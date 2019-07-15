@@ -38,5 +38,15 @@ class Document: NSDocument {
     }
 
 
+
+    //MARK: - Base Actions
+    @IBAction func newPage(_ sender: Any?) {
+        Swift.print("New Page")
+    }
+
+    @IBAction func newCanvas(_ sender: Any?) {
+        Swift.print("New Canvas")
+    }
+
 }
 

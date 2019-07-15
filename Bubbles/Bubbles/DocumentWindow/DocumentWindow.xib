@@ -7,6 +7,10 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="DocumentWindowController" customModule="Bubbles" customModuleProvider="target">
             <connections>
+                <outlet property="editorContainer" destination="u2u-OM-pWv" id="C7y-cB-GB8"/>
+                <outlet property="inspectorContainer" destination="vle-dL-M8g" id="Whu-sk-7QN"/>
+                <outlet property="sidebarContainer" destination="wbm-Kc-dgB" id="cAE-F0-Db6"/>
+                <outlet property="splitView" destination="3KB-c4-2lR" id="9AT-sC-fkP"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -20,11 +24,62 @@
             <view key="contentView" id="se5-gp-TjO">
                 <rect key="frame" x="0.0" y="0.0" width="782" height="567"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <splitView fixedFrame="YES" arrangesAllSubviews="NO" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3KB-c4-2lR">
+                        <rect key="frame" x="0.0" y="0.0" width="782" height="567"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <subviews>
+                            <customView fixedFrame="YES" id="wbm-Kc-dgB" userLabel="Sidebar Container">
+                                <rect key="frame" x="0.0" y="0.0" width="156" height="567"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </customView>
+                            <customView fixedFrame="YES" id="u2u-OM-pWv" userLabel="Editor Container">
+                                <rect key="frame" x="157" y="0.0" width="464" height="567"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </customView>
+                            <customView fixedFrame="YES" id="vle-dL-M8g" userLabel="Inspector Container">
+                                <rect key="frame" x="622" y="0.0" width="160" height="567"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </customView>
+                        </subviews>
+                        <holdingPriorities>
+                            <real value="250"/>
+                            <real value="250"/>
+                            <real value="250"/>
+                        </holdingPriorities>
+                    </splitView>
+                </subviews>
             </view>
+            <toolbar key="toolbar" implicitIdentifier="70B77CBD-7734-4DB0-B1CC-5CF88AD75C15" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="wrD-DS-DMi">
+                <allowedToolbarItems>
+                    <toolbarItem implicitItemIdentifier="FDF995B5-86EC-4387-B61F-DA4BB1F3105A" label="New Canvas" paletteLabel="New Canvas" tag="-1" image="NSAddTemplate" id="UfH-lU-K3v">
+                        <size key="minSize" width="11" height="11"/>
+                        <size key="maxSize" width="11" height="11"/>
+                        <connections>
+                            <action selector="newCanvas:" target="-1" id="uBB-H2-0xZ"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="2ABAF4DE-DACE-4684-BAC4-9F5AD5B97469" label="New Page" paletteLabel="New Page" tag="-1" image="NSBookmarksTemplate" id="k5J-mT-QAA">
+                        <size key="minSize" width="17" height="18"/>
+                        <size key="maxSize" width="17" height="18"/>
+                        <connections>
+                            <action selector="newPage:" target="-1" id="auY-Xh-mjg"/>
+                        </connections>
+                    </toolbarItem>
+                </allowedToolbarItems>
+                <defaultToolbarItems>
+                    <toolbarItem reference="UfH-lU-K3v"/>
+                    <toolbarItem reference="k5J-mT-QAA"/>
+                </defaultToolbarItems>
+            </toolbar>
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
             <point key="canvasLocation" x="285" y="-45.5"/>
         </window>
     </objects>
+    <resources>
+        <image name="NSAddTemplate" width="11" height="11"/>
+        <image name="NSBookmarksTemplate" width="17" height="18"/>
+    </resources>
 </document>
