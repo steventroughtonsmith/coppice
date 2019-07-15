@@ -10,9 +10,13 @@ import Cocoa
 
 class Document: NSDocument {
 
+    let modelController: ModelController
+
     override init() {
+        self.modelController = ModelController()
         super.init()
-        // Add your subclass-specific initialization here.
+
+        self.modelController.createTestData()
     }
 
     override class var autosavesInPlace: Bool {

@@ -15,11 +15,28 @@ class DocumentWindowController: NSWindowController {
     @IBOutlet weak var editorContainer: NSView!
     @IBOutlet weak var inspectorContainer: NSView!
 
+    var sidebarViewController: SidebarViewController! {
+        didSet {
+            oldValue?.view.removeFromSuperview()
+            if let newVC = self.sidebarViewController {
+                sidebarContainer.addSubview(newVC.view, withInsets: NSEdgeInsetsZero)
+            }
+        }
+    }
 
-    override func windowDidLoad() {
+    override func windowDidLoad(){
         super.windowDidLoad()
 
-        // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+        self.setupViewControllers()
+    }
+
+    private func setupViewControllers() {
+        guard let document = self.document as? Document else {
+            return
+        }
+
+        let sidebarVM = SidebarViewModel(modelController: document.modelController)
+        self.sidebarViewController = SidebarViewController(viewModel: sidebarVM)
     }
     
 }

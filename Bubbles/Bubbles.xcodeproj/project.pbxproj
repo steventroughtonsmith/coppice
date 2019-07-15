@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		992A5C9222DCB7530012CCB6 /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992A5C9122DCB7530012CCB6 /* SidebarViewController.swift */; };
+		992A5C9622DCB7790012CCB6 /* SidebarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 992A5C9522DCB7790012CCB6 /* SidebarView.xib */; };
+		992A5C9C22DCC6090012CCB6 /* SidebarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992A5C9B22DCC6090012CCB6 /* SidebarViewModel.swift */; };
+		992A5C9F22DCCDB30012CCB6 /* NSView+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992A5C9E22DCCDB30012CCB6 /* NSView+M3Extensions.swift */; };
+		99C41B7122DCA96700C82DDE /* ModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C41B7022DCA96700C82DDE /* ModelController.swift */; };
+		99C41B7322DCA98600C82DDE /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C41B7222DCA98600C82DDE /* Page.swift */; };
+		99C41B7522DCA9A100C82DDE /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C41B7422DCA9A100C82DDE /* Canvas.swift */; };
 		99FE019122CD1037004D380D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FE019022CD1037004D380D /* AppDelegate.swift */; };
 		99FE019322CD1037004D380D /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FE019222CD1037004D380D /* Document.swift */; };
 		99FE019822CD1038004D380D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99FE019722CD1038004D380D /* Assets.xcassets */; };
@@ -35,6 +42,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		992A5C9122DCB7530012CCB6 /* SidebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewController.swift; sourceTree = "<group>"; };
+		992A5C9522DCB7790012CCB6 /* SidebarView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SidebarView.xib; sourceTree = "<group>"; };
+		992A5C9B22DCC6090012CCB6 /* SidebarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewModel.swift; sourceTree = "<group>"; };
+		992A5C9E22DCCDB30012CCB6 /* NSView+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+M3Extensions.swift"; sourceTree = "<group>"; };
+		99C41B7022DCA96700C82DDE /* ModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelController.swift; sourceTree = "<group>"; };
+		99C41B7222DCA98600C82DDE /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
+		99C41B7422DCA9A100C82DDE /* Canvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
 		99FE018D22CD1037004D380D /* Bubbles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bubbles.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		99FE019022CD1037004D380D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		99FE019222CD1037004D380D /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
@@ -77,6 +91,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		992A5C9022DCB2EE0012CCB6 /* Sidebar */ = {
+			isa = PBXGroup;
+			children = (
+				992A5C9122DCB7530012CCB6 /* SidebarViewController.swift */,
+				992A5C9522DCB7790012CCB6 /* SidebarView.xib */,
+				992A5C9B22DCC6090012CCB6 /* SidebarViewModel.swift */,
+			);
+			path = Sidebar;
+			sourceTree = "<group>";
+		};
+		992A5C9D22DCCDA20012CCB6 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				992A5C9E22DCCDB30012CCB6 /* NSView+M3Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		99C41B6F22DCA94000C82DDE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				99C41B7022DCA96700C82DDE /* ModelController.swift */,
+				99C41B7222DCA98600C82DDE /* Page.swift */,
+				99C41B7422DCA9A100C82DDE /* Canvas.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		99FE018422CD1037004D380D = {
 			isa = PBXGroup;
 			children = (
@@ -102,7 +144,10 @@
 			children = (
 				99FE019022CD1037004D380D /* AppDelegate.swift */,
 				99FE019222CD1037004D380D /* Document.swift */,
+				992A5C9D22DCCDA20012CCB6 /* Extensions */,
+				99C41B6F22DCA94000C82DDE /* Model */,
 				99FE01E122D4C22B004D380D /* DocumentWindow */,
+				992A5C9022DCB2EE0012CCB6 /* Sidebar */,
 				99FE019722CD1038004D380D /* Assets.xcassets */,
 				99FE019922CD1038004D380D /* MainMenu.xib */,
 				99FE019C22CD1038004D380D /* Info.plist */,
@@ -251,6 +296,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				99FE019822CD1038004D380D /* Assets.xcassets in Resources */,
+				992A5C9622DCB7790012CCB6 /* SidebarView.xib in Resources */,
 				99FE01E522D4CC8A004D380D /* DocumentWindow.xib in Resources */,
 				99FE019B22CD1038004D380D /* MainMenu.xib in Resources */,
 			);
@@ -278,8 +324,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				99FE019322CD1037004D380D /* Document.swift in Sources */,
+				99C41B7122DCA96700C82DDE /* ModelController.swift in Sources */,
 				99FE019122CD1037004D380D /* AppDelegate.swift in Sources */,
 				99FE01E422D4CC8A004D380D /* DocumentWindowController.swift in Sources */,
+				99C41B7322DCA98600C82DDE /* Page.swift in Sources */,
+				99C41B7522DCA9A100C82DDE /* Canvas.swift in Sources */,
+				992A5C9F22DCCDB30012CCB6 /* NSView+M3Extensions.swift in Sources */,
+				992A5C9222DCB7530012CCB6 /* SidebarViewController.swift in Sources */,
+				992A5C9C22DCC6090012CCB6 /* SidebarViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
