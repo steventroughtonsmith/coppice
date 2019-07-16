@@ -14,8 +14,13 @@ protocol SidebarView: class {
     func reloadPages()
 }
 
+protocol SidebarViewModelDelegate: class {
+    func selectedObjectDidChange(in viewModel: SidebarViewModel)
+}
+
 class SidebarViewModel: NSObject {
     weak var view: SidebarView?
+    weak var delegate: SidebarViewModelDelegate?
 
     let modelController: ModelController
     init(modelController: ModelController) {
@@ -40,7 +45,15 @@ class SidebarViewModel: NSObject {
     }
 
     //MARK: - Selection
-    private(set) var selectedObject: Any?
+    var selectedObject: Any? {
+        if (self.selectedCanvasRow >= 0) {
+            return self.modelController.allCanvases[self.selectedCanvasRow]
+        }
+        if (self.selectedPageRow >= 0) {
+            return self.modelController.allPages[self.selectedPageRow]
+        }
+        return nil
+    }
 
 
     private(set) var selectedCanvasRow: Int = -1
@@ -53,6 +66,7 @@ class SidebarViewModel: NSObject {
         self.selectedPageRow = -1
         self.selectedCanvasRow = row
         self.view?.reloadSelection()
+        self.delegate?.selectedObjectDidChange(in: self)
     }
 
     private(set) var selectedPageRow: Int = -1
@@ -65,5 +79,6 @@ class SidebarViewModel: NSObject {
         self.selectedCanvasRow = -1
         self.selectedPageRow = row
         self.view?.reloadSelection()
+        self.delegate?.selectedObjectDidChange(in: self)
     }
 }

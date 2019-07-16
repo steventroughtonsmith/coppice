@@ -15,11 +15,20 @@ class DocumentWindowController: NSWindowController {
     @IBOutlet weak var editorContainer: NSView!
     @IBOutlet weak var inspectorContainer: NSView!
 
-    var sidebarViewController: SidebarViewController! {
+    var sidebarViewController: SidebarViewController? {
         didSet {
             oldValue?.view.removeFromSuperview()
             if let newVC = self.sidebarViewController {
                 sidebarContainer.addSubview(newVC.view, withInsets: NSEdgeInsetsZero)
+            }
+        }
+    }
+
+    var editorContainerViewController: EditorContainerViewController? {
+        didSet {
+            oldValue?.view.removeFromSuperview()
+            if let newVC = self.editorContainerViewController {
+                editorContainer.addSubview(newVC.view, withInsets: NSEdgeInsetsZero)
             }
         }
     }
@@ -36,7 +45,16 @@ class DocumentWindowController: NSWindowController {
         }
 
         let sidebarVM = SidebarViewModel(modelController: document.modelController)
+        sidebarVM.delegate = self
         self.sidebarViewController = SidebarViewController(viewModel: sidebarVM)
+
+        self.editorContainerViewController = EditorContainerViewController(viewModel: EditorContainerViewModel())
     }
     
+}
+
+extension DocumentWindowController: SidebarViewModelDelegate {
+    func selectedObjectDidChange(in viewModel: SidebarViewModel) {
+        self.editorContainerViewController?.viewModel.currentObject = viewModel.selectedObject
+    }
 }

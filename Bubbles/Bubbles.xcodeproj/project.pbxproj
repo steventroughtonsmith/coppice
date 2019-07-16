@@ -11,6 +11,15 @@
 		992A5C9622DCB7790012CCB6 /* SidebarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 992A5C9522DCB7790012CCB6 /* SidebarView.xib */; };
 		992A5C9C22DCC6090012CCB6 /* SidebarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992A5C9B22DCC6090012CCB6 /* SidebarViewModel.swift */; };
 		992A5C9F22DCCDB30012CCB6 /* NSView+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992A5C9E22DCCDB30012CCB6 /* NSView+M3Extensions.swift */; };
+		992A5CA222DDF4B60012CCB6 /* EditorContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992A5CA122DDF4B60012CCB6 /* EditorContainerViewModel.swift */; };
+		992A5CA522DDF4C50012CCB6 /* EditorContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992A5CA322DDF4C50012CCB6 /* EditorContainerViewController.swift */; };
+		992A5CA622DDF4C50012CCB6 /* EditorContainerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 992A5CA422DDF4C50012CCB6 /* EditorContainerViewController.xib */; };
+		992A5CAA22DDF5000012CCB6 /* DebugCanvasEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992A5CA822DDF5000012CCB6 /* DebugCanvasEditor.swift */; };
+		992A5CAB22DDF5000012CCB6 /* DebugCanvasEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 992A5CA922DDF5000012CCB6 /* DebugCanvasEditor.xib */; };
+		992A5CAE22DDF50F0012CCB6 /* DebugPageEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992A5CAC22DDF50F0012CCB6 /* DebugPageEditor.swift */; };
+		992A5CAF22DDF50F0012CCB6 /* DebugPageEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 992A5CAD22DDF50F0012CCB6 /* DebugPageEditor.xib */; };
+		992A5CB122DDF5210012CCB6 /* DebugCanvasEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992A5CB022DDF5210012CCB6 /* DebugCanvasEditorViewModel.swift */; };
+		992A5CB322DDF53C0012CCB6 /* DebugPageEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992A5CB222DDF53C0012CCB6 /* DebugPageEditorViewModel.swift */; };
 		99C41B7122DCA96700C82DDE /* ModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C41B7022DCA96700C82DDE /* ModelController.swift */; };
 		99C41B7322DCA98600C82DDE /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C41B7222DCA98600C82DDE /* Page.swift */; };
 		99C41B7522DCA9A100C82DDE /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C41B7422DCA9A100C82DDE /* Canvas.swift */; };
@@ -46,6 +55,15 @@
 		992A5C9522DCB7790012CCB6 /* SidebarView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SidebarView.xib; sourceTree = "<group>"; };
 		992A5C9B22DCC6090012CCB6 /* SidebarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewModel.swift; sourceTree = "<group>"; };
 		992A5C9E22DCCDB30012CCB6 /* NSView+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+M3Extensions.swift"; sourceTree = "<group>"; };
+		992A5CA122DDF4B60012CCB6 /* EditorContainerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContainerViewModel.swift; sourceTree = "<group>"; };
+		992A5CA322DDF4C50012CCB6 /* EditorContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorContainerViewController.swift; sourceTree = "<group>"; };
+		992A5CA422DDF4C50012CCB6 /* EditorContainerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditorContainerViewController.xib; sourceTree = "<group>"; };
+		992A5CA822DDF5000012CCB6 /* DebugCanvasEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugCanvasEditor.swift; sourceTree = "<group>"; };
+		992A5CA922DDF5000012CCB6 /* DebugCanvasEditor.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DebugCanvasEditor.xib; sourceTree = "<group>"; };
+		992A5CAC22DDF50F0012CCB6 /* DebugPageEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugPageEditor.swift; sourceTree = "<group>"; };
+		992A5CAD22DDF50F0012CCB6 /* DebugPageEditor.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DebugPageEditor.xib; sourceTree = "<group>"; };
+		992A5CB022DDF5210012CCB6 /* DebugCanvasEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugCanvasEditorViewModel.swift; sourceTree = "<group>"; };
+		992A5CB222DDF53C0012CCB6 /* DebugPageEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugPageEditorViewModel.swift; sourceTree = "<group>"; };
 		99C41B7022DCA96700C82DDE /* ModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelController.swift; sourceTree = "<group>"; };
 		99C41B7222DCA98600C82DDE /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		99C41B7422DCA9A100C82DDE /* Canvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
@@ -109,6 +127,30 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		992A5CA022DDF4820012CCB6 /* Editors */ = {
+			isa = PBXGroup;
+			children = (
+				992A5CA122DDF4B60012CCB6 /* EditorContainerViewModel.swift */,
+				992A5CA322DDF4C50012CCB6 /* EditorContainerViewController.swift */,
+				992A5CA422DDF4C50012CCB6 /* EditorContainerViewController.xib */,
+				992A5CA722DDF4E40012CCB6 /* DebugEditors */,
+			);
+			path = Editors;
+			sourceTree = "<group>";
+		};
+		992A5CA722DDF4E40012CCB6 /* DebugEditors */ = {
+			isa = PBXGroup;
+			children = (
+				992A5CB022DDF5210012CCB6 /* DebugCanvasEditorViewModel.swift */,
+				992A5CA822DDF5000012CCB6 /* DebugCanvasEditor.swift */,
+				992A5CA922DDF5000012CCB6 /* DebugCanvasEditor.xib */,
+				992A5CB222DDF53C0012CCB6 /* DebugPageEditorViewModel.swift */,
+				992A5CAC22DDF50F0012CCB6 /* DebugPageEditor.swift */,
+				992A5CAD22DDF50F0012CCB6 /* DebugPageEditor.xib */,
+			);
+			path = DebugEditors;
+			sourceTree = "<group>";
+		};
 		99C41B6F22DCA94000C82DDE /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -148,6 +190,7 @@
 				99C41B6F22DCA94000C82DDE /* Model */,
 				99FE01E122D4C22B004D380D /* DocumentWindow */,
 				992A5C9022DCB2EE0012CCB6 /* Sidebar */,
+				992A5CA022DDF4820012CCB6 /* Editors */,
 				99FE019722CD1038004D380D /* Assets.xcassets */,
 				99FE019922CD1038004D380D /* MainMenu.xib */,
 				99FE019C22CD1038004D380D /* Info.plist */,
@@ -295,7 +338,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				992A5CA622DDF4C50012CCB6 /* EditorContainerViewController.xib in Resources */,
+				992A5CAF22DDF50F0012CCB6 /* DebugPageEditor.xib in Resources */,
 				99FE019822CD1038004D380D /* Assets.xcassets in Resources */,
+				992A5CAB22DDF5000012CCB6 /* DebugCanvasEditor.xib in Resources */,
 				992A5C9622DCB7790012CCB6 /* SidebarView.xib in Resources */,
 				99FE01E522D4CC8A004D380D /* DocumentWindow.xib in Resources */,
 				99FE019B22CD1038004D380D /* MainMenu.xib in Resources */,
@@ -323,14 +369,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				992A5CAA22DDF5000012CCB6 /* DebugCanvasEditor.swift in Sources */,
+				992A5CB322DDF53C0012CCB6 /* DebugPageEditorViewModel.swift in Sources */,
 				99FE019322CD1037004D380D /* Document.swift in Sources */,
 				99C41B7122DCA96700C82DDE /* ModelController.swift in Sources */,
+				992A5CAE22DDF50F0012CCB6 /* DebugPageEditor.swift in Sources */,
 				99FE019122CD1037004D380D /* AppDelegate.swift in Sources */,
+				992A5CA522DDF4C50012CCB6 /* EditorContainerViewController.swift in Sources */,
 				99FE01E422D4CC8A004D380D /* DocumentWindowController.swift in Sources */,
 				99C41B7322DCA98600C82DDE /* Page.swift in Sources */,
 				99C41B7522DCA9A100C82DDE /* Canvas.swift in Sources */,
 				992A5C9F22DCCDB30012CCB6 /* NSView+M3Extensions.swift in Sources */,
+				992A5CA222DDF4B60012CCB6 /* EditorContainerViewModel.swift in Sources */,
 				992A5C9222DCB7530012CCB6 /* SidebarViewController.swift in Sources */,
+				992A5CB122DDF5210012CCB6 /* DebugCanvasEditorViewModel.swift in Sources */,
 				992A5C9C22DCC6090012CCB6 /* SidebarViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
