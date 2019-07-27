@@ -14,12 +14,14 @@ struct Tag {
 
 class Page: NSObject {
     var id = UUID()
-    var title: String = "Untitled Page"
+    @objc dynamic var title: String = "Untitled Page"
     var tags: [Tag] = []
     var dateCreated = Date()
     var dateModified = Date()
 
     var content: PageContent?
+
+    var canvases = Set<CanvasPage>()
 }
 
 protocol PageContent: class {

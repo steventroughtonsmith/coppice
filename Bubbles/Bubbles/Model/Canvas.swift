@@ -10,7 +10,8 @@ import Cocoa
 
 class Canvas: NSObject {
     var id = UUID()
-    var title: String = "New Canvas"
+    @objc var title: String = "New Canvas"
     var dateCreated = Date()
     var dateModified = Date()
+    var pages = Set<CanvasPage>()
 }

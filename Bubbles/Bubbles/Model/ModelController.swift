@@ -9,6 +9,7 @@
 import Cocoa
 
 class ModelController: NSObject {
+    weak var document: Document?
 
     func createTestData() {
         let canvas1 = self.newCanvas()

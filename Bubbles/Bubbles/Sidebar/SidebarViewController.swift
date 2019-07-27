@@ -26,6 +26,8 @@ class SidebarViewController: NSViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        self.pagesTable.setDraggingSourceOperationMask(.copy, forLocal: false)
         // Do view setup here.
     }
 }
@@ -68,7 +70,15 @@ extension SidebarViewController: NSTableViewDataSource {
         if (tableView == self.canvasesTable) {
             return self.viewModel.canvas(forRow: row)
         }
-        return self.viewModel.page(forRow: row)
+        let page = self.viewModel.page(forRow: row)
+        return page
+    }
+
+    func tableView(_ tableView: NSTableView, pasteboardWriterForRow row: Int) -> NSPasteboardWriting? {
+        if (tableView == self.pagesTable) {
+            return self.viewModel.page(forRow: row).id.uuidString as NSString
+        }
+        return nil
     }
 }
 

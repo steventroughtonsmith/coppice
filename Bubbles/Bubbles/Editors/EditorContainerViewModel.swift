@@ -19,6 +19,12 @@ protocol Editor {
 class EditorContainerViewModel: NSObject {
     weak var view: EditorContainerView?
 
+    let modelController: ModelController
+    init(modelController: ModelController) {
+        self.modelController = modelController
+        super.init()
+    }
+
     var currentObject: Any? {
         didSet {
             self.view?.editorChanged()
@@ -27,7 +33,7 @@ class EditorContainerViewModel: NSObject {
 
     var editor: Editor? {
         if let canvas = self.currentObject as? Canvas {
-            let viewModel = DebugCanvasEditorViewModel(canvas: canvas)
+            let viewModel = DebugCanvasEditorViewModel(canvas: canvas, modelController: self.modelController)
             return DebugCanvasEditor(viewModel: viewModel)
         }
         if let page = self.currentObject as? Page {

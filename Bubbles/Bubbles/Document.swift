@@ -15,7 +15,7 @@ class Document: NSDocument {
     override init() {
         self.modelController = ModelController()
         super.init()
-
+        self.modelController.document = self
         self.modelController.createTestData()
     }
 

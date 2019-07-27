@@ -23,11 +23,10 @@
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="se5-gp-TjO">
                 <rect key="frame" x="0.0" y="0.0" width="782" height="567"/>
-                <autoresizingMask key="autoresizingMask"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
-                    <splitView fixedFrame="YES" arrangesAllSubviews="NO" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3KB-c4-2lR">
+                    <splitView arrangesAllSubviews="NO" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3KB-c4-2lR">
                         <rect key="frame" x="0.0" y="0.0" width="782" height="567"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
                             <customView fixedFrame="YES" id="wbm-Kc-dgB" userLabel="Sidebar Container">
                                 <rect key="frame" x="0.0" y="0.0" width="156" height="567"/>
@@ -44,11 +43,17 @@
                         </subviews>
                         <holdingPriorities>
                             <real value="250"/>
-                            <real value="250"/>
+                            <real value="249"/>
                             <real value="250"/>
                         </holdingPriorities>
                     </splitView>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="3KB-c4-2lR" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" id="BEZ-97-ReR"/>
+                    <constraint firstItem="3KB-c4-2lR" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" id="Fm4-eH-wOP"/>
+                    <constraint firstAttribute="bottom" secondItem="3KB-c4-2lR" secondAttribute="bottom" id="mic-zb-DBn"/>
+                    <constraint firstAttribute="trailing" secondItem="3KB-c4-2lR" secondAttribute="trailing" id="qOV-1D-6QN"/>
+                </constraints>
             </view>
             <toolbar key="toolbar" implicitIdentifier="70B77CBD-7734-4DB0-B1CC-5CF88AD75C15" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="wrD-DS-DMi">
                 <allowedToolbarItems>

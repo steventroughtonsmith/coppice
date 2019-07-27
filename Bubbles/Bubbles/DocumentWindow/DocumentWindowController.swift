@@ -48,7 +48,7 @@ class DocumentWindowController: NSWindowController {
         sidebarVM.delegate = self
         self.sidebarViewController = SidebarViewController(viewModel: sidebarVM)
 
-        self.editorContainerViewController = EditorContainerViewController(viewModel: EditorContainerViewModel())
+        self.editorContainerViewController = EditorContainerViewController(viewModel: EditorContainerViewModel(modelController: document.modelController))
     }
     
 }
