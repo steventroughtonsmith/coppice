@@ -12,16 +12,30 @@ struct Tag {
     let name: String
 }
 
-class Page: NSObject {
+final class Page: NSObject, CollectableModelObject {
+    static let modelType: ModelType = ModelType(rawValue: "Page")!
+
     var id = UUID()
+    weak var collection: ModelCollection<Page>?
+
+    override required init() {
+        super.init()
+    }
+
+    
+    // MARK: - Attributes
     @objc dynamic var title: String = "Untitled Page"
     var tags: [Tag] = []
     var dateCreated = Date()
     var dateModified = Date()
 
+
+    // MARK: - Relationships
     var content: PageContent?
 
-    var canvases = Set<CanvasPage>()
+    var canvases: Set<CanvasPage> {
+        return self.relationship(for: \.page)
+    }
 }
 
 protocol PageContent: class {

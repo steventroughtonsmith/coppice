@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		990825D922EDF2FE00273A1D /* ModelCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990825D822EDF2FE00273A1D /* ModelCollection.swift */; };
 		990B6A3722E5F84400523C06 /* CanvasPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990B6A3622E5F84400523C06 /* CanvasPage.swift */; };
 		990B6A3922EB482D00523C06 /* ModelObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990B6A3822EB482D00523C06 /* ModelObject.swift */; };
 		992A5C9222DCB7530012CCB6 /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992A5C9122DCB7530012CCB6 /* SidebarViewController.swift */; };
@@ -53,6 +54,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		990825D822EDF2FE00273A1D /* ModelCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelCollection.swift; sourceTree = "<group>"; };
 		990B6A3622E5F84400523C06 /* CanvasPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPage.swift; sourceTree = "<group>"; };
 		990B6A3822EB482D00523C06 /* ModelObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelObject.swift; sourceTree = "<group>"; };
 		992A5C9122DCB7530012CCB6 /* SidebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewController.swift; sourceTree = "<group>"; };
@@ -116,9 +118,9 @@
 		992A5C9022DCB2EE0012CCB6 /* Sidebar */ = {
 			isa = PBXGroup;
 			children = (
+				992A5C9B22DCC6090012CCB6 /* SidebarViewModel.swift */,
 				992A5C9122DCB7530012CCB6 /* SidebarViewController.swift */,
 				992A5C9522DCB7790012CCB6 /* SidebarView.xib */,
-				992A5C9B22DCC6090012CCB6 /* SidebarViewModel.swift */,
 			);
 			path = Sidebar;
 			sourceTree = "<group>";
@@ -159,6 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				99C41B7022DCA96700C82DDE /* ModelController.swift */,
+				990825D822EDF2FE00273A1D /* ModelCollection.swift */,
 				990B6A3822EB482D00523C06 /* ModelObject.swift */,
 				99C41B7222DCA98600C82DDE /* Page.swift */,
 				99C41B7422DCA9A100C82DDE /* Canvas.swift */,
@@ -392,6 +395,7 @@
 				992A5C9222DCB7530012CCB6 /* SidebarViewController.swift in Sources */,
 				992A5CB122DDF5210012CCB6 /* DebugCanvasEditorViewModel.swift in Sources */,
 				992A5C9C22DCC6090012CCB6 /* SidebarViewModel.swift in Sources */,
+				990825D922EDF2FE00273A1D /* ModelCollection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

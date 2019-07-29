@@ -8,14 +8,35 @@
 
 import Cocoa
 
-class CanvasPage: NSObject, ModelObject {
-    var id = UUID()
-    weak var modelController: ModelController?
+final class CanvasPage: NSObject, CollectableModelObject {
+    static let modelType: ModelType = ModelType(rawValue: "CanvasPage")!
 
-    weak var page: Page?
-    weak var canvas: Canvas?
-    var position: CGPoint = .zero
-    var size: CGSize = .zero
+    var id = UUID()
+    weak var collection: ModelCollection<CanvasPage>?
+
+    override required init() {
+        super.init()
+    }
+
+
+    //MARK: - Attributes
+    weak var page: Page? {
+        didSet { self.didChange(\.page, oldValue: oldValue) }
+    }
+    weak var canvas: Canvas? {
+        didSet { self.didChange(\.canvas, oldValue: oldValue) }
+    }
+    var position: CGPoint = .zero {
+        didSet { self.didChange(\.position, oldValue: oldValue) }
+    }
+    var size: CGSize = .zero {
+        didSet { self.didChange(\.size, oldValue: oldValue) }
+    }
+
+    
+    //MARK: - Relationships
     weak var parent: CanvasPage?
-    var children = Set<CanvasPage>()
+    var children: Set<CanvasPage> {
+        self.relationship(for: \.parent)
+    }
 }

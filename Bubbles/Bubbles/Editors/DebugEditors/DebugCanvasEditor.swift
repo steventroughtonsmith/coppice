@@ -20,11 +20,13 @@ enum Columns: String {
 
 class DebugCanvasEditor: NSViewController, Editor {
     @IBOutlet weak var tableView: NSTableView!
+    @IBOutlet var arrayController: NSArrayController!
 
-    let viewModel: DebugCanvasEditorViewModel
+    @objc dynamic let viewModel: DebugCanvasEditorViewModel
     init(viewModel: DebugCanvasEditorViewModel) {
         self.viewModel = viewModel
         super.init(nibName: "DebugCanvasEditor", bundle: nil)
+        viewModel.view = self
     }
     
     required init?(coder: NSCoder) {
@@ -36,7 +38,22 @@ class DebugCanvasEditor: NSViewController, Editor {
 
         self.tableView.registerForDraggedTypes([.string])
     }
-    
+
+    override func viewWillAppear() {
+        super.viewWillAppear()
+        self.viewModel.startObservingChanges()
+    }
+
+    override func viewDidDisappear() {
+        super.viewDidDisappear()
+        self.viewModel.stopObservingChanges()
+    }
+}
+
+extension DebugCanvasEditor: DebugCanvasEditorView {
+    func reloadPage(_ page: CanvasPage) {
+        self.tableView.reloadData()
+    }
 }
 
 extension DebugCanvasEditor: NSTableViewDataSource {
@@ -94,7 +111,6 @@ extension DebugCanvasEditor: NSTableViewDataSource {
             }
 
             let newParent = self.viewModel.pages.first(where: { $0.id == uuid })
-            newParent?.children.insert(page)
             page.parent = newParent
         default:
             break

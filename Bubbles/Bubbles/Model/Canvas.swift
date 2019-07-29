@@ -8,10 +8,25 @@
 
 import Cocoa
 
-class Canvas: NSObject {
+final class Canvas: NSObject, CollectableModelObject {
+    static let modelType: ModelType = ModelType(rawValue: "Canvas")!
+
     var id = UUID()
+    weak var collection: ModelCollection<Canvas>?
+
+    override required init() {
+        super.init()
+    }
+
+    
+    //MARK: - Attributes
     @objc var title: String = "New Canvas"
     var dateCreated = Date()
     var dateModified = Date()
-    var pages = Set<CanvasPage>()
+
+
+    //MARK: - Relationships
+    var pages: Set<CanvasPage> {
+        return self.relationship(for: \.canvas)
+    }
 }

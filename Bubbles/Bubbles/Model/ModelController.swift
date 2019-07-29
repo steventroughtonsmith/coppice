@@ -11,65 +11,58 @@ import Cocoa
 class ModelController: NSObject {
     weak var document: Document?
 
+    var undoManager: UndoManager? {
+        return self.document?.undoManager
+    }
+
     func createTestData() {
-        let canvas1 = self.newCanvas()
+        let canvas1 = self.canvases.newObject()
         canvas1.title = "First"
-        let canvas2 = self.newCanvas()
+        let canvas2 = self.canvases.newObject()
         canvas2.title = "Second!"
 
-        let page1 = self.newPage()
+        let page1 = self.pages.newObject()
         page1.title = "Foo"
-        let page2 = self.newPage()
+        let page2 = self.pages.newObject()
         page2.title = "Bar"
-        let page3 = self.newPage()
+        let page3 = self.pages.newObject()
         page3.title = "Baz"
     }
 
-    //MARK: - Canvas
-    private (set) var allCanvases = [Canvas]()
 
-    func canvasWithID(_ id: UUID) -> Canvas? {
-        for canvas in self.allCanvases {
-            if canvas.id == id {
-                return canvas
-            }
-        }
-        return nil
-    }
 
-    func newCanvas() -> Canvas {
-        let canvas = Canvas()
-        self.allCanvases.append(canvas)
-        return canvas
-    }
+    let canvases = ModelCollection<Canvas>()
+    let pages = ModelCollection<Page>()
+    let canvasPages = ModelCollection<CanvasPage>()
 
-    func delete(_ canvas: Canvas) {
-        if let index = self.allCanvases.firstIndex(of: canvas) {
-            self.allCanvases.remove(at: index)
+    func collection(for modelType: ModelType) -> Any {
+        switch modelType {
+        case Canvas.modelType:
+            return self.canvases
+        case Page.modelType:
+            return self.pages
+        case CanvasPage.modelType:
+            return self.canvasPages
+        default:
+            fatalError("Model type '\(modelType)' does not exist")
         }
     }
 
-    //MARK: - Pages
-    private (set) var allPages = [Page]()
+    override init() {
+        super.init()
+        self.canvases.modelController = self
+        self.pages.modelController = self
+        self.canvasPages.modelController = self
+    }
 
-    func pageWithID(_ id: UUID) -> Page? {
-        for page in self.allPages {
-            if page.id == id {
-                return page
-            }
+    //MARK: - Undo
+
+    func registerUndoAction(withName name: String? = nil, invocationBlock: @escaping (ModelController) -> Void) {
+        if let name = name {
+            self.undoManager?.setActionName(name)
         }
-        return nil
+        self.undoManager?.registerUndo(withTarget: self, handler: invocationBlock)
     }
 
-    func newPage() -> Page {
-        let page = Page()
-        self.allPages.append(page)
-        return page
-    }
 
-    func delete(_ page: Page) {
-        if let index = self.allPages.firstIndex(of: page) {
-            self.allPages.remove(at: index)
-        }
-    }
 }

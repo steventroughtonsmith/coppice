@@ -26,35 +26,69 @@ class SidebarViewModel: NSObject {
     init(modelController: ModelController) {
         self.modelController = modelController
         super.init()
+
+        self.setupSelectionUndo()
+    }
+
+    var sortedCanvases: [Canvas] {
+        self.modelController.canvases.all.sorted { $0.title < $1.title }
     }
 
     var numberOfCanvases: Int {
-        return self.modelController.allCanvases.count
+        return self.modelController.canvases.all.count
     }
 
     func canvas(forRow row: Int) -> Canvas {
-        return self.modelController.allCanvases[row]
+        return self.sortedCanvases[row]
+    }
+
+    func row(for canvas: Canvas) -> Int? {
+        return self.sortedCanvases.firstIndex(of: canvas)
+    }
+
+    var sortedPages: [Page] {
+        self.modelController.pages.all.sorted { $0.title < $1.title }
     }
 
     var numberOfPages: Int {
-        return self.modelController.allPages.count
+        return self.modelController.pages.all.count
     }
 
     func page(forRow row: Int) -> Page {
-        return self.modelController.allPages[row]
+        return self.sortedPages[row]
+    }
+
+    func row(for page: Page) -> Int? {
+        return self.sortedPages.firstIndex(of: page)
     }
 
     //MARK: - Selection
-    var selectedObject: Any? {
+    var selectedObject: ModelObject? {
         if (self.selectedCanvasRow >= 0) {
-            return self.modelController.allCanvases[self.selectedCanvasRow]
+            return self.sortedCanvases[self.selectedCanvasRow]
         }
         if (self.selectedPageRow >= 0) {
-            return self.modelController.allPages[self.selectedPageRow]
+            return self.sortedPages[self.selectedPageRow]
         }
         return nil
     }
 
+    func selectObject(withID id: UUID) {
+        if let canvas = self.modelController.canvases.objectWithID(id),
+           let canvasRow = self.row(for: canvas) {
+            self.selectCanvas(atRow: canvasRow)
+        }
+        else if let page = self.modelController.pages.objectWithID(id),
+            let pageRow = self.row(for: page) {
+            self.selectPage(atRow: pageRow)
+        }
+
+        if let selectionID = self.selectedObject?.id {
+            self.modelController.undoManager?.registerUndo(withTarget: self, handler: { (target) in
+                target.selectObject(withID: selectionID)
+            })
+        }
+    }
 
     private(set) var selectedCanvasRow: Int = -1
 
@@ -80,5 +114,24 @@ class SidebarViewModel: NSObject {
         self.selectedPageRow = row
         self.view?.reloadSelection()
         self.delegate?.selectedObjectDidChange(in: self)
+    }
+
+
+    private var undoObservation: NSObjectProtocol?
+    private func setupSelectionUndo() {
+        guard let undoManager = self.modelController.document?.undoManager else {
+            return
+        }
+
+        self.undoObservation = NotificationCenter.default.addObserver(forName: .NSUndoManagerDidOpenUndoGroup, object: undoManager, queue: .main) { [weak self] (notification) in
+            guard let strongSelf = self,
+                let selectionID = strongSelf.selectedObject?.id else {
+                return
+            }
+
+            undoManager.registerUndo(withTarget: strongSelf) { (target) in
+                target.selectObject(withID: selectionID)
+            }
+        }
     }
 }
