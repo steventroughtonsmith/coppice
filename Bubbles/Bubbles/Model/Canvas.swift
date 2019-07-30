@@ -20,7 +20,9 @@ final class Canvas: NSObject, CollectableModelObject {
 
     
     //MARK: - Attributes
-    @objc var title: String = "New Canvas"
+    @objc var title: String = "New Canvas" {
+        didSet { self.didChange(\.title, oldValue: oldValue) }
+    }
     var dateCreated = Date()
     var dateModified = Date()
 

@@ -24,8 +24,12 @@ final class Page: NSObject, CollectableModelObject {
 
     
     // MARK: - Attributes
-    @objc dynamic var title: String = "Untitled Page"
-    var tags: [Tag] = []
+    @objc dynamic var title: String = "Untitled Page" {
+        didSet { self.didChange(\.title, oldValue: oldValue) }
+    }
+    var tags: [Tag] = [] {
+        didSet { self.didChange(\.tags, oldValue: oldValue) }
+    }
     var dateCreated = Date()
     var dateModified = Date()
 
