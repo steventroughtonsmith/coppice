@@ -15,7 +15,7 @@ struct Tag {
 final class Page: NSObject, CollectableModelObject {
     static let modelType: ModelType = ModelType(rawValue: "Page")!
 
-    var id = UUID()
+    var id = ModelID(modelType: Page.modelType)
     weak var collection: ModelCollection<Page>?
 
     override required init() {

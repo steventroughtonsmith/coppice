@@ -11,11 +11,16 @@ import Cocoa
 final class Canvas: NSObject, CollectableModelObject {
     static let modelType: ModelType = ModelType(rawValue: "Canvas")!
 
-    var id = UUID()
+    var id = ModelID(modelType: Canvas.modelType)
     weak var collection: ModelCollection<Canvas>?
 
     override required init() {
         super.init()
+    }
+
+
+    func objectWasInserted() {
+        self.sortIndex = self.collection?.all.count ?? 0
     }
 
     
@@ -25,6 +30,9 @@ final class Canvas: NSObject, CollectableModelObject {
     }
     var dateCreated = Date()
     var dateModified = Date()
+    @objc dynamic var sortIndex = 0 {
+        didSet { self.didChange(\.sortIndex, oldValue: oldValue) }
+    }
 
 
     //MARK: - Relationships

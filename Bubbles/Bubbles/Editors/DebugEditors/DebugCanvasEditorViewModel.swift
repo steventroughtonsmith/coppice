@@ -15,7 +15,7 @@ protocol DebugCanvasEditorView: class {
 class DebugCanvasEditorViewModel: NSObject {
     weak var view: DebugCanvasEditorView?
 
-    let canvas: Canvas
+    @objc dynamic let canvas: Canvas
     let modelController: ModelController
     init(canvas: Canvas, modelController: ModelController) {
         self.canvas = canvas
@@ -23,9 +23,25 @@ class DebugCanvasEditorViewModel: NSObject {
         super.init()
     }
 
+    @objc dynamic var title: String {
+        return self.canvas.title
+    }
+
+    override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
+        var keyPaths = super.keyPathsForValuesAffectingValue(forKey: key)
+        if key == "sortIndex" {
+            keyPaths.insert("self.canvas.sortIndex")
+        }
+        return keyPaths
+    }
+
+    @objc dynamic var sortIndex: String {
+        return "\(self.canvas.sortIndex)"
+    }
+
 
     private var sortedCanvases: [CanvasPage] {
-        return self.canvas.pages.sorted(by: {$0.id.uuidString < $1.id.uuidString})
+        return self.canvas.pages.sorted(by: {$0.id.uuid.uuidString < $1.id.uuid.uuidString})
     }
 
     @objc dynamic var pages: [CanvasPage] {
@@ -34,7 +50,7 @@ class DebugCanvasEditorViewModel: NSObject {
 
     @objc dynamic var selectedCanvasPage: CanvasPage?
 
-    func addPageWithID(_ pageID: UUID) {
+    func addPageWithID(_ pageID: ModelID) {
         guard let page = self.modelController.pages.objectWithID(pageID) else {
             return
         }

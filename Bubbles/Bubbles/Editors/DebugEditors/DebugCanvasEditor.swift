@@ -104,13 +104,13 @@ extension DebugCanvasEditor: NSTableViewDataSource {
             page.size.height = (object as? CGFloat) ?? 0
         case .parent:
             guard let uuidString = object as? String,
-                let uuid = UUID(uuidString: uuidString),
-                uuid != page.id else {
+                let id = Page.modelID(withUUIDString: uuidString),
+                id != page.id else {
                     page.parent = nil
                     return
             }
 
-            let newParent = self.viewModel.pages.first(where: { $0.id == uuid })
+            let newParent = self.viewModel.pages.first(where: { $0.id == id })
             page.parent = newParent
         default:
             break
@@ -136,10 +136,10 @@ extension DebugCanvasEditor: NSTableViewDataSource {
 
         for item in items {
             guard let uuidString = item.string(forType: .string),
-                let uuid = UUID(uuidString: uuidString) else {
+                let id = Page.modelID(withUUIDString: uuidString) else {
                     continue
             }
-            self.viewModel.addPageWithID(uuid)
+            self.viewModel.addPageWithID(id)
         }
         self.tableView.reloadData()
         return true

@@ -48,6 +48,19 @@ class ModelController: NSObject {
         }
     }
 
+    func object(with id: ModelID) -> ModelObject? {
+        switch id.modelType {
+        case Canvas.modelType:
+            return self.canvases.objectWithID(id)
+        case Page.modelType:
+            return self.pages.objectWithID(id)
+        case CanvasPage.modelType:
+            return self.canvasPages.objectWithID(id)
+        default:
+            fatalError("Model type '\(id.modelType)' does not exist")
+        }
+    }
+
     override init() {
         super.init()
         self.canvases.modelController = self

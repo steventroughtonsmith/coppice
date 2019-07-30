@@ -27,8 +27,20 @@ class SidebarViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.canvasesTable.setDraggingSourceOperationMask(.copy, forLocal: true)
+        self.canvasesTable.registerForDraggedTypes([.string])
         self.pagesTable.setDraggingSourceOperationMask(.copy, forLocal: false)
         // Do view setup here.
+    }
+
+    override func viewWillAppear() {
+        super.viewWillAppear()
+        self.viewModel.startObserving()
+    }
+
+    override func viewDidDisappear() {
+        super.viewDidDisappear()
+        self.viewModel.stopObserving()
     }
 }
 
@@ -61,24 +73,44 @@ extension SidebarViewController: SidebarView {
 extension SidebarViewController: NSTableViewDataSource {
     func numberOfRows(in tableView: NSTableView) -> Int {
         if (tableView == self.canvasesTable) {
-            return self.viewModel.numberOfCanvases
+            return self.viewModel.canvasItems.count
         }
-        return self.viewModel.numberOfPages
+        return self.viewModel.pageItems.count
     }
 
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
         if (tableView == self.canvasesTable) {
-            return self.viewModel.canvas(forRow: row)
+            return self.viewModel.canvasItems[row]
         }
-        let page = self.viewModel.page(forRow: row)
-        return page
+        return self.viewModel.pageItems[row]
     }
 
     func tableView(_ tableView: NSTableView, pasteboardWriterForRow row: Int) -> NSPasteboardWriting? {
         if (tableView == self.pagesTable) {
-            return self.viewModel.page(forRow: row).id.uuidString as NSString
+            return self.viewModel.pageItems[row].id.uuid.uuidString as NSString
         }
-        return nil
+
+        return self.viewModel.canvasItems[row].id.uuid.uuidString as NSString
+    }
+
+    func tableView(_ tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableView.DropOperation) -> NSDragOperation {
+        print("row: \(row) dropOp: \(dropOperation.rawValue)")
+        if case .on = dropOperation {
+            self.canvasesTable.setDropRow(row, dropOperation: .above)
+        }
+        return .move
+    }
+
+    func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableView.DropOperation) -> Bool {
+        guard let item = info.draggingPasteboard.pasteboardItems?.first,
+            let uuidString = item.string(forType: .string),
+            let id = Canvas.modelID(withUUIDString: uuidString) else {
+            return false
+        }
+
+        self.viewModel.moveCanvas(with: id, toIndex: row)
+        self.reloadCanvases()
+        return true
     }
 }
 

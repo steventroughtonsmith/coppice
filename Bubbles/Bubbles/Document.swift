@@ -45,11 +45,11 @@ class Document: NSDocument {
 
     //MARK: - Base Actions
     @IBAction func newPage(_ sender: Any?) {
-        Swift.print("New Page")
+        self.modelController.pages.newObject()
     }
 
     @IBAction func newCanvas(_ sender: Any?) {
-        Swift.print("New Canvas")
+        self.modelController.canvases.newObject()
     }
 
 }

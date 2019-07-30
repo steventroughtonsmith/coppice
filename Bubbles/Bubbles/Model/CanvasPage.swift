@@ -11,7 +11,7 @@ import Cocoa
 final class CanvasPage: NSObject, CollectableModelObject {
     static let modelType: ModelType = ModelType(rawValue: "CanvasPage")!
 
-    var id = UUID()
+    var id = ModelID(modelType: CanvasPage.modelType)
     weak var collection: ModelCollection<CanvasPage>?
 
     override required init() {

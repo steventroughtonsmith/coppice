@@ -18,6 +18,32 @@ protocol SidebarViewModelDelegate: class {
     func selectedObjectDidChange(in viewModel: SidebarViewModel)
 }
 
+
+protocol SidebarItem: class{
+    var id: ModelID { get }
+    var title: String { get }
+}
+
+class CanvasSidebarItem: NSObject, SidebarItem {
+    let canvas: Canvas
+    init(canvas: Canvas) {
+        self.canvas = canvas
+    }
+
+    var id: ModelID { self.canvas.id }
+    @objc dynamic var title: String { self.canvas.title }
+}
+
+class PageSidebarItem: NSObject, SidebarItem {
+    let page: Page
+    init(page: Page) {
+        self.page = page
+    }
+
+    var id: ModelID { self.page.id }
+    @objc dynamic var title: String { self.page.title }
+}
+
 class SidebarViewModel: NSObject {
     weak var view: SidebarView?
     weak var delegate: SidebarViewModelDelegate?
@@ -30,56 +56,95 @@ class SidebarViewModel: NSObject {
         self.setupSelectionUndo()
     }
 
-    var sortedCanvases: [Canvas] {
-        self.modelController.canvases.all.sorted { $0.title < $1.title }
+    var canvasObserver: ModelCollectionObservation<Canvas>?
+    var pageObserver: ModelCollectionObservation<Page>?
+
+    func startObserving() {
+        self.canvasObserver = self.modelController.canvases.addObserver { _ in self.reloadCanvases() }
+        self.pageObserver = self.modelController.pages.addObserver { _ in self.reloadPages() }
     }
 
-    var numberOfCanvases: Int {
-        return self.modelController.canvases.all.count
+    func stopObserving() {
+        if let canvasObserver = self.canvasObserver {
+            self.modelController.canvases.removeObserver(canvasObserver)
+            self.canvasObserver = nil
+        }
+        if let pageObserver = self.pageObserver {
+            self.modelController.pages.removeObserver(pageObserver)
+            self.pageObserver = nil
+        }
     }
 
-    func canvas(forRow row: Int) -> Canvas {
-        return self.sortedCanvases[row]
+
+    func reloadCanvases() {
+        self.cachedCanvasItems = nil
+        self.view?.reloadCanvases()
     }
 
-    func row(for canvas: Canvas) -> Int? {
-        return self.sortedCanvases.firstIndex(of: canvas)
+    func reloadPages() {
+        self.cachedPageItems = nil
+        self.view?.reloadPages()
     }
 
-    var sortedPages: [Page] {
-        self.modelController.pages.all.sorted { $0.title < $1.title }
+
+    private var cachedCanvasItems: [CanvasSidebarItem]?
+    var canvasItems: [CanvasSidebarItem] {
+        if let cachedItems = self.cachedCanvasItems {
+            return cachedItems
+        }
+        let items = self.modelController.canvases.all.sorted { $0.sortIndex < $1.sortIndex }.map { CanvasSidebarItem(canvas: $0)}
+        self.cachedCanvasItems = items
+        return items
     }
 
-    var numberOfPages: Int {
-        return self.modelController.pages.all.count
+    private var cachedPageItems: [PageSidebarItem]?
+    var pageItems: [PageSidebarItem] {
+        if let cachedItems = self.cachedPageItems {
+            return cachedItems
+        }
+        let items = self.modelController.pages.all.sorted { $0.title < $1.title }.map { PageSidebarItem(page: $0)}
+        self.cachedPageItems = items
+        return items
     }
 
-    func page(forRow row: Int) -> Page {
-        return self.sortedPages[row]
+
+    //MARK: - Re-ordering
+    func moveCanvas(with id: ModelID, toIndex index: Int) {
+        var canvases: [Canvas?] = self.canvasItems.map { $0.canvas }
+        guard let currentIndex = canvases.firstIndex(where: { $0?.id == id}) else {
+            return
+        }
+
+        let canvasToMove = canvases[currentIndex]
+        canvases[currentIndex] = nil
+        canvases.insert(canvasToMove, at: index)
+
+        var sortIndex = 0
+        for canvas in canvases {
+            if canvas != nil {
+                canvas?.sortIndex = sortIndex
+                sortIndex += 1
+            }
+        }
     }
 
-    func row(for page: Page) -> Int? {
-        return self.sortedPages.firstIndex(of: page)
-    }
 
     //MARK: - Selection
     var selectedObject: ModelObject? {
         if (self.selectedCanvasRow >= 0) {
-            return self.sortedCanvases[self.selectedCanvasRow]
+            return self.canvasItems[self.selectedCanvasRow].canvas
         }
         if (self.selectedPageRow >= 0) {
-            return self.sortedPages[self.selectedPageRow]
+            return self.pageItems[self.selectedPageRow].page
         }
         return nil
     }
 
-    func selectObject(withID id: UUID) {
-        if let canvas = self.modelController.canvases.objectWithID(id),
-           let canvasRow = self.row(for: canvas) {
+    func selectObject(withID id: ModelID) {
+        if let canvasRow = self.canvasItems.firstIndex(where: { $0.id == id }) {
             self.selectCanvas(atRow: canvasRow)
         }
-        else if let page = self.modelController.pages.objectWithID(id),
-            let pageRow = self.row(for: page) {
+        else if let pageRow = self.pageItems.firstIndex(where: { $0.id == id }) {
             self.selectPage(atRow: pageRow)
         }
 

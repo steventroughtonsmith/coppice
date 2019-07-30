@@ -19,12 +19,44 @@ struct ModelType: RawRepresentable, Equatable, Hashable {
 }
 
 
+struct ModelID: Equatable {
+    let modelType: ModelType
+    let uuid: UUID
+
+    init(modelType: ModelType, uuid: UUID = UUID()) {
+        self.modelType = modelType
+        self.uuid = uuid
+    }
+
+    init?(modelType: ModelType, uuidString: String) {
+        guard let uuid = UUID(uuidString: uuidString) else {
+            return nil
+        }
+        self.init(modelType: modelType, uuid: uuid)
+    }
+}
+
+
 //MARK: -
 /// The protocol root for model objects, used where generics can't be
 protocol ModelObject: class {
-    var id: UUID { get set }
+    var id: ModelID { get set }
     static var modelType: ModelType { get }
     var modelController: ModelController? { get }
+
+    static func modelID(with: UUID) -> ModelID
+    static func modelID(withUUIDString: String) -> ModelID?
+}
+
+
+extension ModelObject {
+    static func modelID(with uuid: UUID) -> ModelID {
+        return ModelID(modelType: self.modelType, uuid: uuid)
+    }
+
+    static func modelID(withUUIDString uuidString: String) -> ModelID? {
+        return ModelID(modelType: self.modelType, uuidString: uuidString)
+    }
 }
 
 
@@ -34,6 +66,9 @@ protocol CollectableModelObject: ModelObject, Hashable {
     var collection: ModelCollection<Self>? { get set }
 
     init()
+
+    /// Called after the object was inserted into the collection. The `collection` property is guaranteed to get set when this is called
+    func objectWasInserted()
 
     /// Register an undo action for an attribute change
     /// - Parameter oldValue: The old value of the attribute
@@ -52,10 +87,12 @@ extension CollectableModelObject {
     var modelController: ModelController? {
         return self.collection?.modelController
     }
+
+    func objectWasInserted() {}
     
     func didChange<T>(_ keyPath: ReferenceWritableKeyPath<Self, T>, oldValue: T) {
         let id = self.id
-        self.collection?.notifyOfChange(to: self, keyPath: keyPath)
+        self.collection?.notifyOfChange(to: self)
         self.collection?.registerUndoAction(withName: nil) { (collection) in
             collection.setValue(oldValue, for: keyPath, ofObjectWithID: id)
         }
