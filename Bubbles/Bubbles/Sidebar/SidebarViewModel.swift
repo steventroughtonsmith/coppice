@@ -18,44 +18,22 @@ protocol SidebarViewModelDelegate: class {
     func selectedObjectDidChange(in viewModel: SidebarViewModel)
 }
 
-
-protocol SidebarItem: class{
-    var id: ModelID { get }
-    var title: String { get }
-}
-
-class CanvasSidebarItem: NSObject, SidebarItem {
-    let canvas: Canvas
-    init(canvas: Canvas) {
-        self.canvas = canvas
-    }
-
-    var id: ModelID { self.canvas.id }
-    @objc dynamic var title: String { self.canvas.title }
-}
-
-class PageSidebarItem: NSObject, SidebarItem {
-    let page: Page
-    init(page: Page) {
-        self.page = page
-    }
-
-    var id: ModelID { self.page.id }
-    @objc dynamic var title: String { self.page.title }
-}
-
 class SidebarViewModel: NSObject {
     weak var view: SidebarView?
     weak var delegate: SidebarViewModelDelegate?
 
     let modelController: ModelController
-    init(modelController: ModelController) {
+    let notificationCenter: NotificationCenter
+    init(modelController: ModelController, notificationCenter: NotificationCenter = NotificationCenter.default) {
         self.modelController = modelController
+        self.notificationCenter = notificationCenter
         super.init()
 
         self.setupSelectionUndo()
     }
 
+
+    //MARK: - Observation
     var canvasObserver: ModelCollectionObservation<Canvas>?
     var pageObserver: ModelCollectionObservation<Page>?
 
@@ -76,16 +54,11 @@ class SidebarViewModel: NSObject {
     }
 
 
+    //MARK: - Canvases
     func reloadCanvases() {
         self.cachedCanvasItems = nil
         self.view?.reloadCanvases()
     }
-
-    func reloadPages() {
-        self.cachedPageItems = nil
-        self.view?.reloadPages()
-    }
-
 
     private var cachedCanvasItems: [CanvasSidebarItem]?
     var canvasItems: [CanvasSidebarItem] {
@@ -95,6 +68,13 @@ class SidebarViewModel: NSObject {
         let items = self.modelController.canvases.all.sorted { $0.sortIndex < $1.sortIndex }.map { CanvasSidebarItem(canvas: $0)}
         self.cachedCanvasItems = items
         return items
+    }
+
+
+    //MARK: - Pages
+    func reloadPages() {
+        self.cachedPageItems = nil
+        self.view?.reloadPages()
     }
 
     private var cachedPageItems: [PageSidebarItem]?
@@ -130,72 +110,62 @@ class SidebarViewModel: NSObject {
 
 
     //MARK: - Selection
-    var selectedObject: ModelObject? {
-        if (self.selectedCanvasRow >= 0) {
-            return self.canvasItems[self.selectedCanvasRow].canvas
-        }
-        if (self.selectedPageRow >= 0) {
-            return self.pageItems[self.selectedPageRow].page
-        }
-        return nil
-    }
-
-    func selectObject(withID id: ModelID) {
-        if let canvasRow = self.canvasItems.firstIndex(where: { $0.id == id }) {
-            self.selectCanvas(atRow: canvasRow)
-        }
-        else if let pageRow = self.pageItems.firstIndex(where: { $0.id == id }) {
-            self.selectPage(atRow: pageRow)
-        }
-
-        if let selectionID = self.selectedObject?.id {
-            self.modelController.undoManager?.registerUndo(withTarget: self, handler: { (target) in
-                target.selectObject(withID: selectionID)
-            })
+    var selectedObjectID: ModelID? {
+        didSet {
+            let undoManager = self.modelController.undoManager
+            if (undoManager.isUndoing || undoManager.isRedoing) {
+                let selectedObjectID = self.selectedObjectID
+                self.modelController.undoManager.setActionIsDiscardable(true)
+                self.modelController.undoManager.registerUndo(withTarget: self, handler: { (target) in
+                    target.selectedObjectID = selectedObjectID
+                })
+            }
+            self.view?.reloadSelection()
+            self.delegate?.selectedObjectDidChange(in: self)
         }
     }
 
-    private(set) var selectedCanvasRow: Int = -1
-
-    func selectCanvas(atRow row: Int) {
-        guard self.selectedCanvasRow != row else {
-            return
+    var selectedCanvasRow: Int {
+        get {
+            return self.canvasItems.firstIndex(where: { $0.id == self.selectedObjectID }) ?? -1
         }
-
-        self.selectedPageRow = -1
-        self.selectedCanvasRow = row
-        self.view?.reloadSelection()
-        self.delegate?.selectedObjectDidChange(in: self)
+        set {
+            guard (newValue >= 0) && (newValue < self.canvasItems.count) else {
+                return
+            }
+            self.selectedObjectID = self.canvasItems[newValue].id
+        }
     }
 
-    private(set) var selectedPageRow: Int = -1
-
-    func selectPage(atRow row: Int) {
-        guard self.selectedPageRow != row else {
-            return
+    var selectedPageRow: Int {
+        get {
+            return self.pageItems.firstIndex(where: { $0.id == self.selectedObjectID }) ?? -1
         }
-
-        self.selectedCanvasRow = -1
-        self.selectedPageRow = row
-        self.view?.reloadSelection()
-        self.delegate?.selectedObjectDidChange(in: self)
+        set {
+            guard (newValue >= 0) && (newValue < self.pageItems.count) else {
+                return
+            }
+            self.selectedObjectID = self.pageItems[newValue].id
+        }
     }
 
 
+    //MARK: - Undo
     private var undoObservation: NSObjectProtocol?
     private func setupSelectionUndo() {
-        guard let undoManager = self.modelController.document?.undoManager else {
-            return
-        }
-
-        self.undoObservation = NotificationCenter.default.addObserver(forName: .NSUndoManagerDidOpenUndoGroup, object: undoManager, queue: .main) { [weak self] (notification) in
+        let undoManager = self.modelController.undoManager
+        self.undoObservation = self.notificationCenter.addObserver(forName: .NSUndoManagerDidOpenUndoGroup,
+                                                                   object: undoManager,
+                                                                   queue: .main)
+        { [weak self] (notification) in
             guard let strongSelf = self,
-                let selectionID = strongSelf.selectedObject?.id else {
+                let selectionID = strongSelf.selectedObjectID else {
                 return
             }
 
+            undoManager.setActionIsDiscardable(true)
             undoManager.registerUndo(withTarget: strongSelf) { (target) in
-                target.selectObject(withID: selectionID)
+                target.selectedObjectID = selectionID
             }
         }
     }

@@ -36,7 +36,7 @@ class DebugCanvasEditor: NSViewController, Editor {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.tableView.registerForDraggedTypes([.string])
+        self.tableView.registerForDraggedTypes([ModelID.PasteboardType])
     }
 
     override func viewWillAppear() {
@@ -71,17 +71,17 @@ extension DebugCanvasEditor: NSTableViewDataSource {
         case .id:
             return page.id
         case .page:
-            return page.page?.title
+            return page.pageTitle
         case .x:
-            return page.position.x
+            return page.x
         case .y:
-            return page.position.y
+            return page.y
         case .width:
-            return page.size.width
+            return page.width
         case .height:
-            return page.size.height
+            return page.height
         case .parent:
-            return page.parent?.id
+            return page.parentID
         }
     }
 
@@ -93,25 +93,17 @@ extension DebugCanvasEditor: NSTableViewDataSource {
         let page = self.viewModel.pages[row]
         switch identifier {
         case .page:
-            page.page?.title = (object as? String) ?? ""
+            page.pageTitle = (object as? String) ?? ""
         case .x:
-            page.position.x = (object as? CGFloat) ?? 0
+            page.x = (object as? CGFloat) ?? 0
         case .y:
-            page.position.y = (object as? CGFloat) ?? 0
+            page.y = (object as? CGFloat) ?? 0
         case .width:
-            page.size.width = (object as? CGFloat) ?? 0
+            page.width = (object as? CGFloat) ?? 0
         case .height:
-            page.size.height = (object as? CGFloat) ?? 0
+            page.height = (object as? CGFloat) ?? 0
         case .parent:
-            guard let uuidString = object as? String,
-                let id = Page.modelID(withUUIDString: uuidString),
-                id != page.id else {
-                    page.parent = nil
-                    return
-            }
-
-            let newParent = self.viewModel.pages.first(where: { $0.id == id })
-            page.parent = newParent
+            page.parentID = (object as? String) ?? ""
         default:
             break
         }
@@ -135,8 +127,7 @@ extension DebugCanvasEditor: NSTableViewDataSource {
         }
 
         for item in items {
-            guard let uuidString = item.string(forType: .string),
-                let id = Page.modelID(withUUIDString: uuidString) else {
+            guard let id = ModelID(pasteboardItem: item) else {
                     continue
             }
             self.viewModel.addPageWithID(id)

@@ -28,7 +28,7 @@ class SidebarViewController: NSViewController {
         super.viewDidLoad()
 
         self.canvasesTable.setDraggingSourceOperationMask(.copy, forLocal: true)
-        self.canvasesTable.registerForDraggedTypes([.string])
+        self.canvasesTable.registerForDraggedTypes([ModelID.PasteboardType])
         self.pagesTable.setDraggingSourceOperationMask(.copy, forLocal: false)
         // Do view setup here.
     }
@@ -87,14 +87,13 @@ extension SidebarViewController: NSTableViewDataSource {
 
     func tableView(_ tableView: NSTableView, pasteboardWriterForRow row: Int) -> NSPasteboardWriting? {
         if (tableView == self.pagesTable) {
-            return self.viewModel.pageItems[row].id.uuid.uuidString as NSString
+            return self.viewModel.pageItems[row].id.pasteboardItem
         }
 
-        return self.viewModel.canvasItems[row].id.uuid.uuidString as NSString
+        return self.viewModel.canvasItems[row].id.pasteboardItem
     }
 
     func tableView(_ tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableView.DropOperation) -> NSDragOperation {
-        print("row: \(row) dropOp: \(dropOperation.rawValue)")
         if case .on = dropOperation {
             self.canvasesTable.setDropRow(row, dropOperation: .above)
         }
@@ -103,8 +102,7 @@ extension SidebarViewController: NSTableViewDataSource {
 
     func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableView.DropOperation) -> Bool {
         guard let item = info.draggingPasteboard.pasteboardItems?.first,
-            let uuidString = item.string(forType: .string),
-            let id = Canvas.modelID(withUUIDString: uuidString) else {
+            let id = ModelID(pasteboardItem: item) else {
             return false
         }
 
@@ -121,9 +119,9 @@ extension SidebarViewController: NSTableViewDelegate {
         }
 
         if (tableView == self.canvasesTable) {
-            self.viewModel.selectCanvas(atRow: self.canvasesTable.selectedRow)
+            self.viewModel.selectedCanvasRow = self.canvasesTable.selectedRow
         } else {
-            self.viewModel.selectPage(atRow: self.pagesTable.selectedRow)
+            self.viewModel.selectedPageRow = self.pagesTable.selectedRow
         }
     }
 }

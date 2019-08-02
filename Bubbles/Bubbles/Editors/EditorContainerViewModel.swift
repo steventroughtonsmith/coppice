@@ -25,10 +25,17 @@ class EditorContainerViewModel: NSObject {
         super.init()
     }
 
-    var currentObject: Any? {
+    var currentObjectID: ModelID? {
         didSet {
             self.view?.editorChanged()
         }
+    }
+
+    var currentObject: ModelObject? {
+        guard let objectID = self.currentObjectID else {
+            return nil
+        }
+        return self.modelController.object(with: objectID)
     }
 
     var editor: Editor? {

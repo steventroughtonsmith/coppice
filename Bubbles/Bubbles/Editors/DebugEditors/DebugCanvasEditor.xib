@@ -8,7 +8,6 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="DebugCanvasEditor" customModule="Bubbles" customModuleProvider="target">
             <connections>
-                <outlet property="arrayController" destination="Zsq-Ig-xsU" id="D4h-Md-jiU"/>
                 <outlet property="tableView" destination="CzB-u8-T4E" id="Q10-zw-Cdv"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
@@ -266,10 +265,5 @@
             </constraints>
             <point key="canvasLocation" x="243" y="13"/>
         </customView>
-        <arrayController id="Zsq-Ig-xsU">
-            <connections>
-                <binding destination="-2" name="contentArray" keyPath="self.viewModel.pages" id="t6p-9v-SKB"/>
-            </connections>
-        </arrayController>
     </objects>
 </document>

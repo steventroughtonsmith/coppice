@@ -26,11 +26,15 @@
 		99C41B7122DCA96700C82DDE /* ModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C41B7022DCA96700C82DDE /* ModelController.swift */; };
 		99C41B7322DCA98600C82DDE /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C41B7222DCA98600C82DDE /* Page.swift */; };
 		99C41B7522DCA9A100C82DDE /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C41B7422DCA9A100C82DDE /* Canvas.swift */; };
+		99DEF28822F1D72D0020A7CE /* SidebarViewModelTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DEF28722F1D72D0020A7CE /* SidebarViewModelTypes.swift */; };
+		99DEF28A22F32D350020A7CE /* DebugCanvasViewModelTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DEF28922F32D350020A7CE /* DebugCanvasViewModelTypes.swift */; };
+		99DEF28C22F33A2A0020A7CE /* ModelObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DEF28B22F33A2A0020A7CE /* ModelObjectTests.swift */; };
+		99DEF28F22F33A790020A7CE /* ModelID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DEF28E22F33A790020A7CE /* ModelID.swift */; };
+		99DEF29322F33ABB0020A7CE /* ModelIDTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DEF29222F33ABB0020A7CE /* ModelIDTests.swift */; };
 		99FE019122CD1037004D380D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FE019022CD1037004D380D /* AppDelegate.swift */; };
 		99FE019322CD1037004D380D /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FE019222CD1037004D380D /* Document.swift */; };
 		99FE019822CD1038004D380D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99FE019722CD1038004D380D /* Assets.xcassets */; };
 		99FE019B22CD1038004D380D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99FE019922CD1038004D380D /* MainMenu.xib */; };
-		99FE01A722CD1038004D380D /* BubblesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FE01A622CD1038004D380D /* BubblesTests.swift */; };
 		99FE01B222CD1038004D380D /* BubblesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FE01B122CD1038004D380D /* BubblesUITests.swift */; };
 		99FE01E422D4CC8A004D380D /* DocumentWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FE01E222D4CC8A004D380D /* DocumentWindowController.swift */; };
 		99FE01E522D4CC8A004D380D /* DocumentWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99FE01E322D4CC8A004D380D /* DocumentWindow.xib */; };
@@ -73,6 +77,11 @@
 		99C41B7022DCA96700C82DDE /* ModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelController.swift; sourceTree = "<group>"; };
 		99C41B7222DCA98600C82DDE /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		99C41B7422DCA9A100C82DDE /* Canvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
+		99DEF28722F1D72D0020A7CE /* SidebarViewModelTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewModelTypes.swift; sourceTree = "<group>"; };
+		99DEF28922F32D350020A7CE /* DebugCanvasViewModelTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugCanvasViewModelTypes.swift; sourceTree = "<group>"; };
+		99DEF28B22F33A2A0020A7CE /* ModelObjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelObjectTests.swift; sourceTree = "<group>"; };
+		99DEF28E22F33A790020A7CE /* ModelID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelID.swift; sourceTree = "<group>"; };
+		99DEF29222F33ABB0020A7CE /* ModelIDTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelIDTests.swift; sourceTree = "<group>"; };
 		99FE018D22CD1037004D380D /* Bubbles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bubbles.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		99FE019022CD1037004D380D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		99FE019222CD1037004D380D /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
@@ -81,7 +90,6 @@
 		99FE019C22CD1038004D380D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		99FE019D22CD1038004D380D /* Bubbles.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Bubbles.entitlements; sourceTree = "<group>"; };
 		99FE01A222CD1038004D380D /* BubblesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BubblesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		99FE01A622CD1038004D380D /* BubblesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubblesTests.swift; sourceTree = "<group>"; };
 		99FE01A822CD1038004D380D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		99FE01AD22CD1038004D380D /* BubblesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BubblesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		99FE01B122CD1038004D380D /* BubblesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubblesUITests.swift; sourceTree = "<group>"; };
@@ -118,6 +126,7 @@
 		992A5C9022DCB2EE0012CCB6 /* Sidebar */ = {
 			isa = PBXGroup;
 			children = (
+				99DEF28722F1D72D0020A7CE /* SidebarViewModelTypes.swift */,
 				992A5C9B22DCC6090012CCB6 /* SidebarViewModel.swift */,
 				992A5C9122DCB7530012CCB6 /* SidebarViewController.swift */,
 				992A5C9522DCB7790012CCB6 /* SidebarView.xib */,
@@ -147,6 +156,7 @@
 		992A5CA722DDF4E40012CCB6 /* DebugEditors */ = {
 			isa = PBXGroup;
 			children = (
+				99DEF28922F32D350020A7CE /* DebugCanvasViewModelTypes.swift */,
 				992A5CB022DDF5210012CCB6 /* DebugCanvasEditorViewModel.swift */,
 				992A5CA822DDF5000012CCB6 /* DebugCanvasEditor.swift */,
 				992A5CA922DDF5000012CCB6 /* DebugCanvasEditor.xib */,
@@ -163,9 +173,19 @@
 				99C41B7022DCA96700C82DDE /* ModelController.swift */,
 				990825D822EDF2FE00273A1D /* ModelCollection.swift */,
 				990B6A3822EB482D00523C06 /* ModelObject.swift */,
+				99DEF28E22F33A790020A7CE /* ModelID.swift */,
 				99C41B7222DCA98600C82DDE /* Page.swift */,
 				99C41B7422DCA9A100C82DDE /* Canvas.swift */,
 				990B6A3622E5F84400523C06 /* CanvasPage.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		99DEF28D22F33A2E0020A7CE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				99DEF28B22F33A2A0020A7CE /* ModelObjectTests.swift */,
+				99DEF29222F33ABB0020A7CE /* ModelIDTests.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -211,7 +231,7 @@
 		99FE01A522CD1038004D380D /* BubblesTests */ = {
 			isa = PBXGroup;
 			children = (
-				99FE01A622CD1038004D380D /* BubblesTests.swift */,
+				99DEF28D22F33A2E0020A7CE /* Model */,
 				99FE01A822CD1038004D380D /* Info.plist */,
 			);
 			path = BubblesTests;
@@ -380,11 +400,14 @@
 			files = (
 				992A5CAA22DDF5000012CCB6 /* DebugCanvasEditor.swift in Sources */,
 				992A5CB322DDF53C0012CCB6 /* DebugPageEditorViewModel.swift in Sources */,
+				99DEF28A22F32D350020A7CE /* DebugCanvasViewModelTypes.swift in Sources */,
 				99FE019322CD1037004D380D /* Document.swift in Sources */,
 				99C41B7122DCA96700C82DDE /* ModelController.swift in Sources */,
 				990B6A3722E5F84400523C06 /* CanvasPage.swift in Sources */,
 				992A5CAE22DDF50F0012CCB6 /* DebugPageEditor.swift in Sources */,
 				990B6A3922EB482D00523C06 /* ModelObject.swift in Sources */,
+				99DEF28822F1D72D0020A7CE /* SidebarViewModelTypes.swift in Sources */,
+				99DEF28F22F33A790020A7CE /* ModelID.swift in Sources */,
 				99FE019122CD1037004D380D /* AppDelegate.swift in Sources */,
 				992A5CA522DDF4C50012CCB6 /* EditorContainerViewController.swift in Sources */,
 				99FE01E422D4CC8A004D380D /* DocumentWindowController.swift in Sources */,
@@ -403,7 +426,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				99FE01A722CD1038004D380D /* BubblesTests.swift in Sources */,
+				99DEF29322F33ABB0020A7CE /* ModelIDTests.swift in Sources */,
+				99DEF28C22F33A2A0020A7CE /* ModelObjectTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

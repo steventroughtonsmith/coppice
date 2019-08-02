@@ -55,6 +55,6 @@ class DocumentWindowController: NSWindowController {
 
 extension DocumentWindowController: SidebarViewModelDelegate {
     func selectedObjectDidChange(in viewModel: SidebarViewModel) {
-        self.editorContainerViewController?.viewModel.currentObject = viewModel.selectedObject
+        self.editorContainerViewController?.viewModel.currentObjectID = viewModel.selectedObjectID
     }
 }

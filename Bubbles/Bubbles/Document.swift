@@ -9,13 +9,12 @@
 import Cocoa
 
 class Document: NSDocument {
-
-    let modelController: ModelController
+    lazy var modelController: ModelController = {
+        ModelController(undoManager: self.undoManager!)
+    }()
 
     override init() {
-        self.modelController = ModelController()
         super.init()
-        self.modelController.document = self
         self.modelController.createTestData()
     }
 
@@ -39,6 +38,10 @@ class Document: NSDocument {
         // Alternatively, you could remove this method and override read(from:ofType:) instead.
         // If you do, you should also override isEntireFileLoaded to return false if the contents are lazily loaded.
         throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
+    }
+
+    override func close() {
+        super.close()
     }
 
 

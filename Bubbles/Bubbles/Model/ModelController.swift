@@ -9,24 +9,31 @@
 import Cocoa
 
 class ModelController: NSObject {
-    weak var document: Document?
-
-    var undoManager: UndoManager? {
-        return self.document?.undoManager
+    let undoManager: UndoManager
+    init(undoManager: UndoManager) {
+        self.undoManager = undoManager
+        super.init()
+        self.canvases.modelController = self
+        self.pages.modelController = self
+        self.canvasPages.modelController = self
     }
 
     func createTestData() {
-        let canvas1 = self.canvases.newObject()
-        canvas1.title = "First"
-        let canvas2 = self.canvases.newObject()
-        canvas2.title = "Second!"
+        self.canvases.disableUndo {
+            let canvas1 = self.canvases.newObject()
+            canvas1.title = "First"
+            let canvas2 = self.canvases.newObject()
+            canvas2.title = "Second!"
+        }
 
-        let page1 = self.pages.newObject()
-        page1.title = "Foo"
-        let page2 = self.pages.newObject()
-        page2.title = "Bar"
-        let page3 = self.pages.newObject()
-        page3.title = "Baz"
+        self.pages.disableUndo {
+            let page1 = self.pages.newObject()
+            page1.title = "Foo"
+            let page2 = self.pages.newObject()
+            page2.title = "Bar"
+            let page3 = self.pages.newObject()
+            page3.title = "Baz"
+        }
     }
 
 
@@ -61,20 +68,13 @@ class ModelController: NSObject {
         }
     }
 
-    override init() {
-        super.init()
-        self.canvases.modelController = self
-        self.pages.modelController = self
-        self.canvasPages.modelController = self
-    }
-
     //MARK: - Undo
 
     func registerUndoAction(withName name: String? = nil, invocationBlock: @escaping (ModelController) -> Void) {
         if let name = name {
-            self.undoManager?.setActionName(name)
+            self.undoManager.setActionName(name)
         }
-        self.undoManager?.registerUndo(withTarget: self, handler: invocationBlock)
+        self.undoManager.registerUndo(withTarget: self, handler: invocationBlock)
     }
 
 

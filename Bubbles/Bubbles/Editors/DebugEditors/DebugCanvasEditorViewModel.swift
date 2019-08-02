@@ -39,16 +39,13 @@ class DebugCanvasEditorViewModel: NSObject {
         return "\(self.canvas.sortIndex)"
     }
 
-
-    private var sortedCanvases: [CanvasPage] {
-        return self.canvas.pages.sorted(by: {$0.id.uuid.uuidString < $1.id.uuid.uuidString})
+    var pages: [DebugCanvasPageItem] {
+        return self.canvas.pages
+            .sorted(by: {$0.id.uuid.uuidString < $1.id.uuid.uuidString})
+            .map { DebugCanvasPageItem(canvasPage: $0) }
     }
 
-    @objc dynamic var pages: [CanvasPage] {
-        return self.sortedCanvases
-    }
-
-    @objc dynamic var selectedCanvasPage: CanvasPage?
+    var selectedCanvasPage: DebugCanvasPageItem?
 
     func addPageWithID(_ pageID: ModelID) {
         guard let page = self.modelController.pages.objectWithID(pageID) else {
@@ -63,8 +60,8 @@ class DebugCanvasEditorViewModel: NSObject {
 
     }
 
+    
     //MARK: - Observation
-
     private var observation: ModelCollectionObservation<CanvasPage>?
     func startObservingChanges() {
         self.observation = self.modelController.canvasPages.addObserver { [weak self] (page) in

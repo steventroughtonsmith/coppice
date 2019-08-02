@@ -8,35 +8,6 @@
 
 import Foundation
 
-/// Used for determining model type
-struct ModelType: RawRepresentable, Equatable, Hashable {
-    typealias RawValue = String
-
-    let rawValue: String
-    init?(rawValue: String) {
-        self.rawValue = rawValue
-    }
-}
-
-
-struct ModelID: Equatable {
-    let modelType: ModelType
-    let uuid: UUID
-
-    init(modelType: ModelType, uuid: UUID = UUID()) {
-        self.modelType = modelType
-        self.uuid = uuid
-    }
-
-    init?(modelType: ModelType, uuidString: String) {
-        guard let uuid = UUID(uuidString: uuidString) else {
-            return nil
-        }
-        self.init(modelType: modelType, uuid: uuid)
-    }
-}
-
-
 //MARK: -
 /// The protocol root for model objects, used where generics can't be
 protocol ModelObject: class {
