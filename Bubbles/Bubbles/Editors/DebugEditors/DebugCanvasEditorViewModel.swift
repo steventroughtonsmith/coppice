@@ -16,8 +16,8 @@ class DebugCanvasEditorViewModel: NSObject {
     weak var view: DebugCanvasEditorView?
 
     @objc dynamic let canvas: Canvas
-    let modelController: ModelController
-    init(canvas: Canvas, modelController: ModelController) {
+    let modelController: BubblesModelController
+    init(canvas: Canvas, modelController: BubblesModelController) {
         self.canvas = canvas
         self.modelController = modelController
         super.init()

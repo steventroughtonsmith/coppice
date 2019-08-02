@@ -9,15 +9,22 @@
 import XCTest
 @testable import Bubbles
 
-class TestModelObject: ModelObject {
-    static var modelType: ModelType = ModelType("Test")!
-
-    var id = ModelID(modelType: TestModelObject.modelType)
-
-    var modelController: ModelController?
-}
-
 class ModelObjectTests: XCTestCase {
+    var modelController: TestModelController!
+    var modelCollection: ModelCollection<TestCollectableModelObject>!
+
+    override func setUp() {
+        super.setUp()
+        self.modelController = TestModelController()
+        self.modelCollection = ModelCollection<TestCollectableModelObject>()
+        self.modelCollection.modelController = self.modelController
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        self.modelController = nil
+        self.modelCollection = nil
+    }
 
     //MARK: - ModelObject
     func test_modelIDWithUUID_returnsModelIDWithObjectsTypeAndSuppliedUUID() {
@@ -36,5 +43,14 @@ class ModelObjectTests: XCTestCase {
 
     func test_modelIDWithUUIDString_returnsNilIfSuppliedStringIsNotUUID() {
         XCTAssertNil(TestModelObject.modelID(withUUIDString: ""))
+    }
+
+
+    //MARK: - CollectableModelObject.modelController
+    func test_modelController_returnsCollectionsModelController() {
+        let model = TestCollectableModelObject()
+        model.collection = self.modelCollection
+
+        XCTAssertEqual((model.modelController as! TestModelController), self.modelController)
     }
 }

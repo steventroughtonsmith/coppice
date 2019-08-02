@@ -19,8 +19,8 @@ protocol Editor {
 class EditorContainerViewModel: NSObject {
     weak var view: EditorContainerView?
 
-    let modelController: ModelController
-    init(modelController: ModelController) {
+    let modelController: BubblesModelController
+    init(modelController: BubblesModelController) {
         self.modelController = modelController
         super.init()
     }
@@ -35,7 +35,7 @@ class EditorContainerViewModel: NSObject {
         guard let objectID = self.currentObjectID else {
             return nil
         }
-        return self.modelController.object(with: objectID)
+        return self.modelController.object(with: objectID) as? ModelObject
     }
 
     var editor: Editor? {

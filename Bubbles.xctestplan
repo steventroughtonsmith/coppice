@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "07ECCD3F-CFA3-44F8-8A0A-34B14B943850",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:Bubbles.xcodeproj",
+        "identifier" : "99FE01A122CD1038004D380D",
+        "name" : "BubblesTests"
+      }
+    }
+  ],
+  "version" : 1
+}

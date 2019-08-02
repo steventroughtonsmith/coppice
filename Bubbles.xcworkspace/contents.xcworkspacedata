@@ -4,4 +4,7 @@
    <FileRef
       location = "group:Bubbles/Bubbles.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:Bubbles.xctestplan">
+   </FileRef>
 </Workspace>

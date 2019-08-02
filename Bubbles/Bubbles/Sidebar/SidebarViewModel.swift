@@ -22,9 +22,9 @@ class SidebarViewModel: NSObject {
     weak var view: SidebarView?
     weak var delegate: SidebarViewModelDelegate?
 
-    let modelController: ModelController
+    let modelController: BubblesModelController
     let notificationCenter: NotificationCenter
-    init(modelController: ModelController, notificationCenter: NotificationCenter = NotificationCenter.default) {
+    init(modelController: BubblesModelController, notificationCenter: NotificationCenter = NotificationCenter.default) {
         self.modelController = modelController
         self.notificationCenter = notificationCenter
         super.init()

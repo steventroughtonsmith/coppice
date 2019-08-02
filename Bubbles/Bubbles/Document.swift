@@ -9,8 +9,8 @@
 import Cocoa
 
 class Document: NSDocument {
-    lazy var modelController: ModelController = {
-        ModelController(undoManager: self.undoManager!)
+    lazy var modelController: BubblesModelController = {
+        BubblesModelController(undoManager: self.undoManager!)
     }()
 
     override init() {
