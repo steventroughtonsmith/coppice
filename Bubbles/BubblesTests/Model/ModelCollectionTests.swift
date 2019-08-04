@@ -138,15 +138,53 @@ class ModelCollectionTests: XCTestCase {
 
     //MARK: - Observation
     func test_observation_notifiesAddedObserversOfChange() {
-        XCTFail()
+        let observer1Expectation = self.expectation(description: "Observer 1 Notified")
+        _ = self.collection.addObserver { _ in
+            observer1Expectation.fulfill()
+        }
+
+        let observer2Expectation = self.expectation(description: "Observer 2 Notified")
+        _ = self.collection.addObserver { _ in
+            observer2Expectation.fulfill()
+        }
+
+        self.collection.notifyOfChange(to: TestCollectableModelObject())
+        self.wait(for: [observer1Expectation, observer2Expectation], timeout: 0)
     }
 
     func test_observation_doesntNotifyObserverIfChangedObjectIDNotInFilter() {
-        XCTFail()
+        let object = TestCollectableModelObject()
+
+        let observer1Expectation = self.expectation(description: "Observer 1 Notified")
+        _ = self.collection.addObserver(filterBy: [object.id]) { _ in
+            observer1Expectation.fulfill()
+        }
+
+        let observer2Expectation = self.expectation(description: "Observer 2 Notified")
+        observer2Expectation.isInverted = true
+        _ = self.collection.addObserver(filterBy: [TestCollectableModelObject.modelID(with: UUID())]) { _ in
+            observer2Expectation.fulfill()
+        }
+
+        self.collection.notifyOfChange(to: object)
+        self.wait(for: [observer1Expectation, observer2Expectation], timeout: 1)
     }
 
     func test_observation_doesntNotifyObserverIfRemovedBeforeChange() {
-        XCTFail()
+        let observer1Expectation = self.expectation(description: "Observer 1 Notified")
+        observer1Expectation.isInverted = true
+        let observer1 = self.collection.addObserver { _ in
+            observer1Expectation.fulfill()
+        }
+
+        let observer2Expectation = self.expectation(description: "Observer 2 Notified")
+        _ = self.collection.addObserver { _ in
+            observer2Expectation.fulfill()
+        }
+
+        self.collection.removeObserver(observer1)
+        self.collection.notifyOfChange(to: TestCollectableModelObject())
+        self.wait(for: [observer1Expectation, observer2Expectation], timeout: 1)
     }
 
 
