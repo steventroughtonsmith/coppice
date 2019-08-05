@@ -35,7 +35,7 @@ class EditorContainerViewModel: NSObject {
         guard let objectID = self.currentObjectID else {
             return nil
         }
-        return self.modelController.object(with: objectID) as? ModelObject
+        return self.modelController.object(with: objectID)
     }
 
     var editor: Editor? {
