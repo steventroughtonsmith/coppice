@@ -136,6 +136,23 @@ class ModelCollectionTests: XCTestCase {
     }
 
 
+    //MARK: - objectsForRelationship(on:inverseKeyPath:)
+    func test_objectsForRelationship_returnsObjectsMatchingInverseRelationship() {
+        let parent = self.collection.newObject()
+        let o1 = self.collection.newObject()
+        o1.inverseRelationship = parent
+        _ = self.collection.newObject()
+        let o3 = self.collection.newObject()
+        o3.inverseRelationship = parent
+
+        let relationship = self.collection.objectsForRelationship(on: parent, inverseKeyPath: \.inverseRelationship)
+
+        XCTAssertEqual(relationship.count, 2)
+        XCTAssertTrue(relationship.contains(o1))
+        XCTAssertTrue(relationship.contains(o3))
+    }
+
+
     //MARK: - Observation
     func test_observation_notifiesAddedObserversOfChange() {
         let observer1Expectation = self.expectation(description: "Observer 1 Notified")
@@ -190,39 +207,105 @@ class ModelCollectionTests: XCTestCase {
 
     //MARK: - Undo
     func test_disableUndo_doesntAddAnyUndoRegistrationInBlock() {
-        XCTFail()
+        XCTAssertFalse(self.modelController.undoManager.canUndo)
+        self.collection.disableUndo {
+            self.collection.registerUndoAction { _ in
+            }
+        }
+        XCTAssertFalse(self.modelController.undoManager.canUndo)
     }
 
     func test_registerUndoAction_registersUndoActionWithControllersUndoManager() {
-        XCTFail()
+        XCTAssertFalse(self.modelController.undoManager.canUndo)
+        let undoExpectation = self.expectation(description: "Undo Called")
+        var undoTarget: ModelCollection<TestCollectableModelObject>?
+        self.collection.registerUndoAction { collection in
+            undoTarget = collection
+            undoExpectation.fulfill()
+        }
+        XCTAssertTrue(self.modelController.undoManager.canUndo)
+
+        self.modelController.undoManager.undo()
+        self.wait(for: [undoExpectation], timeout: 0)
+
+        XCTAssertTrue(undoTarget === self.collection)
     }
 
     func test_registerUndoAction_setsUndoActionNameToPassedValue() {
-        XCTFail()
+        self.collection.registerUndoAction(withName: "Test Name") { collection in
+        }
+
+        XCTAssertEqual(self.modelController.undoManager.undoActionName, "Test Name")
     }
 
 
     //MARK: - setValue(_:for:ofObjectWithID:)
     func test_setValue_updatesKeyPathOfItemMatchingID() {
-        XCTFail()
+        self.collection.newObject()
+        let object = self.collection.newObject()
+        self.collection.newObject()
+
+        self.collection.setValue("Hello World", for: \.stringProperty, ofObjectWithID: object.id)
+
+        XCTAssertEqual(object.stringProperty, "Hello World")
     }
 
     func test_setValue_doesntUpdateKeyPathOfObjectIfNotInCollection() {
-        XCTFail()
+        let o1 = self.collection.newObject()
+        let o2 = self.collection.newObject()
+        let o3 = self.collection.newObject()
+
+        let separateObject = TestCollectableModelObject()
+
+        self.collection.setValue("Hello World", for: \.stringProperty, ofObjectWithID: separateObject.id)
+
+        XCTAssertNotEqual(separateObject.stringProperty, "Hello World")
+        XCTAssertNotEqual(o1.stringProperty, "Hello World")
+        XCTAssertNotEqual(o2.stringProperty, "Hello World")
+        XCTAssertNotEqual(o3.stringProperty, "Hello World")
     }
 
 
     //MARK: - CollectableModelObject integration
     func test_collectableModelObjectDidChange_notifiesCollectionOfChange() {
-        XCTFail()
+        let object = self.collection.newObject()
+        object.stringProperty = "Foo"
+        let observerExpectation = self.expectation(description: "Observer 1 Notified")
+        _ = self.collection.addObserver { _ in
+            observerExpectation.fulfill()
+        }
+
+        object.didChange(\.stringProperty, oldValue: "Bar")
+        wait(for: [observerExpectation], timeout: 0)
     }
 
     func test_collectableModelObjectDidChange_registersUndoActionToRevertValueChange() {
-        XCTFail()
+        let object = self.collection.newObject()
+        object.stringProperty = "Foo"
+
+        XCTAssertFalse(self.modelController.undoManager.canUndo)
+        object.didChange(\.stringProperty, oldValue: "Bar")
+
+        XCTAssertTrue(self.modelController.undoManager.canUndo)
+
+        self.modelController.undoManager.undo()
+
+        XCTAssertEqual(object.stringProperty, "Bar")
     }
 
     func test_collectableModelObjectRelationshipForKeyPath_fetchesObjectsForRelationshipOnSelfFromCollection() {
-        XCTFail()
+        let parent = self.collection.newObject()
+        let o1 = self.collection.newObject()
+        o1.inverseRelationship = parent
+        _ = self.collection.newObject()
+        let o3 = self.collection.newObject()
+        o3.inverseRelationship = parent
+
+        let relationship: Set<TestCollectableModelObject> = parent.relationship(for: \.inverseRelationship)
+
+        XCTAssertEqual(relationship.count, 2)
+        XCTAssertTrue(relationship.contains(o1))
+        XCTAssertTrue(relationship.contains(o3))
     }
 
 }

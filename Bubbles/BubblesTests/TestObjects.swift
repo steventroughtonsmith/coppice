@@ -32,6 +32,10 @@ final class TestCollectableModelObject: NSObject, CollectableModelObject {
     func objectWasInserted() {
         self.objectWasInsertedCalled = true
     }
+
+    var stringProperty = "Test"
+
+    var inverseRelationship: TestCollectableModelObject?
 }
 
 class TestModelController: NSObject, ModelController {

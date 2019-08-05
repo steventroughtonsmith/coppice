@@ -21,6 +21,7 @@ protocol ModelController: class {
 extension ModelController {
     func add<T>(_ modelCollection: ModelCollection<T>, for modelType: ModelType) {
         self.collections[modelType] = modelCollection
+        modelCollection.modelController = self
     }
 
     func removeModelCollection(for modelType: ModelType) {
