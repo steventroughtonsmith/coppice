@@ -22,10 +22,26 @@ class SidebarViewModel: NSObject {
     weak var view: SidebarView?
     weak var delegate: SidebarViewModelDelegate?
 
-    let modelController: BubblesModelController
+
+
+    convenience init(modelController: BubblesModelController, notificationCenter: NotificationCenter = NotificationCenter.default) {
+        self.init(canvases: modelController.canvases,
+                  pages: modelController.pages,
+                  undoManager: modelController.undoManager,
+                  notificationCenter: notificationCenter)
+    }
+
+    let canvases: ModelCollection<Canvas>
+    let pages: ModelCollection<Page>
+    let undoManager: UndoManager
     let notificationCenter: NotificationCenter
-    init(modelController: BubblesModelController, notificationCenter: NotificationCenter = NotificationCenter.default) {
-        self.modelController = modelController
+    init(canvases: ModelCollection<Canvas>,
+         pages: ModelCollection<Page>,
+         undoManager: UndoManager,
+         notificationCenter: NotificationCenter) {
+        self.canvases = canvases
+        self.pages = pages
+        self.undoManager = undoManager
         self.notificationCenter = notificationCenter
         super.init()
 
@@ -38,24 +54,24 @@ class SidebarViewModel: NSObject {
     var pageObserver: ModelCollectionObservation<Page>?
 
     func startObserving() {
-        self.canvasObserver = self.modelController.canvases.addObserver { _ in self.reloadCanvases() }
-        self.pageObserver = self.modelController.pages.addObserver { _ in self.reloadPages() }
+        self.canvasObserver = self.canvases.addObserver { _ in self.reloadCanvases() }
+        self.pageObserver = self.pages.addObserver { _ in self.reloadPages() }
     }
 
     func stopObserving() {
         if let canvasObserver = self.canvasObserver {
-            self.modelController.canvases.removeObserver(canvasObserver)
+            self.canvases.removeObserver(canvasObserver)
             self.canvasObserver = nil
         }
         if let pageObserver = self.pageObserver {
-            self.modelController.pages.removeObserver(pageObserver)
+            self.pages.removeObserver(pageObserver)
             self.pageObserver = nil
         }
     }
 
 
     //MARK: - Canvases
-    func reloadCanvases() {
+    private func reloadCanvases() {
         self.cachedCanvasItems = nil
         self.view?.reloadCanvases()
     }
@@ -65,14 +81,14 @@ class SidebarViewModel: NSObject {
         if let cachedItems = self.cachedCanvasItems {
             return cachedItems
         }
-        let items = self.modelController.canvases.all.sorted { $0.sortIndex < $1.sortIndex }.map { CanvasSidebarItem(canvas: $0)}
+        let items = self.canvases.all.sorted { $0.sortIndex < $1.sortIndex }.map { CanvasSidebarItem(canvas: $0)}
         self.cachedCanvasItems = items
         return items
     }
 
 
     //MARK: - Pages
-    func reloadPages() {
+    private func reloadPages() {
         self.cachedPageItems = nil
         self.view?.reloadPages()
     }
@@ -82,14 +98,14 @@ class SidebarViewModel: NSObject {
         if let cachedItems = self.cachedPageItems {
             return cachedItems
         }
-        let items = self.modelController.pages.all.sorted { $0.title < $1.title }.map { PageSidebarItem(page: $0)}
+        let items = self.pages.all.sorted { $0.title < $1.title }.map { PageSidebarItem(page: $0)}
         self.cachedPageItems = items
         return items
     }
 
 
     //MARK: - Re-ordering
-    func moveCanvas(with id: ModelID, toIndex index: Int) {
+    func moveCanvas(with id: ModelID, aboveCanvasAtIndex index: Int) {
         var canvases: [Canvas?] = self.canvasItems.map { $0.canvas }
         guard let currentIndex = canvases.firstIndex(where: { $0?.id == id}) else {
             return
@@ -106,17 +122,18 @@ class SidebarViewModel: NSObject {
                 sortIndex += 1
             }
         }
+        self.cachedCanvasItems = nil
     }
 
 
     //MARK: - Selection
     var selectedObjectID: ModelID? {
         didSet {
-            let undoManager = self.modelController.undoManager
+            let undoManager = self.undoManager
             if (undoManager.isUndoing || undoManager.isRedoing) {
                 let selectedObjectID = self.selectedObjectID
-                self.modelController.undoManager.setActionIsDiscardable(true)
-                self.modelController.undoManager.registerUndo(withTarget: self, handler: { (target) in
+                self.undoManager.setActionIsDiscardable(true)
+                self.undoManager.registerUndo(withTarget: self, handler: { (target) in
                     target.selectedObjectID = selectedObjectID
                 })
             }
@@ -153,7 +170,7 @@ class SidebarViewModel: NSObject {
     //MARK: - Undo
     private var undoObservation: NSObjectProtocol?
     private func setupSelectionUndo() {
-        let undoManager = self.modelController.undoManager
+        let undoManager = self.undoManager
         self.undoObservation = self.notificationCenter.addObserver(forName: .NSUndoManagerDidOpenUndoGroup,
                                                                    object: undoManager,
                                                                    queue: .main)

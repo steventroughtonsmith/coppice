@@ -106,7 +106,7 @@ extension SidebarViewController: NSTableViewDataSource {
             return false
         }
 
-        self.viewModel.moveCanvas(with: id, toIndex: row)
+        self.viewModel.moveCanvas(with: id, aboveCanvasAtIndex: row)
         self.reloadCanvases()
         return true
     }
