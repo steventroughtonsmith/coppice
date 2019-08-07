@@ -73,10 +73,12 @@ class ModelCollectionTests: XCTestCase {
 
     func test_newObject_notifiesObserversOfChange() {
         var changedObject: TestCollectableModelObject? = nil
+        var changeType: ModelCollection<TestCollectableModelObject>.ChangeType? = nil
 
         let expectation = self.expectation(description: "ObserverCalled")
-        _ = self.collection.addObserver { (object) in
+        _ = self.collection.addObserver { (object, change) in
             changedObject = object
+            changeType = change
             expectation.fulfill()
         }
 
@@ -84,6 +86,7 @@ class ModelCollectionTests: XCTestCase {
         self.wait(for: [expectation], timeout: 0)
 
         XCTAssertEqual(newObject, changedObject)
+        XCTAssertEqual(changeType, .insert)
     }
 
 
@@ -122,10 +125,12 @@ class ModelCollectionTests: XCTestCase {
         let objectToDelete = self.collection.newObject()
 
         var changedObject: TestCollectableModelObject? = nil
+        var changeType: ModelCollection<TestCollectableModelObject>.ChangeType? = nil
 
         let expectation = self.expectation(description: "ObserverCalled")
-        _ = self.collection.addObserver { (object) in
+        _ = self.collection.addObserver { (object, change) in
             changedObject = object
+            changeType = change
             expectation.fulfill()
         }
 
@@ -133,6 +138,7 @@ class ModelCollectionTests: XCTestCase {
         self.wait(for: [expectation], timeout: 0)
 
         XCTAssertEqual(objectToDelete, changedObject)
+        XCTAssertEqual(changeType, .delete)
     }
 
 
@@ -156,12 +162,12 @@ class ModelCollectionTests: XCTestCase {
     //MARK: - Observation
     func test_observation_notifiesAddedObserversOfChange() {
         let observer1Expectation = self.expectation(description: "Observer 1 Notified")
-        _ = self.collection.addObserver { _ in
+        _ = self.collection.addObserver { _, _ in
             observer1Expectation.fulfill()
         }
 
         let observer2Expectation = self.expectation(description: "Observer 2 Notified")
-        _ = self.collection.addObserver { _ in
+        _ = self.collection.addObserver { _, _ in
             observer2Expectation.fulfill()
         }
 
@@ -173,13 +179,13 @@ class ModelCollectionTests: XCTestCase {
         let object = TestCollectableModelObject()
 
         let observer1Expectation = self.expectation(description: "Observer 1 Notified")
-        _ = self.collection.addObserver(filterBy: [object.id]) { _ in
+        _ = self.collection.addObserver(filterBy: [object.id]) { _, _ in
             observer1Expectation.fulfill()
         }
 
         let observer2Expectation = self.expectation(description: "Observer 2 Notified")
         observer2Expectation.isInverted = true
-        _ = self.collection.addObserver(filterBy: [TestCollectableModelObject.modelID(with: UUID())]) { _ in
+        _ = self.collection.addObserver(filterBy: [TestCollectableModelObject.modelID(with: UUID())]) { _, _ in
             observer2Expectation.fulfill()
         }
 
@@ -190,12 +196,12 @@ class ModelCollectionTests: XCTestCase {
     func test_observation_doesntNotifyObserverIfRemovedBeforeChange() {
         let observer1Expectation = self.expectation(description: "Observer 1 Notified")
         observer1Expectation.isInverted = true
-        let observer1 = self.collection.addObserver { _ in
+        let observer1 = self.collection.addObserver { _, _ in
             observer1Expectation.fulfill()
         }
 
         let observer2Expectation = self.expectation(description: "Observer 2 Notified")
-        _ = self.collection.addObserver { _ in
+        _ = self.collection.addObserver { _ , _ in
             observer2Expectation.fulfill()
         }
 
@@ -271,7 +277,7 @@ class ModelCollectionTests: XCTestCase {
         let object = self.collection.newObject()
         object.stringProperty = "Foo"
         let observerExpectation = self.expectation(description: "Observer 1 Notified")
-        _ = self.collection.addObserver { _ in
+        _ = self.collection.addObserver { _, _ in
             observerExpectation.fulfill()
         }
 

@@ -50,12 +50,12 @@ class SidebarViewModel: NSObject {
 
 
     //MARK: - Observation
-    var canvasObserver: ModelCollectionObservation<Canvas>?
-    var pageObserver: ModelCollectionObservation<Page>?
+    var canvasObserver: ModelCollection<Canvas>.Observation?
+    var pageObserver: ModelCollection<Page>.Observation?
 
     func startObserving() {
-        self.canvasObserver = self.canvases.addObserver { _ in self.reloadCanvases() }
-        self.pageObserver = self.pages.addObserver { _ in self.reloadPages() }
+        self.canvasObserver = self.canvases.addObserver { canvas, change in self.handleChange(to: canvas, changeType: change) }
+        self.pageObserver = self.pages.addObserver { page, change in self.handleChange(to: page, changeType: change)}
     }
 
     func stopObserving() {
@@ -70,7 +70,16 @@ class SidebarViewModel: NSObject {
     }
 
 
+
+
     //MARK: - Canvases
+    private func handleChange(to canvas: Canvas, changeType: ModelCollection<Canvas>.ChangeType) {
+        self.reloadCanvases()
+        if (changeType == .insert) {
+            self.selectedObjectID = canvas.id
+        }
+    }
+
     private func reloadCanvases() {
         self.cachedCanvasItems = nil
         self.view?.reloadCanvases()
@@ -88,6 +97,14 @@ class SidebarViewModel: NSObject {
 
 
     //MARK: - Pages
+    private func handleChange(to page: Page, changeType: ModelCollection<Page>.ChangeType) {
+        self.reloadPages()
+        //Only want to select the page in the sidebar if the user has a page selected (otherwise it will appear in the canvas)
+        if ((self.selectedPageRow != -1) && changeType == .insert) {
+            self.selectedObjectID = page.id
+        }
+    }
+
     private func reloadPages() {
         self.cachedPageItems = nil
         self.view?.reloadPages()

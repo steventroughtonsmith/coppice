@@ -8,68 +8,75 @@
 
 import Foundation
 
-struct ModelCollectionObservation<Type: CollectableModelObject> {
-    fileprivate let id = UUID()
-    fileprivate let filterIDs: [ModelID]?
-    fileprivate let changeHandler: (Type) -> Void
+class ModelCollection<ModelType: CollectableModelObject> {
 
-    fileprivate func notifyOfChange(to object: Type) {
-        if ((self.filterIDs == nil) || (self.filterIDs?.contains(object.id) == true)) {
-            changeHandler(object)
+    enum ChangeType: Equatable {
+        case update
+        case insert
+        case delete
+    }
+
+    struct Observation {
+        fileprivate let id = UUID()
+        fileprivate let filterIDs: [ModelID]?
+        fileprivate let changeHandler: (ModelType, ChangeType) -> Void
+
+        fileprivate func notifyOfChange(to object: ModelType, changeType: ChangeType) {
+            if ((self.filterIDs == nil) || (self.filterIDs?.contains(object.id) == true)) {
+                changeHandler(object, changeType)
+            }
         }
     }
-}
 
-class ModelCollection<Type: CollectableModelObject> {
 
     weak var modelController: ModelController?
 
-    private(set) var all = Set<Type>()
+    private(set) var all = Set<ModelType>()
 
-    func objectWithID(_ id: ModelID) -> Type? {
+    func objectWithID(_ id: ModelID) -> ModelType? {
         return self.all.first { $0.id == id }
     }
 
-    @discardableResult func newObject() -> Type {
-        let newObject = Type()
+    @discardableResult func newObject() -> ModelType {
+        let newObject = ModelType()
         newObject.collection = self
         self.all.insert(newObject)
         self.disableUndo {
             newObject.objectWasInserted()
         }
-        self.notifyOfChange(to: newObject)
+        self.notifyOfChange(to: newObject, changeType: .insert)
         return newObject
     }
 
-    func delete(_ object: Type) {
+    func delete(_ object: ModelType) {
         if let index = self.all.firstIndex(where: {$0.id == object.id}) {
             self.all.remove(at: index)
-            self.notifyOfChange(to: object)
+            self.notifyOfChange(to: object, changeType: .delete)
         }
     }
 
-    func objectsForRelationship<R: ModelObject>(on object: R, inverseKeyPath: ReferenceWritableKeyPath<Type, R?>) -> Set<Type> {
+    func objectsForRelationship<R: ModelObject>(on object: R, inverseKeyPath: ReferenceWritableKeyPath<ModelType, R?>) -> Set<ModelType> {
         return self.all.filter { $0[keyPath: inverseKeyPath]?.id == object.id }
     }
 
 
-    private var observers = [ModelCollectionObservation<Type>]()
+    private var observers = [Observation]()
 
-    func addObserver(filterBy uuids: [ModelID]? = nil, changeHandler: @escaping (Type) -> Void) -> ModelCollectionObservation<Type> {
-        let observer = ModelCollectionObservation(filterIDs: uuids, changeHandler: changeHandler)
+    func addObserver(filterBy uuids: [ModelID]? = nil, changeHandler: @escaping (ModelType, ChangeType) -> Void) -> Observation {
+        let observer = Observation(filterIDs: uuids, changeHandler: changeHandler)
         self.observers.append(observer)
         return observer
     }
 
-    func removeObserver(_ observer: ModelCollectionObservation<Type>) {
+    func removeObserver(_ observer: Observation) {
         if let index = self.observers.firstIndex(where: { $0.id == observer.id }) {
             self.observers.remove(at: index)
         }
     }
 
-    func notifyOfChange(to object: Type) {
+    func notifyOfChange(to object: ModelType, changeType: ModelCollection.ChangeType = .update) {
         for observer in self.observers {
-            observer.notifyOfChange(to: object)
+            observer.notifyOfChange(to: object, changeType: changeType)
         }
     }
 
@@ -85,7 +92,7 @@ class ModelCollection<Type: CollectableModelObject> {
         undoManager.enableUndoRegistration()
     }
 
-    func registerUndoAction(withName name: String? = nil, invocationBlock: @escaping (ModelCollection<Type>) -> Void) {
+    func registerUndoAction(withName name: String? = nil, invocationBlock: @escaping (ModelCollection<ModelType>) -> Void) {
         guard let undoManager = self.modelController?.undoManager else {
             return
         }
@@ -96,7 +103,7 @@ class ModelCollection<Type: CollectableModelObject> {
         undoManager.registerUndo(withTarget: self, handler: invocationBlock)
     }
 
-    func setValue<Value>(_ value: Value, for keyPath: ReferenceWritableKeyPath<Type, Value>, ofObjectWithID id: ModelID) {
+    func setValue<Value>(_ value: Value, for keyPath: ReferenceWritableKeyPath<ModelType, Value>, ofObjectWithID id: ModelID) {
         guard let object = self.objectWithID(id) else {
             return
         }

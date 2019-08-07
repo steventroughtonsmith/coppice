@@ -49,6 +49,7 @@ extension SidebarViewController: SidebarView {
         if (self.viewModel.selectedCanvasRow >= 0) {
             self.canvasesTable.selectRowIndexes(IndexSet(integer: self.viewModel.selectedCanvasRow),
                                                 byExtendingSelection: false)
+            self.view.window?.makeFirstResponder(self.canvasesTable)
         } else {
             self.canvasesTable.deselectRow(self.canvasesTable.selectedRow)
         }
@@ -56,6 +57,7 @@ extension SidebarViewController: SidebarView {
         if (self.viewModel.selectedPageRow >= 0) {
             self.pagesTable.selectRowIndexes(IndexSet(integer: self.viewModel.selectedPageRow),
                                              byExtendingSelection: false)
+            self.view.window?.makeFirstResponder(self.pagesTable)
         } else {
             self.pagesTable.deselectAll(nil)
         }

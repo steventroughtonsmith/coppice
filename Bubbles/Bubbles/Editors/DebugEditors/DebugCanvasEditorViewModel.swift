@@ -62,9 +62,9 @@ class DebugCanvasEditorViewModel: NSObject {
 
     
     //MARK: - Observation
-    private var observation: ModelCollectionObservation<CanvasPage>?
+    private var observation: ModelCollection<CanvasPage>.Observation?
     func startObservingChanges() {
-        self.observation = self.modelController.canvasPages.addObserver { [weak self] (page) in
+        self.observation = self.modelController.canvasPages.addObserver { [weak self] (page, _) in
             self?.view?.reloadPage(page)
         }
     }
