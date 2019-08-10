@@ -398,6 +398,45 @@ class SidebarViewModelTests: XCTestCase {
     }
 
 
+    //MARK: - Observation
+    func test_observation_selectsNewlyCreatedCanvas() {
+        let (_, c2, _, _, _) = self.createCanvasObjects()
+
+        let viewModel = self.createViewModel()
+        viewModel.startObserving()
+        viewModel.selectedObjectID = c2.id
+
+        let newCanvas = self.canvasCollection.newObject()
+
+        XCTAssertEqual(viewModel.selectedObjectID, newCanvas.id)
+    }
+
+    func test_observation_selectsNewlyCreatedPageIfPageAlreadySelected() {
+        let (_, _, p3, _, _) = self.createPageObjects()
+
+        let viewModel = self.createViewModel()
+        viewModel.startObserving()
+        viewModel.selectedObjectID = p3.id
+
+        let newPage = self.pageCollection.newObject()
+
+        XCTAssertEqual(viewModel.selectedObjectID, newPage.id)
+    }
+
+    func test_observation_doesntSelectNewlyCreatedPageIfCanvasSelected() {
+        let (_, c2, _, _, _) = self.createCanvasObjects()
+        _ = self.createPageObjects()
+
+        let viewModel = self.createViewModel()
+        viewModel.startObserving()
+        viewModel.selectedObjectID = c2.id
+
+        self.pageCollection.newObject()
+
+        XCTAssertEqual(viewModel.selectedObjectID, c2.id)
+    }
+
+
     //MARK: - Selection Undo
 //    func test_selectionUndo_undoingAnEditRevertsSelectionIfDifferent() {
 //        let (o1, _, o3, o4, _) = self.createPageObjects()

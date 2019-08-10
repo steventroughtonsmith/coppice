@@ -50,8 +50,8 @@ class SidebarViewModel: NSObject {
 
 
     //MARK: - Observation
-    var canvasObserver: ModelCollection<Canvas>.Observation?
-    var pageObserver: ModelCollection<Page>.Observation?
+    private var canvasObserver: ModelCollection<Canvas>.Observation?
+    private var pageObserver: ModelCollection<Page>.Observation?
 
     func startObserving() {
         self.canvasObserver = self.canvases.addObserver { canvas, change in self.handleChange(to: canvas, changeType: change) }
