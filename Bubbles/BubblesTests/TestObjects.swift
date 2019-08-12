@@ -44,7 +44,7 @@ class TestModelController: NSObject, ModelController {
 
     override init() {
         super.init()
-        self.add(ModelCollection<TestCollectableModelObject>(), for: TestCollectableModelObject.modelType)
+        self.add(ModelCollection<TestCollectableModelObject>() { _ in TestCollectableModelObject () }, for: TestCollectableModelObject.modelType)
     }
 
     func object(with id: ModelID) -> ModelObject? {

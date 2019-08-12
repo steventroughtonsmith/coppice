@@ -36,8 +36,6 @@ extension ModelObject {
 protocol CollectableModelObject: ModelObject, Hashable {
     var collection: ModelCollection<Self>? { get set }
 
-    init()
-
     /// Called after the object was inserted into the collection. The `collection` property is guaranteed to get set when this is called
     func objectWasInserted()
 

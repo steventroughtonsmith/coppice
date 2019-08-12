@@ -28,6 +28,12 @@ class ModelCollection<ModelType: CollectableModelObject> {
         }
     }
 
+    typealias CustomInitialiser = ([String: Any]) -> ModelType
+    let objectInitialiser: CustomInitialiser
+    init(objectInitialiser: @escaping CustomInitialiser) {
+        self.objectInitialiser = objectInitialiser
+    }
+
 
     weak var modelController: ModelController?
 
@@ -37,8 +43,8 @@ class ModelCollection<ModelType: CollectableModelObject> {
         return self.all.first { $0.id == id }
     }
 
-    @discardableResult func newObject() -> ModelType {
-        let newObject = ModelType()
+    @discardableResult func newObject(context: [String: Any] = [:]) -> ModelType {
+        let newObject = self.objectInitialiser(context)
         newObject.collection = self
         self.all.insert(newObject)
         self.disableUndo {

@@ -29,6 +29,10 @@
 		99C41B7122DCA96700C82DDE /* BubblesModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C41B7022DCA96700C82DDE /* BubblesModelController.swift */; };
 		99C41B7322DCA98600C82DDE /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C41B7222DCA98600C82DDE /* Page.swift */; };
 		99C41B7522DCA9A100C82DDE /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C41B7422DCA9A100C82DDE /* Canvas.swift */; };
+		99C8650923016EB2004C7B89 /* TextEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C8650823016EB2004C7B89 /* TextEditorViewModel.swift */; };
+		99C8650D23016EE5004C7B89 /* TextEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99C8650C23016EE5004C7B89 /* TextEditorViewController.xib */; };
+		99C8650F23017222004C7B89 /* TextEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C8650E23017222004C7B89 /* TextEditorViewController.swift */; };
+		99C86511230174B9004C7B89 /* PageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C86510230174B9004C7B89 /* PageContent.swift */; };
 		99D4D59822F8650300F69C1F /* SidebarViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D4D59722F8650300F69C1F /* SidebarViewModelTests.swift */; };
 		99DEF28822F1D72D0020A7CE /* SidebarViewModelTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DEF28722F1D72D0020A7CE /* SidebarViewModelTypes.swift */; };
 		99DEF28A22F32D350020A7CE /* DebugCanvasViewModelTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DEF28922F32D350020A7CE /* DebugCanvasViewModelTypes.swift */; };
@@ -84,6 +88,10 @@
 		99C41B7022DCA96700C82DDE /* BubblesModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubblesModelController.swift; sourceTree = "<group>"; };
 		99C41B7222DCA98600C82DDE /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		99C41B7422DCA9A100C82DDE /* Canvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
+		99C8650823016EB2004C7B89 /* TextEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorViewModel.swift; sourceTree = "<group>"; };
+		99C8650C23016EE5004C7B89 /* TextEditorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextEditorViewController.xib; sourceTree = "<group>"; };
+		99C8650E23017222004C7B89 /* TextEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorViewController.swift; sourceTree = "<group>"; };
+		99C86510230174B9004C7B89 /* PageContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageContent.swift; sourceTree = "<group>"; };
 		99D4D59722F8650300F69C1F /* SidebarViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewModelTests.swift; sourceTree = "<group>"; };
 		99DEF28722F1D72D0020A7CE /* SidebarViewModelTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewModelTypes.swift; sourceTree = "<group>"; };
 		99DEF28922F32D350020A7CE /* DebugCanvasViewModelTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugCanvasViewModelTypes.swift; sourceTree = "<group>"; };
@@ -167,6 +175,7 @@
 				992A5CA122DDF4B60012CCB6 /* EditorContainerViewModel.swift */,
 				992A5CA322DDF4C50012CCB6 /* EditorContainerViewController.swift */,
 				992A5CA422DDF4C50012CCB6 /* EditorContainerViewController.xib */,
+				99C8650723016E90004C7B89 /* TextContentEditor */,
 				992A5CA722DDF4E40012CCB6 /* DebugEditors */,
 			);
 			path = Editors;
@@ -192,10 +201,21 @@
 				99C41B7022DCA96700C82DDE /* BubblesModelController.swift */,
 				9923B07222F47F2E0035D8C6 /* Model Infrastructure */,
 				99C41B7222DCA98600C82DDE /* Page.swift */,
+				99C86510230174B9004C7B89 /* PageContent.swift */,
 				99C41B7422DCA9A100C82DDE /* Canvas.swift */,
 				990B6A3622E5F84400523C06 /* CanvasPage.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		99C8650723016E90004C7B89 /* TextContentEditor */ = {
+			isa = PBXGroup;
+			children = (
+				99C8650823016EB2004C7B89 /* TextEditorViewModel.swift */,
+				99C8650E23017222004C7B89 /* TextEditorViewController.swift */,
+				99C8650C23016EE5004C7B89 /* TextEditorViewController.xib */,
+			);
+			path = TextContentEditor;
 			sourceTree = "<group>";
 		};
 		99D4D59622F864E200F69C1F /* Sidebar */ = {
@@ -395,6 +415,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99C8650D23016EE5004C7B89 /* TextEditorViewController.xib in Resources */,
 				992A5CA622DDF4C50012CCB6 /* EditorContainerViewController.xib in Resources */,
 				992A5CAF22DDF50F0012CCB6 /* DebugPageEditor.xib in Resources */,
 				99FE019822CD1038004D380D /* Assets.xcassets in Resources */,
@@ -429,6 +450,8 @@
 				992A5CAA22DDF5000012CCB6 /* DebugCanvasEditor.swift in Sources */,
 				992A5CB322DDF53C0012CCB6 /* DebugPageEditorViewModel.swift in Sources */,
 				99DEF28A22F32D350020A7CE /* DebugCanvasViewModelTypes.swift in Sources */,
+				99C8650923016EB2004C7B89 /* TextEditorViewModel.swift in Sources */,
+				99C86511230174B9004C7B89 /* PageContent.swift in Sources */,
 				99FE019322CD1037004D380D /* Document.swift in Sources */,
 				99C41B7122DCA96700C82DDE /* BubblesModelController.swift in Sources */,
 				990B6A3722E5F84400523C06 /* CanvasPage.swift in Sources */,
@@ -445,6 +468,7 @@
 				992A5C9F22DCCDB30012CCB6 /* NSView+M3Extensions.swift in Sources */,
 				992A5CA222DDF4B60012CCB6 /* EditorContainerViewModel.swift in Sources */,
 				992A5C9222DCB7530012CCB6 /* SidebarViewController.swift in Sources */,
+				99C8650F23017222004C7B89 /* TextEditorViewController.swift in Sources */,
 				992A5CB122DDF5210012CCB6 /* DebugCanvasEditorViewModel.swift in Sources */,
 				992A5C9C22DCC6090012CCB6 /* SidebarViewModel.swift in Sources */,
 				990825D922EDF2FE00273A1D /* ModelCollection.swift in Sources */,

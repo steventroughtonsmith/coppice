@@ -18,13 +18,13 @@ final class Page: NSObject, CollectableModelObject {
     var id = ModelID(modelType: Page.modelType)
     weak var collection: ModelCollection<Page>?
 
-    override required init() {
-        super.init()
+    init(content: PageContent, title: String? = nil) {
+        self.content = content
+        self.title = title ?? "Untitled Page"
     }
-
     
     // MARK: - Attributes
-    @objc dynamic var title: String = "Untitled Page" {
+    @objc dynamic var title: String {
         didSet { self.didChange(\.title, oldValue: oldValue) }
     }
     var tags: [Tag] = [] {
@@ -35,13 +35,16 @@ final class Page: NSObject, CollectableModelObject {
 
 
     // MARK: - Relationships
-    var content: PageContent?
+    var content: PageContent!
 
     var canvases: Set<CanvasPage> {
         return self.relationship(for: \.page)
     }
 }
 
-protocol PageContent: class {
 
+extension ModelCollection where ModelType == Page {
+    @discardableResult func newPage(ofType type: PageContentType = .text, title: String = "Untitled Page") -> Page {
+        return self.newObject(context: ["type": type, "title": title])
+    }
 }

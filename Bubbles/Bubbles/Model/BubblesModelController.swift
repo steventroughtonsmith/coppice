@@ -15,9 +15,16 @@ class BubblesModelController: NSObject, ModelController {
     init(undoManager: UndoManager) {
         self.undoManager = undoManager
         super.init()
-        self.add(ModelCollection<Canvas>(), for: Canvas.modelType)
-        self.add(ModelCollection<Page>(), for: Page.modelType)
-        self.add(ModelCollection<CanvasPage>(), for: CanvasPage.modelType)
+
+        self.add(ModelCollection<Canvas>() { _ in Canvas() }, for: Canvas.modelType)
+        self.add(ModelCollection<CanvasPage>() { _ in CanvasPage() }, for: CanvasPage.modelType)
+
+        let pageCollection = ModelCollection<Page>() { context in
+            let title = (context["title"] as? String)
+            let contentType = (context["type"] as? PageContentType) ?? .text
+            return Page(content: contentType.createContent(), title: title)
+        }
+        self.add(pageCollection, for: Page.modelType)
     }
     
     var canvases: ModelCollection<Canvas> { self.collection(for: Canvas.modelType) as! ModelCollection<Canvas> }
@@ -50,6 +57,7 @@ extension BubblesModelController {
         self.pages.disableUndo {
             let page1 = self.pages.newObject()
             page1.title = "Foo"
+            (page1.content as! TextPageContent).text = NSAttributedString(string: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vehicula sit amet felis ac commodo. Sed quis faucibus nibh. Nam ut urna libero.")
             let page2 = self.pages.newObject()
             page2.title = "Bar"
             let page3 = self.pages.newObject()

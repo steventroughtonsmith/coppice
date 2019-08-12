@@ -39,6 +39,22 @@ class EditorContainerViewModel: NSObject {
     }
 
     var editor: Editor? {
+        if (UserDefaults.standard.bool(forKey: "M3UseDebugEditors")) {
+            return self.debugEditor
+        }
+        if let page = self.currentObject as? Page {
+            switch page.content.contentType {
+            case .text:
+                let viewModel = TextEditorViewModel(textContent: (page.content as! TextPageContent),
+                                                    modelController: self.modelController)
+                return TextEditorViewController(viewModel: viewModel)
+            }
+        }
+        return nil
+    }
+
+
+    private var debugEditor: Editor? {
         if let canvas = self.currentObject as? Canvas {
             let viewModel = DebugCanvasEditorViewModel(canvas: canvas, modelController: self.modelController)
             return DebugCanvasEditor(viewModel: viewModel)

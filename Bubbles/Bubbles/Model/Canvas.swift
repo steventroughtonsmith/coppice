@@ -14,11 +14,6 @@ final class Canvas: NSObject, CollectableModelObject {
     var id = ModelID(modelType: Canvas.modelType)
     weak var collection: ModelCollection<Canvas>?
 
-    override required init() {
-        super.init()
-    }
-
-
     func objectWasInserted() {
         self.sortIndex = self.collection?.all.count ?? 0
     }

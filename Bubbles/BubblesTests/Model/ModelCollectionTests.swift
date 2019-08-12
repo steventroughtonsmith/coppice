@@ -16,7 +16,7 @@ class ModelCollectionTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        self.collection = ModelCollection<TestCollectableModelObject>()
+        self.collection = ModelCollection<TestCollectableModelObject>() { _ in TestCollectableModelObject () }
         self.modelController = TestModelController()
         self.modelController.add(collection, for: TestCollectableModelObject.modelType)
     }

@@ -14,11 +14,6 @@ final class CanvasPage: NSObject, CollectableModelObject {
     var id = ModelID(modelType: CanvasPage.modelType)
     weak var collection: ModelCollection<CanvasPage>?
 
-    override required init() {
-        super.init()
-    }
-
-
     //MARK: - Attributes
     weak var page: Page? {
         didSet { self.didChange(\.page, oldValue: oldValue) }
