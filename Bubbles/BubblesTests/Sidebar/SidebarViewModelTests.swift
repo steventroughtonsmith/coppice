@@ -23,7 +23,7 @@ class SidebarViewModelTests: XCTestCase {
         super.setUp()
 
         self.canvasCollection = ModelCollection<Canvas>() { _ in Canvas() }
-        self.pageCollection = ModelCollection<Page>() { _ in Page(content: TextPageContent()) }
+        self.pageCollection = ModelCollection<Page>() { _ in Page() }
         self.undoManager = UndoManager()
         self.notificationCenter = NotificationCenter()
 

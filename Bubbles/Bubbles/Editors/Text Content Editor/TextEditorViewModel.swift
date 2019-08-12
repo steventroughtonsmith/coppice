@@ -30,7 +30,8 @@ class TextEditorViewModel: NSObject {
 
     func createNewLinkedPage(for range: NSRange) {
         let selectedText = self.attributedText.attributedSubstring(from: range)
-        self.modelController.pages.newPage(ofType: .text, title: selectedText.string)
+        self.modelController.pages.newPage(title: selectedText.string)
     }
 }
+
 

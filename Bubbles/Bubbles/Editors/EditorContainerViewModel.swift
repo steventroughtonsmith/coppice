@@ -25,6 +25,8 @@ class EditorContainerViewModel: NSObject {
         super.init()
     }
 
+    var pageContentTypeObservation: NSKeyValueObservation?
+
     var currentObjectID: ModelID? {
         didSet {
             self.view?.editorChanged()
@@ -44,6 +46,10 @@ class EditorContainerViewModel: NSObject {
         }
         if let page = self.currentObject as? Page {
             switch page.content.contentType {
+            case .empty:
+                let viewModel = ContentSelectorViewModel(page: page, modelController: self.modelController)
+                viewModel.delegate = self
+                return ContentSelectorViewController(viewModel: viewModel)
             case .text:
                 let viewModel = TextEditorViewModel(textContent: (page.content as! TextPageContent),
                                                     modelController: self.modelController)
@@ -64,5 +70,12 @@ class EditorContainerViewModel: NSObject {
             return DebugPageEditor(viewModel: viewModel)
         }
         return nil
+    }
+}
+
+
+extension EditorContainerViewModel: ContentSelectorViewModelDelegate {
+    func selectedType(in viewModel: ContentSelectorViewModel) {
+        self.view?.editorChanged()
     }
 }

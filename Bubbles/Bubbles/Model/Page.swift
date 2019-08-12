@@ -18,8 +18,7 @@ final class Page: NSObject, CollectableModelObject {
     var id = ModelID(modelType: Page.modelType)
     weak var collection: ModelCollection<Page>?
 
-    init(content: PageContent, title: String? = nil) {
-        self.content = content
+    init(title: String? = nil) {
         self.title = title ?? "Untitled Page"
     }
     
@@ -35,7 +34,7 @@ final class Page: NSObject, CollectableModelObject {
 
 
     // MARK: - Relationships
-    var content: PageContent!
+    var content: PageContent = EmptyPageContent()
 
     var canvases: Set<CanvasPage> {
         return self.relationship(for: \.page)
@@ -44,7 +43,7 @@ final class Page: NSObject, CollectableModelObject {
 
 
 extension ModelCollection where ModelType == Page {
-    @discardableResult func newPage(ofType type: PageContentType = .text, title: String = "Untitled Page") -> Page {
-        return self.newObject(context: ["type": type, "title": title])
+    @discardableResult func newPage(title: String = "Untitled Page") -> Page {
+        return self.newObject(context: ["title": title])
     }
 }

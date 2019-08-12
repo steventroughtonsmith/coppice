@@ -21,8 +21,7 @@ class BubblesModelController: NSObject, ModelController {
 
         let pageCollection = ModelCollection<Page>() { context in
             let title = (context["title"] as? String)
-            let contentType = (context["type"] as? PageContentType) ?? .text
-            return Page(content: contentType.createContent(), title: title)
+            return Page(title: title)
         }
         self.add(pageCollection, for: Page.modelType)
     }
@@ -57,7 +56,9 @@ extension BubblesModelController {
         self.pages.disableUndo {
             let page1 = self.pages.newObject()
             page1.title = "Foo"
-            (page1.content as! TextPageContent).text = NSAttributedString(string: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vehicula sit amet felis ac commodo. Sed quis faucibus nibh. Nam ut urna libero.")
+            let content = TextPageContent()
+            content.text = NSAttributedString(string: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vehicula sit amet felis ac commodo. Sed quis faucibus nibh. Nam ut urna libero.")
+            page1.content = content
             let page2 = self.pages.newObject()
             page2.title = "Bar"
             let page3 = self.pages.newObject()

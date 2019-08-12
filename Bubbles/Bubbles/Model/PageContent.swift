@@ -9,10 +9,13 @@
 import Foundation
 
 enum PageContentType {
+    case empty
     case text
 
     func createContent() -> PageContent {
         switch self {
+        case .empty:
+            return EmptyPageContent()
         case .text:
             return TextPageContent()
         }
@@ -21,6 +24,10 @@ enum PageContentType {
 
 protocol PageContent: class {
     var contentType: PageContentType { get }
+}
+
+class EmptyPageContent: PageContent {
+    let contentType = PageContentType.empty
 }
 
 class TextPageContent: PageContent {

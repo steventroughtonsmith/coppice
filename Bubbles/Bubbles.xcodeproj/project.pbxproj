@@ -33,6 +33,9 @@
 		99C8650D23016EE5004C7B89 /* TextEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99C8650C23016EE5004C7B89 /* TextEditorViewController.xib */; };
 		99C8650F23017222004C7B89 /* TextEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C8650E23017222004C7B89 /* TextEditorViewController.swift */; };
 		99C86511230174B9004C7B89 /* PageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C86510230174B9004C7B89 /* PageContent.swift */; };
+		99C865142301A852004C7B89 /* ContentSelectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C865132301A852004C7B89 /* ContentSelectorViewModel.swift */; };
+		99C865172301A86D004C7B89 /* ContentSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C865152301A86D004C7B89 /* ContentSelectorViewController.swift */; };
+		99C865182301A86D004C7B89 /* ContentSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99C865162301A86D004C7B89 /* ContentSelectorViewController.xib */; };
 		99D4D59822F8650300F69C1F /* SidebarViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D4D59722F8650300F69C1F /* SidebarViewModelTests.swift */; };
 		99DEF28822F1D72D0020A7CE /* SidebarViewModelTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DEF28722F1D72D0020A7CE /* SidebarViewModelTypes.swift */; };
 		99DEF28A22F32D350020A7CE /* DebugCanvasViewModelTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DEF28922F32D350020A7CE /* DebugCanvasViewModelTypes.swift */; };
@@ -92,6 +95,9 @@
 		99C8650C23016EE5004C7B89 /* TextEditorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextEditorViewController.xib; sourceTree = "<group>"; };
 		99C8650E23017222004C7B89 /* TextEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorViewController.swift; sourceTree = "<group>"; };
 		99C86510230174B9004C7B89 /* PageContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageContent.swift; sourceTree = "<group>"; };
+		99C865132301A852004C7B89 /* ContentSelectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentSelectorViewModel.swift; sourceTree = "<group>"; };
+		99C865152301A86D004C7B89 /* ContentSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentSelectorViewController.swift; sourceTree = "<group>"; };
+		99C865162301A86D004C7B89 /* ContentSelectorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContentSelectorViewController.xib; sourceTree = "<group>"; };
 		99D4D59722F8650300F69C1F /* SidebarViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewModelTests.swift; sourceTree = "<group>"; };
 		99DEF28722F1D72D0020A7CE /* SidebarViewModelTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewModelTypes.swift; sourceTree = "<group>"; };
 		99DEF28922F32D350020A7CE /* DebugCanvasViewModelTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugCanvasViewModelTypes.swift; sourceTree = "<group>"; };
@@ -175,7 +181,8 @@
 				992A5CA122DDF4B60012CCB6 /* EditorContainerViewModel.swift */,
 				992A5CA322DDF4C50012CCB6 /* EditorContainerViewController.swift */,
 				992A5CA422DDF4C50012CCB6 /* EditorContainerViewController.xib */,
-				99C8650723016E90004C7B89 /* TextContentEditor */,
+				99C865122301A82E004C7B89 /* Content Selector Editor */,
+				99C8650723016E90004C7B89 /* Text Content Editor */,
 				992A5CA722DDF4E40012CCB6 /* DebugEditors */,
 			);
 			path = Editors;
@@ -208,14 +215,24 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		99C8650723016E90004C7B89 /* TextContentEditor */ = {
+		99C8650723016E90004C7B89 /* Text Content Editor */ = {
 			isa = PBXGroup;
 			children = (
 				99C8650823016EB2004C7B89 /* TextEditorViewModel.swift */,
 				99C8650E23017222004C7B89 /* TextEditorViewController.swift */,
 				99C8650C23016EE5004C7B89 /* TextEditorViewController.xib */,
 			);
-			path = TextContentEditor;
+			path = "Text Content Editor";
+			sourceTree = "<group>";
+		};
+		99C865122301A82E004C7B89 /* Content Selector Editor */ = {
+			isa = PBXGroup;
+			children = (
+				99C865132301A852004C7B89 /* ContentSelectorViewModel.swift */,
+				99C865152301A86D004C7B89 /* ContentSelectorViewController.swift */,
+				99C865162301A86D004C7B89 /* ContentSelectorViewController.xib */,
+			);
+			path = "Content Selector Editor";
 			sourceTree = "<group>";
 		};
 		99D4D59622F864E200F69C1F /* Sidebar */ = {
@@ -421,6 +438,7 @@
 				99FE019822CD1038004D380D /* Assets.xcassets in Resources */,
 				992A5CAB22DDF5000012CCB6 /* DebugCanvasEditor.xib in Resources */,
 				992A5C9622DCB7790012CCB6 /* SidebarView.xib in Resources */,
+				99C865182301A86D004C7B89 /* ContentSelectorViewController.xib in Resources */,
 				99FE01E522D4CC8A004D380D /* DocumentWindow.xib in Resources */,
 				99FE019B22CD1038004D380D /* MainMenu.xib in Resources */,
 			);
@@ -461,7 +479,9 @@
 				99DEF28F22F33A790020A7CE /* ModelID.swift in Sources */,
 				99FE019122CD1037004D380D /* AppDelegate.swift in Sources */,
 				9923B07122F47AE30035D8C6 /* ModelController.swift in Sources */,
+				99C865172301A86D004C7B89 /* ContentSelectorViewController.swift in Sources */,
 				992A5CA522DDF4C50012CCB6 /* EditorContainerViewController.swift in Sources */,
+				99C865142301A852004C7B89 /* ContentSelectorViewModel.swift in Sources */,
 				99FE01E422D4CC8A004D380D /* DocumentWindowController.swift in Sources */,
 				99C41B7322DCA98600C82DDE /* Page.swift in Sources */,
 				99C41B7522DCA9A100C82DDE /* Canvas.swift in Sources */,
