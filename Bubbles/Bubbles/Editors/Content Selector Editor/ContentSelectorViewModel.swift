@@ -29,7 +29,8 @@ class ContentSelectorViewModel: NSObject {
     }
 
     var contentTypes: [ContentTypeModel] = [
-        ContentTypeModel(type: .text, localizedName: "Text", iconName: "NSMultipleDocuments")
+        ContentTypeModel(type: .text, localizedName: "Text", iconName: "NSMultipleDocuments"),
+        ContentTypeModel(type: .image, localizedName: "Image", iconName: "NSColorPanel")
     ]
 
     func selectType(_ contentType: ContentTypeModel) {

@@ -54,6 +54,10 @@ class EditorContainerViewModel: NSObject {
                 let viewModel = TextEditorViewModel(textContent: (page.content as! TextPageContent),
                                                     modelController: self.modelController)
                 return TextEditorViewController(viewModel: viewModel)
+            case .image:
+                let viewModel = ImageEditorViewModel(imageContent: (page.content as! ImagePageContent),
+                                                     modelController: self.modelController)
+                return ImageEditorViewController(viewModel: viewModel)
             }
         }
         return nil

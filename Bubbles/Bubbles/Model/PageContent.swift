@@ -6,11 +6,12 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import Foundation
+import AppKit
 
 enum PageContentType {
     case empty
     case text
+    case image
 
     func createContent() -> PageContent {
         switch self {
@@ -18,6 +19,8 @@ enum PageContentType {
             return EmptyPageContent()
         case .text:
             return TextPageContent()
+        case .image:
+            return ImagePageContent()
         }
     }
 }
@@ -33,4 +36,9 @@ class EmptyPageContent: PageContent {
 class TextPageContent: PageContent {
     let contentType = PageContentType.text
     var text: NSAttributedString = NSAttributedString()
+}
+
+class ImagePageContent: PageContent {
+    let contentType = PageContentType.image
+    var image: NSImage?
 }
