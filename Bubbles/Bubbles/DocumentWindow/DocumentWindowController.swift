@@ -15,6 +15,9 @@ class DocumentWindowController: NSWindowController {
     @IBOutlet weak var editorContainer: NSView!
     @IBOutlet weak var inspectorContainer: NSView!
 
+    @IBOutlet weak var panelContainer: NSView!
+    private var currentPanel: NSViewController?
+
     var sidebarViewController: SidebarViewController? {
         didSet {
             oldValue?.view.removeFromSuperview()
@@ -50,7 +53,26 @@ class DocumentWindowController: NSWindowController {
 
         self.editorContainerViewController = EditorContainerViewController(viewModel: EditorContainerViewModel(modelController: document.modelController))
     }
-    
+
+
+    @IBAction func jumpToPage(_ sender: Any?) {
+        guard let document = self.document as? Document else {
+            return
+        }
+
+        let viewModel = PageSelectorViewModel(title: "Jump to page…", modelController: document.modelController) { page in
+            print("page")
+        }
+        let pageSelector = PageSelectorViewController(viewModel: viewModel)
+        self.present(pageSelector)
+    }
+
+    func present(_ pageSelector: PageSelectorViewController) {
+        let view = pageSelector.view
+        self.panelContainer.addSubview(view, withInsets: NSEdgeInsetsZero)
+        self.panelContainer.isHidden = false
+        self.currentPanel = pageSelector
+    }
 }
 
 extension DocumentWindowController: SidebarViewModelDelegate {

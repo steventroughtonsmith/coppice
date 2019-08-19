@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14854.2" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14854.2"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="DocumentWindowController" customModule="Bubbles" customModuleProvider="target">
             <connections>
-                <outlet property="editorContainer" destination="u2u-OM-pWv" id="C7y-cB-GB8"/>
+                <outlet property="editorContainer" destination="BJE-TL-Rpa" id="2Qf-ld-nYR"/>
                 <outlet property="inspectorContainer" destination="vle-dL-M8g" id="Whu-sk-7QN"/>
+                <outlet property="panelContainer" destination="RPj-Wm-kVq" id="E9K-I7-ndM"/>
                 <outlet property="sidebarContainer" destination="wbm-Kc-dgB" id="cAE-F0-Db6"/>
                 <outlet property="splitView" destination="3KB-c4-2lR" id="9AT-sC-fkP"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
@@ -32,10 +35,15 @@
                                 <rect key="frame" x="0.0" y="0.0" width="156" height="567"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </customView>
-                            <customView fixedFrame="YES" id="u2u-OM-pWv" userLabel="Editor Container">
+                            <box fixedFrame="YES" boxType="custom" borderType="none" title="Box" titlePosition="noTitle" id="9A6-YZ-VoA">
                                 <rect key="frame" x="157" y="0.0" width="464" height="567"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                            </customView>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <view key="contentView" id="BJE-TL-Rpa">
+                                    <rect key="frame" x="0.0" y="0.0" width="464" height="567"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                                <color key="fillColor" name="EditorBackground"/>
+                            </box>
                             <customView fixedFrame="YES" id="vle-dL-M8g" userLabel="Inspector Container">
                                 <rect key="frame" x="622" y="0.0" width="160" height="567"/>
                                 <autoresizingMask key="autoresizingMask"/>
@@ -47,10 +55,19 @@
                             <real value="250"/>
                         </holdingPriorities>
                     </splitView>
+                    <customView hidden="YES" wantsLayer="YES" placeholderIntrinsicWidth="400" placeholderIntrinsicHeight="300" translatesAutoresizingMaskIntoConstraints="NO" id="RPj-Wm-kVq">
+                        <rect key="frame" x="191" y="204" width="400" height="300"/>
+                        <shadow key="shadow" blurRadius="4">
+                            <color key="color" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </shadow>
+                    </customView>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="RPj-Wm-kVq" firstAttribute="centerY" secondItem="se5-gp-TjO" secondAttribute="centerY" priority="450" constant="-70" id="9Hh-MC-75a"/>
                     <constraint firstItem="3KB-c4-2lR" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" id="BEZ-97-ReR"/>
                     <constraint firstItem="3KB-c4-2lR" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" id="Fm4-eH-wOP"/>
+                    <constraint firstItem="RPj-Wm-kVq" firstAttribute="centerX" secondItem="se5-gp-TjO" secondAttribute="centerX" id="NuP-uD-LBu"/>
+                    <constraint firstItem="RPj-Wm-kVq" firstAttribute="top" relation="greaterThanOrEqual" secondItem="se5-gp-TjO" secondAttribute="top" constant="20" id="RGV-as-aIJ"/>
                     <constraint firstAttribute="bottom" secondItem="3KB-c4-2lR" secondAttribute="bottom" id="mic-zb-DBn"/>
                     <constraint firstAttribute="trailing" secondItem="3KB-c4-2lR" secondAttribute="trailing" id="qOV-1D-6QN"/>
                 </constraints>
@@ -86,5 +103,8 @@
     <resources>
         <image name="NSAddTemplate" width="11" height="11"/>
         <image name="NSBookmarksTemplate" width="17" height="18"/>
+        <namedColor name="EditorBackground">
+            <color red="0.25098234415054321" green="0.25097692012786865" blue="0.25098058581352234" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
     </resources>
 </document>
