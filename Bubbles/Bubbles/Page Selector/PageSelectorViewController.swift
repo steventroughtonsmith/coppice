@@ -26,6 +26,11 @@ class PageSelectorViewController: NSViewController {
         super.viewDidLoad()
         self.searchField.placeholderString = self.viewModel.title
     }
+
+    //For some reason NSWindow doesn't enable this and we can't do it in the window controller
+    @IBAction func performClose(_ sender: Any?) {
+        self.view.window?.windowController?.close()
+    }
 }
 
 extension PageSelectorViewController: PageSelectorView {

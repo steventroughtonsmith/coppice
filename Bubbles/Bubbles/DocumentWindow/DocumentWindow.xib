@@ -11,7 +11,6 @@
             <connections>
                 <outlet property="editorContainer" destination="BJE-TL-Rpa" id="2Qf-ld-nYR"/>
                 <outlet property="inspectorContainer" destination="vle-dL-M8g" id="Whu-sk-7QN"/>
-                <outlet property="panelContainer" destination="RPj-Wm-kVq" id="E9K-I7-ndM"/>
                 <outlet property="sidebarContainer" destination="wbm-Kc-dgB" id="cAE-F0-Db6"/>
                 <outlet property="splitView" destination="3KB-c4-2lR" id="9AT-sC-fkP"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
@@ -55,19 +54,10 @@
                             <real value="250"/>
                         </holdingPriorities>
                     </splitView>
-                    <customView hidden="YES" wantsLayer="YES" placeholderIntrinsicWidth="400" placeholderIntrinsicHeight="300" translatesAutoresizingMaskIntoConstraints="NO" id="RPj-Wm-kVq">
-                        <rect key="frame" x="191" y="204" width="400" height="300"/>
-                        <shadow key="shadow" blurRadius="4">
-                            <color key="color" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </shadow>
-                    </customView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="RPj-Wm-kVq" firstAttribute="centerY" secondItem="se5-gp-TjO" secondAttribute="centerY" priority="450" constant="-70" id="9Hh-MC-75a"/>
                     <constraint firstItem="3KB-c4-2lR" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" id="BEZ-97-ReR"/>
                     <constraint firstItem="3KB-c4-2lR" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" id="Fm4-eH-wOP"/>
-                    <constraint firstItem="RPj-Wm-kVq" firstAttribute="centerX" secondItem="se5-gp-TjO" secondAttribute="centerX" id="NuP-uD-LBu"/>
-                    <constraint firstItem="RPj-Wm-kVq" firstAttribute="top" relation="greaterThanOrEqual" secondItem="se5-gp-TjO" secondAttribute="top" constant="20" id="RGV-as-aIJ"/>
                     <constraint firstAttribute="bottom" secondItem="3KB-c4-2lR" secondAttribute="bottom" id="mic-zb-DBn"/>
                     <constraint firstAttribute="trailing" secondItem="3KB-c4-2lR" secondAttribute="trailing" id="qOV-1D-6QN"/>
                 </constraints>
@@ -104,7 +94,7 @@
         <image name="NSAddTemplate" width="11" height="11"/>
         <image name="NSBookmarksTemplate" width="17" height="18"/>
         <namedColor name="EditorBackground">
-            <color red="0.25098234415054321" green="0.25097692012786865" blue="0.25098058581352234" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.25099998712539673" green="0.25099998712539673" blue="0.25099998712539673" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
     </resources>
 </document>

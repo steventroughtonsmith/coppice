@@ -26,6 +26,8 @@
 		992A5CAF22DDF50F0012CCB6 /* DebugPageEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 992A5CAD22DDF50F0012CCB6 /* DebugPageEditor.xib */; };
 		992A5CB122DDF5210012CCB6 /* DebugCanvasEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992A5CB022DDF5210012CCB6 /* DebugCanvasEditorViewModel.swift */; };
 		992A5CB322DDF53C0012CCB6 /* DebugPageEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992A5CB222DDF53C0012CCB6 /* DebugPageEditorViewModel.swift */; };
+		9951C26C230AEFAB006CAD4D /* PageSelectorWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9951C26B230AEFAB006CAD4D /* PageSelectorWindowController.swift */; };
+		9951C26E230AF011006CAD4D /* PageSelectorWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9951C26D230AF011006CAD4D /* PageSelectorWindow.swift */; };
 		99C41B7122DCA96700C82DDE /* BubblesModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C41B7022DCA96700C82DDE /* BubblesModelController.swift */; };
 		99C41B7322DCA98600C82DDE /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C41B7222DCA98600C82DDE /* Page.swift */; };
 		99C41B7522DCA9A100C82DDE /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C41B7422DCA9A100C82DDE /* Canvas.swift */; };
@@ -94,6 +96,8 @@
 		992A5CAD22DDF50F0012CCB6 /* DebugPageEditor.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DebugPageEditor.xib; sourceTree = "<group>"; };
 		992A5CB022DDF5210012CCB6 /* DebugCanvasEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugCanvasEditorViewModel.swift; sourceTree = "<group>"; };
 		992A5CB222DDF53C0012CCB6 /* DebugPageEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugPageEditorViewModel.swift; sourceTree = "<group>"; };
+		9951C26B230AEFAB006CAD4D /* PageSelectorWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageSelectorWindowController.swift; sourceTree = "<group>"; };
+		9951C26D230AF011006CAD4D /* PageSelectorWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageSelectorWindow.swift; sourceTree = "<group>"; };
 		99C41B7022DCA96700C82DDE /* BubblesModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubblesModelController.swift; sourceTree = "<group>"; };
 		99C41B7222DCA98600C82DDE /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		99C41B7422DCA9A100C82DDE /* Canvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
@@ -264,6 +268,8 @@
 				99C865252306D12B004C7B89 /* PageSelectorViewModel.swift */,
 				99C865272306D141004C7B89 /* PageSelectorViewController.swift */,
 				99C865282306D141004C7B89 /* PageSelectorViewController.xib */,
+				9951C26B230AEFAB006CAD4D /* PageSelectorWindowController.swift */,
+				9951C26D230AF011006CAD4D /* PageSelectorWindow.swift */,
 			);
 			path = "Page Selector";
 			sourceTree = "<group>";
@@ -520,12 +526,14 @@
 				9923B07122F47AE30035D8C6 /* ModelController.swift in Sources */,
 				99C865172301A86D004C7B89 /* ContentSelectorViewController.swift in Sources */,
 				992A5CA522DDF4C50012CCB6 /* EditorContainerViewController.swift in Sources */,
+				9951C26C230AEFAB006CAD4D /* PageSelectorWindowController.swift in Sources */,
 				99C865142301A852004C7B89 /* ContentSelectorViewModel.swift in Sources */,
 				99FE01E422D4CC8A004D380D /* DocumentWindowController.swift in Sources */,
 				99C41B7322DCA98600C82DDE /* Page.swift in Sources */,
 				99C41B7522DCA9A100C82DDE /* Canvas.swift in Sources */,
 				99C865262306D12B004C7B89 /* PageSelectorViewModel.swift in Sources */,
 				992A5C9F22DCCDB30012CCB6 /* NSView+M3Extensions.swift in Sources */,
+				9951C26E230AF011006CAD4D /* PageSelectorWindow.swift in Sources */,
 				992A5CA222DDF4B60012CCB6 /* EditorContainerViewModel.swift in Sources */,
 				992A5C9222DCB7530012CCB6 /* SidebarViewController.swift in Sources */,
 				99C8650F23017222004C7B89 /* TextEditorViewController.swift in Sources */,

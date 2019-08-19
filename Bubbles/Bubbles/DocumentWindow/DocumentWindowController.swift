@@ -15,8 +15,7 @@ class DocumentWindowController: NSWindowController {
     @IBOutlet weak var editorContainer: NSView!
     @IBOutlet weak var inspectorContainer: NSView!
 
-    @IBOutlet weak var panelContainer: NSView!
-    private var currentPanel: NSViewController?
+    private var pageSelectorWindowController: PageSelectorWindowController?
 
     var sidebarViewController: SidebarViewController? {
         didSet {
@@ -63,15 +62,9 @@ class DocumentWindowController: NSWindowController {
         let viewModel = PageSelectorViewModel(title: "Jump to page…", modelController: document.modelController) { page in
             print("page")
         }
-        let pageSelector = PageSelectorViewController(viewModel: viewModel)
-        self.present(pageSelector)
-    }
+        self.pageSelectorWindowController = PageSelectorWindowController(viewModel: viewModel)
+        self.pageSelectorWindowController?.showWindow(self)
 
-    func present(_ pageSelector: PageSelectorViewController) {
-        let view = pageSelector.view
-        self.panelContainer.addSubview(view, withInsets: NSEdgeInsetsZero)
-        self.panelContainer.isHidden = false
-        self.currentPanel = pageSelector
     }
 }
 
