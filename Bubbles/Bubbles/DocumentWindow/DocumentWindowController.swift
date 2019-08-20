@@ -59,12 +59,12 @@ class DocumentWindowController: NSWindowController {
             return
         }
 
-        let viewModel = PageSelectorViewModel(title: "Jump to page…", modelController: document.modelController) { page in
-            print("page")
+        let viewModel = PageSelectorViewModel(title: "Jump to page…", modelController: document.modelController) { [weak self] page in
+            self?.editorContainerViewController?.viewModel.currentObjectID = page.id
+            self?.sidebarViewController?.viewModel.selectedObjectID = page.id
         }
         self.pageSelectorWindowController = PageSelectorWindowController(viewModel: viewModel)
-        self.pageSelectorWindowController?.showWindow(self)
-
+        self.pageSelectorWindowController?.show(over: self.window)
     }
 }
 

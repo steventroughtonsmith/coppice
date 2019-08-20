@@ -26,6 +26,21 @@ class PageSelectorWindowController: NSWindowController {
     func windowDidResignMain(_ notification: Notification) {
         self.close()
     }
+
+    func show(over window: NSWindow?) {
+        if let parentWindow = window, let selectorWindow = self.window {
+            let parentFrame = parentWindow.frame
+            var selectorFrame = selectorWindow.frame
+
+            let deltaWidth = (parentFrame.width - selectorFrame.width) / 2
+            selectorFrame.origin.x = parentFrame.minX + deltaWidth
+
+            selectorFrame.origin.y = parentFrame.maxY - selectorFrame.height - 100
+
+            selectorWindow.setFrameOrigin(selectorFrame.origin)
+        }
+        self.showWindow(self)
+    }
 }
 
 extension PageSelectorWindowController: NSWindowDelegate {

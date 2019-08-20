@@ -39,7 +39,6 @@ class PageSelectorViewModel: NSObject {
         }
     }
 
-
     private func updatePages() {
         let sortedPages = self.modelController.pages.all.sorted(by: {$0.title < $1.title})
         guard self.searchTerm.count > 1 else {
@@ -51,6 +50,9 @@ class PageSelectorViewModel: NSObject {
         self.matchingPages = filteredPages.map { PageSelectorResult(page: $0) }
     }
 
+    func confirmSelection(of result: PageSelectorResult) {
+        self.selectionBlock(result.page)
+    }
 }
 
 class PageSelectorResult: NSObject {
