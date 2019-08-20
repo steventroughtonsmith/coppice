@@ -33,11 +33,7 @@ class PageSelectorViewModel: NSObject {
         }
     }
 
-    @objc dynamic private(set) var matchingPages = [PageSelectorResult]() {
-        didSet {
-            print("matching pages changed: \(self.matchingPages.count)")
-        }
-    }
+    @objc dynamic private(set) var matchingPages = [PageSelectorResult]()
 
     private func updatePages() {
         let sortedPages = self.modelController.pages.all.sorted(by: {$0.title < $1.title})
