@@ -55,13 +55,20 @@ class DocumentWindowController: NSWindowController {
 
 
     @IBAction func jumpToPage(_ sender: Any?) {
+        self.showPageSelector(title: "Jump to page…") { [weak self] page in
+            self?.editorContainerViewController?.viewModel.currentObjectID = page.id
+            self?.sidebarViewController?.viewModel.selectedObjectID = page.id
+        }
+    }
+
+    func showPageSelector(title: String, callback: @escaping PageSelectorViewModel.SelectionBlock) {
         guard let document = self.document as? Document else {
             return
         }
 
-        let viewModel = PageSelectorViewModel(title: "Jump to page…", modelController: document.modelController) { [weak self] page in
-            self?.editorContainerViewController?.viewModel.currentObjectID = page.id
-            self?.sidebarViewController?.viewModel.selectedObjectID = page.id
+        let viewModel = PageSelectorViewModel(title: title, modelController: document.modelController) { [weak self] page in
+            callback(page)
+            self?.pageSelectorWindowController = nil
         }
         self.pageSelectorWindowController = PageSelectorWindowController(viewModel: viewModel)
         self.pageSelectorWindowController?.show(over: self.window)

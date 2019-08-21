@@ -13,12 +13,12 @@ protocol PageSelectorView: class {}
 class PageSelectorViewModel: NSObject {
     weak var view: PageSelectorView?
 
-    typealias PageSelectionBlock = (Page) -> Void
+    typealias SelectionBlock = (Page) -> Void
 
     let modelController: BubblesModelController
     let title: String
-    let selectionBlock: PageSelectionBlock
-    init(title: String, modelController: BubblesModelController, selectionBlock: @escaping PageSelectionBlock) {
+    let selectionBlock: SelectionBlock
+    init(title: String, modelController: BubblesModelController, selectionBlock: @escaping SelectionBlock) {
         self.title = title
         self.modelController = modelController
         self.selectionBlock = selectionBlock

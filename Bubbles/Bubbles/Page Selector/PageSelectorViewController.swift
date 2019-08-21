@@ -31,7 +31,7 @@ class PageSelectorViewController: NSViewController {
 
     //For some reason NSWindow doesn't enable this and we can't do it in the window controller
     @IBAction func performClose(_ sender: Any?) {
-        self.view.window?.windowController?.close()
+        self.windowController?.close()
     }
 
     @IBAction func tableDoubleClicked(_ sender: Any?) {
@@ -43,8 +43,8 @@ class PageSelectorViewController: NSViewController {
             return false
         }
 
-        self.viewModel.confirmSelection(of: result)
         self.performClose(nil)
+        self.viewModel.confirmSelection(of: result)
         return true
     }
 }

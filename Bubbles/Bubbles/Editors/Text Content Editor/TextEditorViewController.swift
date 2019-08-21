@@ -33,7 +33,13 @@ class TextEditorViewController: NSViewController, Editor {
     }
 
     @objc func linkToPage(_ sender: Any?) {
-
+        guard let windowController = (self.windowController as? DocumentWindowController) else {
+            return
+        }
+        let selectedRange = self.textView.selectedRange()
+        windowController.showPageSelector(title: "Link to page…") { [weak self] (page) in
+            self?.viewModel.link(to: page, for: selectedRange)
+        }
     }
 }
 

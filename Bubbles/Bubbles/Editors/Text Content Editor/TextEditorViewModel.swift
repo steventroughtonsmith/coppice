@@ -24,13 +24,24 @@ class TextEditorViewModel: NSObject {
     }
 
     @objc dynamic var attributedText: NSAttributedString {
-        get { textContent.text }
-        set { textContent.text = newValue }
+        get { self.textContent.text }
+        set { self.textContent.text = newValue }
     }
 
     func createNewLinkedPage(for range: NSRange) {
         let selectedText = self.attributedText.attributedSubstring(from: range)
-        self.modelController.pages.newPage(title: selectedText.string)
+        let page = self.modelController.pages.newPage(title: selectedText.string)
+        self.link(to: page, for: range)
+    }
+
+    func link(to page: Page, for range: NSRange) {
+        guard let mutableText = self.attributedText.mutableCopy() as? NSMutableAttributedString else {
+            return
+        }
+
+        mutableText.addAttribute(.link, value: page.linkingURL, range: range)
+
+        self.attributedText = mutableText
     }
 }
 

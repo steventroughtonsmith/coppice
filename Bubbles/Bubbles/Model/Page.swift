@@ -21,6 +21,10 @@ final class Page: NSObject, CollectableModelObject {
     init(title: String? = nil) {
         self.title = title ?? "Untitled Page"
     }
+
+    var linkingURL: URL {
+        return URL(string: "bubblespage://\(self.id.uuid.uuidString)")!
+    }
     
     // MARK: - Attributes
     @objc dynamic var title: String {
