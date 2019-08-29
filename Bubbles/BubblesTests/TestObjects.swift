@@ -35,17 +35,24 @@ final class TestCollectableModelObject: NSObject, CollectableModelObject {
 
     var stringProperty = "Test"
 
-    var inverseRelationship: TestCollectableModelObject?
+    var inverseRelationship: RelationshipModelObject?
+}
+
+final class RelationshipModelObject: NSObject, CollectableModelObject {
+    var collection: ModelCollection<RelationshipModelObject>?
+
+    var id = ModelID(modelType: RelationshipModelObject.modelType)
+
+    static var modelType: ModelType = ModelType("Relationship")!
+
+    var relationship: Set<TestCollectableModelObject> {
+        self.relationship(for: \.inverseRelationship)
+    }
 }
 
 class TestModelController: NSObject, ModelController {
     var undoManager = UndoManager()
     var collections = [ModelType : Any]()
-
-    override init() {
-        super.init()
-        self.add(ModelCollection<TestCollectableModelObject>() { _ in TestCollectableModelObject () }, for: TestCollectableModelObject.modelType)
-    }
 
     func object(with id: ModelID) -> ModelObject? {
         return (self.collection(for: id.modelType) as? ModelCollection<TestCollectableModelObject>)?.objectWithID(id)

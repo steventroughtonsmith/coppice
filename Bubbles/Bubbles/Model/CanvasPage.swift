@@ -15,12 +15,6 @@ final class CanvasPage: NSObject, CollectableModelObject {
     weak var collection: ModelCollection<CanvasPage>?
 
     //MARK: - Attributes
-    weak var page: Page? {
-        didSet { self.didChange(\.page, oldValue: oldValue) }
-    }
-    weak var canvas: Canvas? {
-        didSet { self.didChange(\.canvas, oldValue: oldValue) }
-    }
     var position: CGPoint = .zero {
         didSet { self.didChange(\.position, oldValue: oldValue) }
     }
@@ -30,6 +24,13 @@ final class CanvasPage: NSObject, CollectableModelObject {
 
     
     //MARK: - Relationships
+    weak var page: Page? {
+        didSet { self.didChangeRelationship(\.page, oldValue: oldValue, inverseKeyPath: \.canvases) }
+    }
+    weak var canvas: Canvas? {
+        didSet { self.didChangeRelationship(\.canvas, oldValue: oldValue, inverseKeyPath: \.pages) }
+    }
+
     weak var parent: CanvasPage?
     var children: Set<CanvasPage> {
         self.relationship(for: \.parent)

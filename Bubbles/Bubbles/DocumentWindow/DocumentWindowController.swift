@@ -73,6 +73,28 @@ class DocumentWindowController: NSWindowController {
         self.pageSelectorWindowController = PageSelectorWindowController(viewModel: viewModel)
         self.pageSelectorWindowController?.show(over: self.window)
     }
+
+
+    //MARK: - Responder Chain
+    override func supplementalTarget(forAction action: Selector, sender: Any?) -> Any? {
+        if let editor = self.editorContainerViewController?.currentEditor,
+            editor.responds(to: action) {
+            return editor
+        }
+        return super.supplementalTarget(forAction: action, sender: sender)
+    }
+
+
+    //MARK: - Debugging
+    @IBAction func logResponderChain(_ sender: Any?) {
+        var responder = self.window?.firstResponder
+        var prefix = "|--"
+        while responder != nil {
+            print("\(prefix)\(responder!)")
+            prefix = "   \(prefix)"
+            responder = responder?.nextResponder
+        }
+    }
 }
 
 extension DocumentWindowController: SidebarViewModelDelegate {

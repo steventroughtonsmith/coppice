@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class ContentSelectorViewController: NSViewController, Editor {
+class ContentSelectorViewController: NSViewController {
     @IBOutlet weak var stackView: NSStackView!
 
     let viewModel: ContentSelectorViewModel

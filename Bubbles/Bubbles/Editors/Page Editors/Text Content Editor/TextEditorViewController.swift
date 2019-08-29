@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class TextEditorViewController: NSViewController, Editor {
+class TextEditorViewController: NSViewController {
     @IBOutlet var textView: NSTextView!
 
     @objc dynamic let viewModel: TextEditorViewModel

@@ -67,6 +67,18 @@ extension CollectableModelObject {
         }
     }
 
+    func didChangeRelationship<T: CollectableModelObject>(_ keyPath: ReferenceWritableKeyPath<Self, T?>, oldValue: T?, inverseKeyPath: KeyPath<T, Set<Self>>) {
+        let id = self.id
+        self.collection?.notifyOfChange(to: self)
+        self.collection?.registerUndoAction(withName: nil) { (collection) in
+            collection.setValue(oldValue, for: keyPath, ofObjectWithID: id)
+        }
+
+        if let value = oldValue ?? self[keyPath: keyPath] {
+        	value.collection?.notifyOfChange(to: value)
+        }
+    }
+
     func relationship<T: CollectableModelObject>(for keyPath: ReferenceWritableKeyPath<T, Self?>) -> Set<T> {
         guard let modelController = self.modelController else {
             return Set<T>()

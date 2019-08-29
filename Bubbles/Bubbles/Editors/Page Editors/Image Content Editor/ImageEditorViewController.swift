@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class ImageEditorViewController: NSViewController, Editor {
+class ImageEditorViewController: NSViewController {
     @IBOutlet weak var imageView: NSImageView!
     
     @objc dynamic let viewModel: ImageEditorViewModel

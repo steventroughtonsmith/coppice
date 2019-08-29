@@ -20,10 +20,14 @@ class EditorContainerViewController: NSViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private var currentEditor: Editor? {
+
+
+    private(set) var currentEditor: NSViewController? {
         didSet {
             oldValue?.view.removeFromSuperview()
+            oldValue?.removeFromParent()
             if let newEditor = self.currentEditor {
+                self.addChild(newEditor)
                 self.view.addSubview(newEditor.view, withInsets: NSEdgeInsetsZero)
             }
         }

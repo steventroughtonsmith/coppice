@@ -11,14 +11,17 @@ import XCTest
 
 class ModelCollectionTests: XCTestCase {
     var collection: ModelCollection<TestCollectableModelObject>!
+    var relationshipCollection: ModelCollection<RelationshipModelObject>!
     var modelController: TestModelController!
 
     override func setUp() {
         super.setUp()
 
         self.collection = ModelCollection<TestCollectableModelObject>() { _ in TestCollectableModelObject () }
+        self.relationshipCollection = ModelCollection<RelationshipModelObject>() { _ in RelationshipModelObject() }
         self.modelController = TestModelController()
-        self.modelController.add(collection, for: TestCollectableModelObject.modelType)
+        self.modelController.add(self.collection, for: TestCollectableModelObject.modelType)
+        self.modelController.add(self.relationshipCollection, for: RelationshipModelObject.modelType)
     }
 
     override func tearDown() {
@@ -144,7 +147,7 @@ class ModelCollectionTests: XCTestCase {
 
     //MARK: - objectsForRelationship(on:inverseKeyPath:)
     func test_objectsForRelationship_returnsObjectsMatchingInverseRelationship() {
-        let parent = self.collection.newObject()
+        let parent = self.relationshipCollection.newObject()
         let o1 = self.collection.newObject()
         o1.inverseRelationship = parent
         _ = self.collection.newObject()
@@ -299,8 +302,61 @@ class ModelCollectionTests: XCTestCase {
         XCTAssertEqual(object.stringProperty, "Bar")
     }
 
+    func test_collectableModelObjectDidChangeRelationship_notifiesCollectionOfChange() {
+        let parent = self.relationshipCollection.newObject()
+        let child1 = self.collection.newObject()
+        child1.inverseRelationship = parent
+        let observerExpectation = self.expectation(description: "Observer 1 Notified")
+        _ = self.collection.addObserver { _, _ in
+            observerExpectation.fulfill()
+        }
+
+        child1.didChangeRelationship(\.inverseRelationship, oldValue: nil, inverseKeyPath: \.relationship)
+        wait(for: [observerExpectation], timeout: 0)
+    }
+
+    func test_collectableModelObjectDidChangeRelationship_registersUndoActionToRevertValueChange() {
+        let parent = self.relationshipCollection.newObject()
+        let child1 = self.collection.newObject()
+        child1.inverseRelationship = parent
+
+        XCTAssertFalse(self.modelController.undoManager.canUndo)
+        child1.didChangeRelationship(\.inverseRelationship, oldValue: nil, inverseKeyPath: \.relationship)
+
+        XCTAssertTrue(self.modelController.undoManager.canUndo)
+
+        self.modelController.undoManager.undo()
+
+        XCTAssertNil(child1.inverseRelationship)
+    }
+
+    func test_collectableModelObjectDidChangeRelationship_notifiesInverseObjectsCollectionOfChangeIfRemovingFromRelationship() {
+        let parent = self.relationshipCollection.newObject()
+        let child1 = self.collection.newObject()
+        let observerExpectation = self.expectation(description: "Observer 1 Notified")
+        _ = self.relationshipCollection.addObserver { _, _ in
+            observerExpectation.fulfill()
+        }
+
+        child1.didChangeRelationship(\.inverseRelationship, oldValue: parent, inverseKeyPath: \.relationship)
+        wait(for: [observerExpectation], timeout: 0)
+    }
+
+    func test_collectableModelObjectDidChangeRelationship_notifiesInverseObjectsCollectionOfChangeIfAddingToRelationship() {
+        let parent = self.relationshipCollection.newObject()
+        let child1 = self.collection.newObject()
+        child1.inverseRelationship = parent
+        let observerExpectation = self.expectation(description: "Observer 1 Notified")
+        _ = self.relationshipCollection.addObserver { _, _ in
+            observerExpectation.fulfill()
+        }
+
+        child1.didChangeRelationship(\.inverseRelationship, oldValue: nil, inverseKeyPath: \.relationship)
+        wait(for: [observerExpectation], timeout: 0)
+    }
+
     func test_collectableModelObjectRelationshipForKeyPath_fetchesObjectsForRelationshipOnSelfFromCollection() {
-        let parent = self.collection.newObject()
+        let parent = self.relationshipCollection.newObject()
         let o1 = self.collection.newObject()
         o1.inverseRelationship = parent
         _ = self.collection.newObject()

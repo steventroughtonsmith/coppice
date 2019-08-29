@@ -12,10 +12,6 @@ protocol EditorContainerView: class {
     func editorChanged()
 }
 
-protocol Editor {
-    var view: NSView { get }
-}
-
 class EditorContainerViewModel: NSObject {
     weak var view: EditorContainerView?
 
@@ -40,9 +36,13 @@ class EditorContainerViewModel: NSObject {
         return self.modelController.object(with: objectID)
     }
 
-    var editor: Editor? {
+    var editor: NSViewController? {
         if (UserDefaults.standard.bool(forKey: "M3UseDebugEditors")) {
             return self.debugEditor
+        }
+        if let canvas = self.currentObject as? Canvas {
+            let viewModel = CanvasEditorViewModel(canvas: canvas, modelController: self.modelController)
+            return CanvasEditorViewController(viewModel: viewModel)
         }
         if let page = self.currentObject as? Page {
             switch page.content.contentType {
@@ -64,7 +64,7 @@ class EditorContainerViewModel: NSObject {
     }
 
 
-    private var debugEditor: Editor? {
+    private var debugEditor: NSViewController? {
         if let canvas = self.currentObject as? Canvas {
             let viewModel = DebugCanvasEditorViewModel(canvas: canvas, modelController: self.modelController)
             return DebugCanvasEditor(viewModel: viewModel)

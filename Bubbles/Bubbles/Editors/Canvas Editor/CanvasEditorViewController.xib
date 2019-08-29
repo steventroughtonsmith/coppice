@@ -1,11 +1,15 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11134" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14865.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11134"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14865.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="CanvasEditorViewController" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="CanvasEditorViewController" customModule="Bubbles" customModuleProvider="target">
             <connections>
+                <outlet property="canvasView" destination="PUw-B3-8ie" id="pZV-PX-WgV"/>
+                <outlet property="scrollView" destination="WXD-co-iCD" id="Unx-zF-neD"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
         </customObject>
@@ -14,6 +18,51 @@
         <customView id="Hz6-mo-xeY">
             <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WXD-co-iCD">
+                    <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
+                    <clipView key="contentView" id="0wh-ER-x58">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view id="PUw-B3-8ie">
+                                <rect key="frame" x="0.0" y="0.0" width="465" height="257"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rUk-Uq-fp0">
+                                        <rect key="frame" x="208" y="121" width="49" height="16"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Canvas" id="ZQ4-tY-FyL">
+                                            <font key="font" usesAppearanceFont="YES"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="rUk-Uq-fp0" firstAttribute="centerX" secondItem="PUw-B3-8ie" secondAttribute="centerX" id="Hdj-Sy-w3P"/>
+                                    <constraint firstItem="rUk-Uq-fp0" firstAttribute="centerY" secondItem="PUw-B3-8ie" secondAttribute="centerY" id="K8s-No-HVn"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.25098234415054321" green="0.25097692012786865" blue="0.25098058581352234" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    </clipView>
+                    <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="qrD-Pn-Wt2">
+                        <rect key="frame" x="0.0" y="256" width="480" height="16"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="AfH-uV-J0m">
+                        <rect key="frame" x="464" y="0.0" width="16" height="272"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                </scrollView>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="WXD-co-iCD" secondAttribute="bottom" id="FDw-ez-aWW"/>
+                <constraint firstItem="WXD-co-iCD" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="GRU-Ml-fDU"/>
+                <constraint firstItem="WXD-co-iCD" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="PqC-vB-bI8"/>
+                <constraint firstAttribute="trailing" secondItem="WXD-co-iCD" secondAttribute="trailing" id="evb-4M-iqi"/>
+            </constraints>
+            <point key="canvasLocation" x="139" y="154"/>
         </customView>
     </objects>
 </document>

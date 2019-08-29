@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class DebugPageEditor: NSViewController, Editor {
+class DebugPageEditor: NSViewController {
     let viewModel: DebugPageEditorViewModel
     init(viewModel: DebugPageEditorViewModel) {
         self.viewModel = viewModel

@@ -18,7 +18,7 @@ enum Columns: String {
     case parent
 }
 
-class DebugCanvasEditor: NSViewController, Editor {
+class DebugCanvasEditor: NSViewController {
     @IBOutlet weak var tableView: NSTableView!
     @IBOutlet var arrayController: NSArrayController!
 
