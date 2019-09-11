@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class TestCanvasPageViewController: NSViewController, PageView {
+class TestCanvasPageViewController: NSViewController {
 
     let id: UUID
     var width: CGFloat {

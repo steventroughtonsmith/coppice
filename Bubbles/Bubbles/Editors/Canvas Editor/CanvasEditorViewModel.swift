@@ -72,7 +72,6 @@ class CanvasEditorViewModel: NSObject {
         let removedPages = self.canvasPages.subtracting(newPages)
 
         self.canvasPages = newPages
-        self.layoutEngine.add(Array(addedPages))
-        self.layoutEngine.remove(Array(removedPages))
+
     }
 }

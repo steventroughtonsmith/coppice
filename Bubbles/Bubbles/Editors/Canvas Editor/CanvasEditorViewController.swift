@@ -17,7 +17,6 @@ class CanvasEditorViewController: NSViewController {
         self.viewModel = viewModel
         super.init(nibName: "CanvasEditorViewController", bundle: nil)
         self.viewModel.view = self
-        self.viewModel.layoutEngine.canvasView = self
     }
 
     required init?(coder: NSCoder) {
@@ -33,18 +32,3 @@ class CanvasEditorViewController: NSViewController {
 extension CanvasEditorViewController: CanvasEditorView {
 
 }
-
-extension CanvasEditorViewController: CanvasView {
-    func add(_ pageView: PageLayoutModel) {
-
-    }
-
-    func remove(_ pageView: PageLayoutModel) {
-
-    }
-
-    func update(_ pageViews: [PageLayoutModel]) {
-
-    }
-}
-

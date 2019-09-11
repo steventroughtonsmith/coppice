@@ -1,0 +1,49 @@
+//
+//  PageTitleBarEventContext.swift
+//  Canvas Final
+//
+//  Created by Martin Pilkington on 11/09/2019.
+//  Copyright © 2019 M Cubed Software. All rights reserved.
+//
+
+import Cocoa
+
+class PageTitleBarEventContext: CanvasEventContext {
+    private var lastLocation: CGPoint?
+
+    let page: LayoutEnginePage
+    init(page: LayoutEnginePage) {
+        self.page = page
+    }
+
+    func downEvent(at location: CGPoint, modifiers: LayoutEventModifiers, in layout: CanvasLayoutEngine) {
+        //Toggle selection if the user is shift clicking
+        if (modifiers.contains(.shift)) {
+            self.page.selected = !self.page.selected
+        }
+        //Otherwise we want to select just the clicked page if it isn't already selected (if it is then we assume the user is about the drag the selection
+        else if (self.page.selected == false) {
+            layout.deselectAll()
+            self.page.selected = true
+        }
+
+        self.lastLocation = location
+    }
+
+    func draggedEvent(at location: CGPoint, modifiers: LayoutEventModifiers, in layout: CanvasLayoutEngine) {
+        guard let lastLocation = self.lastLocation else {
+            return
+        }
+        let delta = location.minus(lastLocation)
+        for page in layout.selectedPages {
+            page.canvasOrigin = page.canvasOrigin.plus(delta)
+            page.pageOrigin = page.pageOrigin.plus(delta)
+        }
+        self.lastLocation = location
+    }
+
+    func upEvent(at location: CGPoint, modifiers: LayoutEventModifiers, in layout: CanvasLayoutEngine) {
+        let movedPages = layout.selectedPages
+        layout.finishedModifying(movedPages)
+    }
+}

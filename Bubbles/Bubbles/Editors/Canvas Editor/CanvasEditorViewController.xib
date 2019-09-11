@@ -28,20 +28,6 @@
                             <view id="PUw-B3-8ie">
                                 <rect key="frame" x="0.0" y="0.0" width="465" height="257"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <subviews>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rUk-Uq-fp0">
-                                        <rect key="frame" x="208" y="121" width="49" height="16"/>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Canvas" id="ZQ4-tY-FyL">
-                                            <font key="font" usesAppearanceFont="YES"/>
-                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="rUk-Uq-fp0" firstAttribute="centerX" secondItem="PUw-B3-8ie" secondAttribute="centerX" id="Hdj-Sy-w3P"/>
-                                    <constraint firstItem="rUk-Uq-fp0" firstAttribute="centerY" secondItem="PUw-B3-8ie" secondAttribute="centerY" id="K8s-No-HVn"/>
-                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="0.25098234415054321" green="0.25097692012786865" blue="0.25098058581352234" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
