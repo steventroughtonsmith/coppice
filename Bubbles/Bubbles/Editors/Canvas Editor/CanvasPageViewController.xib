@@ -8,50 +8,77 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="CanvasPageViewController" customModule="Bubbles" customModuleProvider="target">
             <connections>
-                <outlet property="view" destination="0hL-Hb-tOc" id="a0S-SC-HBc"/>
+                <outlet property="view" destination="z97-7h-MV3" id="UJC-Zc-64D"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <box boxType="custom" cornerRadius="4" title="Box" id="0hL-Hb-tOc">
-            <rect key="frame" x="0.0" y="0.0" width="490" height="389"/>
+        <customView id="z97-7h-MV3" customClass="ResizableCanvasElement" customModule="Bubbles" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="516" height="485"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <view key="contentView" id="5Ho-x6-fcy">
-                <rect key="frame" x="1" y="1" width="488" height="387"/>
-                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                <subviews>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8QV-BG-GXx">
-                        <rect key="frame" x="227" y="363" width="35" height="16"/>
-                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Title" id="3mW-dd-igw">
-                            <font key="font" usesAppearanceFont="YES"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YuF-c0-uxg">
-                        <rect key="frame" x="8" y="362" width="17" height="18"/>
-                        <buttonCell key="cell" type="inline" bezelStyle="inline" image="NSStopProgressFreestandingTemplate" imagePosition="overlaps" alignment="center" inset="2" id="nC9-7v-fWz">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="smallSystemBold"/>
-                        </buttonCell>
-                    </button>
-                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="wWQ-K4-REw">
-                        <rect key="frame" x="0.0" y="0.0" width="488" height="355"/>
-                    </customView>
-                </subviews>
-                <constraints>
-                    <constraint firstAttribute="bottom" secondItem="wWQ-K4-REw" secondAttribute="bottom" id="4rt-dr-HG9"/>
-                    <constraint firstItem="YuF-c0-uxg" firstAttribute="centerY" secondItem="8QV-BG-GXx" secondAttribute="centerY" id="6nD-sN-hhz"/>
-                    <constraint firstItem="YuF-c0-uxg" firstAttribute="leading" secondItem="5Ho-x6-fcy" secondAttribute="leading" constant="8" id="7gY-dN-vlZ"/>
-                    <constraint firstItem="8QV-BG-GXx" firstAttribute="top" secondItem="5Ho-x6-fcy" secondAttribute="top" constant="8" id="97z-CK-Kik"/>
-                    <constraint firstItem="8QV-BG-GXx" firstAttribute="centerX" secondItem="5Ho-x6-fcy" secondAttribute="centerX" id="bQZ-fW-kbj"/>
-                    <constraint firstAttribute="trailing" secondItem="wWQ-K4-REw" secondAttribute="trailing" id="dEy-e3-Dmd"/>
-                    <constraint firstItem="wWQ-K4-REw" firstAttribute="top" secondItem="8QV-BG-GXx" secondAttribute="bottom" constant="8" id="g6d-x4-Tug"/>
-                    <constraint firstItem="wWQ-K4-REw" firstAttribute="leading" secondItem="5Ho-x6-fcy" secondAttribute="leading" id="tdG-Hn-EvJ"/>
-                </constraints>
-            </view>
-            <point key="canvasLocation" x="131" y="-83.5"/>
-        </box>
+            <subviews>
+                <box boxType="custom" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="0hL-Hb-tOc">
+                    <rect key="frame" x="2" y="2" width="512" height="481"/>
+                    <view key="contentView" id="5Ho-x6-fcy">
+                        <rect key="frame" x="1" y="1" width="510" height="479"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="AZo-jd-3Q7">
+                                <rect key="frame" x="0.0" y="447" width="510" height="32"/>
+                                <subviews>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8QV-BG-GXx">
+                                        <rect key="frame" x="238" y="8" width="35" height="16"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Title" id="3mW-dd-igw">
+                                            <font key="font" usesAppearanceFont="YES"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YuF-c0-uxg">
+                                        <rect key="frame" x="8" y="7" width="17" height="18"/>
+                                        <buttonCell key="cell" type="inline" bezelStyle="inline" image="NSStopProgressFreestandingTemplate" imagePosition="overlaps" alignment="center" inset="2" id="nC9-7v-fWz">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="smallSystemBold"/>
+                                        </buttonCell>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="YuF-c0-uxg" firstAttribute="centerY" secondItem="AZo-jd-3Q7" secondAttribute="centerY" id="11X-6G-B8d"/>
+                                    <constraint firstItem="8QV-BG-GXx" firstAttribute="centerY" secondItem="AZo-jd-3Q7" secondAttribute="centerY" id="Aew-Bw-qdK"/>
+                                    <constraint firstItem="8QV-BG-GXx" firstAttribute="centerX" secondItem="AZo-jd-3Q7" secondAttribute="centerX" id="EPN-GW-vSg"/>
+                                    <constraint firstAttribute="height" constant="32" id="S9B-Yc-Juj"/>
+                                    <constraint firstItem="YuF-c0-uxg" firstAttribute="leading" secondItem="AZo-jd-3Q7" secondAttribute="leading" constant="8" id="j1V-hf-ehq"/>
+                                </constraints>
+                            </customView>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="wWQ-K4-REw">
+                                <rect key="frame" x="0.0" y="0.0" width="510" height="447"/>
+                            </customView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="AZo-jd-3Q7" secondAttribute="trailing" id="4pE-T8-tsr"/>
+                            <constraint firstAttribute="bottom" secondItem="wWQ-K4-REw" secondAttribute="bottom" id="4rt-dr-HG9"/>
+                            <constraint firstItem="AZo-jd-3Q7" firstAttribute="top" secondItem="5Ho-x6-fcy" secondAttribute="top" id="EKu-AT-iRe"/>
+                            <constraint firstAttribute="trailing" secondItem="wWQ-K4-REw" secondAttribute="trailing" id="dEy-e3-Dmd"/>
+                            <constraint firstItem="AZo-jd-3Q7" firstAttribute="leading" secondItem="5Ho-x6-fcy" secondAttribute="leading" id="iDi-uo-rHZ"/>
+                            <constraint firstItem="wWQ-K4-REw" firstAttribute="top" secondItem="AZo-jd-3Q7" secondAttribute="bottom" id="ssF-w3-9XC"/>
+                            <constraint firstItem="wWQ-K4-REw" firstAttribute="leading" secondItem="5Ho-x6-fcy" secondAttribute="leading" id="tdG-Hn-EvJ"/>
+                        </constraints>
+                    </view>
+                </box>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="0hL-Hb-tOc" secondAttribute="trailing" constant="2" id="EHF-do-Ztx"/>
+                <constraint firstItem="0hL-Hb-tOc" firstAttribute="top" secondItem="z97-7h-MV3" secondAttribute="top" constant="2" id="OGJ-hr-aCN"/>
+                <constraint firstItem="0hL-Hb-tOc" firstAttribute="leading" secondItem="z97-7h-MV3" secondAttribute="leading" constant="2" id="kqZ-XE-peq"/>
+                <constraint firstAttribute="bottom" secondItem="0hL-Hb-tOc" secondAttribute="bottom" constant="2" id="ySx-hS-ZI8"/>
+            </constraints>
+            <connections>
+                <outlet property="boxView" destination="0hL-Hb-tOc" id="w1K-Rf-wFl"/>
+                <outlet property="titleBar" destination="AZo-jd-3Q7" id="zoQ-ip-XI7"/>
+                <outlet property="titleLabel" destination="8QV-BG-GXx" id="YRw-Ba-wIr"/>
+            </connections>
+            <point key="canvasLocation" x="90" y="294.5"/>
+        </customView>
     </objects>
     <resources>
         <image name="NSStopProgressFreestandingTemplate" width="14" height="14"/>

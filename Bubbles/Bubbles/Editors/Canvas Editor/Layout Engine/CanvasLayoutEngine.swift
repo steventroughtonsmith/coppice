@@ -75,6 +75,7 @@ class CanvasLayoutEngine: NSObject {
 
         self.canvasSize = contentFrame.size
         self.pageSpaceOffset = contentFrame.origin.multiplied(by: -1)
+        self.view?.layoutChanged()
     }
 
     private func updatePageCanvasFrames() {
@@ -125,6 +126,7 @@ class CanvasLayoutEngine: NSObject {
 
     func deselectAll() {
         self.selectedPages.forEach { $0.selected = false }
+        self.view?.layoutChanged()
     }
 
     func finishedModifying(_ pages: [LayoutEnginePage]) {
@@ -157,14 +159,17 @@ class CanvasLayoutEngine: NSObject {
     func downEvent(at location: CGPoint, modifiers: LayoutEventModifiers = []) {
         self.currentEventContext = self.createEventContext(for: location)
         self.currentEventContext?.downEvent(at: location, modifiers: modifiers, in: self)
+        self.view?.layoutChanged()
     }
 
     func draggedEvent(at location: CGPoint, modifiers: LayoutEventModifiers = []) {
         self.currentEventContext?.draggedEvent(at: location, modifiers: modifiers, in: self)
+        self.view?.layoutChanged()
     }
 
     func upEvent(at location: CGPoint, modifiers: LayoutEventModifiers = []) {
         self.currentEventContext?.upEvent(at: location, modifiers: modifiers, in: self)
         self.recalculateCanvasSize()
+        self.view?.layoutChanged()
     }
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum LayoutEnginePageComponent: Equatable {
+enum LayoutEnginePageComponent: CaseIterable, Equatable {
     case titleBar
     case resizeLeft
     case resizeTopLeft
@@ -42,7 +42,7 @@ protocol LayoutPageComponentProvider {
 
 class LayoutEnginePage: Equatable {
     let id: UUID
-    let componentProvider: LayoutPageComponentProvider
+    var componentProvider: LayoutPageComponentProvider?
     var canvasOrigin: CGPoint = .zero
     var pageOrigin: CGPoint
     var size: CGSize
@@ -58,7 +58,7 @@ class LayoutEnginePage: Equatable {
     }
 
     weak var layoutEngine: CanvasLayoutEngine?
-    init(id: UUID, pageOrigin: CGPoint, size: CGSize, componentProvider: LayoutPageComponentProvider) {
+    init(id: UUID, pageOrigin: CGPoint, size: CGSize, componentProvider: LayoutPageComponentProvider? = nil) {
         self.id = id
         self.componentProvider = componentProvider
         self.pageOrigin = pageOrigin
@@ -66,7 +66,7 @@ class LayoutEnginePage: Equatable {
     }
 
     func component(at point: CGPoint) -> LayoutEnginePageComponent? {
-        return self.componentProvider.component(at: point, in: self)
+        return self.componentProvider?.component(at: point, in: self)
     }
 
     static func == (lhs: LayoutEnginePage, rhs: LayoutEnginePage) -> Bool {

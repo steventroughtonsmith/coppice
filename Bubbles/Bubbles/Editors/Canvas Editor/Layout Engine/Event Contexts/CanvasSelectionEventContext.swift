@@ -59,5 +59,6 @@ class CanvasSelectionEventContext: CanvasEventContext {
         if (location == self.startPoint) {
             layout.deselectAll()
         }
+        layout.selectionRect = nil
     }
 }

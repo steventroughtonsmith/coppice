@@ -47,6 +47,10 @@
 		99C03EFC23293D8A00EB7516 /* PageTitleBarEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03EF723293D8A00EB7516 /* PageTitleBarEventContext.swift */; };
 		99C03EFD23293D8A00EB7516 /* ResizePageEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03EF823293D8A00EB7516 /* ResizePageEventContext.swift */; };
 		99C03F0123293DAD00EB7516 /* CanvasLayoutEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03F0023293DAD00EB7516 /* CanvasLayoutEngineTests.swift */; };
+		99C03F03232A8E9500EB7516 /* EdgeResizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03F02232A8E9500EB7516 /* EdgeResizable.swift */; };
+		99C03F07232A8ED200EB7516 /* ResizableCanvasElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03F06232A8ED200EB7516 /* ResizableCanvasElement.swift */; };
+		99C03F09232A99F400EB7516 /* Cursors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99C03F08232A99F400EB7516 /* Cursors.xcassets */; };
+		99C03F0B232A9A5E00EB7516 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03F0A232A9A5E00EB7516 /* CanvasView.swift */; };
 		99C41B7122DCA96700C82DDE /* BubblesModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C41B7022DCA96700C82DDE /* BubblesModelController.swift */; };
 		99C41B7322DCA98600C82DDE /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C41B7222DCA98600C82DDE /* Page.swift */; };
 		99C41B7522DCA9A100C82DDE /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C41B7422DCA9A100C82DDE /* Canvas.swift */; };
@@ -136,6 +140,10 @@
 		99C03EF723293D8A00EB7516 /* PageTitleBarEventContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageTitleBarEventContext.swift; sourceTree = "<group>"; };
 		99C03EF823293D8A00EB7516 /* ResizePageEventContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResizePageEventContext.swift; sourceTree = "<group>"; };
 		99C03F0023293DAD00EB7516 /* CanvasLayoutEngineTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasLayoutEngineTests.swift; sourceTree = "<group>"; };
+		99C03F02232A8E9500EB7516 /* EdgeResizable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EdgeResizable.swift; sourceTree = "<group>"; };
+		99C03F06232A8ED200EB7516 /* ResizableCanvasElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizableCanvasElement.swift; sourceTree = "<group>"; };
+		99C03F08232A99F400EB7516 /* Cursors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Cursors.xcassets; sourceTree = "<group>"; };
+		99C03F0A232A9A5E00EB7516 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
 		99C41B7022DCA96700C82DDE /* BubblesModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubblesModelController.swift; sourceTree = "<group>"; };
 		99C41B7222DCA98600C82DDE /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		99C41B7422DCA9A100C82DDE /* Canvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
@@ -281,11 +289,14 @@
 			children = (
 				9958107E230D7EEB00D996C4 /* CanvasEditorViewModel.swift */,
 				99581080230D7EFB00D996C4 /* CanvasEditorViewController.swift */,
+				99C03F0A232A9A5E00EB7516 /* CanvasView.swift */,
 				99581081230D7EFB00D996C4 /* CanvasEditorViewController.xib */,
+				99C03EF223293D8A00EB7516 /* Layout Engine */,
 				99581094230D93F700D996C4 /* CanvasPageViewModel.swift */,
 				99581090230D92C600D996C4 /* CanvasPageViewController.swift */,
+				99C03F02232A8E9500EB7516 /* EdgeResizable.swift */,
 				99581091230D92C600D996C4 /* CanvasPageViewController.xib */,
-				99C03EF223293D8A00EB7516 /* Layout Engine */,
+				99C03F06232A8ED200EB7516 /* ResizableCanvasElement.swift */,
 				9958108B230D908200D996C4 /* Test CanvasPage View */,
 			);
 			path = "Canvas Editor";
@@ -459,6 +470,7 @@
 				992A5CA022DDF4820012CCB6 /* Editors */,
 				99C865242306D0CC004C7B89 /* Page Selector */,
 				99FE019722CD1038004D380D /* Assets.xcassets */,
+				99C03F08232A99F400EB7516 /* Cursors.xcassets */,
 				99FE019922CD1038004D380D /* MainMenu.xib */,
 				99FE019C22CD1038004D380D /* Info.plist */,
 				99FE019D22CD1038004D380D /* Bubbles.entitlements */,
@@ -621,6 +633,7 @@
 				99C8652A2306D141004C7B89 /* PageSelectorViewController.xib in Resources */,
 				99581083230D7EFB00D996C4 /* CanvasEditorViewController.xib in Resources */,
 				99581093230D92C600D996C4 /* CanvasPageViewController.xib in Resources */,
+				99C03F09232A99F400EB7516 /* Cursors.xcassets in Resources */,
 				99FE01E522D4CC8A004D380D /* DocumentWindow.xib in Resources */,
 				99FE019B22CD1038004D380D /* MainMenu.xib in Resources */,
 			);
@@ -650,6 +663,7 @@
 				992A5CAA22DDF5000012CCB6 /* DebugCanvasEditor.swift in Sources */,
 				99C03EF123293D6C00EB7516 /* Array+M3Extensions.swift in Sources */,
 				99C865292306D141004C7B89 /* PageSelectorViewController.swift in Sources */,
+				99C03F07232A8ED200EB7516 /* ResizableCanvasElement.swift in Sources */,
 				99581082230D7EFB00D996C4 /* CanvasEditorViewController.swift in Sources */,
 				99581092230D92C600D996C4 /* CanvasPageViewController.swift in Sources */,
 				99C03EFC23293D8A00EB7516 /* PageTitleBarEventContext.swift in Sources */,
@@ -658,6 +672,7 @@
 				99C865202302E256004C7B89 /* ImageEditorViewController.swift in Sources */,
 				99C8650923016EB2004C7B89 /* TextEditorViewModel.swift in Sources */,
 				99581095230D93F700D996C4 /* CanvasPageViewModel.swift in Sources */,
+				99C03F03232A8E9500EB7516 /* EdgeResizable.swift in Sources */,
 				99C86511230174B9004C7B89 /* PageContent.swift in Sources */,
 				99FE019322CD1037004D380D /* Document.swift in Sources */,
 				99C41B7122DCA96700C82DDE /* BubblesModelController.swift in Sources */,
@@ -667,6 +682,7 @@
 				99C03EFD23293D8A00EB7516 /* ResizePageEventContext.swift in Sources */,
 				990B6A3922EB482D00523C06 /* ModelObject.swift in Sources */,
 				99DEF28822F1D72D0020A7CE /* SidebarViewModelTypes.swift in Sources */,
+				99C03F0B232A9A5E00EB7516 /* CanvasView.swift in Sources */,
 				99C03EF923293D8A00EB7516 /* LayoutEnginePage.swift in Sources */,
 				99DEF28F22F33A790020A7CE /* ModelID.swift in Sources */,
 				99C865232302E267004C7B89 /* ImageEditorViewModel.swift in Sources */,
