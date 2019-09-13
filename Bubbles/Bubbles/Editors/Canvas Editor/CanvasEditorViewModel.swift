@@ -25,6 +25,8 @@ class CanvasEditorViewModel: NSObject {
 
         self.setupObservation()
         self.updatePages()
+
+        self.layoutEngine.delegate = self
     }
 
 
@@ -47,6 +49,11 @@ class CanvasEditorViewModel: NSObject {
     //Using an add to canvas control
     //Dropping a page on the canvas
     //Dropping content on a canvas
+
+    func close(_ canvasPage: CanvasPage) {
+        canvasPage.canvas = nil
+        self.modelController.canvasPages.delete(canvasPage)
+    }
 
     //MARK: - Page Management
     private(set) var canvasPages = Set<CanvasPage>()
@@ -89,5 +96,17 @@ class CanvasEditorViewModel: NSObject {
         self.removePages(removedPages)
 
         self.canvasPages = newPages
+    }
+}
+
+extension CanvasEditorViewModel: CanvasLayoutEngineDelegate {
+    func moved(pages: [LayoutEnginePage], in layout: CanvasLayoutEngine) {
+        for page in pages {
+            guard let canvasPage = self.canvasPage(with: page.id) else {
+                continue
+            }
+            canvasPage.position = page.pageOrigin
+            canvasPage.size = page.size
+        }
     }
 }

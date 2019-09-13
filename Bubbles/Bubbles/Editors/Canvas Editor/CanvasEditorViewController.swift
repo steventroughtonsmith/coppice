@@ -27,17 +27,43 @@ class CanvasEditorViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.canvasView.layoutEngine = self.viewModel.layoutEngine
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(scrollingChanged(_:)),
+                                               name: NSView.boundsDidChangeNotification,
+                                               object: self.scrollView.contentView)
+        self.layout()
     }
 
     @IBAction func addTestPage(_ sender: Any?) {
         self.viewModel.createTestPage()
     }
 
+    private var lastScrollPoint: CGPoint?
+    @objc func scrollingChanged(_ sender: Any?) {
+        let scrollPoint = self.scrollView.contentView.bounds.origin
+        self.lastScrollPoint = self.viewModel.layoutEngine.convertPointToPageSpace(scrollPoint)
+    }
+
     
     //MARK: - Layout
     @objc func layout() {
+        self.updateCanvas()
         self.updateSelectionRect()
         self.updatePages()
+    }
+
+    private func updateCanvas() {
+        self.canvasView.frame.size = self.viewModel.layoutEngine.canvasSize
+        if let lastScrollPoint = self.lastScrollPoint, self.viewModel.layoutEngine.pages.count > 0 {
+            let canvasPoint = self.viewModel.layoutEngine.convertPointToCanvasSpace(lastScrollPoint)
+            self.scrollView.contentView.scroll(to: canvasPoint)
+        }
+        else {
+            let x = (self.canvasView.frame.width - self.scrollView.frame.width) / 2
+            let y = (self.canvasView.frame.height - self.scrollView.frame.height) / 2
+            self.scrollView.contentView.scroll(to: CGPoint(x: x, y: y))
+        }
+
     }
 
     private func updateSelectionRect() {
@@ -64,6 +90,7 @@ class CanvasEditorViewController: NSViewController {
 
     private func apply(_ layoutPage: LayoutEnginePage, to viewController: CanvasPageViewController) {
         viewController.view.frame = layoutPage.canvasFrame
+        viewController.selected = layoutPage.selected
     }
 
 
@@ -83,6 +110,7 @@ class CanvasEditorViewController: NSViewController {
 
         let viewModel = CanvasPageViewModel(canvasPage: canvasPage)
         let viewController = CanvasPageViewController(viewModel: viewModel)
+        viewController.delegate = self
         page.componentProvider = viewController
 
         self.addChild(viewController)
@@ -110,5 +138,11 @@ extension CanvasEditorViewController: CanvasLayoutView {
 
     var viewPortFrame: CGRect {
         return self.scrollView.contentView.bounds
+    }
+}
+
+extension CanvasEditorViewController: CanvasPageViewControllerDelegate {
+    func close(_ page: CanvasPageViewController) {
+        self.viewModel.close(page.viewModel.canvasPage)
     }
 }

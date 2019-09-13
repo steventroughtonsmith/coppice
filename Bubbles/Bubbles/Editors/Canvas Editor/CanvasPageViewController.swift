@@ -8,8 +8,15 @@
 
 import Cocoa
 
-class CanvasPageViewController: NSViewController {
+protocol CanvasPageViewControllerDelegate: class {
+    func close(_ page: CanvasPageViewController)
+}
 
+class CanvasPageViewController: NSViewController, CanvasPageView {
+    weak var delegate: CanvasPageViewControllerDelegate?
+
+
+    @IBOutlet weak var contentContainer: NSView!
     var uuid: UUID {
         return self.viewModel.canvasPage.id.uuid
     }
@@ -19,15 +26,32 @@ class CanvasPageViewController: NSViewController {
         set { self.view = newValue }
     }
 
+    var selected: Bool = false {
+        didSet {
+            self.updateBorder()
+        }
+    }
+
     let viewModel: CanvasPageViewModel
     init(viewModel: CanvasPageViewModel) {
         self.viewModel = viewModel
         super.init(nibName: "CanvasPageViewController", bundle: nil)
-//        viewModel.view = self
+        viewModel.view = self
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @IBAction func close(_ sender: Any) {
+        self.delegate?.close(self)
+    }
+
+    private func updateBorder() {
+        let colour = self.selected ? NSColor.selectedControlColor : NSColor(named: "PageViewBorder")!
+        let size: CGFloat = self.selected ? 2 : 1
+        self.typedView.boxView.borderColor = colour
+        self.typedView.boxView.borderWidth = size
     }
 }
 

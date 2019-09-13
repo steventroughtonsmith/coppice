@@ -3,11 +3,13 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14865.1"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="CanvasPageViewController" customModule="Bubbles" customModuleProvider="target">
             <connections>
+                <outlet property="contentContainer" destination="wWQ-K4-REw" id="God-zR-8Qr"/>
                 <outlet property="view" destination="z97-7h-MV3" id="UJC-Zc-64D"/>
             </connections>
         </customObject>
@@ -40,6 +42,9 @@
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="smallSystemBold"/>
                                         </buttonCell>
+                                        <connections>
+                                            <action selector="close:" target="-2" id="Q5G-BF-SKh"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -64,6 +69,8 @@
                             <constraint firstItem="wWQ-K4-REw" firstAttribute="leading" secondItem="5Ho-x6-fcy" secondAttribute="leading" id="tdG-Hn-EvJ"/>
                         </constraints>
                     </view>
+                    <color key="borderColor" name="PageViewBorder"/>
+                    <color key="fillColor" name="PageViewBackground"/>
                 </box>
             </subviews>
             <constraints>
@@ -82,5 +89,11 @@
     </objects>
     <resources>
         <image name="NSStopProgressFreestandingTemplate" width="14" height="14"/>
+        <namedColor name="PageViewBackground">
+            <color red="0.21565845608711243" green="0.21570226550102234" blue="0.21565568447113037" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="PageViewBorder">
+            <color red="0.37250512838363647" green="0.37257429957389832" blue="0.37250077724456787" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

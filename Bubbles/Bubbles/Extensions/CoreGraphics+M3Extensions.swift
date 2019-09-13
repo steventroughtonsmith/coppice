@@ -37,6 +37,12 @@ extension CGPoint {
     static var identity: CGPoint {
         return CGPoint(x: 1, y: 1)
     }
+
+    func rounded() -> CGPoint {
+        let x = round(self.x)
+        let y = round(self.y)
+        return CGPoint(x: x, y: y)
+    }
 }
 
 

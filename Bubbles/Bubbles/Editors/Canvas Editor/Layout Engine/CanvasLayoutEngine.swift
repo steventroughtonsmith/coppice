@@ -46,9 +46,9 @@ class CanvasLayoutEngine: NSObject {
     private(set) var canvasSize: CGSize = .zero
     private var pageSpaceOffset: CGPoint = .zero {
         didSet {
-            if (self.pageSpaceOffset != oldValue) {
+//            if (self.pageSpaceOffset != oldValue) {
                 self.updatePageCanvasFrames()
-            }
+//            }
         }
     }
 
@@ -61,9 +61,17 @@ class CanvasLayoutEngine: NSObject {
     }
 
     private func recalculateCanvasSize() {
-        var contentFrame: CGRect = .zero
+        var contentFrame: CGRect!
         for page in self.pages {
-            contentFrame = contentFrame.union(page.pageFrame)
+            guard let currentFrame = contentFrame else {
+                contentFrame = page.pageFrame
+                continue
+            }
+            contentFrame = currentFrame.union(page.pageFrame)
+        }
+
+        if contentFrame == nil {
+            contentFrame = .zero
         }
 
         contentFrame = contentFrame.insetBy(dx: -self.contentBorder, dy: -self.contentBorder)
