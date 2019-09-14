@@ -126,6 +126,20 @@ class CanvasEditorViewController: NSViewController {
         viewController.removeFromParent()
     }
 
+
+    //MARK: - Zooming
+    @IBAction func zoomIn(_ sender: Any) {
+        self.scrollView.magnification *= 2
+    }
+
+    @IBAction func zoomOut(_ sender: Any) {
+        self.scrollView.magnification /= 2
+    }
+
+    @IBAction func zoomTo100(_ sender: Any) {
+        self.scrollView.magnification = 1
+    }
+
 }
 
 extension CanvasEditorViewController: CanvasEditorView {}

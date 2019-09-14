@@ -639,6 +639,22 @@
                                     <action selector="runToolbarCustomizationPalette:" target="-1" id="pQI-g3-MTW"/>
                                 </connections>
                             </menuItem>
+                            <menuItem isSeparatorItem="YES" id="fnm-LZ-sFQ"/>
+                            <menuItem title="Zoom In" keyEquivalent="+" id="qqo-58-jVY">
+                                <connections>
+                                    <action selector="zoomIn:" target="-1" id="w74-e5-mvl"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Zoom Out" keyEquivalent="-" id="Srl-KO-7Ad">
+                                <connections>
+                                    <action selector="zoomOut:" target="-1" id="QTt-3g-Btv"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Zoom To 100%" keyEquivalent="0" id="Ri2-Zh-Ffj">
+                                <connections>
+                                    <action selector="zoomTo100:" target="-1" id="yDs-cD-454"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="8k8-FA-Qao"/>
                             <menuItem title="Jump to Page" keyEquivalent="J" id="XFg-Um-Khw">
                                 <connections>
