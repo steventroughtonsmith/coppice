@@ -50,6 +50,7 @@ class CanvasEditorViewController: NSViewController {
         self.updateCanvas()
         self.updateSelectionRect()
         self.updatePages()
+        self.sortViews()
     }
 
     private func updateCanvas() {
@@ -86,6 +87,23 @@ class CanvasEditorViewController: NSViewController {
         for id in idsToRemove {
             self.removePageViewController(with: id)
         }
+    }
+
+    private func sortViews() {
+        var currentSubviews = self.canvasView.subviews
+        let newPageUUIDs = self.viewModel.layoutEngine.pages.map { $0.id }
+        var pageViewsToOrder = [NSView?](repeating: nil, count: newPageUUIDs.count)
+        for vc in self.pageViewControllers {
+            guard let index = newPageUUIDs.firstIndex(of: vc.uuid) else {
+                continue
+            }
+            if let subviewIndex = currentSubviews.firstIndex(of: vc.view) {
+                currentSubviews.remove(at: subviewIndex)
+            }
+            pageViewsToOrder.insert(vc.view, at: index)
+        }
+        let pageViews = pageViewsToOrder.compactMap { $0 }
+        self.canvasView.subviews = pageViews + currentSubviews
     }
 
     private func apply(_ layoutPage: LayoutEnginePage, to viewController: CanvasPageViewController) {

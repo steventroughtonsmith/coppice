@@ -114,7 +114,7 @@ class CanvasLayoutEngine: NSObject {
     var selectionRect: CGRect?
 
     func page(atCanvasPoint canvasPoint: CGPoint) -> LayoutEnginePage? {
-        for page in self.pages {
+        for page in self.pages.reversed() {
             if page.canvasFrame.contains(canvasPoint) {
                 return page
             }
@@ -141,6 +141,15 @@ class CanvasLayoutEngine: NSObject {
         self.delegate?.moved(pages: pages, in: self)
     }
 
+    private func movePageToFront(_ page: LayoutEnginePage) {
+        guard let index = self.pages.firstIndex(of: page) else {
+            return // Page doesn't exist
+        }
+
+        self.pages.remove(at: index)
+        self.pages.append(page)
+    }
+
 
     //MARK: - Manage Events
     private var currentEventContext: CanvasEventContext?
@@ -150,6 +159,8 @@ class CanvasLayoutEngine: NSObject {
         guard let page = self.page(atCanvasPoint: location) else {
             return CanvasSelectionEventContext(originalSelection: self.selectedPages)
         }
+
+        self.movePageToFront(page)
 
         //Page content click
         guard let pageComponent = page.component(at: location.minus(page.canvasOrigin)) else {
