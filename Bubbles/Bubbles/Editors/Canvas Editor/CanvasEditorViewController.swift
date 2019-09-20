@@ -27,11 +27,11 @@ class CanvasEditorViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.canvasView.layoutEngine = self.viewModel.layoutEngine
+        self.layout()
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(scrollingChanged(_:)),
                                                name: NSView.boundsDidChangeNotification,
                                                object: self.scrollView.contentView)
-        self.layout()
     }
 
     @IBAction func addTestPage(_ sender: Any?) {
@@ -40,31 +40,69 @@ class CanvasEditorViewController: NSViewController {
 
     private var lastScrollPoint: CGPoint?
     @objc func scrollingChanged(_ sender: Any?) {
-        let scrollPoint = self.scrollView.contentView.bounds.origin
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(scrollingEnded), object: nil)
+        let scrollPoint = self.scrollView.contentView.visualCentre
         self.lastScrollPoint = self.viewModel.layoutEngine.convertPointToPageSpace(scrollPoint)
+        self.perform(#selector(scrollingEnded), with: nil, afterDelay: 0.5)
+
+    }
+
+    @objc func scrollingEnded() {
+        guard self.hasLaidOut == false else {
+            self.hasLaidOut = false
+            return
+        }
+        self.viewModel.layoutEngine.viewPortChanged()
     }
 
     
     //MARK: - Layout
+    private var hasLaidOut = false
     @objc func layout() {
         self.updateCanvas()
         self.updateSelectionRect()
         self.updatePages()
         self.sortViews()
+        self.hasLaidOut = true
     }
 
     private func updateCanvas() {
-        self.canvasView.frame.size = self.viewModel.layoutEngine.canvasSize
-        if let lastScrollPoint = self.lastScrollPoint, self.viewModel.layoutEngine.pages.count > 0 {
-            let canvasPoint = self.viewModel.layoutEngine.convertPointToCanvasSpace(lastScrollPoint)
-            self.scrollView.contentView.scroll(to: canvasPoint)
+        guard self.canvasView.frame.size != self.viewModel.layoutEngine.canvasSize else {
+            return
         }
-        else {
-            let x = (self.canvasView.frame.width - self.scrollView.frame.width) / 2
-            let y = (self.canvasView.frame.height - self.scrollView.frame.height) / 2
-            self.scrollView.contentView.scroll(to: CGPoint(x: x, y: y))
+        var singlePageOffset: CGPoint? = nil
+        if self.pageViewControllers.count == 1 && self.viewModel.layoutEngine.pages.count == 1 {
+            singlePageOffset = self.pageViewControllers.first?.view.frame.origin.minus(self.scrollView.contentView.bounds.origin)
         }
 
+
+        let magnification = self.scrollView.magnification
+        self.scrollView.magnification = 1
+        let canvasSize = self.viewModel.layoutEngine.canvasSize
+        self.canvasView.frame.size = canvasSize
+        self.scrollView.magnification = magnification
+
+        var scrollPoint = CGPoint(x: canvasSize.width / 2,
+                                  y: canvasSize.height / 2)
+
+        if let offset = singlePageOffset,
+           let scrollOffset = self.pageViewControllers.first?.view.frame.origin.minus(offset) {
+            self.scrollView.contentView.scroll(to: scrollOffset)
+            return
+        }
+
+        if let lastPoint = self.lastScrollPoint, self.viewModel.layoutEngine.pages.count > 0 {
+            let canvasPoint = self.viewModel.layoutEngine.convertPointToCanvasSpace(lastPoint)
+            if ((canvasSize.width * self.scrollView.magnification) > self.scrollView.frame.width) {
+                scrollPoint.x = canvasPoint.x
+            }
+            if ((canvasSize.height * self.scrollView.magnification) > self.scrollView.frame.height) {
+                scrollPoint.y = canvasPoint.y
+            }
+        }
+
+        self.scrollView.contentView.centre(on: scrollPoint)
+        self.lastScrollPoint = self.viewModel.layoutEngine.convertPointToPageSpace(scrollPoint)
     }
 
     private func updateSelectionRect() {
@@ -147,15 +185,22 @@ class CanvasEditorViewController: NSViewController {
 
     //MARK: - Zooming
     @IBAction func zoomIn(_ sender: Any) {
-        self.scrollView.magnification *= 2
+        self.magnify(by: 2)
     }
 
     @IBAction func zoomOut(_ sender: Any) {
-        self.scrollView.magnification /= 2
+        self.magnify(by: 0.5)
     }
 
     @IBAction func zoomTo100(_ sender: Any) {
-        self.scrollView.magnification = 1
+        self.magnify(by: 1 / self.scrollView.magnification)
+    }
+
+    private func magnify(by factor: CGFloat) {
+        let centrePoint = self.scrollView.contentView.visualCentre
+        self.scrollView.magnification *= factor
+        self.scrollView.contentView.centre(on: centrePoint)
+        self.viewModel.layoutEngine.viewPortChanged()
     }
 
 }

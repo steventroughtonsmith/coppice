@@ -191,4 +191,13 @@ class CanvasLayoutEngine: NSObject {
         self.recalculateCanvasSize()
         self.view?.layoutChanged()
     }
+
+    func viewPortChanged() {
+        //We don't care about view port changes while another event is happening
+        guard self.currentEventContext == nil else {
+            return
+        }
+        self.recalculateCanvasSize()
+        self.view?.layoutChanged()
+    }
 }

@@ -57,12 +57,19 @@ class CanvasView: NSView {
     }
 
     private func createSelectionView() -> NSView {
-        let selectionView = NSBox()
-        selectionView.boxType = .custom
-        selectionView.titlePosition = .noTitle
-        selectionView.fillColor = NSColor(white: 0, alpha: 0.3)
-        selectionView.borderColor = NSColor(white: 0, alpha: 0.5)
+        let selectionView = NSView()
+        selectionView.wantsLayer = true
+        selectionView.layer?.backgroundColor = NSColor(white: 0, alpha: 0.3).cgColor
+        selectionView.layer?.borderColor = NSColor(white: 0, alpha: 0.5).cgColor
+        selectionView.layer?.borderWidth = 1
+        selectionView.identifier = NSUserInterfaceItemIdentifier("SelectionView")
         return selectionView
+    }
+
+
+    override func draw(_ dirtyRect: NSRect) {
+        NSColor(white: 0.85, alpha: 1).set()
+        self.bounds.fill()
     }
 }
 
