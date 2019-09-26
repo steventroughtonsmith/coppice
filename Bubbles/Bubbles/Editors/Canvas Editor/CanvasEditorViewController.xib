@@ -12,6 +12,7 @@
                 <outlet property="canvasView" destination="PUw-B3-8ie" id="pZV-PX-WgV"/>
                 <outlet property="scrollView" destination="WXD-co-iCD" id="Unx-zF-neD"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+                <outlet property="zoomControl" destination="0MP-eZ-rts" id="Tyv-GE-eil"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
@@ -59,6 +60,9 @@
                             </items>
                         </menu>
                     </popUpButtonCell>
+                    <connections>
+                        <action selector="zoomControlChanged:" target="-2" id="7NO-Fo-LHR"/>
+                    </connections>
                 </popUpButton>
             </subviews>
             <constraints>

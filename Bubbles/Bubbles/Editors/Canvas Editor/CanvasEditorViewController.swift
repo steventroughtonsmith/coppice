@@ -38,6 +38,7 @@ class CanvasEditorViewController: NSViewController {
                                                selector: #selector(scrollingChanged(_:)),
                                                name: NSView.boundsDidChangeNotification,
                                                object: self.scrollView.contentView)
+        self.updateZoomControl()
     }
 
     @IBAction func addTestPage(_ sender: Any?) {
@@ -196,36 +197,46 @@ class CanvasEditorViewController: NSViewController {
 
 
     //MARK: - Zooming
-    private func startZoomObservation() {
-        
-    }
-
-    private func stopZoomObservation() {
-
-    }
+    @IBOutlet weak var zoomControl: NSPopUpButton!
 
     @IBAction func zoomIn(_ sender: Any) {
-        self.magnify(by: 2)
+        self.viewModel.zoomIn()
     }
 
     @IBAction func zoomOut(_ sender: Any) {
-        self.magnify(by: 0.5)
+        self.viewModel.zoomOut()
     }
 
     @IBAction func zoomTo100(_ sender: Any) {
-        self.magnify(by: 1 / self.scrollView.magnification)
+        self.viewModel.zoomTo100()
     }
 
-    private func magnify(by factor: CGFloat) {
+    private func zoom(to zoomFactor: CGFloat) {
         let centrePoint = self.scrollView.contentView.visualCentre
-        self.scrollView.magnification *= factor
+        self.scrollView.magnification = zoomFactor
         self.scrollView.contentView.centre(on: centrePoint)
         self.layoutEngine.viewPortChanged()
     }
 
+    private func updateZoomControl() {
+        self.zoomControl.removeAllItems()
+        for item in self.viewModel.zoomLevels {
+            self.zoomControl.addItem(withTitle: "\(item)%")
+        }
+        self.zoomControl.selectItem(at: self.viewModel.selectedZoomLevel)
+    }
+
+    @IBAction func zoomControlChanged(_ sender: Any?) {
+        self.viewModel.selectedZoomLevel = self.zoomControl.indexOfSelectedItem
+    }
 }
 
-extension CanvasEditorViewController: CanvasEditorView {}
+extension CanvasEditorViewController: CanvasEditorView {
+    func updateZoomFactor() {
+        self.zoom(to: self.viewModel.zoomFactor)
+        self.updateZoomControl()
+    }
+}
 
 extension CanvasEditorViewController: CanvasLayoutView {
     func layoutChanged(with context: CanvasLayoutContext) {

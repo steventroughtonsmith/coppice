@@ -9,6 +9,7 @@
 import Foundation
 
 protocol CanvasEditorView: class {
+    func updateZoomFactor()
 }
 
 class CanvasEditorViewModel: NSObject {
@@ -44,14 +45,6 @@ class CanvasEditorViewModel: NSObject {
         if let observer = self.canvasObserver {
             self.modelController.canvases.removeObserver(observer)
         }
-    }
-
-    override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
-        var set = super.keyPathsForValuesAffectingValue(forKey: key)
-        if (key == #keyPath(zoomPercentage)) {
-            set.insert(#keyPath(zoomFactor))
-        }
-        return set
     }
 
     //Using an add to canvas control
@@ -113,28 +106,48 @@ class CanvasEditorViewModel: NSObject {
             if self.zoomFactor > 1 {
                 self.zoomFactor = 1
             }
-            if self.zoomFactor < 0.25 {
+            else if self.zoomFactor < 0.25 {
                 self.zoomFactor = 0.25
+            }
+            else {
+                self.view?.updateZoomFactor()
             }
         }
     }
 
-    @objc dynamic var zoomControlOptions: String {
-        return "\((self.zoomFactor * 100).rounded())%"
+    var zoomLevels: [Int] {
+        var baseLevels = [25, 50, 75, 100]
+        let zoomFactorLevel = Int((self.zoomFactor * 100).rounded())
+        if (!baseLevels.contains(zoomFactorLevel)) {
+            baseLevels.append(zoomFactorLevel)
+            baseLevels.sort()
+        }
+        baseLevels.reverse()
+        return baseLevels
     }
 
-    @objc dynamic var zoomControlSelectedOption: Int
+    var selectedZoomLevel: Int {
+        get {
+            let zoomFactorLevel = Int((self.zoomFactor * 100).rounded())
+            return self.zoomLevels.firstIndex(of: zoomFactorLevel) ?? 0
+        }
+        set {
+            let index = max(min(newValue, (self.zoomLevels.count - 1)), 0)
+            let zoomLevel = self.zoomLevels[index]
+            self.zoomFactor = CGFloat(zoomLevel) / 100
+        }
+    }
 
     func zoomIn() {
-
+        self.selectedZoomLevel -= 1
     }
 
     func zoomOut() {
-
+        self.selectedZoomLevel += 1
     }
 
     func zoomTo100() {
-
+        self.zoomFactor = 1
     }
 }
 
