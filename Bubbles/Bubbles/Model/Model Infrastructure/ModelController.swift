@@ -11,26 +11,28 @@ import Foundation
 protocol ModelController: class {
     var undoManager: UndoManager { get }
     var collections: [ModelType: Any] {get set}
-    func add<T>(_ modelCollection: ModelCollection<T>, for modelType: ModelType)
-    func removeModelCollection(for modelType: ModelType)
+    @discardableResult func addModelCollection<T: CollectableModelObject>(for type: T.Type, objectInitialiser: @escaping ([String: Any]) -> T) -> ModelCollection<T>
+    func removeModelCollection<T: CollectableModelObject>(for type: T.Type)
 
-    func collection(for modelType: ModelType) -> Any
+    func collection<T: CollectableModelObject>(for type: T.Type) -> ModelCollection<T>
     func object(with id: ModelID) -> ModelObject?
 }
 
 extension ModelController {
-    func add<T>(_ modelCollection: ModelCollection<T>, for modelType: ModelType) {
-        self.collections[modelType] = modelCollection
+    @discardableResult func addModelCollection<T: CollectableModelObject>(for type: T.Type, objectInitialiser: @escaping ([String: Any]) -> T) -> ModelCollection<T> {
+        let modelCollection = ModelCollection<T>(objectInitialiser: objectInitialiser)
         modelCollection.modelController = self
+        self.collections[type.modelType] = modelCollection
+        return modelCollection
     }
 
-    func removeModelCollection(for modelType: ModelType) {
-        self.collections.removeValue(forKey: modelType)
+    func removeModelCollection<T: CollectableModelObject>(for type: T.Type) {
+        self.collections.removeValue(forKey: type.modelType)
     }
 
-    func collection(for modelType: ModelType) -> Any {
-        guard let model = self.collections[modelType] else {
-            fatalError("Collection with type '\(modelType)' does not exist")
+    func collection<T: CollectableModelObject>(for type: T.Type) -> ModelCollection<T> {
+        guard let model = self.collections[type.modelType] as? ModelCollection<T> else {
+            fatalError("Collection with type '\(type.modelType)' does not exist")
         }
         return model
     }

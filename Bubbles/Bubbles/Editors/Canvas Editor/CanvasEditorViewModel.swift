@@ -18,8 +18,8 @@ class CanvasEditorViewModel: NSObject {
     let layoutEngine = CanvasLayoutEngine()
 
     let canvas: Canvas
-    let modelController: BubblesModelController
-    init(canvas: Canvas, modelController: BubblesModelController) {
+    let modelController: ModelController
+    init(canvas: Canvas, modelController: ModelController) {
         self.canvas = canvas
         self.modelController = modelController
         super.init()
@@ -34,7 +34,7 @@ class CanvasEditorViewModel: NSObject {
     //MARK: - Observation
     var canvasObserver: ModelCollection<Canvas>.Observation?
     private func setupObservation() {
-        self.canvasObserver = self.modelController.canvases.addObserver(filterBy: [self.canvas.id]) { [weak self] (canvas, changeType) in
+        self.canvasObserver = self.modelController.collection(for: Canvas.self).addObserver(filterBy: [self.canvas.id]) { [weak self] (canvas, changeType) in
             if changeType == .update {
                 self?.updatePages()
             }
@@ -43,7 +43,7 @@ class CanvasEditorViewModel: NSObject {
 
     deinit {
         if let observer = self.canvasObserver {
-            self.modelController.canvases.removeObserver(observer)
+            self.modelController.collection(for: Canvas.self).removeObserver(observer)
         }
     }
 
@@ -53,7 +53,7 @@ class CanvasEditorViewModel: NSObject {
 
     func close(_ canvasPage: CanvasPage) {
         canvasPage.canvas = nil
-        self.modelController.canvasPages.delete(canvasPage)
+        self.modelController.collection(for: CanvasPage.self).delete(canvasPage)
     }
 
     //MARK: - Page Management
@@ -81,7 +81,7 @@ class CanvasEditorViewModel: NSObject {
     }
 
     func createTestPage() {
-        let canvasPage = self.modelController.canvasPages.newObject()
+        let canvasPage = self.modelController.collection(for: CanvasPage.self).newObject()
         canvasPage.position = CGPoint(x: 100, y: 100)
         canvasPage.size = CGSize(width: 300, height: 400)
         canvasPage.canvas = self.canvas

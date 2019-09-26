@@ -726,7 +726,7 @@ class CanvasLayoutEngineTests: XCTestCase {
 
     func test_canvasSize_canvasSizeShouldBeBiggerThanContentBoundsPlusCanvasBorderIfViewPortFrameIsOutside() {
         class TestCanvasView: CanvasLayoutView {
-            func layoutChanged() {}
+            func layoutChanged(with context: CanvasLayoutContext) {}
             var viewPortFrame: CGRect = .zero
         }
 

@@ -55,7 +55,7 @@ class TestModelController: NSObject, ModelController {
     var collections = [ModelType : Any]()
 
     func object(with id: ModelID) -> ModelObject? {
-        return (self.collection(for: id.modelType) as? ModelCollection<TestCollectableModelObject>)?.objectWithID(id)
+        return self.collection(for: TestCollectableModelObject.self).objectWithID(id)
     }
 
 

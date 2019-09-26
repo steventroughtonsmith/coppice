@@ -17,11 +17,9 @@ class ModelCollectionTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        self.collection = ModelCollection<TestCollectableModelObject>() { _ in TestCollectableModelObject () }
-        self.relationshipCollection = ModelCollection<RelationshipModelObject>() { _ in RelationshipModelObject() }
         self.modelController = TestModelController()
-        self.modelController.add(self.collection, for: TestCollectableModelObject.modelType)
-        self.modelController.add(self.relationshipCollection, for: RelationshipModelObject.modelType)
+        self.collection = self.modelController.addModelCollection(for: TestCollectableModelObject.self) { _ in TestCollectableModelObject() }
+        self.relationshipCollection = self.modelController.addModelCollection(for: RelationshipModelObject.self) { _ in RelationshipModelObject() }
     }
 
     override func tearDown() {

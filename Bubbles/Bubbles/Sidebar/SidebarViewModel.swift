@@ -24,9 +24,9 @@ class SidebarViewModel: NSObject {
 
 
 
-    convenience init(modelController: BubblesModelController, notificationCenter: NotificationCenter = NotificationCenter.default) {
-        self.init(canvases: modelController.canvases,
-                  pages: modelController.pages,
+    convenience init(modelController: ModelController, notificationCenter: NotificationCenter = NotificationCenter.default) {
+        self.init(canvases: modelController.collection(for: Canvas.self),
+                  pages: modelController.collection(for: Page.self),
                   undoManager: modelController.undoManager,
                   notificationCenter: notificationCenter)
     }

@@ -21,8 +21,8 @@ class ContentSelectorViewModel: NSObject {
     weak var delegate: ContentSelectorViewModelDelegate?
 
     let page: Page
-    let modelController: BubblesModelController
-    init(page: Page, modelController: BubblesModelController) {
+    let modelController: ModelController
+    init(page: Page, modelController: ModelController) {
         self.page = page
         self.modelController = modelController
         super.init()

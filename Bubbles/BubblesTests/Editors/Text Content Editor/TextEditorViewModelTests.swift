@@ -11,7 +11,7 @@ import XCTest
 
 class TextEditorViewModelTests: XCTestCase {
 
-    var modelController: BubblesModelController!
+    var modelController: ModelController!
     var textContent: TextPageContent!
 
     var viewModel: TextEditorViewModel!
@@ -54,22 +54,22 @@ class TextEditorViewModelTests: XCTestCase {
     func test_createNewLinkedPage_createsNewPageUsingSelectedTextAsTitle() throws {
         self.textContent.text = NSAttributedString(string: "Hello World!")
 
-        XCTAssertEqual(self.modelController.pages.all.count, 0)
+        XCTAssertEqual(self.modelController.collection(for: Page.self).all.count, 0)
 
         self.viewModel.createNewLinkedPage(for: NSMakeRange(6, 5))
 
-        let page = try XCTUnwrap(Array(self.modelController.pages.all).first)
+        let page = try XCTUnwrap(Array(self.modelController.collection(for: Page.self).all).first)
         XCTAssertEqual(page.title, "World")
     }
 
     func test_createNewLinkedPage_addsLinkToNewPageInContentText() throws {
         self.textContent.text = NSAttributedString(string: "Hello World!")
 
-        XCTAssertEqual(self.modelController.pages.all.count, 0)
+        XCTAssertEqual(self.modelController.collection(for: Page.self).all.count, 0)
 
         self.viewModel.createNewLinkedPage(for: NSMakeRange(6, 5))
 
-        let page = try XCTUnwrap(Array(self.modelController.pages.all).first)
+        let page = try XCTUnwrap(Array(self.modelController.collection(for: Page.self).all).first)
 
         var rangePointer: NSRange = NSMakeRange(0, 0)
         let attribute = self.textContent.text.attribute(.link, at: 6, effectiveRange: &rangePointer)
@@ -83,7 +83,7 @@ class TextEditorViewModelTests: XCTestCase {
     func test_linkToPage_addsLinkForSuppliedPageToContentText() {
         self.textContent.text = NSAttributedString(string: "Hello World!")
 
-        let page = self.modelController.pages.newPage()
+        let page = self.modelController.collection(for: Page.self).newPage()
         let expectedTitle = page.title
 
         self.viewModel.link(to: page, for: NSMakeRange(2, 3))

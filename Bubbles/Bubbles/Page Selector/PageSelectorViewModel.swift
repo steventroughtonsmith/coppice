@@ -15,10 +15,10 @@ class PageSelectorViewModel: NSObject {
 
     typealias SelectionBlock = (Page) -> Void
 
-    let modelController: BubblesModelController
+    let modelController: ModelController
     let title: String
     let selectionBlock: SelectionBlock
-    init(title: String, modelController: BubblesModelController, selectionBlock: @escaping SelectionBlock) {
+    init(title: String, modelController: ModelController, selectionBlock: @escaping SelectionBlock) {
         self.title = title
         self.modelController = modelController
         self.selectionBlock = selectionBlock
@@ -36,7 +36,7 @@ class PageSelectorViewModel: NSObject {
     @objc dynamic private(set) var matchingPages = [PageSelectorResult]()
 
     private func updatePages() {
-        let sortedPages = self.modelController.pages.all.sorted(by: {$0.title < $1.title})
+        let sortedPages = self.modelController.collection(for: Page.self).all.sorted(by: {$0.title < $1.title})
         guard self.searchTerm.count > 1 else {
             self.matchingPages = sortedPages.map { PageSelectorResult(page: $0) }
             return

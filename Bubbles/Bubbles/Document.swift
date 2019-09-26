@@ -48,11 +48,11 @@ class Document: NSDocument {
 
     //MARK: - Base Actions
     @IBAction func newPage(_ sender: Any?) {
-        self.modelController.pages.newObject()
+        self.modelController.collection(for: Page.self).newObject()
     }
 
     @IBAction func newCanvas(_ sender: Any?) {
-        self.modelController.canvases.newObject()
+        self.modelController.collection(for: Canvas.self).newObject()
     }
 
 }

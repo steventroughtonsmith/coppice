@@ -16,8 +16,8 @@ class DebugCanvasEditorViewModel: NSObject {
     weak var view: DebugCanvasEditorView?
 
     @objc dynamic let canvas: Canvas
-    let modelController: BubblesModelController
-    init(canvas: Canvas, modelController: BubblesModelController) {
+    let modelController: ModelController
+    init(canvas: Canvas, modelController: ModelController) {
         self.canvas = canvas
         self.modelController = modelController
         super.init()
@@ -48,10 +48,10 @@ class DebugCanvasEditorViewModel: NSObject {
     var selectedCanvasPage: DebugCanvasPageItem?
 
     func addPageWithID(_ pageID: ModelID) {
-        guard let page = self.modelController.pages.objectWithID(pageID) else {
+        guard let page = self.modelController.collection(for: Page.self).objectWithID(pageID) else {
             return
         }
-        let canvasPage = self.modelController.canvasPages.newObject()
+        let canvasPage = self.modelController.collection(for: CanvasPage.self).newObject()
         canvasPage.page = page
         canvasPage.canvas = self.canvas
     }
@@ -64,14 +64,14 @@ class DebugCanvasEditorViewModel: NSObject {
     //MARK: - Observation
     private var observation: ModelCollection<CanvasPage>.Observation?
     func startObservingChanges() {
-        self.observation = self.modelController.canvasPages.addObserver { [weak self] (page, _) in
+        self.observation = self.modelController.collection(for: CanvasPage.self).addObserver { [weak self] (page, _) in
             self?.view?.reloadPage(page)
         }
     }
 
     func stopObservingChanges() {
         if let observation = self.observation {
-            self.modelController.canvasPages.removeObserver(observation)
+            self.modelController.collection(for: CanvasPage.self).removeObserver(observation)
         }
     }
 }

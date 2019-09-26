@@ -15,8 +15,8 @@ class ImageEditorViewModel: NSObject {
     weak var view: ImageEditorView?
 
     let imageContent: ImagePageContent
-    let modelController: BubblesModelController
-    init(imageContent: ImagePageContent, modelController: BubblesModelController) {
+    let modelController: ModelController
+    init(imageContent: ImagePageContent, modelController: ModelController) {
         self.imageContent = imageContent
         self.modelController = modelController
         super.init()

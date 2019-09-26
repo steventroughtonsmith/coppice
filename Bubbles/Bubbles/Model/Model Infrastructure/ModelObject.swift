@@ -83,10 +83,7 @@ extension CollectableModelObject {
         guard let modelController = self.modelController else {
             return Set<T>()
         }
-        guard let collection = modelController.collection(for: T.modelType) as? ModelCollection<T> else {
-            print("Collection types did not match")
-            return Set<T>()
-        }
+        let collection = modelController.collection(for: T.self)
         return collection.objectsForRelationship(on: self, inverseKeyPath: keyPath)
     }
 }

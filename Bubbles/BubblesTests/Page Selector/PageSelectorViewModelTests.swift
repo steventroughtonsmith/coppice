@@ -11,7 +11,7 @@ import XCTest
 
 class PageSelectorViewModelTests: XCTestCase {
 
-    var modelController: BubblesModelController!
+    var modelController: ModelController!
     var applePage: Page!
     var raspberryPage: Page!
     var strawberryPage: Page!
@@ -21,16 +21,16 @@ class PageSelectorViewModelTests: XCTestCase {
         super.setUp()
 
         self.modelController = BubblesModelController(undoManager: UndoManager())
-        self.applePage = self.modelController.pages.newPage()
+        self.applePage = self.modelController.collection(for: Page.self).newPage()
         self.applePage.title = "Apple"
 
-        self.raspberryPage = self.modelController.pages.newPage()
+        self.raspberryPage = self.modelController.collection(for: Page.self).newPage()
         self.raspberryPage.title = "Raspberry"
 
-        self.strawberryPage = self.modelController.pages.newPage()
+        self.strawberryPage = self.modelController.collection(for: Page.self).newPage()
         self.strawberryPage.title = "Strawberry"
 
-        self.bananaPage = self.modelController.pages.newPage()
+        self.bananaPage = self.modelController.collection(for: Page.self).newPage()
         self.bananaPage.title = "Banana"
     }
 

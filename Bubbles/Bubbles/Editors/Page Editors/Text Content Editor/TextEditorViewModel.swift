@@ -16,8 +16,8 @@ class TextEditorViewModel: NSObject {
     weak var view: TextEditorView?
     
     let textContent: TextPageContent
-    let modelController: BubblesModelController
-    init(textContent: TextPageContent, modelController: BubblesModelController) {
+    let modelController: ModelController
+    init(textContent: TextPageContent, modelController: ModelController) {
         self.textContent = textContent
         self.modelController = modelController
         super.init()
@@ -30,7 +30,7 @@ class TextEditorViewModel: NSObject {
 
     func createNewLinkedPage(for range: NSRange) {
         let selectedText = self.attributedText.attributedSubstring(from: range)
-        let page = self.modelController.pages.newPage(title: selectedText.string)
+        let page = self.modelController.collection(for: Page.self).newPage(title: selectedText.string)
         self.link(to: page, for: range)
     }
 

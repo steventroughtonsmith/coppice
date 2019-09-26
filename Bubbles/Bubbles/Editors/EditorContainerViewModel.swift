@@ -15,8 +15,8 @@ protocol EditorContainerView: class {
 class EditorContainerViewModel: NSObject {
     weak var view: EditorContainerView?
 
-    let modelController: BubblesModelController
-    init(modelController: BubblesModelController) {
+    let modelController: ModelController
+    init(modelController: ModelController) {
         self.modelController = modelController
         super.init()
     }
