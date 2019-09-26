@@ -15,7 +15,7 @@ extension NSClipView {
     }
 
     func centre(on point: CGPoint) {
-        let scrollPoint = point.minus(CGPoint(x: self.bounds.width / 2, y: self.bounds.height / 2))
+        let scrollPoint = point.minus(CGPoint(x: self.bounds.width / 2, y: self.bounds.height / 2)).rounded()
         self.scroll(to: scrollPoint)
     }
 }

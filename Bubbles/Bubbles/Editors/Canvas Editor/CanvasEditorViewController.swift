@@ -24,9 +24,15 @@ class CanvasEditorViewController: NSViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    var layoutEngine: CanvasLayoutEngine {
+        return self.viewModel.layoutEngine
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.canvasView.layoutEngine = self.viewModel.layoutEngine
+        self.canvasView.layoutEngine = self.layoutEngine
+        self.canvasView.wantsLayer = true
+        self.canvasView.layer?.masksToBounds = false
         self.layout()
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(scrollingChanged(_:)),
@@ -38,13 +44,17 @@ class CanvasEditorViewController: NSViewController {
         self.viewModel.createTestPage()
     }
 
-    private var lastScrollPoint: CGPoint?
+
+    //MARK: - Scrolling
+
+    private var lastOriginOffsetFromScrollPoint: CGPoint?
+
     @objc func scrollingChanged(_ sender: Any?) {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(scrollingEnded), object: nil)
-        let scrollPoint = self.scrollView.contentView.visualCentre
-        self.lastScrollPoint = self.viewModel.layoutEngine.convertPointToPageSpace(scrollPoint)
+        if !self.isLayingOut {
+            self.updateLastOriginOffset()
+        }
         self.perform(#selector(scrollingEnded), with: nil, afterDelay: 0.5)
-
     }
 
     @objc func scrollingEnded() {
@@ -52,66 +62,68 @@ class CanvasEditorViewController: NSViewController {
             self.hasLaidOut = false
             return
         }
-        self.viewModel.layoutEngine.viewPortChanged()
+        self.layoutEngine.viewPortChanged()
+    }
+
+    private func updateLastOriginOffset() {
+        let originInCanvas = self.layoutEngine.convertPointToCanvasSpace(.zero)
+        self.lastOriginOffsetFromScrollPoint = originInCanvas.minus(self.scrollView.contentView.bounds.origin)
+    }
+
+    private func scroll(toOriginOffset originOffset: CGPoint) {
+        let originInCanvas = self.layoutEngine.convertPointToCanvasSpace(.zero)
+        let scrollPoint = originInCanvas.minus(originOffset)
+        self.scrollView.contentView.bounds.origin = scrollPoint
     }
 
     
     //MARK: - Layout
     private var hasLaidOut = false
+    private var isLayingOut = false
+    private var currentLayoutContext: CanvasLayoutContext?
     @objc func layout() {
+        self.isLayingOut = true
         self.updateCanvas()
         self.updateSelectionRect()
         self.updatePages()
         self.sortViews()
+        self.isLayingOut = false
         self.hasLaidOut = true
+        self.currentLayoutContext = nil
     }
 
     private func updateCanvas() {
-        guard self.canvasView.frame.size != self.viewModel.layoutEngine.canvasSize else {
-            return
-        }
-        var singlePageOffset: CGPoint? = nil
-        if self.pageViewControllers.count == 1 && self.viewModel.layoutEngine.pages.count == 1 {
-            singlePageOffset = self.pageViewControllers.first?.view.frame.origin.minus(self.scrollView.contentView.bounds.origin)
-        }
-
-
-        let magnification = self.scrollView.magnification
-        self.scrollView.magnification = 1
-        let canvasSize = self.viewModel.layoutEngine.canvasSize
-        self.canvasView.frame.size = canvasSize
-        self.scrollView.magnification = magnification
-
-        var scrollPoint = CGPoint(x: canvasSize.width / 2,
-                                  y: canvasSize.height / 2)
-
-        if let offset = singlePageOffset,
-           let scrollOffset = self.pageViewControllers.first?.view.frame.origin.minus(offset) {
-            self.scrollView.contentView.scroll(to: scrollOffset)
+        guard (self.currentLayoutContext?.sizeChanged == true) || (self.currentLayoutContext?.pageOffsetChange != nil) else {
             return
         }
 
-        if let lastPoint = self.lastScrollPoint, self.viewModel.layoutEngine.pages.count > 0 {
-            let canvasPoint = self.viewModel.layoutEngine.convertPointToCanvasSpace(lastPoint)
-            if ((canvasSize.width * self.scrollView.magnification) > self.scrollView.frame.width) {
-                scrollPoint.x = canvasPoint.x
-            }
-            if ((canvasSize.height * self.scrollView.magnification) > self.scrollView.frame.height) {
-                scrollPoint.y = canvasPoint.y
-            }
+        let canvasSize = self.layoutEngine.canvasSize
+        if (self.currentLayoutContext?.sizeChanged == true) {
+            let magnification = self.scrollView.magnification
+            self.scrollView.magnification = 1
+            self.canvasView.frame.size = canvasSize
+            self.scrollView.magnification = magnification
         }
 
-        self.scrollView.contentView.centre(on: scrollPoint)
-        self.lastScrollPoint = self.viewModel.layoutEngine.convertPointToPageSpace(scrollPoint)
+        if let lastPoint = self.lastOriginOffsetFromScrollPoint, self.layoutEngine.pages.count > 0 {
+            self.scroll(toOriginOffset: lastPoint)
+        } else {
+            let scrollPoint = CGPoint(x: canvasSize.width / 2, y: canvasSize.height / 2).rounded()
+            self.scrollView.contentView.centre(on: scrollPoint)
+
+            self.updateLastOriginOffset()
+        }
+
+        self.canvasView.pageSpaceOrigin = self.layoutEngine.convertPointToCanvasSpace(.zero)
     }
 
     private func updateSelectionRect() {
-        self.canvasView.selectionRect = self.viewModel.layoutEngine.selectionRect
+        self.canvasView.selectionRect = self.layoutEngine.selectionRect
     }
 
     private func updatePages() {
         var idsToRemove = self.pageViewControllers.map { $0.uuid }
-        for page in self.viewModel.layoutEngine.pages {
+        for page in self.layoutEngine.pages {
             guard let viewController = self.pageViewController(for: page) else {
                 continue
             }
@@ -129,7 +141,7 @@ class CanvasEditorViewController: NSViewController {
 
     private func sortViews() {
         var currentSubviews = self.canvasView.subviews
-        let newPageUUIDs = self.viewModel.layoutEngine.pages.map { $0.id }
+        let newPageUUIDs = self.layoutEngine.pages.map { $0.id }
         var pageViewsToOrder = [NSView?](repeating: nil, count: newPageUUIDs.count)
         for vc in self.pageViewControllers {
             guard let index = newPageUUIDs.firstIndex(of: vc.uuid) else {
@@ -145,7 +157,7 @@ class CanvasEditorViewController: NSViewController {
     }
 
     private func apply(_ layoutPage: LayoutEnginePage, to viewController: CanvasPageViewController) {
-        viewController.view.frame = layoutPage.canvasFrame
+        viewController.view.frame = layoutPage.canvasFrame.rounded()
         viewController.selected = layoutPage.selected
     }
 
@@ -184,6 +196,14 @@ class CanvasEditorViewController: NSViewController {
 
 
     //MARK: - Zooming
+    private func startZoomObservation() {
+        
+    }
+
+    private func stopZoomObservation() {
+
+    }
+
     @IBAction func zoomIn(_ sender: Any) {
         self.magnify(by: 2)
     }
@@ -200,7 +220,7 @@ class CanvasEditorViewController: NSViewController {
         let centrePoint = self.scrollView.contentView.visualCentre
         self.scrollView.magnification *= factor
         self.scrollView.contentView.centre(on: centrePoint)
-        self.viewModel.layoutEngine.viewPortChanged()
+        self.layoutEngine.viewPortChanged()
     }
 
 }
@@ -208,8 +228,13 @@ class CanvasEditorViewController: NSViewController {
 extension CanvasEditorViewController: CanvasEditorView {}
 
 extension CanvasEditorViewController: CanvasLayoutView {
-    func layoutChanged() {
+    func layoutChanged(with context: CanvasLayoutContext) {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(layout), object: nil)
+        if let currentContext = self.currentLayoutContext {
+            self.currentLayoutContext = currentContext.merged(with: context)
+        } else {
+            self.currentLayoutContext = context
+        }
         self.perform(#selector(layout), with: nil, afterDelay: 0)
     }
 

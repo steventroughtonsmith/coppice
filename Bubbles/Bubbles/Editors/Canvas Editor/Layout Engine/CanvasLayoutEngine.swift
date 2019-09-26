@@ -17,9 +17,18 @@ struct LayoutEventModifiers: OptionSet {
     static let command = LayoutEventModifiers(rawValue: 1 << 3)
 }
 
+struct CanvasLayoutContext: Equatable {
+    var sizeChanged = false
+    var pageOffsetChange: CGPoint?
+
+    func merged(with context: CanvasLayoutContext) -> CanvasLayoutContext {
+        return CanvasLayoutContext(sizeChanged: self.sizeChanged || context.sizeChanged,
+                                   pageOffsetChange: self.pageOffsetChange ?? context.pageOffsetChange)
+    }
+}
 
 protocol CanvasLayoutView: class {
-    func layoutChanged()
+    func layoutChanged(with context: CanvasLayoutContext)
     var viewPortFrame: CGRect { get }
 }
 
@@ -64,10 +73,10 @@ class CanvasLayoutEngine: NSObject {
         var contentFrame: CGRect!
         for page in self.pages {
             guard let currentFrame = contentFrame else {
-                contentFrame = page.pageFrame
+                contentFrame = page.pageFrame.rounded()
                 continue
             }
-            contentFrame = currentFrame.union(page.pageFrame)
+            contentFrame = currentFrame.union(page.pageFrame.rounded())
         }
 
         if contentFrame == nil {
@@ -81,9 +90,15 @@ class CanvasLayoutEngine: NSObject {
             contentFrame = contentFrame.union(viewPortFrame)
         }
 
+        let newOffset = contentFrame.origin.multiplied(by: -1)
+        let offsetChange = newOffset.minus(self.pageSpaceOffset)
+        self.pageSpaceOffset = newOffset
+
+        let canvasChanged = (self.canvasSize != contentFrame.size)
         self.canvasSize = contentFrame.size
-        self.pageSpaceOffset = contentFrame.origin.multiplied(by: -1)
-        self.view?.layoutChanged()
+
+
+        self.view?.layoutChanged(with: CanvasLayoutContext(sizeChanged: canvasChanged, pageOffsetChange: offsetChange))
     }
 
     private func updatePageCanvasFrames() {
@@ -134,7 +149,7 @@ class CanvasLayoutEngine: NSObject {
 
     func deselectAll() {
         self.selectedPages.forEach { $0.selected = false }
-        self.view?.layoutChanged()
+        self.view?.layoutChanged(with: CanvasLayoutContext())
     }
 
     func finishedModifying(_ pages: [LayoutEnginePage]) {
@@ -178,18 +193,18 @@ class CanvasLayoutEngine: NSObject {
     func downEvent(at location: CGPoint, modifiers: LayoutEventModifiers = []) {
         self.currentEventContext = self.createEventContext(for: location)
         self.currentEventContext?.downEvent(at: location, modifiers: modifiers, in: self)
-        self.view?.layoutChanged()
+        self.view?.layoutChanged(with: CanvasLayoutContext())
     }
 
     func draggedEvent(at location: CGPoint, modifiers: LayoutEventModifiers = []) {
         self.currentEventContext?.draggedEvent(at: location, modifiers: modifiers, in: self)
-        self.view?.layoutChanged()
+        self.view?.layoutChanged(with: CanvasLayoutContext())
     }
 
     func upEvent(at location: CGPoint, modifiers: LayoutEventModifiers = []) {
         self.currentEventContext?.upEvent(at: location, modifiers: modifiers, in: self)
         self.recalculateCanvasSize()
-        self.view?.layoutChanged()
+        self.currentEventContext = nil
     }
 
     func viewPortChanged() {
@@ -198,6 +213,5 @@ class CanvasLayoutEngine: NSObject {
             return
         }
         self.recalculateCanvasSize()
-        self.view?.layoutChanged()
     }
 }

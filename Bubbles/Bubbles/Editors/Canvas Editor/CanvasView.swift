@@ -31,6 +31,11 @@ class CanvasView: NSView {
     }
 
 
+    override var wantsDefaultClipping: Bool {
+        return false
+    }
+
+
     //MARK: - Selection Rect
     var selectionRect: CGRect? {
         didSet {
@@ -68,8 +73,23 @@ class CanvasView: NSView {
 
 
     override func draw(_ dirtyRect: NSRect) {
-        NSColor(white: 0.85, alpha: 1).set()
+        NSColor(named: "CanvasBackground")?.set()
         self.bounds.fill()
+
+        if let pageSpaceOrigin = self.pageSpaceOrigin {
+            NSColor(named: "DebugCanvasAxes")?.set()
+            CGRect(x: pageSpaceOrigin.x, y: 0, width: 1, height: self.bounds.height).fill()
+            CGRect(x: 0, y: pageSpaceOrigin.y, width: self.bounds.width, height: 1).fill()
+        }
+    }
+
+
+    //MARK: - Debug
+
+    var pageSpaceOrigin: CGPoint? {
+        didSet {
+            self.setNeedsDisplay(self.bounds)
+        }
     }
 }
 

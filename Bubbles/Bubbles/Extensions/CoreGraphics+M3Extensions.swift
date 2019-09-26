@@ -53,4 +53,18 @@ extension CGSize {
         newSize.height += size.height
         return newSize
     }
+
+    func rounded() -> CGSize {
+        let width = round(self.width)
+        let height = round(self.height)
+        return CGSize(width: width, height: height)
+    }
+}
+
+extension CGRect {
+    func rounded() -> CGRect {
+        let origin = self.origin.rounded()
+        let size = self.size.rounded()
+        return CGRect(origin: origin, size: size)
+    }
 }

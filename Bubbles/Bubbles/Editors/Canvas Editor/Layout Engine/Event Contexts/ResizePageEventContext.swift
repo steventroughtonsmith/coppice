@@ -27,8 +27,11 @@ class ResizePageEventContext: CanvasEventContext {
             return
         }
         let boundedLocation = location.bounded(within: CGRect(origin: .zero, size: layout.canvasSize))
+        if (boundedLocation != location) {
+            return
+        }
 
-        var delta = boundedLocation.minus(lastLocation)
+        var delta = boundedLocation.minus(lastLocation).rounded()
         if (self.component.isRight) {
             if (self.page.size.width + delta.x < self.page.minSize.width) {
                 delta.x = self.page.minSize.width - self.page.size.width

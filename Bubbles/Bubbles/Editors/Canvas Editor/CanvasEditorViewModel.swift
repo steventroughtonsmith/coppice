@@ -46,6 +46,14 @@ class CanvasEditorViewModel: NSObject {
         }
     }
 
+    override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
+        var set = super.keyPathsForValuesAffectingValue(forKey: key)
+        if (key == #keyPath(zoomPercentage)) {
+            set.insert(#keyPath(zoomFactor))
+        }
+        return set
+    }
+
     //Using an add to canvas control
     //Dropping a page on the canvas
     //Dropping content on a canvas
@@ -96,6 +104,37 @@ class CanvasEditorViewModel: NSObject {
         self.removePages(removedPages)
 
         self.canvasPages = newPages
+    }
+
+
+    //MARK: - Zooming
+    @objc dynamic var zoomFactor: CGFloat = 1 {
+        didSet {
+            if self.zoomFactor > 1 {
+                self.zoomFactor = 1
+            }
+            if self.zoomFactor < 0.25 {
+                self.zoomFactor = 0.25
+            }
+        }
+    }
+
+    @objc dynamic var zoomControlOptions: String {
+        return "\((self.zoomFactor * 100).rounded())%"
+    }
+
+    @objc dynamic var zoomControlSelectedOption: Int
+
+    func zoomIn() {
+
+    }
+
+    func zoomOut() {
+
+    }
+
+    func zoomTo100() {
+
     }
 }
 
