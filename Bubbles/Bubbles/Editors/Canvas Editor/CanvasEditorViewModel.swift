@@ -63,12 +63,12 @@ class CanvasEditorViewModel: NSObject {
         return self.canvasPages.first(where: { $0.id.uuid == uuid })
     }
 
-    func addPages(_ canvasPages: Set<CanvasPage>) {
+    private func addPages(_ canvasPages: Set<CanvasPage>) {
         let layoutEnginePages = canvasPages.map { self.createLayoutPage(for: $0) }
         self.layoutEngine.add(layoutEnginePages)
     }
 
-    func removePages(_ canvasPages: Set<CanvasPage>) {
+    private func removePages(_ canvasPages: Set<CanvasPage>) {
         let idsToRemove = canvasPages.map { $0.id.uuid }
         let layoutPagesToRemove = self.layoutEngine.pages.filter { idsToRemove.contains($0.id) }
         self.layoutEngine.remove(layoutPagesToRemove)
@@ -122,7 +122,6 @@ class CanvasEditorViewModel: NSObject {
             baseLevels.append(zoomFactorLevel)
             baseLevels.sort()
         }
-        baseLevels.reverse()
         return baseLevels
     }
 
@@ -139,11 +138,11 @@ class CanvasEditorViewModel: NSObject {
     }
 
     func zoomIn() {
-        self.selectedZoomLevel -= 1
+        self.selectedZoomLevel += 1
     }
 
     func zoomOut() {
-        self.selectedZoomLevel += 1
+        self.selectedZoomLevel -= 1
     }
 
     func zoomTo100() {

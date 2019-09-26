@@ -9,7 +9,6 @@
 import Foundation
 
 class ModelCollection<ModelType: CollectableModelObject> {
-
     enum ChangeType: Equatable {
         case update
         case insert
@@ -61,11 +60,14 @@ class ModelCollection<ModelType: CollectableModelObject> {
         }
     }
 
+
+    //MARK: - Relationships
     func objectsForRelationship<R: ModelObject>(on object: R, inverseKeyPath: ReferenceWritableKeyPath<ModelType, R?>) -> Set<ModelType> {
         return self.all.filter { $0[keyPath: inverseKeyPath]?.id == object.id }
     }
 
 
+    //MARK: - Observation
     private var observers = [Observation]()
 
     func addObserver(filterBy uuids: [ModelID]? = nil, changeHandler: @escaping (ModelType, ChangeType) -> Void) -> Observation {
@@ -87,6 +89,7 @@ class ModelCollection<ModelType: CollectableModelObject> {
     }
 
 
+    //MARK: - Undo
     func disableUndo(_ caller: () -> Void) {
         guard let undoManager = self.modelController?.undoManager else {
             caller()
