@@ -8,6 +8,8 @@
 
 import Foundation
 
+
+
 class ModelCollection<ModelType: CollectableModelObject> {
     enum ChangeType: Equatable {
         case update
@@ -55,6 +57,7 @@ class ModelCollection<ModelType: CollectableModelObject> {
 
     func delete(_ object: ModelType) {
         if let index = self.all.firstIndex(where: {$0.id == object.id}) {
+            object.objectWillBeDeleted()
             self.all.remove(at: index)
             self.notifyOfChange(to: object, changeType: .delete)
         }

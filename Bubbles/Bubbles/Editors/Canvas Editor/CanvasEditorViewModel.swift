@@ -109,15 +109,13 @@ class CanvasEditorViewModel: NSObject {
             else if self.zoomFactor < 0.25 {
                 self.zoomFactor = 0.25
             }
-            else {
-                self.view?.updateZoomFactor()
-            }
+            self.view?.updateZoomFactor()
         }
     }
 
     var zoomLevels: [Int] {
         var baseLevels = [25, 50, 75, 100]
-        let zoomFactorLevel = Int((self.zoomFactor * 100).rounded())
+        let zoomFactorLevel = Int((self.zoomFactor * 100))
         if (!baseLevels.contains(zoomFactorLevel)) {
             baseLevels.append(zoomFactorLevel)
             baseLevels.sort()
@@ -127,7 +125,7 @@ class CanvasEditorViewModel: NSObject {
 
     var selectedZoomLevel: Int {
         get {
-            let zoomFactorLevel = Int((self.zoomFactor * 100).rounded())
+            let zoomFactorLevel = Int((self.zoomFactor * 100))
             return self.zoomLevels.firstIndex(of: zoomFactorLevel) ?? 0
         }
         set {

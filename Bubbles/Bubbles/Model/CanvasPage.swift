@@ -35,4 +35,10 @@ final class CanvasPage: NSObject, CollectableModelObject {
     var children: Set<CanvasPage> {
         self.relationship(for: \.parent)
     }
+
+    func objectWillBeDeleted() {
+        self.page = nil
+        self.canvas = nil
+        self.parent = nil
+    }
 }

@@ -39,6 +39,9 @@ protocol CollectableModelObject: ModelObject, Hashable {
     /// Called after the object was inserted into the collection. The `collection` property is guaranteed to get set when this is called
     func objectWasInserted()
 
+    /// Called before the object will be deleted. The object should break any relationship
+    func objectWillBeDeleted()
+
     /// Register an undo action for an attribute change
     /// - Parameter oldValue: The old value of the attribute
     /// - Parameter keyPath: The keypath of the attribute
@@ -58,6 +61,8 @@ extension CollectableModelObject {
     }
 
     func objectWasInserted() {}
+
+    func objectWillBeDeleted() {}
     
     func didChange<T>(_ keyPath: ReferenceWritableKeyPath<Self, T>, oldValue: T) {
         let id = self.id
