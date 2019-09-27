@@ -219,8 +219,8 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertEqual(self.layoutEngine.selectedPages.count, 1)
         self.layoutEngine.downEvent(at: self.page1.canvasOrigin.plus(.identity), modifiers: .shift)
         let selectedPages = self.layoutEngine.selectedPages
-        XCTAssertTrue(try XCTUnwrap(selectedPages[safe: 0]) === self.page1)
-        XCTAssertTrue(try XCTUnwrap(selectedPages[safe: 1]) === self.page3)
+        XCTAssertTrue(selectedPages.contains(self.page1))
+        XCTAssertTrue(selectedPages.contains(self.page3))
     }
 
     func test_selection_mouseDownWithShiftModifierOnPageTitleRemovesThatPageFromSelectionIAlreadySelected() {

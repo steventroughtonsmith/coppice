@@ -27,9 +27,6 @@ class ResizePageEventContext: CanvasEventContext {
             return
         }
         let boundedLocation = location.bounded(within: CGRect(origin: .zero, size: layout.canvasSize))
-        if (boundedLocation != location) {
-            return
-        }
 
         var delta = boundedLocation.minus(lastLocation).rounded()
         if (self.component.isRight) {
@@ -64,7 +61,7 @@ class ResizePageEventContext: CanvasEventContext {
             self.page.pageOrigin.y += delta.y
         }
 
-        self.lastLocation = location
+        self.lastLocation = boundedLocation
     }
 
     func upEvent(at location: CGPoint, modifiers: LayoutEventModifiers, in layout: CanvasLayoutEngine) {
