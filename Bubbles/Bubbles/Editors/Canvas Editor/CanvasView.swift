@@ -23,6 +23,8 @@ class CanvasView: NSView {
     override func mouseDragged(with event: NSEvent) {
         let point = self.convert(event.locationInWindow, from: nil)
         self.layoutEngine?.draggedEvent(at: point, modifiers: event.layoutEventModifiers)
+
+        self.startAutoscrolling(with: event)
     }
 
     override func mouseUp(with event: NSEvent) {
@@ -33,6 +35,21 @@ class CanvasView: NSView {
 
     override var wantsDefaultClipping: Bool {
         return false
+    }
+
+
+    //MARK: - Auto scrolling
+    @objc func startAutoscrolling(with event: NSEvent) {
+        guard let contentView = self.enclosingScrollView?.contentView else {
+            return
+        }
+        let previousPosition = contentView.bounds.origin
+        if (self.autoscroll(with: event)) {
+            let delta = contentView.bounds.origin.minus(previousPosition)
+            let point = self.convert(event.locationInWindow, from: nil).plus(delta)
+            self.layoutEngine?.draggedEvent(at: point, modifiers: event.layoutEventModifiers)
+            self.perform(#selector(startAutoscrolling(with:)), with: event, afterDelay: 0.2)
+        }
     }
 
 
