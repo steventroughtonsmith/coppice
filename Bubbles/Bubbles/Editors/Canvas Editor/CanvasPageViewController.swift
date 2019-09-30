@@ -53,6 +53,13 @@ class CanvasPageViewController: NSViewController, CanvasPageView {
         self.typedView.boxView.borderColor = colour
         self.typedView.boxView.borderWidth = size
     }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        //We need to make sure we stay pinned to the top left when resizing the view
+        self.view.autoresizingMask = [.maxXMargin, .maxYMargin]
+    }
 }
 
 extension CanvasPageViewController: LayoutPageComponentProvider {

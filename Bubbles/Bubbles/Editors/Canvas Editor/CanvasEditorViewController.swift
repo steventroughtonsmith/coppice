@@ -33,12 +33,28 @@ class CanvasEditorViewController: NSViewController {
         self.canvasView.layoutEngine = self.layoutEngine
         self.canvasView.wantsLayer = true
         self.canvasView.layer?.masksToBounds = false
-        self.layout()
+        self.forceFullLayout()
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(scrollingChanged(_:)),
                                                name: NSView.boundsDidChangeNotification,
                                                object: self.scrollView.contentView)
         self.updateZoomControl()
+    }
+
+    override func viewDidAppear() {
+        super.viewDidAppear()
+    }
+
+    private var performedInitialLayout = false
+    override func viewDidLayout() {
+        super.viewDidLayout()
+        guard self.performedInitialLayout == false else {
+            return
+        }
+        let canvasSize = self.layoutEngine.canvasSize
+        let scrollPoint = CGPoint(x: canvasSize.width / 2, y: canvasSize.height / 2).rounded()
+        self.scrollView.contentView.centre(on: scrollPoint)
+        self.performedInitialLayout = true
     }
 
     @IBAction func addTestPage(_ sender: Any?) {
@@ -82,6 +98,10 @@ class CanvasEditorViewController: NSViewController {
     private var hasLaidOut = false
     private var isLayingOut = false
     private var currentLayoutContext: CanvasLayoutContext?
+    private func forceFullLayout() {
+        self.currentLayoutContext = CanvasLayoutContext(sizeChanged: true, pageOffsetChange: .zero)
+        self.layout()
+    }
     @objc func layout() {
         self.isLayingOut = true
         self.updateCanvas()
@@ -106,7 +126,7 @@ class CanvasEditorViewController: NSViewController {
             self.scrollView.magnification = magnification
         }
 
-        if let lastPoint = self.lastOriginOffsetFromScrollPoint, self.layoutEngine.pages.count > 0 {
+        if let lastPoint = self.lastOriginOffsetFromScrollPoint {
             self.scroll(toOriginOffset: lastPoint)
         } else {
             let scrollPoint = CGPoint(x: canvasSize.width / 2, y: canvasSize.height / 2).rounded()

@@ -85,7 +85,7 @@ class CanvasLayoutEngine: NSObject {
 
         contentFrame = contentFrame.insetBy(dx: -self.contentBorder, dy: -self.contentBorder)
 
-        if var viewPortFrame = self.view?.viewPortFrame {
+        if var viewPortFrame = self.view?.viewPortFrame, self.pages.count > 0 {
             viewPortFrame.origin = self.convertPointToPageSpace(viewPortFrame.origin)
             contentFrame = contentFrame.union(viewPortFrame)
         }

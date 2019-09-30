@@ -50,7 +50,7 @@
                     </constraints>
                     <popUpButtonCell key="cell" type="roundTextured" title="100%" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="sDf-q3-QAo" id="CYv-ZM-Ftx">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
+                        <font key="font" metaFont="menu"/>
                         <menu key="menu" id="BE2-7n-p5T">
                             <items>
                                 <menuItem title="25%" id="ElS-fd-dI4"/>
