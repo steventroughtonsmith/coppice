@@ -8,11 +8,16 @@
 
 import Cocoa
 
+protocol CanvasViewDelegate: class {
+    func didDrop(pageWithID: ModelID, at point: CGPoint, on canvasView: CanvasView)
+}
+
 class CanvasView: NSView {
     override var isFlipped: Bool {
         return true
     }
 
+    weak var delegate: CanvasViewDelegate?
     var layoutEngine: CanvasLayoutEngine?
 
     override func mouseDown(with event: NSEvent) {
@@ -98,6 +103,39 @@ class CanvasView: NSView {
             CGRect(x: pageSpaceOrigin.x, y: 0, width: 1, height: self.bounds.height).fill()
             CGRect(x: 0, y: pageSpaceOrigin.y, width: self.bounds.width, height: 1).fill()
         }
+    }
+
+
+    //MARK: - Drag & Drop
+    override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
+        return self.draggingUpdated(sender)
+    }
+
+    override func draggingUpdated(_ sender: NSDraggingInfo) -> NSDragOperation {
+        guard let item = sender.draggingPasteboard.pasteboardItems?.first,
+            let id = ModelID(pasteboardItem: item) else {
+                return []
+        }
+        if id.modelType == Page.modelType {
+            return .copy
+        }
+        return []
+    }
+
+    override func prepareForDragOperation(_ sender: NSDraggingInfo) -> Bool {
+        return true
+    }
+
+    override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
+        guard let item = sender.draggingPasteboard.pasteboardItems?.first,
+            let id = ModelID(pasteboardItem: item),
+            id.modelType == Page.modelType else {
+            return false
+        }
+
+        let dropPoint = self.convert(sender.draggingLocation, from: nil)
+        self.delegate?.didDrop(pageWithID: id, at: dropPoint, on: self)
+        return true
     }
 
 

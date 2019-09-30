@@ -30,15 +30,24 @@ class CanvasEditorViewController: NSViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.canvasView.layoutEngine = self.layoutEngine
-        self.canvasView.wantsLayer = true
-        self.canvasView.layer?.masksToBounds = false
+        self.setupCanvasView()
+
         self.forceFullLayout()
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(scrollingChanged(_:)),
                                                name: NSView.boundsDidChangeNotification,
                                                object: self.scrollView.contentView)
         self.updateZoomControl()
+    }
+
+    private func setupCanvasView() {
+        self.canvasView.layoutEngine = self.layoutEngine
+
+        self.canvasView.wantsLayer = true
+        self.canvasView.layer?.masksToBounds = false
+
+        self.canvasView.delegate = self
+        self.canvasView.registerForDraggedTypes([ModelID.PasteboardType])
     }
 
     override func viewDidAppear() {
@@ -247,6 +256,12 @@ class CanvasEditorViewController: NSViewController {
 
     @IBAction func zoomControlChanged(_ sender: Any?) {
         self.viewModel.selectedZoomLevel = self.zoomControl.indexOfSelectedItem
+    }
+}
+
+extension CanvasEditorViewController: CanvasViewDelegate {
+    func didDrop(pageWithID: ModelID, at point: CGPoint, on canvasView: CanvasView) {
+        self.viewModel.addPage(with: pageWithID, centredOn: point)
     }
 }
 

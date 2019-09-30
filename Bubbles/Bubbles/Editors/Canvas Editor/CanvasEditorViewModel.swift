@@ -56,6 +56,7 @@ class CanvasEditorViewModel: NSObject {
         self.modelController.collection(for: CanvasPage.self).delete(canvasPage)
     }
 
+
     //MARK: - Page Management
     private(set) var canvasPages = Set<CanvasPage>()
 
@@ -80,14 +81,6 @@ class CanvasEditorViewModel: NSObject {
         return layoutPage
     }
 
-    func createTestPage() {
-        let canvasPage = self.modelController.collection(for: CanvasPage.self).newObject()
-        canvasPage.position = CGPoint(x: 100, y: 100)
-        canvasPage.size = CGSize(width: 300, height: 400)
-        canvasPage.canvas = self.canvas
-        self.updatePages()
-    }
-
     private func updatePages() {
         let newPages = self.canvas.pages
         let addedPages = newPages.subtracting(self.canvasPages)
@@ -97,6 +90,23 @@ class CanvasEditorViewModel: NSObject {
         self.removePages(removedPages)
 
         self.canvasPages = newPages
+    }
+
+    func createTestPage() {
+        let canvasPage = self.modelController.collection(for: CanvasPage.self).newObject()
+        canvasPage.position = CGPoint(x: 100, y: 100)
+        canvasPage.size = CGSize(width: 300, height: 400)
+        canvasPage.canvas = self.canvas
+        self.updatePages()
+    }
+
+    func addPage(with id: ModelID, centredOn point: CGPoint) {
+        guard let page = self.modelController.collection(for: Page.self).objectWithID(id) else {
+            return
+        }
+
+        let pagePosition = self.layoutEngine.convertPointToPageSpace(point)
+        self.canvas.add(page, centredOn: pagePosition)
     }
 
 
