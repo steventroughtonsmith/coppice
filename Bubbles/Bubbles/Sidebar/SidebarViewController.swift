@@ -96,10 +96,22 @@ extension SidebarViewController: NSTableViewDataSource {
     }
 
     func tableView(_ tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableView.DropOperation) -> NSDragOperation {
-        if case .on = dropOperation {
-            self.canvasesTable.setDropRow(row, dropOperation: .above)
+        guard let item = info.draggingPasteboard.pasteboardItems?.first,
+            let id = ModelID(pasteboardItem: item) else {
+                return []
         }
-        return .move
+
+        if (id.modelType == Canvas.modelType) {
+            self.canvasesTable.setDropRow(row, dropOperation: .above)
+            return .move
+        }
+
+        if (id.modelType == Page.modelType), case .on = dropOperation {
+            self.canvasesTable.setDropRow(row, dropOperation: .on)
+            return .copy
+        }
+
+        return []
     }
 
     func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableView.DropOperation) -> Bool {
@@ -108,9 +120,18 @@ extension SidebarViewController: NSTableViewDataSource {
             return false
         }
 
-        self.viewModel.moveCanvas(with: id, aboveCanvasAtIndex: row)
-        self.reloadCanvases()
-        return true
+        if (id.modelType == Canvas.modelType) {
+            self.viewModel.moveCanvas(with: id, aboveCanvasAtIndex: row)
+            self.reloadCanvases()
+            return true
+        }
+
+        if (id.modelType == Page.modelType) {
+            self.viewModel.addPage(with: id, toCanvasAtIndex: row)
+            return true
+        }
+
+        return false
     }
 }
 

@@ -14,6 +14,7 @@ struct Tag {
 
 final class Page: NSObject, CollectableModelObject {
     static let modelType: ModelType = ModelType(rawValue: "Page")!
+    static let standardSize = CGSize(width: 300, height: 400)
 
     var id = ModelID(modelType: Page.modelType)
     weak var collection: ModelCollection<Page>?
@@ -35,6 +36,15 @@ final class Page: NSObject, CollectableModelObject {
     }
     var dateCreated = Date()
     var dateModified = Date()
+    private var userPreferredSize: CGSize?
+    var contentSize: CGSize {
+        get {
+            return self.userPreferredSize ?? self.content.contentSize ?? Page.standardSize
+        }
+        set {
+            self.userPreferredSize = newValue
+        }
+    }
 
 
     // MARK: - Relationships

@@ -25,7 +25,12 @@ final class CanvasPage: NSObject, CollectableModelObject {
     
     //MARK: - Relationships
     weak var page: Page? {
-        didSet { self.didChangeRelationship(\.page, oldValue: oldValue, inverseKeyPath: \.canvases) }
+        didSet {
+            if let page = self.page {
+                self.size = page.contentSize
+            }
+            self.didChangeRelationship(\.page, oldValue: oldValue, inverseKeyPath: \.canvases)
+        }
     }
     weak var canvas: Canvas? {
         didSet { self.didChangeRelationship(\.canvas, oldValue: oldValue, inverseKeyPath: \.pages) }

@@ -120,9 +120,25 @@ class SidebarViewModel: NSObject {
         return items
     }
 
+    func addPage(with id: ModelID, toCanvasAtIndex index: Int) {
+        guard id.modelType == Page.modelType else {
+            return
+        }
+        guard let page = self.pageItems.first(where: { $0.id == id })?.page else {
+            return
+        }
+        
+        let canvas = self.canvasItems[index].canvas
+        canvas.add(page)
+    }
+
 
     //MARK: - Re-ordering
     func moveCanvas(with id: ModelID, aboveCanvasAtIndex index: Int) {
+        guard id.modelType == Canvas.modelType else {
+            return
+        }
+
         var canvases: [Canvas?] = self.canvasItems.map { $0.canvas }
         guard let currentIndex = canvases.firstIndex(where: { $0?.id == id}) else {
             return

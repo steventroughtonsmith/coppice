@@ -63,7 +63,6 @@ class CanvasEditorViewController: NSViewController {
 
 
     //MARK: - Scrolling
-
     private var lastOriginOffsetFromScrollPoint: CGPoint?
 
     @objc func scrollingChanged(_ sender: Any?) {

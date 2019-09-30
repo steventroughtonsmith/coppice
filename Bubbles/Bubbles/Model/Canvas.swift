@@ -34,4 +34,12 @@ final class Canvas: NSObject, CollectableModelObject {
     var pages: Set<CanvasPage> {
         return self.relationship(for: \.canvas)
     }
+
+
+    //MARK: - Helpers
+    func add(_ page: Page) {
+        let canvasPage = self.modelController?.collection(for: CanvasPage.self).newObject()
+        canvasPage?.page = page
+        canvasPage?.canvas = self
+    }
 }

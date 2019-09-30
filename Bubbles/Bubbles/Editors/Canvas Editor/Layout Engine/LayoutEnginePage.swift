@@ -45,9 +45,13 @@ class LayoutEnginePage: Equatable {
     var componentProvider: LayoutPageComponentProvider?
     var canvasOrigin: CGPoint = .zero
     var pageOrigin: CGPoint
-    var size: CGSize
+    var size: CGSize {
+        didSet {
+            self.validateSize()
+        }
+    }
     var selected: Bool = false
-    var minSize: CGSize = .zero
+    var minSize: CGSize = CGSize(width: 100, height: 200)
 
     var pageFrame: CGRect {
         return CGRect(origin: self.pageOrigin, size: self.size)
@@ -63,6 +67,7 @@ class LayoutEnginePage: Equatable {
         self.componentProvider = componentProvider
         self.pageOrigin = pageOrigin
         self.size = size
+        self.validateSize()
     }
 
     func component(at point: CGPoint) -> LayoutEnginePageComponent? {
@@ -71,5 +76,15 @@ class LayoutEnginePage: Equatable {
 
     static func == (lhs: LayoutEnginePage, rhs: LayoutEnginePage) -> Bool {
         return lhs.id == rhs.id
+    }
+
+    private func validateSize() {
+        var boundedSize = self.size
+        boundedSize.width = max(boundedSize.width, self.minSize.width)
+        boundedSize.height = max(boundedSize.height, self.minSize.height)
+
+        if boundedSize != self.size {
+            self.size = boundedSize
+        }
     }
 }

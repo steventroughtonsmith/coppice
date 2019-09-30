@@ -27,18 +27,28 @@ enum PageContentType {
 
 protocol PageContent: class {
     var contentType: PageContentType { get }
+    var contentSize: CGSize? { get }
 }
 
 class EmptyPageContent: PageContent {
     let contentType = PageContentType.empty
+    var contentSize: CGSize? {
+        return nil
+    }
 }
 
 class TextPageContent: PageContent {
     let contentType = PageContentType.text
     var text: NSAttributedString = NSAttributedString()
+    var contentSize: CGSize? {
+        return nil
+    }
 }
 
 class ImagePageContent: PageContent {
     let contentType = PageContentType.image
     var image: NSImage?
+    var contentSize: CGSize? {
+        return self.image?.size
+    }
 }
