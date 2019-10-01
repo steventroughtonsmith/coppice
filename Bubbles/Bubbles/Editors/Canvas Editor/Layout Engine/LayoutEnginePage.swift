@@ -51,7 +51,7 @@ class LayoutEnginePage: Equatable {
         }
     }
     var selected: Bool = false
-    var minSize: CGSize = CGSize(width: 100, height: 200)
+    var minSize: CGSize
 
     var pageFrame: CGRect {
         return CGRect(origin: self.pageOrigin, size: self.size)
@@ -62,11 +62,16 @@ class LayoutEnginePage: Equatable {
     }
 
     weak var layoutEngine: CanvasLayoutEngine?
-    init(id: UUID, pageOrigin: CGPoint, size: CGSize, componentProvider: LayoutPageComponentProvider? = nil) {
+    init(id: UUID,
+         pageOrigin: CGPoint,
+         size: CGSize,
+         minSize: CGSize = CGSize(width: 100, height: 200),
+         componentProvider: LayoutPageComponentProvider? = nil) {
         self.id = id
         self.componentProvider = componentProvider
         self.pageOrigin = pageOrigin
         self.size = size
+        self.minSize = minSize
         self.validateSize()
     }
 

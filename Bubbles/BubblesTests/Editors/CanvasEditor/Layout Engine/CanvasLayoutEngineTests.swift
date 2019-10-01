@@ -74,16 +74,19 @@ class CanvasLayoutEngineTests: XCTestCase {
         self.page1 = LayoutEnginePage(id: UUID(),
                                       pageOrigin: CGPoint(x: 40, y: 40),
                                       size: CGSize(width: 10, height: 10),
+                                      minSize: CGSize(width: 0, height: 0),
                                       componentProvider: TestComponentProvider())
 
         self.page2 = LayoutEnginePage(id: UUID(),
                                       pageOrigin: CGPoint(x: -30, y: -20),
                                       size: CGSize(width: 20, height: 40),
+                                      minSize: CGSize(width: 0, height: 0),
                                       componentProvider: TestComponentProvider())
 
         self.page3 = LayoutEnginePage(id: UUID(),
                                       pageOrigin: CGPoint(x: 30, y: -30),
                                       size: CGSize(width: 30, height: 20),
+                                      minSize: CGSize(width: 0, height: 0),
                                       componentProvider: TestComponentProvider())
 
         self.layoutEngine.add([self.page1, self.page2, self.page3])
@@ -104,6 +107,7 @@ class CanvasLayoutEngineTests: XCTestCase {
         let page = LayoutEnginePage(id: UUID(),
                                     pageOrigin: CGPoint(x: 42, y: 31),
                                     size: CGSize(width: 20, height: 20),
+                                    minSize: CGSize(width: 0, height: 0),
                                     componentProvider: TestComponentProvider())
 
         XCTAssertEqual(page.component(at: CGPoint(x: 0, y: 0)), .resizeTopLeft)
