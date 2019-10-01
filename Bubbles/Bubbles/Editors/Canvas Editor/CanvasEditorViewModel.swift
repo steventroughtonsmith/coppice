@@ -33,9 +33,17 @@ class CanvasEditorViewModel: NSObject {
 
     //MARK: - Observation
     var canvasObserver: ModelCollection<Canvas>.Observation?
+    var canvasPageObserver: ModelCollection<CanvasPage>.Observation?
     private func setupObservation() {
         self.canvasObserver = self.modelController.collection(for: Canvas.self).addObserver(filterBy: [self.canvas.id]) { [weak self] (canvas, changeType) in
             if changeType == .update {
+                self?.updatePages()
+            }
+        }
+        self.canvasPageObserver = self.modelController.collection(for: CanvasPage.self).addObserver() { [weak self] (canvas, changeType) in
+            if changeType == .update {
+                self?.updatePages()
+            } else if changeType == .insert {
                 self?.updatePages()
             }
         }
@@ -93,10 +101,11 @@ class CanvasEditorViewModel: NSObject {
     }
 
     func createTestPage() {
-        let canvasPage = self.modelController.collection(for: CanvasPage.self).newObject()
-        canvasPage.position = CGPoint(x: 100, y: 100)
-        canvasPage.size = CGSize(width: 300, height: 400)
-        canvasPage.canvas = self.canvas
+        self.modelController.collection(for: CanvasPage.self).newObject() { canvasPage in
+            canvasPage.position = CGPoint(x: 100, y: 100)
+            canvasPage.size = CGSize(width: 300, height: 400)
+            canvasPage.canvas = self.canvas
+        }
         self.updatePages()
     }
 

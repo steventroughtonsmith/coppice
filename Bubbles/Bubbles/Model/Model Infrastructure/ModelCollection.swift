@@ -29,6 +29,19 @@ class ModelCollection<ModelType: CollectableModelObject> {
         }
     }
 
+    class ChangeGroup {
+        private(set) var changes = [ModelType: ChangeType]()
+        func registerChange(for object: ModelType, ofType changeType: ChangeType) {
+            self.changes[object] = changeType
+        }
+
+        func notify(_ observers: [Observation]) {
+            for (object, changeType) in self.changes {
+                observers.forEach { $0.notifyOfChange(to: object, changeType: changeType) }
+            }
+        }
+    }
+
     typealias CustomInitialiser = ([String: Any]) -> ModelType
     let objectInitialiser: CustomInitialiser
     init(objectInitialiser: @escaping CustomInitialiser) {
@@ -44,14 +57,18 @@ class ModelCollection<ModelType: CollectableModelObject> {
         return self.all.first { $0.id == id }
     }
 
-    @discardableResult func newObject(context: [String: Any] = [:]) -> ModelType {
+    typealias ModelSetupBlock = (ModelType) -> Void
+    @discardableResult func newObject(context: [String: Any] = [:], setupBlock: ModelSetupBlock? = nil) -> ModelType {
+        self.modelController?.pushChangeGroup()
         let newObject = self.objectInitialiser(context)
         newObject.collection = self
         self.all.insert(newObject)
         self.disableUndo {
             newObject.objectWasInserted()
         }
+        setupBlock?(newObject)
         self.notifyOfChange(to: newObject, changeType: .insert)
+        self.modelController?.popChangeGroup()
         return newObject
     }
 
@@ -86,10 +103,16 @@ class ModelCollection<ModelType: CollectableModelObject> {
     }
 
     func notifyOfChange(to object: ModelType, changeType: ModelCollection.ChangeType = .update) {
-        for observer in self.observers {
-            observer.notifyOfChange(to: object, changeType: changeType)
+        guard let currentChangeGroup = self.changeGroups.last else {
+            let changeGroup = ChangeGroup()
+            changeGroup.registerChange(for: object, ofType: changeType)
+            changeGroup.notify(self.observers)
+            return
         }
+        currentChangeGroup.registerChange(for: object, ofType: changeType)
     }
+
+    private var changeGroups = [ChangeGroup]()
 
 
     //MARK: - Undo
@@ -120,5 +143,18 @@ class ModelCollection<ModelType: CollectableModelObject> {
             return
         }
         object[keyPath: keyPath] = value
+    }
+}
+
+extension ModelCollection: ModelChangeGroupHandler {
+    func pushChangeGroup() {
+        print("push change group: \(self)")
+        self.changeGroups.append(ChangeGroup())
+    }
+
+    func popChangeGroup() {
+        print("pop change group: \(self)")
+        let changeGroup = self.changeGroups.popLast()
+        changeGroup?.notify(self.observers)
     }
 }

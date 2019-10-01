@@ -51,6 +51,8 @@ protocol CollectableModelObject: ModelObject, Hashable {
     /// Return the objects for a to-many relationship
     /// - Parameter keyPath: The keypath on the returned type that holds the inverse relationship
     func relationship<T: CollectableModelObject>(for keyPath: ReferenceWritableKeyPath<T, Self?>) -> Set<T>
+
+    func performUpdate(_ updateBlock: (Self) -> Void)
 }
 
 
@@ -90,5 +92,11 @@ extension CollectableModelObject {
         }
         let collection = modelController.collection(for: T.self)
         return collection.objectsForRelationship(on: self, inverseKeyPath: keyPath)
+    }
+
+    func performUpdate(_ updateBlock: (Self) -> Void) {
+        self.modelController?.pushChangeGroup()
+        updateBlock(self)
+        self.modelController?.popChangeGroup()
     }
 }

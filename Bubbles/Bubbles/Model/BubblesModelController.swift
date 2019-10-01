@@ -41,22 +41,19 @@ class BubblesModelController: NSObject, ModelController {
 extension BubblesModelController {
     func createTestData() {
         self.collection(for: Canvas.self).disableUndo {
-            let canvas1 = self.collection(for: Canvas.self).newObject()
-            canvas1.title = "First"
-            let canvas2 = self.collection(for: Canvas.self).newObject()
-            canvas2.title = "Second!"
+            self.collection(for: Canvas.self).newObject() { $0.title = "First" }
+            self.collection(for: Canvas.self).newObject() { $0.title = "Second!" }
         }
 
         self.collection(for: Page.self).disableUndo {
-            let page1 = self.collection(for: Page.self).newObject()
-            page1.title = "Foo"
-            let content = TextPageContent()
-            content.text = NSAttributedString(string: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vehicula sit amet felis ac commodo. Sed quis faucibus nibh. Nam ut urna libero.")
-            page1.content = content
-            let page2 = self.collection(for: Page.self).newObject()
-            page2.title = "Bar"
-            let page3 = self.collection(for: Page.self).newObject()
-            page3.title = "Baz"
+            self.collection(for: Page.self).newObject() { page in
+                page.title = "Foo"
+                let content = TextPageContent()
+                content.text = NSAttributedString(string: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vehicula sit amet felis ac commodo. Sed quis faucibus nibh. Nam ut urna libero.")
+                page.content = content
+            }
+            self.collection(for: Page.self).newObject() { $0.title = "Bar" }
+            self.collection(for: Page.self).newObject() { $0.title = "Baz" }
         }
     }
 

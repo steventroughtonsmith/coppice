@@ -51,9 +51,10 @@ class DebugCanvasEditorViewModel: NSObject {
         guard let page = self.modelController.collection(for: Page.self).objectWithID(pageID) else {
             return
         }
-        let canvasPage = self.modelController.collection(for: CanvasPage.self).newObject()
-        canvasPage.page = page
-        canvasPage.canvas = self.canvas
+        self.modelController.collection(for: CanvasPage.self).newObject() { canvasPage in
+            canvasPage.page = page
+            canvasPage.canvas = self.canvas
+        }
     }
 
     func removeSelected() {

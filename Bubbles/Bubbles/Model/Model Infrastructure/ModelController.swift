@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ModelController: class {
+protocol ModelController: class, ModelChangeGroupHandler {
     var undoManager: UndoManager { get }
     var collections: [ModelType: Any] {get set}
     @discardableResult func addModelCollection<T: CollectableModelObject>(for type: T.Type, objectInitialiser: @escaping ([String: Any]) -> T) -> ModelCollection<T>
@@ -35,5 +35,17 @@ extension ModelController {
             fatalError("Collection with type '\(type.modelType)' does not exist")
         }
         return model
+    }
+
+    func pushChangeGroup() {
+        self.collections.values
+            .compactMap { $0 as? ModelChangeGroupHandler }
+            .forEach { $0.pushChangeGroup() }
+    }
+
+    func popChangeGroup() {
+        self.collections.values
+            .compactMap { $0 as? ModelChangeGroupHandler }
+            .forEach { $0.popChangeGroup() }
     }
 }

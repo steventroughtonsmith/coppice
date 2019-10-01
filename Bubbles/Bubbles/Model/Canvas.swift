@@ -38,15 +38,16 @@ final class Canvas: NSObject, CollectableModelObject {
 
     //MARK: - Helpers
     func add(_ page: Page, centredOn point: CGPoint? = nil) {
-        guard let canvasPage = self.modelController?.collection(for: CanvasPage.self).newObject() else {
+        guard let collection = self.modelController?.collection(for: CanvasPage.self) else {
             return
         }
-        canvasPage.page = page
 
-        if let point = point {
-            canvasPage.position = point.minus(CGPoint(x: canvasPage.size.width / 2, y: canvasPage.size.height / 2)).rounded()
+        collection.newObject() { canvasPage in
+            canvasPage.page = page
+            if let point = point {
+                canvasPage.position = point.minus(CGPoint(x: canvasPage.size.width / 2, y: canvasPage.size.height / 2)).rounded()
+            }
+            canvasPage.canvas = self
         }
-
-        canvasPage.canvas = self
     }
 }
