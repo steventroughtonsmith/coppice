@@ -33,7 +33,13 @@ final class TestCollectableModelObject: NSObject, CollectableModelObject {
         self.objectWasInsertedCalled = true
     }
 
-    var stringProperty = "Test"
+    var stringProperty = "Test" {
+        didSet { self.didChange(\.stringProperty, oldValue: oldValue) }
+    }
+
+    var intProperty = 0 {
+        didSet { self.didChange(\.intProperty, oldValue: oldValue) }
+    }
 
     var inverseRelationship: RelationshipModelObject?
 }

@@ -72,7 +72,16 @@ class ModelCollectionTests: XCTestCase {
         XCTAssertTrue(newObject.objectWasInsertedCalled)
     }
 
-    func test_newObject_notifiesObserversOfChange() {
+    func test_newObject_callsSetupBlockWithNewlyCreatedObject() {
+        var blockObject: TestCollectableModelObject?
+        let newObject = self.collection.newObject() { setupObject in
+            blockObject = setupObject
+        }
+
+        XCTAssertEqual(newObject, blockObject)
+    }
+
+    func test_newObject_notifiesObserversOfInsert() {
         var changedObject: TestCollectableModelObject? = nil
         var changeType: ModelCollection<TestCollectableModelObject>.ChangeType? = nil
 
@@ -88,6 +97,19 @@ class ModelCollectionTests: XCTestCase {
 
         XCTAssertEqual(newObject, changedObject)
         XCTAssertEqual(changeType, .insert)
+    }
+
+    func test_newObject_doesntNotifyObserversAnyUpdatesInsideSetupBlock() {
+        let expectation = self.expectation(description: "ObserverCalled")
+        _ = self.collection.addObserver { (object, change) in
+            expectation.fulfill()
+        }
+
+        self.collection.newObject() { object in
+            object.stringProperty = "Foo"
+        }
+
+        self.wait(for: [expectation], timeout: 0)
     }
 
 
@@ -212,6 +234,77 @@ class ModelCollectionTests: XCTestCase {
     }
 
 
+    //MARK: - changeGroups
+    func test_changeGroups_notifiesObserverImmediatelyAfterEachUpdateIfNoChangeGroupPushed() {
+        let newObject = self.collection.newObject()
+
+        let stringExpectation = self.expectation(description: "String Property Changed")
+        let stringObserver = self.collection.addObserver { object, change in
+            stringExpectation.fulfill()
+        }
+
+        newObject.stringProperty = "Foo"
+        self.wait(for: [stringExpectation], timeout: 0)
+        self.collection.removeObserver(stringObserver)
+
+
+        let intExpectation = self.expectation(description: "Int Property Changed")
+        let intObserver = self.collection.addObserver { object, change in
+            intExpectation.fulfill()
+        }
+
+        newObject.intProperty = 5
+        self.wait(for: [intExpectation], timeout: 0)
+        self.collection.removeObserver(intObserver)
+
+    }
+
+    func test_changeGroups_doesntNotifyObserverUntilAfterChangeGroupPopped() {
+        let newObject = self.collection.newObject()
+
+        self.collection.pushChangeGroup()
+        let notCalledExpectation = self.expectation(description: "Not Called")
+        notCalledExpectation.isInverted = true
+        let notCalledObserver = self.collection.addObserver { _, _ in
+            notCalledExpectation.fulfill()
+        }
+
+        newObject.stringProperty = "Foo"
+        self.wait(for: [notCalledExpectation], timeout: 0)
+
+        self.collection.removeObserver(notCalledObserver)
+
+        let calledExpectation = self.expectation(description: "Observer called")
+        _ = self.collection.addObserver { object, changeType in
+            XCTAssertEqual(object, newObject)
+            XCTAssertEqual(changeType, .update)
+            calledExpectation.fulfill()
+        }
+
+        self.collection.popChangeGroup()
+        self.wait(for: [calledExpectation], timeout: 0)
+    }
+
+    func test_changeGroups_onlyNotifiesObserverOnceForMultipleUpdatesIfInChangeGroup() {
+        let newObject = self.collection.newObject()
+
+
+        let expectationExpectation = self.expectation(description: "Observer called")
+        _ = self.collection.addObserver { object, changeType in
+            XCTAssertEqual(object, newObject)
+            XCTAssertEqual(changeType, .update)
+            expectationExpectation.fulfill()
+        }
+
+        self.collection.pushChangeGroup()
+        newObject.stringProperty = "Foo"
+        newObject.intProperty = 5
+        self.collection.popChangeGroup()
+
+        self.wait(for: [expectationExpectation], timeout: 0)
+    }
+
+
     //MARK: - Undo
     func test_disableUndo_doesntAddAnyUndoRegistrationInBlock() {
         XCTAssertFalse(self.modelController.undoManager.canUndo)
@@ -287,8 +380,9 @@ class ModelCollectionTests: XCTestCase {
     }
 
     func test_collectableModelObjectDidChange_registersUndoActionToRevertValueChange() {
-        let object = self.collection.newObject()
-        object.stringProperty = "Foo"
+        let object = self.collection.newObject() {
+            $0.stringProperty = "Foo"
+        }
 
         XCTAssertFalse(self.modelController.undoManager.canUndo)
         object.didChange(\.stringProperty, oldValue: "Bar")

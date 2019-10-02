@@ -65,8 +65,8 @@ class ModelCollection<ModelType: CollectableModelObject> {
         self.all.insert(newObject)
         self.disableUndo {
             newObject.objectWasInserted()
+            setupBlock?(newObject)
         }
-        setupBlock?(newObject)
         self.notifyOfChange(to: newObject, changeType: .insert)
         self.modelController?.popChangeGroup()
         return newObject
@@ -148,12 +148,10 @@ class ModelCollection<ModelType: CollectableModelObject> {
 
 extension ModelCollection: ModelChangeGroupHandler {
     func pushChangeGroup() {
-        print("push change group: \(self)")
         self.changeGroups.append(ChangeGroup())
     }
 
     func popChangeGroup() {
-        print("pop change group: \(self)")
         let changeGroup = self.changeGroups.popLast()
         changeGroup?.notify(self.observers)
     }
