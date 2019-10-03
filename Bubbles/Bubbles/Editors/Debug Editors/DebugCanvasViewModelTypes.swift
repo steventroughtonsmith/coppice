@@ -24,23 +24,23 @@ class DebugCanvasPageItem {
     }
 
     var x: CGFloat {
-        get { self.canvasPage.position.x }
-        set { self.canvasPage.position.x = newValue }
+        get { self.canvasPage.frame.origin.x }
+        set { self.canvasPage.frame.origin.x = newValue }
     }
 
     var y: CGFloat {
-        get { self.canvasPage.position.y }
-        set { self.canvasPage.position.y = newValue }
+        get { self.canvasPage.frame.origin.y }
+        set { self.canvasPage.frame.origin.y = newValue }
     }
 
     var width: CGFloat {
-        get { self.canvasPage.size.width }
-        set { self.canvasPage.size.width = newValue }
+        get { self.canvasPage.frame.size.width }
+        set { self.canvasPage.frame.size.width = newValue }
     }
 
     var height: CGFloat {
-        get { self.canvasPage.size.height }
-        set { self.canvasPage.size.height = newValue }
+        get { self.canvasPage.frame.size.height }
+        set { self.canvasPage.frame.size.height = newValue }
     }
 
     var parentID: String {

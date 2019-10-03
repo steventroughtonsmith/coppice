@@ -44,8 +44,9 @@ final class Canvas: NSObject, CollectableModelObject {
 
         collection.newObject() { canvasPage in
             canvasPage.page = page
+
             if let point = point {
-                canvasPage.position = point.minus(CGPoint(x: canvasPage.size.width / 2, y: canvasPage.size.height / 2)).rounded()
+                canvasPage.frame.origin = point.minus(CGPoint(x: canvasPage.frame.size.width / 2, y: canvasPage.frame.size.height / 2)).rounded()
             }
             canvasPage.canvas = self
         }

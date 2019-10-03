@@ -84,7 +84,7 @@ class CanvasEditorViewModel: NSObject {
     }
 
     private func createLayoutPage(for canvasPage: CanvasPage) -> LayoutEnginePage {
-        let layoutPage = LayoutEnginePage(id: canvasPage.id.uuid, pageOrigin: canvasPage.position, size: canvasPage.size)
+        let layoutPage = LayoutEnginePage(id: canvasPage.id.uuid, pageOrigin: canvasPage.frame.origin, size: canvasPage.frame.size)
         layoutPage.minSize = CGSize(width: 100, height: 100)
         return layoutPage
     }
@@ -102,8 +102,7 @@ class CanvasEditorViewModel: NSObject {
 
     func createTestPage() {
         self.modelController.collection(for: CanvasPage.self).newObject() { canvasPage in
-            canvasPage.position = CGPoint(x: 100, y: 100)
-            canvasPage.size = CGSize(width: 300, height: 400)
+            canvasPage.frame = CGRect(x: 100, y: 100, width: 300, height: 400)
             canvasPage.canvas = self.canvas
         }
         self.updatePages()
@@ -173,8 +172,7 @@ extension CanvasEditorViewModel: CanvasLayoutEngineDelegate {
             guard let canvasPage = self.canvasPage(with: page.id) else {
                 continue
             }
-            canvasPage.position = page.pageOrigin
-            canvasPage.size = page.size
+            canvasPage.frame = CGRect(origin: page.pageOrigin, size: page.size)
         }
     }
 }

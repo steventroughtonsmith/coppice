@@ -15,11 +15,8 @@ final class CanvasPage: NSObject, CollectableModelObject {
     weak var collection: ModelCollection<CanvasPage>?
 
     //MARK: - Attributes
-    var position: CGPoint = .zero {
-        didSet { self.didChange(\.position, oldValue: oldValue) }
-    }
-    var size: CGSize = .zero {
-        didSet { self.didChange(\.size, oldValue: oldValue) }
+    var frame: CGRect = .zero {
+        didSet { self.didChange(\.frame, oldValue: oldValue) }
     }
 
     
@@ -27,7 +24,7 @@ final class CanvasPage: NSObject, CollectableModelObject {
     weak var page: Page? {
         didSet {
             if let page = self.page {
-                self.size = page.contentSize
+                self.frame.size = page.contentSize
             }
             self.didChangeRelationship(\.page, oldValue: oldValue, inverseKeyPath: \.canvases)
         }

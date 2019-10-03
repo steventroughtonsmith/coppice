@@ -25,9 +25,9 @@ class TestCanvasPageViewController: NSViewController {
     init(canvasPage: CanvasPage) {
         self.canvasPage = canvasPage
         self.id = canvasPage.id.uuid
-        self.width = canvasPage.size.width
-        self.height = canvasPage.size.height
-        self.position = canvasPage.position
+        self.width = canvasPage.frame.size.width
+        self.height = canvasPage.frame.size.height
+        self.position = canvasPage.frame.origin
         super.init(nibName: "TestCanvasPageViewController", bundle: nil)
     }
 
