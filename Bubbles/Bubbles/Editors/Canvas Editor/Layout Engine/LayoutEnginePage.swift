@@ -44,33 +44,32 @@ class LayoutEnginePage: Equatable {
     let id: UUID
     var componentProvider: LayoutPageComponentProvider?
     var canvasOrigin: CGPoint = .zero
-    var pageOrigin: CGPoint
-    var size: CGSize {
-        didSet {
-            self.validateSize()
-        }
-    }
+
     var selected: Bool = false
     var minSize: CGSize
 
     var pageFrame: CGRect {
-        return CGRect(origin: self.pageOrigin, size: self.size)
+        return CGRect(origin: self.contentFrame.origin, size: self.contentFrame.size)
     }
 
     var canvasFrame: CGRect {
-        return CGRect(origin: self.canvasOrigin, size: self.size)
+        return CGRect(origin: self.canvasOrigin, size: self.contentFrame.size)
+    }
+
+    var contentFrame: CGRect {
+        didSet {
+            self.validateSize()
+        }
     }
 
     weak var layoutEngine: CanvasLayoutEngine?
     init(id: UUID,
-         pageOrigin: CGPoint,
-         size: CGSize,
+         contentFrame: CGRect,
          minSize: CGSize = CGSize(width: 100, height: 200),
          componentProvider: LayoutPageComponentProvider? = nil) {
         self.id = id
         self.componentProvider = componentProvider
-        self.pageOrigin = pageOrigin
-        self.size = size
+        self.contentFrame = contentFrame
         self.minSize = minSize
         self.validateSize()
     }
@@ -84,12 +83,12 @@ class LayoutEnginePage: Equatable {
     }
 
     private func validateSize() {
-        var boundedSize = self.size
+        var boundedSize = self.contentFrame.size
         boundedSize.width = max(boundedSize.width, self.minSize.width)
         boundedSize.height = max(boundedSize.height, self.minSize.height)
 
-        if boundedSize != self.size {
-            self.size = boundedSize
+        if boundedSize != self.contentFrame.size {
+            self.contentFrame.size = boundedSize
         }
     }
 }

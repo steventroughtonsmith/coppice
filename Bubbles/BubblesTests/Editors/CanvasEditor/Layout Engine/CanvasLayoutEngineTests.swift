@@ -30,16 +30,16 @@ class TestComponentProvider: LayoutPageComponentProvider {
             if (point.y == 0) {
                 return .resizeTopLeft
             }
-            if (point.y == page.size.height - 1) {
+            if (point.y == page.contentFrame.size.height - 1) {
                 return .resizeBottomLeft
             }
             return .resizeLeft
         }
-        if (point.x == page.size.width - 1) {
+        if (point.x == page.contentFrame.size.width - 1) {
             if (point.y == 0) {
                 return .resizeTopRight
             }
-            if (point.y == page.size.height - 1) {
+            if (point.y == page.contentFrame.size.height - 1) {
                 return .resizeBottomRight
             }
             return .resizeRight
@@ -47,7 +47,7 @@ class TestComponentProvider: LayoutPageComponentProvider {
         if (point.y == 0) {
             return .resizeTop
         }
-        if (point.y == page.size.height - 1) {
+        if (point.y == page.contentFrame.size.height - 1) {
             return .resizeBottom
         }
         if (point.y <= 5) {
@@ -72,20 +72,17 @@ class CanvasLayoutEngineTests: XCTestCase {
         self.layoutEngine.contentBorder = 20
 
         self.page1 = LayoutEnginePage(id: UUID(),
-                                      pageOrigin: CGPoint(x: 40, y: 40),
-                                      size: CGSize(width: 10, height: 10),
+                                      contentFrame: CGRect(x: 40, y: 40, width: 10, height: 10),
                                       minSize: CGSize(width: 0, height: 0),
                                       componentProvider: TestComponentProvider())
 
         self.page2 = LayoutEnginePage(id: UUID(),
-                                      pageOrigin: CGPoint(x: -30, y: -20),
-                                      size: CGSize(width: 20, height: 40),
+                                      contentFrame: CGRect(x: -30, y: -20, width: 20, height: 40),
                                       minSize: CGSize(width: 0, height: 0),
                                       componentProvider: TestComponentProvider())
 
         self.page3 = LayoutEnginePage(id: UUID(),
-                                      pageOrigin: CGPoint(x: 30, y: -30),
-                                      size: CGSize(width: 30, height: 20),
+                                      contentFrame: CGRect(x: 30, y: -30, width: 30, height: 20),
                                       minSize: CGSize(width: 0, height: 0),
                                       componentProvider: TestComponentProvider())
 
@@ -105,8 +102,7 @@ class CanvasLayoutEngineTests: XCTestCase {
     //MARK: - TestLayoutEnginePage Sanity Tests
     func test_testLayoutEnginePage_sanityTests() {
         let page = LayoutEnginePage(id: UUID(),
-                                    pageOrigin: CGPoint(x: 42, y: 31),
-                                    size: CGSize(width: 20, height: 20),
+                                    contentFrame: CGRect(x: 42, y: 31, width: 20, height: 20),
                                     minSize: CGSize(width: 0, height: 0),
                                     componentProvider: TestComponentProvider())
 

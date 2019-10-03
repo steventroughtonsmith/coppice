@@ -84,7 +84,7 @@ class CanvasEditorViewModel: NSObject {
     }
 
     private func createLayoutPage(for canvasPage: CanvasPage) -> LayoutEnginePage {
-        let layoutPage = LayoutEnginePage(id: canvasPage.id.uuid, pageOrigin: canvasPage.frame.origin, size: canvasPage.frame.size)
+        let layoutPage = LayoutEnginePage(id: canvasPage.id.uuid, contentFrame: canvasPage.frame)
         layoutPage.minSize = CGSize(width: 100, height: 100)
         return layoutPage
     }
@@ -172,7 +172,7 @@ extension CanvasEditorViewModel: CanvasLayoutEngineDelegate {
             guard let canvasPage = self.canvasPage(with: page.id) else {
                 continue
             }
-            canvasPage.frame = CGRect(origin: page.pageOrigin, size: page.size)
+            canvasPage.frame = page.contentFrame
         }
     }
 }

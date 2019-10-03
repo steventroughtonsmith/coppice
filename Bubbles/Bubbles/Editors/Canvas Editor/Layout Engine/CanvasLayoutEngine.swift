@@ -103,7 +103,7 @@ class CanvasLayoutEngine: NSObject {
 
     private func updatePageCanvasFrames() {
         for page in self.pages {
-            page.canvasOrigin = self.convertPointToCanvasSpace(page.pageOrigin)
+            page.canvasOrigin = self.convertPointToCanvasSpace(page.contentFrame.origin)
         }
     }
 
