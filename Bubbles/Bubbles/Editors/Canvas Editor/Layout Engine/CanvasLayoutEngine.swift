@@ -53,13 +53,7 @@ class CanvasLayoutEngine: NSObject {
 
     //MARK: - Manage Canvas
     private(set) var canvasSize: CGSize = .zero
-    private var pageSpaceOffset: CGPoint = .zero {
-        didSet {
-//            if (self.pageSpaceOffset != oldValue) {
-                self.updatePageCanvasFrames()
-//            }
-        }
-    }
+    private var pageSpaceOffset: CGPoint = .zero
 
     func convertPointToPageSpace(_ point: CGPoint) -> CGPoint {
         return point.minus(self.pageSpaceOffset)
@@ -100,22 +94,15 @@ class CanvasLayoutEngine: NSObject {
 
         self.view?.layoutChanged(with: CanvasLayoutContext(sizeChanged: canvasChanged, pageOffsetChange: offsetChange))
     }
-
-    private func updatePageCanvasFrames() {
-        for page in self.pages {
-            page.canvasOrigin = self.convertPointToCanvasSpace(page.contentFrame.origin)
-        }
-    }
-
     
     //MARK: - Manage Pages
     private(set) var pages = [LayoutEnginePage]()
 
-    func add(_ pages: [LayoutEnginePage]) {
-        for page in pages {
-            self.pages.append(page)
-        }
+    @discardableResult func addPage(withID id: UUID, contentFrame: CGRect, minimumContentSize: CGSize = CGSize(width: 100, height: 200)) -> LayoutEnginePage {
+        let page = LayoutEnginePage(id: id, contentFrame: contentFrame, minimumContentSize: minimumContentSize, layoutEngine: self)
+        self.pages.append(page)
         self.recalculateCanvasSize()
+        return page
     }
 
     func remove(_ pages: [LayoutEnginePage]) {
@@ -178,7 +165,7 @@ class CanvasLayoutEngine: NSObject {
         self.movePageToFront(page)
 
         //Page content click
-        guard let pageComponent = page.component(at: location.minus(page.canvasOrigin)) else {
+        guard let pageComponent = page.component(at: location.minus(page.canvasFrame.origin)) else {
             return nil
         }
 

@@ -43,17 +43,17 @@ protocol LayoutPageComponentProvider {
 class LayoutEnginePage: Equatable {
     let id: UUID
     var componentProvider: LayoutPageComponentProvider?
-    var canvasOrigin: CGPoint = .zero
 
     var selected: Bool = false
-    var minSize: CGSize
+    var minimumContentSize: CGSize
 
     var pageFrame: CGRect {
         return CGRect(origin: self.contentFrame.origin, size: self.contentFrame.size)
     }
 
     var canvasFrame: CGRect {
-        return CGRect(origin: self.canvasOrigin, size: self.contentFrame.size)
+        let canvasOrigin = self.layoutEngine?.convertPointToCanvasSpace(self.pageFrame.origin) ?? self.pageFrame.origin
+        return CGRect(origin: canvasOrigin, size: self.contentFrame.size)
     }
 
     var contentFrame: CGRect {
@@ -65,12 +65,12 @@ class LayoutEnginePage: Equatable {
     weak var layoutEngine: CanvasLayoutEngine?
     init(id: UUID,
          contentFrame: CGRect,
-         minSize: CGSize = CGSize(width: 100, height: 200),
-         componentProvider: LayoutPageComponentProvider? = nil) {
+         minimumContentSize: CGSize = CGSize(width: 100, height: 200),
+         layoutEngine: CanvasLayoutEngine) {
         self.id = id
-        self.componentProvider = componentProvider
         self.contentFrame = contentFrame
-        self.minSize = minSize
+        self.minimumContentSize = minimumContentSize
+        self.layoutEngine = layoutEngine
         self.validateSize()
     }
 
@@ -84,8 +84,8 @@ class LayoutEnginePage: Equatable {
 
     private func validateSize() {
         var boundedSize = self.contentFrame.size
-        boundedSize.width = max(boundedSize.width, self.minSize.width)
-        boundedSize.height = max(boundedSize.height, self.minSize.height)
+        boundedSize.width = max(boundedSize.width, self.minimumContentSize.width)
+        boundedSize.height = max(boundedSize.height, self.minimumContentSize.height)
 
         if boundedSize != self.contentFrame.size {
             self.contentFrame.size = boundedSize

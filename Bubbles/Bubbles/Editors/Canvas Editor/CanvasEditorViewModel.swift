@@ -73,20 +73,16 @@ class CanvasEditorViewModel: NSObject {
     }
 
     private func addPages(_ canvasPages: Set<CanvasPage>) {
-        let layoutEnginePages = canvasPages.map { self.createLayoutPage(for: $0) }
-        self.layoutEngine.add(layoutEnginePages)
+        canvasPages.forEach { (canvasPage) in
+            self.layoutEngine.addPage(withID: canvasPage.id.uuid,
+                                      contentFrame: canvasPage.frame)
+        }
     }
 
     private func removePages(_ canvasPages: Set<CanvasPage>) {
         let idsToRemove = canvasPages.map { $0.id.uuid }
         let layoutPagesToRemove = self.layoutEngine.pages.filter { idsToRemove.contains($0.id) }
         self.layoutEngine.remove(layoutPagesToRemove)
-    }
-
-    private func createLayoutPage(for canvasPage: CanvasPage) -> LayoutEnginePage {
-        let layoutPage = LayoutEnginePage(id: canvasPage.id.uuid, contentFrame: canvasPage.frame)
-        layoutPage.minSize = CGSize(width: 100, height: 100)
-        return layoutPage
     }
 
     private func updatePages() {
