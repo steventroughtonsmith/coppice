@@ -105,9 +105,9 @@ class CanvasEditorViewController: NSViewController {
     //MARK: - Layout
     private var hasLaidOut = false
     private var isLayingOut = false
-    private var currentLayoutContext: CanvasLayoutContext?
+    private var currentLayoutContext: CanvasLayoutEngine.LayoutContext?
     private func forceFullLayout() {
-        self.currentLayoutContext = CanvasLayoutContext(sizeChanged: true, pageOffsetChange: .zero)
+        self.currentLayoutContext = CanvasLayoutEngine.LayoutContext(sizeChanged: true, pageOffsetChange: .zero)
         self.layout()
     }
     @objc func layout() {
@@ -273,7 +273,7 @@ extension CanvasEditorViewController: CanvasEditorView {
 }
 
 extension CanvasEditorViewController: CanvasLayoutView {
-    func layoutChanged(with context: CanvasLayoutContext) {
+    func layoutChanged(with context: CanvasLayoutEngine.LayoutContext) {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(layout), object: nil)
         if let currentContext = self.currentLayoutContext {
             self.currentLayoutContext = currentContext.merged(with: context)

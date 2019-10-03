@@ -68,7 +68,10 @@ class CanvasLayoutEngineTests: XCTestCase {
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
 
-        self.layoutEngine = CanvasLayoutEngine()
+        self.layoutEngine = CanvasLayoutEngine(configuration: .init(pageTitleHeight: 5,
+                                                                    pageResizeEdgeHandleSize: 1,
+                                                                    pageResizeCornerHandleSize: 1,
+                                                                    pageResizeHandleOffset: 0))
         self.layoutEngine.contentBorder = 20
 
         self.page1 = self.layoutEngine.addPage(withID: UUID(),
@@ -128,7 +131,10 @@ class CanvasLayoutEngineTests: XCTestCase {
     func test_pointConversion_convertsPointFromPageSpaceToCanvasSpaceForEmptyEngine() {
         let basePoint = CGPoint(x: 10, y: 42)
 
-        let emptyEngine = CanvasLayoutEngine()
+        let emptyEngine = CanvasLayoutEngine(configuration: .init(pageTitleHeight: 5,
+                                                                  pageResizeEdgeHandleSize: 1,
+                                                                  pageResizeCornerHandleSize: 1,
+                                                                  pageResizeHandleOffset: 0))
         let expectedPoint = basePoint
         XCTAssertEqual(emptyEngine.convertPointToCanvasSpace(basePoint), expectedPoint)
     }
@@ -144,7 +150,10 @@ class CanvasLayoutEngineTests: XCTestCase {
     func test_pointConversion_convertsPointFromCanvasSpaceToPageSpaceForEmptyEngine() {
         let basePoint = CGPoint(x: 15, y: 31)
 
-        let emptyEngine = CanvasLayoutEngine()
+        let emptyEngine = CanvasLayoutEngine(configuration: .init(pageTitleHeight: 5,
+                                                                  pageResizeEdgeHandleSize: 1,
+                                                                  pageResizeCornerHandleSize: 1,
+                                                                  pageResizeHandleOffset: 0))
         let expectedPoint = basePoint
         XCTAssertEqual(emptyEngine.convertPointToPageSpace(basePoint), expectedPoint)
     }
@@ -724,7 +733,7 @@ class CanvasLayoutEngineTests: XCTestCase {
 
     func test_canvasSize_canvasSizeShouldBeBiggerThanContentBoundsPlusCanvasBorderIfViewPortFrameIsOutside() {
         class TestCanvasView: CanvasLayoutView {
-            func layoutChanged(with context: CanvasLayoutContext) {}
+            func layoutChanged(with context: CanvasLayoutEngine.LayoutContext) {}
             var viewPortFrame: CGRect = .zero
         }
 

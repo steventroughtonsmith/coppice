@@ -15,7 +15,10 @@ protocol CanvasEditorView: class {
 class CanvasEditorViewModel: NSObject {
     weak var view: CanvasEditorView?
 
-    let layoutEngine = CanvasLayoutEngine()
+    let layoutEngine = CanvasLayoutEngine(configuration: .init(pageTitleHeight: 32,
+                                                               pageResizeEdgeHandleSize: 5,
+                                                               pageResizeCornerHandleSize: 8,
+                                                               pageResizeHandleOffset: 2))
 
     let canvas: Canvas
     let modelController: ModelController

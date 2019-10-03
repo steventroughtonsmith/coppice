@@ -56,6 +56,8 @@ class LayoutEnginePage: Equatable {
         return CGRect(origin: canvasOrigin, size: self.contentFrame.size)
     }
 
+
+    /// The frame of the page's content in pageSpace
     var contentFrame: CGRect {
         didSet {
             self.validateSize()
