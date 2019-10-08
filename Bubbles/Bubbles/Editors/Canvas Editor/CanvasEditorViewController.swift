@@ -186,7 +186,7 @@ class CanvasEditorViewController: NSViewController {
     }
 
     private func apply(_ layoutPage: LayoutEnginePage, to viewController: CanvasPageViewController) {
-        viewController.view.frame = layoutPage.canvasFrame.rounded()
+        viewController.view.frame = layoutPage.layoutFrame.rounded()
         viewController.selected = layoutPage.selected
     }
 

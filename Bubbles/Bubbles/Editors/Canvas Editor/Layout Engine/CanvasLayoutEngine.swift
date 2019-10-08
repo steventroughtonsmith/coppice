@@ -41,8 +41,6 @@ class CanvasLayoutEngine: NSObject {
     weak var view: CanvasLayoutView?
     weak var delegate: CanvasLayoutEngineDelegate?
 
-    var contentBorder: CGFloat = 1000
-
     let configuration: Configuration
     init(configuration: Configuration) {
         self.configuration = configuration
@@ -64,17 +62,17 @@ class CanvasLayoutEngine: NSObject {
         var contentFrame: CGRect!
         for page in self.pages {
             guard let currentFrame = contentFrame else {
-                contentFrame = page.pageFrame.rounded()
+                contentFrame = page.layoutFrameInPageSpace.rounded()
                 continue
             }
-            contentFrame = currentFrame.union(page.pageFrame.rounded())
+            contentFrame = currentFrame.union(page.layoutFrameInPageSpace.rounded())
         }
 
         if contentFrame == nil {
             contentFrame = .zero
         }
 
-        contentFrame = contentFrame.insetBy(dx: -self.contentBorder, dy: -self.contentBorder)
+        contentFrame = contentFrame.insetBy(dx: -self.configuration.contentBorder, dy: -self.configuration.contentBorder)
 
         if var viewPortFrame = self.view?.viewPortFrame, self.pages.count > 0 {
             viewPortFrame.origin = self.convertPointToPageSpace(viewPortFrame.origin)
@@ -114,7 +112,7 @@ class CanvasLayoutEngine: NSObject {
 
     func page(atCanvasPoint canvasPoint: CGPoint) -> LayoutEnginePage? {
         for page in self.pages.reversed() {
-            if page.canvasFrame.contains(canvasPoint) {
+            if page.layoutFrame.contains(canvasPoint) {
                 return page
             }
         }
@@ -124,7 +122,7 @@ class CanvasLayoutEngine: NSObject {
     func pages(inCanvasRect canvasRect: CGRect) -> [LayoutEnginePage] {
         var pagesInRect = [LayoutEnginePage]()
         for page in self.pages {
-            if page.canvasFrame.intersects(canvasRect) {
+            if page.layoutFrame.intersects(canvasRect) {
                 pagesInRect.append(page)
             }
         }
@@ -162,7 +160,7 @@ class CanvasLayoutEngine: NSObject {
         self.movePageToFront(page)
 
         //Page content click
-        guard let pageComponent = page.component(at: location.minus(page.canvasFrame.origin)) else {
+        guard let pageComponent = page.component(at: location.minus(page.layoutFrame.origin)) else {
             return nil
         }
 
@@ -217,5 +215,47 @@ extension CanvasLayoutEngine {
         let pageResizeEdgeHandleSize: CGFloat
         let pageResizeCornerHandleSize: CGFloat
         let pageResizeHandleOffset: CGFloat
+
+        let contentBorder: CGFloat
+
+
+        /// The margins from around the content to get to the layout
+        var layoutFrameOffsetFromContent: LayoutMargins {
+            return LayoutMargins(left: self.pageResizeHandleOffset,
+                                 top: self.pageResizeHandleOffset + self.pageTitleHeight,
+                                 right: self.pageResizeHandleOffset,
+                                 bottom: self.pageResizeHandleOffset)
+        }
+
+        /// The margins inside the layoutFrame to get the visible frame
+        var visibleFrameInset: LayoutMargins {
+            return LayoutMargins(left: self.pageResizeHandleOffset, top: self.pageResizeHandleOffset, right: self.pageResizeHandleOffset, bottom: self.pageResizeHandleOffset)
+        }
+
+    }
+
+    struct LayoutMargins: Equatable {
+        let left: CGFloat
+        let top: CGFloat
+        let right: CGFloat
+        let bottom: CGFloat
+
+        static let zero = LayoutMargins(left: 0, top: 0, right: 0, bottom: 0)
+    }
+}
+
+extension CGRect {
+    func grow(by layoutMargins: CanvasLayoutEngine.LayoutMargins) -> CGRect {
+        return CGRect(x: (self.origin.x - layoutMargins.left),
+                      y: (self.origin.y - layoutMargins.top),
+                      width: (self.size.width + layoutMargins.left + layoutMargins.right),
+                      height: (self.size.height + layoutMargins.top + layoutMargins.bottom))
+    }
+
+    func shrink(by layoutMargins: CanvasLayoutEngine.LayoutMargins) -> CGRect {
+        return CGRect(x: (self.origin.x + layoutMargins.left),
+                      y: (self.origin.y + layoutMargins.top),
+                      width: (self.size.width - layoutMargins.left - layoutMargins.right),
+                      height: (self.size.height - layoutMargins.top - layoutMargins.bottom))
     }
 }

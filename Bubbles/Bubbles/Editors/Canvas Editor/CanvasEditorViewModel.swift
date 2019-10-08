@@ -18,7 +18,8 @@ class CanvasEditorViewModel: NSObject {
     let layoutEngine = CanvasLayoutEngine(configuration: .init(pageTitleHeight: 32,
                                                                pageResizeEdgeHandleSize: 5,
                                                                pageResizeCornerHandleSize: 8,
-                                                               pageResizeHandleOffset: 2))
+                                                               pageResizeHandleOffset: 2,
+                                                               contentBorder: 1000))
 
     let canvas: Canvas
     let modelController: ModelController

@@ -36,7 +36,7 @@ class PageTitleBarEventContext: CanvasEventContext {
         }
         let delta = location.minus(lastLocation)
         for page in layout.selectedPages {
-            page.contentFrame.origin = page.contentFrame.origin.plus(delta)
+            page.layoutFrame.origin = page.layoutFrame.origin.plus(delta)
         }
         self.lastLocation = location
     }

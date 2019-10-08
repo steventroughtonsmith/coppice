@@ -54,6 +54,10 @@ extension CGSize {
         return newSize
     }
 
+    func plus(width: CGFloat = 0, height: CGFloat = 0) -> CGSize {
+        return self.plus(CGSize(width: width, height: height))
+    }
+
     func rounded() -> CGSize {
         let width = round(self.width)
         let height = round(self.height)

@@ -24,39 +24,6 @@ let testLayoutASCII = """
           |
 """
 
-class TestComponentProvider: LayoutPageComponentProvider {
-    func component(at point: CGPoint, in page: LayoutEnginePage) -> LayoutEnginePageComponent? {
-        if (point.x == 0) {
-            if (point.y == 0) {
-                return .resizeTopLeft
-            }
-            if (point.y == page.contentFrame.size.height - 1) {
-                return .resizeBottomLeft
-            }
-            return .resizeLeft
-        }
-        if (point.x == page.contentFrame.size.width - 1) {
-            if (point.y == 0) {
-                return .resizeTopRight
-            }
-            if (point.y == page.contentFrame.size.height - 1) {
-                return .resizeBottomRight
-            }
-            return .resizeRight
-        }
-        if (point.y == 0) {
-            return .resizeTop
-        }
-        if (point.y == page.contentFrame.size.height - 1) {
-            return .resizeBottom
-        }
-        if (point.y <= 5) {
-            return .titleBar
-        }
-        return nil
-    }
-}
-
 class CanvasLayoutEngineTests: XCTestCase {
 
     var layoutEngine: CanvasLayoutEngine!
@@ -64,6 +31,7 @@ class CanvasLayoutEngineTests: XCTestCase {
     var page2: LayoutEnginePage!
     var page3: LayoutEnginePage!
     var contentFrame: CGRect = .zero
+    var expectedOffset: CGPoint!
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -71,25 +39,23 @@ class CanvasLayoutEngineTests: XCTestCase {
         self.layoutEngine = CanvasLayoutEngine(configuration: .init(pageTitleHeight: 5,
                                                                     pageResizeEdgeHandleSize: 1,
                                                                     pageResizeCornerHandleSize: 1,
-                                                                    pageResizeHandleOffset: 0))
-        self.layoutEngine.contentBorder = 20
+                                                                    pageResizeHandleOffset: 0,
+                                                                    contentBorder: 20))
 
         self.page1 = self.layoutEngine.addPage(withID: UUID(),
                                                contentFrame: CGRect(x: 40, y: 40, width: 10, height: 10),
                                                minimumContentSize: CGSize(width: 0, height: 0))
-        self.page1.componentProvider = TestComponentProvider()
 
         self.page2 = self.layoutEngine.addPage(withID: UUID(),
                                                contentFrame: CGRect(x: -30, y: -20, width: 20, height: 40),
                                                minimumContentSize: CGSize(width: 0, height: 0))
-        self.page2.componentProvider = TestComponentProvider()
 
         self.page3 = self.layoutEngine.addPage(withID: UUID(),
                                                contentFrame: CGRect(x: 30, y: -30, width: 30, height: 20),
                                                minimumContentSize: CGSize(width: 0, height: 0))
-        self.page3.componentProvider = TestComponentProvider()
 
-        self.contentFrame = self.page1.canvasFrame.union(self.page2.canvasFrame).union(self.page3.canvasFrame)
+        self.contentFrame = self.page1.layoutFrame.union(self.page2.layoutFrame).union(self.page3.layoutFrame)
+        self.expectedOffset = CGPoint(x: 50, y: 55) //This is (50, 50) for the content frame, but we have a 5pt title which pushes the y up a bit
     }
 
     override func tearDown() {
@@ -103,9 +69,8 @@ class CanvasLayoutEngineTests: XCTestCase {
     //MARK: - TestLayoutEnginePage Sanity Tests
     func test_testLayoutEnginePage_sanityTests() {
         let page = self.layoutEngine.addPage(withID: UUID(),
-                                             contentFrame: CGRect(x: 42, y: 31, width: 20, height: 20),
+                                             contentFrame: CGRect(x: 42, y: 31, width: 20, height: 15),
                                              minimumContentSize: CGSize(width: 0, height: 0))
-        page.componentProvider = TestComponentProvider()
 
         XCTAssertEqual(page.component(at: CGPoint(x: 0, y: 0)), .resizeTopLeft)
         XCTAssertEqual(page.component(at: CGPoint(x: 0, y: 1)), .resizeLeft)
@@ -121,8 +86,8 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertEqual(page.component(at: CGPoint(x: 18, y: 19)), .resizeBottom)
         XCTAssertEqual(page.component(at: CGPoint(x: 1, y: 1)), .titleBar)
         XCTAssertEqual(page.component(at: CGPoint(x: 18, y: 1)), .titleBar)
-        XCTAssertEqual(page.component(at: CGPoint(x: 1, y: 5)), .titleBar)
-        XCTAssertEqual(page.component(at: CGPoint(x: 18, y: 5)), .titleBar)
+        XCTAssertEqual(page.component(at: CGPoint(x: 1, y: 4)), .titleBar)
+        XCTAssertEqual(page.component(at: CGPoint(x: 18, y: 4)), .titleBar)
         XCTAssertEqual(page.component(at: CGPoint(x: 10, y: 3)), .titleBar)
     }
 
@@ -134,7 +99,8 @@ class CanvasLayoutEngineTests: XCTestCase {
         let emptyEngine = CanvasLayoutEngine(configuration: .init(pageTitleHeight: 5,
                                                                   pageResizeEdgeHandleSize: 1,
                                                                   pageResizeCornerHandleSize: 1,
-                                                                  pageResizeHandleOffset: 0))
+                                                                  pageResizeHandleOffset: 0,
+                                                                  contentBorder: 20))
         let expectedPoint = basePoint
         XCTAssertEqual(emptyEngine.convertPointToCanvasSpace(basePoint), expectedPoint)
     }
@@ -142,8 +108,7 @@ class CanvasLayoutEngineTests: XCTestCase {
     func test_pointConversion_convertsPointFromPageSpaceToCanvasSpace() {
         let basePoint = CGPoint(x: 10, y: 42)
 
-        let offset = CGPoint(x: 50, y: 50)
-        let expectedPoint = basePoint.plus(offset)
+        let expectedPoint = basePoint.plus(self.expectedOffset)
         XCTAssertEqual(self.layoutEngine.convertPointToCanvasSpace(basePoint), expectedPoint)
     }
 
@@ -153,7 +118,8 @@ class CanvasLayoutEngineTests: XCTestCase {
         let emptyEngine = CanvasLayoutEngine(configuration: .init(pageTitleHeight: 5,
                                                                   pageResizeEdgeHandleSize: 1,
                                                                   pageResizeCornerHandleSize: 1,
-                                                                  pageResizeHandleOffset: 0))
+                                                                  pageResizeHandleOffset: 0,
+                                                                  contentBorder: 20))
         let expectedPoint = basePoint
         XCTAssertEqual(emptyEngine.convertPointToPageSpace(basePoint), expectedPoint)
     }
@@ -161,8 +127,7 @@ class CanvasLayoutEngineTests: XCTestCase {
     func test_pointConversion_convertsPointFromCanvasSpaceToPageSpace() {
         let basePoint = CGPoint(x: 65, y: 81)
 
-        let offset = CGPoint(x: 50, y: 50)
-        let expectedPoint = basePoint.minus(offset)
+        let expectedPoint = basePoint.minus(self.expectedOffset)
         XCTAssertEqual(self.layoutEngine.convertPointToPageSpace(basePoint), expectedPoint)
     }
 
@@ -190,7 +155,7 @@ class CanvasLayoutEngineTests: XCTestCase {
     func test_selection_mouseDownWithNoModifiersOnPageTitleSelectsThatPage() throws {
         XCTAssertEqual(self.layoutEngine.selectedPages.count, 0)
 
-        let clickPoint = self.page3.canvasFrame.origin.plus(.identity)
+        let clickPoint = self.page3.layoutFrame.origin.plus(.identity)
         self.layoutEngine.downEvent(at: clickPoint)
 
         XCTAssertTrue(self.layoutEngine.selectedPages.first === self.page3)
@@ -200,7 +165,7 @@ class CanvasLayoutEngineTests: XCTestCase {
         self.page1.selected = true
         XCTAssertEqual(self.layoutEngine.selectedPages.count, 1)
 
-        let clickPoint = self.page3.canvasFrame.origin.plus(.identity)
+        let clickPoint = self.page3.layoutFrame.origin.plus(.identity)
         self.layoutEngine.downEvent(at: clickPoint)
         XCTAssertEqual(self.layoutEngine.selectedPages.count, 1)
         XCTAssertTrue(self.layoutEngine.selectedPages.first === self.page3)
@@ -211,7 +176,7 @@ class CanvasLayoutEngineTests: XCTestCase {
         self.page3.selected = true
         XCTAssertEqual(self.layoutEngine.selectedPages.count, 2)
 
-        let clickPoint = self.page3.canvasFrame.origin.plus(.identity)
+        let clickPoint = self.page3.layoutFrame.origin.plus(.identity)
         self.layoutEngine.downEvent(at: clickPoint)
 
         let selectedPages = self.layoutEngine.selectedPages
@@ -224,7 +189,7 @@ class CanvasLayoutEngineTests: XCTestCase {
         self.page3.selected = true
 
         XCTAssertEqual(self.layoutEngine.selectedPages.count, 1)
-        self.layoutEngine.downEvent(at: self.page1.canvasFrame.origin.plus(.identity), modifiers: .shift)
+        self.layoutEngine.downEvent(at: self.page1.layoutFrame.origin.plus(.identity), modifiers: .shift)
         let selectedPages = self.layoutEngine.selectedPages
         XCTAssertTrue(selectedPages.contains(self.page1))
         XCTAssertTrue(selectedPages.contains(self.page3))
@@ -235,7 +200,7 @@ class CanvasLayoutEngineTests: XCTestCase {
         self.page3.selected = true
 
         XCTAssertEqual(self.layoutEngine.selectedPages.count, 2)
-        self.layoutEngine.downEvent(at: self.page2.canvasFrame.origin.plus(.identity), modifiers: .shift)
+        self.layoutEngine.downEvent(at: self.page2.layoutFrame.origin.plus(.identity), modifiers: .shift)
         let selectedPages = self.layoutEngine.selectedPages
         XCTAssertEqual(selectedPages.count, 1)
         XCTAssertTrue(try XCTUnwrap(selectedPages[safe: 0]) === self.page3)
@@ -312,7 +277,7 @@ class CanvasLayoutEngineTests: XCTestCase {
 
     //MARK: - Move Pages
     func test_moving_mouseDraggedFromPageTitleMovesThatPage() {
-        let page1Point = self.page1.canvasFrame.origin
+        let page1Point = self.page1.layoutFrame.origin
 
         let offset = CGPoint(x: 5, y: 3)
         self.layoutEngine.downEvent(at: page1Point.plus(.identity))
@@ -320,14 +285,14 @@ class CanvasLayoutEngineTests: XCTestCase {
         self.layoutEngine.draggedEvent(at: page1Point.plus(.identity).plus(offset))
 
         let expectedPoint = page1Point.plus(CGPoint(x: 5, y: 3))
-        XCTAssertEqual(self.page1.canvasFrame.origin, expectedPoint)
+        XCTAssertEqual(self.page1.layoutFrame.origin, expectedPoint)
     }
 
     func test_moving_mouseDraggedFromPageTitleMovesAllSelectedPages() {
         self.page2.selected = true
         self.page3.selected = true
-        let page2Point = self.page2.canvasFrame.origin
-        let page3Point = self.page3.canvasFrame.origin
+        let page2Point = self.page2.layoutFrame.origin
+        let page3Point = self.page3.layoutFrame.origin
 
         let offset = CGPoint(x: 7, y: 8)
 
@@ -336,9 +301,9 @@ class CanvasLayoutEngineTests: XCTestCase {
         self.layoutEngine.draggedEvent(at: page3Point.plus(.identity).plus(offset))
 
         let expectedPage2Point = page2Point.plus(offset)
-        XCTAssertEqual(self.page2.canvasFrame.origin, expectedPage2Point)
+        XCTAssertEqual(self.page2.layoutFrame.origin, expectedPage2Point)
         let expectedPage3Point = page3Point.plus(offset)
-        XCTAssertEqual(self.page3.canvasFrame.origin, expectedPage3Point)
+        XCTAssertEqual(self.page3.layoutFrame.origin, expectedPage3Point)
     }
 
     func test_moving_mouseUpInformsDelegateOfChangeToPages() throws {
@@ -357,7 +322,7 @@ class CanvasLayoutEngineTests: XCTestCase {
         self.page2.selected = true
         self.page3.selected = true
 
-        let page3Point = self.page3.canvasFrame.origin
+        let page3Point = self.page3.layoutFrame.origin
 
         let offset = CGPoint(x: 7, y: 8)
 
@@ -381,21 +346,21 @@ class CanvasLayoutEngineTests: XCTestCase {
         let startX: CGFloat
         switch (xEdge) {
         case .min:
-            startX = self.page1.canvasFrame.minX
+            startX = self.page1.layoutFrame.minX
         case .mid:
-            startX = self.page1.canvasFrame.midX
+            startX = self.page1.layoutFrame.midX
         case .max:
-            startX = self.page1.canvasFrame.maxX - 1
+            startX = self.page1.layoutFrame.maxX - 1
         }
 
         let startY: CGFloat
         switch (yEdge) {
         case .min:
-            startY = self.page1.canvasFrame.minY
+            startY = self.page1.layoutFrame.minY
         case .mid:
-            startY = self.page1.canvasFrame.midY
+            startY = self.page1.layoutFrame.midY
         case .max:
-            startY = self.page1.canvasFrame.maxY - 1
+            startY = self.page1.layoutFrame.maxY - 1
         }
 
         let startPoint = CGPoint(x: startX, y: startY)
@@ -407,322 +372,322 @@ class CanvasLayoutEngineTests: XCTestCase {
 
     //Left
     func test_resizing_draggingLeftEdgeToLeftIncreasesWidthAndDecreasesOriginX() {
-        var expectedFrame = self.page1.canvasFrame
+        var expectedFrame = self.page1.layoutFrame
         expectedFrame.origin.x -= 2
         expectedFrame.size.width += 2
 
         self.dragPageBy(xEdge: .min, yEdge: .mid, deltaX: -2, deltaY: -2)
 
-        XCTAssertEqual(self.page1.canvasFrame, expectedFrame)
+        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
     func test_resizing_draggingLeftEdgeToRightDecreasesWidthAndIncreasesOriginX() {
-        var expectedFrame = self.page1.canvasFrame
+        var expectedFrame = self.page1.layoutFrame
         expectedFrame.origin.x += 2
         expectedFrame.size.width -= 2
 
         self.dragPageBy(xEdge: .min, yEdge: .mid, deltaX: 2, deltaY: 2)
 
-        XCTAssertEqual(self.page1.canvasFrame, expectedFrame)
+        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
     func test_resizing_draggingLeftEdgeToLeftStopsAtCanvasEdge() {
-        var expectedFrame = self.page1.canvasFrame
+        var expectedFrame = self.page1.layoutFrame
         expectedFrame.size.width += expectedFrame.origin.x
         expectedFrame.origin.x = 20
 
         self.dragPageBy(xEdge: .min, yEdge: .mid, deltaX: -100, deltaY: -100)
 
-        XCTAssertEqual(self.page1.canvasFrame, expectedFrame)
+        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
     func test_resizing_draggingLeftEdgeToRightStopsAtMinimumWidth() {
         self.page1.minimumContentSize = CGSize(width: 5, height: 5)
-        var expectedFrame = self.page1.canvasFrame
+        var expectedFrame = self.page1.layoutFrame
         expectedFrame.origin.x += expectedFrame.width - self.page1.minimumContentSize.width
         expectedFrame.size.width = self.page1.minimumContentSize.width
 
         self.dragPageBy(xEdge: .min, yEdge: .mid, deltaX: 100, deltaY: 100)
 
-        XCTAssertEqual(self.page1.canvasFrame, expectedFrame)
+        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
     //Top
     func test_resizing_draggingTopEdgeUpIncreasesHeightAndDecreasesOriginY() {
-        var expectedFrame = self.page1.canvasFrame
+        var expectedFrame = self.page1.layoutFrame
         expectedFrame.origin.y -= 2
         expectedFrame.size.height += 2
 
         self.dragPageBy(xEdge: .mid, yEdge: .min, deltaX: -2, deltaY: -2)
 
-        XCTAssertEqual(self.page1.canvasFrame, expectedFrame)
+        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
     func test_resizing_draggingTopEdgeDownDecreasesHeightAndIncreasesOriginY() {
-        var expectedFrame = self.page1.canvasFrame
+        var expectedFrame = self.page1.layoutFrame
         expectedFrame.origin.y += 2
         expectedFrame.size.height -= 2
 
         self.dragPageBy(xEdge: .mid, yEdge: .min, deltaX: 2, deltaY: 2)
 
-        XCTAssertEqual(self.page1.canvasFrame, expectedFrame)
+        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
     func test_resizing_draggingTopEdgeUpStopsAtCanvasEdge() {
-        var expectedFrame = self.page1.canvasFrame
+        var expectedFrame = self.page1.layoutFrame
         expectedFrame.size.height += expectedFrame.origin.y
         expectedFrame.origin.y = 20
 
         self.dragPageBy(xEdge: .mid, yEdge: .min, deltaX: -100, deltaY: -100)
 
-        XCTAssertEqual(self.page1.canvasFrame, expectedFrame)
+        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
     func test_resizing_draggingTopEdgeDownStopsAtMinimumHeight() {
         self.page1.minimumContentSize = CGSize(width: 5, height: 5)
-        var expectedFrame = self.page1.canvasFrame
-        expectedFrame.origin.y += expectedFrame.height - self.page1.minimumContentSize.height
-        expectedFrame.size.height = self.page1.minimumContentSize.height
+        var expectedFrame = self.page1.layoutFrame
+        expectedFrame.origin.y += expectedFrame.height - self.page1.minimumLayoutSize.height
+        expectedFrame.size.height = self.page1.minimumLayoutSize.height
 
         self.dragPageBy(xEdge: .mid, yEdge: .min, deltaX: 100, deltaY: 100)
 
-        XCTAssertEqual(self.page1.canvasFrame, expectedFrame)
+        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
     //Right
     func test_resizing_draggingRightEdgeToRightIncreasesWidth() {
-        var expectedFrame = self.page1.canvasFrame
+        var expectedFrame = self.page1.layoutFrame
         expectedFrame.size.width += 2
 
         self.dragPageBy(xEdge: .max, yEdge: .mid, deltaX: 2, deltaY: 2)
 
-        XCTAssertEqual(self.page1.canvasFrame, expectedFrame)
+        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
     func test_resizing_draggingRightEdgeToLeftDecreasesWidth() {
-        var expectedFrame = self.page1.canvasFrame
+        var expectedFrame = self.page1.layoutFrame
         expectedFrame.size.width -= 2
 
         self.dragPageBy(xEdge: .max, yEdge: .mid, deltaX: -2, deltaY: -2)
 
-        XCTAssertEqual(self.page1.canvasFrame, expectedFrame)
+        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
     func test_resizing_draggingRightEdgeToRightStopsAtCanvasEdge() {
-        var expectedFrame = self.page1.canvasFrame
-        expectedFrame.size.width += self.contentFrame.maxX - expectedFrame.maxX + self.layoutEngine.contentBorder
+        var expectedFrame = self.page1.layoutFrame
+        expectedFrame.size.width += self.contentFrame.maxX - expectedFrame.maxX + self.layoutEngine.configuration.contentBorder
 
         self.dragPageBy(xEdge: .max, yEdge: .mid, deltaX: 100, deltaY: 100)
 
-        XCTAssertEqual(self.page1.canvasFrame, expectedFrame)
+        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
     func test_resizing_draggingRightEdgeToLeftStopsAtMinimumWidth() {
         self.page1.minimumContentSize = CGSize(width: 5, height: 5)
-        var expectedFrame = self.page1.canvasFrame
+        var expectedFrame = self.page1.layoutFrame
         expectedFrame.size.width = self.page1.minimumContentSize.width
 
         self.dragPageBy(xEdge: .max, yEdge: .mid, deltaX: -100, deltaY: -100)
 
-        XCTAssertEqual(self.page1.canvasFrame, expectedFrame)
+        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
     //Bottom
     func test_resizing_draggingBottomEdgeDownIncreasesHeight() {
-        var expectedFrame = self.page1.canvasFrame
+        var expectedFrame = self.page1.layoutFrame
         expectedFrame.size.height += 2
 
         self.dragPageBy(xEdge: .mid, yEdge: .max, deltaX: 2, deltaY: 2)
 
-        XCTAssertEqual(self.page1.canvasFrame, expectedFrame)
+        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
     func test_resizing_draggingBottomEdgeUpDecreasesHeight() {
-        var expectedFrame = self.page1.canvasFrame
+        var expectedFrame = self.page1.layoutFrame
         expectedFrame.size.height -= 2
 
         self.dragPageBy(xEdge: .mid, yEdge: .max, deltaX: -2, deltaY: -2)
 
-        XCTAssertEqual(self.page1.canvasFrame, expectedFrame)
+        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
     func test_resizing_draggingBottomEdgeDownStopsAtCanvasEdge() {
-        var expectedFrame = self.page1.canvasFrame
-        expectedFrame.size.height += self.contentFrame.maxY - expectedFrame.maxY + self.layoutEngine.contentBorder
+        var expectedFrame = self.page1.layoutFrame
+        expectedFrame.size.height += self.contentFrame.maxY - expectedFrame.maxY + self.layoutEngine.configuration.contentBorder
 
         self.dragPageBy(xEdge: .mid, yEdge: .max, deltaX: 100, deltaY: 100)
 
-        XCTAssertEqual(self.page1.canvasFrame, expectedFrame)
+        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
     func test_resizing_draggingBottomEdgeUpStopsAtMinimumHeight() {
         self.page1.minimumContentSize = CGSize(width: 5, height: 5)
-        var expectedFrame = self.page1.canvasFrame
-        expectedFrame.size.height = self.page1.minimumContentSize.height
+        var expectedFrame = self.page1.layoutFrame
+        expectedFrame.size.height = self.page1.minimumLayoutSize.height
 
         self.dragPageBy(xEdge: .mid, yEdge: .max, deltaX: -100, deltaY: -100)
 
-        XCTAssertEqual(self.page1.canvasFrame, expectedFrame)
+        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
     //Top Left
     func test_resizing_draggingTopLeftEdgeToTopLeftIncreasesSizeAndDecreasesOrigin() {
-        var expectedFrame = self.page1.canvasFrame
+        var expectedFrame = self.page1.layoutFrame
         expectedFrame.origin = expectedFrame.origin.plus(CGPoint(x: -3, y: -4))
         expectedFrame.size = expectedFrame.size.plus(CGSize(width: 3, height: 4))
 
         self.dragPageBy(xEdge: .min, yEdge: .min, deltaX: -3, deltaY: -4)
 
-        XCTAssertEqual(self.page1.canvasFrame, expectedFrame)
+        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
     func test_resizing_draggingTopLeftEdgeToBottomRightDecreasesSizeAndIncreasesOrigin() {
-        var expectedFrame = self.page1.canvasFrame
+        var expectedFrame = self.page1.layoutFrame
         expectedFrame.origin = expectedFrame.origin.plus(CGPoint(x: 3, y: 4))
         expectedFrame.size = expectedFrame.size.plus(CGSize(width: -3, height: -4))
 
         self.dragPageBy(xEdge: .min, yEdge: .min, deltaX: 3, deltaY: 4)
 
-        XCTAssertEqual(self.page1.canvasFrame, expectedFrame)
+        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
     func test_resizing_draggingTopLeftEdgeToTopLeftStopsAtCanvasEdge() {
-        var expectedFrame = self.page1.canvasFrame
+        var expectedFrame = self.page1.layoutFrame
         expectedFrame.size = CGSize(width: expectedFrame.maxX, height: expectedFrame.maxY)
         expectedFrame.origin = CGPoint(x: 20, y: 20)
 
         self.dragPageBy(xEdge: .min, yEdge: .min, deltaX: -100, deltaY: -100)
 
-        XCTAssertEqual(self.page1.canvasFrame, expectedFrame)
+        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
     func test_resizing_draggingTopLeftEdgeToBottomRightStopsAtMinimumSize() {
         self.page1.minimumContentSize = CGSize(width: 5, height: 5)
-        var expectedFrame = self.page1.canvasFrame
-        expectedFrame.origin = expectedFrame.origin.plus(CGPoint(x: expectedFrame.width - self.page1.minimumContentSize.width, y: expectedFrame.height - self.page1.minimumContentSize.height))
-        expectedFrame.size = self.page1.minimumContentSize
+        var expectedFrame = self.page1.layoutFrame
+        expectedFrame.origin = expectedFrame.origin.plus(CGPoint(x: expectedFrame.width - self.page1.minimumLayoutSize.width, y: expectedFrame.height - self.page1.minimumLayoutSize.height))
+        expectedFrame.size = self.page1.minimumLayoutSize
         self.dragPageBy(xEdge: .min, yEdge: .min, deltaX: 100, deltaY: 100)
 
-        XCTAssertEqual(self.page1.canvasFrame, expectedFrame)
+        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
     //Top Right
     func test_resizing_draggingTopRightEdgeToTopRightIncreasesSizeAndDecreasesOrigin() {
-        var expectedFrame = self.page1.canvasFrame
+        var expectedFrame = self.page1.layoutFrame
         expectedFrame.origin = expectedFrame.origin.plus(CGPoint(x: 0, y: -4))
         expectedFrame.size = expectedFrame.size.plus(CGSize(width: 3, height: 4))
 
         self.dragPageBy(xEdge: .max, yEdge: .min, deltaX: 3, deltaY: -4)
 
-        XCTAssertEqual(self.page1.canvasFrame, expectedFrame)
+        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
     func test_resizing_draggingTopRightEdgeToBottomLeftDecreasesSizeAndIncreasesOrigin() {
-        var expectedFrame = self.page1.canvasFrame
+        var expectedFrame = self.page1.layoutFrame
         expectedFrame.origin = expectedFrame.origin.plus(CGPoint(x: 0, y: 4))
         expectedFrame.size = expectedFrame.size.plus(CGSize(width: -3, height: -4))
 
         self.dragPageBy(xEdge: .max, yEdge: .min, deltaX: -3, deltaY: 4)
 
-        XCTAssertEqual(self.page1.canvasFrame, expectedFrame)
+        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
     func test_resizing_draggingTopRightEdgeToTopRightStopsAtCanvasEdge() {
-        var expectedFrame = self.page1.canvasFrame
-        expectedFrame.size = CGSize(width: self.contentFrame.maxX - expectedFrame.minX + self.layoutEngine.contentBorder, height: expectedFrame.maxY)
+        var expectedFrame = self.page1.layoutFrame
+        expectedFrame.size = CGSize(width: self.contentFrame.maxX - expectedFrame.minX + self.layoutEngine.configuration.contentBorder, height: expectedFrame.maxY)
         expectedFrame.origin.y = 20
 
         self.dragPageBy(xEdge: .max, yEdge: .min, deltaX: 100, deltaY: -100)
 
-        XCTAssertEqual(self.page1.canvasFrame, expectedFrame)
+        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
     func test_resizing_draggingTopRightEdgeToBottomLeftStopsAtMinimumSize() {
         self.page1.minimumContentSize = CGSize(width: 5, height: 5)
-        var expectedFrame = self.page1.canvasFrame
-        expectedFrame.origin = expectedFrame.origin.plus(CGPoint(x: 0, y: expectedFrame.height - self.page1.minimumContentSize.height))
-        expectedFrame.size = self.page1.minimumContentSize
+        var expectedFrame = self.page1.layoutFrame
+        expectedFrame.origin = expectedFrame.origin.plus(CGPoint(x: 0, y: expectedFrame.height - self.page1.minimumLayoutSize.height))
+        expectedFrame.size = self.page1.minimumLayoutSize
         self.dragPageBy(xEdge: .max, yEdge: .min, deltaX: -100, deltaY: 100)
 
-        XCTAssertEqual(self.page1.canvasFrame, expectedFrame)
+        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
     //Bottom Right
     func test_resizing_draggingBottomRightEdgeToBottomRightIncreasesSize() {
-        var expectedFrame = self.page1.canvasFrame
+        var expectedFrame = self.page1.layoutFrame
         expectedFrame.size = expectedFrame.size.plus(CGSize(width: 3, height: 4))
 
         self.dragPageBy(xEdge: .max, yEdge: .max, deltaX: 3, deltaY: 4)
 
-        XCTAssertEqual(self.page1.canvasFrame, expectedFrame)
+        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
     func test_resizing_draggingBottomRightEdgeToTopLeftDecreasesSize() {
-        var expectedFrame = self.page1.canvasFrame
+        var expectedFrame = self.page1.layoutFrame
         expectedFrame.size = expectedFrame.size.plus(CGSize(width: -3, height: -4))
 
         self.dragPageBy(xEdge: .max, yEdge: .max, deltaX: -3, deltaY: -4)
 
-        XCTAssertEqual(self.page1.canvasFrame, expectedFrame)
+        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
     func test_resizing_draggingBottomRightEdgeToBottomRightStopsAtCanvasEdge() {
-        var expectedFrame = self.page1.canvasFrame
-        expectedFrame.size = CGSize(width: self.contentFrame.maxX - expectedFrame.minX + self.layoutEngine.contentBorder, height: self.contentFrame.maxY - expectedFrame.minY + self.layoutEngine.contentBorder)
+        var expectedFrame = self.page1.layoutFrame
+        expectedFrame.size = CGSize(width: self.contentFrame.maxX - expectedFrame.minX + self.layoutEngine.configuration.contentBorder, height: self.contentFrame.maxY - expectedFrame.minY + self.layoutEngine.configuration.contentBorder)
 
         self.dragPageBy(xEdge: .max, yEdge: .max, deltaX: 100, deltaY: 100)
 
-        XCTAssertEqual(self.page1.canvasFrame, expectedFrame)
+        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
     func test_resizing_draggingBottomRightEdgeToTopLeftStopsAtMinimumSize() {
         self.page1.minimumContentSize = CGSize(width: 5, height: 5)
-        var expectedFrame = self.page1.canvasFrame
-        expectedFrame.size = self.page1.minimumContentSize
+        var expectedFrame = self.page1.layoutFrame
+        expectedFrame.size = self.page1.minimumLayoutSize
         self.dragPageBy(xEdge: .max, yEdge: .max, deltaX: -100, deltaY: -100)
 
-        XCTAssertEqual(self.page1.canvasFrame, expectedFrame)
+        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
     //Top Right
     func test_resizing_draggingBottomLeftEdgeToBottomLeftIncreasesSizeAndDecreasesOrigin() {
-        var expectedFrame = self.page1.canvasFrame
+        var expectedFrame = self.page1.layoutFrame
         expectedFrame.origin = expectedFrame.origin.plus(CGPoint(x: -3, y: 0))
         expectedFrame.size = expectedFrame.size.plus(CGSize(width: 3, height: 4))
 
         self.dragPageBy(xEdge: .min, yEdge: .max, deltaX: -3, deltaY: 4)
 
-        XCTAssertEqual(self.page1.canvasFrame, expectedFrame)
+        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
     func test_resizing_draggingBottomLeftEdgeToTopRightDecreasesSizeAndIncreasesOrigin() {
-        var expectedFrame = self.page1.canvasFrame
+        var expectedFrame = self.page1.layoutFrame
         expectedFrame.origin = expectedFrame.origin.plus(CGPoint(x: 3, y: 0))
         expectedFrame.size = expectedFrame.size.plus(CGSize(width: -3, height: -4))
 
         self.dragPageBy(xEdge: .min, yEdge: .max, deltaX: 3, deltaY: -4)
 
-        XCTAssertEqual(self.page1.canvasFrame, expectedFrame)
+        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
     func test_resizing_draggingBottomLeftEdgeToBottomLeftStopsAtCanvasEdge() {
-        var expectedFrame = self.page1.canvasFrame
-        expectedFrame.size = CGSize(width: expectedFrame.maxX, height: self.contentFrame.maxY - expectedFrame.minY  + self.layoutEngine.contentBorder)
+        var expectedFrame = self.page1.layoutFrame
+        expectedFrame.size = CGSize(width: expectedFrame.maxX, height: self.contentFrame.maxY - expectedFrame.minY  + self.layoutEngine.configuration.contentBorder)
         expectedFrame.origin.x = 20
 
         self.dragPageBy(xEdge: .min, yEdge: .max, deltaX: -100, deltaY: 100)
 
-        XCTAssertEqual(self.page1.canvasFrame, expectedFrame)
+        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
     func test_resizing_draggingBottomLeftEdgeToTopRightStopsAtMinimumSize() {
         self.page1.minimumContentSize = CGSize(width: 5, height: 5)
-        var expectedFrame = self.page1.canvasFrame
-        expectedFrame.origin = expectedFrame.origin.plus(CGPoint(x: expectedFrame.width - self.page1.minimumContentSize.width, y: 0))
-        expectedFrame.size = self.page1.minimumContentSize
+        var expectedFrame = self.page1.layoutFrame
+        expectedFrame.origin = expectedFrame.origin.plus(CGPoint(x: expectedFrame.width - self.page1.minimumLayoutSize.width, y: 0))
+        expectedFrame.size = self.page1.minimumLayoutSize
         self.dragPageBy(xEdge: .min, yEdge: .max, deltaX: 100, deltaY: -100)
 
-        XCTAssertEqual(self.page1.canvasFrame, expectedFrame)
+        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
 
@@ -751,7 +716,7 @@ class CanvasLayoutEngineTests: XCTestCase {
     func test_canvasSize_pageSpaceOffsetShouldChangeIfCanvasGrowsUpwards() {
         let initialOffset = self.layoutEngine.convertPointToPageSpace(.zero)
 
-        let pageOrigin = self.page2.canvasFrame
+        let pageOrigin = self.page2.layoutFrame
         let startPoint = CGPoint(x: pageOrigin.midX, y: pageOrigin.minY + 3)
         let endPoint = startPoint.plus(CGPoint(x: 0, y: -20))
 
@@ -767,7 +732,7 @@ class CanvasLayoutEngineTests: XCTestCase {
     func test_canvasSize_pageSpaceOffsetShouldChangeIfCanvasGrowsToLeft() {
         let initialOffset = self.layoutEngine.convertPointToPageSpace(.zero)
 
-        let pageOrigin = self.page2.canvasFrame
+        let pageOrigin = self.page2.layoutFrame
         let startPoint = CGPoint(x: pageOrigin.midX, y: pageOrigin.minY + 3)
         let endPoint = startPoint.plus(CGPoint(x: -20, y: 0))
 
@@ -782,7 +747,7 @@ class CanvasLayoutEngineTests: XCTestCase {
 
     func test_canvasSize_canvasSizeShouldUpdateWhenMovingPagesEnds() {
         let initialSize = self.layoutEngine.canvasSize
-        let pageOrigin = self.page2.canvasFrame
+        let pageOrigin = self.page2.layoutFrame
         let startPoint = CGPoint(x: pageOrigin.midX, y: pageOrigin.minY + 3)
         let endPoint = startPoint.plus(CGPoint(x: -20, y: 0))
 
@@ -796,7 +761,7 @@ class CanvasLayoutEngineTests: XCTestCase {
 
     func test_canvasSize_canvasSizeShouldUpdateWhenResizingPageEnds() {
         let initialSize = self.layoutEngine.canvasSize
-        let pageOrigin = self.page2.canvasFrame
+        let pageOrigin = self.page2.layoutFrame
         let startPoint = CGPoint(x: pageOrigin.minX, y: pageOrigin.midY)
         let endPoint = startPoint.plus(CGPoint(x: -20, y: 0))
 
@@ -813,10 +778,10 @@ class CanvasLayoutEngineTests: XCTestCase {
     }
 
     func test_canvasSize_updatesAllPagesCanvasFrameIfCanvasResizesUpAndToTheLeft() {
-        let page1Origin = self.page1.canvasFrame.origin
-        let page3Origin = self.page3.canvasFrame.origin
+        let page1Origin = self.page1.layoutFrame.origin
+        let page3Origin = self.page3.layoutFrame.origin
 
-        let pageOrigin = self.page2.canvasFrame
+        let pageOrigin = self.page2.layoutFrame
         let startPoint = CGPoint(x: pageOrigin.midX, y: pageOrigin.minY + 3)
         let endPoint = startPoint.plus(CGPoint(x: -10, y: -30))
 
@@ -824,17 +789,17 @@ class CanvasLayoutEngineTests: XCTestCase {
         self.layoutEngine.draggedEvent(at: endPoint)
         self.layoutEngine.upEvent(at: endPoint)
 
-        XCTAssertEqual(self.page1.canvasFrame.origin, page1Origin.plus(CGPoint(x: 10, y: 20)))
-        XCTAssertEqual(self.page2.canvasFrame.origin, CGPoint(x: self.layoutEngine.contentBorder, y: self.layoutEngine.contentBorder))
-        XCTAssertEqual(self.page3.canvasFrame.origin, page3Origin.plus(CGPoint(x: 10, y: 20)))
+        XCTAssertEqual(self.page1.layoutFrame.origin, page1Origin.plus(CGPoint(x: 10, y: 20)))
+        XCTAssertEqual(self.page2.layoutFrame.origin, CGPoint(x: self.layoutEngine.configuration.contentBorder, y: self.layoutEngine.configuration.contentBorder))
+        XCTAssertEqual(self.page3.layoutFrame.origin, page3Origin.plus(CGPoint(x: 10, y: 20)))
     }
 
     func test_canvasSize_doesNOTUpdatePagesCanvasFrameIfCanvasResizesDownToTheLeft() {
-        let page1Origin = self.page1.canvasFrame.origin
-        let page2Origin = self.page2.canvasFrame.origin
-        let page3Origin = self.page3.canvasFrame.origin
+        let page1Origin = self.page1.layoutFrame.origin
+        let page2Origin = self.page2.layoutFrame.origin
+        let page3Origin = self.page3.layoutFrame.origin
 
-        let pageOrigin = self.page1.canvasFrame
+        let pageOrigin = self.page1.layoutFrame
         let startPoint = CGPoint(x: pageOrigin.midX, y: pageOrigin.minY + 3)
         let endPoint = startPoint.plus(CGPoint(x: 10, y: 20))
 
@@ -842,9 +807,65 @@ class CanvasLayoutEngineTests: XCTestCase {
         self.layoutEngine.draggedEvent(at: endPoint)
         self.layoutEngine.upEvent(at: endPoint)
 
-        XCTAssertEqual(self.page1.canvasFrame.origin, page1Origin.plus(CGPoint(x: 10, y: 20)))
-        XCTAssertEqual(self.page2.canvasFrame.origin, page2Origin)
-        XCTAssertEqual(self.page3.canvasFrame.origin, page3Origin)
+        XCTAssertEqual(self.page1.layoutFrame.origin, page1Origin.plus(CGPoint(x: 10, y: 20)))
+        XCTAssertEqual(self.page2.layoutFrame.origin, page2Origin)
+        XCTAssertEqual(self.page3.layoutFrame.origin, page3Origin)
+    }
+
+
+    //MARK: - Config
+    func test_config_increasesLayoutFrameOffsetFromContentForTitleHeight() {
+        let config = CanvasLayoutEngine.Configuration(pageTitleHeight: 15,
+                                                      pageResizeEdgeHandleSize: 0,
+                                                      pageResizeCornerHandleSize: 0,
+                                                      pageResizeHandleOffset: 0,
+                                                      contentBorder: 20)
+        XCTAssertEqual(config.layoutFrameOffsetFromContent, .init(left: 0, top: 15, right: 0, bottom: 0))
+    }
+
+    func test_config_doesntIncreaseMarginsForResizeHandlesIfOffset0() {
+        let config = CanvasLayoutEngine.Configuration(pageTitleHeight: 0,
+                                                      pageResizeEdgeHandleSize: 4,
+                                                      pageResizeCornerHandleSize: 4,
+                                                      pageResizeHandleOffset: 0,
+                                                      contentBorder: 20)
+        XCTAssertEqual(config.layoutFrameOffsetFromContent, .zero)
+    }
+
+    func test_config_increasesLayoutFrameOffsetFromContentForResizeHandlesByOffset() {
+        let config = CanvasLayoutEngine.Configuration(pageTitleHeight: 0,
+                                                      pageResizeEdgeHandleSize: 4,
+                                                      pageResizeCornerHandleSize: 8,
+                                                      pageResizeHandleOffset: 3,
+                                                      contentBorder: 20)
+        XCTAssertEqual(config.layoutFrameOffsetFromContent, .init(left: 3, top: 3, right: 3, bottom: 3))
+    }
+
+    func test_config_increaseLayoutFrameOffsetFromContentToAccountForTitleAndResizeHandleOffset() {
+        let config = CanvasLayoutEngine.Configuration(pageTitleHeight: 42,
+                                                      pageResizeEdgeHandleSize: 16,
+                                                      pageResizeCornerHandleSize: 31,
+                                                      pageResizeHandleOffset: 8,
+                                                      contentBorder: 20)
+        XCTAssertEqual(config.layoutFrameOffsetFromContent, .init(left: 8, top: 50, right: 8, bottom: 8))
+    }
+
+    func test_config_visibleFrameInsetsIsZeroIfHandleOffsetIsZero() {
+        let config = CanvasLayoutEngine.Configuration(pageTitleHeight: 12,
+                                                      pageResizeEdgeHandleSize: 13,
+                                                      pageResizeCornerHandleSize: 14,
+                                                      pageResizeHandleOffset: 0,
+                                                      contentBorder: 20)
+        XCTAssertEqual(config.visibleFrameInset, .zero)
+    }
+
+    func test_config_visibleFrameInsetOnlyTakesResizeHandleOffsetIntoAccountRegardlessOfTitleHeight() {
+        let config = CanvasLayoutEngine.Configuration(pageTitleHeight: 31,
+                                                      pageResizeEdgeHandleSize: 32,
+                                                      pageResizeCornerHandleSize: 33,
+                                                      pageResizeHandleOffset: 16,
+                                                      contentBorder: 20)
+        XCTAssertEqual(config.visibleFrameInset, .init(left: 16, top: 16, right: 16, bottom: 16))
     }
 
 }

@@ -83,6 +83,7 @@
 		99FE01E422D4CC8A004D380D /* DocumentWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FE01E222D4CC8A004D380D /* DocumentWindowController.swift */; };
 		99FE01E522D4CC8A004D380D /* DocumentWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99FE01E322D4CC8A004D380D /* DocumentWindow.xib */; };
 		99FFF9C823439DB500EF02A0 /* ModelObservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FFF9C723439DB500EF02A0 /* ModelObservation.swift */; };
+		99FFF9CA23463DFD00EF02A0 /* LayoutEnginePageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FFF9C923463DFD00EF02A0 /* LayoutEnginePageTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -186,6 +187,7 @@
 		99FE01E222D4CC8A004D380D /* DocumentWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentWindowController.swift; sourceTree = "<group>"; };
 		99FE01E322D4CC8A004D380D /* DocumentWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DocumentWindow.xib; sourceTree = "<group>"; };
 		99FFF9C723439DB500EF02A0 /* ModelObservation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelObservation.swift; sourceTree = "<group>"; };
+		99FFF9C923463DFD00EF02A0 /* LayoutEnginePageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutEnginePageTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -370,6 +372,7 @@
 			isa = PBXGroup;
 			children = (
 				99C03F0023293DAD00EB7516 /* CanvasLayoutEngineTests.swift */,
+				99FFF9C923463DFD00EF02A0 /* LayoutEnginePageTests.swift */,
 			);
 			path = "Layout Engine";
 			sourceTree = "<group>";
@@ -727,6 +730,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99FFF9CA23463DFD00EF02A0 /* LayoutEnginePageTests.swift in Sources */,
 				99DEF29322F33ABB0020A7CE /* ModelIDTests.swift in Sources */,
 				9958107C230D75AA00D996C4 /* TextEditorViewModelTests.swift in Sources */,
 				9923B07422F485480035D8C6 /* ModelCollectionTests.swift in Sources */,

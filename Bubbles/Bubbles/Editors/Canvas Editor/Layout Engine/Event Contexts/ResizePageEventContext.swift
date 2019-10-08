@@ -30,33 +30,33 @@ class ResizePageEventContext: CanvasEventContext {
 
         var delta = boundedLocation.minus(lastLocation).rounded()
         if (self.component.isRight) {
-            if (self.page.contentFrame.size.width + delta.x < self.page.minimumContentSize.width) {
-                delta.x = self.page.minimumContentSize.width - self.page.contentFrame.size.width
+            if (self.page.layoutFrame.size.width + delta.x < self.page.minimumLayoutSize.width) {
+                delta.x = self.page.minimumLayoutSize.width - self.page.layoutFrame.size.width
             }
-            self.page.contentFrame.size.width += delta.x
+            self.page.layoutFrame.size.width += delta.x
         }
 
         if (self.component.isBottom) {
-            if (self.page.contentFrame.size.height + delta.y < self.page.minimumContentSize.height) {
-                delta.y = self.page.minimumContentSize.height - self.page.contentFrame.size.height
+            if (self.page.layoutFrame.size.height + delta.y < self.page.minimumLayoutSize.height) {
+                delta.y = self.page.minimumLayoutSize.height - self.page.layoutFrame.size.height
             }
-            self.page.contentFrame.size.height += delta.y
+            self.page.layoutFrame.size.height += delta.y
         }
 
         if (self.component.isLeft) {
-            if (self.page.contentFrame.size.width - delta.x < self.page.minimumContentSize.width) {
-                delta.x = -(self.page.minimumContentSize.width - self.page.contentFrame.size.width)
+            if (self.page.layoutFrame.size.width - delta.x < self.page.minimumLayoutSize.width) {
+                delta.x = -(self.page.minimumLayoutSize.width - self.page.layoutFrame.size.width)
             }
-            self.page.contentFrame.size.width -= delta.x
-            self.page.contentFrame.origin.x += delta.x
+            self.page.layoutFrame.size.width -= delta.x
+            self.page.layoutFrame.origin.x += delta.x
         }
 
         if (self.component.isTop) {
-            if (self.page.contentFrame.size.height - delta.y < self.page.minimumContentSize.height) {
-                delta.y = -(self.page.minimumContentSize.height - self.page.contentFrame.size.height)
+            if (self.page.layoutFrame.size.height - delta.y < self.page.minimumLayoutSize.height) {
+                delta.y = -(self.page.minimumLayoutSize.height - self.page.layoutFrame.size.height)
             }
-            self.page.contentFrame.size.height -= delta.y
-            self.page.contentFrame.origin.y += delta.y
+            self.page.layoutFrame.size.height -= delta.y
+            self.page.layoutFrame.origin.y += delta.y
         }
 
         self.lastLocation = boundedLocation
