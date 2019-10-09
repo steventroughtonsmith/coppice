@@ -160,7 +160,7 @@ class CanvasEditorViewController: NSViewController {
             if let idIndex = idsToRemove.firstIndex(of: page.id) {
                 idsToRemove.remove(at: idIndex)
             }
-            self.apply(page, to: viewController)
+            viewController.apply(page)
         }
 
         for id in idsToRemove {
@@ -185,11 +185,6 @@ class CanvasEditorViewController: NSViewController {
         self.canvasView.subviews = pageViews + currentSubviews
     }
 
-    private func apply(_ layoutPage: LayoutEnginePage, to viewController: CanvasPageViewController) {
-        viewController.view.frame = layoutPage.layoutFrame.rounded()
-        viewController.selected = layoutPage.selected
-    }
-
 
     //MARK: - Page View Controller Management
     private var pageViewControllers: [CanvasPageViewController] {
@@ -208,7 +203,6 @@ class CanvasEditorViewController: NSViewController {
         let viewModel = CanvasPageViewModel(canvasPage: canvasPage)
         let viewController = CanvasPageViewController(viewModel: viewModel)
         viewController.delegate = self
-        page.componentProvider = viewController
 
         self.addChild(viewController)
         self.canvasView.addSubview(viewController.view)

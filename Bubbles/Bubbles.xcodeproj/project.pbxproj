@@ -48,7 +48,7 @@
 		99C03EFD23293D8A00EB7516 /* ResizePageEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03EF823293D8A00EB7516 /* ResizePageEventContext.swift */; };
 		99C03F0123293DAD00EB7516 /* CanvasLayoutEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03F0023293DAD00EB7516 /* CanvasLayoutEngineTests.swift */; };
 		99C03F03232A8E9500EB7516 /* EdgeResizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03F02232A8E9500EB7516 /* EdgeResizable.swift */; };
-		99C03F07232A8ED200EB7516 /* ResizableCanvasElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03F06232A8ED200EB7516 /* ResizableCanvasElement.swift */; };
+		99C03F07232A8ED200EB7516 /* CanvasElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03F06232A8ED200EB7516 /* CanvasElementView.swift */; };
 		99C03F09232A99F400EB7516 /* Cursors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99C03F08232A99F400EB7516 /* Cursors.xcassets */; };
 		99C03F0B232A9A5E00EB7516 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03F0A232A9A5E00EB7516 /* CanvasView.swift */; };
 		99C03F0D2334D04200EB7516 /* NSScrollView+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03F0C2334D04200EB7516 /* NSScrollView+M3Extensions.swift */; };
@@ -84,6 +84,7 @@
 		99FE01E522D4CC8A004D380D /* DocumentWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99FE01E322D4CC8A004D380D /* DocumentWindow.xib */; };
 		99FFF9C823439DB500EF02A0 /* ModelObservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FFF9C723439DB500EF02A0 /* ModelObservation.swift */; };
 		99FFF9CA23463DFD00EF02A0 /* LayoutEnginePageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FFF9C923463DFD00EF02A0 /* LayoutEnginePageTests.swift */; };
+		99FFF9CC234E2F2F00EF02A0 /* FlippedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FFF9CB234E2F2F00EF02A0 /* FlippedView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -145,7 +146,7 @@
 		99C03EF823293D8A00EB7516 /* ResizePageEventContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResizePageEventContext.swift; sourceTree = "<group>"; };
 		99C03F0023293DAD00EB7516 /* CanvasLayoutEngineTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasLayoutEngineTests.swift; sourceTree = "<group>"; };
 		99C03F02232A8E9500EB7516 /* EdgeResizable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EdgeResizable.swift; sourceTree = "<group>"; };
-		99C03F06232A8ED200EB7516 /* ResizableCanvasElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizableCanvasElement.swift; sourceTree = "<group>"; };
+		99C03F06232A8ED200EB7516 /* CanvasElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasElementView.swift; sourceTree = "<group>"; };
 		99C03F08232A99F400EB7516 /* Cursors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Cursors.xcassets; sourceTree = "<group>"; };
 		99C03F0A232A9A5E00EB7516 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
 		99C03F0C2334D04200EB7516 /* NSScrollView+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSScrollView+M3Extensions.swift"; sourceTree = "<group>"; };
@@ -188,6 +189,7 @@
 		99FE01E322D4CC8A004D380D /* DocumentWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DocumentWindow.xib; sourceTree = "<group>"; };
 		99FFF9C723439DB500EF02A0 /* ModelObservation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelObservation.swift; sourceTree = "<group>"; };
 		99FFF9C923463DFD00EF02A0 /* LayoutEnginePageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutEnginePageTests.swift; sourceTree = "<group>"; };
+		99FFF9CB234E2F2F00EF02A0 /* FlippedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlippedView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -246,6 +248,7 @@
 				99C03EEF23293D6C00EB7516 /* Array+M3Extensions.swift */,
 				99C03EEE23293D6C00EB7516 /* CoreGraphics+M3Extensions.swift */,
 				99C03F0C2334D04200EB7516 /* NSScrollView+M3Extensions.swift */,
+				99FFF9CB234E2F2F00EF02A0 /* FlippedView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -306,7 +309,7 @@
 				99581090230D92C600D996C4 /* CanvasPageViewController.swift */,
 				99C03F02232A8E9500EB7516 /* EdgeResizable.swift */,
 				99581091230D92C600D996C4 /* CanvasPageViewController.xib */,
-				99C03F06232A8ED200EB7516 /* ResizableCanvasElement.swift */,
+				99C03F06232A8ED200EB7516 /* CanvasElementView.swift */,
 				9958108B230D908200D996C4 /* Test CanvasPage View */,
 			);
 			path = "Canvas Editor";
@@ -675,7 +678,7 @@
 				992A5CAA22DDF5000012CCB6 /* DebugCanvasEditor.swift in Sources */,
 				99C03EF123293D6C00EB7516 /* Array+M3Extensions.swift in Sources */,
 				99C865292306D141004C7B89 /* PageSelectorViewController.swift in Sources */,
-				99C03F07232A8ED200EB7516 /* ResizableCanvasElement.swift in Sources */,
+				99C03F07232A8ED200EB7516 /* CanvasElementView.swift in Sources */,
 				99581082230D7EFB00D996C4 /* CanvasEditorViewController.swift in Sources */,
 				99581092230D92C600D996C4 /* CanvasPageViewController.swift in Sources */,
 				99C03EFC23293D8A00EB7516 /* PageTitleBarEventContext.swift in Sources */,
@@ -683,6 +686,7 @@
 				99DEF28A22F32D350020A7CE /* DebugCanvasViewModelTypes.swift in Sources */,
 				99C865202302E256004C7B89 /* ImageEditorViewController.swift in Sources */,
 				99C8650923016EB2004C7B89 /* TextEditorViewModel.swift in Sources */,
+				99FFF9CC234E2F2F00EF02A0 /* FlippedView.swift in Sources */,
 				99581095230D93F700D996C4 /* CanvasPageViewModel.swift in Sources */,
 				99C03F03232A8E9500EB7516 /* EdgeResizable.swift in Sources */,
 				99C86511230174B9004C7B89 /* PageContent.swift in Sources */,

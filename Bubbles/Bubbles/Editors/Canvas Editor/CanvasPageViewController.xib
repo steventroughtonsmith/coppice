@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14865.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14868" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14865.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14868"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -15,19 +15,25 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customView id="z97-7h-MV3" customClass="ResizableCanvasElement" customModule="Bubbles" customModuleProvider="target">
+        <customView id="z97-7h-MV3" customClass="CanvasElementView" customModule="Bubbles" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="516" height="485"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <box boxType="custom" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="0hL-Hb-tOc">
                     <rect key="frame" x="2" y="2" width="512" height="481"/>
-                    <view key="contentView" id="5Ho-x6-fcy">
+                    <view key="contentView" id="5Ho-x6-fcy" customClass="FlippedView" customModule="Bubbles" customModuleProvider="target">
                         <rect key="frame" x="1" y="1" width="510" height="479"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="AZo-jd-3Q7">
+                            <customView ambiguous="YES" placeholderIntrinsicWidth="510" placeholderIntrinsicHeight="32" translatesAutoresizingMaskIntoConstraints="NO" id="AZo-jd-3Q7">
                                 <rect key="frame" x="0.0" y="447" width="510" height="32"/>
                                 <subviews>
+                                    <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="Po8-NE-6NC">
+                                        <rect key="frame" x="0.0" y="-2" width="510" height="5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="pqg-jD-9Zx"/>
+                                        </constraints>
+                                    </box>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8QV-BG-GXx">
                                         <rect key="frame" x="238" y="8" width="35" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Title" id="3mW-dd-igw">
@@ -49,25 +55,22 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="YuF-c0-uxg" firstAttribute="centerY" secondItem="AZo-jd-3Q7" secondAttribute="centerY" id="11X-6G-B8d"/>
+                                    <constraint firstAttribute="bottom" secondItem="Po8-NE-6NC" secondAttribute="bottom" id="9mi-Fe-Cor"/>
                                     <constraint firstItem="8QV-BG-GXx" firstAttribute="centerY" secondItem="AZo-jd-3Q7" secondAttribute="centerY" id="Aew-Bw-qdK"/>
                                     <constraint firstItem="8QV-BG-GXx" firstAttribute="centerX" secondItem="AZo-jd-3Q7" secondAttribute="centerX" id="EPN-GW-vSg"/>
-                                    <constraint firstAttribute="height" constant="32" id="S9B-Yc-Juj"/>
                                     <constraint firstItem="YuF-c0-uxg" firstAttribute="leading" secondItem="AZo-jd-3Q7" secondAttribute="leading" constant="8" id="j1V-hf-ehq"/>
+                                    <constraint firstAttribute="trailing" secondItem="Po8-NE-6NC" secondAttribute="trailing" id="kid-oT-tCk"/>
+                                    <constraint firstItem="Po8-NE-6NC" firstAttribute="leading" secondItem="AZo-jd-3Q7" secondAttribute="leading" id="p0b-XZ-Yin"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="translatesAutoresizingMaskIntoConstraints" value="YES"/>
+                                </userDefinedRuntimeAttributes>
                             </customView>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="wWQ-K4-REw">
+                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wWQ-K4-REw">
                                 <rect key="frame" x="0.0" y="0.0" width="510" height="447"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                             </customView>
                         </subviews>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="AZo-jd-3Q7" secondAttribute="trailing" id="4pE-T8-tsr"/>
-                            <constraint firstAttribute="bottom" secondItem="wWQ-K4-REw" secondAttribute="bottom" id="4rt-dr-HG9"/>
-                            <constraint firstItem="AZo-jd-3Q7" firstAttribute="top" secondItem="5Ho-x6-fcy" secondAttribute="top" id="EKu-AT-iRe"/>
-                            <constraint firstAttribute="trailing" secondItem="wWQ-K4-REw" secondAttribute="trailing" id="dEy-e3-Dmd"/>
-                            <constraint firstItem="AZo-jd-3Q7" firstAttribute="leading" secondItem="5Ho-x6-fcy" secondAttribute="leading" id="iDi-uo-rHZ"/>
-                            <constraint firstItem="wWQ-K4-REw" firstAttribute="top" secondItem="AZo-jd-3Q7" secondAttribute="bottom" id="ssF-w3-9XC"/>
-                            <constraint firstItem="wWQ-K4-REw" firstAttribute="leading" secondItem="5Ho-x6-fcy" secondAttribute="leading" id="tdG-Hn-EvJ"/>
-                        </constraints>
                     </view>
                     <color key="borderColor" name="PageViewBorder"/>
                     <color key="fillColor" name="PageViewBackground"/>
@@ -81,6 +84,7 @@
             </constraints>
             <connections>
                 <outlet property="boxView" destination="0hL-Hb-tOc" id="w1K-Rf-wFl"/>
+                <outlet property="contentContainer" destination="wWQ-K4-REw" id="rHD-7e-q6F"/>
                 <outlet property="titleBar" destination="AZo-jd-3Q7" id="zoQ-ip-XI7"/>
                 <outlet property="titleLabel" destination="8QV-BG-GXx" id="YRw-Ba-wIr"/>
             </connections>
@@ -90,10 +94,10 @@
     <resources>
         <image name="NSStopProgressFreestandingTemplate" width="14" height="14"/>
         <namedColor name="PageViewBackground">
-            <color red="0.21565845608711243" green="0.21570226550102234" blue="0.21565568447113037" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.21600000560283661" green="0.21600000560283661" blue="0.21600000560283661" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="PageViewBorder">
-            <color red="0.37250512838363647" green="0.37257429957389832" blue="0.37250077724456787" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.37299999594688416" green="0.37299999594688416" blue="0.37299999594688416" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

@@ -8,12 +8,6 @@
 
 import Foundation
 
-protocol LayoutPageComponentProvider {
-    func component(at point: CGPoint, in page: LayoutEnginePage) -> LayoutEnginePageComponent?
-}
-
-
-
 /// A class representing the layout information for a page inside the LayoutEngine
 ///
 /// The main frame that is manipulated is the contentFrame, which is what is persisted.
@@ -25,7 +19,6 @@ protocol LayoutPageComponentProvider {
 ///         - Content (`contentFrameInsideVisualPage`): The actual page content
 class LayoutEnginePage: Equatable {
     let id: UUID
-    var componentProvider: LayoutPageComponentProvider?
 
     var selected: Bool = false
 
@@ -127,58 +120,54 @@ class LayoutEnginePage: Equatable {
 
 
     //MARK: - Components
-    func component(at point: CGPoint) -> LayoutEnginePageComponent? {
+    func rectInLayoutFrame(for component: LayoutEnginePageComponent) -> CGRect {
         guard let configuration = self.layoutEngine?.configuration else {
-            return nil
+            return .zero
+        }
+        if (component == .titleBar) {
+            var titleBarRect = self.visualPageFrame
+            titleBarRect.size.height = configuration.pageTitleHeight
+            return titleBarRect
         }
 
-        let biggestMargin = max(configuration.pageResizeEdgeHandleSize, configuration.pageResizeCornerHandleSize)
+        var x: CGFloat = 0
+        var y: CGFloat = 0
+        var width: CGFloat = 0
+        var height: CGFloat = 0
+
         let layoutSize = self.layoutFrame.size
 
-
-        if (point.x < 0 || point.y < 0) {
-            return nil
+        if (component.isCorner) {
+            width = configuration.pageResizeCornerHandleSize
+            height = configuration.pageResizeCornerHandleSize
         }
-        if (point.x >= layoutSize.width || point.y >= layoutSize.height) {
-            return nil
+        else if (component == .resizeRight || component == .resizeLeft) {
+            y = configuration.pageResizeCornerHandleSize
+            width = configuration.pageResizeEdgeHandleSize
+            height = layoutSize.height - (2 * configuration.pageResizeCornerHandleSize)
         }
-        
-        //Left
-        if (point.x < biggestMargin) {
-            if (point.y < configuration.pageResizeCornerHandleSize) {
-                return .resizeTopLeft
-            }
-            if (point.y >= (layoutSize.height - configuration.pageResizeCornerHandleSize)) {
-                return .resizeBottomLeft
-            }
-            if (point.x < configuration.pageResizeEdgeHandleSize) {
-                return .resizeLeft
-            }
+        else if (component == .resizeTop || component == .resizeBottom) {
+            x = configuration.pageResizeCornerHandleSize
+            width = layoutSize.width - (2 * configuration.pageResizeCornerHandleSize)
+            height = configuration.pageResizeEdgeHandleSize
         }
 
-        //Right
-        if (point.x >= (layoutSize.width - biggestMargin)) {
-            if (point.y < configuration.pageResizeCornerHandleSize) {
-                return .resizeTopRight
-            }
-            if (point.y >= (layoutSize.height - configuration.pageResizeCornerHandleSize)) {
-                return .resizeBottomRight
-            }
-            if (point.x >= (layoutSize.width - configuration.pageResizeEdgeHandleSize)) {
-                return .resizeRight
-            }
+        if (component.isRight) {
+            x = layoutSize.width - width
         }
-        //Top & Bottom
-        if (point.y < configuration.pageResizeEdgeHandleSize) {
-            return .resizeTop
-        }
-        if (point.y >= (layoutSize.height - configuration.pageResizeEdgeHandleSize)) {
-            return .resizeBottom
+        if (component.isBottom) {
+            y = layoutSize.height - height
         }
 
-        //Title
-        if (self.titleFrameInsideVisualPage.contains(point)) {
-            return .titleBar
+        return CGRect(x: x, y: y, width: width, height: height)
+    }
+
+
+    func component(at point: CGPoint) -> LayoutEnginePageComponent? {
+        for component in LayoutEnginePageComponent.orderedCases {
+            if self.rectInLayoutFrame(for: component).contains(point) {
+                return component
+            }
         }
 
         return nil
@@ -186,7 +175,6 @@ class LayoutEnginePage: Equatable {
 }
 
 enum LayoutEnginePageComponent: CaseIterable, Equatable {
-    case titleBar
     case resizeLeft
     case resizeTopLeft
     case resizeTop
@@ -195,6 +183,7 @@ enum LayoutEnginePageComponent: CaseIterable, Equatable {
     case resizeBottomRight
     case resizeBottom
     case resizeBottomLeft
+    case titleBar
 
     var isRight: Bool {
         return [.resizeRight, .resizeTopRight, .resizeBottomRight].contains(self)
@@ -210,5 +199,22 @@ enum LayoutEnginePageComponent: CaseIterable, Equatable {
 
     var isTop: Bool {
         return [.resizeTop, .resizeTopLeft, .resizeTopRight].contains(self)
+    }
+
+    var isCorner: Bool {
+        return [.resizeTopLeft, .resizeTopRight, .resizeBottomLeft, .resizeBottomRight].contains(self)
+    }
+
+    var isEdge: Bool {
+        return [.resizeLeft, .resizeTop, .resizeRight, .resizeBottom].contains(self)
+    }
+
+    static var orderedCases: [LayoutEnginePageComponent] {
+        var cases = self.allCases
+        if let index = cases.firstIndex(of: .titleBar) {
+            cases.remove(at: index)
+        }
+        cases.append(.titleBar)
+        return cases
     }
 }

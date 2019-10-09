@@ -397,6 +397,8 @@ class LayoutEnginePageTests: XCTestCase {
             XCTAssertEqual(page.component(at: CGPoint(x: 5, y: 5)), .titleBar)
 
             //Outside
+            XCTAssertNil(page.component(at: CGPoint(x: 3, y: 10)))
+            XCTAssertNil(page.component(at: CGPoint(x: 26, y: 10)))
         }
     }
 

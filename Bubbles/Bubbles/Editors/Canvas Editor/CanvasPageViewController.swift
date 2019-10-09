@@ -21,8 +21,8 @@ class CanvasPageViewController: NSViewController, CanvasPageView {
         return self.viewModel.canvasPage.id.uuid
     }
 
-    var typedView: ResizableCanvasElement {
-        get { self.view as! ResizableCanvasElement }
+    var typedView: CanvasElementView {
+        get { self.view as! CanvasElementView }
         set { self.view = newValue }
     }
 
@@ -60,10 +60,10 @@ class CanvasPageViewController: NSViewController, CanvasPageView {
         //We need to make sure we stay pinned to the top left when resizing the view
         self.view.autoresizingMask = [.maxXMargin, .maxYMargin]
     }
-}
 
-extension CanvasPageViewController: LayoutPageComponentProvider {
-    func component(at point: CGPoint, in page: LayoutEnginePage) -> LayoutEnginePageComponent? {
-        self.typedView.component(at: point)
+    func apply(_ layoutPage: LayoutEnginePage) {
+        self.view.frame = layoutPage.layoutFrame.rounded()
+        self.selected = layoutPage.selected
+        self.typedView.apply(layoutPage)
     }
 }
