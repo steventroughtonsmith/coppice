@@ -134,7 +134,6 @@ class SidebarViewModel: NSObject {
         } else {
             canvas.add(page, centredOn: .zero)
         }
-
     }
 
 

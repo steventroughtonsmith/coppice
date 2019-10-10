@@ -29,7 +29,6 @@ final class Canvas: NSObject, CollectableModelObject {
         didSet { self.didChange(\.sortIndex, oldValue: oldValue) }
     }
 
-    var originOffsetFromScrollPoint: CGPoint?
     var viewPort: CGRect?
 
 
@@ -48,8 +47,11 @@ final class Canvas: NSObject, CollectableModelObject {
         collection.newObject() { canvasPage in
             canvasPage.page = page
 
+            let halfSize = CGPoint(x: canvasPage.frame.size.width / 2, y: canvasPage.frame.size.height / 2)
             if let point = point {
-                canvasPage.frame.origin = point.minus(CGPoint(x: canvasPage.frame.size.width / 2, y: canvasPage.frame.size.height / 2)).rounded()
+                canvasPage.frame.origin = point.minus(halfSize).rounded()
+            } else if let viewPort = self.viewPort {
+                canvasPage.frame.origin = viewPort.midPoint.minus(halfSize).rounded()
             }
             canvasPage.canvas = self
         }

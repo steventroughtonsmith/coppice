@@ -85,6 +85,24 @@ class DocumentWindowController: NSWindowController {
     }
 
 
+    //MARK: - Actions
+    @IBAction func newPage(_ sender: Any?) {
+        guard let document = self.document as? Document,
+            let sidebarVM = self.sidebarViewController?.viewModel else {
+            return
+        }
+        let page = document.modelController.collection(for: Page.self).newObject()
+        guard let selectedObjectID = sidebarVM.selectedObjectID, (selectedObjectID.modelType == Canvas.modelType) else {
+            sidebarVM.selectedObjectID = page.id
+            return
+        }
+
+        if let canvas = document.modelController.collection(for: Canvas.self).objectWithID(selectedObjectID) {
+            canvas.add(page)
+        }
+    }
+
+
     //MARK: - Debugging
     @IBAction func logResponderChain(_ sender: Any?) {
         var responder = self.window?.firstResponder

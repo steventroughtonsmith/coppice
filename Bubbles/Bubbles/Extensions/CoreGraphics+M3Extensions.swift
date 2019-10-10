@@ -77,4 +77,8 @@ extension CGRect {
         let y = rect.midY - (height / 2)
         self.init(x: x.rounded(), y: y.rounded(), width: width, height: height)
     }
+
+    var midPoint: CGPoint {
+        return CGPoint(x: self.midX, y: midY)
+    }
 }
