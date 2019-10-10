@@ -18,6 +18,7 @@ class CanvasEditorViewController: NSViewController {
         super.init(nibName: "CanvasEditorViewController", bundle: nil)
         self.viewModel.view = self
         self.viewModel.layoutEngine.view = self
+        self.originOffsetFromScrollPoint = self.viewModel.viewPortInCanvasSpace?.origin
     }
 
     required init?(coder: NSCoder) {
@@ -52,6 +53,7 @@ class CanvasEditorViewController: NSViewController {
 
     override func viewDidAppear() {
         super.viewDidAppear()
+        self.perform(#selector(forceFullLayout), with: nil, afterDelay: 4)
     }
 
     private var performedInitialLayout = false
@@ -60,9 +62,11 @@ class CanvasEditorViewController: NSViewController {
         guard self.performedInitialLayout == false else {
             return
         }
-        let canvasSize = self.layoutEngine.canvasSize
-        let scrollPoint = CGPoint(x: canvasSize.width / 2, y: canvasSize.height / 2).rounded()
-        self.scrollView.contentView.centre(on: scrollPoint)
+        if (self.viewModel.canvasPages.count == 0) {
+            let canvasSize = self.layoutEngine.canvasSize
+            let scrollPoint = CGPoint(x: canvasSize.width / 2, y: canvasSize.height / 2).rounded()
+            self.scrollView.contentView.centre(on: scrollPoint)
+        }
         self.performedInitialLayout = true
     }
 
@@ -72,7 +76,11 @@ class CanvasEditorViewController: NSViewController {
 
 
     //MARK: - Scrolling
-    private var lastOriginOffsetFromScrollPoint: CGPoint?
+    private var originOffsetFromScrollPoint: CGPoint? {
+        didSet {
+            self.updateCanvasViewPort()
+        }
+    }
 
     @objc func scrollingChanged(_ sender: Any?) {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(scrollingEnded), object: nil)
@@ -92,7 +100,7 @@ class CanvasEditorViewController: NSViewController {
 
     private func updateLastOriginOffset() {
         let originInCanvas = self.layoutEngine.convertPointToCanvasSpace(.zero)
-        self.lastOriginOffsetFromScrollPoint = originInCanvas.minus(self.scrollView.contentView.bounds.origin)
+        self.originOffsetFromScrollPoint = originInCanvas.minus(self.scrollView.contentView.bounds.origin)
     }
 
     private func scroll(toOriginOffset originOffset: CGPoint) {
@@ -101,21 +109,31 @@ class CanvasEditorViewController: NSViewController {
         self.scrollView.contentView.bounds.origin = scrollPoint
     }
 
+    private func updateCanvasViewPort() {
+        guard let origin = self.originOffsetFromScrollPoint else {
+            self.viewModel.viewPortInCanvasSpace = nil
+            return
+        }
+        self.viewModel.viewPortInCanvasSpace = CGRect(origin: origin, size: self.scrollView.frame.size)
+    }
+
     
     //MARK: - Layout
     private var hasLaidOut = false
     private var isLayingOut = false
     private var currentLayoutContext: CanvasLayoutEngine.LayoutContext?
-    private func forceFullLayout() {
+    @objc private func forceFullLayout() {
         self.currentLayoutContext = CanvasLayoutEngine.LayoutContext(sizeChanged: true, pageOffsetChange: .zero)
         self.layout()
     }
+
     @objc func layout() {
         self.isLayingOut = true
         self.updateCanvas()
         self.updateSelectionRect()
         self.updatePages()
         self.sortViews()
+        self.updateCanvasViewPort()
         self.isLayingOut = false
         self.hasLaidOut = true
         self.currentLayoutContext = nil
@@ -134,7 +152,7 @@ class CanvasEditorViewController: NSViewController {
             self.scrollView.magnification = magnification
         }
 
-        if let lastPoint = self.lastOriginOffsetFromScrollPoint {
+        if let lastPoint = self.originOffsetFromScrollPoint {
             self.scroll(toOriginOffset: lastPoint)
         } else {
             let scrollPoint = CGPoint(x: canvasSize.width / 2, y: canvasSize.height / 2).rounded()

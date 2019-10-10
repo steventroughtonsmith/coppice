@@ -69,6 +69,26 @@ class CanvasEditorViewModel: NSObject {
     }
 
 
+    //MARK: - View Port
+    var viewPortInCanvasSpace: CGRect? {
+        get {
+            guard var viewPort = self.canvas.viewPort else {
+                return nil
+            }
+            viewPort.origin = viewPort.origin.multiplied(by: -1)
+            return viewPort
+        }
+        set {
+            guard var newViewPort = newValue else {
+                self.canvas.viewPort = nil
+                return
+            }
+            newViewPort.origin = newViewPort.origin.multiplied(by: -1)
+            self.canvas.viewPort = newViewPort
+        }
+    }
+
+
     //MARK: - Page Management
     private(set) var canvasPages = Set<CanvasPage>()
 
@@ -102,7 +122,11 @@ class CanvasEditorViewModel: NSObject {
 
     func createTestPage() {
         self.modelController.collection(for: CanvasPage.self).newObject() { canvasPage in
-            canvasPage.frame = CGRect(x: 100, y: 100, width: 300, height: 400)
+            if let viewPort = self.canvas.viewPort {
+                canvasPage.frame = CGRect(width: 300, height: 400, centredIn: viewPort)
+            } else {
+                canvasPage.frame = CGRect(x: 0, y: 0, width: 300, height: 400)
+            }
             canvasPage.canvas = self.canvas
         }
         self.updatePages()

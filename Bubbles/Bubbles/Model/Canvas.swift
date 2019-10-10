@@ -29,6 +29,9 @@ final class Canvas: NSObject, CollectableModelObject {
         didSet { self.didChange(\.sortIndex, oldValue: oldValue) }
     }
 
+    var originOffsetFromScrollPoint: CGPoint?
+    var viewPort: CGRect?
+
 
     //MARK: - Relationships
     var pages: Set<CanvasPage> {

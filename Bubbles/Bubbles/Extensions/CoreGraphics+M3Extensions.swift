@@ -71,4 +71,10 @@ extension CGRect {
         let size = self.size.rounded()
         return CGRect(origin: origin, size: size)
     }
+
+    init(width: CGFloat, height: CGFloat, centredIn rect: CGRect) {
+        let x = rect.midX - (width / 2)
+        let y = rect.midY - (height / 2)
+        self.init(x: x.rounded(), y: y.rounded(), width: width, height: height)
+    }
 }

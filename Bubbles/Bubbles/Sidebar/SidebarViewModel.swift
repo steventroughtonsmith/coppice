@@ -129,7 +129,12 @@ class SidebarViewModel: NSObject {
         }
         
         let canvas = self.canvasItems[index].canvas
-        canvas.add(page)
+        if let viewPort = canvas.viewPort {
+            canvas.add(page, centredOn: CGPoint(x: viewPort.midX, y: viewPort.midY))
+        } else {
+            canvas.add(page, centredOn: .zero)
+        }
+
     }
 
 
