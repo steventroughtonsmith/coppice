@@ -46,13 +46,20 @@ extension BubblesModelController {
         }
 
         self.collection(for: Page.self).disableUndo {
-            self.collection(for: Page.self).newObject() { page in
+            let page1 = self.collection(for: Page.self).newObject() { page in
                 page.title = "Foo"
                 let content = TextPageContent()
                 content.text = NSAttributedString(string: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vehicula sit amet felis ac commodo. Sed quis faucibus nibh. Nam ut urna libero.")
                 page.content = content
             }
-            self.collection(for: Page.self).newObject() { $0.title = "Bar" }
+            self.collection(for: Page.self).newObject() { page in
+                page.title = "Bar"
+                let content = TextPageContent()
+                let mutableText = NSMutableAttributedString(string: "This page links to this page")
+                mutableText.addAttribute(.link, value: page1.linkingURL, range: NSRange(location: 19, length: 9))
+                content.text = mutableText
+                page.content = content
+            }
             self.collection(for: Page.self).newObject() { $0.title = "Baz" }
         }
     }

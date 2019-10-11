@@ -59,6 +59,11 @@ class CanvasPageViewController: NSViewController, CanvasPageView {
 
         //We need to make sure we stay pinned to the top left when resizing the view
         self.view.autoresizingMask = [.maxXMargin, .maxYMargin]
+
+        if let pageEditor = self.viewModel.pageEditor {
+            self.typedView.contentContainer.addSubview(pageEditor.view, withInsets: NSEdgeInsetsZero)
+            self.addChild(pageEditor)
+        }
     }
 
     func apply(_ layoutPage: LayoutEnginePage) {

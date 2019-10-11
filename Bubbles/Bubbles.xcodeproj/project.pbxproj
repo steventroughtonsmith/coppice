@@ -85,6 +85,8 @@
 		99FFF9C823439DB500EF02A0 /* ModelObservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FFF9C723439DB500EF02A0 /* ModelObservation.swift */; };
 		99FFF9CA23463DFD00EF02A0 /* LayoutEnginePageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FFF9C923463DFD00EF02A0 /* LayoutEnginePageTests.swift */; };
 		99FFF9CC234E2F2F00EF02A0 /* FlippedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FFF9CB234E2F2F00EF02A0 /* FlippedView.swift */; };
+		99FFF9CE2350BAE400EF02A0 /* PageEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FFF9CD2350BAE400EF02A0 /* PageEditorViewController.swift */; };
+		99FFF9D02350BAF500EF02A0 /* PageEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FFF9CF2350BAF500EF02A0 /* PageEditorViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -190,6 +192,8 @@
 		99FFF9C723439DB500EF02A0 /* ModelObservation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelObservation.swift; sourceTree = "<group>"; };
 		99FFF9C923463DFD00EF02A0 /* LayoutEnginePageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutEnginePageTests.swift; sourceTree = "<group>"; };
 		99FFF9CB234E2F2F00EF02A0 /* FlippedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlippedView.swift; sourceTree = "<group>"; };
+		99FFF9CD2350BAE400EF02A0 /* PageEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageEditorViewController.swift; sourceTree = "<group>"; };
+		99FFF9CF2350BAF500EF02A0 /* PageEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageEditorViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -232,8 +236,8 @@
 		992A5C9022DCB2EE0012CCB6 /* Sidebar */ = {
 			isa = PBXGroup;
 			children = (
-				99DEF28722F1D72D0020A7CE /* SidebarViewModelTypes.swift */,
 				992A5C9B22DCC6090012CCB6 /* SidebarViewModel.swift */,
+				99DEF28722F1D72D0020A7CE /* SidebarViewModelTypes.swift */,
 				992A5C9122DCB7530012CCB6 /* SidebarViewController.swift */,
 				992A5C9522DCB7790012CCB6 /* SidebarView.xib */,
 			);
@@ -305,9 +309,9 @@
 				99C03F0A232A9A5E00EB7516 /* CanvasView.swift */,
 				99581081230D7EFB00D996C4 /* CanvasEditorViewController.xib */,
 				99C03EF223293D8A00EB7516 /* Layout Engine */,
+				99C03F02232A8E9500EB7516 /* EdgeResizable.swift */,
 				99581094230D93F700D996C4 /* CanvasPageViewModel.swift */,
 				99581090230D92C600D996C4 /* CanvasPageViewController.swift */,
-				99C03F02232A8E9500EB7516 /* EdgeResizable.swift */,
 				99581091230D92C600D996C4 /* CanvasPageViewController.xib */,
 				99C03F06232A8ED200EB7516 /* CanvasElementView.swift */,
 				9958108B230D908200D996C4 /* Test CanvasPage View */,
@@ -318,6 +322,8 @@
 		99581084230D871C00D996C4 /* Page Editors */ = {
 			isa = PBXGroup;
 			children = (
+				99FFF9CF2350BAF500EF02A0 /* PageEditorViewModel.swift */,
+				99FFF9CD2350BAE400EF02A0 /* PageEditorViewController.swift */,
 				99C865122301A82E004C7B89 /* Content Selector Editor */,
 				99C8650723016E90004C7B89 /* Text Content Editor */,
 				99C8651D2302E216004C7B89 /* Image Content Editor */,
@@ -690,6 +696,7 @@
 				99581095230D93F700D996C4 /* CanvasPageViewModel.swift in Sources */,
 				99C03F03232A8E9500EB7516 /* EdgeResizable.swift in Sources */,
 				99C86511230174B9004C7B89 /* PageContent.swift in Sources */,
+				99FFF9CE2350BAE400EF02A0 /* PageEditorViewController.swift in Sources */,
 				99FE019322CD1037004D380D /* Document.swift in Sources */,
 				99C41B7122DCA96700C82DDE /* BubblesModelController.swift in Sources */,
 				990B6A3722E5F84400523C06 /* CanvasPage.swift in Sources */,
@@ -700,6 +707,7 @@
 				990B6A3922EB482D00523C06 /* ModelObject.swift in Sources */,
 				99DEF28822F1D72D0020A7CE /* SidebarViewModelTypes.swift in Sources */,
 				99FFF9C823439DB500EF02A0 /* ModelObservation.swift in Sources */,
+				99FFF9D02350BAF500EF02A0 /* PageEditorViewModel.swift in Sources */,
 				99C03F0B232A9A5E00EB7516 /* CanvasView.swift in Sources */,
 				99C03EF923293D8A00EB7516 /* LayoutEnginePage.swift in Sources */,
 				99DEF28F22F33A790020A7CE /* ModelID.swift in Sources */,

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14854.2" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14868" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14854.2"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14868"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -20,7 +20,7 @@
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HJj-A1-3t4">
                     <rect key="frame" x="95" y="20" width="370" height="16"/>
-                    <textFieldCell key="cell" lineBreakMode="clipping" title="You can also drop a file or paste content from your clipboard" id="4lK-qk-oaH">
+                    <textFieldCell key="cell" title="You can also drop a file or paste content from your clipboard" id="4lK-qk-oaH">
                         <font key="font" usesAppearanceFont="YES"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -40,11 +40,13 @@
             </subviews>
             <constraints>
                 <constraint firstItem="C1C-x5-2tO" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="0Nj-ol-vZ1"/>
+                <constraint firstItem="HJj-A1-3t4" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="0Sx-sg-hEg"/>
                 <constraint firstItem="C1C-x5-2tO" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="20" id="GYI-n5-NgF"/>
                 <constraint firstItem="HJj-A1-3t4" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="IVV-Av-vjF"/>
                 <constraint firstItem="fDh-gw-aI7" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="TPb-8x-iq1"/>
                 <constraint firstItem="fDh-gw-aI7" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="UsY-y4-dho"/>
                 <constraint firstItem="fDh-gw-aI7" firstAttribute="top" secondItem="C1C-x5-2tO" secondAttribute="bottom" constant="30" id="bDq-E3-NHg"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="HJj-A1-3t4" secondAttribute="trailing" constant="20" id="hVN-FX-9ma"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="fDh-gw-aI7" secondAttribute="trailing" constant="20" id="iYD-0I-uNz"/>
                 <constraint firstAttribute="bottom" secondItem="HJj-A1-3t4" secondAttribute="bottom" constant="20" id="j6f-ex-8Mu"/>
             </constraints>
