@@ -87,6 +87,7 @@
 		99FFF9CC234E2F2F00EF02A0 /* FlippedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FFF9CB234E2F2F00EF02A0 /* FlippedView.swift */; };
 		99FFF9CE2350BAE400EF02A0 /* PageEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FFF9CD2350BAE400EF02A0 /* PageEditorViewController.swift */; };
 		99FFF9D02350BAF500EF02A0 /* PageEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FFF9CF2350BAF500EF02A0 /* PageEditorViewModel.swift */; };
+		99FFF9D22354C4F600EF02A0 /* GlobalConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FFF9D12354C4F600EF02A0 /* GlobalConstants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -194,6 +195,7 @@
 		99FFF9CB234E2F2F00EF02A0 /* FlippedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlippedView.swift; sourceTree = "<group>"; };
 		99FFF9CD2350BAE400EF02A0 /* PageEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageEditorViewController.swift; sourceTree = "<group>"; };
 		99FFF9CF2350BAF500EF02A0 /* PageEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageEditorViewModel.swift; sourceTree = "<group>"; };
+		99FFF9D12354C4F600EF02A0 /* GlobalConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalConstants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -484,6 +486,7 @@
 			children = (
 				99FE019022CD1037004D380D /* AppDelegate.swift */,
 				99FE019222CD1037004D380D /* Document.swift */,
+				99FFF9D12354C4F600EF02A0 /* GlobalConstants.swift */,
 				992A5C9D22DCCDA20012CCB6 /* Extensions */,
 				99C41B6F22DCA94000C82DDE /* Model */,
 				99FE01E122D4C22B004D380D /* DocumentWindow */,
@@ -708,6 +711,7 @@
 				99DEF28822F1D72D0020A7CE /* SidebarViewModelTypes.swift in Sources */,
 				99FFF9C823439DB500EF02A0 /* ModelObservation.swift in Sources */,
 				99FFF9D02350BAF500EF02A0 /* PageEditorViewModel.swift in Sources */,
+				99FFF9D22354C4F600EF02A0 /* GlobalConstants.swift in Sources */,
 				99C03F0B232A9A5E00EB7516 /* CanvasView.swift in Sources */,
 				99C03EF923293D8A00EB7516 /* LayoutEnginePage.swift in Sources */,
 				99DEF28F22F33A790020A7CE /* ModelID.swift in Sources */,

@@ -132,13 +132,20 @@ class CanvasEditorViewModel: NSObject {
         self.updatePages()
     }
 
-    func addPage(with id: ModelID, centredOn point: CGPoint) {
-        guard let page = self.modelController.collection(for: Page.self).objectWithID(id) else {
+    func addPage(at link: PageLink, centredOn point: CGPoint? = nil) {
+        let pageCollection = self.modelController.collection(for: Page.self)
+        guard let page = pageCollection.objectWithID(link.destination) else {
             return
         }
 
-        let pagePosition = self.layoutEngine.convertPointToPageSpace(point)
-        self.canvas.add(page, centredOn: pagePosition)
+        var sourcePage: CanvasPage? = nil
+        if let source = link.source,
+           let potentialSource = pageCollection.objectWithID(source) {
+            sourcePage = self.canvas.canvasPage(for: potentialSource)
+        }
+
+        let pagePosition = (point != nil) ? self.layoutEngine.convertPointToPageSpace(point!) : nil
+        self.canvas.add(page, linkedFrom: sourcePage, centredOn: pagePosition)
     }
 
 

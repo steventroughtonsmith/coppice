@@ -39,7 +39,7 @@ class TextEditorViewModel: NSObject {
             return
         }
 
-        mutableText.addAttribute(.link, value: page.linkingURL, range: range)
+        mutableText.addAttribute(.link, value: page.linkToPage(from: self.textContent.page), range: range)
 
         self.attributedText = mutableText
     }

@@ -56,7 +56,7 @@ extension BubblesModelController {
                 page.title = "Bar"
                 let content = TextPageContent()
                 let mutableText = NSMutableAttributedString(string: "This page links to this page")
-                mutableText.addAttribute(.link, value: page1.linkingURL, range: NSRange(location: 19, length: 9))
+                mutableText.addAttribute(.link, value: page1.linkToPage(from: page).url, range: NSRange(location: 19, length: 9))
                 content.text = mutableText
                 page.content = content
             }

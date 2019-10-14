@@ -39,6 +39,7 @@ struct ModelID: Equatable {
     }
 }
 
+
 extension ModelID {
     private static let UUIDKey = "uuid"
     private static let modelTypeKey = "modelType"

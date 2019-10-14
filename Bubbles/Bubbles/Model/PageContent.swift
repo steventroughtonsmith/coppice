@@ -28,6 +28,7 @@ enum PageContentType {
 protocol PageContent: class {
     var contentType: PageContentType { get }
     var contentSize: CGSize? { get }
+    var page: Page? { get set }
 }
 
 class EmptyPageContent: PageContent {
@@ -35,6 +36,7 @@ class EmptyPageContent: PageContent {
     var contentSize: CGSize? {
         return nil
     }
+    weak var page: Page?
 }
 
 class TextPageContent: PageContent {
@@ -43,6 +45,7 @@ class TextPageContent: PageContent {
     var contentSize: CGSize? {
         return nil
     }
+    weak var page: Page?
 }
 
 class ImagePageContent: PageContent {
@@ -51,4 +54,5 @@ class ImagePageContent: PageContent {
     var contentSize: CGSize? {
         return self.image?.size
     }
+    weak var page: Page?
 }

@@ -52,5 +52,18 @@ class Document: NSDocument {
         self.modelController.collection(for: Canvas.self).newObject()
     }
 
+
+    //MARK: - URL handling
+    func handle(_ url: URL) -> Bool {
+        guard let pageLink = PageLink(url: url),
+            let windowController = self.windowControllers.first as? DocumentWindowController else {
+            return false
+        }
+
+
+
+        return windowController.openPage(at: pageLink)
+    }
+
 }
 

@@ -27,6 +27,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     #endif
 
+    func application(_ application: NSApplication, open urls: [URL]) {
+        let pageURLs = urls.filter { $0.scheme == GlobalConstants.urlScheme }
+        let documents = NSDocumentController.shared.documents.compactMap { $0 as? Document }
+
+        pageURLs.forEach { (url) in
+            for document in documents {
+                if document.handle(url) {
+                    break
+                }
+            }
+        }
+    }
     
 }
 

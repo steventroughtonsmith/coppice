@@ -272,8 +272,8 @@ class CanvasEditorViewController: NSViewController {
 }
 
 extension CanvasEditorViewController: CanvasViewDelegate {
-    func didDrop(pageWithID: ModelID, at point: CGPoint, on canvasView: CanvasView) {
-        self.viewModel.addPage(with: pageWithID, centredOn: point)
+    func didDropPage(with id: ModelID, at point: CGPoint, on canvasView: CanvasView) {
+        self.viewModel.addPage(at: PageLink(destination: id), centredOn: point)
     }
 }
 

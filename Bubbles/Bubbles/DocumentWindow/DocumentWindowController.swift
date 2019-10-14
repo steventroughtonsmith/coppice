@@ -56,8 +56,7 @@ class DocumentWindowController: NSWindowController {
 
     @IBAction func jumpToPage(_ sender: Any?) {
         self.showPageSelector(title: "Jump to page…") { [weak self] page in
-            self?.editorContainerViewController?.viewModel.currentObjectID = page.id
-            self?.sidebarViewController?.viewModel.selectedObjectID = page.id
+            self?.openPage(at: page.linkToPage())
         }
     }
 
@@ -72,6 +71,33 @@ class DocumentWindowController: NSWindowController {
         }
         self.pageSelectorWindowController = PageSelectorWindowController(viewModel: viewModel)
         self.pageSelectorWindowController?.show(over: self.window)
+    }
+
+
+    //MARK: - Displaying Page
+    @discardableResult func openPage(at pageLink: PageLink) -> Bool {
+        guard let document = self.document as? Document,
+            (document.modelController.object(with: pageLink.destination) != nil) else {
+            return false
+        }
+
+        let selectedObjectID = self.sidebarViewController?.viewModel.selectedObjectID
+        guard (selectedObjectID?.modelType != Canvas.modelType) else {
+            //In theory canvasEditor should always be set if the selected object is a Canvas but we want to exit early regardless as it's a bit more predicatable
+            guard let canvasEditor = self.editorContainerViewController?.currentEditor as? CanvasEditorViewController else {
+                return false
+            }
+            canvasEditor.viewModel.addPage(at: pageLink)
+            return true
+        }
+
+        self.selectObject(with: pageLink.destination)
+        return true
+    }
+
+    func selectObject(with id: ModelID) {
+        self.sidebarViewController?.viewModel.selectedObjectID = id
+        self.editorContainerViewController?.viewModel.currentObjectID = id
     }
 
 

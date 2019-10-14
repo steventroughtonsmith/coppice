@@ -9,7 +9,7 @@
 import Cocoa
 
 protocol CanvasViewDelegate: class {
-    func didDrop(pageWithID: ModelID, at point: CGPoint, on canvasView: CanvasView)
+    func didDropPage(with id: ModelID, at point: CGPoint, on canvasView: CanvasView)
 }
 
 class CanvasView: NSView {
@@ -134,7 +134,7 @@ class CanvasView: NSView {
         }
 
         let dropPoint = self.convert(sender.draggingLocation, from: nil)
-        self.delegate?.didDrop(pageWithID: id, at: dropPoint, on: self)
+        self.delegate?.didDropPage(with: id, at: dropPoint, on: self)
         return true
     }
 

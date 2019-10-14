@@ -39,13 +39,18 @@ final class Canvas: NSObject, CollectableModelObject {
 
 
     //MARK: - Helpers
-    func add(_ page: Page, centredOn point: CGPoint? = nil) {
+    func canvasPage(for page: Page) -> CanvasPage? {
+        return self.pages.first(where: { $0.page == page })
+    }
+
+    func add(_ page: Page, linkedFrom sourcePage: CanvasPage? = nil, centredOn point: CGPoint? = nil) {
         guard let collection = self.modelController?.collection(for: CanvasPage.self) else {
             return
         }
 
         collection.newObject() { canvasPage in
             canvasPage.page = page
+            canvasPage.parent = sourcePage
 
             let halfSize = CGPoint(x: canvasPage.frame.size.width / 2, y: canvasPage.frame.size.height / 2)
             if let point = point {

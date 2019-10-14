@@ -22,6 +22,16 @@ class CanvasPageViewModel: NSObject {
         super.init()
     }
 
+    var title: String {
+        var title = self.canvasPage.page?.title ?? "Untitled"
+        var currentPage = self.canvasPage.parent
+        while currentPage != nil {
+            title += " : \(currentPage?.page?.title ?? "Untitled")"
+            currentPage = currentPage?.parent
+        }
+        return title
+    }
+
 
     lazy var pageEditor: PageEditorViewController? = {
         guard let page = self.canvasPage.page else {
