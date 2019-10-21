@@ -60,6 +60,7 @@ class ResizePageEventContext: CanvasEventContext {
         }
 
         self.lastLocation = boundedLocation
+        layout.modified([self.page])
     }
 
     func upEvent(at location: CGPoint, modifiers: LayoutEventModifiers, in layout: CanvasLayoutEngine) {

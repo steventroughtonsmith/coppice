@@ -19,7 +19,7 @@ import Foundation
 ///         - Content (`contentFrameInsideVisualPage`): The actual page content
 class LayoutEnginePage: Equatable {
     let id: UUID
-
+    let parentID: UUID?
     var selected: Bool = false
 
     //MARK: - Content
@@ -96,10 +96,12 @@ class LayoutEnginePage: Equatable {
     init(id: UUID,
          contentFrame: CGRect,
          minimumContentSize: CGSize = CGSize(width: 100, height: 200),
+         parentID: UUID? = nil,
          layoutEngine: CanvasLayoutEngine) {
         self.id = id
         self.contentFrame = contentFrame
         self.minimumContentSize = minimumContentSize
+        self.parentID = parentID
         self.layoutEngine = layoutEngine
         self.validateSize()
     }

@@ -74,7 +74,7 @@ class TextEditorViewModelTests: XCTestCase {
         var rangePointer: NSRange = NSMakeRange(0, 0)
         let attribute = self.textContent.text.attribute(.link, at: 6, effectiveRange: &rangePointer)
 
-        XCTAssertEqual((attribute as? URL), page.linkingURL)
+        XCTAssertEqual((attribute as? URL), page.linkToPage().url)
         XCTAssertEqual(rangePointer, NSMakeRange(6, 5))
     }
 
@@ -93,7 +93,7 @@ class TextEditorViewModelTests: XCTestCase {
         var rangePointer: NSRange = NSMakeRange(0, 0)
         let attribute = self.textContent.text.attribute(.link, at: 2, effectiveRange: &rangePointer)
 
-        XCTAssertEqual((attribute as? URL), page.linkingURL)
+        XCTAssertEqual((attribute as? URL), page.linkToPage().url)
         XCTAssertEqual(rangePointer, NSMakeRange(2, 3))
     }
 }

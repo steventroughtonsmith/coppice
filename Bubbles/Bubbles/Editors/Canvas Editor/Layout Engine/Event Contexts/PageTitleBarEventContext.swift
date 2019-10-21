@@ -39,6 +39,7 @@ class PageTitleBarEventContext: CanvasEventContext {
             page.layoutFrame.origin = page.layoutFrame.origin.plus(delta)
         }
         self.lastLocation = location
+        layout.modified(layout.selectedPages)
     }
 
     func upEvent(at location: CGPoint, modifiers: LayoutEventModifiers, in layout: CanvasLayoutEngine) {

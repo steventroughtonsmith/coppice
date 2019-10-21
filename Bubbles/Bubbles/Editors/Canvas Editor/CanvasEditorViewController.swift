@@ -187,20 +187,16 @@ class CanvasEditorViewController: NSViewController {
     }
 
     private func sortViews() {
-        var currentSubviews = self.canvasView.subviews
         let newPageUUIDs = self.layoutEngine.pages.map { $0.id }
         var pageViewsToOrder = [NSView?](repeating: nil, count: newPageUUIDs.count)
         for vc in self.pageViewControllers {
             guard let index = newPageUUIDs.firstIndex(of: vc.uuid) else {
                 continue
             }
-            if let subviewIndex = currentSubviews.firstIndex(of: vc.view) {
-                currentSubviews.remove(at: subviewIndex)
-            }
             pageViewsToOrder.insert(vc.view, at: index)
         }
         let pageViews = pageViewsToOrder.compactMap { $0 }
-        self.canvasView.subviews = pageViews + currentSubviews
+        self.canvasView.pageLayer.subviews = pageViews
     }
 
 
@@ -223,7 +219,7 @@ class CanvasEditorViewController: NSViewController {
         viewController.delegate = self
 
         self.addChild(viewController)
-        self.canvasView.addSubview(viewController.view)
+        self.canvasView.pageLayer.addSubview(viewController.view)
         return viewController
     }
 

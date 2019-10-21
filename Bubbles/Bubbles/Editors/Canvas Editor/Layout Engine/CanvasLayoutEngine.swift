@@ -18,7 +18,6 @@ struct LayoutEventModifiers: OptionSet {
 }
 
 
-
 protocol CanvasLayoutView: class {
     func layoutChanged(with context: CanvasLayoutEngine.LayoutContext)
     var viewPortFrame: CGRect { get }
@@ -35,6 +34,7 @@ protocol CanvasEventContext {
     func draggedEvent(at location: CGPoint, modifiers: LayoutEventModifiers, in layout: CanvasLayoutEngine)
     func upEvent(at location: CGPoint, modifiers: LayoutEventModifiers, in layout: CanvasLayoutEngine)
 }
+
 
 class CanvasLayoutEngine: NSObject {
 
@@ -86,22 +86,28 @@ class CanvasLayoutEngine: NSObject {
         let canvasChanged = (self.canvasSize != contentFrame.size)
         self.canvasSize = contentFrame.size
 
+        self.updateArrows()
 
         self.view?.layoutChanged(with: LayoutContext(sizeChanged: canvasChanged, pageOffsetChange: offsetChange))
     }
     
     //MARK: - Manage Pages
     private(set) var pages = [LayoutEnginePage]()
+    private var pagesByUUID = [UUID: LayoutEnginePage]()
 
-    @discardableResult func addPage(withID id: UUID, contentFrame: CGRect, minimumContentSize: CGSize = CGSize(width: 100, height: 200)) -> LayoutEnginePage {
-        let page = LayoutEnginePage(id: id, contentFrame: contentFrame, minimumContentSize: minimumContentSize, layoutEngine: self)
+    @discardableResult func addPage(withID id: UUID, contentFrame: CGRect, minimumContentSize: CGSize = CGSize(width: 100, height: 200), parentID: UUID? = nil) -> LayoutEnginePage {
+        let page = LayoutEnginePage(id: id, contentFrame: contentFrame, minimumContentSize: minimumContentSize, parentID: parentID, layoutEngine: self)
         self.pages.append(page)
+        self.pagesByUUID[id] = page
         self.recalculateCanvasSize()
         return page
     }
 
     func remove(_ pages: [LayoutEnginePage]) {
         self.pages = self.pages.filter { !pages.contains($0) }
+        for page in pages {
+            self.pagesByUUID.removeValue(forKey: page.id)
+        }
         self.recalculateCanvasSize()
     }
 
@@ -134,6 +140,10 @@ class CanvasLayoutEngine: NSObject {
         self.view?.layoutChanged(with: LayoutContext())
     }
 
+    func modified(_ pages: [LayoutEnginePage]) {
+        self.updateArrows()
+    }
+
     func finishedModifying(_ pages: [LayoutEnginePage]) {
         self.delegate?.moved(pages: pages, in: self)
     }
@@ -145,6 +155,67 @@ class CanvasLayoutEngine: NSObject {
 
         self.pages.remove(at: index)
         self.pages.append(page)
+    }
+
+
+    //MARK: - Manage Arrows
+    private(set) var arrows = [LayoutEngineArrow]()
+
+    func updateArrows() {
+        var arrows = [LayoutEngineArrow]()
+        for page in self.pages {
+            guard let parentID = page.parentID,
+                let parent = self.pagesByUUID[parentID] else {
+                continue
+            }
+            arrows.append(self.calculateArrowBetween(parent: parent, andChild: page))
+        }
+
+        self.arrows = arrows
+    }
+
+    private func calculateArrowBetween(parent: LayoutEnginePage, andChild child: LayoutEnginePage) -> LayoutEngineArrow {
+        let arrowWidth = self.configuration.arrowWidth
+        assert((Int(arrowWidth) % 2) == 1, "Arrow width should be an odd number!")
+        let arrowOffset = (arrowWidth - 1) / 2
+
+        let parentFrame = parent.layoutFrame
+        let childFrame = child.layoutFrame
+
+        let x: CGFloat
+        let width: CGFloat
+        let horizontalDirection: LayoutEngineArrow.Direction
+        if (childFrame.midX > parentFrame.midX) {
+            x = parentFrame.midX
+            width = childFrame.midX - parentFrame.midX
+            horizontalDirection = .maxEdge
+        } else {
+            x = childFrame.midX
+            width = max(parentFrame.midX - childFrame.midX, 1) //ensure a minimum width of 1
+            horizontalDirection = .minEdge
+        }
+
+        let y: CGFloat
+        let height: CGFloat
+        let verticalDirection: LayoutEngineArrow.Direction
+        if (childFrame.midY > parentFrame.midY) {
+            y = parentFrame.midY
+            height = childFrame.midY - parentFrame.midY
+            verticalDirection = .maxEdge
+        } else {
+            y = childFrame.midY
+            height = max(parentFrame.midY - childFrame.midY, 1) //ensure a minimum height of 1
+            verticalDirection = .minEdge
+        }
+
+        let frame = CGRect(x: x, y: y, width: width, height: height)
+        let offsetFrame = frame.insetBy(dx: -arrowOffset, dy: -arrowOffset)
+
+        return LayoutEngineArrow(parentID: parent.id,
+                                 childID: child.id,
+                                 frame: offsetFrame,
+                                 horizontalDirection: horizontalDirection,
+                                 verticalDirection: verticalDirection)
     }
 
 
@@ -217,6 +288,9 @@ extension CanvasLayoutEngine {
         let pageResizeHandleOffset: CGFloat
 
         let contentBorder: CGFloat
+
+        //Must be odd number
+        let arrowWidth: CGFloat
 
 
         /// The margins from around the content to get to the layout

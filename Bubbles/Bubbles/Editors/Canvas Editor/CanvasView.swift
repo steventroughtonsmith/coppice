@@ -20,6 +20,30 @@ class CanvasView: NSView {
     weak var delegate: CanvasViewDelegate?
     var layoutEngine: CanvasLayoutEngine?
 
+    let pageLayer = FlippedView()
+    let selectionLayer = FlippedView()
+    let arrowLayer = FlippedView()
+
+    override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+        self.setupLayers()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        self.setupLayers()
+    }
+
+    private func setupLayers() {
+        let layers = [self.arrowLayer, self.pageLayer, self.selectionLayer]
+        for layer in layers {
+            layer.frame = self.bounds
+            layer.autoresizingMask = [.height,  .width]
+        }
+        self.subviews = layers
+    }
+
+
     override func mouseDown(with event: NSEvent) {
         let point = self.convert(event.locationInWindow, from: nil)
         self.layoutEngine?.downEvent(at: point, modifiers: event.layoutEventModifiers)
@@ -76,11 +100,11 @@ class CanvasView: NSView {
 
         if self.selectionView == nil {
             let selectionView = self.createSelectionView()
-            self.addSubview(selectionView)
+            self.selectionLayer.addSubview(selectionView)
             self.selectionView = selectionView
         }
 
-        self.selectionView?.frame = selectionRect
+        self.selectionView?.frame = selectionRect.rounded()
     }
 
     private func createSelectionView() -> NSView {
