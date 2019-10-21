@@ -132,6 +132,7 @@ class CanvasEditorViewController: NSViewController {
         self.updateCanvas()
         self.updateSelectionRect()
         self.updatePages()
+        self.updateArrows()
         self.sortViews()
         self.updateCanvasViewPort()
         self.isLayingOut = false
@@ -186,6 +187,23 @@ class CanvasEditorViewController: NSViewController {
         }
     }
 
+    private func updateArrows() {
+        var existingViews = self.arrowViews
+        var newArrows = [LayoutEngineArrow]()
+        for arrow in self.layoutEngine.arrows {
+            let arrowView = self.arrowView(for: arrow)
+            arrowView.arrow = arrow
+            arrowView.frame = arrow.frame
+
+            newArrows.append(arrow)
+            if let index = existingViews.firstIndex(of: arrowView) {
+                existingViews.remove(at: index)
+            }
+        }
+
+        existingViews.forEach { $0.removeFromSuperview() }
+    }
+
     private func sortViews() {
         let newPageUUIDs = self.layoutEngine.pages.map { $0.id }
         var pageViewsToOrder = [NSView?](repeating: nil, count: newPageUUIDs.count)
@@ -229,6 +247,22 @@ class CanvasEditorViewController: NSViewController {
         }
         viewController.view.removeFromSuperview()
         viewController.removeFromParent()
+    }
+
+
+    //MARK: - Arrow View Management
+    private var arrowViews: [PageArrowView] {
+        return self.canvasView.arrowLayer.subviews.compactMap { $0 as? PageArrowView }
+    }
+
+    private func arrowView(for arrow: LayoutEngineArrow) -> PageArrowView {
+        if let arrowView = self.arrowViews.first(where: { $0.arrow?.childID == arrow.childID && $0.arrow?.parentID == arrow.parentID }) {
+            return arrowView
+        }
+
+        let newArrowView = PageArrowView()
+        self.canvasView.arrowLayer.addSubview(newArrowView)
+        return newArrowView
     }
 
 

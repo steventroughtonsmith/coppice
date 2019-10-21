@@ -100,7 +100,8 @@ class CanvasEditorViewModel: NSObject {
     private func addPages(_ canvasPages: Set<CanvasPage>) {
         canvasPages.forEach { (canvasPage) in
             self.layoutEngine.addPage(withID: canvasPage.id.uuid,
-                                      contentFrame: canvasPage.frame)
+                                      contentFrame: canvasPage.frame,
+                                      parentID: canvasPage.parent?.id.uuid)
         }
     }
 

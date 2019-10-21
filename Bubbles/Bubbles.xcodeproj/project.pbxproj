@@ -12,6 +12,7 @@
 		990B6A3922EB482D00523C06 /* ModelObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990B6A3822EB482D00523C06 /* ModelObject.swift */; };
 		990D243D23560169001B1FD9 /* LayoutEngineArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990D243C23560169001B1FD9 /* LayoutEngineArrow.swift */; };
 		990D243F23560688001B1FD9 /* CanvasLayoutEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03F0023293DAD00EB7516 /* CanvasLayoutEngineTests.swift */; };
+		990D2441235DEFE2001B1FD9 /* PageArrowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990D2440235DEFE2001B1FD9 /* PageArrowView.swift */; };
 		9923B06B22F45F7E0035D8C6 /* TestObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9923B06A22F45F7E0035D8C6 /* TestObjects.swift */; };
 		9923B07122F47AE30035D8C6 /* ModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9923B07022F47AE30035D8C6 /* ModelController.swift */; };
 		9923B07422F485480035D8C6 /* ModelCollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9923B07322F485480035D8C6 /* ModelCollectionTests.swift */; };
@@ -113,6 +114,7 @@
 		990B6A3622E5F84400523C06 /* CanvasPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPage.swift; sourceTree = "<group>"; };
 		990B6A3822EB482D00523C06 /* ModelObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelObject.swift; sourceTree = "<group>"; };
 		990D243C23560169001B1FD9 /* LayoutEngineArrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutEngineArrow.swift; sourceTree = "<group>"; };
+		990D2440235DEFE2001B1FD9 /* PageArrowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageArrowView.swift; sourceTree = "<group>"; };
 		9923B06A22F45F7E0035D8C6 /* TestObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestObjects.swift; sourceTree = "<group>"; };
 		9923B07022F47AE30035D8C6 /* ModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelController.swift; sourceTree = "<group>"; };
 		9923B07322F485480035D8C6 /* ModelCollectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelCollectionTests.swift; sourceTree = "<group>"; };
@@ -318,6 +320,7 @@
 				99581090230D92C600D996C4 /* CanvasPageViewController.swift */,
 				99581091230D92C600D996C4 /* CanvasPageViewController.xib */,
 				99C03F06232A8ED200EB7516 /* CanvasElementView.swift */,
+				990D2440235DEFE2001B1FD9 /* PageArrowView.swift */,
 				9958108B230D908200D996C4 /* Test CanvasPage View */,
 			);
 			path = "Canvas Editor";
@@ -708,6 +711,7 @@
 				99C41B7122DCA96700C82DDE /* BubblesModelController.swift in Sources */,
 				990B6A3722E5F84400523C06 /* CanvasPage.swift in Sources */,
 				9958108E230D909900D996C4 /* TestCanvasPageViewController.swift in Sources */,
+				990D2441235DEFE2001B1FD9 /* PageArrowView.swift in Sources */,
 				992A5CAE22DDF50F0012CCB6 /* DebugPageEditor.swift in Sources */,
 				99C03EFD23293D8A00EB7516 /* ResizePageEventContext.swift in Sources */,
 				99C03F0D2334D04200EB7516 /* NSScrollView+M3Extensions.swift in Sources */,
