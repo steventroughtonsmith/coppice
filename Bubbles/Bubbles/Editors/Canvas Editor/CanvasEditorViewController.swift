@@ -260,7 +260,7 @@ class CanvasEditorViewController: NSViewController {
             return arrowView
         }
 
-        let newArrowView = PageArrowView()
+        let newArrowView = PageArrowView(lineWidth: self.layoutEngine.configuration.arrowWidth)
         self.canvasView.arrowLayer.addSubview(newArrowView)
         return newArrowView
     }

@@ -20,7 +20,7 @@ class CanvasEditorViewModel: NSObject {
                                                                pageResizeCornerHandleSize: 8,
                                                                pageResizeHandleOffset: 2,
                                                                contentBorder: 1000,
-                                                               arrowWidth: 5))
+                                                               arrowWidth: 15))
 
     let canvas: Canvas
     let modelController: ModelController
