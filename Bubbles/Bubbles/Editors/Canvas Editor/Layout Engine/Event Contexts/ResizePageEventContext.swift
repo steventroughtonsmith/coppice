@@ -18,11 +18,11 @@ class ResizePageEventContext: CanvasEventContext {
         self.component = component
     }
 
-    func downEvent(at location: CGPoint, modifiers: LayoutEventModifiers, in layout: CanvasLayoutEngine) {
+    func downEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: CanvasLayoutEngine) {
         self.lastLocation = location
     }
 
-    func draggedEvent(at location: CGPoint, modifiers: LayoutEventModifiers, in layout: CanvasLayoutEngine) {
+    func draggedEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: CanvasLayoutEngine) {
         guard let lastLocation = self.lastLocation else {
             return
         }
@@ -63,7 +63,7 @@ class ResizePageEventContext: CanvasEventContext {
         layout.modified([self.page])
     }
 
-    func upEvent(at location: CGPoint, modifiers: LayoutEventModifiers, in layout: CanvasLayoutEngine) {
+    func upEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: CanvasLayoutEngine) {
         layout.finishedModifying([self.page])
     }
 }

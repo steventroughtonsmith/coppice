@@ -88,6 +88,50 @@ class CanvasLayoutEngineTests: XCTestCase {
     }
 
 
+    //MARK: - Page Children
+    func test_allChildren_returnsEmptyArrayIfSuppliedPageHasNoChildren() {
+        //Add child to other page just to be sure
+        self.layoutEngine.addPage(withID: UUID(), contentFrame: .zero, minimumContentSize: .zero, parentID: self.page1.id)
+        XCTAssertEqual(self.layoutEngine.allChildren(of: self.page2), [])
+    }
+
+    func test_allChildren_returnsPagesThatHaveSuppliedPageAsParentID() {
+        //Add child to other page just to be sure
+        self.layoutEngine.addPage(withID: UUID(), contentFrame: .zero, minimumContentSize: .zero, parentID: self.page2.id)
+
+        let child1 = self.layoutEngine.addPage(withID: UUID(), contentFrame: .zero, minimumContentSize: .zero, parentID: self.page1.id)
+        let child2 = self.layoutEngine.addPage(withID: UUID(), contentFrame: .zero, minimumContentSize: .zero, parentID: self.page1.id)
+
+        let children = self.layoutEngine.allChildren(of: self.page1)
+        XCTAssertEqual(children.count, 2)
+        XCTAssertTrue(children.contains(child1))
+        XCTAssertTrue(children.contains(child2))
+    }
+
+    func test_allChildren_returnsAllChildrenGrandChildrenEtcOfSuppliedPage() {
+        //Add child to other page just to be sure
+        self.layoutEngine.addPage(withID: UUID(), contentFrame: .zero, minimumContentSize: .zero, parentID: self.page2.id)
+
+        let child1 = self.layoutEngine.addPage(withID: UUID(), contentFrame: .zero, minimumContentSize: .zero, parentID: self.page3.id)
+        let child2 = self.layoutEngine.addPage(withID: UUID(), contentFrame: .zero, minimumContentSize: .zero, parentID: self.page3.id)
+        let grandchild1 = self.layoutEngine.addPage(withID: UUID(), contentFrame: .zero, minimumContentSize: .zero, parentID: child1.id)
+        let grandchild2 = self.layoutEngine.addPage(withID: UUID(), contentFrame: .zero, minimumContentSize: .zero, parentID: child2.id)
+        let grandchild3 = self.layoutEngine.addPage(withID: UUID(), contentFrame: .zero, minimumContentSize: .zero, parentID: child2.id)
+        let greatGrandchild1 = self.layoutEngine.addPage(withID: UUID(), contentFrame: .zero, minimumContentSize: .zero, parentID: grandchild1.id)
+        let greatGrandchild2 = self.layoutEngine.addPage(withID: UUID(), contentFrame: .zero, minimumContentSize: .zero, parentID: grandchild1.id)
+
+        let children = self.layoutEngine.allChildren(of: self.page3)
+        XCTAssertEqual(children.count, 7)
+        XCTAssertTrue(children.contains(child1))
+        XCTAssertTrue(children.contains(child2))
+        XCTAssertTrue(children.contains(grandchild1))
+        XCTAssertTrue(children.contains(grandchild2))
+        XCTAssertTrue(children.contains(grandchild3))
+        XCTAssertTrue(children.contains(greatGrandchild1))
+        XCTAssertTrue(children.contains(greatGrandchild2))
+    }
+
+
     //MARK: - Point Convertion
     func test_pointConversion_convertsPointFromPageSpaceToCanvasSpaceForEmptyEngine() {
         let basePoint = CGPoint(x: 10, y: 42)
@@ -331,6 +375,24 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertTrue(try XCTUnwrap(delegate.movedPages?[safe: 0]) === self.page2)
         XCTAssertTrue(try XCTUnwrap(delegate.movedPages?[safe: 1]) === self.page3)
     }
+
+    func test_moving_downEventWithCount2SelectsAllChildPages() {
+        let child1 = self.layoutEngine.addPage(withID: UUID(),
+                                               contentFrame: CGRect(x: 120, y: 120, width: 30, height: 30),
+                                               minimumContentSize: .zero,
+                                               parentID: self.page1.id)
+        let child2 = self.layoutEngine.addPage(withID: UUID(),
+                                               contentFrame: CGRect(x: 150, y: 180, width: 30, height: 30),
+                                               minimumContentSize: .zero,
+                                               parentID: self.page1.id)
+
+        self.layoutEngine.downEvent(at: self.page1.layoutFrame.origin.plus(.identity), eventCount: 2)
+        XCTAssertTrue(self.page1.selected)
+        XCTAssertTrue(child1.selected)
+        XCTAssertTrue(child2.selected)
+    }
+
+
 
     //MARK: - Resize Page
 
@@ -769,10 +831,6 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertEqual(self.layoutEngine.canvasSize, initialSize)
         self.layoutEngine.upEvent(at: endPoint)
         XCTAssertNotEqual(self.layoutEngine.canvasSize, initialSize)
-    }
-
-    func test_canvasSize_canvasSizeShouldShrinkIfNecessaryWhenScrollingEnds() {
-//        XCTFail()
     }
 
     func test_canvasSize_updatesAllPagesCanvasFrameIfCanvasResizesUpAndToTheLeft() {

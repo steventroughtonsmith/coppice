@@ -10,13 +10,14 @@ import Cocoa
 
 class PageTitleBarEventContext: CanvasEventContext {
     private var lastLocation: CGPoint?
+    private var initialLocation: CGPoint?
 
     let page: LayoutEnginePage
     init(page: LayoutEnginePage) {
         self.page = page
     }
 
-    func downEvent(at location: CGPoint, modifiers: LayoutEventModifiers, in layout: CanvasLayoutEngine) {
+    func downEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: CanvasLayoutEngine) {
         //Toggle selection if the user is shift clicking
         if (modifiers.contains(.shift)) {
             self.page.selected = !self.page.selected
@@ -27,10 +28,14 @@ class PageTitleBarEventContext: CanvasEventContext {
             self.page.selected = true
         }
 
+        if (eventCount == 2) {
+            let pages = layout.allChildren(of: self.page)
+            pages.forEach { $0.selected = true }
+        }
         self.lastLocation = location
     }
 
-    func draggedEvent(at location: CGPoint, modifiers: LayoutEventModifiers, in layout: CanvasLayoutEngine) {
+    func draggedEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: CanvasLayoutEngine) {
         guard let lastLocation = self.lastLocation else {
             return
         }
@@ -42,7 +47,7 @@ class PageTitleBarEventContext: CanvasEventContext {
         layout.modified(layout.selectedPages)
     }
 
-    func upEvent(at location: CGPoint, modifiers: LayoutEventModifiers, in layout: CanvasLayoutEngine) {
+    func upEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: CanvasLayoutEngine) {
         let movedPages = layout.selectedPages
         layout.finishedModifying(movedPages)
     }

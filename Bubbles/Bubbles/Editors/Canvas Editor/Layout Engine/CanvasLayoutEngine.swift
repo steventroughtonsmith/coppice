@@ -30,9 +30,9 @@ protocol CanvasLayoutEngineDelegate: class {
 
 
 protocol CanvasEventContext {
-    func downEvent(at location: CGPoint, modifiers: LayoutEventModifiers, in layout: CanvasLayoutEngine)
-    func draggedEvent(at location: CGPoint, modifiers: LayoutEventModifiers, in layout: CanvasLayoutEngine)
-    func upEvent(at location: CGPoint, modifiers: LayoutEventModifiers, in layout: CanvasLayoutEngine)
+    func downEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: CanvasLayoutEngine)
+    func draggedEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: CanvasLayoutEngine)
+    func upEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: CanvasLayoutEngine)
 }
 
 
@@ -133,6 +133,17 @@ class CanvasLayoutEngine: NSObject {
             }
         }
         return pagesInRect
+    }
+
+    func allChildren(of rootPage: LayoutEnginePage) -> [LayoutEnginePage] {
+        var pages = [LayoutEnginePage]()
+        for page in self.pages {
+            if rootPage.id == page.parentID {
+                pages.append(page)
+                pages.append(contentsOf: self.allChildren(of: page))
+            }
+        }
+        return pages
     }
 
     func deselectAll() {
@@ -243,19 +254,19 @@ class CanvasLayoutEngine: NSObject {
         }
     }
 
-    func downEvent(at location: CGPoint, modifiers: LayoutEventModifiers = []) {
+    func downEvent(at location: CGPoint, modifiers: LayoutEventModifiers = [], eventCount: Int = 1) {
         self.currentEventContext = self.createEventContext(for: location)
-        self.currentEventContext?.downEvent(at: location, modifiers: modifiers, in: self)
+        self.currentEventContext?.downEvent(at: location, modifiers: modifiers, eventCount: eventCount, in: self)
         self.view?.layoutChanged(with: LayoutContext())
     }
 
-    func draggedEvent(at location: CGPoint, modifiers: LayoutEventModifiers = []) {
-        self.currentEventContext?.draggedEvent(at: location, modifiers: modifiers, in: self)
+    func draggedEvent(at location: CGPoint, modifiers: LayoutEventModifiers = [], eventCount: Int = 1) {
+        self.currentEventContext?.draggedEvent(at: location, modifiers: modifiers, eventCount: eventCount, in: self)
         self.view?.layoutChanged(with: LayoutContext())
     }
 
-    func upEvent(at location: CGPoint, modifiers: LayoutEventModifiers = []) {
-        self.currentEventContext?.upEvent(at: location, modifiers: modifiers, in: self)
+    func upEvent(at location: CGPoint, modifiers: LayoutEventModifiers = [], eventCount: Int = 1) {
+        self.currentEventContext?.upEvent(at: location, modifiers: modifiers, eventCount: eventCount, in: self)
         self.recalculateCanvasSize()
         self.currentEventContext = nil
     }

@@ -46,19 +46,19 @@ class CanvasView: NSView {
 
     override func mouseDown(with event: NSEvent) {
         let point = self.convert(event.locationInWindow, from: nil)
-        self.layoutEngine?.downEvent(at: point, modifiers: event.layoutEventModifiers)
+        self.layoutEngine?.downEvent(at: point, modifiers: event.layoutEventModifiers, eventCount: event.clickCount)
     }
 
     override func mouseDragged(with event: NSEvent) {
         let point = self.convert(event.locationInWindow, from: nil)
-        self.layoutEngine?.draggedEvent(at: point, modifiers: event.layoutEventModifiers)
+        self.layoutEngine?.draggedEvent(at: point, modifiers: event.layoutEventModifiers, eventCount: event.clickCount)
 
         self.startAutoscrolling(with: event)
     }
 
     override func mouseUp(with event: NSEvent) {
         let point = self.convert(event.locationInWindow, from: nil)
-        self.layoutEngine?.upEvent(at: point, modifiers: event.layoutEventModifiers)
+        self.layoutEngine?.upEvent(at: point, modifiers: event.layoutEventModifiers, eventCount: event.clickCount)
     }
 
 
