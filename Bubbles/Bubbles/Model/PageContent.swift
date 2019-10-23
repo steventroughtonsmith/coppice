@@ -50,7 +50,13 @@ class TextPageContent: PageContent {
 
 class ImagePageContent: PageContent {
     let contentType = PageContentType.image
-    var image: NSImage?
+    var image: NSImage? {
+        didSet {
+            if oldValue == nil && self.image != nil {
+                self.page?.updatePageSizes()
+            }
+        }
+    }
     var contentSize: CGSize? {
         return self.image?.size
     }

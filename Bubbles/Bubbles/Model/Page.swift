@@ -29,7 +29,8 @@ final class Page: NSObject, CollectableModelObject {
         super.init()
         self.content.page = self
     }
-    
+
+
     // MARK: - Attributes
     @objc dynamic var title: String {
         didSet { self.didChange(\.title, oldValue: oldValue) }
@@ -60,6 +61,19 @@ final class Page: NSObject, CollectableModelObject {
     var canvases: Set<CanvasPage> {
         return self.relationship(for: \.page)
     }
+
+
+    //MARK: - Helpers
+    func updatePageSizes() {
+        guard self.userPreferredSize == nil else {
+            return
+        }
+        self.canvases.forEach { canvasPage in
+            var frame = canvasPage.frame
+            frame.size = self.contentSize
+            canvasPage.frame = frame
+        }
+    }
 }
 
 struct PageLink {
@@ -74,7 +88,6 @@ struct PageLink {
     }
 
     init?(url: URL) {
-        print("url \(url)")
         guard let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false),
             urlComponents.scheme == GlobalConstants.urlScheme,
             urlComponents.host == PageLink.host else {
