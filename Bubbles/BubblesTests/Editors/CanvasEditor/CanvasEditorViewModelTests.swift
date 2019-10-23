@@ -24,10 +24,8 @@ class CanvasEditorViewModelTests: XCTestCase {
         self.canvas = self.modelController.collection(for: Canvas.self).newObject()
 
         let canvasPageCollection = self.modelController.collection(for: CanvasPage.self)
-        self.canvasPage1 = canvasPageCollection.newObject()
-        self.canvasPage1.canvas = self.canvas
-        self.canvasPage2 = canvasPageCollection.newObject()
-        self.canvasPage2.canvas = self.canvas
+        self.canvasPage1 = canvasPageCollection.newObject() { $0.canvas = self.canvas }
+        self.canvasPage2 = canvasPageCollection.newObject() { $0.canvas = self.canvas }
 
         self.viewModel = CanvasEditorViewModel(canvas: self.canvas, modelController: self.modelController)
     }
@@ -52,6 +50,40 @@ class CanvasEditorViewModelTests: XCTestCase {
     func test_closeCanvasPage_deleteCanvasPage() {
         self.viewModel.close(self.canvasPage2)
         XCTAssertNil(self.modelController.collection(for: CanvasPage.self).objectWithID(self.canvasPage2.id))
+    }
+
+    func test_closeCanvasPage_removesChildPagesFromCanvas() {
+        let canvasPageCollection = self.modelController.collection(for: CanvasPage.self)
+        let child1 = canvasPageCollection.newObject() {
+            $0.canvas = self.canvas
+            $0.parent = self.canvasPage1
+        }
+        let child2 = canvasPageCollection.newObject() {
+            $0.canvas = self.canvas
+            $0.parent = self.canvasPage1
+        }
+
+        self.viewModel.close(self.canvasPage1)
+        XCTAssertNil(child1.canvas)
+        XCTAssertFalse(self.canvas.pages.contains(child1))
+        XCTAssertNil(child2.canvas)
+        XCTAssertFalse(self.canvas.pages.contains(child2))
+    }
+
+    func test_closeCanvasPage_deletesChildCanvasPages() {
+        let canvasPageCollection = self.modelController.collection(for: CanvasPage.self)
+        let child1 = canvasPageCollection.newObject() {
+            $0.canvas = self.canvas
+            $0.parent = self.canvasPage1
+        }
+        let child2 = canvasPageCollection.newObject() {
+            $0.canvas = self.canvas
+            $0.parent = self.canvasPage1
+        }
+
+        self.viewModel.close(self.canvasPage1)
+        XCTAssertNil(canvasPageCollection.objectWithID(child1.id))
+        XCTAssertNil(canvasPageCollection.objectWithID(child2.id))
     }
 
 

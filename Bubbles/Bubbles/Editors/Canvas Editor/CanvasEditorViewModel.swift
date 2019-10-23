@@ -65,8 +65,19 @@ class CanvasEditorViewModel: NSObject {
     //Dropping content on a canvas
 
     func close(_ canvasPage: CanvasPage) {
+        self.modelController.pushChangeGroup()
+        self.closeChildren(of: canvasPage)
         canvasPage.canvas = nil
         self.modelController.collection(for: CanvasPage.self).delete(canvasPage)
+        self.modelController.popChangeGroup()
+    }
+
+    private func closeChildren(of canvasPage: CanvasPage) {
+        for child in canvasPage.children {
+            self.closeChildren(of: child)
+            child.canvas = nil
+            self.modelController.collection(for: CanvasPage.self).delete(child)
+        }
     }
 
 
