@@ -47,11 +47,25 @@ class CanvasView: NSView {
         return false
     }
 
+    //MARK: - First Responder
+    override var acceptsFirstResponder: Bool {
+        return true
+    }
+
+    override func becomeFirstResponder() -> Bool {
+        return true
+    }
+
+    override func resignFirstResponder() -> Bool {
+        return true
+    }
+
 
     //MARK: - Events
     override func mouseDown(with event: NSEvent) {
         let point = self.convert(event.locationInWindow, from: nil)
         self.layoutEngine?.downEvent(at: point, modifiers: event.layoutEventModifiers, eventCount: event.clickCount)
+        self.window?.makeFirstResponder(self)
     }
 
     override func mouseDragged(with event: NSEvent) {
