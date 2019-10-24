@@ -15,6 +15,7 @@ struct Tag {
 final class Page: NSObject, CollectableModelObject {
     static let modelType: ModelType = ModelType(rawValue: "Page")!
     static let standardSize = CGSize(width: 300, height: 400)
+    static let contentChangedNotification = Notification.Name("PageContentChangedNotification")
 
     var id = ModelID(modelType: Page.modelType)
     weak var collection: ModelCollection<Page>?
@@ -55,6 +56,7 @@ final class Page: NSObject, CollectableModelObject {
     var content: PageContent {
         didSet {
             self.content.page = self
+            NotificationCenter.default.post(name: Page.contentChangedNotification, object: self)
         }
     }
 

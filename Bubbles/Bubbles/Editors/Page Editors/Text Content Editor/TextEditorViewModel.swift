@@ -15,12 +15,20 @@ protocol TextEditorView: class {
 class TextEditorViewModel: NSObject {
     weak var view: TextEditorView?
     
-    let textContent: TextPageContent
+    @objc dynamic let textContent: TextPageContent
     let modelController: ModelController
     init(textContent: TextPageContent, modelController: ModelController) {
         self.textContent = textContent
         self.modelController = modelController
         super.init()
+    }
+
+    override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
+        var keyPaths = super.keyPathsForValuesAffectingValue(forKey: key)
+        if (key == "attributedText") {
+            keyPaths.insert("textContent.text")
+        }
+        return keyPaths
     }
 
     @objc dynamic var attributedText: NSAttributedString {

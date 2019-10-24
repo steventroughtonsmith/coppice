@@ -14,12 +14,20 @@ protocol ImageEditorView: class {
 class ImageEditorViewModel: NSObject {
     weak var view: ImageEditorView?
 
-    let imageContent: ImagePageContent
+    @objc dynamic let imageContent: ImagePageContent
     let modelController: ModelController
     init(imageContent: ImagePageContent, modelController: ModelController) {
         self.imageContent = imageContent
         self.modelController = modelController
         super.init()
+    }
+
+    override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
+        var keyPaths = super.keyPathsForValuesAffectingValue(forKey: key)
+        if (key == "image") {
+            keyPaths.insert("imageContent.image")
+        }
+        return keyPaths
     }
 
     @objc dynamic var image: NSImage? {

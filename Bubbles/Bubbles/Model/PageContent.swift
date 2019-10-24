@@ -31,7 +31,7 @@ protocol PageContent: class {
     var page: Page? { get set }
 }
 
-class EmptyPageContent: PageContent {
+class EmptyPageContent: NSObject, PageContent {
     let contentType = PageContentType.empty
     var contentSize: CGSize? {
         return nil
@@ -39,18 +39,18 @@ class EmptyPageContent: PageContent {
     weak var page: Page?
 }
 
-class TextPageContent: PageContent {
+class TextPageContent: NSObject, PageContent {
     let contentType = PageContentType.text
-    var text: NSAttributedString = NSAttributedString()
+    @objc dynamic var text: NSAttributedString = NSAttributedString()
     var contentSize: CGSize? {
         return nil
     }
     weak var page: Page?
 }
 
-class ImagePageContent: PageContent {
+class ImagePageContent: NSObject, PageContent {
     let contentType = PageContentType.image
-    var image: NSImage? {
+    @objc dynamic var image: NSImage? {
         didSet {
             if oldValue == nil && self.image != nil {
                 self.page?.updatePageSizes()

@@ -17,10 +17,21 @@ class PageEditorViewModel: NSObject {
     
     let page: Page
     let modelController: ModelController
+    private var contentObserver: NSObjectProtocol?
     init(page: Page, modelController: ModelController) {
         self.page = page
         self.modelController = modelController
         super.init()
+
+        self.contentObserver = NotificationCenter.default.addObserver(forName: Page.contentChangedNotification, object: self.page, queue: .main) { [weak self] (_) in
+            self?.view?.contentChanged()
+        }
+    }
+
+    deinit {
+        if let observer = self.contentObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
     }
 
     var contentEditor: NSViewController {
