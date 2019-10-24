@@ -47,6 +47,11 @@ class CanvasView: NSView {
         return false
     }
 
+    func addPageView(_ view: CanvasElementView) {
+        view.canvas = self
+        self.pageLayer.addSubview(view)
+    }
+
     //MARK: - First Responder
     override var acceptsFirstResponder: Bool {
         return true
@@ -71,25 +76,28 @@ class CanvasView: NSView {
     override func mouseDragged(with event: NSEvent) {
         let point = self.convert(event.locationInWindow, from: nil)
         self.layoutEngine?.draggedEvent(at: point, modifiers: event.layoutEventModifiers, eventCount: event.clickCount)
-
         self.startAutoscrolling(with: event)
     }
 
     override func mouseUp(with event: NSEvent) {
         let point = self.convert(event.locationInWindow, from: nil)
         self.layoutEngine?.upEvent(at: point, modifiers: event.layoutEventModifiers, eventCount: event.clickCount)
+        self.stopAutoscrolling()
     }
 
     override func hitTest(_ point: NSPoint) -> NSView? {
         guard let view = self.pageLayer.hitTest(point) else {
             return self
         }
+        print("view: \(view)")
         return view
     }
 
 
     //MARK: - Auto scrolling
     @objc func startAutoscrolling(with event: NSEvent) {
+        self.stopAutoscrolling()
+
         guard let contentView = self.enclosingScrollView?.contentView else {
             return
         }
@@ -98,8 +106,12 @@ class CanvasView: NSView {
             let delta = contentView.bounds.origin.minus(previousPosition)
             let point = self.convert(event.locationInWindow, from: nil).plus(delta)
             self.layoutEngine?.draggedEvent(at: point, modifiers: event.layoutEventModifiers)
-            self.perform(#selector(startAutoscrolling(with:)), with: event, afterDelay: 0.2)
+            self.perform(#selector(startAutoscrolling(with:)), with: event, afterDelay: 0.01)
         }
+    }
+
+    private func stopAutoscrolling() {
+        NSObject.cancelPreviousPerformRequests(withTarget: self)
     }
 
 

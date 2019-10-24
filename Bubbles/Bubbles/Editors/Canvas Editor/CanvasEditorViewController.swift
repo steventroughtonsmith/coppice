@@ -237,7 +237,7 @@ class CanvasEditorViewController: NSViewController {
         viewController.delegate = self
 
         self.addChild(viewController)
-        self.canvasView.pageLayer.addSubview(viewController.view)
+        self.canvasView.addPageView(viewController.typedView)
         return viewController
     }
 
@@ -322,7 +322,7 @@ extension CanvasEditorViewController: CanvasLayoutView {
         } else {
             self.currentLayoutContext = context
         }
-        self.perform(#selector(layout), with: nil, afterDelay: 0)
+        self.layout()
     }
 
     var viewPortFrame: CGRect {

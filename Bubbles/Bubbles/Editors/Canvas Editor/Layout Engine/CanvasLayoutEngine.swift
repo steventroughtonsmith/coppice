@@ -88,7 +88,7 @@ class CanvasLayoutEngine: NSObject {
 
         self.updateArrows()
 
-        self.view?.layoutChanged(with: LayoutContext(sizeChanged: canvasChanged, pageOffsetChange: offsetChange))
+        self.informOfLayoutChange(with: LayoutContext(sizeChanged: canvasChanged, pageOffsetChange: offsetChange))
     }
     
     //MARK: - Manage Pages
@@ -159,7 +159,7 @@ class CanvasLayoutEngine: NSObject {
 
     func deselectAll() {
         self.selectedPages.forEach { $0.selected = false }
-        self.view?.layoutChanged(with: LayoutContext())
+        self.informOfLayoutChange(with: LayoutContext())
     }
 
     func modified(_ pages: [LayoutEnginePage]) {
@@ -268,12 +268,12 @@ class CanvasLayoutEngine: NSObject {
     func downEvent(at location: CGPoint, modifiers: LayoutEventModifiers = [], eventCount: Int = 1) {
         self.currentEventContext = self.createEventContext(for: location)
         self.currentEventContext?.downEvent(at: location, modifiers: modifiers, eventCount: eventCount, in: self)
-        self.view?.layoutChanged(with: LayoutContext())
+        self.informOfLayoutChange(with: LayoutContext())
     }
 
     func draggedEvent(at location: CGPoint, modifiers: LayoutEventModifiers = [], eventCount: Int = 1) {
         self.currentEventContext?.draggedEvent(at: location, modifiers: modifiers, eventCount: eventCount, in: self)
-        self.view?.layoutChanged(with: LayoutContext())
+        self.informOfLayoutChange(with: LayoutContext())
     }
 
     func upEvent(at location: CGPoint, modifiers: LayoutEventModifiers = [], eventCount: Int = 1) {
@@ -288,6 +288,12 @@ class CanvasLayoutEngine: NSObject {
             return
         }
         self.recalculateCanvasSize()
+    }
+
+
+    //MARK: - Manage View
+    private func informOfLayoutChange(with context: LayoutContext) {
+        self.view?.layoutChanged(with: context)
     }
 }
 

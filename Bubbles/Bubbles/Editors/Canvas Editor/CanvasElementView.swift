@@ -9,7 +9,7 @@
 import Cocoa
 
 extension LayoutEnginePageComponent {
-    func cursor(isAtLimit: Bool = false) -> NSCursor? {
+    func cursor(isAtLimit: Bool = false) -> NSCursor {
         var cursorImage: NSImage? = nil
         switch (self) {
         case .resizeLeft:
@@ -34,7 +34,7 @@ extension LayoutEnginePageComponent {
 
 
         guard let image = cursorImage else {
-            return nil
+            return NSCursor.arrow
         }
         return NSCursor(image: image, hotSpot: NSPoint(x: 11, y: 11))
     }
@@ -49,6 +49,8 @@ class CanvasElementView: NSView  {
     @IBOutlet var boxView: NSBox!
     @IBOutlet weak var contentContainer: NSView!
 
+    weak var canvas: NSView?
+
     override var isFlipped: Bool {
         return true
     }
@@ -58,10 +60,10 @@ class CanvasElementView: NSView  {
         super.resetCursorRects()
 
         for (type, rect) in self.resizeRects {
-            if let cursor = type.cursor() {
-                self.addCursorRect(rect, cursor: cursor)
-            }
+            self.addCursorRect(rect, cursor: type.cursor())
         }
+
+        self.addCursorRect(self.titleBar.frame, cursor: LayoutEnginePageComponent.titleBar.cursor())
     }
 
     func apply(_ layoutPage: LayoutEnginePage) {
@@ -109,5 +111,9 @@ class CanvasElementView: NSView  {
             return self
         }
         return hitView
+    }
+
+    override func mouseDown(with event: NSEvent) {
+        self.canvas?.mouseDown(with: event)
     }
 }
