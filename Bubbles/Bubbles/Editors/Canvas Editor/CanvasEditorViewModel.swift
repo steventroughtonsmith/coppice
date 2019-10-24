@@ -126,7 +126,13 @@ class CanvasEditorViewModel: NSObject {
         canvasPages.forEach { self.layoutEngine.updateContentFrame($0.frame, ofPageWithID: $0.id.uuid) }
     }
 
+    private var updatesDisable = false
+
     private func updatePages() {
+        guard !self.updatesDisable else {
+            return
+        }
+
         let newPages = self.canvas.pages
         let addedPages = newPages.subtracting(self.canvasPages)
         let removedPages = self.canvasPages.subtracting(newPages)
@@ -218,11 +224,13 @@ class CanvasEditorViewModel: NSObject {
 
 extension CanvasEditorViewModel: CanvasLayoutEngineDelegate {
     func moved(pages: [LayoutEnginePage], in layout: CanvasLayoutEngine) {
+        self.updatesDisable = true
         for page in pages {
             guard let canvasPage = self.canvasPage(with: page.id) else {
                 continue
             }
             canvasPage.frame = page.contentFrame
         }
+        self.updatesDisable = false
     }
 }
