@@ -43,7 +43,12 @@ class CanvasView: NSView {
         self.subviews = layers
     }
 
+    override var wantsDefaultClipping: Bool {
+        return false
+    }
 
+
+    //MARK: - Events
     override func mouseDown(with event: NSEvent) {
         let point = self.convert(event.locationInWindow, from: nil)
         self.layoutEngine?.downEvent(at: point, modifiers: event.layoutEventModifiers, eventCount: event.clickCount)
@@ -61,9 +66,11 @@ class CanvasView: NSView {
         self.layoutEngine?.upEvent(at: point, modifiers: event.layoutEventModifiers, eventCount: event.clickCount)
     }
 
-
-    override var wantsDefaultClipping: Bool {
-        return false
+    override func hitTest(_ point: NSPoint) -> NSView? {
+        guard let view = self.pageLayer.hitTest(point) else {
+            return self
+        }
+        return view
     }
 
 
