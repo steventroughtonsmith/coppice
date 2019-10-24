@@ -88,6 +88,53 @@ class CanvasLayoutEngineTests: XCTestCase {
     }
 
 
+    //MARK: - Updating Pages
+    func test_updateFrame_updatesTheFrameOfPageWithSuppliedUUID() {
+        let expectedContentFrame = CGRect(x: 35, y: 35, width: 20, height: 20)
+        self.layoutEngine.updateContentFrame(expectedContentFrame, ofPageWithID: self.page1.id)
+        XCTAssertEqual(self.page1.contentFrame, expectedContentFrame)
+    }
+
+    func test_updateFrame_updatesCanvasSizeIfNewFrameChangesSize() {
+        let expectedCanvasSize = self.layoutEngine.canvasSize.plus(CGSize(width: 10, height: 10))
+        self.layoutEngine.updateContentFrame(CGRect(x: 30, y: -40, width: 40, height: 20), ofPageWithID: self.page3.id)
+        XCTAssertEqual(self.layoutEngine.canvasSize, expectedCanvasSize)
+    }
+
+    func test_updateFrame_notifiesViewOfLayoutChange() {
+        class TestCanvasView: CanvasLayoutView {
+            var context: CanvasLayoutEngine.LayoutContext?
+            func layoutChanged(with context: CanvasLayoutEngine.LayoutContext) {
+                self.context = context
+            }
+            var viewPortFrame: CGRect = CGRect(x: 50, y: 50, width: 10, height: 10)
+        }
+
+        let view = TestCanvasView()
+        self.layoutEngine.view = view
+        self.layoutEngine.updateContentFrame(CGRect(x: -20, y: -10, width: 20, height: 40), ofPageWithID: self.page2.id)
+
+        let expectedContext = CanvasLayoutEngine.LayoutContext(sizeChanged: true, pageOffsetChange: CGPoint(x: -10, y: 0))
+        XCTAssertEqual(view.context, expectedContext)
+    }
+
+    func test_updateFrame_doesntUpdateLayoutIfFrameHasNotChanged() {
+        class TestCanvasView: CanvasLayoutView {
+            var context: CanvasLayoutEngine.LayoutContext?
+            func layoutChanged(with context: CanvasLayoutEngine.LayoutContext) {
+                self.context = context
+            }
+            var viewPortFrame: CGRect = CGRect(x: 50, y: 50, width: 10, height: 10)
+        }
+
+        let view = TestCanvasView()
+        self.layoutEngine.view = view
+        self.layoutEngine.updateContentFrame(CGRect(x: -30, y: -20, width: 20, height: 40), ofPageWithID: self.page2.id)
+
+        XCTAssertNil(view.context)
+    }
+
+
     //MARK: - Page Children
     func test_allChildren_returnsEmptyArrayIfSuppliedPageHasNoChildren() {
         //Add child to other page just to be sure
@@ -132,7 +179,7 @@ class CanvasLayoutEngineTests: XCTestCase {
     }
 
 
-    //MARK: - Point Convertion
+    //MARK: - Point Conversion
     func test_pointConversion_convertsPointFromPageSpaceToCanvasSpaceForEmptyEngine() {
         let basePoint = CGPoint(x: 10, y: 42)
 

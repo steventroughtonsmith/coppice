@@ -122,13 +122,19 @@ class CanvasEditorViewModel: NSObject {
         self.layoutEngine.remove(layoutPagesToRemove)
     }
 
+    private func updatePages(_ canvasPages: Set<CanvasPage>) {
+        canvasPages.forEach { self.layoutEngine.updateContentFrame($0.frame, ofPageWithID: $0.id.uuid) }
+    }
+
     private func updatePages() {
         let newPages = self.canvas.pages
         let addedPages = newPages.subtracting(self.canvasPages)
         let removedPages = self.canvasPages.subtracting(newPages)
+        let remainingPages = newPages.subtracting(addedPages)
 
         self.addPages(addedPages)
         self.removePages(removedPages)
+        self.updatePages(remainingPages)
 
         self.canvasPages = newPages
     }

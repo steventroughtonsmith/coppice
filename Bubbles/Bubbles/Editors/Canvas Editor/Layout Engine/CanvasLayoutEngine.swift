@@ -111,6 +111,17 @@ class CanvasLayoutEngine: NSObject {
         self.recalculateCanvasSize()
     }
 
+    func updateContentFrame(_ frame: CGRect, ofPageWithID uuid: UUID) {
+        guard let page = self.pagesByUUID[uuid] else {
+            return
+        }
+        guard page.contentFrame != frame else {
+            return
+        }
+        page.contentFrame = frame
+        self.recalculateCanvasSize()
+    }
+
     var selectedPages: [LayoutEnginePage] {
         return self.pages.filter { $0.selected }
     }
