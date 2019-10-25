@@ -9,16 +9,6 @@
 import Cocoa
 
 class CanvasTextView: NSTextView {
-
-    
-
-//    override func mouseEntered(with event: NSEvent) {
-//        print("entered")
-//    }
-//
-//    override func mouseExited(with event: NSEvent) {
-//    }
-
     override func mouseMoved(with event: NSEvent) {
         guard let canvasView = self.canvasView else {
             super.mouseMoved(with: event)
