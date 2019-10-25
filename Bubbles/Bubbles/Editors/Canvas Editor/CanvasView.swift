@@ -48,7 +48,6 @@ class CanvasView: NSView {
     }
 
     func addPageView(_ view: CanvasElementView) {
-        view.canvas = self
         self.pageLayer.addSubview(view)
     }
 
@@ -67,19 +66,27 @@ class CanvasView: NSView {
 
 
     //MARK: - Events
+    var draggingCursor: NSCursor?
     override func mouseDown(with event: NSEvent) {
+        //We need to save the cursor so we can force it remain the same during a drag
+        self.draggingCursor = NSCursor.current
+        self.window?.disableCursorRects()
+
         let point = self.convert(event.locationInWindow, from: nil)
         self.layoutEngine?.downEvent(at: point, modifiers: event.layoutEventModifiers, eventCount: event.clickCount)
         self.window?.makeFirstResponder(self)
     }
 
     override func mouseDragged(with event: NSEvent) {
+        self.draggingCursor?.set()
         let point = self.convert(event.locationInWindow, from: nil)
         self.layoutEngine?.draggedEvent(at: point, modifiers: event.layoutEventModifiers, eventCount: event.clickCount)
         self.startAutoscrolling(with: event)
     }
 
     override func mouseUp(with event: NSEvent) {
+        self.draggingCursor = nil
+        self.window?.enableCursorRects()
         let point = self.convert(event.locationInWindow, from: nil)
         self.layoutEngine?.upEvent(at: point, modifiers: event.layoutEventModifiers, eventCount: event.clickCount)
         self.stopAutoscrolling()
@@ -89,7 +96,6 @@ class CanvasView: NSView {
         guard let view = self.pageLayer.hitTest(point) else {
             return self
         }
-        print("view: \(view)")
         return view
     }
 

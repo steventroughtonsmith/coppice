@@ -49,21 +49,8 @@ class CanvasElementView: NSView  {
     @IBOutlet var boxView: NSBox!
     @IBOutlet weak var contentContainer: NSView!
 
-    weak var canvas: NSView?
-
     override var isFlipped: Bool {
         return true
-    }
-
-
-    override func resetCursorRects() {
-        super.resetCursorRects()
-
-        for (type, rect) in self.resizeRects {
-            self.addCursorRect(rect, cursor: type.cursor())
-        }
-
-        self.addCursorRect(self.titleBar.frame, cursor: LayoutEnginePageComponent.titleBar.cursor())
     }
 
     func apply(_ layoutPage: LayoutEnginePage) {
@@ -114,6 +101,55 @@ class CanvasElementView: NSView  {
     }
 
     override func mouseDown(with event: NSEvent) {
-        self.canvas?.mouseDown(with: event)
+        self.canvasView?.mouseDown(with: event)
+    }
+
+
+    //MARK: - Cursor Handling
+    override func updateTrackingAreas() {
+        for area in self.trackingAreas {
+            self.removeTrackingArea(area)
+        }
+
+        //NSTrackingArea isn't clipped by superviews so we need to do that manually
+        var trackingRect = self.bounds
+        if let scrollView = self.enclosingScrollView {
+            let frame = self.convert(scrollView.frame, from: scrollView)
+            trackingRect = trackingRect.intersection(frame)
+        }
+
+        guard (trackingRect.width > 0) && (trackingRect.height > 0) else {
+            return
+        }
+
+        let area = NSTrackingArea(rect: trackingRect,
+                                  options: [.activeInActiveApp, .mouseMoved],
+                                  owner: self,
+                                  userInfo: nil)
+        self.addTrackingArea(area)
+    }
+
+    //Cursor rects and NSTextView don't play nice, so we'll just go for the nuclear option
+    override func mouseMoved(with event: NSEvent) {
+        guard let canvasView = self.canvasView else {
+            super.mouseMoved(with: event)
+            return
+        }
+
+        //Ensure we're the top most view at this point
+        let hitView = canvasView.hitTest(canvasView.convert(event.locationInWindow, from: nil))
+        guard (hitView == self) && (canvasView.draggingCursor == nil) else {
+            return
+        }
+
+        let location = self.convert(event.locationInWindow, from: nil)
+
+        let cursorRects = self.resizeRects + [(.titleBar, self.titleBar.frame)]
+        for (type, rect) in cursorRects {
+            if (rect.contains(location)) {
+                type.cursor().set()
+                return
+            }
+        }
     }
 }
