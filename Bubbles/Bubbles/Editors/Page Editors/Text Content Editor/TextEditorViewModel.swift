@@ -38,7 +38,7 @@ class TextEditorViewModel: NSObject {
 
     func createNewLinkedPage(for range: NSRange) {
         let selectedText = self.attributedText.attributedSubstring(from: range)
-        let page = self.modelController.collection(for: Page.self).newPage(title: selectedText.string)
+        let page = self.modelController.collection(for: Page.self).newObject() { $0.title = selectedText.string }
         self.link(to: page, for: range)
     }
 

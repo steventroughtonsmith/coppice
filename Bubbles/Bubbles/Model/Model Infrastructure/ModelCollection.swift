@@ -42,13 +42,6 @@ class ModelCollection<ModelType: CollectableModelObject> {
         }
     }
 
-    typealias CustomInitialiser = ([String: Any]) -> ModelType
-    let objectInitialiser: CustomInitialiser
-    init(objectInitialiser: @escaping CustomInitialiser) {
-        self.objectInitialiser = objectInitialiser
-    }
-
-
     weak var modelController: ModelController?
 
     private(set) var all = Set<ModelType>()
@@ -58,9 +51,9 @@ class ModelCollection<ModelType: CollectableModelObject> {
     }
 
     typealias ModelSetupBlock = (ModelType) -> Void
-    @discardableResult func newObject(context: [String: Any] = [:], setupBlock: ModelSetupBlock? = nil) -> ModelType {
+    @discardableResult func newObject(setupBlock: ModelSetupBlock? = nil) -> ModelType {
         self.modelController?.pushChangeGroup()
-        let newObject = self.objectInitialiser(context)
+        let newObject = ModelType()
         newObject.collection = self
         self.all.insert(newObject)
         self.disableUndo {

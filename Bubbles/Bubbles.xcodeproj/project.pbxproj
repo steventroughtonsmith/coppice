@@ -72,6 +72,7 @@
 		99C8652A2306D141004C7B89 /* PageSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99C865282306D141004C7B89 /* PageSelectorViewController.xib */; };
 		99C9AF1423631348009F909A /* CanvasTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9AF1323631348009F909A /* CanvasTextView.swift */; };
 		99C9AF1623632349009F909A /* NSView+CanvasLookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9AF1523632349009F909A /* NSView+CanvasLookup.swift */; };
+		99C9AF1923671DB0009F909A /* PageLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9AF1823671DB0009F909A /* PageLink.swift */; };
 		99D170E6233D0542004EBD70 /* CanvasEditorViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D170E5233D0542004EBD70 /* CanvasEditorViewModelTests.swift */; };
 		99D4D59822F8650300F69C1F /* SidebarViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D4D59722F8650300F69C1F /* SidebarViewModelTests.swift */; };
 		99DEF28822F1D72D0020A7CE /* SidebarViewModelTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DEF28722F1D72D0020A7CE /* SidebarViewModelTypes.swift */; };
@@ -177,6 +178,7 @@
 		99C865282306D141004C7B89 /* PageSelectorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PageSelectorViewController.xib; sourceTree = "<group>"; };
 		99C9AF1323631348009F909A /* CanvasTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasTextView.swift; sourceTree = "<group>"; };
 		99C9AF1523632349009F909A /* NSView+CanvasLookup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+CanvasLookup.swift"; sourceTree = "<group>"; };
+		99C9AF1823671DB0009F909A /* PageLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageLink.swift; sourceTree = "<group>"; };
 		99D170E5233D0542004EBD70 /* CanvasEditorViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasEditorViewModelTests.swift; sourceTree = "<group>"; };
 		99D4D59722F8650300F69C1F /* SidebarViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewModelTests.swift; sourceTree = "<group>"; };
 		99DEF28722F1D72D0020A7CE /* SidebarViewModelTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewModelTypes.swift; sourceTree = "<group>"; };
@@ -404,10 +406,7 @@
 			children = (
 				99C41B7022DCA96700C82DDE /* BubblesModelController.swift */,
 				9923B07222F47F2E0035D8C6 /* Model Infrastructure */,
-				99C41B7222DCA98600C82DDE /* Page.swift */,
-				99C86510230174B9004C7B89 /* PageContent.swift */,
-				99C41B7422DCA9A100C82DDE /* Canvas.swift */,
-				990B6A3622E5F84400523C06 /* CanvasPage.swift */,
+				99C9AF1723671D98009F909A /* Model Objects */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -453,6 +452,18 @@
 				9951C26D230AF011006CAD4D /* PageSelectorWindow.swift */,
 			);
 			path = "Page Selector";
+			sourceTree = "<group>";
+		};
+		99C9AF1723671D98009F909A /* Model Objects */ = {
+			isa = PBXGroup;
+			children = (
+				99C41B7222DCA98600C82DDE /* Page.swift */,
+				99C9AF1823671DB0009F909A /* PageLink.swift */,
+				99C86510230174B9004C7B89 /* PageContent.swift */,
+				99C41B7422DCA9A100C82DDE /* Canvas.swift */,
+				990B6A3622E5F84400523C06 /* CanvasPage.swift */,
+			);
+			path = "Model Objects";
 			sourceTree = "<group>";
 		};
 		99D4D59622F864E200F69C1F /* Sidebar */ = {
@@ -744,6 +755,7 @@
 				99C865262306D12B004C7B89 /* PageSelectorViewModel.swift in Sources */,
 				992A5C9F22DCCDB30012CCB6 /* NSView+M3Extensions.swift in Sources */,
 				9951C26E230AF011006CAD4D /* PageSelectorWindow.swift in Sources */,
+				99C9AF1923671DB0009F909A /* PageLink.swift in Sources */,
 				99C03EF023293D6C00EB7516 /* CoreGraphics+M3Extensions.swift in Sources */,
 				992A5CA222DDF4B60012CCB6 /* EditorContainerViewModel.swift in Sources */,
 				992A5C9222DCB7530012CCB6 /* SidebarViewController.swift in Sources */,

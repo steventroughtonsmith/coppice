@@ -15,6 +15,10 @@ class TestModelObject: ModelObject {
     var id = ModelID(modelType: TestModelObject.modelType)
 
     var modelController: ModelController?
+
+    required init() {
+        
+    }
 }
 
 final class TestCollectableModelObject: NSObject, CollectableModelObject {

@@ -22,8 +22,8 @@ class SidebarViewModelTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        self.canvasCollection = ModelCollection<Canvas>() { _ in Canvas() }
-        self.pageCollection = ModelCollection<Page>() { _ in Page() }
+        self.canvasCollection = ModelCollection<Canvas>()
+        self.pageCollection = ModelCollection<Page>()
         self.undoManager = UndoManager()
         self.notificationCenter = NotificationCenter()
 

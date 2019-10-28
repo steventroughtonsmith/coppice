@@ -15,6 +15,8 @@ protocol ModelObject: class {
     static var modelType: ModelType { get }
     var modelController: ModelController? { get }
 
+    init()
+
     static func modelID(with: UUID) -> ModelID
     static func modelID(withUUIDString: String) -> ModelID?
 }

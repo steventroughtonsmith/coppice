@@ -16,12 +16,9 @@ class BubblesModelController: NSObject, ModelController {
         self.undoManager = undoManager
         super.init()
 
-        self.addModelCollection(for: Canvas.self) { _ in Canvas() }
-        self.addModelCollection(for: CanvasPage.self) { _ in CanvasPage() }
-        self.addModelCollection(for: Page.self) { context in
-            let title = (context["title"] as? String)
-            return Page(title: title)
-        }
+        self.addModelCollection(for: Canvas.self)
+        self.addModelCollection(for: CanvasPage.self)
+        self.addModelCollection(for: Page.self) 
     }
 
     func object(with id: ModelID) -> ModelObject? {

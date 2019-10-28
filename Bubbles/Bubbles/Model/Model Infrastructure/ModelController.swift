@@ -11,7 +11,7 @@ import Foundation
 protocol ModelController: class, ModelChangeGroupHandler {
     var undoManager: UndoManager { get }
     var collections: [ModelType: Any] {get set}
-    @discardableResult func addModelCollection<T: CollectableModelObject>(for type: T.Type, objectInitialiser: @escaping ([String: Any]) -> T) -> ModelCollection<T>
+    @discardableResult func addModelCollection<T: CollectableModelObject>(for type: T.Type) -> ModelCollection<T>
     func removeModelCollection<T: CollectableModelObject>(for type: T.Type)
 
     func collection<T: CollectableModelObject>(for type: T.Type) -> ModelCollection<T>
@@ -19,8 +19,8 @@ protocol ModelController: class, ModelChangeGroupHandler {
 }
 
 extension ModelController {
-    @discardableResult func addModelCollection<T: CollectableModelObject>(for type: T.Type, objectInitialiser: @escaping ([String: Any]) -> T) -> ModelCollection<T> {
-        let modelCollection = ModelCollection<T>(objectInitialiser: objectInitialiser)
+    @discardableResult func addModelCollection<T: CollectableModelObject>(for type: T.Type) -> ModelCollection<T> {
+        let modelCollection = ModelCollection<T>()
         modelCollection.modelController = self
         self.collections[type.modelType] = modelCollection
         return modelCollection

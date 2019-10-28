@@ -83,7 +83,7 @@ class TextEditorViewModelTests: XCTestCase {
     func test_linkToPage_addsLinkForSuppliedPageToContentText() {
         self.textContent.text = NSAttributedString(string: "Hello World!")
 
-        let page = self.modelController.collection(for: Page.self).newPage()
+        let page = self.modelController.collection(for: Page.self).newObject()
         let expectedTitle = page.title
 
         self.viewModel.link(to: page, for: NSMakeRange(2, 3))
