@@ -22,7 +22,7 @@ struct ModelType: RawRepresentable, Equatable, Hashable {
 }
 
 
-struct ModelID: Equatable {
+struct ModelID: Equatable, Hashable {
     let modelType: ModelType
     let uuid: UUID
 
@@ -40,6 +40,7 @@ struct ModelID: Equatable {
 }
 
 
+//MARK: - Pasteboard Conversion
 extension ModelID {
     private static let UUIDKey = "uuid"
     private static let modelTypeKey = "modelType"
@@ -61,5 +62,22 @@ extension ModelID {
                 return nil
         }
         self.init(modelType: modelType, uuidString: uuidString)
+    }
+}
+
+
+//MARK: - PlistConversion
+extension ModelID {
+    var stringRepresentation: String {
+        return "\(self.modelType.rawValue)_\(self.uuid.uuidString)"
+    }
+
+    init?(string: String) {
+        let components = string.split(separator: "_")
+        guard components.count == 2,
+            let modelType = ModelType(rawValue: String(components[0])) else {
+            return nil
+        }
+        self.init(modelType: modelType, uuidString: String(components[1]))
     }
 }

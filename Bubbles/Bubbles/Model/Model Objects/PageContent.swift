@@ -8,19 +8,19 @@
 
 import AppKit
 
-enum PageContentType {
+enum PageContentType: String {
     case empty
     case text
     case image
 
-    func createContent() -> PageContent {
+    func createContent(data: Data? = nil) -> PageContent {
         switch self {
         case .empty:
             return EmptyPageContent()
         case .text:
-            return TextPageContent()
+            return TextPageContent(data: data)
         case .image:
-            return ImagePageContent()
+            return ImagePageContent(data: data)
         }
     }
 }
@@ -29,6 +29,7 @@ protocol PageContent: class {
     var contentType: PageContentType { get }
     var contentSize: CGSize? { get }
     var page: Page? { get set }
+    var modelFile: ModelFile { get }
 }
 
 class EmptyPageContent: NSObject, PageContent {
@@ -37,6 +38,10 @@ class EmptyPageContent: NSObject, PageContent {
         return nil
     }
     weak var page: Page?
+
+    var modelFile: ModelFile {
+        return ModelFile(type: self.contentType.rawValue, filename: nil, data: nil)
+    }
 }
 
 class TextPageContent: NSObject, PageContent {
@@ -46,6 +51,20 @@ class TextPageContent: NSObject, PageContent {
         return nil
     }
     weak var page: Page?
+
+    init(data: Data? = nil) {
+        if let textData = data,
+            let text = try? NSAttributedString(data: textData, options: [:], documentAttributes: nil) {
+            self.text = text
+        }
+    }
+
+    var modelFile: ModelFile {
+        let textData = try? self.text.data(from: NSMakeRange(0, self.text.length),
+                                           documentAttributes: [.documentType: NSAttributedString.DocumentType.rtf])
+        let filename = (self.page != nil) ? "\(self.page!.id.uuid.uuidString).rtf" : nil
+        return ModelFile(type: self.contentType.rawValue, filename: filename, data: textData)
+    }
 }
 
 class ImagePageContent: NSObject, PageContent {
@@ -61,4 +80,16 @@ class ImagePageContent: NSObject, PageContent {
         return self.image?.size
     }
     weak var page: Page?
+
+    init(data: Data? = nil) {
+        if let imageData = data, let image = NSImage(data: imageData) {
+            self.image = image
+        }
+    }
+
+    var modelFile: ModelFile {
+        let imageData = self.image?.pngData()
+        let filename = (self.page != nil) ? "\(self.page!.id.uuid.uuidString).png" : nil
+        return ModelFile(type: self.contentType.rawValue, filename: filename, data: imageData)
+    }
 }

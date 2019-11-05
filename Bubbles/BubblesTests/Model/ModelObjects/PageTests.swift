@@ -1,0 +1,295 @@
+//
+//  PageTests.swift
+//  BubblesTests
+//
+//  Created by Martin Pilkington on 28/10/2019.
+//  Copyright © 2019 M Cubed Software. All rights reserved.
+//
+
+import XCTest
+@testable import Bubbles
+
+class PageTests: XCTestCase {
+    func test_plistRepresentation_containsID() throws {
+        let page = Page()
+        let id = try XCTUnwrap(page.plistRepresentation["id"] as? String)
+        XCTAssertEqual(id, page.id.stringRepresentation)
+    }
+
+    func test_plistRepresentation_containsTitle() throws {
+        let page = Page()
+        page.title = "Foobar"
+        let title = try XCTUnwrap(page.plistRepresentation["title"] as? String)
+        XCTAssertEqual(title, "Foobar")
+    }
+
+    func test_plistRepresentation_containsDateCreated() throws {
+        let page = Page()
+        page.dateCreated = Date(timeIntervalSinceReferenceDate: 31)
+        let date = try XCTUnwrap(page.plistRepresentation["dateCreated"] as? Date)
+        XCTAssertEqual(date, Date(timeIntervalSinceReferenceDate: 31))
+    }
+
+    func test_plistRepresentation_containsDateModified() throws {
+        let page = Page()
+        page.dateModified = Date(timeIntervalSinceReferenceDate: 12345)
+        let date = try XCTUnwrap(page.plistRepresentation["dateModified"] as? Date)
+        XCTAssertEqual(date, Date(timeIntervalSinceReferenceDate: 12345))
+    }
+
+    func test_plistRepresentation_containsUserPreferredSizeIfSet() throws {
+        let page = Page()
+        page.contentSize = CGSize(width: 200, height: 300)
+        let size = try XCTUnwrap(page.plistRepresentation["userPreferredSize"] as? String)
+        XCTAssertEqual(size, NSStringFromSize(CGSize(width: 200, height: 300)))
+    }
+
+    func test_plistRepresentation_doesntContainUserPreferredSizeIfSet() {
+        let page = Page()
+        XCTAssertNil(page.plistRepresentation["userPreferredSize"])
+    }
+
+    func test_plistRepresentation_containsContentForEmptyContent() throws {
+        let page = Page()
+        page.content = EmptyPageContent()
+
+        let expectedContent = ModelFile(type: PageContentType.empty.rawValue, filename: nil, data: nil)
+
+        let content = try XCTUnwrap(page.plistRepresentation["content"] as? ModelFile)
+        XCTAssertEqual(content, expectedContent)
+    }
+
+    func test_plistRepresentation_containsContentForTextContent() throws {
+        let textContent = TextPageContent()
+        textContent.text = NSAttributedString(string: "foobar")
+        let page = Page()
+        page.content = textContent
+
+        let expectedContent = ModelFile(type: PageContentType.text.rawValue,
+                                        filename: "\(page.id.uuid.uuidString).rtf",
+                                        data: try textContent.text.data(from: NSRange(location: 0, length: 6), documentAttributes: [.documentType: NSAttributedString.DocumentType.rtf]))
+
+        let content = try XCTUnwrap(page.plistRepresentation["content"] as? ModelFile)
+        XCTAssertEqual(content, expectedContent)
+    }
+
+    func test_plistRepresentation_containsContentForImageContent() throws {
+        let imageContent = ImagePageContent()
+        imageContent.image = NSImage(named: "NSAddTemplate")
+        let page = Page()
+        page.content = imageContent
+
+        let expectedContent = ModelFile(type: PageContentType.image.rawValue,
+                                        filename: "\(page.id.uuid.uuidString).png",
+                                        data: imageContent.image?.pngData())
+
+        let content = try XCTUnwrap(page.plistRepresentation["content"] as? ModelFile)
+        XCTAssertEqual(content, expectedContent)
+    }
+
+
+    //MARK: - update(fromPlistRepresentation:)
+    func test_updateFromPlistRepresentation_doesntUpdateIfIDsDontMatch() {
+        let page = Page()
+        let plist: [String: Any] = [
+            "id": "foobar",
+            "title": "Lorem Ipsum",
+            "dateCreated": Date(timeIntervalSinceReferenceDate: 1234),
+            "dateModified": Date(timeIntervalSinceReferenceDate: 9876),
+            "content": ModelFile(type: "empty", filename: nil, data: nil)
+        ]
+
+        XCTAssertThrowsError(try page.update(fromPlistRepresentation: plist), "") {
+            XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .idsDontMatch)
+        }
+    }
+
+    func test_updateFromPlistRepresentation_updatesTitle() {
+        let page = Page()
+        let plist: [String: Any] = [
+            "id": page.id.stringRepresentation,
+            "title": "Lorem Ipsum",
+            "dateCreated": Date(timeIntervalSinceReferenceDate: 1235),
+            "dateModified": Date(timeIntervalSinceReferenceDate: 9875),
+            "content": ModelFile(type: "empty", filename: nil, data: nil)
+        ]
+
+        XCTAssertNoThrow(try page.update(fromPlistRepresentation: plist))
+
+        XCTAssertEqual(page.title, "Lorem Ipsum")
+    }
+
+    func test_updateFromPlistRepresentation_throwsIfTitleMissing() {
+        let page = Page()
+        let plist: [String: Any] = [
+            "id": page.id.stringRepresentation,
+            "dateCreated": Date(timeIntervalSinceReferenceDate: 1235),
+            "dateModified": Date(timeIntervalSinceReferenceDate: 9875),
+            "content": ModelFile(type: "empty", filename: nil, data: nil)
+        ]
+
+        XCTAssertThrowsError(try page.update(fromPlistRepresentation: plist), "") {
+            XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .attributeNotFound("title"))
+        }
+    }
+
+    func test_updateFromPlistRepresentation_updatesDateCreated() {
+        let page = Page()
+        let plist: [String: Any] = [
+            "id": page.id.stringRepresentation,
+            "title": "Lorem Ipsum",
+            "dateCreated": Date(timeIntervalSinceReferenceDate: 1236),
+            "dateModified": Date(timeIntervalSinceReferenceDate: 9874),
+            "content": ModelFile(type: "empty", filename: nil, data: nil)
+        ]
+
+        XCTAssertNoThrow(try page.update(fromPlistRepresentation: plist))
+
+        XCTAssertEqual(page.dateCreated, Date(timeIntervalSinceReferenceDate: 1236))
+    }
+
+    func test_updateFromPlistRepresentation_throwsIfDateCreatedMissing() {
+        let page = Page()
+        let plist: [String: Any] = [
+            "id": page.id.stringRepresentation,
+            "title": "Lorem Ipsum",
+            "dateModified": Date(timeIntervalSinceReferenceDate: 9874),
+            "content": ModelFile(type: "empty", filename: nil, data: nil)
+        ]
+
+        XCTAssertThrowsError(try page.update(fromPlistRepresentation: plist), "") {
+            XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .attributeNotFound("dateCreated"))
+        }
+    }
+
+    func test_updateFromPlistRepresentation_updatesDateModified() {
+        let page = Page()
+        let plist: [String: Any] = [
+            "id": page.id.stringRepresentation,
+            "title": "Lorem Ipsum",
+            "dateCreated": Date(timeIntervalSinceReferenceDate: 1237),
+            "dateModified": Date(timeIntervalSinceReferenceDate: 9873),
+            "content": ModelFile(type: "empty", filename: nil, data: nil)
+        ]
+
+        XCTAssertNoThrow(try page.update(fromPlistRepresentation: plist))
+
+        XCTAssertEqual(page.dateModified, Date(timeIntervalSinceReferenceDate: 9873))
+    }
+
+    func test_updateFromPlistRepresentation_throwsIfDateModifiedMissing() {
+        let page = Page()
+        let plist: [String: Any] = [
+            "id": page.id.stringRepresentation,
+            "title": "Lorem Ipsum",
+            "dateCreated": Date(timeIntervalSinceReferenceDate: 1237),
+            "content": ModelFile(type: "empty", filename: nil, data: nil)
+        ]
+
+        XCTAssertThrowsError(try page.update(fromPlistRepresentation: plist), "") {
+            XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .attributeNotFound("dateModified"))
+        }
+    }
+
+    func test_updateFromPlistRepresentation_updatesUserPreferredSizeIfInPlist() {
+        let page = Page()
+        let plist: [String: Any] = [
+            "id": page.id.stringRepresentation,
+            "title": "Lorem Ipsum",
+            "dateCreated": Date(timeIntervalSinceReferenceDate: 1238),
+            "dateModified": Date(timeIntervalSinceReferenceDate: 9872),
+            "userPreferredSize": NSStringFromSize(CGSize(width: 320, height: 480)),
+            "content": ModelFile(type: "empty", filename: nil, data: nil)
+        ]
+
+        XCTAssertNoThrow(try page.update(fromPlistRepresentation: plist))
+
+        XCTAssertEqual(page.contentSize, CGSize(width: 320, height: 480))
+    }
+
+    func test_updateFromPlistRepresentation_setsUserPreferredSizeToNilIfNotInPlist() {
+        let page = Page()
+        page.contentSize = CGSize(width: 3, height: 4)
+        let plist: [String: Any] = [
+            "id": page.id.stringRepresentation,
+            "title": "Lorem Ipsum",
+            "dateCreated": Date(timeIntervalSinceReferenceDate: 1238),
+            "dateModified": Date(timeIntervalSinceReferenceDate: 9872),
+            "content": ModelFile(type: "empty", filename: nil, data: nil)
+        ]
+
+        XCTAssertNoThrow(try page.update(fromPlistRepresentation: plist))
+
+        XCTAssertEqual(page.contentSize, Page.standardSize)
+    }
+
+    func test_updateFromPlistRepresentation_updatesContentToEmptyContentIfEmptyContentInPlist() {
+        let page = Page()
+        page.content = TextPageContent()
+        let plist: [String: Any] = [
+            "id": page.id.stringRepresentation,
+            "title": "Lorem Ipsum",
+            "dateCreated": Date(timeIntervalSinceReferenceDate: 1238),
+            "dateModified": Date(timeIntervalSinceReferenceDate: 9872),
+            "content": ModelFile(type: "empty", filename: nil, data: nil)
+        ]
+
+        XCTAssertNoThrow(try page.update(fromPlistRepresentation: plist))
+
+        XCTAssertEqual(page.content.contentType, .empty)
+    }
+
+    func test_updateFromPlistRepresentation_updatesContentToTextContentIfTextContentInPlist() throws {
+        let page = Page()
+        let data = try NSAttributedString(string: "Foobar Baz", attributes: [.font: NSFont.systemFont(ofSize: 5)]).data(from: NSRange(location: 0, length: 10),
+                                                                     documentAttributes: [.documentType: NSAttributedString.DocumentType.rtf])
+        let plist: [String: Any] = [
+            "id": page.id.stringRepresentation,
+            "title": "Lorem Ipsum",
+            "dateCreated": Date(timeIntervalSinceReferenceDate: 1238),
+            "dateModified": Date(timeIntervalSinceReferenceDate: 9872),
+            "content": ModelFile(type: "text", filename: "\(page.id.uuid.uuidString).rtf", data: data)
+        ]
+
+        XCTAssertNoThrow(try page.update(fromPlistRepresentation: plist))
+
+        XCTAssertEqual(page.content.contentType, .text)
+        let expectedString = try NSAttributedString(data: data, options: [:], documentAttributes: nil)
+        XCTAssertEqual((page.content as? TextPageContent)?.text, expectedString)
+    }
+
+    func test_updateFromPlistRepresentation_updatesContentToImageContentIfImageContentInPlist() {
+        let page = Page()
+        guard let data = NSImage(named: "NSAddTemplate")?.pngData() else {
+            XCTFail("Couldn't generate PDF data")
+            return
+        }
+        let image = NSImage(data: data)
+        let plist: [String: Any] = [
+            "id": page.id.stringRepresentation,
+            "title": "Lorem Ipsum",
+            "dateCreated": Date(timeIntervalSinceReferenceDate: 1238),
+            "dateModified": Date(timeIntervalSinceReferenceDate: 9872),
+            "content": ModelFile(type: "image", filename: "\(page.id.uuid.uuidString).png", data: data)
+        ]
+
+        XCTAssertNoThrow(try page.update(fromPlistRepresentation: plist))
+
+        XCTAssertEqual(page.content.contentType, .image)
+        XCTAssertEqual((page.content as? ImagePageContent)?.image?.tiffRepresentation, image?.tiffRepresentation)
+    }
+
+    func test_updateFromPlistRepresentation_throwsIfContentMissing() {
+        let page = Page()
+        let plist: [String: Any] = [
+            "id": page.id.stringRepresentation,
+            "title": "Lorem Ipsum",
+            "dateCreated": Date(timeIntervalSinceReferenceDate: 1239),
+            "dateModified": Date(timeIntervalSinceReferenceDate: 9871),
+        ]
+
+        XCTAssertThrowsError(try page.update(fromPlistRepresentation: plist), "") {
+            XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .attributeNotFound("content"))
+        }
+    }
+}

@@ -8,6 +8,12 @@
 
 import Foundation
 
+enum ModelObjectUpdateErrors: Error, Equatable {
+    case idsDontMatch
+    case attributeNotFound(String)
+    case modelControllerNotSet
+}
+
 //MARK: -
 /// The protocol root for model objects, used where generics can't be
 protocol ModelObject: class {
@@ -19,6 +25,17 @@ protocol ModelObject: class {
 
     static func modelID(with: UUID) -> ModelID
     static func modelID(withUUIDString: String) -> ModelID?
+
+    //MARK: - Plist
+    var plistRepresentation: [String: Any] { get }
+
+    /// Update the model using the supplied Plist values.
+    ///
+    /// Implementations should check the plist to see if IDs match before updating
+    /// - Parameter plist: The plist to update
+    func update(fromPlistRepresentation plist: [String: Any]) throws
+
+    static var modelFileProperties: [String] { get }
 }
 
 
@@ -29,6 +46,10 @@ extension ModelObject {
 
     static func modelID(withUUIDString uuidString: String) -> ModelID? {
         return ModelID(modelType: self.modelType, uuidString: uuidString)
+    }
+
+    static var modelFileProperties: [String] {
+        return []
     }
 }
 
@@ -100,5 +121,20 @@ extension CollectableModelObject {
         self.modelController?.pushChangeGroup()
         updateBlock(self)
         self.modelController?.popChangeGroup()
+    }
+}
+
+
+struct ModelFile: Equatable {
+    let type: String
+    let filename: String?
+    let data: Data?
+
+    var plistRepresentation: [String: String] {
+        var plist = ["type": self.type]
+        if let filename = self.filename {
+            plist["filename"] = filename
+        }
+        return plist
     }
 }

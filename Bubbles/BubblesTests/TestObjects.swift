@@ -10,6 +10,11 @@ import Foundation
 @testable import Bubbles
 
 class TestModelObject: ModelObject {
+    var plistRepresentation = [String : Any]()
+
+    func update(fromPlistRepresentation plist: [String : Any]) {
+    }
+
     static var modelType: ModelType = ModelType("Test")!
 
     var id = ModelID(modelType: TestModelObject.modelType)
@@ -22,6 +27,11 @@ class TestModelObject: ModelObject {
 }
 
 final class TestCollectableModelObject: NSObject, CollectableModelObject {
+    var plistRepresentation = [String : Any]()
+
+    func update(fromPlistRepresentation plist: [String : Any]) {
+    }
+
     var collection: ModelCollection<TestCollectableModelObject>?
 
     var id = ModelID(modelType: TestCollectableModelObject.modelType)
@@ -49,6 +59,11 @@ final class TestCollectableModelObject: NSObject, CollectableModelObject {
 }
 
 final class RelationshipModelObject: NSObject, CollectableModelObject {
+    var plistRepresentation = [String : Any]()
+
+    func update(fromPlistRepresentation plist: [String : Any]) {
+    }
+
     var collection: ModelCollection<RelationshipModelObject>?
 
     var id = ModelID(modelType: RelationshipModelObject.modelType)

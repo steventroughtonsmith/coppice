@@ -61,4 +61,44 @@ final class Canvas: NSObject, CollectableModelObject {
             canvasPage.canvas = self
         }
     }
+
+
+    //MARK: - Plists
+    var plistRepresentation: [String : Any] {
+        var plist: [String: Any] = [
+            "id": self.id.stringRepresentation,
+            "title": self.title,
+            "dateCreated": self.dateCreated,
+            "dateModified": self.dateModified,
+            "sortIndex": self.sortIndex
+        ]
+        if let viewPort = self.viewPort  {
+            plist["viewPort"] = NSStringFromRect(viewPort)
+        }
+        return plist
+    }
+
+    func update(fromPlistRepresentation plist: [String : Any]) throws {
+        guard self.id.stringRepresentation == (plist["id"] as? String) else {
+            throw ModelObjectUpdateErrors.idsDontMatch
+        }
+
+        self.title = try self.attribute(withKey: "title", from: plist)
+        self.dateCreated = try self.attribute(withKey: "dateCreated", from: plist)
+        self.dateModified = try self.attribute(withKey: "dateModified", from: plist)
+        self.sortIndex = try self.attribute(withKey: "sortIndex", from: plist)
+
+        if let viewPortString = plist["viewPort"] as? String {
+            self.viewPort = NSRectFromString(viewPortString)
+        } else {
+            self.viewPort = nil
+        }
+    }
+
+    private func attribute<T>(withKey key: String, from plist: [String: Any]) throws -> T {
+        guard let value = plist[key] as? T else {
+            throw ModelObjectUpdateErrors.attributeNotFound(key)
+        }
+        return value
+    }
 }

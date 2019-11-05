@@ -31,13 +31,9 @@ final class Page: NSObject, CollectableModelObject {
         self.content.page = self
     }
 
-
     // MARK: - Attributes
     @objc dynamic var title: String {
         didSet { self.didChange(\.title, oldValue: oldValue) }
-    }
-    var tags: [Tag] = [] {
-        didSet { self.didChange(\.tags, oldValue: oldValue) }
     }
     var dateCreated = Date()
     var dateModified = Date()
@@ -75,5 +71,55 @@ final class Page: NSObject, CollectableModelObject {
             frame.size = self.contentSize
             canvasPage.frame = frame
         }
+    }
+
+
+    //MARK: - Plists
+    static var modelFileProperties: [String] {
+        return ["content"]
+    }
+    
+    var plistRepresentation: [String : Any] {
+        var plist: [String: Any] = [
+            "id": self.id.stringRepresentation,
+            "title": self.title,
+            "dateCreated": self.dateCreated,
+            "dateModified": self.dateModified,
+            "content": self.content.modelFile
+        ]
+        if let preferredSize = self.userPreferredSize {
+            plist["userPreferredSize"] = NSStringFromSize(preferredSize)
+        }
+
+        return plist
+    }
+
+    func update(fromPlistRepresentation plist: [String : Any]) throws {
+        guard self.id.stringRepresentation == (plist["id"] as? String) else {
+            throw ModelObjectUpdateErrors.idsDontMatch
+        }
+
+        self.title = try self.attribute(withKey: "title", from: plist)
+        self.dateCreated = try self.attribute(withKey: "dateCreated", from: plist)
+        self.dateModified = try self.attribute(withKey: "dateModified", from: plist)
+
+        if let userPreferredSizeString = plist["userPreferredSize"] as? String {
+            self.userPreferredSize = NSSizeFromString(userPreferredSizeString)
+        } else {
+            self.userPreferredSize = nil
+        }
+
+        let content: ModelFile = try self.attribute(withKey: "content", from: plist)
+        guard let contentType = PageContentType(rawValue: content.type) else {
+            throw ModelObjectUpdateErrors.attributeNotFound("content")
+        }
+        self.content = contentType.createContent(data: content.data)
+    }
+
+    private func attribute<T>(withKey key: String, from plist: [String: Any]) throws -> T {
+        guard let value = plist[key] as? T else {
+            throw ModelObjectUpdateErrors.attributeNotFound(key)
+        }
+        return value
     }
 }
