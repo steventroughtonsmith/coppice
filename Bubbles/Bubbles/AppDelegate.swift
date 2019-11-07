@@ -11,10 +11,10 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-
+    let documentController = BubblesDocumentController()
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-
+        
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -29,7 +29,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func application(_ application: NSApplication, open urls: [URL]) {
         let pageURLs = urls.filter { $0.scheme == GlobalConstants.urlScheme }
-        let documents = NSDocumentController.shared.documents.compactMap { $0 as? Document }
+        let documents = BubblesDocumentController.shared.documents.compactMap { $0 as? Document }
 
         pageURLs.forEach { (url) in
             for document in documents {

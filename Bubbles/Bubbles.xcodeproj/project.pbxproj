@@ -42,6 +42,7 @@
 		99581092230D92C600D996C4 /* CanvasPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99581090230D92C600D996C4 /* CanvasPageViewController.swift */; };
 		99581093230D92C600D996C4 /* CanvasPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99581091230D92C600D996C4 /* CanvasPageViewController.xib */; };
 		99581095230D93F700D996C4 /* CanvasPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99581094230D93F700D996C4 /* CanvasPageViewModel.swift */; };
+		9962AB8923732D9400337834 /* BubblesDocumentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9962AB8823732D9400337834 /* BubblesDocumentController.swift */; };
 		9976A49323674254004D573D /* ModelWriterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9976A49223674254004D573D /* ModelWriterTests.swift */; };
 		9976A49723674430004D573D /* PageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9976A49623674430004D573D /* PageTests.swift */; };
 		9976A49923674448004D573D /* CanvasTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9976A49823674448004D573D /* CanvasTests.swift */; };
@@ -155,6 +156,7 @@
 		99581090230D92C600D996C4 /* CanvasPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageViewController.swift; sourceTree = "<group>"; };
 		99581091230D92C600D996C4 /* CanvasPageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CanvasPageViewController.xib; sourceTree = "<group>"; };
 		99581094230D93F700D996C4 /* CanvasPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageViewModel.swift; sourceTree = "<group>"; };
+		9962AB8823732D9400337834 /* BubblesDocumentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubblesDocumentController.swift; sourceTree = "<group>"; };
 		9976A49223674254004D573D /* ModelWriterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelWriterTests.swift; sourceTree = "<group>"; };
 		9976A49623674430004D573D /* PageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageTests.swift; sourceTree = "<group>"; };
 		9976A49823674448004D573D /* CanvasTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasTests.swift; sourceTree = "<group>"; };
@@ -549,6 +551,7 @@
 			children = (
 				99FE019022CD1037004D380D /* AppDelegate.swift */,
 				99FE019222CD1037004D380D /* Document.swift */,
+				9962AB8823732D9400337834 /* BubblesDocumentController.swift */,
 				99FFF9D12354C4F600EF02A0 /* GlobalConstants.swift */,
 				992A5C9D22DCCDA20012CCB6 /* Extensions */,
 				99C41B6F22DCA94000C82DDE /* Model */,
@@ -775,6 +778,7 @@
 				99C03EFD23293D8A00EB7516 /* ResizePageEventContext.swift in Sources */,
 				99C03F0D2334D04200EB7516 /* NSScrollView+M3Extensions.swift in Sources */,
 				990B6A3922EB482D00523C06 /* ModelObject.swift in Sources */,
+				9962AB8923732D9400337834 /* BubblesDocumentController.swift in Sources */,
 				99DEF28822F1D72D0020A7CE /* SidebarViewModelTypes.swift in Sources */,
 				99FFF9C823439DB500EF02A0 /* ModelObservation.swift in Sources */,
 				99FFF9D02350BAF500EF02A0 /* PageEditorViewModel.swift in Sources */,

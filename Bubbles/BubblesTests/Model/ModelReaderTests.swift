@@ -21,6 +21,8 @@ class ModelReaderTests: XCTestCase {
     var content: [String: Data]!
 
     var testFileWrapper: FileWrapper!
+    var modelController: BubblesModelController!
+    var modelReader: ModelReader!
 
     override func setUp() {
         super.setUp()
@@ -111,14 +113,15 @@ class ModelReaderTests: XCTestCase {
             "data.plist": FileWrapper(regularFileWithContents: plistData),
             "content": FileWrapper(directoryWithFileWrappers: self.content.mapValues { FileWrapper(regularFileWithContents: $0) })
         ])
+
+        self.modelController = BubblesModelController(undoManager: UndoManager())
+        self.modelReader = ModelReader(modelController: modelController)
     }
 
     func test_read_createsAllCanvasesFromPlist() {
-        let modelController = BubblesModelController(undoManager: UndoManager())
-        let modelReader = ModelReader(modelController: modelController)
-        modelReader.read(self.testFileWrapper)
+        XCTAssertNoThrow(try self.modelReader.read(self.testFileWrapper))
 
-        let canvases = modelController.collection(for: Canvas.self).all
+        let canvases = self.modelController.collection(for: Canvas.self).all
         XCTAssertEqual(canvases.count, 2)
 
         let ids = canvases.map { $0.id }
@@ -131,11 +134,9 @@ class ModelReaderTests: XCTestCase {
     }
 
     func test_read_createsAllPagesFromPlist() {
-        let modelController = BubblesModelController(undoManager: UndoManager())
-        let modelReader = ModelReader(modelController: modelController)
-        modelReader.read(self.testFileWrapper)
+        XCTAssertNoThrow(try self.modelReader.read(self.testFileWrapper))
 
-        let pages = modelController.collection(for: Page.self).all
+        let pages = self.modelController.collection(for: Page.self).all
         XCTAssertEqual(pages.count, 3)
 
         let ids = pages.map { $0.id }
@@ -150,11 +151,9 @@ class ModelReaderTests: XCTestCase {
     }
 
     func test_read_createsAllCanvasPagesFromPlist() {
-        let modelController = BubblesModelController(undoManager: UndoManager())
-        let modelReader = ModelReader(modelController: modelController)
-        modelReader.read(self.testFileWrapper)
+        XCTAssertNoThrow(try self.modelReader.read(self.testFileWrapper))
 
-        let canvasPages = modelController.collection(for: CanvasPage.self).all
+        let canvasPages = self.modelController.collection(for: CanvasPage.self).all
         XCTAssertEqual(canvasPages.count, 3)
 
         let ids = canvasPages.map { $0.id }
@@ -164,16 +163,14 @@ class ModelReaderTests: XCTestCase {
     }
 
     func test_read_doesntCreateNewCanvasIfOneAlreadyExistsWithID() {
-        let modelController = BubblesModelController(undoManager: UndoManager())
-        modelController.collection(for: Canvas.self).newObject() {
+        self.modelController.collection(for: Canvas.self).newObject() {
             $0.id = Canvas.modelID(with: self.canvasIDs[1])
             $0.title = "Foo Bar Baz"
         }
 
-        let modelReader = ModelReader(modelController: modelController)
-        modelReader.read(self.testFileWrapper)
+        XCTAssertNoThrow(try self.modelReader.read(self.testFileWrapper))
 
-        let canvases = modelController.collection(for: Canvas.self).all
+        let canvases = self.modelController.collection(for: Canvas.self).all
         XCTAssertEqual(canvases.count, 2)
 
         let ids = canvases.map { $0.id }
@@ -186,21 +183,19 @@ class ModelReaderTests: XCTestCase {
     }
 
     func test_read_doesntCreateNewPageIfOneAlreadyExistsWithID() {
-        let modelController = BubblesModelController(undoManager: UndoManager())
-        modelController.collection(for: Page.self).newObject() {
+        self.modelController.collection(for: Page.self).newObject() {
             $0.id = Page.modelID(with: self.pageIDs[0])
             $0.title = "Hello"
         }
 
-        modelController.collection(for: Page.self).newObject() {
+        self.modelController.collection(for: Page.self).newObject() {
             $0.id = Page.modelID(with: self.pageIDs[2])
             $0.title = "World"
         }
 
-        let modelReader = ModelReader(modelController: modelController)
-        modelReader.read(self.testFileWrapper)
+        XCTAssertNoThrow(try self.modelReader.read(self.testFileWrapper))
 
-        let pages = modelController.collection(for: Page.self).all
+        let pages = self.modelController.collection(for: Page.self).all
         XCTAssertEqual(pages.count, 3)
 
         let ids = pages.map { $0.id }
@@ -215,15 +210,13 @@ class ModelReaderTests: XCTestCase {
     }
 
     func test_read_doesntCreateNewCanvasPageIfOneAlreadyExistsWithID() {
-        let modelController = BubblesModelController(undoManager: UndoManager())
-        modelController.collection(for: CanvasPage.self).newObject() {
+        self.modelController.collection(for: CanvasPage.self).newObject() {
             $0.id = CanvasPage.modelID(with: self.canvasPageIDs[1])
         }
 
-        let modelReader = ModelReader(modelController: modelController)
-        modelReader.read(self.testFileWrapper)
+        XCTAssertNoThrow(try self.modelReader.read(self.testFileWrapper))
 
-        let canvasPages = modelController.collection(for: CanvasPage.self).all
+        let canvasPages = self.modelController.collection(for: CanvasPage.self).all
         XCTAssertEqual(canvasPages.count, 3)
 
         let ids = canvasPages.map { $0.id }
@@ -233,13 +226,11 @@ class ModelReaderTests: XCTestCase {
     }
 
     func test_read_removesAllExtraCanvasesFromModelController() {
-        let modelController = BubblesModelController(undoManager: UndoManager())
-        let canvasToRemove = modelController.collection(for: Canvas.self).newObject()
+        let canvasToRemove = self.modelController.collection(for: Canvas.self).newObject()
 
-        let modelReader = ModelReader(modelController: modelController)
-        modelReader.read(self.testFileWrapper)
+        XCTAssertNoThrow(try self.modelReader.read(self.testFileWrapper))
 
-        let canvases = modelController.collection(for: Canvas.self).all
+        let canvases = self.modelController.collection(for: Canvas.self).all
         XCTAssertEqual(canvases.count, 2)
 
         let ids = canvases.map { $0.id }
@@ -249,13 +240,11 @@ class ModelReaderTests: XCTestCase {
     }
 
     func test_read_removesAllExtraPagesFromModelController() {
-        let modelController = BubblesModelController(undoManager: UndoManager())
-        let pageToRemove = modelController.collection(for: Page.self).newObject()
+        let pageToRemove = self.modelController.collection(for: Page.self).newObject()
 
-        let modelReader = ModelReader(modelController: modelController)
-        modelReader.read(self.testFileWrapper)
+        XCTAssertNoThrow(try self.modelReader.read(self.testFileWrapper))
 
-        let pages = modelController.collection(for: Page.self).all
+        let pages = self.modelController.collection(for: Page.self).all
         XCTAssertEqual(pages.count, 3)
 
         let ids = pages.map { $0.id }
@@ -266,13 +255,10 @@ class ModelReaderTests: XCTestCase {
     }
 
     func test_read_removesAllExtraCanvasPagesFromModelController() {
-        let modelController = BubblesModelController(undoManager: UndoManager())
-        let canvasPageToRemove = modelController.collection(for: CanvasPage.self).newObject()
+        let canvasPageToRemove = self.modelController.collection(for: CanvasPage.self).newObject()
+        XCTAssertNoThrow(try self.modelReader.read(self.testFileWrapper))
 
-        let modelReader = ModelReader(modelController: modelController)
-        modelReader.read(self.testFileWrapper)
-
-        let canvasPages = modelController.collection(for: CanvasPage.self).all
+        let canvasPages = self.modelController.collection(for: CanvasPage.self).all
         XCTAssertEqual(canvasPages.count, 3)
 
         let ids = canvasPages.map { $0.id }
@@ -283,19 +269,17 @@ class ModelReaderTests: XCTestCase {
     }
 
     func test_read_allRelationshipsAreCompleted() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
-        let modelReader = ModelReader(modelController: modelController)
-        modelReader.read(self.testFileWrapper)
+        XCTAssertNoThrow(try self.modelReader.read(self.testFileWrapper))
 
-        let canvasPage1 = try XCTUnwrap(modelController.collection(for: CanvasPage.self).objectWithID(CanvasPage.modelID(with: self.canvasPageIDs[0])))
-        let canvasPage2 = try XCTUnwrap(modelController.collection(for: CanvasPage.self).objectWithID(CanvasPage.modelID(with: self.canvasPageIDs[1])))
-        let canvasPage3 = try XCTUnwrap(modelController.collection(for: CanvasPage.self).objectWithID(CanvasPage.modelID(with: self.canvasPageIDs[2])))
+        let canvasPage1 = try XCTUnwrap(self.modelController.collection(for: CanvasPage.self).objectWithID(CanvasPage.modelID(with: self.canvasPageIDs[0])))
+        let canvasPage2 = try XCTUnwrap(self.modelController.collection(for: CanvasPage.self).objectWithID(CanvasPage.modelID(with: self.canvasPageIDs[1])))
+        let canvasPage3 = try XCTUnwrap(self.modelController.collection(for: CanvasPage.self).objectWithID(CanvasPage.modelID(with: self.canvasPageIDs[2])))
 
-        let page1 = try XCTUnwrap(modelController.collection(for: Page.self).objectWithID(Page.modelID(with: self.pageIDs[0])))
-        let page2 = try XCTUnwrap(modelController.collection(for: Page.self).objectWithID(Page.modelID(with: self.pageIDs[1])))
+        let page1 = try XCTUnwrap(self.modelController.collection(for: Page.self).objectWithID(Page.modelID(with: self.pageIDs[0])))
+        let page2 = try XCTUnwrap(self.modelController.collection(for: Page.self).objectWithID(Page.modelID(with: self.pageIDs[1])))
 
-        let canvas1 = try XCTUnwrap(modelController.collection(for: Canvas.self).objectWithID(Canvas.modelID(with: self.canvasIDs[0])))
-        let canvas2 = try XCTUnwrap(modelController.collection(for: Canvas.self).objectWithID(Canvas.modelID(with: self.canvasIDs[1])))
+        let canvas1 = try XCTUnwrap(self.modelController.collection(for: Canvas.self).objectWithID(Canvas.modelID(with: self.canvasIDs[0])))
+        let canvas2 = try XCTUnwrap(self.modelController.collection(for: Canvas.self).objectWithID(Canvas.modelID(with: self.canvasIDs[1])))
 
         XCTAssertEqual(canvasPage1.page, page1)
         XCTAssertEqual(canvasPage2.page, page2)
@@ -309,15 +293,13 @@ class ModelReaderTests: XCTestCase {
     }
 
     func test_read_allContentIsReadFromDisk() {
-        let modelController = BubblesModelController(undoManager: UndoManager())
-        let modelReader = ModelReader(modelController: modelController)
-        modelReader.read(self.testFileWrapper)
+        XCTAssertNoThrow(try self.modelReader.read(self.testFileWrapper))
 
-        let textPage = modelController.collection(for: Page.self).objectWithID(Page.modelID(with: self.pageIDs[0]))
+        let textPage = self.modelController.collection(for: Page.self).objectWithID(Page.modelID(with: self.pageIDs[0]))
         XCTAssertEqual(textPage?.content.contentType, .text)
         XCTAssertEqual((textPage?.content as? TextPageContent)?.text.string, "Foo Bar")
 
-        let imagePage = modelController.collection(for: Page.self).objectWithID(Page.modelID(with: self.pageIDs[2]))
+        let imagePage = self.modelController.collection(for: Page.self).objectWithID(Page.modelID(with: self.pageIDs[2]))
         XCTAssertEqual(imagePage?.content.contentType, .image)
         //We need to convert to data and back to ensure the resulting pngData is always equal
         let imageData = NSImage(named: "NSAddTemplate")!.pngData()!
@@ -326,7 +308,237 @@ class ModelReaderTests: XCTestCase {
     }
 
 
-    //MARK: - Helpers
+    //MARK: - Errors
 
+    func test_errors_doesntThrowErrorIfFileWrapperIsEmpty() {
+        XCTAssertNoThrow(try self.modelReader.read(FileWrapper(directoryWithFileWrappers: [:])))
+    }
 
+    func test_errors_throwsCorruptDataErrorIfDataPlistExistsButIsEmpty() {
+        let fileWrapper = FileWrapper(directoryWithFileWrappers: [
+            "data.plist": FileWrapper(regularFileWithContents: Data()),
+            "content": FileWrapper(directoryWithFileWrappers: [:])
+        ])
+        do {
+            try self.modelReader.read(fileWrapper)
+            XCTFail("Error not thrown")
+        } catch ModelReader.Errors.corruptData {
+            //Correct
+        } catch let e {
+            XCTFail("Threw incorrect error: \(e)")
+        }
+    }
+
+    func test_errors_throwsCorruptDataErrorIfPlistCannotBeDecoded() {
+        let fileWrapper = FileWrapper(directoryWithFileWrappers: [
+            "data.plist": FileWrapper(regularFileWithContents: "abcdefgh".data(using: .utf8)!),
+            "content": FileWrapper(directoryWithFileWrappers: [:])
+        ])
+        do {
+            try self.modelReader.read(fileWrapper)
+            XCTFail("Error not thrown")
+        } catch ModelReader.Errors.corruptData {
+            //Correct
+        } catch let e {
+            XCTFail("Threw incorrect error: \(e)")
+        }
+    }
+
+    func test_errors_throwsMissingCollectionErrorIfCanvasesMissing() {
+        let plist = ["pages": [[String: Any]](), "canvasPages": [[String: Any]]()]
+        let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
+
+        let fileWrapper = FileWrapper(directoryWithFileWrappers: [
+            "data.plist": FileWrapper(regularFileWithContents: plistData),
+            "content": FileWrapper(directoryWithFileWrappers: [:])
+        ])
+        do {
+            try self.modelReader.read(fileWrapper)
+            XCTFail("Error not thrown")
+        } catch ModelReader.Errors.missingCollection("canvases") {
+            //Correct
+        } catch let e {
+            XCTFail("Threw incorrect error: \(e)")
+        }
+    }
+
+    func test_errors_throwsMissingCollectionErrorIfPagesMissing() {
+        let plist = ["canvases": [[String: Any]](), "canvasPages": [[String: Any]]()]
+        let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
+
+        let fileWrapper = FileWrapper(directoryWithFileWrappers: [
+            "data.plist": FileWrapper(regularFileWithContents: plistData),
+            "content": FileWrapper(directoryWithFileWrappers: [:])
+        ])
+        do {
+            try self.modelReader.read(fileWrapper)
+            XCTFail("Error not thrown")
+        } catch ModelReader.Errors.missingCollection("pages") {
+            //Correct
+        } catch let e {
+            XCTFail("Threw incorrect error: \(e)")
+        }
+    }
+
+    func test_errors_throwsMissingCollectionErrorIfCanvasPagesMissing() {
+        let plist = ["pages": [[String: Any]](), "canvases": [[String: Any]]()]
+        let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
+
+        let fileWrapper = FileWrapper(directoryWithFileWrappers: [
+            "data.plist": FileWrapper(regularFileWithContents: plistData),
+            "content": FileWrapper(directoryWithFileWrappers: [:])
+        ])
+        do {
+            try self.modelReader.read(fileWrapper)
+            XCTFail("Error not thrown")
+        } catch ModelReader.Errors.missingCollection("canvasPages") {
+            //Correct
+        } catch let e {
+            XCTFail("Threw incorrect error: \(e)")
+        }
+    }
+
+    func test_errors_throwsMissingIDErrorIfACanvasIsMissingAnID() {
+        let plist: [String: [[String: Any]]] = [
+            "canvases": [["title": "Canvas Without ID"]],
+            "pages": [],
+            "canvasPages": []
+        ]
+        let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
+
+        let fileWrapper = FileWrapper(directoryWithFileWrappers: [
+            "data.plist": FileWrapper(regularFileWithContents: plistData),
+            "content": FileWrapper(directoryWithFileWrappers: [:])
+        ])
+        do {
+            try self.modelReader.read(fileWrapper)
+            XCTFail("Error not thrown")
+        } catch ModelReader.Errors.missingID(let object) {
+            XCTAssertEqual(object as? [String: String], ["title": "Canvas Without ID"])
+        } catch let e {
+            XCTFail("Threw incorrect error: \(e)")
+        }
+    }
+
+    func test_errors_throwsMissingIDErrorIfAPageIsMissingAnID() {
+        let plist: [String: [[String: Any]]] = [
+            "canvases": [],
+            "pages": [
+                ["id": Page.modelID(with: UUID()).stringRepresentation, "title": "Page With ID"],
+                ["title": "Page Without ID"]
+            ],
+            "canvasPages": []
+        ]
+        let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
+
+        let fileWrapper = FileWrapper(directoryWithFileWrappers: [
+            "data.plist": FileWrapper(regularFileWithContents: plistData),
+            "content": FileWrapper(directoryWithFileWrappers: [:])
+        ])
+        do {
+            try self.modelReader.read(fileWrapper)
+            XCTFail("Error not thrown")
+        } catch ModelReader.Errors.missingID(let object) {
+            XCTAssertEqual(object as? [String: String], ["title": "Page Without ID"])
+        } catch let e {
+            XCTFail("Threw incorrect error: \(e)")
+        }
+    }
+
+    func test_errors_throwsMissingIDErrorIfACanvasPageIsMissingAnID() {
+        let plist: [String: [[String: Any]]] = [
+            "canvases": [],
+            "pages": [],
+            "canvasPages": [
+                ["id": Page.modelID(with: UUID()).stringRepresentation, "frame": NSStringFromRect(CGRect(x: 0, y: 2, width: 8, height: 9))],
+                ["frame": NSStringFromRect(CGRect(x: 0, y: 12, width: 5, height: 4))]
+            ]
+        ]
+        let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
+
+        let fileWrapper = FileWrapper(directoryWithFileWrappers: [
+            "data.plist": FileWrapper(regularFileWithContents: plistData),
+            "content": FileWrapper(directoryWithFileWrappers: [:])
+        ])
+        do {
+            try self.modelReader.read(fileWrapper)
+            XCTFail("Error not thrown")
+        } catch ModelReader.Errors.missingID(let object) {
+            XCTAssertEqual(object as? [String: String], ["frame": NSStringFromRect(CGRect(x: 0, y: 12, width: 5, height: 4))])
+        } catch let e {
+            XCTFail("Threw incorrect error: \(e)")
+        }
+    }
+
+    func test_errors_throwsModelObjectUpdateErrorIfCanvasUpdateFailed() {
+        let plist: [String: [[String: Any]]] = [
+            "canvases": [
+                ["id": Canvas.modelID(with: UUID()).stringRepresentation]
+            ],
+            "pages": [],
+            "canvasPages": []
+        ]
+        let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
+
+        let fileWrapper = FileWrapper(directoryWithFileWrappers: [
+            "data.plist": FileWrapper(regularFileWithContents: plistData),
+            "content": FileWrapper(directoryWithFileWrappers: [:])
+        ])
+        do {
+            try self.modelReader.read(fileWrapper)
+            XCTFail("Error not thrown")
+        } catch ModelObjectUpdateErrors.attributeNotFound {
+            //Passes
+        } catch let e {
+            XCTFail("Threw incorrect error: \(e)")
+        }
+    }
+
+    func test_errors_throwsModelObjectUpdateErrorIfPageUpdateFailed() {
+        let plist: [String: [[String: Any]]] = [
+            "canvases": [],
+            "pages": [
+                ["id": Page.modelID(with: UUID()).stringRepresentation]
+            ],
+            "canvasPages": []
+        ]
+        let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
+
+        let fileWrapper = FileWrapper(directoryWithFileWrappers: [
+            "data.plist": FileWrapper(regularFileWithContents: plistData),
+            "content": FileWrapper(directoryWithFileWrappers: [:])
+        ])
+        do {
+            try self.modelReader.read(fileWrapper)
+            XCTFail("Error not thrown")
+        } catch ModelObjectUpdateErrors.attributeNotFound {
+            //Passes
+        } catch let e {
+            XCTFail("Threw incorrect error: \(e)")
+        }
+    }
+
+    func test_errors_throwsModelObjectUpdateErrorIfCanvasPageUpdateFailed() {
+        let plist: [String: [[String: Any]]] = [
+            "canvases": [],
+            "pages": [],
+            "canvasPages": [
+                ["id": CanvasPage.modelID(with: UUID()).stringRepresentation]
+            ]
+        ]
+        let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
+
+        let fileWrapper = FileWrapper(directoryWithFileWrappers: [
+            "data.plist": FileWrapper(regularFileWithContents: plistData),
+            "content": FileWrapper(directoryWithFileWrappers: [:])
+        ])
+        do {
+            try self.modelReader.read(fileWrapper)
+            XCTFail("Error not thrown")
+        } catch ModelObjectUpdateErrors.attributeNotFound {
+            //Passes
+        } catch let e {
+            XCTFail("Threw incorrect error: \(e)")
+        }
+    }
 }

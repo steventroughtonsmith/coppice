@@ -10,4 +10,10 @@ import Foundation
 
 struct GlobalConstants {
     static let urlScheme = "bubbles"
+
+    static let appErrorDomain = "com.mcubedsw.Bubbles"
+
+    enum ErrorCodes: Int {
+        case readingDocumentFailed = 1
+    }
 }
