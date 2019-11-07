@@ -48,6 +48,8 @@
 		9976A49923674448004D573D /* CanvasTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9976A49823674448004D573D /* CanvasTests.swift */; };
 		9976A49B23674454004D573D /* CanvasPageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9976A49A23674454004D573D /* CanvasPageTests.swift */; };
 		9976A49D2367524D004D573D /* ModelReaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9976A49C2367524D004D573D /* ModelReaderTests.swift */; };
+		99AD8874237464C4000453E1 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AD8873237464C4000453E1 /* Alert.swift */; };
+		99AD88762374665D000453E1 /* Alert+AppKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AD88752374665D000453E1 /* Alert+AppKit.swift */; };
 		99C03EF023293D6C00EB7516 /* CoreGraphics+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03EEE23293D6C00EB7516 /* CoreGraphics+M3Extensions.swift */; };
 		99C03EF123293D6C00EB7516 /* Array+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03EEF23293D6C00EB7516 /* Array+M3Extensions.swift */; };
 		99C03EF923293D8A00EB7516 /* LayoutEnginePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03EF323293D8A00EB7516 /* LayoutEnginePage.swift */; };
@@ -162,6 +164,8 @@
 		9976A49823674448004D573D /* CanvasTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasTests.swift; sourceTree = "<group>"; };
 		9976A49A23674454004D573D /* CanvasPageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageTests.swift; sourceTree = "<group>"; };
 		9976A49C2367524D004D573D /* ModelReaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelReaderTests.swift; sourceTree = "<group>"; };
+		99AD8873237464C4000453E1 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
+		99AD88752374665D000453E1 /* Alert+AppKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alert+AppKit.swift"; sourceTree = "<group>"; };
 		99C03EEE23293D6C00EB7516 /* CoreGraphics+M3Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CoreGraphics+M3Extensions.swift"; sourceTree = "<group>"; };
 		99C03EEF23293D6C00EB7516 /* Array+M3Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+M3Extensions.swift"; sourceTree = "<group>"; };
 		99C03EF323293D8A00EB7516 /* LayoutEnginePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutEnginePage.swift; sourceTree = "<group>"; };
@@ -285,6 +289,7 @@
 				99FFF9CB234E2F2F00EF02A0 /* FlippedView.swift */,
 				99C9AF1523632349009F909A /* NSView+CanvasLookup.swift */,
 				99E944FA2368683F00DFAB95 /* NSImage+M3Extensions.swift */,
+				99AD88752374665D000453E1 /* Alert+AppKit.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -399,6 +404,14 @@
 				99581075230C40FD00D996C4 /* PageSelectorViewModelTests.swift */,
 			);
 			path = "Page Selector";
+			sourceTree = "<group>";
+		};
+		99AD8872237464B5000453E1 /* Generic Types */ = {
+			isa = PBXGroup;
+			children = (
+				99AD8873237464C4000453E1 /* Alert.swift */,
+			);
+			path = "Generic Types";
 			sourceTree = "<group>";
 		};
 		99C03EF223293D8A00EB7516 /* Layout Engine */ = {
@@ -553,6 +566,7 @@
 				99FE019222CD1037004D380D /* Document.swift */,
 				9962AB8823732D9400337834 /* BubblesDocumentController.swift */,
 				99FFF9D12354C4F600EF02A0 /* GlobalConstants.swift */,
+				99AD8872237464B5000453E1 /* Generic Types */,
 				992A5C9D22DCCDA20012CCB6 /* Extensions */,
 				99C41B6F22DCA94000C82DDE /* Model */,
 				99FE01E122D4C22B004D380D /* DocumentWindow */,
@@ -765,9 +779,11 @@
 				99E944FB2368683F00DFAB95 /* NSImage+M3Extensions.swift in Sources */,
 				99FFF9CC234E2F2F00EF02A0 /* FlippedView.swift in Sources */,
 				99581095230D93F700D996C4 /* CanvasPageViewModel.swift in Sources */,
+				99AD88762374665D000453E1 /* Alert+AppKit.swift in Sources */,
 				99C03F03232A8E9500EB7516 /* EdgeResizable.swift in Sources */,
 				99C86511230174B9004C7B89 /* PageContent.swift in Sources */,
 				99FFF9CE2350BAE400EF02A0 /* PageEditorViewController.swift in Sources */,
+				99AD8874237464C4000453E1 /* Alert.swift in Sources */,
 				99FE019322CD1037004D380D /* Document.swift in Sources */,
 				99C41B7122DCA96700C82DDE /* BubblesModelController.swift in Sources */,
 				990B6A3722E5F84400523C06 /* CanvasPage.swift in Sources */,

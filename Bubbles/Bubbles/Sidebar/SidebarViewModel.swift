@@ -12,6 +12,8 @@ protocol SidebarView: class {
     func reloadSelection()
     func reloadCanvases()
     func reloadPages()
+
+    func showAlert(_ alert: Alert, callback: @escaping (Int) -> Void)
 }
 
 protocol SidebarViewModelDelegate: class {
@@ -68,8 +70,6 @@ class SidebarViewModel: NSObject {
             self.pageObserver = nil
         }
     }
-
-
 
 
     //MARK: - Canvases
@@ -134,6 +134,111 @@ class SidebarViewModel: NSObject {
         } else {
             canvas.add(page, centredOn: .zero)
         }
+    }
+
+
+    //MARK: - Deleting
+    func deleteSelectedObject() {
+        guard let selectedID = self.selectedObjectID else {
+            return
+        }
+
+        if selectedID.modelType == Page.modelType {
+            if let page = self.pages.objectWithID(selectedID) {
+                guard let alert = alertForDeleting(page) else {
+                    self.delete(page)
+                    return
+                }
+
+                self.view?.showAlert(alert, callback: { (index) in
+                    let (type, _) = alert.buttons[index]
+                    if (type == .confirm) {
+                        self.delete(page)
+                    }
+                })
+            }
+        } else if selectedID.modelType == Canvas.modelType {
+            if let canvas = self.canvases.objectWithID(selectedID) {
+                guard let alert = alertForDeleting(canvas) else {
+                    self.delete(canvas)
+                    return
+                }
+
+                self.view?.showAlert(alert, callback: { (index) in
+                    let (type, _) = alert.buttons[index]
+                    if (type == .confirm) {
+                        self.delete(canvas)
+                    }
+                })
+            }
+        }
+    }
+
+    private func alertForDeleting(_ page: Page) -> Alert? {
+        let canvases = Set(page.canvases.compactMap { $0.canvas })
+        guard canvases.count > 0 else {
+            return nil
+        }
+        let localizedTitle = String.localizedStringWithFormat(NSLocalizedString("Delete Page '%@'", comment: "Delete Page alert title"),
+                                                              page.title)
+
+        let localizedMessage: String
+        if canvases.count == 1 {
+            let messageFormat = NSLocalizedString("This page is on the canvas '%@'. Deleting it will also remove it and any linked pages from that canvas.",
+                                                  comment: "Delete Page single canvas alert message")
+            localizedMessage = String.localizedStringWithFormat(messageFormat, canvases.first!.title)
+        } else {
+            let messageFormat = NSLocalizedString("This page is on %d canvases. Deleting it will also remove it and any linked pages from those canvases.",
+                                                  comment: "Delete Page multiple pages alert message")
+            localizedMessage = String.localizedStringWithFormat(messageFormat, canvases.count)
+        }
+        return Alert(title: localizedTitle,
+                     message: localizedMessage,
+                     confirmButtonTitle: NSLocalizedString("Delete", comment: "Delete alert confirm button"))
+    }
+
+    private func delete(_ page: Page) {
+        guard let modelController = page.modelController else {
+            return
+        }
+
+        let canvasPageCollection = modelController.collection(for: CanvasPage.self)
+        modelController.pushChangeGroup()
+        page.canvases.forEach {
+            canvasPageCollection.delete($0)
+        }
+        self.pages.delete(page)
+        modelController.popChangeGroup()
+
+        self.selectedObjectID = nil
+    }
+
+    private func alertForDeleting(_ canvas: Canvas) -> Alert? {
+        guard canvas.pages.count > 0 else {
+            return nil
+        }
+
+        let localizedTitle = String.localizedStringWithFormat(NSLocalizedString("Delete Canvas '%@'", comment: "Delete Canvas alert title"),
+                                                              canvas.title)
+        return Alert(title: localizedTitle,
+                     message: NSLocalizedString("Are you sure you want to delete this canvas?", comment: "Delete canvas confirm message"),
+                     confirmButtonTitle: NSLocalizedString("Delete", comment: "Delete alert confirm button"))
+    }
+
+    private func delete(_ canvas: Canvas) {
+        guard let modelController = canvas.modelController else {
+            return
+        }
+
+        let canvasPageCollection = modelController.collection(for: CanvasPage.self)
+        modelController.pushChangeGroup()
+        canvas.pages.forEach {
+            canvasPageCollection.delete($0)
+        }
+        self.canvases.delete(canvas)
+        modelController.popChangeGroup()
+
+        self.selectedObjectID = nil
     }
 
 

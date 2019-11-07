@@ -42,7 +42,12 @@ class SidebarViewController: NSViewController {
         super.viewDidDisappear()
         self.viewModel.stopObserving()
     }
+
+    override func keyDown(with event: NSEvent) {
+        self.viewModel.deleteSelectedObject()
+    }
 }
+
 
 extension SidebarViewController: SidebarView {
     func reloadSelection() {
@@ -70,7 +75,18 @@ extension SidebarViewController: SidebarView {
     func reloadPages() {
         self.pagesTable.reloadData()
     }
+
+    func showAlert(_ alert: Alert, callback: @escaping (Int) -> Void) {
+        guard let window = self.view.window else {
+            return
+        }
+
+        alert.nsAlert.beginSheetModal(for: window) { (response) in
+            callback(response.rawValue)
+        }
+    }
 }
+
 
 extension SidebarViewController: NSTableViewDataSource {
     func numberOfRows(in tableView: NSTableView) -> Int {

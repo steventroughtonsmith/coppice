@@ -50,7 +50,7 @@ class SidebarViewModelTests: XCTestCase {
                                  notificationCenter: self.notificationCenter)
     }
 
-    private func createCanvasObjects() -> (Canvas, Canvas, Canvas, Canvas, Canvas) {
+    @discardableResult private func createCanvasObjects() -> (Canvas, Canvas, Canvas, Canvas, Canvas) {
         let o1 = self.canvasCollection.newObject()
         let o2 = self.canvasCollection.newObject()
         let o3 = self.canvasCollection.newObject()
@@ -59,7 +59,7 @@ class SidebarViewModelTests: XCTestCase {
         return (o1, o2, o3, o4, o5)
     }
 
-    private func createPageObjects() -> (Page, Page, Page, Page, Page) {
+    @discardableResult private func createPageObjects() -> (Page, Page, Page, Page, Page) {
         var o1, o2, o3, o4, o5: Page!
         self.pageCollection.disableUndo {
             o1 = self.pageCollection.newObject()
@@ -437,6 +437,284 @@ class SidebarViewModelTests: XCTestCase {
     }
 
 
+    //MARK: - deleteSelectedObject()
+
+    func test_deleteSelectedObject_doesntDeleteAnythingIfNoObjectSelected() {
+        self.createPageObjects()
+        self.createCanvasObjects()
+
+        let viewModel = self.createViewModel()
+        viewModel.deleteSelectedObject()
+
+        XCTAssertEqual(self.pageCollection.all.count, 5)
+        XCTAssertEqual(self.canvasCollection.all.count, 5)
+    }
+
+    func test_deleteSelectedObject_deletesPageWithNoCanvasesWithoutAlert() {
+        let (page, _, _, _, _) = self.createPageObjects()
+
+        self.modelController.addModelCollection(for: CanvasPage.self)
+
+        let viewModel = self.createViewModel()
+        viewModel.selectedObjectID = page.id
+
+        let view = MockSidebarView()
+        viewModel.view = view
+
+        viewModel.deleteSelectedObject()
+
+        XCTAssertNil(view.suppliedAlert)
+        XCTAssertNil(view.callback)
+
+        XCTAssertFalse(self.pageCollection.all.contains(page))
+    }
+
+    func test_deleteSelectedObject_ifPageOnCanvasesThenShowsAlert() {
+        let (page, _, _, _, _) = self.createPageObjects()
+        let (canvas, _, _, _, _) = self.createCanvasObjects()
+        let canvasPageCollection = self.modelController.addModelCollection(for: CanvasPage.self)
+        canvasPageCollection.modelController = self.modelController
+
+        canvasPageCollection.newObject {
+            $0.page = page
+            $0.canvas = canvas
+        }
+
+        let viewModel = self.createViewModel()
+        viewModel.selectedObjectID = page.id
+
+        let view = MockSidebarView()
+        viewModel.view = view
+
+        viewModel.deleteSelectedObject()
+
+        XCTAssertNotNil(view.suppliedAlert)
+    }
+
+    func test_deleteSelectedObject_doesntDeletePageIfAlertCallbackNotCalled() {
+        let (page, _, _, _, _) = self.createPageObjects()
+        let (canvas, _, _, _, _) = self.createCanvasObjects()
+        let canvasPageCollection = self.modelController.addModelCollection(for: CanvasPage.self)
+        canvasPageCollection.modelController = self.modelController
+
+        let canvasPage = canvasPageCollection.newObject {
+            $0.page = page
+            $0.canvas = canvas
+        }
+
+        let viewModel = self.createViewModel()
+        viewModel.selectedObjectID = page.id
+
+        let view = MockSidebarView()
+        viewModel.view = view
+
+        viewModel.deleteSelectedObject()
+
+        XCTAssertNotNil(view.callback)
+
+        XCTAssertTrue(self.pageCollection.all.contains(page))
+        XCTAssertTrue(canvasPageCollection.all.contains(canvasPage))
+    }
+
+    func test_deleteSelectedObject_doesntDeletePageIfAlertCancels() {
+        let (page, _, _, _, _) = self.createPageObjects()
+        let (canvas, _, _, _, _) = self.createCanvasObjects()
+        let canvasPageCollection = self.modelController.addModelCollection(for: CanvasPage.self)
+        canvasPageCollection.modelController = self.modelController
+
+        let canvasPage = canvasPageCollection.newObject {
+            $0.page = page
+            $0.canvas = canvas
+        }
+
+        let viewModel = self.createViewModel()
+        viewModel.selectedObjectID = page.id
+
+        let view = MockSidebarView()
+        viewModel.view = view
+
+        viewModel.deleteSelectedObject()
+
+        XCTAssertNotNil(view.callback)
+
+        view.callback?(1)
+
+        XCTAssertTrue(self.pageCollection.all.contains(page))
+        XCTAssertTrue(canvasPageCollection.all.contains(canvasPage))
+    }
+
+    func test_deleteSelectedObject_deletesPageAndAllLinkedCanvasPagesIfAlertConfirms() {
+        let (page, page2, _, _, _) = self.createPageObjects()
+        let (canvas, canvas2, _, _, _) = self.createCanvasObjects()
+        let canvasPageCollection = self.modelController.addModelCollection(for: CanvasPage.self)
+        canvasPageCollection.modelController = self.modelController
+
+        let canvasPage1 = canvasPageCollection.newObject {
+            $0.page = page
+            $0.canvas = canvas
+        }
+
+        let canvasPage2 = canvasPageCollection.newObject {
+            $0.page = page
+            $0.canvas = canvas2
+        }
+
+        let canvasPage3 = canvasPageCollection.newObject {
+            $0.page = page2
+            $0.canvas = canvas
+        }
+
+        let viewModel = self.createViewModel()
+        viewModel.selectedObjectID = page.id
+
+        let view = MockSidebarView()
+        viewModel.view = view
+
+        viewModel.deleteSelectedObject()
+
+        XCTAssertNotNil(view.callback)
+
+        view.callback?(0)
+
+        XCTAssertFalse(self.pageCollection.all.contains(page))
+        XCTAssertFalse(canvasPageCollection.all.contains(canvasPage1))
+        XCTAssertFalse(canvasPageCollection.all.contains(canvasPage2))
+        XCTAssertTrue(canvasPageCollection.all.contains(canvasPage3))
+    }
+
+    func test_deleteSelectedObject_deletesCanvasWithNoPagesWithoutAlert() {
+        let (canvas, _, _, _, _) = self.createCanvasObjects()
+
+        self.modelController.addModelCollection(for: CanvasPage.self)
+
+        let viewModel = self.createViewModel()
+        viewModel.selectedObjectID = canvas.id
+
+        let view = MockSidebarView()
+        viewModel.view = view
+
+        viewModel.deleteSelectedObject()
+
+        XCTAssertNil(view.suppliedAlert)
+        XCTAssertNil(view.callback)
+
+        XCTAssertFalse(self.canvasCollection.all.contains(canvas))
+    }
+
+    func test_deleteSelectedObject_ifCanvasHasPagesThenShowsAlert() {
+        let (page, _, _, _, _) = self.createPageObjects()
+        let (canvas, _, _, _, _) = self.createCanvasObjects()
+        let canvasPageCollection = self.modelController.addModelCollection(for: CanvasPage.self)
+        canvasPageCollection.modelController = self.modelController
+
+        canvasPageCollection.newObject {
+            $0.page = page
+            $0.canvas = canvas
+        }
+
+        let viewModel = self.createViewModel()
+        viewModel.selectedObjectID = canvas.id
+
+        let view = MockSidebarView()
+        viewModel.view = view
+
+        viewModel.deleteSelectedObject()
+
+        XCTAssertNotNil(view.suppliedAlert)
+    }
+
+    func test_deleteSelectedObject_doesntDeleteCanvasIfAlertCallbackNotCalled() {
+        let (page, _, _, _, _) = self.createPageObjects()
+        let (canvas, _, _, _, _) = self.createCanvasObjects()
+        let canvasPageCollection = self.modelController.addModelCollection(for: CanvasPage.self)
+        canvasPageCollection.modelController = self.modelController
+
+        let canvasPage = canvasPageCollection.newObject {
+            $0.page = page
+            $0.canvas = canvas
+        }
+
+        let viewModel = self.createViewModel()
+        viewModel.selectedObjectID = canvas.id
+
+        let view = MockSidebarView()
+        viewModel.view = view
+
+        viewModel.deleteSelectedObject()
+
+        XCTAssertNotNil(view.callback)
+
+        XCTAssertTrue(self.canvasCollection.all.contains(canvas))
+        XCTAssertTrue(canvasPageCollection.all.contains(canvasPage))
+    }
+
+    func test_deleteSelectedObject_doesntDeleteCanvasIfAlertCancels() {
+        let (page, _, _, _, _) = self.createPageObjects()
+        let (canvas, _, _, _, _) = self.createCanvasObjects()
+        let canvasPageCollection = self.modelController.addModelCollection(for: CanvasPage.self)
+        canvasPageCollection.modelController = self.modelController
+
+        let canvasPage = canvasPageCollection.newObject {
+            $0.page = page
+            $0.canvas = canvas
+        }
+
+        let viewModel = self.createViewModel()
+        viewModel.selectedObjectID = canvas.id
+
+        let view = MockSidebarView()
+        viewModel.view = view
+
+        viewModel.deleteSelectedObject()
+
+        XCTAssertNotNil(view.callback)
+
+        view.callback?(1)
+
+        XCTAssertTrue(self.canvasCollection.all.contains(canvas))
+        XCTAssertTrue(canvasPageCollection.all.contains(canvasPage))
+    }
+
+    func test_deleteSelectedObject_deletesCanvasAndAllLinkedCanvasPagesIfAlertConfirms() {
+        let (page, page2, _, _, _) = self.createPageObjects()
+        let (canvas, canvas2, _, _, _) = self.createCanvasObjects()
+        let canvasPageCollection = self.modelController.addModelCollection(for: CanvasPage.self)
+        canvasPageCollection.modelController = self.modelController
+
+        let canvasPage1 = canvasPageCollection.newObject {
+            $0.page = page
+            $0.canvas = canvas
+        }
+
+        let canvasPage2 = canvasPageCollection.newObject {
+            $0.page = page
+            $0.canvas = canvas2
+        }
+
+        let canvasPage3 = canvasPageCollection.newObject {
+            $0.page = page2
+            $0.canvas = canvas
+        }
+
+        let viewModel = self.createViewModel()
+        viewModel.selectedObjectID = canvas.id
+
+        let view = MockSidebarView()
+        viewModel.view = view
+
+        viewModel.deleteSelectedObject()
+
+        XCTAssertNotNil(view.callback)
+
+        view.callback?(0)
+
+        XCTAssertFalse(self.canvasCollection.all.contains(canvas))
+        XCTAssertFalse(canvasPageCollection.all.contains(canvasPage1))
+        XCTAssertTrue(canvasPageCollection.all.contains(canvasPage2))
+        XCTAssertFalse(canvasPageCollection.all.contains(canvasPage3))
+    }
+
+
     //MARK: - Selection Undo
 //    func test_selectionUndo_undoingAnEditRevertsSelectionIfDifferent() {
 //        let (o1, _, o3, o4, _) = self.createPageObjects()
@@ -510,6 +788,13 @@ private class MockSidebarView: SidebarView {
     var reloadPagesCalled = false
     func reloadPages() {
         self.reloadPagesCalled = true
+    }
+
+    var suppliedAlert: Alert?
+    var callback: ((Int) -> Void)?
+    func showAlert(_ alert: Alert, callback: @escaping (Int) -> Void) {
+        self.suppliedAlert = alert
+        self.callback = callback
     }
 }
 
