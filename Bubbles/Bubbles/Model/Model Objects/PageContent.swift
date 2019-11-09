@@ -8,7 +8,7 @@
 
 import AppKit
 
-enum PageContentType: String {
+enum PageContentType: String, Equatable {
     case empty
     case text
     case image
@@ -22,6 +22,16 @@ enum PageContentType: String {
         case .image:
             return ImagePageContent(data: data)
         }
+    }
+
+    static func contentType(forUTI uti: String) -> PageContentType? {
+        if UTTypeConformsTo(uti as CFString, kUTTypeText) {
+            return .text
+        }
+        if UTTypeConformsTo(uti as CFString, kUTTypeImage) {
+            return .image
+        }
+        return nil
     }
 }
 

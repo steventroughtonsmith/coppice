@@ -268,6 +268,22 @@ class SidebarViewModel: NSObject {
     }
 
 
+    //MARK: - Adding Files
+    func addPages(fromFilesAtURLs fileURLs: [URL], toCanvasAtIndex canvasIndex: Int?) -> [Page] {
+        self.pages.modelController?.pushChangeGroup()
+
+        let newPages = fileURLs.compactMap { self.pages.newPage(fromFileAt: $0) }
+        if let index = canvasIndex {
+            let canvas = self.canvasItems[index].canvas
+            newPages.forEach { canvas.add($0) }
+        }
+        
+        self.pages.modelController?.popChangeGroup()
+
+        return newPages
+    }
+
+
     //MARK: - Selection
     var selectedObjectID: ModelID? {
         didSet {

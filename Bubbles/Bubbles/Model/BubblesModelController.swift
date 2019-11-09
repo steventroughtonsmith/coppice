@@ -62,3 +62,28 @@ extension BubblesModelController {
     }
 
 }
+
+
+//MARK: - Collection extensions
+extension ModelCollection where ModelType == Page {
+    func newPage(fromFileAt url: URL) -> Page? {
+        guard let resourceValues = try? url.resourceValues(forKeys: Set([.typeIdentifierKey])),
+            let typeIdentifier = resourceValues.typeIdentifier else {
+            return nil
+        }
+
+        guard let contentType = PageContentType.contentType(forUTI: typeIdentifier) else {
+            return nil
+        }
+
+        guard let data = try? Data(contentsOf: url) else {
+            return nil
+        }
+
+        let page = self.newObject() {
+            $0.title = (url.lastPathComponent as NSString).deletingPathExtension
+            $0.content = contentType.createContent(data: data)
+        }
+        return page
+    }
+}

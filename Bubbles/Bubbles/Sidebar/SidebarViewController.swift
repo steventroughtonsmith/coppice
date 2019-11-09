@@ -28,8 +28,9 @@ class SidebarViewController: NSViewController {
         super.viewDidLoad()
 
         self.canvasesTable.setDraggingSourceOperationMask(.copy, forLocal: true)
-        self.canvasesTable.registerForDraggedTypes([ModelID.PasteboardType])
+        self.canvasesTable.registerForDraggedTypes([ModelID.PasteboardType, .fileURL])
         self.pagesTable.setDraggingSourceOperationMask(.copy, forLocal: false)
+        self.pagesTable.registerForDraggedTypes([.fileURL])
         // Do view setup here.
     }
 
@@ -111,7 +112,22 @@ extension SidebarViewController: NSTableViewDataSource {
         return self.viewModel.canvasItems[row].id.pasteboardItem
     }
 
+
+    //MARK: - Validate drop
     func tableView(_ tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableView.DropOperation) -> NSDragOperation {
+        guard let types = info.draggingPasteboard.types else {
+            return []
+        }
+        if types.contains(ModelID.PasteboardType) {
+            return self.validateObjectDrop(on: tableView, with: info, proposedRow: row, proposedDropOperation: dropOperation)
+        }
+        if types.contains(.fileURL) {
+            return self.validateFileDrop(on: tableView, with: info, proposedRow: row, proposedDropOperation: dropOperation)
+        }
+        return []
+    }
+
+    private func validateObjectDrop(on table: NSTableView, with info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableView.DropOperation) -> NSDragOperation {
         guard let item = info.draggingPasteboard.pasteboardItems?.first,
             let id = ModelID(pasteboardItem: item) else {
                 return []
@@ -130,7 +146,34 @@ extension SidebarViewController: NSTableViewDataSource {
         return []
     }
 
+    private func validateFileDrop(on table: NSTableView, with info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableView.DropOperation) -> NSDragOperation {
+        if table == self.pagesTable {
+            self.pagesTable.setDropRow(-1, dropOperation: .on)
+            return .copy
+        }
+        if (table == self.canvasesTable) && (row < table.numberOfRows) {
+            self.canvasesTable.setDropRow(row, dropOperation: .on)
+            return .copy
+        }
+        return []
+    }
+
+
+    //MARK: - Accept drop
     func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableView.DropOperation) -> Bool {
+        guard let types = info.draggingPasteboard.types else {
+            return false
+        }
+        if (types.contains(ModelID.PasteboardType)) {
+            return self.acceptObjectDrop(on: tableView, with: info, row: row, dropOperation: dropOperation)
+        }
+        if types.contains(.fileURL) {
+            return self.acceptFileDrop(on: tableView, with: info, row: row, dropOperation: dropOperation)
+        }
+        return false
+    }
+
+    private func acceptObjectDrop(on table: NSTableView, with info: NSDraggingInfo, row: Int, dropOperation: NSTableView.DropOperation) -> Bool {
         guard let item = info.draggingPasteboard.pasteboardItems?.first,
             let id = ModelID(pasteboardItem: item) else {
             return false
@@ -148,6 +191,16 @@ extension SidebarViewController: NSTableViewDataSource {
         }
 
         return false
+    }
+
+    private func acceptFileDrop(on table: NSTableView, with info: NSDraggingInfo, row: Int, dropOperation: NSTableView.DropOperation) -> Bool {
+        guard let items = info.draggingPasteboard.pasteboardItems else {
+            return false
+        }
+
+        let urls = items.compactMap{ $0.data(forType: .fileURL) }.compactMap { URL(dataRepresentation: $0, relativeTo: nil) }
+        let newPages = self.viewModel.addPages(fromFilesAtURLs: urls, toCanvasAtIndex: (table == self.canvasesTable) ? row : nil)
+        return (newPages.count > 0) // Accept the drop if at least one file led to a new page
     }
 }
 
