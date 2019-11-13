@@ -301,11 +301,20 @@ class CanvasEditorViewController: NSViewController {
     }
 }
 
+
+extension CanvasEditorViewController: Editor {
+    var inspector: Any? {
+        return nil
+    }
+}
+
+
 extension CanvasEditorViewController: CanvasViewDelegate {
     func didDropPage(with id: ModelID, at point: CGPoint, on canvasView: CanvasView) {
         self.viewModel.addPage(at: PageLink(destination: id), centredOn: point)
     }
 }
+
 
 extension CanvasEditorViewController: CanvasEditorView {
     func updateZoomFactor() {
@@ -313,6 +322,7 @@ extension CanvasEditorViewController: CanvasEditorView {
         self.updateZoomControl()
     }
 }
+
 
 extension CanvasEditorViewController: CanvasLayoutView {
     func layoutChanged(with context: CanvasLayoutEngine.LayoutContext) {
@@ -329,6 +339,7 @@ extension CanvasEditorViewController: CanvasLayoutView {
         return self.scrollView.contentView.bounds
     }
 }
+
 
 extension CanvasEditorViewController: CanvasPageViewControllerDelegate {
     func close(_ page: CanvasPageViewController) {

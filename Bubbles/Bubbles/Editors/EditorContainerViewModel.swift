@@ -16,51 +16,38 @@ class EditorContainerViewModel: NSObject {
     weak var view: EditorContainerView?
 
     let modelController: ModelController
-    init(modelController: ModelController) {
+    let documentWindowState: DocumentWindowState
+    init(modelController: ModelController, documentWindowState: DocumentWindowState) {
         self.modelController = modelController
+        self.documentWindowState = documentWindowState
         super.init()
+
+        self.setupObservation()
     }
 
-    var pageContentTypeObservation: NSKeyValueObservation?
 
-    var currentObjectID: ModelID? {
-        didSet {
-            self.view?.editorChanged()
+    //MARK: - Observation
+    var selectedObjectObservation: NSKeyValueObservation?
+    private func setupObservation() {
+        self.selectedObjectObservation = self.documentWindowState.observe(\.selectedSidebarObjectIDString) { [weak self] (state, change) in
+            guard let strongSelf = self else {
+                return
+            }
+
+            guard let idString = state.selectedSidebarObjectIDString,
+                let objectID = ModelID(string: idString) else
+            {
+                strongSelf.currentObject = nil
+                return
+            }
+
+            strongSelf.currentObject = strongSelf.modelController.object(with: objectID)
         }
     }
 
     var currentObject: ModelObject? {
-        guard let objectID = self.currentObjectID else {
-            return nil
+        didSet {
+            self.view?.editorChanged()
         }
-        return self.modelController.object(with: objectID)
-    }
-
-    var editor: NSViewController? {
-        if (UserDefaults.standard.bool(forKey: "M3UseDebugEditors")) {
-            return self.debugEditor
-        }
-        if let canvas = self.currentObject as? Canvas {
-            let viewModel = CanvasEditorViewModel(canvas: canvas, modelController: self.modelController)
-            return CanvasEditorViewController(viewModel: viewModel)
-        }
-        if let page = self.currentObject as? Page {
-            let viewModel = PageEditorViewModel(page: page, modelController: self.modelController)
-            return PageEditorViewController(viewModel: viewModel)
-        }
-        return nil
-    }
-
-
-    private var debugEditor: NSViewController? {
-        if let canvas = self.currentObject as? Canvas {
-            let viewModel = DebugCanvasEditorViewModel(canvas: canvas, modelController: self.modelController)
-            return DebugCanvasEditor(viewModel: viewModel)
-        }
-        if let page = self.currentObject as? Page {
-            let viewModel = DebugPageEditorViewModel(page: page)
-            return DebugPageEditor(viewModel: viewModel)
-        }
-        return nil
     }
 }

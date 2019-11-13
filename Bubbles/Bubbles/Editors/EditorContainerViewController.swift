@@ -22,20 +22,36 @@ class EditorContainerViewController: NSViewController {
 
 
 
-    private(set) var currentEditor: NSViewController? {
+    private(set) var mainEditor: NSViewController? {
         didSet {
             oldValue?.view.removeFromSuperview()
             oldValue?.removeFromParent()
-            if let newEditor = self.currentEditor {
+            if let newEditor = self.mainEditor {
                 self.addChild(newEditor)
                 self.view.addSubview(newEditor.view, withInsets: NSEdgeInsetsZero)
             }
         }
     }
+
+    var activeEditor: NSViewController? {
+        return nil
+    }
+
+
+    //MARK: - Editor Generation
+    func createEditor() -> NSViewController? {
+        if let canvas = self.viewModel.currentObject as? Canvas {
+            return canvas.createEditor()
+        }
+        if let page = self.viewModel.currentObject as? Page {
+            return page.createEditor()
+        }
+        return nil
+    }
 }
 
 extension EditorContainerViewController: EditorContainerView {
     func editorChanged() {
-        self.currentEditor = self.viewModel.editor
+        self.mainEditor = self.createEditor()
     }
 }

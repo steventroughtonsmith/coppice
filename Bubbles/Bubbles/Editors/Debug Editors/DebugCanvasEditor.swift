@@ -50,6 +50,12 @@ class DebugCanvasEditor: NSViewController {
     }
 }
 
+extension DebugCanvasEditor: Editor {
+    var inspector: Any? {
+        return nil
+    }
+}
+
 extension DebugCanvasEditor: DebugCanvasEditorView {
     func reloadPage(_ page: CanvasPage) {
         self.tableView.reloadData()

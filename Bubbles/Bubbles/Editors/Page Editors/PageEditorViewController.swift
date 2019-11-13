@@ -42,6 +42,14 @@ class PageEditorViewController: NSViewController {
     }
 }
 
+
+extension PageEditorViewController: Editor {
+    var inspector: Any? {
+        return nil
+    }
+}
+
+
 extension PageEditorViewController: PageEditorView {
     func contentChanged() {
         self.currentContentEditor = self.viewModel.contentEditor

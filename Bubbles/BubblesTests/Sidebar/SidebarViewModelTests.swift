@@ -17,18 +17,22 @@ class SidebarViewModelTests: XCTestCase {
     var undoManager: UndoManager!
     var notificationCenter: NotificationCenter!
 
+    var documentWindowState: DocumentWindowState!
+
     var modelController: TestModelController!
 
     override func setUp() {
         super.setUp()
 
-        self.canvasCollection = ModelCollection<Canvas>()
-        self.pageCollection = ModelCollection<Page>()
-        self.undoManager = UndoManager()
         self.notificationCenter = NotificationCenter()
 
         self.modelController = TestModelController()
-        self.modelController.undoManager = self.undoManager
+        self.undoManager = self.modelController.undoManager
+        self.canvasCollection = self.modelController.addModelCollection(for: Canvas.self)
+        self.pageCollection = self.modelController.addModelCollection(for: Page.self)
+        self.modelController.addModelCollection(for: CanvasPage.self)
+
+        self.documentWindowState = DocumentWindowState()
 
         self.canvasCollection.modelController = self.modelController
         self.pageCollection.modelController = self.modelController
@@ -41,13 +45,13 @@ class SidebarViewModelTests: XCTestCase {
         self.pageCollection = nil
         self.undoManager = nil
         self.notificationCenter = nil
+        self.documentWindowState = nil
     }
 
     private func createViewModel() -> SidebarViewModel {
-        return  SidebarViewModel(canvases: self.canvasCollection,
-                                 pages: self.pageCollection,
-                                 undoManager: self.undoManager,
-                                 notificationCenter: self.notificationCenter)
+        return  SidebarViewModel(modelController: self.modelController,
+                                 notificationCenter: self.notificationCenter,
+                                 documentWindowState: self.documentWindowState)
     }
 
     @discardableResult private func createCanvasObjects() -> (Canvas, Canvas, Canvas, Canvas, Canvas) {
@@ -264,15 +268,13 @@ class SidebarViewModelTests: XCTestCase {
         XCTAssertTrue(mockSidebarView.reloadSelectionCalled)
     }
 
-    func test_selectedObjectID_tellsDelegateOfChange() {
-        let mockDelegate = MockSidebarViewModelDelegate()
-
+    func test_selectedObjectID_updatesDocumentWindowState() {
         let viewModel = self.createViewModel()
-        viewModel.delegate = mockDelegate
+        let expectedID = Canvas.modelID(with: UUID())
 
-        viewModel.selectedObjectID = Canvas.modelID(with: UUID())
+        viewModel.selectedObjectID = expectedID
 
-        XCTAssertTrue(mockDelegate.selectedObjectDidChangeCalled)
+        XCTAssertEqual(self.documentWindowState.selectedSidebarObjectIDString, expectedID.stringRepresentation)
     }
 
 
@@ -795,12 +797,5 @@ private class MockSidebarView: SidebarView {
     func showAlert(_ alert: Alert, callback: @escaping (Int) -> Void) {
         self.suppliedAlert = alert
         self.callback = callback
-    }
-}
-
-private class MockSidebarViewModelDelegate: SidebarViewModelDelegate {
-    var selectedObjectDidChangeCalled = false
-    func selectedObjectDidChange(in viewModel: SidebarViewModel) {
-        self.selectedObjectDidChangeCalled = true
     }
 }

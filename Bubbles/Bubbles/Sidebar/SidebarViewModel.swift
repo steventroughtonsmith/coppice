@@ -16,48 +16,56 @@ protocol SidebarView: class {
     func showAlert(_ alert: Alert, callback: @escaping (Int) -> Void)
 }
 
-protocol SidebarViewModelDelegate: class {
-    func selectedObjectDidChange(in viewModel: SidebarViewModel)
-}
-
 class SidebarViewModel: NSObject {
     weak var view: SidebarView?
-    weak var delegate: SidebarViewModelDelegate?
 
-
-
-    convenience init(modelController: ModelController, notificationCenter: NotificationCenter = NotificationCenter.default) {
-        self.init(canvases: modelController.collection(for: Canvas.self),
-                  pages: modelController.collection(for: Page.self),
-                  undoManager: modelController.undoManager,
-                  notificationCenter: notificationCenter)
-    }
-
-    let canvases: ModelCollection<Canvas>
-    let pages: ModelCollection<Page>
-    let undoManager: UndoManager
+    let modelController: ModelController
     let notificationCenter: NotificationCenter
-    init(canvases: ModelCollection<Canvas>,
-         pages: ModelCollection<Page>,
-         undoManager: UndoManager,
-         notificationCenter: NotificationCenter) {
-        self.canvases = canvases
-        self.pages = pages
-        self.undoManager = undoManager
+    let documentWindowState: DocumentWindowState
+    init(modelController: ModelController,
+         notificationCenter: NotificationCenter = NotificationCenter.default,
+         documentWindowState: DocumentWindowState) {
+        self.modelController = modelController
         self.notificationCenter = notificationCenter
+        self.documentWindowState = documentWindowState
         super.init()
 
         self.setupSelectionUndo()
     }
 
 
+    //MARK: - Convenience Methods
+
+    var canvases: ModelCollection<Canvas> {
+        return self.modelController.collection(for: Canvas.self)
+    }
+
+    var pages: ModelCollection<Page> {
+        return self.modelController.collection(for: Page.self)
+    }
+
+    var canvasPages: ModelCollection<CanvasPage> {
+        return self.modelController.collection(for: CanvasPage.self)
+    }
+
+
     //MARK: - Observation
     private var canvasObserver: ModelCollection<Canvas>.Observation?
     private var pageObserver: ModelCollection<Page>.Observation?
+    private var windowStateSidebarObserver: NSKeyValueObservation?
 
     func startObserving() {
         self.canvasObserver = self.canvases.addObserver { canvas, change in self.handleChange(to: canvas, changeType: change) }
         self.pageObserver = self.pages.addObserver { page, change in self.handleChange(to: page, changeType: change)}
+        self.windowStateSidebarObserver = self.documentWindowState.observe(\.selectedSidebarObjectIDString) { [weak self] (state, change) in
+            guard let strongSelf = self else {
+                return
+            }
+            guard let idString = state.selectedSidebarObjectIDString else {
+                return
+            }
+            strongSelf.selectedObjectID = ModelID(string: idString)
+        }
     }
 
     func stopObserving() {
@@ -198,17 +206,12 @@ class SidebarViewModel: NSObject {
     }
 
     private func delete(_ page: Page) {
-        guard let modelController = page.modelController else {
-            return
-        }
-
-        let canvasPageCollection = modelController.collection(for: CanvasPage.self)
-        modelController.pushChangeGroup()
+        self.modelController.pushChangeGroup()
         page.canvases.forEach {
-            canvasPageCollection.delete($0)
+            self.canvasPages.delete($0)
         }
         self.pages.delete(page)
-        modelController.popChangeGroup()
+        self.modelController.popChangeGroup()
 
         self.selectedObjectID = nil
     }
@@ -226,17 +229,12 @@ class SidebarViewModel: NSObject {
     }
 
     private func delete(_ canvas: Canvas) {
-        guard let modelController = canvas.modelController else {
-            return
-        }
-
-        let canvasPageCollection = modelController.collection(for: CanvasPage.self)
-        modelController.pushChangeGroup()
+        self.modelController.pushChangeGroup()
         canvas.pages.forEach {
-            canvasPageCollection.delete($0)
+            self.canvasPages.delete($0)
         }
         self.canvases.delete(canvas)
-        modelController.popChangeGroup()
+        self.modelController.popChangeGroup()
 
         self.selectedObjectID = nil
     }
@@ -287,16 +285,19 @@ class SidebarViewModel: NSObject {
     //MARK: - Selection
     var selectedObjectID: ModelID? {
         didSet {
-            let undoManager = self.undoManager
+            guard self.selectedObjectID != oldValue else {
+                return
+            }
+            let undoManager = self.modelController.undoManager
             if (undoManager.isUndoing || undoManager.isRedoing) {
                 let selectedObjectID = self.selectedObjectID
-                self.undoManager.setActionIsDiscardable(true)
-                self.undoManager.registerUndo(withTarget: self, handler: { (target) in
+                undoManager.setActionIsDiscardable(true)
+                undoManager.registerUndo(withTarget: self, handler: { (target) in
                     target.selectedObjectID = selectedObjectID
                 })
             }
             self.view?.reloadSelection()
-            self.delegate?.selectedObjectDidChange(in: self)
+            self.documentWindowState.selectedSidebarObjectIDString = self.selectedObjectID?.stringRepresentation
         }
     }
 
@@ -328,7 +329,7 @@ class SidebarViewModel: NSObject {
     //MARK: - Undo
     private var undoObservation: NSObjectProtocol?
     private func setupSelectionUndo() {
-        let undoManager = self.undoManager
+        let undoManager = self.modelController.undoManager
         self.undoObservation = self.notificationCenter.addObserver(forName: .NSUndoManagerDidOpenUndoGroup,
                                                                    object: undoManager,
                                                                    queue: .main)

@@ -19,3 +19,9 @@ class DebugPageEditor: NSViewController {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+extension DebugPageEditor: Editor {
+    var inspector: Any? {
+        return nil
+    }
+}

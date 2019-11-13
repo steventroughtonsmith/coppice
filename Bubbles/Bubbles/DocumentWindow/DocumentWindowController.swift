@@ -35,6 +35,8 @@ class DocumentWindowController: NSWindowController {
         }
     }
 
+    let documentWindowState = DocumentWindowState()
+
     override func windowDidLoad(){
         super.windowDidLoad()
 
@@ -46,11 +48,10 @@ class DocumentWindowController: NSWindowController {
             return
         }
 
-        let sidebarVM = SidebarViewModel(modelController: document.modelController)
-        sidebarVM.delegate = self
+        let sidebarVM = SidebarViewModel(modelController: document.modelController, documentWindowState: self.documentWindowState)
         self.sidebarViewController = SidebarViewController(viewModel: sidebarVM)
 
-        self.editorContainerViewController = EditorContainerViewController(viewModel: EditorContainerViewModel(modelController: document.modelController))
+        self.editorContainerViewController = EditorContainerViewController(viewModel: EditorContainerViewModel(modelController: document.modelController, documentWindowState: self.documentWindowState))
     }
 
 
@@ -84,7 +85,7 @@ class DocumentWindowController: NSWindowController {
         let selectedObjectID = self.sidebarViewController?.viewModel.selectedObjectID
         guard (selectedObjectID?.modelType != Canvas.modelType) else {
             //In theory canvasEditor should always be set if the selected object is a Canvas but we want to exit early regardless as it's a bit more predicatable
-            guard let canvasEditor = self.editorContainerViewController?.currentEditor as? CanvasEditorViewController else {
+            guard let canvasEditor = self.editorContainerViewController?.mainEditor as? CanvasEditorViewController else {
                 return false
             }
             canvasEditor.viewModel.addPage(at: pageLink)
@@ -96,14 +97,13 @@ class DocumentWindowController: NSWindowController {
     }
 
     func selectObject(with id: ModelID) {
-        self.sidebarViewController?.viewModel.selectedObjectID = id
-        self.editorContainerViewController?.viewModel.currentObjectID = id
+        self.documentWindowState.selectedSidebarObjectIDString = id.stringRepresentation
     }
 
 
     //MARK: - Responder Chain
     override func supplementalTarget(forAction action: Selector, sender: Any?) -> Any? {
-        if let editor = self.editorContainerViewController?.currentEditor,
+        if let editor = self.editorContainerViewController?.mainEditor,
             editor.responds(to: action) {
             return editor
         }
@@ -138,11 +138,5 @@ class DocumentWindowController: NSWindowController {
             prefix = "   \(prefix)"
             responder = responder?.nextResponder
         }
-    }
-}
-
-extension DocumentWindowController: SidebarViewModelDelegate {
-    func selectedObjectDidChange(in viewModel: SidebarViewModel) {
-        self.editorContainerViewController?.viewModel.currentObjectID = viewModel.selectedObjectID
     }
 }
