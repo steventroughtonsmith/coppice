@@ -55,6 +55,13 @@ class CanvasPageTests: XCTestCase {
 
 
     //MARK: - update(fromPlistRepresentation:)
+    func test_updateFromPlistRepresentation_throwsErrorIfModelControllerNotSet() {
+        let canvasPage = CanvasPage()
+        XCTAssertThrowsError(try canvasPage.update(fromPlistRepresentation: [:]), "") {
+            XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .modelControllerNotSet)
+        }
+    }
+
     func test_updateFromPlistRepresentation_doesntUpdateIfIDsDontMatch() {
         let modelController = BubblesModelController(undoManager: UndoManager())
 

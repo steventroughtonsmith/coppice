@@ -292,4 +292,67 @@ class PageTests: XCTestCase {
             XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .attributeNotFound("content"))
         }
     }
+
+    func test_updateFromPlistRepresentation_throwsIfContentTypeIsNotValid() {
+        let page = Page()
+        page.content = TextPageContent()
+        let plist: [String: Any] = [
+           "id": page.id.stringRepresentation,
+           "title": "Lorem Ipsum",
+           "dateCreated": Date(timeIntervalSinceReferenceDate: 1238),
+           "dateModified": Date(timeIntervalSinceReferenceDate: 9872),
+           "content": ModelFile(type: "foobar", filename: nil, data: nil)
+        ]
+
+        XCTAssertThrowsError(try page.update(fromPlistRepresentation: plist), "") {
+            XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .attributeNotFound("content"))
+        }
+    }
+
+
+    //MARK: - updatePageSizes()
+    func test_updatePagesSizes_doesntUpdateAnySizesIfUserPreferredSizeIsSet() {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+        let page = modelController.collection(for: Page.self).newObject() {
+            let content = ImagePageContent()
+            content.image = NSImage(size: NSSize(width: 50, height: 30))
+            $0.content = content
+        }
+        let canvas1 = modelController.collection(for: Canvas.self).newObject()
+        let canvas2 = modelController.collection(for: Canvas.self).newObject()
+        let canvasPage1 = canvas1.add(page)
+        let canvasPage2 = canvas2.add(page)
+
+        canvasPage1.frame = CGRect(x: 20, y: 30, width: 40, height: 50)
+        canvasPage2.frame = CGRect(x: 60, y: 70, width: 80, height: 90)
+
+        page.contentSize = CGSize(width: 50, height: 40)
+
+        page.updatePageSizes()
+
+        XCTAssertEqual(canvasPage1.frame, CGRect(x: 20, y: 30, width: 40, height: 50))
+        XCTAssertEqual(canvasPage2.frame, CGRect(x: 60, y: 70, width: 80, height: 90))
+    }
+
+    func test_updatePageSizes_updatesFrameSizeOfPageOnAllCanvasesIfUserPreferredSizeIsNotSet() {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+        let page = modelController.collection(for: Page.self).newObject() {
+            let content = ImagePageContent()
+            content.image = NSImage(size: NSSize(width: 50, height: 30))
+            $0.content = content
+        }
+        let canvas1 = modelController.collection(for: Canvas.self).newObject()
+        let canvas2 = modelController.collection(for: Canvas.self).newObject()
+        let canvasPage1 = canvas1.add(page)
+        let canvasPage2 = canvas2.add(page)
+
+        canvasPage1.frame = CGRect(x: 20, y: 30, width: 40, height: 50)
+        canvasPage2.frame = CGRect(x: 60, y: 70, width: 80, height: 90)
+
+        page.updatePageSizes()
+
+        XCTAssertEqual(canvasPage1.frame, CGRect(x: 20, y: 30, width: 50, height: 30))
+        XCTAssertEqual(canvasPage2.frame, CGRect(x: 60, y: 70, width: 50, height: 30))
+    }
+
 }

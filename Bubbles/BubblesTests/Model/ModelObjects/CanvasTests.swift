@@ -229,4 +229,70 @@ class CanvasTests: XCTestCase {
 
         XCTAssertNil(canvas.viewPort)
     }
+
+
+    //MARK: - objectWasInserted()
+    func test_objectWasInserted_updatesSortIndexAfterInsertingInCollection() {
+        let canvasCollection = ModelCollection<Canvas>()
+        XCTAssertEqual(canvasCollection.newObject().sortIndex, 1)
+        XCTAssertEqual(canvasCollection.newObject().sortIndex, 2)
+        XCTAssertEqual(canvasCollection.newObject().sortIndex, 3)
+        XCTAssertEqual(canvasCollection.newObject().sortIndex, 4)
+    }
+
+
+    //MARK: - add(_:linkedFrom:centredOn:)
+    func test_addPage_createsANewCanvasPageWithSuppliedPage() {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+
+        let canvas = modelController.collection(for: Canvas.self).newObject()
+        let page = modelController.collection(for: Page.self).newObject() {
+            $0.contentSize = CGSize(width: 20, height: 20)
+        }
+
+        let canvasPage = canvas.add(page)
+        XCTAssertEqual(canvasPage.page, page)
+        XCTAssertTrue(modelController.collection(for: CanvasPage.self).all.contains(canvasPage))
+    }
+
+    func test_addPage_createsANewCanvasPageWithSourcePageAsParent() {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+
+        let sourcePage = modelController.collection(for: CanvasPage.self).newObject()
+        let canvas = modelController.collection(for: Canvas.self).newObject()
+        let page = modelController.collection(for: Page.self).newObject() {
+            $0.contentSize = CGSize(width: 20, height: 20)
+        }
+
+        let canvasPage = canvas.add(page, linkedFrom: sourcePage)
+        XCTAssertEqual(canvasPage.parent, sourcePage)
+    }
+
+    func test_addPage_centresCanvasPageOnViewPortIfNoPointSupplied() {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+
+        let canvas = modelController.collection(for: Canvas.self).newObject() {
+            $0.viewPort = CGRect(x: 40, y: 40, width: 100, height: 100)
+        }
+        let page = modelController.collection(for: Page.self).newObject() {
+            $0.contentSize = CGSize(width: 20, height: 20)
+        }
+
+        let canvasPage = canvas.add(page)
+        XCTAssertEqual(canvasPage.frame, CGRect(x: 80, y: 80, width: 20, height: 20))
+    }
+
+    func test_addPage_centresCanvasPageOnSuppliedPoint() {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+
+        let canvas = modelController.collection(for: Canvas.self).newObject() {
+            $0.viewPort = CGRect(x: 40, y: 40, width: 100, height: 100)
+        }
+        let page = modelController.collection(for: Page.self).newObject() {
+            $0.contentSize = CGSize(width: 20, height: 20)
+        }
+
+        let canvasPage = canvas.add(page, centredOn: CGPoint(x: 60, y: 30))
+        XCTAssertEqual(canvasPage.frame, CGRect(x: 50, y: 20, width: 20, height: 20))
+    }
 }

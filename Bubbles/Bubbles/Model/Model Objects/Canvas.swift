@@ -43,12 +43,12 @@ final class Canvas: NSObject, CollectableModelObject {
         return self.pages.first(where: { $0.page == page })
     }
 
-    func add(_ page: Page, linkedFrom sourcePage: CanvasPage? = nil, centredOn point: CGPoint? = nil) {
+    @discardableResult func add(_ page: Page, linkedFrom sourcePage: CanvasPage? = nil, centredOn point: CGPoint? = nil) -> CanvasPage {
         guard let collection = self.modelController?.collection(for: CanvasPage.self) else {
-            return
+            fatalError("Could not find canvas page collection")
         }
 
-        collection.newObject() { canvasPage in
+        return collection.newObject() { canvasPage in
             canvasPage.page = page
             canvasPage.parent = sourcePage
 
