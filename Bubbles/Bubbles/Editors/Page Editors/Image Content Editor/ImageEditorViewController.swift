@@ -23,6 +23,14 @@ class ImageEditorViewController: NSViewController {
     }
 }
 
+
+extension ImageEditorViewController: Editor {
+    var inspectors: [Any] {
+        return ["Image"]
+    }
+}
+
+
 extension ImageEditorViewController: ImageEditorView {
     
 }

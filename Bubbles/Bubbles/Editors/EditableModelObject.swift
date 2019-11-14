@@ -9,12 +9,12 @@
 import AppKit
 
 protocol EditableModelObject: ModelObject {
-    func createEditor() -> (Editor & NSViewController)?
+    func createEditor(with documentWindowState: DocumentWindowState) -> (Editor & NSViewController)?
 }
 
 
 extension Page: EditableModelObject {
-    func createEditor() -> (Editor & NSViewController)? {
+    func createEditor(with documentWindowState: DocumentWindowState) -> (Editor & NSViewController)? {
         guard let modelController = self.modelController else {
             return nil
         }
@@ -24,14 +24,14 @@ extension Page: EditableModelObject {
             return DebugPageEditor(viewModel: viewModel)
         }
 
-        let viewModel = PageEditorViewModel(page: self, modelController: modelController)
+        let viewModel = PageEditorViewModel(page: self, modelController: modelController, documentWindowState: documentWindowState)
         return PageEditorViewController(viewModel: viewModel)
     }
 }
 
 
 extension Canvas: EditableModelObject {
-    func createEditor() -> (Editor & NSViewController)? {
+    func createEditor(with documentWindowState: DocumentWindowState) -> (Editor & NSViewController)? {
         guard let modelController = self.modelController else {
             return nil
         }
@@ -41,7 +41,9 @@ extension Canvas: EditableModelObject {
             return DebugCanvasEditor(viewModel: viewModel)
         }
 
-        let viewModel = CanvasEditorViewModel(canvas: self, modelController: modelController)
+        let viewModel = CanvasEditorViewModel(canvas: self,
+                                              modelController: modelController,
+                                              documentWindowState: documentWindowState)
         return CanvasEditorViewController(viewModel: viewModel)
     }
 }

@@ -135,6 +135,7 @@ class CanvasEditorViewController: NSViewController {
         self.updateArrows()
         self.sortViews()
         self.updateCanvasViewPort()
+        self.updateInspectorsIfNeeded()
         self.isLayingOut = false
         self.hasLaidOut = true
         self.currentLayoutContext = nil
@@ -218,6 +219,12 @@ class CanvasEditorViewController: NSViewController {
     }
 
 
+    //MARK: - Page Selections
+    var selectedPages: [CanvasPageViewController] {
+        return self.pageViewControllers.filter { $0.selected }
+    }
+
+
     //MARK: - Page View Controller Management
     private var pageViewControllers: [CanvasPageViewController] {
         return self.children.compactMap({ $0 as? CanvasPageViewController })
@@ -232,7 +239,9 @@ class CanvasEditorViewController: NSViewController {
             return pageViewController
         }
 
-        let viewModel = CanvasPageViewModel(canvasPage: canvasPage, modelController: self.viewModel.modelController)
+        let viewModel = CanvasPageViewModel(canvasPage: canvasPage,
+                                            modelController: self.viewModel.modelController,
+                                            documentWindowState: self.viewModel.documentWindowState)
         let viewController = CanvasPageViewController(viewModel: viewModel)
         viewController.delegate = self
 
@@ -299,12 +308,24 @@ class CanvasEditorViewController: NSViewController {
     @IBAction func zoomControlChanged(_ sender: Any?) {
         self.viewModel.selectedZoomLevel = self.zoomControl.indexOfSelectedItem
     }
+
+
+    //MARK: - Inspectors
+    private func updateInspectorsIfNeeded() {
+        guard self.currentLayoutContext?.selectionChanged == true else {
+            return
+        }
+        self.inspectorsDidChange()
+    }
 }
 
 
 extension CanvasEditorViewController: Editor {
-    var inspector: Any? {
-        return nil
+    var inspectors: [Any] {
+        guard self.selectedPages.count == 1 else {
+            return ["Canvas"]
+        }
+        return self.selectedPages[0].inspectors + ["Canvas"]
     }
 }
 

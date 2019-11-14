@@ -29,7 +29,7 @@ class PageEditorViewController: NSViewController {
         self.contentChanged()
     }
 
-    var currentContentEditor: NSViewController? {
+    var currentContentEditor: (Editor & NSViewController)? {
         didSet {
             oldValue?.view.removeFromSuperview()
             oldValue?.removeFromParent()
@@ -38,14 +38,17 @@ class PageEditorViewController: NSViewController {
                 self.view.addSubview(editor.view, withInsets: NSEdgeInsetsZero)
                 self.addChild(editor)
             }
+            self.inspectorsDidChange()
         }
     }
+
 }
 
 
 extension PageEditorViewController: Editor {
-    var inspector: Any? {
-        return nil
+    var inspectors: [Any] {
+        let contentInspectors = self.currentContentEditor?.inspectors ?? []
+        return contentInspectors + ["Page"]
     }
 }
 

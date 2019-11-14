@@ -295,6 +295,27 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertTrue(try XCTUnwrap(selectedPages[safe: 0]) === self.page3)
     }
 
+    func test_selection_informsViewOfSelectionChangeAfterUpEvent() throws {
+        class TestCanvasView: CanvasLayoutView {
+            var selectionChanged: Bool?
+            func layoutChanged(with context: CanvasLayoutEngine.LayoutContext) {
+                self.selectionChanged = context.selectionChanged
+            }
+            var viewPortFrame: CGRect = .zero
+        }
+
+        let testCanvas = TestCanvasView()
+        self.layoutEngine.view = testCanvas
+
+        XCTAssertEqual(self.layoutEngine.selectedPages.count, 0)
+        self.layoutEngine.downEvent(at: self.page1.layoutFrame.origin.plus(.identity))
+        XCTAssertFalse(try XCTUnwrap(testCanvas.selectionChanged))
+        self.layoutEngine.draggedEvent(at: self.page1.layoutFrame.origin.plus(.identity))
+        XCTAssertFalse(try XCTUnwrap(testCanvas.selectionChanged))
+        self.layoutEngine.upEvent(at: self.page1.layoutFrame.origin.plus(.identity))
+        XCTAssertTrue(try XCTUnwrap(testCanvas.selectionChanged))
+    }
+
 
     //MARK: - Selection Rect
     func test_selectionRect_clickingAndDraggingOnCanvasCreatesASelectionRect() throws {
@@ -361,6 +382,26 @@ class CanvasLayoutEngineTests: XCTestCase {
         self.layoutEngine.draggedEvent(at: CGPoint(x: 45, y: 35))
         let finalSelectedPages = self.layoutEngine.selectedPages
         XCTAssertTrue(try XCTUnwrap(finalSelectedPages[safe: 0]) === self.page2)
+    }
+
+    func test_selectionRect_informsViewOfSelectionChangeAfterUpEvent() throws {
+        class TestCanvasView: CanvasLayoutView {
+            var selectionChanged: Bool?
+            func layoutChanged(with context: CanvasLayoutEngine.LayoutContext) {
+                self.selectionChanged = context.selectionChanged
+            }
+            var viewPortFrame: CGRect = .zero
+        }
+
+        let testCanvas = TestCanvasView()
+        self.layoutEngine.view = testCanvas
+
+        self.layoutEngine.downEvent(at: CGPoint(x: 10, y: 10))
+        XCTAssertFalse(try XCTUnwrap(testCanvas.selectionChanged))
+        self.layoutEngine.draggedEvent(at: CGPoint(x: 85, y: 35))
+        XCTAssertFalse(try XCTUnwrap(testCanvas.selectionChanged))
+        self.layoutEngine.upEvent(at: CGPoint(x: 85, y: 35))
+        XCTAssertTrue(try XCTUnwrap(testCanvas.selectionChanged))
     }
 
 

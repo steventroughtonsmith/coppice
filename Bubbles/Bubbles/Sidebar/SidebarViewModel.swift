@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import Combine
 
 protocol SidebarView: class {
     func reloadSelection()
@@ -52,20 +53,14 @@ class SidebarViewModel: NSObject {
     //MARK: - Observation
     private var canvasObserver: ModelCollection<Canvas>.Observation?
     private var pageObserver: ModelCollection<Page>.Observation?
-    private var windowStateSidebarObserver: NSKeyValueObservation?
+    private var windowStateSidebarObserver: AnyCancellable?
 
     func startObserving() {
         self.canvasObserver = self.canvases.addObserver { canvas, change in self.handleChange(to: canvas, changeType: change) }
         self.pageObserver = self.pages.addObserver { page, change in self.handleChange(to: page, changeType: change)}
-        self.windowStateSidebarObserver = self.documentWindowState.observe(\.selectedSidebarObjectIDString) { [weak self] (state, change) in
-            guard let strongSelf = self else {
-                return
-            }
-            guard let idString = state.selectedSidebarObjectIDString else {
-                return
-            }
-            strongSelf.selectedObjectID = ModelID(string: idString)
-        }
+        self.windowStateSidebarObserver = self.documentWindowState.$selectedSidebarObjectID
+                                            .receive(on: RunLoop.main)
+                                            .assign(to: \.selectedObjectID, on: self)
     }
 
     func stopObserving() {
@@ -297,7 +292,7 @@ class SidebarViewModel: NSObject {
                 })
             }
             self.view?.reloadSelection()
-            self.documentWindowState.selectedSidebarObjectIDString = self.selectedObjectID?.stringRepresentation
+            self.documentWindowState.selectedSidebarObjectID = self.selectedObjectID
         }
     }
 

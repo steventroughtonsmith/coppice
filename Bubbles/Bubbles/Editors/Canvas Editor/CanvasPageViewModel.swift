@@ -16,9 +16,11 @@ class CanvasPageViewModel: NSObject {
 
     let canvasPage: CanvasPage
     let modelController: ModelController
-    init(canvasPage: CanvasPage, modelController: ModelController) {
+    let documentWindowState: DocumentWindowState
+    init(canvasPage: CanvasPage, modelController: ModelController, documentWindowState: DocumentWindowState) {
         self.canvasPage = canvasPage
         self.modelController = modelController
+        self.documentWindowState = documentWindowState
         super.init()
     }
 
@@ -38,7 +40,9 @@ class CanvasPageViewModel: NSObject {
             return nil
         }
 
-        let viewModel = PageEditorViewModel(page: page, modelController: self.modelController)
+        let viewModel = PageEditorViewModel(page: page,
+                                            modelController: self.modelController,
+                                            documentWindowState: self.documentWindowState)
         return PageEditorViewController(viewModel: viewModel)
     }()
 }

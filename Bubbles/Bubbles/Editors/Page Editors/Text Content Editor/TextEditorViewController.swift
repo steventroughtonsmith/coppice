@@ -25,6 +25,8 @@ class TextEditorViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
+
+//        NotificationCenter.default.addObserver(self, selector: #selector(textDidBeginEditing(_:)), name: NSText.didBeginEditingNotification, object: nil)
     }
 
     @objc func createNewLinkedPage(_ sender: Any?) {
@@ -44,8 +46,16 @@ class TextEditorViewController: NSViewController {
 }
 
 
+extension TextEditorViewController: Editor {
+    var inspectors: [Any] {
+        return ["Text"]
+    }
+}
+
+
 extension TextEditorViewController: TextEditorView {
 }
+
 
 extension TextEditorViewController: NSTextViewDelegate {
     func textView(_ view: NSTextView, menu: NSMenu, for event: NSEvent, at charIndex: Int) -> NSMenu? {
@@ -53,5 +63,16 @@ extension TextEditorViewController: NSTextViewDelegate {
         menu.addItem(withTitle: "Create New Linked Page…", action: #selector(createNewLinkedPage(_:)), keyEquivalent: "")
         menu.addItem(withTitle: "Link to Page…", action: #selector(linkToPage(_:)), keyEquivalent: "")
         return menu
+    }
+
+
+    func textDidEndEditing(_ notification: Notification) {
+        print("end")
+    }
+
+    func textViewDidChangeSelection(_ notification: Notification) {
+        guard self.view.window?.firstResponder == self.textView else {
+            return
+        }
     }
 }

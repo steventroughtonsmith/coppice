@@ -24,9 +24,11 @@ class CanvasEditorViewModel: NSObject {
 
     let canvas: Canvas
     let modelController: ModelController
-    init(canvas: Canvas, modelController: ModelController) {
+    let documentWindowState: DocumentWindowState
+    init(canvas: Canvas, modelController: ModelController, documentWindowState: DocumentWindowState) {
         self.canvas = canvas
         self.modelController = modelController
+        self.documentWindowState = documentWindowState
         super.init()
 
         self.setupObservation()

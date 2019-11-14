@@ -58,7 +58,7 @@ class CanvasLayoutEngine: NSObject {
         return point.plus(self.pageSpaceOffset)
     }
 
-    private func recalculateCanvasSize() {
+    private func recalculateCanvasSize() -> LayoutContext {
         var contentFrame: CGRect!
         for page in self.pages {
             guard let currentFrame = contentFrame else {
@@ -88,7 +88,7 @@ class CanvasLayoutEngine: NSObject {
 
         self.updateArrows()
 
-        self.informOfLayoutChange(with: LayoutContext(sizeChanged: canvasChanged, pageOffsetChange: offsetChange))
+        return LayoutContext(sizeChanged: canvasChanged, pageOffsetChange: offsetChange)
     }
     
     //MARK: - Manage Pages
@@ -99,7 +99,7 @@ class CanvasLayoutEngine: NSObject {
         let page = LayoutEnginePage(id: id, contentFrame: contentFrame, minimumContentSize: minimumContentSize, parentID: parentID, layoutEngine: self)
         self.pages.append(page)
         self.pagesByUUID[id] = page
-        self.recalculateCanvasSize()
+        self.informOfLayoutChange(with: self.recalculateCanvasSize())
         return page
     }
 
@@ -108,7 +108,7 @@ class CanvasLayoutEngine: NSObject {
         for page in pages {
             self.pagesByUUID.removeValue(forKey: page.id)
         }
-        self.recalculateCanvasSize()
+        self.informOfLayoutChange(with: self.recalculateCanvasSize())
     }
 
     func updateContentFrame(_ frame: CGRect, ofPageWithID uuid: UUID) {
@@ -119,13 +119,11 @@ class CanvasLayoutEngine: NSObject {
             return
         }
         page.contentFrame = frame
-        self.recalculateCanvasSize()
+        self.informOfLayoutChange(with: self.recalculateCanvasSize())
     }
 
-    var selectedPages: [LayoutEnginePage] {
-        return self.pages.filter { $0.selected }
-    }
-    var selectionRect: CGRect?
+
+    //MARK: - Retrieving Pages
 
     func page(atCanvasPoint canvasPoint: CGPoint) -> LayoutEnginePage? {
         for page in self.pages.reversed() {
@@ -157,10 +155,7 @@ class CanvasLayoutEngine: NSObject {
         return pages
     }
 
-    func deselectAll() {
-        self.selectedPages.forEach { $0.selected = false }
-        self.informOfLayoutChange(with: LayoutContext())
-    }
+
 
     func modified(_ pages: [LayoutEnginePage]) {
         self.updateArrows()
@@ -179,6 +174,26 @@ class CanvasLayoutEngine: NSObject {
         self.pages.append(page)
     }
 
+
+    //MARK: - Selection
+    var selectedPages: [LayoutEnginePage] {
+        return self.pages.filter { $0.selected }
+    }
+
+    var selectionRect: CGRect?
+
+    func deselectAll() {
+        self.selectedPages.forEach { $0.selected = false }
+        self.informOfLayoutChange(with: LayoutContext())
+    }
+
+    private var previousSelectionIDs = Set<UUID>()
+    private func hasSelectionChanged() -> Bool {
+        let newSelectionIDs = Set(self.selectedPages.map { $0.id })
+        let selectionChanged = (self.previousSelectionIDs != newSelectionIDs)
+        self.previousSelectionIDs = newSelectionIDs
+        return selectionChanged
+    }
 
     //MARK: - Manage Arrows
     private(set) var arrows = [LayoutEngineArrow]()
@@ -278,7 +293,9 @@ class CanvasLayoutEngine: NSObject {
 
     func upEvent(at location: CGPoint, modifiers: LayoutEventModifiers = [], eventCount: Int = 1) {
         self.currentEventContext?.upEvent(at: location, modifiers: modifiers, eventCount: eventCount, in: self)
-        self.recalculateCanvasSize()
+        let canvasSizeContext = self.recalculateCanvasSize()
+        let fullContext = LayoutContext(selectionChanged: self.hasSelectionChanged()).merged(with: canvasSizeContext)
+        self.informOfLayoutChange(with: fullContext)
         self.currentEventContext = nil
     }
 
@@ -287,7 +304,7 @@ class CanvasLayoutEngine: NSObject {
         guard self.currentEventContext == nil else {
             return
         }
-        self.recalculateCanvasSize()
+        self.informOfLayoutChange(with: self.recalculateCanvasSize())
     }
 
 
@@ -302,10 +319,12 @@ extension CanvasLayoutEngine {
     struct LayoutContext: Equatable {
         var sizeChanged = false
         var pageOffsetChange: CGPoint?
+        var selectionChanged = false
 
         func merged(with context: LayoutContext) -> LayoutContext {
             return LayoutContext(sizeChanged: self.sizeChanged || context.sizeChanged,
-                                 pageOffsetChange: self.pageOffsetChange ?? context.pageOffsetChange)
+                                 pageOffsetChange: self.pageOffsetChange ?? context.pageOffsetChange,
+                                 selectionChanged: self.selectionChanged || context.selectionChanged)
         }
     }
 

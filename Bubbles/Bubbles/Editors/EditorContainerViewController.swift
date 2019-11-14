@@ -21,8 +21,7 @@ class EditorContainerViewController: NSViewController {
     }
 
 
-
-    private(set) var mainEditor: NSViewController? {
+    private(set) var mainEditor: (Editor & NSViewController)? {
         didSet {
             oldValue?.view.removeFromSuperview()
             oldValue?.removeFromParent()
@@ -30,23 +29,33 @@ class EditorContainerViewController: NSViewController {
                 self.addChild(newEditor)
                 self.view.addSubview(newEditor.view, withInsets: NSEdgeInsetsZero)
             }
+            self.inspectorsDidChange()
         }
-    }
-
-    var activeEditor: NSViewController? {
-        return nil
     }
 
 
     //MARK: - Editor Generation
-    func createEditor() -> NSViewController? {
+    func createEditor() -> (Editor & NSViewController)? {
         if let canvas = self.viewModel.currentObject as? Canvas {
-            return canvas.createEditor()
+            return canvas.createEditor(with: self.viewModel.documentWindowState)
         }
         if let page = self.viewModel.currentObject as? Page {
-            return page.createEditor()
+            return page.createEditor(with: self.viewModel.documentWindowState)
         }
         return nil
+    }
+}
+
+extension EditorContainerViewController: Editor {
+    var inspectors: [Any] {
+        guard let inspectors = self.mainEditor?.inspectors else {
+            return ["Document"]
+        }
+        return inspectors + ["Document"]
+    }
+
+    func inspectorsDidChange() {
+        self.viewModel.documentWindowState.currentInspectors = self.inspectors
     }
 }
 

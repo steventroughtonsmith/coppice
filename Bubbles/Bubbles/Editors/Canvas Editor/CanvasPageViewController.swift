@@ -74,3 +74,9 @@ class CanvasPageViewController: NSViewController, CanvasPageView {
         self.typedView.apply(layoutPage)
     }
 }
+
+extension CanvasPageViewController: Editor {
+    var inspectors: [Any] {
+        return self.viewModel.pageEditor?.inspectors ?? []
+    }
+}

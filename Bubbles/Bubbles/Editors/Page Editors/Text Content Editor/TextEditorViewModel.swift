@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol TextEditorView: class {
+protocol TextEditorView: class, Editor {
 
 }
 
@@ -17,9 +17,11 @@ class TextEditorViewModel: NSObject {
     
     @objc dynamic let textContent: TextPageContent
     let modelController: ModelController
-    init(textContent: TextPageContent, modelController: ModelController) {
+    let documentWindowState: DocumentWindowState
+    init(textContent: TextPageContent, modelController: ModelController, documentWindowState: DocumentWindowState) {
         self.textContent = textContent
         self.modelController = modelController
+        self.documentWindowState = documentWindowState
         super.init()
     }
 

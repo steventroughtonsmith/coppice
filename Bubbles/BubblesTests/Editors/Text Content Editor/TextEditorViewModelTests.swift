@@ -21,7 +21,7 @@ class TextEditorViewModelTests: XCTestCase {
         self.modelController = BubblesModelController(undoManager: UndoManager())
         self.textContent = TextPageContent()
 
-        self.viewModel = TextEditorViewModel(textContent: self.textContent, modelController: self.modelController)
+        self.viewModel = TextEditorViewModel(textContent: self.textContent, modelController: self.modelController, documentWindowState: DocumentWindowState())
     }
 
     override func tearDown() {

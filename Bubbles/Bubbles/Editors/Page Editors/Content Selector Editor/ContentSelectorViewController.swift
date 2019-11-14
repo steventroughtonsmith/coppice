@@ -52,7 +52,12 @@ class ContentSelectorViewController: NSViewController {
         button.imageScaling = .scaleProportionallyUpOrDown
         self.stackView.addArrangedSubview(button)
     }
+}
 
+extension ContentSelectorViewController: Editor {
+    var inspectors: [Any] {
+        return []
+    }
 }
 
 extension ContentSelectorViewController: ContentSelectorView {

@@ -9,8 +9,11 @@
 import AppKit
 
 protocol Editor {
-    var inspector: Any? { get }
+    var inspectors: [Any] { get }
     var parentEditor: Editor? { get }
+    var childEditors: [Editor] { get }
+
+    func inspectorsDidChange()
 }
 
 
@@ -25,5 +28,13 @@ extension Editor where Self: NSViewController {
             parent = parent?.parent
         }
         return nil
+    }
+
+    var childEditors: [Editor] {
+        return self.children.compactMap { $0 as? Editor }
+    }
+
+    func inspectorsDidChange() {
+        self.parentEditor?.inspectorsDidChange()
     }
 }

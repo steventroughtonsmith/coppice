@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import Combine
 
 class DocumentWindowController: NSWindowController {
     @IBOutlet weak var splitView: NSSplitView!
@@ -37,10 +38,15 @@ class DocumentWindowController: NSWindowController {
 
     let documentWindowState = DocumentWindowState()
 
+    private var editorObserver: AnyCancellable!
     override func windowDidLoad(){
         super.windowDidLoad()
 
         self.setupViewControllers()
+
+        self.editorObserver = self.documentWindowState.$currentInspectors.sink { (inspectors) in
+            print("Current Inspectors: \(inspectors)")
+        }
     }
 
     private func setupViewControllers() {
@@ -97,7 +103,7 @@ class DocumentWindowController: NSWindowController {
     }
 
     func selectObject(with id: ModelID) {
-        self.documentWindowState.selectedSidebarObjectIDString = id.stringRepresentation
+        self.documentWindowState.selectedSidebarObjectID = id
     }
 
 

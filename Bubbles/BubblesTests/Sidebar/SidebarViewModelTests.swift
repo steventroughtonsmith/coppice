@@ -274,7 +274,7 @@ class SidebarViewModelTests: XCTestCase {
 
         viewModel.selectedObjectID = expectedID
 
-        XCTAssertEqual(self.documentWindowState.selectedSidebarObjectIDString, expectedID.stringRepresentation)
+        XCTAssertEqual(self.documentWindowState.selectedSidebarObjectID, expectedID)
     }
 
 

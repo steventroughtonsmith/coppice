@@ -27,7 +27,7 @@ class CanvasEditorViewModelTests: XCTestCase {
         self.canvasPage1 = canvasPageCollection.newObject() { $0.canvas = self.canvas }
         self.canvasPage2 = canvasPageCollection.newObject() { $0.canvas = self.canvas }
 
-        self.viewModel = CanvasEditorViewModel(canvas: self.canvas, modelController: self.modelController)
+        self.viewModel = CanvasEditorViewModel(canvas: self.canvas, modelController: self.modelController, documentWindowState: DocumentWindowState())
     }
 
     override func tearDown() {

@@ -51,8 +51,8 @@ class DebugCanvasEditor: NSViewController {
 }
 
 extension DebugCanvasEditor: Editor {
-    var inspector: Any? {
-        return nil
+    var inspectors: [Any] {
+        return []
     }
 }
 

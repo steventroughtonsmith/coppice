@@ -9,7 +9,6 @@
 import Foundation
 
 class DocumentWindowState: NSObject {
-    @objc dynamic var selectedSidebarObjectIDString: String?
-    var mainEditor: Editor?
-    var activeEditor: Editor?
+    @Published var selectedSidebarObjectID: ModelID?
+    @Published var currentInspectors: [Any] = []
 }

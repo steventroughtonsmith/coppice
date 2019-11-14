@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import Combine
 
 protocol EditorContainerView: class {
     func editorChanged()
@@ -27,22 +28,17 @@ class EditorContainerViewModel: NSObject {
 
 
     //MARK: - Observation
-    var selectedObjectObservation: NSKeyValueObservation?
+    var selectedObjectObservation: AnyCancellable?
     private func setupObservation() {
-        self.selectedObjectObservation = self.documentWindowState.observe(\.selectedSidebarObjectIDString) { [weak self] (state, change) in
-            guard let strongSelf = self else {
-                return
-            }
-
-            guard let idString = state.selectedSidebarObjectIDString,
-                let objectID = ModelID(string: idString) else
-            {
-                strongSelf.currentObject = nil
-                return
-            }
-
-            strongSelf.currentObject = strongSelf.modelController.object(with: objectID)
-        }
+        self.selectedObjectObservation = self.documentWindowState.$selectedSidebarObjectID
+            .receive(on: RunLoop.main)
+            .map({[weak self] (modelID) in
+                guard let modelID = modelID else {
+                    return nil
+                }
+                return self?.modelController.object(with: modelID)
+            })
+            .assign(to: \.currentObject, on: self)
     }
 
     var currentObject: ModelObject? {
