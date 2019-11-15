@@ -22,7 +22,7 @@ class DocumentWindowController: NSWindowController {
         didSet {
             oldValue?.view.removeFromSuperview()
             if let newVC = self.sidebarViewController {
-                sidebarContainer.addSubview(newVC.view, withInsets: NSEdgeInsetsZero)
+                self.sidebarContainer.addSubview(newVC.view, withInsets: NSEdgeInsetsZero)
             }
         }
     }
@@ -31,22 +31,26 @@ class DocumentWindowController: NSWindowController {
         didSet {
             oldValue?.view.removeFromSuperview()
             if let newVC = self.editorContainerViewController {
-                editorContainer.addSubview(newVC.view, withInsets: NSEdgeInsetsZero)
+                self.editorContainer.addSubview(newVC.view, withInsets: NSEdgeInsetsZero)
+            }
+        }
+    }
+
+    var inspectorContainerViewController: InspectorContainerViewController? {
+        didSet {
+            oldValue?.view.removeFromSuperview()
+            if let newVC = self.inspectorContainerViewController {
+                self.inspectorContainer.addSubview(newVC.view, withInsets: NSEdgeInsetsZero)
             }
         }
     }
 
     let documentWindowState = DocumentWindowState()
 
-    private var editorObserver: AnyCancellable!
     override func windowDidLoad(){
         super.windowDidLoad()
 
         self.setupViewControllers()
-
-        self.editorObserver = self.documentWindowState.$currentInspectors.sink { (inspectors) in
-            print("Current Inspectors: \(inspectors)")
-        }
     }
 
     private func setupViewControllers() {
@@ -54,10 +58,13 @@ class DocumentWindowController: NSWindowController {
             return
         }
 
+        self.documentWindowState.document = document
+
         let sidebarVM = SidebarViewModel(modelController: document.modelController, documentWindowState: self.documentWindowState)
         self.sidebarViewController = SidebarViewController(viewModel: sidebarVM)
 
         self.editorContainerViewController = EditorContainerViewController(viewModel: EditorContainerViewModel(modelController: document.modelController, documentWindowState: self.documentWindowState))
+        self.inspectorContainerViewController = InspectorContainerViewController(viewModel: InspectorContainerViewModel(modelController: document.modelController, documentWindowState: self.documentWindowState))
     }
 
 

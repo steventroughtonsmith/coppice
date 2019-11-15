@@ -46,4 +46,13 @@ class EditorContainerViewModel: NSObject {
             self.view?.editorChanged()
         }
     }
+
+
+    //MARK: - Inspector
+    var documentInspectorViewModel: DocumentInspectorViewModel? {
+        guard let document = self.documentWindowState.document else {
+            return nil
+        }
+        return DocumentInspectorViewModel(document: document, modelController: self.modelController)
+    }
 }

@@ -222,6 +222,12 @@ class CanvasEditorViewModel: NSObject {
     func zoomTo100() {
         self.zoomFactor = 1
     }
+
+
+    //MARK: - Inspectors
+    var canvasInspectorViewModel: CanvasInspectorViewModel {
+        return CanvasInspectorViewModel(canvas: self.canvas, modelController: self.modelController)
+    }
 }
 
 extension CanvasEditorViewModel: CanvasLayoutEngineDelegate {

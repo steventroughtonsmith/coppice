@@ -9,6 +9,7 @@
 import Foundation
 
 class DocumentWindowState: NSObject {
+    weak var document: Document?
     @Published var selectedSidebarObjectID: ModelID?
-    @Published var currentInspectors: [Any] = []
+    @Published var currentInspectors: [Inspector] = []
 }

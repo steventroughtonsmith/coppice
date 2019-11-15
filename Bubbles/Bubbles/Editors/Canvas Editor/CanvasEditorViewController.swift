@@ -317,15 +317,19 @@ class CanvasEditorViewController: NSViewController {
         }
         self.inspectorsDidChange()
     }
+
+    private lazy var canvasInspector: CanvasInspectorViewController = {
+        return CanvasInspectorViewController(viewModel: self.viewModel.canvasInspectorViewModel)
+    }()
 }
 
 
 extension CanvasEditorViewController: Editor {
-    var inspectors: [Any] {
+    var inspectors: [Inspector] {
         guard self.selectedPages.count == 1 else {
-            return ["Canvas"]
+            return [self.canvasInspector]
         }
-        return self.selectedPages[0].inspectors + ["Canvas"]
+        return self.selectedPages[0].inspectors + [self.canvasInspector]
     }
 }
 

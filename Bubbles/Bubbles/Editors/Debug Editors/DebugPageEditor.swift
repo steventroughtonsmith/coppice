@@ -21,7 +21,7 @@ class DebugPageEditor: NSViewController {
 }
 
 extension DebugPageEditor: Editor {
-    var inspectors: [Any] {
+    var inspectors: [Inspector] {
         return []
     }
 }

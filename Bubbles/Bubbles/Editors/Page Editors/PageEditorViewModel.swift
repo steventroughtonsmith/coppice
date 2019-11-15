@@ -53,6 +53,11 @@ class PageEditorViewModel: NSObject {
             return ImageEditorViewController(viewModel: viewModel)
         }
     }
+
+
+    var pageInspectorViewModel: PageInspectorViewModel {
+        return PageInspectorViewModel(page: self.page, modelController: self.modelController)
+    }
 }
 
 

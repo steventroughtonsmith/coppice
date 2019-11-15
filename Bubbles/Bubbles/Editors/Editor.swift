@@ -9,7 +9,7 @@
 import AppKit
 
 protocol Editor {
-    var inspectors: [Any] { get }
+    var inspectors: [Inspector] { get }
     var parentEditor: Editor? { get }
     var childEditors: [Editor] { get }
 

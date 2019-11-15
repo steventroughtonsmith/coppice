@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15400" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15400"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="InspectorContainerViewController" customModule="Bubbles" customModuleProvider="target">
+            <connections>
+                <outlet property="stackView" destination="o7a-ej-oXw" id="fet-UQ-tZ6"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="184" height="300"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zkb-NC-iT9">
+                    <rect key="frame" x="0.0" y="0.0" width="184" height="300"/>
+                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="jmX-5L-ayH" customClass="FlippedClipView" customModule="Bubbles" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="184" height="300"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" placeholderIntrinsicWidth="184" placeholderIntrinsicHeight="300" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="o7a-ej-oXw">
+                                <rect key="frame" x="0.0" y="0.0" width="184" height="300"/>
+                            </stackView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="o7a-ej-oXw" secondAttribute="trailing" id="M2L-T0-gBX"/>
+                            <constraint firstItem="o7a-ej-oXw" firstAttribute="top" secondItem="jmX-5L-ayH" secondAttribute="top" id="jv2-bI-Zm4"/>
+                            <constraint firstItem="o7a-ej-oXw" firstAttribute="leading" secondItem="jmX-5L-ayH" secondAttribute="leading" id="yYe-WV-rjz"/>
+                        </constraints>
+                    </clipView>
+                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="Nsn-oy-slE">
+                        <rect key="frame" x="-100" y="-100" width="184" height="16"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="NeV-Vp-Zxt">
+                        <rect key="frame" x="168" y="0.0" width="16" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                </scrollView>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="Zkb-NC-iT9" secondAttribute="bottom" id="LLC-GV-6Jn"/>
+                <constraint firstAttribute="trailing" secondItem="Zkb-NC-iT9" secondAttribute="trailing" id="b06-Zs-Iak"/>
+                <constraint firstItem="Zkb-NC-iT9" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="iLM-3r-QBA"/>
+                <constraint firstItem="Zkb-NC-iT9" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="qCJ-YU-Xjr"/>
+            </constraints>
+            <point key="canvasLocation" x="-83" y="-39"/>
+        </customView>
+    </objects>
+</document>

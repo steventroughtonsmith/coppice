@@ -13,3 +13,9 @@ class FlippedView: NSView {
         return true
     }
 }
+
+class FlippedClipView: NSClipView {
+    override var isFlipped: Bool {
+        return true
+    }
+}

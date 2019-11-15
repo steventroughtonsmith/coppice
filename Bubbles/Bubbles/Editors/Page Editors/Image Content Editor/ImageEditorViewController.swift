@@ -25,8 +25,8 @@ class ImageEditorViewController: NSViewController {
 
 
 extension ImageEditorViewController: Editor {
-    var inspectors: [Any] {
-        return ["Image"]
+    var inspectors: [Inspector] {
+        return []//"Image"
     }
 }
 

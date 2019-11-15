@@ -47,8 +47,8 @@ class TextEditorViewController: NSViewController {
 
 
 extension TextEditorViewController: Editor {
-    var inspectors: [Any] {
-        return ["Text"]
+    var inspectors: [Inspector] {
+        return []//"Text"
     }
 }
 

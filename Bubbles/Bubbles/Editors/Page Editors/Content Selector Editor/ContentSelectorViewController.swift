@@ -55,7 +55,7 @@ class ContentSelectorViewController: NSViewController {
 }
 
 extension ContentSelectorViewController: Editor {
-    var inspectors: [Any] {
+    var inspectors: [Inspector] {
         return []
     }
 }

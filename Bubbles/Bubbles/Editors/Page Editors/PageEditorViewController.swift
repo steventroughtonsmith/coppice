@@ -42,13 +42,16 @@ class PageEditorViewController: NSViewController {
         }
     }
 
+    private lazy var pageInspectorViewController: PageInspectorViewController = {
+        return PageInspectorViewController(viewModel: self.viewModel.pageInspectorViewModel)
+    }()
 }
 
 
 extension PageEditorViewController: Editor {
-    var inspectors: [Any] {
+    var inspectors: [Inspector] {
         let contentInspectors = self.currentContentEditor?.inspectors ?? []
-        return contentInspectors + ["Page"]
+        return contentInspectors + [self.pageInspectorViewController]
     }
 }
 
