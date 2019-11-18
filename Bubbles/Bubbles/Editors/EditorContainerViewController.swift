@@ -44,24 +44,11 @@ class EditorContainerViewController: NSViewController {
         }
         return nil
     }
-
-
-    //MARK: - Document Inspector
-    private lazy var documentInspector: DocumentInspectorViewController? = {
-        guard let viewModel = self.viewModel.documentInspectorViewModel else {
-            return nil
-        }
-        return DocumentInspectorViewController(viewModel: viewModel)
-    }()
 }
 
 extension EditorContainerViewController: Editor {
     var inspectors: [Inspector] {
-        var inspectors = self.mainEditor?.inspectors ?? []
-        if let documentInspector = self.documentInspector {
-            inspectors.append(documentInspector)
-        }
-        return inspectors
+        return self.mainEditor?.inspectors ?? []
     }
 
     func inspectorsDidChange() {

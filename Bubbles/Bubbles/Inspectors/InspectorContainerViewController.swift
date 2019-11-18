@@ -32,11 +32,11 @@ class InspectorContainerViewController: NSViewController {
     private var inspectorObservation: AnyCancellable?
     private func setupObservation() {
         self.inspectorObservation = self.viewModel.$inspectors.sink { inspectors in
-            self.inspectorViewControllers = inspectors.map { InspectorViewController(inspector: $0) }
+            self.inspectorViewControllers = inspectors.compactMap { $0 as? BaseInspectorViewController }
         }
     }
 
-    var inspectorViewControllers: [InspectorViewController] = [] {
+    var inspectorViewControllers: [BaseInspectorViewController] = [] {
         didSet {
             oldValue.forEach { $0.view.removeFromSuperview() }
             self.children = self.inspectorViewControllers

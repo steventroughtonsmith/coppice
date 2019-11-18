@@ -8,23 +8,14 @@
 
 import Cocoa
 
-class CanvasInspectorViewController: NSViewController, Inspector {
-
-    let viewModel: CanvasInspectorViewModel
-    init(viewModel: CanvasInspectorViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: "CanvasInspectorViewController", bundle: nil)
-        self.viewModel.view = self
-        self.title = NSLocalizedString("Canvas", comment: "Canvas inspector title")
-        self.identifier = NSUserInterfaceItemIdentifier(rawValue: "inspector.canvas")
+class CanvasInspectorViewController: BaseInspectorViewController {
+    override var dataViewsNibName: NSNib.Name? {
+        return "CanvasInspectorDataViews"
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    override var dataViewIdentifiers: [NSUserInterfaceItemIdentifier] {
+        return [
+            NSUserInterfaceItemIdentifier("canvas.title")
+        ]
     }
-
-}
-
-extension CanvasInspectorViewController: CanvasInspectorView {
-
 }

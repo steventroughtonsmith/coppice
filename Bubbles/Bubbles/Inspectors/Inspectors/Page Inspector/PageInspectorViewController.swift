@@ -8,23 +8,16 @@
 
 import Cocoa
 
-class PageInspectorViewController: NSViewController, Inspector {
-
-    let viewModel: PageInspectorViewModel
-    init(viewModel: PageInspectorViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: "PageInspectorViewController", bundle: nil)
-        self.viewModel.view = self
-        self.title = NSLocalizedString("Page", comment: "Page inspector title")
-        self.identifier = NSUserInterfaceItemIdentifier(rawValue: "inspector.page")
+class PageInspectorViewController: BaseInspectorViewController {
+    override var dataViewsNibName: NSNib.Name? {
+        return "PageInspectorDataViews"
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    override var dataViewIdentifiers: [NSUserInterfaceItemIdentifier] {
+        return [
+            NSUserInterfaceItemIdentifier("page.title")
+        ]
     }
-
 }
 
-extension PageInspectorViewController: PageInspectorView {
 
-}

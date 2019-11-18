@@ -35,8 +35,8 @@ final class Page: NSObject, CollectableModelObject {
     @objc dynamic var title: String {
         didSet { self.didChange(\.title, oldValue: oldValue) }
     }
-    var dateCreated = Date()
-    var dateModified = Date()
+    @objc dynamic var dateCreated = Date()
+    @objc dynamic var dateModified = Date()
     private var userPreferredSize: CGSize?
     var contentSize: CGSize {
         get {

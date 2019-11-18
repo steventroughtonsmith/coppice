@@ -13,14 +13,35 @@ protocol CanvasInspectorView: class {
 }
 
 
-class CanvasInspectorViewModel: NSObject {
+class CanvasInspectorViewModel: BaseInspectorViewModel {
     weak var view: CanvasInspectorView?
 
-    let canvas: Canvas
+    @objc dynamic let canvas: Canvas
     let modelController: ModelController
     init(canvas: Canvas, modelController: ModelController) {
         self.canvas = canvas
         self.modelController = modelController
         super.init()
+    }
+
+    override var title: String? {
+        return NSLocalizedString("Canvas", comment: "Canvas inspector title")
+    }
+
+    override var collapseIdentifier: String {
+        return "inspector.page"
+    }
+
+    override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
+        var keyPaths = super.keyPathsForValuesAffectingValue(forKey: key)
+        if (key == #keyPath(canvasTitle)) {
+            keyPaths.insert("canvas.title")
+        }
+        return keyPaths
+    }
+
+    @objc dynamic var canvasTitle: String {
+        get { self.canvas.title }
+        set { self.canvas.title = newValue }
     }
 }

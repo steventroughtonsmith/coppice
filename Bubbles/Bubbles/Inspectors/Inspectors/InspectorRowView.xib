@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15400" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15400"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner"/>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe" customClass="InspectorRowView" customModule="Bubbles" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="480" height="57"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" placeholderIntrinsicWidth="33" placeholderIntrinsicHeight="16" translatesAutoresizingMaskIntoConstraints="NO" id="qVA-71-RaV">
+                    <rect key="frame" x="6" y="21" width="59" height="16"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="55" id="EwL-Ev-LAs"/>
+                    </constraints>
+                    <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" alignment="right" title="Label" id="M0y-p0-7gs">
+                        <font key="font" metaFont="controlContent" size="11"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="FkQ-RV-2Ql">
+                    <rect key="frame" x="71" y="0.0" width="401" height="57"/>
+                </customView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="qVA-71-RaV" firstAttribute="centerY" secondItem="FkQ-RV-2Ql" secondAttribute="centerY" placeholder="YES" id="2R6-A7-I6N"/>
+                <constraint firstItem="qVA-71-RaV" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="8" id="9Zk-Gl-ECh"/>
+                <constraint firstItem="FkQ-RV-2Ql" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="OxO-b0-VqR"/>
+                <constraint firstItem="FkQ-RV-2Ql" firstAttribute="leading" secondItem="qVA-71-RaV" secondAttribute="trailing" constant="8" id="akI-JU-3vX"/>
+                <constraint firstAttribute="bottom" secondItem="FkQ-RV-2Ql" secondAttribute="bottom" id="bkm-SN-RJh"/>
+                <constraint firstAttribute="trailing" secondItem="FkQ-RV-2Ql" secondAttribute="trailing" constant="8" id="ssI-c3-mMQ"/>
+            </constraints>
+            <connections>
+                <outlet property="dataContainer" destination="FkQ-RV-2Ql" id="VvE-lI-xmI"/>
+                <outlet property="label" destination="qVA-71-RaV" id="L93-3g-cuM"/>
+            </connections>
+            <point key="canvasLocation" x="139" y="74.5"/>
+        </customView>
+    </objects>
+</document>

@@ -15,4 +15,22 @@ extension Array {
         }
         return self[index]
     }
+
+    func dictionary<Key>(_ keyTransform: (Element) -> Key) -> [Key: Element] {
+        var dictionary = [Key: Element]()
+        for item in self {
+            dictionary[keyTransform(item)] = item
+        }
+        return dictionary
+    }
+
+    func compactDictionary<Key>(_ keyTransform: (Element) -> Key?) -> [Key: Element] {
+        var dictionary = [Key: Element]()
+        for item in self {
+            if let key = keyTransform(item) {
+                dictionary[key] = item
+            }
+        }
+        return dictionary
+    }
 }
