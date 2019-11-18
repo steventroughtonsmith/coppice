@@ -9,13 +9,7 @@
 import Cocoa
 
 class CanvasInspectorViewController: BaseInspectorViewController {
-    override var dataViewsNibName: NSNib.Name? {
-        return "CanvasInspectorDataViews"
-    }
-
-    override var dataViewIdentifiers: [NSUserInterfaceItemIdentifier] {
-        return [
-            NSUserInterfaceItemIdentifier("canvas.title")
-        ]
+    override var contentViewNibName: NSNib.Name? {
+        return "CanvasInspectorContentView"
     }
 }

@@ -11,6 +11,7 @@ import Cocoa
 class BaseInspectorViewController: NSViewController, Inspector {
     @IBOutlet weak var titleContainer: NSView!
     @IBOutlet weak var rowContainer: NSStackView!
+    @IBOutlet weak var contentContainer: NSView!
 
     @objc dynamic let viewModel: BaseInspectorViewModel
     init(viewModel: BaseInspectorViewModel) {
@@ -29,27 +30,17 @@ class BaseInspectorViewController: NSViewController, Inspector {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.loadDataViews()
+        self.loadContentView()
     }
 
 
     //MARK: - Row management
-    func add(_ dataView: InspectorDataView) {
-        let row = InspectorRowView.createFromNIB()
-        row.dataView = dataView
-        self.rowContainer.addArrangedSubview(row)
-    }
-
-    var dataViewsNibName: NSNib.Name? {
+    var contentViewNibName: NSNib.Name? {
         return nil
     }
 
-    var dataViewIdentifiers: [NSUserInterfaceItemIdentifier] {
-        return []
-    }
-
-    private func loadDataViews() {
-        guard let nibName = self.dataViewsNibName,
+    private func loadContentView() {
+        guard let nibName = self.contentViewNibName,
               let nib = NSNib(nibNamed: nibName, bundle: nil) else
         {
             return
@@ -58,15 +49,10 @@ class BaseInspectorViewController: NSViewController, Inspector {
         var topLevelObjects: NSArray? = nil
         nib.instantiate(withOwner: self, topLevelObjects: &topLevelObjects)
 
-        guard let objects = topLevelObjects else {
+        guard let contentView = topLevelObjects?.first(where: { $0 is NSView}) as? NSView else {
             return
         }
-        let dataViews = objects.compactMap { $0 as? InspectorDataView }.compactDictionary { $0.identifier }
-        for identifier in self.dataViewIdentifiers {
-            if let view = dataViews[identifier] {
-            	self.add(view)
-            }
-        }
+        self.contentContainer.addSubview(contentView, withInsets: NSEdgeInsetsZero)
     }
 
 

@@ -9,14 +9,8 @@
 import Cocoa
 
 class PageInspectorViewController: BaseInspectorViewController {
-    override var dataViewsNibName: NSNib.Name? {
-        return "PageInspectorDataViews"
-    }
-
-    override var dataViewIdentifiers: [NSUserInterfaceItemIdentifier] {
-        return [
-            NSUserInterfaceItemIdentifier("page.title")
-        ]
+    override var contentViewNibName: NSNib.Name? {
+        return "PageInspectorContentView"
     }
 }
 
