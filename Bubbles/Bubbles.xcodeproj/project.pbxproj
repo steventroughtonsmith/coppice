@@ -46,6 +46,9 @@
 		9965FC3D23843143002FE10D /* CanvasPageInspectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9965FC3B23843143002FE10D /* CanvasPageInspectorViewController.swift */; };
 		9965FC3E23843143002FE10D /* CanvasPageInspectorContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9965FC3C23843143002FE10D /* CanvasPageInspectorContentView.xib */; };
 		9965FC4023843155002FE10D /* CanvasPageInspectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9965FC3F23843155002FE10D /* CanvasPageInspectorViewModel.swift */; };
+		9965FC43238448FF002FE10D /* TextEditorInspectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9965FC42238448FF002FE10D /* TextEditorInspectorViewModel.swift */; };
+		9965FC4623844910002FE10D /* TextEditorInspectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9965FC4423844910002FE10D /* TextEditorInspectorViewController.swift */; };
+		9965FC4723844910002FE10D /* TextEditorInspectorContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9965FC4523844910002FE10D /* TextEditorInspectorContentView.xib */; };
 		9976A49323674254004D573D /* ModelWriterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9976A49223674254004D573D /* ModelWriterTests.swift */; };
 		9976A49723674430004D573D /* PageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9976A49623674430004D573D /* PageTests.swift */; };
 		9976A49923674448004D573D /* CanvasTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9976A49823674448004D573D /* CanvasTests.swift */; };
@@ -186,6 +189,9 @@
 		9965FC3B23843143002FE10D /* CanvasPageInspectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageInspectorViewController.swift; sourceTree = "<group>"; };
 		9965FC3C23843143002FE10D /* CanvasPageInspectorContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CanvasPageInspectorContentView.xib; sourceTree = "<group>"; };
 		9965FC3F23843155002FE10D /* CanvasPageInspectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageInspectorViewModel.swift; sourceTree = "<group>"; };
+		9965FC42238448FF002FE10D /* TextEditorInspectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorInspectorViewModel.swift; sourceTree = "<group>"; };
+		9965FC4423844910002FE10D /* TextEditorInspectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorInspectorViewController.swift; sourceTree = "<group>"; };
+		9965FC4523844910002FE10D /* TextEditorInspectorContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextEditorInspectorContentView.xib; sourceTree = "<group>"; };
 		9976A49223674254004D573D /* ModelWriterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelWriterTests.swift; sourceTree = "<group>"; };
 		9976A49623674430004D573D /* PageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageTests.swift; sourceTree = "<group>"; };
 		9976A49823674448004D573D /* CanvasTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasTests.swift; sourceTree = "<group>"; };
@@ -439,6 +445,16 @@
 			path = "Canvas Page Inspector";
 			sourceTree = "<group>";
 		};
+		9965FC412384450C002FE10D /* Text Editor Inspector */ = {
+			isa = PBXGroup;
+			children = (
+				9965FC42238448FF002FE10D /* TextEditorInspectorViewModel.swift */,
+				9965FC4423844910002FE10D /* TextEditorInspectorViewController.swift */,
+				9965FC4523844910002FE10D /* TextEditorInspectorContentView.xib */,
+			);
+			path = "Text Editor Inspector";
+			sourceTree = "<group>";
+		};
 		9976A49423674412004D573D /* Model Infrastructure */ = {
 			isa = PBXGroup;
 			children = (
@@ -608,6 +624,7 @@
 				99D8E39223800FB90098CF3B /* BaseInspectorViewModel.swift */,
 				99D8E38E23800F9A0098CF3B /* BaseInspectorViewController.swift */,
 				99D8E38F23800F9A0098CF3B /* BaseInspectorViewController.xib */,
+				9965FC412384450C002FE10D /* Text Editor Inspector */,
 				9965FC3A23843131002FE10D /* Canvas Page Inspector */,
 				99D8E367237EDB890098CF3B /* Page Inspector */,
 				99D8E36C237EDB890098CF3B /* Canvas Inspector */,
@@ -849,6 +866,7 @@
 				99C865182301A86D004C7B89 /* ContentSelectorViewController.xib in Resources */,
 				99D8E37C237EDB890098CF3B /* CanvasInspectorContentView.xib in Resources */,
 				99C8652A2306D141004C7B89 /* PageSelectorViewController.xib in Resources */,
+				9965FC4723844910002FE10D /* TextEditorInspectorContentView.xib in Resources */,
 				99581083230D7EFB00D996C4 /* CanvasEditorViewController.xib in Resources */,
 				99581093230D92C600D996C4 /* CanvasPageViewController.xib in Resources */,
 				9965FC3E23843143002FE10D /* CanvasPageInspectorContentView.xib in Resources */,
@@ -888,6 +906,7 @@
 				99C03F07232A8ED200EB7516 /* CanvasElementView.swift in Sources */,
 				99581082230D7EFB00D996C4 /* CanvasEditorViewController.swift in Sources */,
 				99581092230D92C600D996C4 /* CanvasPageViewController.swift in Sources */,
+				9965FC4623844910002FE10D /* TextEditorInspectorViewController.swift in Sources */,
 				99C03EFC23293D8A00EB7516 /* PageTitleBarEventContext.swift in Sources */,
 				992A5CB322DDF53C0012CCB6 /* DebugPageEditorViewModel.swift in Sources */,
 				99D8E37B237EDB890098CF3B /* InspectorViewModel.swift in Sources */,
@@ -898,6 +917,7 @@
 				99C8650923016EB2004C7B89 /* TextEditorViewModel.swift in Sources */,
 				99E944FB2368683F00DFAB95 /* NSImage+M3Extensions.swift in Sources */,
 				99FFF9CC234E2F2F00EF02A0 /* FlippedView.swift in Sources */,
+				9965FC43238448FF002FE10D /* TextEditorInspectorViewModel.swift in Sources */,
 				99D8E38B237F58FA0098CF3B /* NIBInstantiable.swift in Sources */,
 				99AD88A5237B1700000453E1 /* DocumentWindowState.swift in Sources */,
 				99581095230D93F700D996C4 /* CanvasPageViewModel.swift in Sources */,

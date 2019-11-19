@@ -43,12 +43,16 @@ class TextEditorViewController: NSViewController {
             self?.viewModel.link(to: page, for: selectedRange)
         }
     }
+
+    private lazy var textEditorInspectorViewController: TextEditorInspectorViewController = {
+        return TextEditorInspectorViewController(viewModel: TextEditorInspectorViewModel(editor: self, modelController: self.viewModel.modelController))
+    }()
 }
 
 
 extension TextEditorViewController: Editor {
     var inspectors: [Inspector] {
-        return []//"Text"
+        return [self.textEditorInspectorViewController]
     }
 }
 

@@ -9,8 +9,6 @@
 import Foundation
 
 class CanvasPageInspectorViewModel: BaseInspectorViewModel {
-    weak var view: PageInspectorView?
-
     @objc dynamic let canvasPage: CanvasPage
     let modelController: ModelController
     init(canvasPage: CanvasPage, modelController: ModelController) {
