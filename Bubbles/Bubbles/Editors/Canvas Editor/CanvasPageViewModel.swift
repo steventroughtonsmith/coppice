@@ -45,5 +45,9 @@ class CanvasPageViewModel: NSObject {
                                             documentWindowState: self.documentWindowState)
         return PageEditorViewController(viewModel: viewModel)
     }()
+
+    var canvasPageInspectorViewModel: CanvasPageInspectorViewModel {
+        return CanvasPageInspectorViewModel(canvasPage: self.canvasPage, modelController: self.modelController)
+    }
 }
 

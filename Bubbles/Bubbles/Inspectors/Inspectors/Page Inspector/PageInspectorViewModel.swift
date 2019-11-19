@@ -25,7 +25,7 @@ class PageInspectorViewModel: BaseInspectorViewModel {
     }
 
     override var title: String? {
-        return NSLocalizedString("Page", comment: "Page inspector title")
+        return NSLocalizedString("Page Info", comment: "Page inspector title").localizedUppercase
     }
 
     override var collapseIdentifier: String {

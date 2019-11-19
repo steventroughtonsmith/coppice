@@ -14,7 +14,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cbs-QW-dFw">
-                    <rect key="frame" x="60" y="0.0" width="247" height="21"/>
+                    <rect key="frame" x="43" y="0.0" width="264" height="21"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="czh-dI-xk3">
                         <font key="font" usesAppearanceFont="YES"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -25,7 +25,7 @@
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vru-RT-UeN">
-                    <rect key="frame" x="6" y="2" width="48" height="16"/>
+                    <rect key="frame" x="6" y="2" width="31" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Title" id="gx6-FE-zW9">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -39,7 +39,6 @@
                 <constraint firstAttribute="bottom" secondItem="cbs-QW-dFw" secondAttribute="bottom" id="SiK-wp-Jts"/>
                 <constraint firstItem="vru-RT-UeN" firstAttribute="leading" secondItem="phm-4T-vFe" secondAttribute="leading" constant="8" id="Xht-zJ-WJU"/>
                 <constraint firstItem="vru-RT-UeN" firstAttribute="firstBaseline" secondItem="cbs-QW-dFw" secondAttribute="firstBaseline" id="o9C-kL-fAg"/>
-                <constraint firstItem="cbs-QW-dFw" firstAttribute="leading" secondItem="phm-4T-vFe" secondAttribute="leading" constant="60" id="qCW-u3-1tn"/>
                 <constraint firstAttribute="trailing" secondItem="cbs-QW-dFw" secondAttribute="trailing" id="yzD-i0-2TO"/>
             </constraints>
             <point key="canvasLocation" x="13.5" y="11.5"/>

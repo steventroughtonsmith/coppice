@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15400" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15400"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="CanvasPageInspectorViewController" customModule="Bubbles" customModuleProvider="target"/>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="288" height="81"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bnF-CY-U58">
+                    <rect key="frame" x="68" y="-7" width="152" height="32"/>
+                    <buttonCell key="cell" type="push" title="Size to Fit Content" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="NVF-nE-0W3">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
+                <textField verticalHuggingPriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="RXF-GF-zPJ">
+                    <rect key="frame" x="0.0" y="60" width="123" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="AR2-aJ-KT2"/>
+                    </constraints>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="VLO-Tn-ksg">
+                        <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" id="nBG-QX-uaQ"/>
+                        <font key="font" usesAppearanceFont="YES"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <binding destination="-2" name="value" keyPath="self.viewModel.width" id="0Kg-6G-BKV"/>
+                    </connections>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jYf-O7-Kpz">
+                    <rect key="frame" x="-2" y="36" width="127" height="20"/>
+                    <textFieldCell key="cell" controlSize="small" alignment="center" title="Width" id="KDE-7K-Peb">
+                        <font key="font" metaFont="controlContent" size="11"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FIP-vg-SUe">
+                    <rect key="frame" x="124" y="57" width="19" height="28"/>
+                    <stepperCell key="cell" continuous="YES" alignment="left" maxValue="10000" id="a0k-Bt-C5t"/>
+                    <connections>
+                        <binding destination="-2" name="minValue" keyPath="self.viewModel.minimumWidth" id="HLI-0l-NpJ"/>
+                        <binding destination="-2" name="value" keyPath="self.viewModel.width" previousBinding="HLI-0l-NpJ" id="UdX-5f-nqA"/>
+                    </connections>
+                </stepper>
+                <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6ku-81-mRQ">
+                    <rect key="frame" x="272" y="57" width="19" height="28"/>
+                    <stepperCell key="cell" continuous="YES" alignment="left" maxValue="10000" id="sqQ-jW-Awg"/>
+                    <connections>
+                        <binding destination="-2" name="minValue" keyPath="self.viewModel.minimumHeight" id="arb-GE-7V6"/>
+                        <binding destination="-2" name="value" keyPath="self.viewModel.height" previousBinding="arb-GE-7V6" id="rB8-J0-M7Z"/>
+                    </connections>
+                </stepper>
+                <textField verticalHuggingPriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="uzx-B1-fPf">
+                    <rect key="frame" x="148" y="60" width="123" height="21"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="RF7-dM-YNe">
+                        <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" id="fy6-2f-Z7J"/>
+                        <font key="font" usesAppearanceFont="YES"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <binding destination="-2" name="value" keyPath="self.viewModel.height" id="qPa-T8-f8d"/>
+                    </connections>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TER-vx-UUH">
+                    <rect key="frame" x="146" y="42" width="127" height="14"/>
+                    <textFieldCell key="cell" controlSize="small" alignment="center" title="Height" id="xte-Ym-2QC">
+                        <font key="font" metaFont="controlContent" size="11"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="TER-vx-UUH" firstAttribute="leading" secondItem="uzx-B1-fPf" secondAttribute="leading" id="7N1-2e-HPa"/>
+                <constraint firstItem="jYf-O7-Kpz" firstAttribute="leading" secondItem="RXF-GF-zPJ" secondAttribute="leading" id="F6J-DX-QOp"/>
+                <constraint firstItem="bnF-CY-U58" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="Lbj-d3-WJj"/>
+                <constraint firstItem="FIP-vg-SUe" firstAttribute="centerY" secondItem="RXF-GF-zPJ" secondAttribute="centerY" id="NQe-mS-D4V"/>
+                <constraint firstItem="6ku-81-mRQ" firstAttribute="leading" secondItem="uzx-B1-fPf" secondAttribute="trailing" constant="4" id="OKW-hQ-d02"/>
+                <constraint firstAttribute="trailing" secondItem="6ku-81-mRQ" secondAttribute="trailing" id="P89-wt-Af0"/>
+                <constraint firstItem="uzx-B1-fPf" firstAttribute="width" secondItem="RXF-GF-zPJ" secondAttribute="width" id="QIJ-xh-f6n"/>
+                <constraint firstItem="FIP-vg-SUe" firstAttribute="leading" secondItem="RXF-GF-zPJ" secondAttribute="trailing" constant="4" id="RhJ-je-J1P"/>
+                <constraint firstItem="bnF-CY-U58" firstAttribute="top" secondItem="jYf-O7-Kpz" secondAttribute="bottom" constant="15" id="WTb-P2-gpf"/>
+                <constraint firstItem="uzx-B1-fPf" firstAttribute="leading" secondItem="FIP-vg-SUe" secondAttribute="trailing" constant="8" id="Zmr-h9-rqH"/>
+                <constraint firstAttribute="bottom" secondItem="bnF-CY-U58" secondAttribute="bottom" id="aqN-H2-oZE"/>
+                <constraint firstItem="TER-vx-UUH" firstAttribute="trailing" secondItem="uzx-B1-fPf" secondAttribute="trailing" id="gsY-pE-zRe"/>
+                <constraint firstItem="RXF-GF-zPJ" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="jxw-ag-hZP"/>
+                <constraint firstItem="TER-vx-UUH" firstAttribute="firstBaseline" secondItem="jYf-O7-Kpz" secondAttribute="firstBaseline" id="kde-HO-IPc"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="bnF-CY-U58" secondAttribute="trailing" id="mfP-DW-aed"/>
+                <constraint firstItem="bnF-CY-U58" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="oYJ-ey-2LT"/>
+                <constraint firstItem="uzx-B1-fPf" firstAttribute="firstBaseline" secondItem="RXF-GF-zPJ" secondAttribute="firstBaseline" id="rnQ-nH-e3c"/>
+                <constraint firstItem="jYf-O7-Kpz" firstAttribute="top" secondItem="RXF-GF-zPJ" secondAttribute="bottom" constant="4" id="tA8-Yw-Gyg"/>
+                <constraint firstItem="RXF-GF-zPJ" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="ttW-vM-gdn"/>
+                <constraint firstItem="jYf-O7-Kpz" firstAttribute="trailing" secondItem="RXF-GF-zPJ" secondAttribute="trailing" id="yDO-di-WxQ"/>
+                <constraint firstItem="6ku-81-mRQ" firstAttribute="centerY" secondItem="uzx-B1-fPf" secondAttribute="centerY" id="zuP-X9-V1P"/>
+            </constraints>
+            <point key="canvasLocation" x="-1014" y="130.5"/>
+        </customView>
+    </objects>
+</document>

@@ -42,7 +42,7 @@
                                 </view>
                                 <color key="fillColor" name="EditorBackground"/>
                             </box>
-                            <customView misplaced="YES" id="vle-dL-M8g" userLabel="Inspector Container">
+                            <customView id="vle-dL-M8g" userLabel="Inspector Container">
                                 <rect key="frame" x="878" y="0.0" width="222" height="675"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <constraints>
@@ -53,7 +53,7 @@
                         <holdingPriorities>
                             <real value="250"/>
                             <real value="249"/>
-                            <real value="250"/>
+                            <real value="252"/>
                         </holdingPriorities>
                     </splitView>
                 </subviews>

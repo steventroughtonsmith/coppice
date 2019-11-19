@@ -95,7 +95,7 @@ class LayoutEnginePage: Equatable {
     weak var layoutEngine: CanvasLayoutEngine?
     init(id: UUID,
          contentFrame: CGRect,
-         minimumContentSize: CGSize = CGSize(width: 100, height: 200),
+         minimumContentSize: CGSize = CGSize(width: 150, height: 100),
          parentID: UUID? = nil,
          layoutEngine: CanvasLayoutEngine) {
         self.id = id

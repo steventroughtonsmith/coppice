@@ -25,7 +25,7 @@ class CanvasInspectorViewModel: BaseInspectorViewModel {
     }
 
     override var title: String? {
-        return NSLocalizedString("Canvas", comment: "Canvas inspector title")
+        return NSLocalizedString("Canvas", comment: "Canvas inspector title").localizedUppercase
     }
 
     override var collapseIdentifier: String {

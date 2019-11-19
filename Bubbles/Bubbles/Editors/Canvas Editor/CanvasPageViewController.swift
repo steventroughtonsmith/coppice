@@ -73,10 +73,15 @@ class CanvasPageViewController: NSViewController, CanvasPageView {
         self.selected = layoutPage.selected
         self.typedView.apply(layoutPage)
     }
+
+    private lazy var canvasPageInspectorViewController: CanvasPageInspectorViewController = {
+        return CanvasPageInspectorViewController(viewModel: self.viewModel.canvasPageInspectorViewModel)
+    }()
 }
 
 extension CanvasPageViewController: Editor {
     var inspectors: [Inspector] {
-        return self.viewModel.pageEditor?.inspectors ?? []
+        let inspectors = self.viewModel.pageEditor?.inspectors ?? []
+        return inspectors + [self.canvasPageInspectorViewController]
     }
 }

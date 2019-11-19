@@ -15,7 +15,7 @@ final class CanvasPage: NSObject, CollectableModelObject {
     weak var collection: ModelCollection<CanvasPage>?
 
     //MARK: - Attributes
-    var frame: CGRect = .zero {
+    @objc dynamic var frame: CGRect = .zero {
         didSet { self.didChange(\.frame, oldValue: oldValue) }
     }
 

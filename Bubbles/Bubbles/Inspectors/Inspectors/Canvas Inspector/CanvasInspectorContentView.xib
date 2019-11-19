@@ -13,7 +13,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="b0f-QP-nLp">
-                    <rect key="frame" x="60" y="0.0" width="247" height="21"/>
+                    <rect key="frame" x="43" y="0.0" width="264" height="21"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="2n3-qS-CN5">
                         <font key="font" usesAppearanceFont="YES"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -24,7 +24,7 @@
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VTj-SJ-Zad">
-                    <rect key="frame" x="6" y="2" width="48" height="16"/>
+                    <rect key="frame" x="6" y="2" width="31" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Title" id="gqQ-0A-VwJ">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -38,7 +38,6 @@
                 <constraint firstItem="VTj-SJ-Zad" firstAttribute="firstBaseline" secondItem="b0f-QP-nLp" secondAttribute="firstBaseline" id="cwp-qL-Ozp"/>
                 <constraint firstItem="b0f-QP-nLp" firstAttribute="leading" secondItem="VTj-SJ-Zad" secondAttribute="trailing" constant="8" id="o6b-TB-L9J"/>
                 <constraint firstItem="VTj-SJ-Zad" firstAttribute="leading" secondItem="ehY-F7-MGj" secondAttribute="leading" constant="8" id="sWc-Oj-OkF"/>
-                <constraint firstItem="b0f-QP-nLp" firstAttribute="leading" secondItem="ehY-F7-MGj" secondAttribute="leading" constant="60" id="vBu-ga-cYV"/>
                 <constraint firstAttribute="bottom" secondItem="b0f-QP-nLp" secondAttribute="bottom" id="zxb-rq-fBL"/>
             </constraints>
             <point key="canvasLocation" x="13.5" y="10.5"/>

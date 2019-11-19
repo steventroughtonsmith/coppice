@@ -90,12 +90,13 @@ class CanvasLayoutEngine: NSObject {
 
         return LayoutContext(sizeChanged: canvasChanged, pageOffsetChange: offsetChange)
     }
-    
+
+
     //MARK: - Manage Pages
     private(set) var pages = [LayoutEnginePage]()
     private var pagesByUUID = [UUID: LayoutEnginePage]()
 
-    @discardableResult func addPage(withID id: UUID, contentFrame: CGRect, minimumContentSize: CGSize = CGSize(width: 100, height: 200), parentID: UUID? = nil) -> LayoutEnginePage {
+    @discardableResult func addPage(withID id: UUID, contentFrame: CGRect, minimumContentSize: CGSize = GlobalConstants.minimumPageSize, parentID: UUID? = nil) -> LayoutEnginePage {
         let page = LayoutEnginePage(id: id, contentFrame: contentFrame, minimumContentSize: minimumContentSize, parentID: parentID, layoutEngine: self)
         self.pages.append(page)
         self.pagesByUUID[id] = page
@@ -155,8 +156,6 @@ class CanvasLayoutEngine: NSObject {
         return pages
     }
 
-
-
     func modified(_ pages: [LayoutEnginePage]) {
         self.updateArrows()
     }
@@ -194,6 +193,7 @@ class CanvasLayoutEngine: NSObject {
         self.previousSelectionIDs = newSelectionIDs
         return selectionChanged
     }
+
 
     //MARK: - Manage Arrows
     private(set) var arrows = [LayoutEngineArrow]()
