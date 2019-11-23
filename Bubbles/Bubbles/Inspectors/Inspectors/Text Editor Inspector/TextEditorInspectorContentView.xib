@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15400" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15400"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15505"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="TextEditorInspectorViewController" customModule="Bubbles" customModuleProvider="target"/>
+        <customObject id="-2" userLabel="File's Owner" customClass="TextEditorInspectorViewController" customModule="Bubbles" customModuleProvider="target">
+            <connections>
+                <outlet property="alignmentControl" destination="lJO-MO-Qab" id="GrE-G3-hKc"/>
+                <outlet property="colourPopUpButton" destination="fgc-lj-oNC" id="5he-Ll-BMd"/>
+                <outlet property="styleControl" destination="1fJ-zV-rDa" id="LGY-8F-asz"/>
+            </connections>
+        </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="Hz6-mo-xeY">
@@ -25,6 +31,10 @@
                             </items>
                         </menu>
                     </popUpButtonCell>
+                    <connections>
+                        <binding destination="-2" name="contentValues" keyPath="self.viewModel.fontFamilies" id="JwZ-O0-wgl"/>
+                        <binding destination="-2" name="selectedValue" keyPath="self.viewModel.selectedFontFamily" previousBinding="JwZ-O0-wgl" id="MoO-pm-ZNl"/>
+                    </connections>
                 </popUpButton>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="U7t-eh-okS">
                     <rect key="frame" x="-2" y="59" width="208" height="25"/>
@@ -39,6 +49,12 @@
                             </items>
                         </menu>
                     </popUpButtonCell>
+                    <connections>
+                        <binding destination="-2" name="contentObjects" keyPath="self.viewModel.typefaces" previousBinding="w1y-tj-DfP" id="CUr-iE-ie4"/>
+                        <binding destination="-2" name="contentValues" keyPath="self.viewModel.typefaces.displayName" previousBinding="CUr-iE-ie4" id="hGo-9W-h5t"/>
+                        <binding destination="-2" name="selectedObject" keyPath="self.viewModel.selectedTypeface" previousBinding="hGo-9W-h5t" id="R9L-QV-6lM"/>
+                        <binding destination="-2" name="content" keyPath="self.viewModel.typefaces" id="w1y-tj-DfP"/>
+                    </connections>
                 </popUpButton>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tVJ-Wa-8Xo">
                     <rect key="frame" x="213" y="62" width="50" height="21"/>
@@ -46,10 +62,23 @@
                         <constraint firstAttribute="width" constant="50" id="pbu-RP-YEn"/>
                     </constraints>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="40 pt" drawsBackground="YES" id="YbW-uO-c55">
+                        <numberFormatter key="formatter" formatterBehavior="custom10_4" usesGroupingSeparator="NO" lenient="YES" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" id="bJ8-m5-Jet">
+                            <real key="minimum" value="0.0"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="positiveSuffix" value=" pt"/>
+                            </userDefinedRuntimeAttributes>
+                        </numberFormatter>
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <connections>
+                        <binding destination="-2" name="value" keyPath="self.viewModel.fontSize" id="EV2-y3-Vgm">
+                            <dictionary key="options">
+                                <string key="NSNullPlaceholder">-</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
                 </textField>
                 <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gJM-Vb-Oux">
                     <rect key="frame" x="264" y="59" width="19" height="28"/>
@@ -75,14 +104,14 @@
                         <font key="font" metaFont="system"/>
                         <segments>
                             <segment label="􀌀"/>
-                            <segment label="􀌁" selected="YES" tag="1"/>
+                            <segment label="􀌁" tag="1"/>
                             <segment label="􀌂"/>
                         </segments>
                     </segmentedCell>
                 </segmentedControl>
                 <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1fJ-zV-rDa">
                     <rect key="frame" x="-2" y="-2" width="242" height="24"/>
-                    <segmentedCell key="cell" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="rounded" trackingMode="selectOne" id="bxG-Y2-CcR">
+                    <segmentedCell key="cell" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="rounded" trackingMode="selectAny" id="bxG-Y2-CcR">
                         <font key="font" metaFont="system"/>
                         <segments>
                             <segment label="􀅓"/>

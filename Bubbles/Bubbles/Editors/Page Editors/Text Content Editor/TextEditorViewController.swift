@@ -7,8 +7,9 @@
 //
 
 import Cocoa
+import Combine
 
-class TextEditorViewController: NSViewController {
+class TextEditorViewController: NSViewController, InspectableTextEditor {
     @IBOutlet var textView: NSTextView!
 
     @objc dynamic let viewModel: TextEditorViewModel
@@ -47,6 +48,76 @@ class TextEditorViewController: NSViewController {
     private lazy var textEditorInspectorViewController: TextEditorInspectorViewController = {
         return TextEditorInspectorViewController(viewModel: TextEditorInspectorViewModel(editor: self, modelController: self.viewModel.modelController))
     }()
+
+
+    //MARK: - InspectableTextEditor
+    @Published var selectionAttributes: TextEditorAttributes? {
+        didSet {
+            if let attributes = self.selectionAttributes {
+                var string = ""
+                for component in "\(attributes)".split(separator: ",") {
+                    guard string.count > 0 else {
+                        string = String(component)
+                        continue
+                    }
+                    string = "\(string)\n                    \(String(component))"
+                }
+                print("\(string)")
+                print("==========")
+            }
+        }
+    }
+
+    var selectionAttributesDidChange: AnyPublisher<TextEditorAttributes?, Never> {
+        return self.$selectionAttributes.eraseToAnyPublisher()
+    }
+
+    private func updateSelectionAttributes() {
+        var baseAttributes = self.textView.typingAttributes
+        baseAttributes.merge(self.textView.selectedTextAttributes) { (key1, _) in key1 }
+
+        let ranges = self.textView.selectedRanges.compactMap { $0.rangeValue }
+        guard (ranges.count > 1) || ((ranges.first?.length ?? 0) > 0) else {
+            self.selectionAttributes = self.textEditorAttributes(from: baseAttributes)
+            return
+        }
+
+        guard let textStorage = self.textView.textStorage else {
+            return
+        }
+
+        var textEditorAttributes = [TextEditorAttributes]()
+        for range in ranges {
+            textStorage.enumerateAttributes(in: range, options: []) { (attributes, _, _) in
+                let mergedAttributes = attributes.merging(baseAttributes) { (key1, _) in key1 }
+                textEditorAttributes.append(self.textEditorAttributes(from: mergedAttributes))
+            }
+        }
+
+        self.selectionAttributes = TextEditorAttributes.merge(textEditorAttributes)
+    }
+
+    private func textEditorAttributes(from attributes: [NSAttributedString.Key: Any]) -> TextEditorAttributes {
+        let font = attributes[.font] as? NSFont
+        let fontFamily = font?.familyName
+        let fontPostscriptName = font?.fontDescriptor.postscriptName
+        let fontSize = font?.pointSize
+        let textColour = attributes[.foregroundColor] as? NSColor
+        let paragraphStyle = attributes[.paragraphStyle] as? NSParagraphStyle
+        let underlined = attributes[.underlineStyle] as? Int
+        let struckthrough = attributes[.strikethroughStyle] as? Int
+        let symbolicTraits = font?.fontDescriptor.symbolicTraits
+
+        return TextEditorAttributes(fontFamily: fontFamily,
+                                    fontPostscriptName: fontPostscriptName,
+                                    fontSize: fontSize,
+                                    textColour: textColour,
+                                    alignment: paragraphStyle?.alignment,
+                                    isBold: symbolicTraits?.contains(.bold),
+                                    isItalic: symbolicTraits?.contains(.italic),
+                                    isUnderlined: (underlined == 1),
+                                    isStruckthrough: (struckthrough == 1))
+    }
 }
 
 
@@ -69,14 +140,14 @@ extension TextEditorViewController: NSTextViewDelegate {
         return menu
     }
 
-
     func textDidEndEditing(_ notification: Notification) {
-        print("end")
+//        self.selectionAttributes = nil
     }
 
     func textViewDidChangeSelection(_ notification: Notification) {
         guard self.view.window?.firstResponder == self.textView else {
             return
         }
+        self.updateSelectionAttributes()
     }
 }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9902F4A923882ADA00AF646F /* NSSegmentedControl+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9902F4A823882ADA00AF646F /* NSSegmentedControl+M3Extensions.swift */; };
 		990825D922EDF2FE00273A1D /* ModelCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990825D822EDF2FE00273A1D /* ModelCollection.swift */; };
 		990B6A3722E5F84400523C06 /* CanvasPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990B6A3622E5F84400523C06 /* CanvasPage.swift */; };
 		990B6A3922EB482D00523C06 /* ModelObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990B6A3822EB482D00523C06 /* ModelObject.swift */; };
@@ -16,6 +17,7 @@
 		9923B06B22F45F7E0035D8C6 /* TestObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9923B06A22F45F7E0035D8C6 /* TestObjects.swift */; };
 		9923B07122F47AE30035D8C6 /* ModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9923B07022F47AE30035D8C6 /* ModelController.swift */; };
 		9923B07422F485480035D8C6 /* ModelCollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9923B07322F485480035D8C6 /* ModelCollectionTests.swift */; };
+		9925B2622386A0DF001A8ADC /* TextEditorInspectorTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9925B2612386A0DF001A8ADC /* TextEditorInspectorTypes.swift */; };
 		992A5C9222DCB7530012CCB6 /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992A5C9122DCB7530012CCB6 /* SidebarViewController.swift */; };
 		992A5C9622DCB7790012CCB6 /* SidebarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 992A5C9522DCB7790012CCB6 /* SidebarView.xib */; };
 		992A5C9C22DCC6090012CCB6 /* SidebarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992A5C9B22DCC6090012CCB6 /* SidebarViewModel.swift */; };
@@ -54,6 +56,7 @@
 		9976A49923674448004D573D /* CanvasTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9976A49823674448004D573D /* CanvasTests.swift */; };
 		9976A49B23674454004D573D /* CanvasPageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9976A49A23674454004D573D /* CanvasPageTests.swift */; };
 		9976A49D2367524D004D573D /* ModelReaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9976A49C2367524D004D573D /* ModelReaderTests.swift */; };
+		99A0B853238961BF005FCF25 /* NSColor+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B852238961BF005FCF25 /* NSColor+M3Extensions.swift */; };
 		99AD8874237464C4000453E1 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AD8873237464C4000453E1 /* Alert.swift */; };
 		99AD88762374665D000453E1 /* Alert+AppKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AD88752374665D000453E1 /* Alert+AppKit.swift */; };
 		99AD88782376FCF0000453E1 /* PageContentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AD88772376FCF0000453E1 /* PageContentTests.swift */; };
@@ -151,6 +154,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9902F4A823882ADA00AF646F /* NSSegmentedControl+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSSegmentedControl+M3Extensions.swift"; sourceTree = "<group>"; };
 		990825D822EDF2FE00273A1D /* ModelCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelCollection.swift; sourceTree = "<group>"; };
 		990B6A3622E5F84400523C06 /* CanvasPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPage.swift; sourceTree = "<group>"; };
 		990B6A3822EB482D00523C06 /* ModelObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelObject.swift; sourceTree = "<group>"; };
@@ -159,6 +163,7 @@
 		9923B06A22F45F7E0035D8C6 /* TestObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestObjects.swift; sourceTree = "<group>"; };
 		9923B07022F47AE30035D8C6 /* ModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelController.swift; sourceTree = "<group>"; };
 		9923B07322F485480035D8C6 /* ModelCollectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelCollectionTests.swift; sourceTree = "<group>"; };
+		9925B2612386A0DF001A8ADC /* TextEditorInspectorTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorInspectorTypes.swift; sourceTree = "<group>"; };
 		992A5C9122DCB7530012CCB6 /* SidebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewController.swift; sourceTree = "<group>"; };
 		992A5C9522DCB7790012CCB6 /* SidebarView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SidebarView.xib; sourceTree = "<group>"; };
 		992A5C9B22DCC6090012CCB6 /* SidebarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewModel.swift; sourceTree = "<group>"; };
@@ -197,6 +202,7 @@
 		9976A49823674448004D573D /* CanvasTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasTests.swift; sourceTree = "<group>"; };
 		9976A49A23674454004D573D /* CanvasPageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageTests.swift; sourceTree = "<group>"; };
 		9976A49C2367524D004D573D /* ModelReaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelReaderTests.swift; sourceTree = "<group>"; };
+		99A0B852238961BF005FCF25 /* NSColor+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+M3Extensions.swift"; sourceTree = "<group>"; };
 		99AD8873237464C4000453E1 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		99AD88752374665D000453E1 /* Alert+AppKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alert+AppKit.swift"; sourceTree = "<group>"; };
 		99AD88772376FCF0000453E1 /* PageContentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageContentTests.swift; sourceTree = "<group>"; };
@@ -345,6 +351,8 @@
 				99E944FA2368683F00DFAB95 /* NSImage+M3Extensions.swift */,
 				99AD88752374665D000453E1 /* Alert+AppKit.swift */,
 				99D8E38A237F58FA0098CF3B /* NIBInstantiable.swift */,
+				9902F4A823882ADA00AF646F /* NSSegmentedControl+M3Extensions.swift */,
+				99A0B852238961BF005FCF25 /* NSColor+M3Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -448,6 +456,7 @@
 		9965FC412384450C002FE10D /* Text Editor Inspector */ = {
 			isa = PBXGroup;
 			children = (
+				9925B2612386A0DF001A8ADC /* TextEditorInspectorTypes.swift */,
 				9965FC42238448FF002FE10D /* TextEditorInspectorViewModel.swift */,
 				9965FC4423844910002FE10D /* TextEditorInspectorViewController.swift */,
 				9965FC4523844910002FE10D /* TextEditorInspectorContentView.xib */,
@@ -915,6 +924,7 @@
 				990D243D23560169001B1FD9 /* LayoutEngineArrow.swift in Sources */,
 				99C865202302E256004C7B89 /* ImageEditorViewController.swift in Sources */,
 				99C8650923016EB2004C7B89 /* TextEditorViewModel.swift in Sources */,
+				9925B2622386A0DF001A8ADC /* TextEditorInspectorTypes.swift in Sources */,
 				99E944FB2368683F00DFAB95 /* NSImage+M3Extensions.swift in Sources */,
 				99FFF9CC234E2F2F00EF02A0 /* FlippedView.swift in Sources */,
 				9965FC43238448FF002FE10D /* TextEditorInspectorViewModel.swift in Sources */,
@@ -931,6 +941,8 @@
 				990B6A3722E5F84400523C06 /* CanvasPage.swift in Sources */,
 				9958108E230D909900D996C4 /* TestCanvasPageViewController.swift in Sources */,
 				99AD88A9237C36D0000453E1 /* Editor.swift in Sources */,
+				99A0B853238961BF005FCF25 /* NSColor+M3Extensions.swift in Sources */,
+				9902F4A923882ADA00AF646F /* NSSegmentedControl+M3Extensions.swift in Sources */,
 				990D2441235DEFE2001B1FD9 /* PageArrowView.swift in Sources */,
 				99C9AF1D23671FD8009F909A /* ModelReader.swift in Sources */,
 				992A5CAE22DDF50F0012CCB6 /* DebugPageEditor.swift in Sources */,
