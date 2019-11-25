@@ -26,8 +26,6 @@ class TextEditorViewController: NSViewController, InspectableTextEditor {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
-
-//        NotificationCenter.default.addObserver(self, selector: #selector(textDidBeginEditing(_:)), name: NSText.didBeginEditingNotification, object: nil)
     }
 
     @objc func createNewLinkedPage(_ sender: Any?) {
@@ -53,6 +51,17 @@ class TextEditorViewController: NSViewController, InspectableTextEditor {
     //MARK: - InspectableTextEditor
     @Published var selectionAttributes: TextEditorAttributes?
 
+    var isTextSelected: Bool {
+        let ranges = self.textView.selectedRanges
+        if (ranges.count > 1) {
+            return true
+        }
+        if ((ranges.first?.rangeValue.length ?? 0) > 0) {
+            return true
+        }
+        return false
+    }
+
     var selectionAttributesDidChange: AnyPublisher<TextEditorAttributes?, Never> {
         return self.$selectionAttributes.eraseToAnyPublisher()
     }
@@ -61,9 +70,8 @@ class TextEditorViewController: NSViewController, InspectableTextEditor {
         var baseAttributes = self.textView.typingAttributes
         baseAttributes.merge(self.textView.selectedTextAttributes) { (key1, _) in key1 }
 
-        let ranges = self.textView.selectedRanges.compactMap { $0.rangeValue }
-        guard (ranges.count > 1) || ((ranges.first?.length ?? 0) > 0) else {
-            self.selectionAttributes = self.textEditorAttributes(from: baseAttributes)
+        guard self.isTextSelected else {
+            self.selectionAttributes = TextEditorAttributes(attributes: baseAttributes)
             return
         }
 
@@ -71,42 +79,21 @@ class TextEditorViewController: NSViewController, InspectableTextEditor {
             return
         }
 
+        let ranges = self.textView.selectedRanges.compactMap { $0.rangeValue }
+
         var textEditorAttributes = [TextEditorAttributes]()
         for range in ranges {
             textStorage.enumerateAttributes(in: range, options: []) { (attributes, _, _) in
                 let mergedAttributes = attributes.merging(baseAttributes) { (key1, _) in key1 }
-                textEditorAttributes.append(self.textEditorAttributes(from: mergedAttributes))
+                textEditorAttributes.append(TextEditorAttributes(attributes: mergedAttributes))
             }
         }
 
         self.selectionAttributes = TextEditorAttributes.merge(textEditorAttributes)
     }
 
-    private func textEditorAttributes(from attributes: [NSAttributedString.Key: Any]) -> TextEditorAttributes {
-        let font = attributes[.font] as? NSFont
-        let fontFamily = font?.familyName
-        let fontPostscriptName = font?.fontDescriptor.postscriptName
-        let fontSize = font?.pointSize
-        let textColour = attributes[.foregroundColor] as? NSColor
-        let paragraphStyle = attributes[.paragraphStyle] as? NSParagraphStyle
-        let underlined = attributes[.underlineStyle] as? Int
-        let struckthrough = attributes[.strikethroughStyle] as? Int
-        let symbolicTraits = font?.fontDescriptor.symbolicTraits
-
-        return TextEditorAttributes(fontFamily: fontFamily,
-                                    fontPostscriptName: fontPostscriptName,
-                                    fontSize: fontSize,
-                                    textColour: textColour,
-                                    alignment: paragraphStyle?.alignment,
-                                    isBold: symbolicTraits?.contains(.bold),
-                                    isItalic: symbolicTraits?.contains(.italic),
-                                    isUnderlined: (underlined == 1),
-                                    isStruckthrough: (struckthrough == 1))
-    }
-
     func updateSelection(with editorAttributes: TextEditorAttributes) {
-        let ranges = self.textView.selectedRanges.compactMap { $0.rangeValue }
-        guard (ranges.count > 1) || ((ranges.first?.length ?? 0) > 0) else {
+        guard self.isTextSelected else {
             self.textView.typingAttributes = editorAttributes.apply(to: self.textView.typingAttributes)
             self.updateSelectionAttributes()
             return
@@ -118,12 +105,12 @@ class TextEditorViewController: NSViewController, InspectableTextEditor {
             return
         }
 
+        let ranges = self.textView.selectedRanges.compactMap { $0.rangeValue }
         textStorage.beginEditing()
         for selectionRange in ranges {
             textStorage.enumerateAttributes(in: selectionRange, options: []) { (textAttributes, range, _) in
                 let newAttributes = editorAttributes.apply(to: textAttributes)
                 textStorage.setAttributes(newAttributes, range: range)
-//                print("range: \(range), old: \(textAttributes[.font]) new: \(newAttributes[.font])")
             }
         }
         textStorage.endEditing()

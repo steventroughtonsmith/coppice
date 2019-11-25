@@ -57,6 +57,7 @@
 		9976A49B23674454004D573D /* CanvasPageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9976A49A23674454004D573D /* CanvasPageTests.swift */; };
 		9976A49D2367524D004D573D /* ModelReaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9976A49C2367524D004D573D /* ModelReaderTests.swift */; };
 		99A0B853238961BF005FCF25 /* NSColor+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B852238961BF005FCF25 /* NSColor+M3Extensions.swift */; };
+		99A0B855238C2F46005FCF25 /* TextEditorAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B854238C2F46005FCF25 /* TextEditorAttributes.swift */; };
 		99AD8874237464C4000453E1 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AD8873237464C4000453E1 /* Alert.swift */; };
 		99AD88762374665D000453E1 /* Alert+AppKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AD88752374665D000453E1 /* Alert+AppKit.swift */; };
 		99AD88782376FCF0000453E1 /* PageContentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AD88772376FCF0000453E1 /* PageContentTests.swift */; };
@@ -203,6 +204,7 @@
 		9976A49A23674454004D573D /* CanvasPageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageTests.swift; sourceTree = "<group>"; };
 		9976A49C2367524D004D573D /* ModelReaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelReaderTests.swift; sourceTree = "<group>"; };
 		99A0B852238961BF005FCF25 /* NSColor+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+M3Extensions.swift"; sourceTree = "<group>"; };
+		99A0B854238C2F46005FCF25 /* TextEditorAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorAttributes.swift; sourceTree = "<group>"; };
 		99AD8873237464C4000453E1 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		99AD88752374665D000453E1 /* Alert+AppKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alert+AppKit.swift"; sourceTree = "<group>"; };
 		99AD88772376FCF0000453E1 /* PageContentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageContentTests.swift; sourceTree = "<group>"; };
@@ -456,6 +458,7 @@
 		9965FC412384450C002FE10D /* Text Editor Inspector */ = {
 			isa = PBXGroup;
 			children = (
+				99A0B854238C2F46005FCF25 /* TextEditorAttributes.swift */,
 				9925B2612386A0DF001A8ADC /* TextEditorInspectorTypes.swift */,
 				9965FC42238448FF002FE10D /* TextEditorInspectorViewModel.swift */,
 				9965FC4423844910002FE10D /* TextEditorInspectorViewController.swift */,
@@ -977,6 +980,7 @@
 				99C41B7322DCA98600C82DDE /* Page.swift in Sources */,
 				99C41B7522DCA9A100C82DDE /* Canvas.swift in Sources */,
 				99C865262306D12B004C7B89 /* PageSelectorViewModel.swift in Sources */,
+				99A0B855238C2F46005FCF25 /* TextEditorAttributes.swift in Sources */,
 				992A5C9F22DCCDB30012CCB6 /* NSView+M3Extensions.swift in Sources */,
 				9951C26E230AF011006CAD4D /* PageSelectorWindow.swift in Sources */,
 				99C9AF1923671DB0009F909A /* PageLink.swift in Sources */,

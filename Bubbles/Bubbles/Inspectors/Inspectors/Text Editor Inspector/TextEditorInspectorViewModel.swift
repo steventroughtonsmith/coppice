@@ -84,6 +84,7 @@ class TextEditorInspectorViewModel: BaseInspectorViewModel {
             let members = NSFontManager.shared.availableMembers(ofFontFamily: selectedFontFamily) else {
             return []
         }
+
         return members.compactMap { Typeface(memberInfo: $0) }.sorted { $0.weight < $1.weight }
     }
 
