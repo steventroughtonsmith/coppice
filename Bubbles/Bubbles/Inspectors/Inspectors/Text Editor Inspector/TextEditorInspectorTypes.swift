@@ -81,6 +81,26 @@ struct TextEditorAttributes {
     let isUnderlined: Bool?
     let isStruckthrough: Bool?
 
+    init(fontFamily: String? = nil,
+         fontPostscriptName: String? = nil,
+         fontSize: CGFloat? = nil,
+         textColour: NSColor? = nil,
+         alignment: NSTextAlignment? = nil,
+         isBold: Bool? = nil,
+         isItalic: Bool? = nil,
+         isUnderlined: Bool? = nil,
+         isStruckthrough: Bool? = nil) {
+        self.fontFamily = fontFamily
+        self.fontPostscriptName = fontPostscriptName
+        self.fontSize = fontSize
+        self.textColour = textColour
+        self.alignment = alignment
+        self.isBold = isBold
+        self.isItalic = isItalic
+        self.isUnderlined = isUnderlined
+        self.isStruckthrough = isStruckthrough
+    }
+
     static func merge(_ attributes: [TextEditorAttributes]) -> TextEditorAttributes {
         func merge<Value: Hashable>(_ key: KeyPath<Self, Value?>, of attributes: [TextEditorAttributes]) -> Value? {
             let set = Set(attributes.map { $0[keyPath: key] })
@@ -97,9 +117,79 @@ struct TextEditorAttributes {
                                     isUnderlined: merge(\.isUnderlined, of: attributes),
                                     isStruckthrough: merge(\.isStruckthrough, of: attributes))
     }
+
+    func apply(to attributes: [NSAttributedString.Key: Any]) -> [NSAttributedString.Key: Any] {
+        var modifiedAttributes = attributes
+        if let textColour = self.textColour {
+            modifiedAttributes[.foregroundColor] = textColour
+        }
+        if let alignment = self.alignment {
+            let paragraphStyle = (modifiedAttributes[.paragraphStyle] as? NSMutableParagraphStyle) ?? NSMutableParagraphStyle()
+            paragraphStyle.alignment = alignment
+            modifiedAttributes[.paragraphStyle] = paragraphStyle
+        }
+        if let underlined = self.isUnderlined {
+            if underlined {
+                modifiedAttributes[.underlineStyle] = 1
+            } else {
+                modifiedAttributes.removeValue(forKey: .underlineStyle)
+            }
+        }
+        if let strikethrough = self.isStruckthrough {
+            if strikethrough {
+                modifiedAttributes[.strikethroughStyle] = 1
+            } else {
+                modifiedAttributes.removeValue(forKey: .strikethroughStyle)
+            }
+        }
+
+        if let font = (modifiedAttributes[.font] as? NSFont) {
+            var fontDescriptor = font.fontDescriptor
+            var symbolicTraits = fontDescriptor.symbolicTraits
+            
+            if let family = self.fontFamily {
+                print("family: \(family)")
+                fontDescriptor = fontDescriptor.withFamily(family)
+                print("fontDescriptor: \(fontDescriptor)")
+            }
+            if let postScriptName = self.fontPostscriptName {
+                fontDescriptor = fontDescriptor.withFace(postScriptName)
+            }
+
+            if let isBold = self.isBold {
+                if isBold {
+                    symbolicTraits.insert(.bold)
+                } else {
+                    symbolicTraits.remove(.bold)
+                }
+            }
+            if let isItalic = self.isItalic {
+                if isItalic {
+                    symbolicTraits.insert(.italic)
+                } else {
+                    symbolicTraits.remove(.italic)
+                }
+            }
+            fontDescriptor = fontDescriptor.withSymbolicTraits(symbolicTraits)
+
+            print("fontDescriptor after traits: \(fontDescriptor)")
+
+            print("final font: \(NSFont(descriptor: fontDescriptor, size: 12))")
+
+            var fontSize = font.pointSize
+            if let size = self.fontSize {
+                fontSize = size
+            }
+
+            modifiedAttributes[.font] = NSFont(descriptor: fontDescriptor, size: fontSize)
+        }
+        return modifiedAttributes
+    }
 }
 
 protocol InspectableTextEditor {
     var selectionAttributes: TextEditorAttributes? { get }
     var selectionAttributesDidChange: AnyPublisher<TextEditorAttributes?, Never> { get }
+
+    func updateSelection(with attributes: TextEditorAttributes)
 }

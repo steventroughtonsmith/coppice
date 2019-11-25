@@ -51,22 +51,7 @@ class TextEditorViewController: NSViewController, InspectableTextEditor {
 
 
     //MARK: - InspectableTextEditor
-    @Published var selectionAttributes: TextEditorAttributes? {
-        didSet {
-            if let attributes = self.selectionAttributes {
-                var string = ""
-                for component in "\(attributes)".split(separator: ",") {
-                    guard string.count > 0 else {
-                        string = String(component)
-                        continue
-                    }
-                    string = "\(string)\n                    \(String(component))"
-                }
-                print("\(string)")
-                print("==========")
-            }
-        }
-    }
+    @Published var selectionAttributes: TextEditorAttributes?
 
     var selectionAttributesDidChange: AnyPublisher<TextEditorAttributes?, Never> {
         return self.$selectionAttributes.eraseToAnyPublisher()
@@ -117,6 +102,33 @@ class TextEditorViewController: NSViewController, InspectableTextEditor {
                                     isItalic: symbolicTraits?.contains(.italic),
                                     isUnderlined: (underlined == 1),
                                     isStruckthrough: (struckthrough == 1))
+    }
+
+    func updateSelection(with editorAttributes: TextEditorAttributes) {
+        let ranges = self.textView.selectedRanges.compactMap { $0.rangeValue }
+        guard (ranges.count > 1) || ((ranges.first?.length ?? 0) > 0) else {
+            self.textView.typingAttributes = editorAttributes.apply(to: self.textView.typingAttributes)
+            self.updateSelectionAttributes()
+            return
+        }
+
+        guard self.textView.shouldChangeText(inRanges: self.textView.selectedRanges, replacementStrings: nil),
+              let textStorage = self.textView.textStorage else
+        {
+            return
+        }
+
+        textStorage.beginEditing()
+        for selectionRange in ranges {
+            textStorage.enumerateAttributes(in: selectionRange, options: []) { (textAttributes, range, _) in
+                let newAttributes = editorAttributes.apply(to: textAttributes)
+                textStorage.setAttributes(newAttributes, range: range)
+//                print("range: \(range), old: \(textAttributes[.font]) new: \(newAttributes[.font])")
+            }
+        }
+        textStorage.endEditing()
+        self.textView.didChangeText()
+        self.updateSelectionAttributes()
     }
 }
 

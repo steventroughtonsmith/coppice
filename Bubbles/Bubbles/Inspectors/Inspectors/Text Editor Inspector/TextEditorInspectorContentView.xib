@@ -50,10 +50,15 @@
                         </menu>
                     </popUpButtonCell>
                     <connections>
-                        <binding destination="-2" name="contentObjects" keyPath="self.viewModel.typefaces" previousBinding="w1y-tj-DfP" id="CUr-iE-ie4"/>
-                        <binding destination="-2" name="contentValues" keyPath="self.viewModel.typefaces.displayName" previousBinding="CUr-iE-ie4" id="hGo-9W-h5t"/>
+                        <binding destination="-2" name="enabled" keyPath="self.viewModel.selectedFontFamily" id="xXs-vm-ev7">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSIsNotNil</string>
+                            </dictionary>
+                        </binding>
                         <binding destination="-2" name="selectedObject" keyPath="self.viewModel.selectedTypeface" previousBinding="hGo-9W-h5t" id="R9L-QV-6lM"/>
+                        <binding destination="-2" name="contentObjects" keyPath="self.viewModel.typefaces" previousBinding="w1y-tj-DfP" id="CUr-iE-ie4"/>
                         <binding destination="-2" name="content" keyPath="self.viewModel.typefaces" id="w1y-tj-DfP"/>
+                        <binding destination="-2" name="contentValues" keyPath="self.viewModel.typefaces.displayName" previousBinding="CUr-iE-ie4" id="hGo-9W-h5t"/>
                     </connections>
                 </popUpButton>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tVJ-Wa-8Xo">
@@ -82,7 +87,10 @@
                 </textField>
                 <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gJM-Vb-Oux">
                     <rect key="frame" x="264" y="59" width="19" height="28"/>
-                    <stepperCell key="cell" continuous="YES" alignment="left" maxValue="100" id="iIB-a3-m2I"/>
+                    <stepperCell key="cell" continuous="YES" alignment="left" maxValue="999" id="iIB-a3-m2I"/>
+                    <connections>
+                        <binding destination="-2" name="value" keyPath="self.viewModel.fontSize" id="ANJ-Uy-ROM"/>
+                    </connections>
                 </stepper>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fgc-lj-oNC">
                     <rect key="frame" x="-2" y="28" width="161" height="25"/>
@@ -97,6 +105,9 @@
                             </items>
                         </menu>
                     </popUpButtonCell>
+                    <connections>
+                        <action selector="colourPopUpButtonChanged:" target="-2" id="ygm-kU-jAw"/>
+                    </connections>
                 </popUpButton>
                 <segmentedControl horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lJO-MO-Qab">
                     <rect key="frame" x="162" y="29" width="120" height="24"/>
@@ -108,6 +119,9 @@
                             <segment label="􀌂"/>
                         </segments>
                     </segmentedCell>
+                    <connections>
+                        <action selector="alignmentClicked:" target="-2" id="WmK-KG-Cnd"/>
+                    </connections>
                 </segmentedControl>
                 <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1fJ-zV-rDa">
                     <rect key="frame" x="-2" y="-2" width="242" height="24"/>
@@ -120,6 +134,9 @@
                             <segment label="􀅖"/>
                         </segments>
                     </segmentedCell>
+                    <connections>
+                        <action selector="styleControlClicked:" target="-2" id="sia-pJ-wff"/>
+                    </connections>
                 </segmentedControl>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="b02-Xt-Yqt">
                     <rect key="frame" x="242" y="-7" width="44" height="32"/>

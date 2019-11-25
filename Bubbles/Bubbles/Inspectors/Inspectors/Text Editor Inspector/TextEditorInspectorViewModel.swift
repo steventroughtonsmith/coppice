@@ -66,12 +66,15 @@ class TextEditorInspectorViewModel: BaseInspectorViewModel {
         if (key == #keyPath(typefaces)) {
             keyPaths.insert("selectedFontFamily")
         }
+        if (key == #keyPath(textColours)) {
+            keyPaths.insert("textColour")
+        }
 
         return keyPaths
     }
 
 
-
+    //MARK: - Populating UI
     @objc dynamic var fontFamilies: [String] {
         return NSFontManager.shared.availableFontFamilies
     }
@@ -105,21 +108,15 @@ class TextEditorInspectorViewModel: BaseInspectorViewModel {
         return textColourList
     }
 
-    @objc dynamic var selectedFontFamily: String? {
-        get {
-            self.cachedAttributes?.fontFamily
-        }
-        set {
 
-        }
+    //MARK: - Selection
+    @objc dynamic var selectedFontFamily: String? {
+        get { self.cachedAttributes?.fontFamily }
+        set { self.editor.updateSelection(with: TextEditorAttributes(fontFamily: newValue)) }
     }
     @objc dynamic var selectedTypeface: Typeface? {
-        get {
-            return self.typefaces.first { $0.fontName == self.cachedAttributes?.fontPostscriptName }
-        }
-        set {
-
-        }
+        get { self.typefaces.first { $0.fontName == self.cachedAttributes?.fontPostscriptName } }
+        set { self.editor.updateSelection(with: TextEditorAttributes(fontPostscriptName: newValue?.fontName)) }
     }
 
     @objc dynamic var fontSize: NSNumber? {
@@ -130,41 +127,39 @@ class TextEditorInspectorViewModel: BaseInspectorViewModel {
             return fontSize as NSNumber
         }
         set {
-
+            if let fontSize = newValue?.floatValue {
+                self.editor.updateSelection(with: TextEditorAttributes(fontSize: CGFloat(fontSize)))
+            }
         }
     }
 
     @objc dynamic var rawAlignment: Int {
-        get {
-            return self.cachedAttributes?.alignment?.rawValue ?? -1
-        }
-        set {
-
-        }
+        get { self.cachedAttributes?.alignment?.rawValue ?? -1 }
+        set { self.editor.updateSelection(with: TextEditorAttributes(alignment: NSTextAlignment(rawValue: newValue))) }
     }
 
     @objc dynamic var textColour: NSColor? {
         get { self.cachedAttributes?.textColour}
-        set {}
+        set { self.editor.updateSelection(with: TextEditorAttributes(textColour: newValue)) }
     }
 
     @objc dynamic var isBold: Bool {
         get { self.cachedAttributes?.isBold ?? false }
-        set {}
+        set {self.editor.updateSelection(with: TextEditorAttributes(isBold: newValue)) }
     }
 
     @objc dynamic var isItalic: Bool {
         get { self.cachedAttributes?.isItalic ?? false }
-        set {}
+        set { self.editor.updateSelection(with: TextEditorAttributes(isItalic: newValue)) }
     }
 
     @objc dynamic var isUnderlined: Bool {
         get { self.cachedAttributes?.isUnderlined ?? false }
-        set {}
+        set { self.editor.updateSelection(with: TextEditorAttributes(isUnderlined: newValue)) }
     }
 
     @objc dynamic var isStruckthrough: Bool {
         get { self.cachedAttributes?.isStruckthrough ?? false }
-        set {}
+        set { self.editor.updateSelection(with: TextEditorAttributes(isStruckthrough: newValue)) }
     }
 }

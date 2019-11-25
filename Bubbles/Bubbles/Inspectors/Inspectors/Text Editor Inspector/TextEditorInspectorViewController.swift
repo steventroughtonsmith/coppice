@@ -32,6 +32,8 @@ class TextEditorInspectorViewController: BaseInspectorViewController {
         self.setupColourPopUpButton()
     }
 
+
+    //MARK: - Colour Control
     private var textColoursObserver: AnyCancellable!
     private func setupColourPopUpButton() {
         guard let popUpButton = self.colourPopUpButton,
@@ -47,6 +49,26 @@ class TextEditorInspectorViewController: BaseInspectorViewController {
             }
     }
 
+    @IBAction func colourPopUpButtonChanged(_ sender: Any) {
+        guard let selectedItem = self.colourPopUpButton.selectedItem else {
+            return
+        }
+
+        if selectedItem.tag == -1 {
+            let panel = NSColorPanel.shared
+            panel.setTarget(self)
+            panel.setAction(#selector(colourPanelChanged(_:)))
+            panel.makeKeyAndOrderFront(self)
+
+        }
+        else if let textColour = selectedItem.representedObject as? TextColour{
+            self.typedViewModel.textColour = textColour.colour
+        }
+    }
+
+    @objc dynamic func colourPanelChanged(_ sender: Any?) {
+        self.typedViewModel.textColour = NSColorPanel.shared.color
+    }
 
     //MARK: - Alignment Control
     private var alignmentObserver: AnyCancellable!
@@ -63,10 +85,12 @@ class TextEditorInspectorViewController: BaseInspectorViewController {
                                                     .assign(to: \.selectedSegment, on: alignmentControl)
     }
 
+    @IBAction func alignmentClicked(_ sender: Any) {
+        self.typedViewModel.rawAlignment = self.alignmentControl.selectedTag()
+    }
 
 
     //MARK: - Style Control
-
     private var boldObserver: AnyCancellable!
     private var italicObserver: AnyCancellable!
     private var underlineObserver: AnyCancellable!
@@ -82,12 +106,26 @@ class TextEditorInspectorViewController: BaseInspectorViewController {
         self.strikethroughObserver = self.typedViewModel.publisher(for: \.isStruckthrough)
                                                         .sink { styleControl?.setSelected($0, forSegment: 3) }
     }
+
+    @IBAction func styleControlClicked(_ sender: Any) {
+        self.updateStyle(forSegment: 0, keyPath: \.isBold)
+        self.updateStyle(forSegment: 1, keyPath: \.isItalic)
+        self.updateStyle(forSegment: 2, keyPath: \.isUnderlined)
+        self.updateStyle(forSegment: 3, keyPath: \.isStruckthrough)
+    }
+
+    private func updateStyle(forSegment segment: Int, keyPath: ReferenceWritableKeyPath<TextEditorInspectorViewModel, Bool>) {
+        let selected = self.styleControl.isSelected(forSegment: segment)
+        guard (selected != self.typedViewModel[keyPath: keyPath]) else {
+            return
+        }
+        self.typedViewModel[keyPath: keyPath] = selected
+    }
 }
 
 
 extension TextColourList {
     func generateMenuItems() -> ([NSMenuItem], selected: NSMenuItem?) {
-        print("generating items")
         var menuItems = [NSMenuItem]()
         for textColour in self.colours {
             let item = NSMenuItem(title: textColour.name, action: nil, keyEquivalent: "")
@@ -100,6 +138,7 @@ extension TextColourList {
         let customMenuItem = NSMenuItem(title: NSLocalizedString("Custom", comment: "Custom colour item"),
                                         action: nil,
                                         keyEquivalent: "")
+        customMenuItem.tag = -1
 
         var selectedItem: NSMenuItem? = nil
         if let selectedColour = self.selectedColour {
