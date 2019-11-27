@@ -64,6 +64,7 @@ class DocumentWindowController: NSWindowController {
         self.sidebarViewController = SidebarViewController(viewModel: sidebarVM)
 
         self.editorContainerViewController = EditorContainerViewController(viewModel: EditorContainerViewModel(modelController: document.modelController, documentWindowState: self.documentWindowState))
+        self.editorContainerViewController?.delegate = self
         self.inspectorContainerViewController = InspectorContainerViewController(viewModel: InspectorContainerViewModel(modelController: document.modelController, documentWindowState: self.documentWindowState))
     }
 
@@ -151,5 +152,12 @@ class DocumentWindowController: NSWindowController {
             prefix = "   \(prefix)"
             responder = responder?.nextResponder
         }
+    }
+}
+
+
+extension DocumentWindowController: EditorContainerViewControllerDelegate {
+    func open(_ page: PageLink, from viewController: EditorContainerViewController) {
+        self.openPage(at: page)
     }
 }

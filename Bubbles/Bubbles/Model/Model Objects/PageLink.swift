@@ -56,4 +56,8 @@ struct PageLink {
         }
         return url
     }
+
+    func withSource(_ source: ModelID? = nil) -> Self {
+        return PageLink(destination: self.destination, source: source)
+    }
 }

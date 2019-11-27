@@ -14,6 +14,7 @@ protocol Editor {
     var childEditors: [Editor] { get }
 
     func inspectorsDidChange()
+    func open(_ link: PageLink)
 }
 
 
@@ -36,5 +37,9 @@ extension Editor where Self: NSViewController {
 
     func inspectorsDidChange() {
         self.parentEditor?.inspectorsDidChange()
+    }
+
+    func open(_ link: PageLink) {
+        self.parentEditor?.open(link)
     }
 }

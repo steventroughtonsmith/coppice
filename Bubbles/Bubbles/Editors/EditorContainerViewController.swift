@@ -8,7 +8,13 @@
 
 import Cocoa
 
+protocol EditorContainerViewControllerDelegate: class {
+    func open(_ page: PageLink, from viewController: EditorContainerViewController)
+}
+
 class EditorContainerViewController: NSViewController {
+    weak var delegate: EditorContainerViewControllerDelegate?
+
     let viewModel: EditorContainerViewModel
     init(viewModel: EditorContainerViewModel) {
         self.viewModel = viewModel
@@ -53,6 +59,10 @@ extension EditorContainerViewController: Editor {
 
     func inspectorsDidChange() {
         self.viewModel.documentWindowState.currentInspectors = self.inspectors
+    }
+
+    func open(_ page: PageLink) {
+        self.delegate?.open(page, from: self)
     }
 }
 

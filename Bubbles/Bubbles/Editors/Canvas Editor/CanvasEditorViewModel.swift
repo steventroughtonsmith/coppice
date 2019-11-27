@@ -165,10 +165,10 @@ class CanvasEditorViewModel: NSObject {
             return
         }
 
+        let canvasPageCollection = self.modelController.collection(for: CanvasPage.self)
         var sourcePage: CanvasPage? = nil
-        if let source = link.source,
-           let potentialSource = pageCollection.objectWithID(source) {
-            sourcePage = self.canvas.canvasPage(for: potentialSource)
+        if let source = link.source {
+            sourcePage = canvasPageCollection.objectWithID(source)
         }
 
         let pagePosition = (point != nil) ? self.layoutEngine.convertPointToPageSpace(point!) : nil

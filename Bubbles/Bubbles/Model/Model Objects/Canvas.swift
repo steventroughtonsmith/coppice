@@ -39,10 +39,6 @@ final class Canvas: NSObject, CollectableModelObject {
 
 
     //MARK: - Helpers
-    func canvasPage(for page: Page) -> CanvasPage? {
-        return self.pages.first(where: { $0.page == page })
-    }
-
     @discardableResult func add(_ page: Page, linkedFrom sourcePage: CanvasPage? = nil, centredOn point: CGPoint? = nil) -> CanvasPage {
         guard let collection = self.modelController?.collection(for: CanvasPage.self) else {
             fatalError("Could not find canvas page collection")

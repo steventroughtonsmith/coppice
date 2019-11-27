@@ -109,6 +109,18 @@ extension TextEditorViewController: NSTextViewDelegate {
         return menu
     }
 
+    func textView(_ textView: NSTextView, clickedOnLink link: Any, at charIndex: Int) -> Bool {
+        guard let url = link as? URL else {
+            return false
+        }
+
+        guard let pageLink = PageLink(url: url) else {
+            return false
+        }
+        self.open(pageLink)
+        return true
+    }
+
     func textViewDidChangeSelection(_ notification: Notification) {
         guard self.view.window?.firstResponder == self.textView else {
             return

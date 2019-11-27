@@ -84,4 +84,8 @@ extension CanvasPageViewController: Editor {
         let inspectors = self.viewModel.pageEditor?.inspectors ?? []
         return inspectors + [self.canvasPageInspectorViewController]
     }
+
+    func open(_ link: PageLink) {
+        self.parentEditor?.open(link.withSource(self.viewModel.canvasPage.id))
+    }
 }
