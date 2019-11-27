@@ -1,0 +1,158 @@
+//
+//  TextEditorInspectorViewModelTests.swift
+//  BubblesTests
+//
+//  Created by Martin Pilkington on 26/11/2019.
+//  Copyright © 2019 M Cubed Software. All rights reserved.
+//
+
+import XCTest
+import Combine
+@testable import Bubbles
+
+class TestTextEditor: InspectableTextEditor {
+    @Published var selectionAttributes: TextEditorAttributes?
+    var selectionAttributesDidChange: AnyPublisher<TextEditorAttributes?, Never> {
+        return self.$selectionAttributes.eraseToAnyPublisher()
+    }
+
+    var updatedSelectionAttributes: TextEditorAttributes?
+    func updateSelection(with attributes: TextEditorAttributes) {
+        self.updatedSelectionAttributes = attributes
+    }
+
+
+}
+
+class TextEditorInspectorViewModelTests: XCTestCase {
+
+    var editor: TestTextEditor!
+    var modelController: BubblesModelController!
+    var viewModel: TextEditorInspectorViewModel!
+
+    override func setUp() {
+        super.setUp()
+
+        self.modelController = BubblesModelController(undoManager: UndoManager())
+        self.editor = TestTextEditor()
+        self.viewModel = TextEditorInspectorViewModel(editor: self.editor, modelController: self.modelController)
+    }
+
+
+    //MARK: - Tests
+
+    func test_fontFamilies_returnsAvailableFamiliesFromSystem() {
+        let families = NSFontManager.shared.availableFontFamilies
+        XCTAssertEqual(self.viewModel.fontFamilies.count, families.count)
+    }
+
+    func test_typefaces_returnsAllTypefacesForSelectedFamily() {
+        self.editor.selectionAttributes = TextEditorAttributes(fontFamily: "Helvetica")
+
+        let expectedNames = Set(["Light", "Regular", "Light Oblique", "Oblique", "Bold", "Bold Oblique"])
+
+        let typefaceNames = Set(self.viewModel.typefaces.map { $0.displayName })
+        XCTAssertEqual(typefaceNames, expectedNames)
+    }
+
+    func test_textColours_containsAllStandardColours() {
+        let expectedColourNames = Set(["Black", "Blue", "Brown", "Cyan", "Green", "Magenta", "Orange", "Purple", "Red", "Yellow", "White"])
+        let colourNames = Set(self.viewModel.textColours.colours.map { $0.name })
+        XCTAssertEqual(colourNames, expectedColourNames)
+    }
+
+    func test_textColours_containsSelectedColour() {
+        self.editor.selectionAttributes = TextEditorAttributes(textColour: NSColor.blue)
+        XCTAssertEqual(self.viewModel.textColours.selectedColour, NSColor.blue)
+    }
+
+    func test_selectedFontFamily_getReturnsFamilyFromAttributes() {
+        self.editor.selectionAttributes = TextEditorAttributes(fontFamily: "Helvetica")
+        XCTAssertEqual(self.viewModel.selectedFontFamily, "Helvetica")
+    }
+
+    func test_selectedFontFamily_setUpdatesEditorWithNewFamily() {
+        self.viewModel.selectedFontFamily = "Impact"
+        XCTAssertEqual(self.editor.updatedSelectionAttributes, TextEditorAttributes(fontFamily: "Impact"))
+    }
+
+    func test_selectedTypeface_getReturnsTypefaceObjectMatchingAttributesPostscriptName() {
+        self.editor.selectionAttributes = TextEditorAttributes(fontFamily: "Helvetica", fontPostscriptName: "Helvetica-Bold")
+        XCTAssertEqual(self.viewModel.selectedTypeface?.fontName, "Helvetica-Bold")
+    }
+
+    func test_selectedTypeface_setUpdatesEditorWithNewPostscriptName() {
+        self.viewModel.selectedTypeface = Typeface(memberInfo: ["DejaVuSansMono-Bold", "Bold", 5, UInt(1)])
+        XCTAssertEqual(self.editor.updatedSelectionAttributes, TextEditorAttributes(fontPostscriptName: "DejaVuSansMono-Bold"))
+    }
+
+    func test_fontSize_getReturnsFontSizeFromAttributes() {
+        self.editor.selectionAttributes = TextEditorAttributes(fontSize: 30.0)
+        XCTAssertEqual(self.viewModel.fontSize, NSNumber(floatLiteral: 30.0))
+    }
+
+    func test_fontSize_setUpdatesEditorWithNewFontSize() {
+        self.viewModel.fontSize = 42.0
+        XCTAssertEqual(self.editor.updatedSelectionAttributes, TextEditorAttributes(fontSize: 42.0))
+    }
+
+    func test_rawAlignment_getReturnsAlignmentFromAttributes() {
+        self.editor.selectionAttributes = TextEditorAttributes(alignment: .right)
+        XCTAssertEqual(self.viewModel.rawAlignment, NSTextAlignment.right.rawValue)
+    }
+
+    func test_rawAlignment_setUpdatesEditorWithNewTextAlignment() {
+        self.viewModel.rawAlignment = NSTextAlignment.center.rawValue
+        XCTAssertEqual(self.editor.updatedSelectionAttributes, TextEditorAttributes(alignment: .center))
+    }
+
+    func test_textColour_getReturnsColourFromAttributes() {
+        self.editor.selectionAttributes = TextEditorAttributes(textColour: NSColor.red)
+        XCTAssertEqual(self.viewModel.textColour, NSColor.red)
+    }
+
+    func test_textColour_setUpdatesEditorWithNewTextColour() {
+        self.viewModel.textColour = NSColor.green
+        XCTAssertEqual(self.editor.updatedSelectionAttributes, TextEditorAttributes(textColour: NSColor.green))
+    }
+
+    func test_isBold_getReturnsBoldFromAttributes() {
+        self.editor.selectionAttributes = TextEditorAttributes(isBold: true)
+        XCTAssertEqual(self.viewModel.isBold, true)
+    }
+
+    func test_isBold_setUpdatesEditorWithNewBoldValue() {
+        self.viewModel.isBold = true
+        XCTAssertEqual(self.editor.updatedSelectionAttributes, TextEditorAttributes(isBold: true))
+    }
+
+    func test_isItalic_getReturnsItalicFromAttributes() {
+        self.editor.selectionAttributes = TextEditorAttributes(isItalic: true)
+        XCTAssertEqual(self.viewModel.isItalic, true)
+    }
+
+    func test_isItalic_setUpdatesEditorWithNewItalicValue() {
+        self.viewModel.isItalic = true
+        XCTAssertEqual(self.editor.updatedSelectionAttributes, TextEditorAttributes(isItalic: true))
+    }
+
+    func test_isUnderlined_getReturnsUnderlinedFromAttributes() {
+        self.editor.selectionAttributes = TextEditorAttributes(isUnderlined: true)
+        XCTAssertEqual(self.viewModel.isUnderlined, true)
+    }
+
+    func test_isUnderlined_setUpdatesEditorWithNewUnderlinedValue() {
+        self.viewModel.isUnderlined = true
+        XCTAssertEqual(self.editor.updatedSelectionAttributes, TextEditorAttributes(isUnderlined: true))
+    }
+
+    func test_isStruckthrough_getReturnsStrikethroughFromAttributes() {
+        self.editor.selectionAttributes = TextEditorAttributes(isStruckthrough: true)
+        XCTAssertEqual(self.viewModel.isStruckthrough, true)
+    }
+
+    func test_isStruckthrough_setUpdatesEditorWithNewStrikethroughValue() {
+        self.viewModel.isStruckthrough = true
+        XCTAssertEqual(self.editor.updatedSelectionAttributes, TextEditorAttributes(isStruckthrough: true))
+    }
+}

@@ -88,10 +88,6 @@ class TextEditorInspectorViewModel: BaseInspectorViewModel {
         return members.compactMap { Typeface(memberInfo: $0) }.sorted { $0.weight < $1.weight }
     }
 
-    @objc dynamic var typefaceNames: [String] {
-        return self.typefaces.map { $0.displayName }
-    }
-
     @objc dynamic var textColours: TextColourList {
         let textColourList = TextColourList()
         guard let colourList = NSColorList(named: "Apple") else {

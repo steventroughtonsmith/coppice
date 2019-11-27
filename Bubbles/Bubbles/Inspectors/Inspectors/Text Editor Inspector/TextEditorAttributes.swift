@@ -8,7 +8,7 @@
 
 import AppKit
 
-struct TextEditorAttributes {
+struct TextEditorAttributes: Equatable {
     let fontFamily: String?
     let fontPostscriptName: String?
     let fontSize: CGFloat?
@@ -120,7 +120,7 @@ struct TextEditorAttributes {
                     symbolicTraits.remove(.bold)
                 }
             }
-            
+
             if let isItalic = self.isItalic {
                 if isItalic {
                     symbolicTraits.insert(.italic)
@@ -163,6 +163,30 @@ struct TextEditorAttributes {
             font = NSFont(descriptor: fontDescriptor, size: size)
         }
         return font
+    }
+}
+
+
+
+extension NSMutableAttributedString {
+    func textEditorAttributes(in ranges: [NSRange], typingAttributes: [NSAttributedString.Key: Any]) -> TextEditorAttributes {
+        var textEditorAttributes = [TextEditorAttributes]()
+        for range in ranges {
+            self.enumerateAttributes(in: range, options: []) { (attributes, _, _) in
+                let mergedAttributes = attributes.merging(typingAttributes) { (key1, _) in key1 }
+                textEditorAttributes.append(TextEditorAttributes(attributes: mergedAttributes))
+            }
+        }
+        return TextEditorAttributes.merge(textEditorAttributes)
+    }
+
+    func apply(_ textEditorAttributes: TextEditorAttributes, to ranges: [NSRange]) {
+        for selectionRange in ranges {
+            self.enumerateAttributes(in: selectionRange, options: []) { (textAttributes, range, _) in
+                let newAttributes = textEditorAttributes.apply(to: textAttributes)
+                self.setAttributes(newAttributes, range: range)
+            }
+        }
     }
 }
 

@@ -104,8 +104,8 @@ class LayoutEnginePageTests: XCTestCase {
     func test_layoutFrame_convertsContentFrameOriginToCanvasSpaceIfConfigIsAllZeros() {
         let layoutEngine = self.layoutEngine()
 
-        layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: -30, y: -20, width: 10, height: 10))
-        let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 110, height: 220))
+        layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: -30, y: -20, width: 10, height: 10), minimumContentSize: .zero)
+        let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 110, height: 220), minimumContentSize: .zero)
 
         XCTAssertEqual(page.layoutFrame.origin, CGPoint(x: 50, y: 40))
     }
@@ -113,8 +113,8 @@ class LayoutEnginePageTests: XCTestCase {
     func test_layoutFrame_matchesContentFrameSizeIfConfigIsAllZeros() {
         let layoutEngine = self.layoutEngine()
 
-        layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: -30, y: -20, width: 10, height: 10))
-        let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 110, height: 220))
+        layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: -30, y: -20, width: 10, height: 10), minimumContentSize: .zero)
+        let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 110, height: 220), minimumContentSize: .zero)
 
         XCTAssertEqual(page.layoutFrame.size, CGSize(width: 110, height: 220))
     }
@@ -126,16 +126,16 @@ class LayoutEnginePageTests: XCTestCase {
                                              pageResizeHandleOffset: 3,
                                              contentBorder: 20)
 
-        layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: -30, y: -20, width: 10, height: 10))
-        let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 110, height: 220))
+        layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: -30, y: -20, width: 10, height: 10), minimumContentSize: .zero)
+        let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 110, height: 220), minimumContentSize: .zero)
 
         XCTAssertEqual(page.layoutFrame, CGRect(x: 50, y: 40, width: 116, height: 236))
     }
 
     func test_layoutFrame_settingFrameConvertsOriginToPageSpaceAndSetsContentFrameIfConfigIsAllZeroes() {
         let layoutEngine = self.layoutEngine()
-        layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: -30, y: -20, width: 10, height: 10))
-        let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 110, height: 220))
+        layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: -30, y: -20, width: 10, height: 10), minimumContentSize: .zero)
+        let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 110, height: 220), minimumContentSize: .zero)
 
         page.layoutFrame = CGRect(x: 60, y: 60, width: 130, height: 240)
 
@@ -144,8 +144,8 @@ class LayoutEnginePageTests: XCTestCase {
 
     func test_layoutFrame_settingFrameSetsContentFrameSizeToSameIfConfigIsAllZeroes() {
         let layoutEngine = self.layoutEngine()
-        layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: -30, y: -20, width: 10, height: 10))
-        let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 110, height: 220))
+        layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: -30, y: -20, width: 10, height: 10), minimumContentSize: .zero)
+        let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 110, height: 220), minimumContentSize: .zero)
 
         page.layoutFrame = CGRect(x: 60, y: 60, width: 130, height: 240)
 
@@ -158,8 +158,8 @@ class LayoutEnginePageTests: XCTestCase {
                                              pageResizeCornerHandleSize: 5,
                                              pageResizeHandleOffset: 3,
                                              contentBorder: 20)
-        layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: -30, y: -20, width: 10, height: 10))
-        let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 110, height: 220))
+        layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: -30, y: -20, width: 10, height: 10), minimumContentSize: .zero)
+        let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 110, height: 220), minimumContentSize: .zero)
 
         page.layoutFrame = CGRect(x: 60, y: 60, width: 130, height: 240)
 
@@ -173,8 +173,8 @@ class LayoutEnginePageTests: XCTestCase {
                                              pageResizeHandleOffset: 3,
                                              contentBorder: 20)
 
-        layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: -30, y: -20, width: 10, height: 10))
-        let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 220, height: 110))
+        layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: -30, y: -20, width: 10, height: 10), minimumContentSize: .zero)
+        let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 220, height: 110), minimumContentSize: .zero)
 
         XCTAssertEqual(page.layoutFrameInPageSpace, CGRect(origin: CGPoint(x: -3, y: -13), size: page.layoutFrame.size))
     }
@@ -188,7 +188,7 @@ class LayoutEnginePageTests: XCTestCase {
                                              pageResizeHandleOffset: 0,
                                              contentBorder: 20)
 
-        let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 110, height: 220))
+        let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 110, height: 220), minimumContentSize: .zero)
 
         XCTAssertEqual(page.visualPageFrame, CGRect(x: 0, y: 0, width: 110, height: 220))
     }
@@ -200,7 +200,7 @@ class LayoutEnginePageTests: XCTestCase {
                                              pageResizeHandleOffset: 7,
                                              contentBorder: 20)
 
-        let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 110, height: 220))
+        let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 110, height: 220), minimumContentSize: .zero)
 
         XCTAssertEqual(page.visualPageFrame, CGRect(x: 7, y: 7, width: 110, height: 220))
     }
@@ -212,7 +212,7 @@ class LayoutEnginePageTests: XCTestCase {
                                              pageResizeHandleOffset: 0,
                                              contentBorder: 20)
 
-        let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 110, height: 220))
+        let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 110, height: 220), minimumContentSize: .zero)
 
         XCTAssertEqual(page.visualPageFrame, CGRect(x: 0, y: 0, width: 110, height: 262))
     }
@@ -224,7 +224,7 @@ class LayoutEnginePageTests: XCTestCase {
                                              pageResizeHandleOffset: 0,
                                              contentBorder: 20)
 
-        let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 110, height: 220))
+        let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 110, height: 220), minimumContentSize: .zero)
 
         XCTAssertEqual(page.titleFrameInsideVisualPage, CGRect(x: 0, y: 0, width: 110, height: 42))
     }
@@ -236,7 +236,7 @@ class LayoutEnginePageTests: XCTestCase {
                                              pageResizeHandleOffset: 0,
                                              contentBorder: 20)
 
-        let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 110, height: 220))
+        let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 110, height: 220), minimumContentSize: .zero)
 
         XCTAssertEqual(page.contentFrameInsideVisualPage, CGRect(x: 0, y: 42, width: 110, height: 220))
     }

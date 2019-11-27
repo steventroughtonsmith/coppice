@@ -51,17 +51,6 @@ class TextEditorViewController: NSViewController, InspectableTextEditor {
     //MARK: - InspectableTextEditor
     @Published var selectionAttributes: TextEditorAttributes?
 
-    var isTextSelected: Bool {
-        let ranges = self.textView.selectedRanges
-        if (ranges.count > 1) {
-            return true
-        }
-        if ((ranges.first?.rangeValue.length ?? 0) > 0) {
-            return true
-        }
-        return false
-    }
-
     var selectionAttributesDidChange: AnyPublisher<TextEditorAttributes?, Never> {
         return self.$selectionAttributes.eraseToAnyPublisher()
     }
@@ -70,7 +59,7 @@ class TextEditorViewController: NSViewController, InspectableTextEditor {
         var baseAttributes = self.textView.typingAttributes
         baseAttributes.merge(self.textView.selectedTextAttributes) { (key1, _) in key1 }
 
-        guard self.isTextSelected else {
+        guard self.textView.isTextSelected else {
             self.selectionAttributes = TextEditorAttributes(attributes: baseAttributes)
             return
         }
@@ -80,44 +69,25 @@ class TextEditorViewController: NSViewController, InspectableTextEditor {
         }
 
         let ranges = self.textView.selectedRanges.compactMap { $0.rangeValue }
-
-        var textEditorAttributes = [TextEditorAttributes]()
-        for range in ranges {
-            textStorage.enumerateAttributes(in: range, options: []) { (attributes, _, _) in
-                let mergedAttributes = attributes.merging(baseAttributes) { (key1, _) in key1 }
-                textEditorAttributes.append(TextEditorAttributes(attributes: mergedAttributes))
-            }
-        }
-
-        self.selectionAttributes = TextEditorAttributes.merge(textEditorAttributes)
+        self.selectionAttributes = textStorage.textEditorAttributes(in: ranges, typingAttributes: baseAttributes)
     }
 
     func updateSelection(with editorAttributes: TextEditorAttributes) {
-        guard self.isTextSelected else {
+        guard self.textView.isTextSelected else {
             self.textView.typingAttributes = editorAttributes.apply(to: self.textView.typingAttributes)
             self.updateSelectionAttributes()
             return
         }
 
-        guard self.textView.shouldChangeText(inRanges: self.textView.selectedRanges, replacementStrings: nil),
-              let textStorage = self.textView.textStorage else
-        {
-            return
-        }
-
         let ranges = self.textView.selectedRanges.compactMap { $0.rangeValue }
-        textStorage.beginEditing()
-        for selectionRange in ranges {
-            textStorage.enumerateAttributes(in: selectionRange, options: []) { (textAttributes, range, _) in
-                let newAttributes = editorAttributes.apply(to: textAttributes)
-                textStorage.setAttributes(newAttributes, range: range)
-            }
+        self.textView.modifyText(in: ranges) { (textStorage) in
+            textStorage.apply(editorAttributes, to: ranges)
         }
-        textStorage.endEditing()
-        self.textView.didChangeText()
         self.updateSelectionAttributes()
     }
 }
+
+
 
 
 extension TextEditorViewController: Editor {
@@ -137,10 +107,6 @@ extension TextEditorViewController: NSTextViewDelegate {
         menu.addItem(withTitle: "Create New Linked Page…", action: #selector(createNewLinkedPage(_:)), keyEquivalent: "")
         menu.addItem(withTitle: "Link to Page…", action: #selector(linkToPage(_:)), keyEquivalent: "")
         return menu
-    }
-
-    func textDidEndEditing(_ notification: Notification) {
-//        self.selectionAttributes = nil
     }
 
     func textViewDidChangeSelection(_ notification: Notification) {

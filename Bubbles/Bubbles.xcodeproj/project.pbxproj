@@ -58,6 +58,10 @@
 		9976A49D2367524D004D573D /* ModelReaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9976A49C2367524D004D573D /* ModelReaderTests.swift */; };
 		99A0B853238961BF005FCF25 /* NSColor+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B852238961BF005FCF25 /* NSColor+M3Extensions.swift */; };
 		99A0B855238C2F46005FCF25 /* TextEditorAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B854238C2F46005FCF25 /* TextEditorAttributes.swift */; };
+		99A0B857238D6F74005FCF25 /* NSTextView+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B856238D6F74005FCF25 /* NSTextView+M3Extensions.swift */; };
+		99A0B85C238D72F0005FCF25 /* TextEditorAttributesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B85B238D72F0005FCF25 /* TextEditorAttributesTests.swift */; };
+		99A0B85E238D730E005FCF25 /* TextEditorInspectorTypesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B85D238D730E005FCF25 /* TextEditorInspectorTypesTests.swift */; };
+		99A0B860238D732F005FCF25 /* TextEditorInspectorViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B85F238D732F005FCF25 /* TextEditorInspectorViewModelTests.swift */; };
 		99AD8874237464C4000453E1 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AD8873237464C4000453E1 /* Alert.swift */; };
 		99AD88762374665D000453E1 /* Alert+AppKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AD88752374665D000453E1 /* Alert+AppKit.swift */; };
 		99AD88782376FCF0000453E1 /* PageContentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AD88772376FCF0000453E1 /* PageContentTests.swift */; };
@@ -205,6 +209,10 @@
 		9976A49C2367524D004D573D /* ModelReaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelReaderTests.swift; sourceTree = "<group>"; };
 		99A0B852238961BF005FCF25 /* NSColor+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+M3Extensions.swift"; sourceTree = "<group>"; };
 		99A0B854238C2F46005FCF25 /* TextEditorAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorAttributes.swift; sourceTree = "<group>"; };
+		99A0B856238D6F74005FCF25 /* NSTextView+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextView+M3Extensions.swift"; sourceTree = "<group>"; };
+		99A0B85B238D72F0005FCF25 /* TextEditorAttributesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorAttributesTests.swift; sourceTree = "<group>"; };
+		99A0B85D238D730E005FCF25 /* TextEditorInspectorTypesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorInspectorTypesTests.swift; sourceTree = "<group>"; };
+		99A0B85F238D732F005FCF25 /* TextEditorInspectorViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorInspectorViewModelTests.swift; sourceTree = "<group>"; };
 		99AD8873237464C4000453E1 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		99AD88752374665D000453E1 /* Alert+AppKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alert+AppKit.swift"; sourceTree = "<group>"; };
 		99AD88772376FCF0000453E1 /* PageContentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageContentTests.swift; sourceTree = "<group>"; };
@@ -355,6 +363,7 @@
 				99D8E38A237F58FA0098CF3B /* NIBInstantiable.swift */,
 				9902F4A823882ADA00AF646F /* NSSegmentedControl+M3Extensions.swift */,
 				99A0B852238961BF005FCF25 /* NSColor+M3Extensions.swift */,
+				99A0B856238D6F74005FCF25 /* NSTextView+M3Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -486,6 +495,32 @@
 				9976A49A23674454004D573D /* CanvasPageTests.swift */,
 			);
 			path = ModelObjects;
+			sourceTree = "<group>";
+		};
+		99A0B858238D72C2005FCF25 /* Inspectors */ = {
+			isa = PBXGroup;
+			children = (
+				99A0B859238D72CC005FCF25 /* Inspectors */,
+			);
+			path = Inspectors;
+			sourceTree = "<group>";
+		};
+		99A0B859238D72CC005FCF25 /* Inspectors */ = {
+			isa = PBXGroup;
+			children = (
+				99A0B85A238D72D2005FCF25 /* Text Editor Inspector */,
+			);
+			path = Inspectors;
+			sourceTree = "<group>";
+		};
+		99A0B85A238D72D2005FCF25 /* Text Editor Inspector */ = {
+			isa = PBXGroup;
+			children = (
+				99A0B85B238D72F0005FCF25 /* TextEditorAttributesTests.swift */,
+				99A0B85D238D730E005FCF25 /* TextEditorInspectorTypesTests.swift */,
+				99A0B85F238D732F005FCF25 /* TextEditorInspectorViewModelTests.swift */,
+			);
+			path = "Text Editor Inspector";
 			sourceTree = "<group>";
 		};
 		99A8F57B230C3BD800C3F08A /* Page Selector */ = {
@@ -730,6 +765,7 @@
 				99DEF28D22F33A2E0020A7CE /* Model */,
 				99D4D59622F864E200F69C1F /* Sidebar */,
 				99A8F57B230C3BD800C3F08A /* Page Selector */,
+				99A0B858238D72C2005FCF25 /* Inspectors */,
 				99FE01A822CD1038004D380D /* Info.plist */,
 			);
 			path = BubblesTests;
@@ -964,6 +1000,7 @@
 				99DEF28F22F33A790020A7CE /* ModelID.swift in Sources */,
 				99C865232302E267004C7B89 /* ImageEditorViewModel.swift in Sources */,
 				99FE019122CD1037004D380D /* AppDelegate.swift in Sources */,
+				99A0B857238D6F74005FCF25 /* NSTextView+M3Extensions.swift in Sources */,
 				9923B07122F47AE30035D8C6 /* ModelController.swift in Sources */,
 				99D8E378237EDB890098CF3B /* PageInspectorViewController.swift in Sources */,
 				99C865172301A86D004C7B89 /* ContentSelectorViewController.swift in Sources */,
@@ -1015,7 +1052,10 @@
 				9923B07422F485480035D8C6 /* ModelCollectionTests.swift in Sources */,
 				99DEF28C22F33A2A0020A7CE /* ModelObjectTests.swift in Sources */,
 				9976A49D2367524D004D573D /* ModelReaderTests.swift in Sources */,
+				99A0B85E238D730E005FCF25 /* TextEditorInspectorTypesTests.swift in Sources */,
+				99A0B85C238D72F0005FCF25 /* TextEditorAttributesTests.swift in Sources */,
 				9976A49723674430004D573D /* PageTests.swift in Sources */,
+				99A0B860238D732F005FCF25 /* TextEditorInspectorViewModelTests.swift in Sources */,
 				99D4D59822F8650300F69C1F /* SidebarViewModelTests.swift in Sources */,
 				9976A49B23674454004D573D /* CanvasPageTests.swift in Sources */,
 				99581076230C40FD00D996C4 /* PageSelectorViewModelTests.swift in Sources */,
