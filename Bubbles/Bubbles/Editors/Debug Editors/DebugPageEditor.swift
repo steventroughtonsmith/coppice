@@ -18,6 +18,8 @@ class DebugPageEditor: NSViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    var enabled: Bool = true
 }
 
 extension DebugPageEditor: Editor {

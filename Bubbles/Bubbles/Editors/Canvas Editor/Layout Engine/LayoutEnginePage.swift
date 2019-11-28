@@ -131,6 +131,9 @@ class LayoutEnginePage: Equatable {
             titleBarRect.size.height = configuration.pageTitleHeight
             return titleBarRect
         }
+        if (component == .content) {
+            return self.contentFrameInsideVisualPage
+        }
 
         var x: CGFloat = 0
         var y: CGFloat = 0
@@ -186,6 +189,7 @@ enum LayoutEnginePageComponent: CaseIterable, Equatable {
     case resizeBottom
     case resizeBottomLeft
     case titleBar
+    case content
 
     var isRight: Bool {
         return [.resizeRight, .resizeTopRight, .resizeBottomRight].contains(self)
@@ -216,7 +220,11 @@ enum LayoutEnginePageComponent: CaseIterable, Equatable {
         if let index = cases.firstIndex(of: .titleBar) {
             cases.remove(at: index)
         }
+        if let index = cases.firstIndex(of: .content) {
+            cases.remove(at: index)
+        }
         cases.append(.titleBar)
+        cases.append(.content)
         return cases
     }
 }

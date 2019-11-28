@@ -8,13 +8,15 @@
 
 import AppKit
 
-protocol Editor {
+protocol Editor: class {
     var inspectors: [Inspector] { get }
     var parentEditor: Editor? { get }
     var childEditors: [Editor] { get }
 
     func inspectorsDidChange()
     func open(_ link: PageLink)
+
+    var enabled: Bool { get set }
 }
 
 

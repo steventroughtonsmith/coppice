@@ -41,6 +41,8 @@ class CanvasEditorViewController: NSViewController {
         self.updateZoomControl()
     }
 
+    var enabled: Bool = true
+
     private func setupCanvasView() {
         self.canvasView.layoutEngine = self.layoutEngine
 

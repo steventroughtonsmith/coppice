@@ -51,6 +51,18 @@ class CanvasView: NSView {
         self.pageLayer.addSubview(view)
     }
 
+    private func pageView(at point: CGPoint) -> CanvasElementView? {
+        for subview in self.pageLayer.subviews.reversed() {
+            if let pageView = subview as? CanvasElementView,
+                pageView.frame.contains(point)
+            {
+                return pageView
+            }
+        }
+        return nil
+    }
+
+    
     //MARK: - First Responder
     override var acceptsFirstResponder: Bool {
         return true
@@ -202,8 +214,42 @@ class CanvasView: NSView {
     }
 
 
-    //MARK: - Debug
+    //MARK: - Cursor Handling
+    override func updateTrackingAreas() {
+        for area in self.trackingAreas {
+            self.removeTrackingArea(area)
+        }
 
+        //NSTrackingArea isn't clipped by superviews so we need to do that manually
+        var trackingRect = self.bounds
+        if let scrollView = self.enclosingScrollView {
+            let frame = self.convert(scrollView.frame, from: scrollView)
+            trackingRect = trackingRect.intersection(frame)
+        }
+
+        guard (trackingRect.width > 0) && (trackingRect.height > 0) else {
+            return
+        }
+
+        let area = NSTrackingArea(rect: trackingRect,
+                                  options: [.activeInActiveApp, .mouseMoved],
+                                  owner: self,
+                                  userInfo: nil)
+        self.addTrackingArea(area)
+    }
+
+    override func mouseMoved(with event: NSEvent) {
+        let point = self.convert(event.locationInWindow, from: nil)
+        guard let pageView = self.pageView(at: point) else {
+            NSCursor.arrow.set()
+            return
+        }
+        let pagePoint = self.convert(point, to: pageView)
+        pageView.cursor(for: pagePoint)?.set()
+    }
+
+
+    //MARK: - Debug
     var pageSpaceOrigin: CGPoint? {
         didSet {
             self.setNeedsDisplay(self.bounds)

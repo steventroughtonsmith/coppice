@@ -23,10 +23,15 @@ class TextEditorViewController: NSViewController, InspectableTextEditor {
         fatalError("init(coder:) has not been implemented")
     }
 
+
+    private var selectableBinding: AnyCancellable!
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do view setup here.
+
+        self.selectableBinding = self.publisher(for: \.enabled).assign(to: \.isSelectable, on: self.textView)
     }
+
+    @objc dynamic var enabled: Bool = true
 
     @objc func createNewLinkedPage(_ sender: Any?) {
         let selectedRange = self.textView.selectedRange()

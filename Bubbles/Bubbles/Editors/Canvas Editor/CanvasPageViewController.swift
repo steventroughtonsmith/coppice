@@ -29,7 +29,14 @@ class CanvasPageViewController: NSViewController, CanvasPageView {
     var selected: Bool = false {
         didSet {
             self.updateBorder()
+            self.viewModel.pageEditor?.enabled = self.selected
+            self.typedView.enabled = self.selected
         }
+    }
+
+    var enabled: Bool {
+        get { self.selected }
+        set { }
     }
 
     let viewModel: CanvasPageViewModel

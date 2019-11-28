@@ -30,6 +30,8 @@ class ContentSelectorViewController: NSViewController {
         }
     }
 
+    var enabled: Bool = true
+
     @objc func typeSelected(_ sender: NSButton?) {
         guard let tag = sender?.tag else {
             return

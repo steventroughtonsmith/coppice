@@ -39,6 +39,8 @@ class DebugCanvasEditor: NSViewController {
         self.tableView.registerForDraggedTypes([ModelID.PasteboardType])
     }
 
+    var enabled: Bool = true
+
     override func viewWillAppear() {
         super.viewWillAppear()
         self.viewModel.startObservingChanges()

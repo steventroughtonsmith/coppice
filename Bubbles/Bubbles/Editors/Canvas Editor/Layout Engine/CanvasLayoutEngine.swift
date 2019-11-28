@@ -273,7 +273,7 @@ class CanvasLayoutEngine: NSObject {
         }
 
         switch pageComponent {
-        case .titleBar:
+        case .titleBar, .content:
             return PageTitleBarEventContext(page: page)
         default:
             return ResizePageEventContext(page: page, component: pageComponent)

@@ -29,6 +29,12 @@ class PageEditorViewController: NSViewController {
         self.contentChanged()
     }
 
+    var enabled: Bool = true {
+        didSet {
+            self.currentContentEditor?.enabled = self.enabled
+        }
+    }
+
     var currentContentEditor: (Editor & NSViewController)? {
         didSet {
             oldValue?.view.removeFromSuperview()
@@ -36,6 +42,7 @@ class PageEditorViewController: NSViewController {
 
             if let editor = self.currentContentEditor {
                 self.view.addSubview(editor.view, withInsets: NSEdgeInsetsZero)
+                editor.enabled = self.enabled
                 self.addChild(editor)
             }
             self.inspectorsDidChange()

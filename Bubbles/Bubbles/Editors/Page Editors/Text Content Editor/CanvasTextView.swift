@@ -10,6 +10,7 @@ import Cocoa
 
 class CanvasTextView: NSTextView {
     override func mouseMoved(with event: NSEvent) {
+        print("\(Date()) canvas mouse moved")
         guard let canvasView = self.canvasView else {
             super.mouseMoved(with: event)
             return

@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol TextEditorView: class, Editor {
+protocol TextEditorView: Editor {
 
 }
 

@@ -26,6 +26,8 @@ class EditorContainerViewController: NSViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    var enabled: Bool = true
+
 
     private(set) var mainEditor: (Editor & NSViewController)? {
         didSet {

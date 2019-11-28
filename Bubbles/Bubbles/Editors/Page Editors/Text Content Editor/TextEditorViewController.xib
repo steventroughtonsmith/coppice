@@ -32,6 +32,7 @@
                                 <size key="maxSize" width="480" height="10000000"/>
                                 <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                 <connections>
+                                    <binding destination="-2" name="editable" keyPath="self.enabled" id="LZt-K5-uK3"/>
                                     <binding destination="-2" name="attributedString" keyPath="self.viewModel.attributedText" id="56o-qL-5HQ">
                                         <dictionary key="options">
                                             <bool key="NSContinuouslyUpdatesValue" value="YES"/>
