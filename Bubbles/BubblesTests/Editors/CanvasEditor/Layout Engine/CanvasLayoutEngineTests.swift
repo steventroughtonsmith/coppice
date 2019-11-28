@@ -250,11 +250,31 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertTrue(self.layoutEngine.selectedPages.first === self.page3)
     }
 
+    func test_selection_mouseDownWithNoModifiersOnPageContentSelectsThatPage() throws {
+        XCTAssertEqual(self.layoutEngine.selectedPages.count, 0)
+
+        let clickPoint = self.page3.layoutFrame.midPoint
+        self.layoutEngine.downEvent(at: clickPoint)
+
+        XCTAssertTrue(self.layoutEngine.selectedPages.first === self.page3)
+
+    }
+
     func test_selection_mouseDownWithNoModifiersOnUnselectedPageTitleDeselectsCurrentSelectionAndSelectsThatPage() throws {
         self.page1.selected = true
         XCTAssertEqual(self.layoutEngine.selectedPages.count, 1)
 
         let clickPoint = self.page3.layoutFrame.origin.plus(.identity)
+        self.layoutEngine.downEvent(at: clickPoint)
+        XCTAssertEqual(self.layoutEngine.selectedPages.count, 1)
+        XCTAssertTrue(self.layoutEngine.selectedPages.first === self.page3)
+    }
+
+    func test_selection_mouseDownWithNoModifiersOnUnselectedPageContentDeselectsCurrentSelectionAndSelectsThatPage() {
+        self.page1.selected = true
+        XCTAssertEqual(self.layoutEngine.selectedPages.count, 1)
+
+        let clickPoint = self.page3.layoutFrame.midPoint
         self.layoutEngine.downEvent(at: clickPoint)
         XCTAssertEqual(self.layoutEngine.selectedPages.count, 1)
         XCTAssertTrue(self.layoutEngine.selectedPages.first === self.page3)
@@ -274,6 +294,20 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertTrue(try XCTUnwrap(selectedPages[safe: 1]) === self.page3)
     }
 
+    func test_selection_mouseDownWithNoModifiersOnPageContentInCurrentSelectionDoesntChangeSelection() throws {
+        self.page1.selected = true
+        self.page3.selected = true
+        XCTAssertEqual(self.layoutEngine.selectedPages.count, 2)
+
+        let clickPoint = self.page3.layoutFrame.midPoint
+        self.layoutEngine.downEvent(at: clickPoint)
+
+        let selectedPages = self.layoutEngine.selectedPages
+        XCTAssertEqual(selectedPages.count, 2)
+        XCTAssertTrue(try XCTUnwrap(selectedPages[safe: 0]) === self.page1)
+        XCTAssertTrue(try XCTUnwrap(selectedPages[safe: 1]) === self.page3)
+    }
+
     func test_selection_mouseDownWithShiftModifierOnPageTitleAddsThatPageToSelectionIfNotAlreadySelected() throws {
         self.page3.selected = true
 
@@ -284,12 +318,33 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertTrue(selectedPages.contains(self.page3))
     }
 
-    func test_selection_mouseDownWithShiftModifierOnPageTitleRemovesThatPageFromSelectionIAlreadySelected() {
+    func test_selection_mouseDownWithShiftModifierOnPageContentAddsThatPageToSelectionIfNotAlreadySelected() throws {
+        self.page3.selected = true
+
+        XCTAssertEqual(self.layoutEngine.selectedPages.count, 1)
+        self.layoutEngine.downEvent(at: self.page1.layoutFrame.midPoint, modifiers: .shift)
+        let selectedPages = self.layoutEngine.selectedPages
+        XCTAssertTrue(selectedPages.contains(self.page1))
+        XCTAssertTrue(selectedPages.contains(self.page3))
+    }
+
+    func test_selection_mouseDownWithShiftModifierOnPageTitleRemovesThatPageFromSelectionIfAlreadySelected() {
         self.page2.selected = true
         self.page3.selected = true
 
         XCTAssertEqual(self.layoutEngine.selectedPages.count, 2)
         self.layoutEngine.downEvent(at: self.page2.layoutFrame.origin.plus(.identity), modifiers: .shift)
+        let selectedPages = self.layoutEngine.selectedPages
+        XCTAssertEqual(selectedPages.count, 1)
+        XCTAssertTrue(try XCTUnwrap(selectedPages[safe: 0]) === self.page3)
+    }
+
+    func test_selection_mouseDownWithShiftModifierOnPageContentRemovesThatPageFromSelectionIfAlreadySelected() {
+        self.page2.selected = true
+        self.page3.selected = true
+
+        XCTAssertEqual(self.layoutEngine.selectedPages.count, 2)
+        self.layoutEngine.downEvent(at: self.page2.layoutFrame.midPoint, modifiers: .shift)
         let selectedPages = self.layoutEngine.selectedPages
         XCTAssertEqual(selectedPages.count, 1)
         XCTAssertTrue(try XCTUnwrap(selectedPages[safe: 0]) === self.page3)
@@ -405,6 +460,40 @@ class CanvasLayoutEngineTests: XCTestCase {
     }
 
 
+    //MARK: - Enabled Page
+    func test_enabledPage_isNilWhenNoPageSelected() {
+        self.layoutEngine.finishedModifying([])
+
+        XCTAssertNil(self.layoutEngine.enabledPage)
+    }
+
+    func test_enabledPage_isSetToSelectedPageIfSinglePageSelected() {
+        self.page2.selected = true
+        self.layoutEngine.finishedModifying([])
+
+        XCTAssertEqual(self.layoutEngine.enabledPage, self.page2)
+    }
+
+    func test_enabledPage_isNilIfMultiplePagesSelected() {
+        self.page2.selected = true
+        self.page3.selected = true
+        self.layoutEngine.finishedModifying([])
+
+        XCTAssertNil(self.layoutEngine.enabledPage)
+    }
+
+    func test_enabledPage_isSetToSelectedPageIfAllOtherPagesAreDeselected() {
+        self.page2.selected = true
+        self.page3.selected = true
+        self.layoutEngine.finishedModifying([])
+        XCTAssertNil(self.layoutEngine.enabledPage)
+
+        self.page2.selected = false
+        self.layoutEngine.finishedModifying([])
+        XCTAssertEqual(self.layoutEngine.enabledPage, self.page3)
+    }
+
+
     //MARK: - Move Pages
     func test_moving_mouseDraggedFromPageTitleMovesThatPage() {
         let page1Point = self.page1.layoutFrame.origin
@@ -413,6 +502,19 @@ class CanvasLayoutEngineTests: XCTestCase {
         self.layoutEngine.downEvent(at: page1Point.plus(.identity))
         self.layoutEngine.draggedEvent(at: page1Point.plus(.identity).plus(offset.multiplied(by: 0.5)))
         self.layoutEngine.draggedEvent(at: page1Point.plus(.identity).plus(offset))
+
+        let expectedPoint = page1Point.plus(CGPoint(x: 5, y: 3))
+        XCTAssertEqual(self.page1.layoutFrame.origin, expectedPoint)
+    }
+
+    func test_moving_mouseDraggedFromPageContentOfUnselectedPageMovesThatPage() {
+        let page1Point = self.page1.layoutFrame.origin
+
+        let offset = CGPoint(x: 5, y: 3)
+        let eventStartPoint = self.page1.layoutFrame.midPoint
+        self.layoutEngine.downEvent(at: eventStartPoint)
+        self.layoutEngine.draggedEvent(at: eventStartPoint.plus(offset.multiplied(by: 0.5)))
+        self.layoutEngine.draggedEvent(at: eventStartPoint.plus(offset))
 
         let expectedPoint = page1Point.plus(CGPoint(x: 5, y: 3))
         XCTAssertEqual(self.page1.layoutFrame.origin, expectedPoint)
@@ -429,6 +531,25 @@ class CanvasLayoutEngineTests: XCTestCase {
         self.layoutEngine.downEvent(at: page3Point.plus(.identity))
         self.layoutEngine.draggedEvent(at: page3Point.plus(.identity).plus(offset.multiplied(by: 0.5)))
         self.layoutEngine.draggedEvent(at: page3Point.plus(.identity).plus(offset))
+
+        let expectedPage2Point = page2Point.plus(offset)
+        XCTAssertEqual(self.page2.layoutFrame.origin, expectedPage2Point)
+        let expectedPage3Point = page3Point.plus(offset)
+        XCTAssertEqual(self.page3.layoutFrame.origin, expectedPage3Point)
+    }
+
+    func test_moving_mouseDraggedFromPageContentWithMultipleSelectionsMovesAllSelectedPages() {
+        self.page2.selected = true
+        self.page3.selected = true
+        let page2Point = self.page2.layoutFrame.origin
+        let page3Point = self.page3.layoutFrame.origin
+
+        let offset = CGPoint(x: 7, y: 8)
+
+        let eventStartPoint = self.page3.layoutFrame.midPoint
+        self.layoutEngine.downEvent(at: eventStartPoint)
+        self.layoutEngine.draggedEvent(at: eventStartPoint.plus(offset.multiplied(by: 0.5)))
+        self.layoutEngine.draggedEvent(at: eventStartPoint.plus(offset))
 
         let expectedPage2Point = page2Point.plus(offset)
         XCTAssertEqual(self.page2.layoutFrame.origin, expectedPage2Point)

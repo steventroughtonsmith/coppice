@@ -22,6 +22,10 @@ class LayoutEnginePage: Equatable {
     let parentID: UUID?
     var selected: Bool = false
 
+    var enabled: Bool {
+        return (self.layoutEngine?.enabledPage == self)
+    }
+
     //MARK: - Content
 
     var minimumContentSize: CGSize

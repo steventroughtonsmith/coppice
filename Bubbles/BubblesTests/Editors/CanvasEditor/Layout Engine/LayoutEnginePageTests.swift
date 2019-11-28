@@ -266,7 +266,7 @@ class LayoutEnginePageTests: XCTestCase {
 
             //Outside
             XCTAssertNotEqual(try XCTUnwrap(page.component(at: CGPoint(x: 3, y: 5))), .resizeLeft)
-            XCTAssertNil(page.component(at: CGPoint(x: 3, y: 24)))
+            XCTAssertNotEqual(try XCTUnwrap(page.component(at: CGPoint(x: 3, y: 24))), .resizeLeft)
             XCTAssertNotEqual(try XCTUnwrap(page.component(at: CGPoint(x: 0, y: 4))), .resizeLeft)
             XCTAssertNotEqual(try XCTUnwrap(page.component(at: CGPoint(x: 0, y: 25))), .resizeLeft)
         }
@@ -331,7 +331,7 @@ class LayoutEnginePageTests: XCTestCase {
             //Outside
             XCTAssertNotEqual(try XCTUnwrap(page.component(at: CGPoint(x: 26, y: 4))), .resizeRight)
             XCTAssertNotEqual(try XCTUnwrap(page.component(at: CGPoint(x: 29, y: 4))), .resizeRight)
-            XCTAssertNil(page.component(at: CGPoint(x: 26, y: 24)))
+            XCTAssertNotEqual(try XCTUnwrap(page.component(at: CGPoint(x: 26, y: 24))), .resizeRight)
             XCTAssertNotEqual(try XCTUnwrap(page.component(at: CGPoint(x: 29, y: 25))), .resizeRight)
         }
     }
@@ -345,7 +345,7 @@ class LayoutEnginePageTests: XCTestCase {
             XCTAssertEqual(page.component(at: CGPoint(x: 25, y: 29)), .resizeBottomRight)
 
             //Outside
-            XCTAssertNil(page.component(at: CGPoint(x: 24, y: 24)))
+            XCTAssertNotEqual(try XCTUnwrap(page.component(at: CGPoint(x: 24, y: 24))), .resizeBottomRight)
             XCTAssertNotEqual(try XCTUnwrap(page.component(at: CGPoint(x: 29, y: 24))), .resizeBottomRight)
             XCTAssertNil(page.component(at: CGPoint(x: 30, y: 30)))
             XCTAssertNotEqual(try XCTUnwrap(page.component(at: CGPoint(x: 24, y: 29))), .resizeBottomRight)
@@ -361,8 +361,8 @@ class LayoutEnginePageTests: XCTestCase {
             XCTAssertEqual(page.component(at: CGPoint(x: 5, y: 29)), .resizeBottom)
 
             //Outside
-            XCTAssertNil(page.component(at: CGPoint(x: 5, y: 26)))
-            XCTAssertNil(page.component(at: CGPoint(x: 24, y: 26)))
+            XCTAssertNotEqual(try XCTUnwrap(page.component(at: CGPoint(x: 5, y: 26))), .resizeBottom)
+            XCTAssertNotEqual(try XCTUnwrap(page.component(at: CGPoint(x: 24, y: 26))), .resizeBottom)
             XCTAssertNotEqual(try XCTUnwrap(page.component(at: CGPoint(x: 25, y: 29))), .resizeBottom)
             XCTAssertNotEqual(try XCTUnwrap(page.component(at: CGPoint(x: 4, y: 29))), .resizeBottom)
         }
@@ -378,7 +378,7 @@ class LayoutEnginePageTests: XCTestCase {
 
             //Outside
             XCTAssertNotEqual(try XCTUnwrap(page.component(at: CGPoint(x: 0, y: 24))), .resizeBottomLeft)
-            XCTAssertNil(page.component(at: CGPoint(x: 5, y: 24)))
+            XCTAssertNotEqual(try XCTUnwrap(page.component(at: CGPoint(x: 5, y: 24))), .resizeBottomLeft)
             XCTAssertNotEqual(try XCTUnwrap(page.component(at: CGPoint(x: 5, y: 29))), .resizeBottomLeft)
             XCTAssertNil(page.component(at: CGPoint(x: -1, y: 30)))
         }
@@ -397,8 +397,18 @@ class LayoutEnginePageTests: XCTestCase {
             XCTAssertEqual(page.component(at: CGPoint(x: 5, y: 5)), .titleBar)
 
             //Outside
-            XCTAssertNil(page.component(at: CGPoint(x: 3, y: 10)))
-            XCTAssertNil(page.component(at: CGPoint(x: 26, y: 10)))
+            XCTAssertNotEqual(try XCTUnwrap(page.component(at: CGPoint(x: 3, y: 10))), .titleBar)
+            XCTAssertNotEqual(try XCTUnwrap(page.component(at: CGPoint(x: 26, y: 10))), .titleBar)
+        }
+    }
+
+    func test_component_content() throws {
+        try self.performPageComponentTest { page in
+            //Inside
+            XCTAssertEqual(page.component(at: CGPoint(x: 5, y: 10)), .content)
+            XCTAssertEqual(page.component(at: CGPoint(x: 24, y: 10)), .content)
+            XCTAssertEqual(page.component(at: CGPoint(x: 5, y: 24)), .content)
+            XCTAssertEqual(page.component(at: CGPoint(x: 24, y: 24)), .content)
         }
     }
 

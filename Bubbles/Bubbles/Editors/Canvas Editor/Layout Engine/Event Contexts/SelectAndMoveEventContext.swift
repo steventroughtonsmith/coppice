@@ -8,9 +8,11 @@
 
 import Cocoa
 
-class PageTitleBarEventContext: CanvasEventContext {
+class SelectAndMoveEventContext: CanvasEventContext {
     private var lastLocation: CGPoint?
     private var initialLocation: CGPoint?
+    private var didShiftSelect = false
+    private var didDoubleClick = false
 
     let page: LayoutEnginePage
     init(page: LayoutEnginePage) {
@@ -21,6 +23,7 @@ class PageTitleBarEventContext: CanvasEventContext {
         //Toggle selection if the user is shift clicking
         if (modifiers.contains(.shift)) {
             self.page.selected = !self.page.selected
+            self.didShiftSelect = true
         }
         //Otherwise we want to select just the clicked page if it isn't already selected (if it is then we assume the user is about the drag the selection
         else if (self.page.selected == false) {
@@ -31,7 +34,9 @@ class PageTitleBarEventContext: CanvasEventContext {
         if (eventCount == 2) {
             let pages = layout.allChildren(of: self.page)
             pages.forEach { $0.selected = true }
+            self.didDoubleClick = true
         }
+        self.initialLocation = location
         self.lastLocation = location
     }
 
@@ -49,6 +54,11 @@ class PageTitleBarEventContext: CanvasEventContext {
 
     func upEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: CanvasLayoutEngine) {
         let movedPages = layout.selectedPages
+        //If the user clicks on a page in a multiple selection we want to reduce selection to just that page
+        if (movedPages.count > 1) && (self.lastLocation == self.initialLocation) && !self.didShiftSelect && !self.didDoubleClick {
+            layout.deselectAll()
+            self.page.selected = true
+        }
         layout.finishedModifying(movedPages)
     }
 }

@@ -161,6 +161,7 @@ class CanvasLayoutEngine: NSObject {
     }
 
     func finishedModifying(_ pages: [LayoutEnginePage]) {
+        self.updateEnabledPage()
         self.delegate?.moved(pages: pages, in: self)
     }
 
@@ -192,6 +193,15 @@ class CanvasLayoutEngine: NSObject {
         let selectionChanged = (self.previousSelectionIDs != newSelectionIDs)
         self.previousSelectionIDs = newSelectionIDs
         return selectionChanged
+    }
+
+    weak var enabledPage: LayoutEnginePage?
+    private func updateEnabledPage() {
+        guard self.selectedPages.count == 1, let page = self.selectedPages.first else {
+            self.enabledPage = nil
+            return
+        }
+        self.enabledPage = page
     }
 
 
@@ -274,7 +284,7 @@ class CanvasLayoutEngine: NSObject {
 
         switch pageComponent {
         case .titleBar, .content:
-            return PageTitleBarEventContext(page: page)
+            return SelectAndMoveEventContext(page: page)
         default:
             return ResizePageEventContext(page: page, component: pageComponent)
         }

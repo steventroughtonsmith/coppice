@@ -73,7 +73,7 @@
 		99C03EF923293D8A00EB7516 /* LayoutEnginePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03EF323293D8A00EB7516 /* LayoutEnginePage.swift */; };
 		99C03EFA23293D8A00EB7516 /* CanvasLayoutEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03EF423293D8A00EB7516 /* CanvasLayoutEngine.swift */; };
 		99C03EFB23293D8A00EB7516 /* CanvasSelectionEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03EF623293D8A00EB7516 /* CanvasSelectionEventContext.swift */; };
-		99C03EFC23293D8A00EB7516 /* PageTitleBarEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03EF723293D8A00EB7516 /* PageTitleBarEventContext.swift */; };
+		99C03EFC23293D8A00EB7516 /* SelectAndMoveEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03EF723293D8A00EB7516 /* SelectAndMoveEventContext.swift */; };
 		99C03EFD23293D8A00EB7516 /* ResizePageEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03EF823293D8A00EB7516 /* ResizePageEventContext.swift */; };
 		99C03F03232A8E9500EB7516 /* EdgeResizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03F02232A8E9500EB7516 /* EdgeResizable.swift */; };
 		99C03F07232A8ED200EB7516 /* CanvasElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03F06232A8ED200EB7516 /* CanvasElementView.swift */; };
@@ -224,7 +224,7 @@
 		99C03EF323293D8A00EB7516 /* LayoutEnginePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutEnginePage.swift; sourceTree = "<group>"; };
 		99C03EF423293D8A00EB7516 /* CanvasLayoutEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasLayoutEngine.swift; sourceTree = "<group>"; };
 		99C03EF623293D8A00EB7516 /* CanvasSelectionEventContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasSelectionEventContext.swift; sourceTree = "<group>"; };
-		99C03EF723293D8A00EB7516 /* PageTitleBarEventContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageTitleBarEventContext.swift; sourceTree = "<group>"; };
+		99C03EF723293D8A00EB7516 /* SelectAndMoveEventContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectAndMoveEventContext.swift; sourceTree = "<group>"; };
 		99C03EF823293D8A00EB7516 /* ResizePageEventContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResizePageEventContext.swift; sourceTree = "<group>"; };
 		99C03F0023293DAD00EB7516 /* CanvasLayoutEngineTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasLayoutEngineTests.swift; sourceTree = "<group>"; };
 		99C03F02232A8E9500EB7516 /* EdgeResizable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EdgeResizable.swift; sourceTree = "<group>"; };
@@ -554,7 +554,7 @@
 			isa = PBXGroup;
 			children = (
 				99C03EF623293D8A00EB7516 /* CanvasSelectionEventContext.swift */,
-				99C03EF723293D8A00EB7516 /* PageTitleBarEventContext.swift */,
+				99C03EF723293D8A00EB7516 /* SelectAndMoveEventContext.swift */,
 				99C03EF823293D8A00EB7516 /* ResizePageEventContext.swift */,
 			);
 			path = "Event Contexts";
@@ -955,7 +955,7 @@
 				99581082230D7EFB00D996C4 /* CanvasEditorViewController.swift in Sources */,
 				99581092230D92C600D996C4 /* CanvasPageViewController.swift in Sources */,
 				9965FC4623844910002FE10D /* TextEditorInspectorViewController.swift in Sources */,
-				99C03EFC23293D8A00EB7516 /* PageTitleBarEventContext.swift in Sources */,
+				99C03EFC23293D8A00EB7516 /* SelectAndMoveEventContext.swift in Sources */,
 				992A5CB322DDF53C0012CCB6 /* DebugPageEditorViewModel.swift in Sources */,
 				99D8E37B237EDB890098CF3B /* InspectorViewModel.swift in Sources */,
 				99DEF28A22F32D350020A7CE /* DebugCanvasViewModelTypes.swift in Sources */,

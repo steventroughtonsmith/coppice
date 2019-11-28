@@ -29,14 +29,14 @@ class CanvasPageViewController: NSViewController, CanvasPageView {
     var selected: Bool = false {
         didSet {
             self.updateBorder()
-            self.viewModel.pageEditor?.enabled = self.selected
-            self.typedView.enabled = self.selected
         }
     }
 
-    var enabled: Bool {
-        get { self.selected }
-        set { }
+    var enabled: Bool = false {
+        didSet {
+            self.viewModel.pageEditor?.enabled = self.enabled
+            self.typedView.enabled = self.enabled
+        }
     }
 
     let viewModel: CanvasPageViewModel
@@ -78,6 +78,7 @@ class CanvasPageViewController: NSViewController, CanvasPageView {
     func apply(_ layoutPage: LayoutEnginePage) {
         self.view.frame = layoutPage.layoutFrame.rounded()
         self.selected = layoutPage.selected
+        self.enabled = layoutPage.enabled
         self.typedView.apply(layoutPage)
     }
 
