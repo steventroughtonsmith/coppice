@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15400" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15400"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15505"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -14,7 +14,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cbs-QW-dFw">
-                    <rect key="frame" x="43" y="0.0" width="264" height="21"/>
+                    <rect key="frame" x="35" y="0.0" width="272" height="21"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="czh-dI-xk3">
                         <font key="font" usesAppearanceFont="YES"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -24,8 +24,8 @@
                         <binding destination="-2" name="value" keyPath="self.viewModel.pageTitle" id="Zal-qs-LSX"/>
                     </connections>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vru-RT-UeN">
-                    <rect key="frame" x="6" y="2" width="31" height="16"/>
+                <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vru-RT-UeN">
+                    <rect key="frame" x="-2" y="2" width="31" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Title" id="gx6-FE-zW9">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -37,7 +37,7 @@
                 <constraint firstItem="cbs-QW-dFw" firstAttribute="top" secondItem="phm-4T-vFe" secondAttribute="top" id="6AW-aj-pjc"/>
                 <constraint firstItem="cbs-QW-dFw" firstAttribute="leading" secondItem="vru-RT-UeN" secondAttribute="trailing" constant="8" id="7mX-qO-Ak0"/>
                 <constraint firstAttribute="bottom" secondItem="cbs-QW-dFw" secondAttribute="bottom" id="SiK-wp-Jts"/>
-                <constraint firstItem="vru-RT-UeN" firstAttribute="leading" secondItem="phm-4T-vFe" secondAttribute="leading" constant="8" id="Xht-zJ-WJU"/>
+                <constraint firstItem="vru-RT-UeN" firstAttribute="leading" secondItem="phm-4T-vFe" secondAttribute="leading" id="Xht-zJ-WJU"/>
                 <constraint firstItem="vru-RT-UeN" firstAttribute="firstBaseline" secondItem="cbs-QW-dFw" secondAttribute="firstBaseline" id="o9C-kL-fAg"/>
                 <constraint firstAttribute="trailing" secondItem="cbs-QW-dFw" secondAttribute="trailing" id="yzD-i0-2TO"/>
             </constraints>

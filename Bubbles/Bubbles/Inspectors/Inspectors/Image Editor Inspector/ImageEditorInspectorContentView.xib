@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="ImageEditorInspectorViewController" customModule="Bubbles" customModuleProvider="target"/>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="322" height="80"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yd0-mM-B7h">
+                    <rect key="frame" x="0.0" y="0.0" width="322" height="60"/>
+                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="nyN-lN-nod">
+                        <rect key="frame" x="1" y="1" width="320" height="58"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" findStyle="bar" smartInsertDelete="YES" id="Nfg-9H-1PC">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="58"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="InspectorTextViewBackground"/>
+                                <size key="minSize" width="320" height="58"/>
+                                <size key="maxSize" width="402" height="10000000"/>
+                                <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                <connections>
+                                    <binding destination="-2" name="value" keyPath="self.viewModel.imageDescription" id="RP3-c2-ZQH"/>
+                                </connections>
+                            </textView>
+                        </subviews>
+                    </clipView>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="60" id="JsA-Ms-ke4"/>
+                    </constraints>
+                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="Af5-Db-Cm0">
+                        <rect key="frame" x="-100" y="-100" width="240" height="16"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="FhR-Sr-fcc">
+                        <rect key="frame" x="305" y="1" width="16" height="58"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                </scrollView>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="G8q-mk-dZR">
+                    <rect key="frame" x="-2" y="64" width="74" height="16"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="Description" id="jFf-qA-lLK">
+                        <font key="font" usesAppearanceFont="YES"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="yd0-mM-B7h" secondAttribute="bottom" id="2QR-vw-egX"/>
+                <constraint firstAttribute="trailing" secondItem="yd0-mM-B7h" secondAttribute="trailing" id="F3u-wR-RwI"/>
+                <constraint firstItem="yd0-mM-B7h" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="dD7-IJ-8pe"/>
+                <constraint firstItem="G8q-mk-dZR" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="jWz-cy-GCn"/>
+                <constraint firstItem="G8q-mk-dZR" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="rkV-1m-bL3"/>
+                <constraint firstItem="yd0-mM-B7h" firstAttribute="top" secondItem="G8q-mk-dZR" secondAttribute="bottom" constant="4" id="zlc-t1-1kx"/>
+            </constraints>
+            <point key="canvasLocation" x="60" y="49"/>
+        </customView>
+    </objects>
+    <resources>
+        <namedColor name="InspectorTextViewBackground">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

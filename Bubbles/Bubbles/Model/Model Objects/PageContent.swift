@@ -89,7 +89,7 @@ class ImagePageContent: NSObject, PageContent {
     var contentSize: CGSize? {
         return self.image?.size
     }
-    var imageDescription: String?
+    @objc dynamic var imageDescription: String?
     weak var page: Page?
 
     init(data: Data? = nil, metadata: [String: Any]? = nil) {

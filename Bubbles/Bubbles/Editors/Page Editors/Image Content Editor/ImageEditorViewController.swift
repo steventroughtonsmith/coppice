@@ -23,12 +23,16 @@ class ImageEditorViewController: NSViewController {
     }
 
     var enabled: Bool = true
+
+    private lazy var imageEditorInspectorViewController: ImageEditorInspectorViewController = {
+        return ImageEditorInspectorViewController(viewModel: ImageEditorInspectorViewModel(imageContent: self.viewModel.imageContent, modelController: self.viewModel.modelController))
+    }()
 }
 
 
 extension ImageEditorViewController: Editor {
     var inspectors: [Inspector] {
-        return []//"Image"
+        return [self.imageEditorInspectorViewController]
     }
 }
 

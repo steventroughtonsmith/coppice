@@ -131,10 +131,13 @@ struct ModelFile {
     let data: Data?
     let metadata: [String: Any]?
 
-    var plistRepresentation: [String: String] {
-        var plist = ["type": self.type]
+    var plistRepresentation: [String: Any] {
+        var plist: [String: Any] = ["type": self.type]
         if let filename = self.filename {
             plist["filename"] = filename
+        }
+        if let metadata = self.metadata {
+            plist["metadata"] = metadata
         }
         return plist
     }
