@@ -13,14 +13,14 @@ enum PageContentType: String, Equatable {
     case text
     case image
 
-    func createContent(data: Data? = nil) -> PageContent {
+    func createContent(data: Data? = nil, metadata: [String: Any]? = nil) -> PageContent {
         switch self {
         case .empty:
             return EmptyPageContent()
         case .text:
             return TextPageContent(data: data)
         case .image:
-            return ImagePageContent(data: data)
+            return ImagePageContent(data: data, metadata: metadata)
         }
     }
 
@@ -50,7 +50,7 @@ class EmptyPageContent: NSObject, PageContent {
     weak var page: Page?
 
     var modelFile: ModelFile {
-        return ModelFile(type: self.contentType.rawValue, filename: nil, data: nil)
+        return ModelFile(type: self.contentType.rawValue, filename: nil, data: nil, metadata: nil)
     }
 }
 
@@ -73,7 +73,7 @@ class TextPageContent: NSObject, PageContent {
         let textData = try? self.text.data(from: NSMakeRange(0, self.text.length),
                                            documentAttributes: [.documentType: NSAttributedString.DocumentType.rtf])
         let filename = (self.page != nil) ? "\(self.page!.id.uuid.uuidString).rtf" : nil
-        return ModelFile(type: self.contentType.rawValue, filename: filename, data: textData)
+        return ModelFile(type: self.contentType.rawValue, filename: filename, data: textData, metadata: nil)
     }
 }
 
@@ -89,17 +89,25 @@ class ImagePageContent: NSObject, PageContent {
     var contentSize: CGSize? {
         return self.image?.size
     }
+    var imageDescription: String?
     weak var page: Page?
 
-    init(data: Data? = nil) {
+    init(data: Data? = nil, metadata: [String: Any]? = nil) {
         if let imageData = data, let image = NSImage(data: imageData) {
             self.image = image
+        }
+        if let description = metadata?["description"] as? String {
+            self.imageDescription = description
         }
     }
 
     var modelFile: ModelFile {
         let imageData = self.image?.pngData()
         let filename = (self.page != nil) ? "\(self.page!.id.uuid.uuidString).png" : nil
-        return ModelFile(type: self.contentType.rawValue, filename: filename, data: imageData)
+        var metadata: [String: Any]? = nil
+        if let description = self.imageDescription {
+            metadata = ["description": description]
+        }
+        return ModelFile(type: self.contentType.rawValue, filename: filename, data: imageData, metadata: metadata)
     }
 }

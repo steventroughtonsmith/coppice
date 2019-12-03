@@ -125,10 +125,11 @@ extension CollectableModelObject {
 }
 
 
-struct ModelFile: Equatable {
+struct ModelFile {
     let type: String
     let filename: String?
     let data: Data?
+    let metadata: [String: Any]?
 
     var plistRepresentation: [String: String] {
         var plist = ["type": self.type]

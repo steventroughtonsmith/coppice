@@ -113,7 +113,7 @@ final class Page: NSObject, CollectableModelObject {
         guard let contentType = PageContentType(rawValue: content.type) else {
             throw ModelObjectUpdateErrors.attributeNotFound("content")
         }
-        self.content = contentType.createContent(data: content.data)
+        self.content = contentType.createContent(data: content.data, metadata: content.metadata)
     }
 
     private func attribute<T>(withKey key: String, from plist: [String: Any]) throws -> T {

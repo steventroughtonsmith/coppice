@@ -75,17 +75,18 @@ class ModelReader: NSObject {
 
             var plistItemWithModelFiles = plistItem
             for modelFileProperty in type.modelFileProperties {
-                let modelFilePlist = plistItemWithModelFiles[modelFileProperty] as? [String: String]
-                guard let type = modelFilePlist?["type"] else {
+                let modelFilePlist = plistItemWithModelFiles[modelFileProperty] as? [String: Any]
+                guard let type = modelFilePlist?["type"] as? String else {
                     continue
                 }
 
+                let metadata = modelFilePlist?["metadata"] as? [String: Any]
                 let modelFile: ModelFile
-                if let filename = modelFilePlist?["filename"] {
+                if let filename = modelFilePlist?["filename"] as? String {
                     let data = content[filename]?.regularFileContents
-                    modelFile = ModelFile(type: type, filename: filename, data: data)
+                    modelFile = ModelFile(type: type, filename: filename, data: data, metadata: metadata)
                 } else {
-                    modelFile = ModelFile(type: type, filename: nil, data: nil)
+                    modelFile = ModelFile(type: type, filename: nil, data: nil, metadata: metadata)
                 }
 
                 plistItemWithModelFiles[modelFileProperty] = modelFile

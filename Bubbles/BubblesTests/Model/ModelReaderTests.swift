@@ -68,7 +68,7 @@ class ModelReaderTests: XCTestCase {
                 "title": "Page 3",
                 "dateCreated": Date(timeIntervalSinceReferenceDate: 999),
                 "dateModified": Date(timeIntervalSinceReferenceDate: 9999),
-                "content": ["type": "image", "filename": "\(self.pageIDs[2].uuidString).png"]
+                "content": ["type": "image", "filename": "\(self.pageIDs[2].uuidString).png", "metadata": ["description": "This is an image"]]
             ]
         ]
 
@@ -305,6 +305,7 @@ class ModelReaderTests: XCTestCase {
         let imageData = NSImage(named: "NSAddTemplate")!.pngData()!
         let image = NSImage(data: imageData)!
         XCTAssertEqual((imagePage?.content as? ImagePageContent)?.image?.pngData(), image.pngData())
+        XCTAssertEqual((imagePage?.content as? ImagePageContent)?.imageDescription, "This is an image")
     }
 
 
