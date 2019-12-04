@@ -65,3 +65,13 @@ extension ContentSelectorViewController: Editor {
 extension ContentSelectorViewController: ContentSelectorView {
 
 }
+
+extension ContentSelectorViewController: FileDropViewDelegate {
+    func validateDrop(forFileURL url: URL) -> Bool {
+        return self.viewModel.canCreateContent(fromFileAt: url)
+    }
+
+    func acceptDrop(forFileURL url: URL) -> Bool {
+        return self.viewModel.createContent(fromFileAt: url)
+    }
+}

@@ -203,7 +203,9 @@ class TextEditorAttributesTests: XCTestCase {
         let editorAttributes = TextEditorAttributes(fontFamily: "Impact")
         let newAttributes = editorAttributes.apply(to: baseAttributes)
 
-        XCTAssertEqual((newAttributes[.font] as? NSFont), NSFont(name: "Impact", size: 14)!)
+        let font = (newAttributes[.font] as? NSFont)
+        //For some reason NSFont doesn't like equality on Impact
+        XCTAssertEqual(font?.fontName, NSFont(name: "Impact", size: 14)!.fontName)
     }
 
     func test_applyTo_doesntUpdateFontIfFamily_PostScriptFont_Bold_andItalicAreNil() {
