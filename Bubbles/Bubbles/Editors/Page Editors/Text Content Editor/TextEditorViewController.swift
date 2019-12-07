@@ -29,6 +29,7 @@ class TextEditorViewController: NSViewController, InspectableTextEditor {
         super.viewDidLoad()
 
         self.selectableBinding = self.publisher(for: \.enabled).assign(to: \.isSelectable, on: self.textView)
+        self.textView.textStorage?.delegate = self
     }
 
     @objc dynamic var enabled: Bool = true
@@ -103,6 +104,17 @@ extension TextEditorViewController: Editor {
 
 
 extension TextEditorViewController: TextEditorView {
+    func addLink(with url: URL, to range: NSRange) {
+        self.textView.modifyText(in: [range]) { (textStorage) in
+            textStorage.addAttribute(.link, value: url, range: range)
+        }
+    }
+}
+
+extension TextEditorViewController: NSTextStorageDelegate {
+    func textStorage(_ textStorage: NSTextStorage, didProcessEditing editedMask: NSTextStorageEditActions, range editedRange: NSRange, changeInLength delta: Int) {
+        print("range: \(editedRange) length: \(delta)")
+    }
 }
 
 
@@ -131,5 +143,17 @@ extension TextEditorViewController: NSTextViewDelegate {
             return
         }
         self.updateSelectionAttributes()
+    }
+
+    func textView(_ textView: NSTextView, shouldChangeTextIn affectedCharRange: NSRange, replacementString: String?) -> Bool {
+        if let string = replacementString {
+            self.viewModel.textWillChange(in: NSRange(location: affectedCharRange.location, length: string.count))
+        }
+
+        return true
+    }
+
+    func textDidChange(_ notification: Notification) {
+        self.viewModel.textDidChange()
     }
 }

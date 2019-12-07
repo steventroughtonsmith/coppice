@@ -56,6 +56,9 @@
 		9976A49923674448004D573D /* CanvasTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9976A49823674448004D573D /* CanvasTests.swift */; };
 		9976A49B23674454004D573D /* CanvasPageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9976A49A23674454004D573D /* CanvasPageTests.swift */; };
 		9976A49D2367524D004D573D /* ModelReaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9976A49C2367524D004D573D /* ModelReaderTests.swift */; };
+		99771190239A95C300FCC8C7 /* TextLinkFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9977118F239A95C300FCC8C7 /* TextLinkFinder.swift */; };
+		99771192239AA6EB00FCC8C7 /* PageLinkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99771191239AA6EB00FCC8C7 /* PageLinkTests.swift */; };
+		99771194239BF97600FCC8C7 /* NSAttributedString+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99771193239BF97600FCC8C7 /* NSAttributedString+M3Extensions.swift */; };
 		99868F322396AD55009AC0F7 /* ImageEditorInspectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99868F312396AD55009AC0F7 /* ImageEditorInspectorViewModel.swift */; };
 		99868F352396AD73009AC0F7 /* ImageEditorInspectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99868F332396AD73009AC0F7 /* ImageEditorInspectorViewController.swift */; };
 		99868F362396AD73009AC0F7 /* ImageEditorInspectorContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99868F342396AD73009AC0F7 /* ImageEditorInspectorContentView.xib */; };
@@ -64,6 +67,8 @@
 		99868F3F23981172009AC0F7 /* test-rtf.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 99868F3E23981172009AC0F7 /* test-rtf.rtf */; };
 		99868F4123981176009AC0F7 /* test-image.png in Resources */ = {isa = PBXBuildFile; fileRef = 99868F4023981176009AC0F7 /* test-image.png */; };
 		99868F4323981193009AC0F7 /* test-zip.zip in Resources */ = {isa = PBXBuildFile; fileRef = 99868F4223981193009AC0F7 /* test-zip.zip */; };
+		99868F4523995739009AC0F7 /* PageLinkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99868F4423995739009AC0F7 /* PageLinkManager.swift */; };
+		99868F4723995B4F009AC0F7 /* TextLinkFinderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99868F4623995B4F009AC0F7 /* TextLinkFinderTests.swift */; };
 		99A0B853238961BF005FCF25 /* NSColor+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B852238961BF005FCF25 /* NSColor+M3Extensions.swift */; };
 		99A0B855238C2F46005FCF25 /* TextEditorAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B854238C2F46005FCF25 /* TextEditorAttributes.swift */; };
 		99A0B857238D6F74005FCF25 /* NSTextView+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B856238D6F74005FCF25 /* NSTextView+M3Extensions.swift */; };
@@ -215,6 +220,9 @@
 		9976A49823674448004D573D /* CanvasTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasTests.swift; sourceTree = "<group>"; };
 		9976A49A23674454004D573D /* CanvasPageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageTests.swift; sourceTree = "<group>"; };
 		9976A49C2367524D004D573D /* ModelReaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelReaderTests.swift; sourceTree = "<group>"; };
+		9977118F239A95C300FCC8C7 /* TextLinkFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLinkFinder.swift; sourceTree = "<group>"; };
+		99771191239AA6EB00FCC8C7 /* PageLinkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageLinkTests.swift; sourceTree = "<group>"; };
+		99771193239BF97600FCC8C7 /* NSAttributedString+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+M3Extensions.swift"; sourceTree = "<group>"; };
 		99868F312396AD55009AC0F7 /* ImageEditorInspectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorInspectorViewModel.swift; sourceTree = "<group>"; };
 		99868F332396AD73009AC0F7 /* ImageEditorInspectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorInspectorViewController.swift; sourceTree = "<group>"; };
 		99868F342396AD73009AC0F7 /* ImageEditorInspectorContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageEditorInspectorContentView.xib; sourceTree = "<group>"; };
@@ -223,6 +231,8 @@
 		99868F3E23981172009AC0F7 /* test-rtf.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = "test-rtf.rtf"; sourceTree = "<group>"; };
 		99868F4023981176009AC0F7 /* test-image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "test-image.png"; sourceTree = "<group>"; };
 		99868F4223981193009AC0F7 /* test-zip.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "test-zip.zip"; sourceTree = "<group>"; };
+		99868F4423995739009AC0F7 /* PageLinkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageLinkManager.swift; sourceTree = "<group>"; };
+		99868F4623995B4F009AC0F7 /* TextLinkFinderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLinkFinderTests.swift; sourceTree = "<group>"; };
 		99A0B852238961BF005FCF25 /* NSColor+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+M3Extensions.swift"; sourceTree = "<group>"; };
 		99A0B854238C2F46005FCF25 /* TextEditorAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorAttributes.swift; sourceTree = "<group>"; };
 		99A0B856238D6F74005FCF25 /* NSTextView+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextView+M3Extensions.swift"; sourceTree = "<group>"; };
@@ -380,6 +390,7 @@
 				9902F4A823882ADA00AF646F /* NSSegmentedControl+M3Extensions.swift */,
 				99A0B852238961BF005FCF25 /* NSColor+M3Extensions.swift */,
 				99A0B856238D6F74005FCF25 /* NSTextView+M3Extensions.swift */,
+				99771193239BF97600FCC8C7 /* NSAttributedString+M3Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -426,6 +437,7 @@
 			isa = PBXGroup;
 			children = (
 				9958107B230D75AA00D996C4 /* TextEditorViewModelTests.swift */,
+				99868F4623995B4F009AC0F7 /* TextLinkFinderTests.swift */,
 			);
 			path = "Text Content Editor";
 			sourceTree = "<group>";
@@ -509,8 +521,18 @@
 				9976A49823674448004D573D /* CanvasTests.swift */,
 				99AD88772376FCF0000453E1 /* PageContentTests.swift */,
 				9976A49A23674454004D573D /* CanvasPageTests.swift */,
+				99771191239AA6EB00FCC8C7 /* PageLinkTests.swift */,
 			);
 			path = ModelObjects;
+			sourceTree = "<group>";
+		};
+		9977118E239A952900FCC8C7 /* Links */ = {
+			isa = PBXGroup;
+			children = (
+				99868F4423995739009AC0F7 /* PageLinkManager.swift */,
+				9977118F239A95C300FCC8C7 /* TextLinkFinder.swift */,
+			);
+			path = Links;
 			sourceTree = "<group>";
 		};
 		99868F302396AD24009AC0F7 /* Image Editor Inspector */ = {
@@ -650,6 +672,7 @@
 				99C8650E23017222004C7B89 /* TextEditorViewController.swift */,
 				99C8650C23016EE5004C7B89 /* TextEditorViewController.xib */,
 				99C9AF1323631348009F909A /* CanvasTextView.swift */,
+				9977118E239A952900FCC8C7 /* Links */,
 			);
 			path = "Text Content Editor";
 			sourceTree = "<group>";
@@ -1082,6 +1105,9 @@
 				99C865262306D12B004C7B89 /* PageSelectorViewModel.swift in Sources */,
 				99A0B855238C2F46005FCF25 /* TextEditorAttributes.swift in Sources */,
 				992A5C9F22DCCDB30012CCB6 /* NSView+M3Extensions.swift in Sources */,
+				99868F4523995739009AC0F7 /* PageLinkManager.swift in Sources */,
+				99771194239BF97600FCC8C7 /* NSAttributedString+M3Extensions.swift in Sources */,
+				99771190239A95C300FCC8C7 /* TextLinkFinder.swift in Sources */,
 				9951C26E230AF011006CAD4D /* PageSelectorWindow.swift in Sources */,
 				99C9AF1923671DB0009F909A /* PageLink.swift in Sources */,
 				99D8E385237EDCD50098CF3B /* Inspector.swift in Sources */,
@@ -1117,6 +1143,8 @@
 				9976A49D2367524D004D573D /* ModelReaderTests.swift in Sources */,
 				99A0B85E238D730E005FCF25 /* TextEditorInspectorTypesTests.swift in Sources */,
 				99A0B85C238D72F0005FCF25 /* TextEditorAttributesTests.swift in Sources */,
+				99868F4723995B4F009AC0F7 /* TextLinkFinderTests.swift in Sources */,
+				99771192239AA6EB00FCC8C7 /* PageLinkTests.swift in Sources */,
 				99868F3C23981023009AC0F7 /* ContentSelectorViewModelTests.swift in Sources */,
 				9976A49723674430004D573D /* PageTests.swift in Sources */,
 				99A0B860238D732F005FCF25 /* TextEditorInspectorViewModelTests.swift in Sources */,

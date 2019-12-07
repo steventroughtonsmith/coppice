@@ -16,21 +16,12 @@ extension Array {
         return self[index]
     }
 
-    func dictionary<Key>(_ keyTransform: (Element) -> Key) -> [Key: Element] {
+    func indexed<Key>(by keyPath: KeyPath<Element, Key>) -> [Key: Element] {
         var dictionary = [Key: Element]()
         for item in self {
-            dictionary[keyTransform(item)] = item
+            dictionary[item[keyPath: keyPath]] = item
         }
         return dictionary
     }
 
-    func compactDictionary<Key>(_ keyTransform: (Element) -> Key?) -> [Key: Element] {
-        var dictionary = [Key: Element]()
-        for item in self {
-            if let key = keyTransform(item) {
-                dictionary[key] = item
-            }
-        }
-        return dictionary
-    }
 }

@@ -1,0 +1,318 @@
+//
+//  TextLinkFinderTests.swift
+//  BubblesTests
+//
+//  Created by Martin Pilkington on 05/12/2019.
+//  Copyright © 2019 M Cubed Software. All rights reserved.
+//
+
+import XCTest
+@testable import Bubbles
+
+class TextLinkFinderTests: XCTestCase {
+    //MARK: - Empty Inputs
+    func test_emptyInputs_returnsNoChangesIfStringIsEmpty() {
+        let page1 = Page()
+        page1.title = "Hello"
+        let changes = TextLinkFinder().findLinkChanges(in: NSAttributedString(string: ""), using: [page1])
+        XCTAssertEqual(changes.linksToAdd, [])
+        XCTAssertEqual(changes.linksToRemove, [])
+    }
+
+    func test_emptyInputs_returnsNoChangesIfStringHasNoLinksAndNoPagesArePassedIn() {
+        let changes = TextLinkFinder().findLinkChanges(in: NSAttributedString(string: "Hello"), using: [])
+        XCTAssertEqual(changes.linksToAdd, [])
+        XCTAssertEqual(changes.linksToRemove, [])
+    }
+
+
+    //MARK: - Adding Links
+    func test_addingLinks_findsLinkForPageWhenNotPreviouslyLinked() {
+        let page1 = Page()
+        page1.title = "Hello World"
+        let changes = TextLinkFinder().findLinkChanges(in: NSAttributedString(string: "This is a Hello World test"), using: [page1])
+        XCTAssertEqual(changes.linksToAdd, [self.linkFor(loc: 10, length: 11, page: page1, isAuto: true)])
+    }
+
+    func test_addingLinks_findsLinkForPageEvenIfCaseDoesntMatch() {
+        let page1 = Page()
+        page1.title = "Cool Page"
+        let changes = TextLinkFinder().findLinkChanges(in: NSAttributedString(string: "Wow, a coOl pAGe test"), using: [page1])
+        XCTAssertEqual(changes.linksToAdd, [self.linkFor(loc: 7, length: 9, page: page1, isAuto: true)])
+    }
+
+    func test_addingLinks_doesntFindLinkIfCharacterBeforePageIsAlphanumeric() {
+        let page1 = Page()
+        page1.title = "alphanumeric"
+        let changes = TextLinkFinder().findLinkChanges(in: NSAttributedString(string: "here is analphanumeric test"), using: [page1])
+        XCTAssertEqual(changes.linksToAdd, [])
+    }
+
+    func test_addingLinks_doesntFindLinkIfCharacterAfterPageIsAlphanumeric() {
+        let page1 = Page()
+        page1.title = "alphanumeric"
+        let changes = TextLinkFinder().findLinkChanges(in: NSAttributedString(string: "here is an alphanumerictest"), using: [page1])
+        XCTAssertEqual(changes.linksToAdd, [])
+    }
+
+    func test_addingLinks_findsLinkIfCharaterBeforePageIsNotWord() {
+        let page1 = Page()
+        page1.title = "alphanumeric"
+        let charactersToTest = ["$", "_", ".", "…", "(", ")", "-", "[", "]", "\"", "'", ";", " ", "\n", "\t"]
+        for character in charactersToTest {
+            let changes = TextLinkFinder().findLinkChanges(in: NSAttributedString(string: "here is an\(character)alphanumeric test"), using: [page1])
+            XCTAssertEqual(changes.linksToAdd, [self.linkFor(loc: 11, length: 12, page: page1, isAuto: true)])
+        }
+    }
+
+    func test_addingLinks_findsLinkIfCharaterAfterPageIsNotWord() {
+        let page1 = Page()
+        page1.title = "alphanumeric"
+        let charactersToTest = ["$", "_", ".", "…", "(", ")", "-", "[", "]", "\"", "'", ";", " ", "\n", "\t"]
+        for character in charactersToTest {
+            let changes = TextLinkFinder().findLinkChanges(in: NSAttributedString(string: "here is an alphanumeric\(character)test"), using: [page1])
+            XCTAssertEqual(changes.linksToAdd, [self.linkFor(loc: 11, length: 12, page: page1, isAuto: true)])
+        }
+    }
+
+    func test_addingLinks_doesntFindLinkIfPageHasDefaultTitle() {
+        let page1 = Page()
+        let changes = TextLinkFinder().findLinkChanges(in: NSAttributedString(string: "The defualt title \(Page.localizedDefaultTitle) should not appear"), using: [page1])
+        XCTAssertEqual(changes.linksToAdd, [])
+    }
+
+    func test_addingLinks_doesntFindLinkIfMultiplePagesExistWithSameTitle() {
+        let page1 = Page()
+        page1.title = "Twins"
+
+        let page2 = Page()
+        page2.title = "Twins"
+
+        let changes = TextLinkFinder().findLinkChanges(in: NSAttributedString(string: "There are Twins here"), using: [page1, page2])
+        XCTAssertEqual(changes.linksToAdd, [])
+    }
+
+    func test_addingLinks_findsAllLinksForPageWhenNotPreviouslyLinked() {
+        let page1 = Page()
+        page1.title = "Double"
+
+        let changes = TextLinkFinder().findLinkChanges(in: NSAttributedString(string: "double trouble on the double!"), using: [page1])
+        XCTAssertEqual(changes.linksToAdd, [
+            self.linkFor(loc: 0, length: 6, page: page1, isAuto: true),
+            self.linkFor(loc: 22, length: 6, page: page1, isAuto: true)
+        ])
+    }
+
+    func test_addingLinks_doesntIncludeLinkIfItAlreadyExistsAndHasntChanged() {
+        let page1 = Page()
+        page1.title = "existing link"
+        let string = NSMutableAttributedString(string: "This contains an existing link in it")
+        string.addAttribute(.link, value: page1.linkToPage(autoGenerated: true).url, range: NSRange(location: 17, length: 13))
+        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1])
+        XCTAssertEqual(changes.linksToAdd, [])
+    }
+
+    func test_addingLinks_findsNewLinksButNotExistingOnesIfTheyHaventChanged() {
+        let page1 = Page()
+        page1.title = "new link"
+        let string = NSMutableAttributedString(string: "This isnt a new link. But this new link is")
+        string.addAttribute(.link, value: page1.linkToPage(autoGenerated: true).url, range: NSRange(location: 12, length: 8))
+        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1])
+        XCTAssertEqual(changes.linksToAdd, [self.linkFor(loc: 31, length: 8, page: page1, isAuto: true)])
+    }
+
+    func test_addingLinks_findsLinksForAllSuppliedPages() {
+        let page1 = Page()
+        page1.title = "brown fox"
+        let page2 = Page()
+        page2.title = "lazy dog"
+        let string = NSMutableAttributedString(string: "The quick brown fox ran over the lazy dog")
+        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1, page2])
+        XCTAssertEqual(changes.linksToAdd, [self.linkFor(loc: 10, length: 9, page: page1, isAuto: true),
+                                            self.linkFor(loc: 33, length: 8, page: page2, isAuto: true)])
+    }
+
+    func test_addingLinks_findsLongestMatchingLinksIfTwoPagesHaveSameSuffix() {
+        let page1 = Page()
+        page1.title = "foo bar"
+        let page2 = Page()
+        page2.title = "bar"
+        let string = NSMutableAttributedString(string: "It's foo bar baz")
+        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1, page2])
+        XCTAssertEqual(changes.linksToAdd, [self.linkFor(loc: 5, length: 7, page: page1, isAuto: true)])
+    }
+
+    func test_addingLinks_findsLongestMatchingLinksIfTwoPagesHaveSamePrefix() {
+        let page1 = Page()
+        page1.title = "sun"
+        let page2 = Page()
+        page2.title = "sun shine"
+        let string = NSMutableAttributedString(string: "the sun shine is here")
+        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1, page2])
+        XCTAssertEqual(changes.linksToAdd, [self.linkFor(loc: 4, length: 9, page: page2, isAuto: true)])
+    }
+
+    func test_addingLinks_findsFirstMatchingLinkIfTwoPagesOverlap() {
+        let page1 = Page()
+        page1.title = "dog house"
+        let page2 = Page()
+        page2.title = "red dog"
+        let string = NSMutableAttributedString(string: "the red dog house is outside")
+        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1, page2])
+        XCTAssertEqual(changes.linksToAdd, [self.linkFor(loc: 4, length: 7, page: page2, isAuto: true)])
+    }
+
+    func test_addingLinks_doesntAddLinkIfStartOfLinkIsInsideManualLink() {
+        let page1 = Page()
+        page1.title = "link auto"
+        let page2 = Page()
+        page2.title = "foobar"
+        let string = NSMutableAttributedString(string: "This isnt a manual link auto test")
+        string.addAttribute(.link, value: page2.linkToPage(autoGenerated: false).url, range: NSRange(location: 12, length: 11))
+        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1, page2])
+        XCTAssertEqual(changes.linksToAdd, [])
+    }
+
+    func test_addingLinks_doesntAddLinkIfEndOfLinkIsInsideManualLink() {
+        let page1 = Page()
+        page1.title = "a manual"
+        let page2 = Page()
+        page2.title = "foobar"
+        let string = NSMutableAttributedString(string: "This isnt a manual link auto test")
+        string.addAttribute(.link, value: page2.linkToPage(autoGenerated: false).url, range: NSRange(location: 12, length: 11))
+        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1, page2])
+        XCTAssertEqual(changes.linksToAdd, [])
+    }
+
+    func test_addingLinks_doesntAddLinkIfLinkIsSameAsManualLink() {
+        let page1 = Page()
+        page1.title = "manual link"
+        let page2 = Page()
+        page2.title = "foobar"
+        let string = NSMutableAttributedString(string: "This isnt a manual link auto test")
+        string.addAttribute(.link, value: page2.linkToPage(autoGenerated: false).url, range: NSRange(location: 12, length: 11))
+        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1, page2])
+        XCTAssertEqual(changes.linksToAdd, [])
+    }
+
+
+    //MARK: - Removing Links
+    func test_removingLinks_doesntRemoveLinksIfPageStillExistsAndTitleIsSame() {
+        let page1 = Page()
+        page1.title = "existing link"
+        let string = NSMutableAttributedString(string: "This contains an existing link in it")
+        string.addAttribute(.link, value: page1.linkToPage(autoGenerated: true).url, range: NSRange(location: 17, length: 13))
+        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1])
+        XCTAssertEqual(changes.linksToRemove, [])
+    }
+
+    func test_removingLinks_removesAutoLinkIfPageTitleHasChanged() {
+        let page1 = Page()
+        page1.title = "updated title"
+        let string = NSMutableAttributedString(string: "This contains an auto link in it")
+        string.addAttribute(.link, value: page1.linkToPage(autoGenerated: true).url, range: NSRange(location: 17, length: 9))
+        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1])
+        XCTAssertEqual(changes.linksToRemove, [self.linkFor(loc: 17, length: 9, page: nil, isAuto: true)])
+    }
+
+    func test_removingLinks_doesntRemoveManualLinkEvenIfPageTitleHasChanged() {
+        let page1 = Page()
+        page1.title = "updated title"
+        let string = NSMutableAttributedString(string: "Testing a manual link not being removed")
+        string.addAttribute(.link, value: page1.linkToPage(autoGenerated: false).url, range: NSRange(location: 10, length: 11))
+        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1])
+        XCTAssertEqual(changes.linksToRemove, [])
+    }
+
+    func test_removingLinks_removesAutoLinkIfPageNoLongerExists() {
+        let page1 = Page()
+        page1.title = "updated title"
+        let string = NSMutableAttributedString(string: "Remove an auto link")
+        string.addAttribute(.link, value: page1.linkToPage(autoGenerated: true).url, range: NSRange(location: 10, length: 9))
+        let changes = TextLinkFinder().findLinkChanges(in: string, using: [])
+        XCTAssertEqual(changes.linksToRemove, [self.linkFor(loc: 10, length: 9, page: nil, isAuto: true)])
+    }
+
+    func test_removingLinks_removesManualLinkIfPageNoLongerExists() {
+        let page1 = Page()
+        page1.title = "updated title"
+        let string = NSMutableAttributedString(string: "Deleting a manual link thats dead")
+        string.addAttribute(.link, value: page1.linkToPage(autoGenerated: false).url, range: NSRange(location: 11, length: 11))
+        let changes = TextLinkFinder().findLinkChanges(in: string, using: [])
+        XCTAssertEqual(changes.linksToRemove, [self.linkFor(loc: 11, length: 11, page: nil, isAuto: true)])
+    }
+
+    func test_removingLinks_removesAutoLinkIfMultiplePagesExistWithSameTitle() {
+        let page1 = Page()
+        page1.title = "duplicate"
+        let page2 = Page()
+        page2.title = "duplicate"
+        let string = NSMutableAttributedString(string: "Check out this duplicate page")
+        string.addAttribute(.link, value: page1.linkToPage(autoGenerated: true).url, range: NSRange(location: 15, length: 9))
+        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1, page2])
+        XCTAssertEqual(changes.linksToRemove, [self.linkFor(loc: 15, length: 9, page: nil, isAuto: true)])
+    }
+
+    func test_removingLinks_doesntRemoveManualLinkIfMultiplePagesExistWithSameTitle() {
+        let page1 = Page()
+        page1.title = "duplicate"
+        let page2 = Page()
+        page2.title = "duplicate"
+        let string = NSMutableAttributedString(string: "Check out this same page")
+        string.addAttribute(.link, value: page1.linkToPage(autoGenerated: false).url, range: NSRange(location: 15, length: 4))
+        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1, page2])
+        XCTAssertEqual(changes.linksToRemove, [])
+    }
+
+
+    //MARK: - Complex Example
+
+    func test_complexExample() {
+        let page1 = Page()
+        page1.title = "rs.tuv"
+        let page2 = Page()
+        page2.title = "kl"
+        let page3 = Page()
+        page3.title = "op"
+        let page4 = Page()
+        page4.title = "abc"
+        let page5 = Page()
+        page5.title = "fg hij"
+        let page6 = Page()
+        page6.title = "rs"
+        let page7 = Page()
+        page7.title = "kl mn"
+        let page8 = Page()
+        page8.title = "manual page"
+        let page9 = Page()
+        page9.title = "hij"
+
+        let removedPage1 = Page()
+
+        let string = NSMutableAttributedString(string: "abc de fg hij kl mn op q rs.tuv")
+        string.addAttribute(.link, value: page8.linkToPage(autoGenerated: false).url, range: NSRange(location: 1, length: 5))
+        string.addAttribute(.link, value: removedPage1.linkToPage(autoGenerated: false).url, range: NSRange(location: 7, length: 2))
+        string.addAttribute(.link, value: page9.linkToPage(autoGenerated: true).url, range: NSRange(location: 10, length: 3))
+        string.addAttribute(.link, value: page3.linkToPage(autoGenerated: true).url, range: NSRange(location: 20, length: 2))
+        string.addAttribute(.link, value: page3.linkToPage(autoGenerated: false).url, range: NSRange(location: 27, length: 4))
+
+        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1, page2, page3, page4, page5, page6, page7, page8, page9])
+        XCTAssertEqual(changes.linksToAdd, [
+            self.linkFor(loc: 7, length: 6, page: page5, isAuto: true),
+            self.linkFor(loc: 14, length: 5, page: page7, isAuto: true),
+            self.linkFor(loc: 25, length: 2, page: page6, isAuto: true)
+        ])
+
+        XCTAssertEqual(changes.linksToRemove, [
+            self.linkFor(loc: 7, length: 2, page: nil, isAuto: false),
+            self.linkFor(loc: 10, length: 3, page: nil, isAuto: true),
+        ])
+    }
+    
+
+    //MARK: - Helper
+
+    private func linkFor(loc: Int, length: Int, page: Page?, isAuto: Bool) -> TextLinkFinder.Link {
+        return .init(range: NSRange(location: loc, length: length), url: page?.linkToPage(autoGenerated: isAuto).url)
+    }
+}

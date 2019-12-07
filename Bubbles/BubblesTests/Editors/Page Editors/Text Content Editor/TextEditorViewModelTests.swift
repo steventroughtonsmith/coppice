@@ -63,6 +63,8 @@ class TextEditorViewModelTests: XCTestCase {
     }
 
     func test_createNewLinkedPage_addsLinkToNewPageInContentText() throws {
+        let view = MockEditorView()
+        self.viewModel.view = view
         self.textContent.text = NSAttributedString(string: "Hello World!")
 
         XCTAssertEqual(self.modelController.collection(for: Page.self).all.count, 0)
@@ -71,16 +73,16 @@ class TextEditorViewModelTests: XCTestCase {
 
         let page = try XCTUnwrap(Array(self.modelController.collection(for: Page.self).all).first)
 
-        var rangePointer: NSRange = NSMakeRange(0, 0)
-        let attribute = self.textContent.text.attribute(.link, at: 6, effectiveRange: &rangePointer)
-
-        XCTAssertEqual((attribute as? URL), page.linkToPage().url)
-        XCTAssertEqual(rangePointer, NSMakeRange(6, 5))
+        let (url, range) = try XCTUnwrap(view.addedLink)
+        XCTAssertEqual(url, page.linkToPage().url)
+        XCTAssertEqual(range, NSMakeRange(6, 5))
     }
 
 
     //MARK: - link(to:, for:)
-    func test_linkToPage_addsLinkForSuppliedPageToContentText() {
+    func test_linkToPage_addsLinkForSuppliedPageToContentText() throws {
+        let view = MockEditorView()
+        self.viewModel.view = view
         self.textContent.text = NSAttributedString(string: "Hello World!")
 
         let page = self.modelController.collection(for: Page.self).newObject()
@@ -90,10 +92,26 @@ class TextEditorViewModelTests: XCTestCase {
 
         XCTAssertEqual(page.title, expectedTitle)
 
-        var rangePointer: NSRange = NSMakeRange(0, 0)
-        let attribute = self.textContent.text.attribute(.link, at: 2, effectiveRange: &rangePointer)
-
-        XCTAssertEqual((attribute as? URL), page.linkToPage().url)
-        XCTAssertEqual(rangePointer, NSMakeRange(2, 3))
+        let (url, range) = try XCTUnwrap(view.addedLink)
+        XCTAssertEqual(url, page.linkToPage().url)
+        XCTAssertEqual(range, NSMakeRange(2, 3))
     }
+}
+
+private class MockEditorView: TextEditorView {
+    var addedLink: (URL, NSRange)?
+    func addLink(with url: URL, to range: NSRange) {
+        self.addedLink = (url, range)
+    }
+
+
+    //Editor
+    var inspectors: [Inspector] = []
+    var parentEditor: Editor?
+    var childEditors: [Editor] = []
+    func inspectorsDidChange() {
+    }
+    func open(_ link: PageLink) {
+    }
+    var enabled: Bool = true
 }

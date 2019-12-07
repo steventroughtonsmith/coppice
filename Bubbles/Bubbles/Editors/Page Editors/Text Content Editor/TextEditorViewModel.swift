@@ -9,7 +9,7 @@
 import Foundation
 
 protocol TextEditorView: Editor {
-
+    func addLink(with url: URL, to range: NSRange)
 }
 
 class TextEditorViewModel: NSObject {
@@ -18,10 +18,19 @@ class TextEditorViewModel: NSObject {
     @objc dynamic let textContent: TextPageContent
     let modelController: ModelController
     let documentWindowState: DocumentWindowState
-    init(textContent: TextPageContent, modelController: ModelController, documentWindowState: DocumentWindowState) {
+    let textAutoLinker: PageLinkManager
+    convenience init(textContent: TextPageContent, modelController: ModelController, documentWindowState: DocumentWindowState) {
+        self.init(textContent: textContent,
+                  modelController: modelController,
+                  documentWindowState: documentWindowState,
+                  textAutoLinker: PageLinkManager(modelController: modelController))
+    }
+
+    init(textContent: TextPageContent, modelController: ModelController, documentWindowState: DocumentWindowState, textAutoLinker: PageLinkManager) {
         self.textContent = textContent
         self.modelController = modelController
         self.documentWindowState = documentWindowState
+        self.textAutoLinker = textAutoLinker
         super.init()
     }
 
@@ -45,14 +54,44 @@ class TextEditorViewModel: NSObject {
     }
 
     func link(to page: Page, for range: NSRange) {
-        guard let mutableText = self.attributedText.mutableCopy() as? NSMutableAttributedString else {
+        self.view?.addLink(with: page.linkToPage(from: self.textContent.page).url, to: range)
+    }
+
+    private var changeRange: NSRange?
+
+    func textWillChange(in range: NSRange) {
+        self.changeRange = range
+    }
+
+    func textDidChange() {
+        guard let changeRange = self.changeRange else {
             return
         }
 
-        mutableText.addAttribute(.link, value: page.linkToPage(from: self.textContent.page).url, range: range)
+//        let newLinks = self.textAutoLinker.findNewLinks(in: self.attributedText, forChangeIn: changeRange)
+//        for link in newLinks {
+//            self.view?.addLink(with: link.url, to: link.range)
+//        }
 
-        self.attributedText = mutableText
+        self.changeRange = nil
+//        let maxTitleRange = 10
+//        let start = max(changeRange.location - maxTitleRange, 0)
+//        let end = min(NSMaxRange(changeRange) + maxTitleRange, self.attributedText.length)
+//
+//        let range = NSRange(location: start, length: end-start)
+//        let searchString = (self.attributedText.string as NSString).substring(with: range)
+
+
+        //Need to add auto links when typing
+        //Need to update auto links when changing page title
+        //Need to update auto links when adding/removing page
+        //Need to verify auto links when opening a page
     }
+
+    private func findAndCreateLinks(in range: NSRange) {
+
+    }
+
 }
 
 
