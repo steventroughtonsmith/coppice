@@ -14,7 +14,7 @@ protocol CanvasPageView: class {
 class CanvasPageViewModel: NSObject {
     weak var view: CanvasPageView?
 
-    let canvasPage: CanvasPage
+    @objc dynamic let canvasPage: CanvasPage
     let modelController: ModelController
     let documentWindowState: DocumentWindowState
     init(canvasPage: CanvasPage, modelController: ModelController, documentWindowState: DocumentWindowState) {
@@ -24,7 +24,16 @@ class CanvasPageViewModel: NSObject {
         super.init()
     }
 
-    var title: String {
+    override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
+        var keyPaths = super.keyPathsForValuesAffectingValue(forKey: key)
+        if (key == #keyPath(title)) {
+            keyPaths.insert("self.canvasPage.page.title")
+            keyPaths.insert("self.canvasPage.parent.page.title")
+        }
+        return keyPaths
+    }
+
+    @objc dynamic var title: String {
         var title = self.canvasPage.page?.title ?? "Untitled"
         var currentPage = self.canvasPage.parent
         while currentPage != nil {

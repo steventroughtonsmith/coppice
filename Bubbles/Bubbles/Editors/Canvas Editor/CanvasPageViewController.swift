@@ -39,7 +39,7 @@ class CanvasPageViewController: NSViewController, CanvasPageView {
         }
     }
 
-    let viewModel: CanvasPageViewModel
+    @objc dynamic let viewModel: CanvasPageViewModel
     init(viewModel: CanvasPageViewModel) {
         self.viewModel = viewModel
         super.init(nibName: "CanvasPageViewController", bundle: nil)
@@ -66,8 +66,6 @@ class CanvasPageViewController: NSViewController, CanvasPageView {
 
         //We need to make sure we stay pinned to the top left when resizing the view
         self.view.autoresizingMask = [.maxXMargin, .maxYMargin]
-
-        self.typedView.titleLabel.stringValue = self.viewModel.title
 
         if let pageEditor = self.viewModel.pageEditor {
             self.typedView.contentContainer.addSubview(pageEditor.view, withInsets: NSEdgeInsetsZero)

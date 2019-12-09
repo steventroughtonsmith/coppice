@@ -21,7 +21,7 @@ final class CanvasPage: NSObject, CollectableModelObject {
 
     
     //MARK: - Relationships
-    weak var page: Page? {
+    @objc dynamic weak var page: Page? {
         didSet {
             if let page = self.page {
                 self.frame.size = page.contentSize
@@ -33,7 +33,7 @@ final class CanvasPage: NSObject, CollectableModelObject {
         didSet { self.didChangeRelationship(\.canvas, oldValue: oldValue, inverseKeyPath: \.pages) }
     }
 
-    weak var parent: CanvasPage?
+    @objc dynamic weak var parent: CanvasPage?
     var children: Set<CanvasPage> {
         self.relationship(for: \.parent)
     }
