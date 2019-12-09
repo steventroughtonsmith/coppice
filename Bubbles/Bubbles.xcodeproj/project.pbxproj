@@ -59,6 +59,7 @@
 		99771190239A95C300FCC8C7 /* TextLinkFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9977118F239A95C300FCC8C7 /* TextLinkFinder.swift */; };
 		99771192239AA6EB00FCC8C7 /* PageLinkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99771191239AA6EB00FCC8C7 /* PageLinkTests.swift */; };
 		99771194239BF97600FCC8C7 /* NSAttributedString+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99771193239BF97600FCC8C7 /* NSAttributedString+M3Extensions.swift */; };
+		99771196239C530700FCC8C7 /* PageLinkManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99771195239C530700FCC8C7 /* PageLinkManagerTests.swift */; };
 		99868F322396AD55009AC0F7 /* ImageEditorInspectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99868F312396AD55009AC0F7 /* ImageEditorInspectorViewModel.swift */; };
 		99868F352396AD73009AC0F7 /* ImageEditorInspectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99868F332396AD73009AC0F7 /* ImageEditorInspectorViewController.swift */; };
 		99868F362396AD73009AC0F7 /* ImageEditorInspectorContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99868F342396AD73009AC0F7 /* ImageEditorInspectorContentView.xib */; };
@@ -223,6 +224,7 @@
 		9977118F239A95C300FCC8C7 /* TextLinkFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLinkFinder.swift; sourceTree = "<group>"; };
 		99771191239AA6EB00FCC8C7 /* PageLinkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageLinkTests.swift; sourceTree = "<group>"; };
 		99771193239BF97600FCC8C7 /* NSAttributedString+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+M3Extensions.swift"; sourceTree = "<group>"; };
+		99771195239C530700FCC8C7 /* PageLinkManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageLinkManagerTests.swift; sourceTree = "<group>"; };
 		99868F312396AD55009AC0F7 /* ImageEditorInspectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorInspectorViewModel.swift; sourceTree = "<group>"; };
 		99868F332396AD73009AC0F7 /* ImageEditorInspectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorInspectorViewController.swift; sourceTree = "<group>"; };
 		99868F342396AD73009AC0F7 /* ImageEditorInspectorContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageEditorInspectorContentView.xib; sourceTree = "<group>"; };
@@ -437,6 +439,7 @@
 			isa = PBXGroup;
 			children = (
 				9958107B230D75AA00D996C4 /* TextEditorViewModelTests.swift */,
+				99771195239C530700FCC8C7 /* PageLinkManagerTests.swift */,
 				99868F4623995B4F009AC0F7 /* TextLinkFinderTests.swift */,
 			);
 			path = "Text Content Editor";
@@ -1135,6 +1138,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				99FFF9CA23463DFD00EF02A0 /* LayoutEnginePageTests.swift in Sources */,
+				99771196239C530700FCC8C7 /* PageLinkManagerTests.swift in Sources */,
 				99DEF29322F33ABB0020A7CE /* ModelIDTests.swift in Sources */,
 				9958107C230D75AA00D996C4 /* TextEditorViewModelTests.swift in Sources */,
 				990D243F23560688001B1FD9 /* CanvasLayoutEngineTests.swift in Sources */,

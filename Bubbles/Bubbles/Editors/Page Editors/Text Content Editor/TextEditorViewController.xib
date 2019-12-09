@@ -7,7 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TextEditorViewController" customModule="Bubbles" customModuleProvider="target">
             <connections>
-                <outlet property="textView" destination="7Lj-ak-caX" id="chh-rV-jdO"/>
+                <outlet property="editingTextView" destination="7Lj-ak-caX" id="chh-rV-jdO"/>
                 <outlet property="view" destination="c22-O7-iKe" id="j9z-KC-SpR"/>
             </connections>
         </customObject>
@@ -21,7 +21,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="480" height="538"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="GbU-7A-hKB">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="538"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textView verticallyResizable="YES" usesFontPanel="YES" findStyle="bar" allowsDocumentBackgroundColorChange="YES" usesRuler="YES" smartInsertDelete="YES" id="7Lj-ak-caX" customClass="CanvasTextView" customModule="Bubbles" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="480" height="538"/>

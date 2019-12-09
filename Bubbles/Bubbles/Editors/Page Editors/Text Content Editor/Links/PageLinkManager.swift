@@ -15,42 +15,72 @@ protocol PageLinkManagerDelegate: class {
 
 class PageLinkManager: NSObject {
     let modelController: ModelController
+    private var observer: ModelCollection<Page>.Observation!
     init(modelController: ModelController) {
         self.modelController = modelController
+
+        super.init()
+
+        self.observer = self.modelController.collection(for: Page.self).addObserver { (_, changeType) in
+            self.reparseLinks()
+        }
     }
 
-    weak var textStorage: NSTextStorage?
+    deinit {
+        if let observer = self.observer {
+            self.modelController.collection(for: Page.self).removeObserver(observer)
+        }
+    }
+
+    weak var textStorage: NSTextStorage? {
+        didSet {
+            self.textStorage?.delegate = self
+            self.reparseLinks()
+        }
+    }
     weak var delegate: PageLinkManagerDelegate?
 
-    /*
-     Auto linker needs to take a page and a model controller
-     It will then vend any changes to a delegate while it's awake
-     Any auto links will have a special tag on the URL
-     */
+    //Observer for page changes
+    //Observe for page title changes
+    //Observe for text storage changes
 
-    //Adds all links when string has no links
-    //Removes all links when there are no pages
-    //Adds missing links and removes stale links
+    //Update on all of them
 
-    //Adds links if new page added
-    //Removes links if page deleted
-    //Adds links if existing page title changes
-    //Removes links if existing page title changes
-    //Adds and removes links if page title changes to other text that appears
+    private func reparseLinks() {
+        guard let storage = self.textStorage else {
+            return
+        }
 
-    //Matches longest page name over shorter names
-    //Removes link for shorter page name if longer page name added
-    //Updates links when typing
+        let pages = Array(self.modelController.collection(for: Page.self).all)
+        let links = TextLinkFinder().findLinkChanges(in: storage, using: pages)
 
-    //Doesn't update manual links if page title change
-    //Doesn't remove manual links if page title changes
-    //Removes manual links if page is removed
+        guard (links.linksToAdd.count > 0) || (links.linksToRemove.count > 0) else {
+            return
+        }
 
-    //Ignores "Untitled Page"
+        let shouldChange = self.delegate?.shouldChangeText(in: [NSRange(location:0, length: storage.length)], manager: self) ?? true
+        guard shouldChange else {
+            return
+        }
+
+        storage.beginEditing()
+        for link in links.linksToRemove {
+            storage.removeAttribute(.link, range: link.range)
+        }
+        for link in links.linksToAdd {
+            if let url = link.url {
+                storage.addAttribute(.link, value: url, range: link.range)
+            }
+        }
+        storage.endEditing()
+
+
+        self.delegate?.textDidChange(in: self)
+    }
 }
 
 extension PageLinkManager: NSTextStorageDelegate {
     func textStorage(_ textStorage: NSTextStorage, didProcessEditing editedMask: NSTextStorageEditActions, range editedRange: NSRange, changeInLength delta: Int) {
-
+        self.reparseLinks()
     }
 }

@@ -10,11 +10,13 @@ import Cocoa
 import Combine
 
 class TextEditorViewController: NSViewController, InspectableTextEditor {
-    @IBOutlet var textView: NSTextView!
+    @IBOutlet var editingTextView: NSTextView!
 
     @objc dynamic let viewModel: TextEditorViewModel
+    private let pageLinkManager: PageLinkManager
     init(viewModel: TextEditorViewModel) {
         self.viewModel = viewModel
+        self.pageLinkManager = PageLinkManager(modelController: viewModel.modelController)
         super.init(nibName: "TextEditorViewController", bundle: nil)
         self.viewModel.view = self
     }
@@ -24,18 +26,20 @@ class TextEditorViewController: NSViewController, InspectableTextEditor {
     }
 
 
+
     private var selectableBinding: AnyCancellable!
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.selectableBinding = self.publisher(for: \.enabled).assign(to: \.isSelectable, on: self.textView)
-        self.textView.textStorage?.delegate = self
+        self.selectableBinding = self.publisher(for: \.enabled).assign(to: \.isSelectable, on: self.editingTextView)
+
+        self.pageLinkManager.textStorage = self.editingTextView.textStorage
     }
 
     @objc dynamic var enabled: Bool = true
 
     @objc func createNewLinkedPage(_ sender: Any?) {
-        let selectedRange = self.textView.selectedRange()
+        let selectedRange = self.editingTextView.selectedRange()
         self.viewModel.createNewLinkedPage(for: selectedRange)
     }
 
@@ -43,7 +47,7 @@ class TextEditorViewController: NSViewController, InspectableTextEditor {
         guard let windowController = (self.windowController as? DocumentWindowController) else {
             return
         }
-        let selectedRange = self.textView.selectedRange()
+        let selectedRange = self.editingTextView.selectedRange()
         windowController.showPageSelector(title: "Link to page…") { [weak self] (page) in
             self?.viewModel.link(to: page, for: selectedRange)
         }
@@ -62,38 +66,36 @@ class TextEditorViewController: NSViewController, InspectableTextEditor {
     }
 
     private func updateSelectionAttributes() {
-        var baseAttributes = self.textView.typingAttributes
-        baseAttributes.merge(self.textView.selectedTextAttributes) { (key1, _) in key1 }
+        var baseAttributes = self.editingTextView.typingAttributes
+        baseAttributes.merge(self.editingTextView.selectedTextAttributes) { (key1, _) in key1 }
 
-        guard self.textView.isTextSelected else {
+        guard self.editingTextView.isTextSelected else {
             self.selectionAttributes = TextEditorAttributes(attributes: baseAttributes)
             return
         }
 
-        guard let textStorage = self.textView.textStorage else {
+        guard let textStorage = self.editingTextView.textStorage else {
             return
         }
 
-        let ranges = self.textView.selectedRanges.compactMap { $0.rangeValue }
+        let ranges = self.editingTextView.selectedRanges.compactMap { $0.rangeValue }
         self.selectionAttributes = textStorage.textEditorAttributes(in: ranges, typingAttributes: baseAttributes)
     }
 
     func updateSelection(with editorAttributes: TextEditorAttributes) {
-        guard self.textView.isTextSelected else {
-            self.textView.typingAttributes = editorAttributes.apply(to: self.textView.typingAttributes)
+        guard self.editingTextView.isTextSelected else {
+            self.editingTextView.typingAttributes = editorAttributes.apply(to: self.editingTextView.typingAttributes)
             self.updateSelectionAttributes()
             return
         }
 
-        let ranges = self.textView.selectedRanges.compactMap { $0.rangeValue }
-        self.textView.modifyText(in: ranges) { (textStorage) in
+        let ranges = self.editingTextView.selectedRanges.compactMap { $0.rangeValue }
+        self.editingTextView.modifyText(in: ranges) { (textStorage) in
             textStorage.apply(editorAttributes, to: ranges)
         }
         self.updateSelectionAttributes()
     }
 }
-
-
 
 
 extension TextEditorViewController: Editor {
@@ -105,15 +107,20 @@ extension TextEditorViewController: Editor {
 
 extension TextEditorViewController: TextEditorView {
     func addLink(with url: URL, to range: NSRange) {
-        self.textView.modifyText(in: [range]) { (textStorage) in
+        self.editingTextView.modifyText(in: [range]) { (textStorage) in
             textStorage.addAttribute(.link, value: url, range: range)
         }
     }
 }
 
-extension TextEditorViewController: NSTextStorageDelegate {
-    func textStorage(_ textStorage: NSTextStorage, didProcessEditing editedMask: NSTextStorageEditActions, range editedRange: NSRange, changeInLength delta: Int) {
-        print("range: \(editedRange) length: \(delta)")
+
+extension TextEditorViewController: PageLinkManagerDelegate {
+    func shouldChangeText(in ranges: [NSRange], manager: PageLinkManager) -> Bool {
+        return true //Can't use the actual method because the swift compiler is being funny
+    }
+
+    func textDidChange(in manager: PageLinkManager) {
+        self.editingTextView.didChangeText()
     }
 }
 
@@ -139,7 +146,7 @@ extension TextEditorViewController: NSTextViewDelegate {
     }
 
     func textViewDidChangeSelection(_ notification: Notification) {
-        guard self.view.window?.firstResponder == self.textView else {
+        guard self.view.window?.firstResponder == self.editingTextView else {
             return
         }
         self.updateSelectionAttributes()
