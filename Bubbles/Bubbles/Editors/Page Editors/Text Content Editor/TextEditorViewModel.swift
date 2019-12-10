@@ -12,26 +12,21 @@ protocol TextEditorView: Editor {
     func addLink(with url: URL, to range: NSRange)
 }
 
-class TextEditorViewModel: NSObject {
+class TextEditorViewModel: ViewModel {
     weak var view: TextEditorView?
     
     @objc dynamic let textContent: TextPageContent
-    let modelController: ModelController
-    let documentWindowState: DocumentWindowState
     let textAutoLinker: PageLinkManager
-    convenience init(textContent: TextPageContent, modelController: ModelController, documentWindowState: DocumentWindowState) {
+    convenience init(textContent: TextPageContent, documentWindowViewModel: DocumentWindowViewModel) {
         self.init(textContent: textContent,
-                  modelController: modelController,
-                  documentWindowState: documentWindowState,
-                  textAutoLinker: PageLinkManager(modelController: modelController))
+                  documentWindowViewModel: documentWindowViewModel,
+                  textAutoLinker: PageLinkManager(modelController: documentWindowViewModel.modelController))
     }
 
-    init(textContent: TextPageContent, modelController: ModelController, documentWindowState: DocumentWindowState, textAutoLinker: PageLinkManager) {
+    init(textContent: TextPageContent, documentWindowViewModel: DocumentWindowViewModel, textAutoLinker: PageLinkManager) {
         self.textContent = textContent
-        self.modelController = modelController
-        self.documentWindowState = documentWindowState
         self.textAutoLinker = textAutoLinker
-        super.init()
+        super.init(documentWindowViewModel: documentWindowViewModel)
     }
 
     override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {

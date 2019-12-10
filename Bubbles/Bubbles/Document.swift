@@ -22,7 +22,7 @@ class Document: NSDocument {
     }
 
     override func makeWindowControllers() {
-        let newWindowController = DocumentWindowController(windowNibName: "DocumentWindow")
+        let newWindowController = DocumentWindowController(viewModel: DocumentWindowViewModel(modelController: self.modelController))
         self.addWindowController(newWindowController)
     }
 
@@ -44,14 +44,6 @@ class Document: NSDocument {
 
     override func close() {
         super.close()
-    }
-
-
-
-    //MARK: - Base Actions
-
-    @IBAction func newCanvas(_ sender: Any?) {
-        self.modelController.collection(for: Canvas.self).newObject()
     }
 
 

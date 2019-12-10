@@ -17,7 +17,7 @@ class SidebarViewModelTests: XCTestCase {
     var undoManager: UndoManager!
     var notificationCenter: NotificationCenter!
 
-    var documentWindowState: DocumentWindowState!
+    var documentWindowViewModel: DocumentWindowViewModel!
 
     var modelController: TestModelController!
 
@@ -32,7 +32,7 @@ class SidebarViewModelTests: XCTestCase {
         self.pageCollection = self.modelController.addModelCollection(for: Page.self)
         self.modelController.addModelCollection(for: CanvasPage.self)
 
-        self.documentWindowState = DocumentWindowState()
+        self.documentWindowViewModel = MockDocumentWindowViewModel(modelController: self.modelController)
 
         self.canvasCollection.modelController = self.modelController
         self.pageCollection.modelController = self.modelController
@@ -45,13 +45,12 @@ class SidebarViewModelTests: XCTestCase {
         self.pageCollection = nil
         self.undoManager = nil
         self.notificationCenter = nil
-        self.documentWindowState = nil
+        self.documentWindowViewModel = nil
     }
 
     private func createViewModel() -> SidebarViewModel {
-        return  SidebarViewModel(modelController: self.modelController,
-                                 notificationCenter: self.notificationCenter,
-                                 documentWindowState: self.documentWindowState)
+        return  SidebarViewModel(documentWindowViewModel: self.documentWindowViewModel,
+                                 notificationCenter: self.notificationCenter)
     }
 
     @discardableResult private func createCanvasObjects() -> (Canvas, Canvas, Canvas, Canvas, Canvas) {
@@ -274,7 +273,7 @@ class SidebarViewModelTests: XCTestCase {
 
         viewModel.selectedObjectID = expectedID
 
-        XCTAssertEqual(self.documentWindowState.selectedSidebarObjectID, expectedID)
+        XCTAssertEqual(self.documentWindowViewModel.selectedSidebarObjectID, expectedID)
     }
 
 
@@ -460,13 +459,13 @@ class SidebarViewModelTests: XCTestCase {
         let viewModel = self.createViewModel()
         viewModel.selectedObjectID = page.id
 
-        let view = MockSidebarView()
-        viewModel.view = view
+        let window = MockWindow()
+        viewModel.documentWindowViewModel.window = window
 
         viewModel.deleteSelectedObject()
 
-        XCTAssertNil(view.suppliedAlert)
-        XCTAssertNil(view.callback)
+        XCTAssertNil(window.suppliedAlert)
+        XCTAssertNil(window.callback)
 
         XCTAssertFalse(self.pageCollection.all.contains(page))
     }
@@ -485,12 +484,12 @@ class SidebarViewModelTests: XCTestCase {
         let viewModel = self.createViewModel()
         viewModel.selectedObjectID = page.id
 
-        let view = MockSidebarView()
-        viewModel.view = view
+        let window = MockWindow()
+        viewModel.documentWindowViewModel.window = window
 
         viewModel.deleteSelectedObject()
 
-        XCTAssertNotNil(view.suppliedAlert)
+        XCTAssertNotNil(window.suppliedAlert)
     }
 
     func test_deleteSelectedObject_doesntDeletePageIfAlertCallbackNotCalled() {
@@ -507,12 +506,12 @@ class SidebarViewModelTests: XCTestCase {
         let viewModel = self.createViewModel()
         viewModel.selectedObjectID = page.id
 
-        let view = MockSidebarView()
-        viewModel.view = view
+        let window = MockWindow()
+        viewModel.documentWindowViewModel.window = window
 
         viewModel.deleteSelectedObject()
 
-        XCTAssertNotNil(view.callback)
+        XCTAssertNotNil(window.callback)
 
         XCTAssertTrue(self.pageCollection.all.contains(page))
         XCTAssertTrue(canvasPageCollection.all.contains(canvasPage))
@@ -532,14 +531,14 @@ class SidebarViewModelTests: XCTestCase {
         let viewModel = self.createViewModel()
         viewModel.selectedObjectID = page.id
 
-        let view = MockSidebarView()
-        viewModel.view = view
+        let window = MockWindow()
+        viewModel.documentWindowViewModel.window = window
 
         viewModel.deleteSelectedObject()
 
-        XCTAssertNotNil(view.callback)
+        XCTAssertNotNil(window.callback)
 
-        view.callback?(1)
+        window.callback?(1)
 
         XCTAssertTrue(self.pageCollection.all.contains(page))
         XCTAssertTrue(canvasPageCollection.all.contains(canvasPage))
@@ -569,14 +568,14 @@ class SidebarViewModelTests: XCTestCase {
         let viewModel = self.createViewModel()
         viewModel.selectedObjectID = page.id
 
-        let view = MockSidebarView()
-        viewModel.view = view
+        let window = MockWindow()
+        viewModel.documentWindowViewModel.window = window
 
         viewModel.deleteSelectedObject()
 
-        XCTAssertNotNil(view.callback)
+        XCTAssertNotNil(window.callback)
 
-        view.callback?(0)
+        window.callback?(0)
 
         XCTAssertFalse(self.pageCollection.all.contains(page))
         XCTAssertFalse(canvasPageCollection.all.contains(canvasPage1))
@@ -592,13 +591,13 @@ class SidebarViewModelTests: XCTestCase {
         let viewModel = self.createViewModel()
         viewModel.selectedObjectID = canvas.id
 
-        let view = MockSidebarView()
-        viewModel.view = view
+        let window = MockWindow()
+        viewModel.documentWindowViewModel.window = window
 
         viewModel.deleteSelectedObject()
 
-        XCTAssertNil(view.suppliedAlert)
-        XCTAssertNil(view.callback)
+        XCTAssertNil(window.suppliedAlert)
+        XCTAssertNil(window.callback)
 
         XCTAssertFalse(self.canvasCollection.all.contains(canvas))
     }
@@ -617,12 +616,12 @@ class SidebarViewModelTests: XCTestCase {
         let viewModel = self.createViewModel()
         viewModel.selectedObjectID = canvas.id
 
-        let view = MockSidebarView()
-        viewModel.view = view
+        let window = MockWindow()
+        viewModel.documentWindowViewModel.window = window
 
         viewModel.deleteSelectedObject()
 
-        XCTAssertNotNil(view.suppliedAlert)
+        XCTAssertNotNil(window.suppliedAlert)
     }
 
     func test_deleteSelectedObject_doesntDeleteCanvasIfAlertCallbackNotCalled() {
@@ -639,12 +638,12 @@ class SidebarViewModelTests: XCTestCase {
         let viewModel = self.createViewModel()
         viewModel.selectedObjectID = canvas.id
 
-        let view = MockSidebarView()
-        viewModel.view = view
+        let window = MockWindow()
+        viewModel.documentWindowViewModel.window = window
 
         viewModel.deleteSelectedObject()
 
-        XCTAssertNotNil(view.callback)
+        XCTAssertNotNil(window.callback)
 
         XCTAssertTrue(self.canvasCollection.all.contains(canvas))
         XCTAssertTrue(canvasPageCollection.all.contains(canvasPage))
@@ -664,14 +663,14 @@ class SidebarViewModelTests: XCTestCase {
         let viewModel = self.createViewModel()
         viewModel.selectedObjectID = canvas.id
 
-        let view = MockSidebarView()
-        viewModel.view = view
+        let window = MockWindow()
+        viewModel.documentWindowViewModel.window = window
 
         viewModel.deleteSelectedObject()
 
-        XCTAssertNotNil(view.callback)
+        XCTAssertNotNil(window.callback)
 
-        view.callback?(1)
+        window.callback?(1)
 
         XCTAssertTrue(self.canvasCollection.all.contains(canvas))
         XCTAssertTrue(canvasPageCollection.all.contains(canvasPage))
@@ -701,14 +700,14 @@ class SidebarViewModelTests: XCTestCase {
         let viewModel = self.createViewModel()
         viewModel.selectedObjectID = canvas.id
 
-        let view = MockSidebarView()
-        viewModel.view = view
+        let window = MockWindow()
+        viewModel.documentWindowViewModel.window = window
 
         viewModel.deleteSelectedObject()
 
-        XCTAssertNotNil(view.callback)
+        XCTAssertNotNil(window.callback)
 
-        view.callback?(0)
+        window.callback?(0)
 
         XCTAssertFalse(self.canvasCollection.all.contains(canvas))
         XCTAssertFalse(canvasPageCollection.all.contains(canvasPage1))
@@ -791,11 +790,5 @@ private class MockSidebarView: SidebarView {
     func reloadPages() {
         self.reloadPagesCalled = true
     }
-
-    var suppliedAlert: Alert?
-    var callback: ((Int) -> Void)?
-    func showAlert(_ alert: Alert, callback: @escaping (Int) -> Void) {
-        self.suppliedAlert = alert
-        self.callback = callback
-    }
 }
+

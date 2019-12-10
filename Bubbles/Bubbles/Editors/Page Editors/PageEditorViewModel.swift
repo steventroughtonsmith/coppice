@@ -12,19 +12,17 @@ protocol PageEditorView: class {
     func contentChanged()
 }
 
-class PageEditorViewModel: NSObject {
+class PageEditorViewModel: ViewModel {
     weak var view: PageEditorView?
     
     let page: Page
-    let modelController: ModelController
-    let documentWindowState: DocumentWindowState
     private var contentObserver: NSObjectProtocol?
-    init(page: Page, modelController: ModelController, documentWindowState: DocumentWindowState) {
+    init(page: Page, documentWindowViewModel: DocumentWindowViewModel) {
         self.page = page
-        self.modelController = modelController
-        self.documentWindowState = documentWindowState
-        super.init()
+        super.init(documentWindowViewModel: documentWindowViewModel)
+    }
 
+    override func setup() {
         self.contentObserver = NotificationCenter.default.addObserver(forName: Page.contentChangedNotification, object: self.page, queue: .main) { [weak self] (_) in
             self?.view?.contentChanged()
         }
@@ -39,17 +37,16 @@ class PageEditorViewModel: NSObject {
     var contentEditor: (Editor & NSViewController) {
         switch self.page.content.contentType {
         case .empty:
-            let viewModel = ContentSelectorViewModel(page: self.page, modelController: self.modelController)
+            let viewModel = ContentSelectorViewModel(page: self.page, documentWindowViewModel: self.documentWindowViewModel)
             viewModel.delegate = self
             return ContentSelectorViewController(viewModel: viewModel)
         case .text:
             let viewModel = TextEditorViewModel(textContent: (self.page.content as! TextPageContent),
-                                                modelController: self.modelController,
-                                                documentWindowState: self.documentWindowState)
+                                                documentWindowViewModel: self.documentWindowViewModel)
             return TextEditorViewController(viewModel: viewModel)
         case .image:
             let viewModel = ImageEditorViewModel(imageContent: (self.page.content as! ImagePageContent),
-                                                 modelController: self.modelController)
+                                                 documentWindowViewModel: self.documentWindowViewModel)
             return ImageEditorViewController(viewModel: viewModel)
         }
     }

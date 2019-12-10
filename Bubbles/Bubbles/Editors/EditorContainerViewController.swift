@@ -45,10 +45,10 @@ class EditorContainerViewController: NSViewController {
     //MARK: - Editor Generation
     func createEditor() -> (Editor & NSViewController)? {
         if let canvas = self.viewModel.currentObject as? Canvas {
-            return canvas.createEditor(with: self.viewModel.documentWindowState)
+            return canvas.createEditor(with: self.viewModel.documentWindowViewModel)
         }
         if let page = self.viewModel.currentObject as? Page {
-            return page.createEditor(with: self.viewModel.documentWindowState)
+            return page.createEditor(with: self.viewModel.documentWindowViewModel)
         }
         return nil
     }
@@ -60,7 +60,7 @@ extension EditorContainerViewController: Editor {
     }
 
     func inspectorsDidChange() {
-        self.viewModel.documentWindowState.currentInspectors = self.inspectors
+        self.viewModel.documentWindowViewModel.currentInspectors = self.inspectors
     }
 
     func open(_ page: PageLink) {

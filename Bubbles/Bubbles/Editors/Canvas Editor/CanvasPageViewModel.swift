@@ -11,17 +11,13 @@ import Foundation
 protocol CanvasPageView: class {
 }
 
-class CanvasPageViewModel: NSObject {
+class CanvasPageViewModel: ViewModel {
     weak var view: CanvasPageView?
 
     @objc dynamic let canvasPage: CanvasPage
-    let modelController: ModelController
-    let documentWindowState: DocumentWindowState
-    init(canvasPage: CanvasPage, modelController: ModelController, documentWindowState: DocumentWindowState) {
+    init(canvasPage: CanvasPage, documentWindowViewModel: DocumentWindowViewModel) {
         self.canvasPage = canvasPage
-        self.modelController = modelController
-        self.documentWindowState = documentWindowState
-        super.init()
+        super.init(documentWindowViewModel: documentWindowViewModel)
     }
 
     override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
@@ -49,9 +45,7 @@ class CanvasPageViewModel: NSObject {
             return nil
         }
 
-        let viewModel = PageEditorViewModel(page: page,
-                                            modelController: self.modelController,
-                                            documentWindowState: self.documentWindowState)
+        let viewModel = PageEditorViewModel(page: page, documentWindowViewModel: self.documentWindowViewModel)
         return PageEditorViewController(viewModel: viewModel)
     }()
 

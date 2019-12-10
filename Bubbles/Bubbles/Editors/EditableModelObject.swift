@@ -9,29 +9,25 @@
 import AppKit
 
 protocol EditableModelObject: ModelObject {
-    func createEditor(with documentWindowState: DocumentWindowState) -> (Editor & NSViewController)?
+    func createEditor(with documentWindowState: DocumentWindowViewModel) -> (Editor & NSViewController)?
 }
 
 
 extension Page: EditableModelObject {
-    func createEditor(with documentWindowState: DocumentWindowState) -> (Editor & NSViewController)? {
-        guard let modelController = self.modelController else {
-            return nil
-        }
-
+    func createEditor(with documentWindowViewModel: DocumentWindowViewModel) -> (Editor & NSViewController)? {
         if UserDefaults.standard.bool(forKey: "M3UseDebugEditors") {
             let viewModel = DebugPageEditorViewModel(page: self)
             return DebugPageEditor(viewModel: viewModel)
         }
 
-        let viewModel = PageEditorViewModel(page: self, modelController: modelController, documentWindowState: documentWindowState)
+        let viewModel = PageEditorViewModel(page: self, documentWindowViewModel: documentWindowViewModel)
         return PageEditorViewController(viewModel: viewModel)
     }
 }
 
 
 extension Canvas: EditableModelObject {
-    func createEditor(with documentWindowState: DocumentWindowState) -> (Editor & NSViewController)? {
+    func createEditor(with documentWindowViewModel: DocumentWindowViewModel) -> (Editor & NSViewController)? {
         guard let modelController = self.modelController else {
             return nil
         }
@@ -41,9 +37,7 @@ extension Canvas: EditableModelObject {
             return DebugCanvasEditor(viewModel: viewModel)
         }
 
-        let viewModel = CanvasEditorViewModel(canvas: self,
-                                              modelController: modelController,
-                                              documentWindowState: documentWindowState)
+        let viewModel = CanvasEditorViewModel(canvas: self, documentWindowViewModel: documentWindowViewModel)
         return CanvasEditorViewController(viewModel: viewModel)
     }
 }

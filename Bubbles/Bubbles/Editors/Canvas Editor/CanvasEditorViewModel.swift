@@ -12,7 +12,7 @@ protocol CanvasEditorView: class {
     func updateZoomFactor()
 }
 
-class CanvasEditorViewModel: NSObject {
+class CanvasEditorViewModel: ViewModel {
     weak var view: CanvasEditorView?
 
     let layoutEngine = CanvasLayoutEngine(configuration: .init(pageTitleHeight: 32,
@@ -23,14 +23,12 @@ class CanvasEditorViewModel: NSObject {
                                                                arrowWidth: 15))
 
     let canvas: Canvas
-    let modelController: ModelController
-    let documentWindowState: DocumentWindowState
-    init(canvas: Canvas, modelController: ModelController, documentWindowState: DocumentWindowState) {
+    init(canvas: Canvas, documentWindowViewModel: DocumentWindowViewModel) {
         self.canvas = canvas
-        self.modelController = modelController
-        self.documentWindowState = documentWindowState
-        super.init()
+        super.init(documentWindowViewModel: documentWindowViewModel)
+    }
 
+    override func setup() {
         self.setupObservation()
         self.updatePages()
 
@@ -62,26 +60,6 @@ class CanvasEditorViewModel: NSObject {
         }
     }
 
-    //Using an add to canvas control
-    //Dropping a page on the canvas
-    //Dropping content on a canvas
-
-    func close(_ canvasPage: CanvasPage) {
-        self.modelController.pushChangeGroup()
-        self.closeChildren(of: canvasPage)
-        canvasPage.canvas = nil
-        self.modelController.collection(for: CanvasPage.self).delete(canvasPage)
-        self.modelController.popChangeGroup()
-    }
-
-    private func closeChildren(of canvasPage: CanvasPage) {
-        for child in canvasPage.children {
-            self.closeChildren(of: child)
-            child.canvas = nil
-            self.modelController.collection(for: CanvasPage.self).delete(child)
-        }
-    }
-
 
     //MARK: - View Port
     var viewPortInCanvasSpace: CGRect? {
@@ -105,6 +83,10 @@ class CanvasEditorViewModel: NSObject {
 
     //MARK: - Page Management
     private(set) var canvasPages = Set<CanvasPage>()
+
+    func close(_ canvasPage: CanvasPage) {
+        self.documentWindowViewModel.remove(canvasPage)
+    }
 
     func canvasPage(with uuid: UUID) -> CanvasPage? {
         return self.canvasPages.first(where: { $0.id.uuid == uuid })
@@ -160,19 +142,8 @@ class CanvasEditorViewModel: NSObject {
     }
 
     func addPage(at link: PageLink, centredOn point: CGPoint? = nil) {
-        let pageCollection = self.modelController.collection(for: Page.self)
-        guard let page = pageCollection.objectWithID(link.destination) else {
-            return
-        }
-
-        let canvasPageCollection = self.modelController.collection(for: CanvasPage.self)
-        var sourcePage: CanvasPage? = nil
-        if let source = link.source {
-            sourcePage = canvasPageCollection.objectWithID(source)
-        }
-
         let pagePosition = (point != nil) ? self.layoutEngine.convertPointToPageSpace(point!) : nil
-        self.canvas.add(page, linkedFrom: sourcePage, centredOn: pagePosition)
+        self.documentWindowViewModel.addPage(at: link, to: self.canvas, centredOn: pagePosition)
     }
 
 

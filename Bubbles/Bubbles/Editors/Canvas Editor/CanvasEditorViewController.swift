@@ -242,8 +242,7 @@ class CanvasEditorViewController: NSViewController {
         }
 
         let viewModel = CanvasPageViewModel(canvasPage: canvasPage,
-                                            modelController: self.viewModel.modelController,
-                                            documentWindowState: self.viewModel.documentWindowState)
+                                            documentWindowViewModel: self.viewModel.documentWindowViewModel)
         let viewController = CanvasPageViewController(viewModel: viewModel)
         viewController.delegate = self
 

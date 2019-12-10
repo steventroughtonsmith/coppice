@@ -14,21 +14,16 @@ protocol InspectorContainerView: class {
 }
 
 
-class InspectorContainerViewModel {
+class InspectorContainerViewModel: ViewModel {
     weak var view: InspectorContainerView?
 
-    let modelController: ModelController
-    let documentWindowState: DocumentWindowState
-    init(modelController: ModelController, documentWindowState: DocumentWindowState) {
-        self.modelController = modelController
-        self.documentWindowState = documentWindowState
-
+    override func setup() {
         self.setupObservers()
     }
 
     private var inspectorObserver: AnyCancellable?
     private func setupObservers() {
-        self.inspectorObserver = self.documentWindowState.$currentInspectors.sink { [weak self] (inspectors) in
+        self.inspectorObserver = self.documentWindowViewModel.$currentInspectors.sink { [weak self] (inspectors) in
             self?.inspectors = inspectors
         }
     }

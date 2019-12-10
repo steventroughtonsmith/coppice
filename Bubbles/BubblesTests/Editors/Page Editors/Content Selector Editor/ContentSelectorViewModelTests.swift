@@ -27,7 +27,7 @@ class ContentSelectorViewModelTests: XCTestCase {
 
         self.modelController = BubblesModelController(undoManager: UndoManager())
         self.page = self.modelController.collection(for: Page.self).newObject()
-        self.viewModel = ContentSelectorViewModel(page: self.page, modelController: self.modelController)
+        self.viewModel = ContentSelectorViewModel(page: self.page, documentWindowViewModel: MockDocumentWindowViewModel(modelController: self.modelController))
     }
 
     //MARK: - selectType(_:)

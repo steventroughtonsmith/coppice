@@ -16,16 +16,14 @@ protocol ContentSelectorViewModelDelegate: class {
 protocol ContentSelectorView: class {
 }
 
-class ContentSelectorViewModel: NSObject {
+class ContentSelectorViewModel: ViewModel {
     weak var view: ContentSelectorView?
     weak var delegate: ContentSelectorViewModelDelegate?
 
     let page: Page
-    let modelController: ModelController
-    init(page: Page, modelController: ModelController) {
+    init(page: Page, documentWindowViewModel: DocumentWindowViewModel) {
         self.page = page
-        self.modelController = modelController
-        super.init()
+        super.init(documentWindowViewModel: documentWindowViewModel)
     }
 
     var contentTypes: [ContentTypeModel] = [

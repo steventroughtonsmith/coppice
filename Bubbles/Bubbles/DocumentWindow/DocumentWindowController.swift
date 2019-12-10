@@ -45,7 +45,19 @@ class DocumentWindowController: NSWindowController {
         }
     }
 
-    let documentWindowState = DocumentWindowState()
+    let viewModel: DocumentWindowViewModel
+    init(viewModel: DocumentWindowViewModel) {
+        self.viewModel = viewModel
+        super.init(window: nil)
+    }
+
+    override var windowNibName: NSNib.Name? {
+        return "DocumentWindow"
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func windowDidLoad(){
         super.windowDidLoad()
@@ -58,14 +70,14 @@ class DocumentWindowController: NSWindowController {
             return
         }
 
-        self.documentWindowState.document = document
+        self.viewModel.document = document
 
-        let sidebarVM = SidebarViewModel(modelController: document.modelController, documentWindowState: self.documentWindowState)
+        let sidebarVM = SidebarViewModel(documentWindowViewModel: self.viewModel)
         self.sidebarViewController = SidebarViewController(viewModel: sidebarVM)
 
-        self.editorContainerViewController = EditorContainerViewController(viewModel: EditorContainerViewModel(modelController: document.modelController, documentWindowState: self.documentWindowState))
+        self.editorContainerViewController = EditorContainerViewController(viewModel: EditorContainerViewModel(documentWindowViewModel: self.viewModel))
         self.editorContainerViewController?.delegate = self
-        self.inspectorContainerViewController = InspectorContainerViewController(viewModel: InspectorContainerViewModel(modelController: document.modelController, documentWindowState: self.documentWindowState))
+        self.inspectorContainerViewController = InspectorContainerViewController(viewModel: InspectorContainerViewModel(documentWindowViewModel: self.viewModel))
     }
 
 
@@ -111,7 +123,7 @@ class DocumentWindowController: NSWindowController {
     }
 
     func selectObject(with id: ModelID) {
-        self.documentWindowState.selectedSidebarObjectID = id
+        self.viewModel.selectedSidebarObjectID = id
     }
 
 
@@ -127,19 +139,11 @@ class DocumentWindowController: NSWindowController {
 
     //MARK: - Actions
     @IBAction func newPage(_ sender: Any?) {
-        guard let document = self.document as? Document,
-            let sidebarVM = self.sidebarViewController?.viewModel else {
-            return
-        }
-        let page = document.modelController.collection(for: Page.self).newObject()
-        guard let selectedObjectID = sidebarVM.selectedObjectID, (selectedObjectID.modelType == Canvas.modelType) else {
-            sidebarVM.selectedObjectID = page.id
-            return
-        }
+        self.viewModel.createPage()
+    }
 
-        if let canvas = document.modelController.collection(for: Canvas.self).objectWithID(selectedObjectID) {
-            canvas.add(page)
-        }
+    @IBAction func newCanvas(_ sender: Any?) {
+        self.viewModel.createCanvas()
     }
 
 

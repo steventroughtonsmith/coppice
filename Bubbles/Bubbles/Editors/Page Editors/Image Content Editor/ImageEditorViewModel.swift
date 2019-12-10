@@ -11,15 +11,13 @@ import AppKit
 protocol ImageEditorView: class {
 }
 
-class ImageEditorViewModel: NSObject {
+class ImageEditorViewModel: ViewModel {
     weak var view: ImageEditorView?
 
     @objc dynamic let imageContent: ImagePageContent
-    let modelController: ModelController
-    init(imageContent: ImagePageContent, modelController: ModelController) {
+    init(imageContent: ImagePageContent, documentWindowViewModel: DocumentWindowViewModel) {
         self.imageContent = imageContent
-        self.modelController = modelController
-        super.init()
+        super.init(documentWindowViewModel: documentWindowViewModel)
     }
 
     override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {

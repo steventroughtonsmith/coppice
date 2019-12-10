@@ -13,16 +13,10 @@ protocol EditorContainerView: class {
     func editorChanged()
 }
 
-class EditorContainerViewModel: NSObject {
+class EditorContainerViewModel: ViewModel {
     weak var view: EditorContainerView?
 
-    let modelController: ModelController
-    let documentWindowState: DocumentWindowState
-    init(modelController: ModelController, documentWindowState: DocumentWindowState) {
-        self.modelController = modelController
-        self.documentWindowState = documentWindowState
-        super.init()
-
+    override func setup() {
         self.setupObservation()
     }
 
@@ -30,7 +24,7 @@ class EditorContainerViewModel: NSObject {
     //MARK: - Observation
     var selectedObjectObservation: AnyCancellable?
     private func setupObservation() {
-        self.selectedObjectObservation = self.documentWindowState.$selectedSidebarObjectID
+        self.selectedObjectObservation = self.documentWindowViewModel.$selectedSidebarObjectID
             .receive(on: RunLoop.main)
             .map({[weak self] (modelID) in
                 guard let modelID = modelID else {

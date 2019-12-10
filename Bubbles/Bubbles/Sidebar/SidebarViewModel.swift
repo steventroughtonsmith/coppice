@@ -13,24 +13,19 @@ protocol SidebarView: class {
     func reloadSelection()
     func reloadCanvases()
     func reloadPages()
-
-    func showAlert(_ alert: Alert, callback: @escaping (Int) -> Void)
 }
 
-class SidebarViewModel: NSObject {
+class SidebarViewModel: ViewModel {
     weak var view: SidebarView?
 
-    let modelController: ModelController
     let notificationCenter: NotificationCenter
-    let documentWindowState: DocumentWindowState
-    init(modelController: ModelController,
-         notificationCenter: NotificationCenter = NotificationCenter.default,
-         documentWindowState: DocumentWindowState) {
-        self.modelController = modelController
+    init(documentWindowViewModel: DocumentWindowViewModel, notificationCenter: NotificationCenter = NotificationCenter.default) {
         self.notificationCenter = notificationCenter
-        self.documentWindowState = documentWindowState
-        super.init()
 
+        super.init(documentWindowViewModel: documentWindowViewModel)
+    }
+
+    override func setup() {
         self.setupSelectionUndo()
     }
 
@@ -58,7 +53,7 @@ class SidebarViewModel: NSObject {
     func startObserving() {
         self.canvasObserver = self.canvases.addObserver { canvas, change in self.handleChange(to: canvas, changeType: change) }
         self.pageObserver = self.pages.addObserver { page, change in self.handleChange(to: page, changeType: change)}
-        self.windowStateSidebarObserver = self.documentWindowState.$selectedSidebarObjectID
+        self.windowStateSidebarObserver = self.documentWindowViewModel.$selectedSidebarObjectID
                                             .receive(on: RunLoop.main)
                                             .assign(to: \.selectedObjectID, on: self)
     }
@@ -124,19 +119,13 @@ class SidebarViewModel: NSObject {
     }
 
     func addPage(with id: ModelID, toCanvasAtIndex index: Int) {
-        guard id.modelType == Page.modelType else {
-            return
-        }
-        guard let page = self.pageItems.first(where: { $0.id == id })?.page else {
-            return
-        }
-        
+        let pageLink = PageLink(destination: id)
         let canvas = self.canvasItems[index].canvas
+        var centrePoint = CGPoint.zero
         if let viewPort = canvas.viewPort {
-            canvas.add(page, centredOn: CGPoint(x: viewPort.midX, y: viewPort.midY))
-        } else {
-            canvas.add(page, centredOn: .zero)
+            centrePoint = CGPoint(x: viewPort.midX, y: viewPort.midY)
         }
+        self.documentWindowViewModel.addPage(at: pageLink, to: canvas, centredOn: centrePoint)
     }
 
 
@@ -148,92 +137,15 @@ class SidebarViewModel: NSObject {
 
         if selectedID.modelType == Page.modelType {
             if let page = self.pages.objectWithID(selectedID) {
-                guard let alert = alertForDeleting(page) else {
-                    self.delete(page)
-                    return
-                }
-
-                self.view?.showAlert(alert, callback: { (index) in
-                    let (type, _) = alert.buttons[index]
-                    if (type == .confirm) {
-                        self.delete(page)
-                    }
-                })
+                self.documentWindowViewModel.delete(page)
             }
         } else if selectedID.modelType == Canvas.modelType {
             if let canvas = self.canvases.objectWithID(selectedID) {
-                guard let alert = alertForDeleting(canvas) else {
-                    self.delete(canvas)
-                    return
-                }
-
-                self.view?.showAlert(alert, callback: { (index) in
-                    let (type, _) = alert.buttons[index]
-                    if (type == .confirm) {
-                        self.delete(canvas)
-                    }
-                })
+                self.documentWindowViewModel.delete(canvas)
             }
         }
     }
-
-    private func alertForDeleting(_ page: Page) -> Alert? {
-        let canvases = Set(page.canvases.compactMap { $0.canvas })
-        guard canvases.count > 0 else {
-            return nil
-        }
-        let localizedTitle = String.localizedStringWithFormat(NSLocalizedString("Delete Page '%@'", comment: "Delete Page alert title"),
-                                                              page.title)
-
-        let localizedMessage: String
-        if canvases.count == 1 {
-            let messageFormat = NSLocalizedString("This page is on the canvas '%@'. Deleting it will also remove it and any linked pages from that canvas.",
-                                                  comment: "Delete Page single canvas alert message")
-            localizedMessage = String.localizedStringWithFormat(messageFormat, canvases.first!.title)
-        } else {
-            let messageFormat = NSLocalizedString("This page is on %d canvases. Deleting it will also remove it and any linked pages from those canvases.",
-                                                  comment: "Delete Page multiple pages alert message")
-            localizedMessage = String.localizedStringWithFormat(messageFormat, canvases.count)
-        }
-        return Alert(title: localizedTitle,
-                     message: localizedMessage,
-                     confirmButtonTitle: NSLocalizedString("Delete", comment: "Delete alert confirm button"))
-    }
-
-    private func delete(_ page: Page) {
-        self.modelController.pushChangeGroup()
-        page.canvases.forEach {
-            self.canvasPages.delete($0)
-        }
-        self.pages.delete(page)
-        self.modelController.popChangeGroup()
-
-        self.selectedObjectID = nil
-    }
-
-    private func alertForDeleting(_ canvas: Canvas) -> Alert? {
-        guard canvas.pages.count > 0 else {
-            return nil
-        }
-
-        let localizedTitle = String.localizedStringWithFormat(NSLocalizedString("Delete Canvas '%@'", comment: "Delete Canvas alert title"),
-                                                              canvas.title)
-        return Alert(title: localizedTitle,
-                     message: NSLocalizedString("Are you sure you want to delete this canvas?", comment: "Delete canvas confirm message"),
-                     confirmButtonTitle: NSLocalizedString("Delete", comment: "Delete alert confirm button"))
-    }
-
-    private func delete(_ canvas: Canvas) {
-        self.modelController.pushChangeGroup()
-        canvas.pages.forEach {
-            self.canvasPages.delete($0)
-        }
-        self.canvases.delete(canvas)
-        self.modelController.popChangeGroup()
-
-        self.selectedObjectID = nil
-    }
-
+    
 
     //MARK: - Re-ordering
     func moveCanvas(with id: ModelID, aboveCanvasAtIndex index: Int) {
@@ -263,17 +175,12 @@ class SidebarViewModel: NSObject {
 
     //MARK: - Adding Files
     func addPages(fromFilesAtURLs fileURLs: [URL], toCanvasAtIndex canvasIndex: Int?) -> [Page] {
-        self.pages.modelController?.pushChangeGroup()
-
-        let newPages = fileURLs.compactMap { self.pages.newPage(fromFileAt: $0) }
+        var canvas: Canvas?
         if let index = canvasIndex {
-            let canvas = self.canvasItems[index].canvas
-            newPages.forEach { canvas.add($0) }
+            canvas = self.canvasItems[index].canvas
         }
-        
-        self.pages.modelController?.popChangeGroup()
 
-        return newPages
+        return self.documentWindowViewModel.createPages(fromFilesAtURLs: fileURLs, addingTo: canvas)
     }
 
 
@@ -292,7 +199,7 @@ class SidebarViewModel: NSObject {
                 })
             }
             self.view?.reloadSelection()
-            self.documentWindowState.selectedSidebarObjectID = self.selectedObjectID
+            self.documentWindowViewModel.selectedSidebarObjectID = self.selectedObjectID
         }
     }
 
