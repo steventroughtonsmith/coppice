@@ -384,7 +384,7 @@ class ModelCollectionTests: XCTestCase {
             $0.stringProperty = "Foo"
         }
 
-        XCTAssertFalse(self.modelController.undoManager.canUndo)
+        self.modelController.undoManager.removeAllActions() // Clean up
         object.didChange(\.stringProperty, oldValue: "Bar")
 
         XCTAssertTrue(self.modelController.undoManager.canUndo)
@@ -412,7 +412,7 @@ class ModelCollectionTests: XCTestCase {
         let child1 = self.collection.newObject()
         child1.inverseRelationship = parent
 
-        XCTAssertFalse(self.modelController.undoManager.canUndo)
+        self.modelController.undoManager.removeAllActions() // Clean up
         child1.didChangeRelationship(\.inverseRelationship, oldValue: nil, inverseKeyPath: \.relationship)
 
         XCTAssertTrue(self.modelController.undoManager.canUndo)

@@ -21,6 +21,8 @@ class DocumentWindowViewModel: NSObject {
     let modelController: ModelController
     init(modelController: ModelController) {
         self.modelController = modelController
+        super.init()
+        self.setupSelectionUndo()
     }
 
 
@@ -40,21 +42,25 @@ class DocumentWindowViewModel: NSObject {
 
     //MARK: - Creating Pages
     @discardableResult func createPage() -> Page {
+        self.modelController.undoManager.beginUndoGrouping()
+        self.modelController.undoManager.setActionName(NSLocalizedString("Create Page", comment: "Create Page Undo Action Name"))
         let page = self.pageCollection.newObject()
         guard let selectedObjectID = self.selectedSidebarObjectID, (selectedObjectID.modelType == Canvas.modelType) else {
             self.selectedSidebarObjectID = page.id
+            self.modelController.undoManager.endUndoGrouping()
             return page
         }
 
         if let canvas = self.canvasCollection.objectWithID(selectedObjectID) {
             canvas.add(page)
         }
+        self.modelController.undoManager.endUndoGrouping()
         return page
     }
 
     func createPages(fromFilesAtURLs fileURLs: [URL], addingTo canvas: Canvas? = nil, centredOn point: CGPoint? = nil) -> [Page] {
         self.modelController.pushChangeGroup()
-
+        self.modelController.undoManager.setActionName(NSLocalizedString("Create Pages", comment: "Create Page Undo Action Name"))
         let newPages = fileURLs.compactMap { self.pageCollection.newPage(fromFileAt: $0) }
         if let canvas = canvas {
             newPages.forEach { canvas.add($0) }
@@ -107,6 +113,7 @@ class DocumentWindowViewModel: NSObject {
 
     private func actuallyDelete(_ page: Page) {
         self.modelController.pushChangeGroup()
+        self.modelController.undoManager.setActionName(NSLocalizedString("Delete Page", comment: "Delete Page Undo Action Name"))
         page.canvases.forEach {
             self.canvasPageCollection.delete($0)
         }
@@ -120,22 +127,24 @@ class DocumentWindowViewModel: NSObject {
 
 
     //MARK: - Adding Pages To Canvas
-    func addPage(at link: PageLink, to canvas: Canvas, centredOn point: CGPoint? = nil) {
+    @discardableResult func addPage(at link: PageLink, to canvas: Canvas, centredOn point: CGPoint? = nil) -> CanvasPage? {
         guard let page = self.pageCollection.objectWithID(link.destination) else {
-            return
+            return nil
         }
+        self.modelController.undoManager.setActionName(NSLocalizedString("Add Page to Canvas", comment: "Add Page To Canvas Undo Action Name"))
 
         var sourcePage: CanvasPage? = nil
         if let source = link.source {
             sourcePage = self.canvasPageCollection.objectWithID(source)
         }
 
-        canvas.add(page, linkedFrom: sourcePage, centredOn: point)
+        return canvas.add(page, linkedFrom: sourcePage, centredOn: point)
     }
 
 
     //MARK: - Creating Canvases
     @discardableResult func createCanvas() -> Canvas {
+        self.modelController.undoManager.setActionName(NSLocalizedString("Create Canvas", comment: "Create Canvas Undo Action Name"))
         return self.modelController.collection(for: Canvas.self).newObject()
     }
 
@@ -169,6 +178,7 @@ class DocumentWindowViewModel: NSObject {
 
     private func actuallyDelete(_ canvas: Canvas) {
         self.modelController.pushChangeGroup()
+        self.modelController.undoManager.setActionName(NSLocalizedString("Delete Canvas", comment: "Delete Canvas Undo Action Name"))
         canvas.pages.forEach {
             self.canvasPageCollection.delete($0)
         }
@@ -184,6 +194,7 @@ class DocumentWindowViewModel: NSObject {
     //Removing page from canvas
     func remove(_ canvasPage: CanvasPage) {
         self.modelController.pushChangeGroup()
+        self.modelController.undoManager.setActionName(NSLocalizedString("Remove Page From Canvas", comment: "Remove Page From Canvas Undo Action Name"))
         self.closeChildren(of: canvasPage)
         canvasPage.canvas = nil
         self.canvasPageCollection.delete(canvasPage)
@@ -195,6 +206,26 @@ class DocumentWindowViewModel: NSObject {
             self.closeChildren(of: child)
             child.canvas = nil
             self.canvasPageCollection.delete(child)
+        }
+    }
+
+
+    //MARK: - Undo
+    private var undoObservation: NSObjectProtocol?
+    private func setupSelectionUndo() {
+        let undoManager = self.modelController.undoManager
+        self.undoObservation = NotificationCenter.default.addObserver(forName: .NSUndoManagerDidOpenUndoGroup,
+                                                                      object: undoManager,
+                                                                      queue: .main)
+        { [weak self] (notification) in
+            guard let strongSelf = self else {
+                return
+            }
+            let selectionID = strongSelf.selectedSidebarObjectID
+            undoManager.setActionIsDiscardable(true)
+            undoManager.registerUndo(withTarget: strongSelf) { (target) in
+                target.selectedSidebarObjectID = selectionID
+            }
         }
     }
 }

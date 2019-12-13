@@ -45,6 +45,11 @@ final class TestCollectableModelObject: NSObject, CollectableModelObject {
     var objectWasInsertedCalled = false
     func objectWasInserted() {
         self.objectWasInsertedCalled = true
+        self.$inverseRelationship.modelController = self.modelController
+    }
+
+    func objectWasDeleted() {
+        self.$inverseRelationship.performCleanUp()
     }
 
     var stringProperty = "Test" {
@@ -55,7 +60,7 @@ final class TestCollectableModelObject: NSObject, CollectableModelObject {
         didSet { self.didChange(\.intProperty, oldValue: oldValue) }
     }
 
-    var inverseRelationship: RelationshipModelObject?
+    @ModelObjectReference var inverseRelationship: RelationshipModelObject?
 }
 
 final class RelationshipModelObject: NSObject, CollectableModelObject {

@@ -33,15 +33,17 @@ final class CanvasPage: NSObject, CollectableModelObject {
         didSet { self.didChangeRelationship(\.canvas, oldValue: oldValue, inverseKeyPath: \.pages) }
     }
 
-    @objc dynamic weak var parent: CanvasPage?
+    @ModelObjectReference @objc dynamic var parent: CanvasPage?
     var children: Set<CanvasPage> {
         self.relationship(for: \.parent)
     }
 
-    func objectWillBeDeleted() {
-        self.page = nil
-        self.canvas = nil
-        self.parent = nil
+    func objectWasInserted() {
+        self.$parent.modelController = self.modelController
+    }
+
+    func objectWasDeleted() {
+        self.$parent.performCleanUp()
     }
 
 

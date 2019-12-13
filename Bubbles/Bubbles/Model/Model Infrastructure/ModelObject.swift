@@ -23,6 +23,7 @@ protocol ModelObject: class {
 
     init()
 
+
     static func modelID(with: UUID) -> ModelID
     static func modelID(withUUIDString: String) -> ModelID?
 
@@ -63,7 +64,7 @@ protocol CollectableModelObject: ModelObject, Hashable {
     func objectWasInserted()
 
     /// Called before the object will be deleted. The object should break any relationship
-    func objectWillBeDeleted()
+    func objectWasDeleted()
 
     /// Register an undo action for an attribute change
     /// - Parameter oldValue: The old value of the attribute
@@ -85,9 +86,13 @@ extension CollectableModelObject {
         return self.collection?.modelController
     }
 
+    static func create(in modelController: ModelController, setupBlock: ((Self) -> Void)? = nil) -> Self {
+        return modelController.collection(for: Self.self).newObject(setupBlock: setupBlock)
+    }
+
     func objectWasInserted() {}
 
-    func objectWillBeDeleted() {}
+    func objectWasDeleted() {}
     
     func didChange<T>(_ keyPath: ReferenceWritableKeyPath<Self, T>, oldValue: T) {
         let id = self.id
@@ -98,15 +103,24 @@ extension CollectableModelObject {
     }
 
     func didChangeRelationship<T: CollectableModelObject>(_ keyPath: ReferenceWritableKeyPath<Self, T?>, oldValue: T?, inverseKeyPath: KeyPath<T, Set<Self>>) {
+        guard let relationshipObject = oldValue ?? self[keyPath: keyPath],
+              let selfCollection = self.collection,
+              let relationshipCollection = relationshipObject.collection else {
+                return
+        }
         let id = self.id
-        self.collection?.notifyOfChange(to: self)
-        self.collection?.registerUndoAction(withName: nil) { (collection) in
-            collection.setValue(oldValue, for: keyPath, ofObjectWithID: id)
+        let oldID = oldValue?.id
+        selfCollection.notifyOfChange(to: self)
+        selfCollection.registerUndoAction(withName: nil) { (collection) in
+            var value: T? = nil
+            if let objectID = oldID,
+               let oldObject = relationshipCollection.objectWithID(objectID) {
+                value = oldObject
+            }
+            collection.setValue(value, for: keyPath, ofObjectWithID: id)
         }
 
-        if let value = oldValue ?? self[keyPath: keyPath] {
-        	value.collection?.notifyOfChange(to: value)
-        }
+        relationshipCollection.notifyOfChange(to: relationshipObject)
     }
 
     func relationship<T: CollectableModelObject>(for keyPath: ReferenceWritableKeyPath<T, Self?>) -> Set<T> {

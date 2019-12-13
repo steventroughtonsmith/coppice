@@ -25,10 +25,6 @@ class SidebarViewModel: ViewModel {
         super.init(documentWindowViewModel: documentWindowViewModel)
     }
 
-    override func setup() {
-        self.setupSelectionUndo()
-    }
-
 
     //MARK: - Convenience Methods
 
@@ -224,27 +220,6 @@ class SidebarViewModel: ViewModel {
                 return
             }
             self.selectedObjectID = self.pageItems[newValue].id
-        }
-    }
-
-
-    //MARK: - Undo
-    private var undoObservation: NSObjectProtocol?
-    private func setupSelectionUndo() {
-        let undoManager = self.modelController.undoManager
-        self.undoObservation = self.notificationCenter.addObserver(forName: .NSUndoManagerDidOpenUndoGroup,
-                                                                   object: undoManager,
-                                                                   queue: .main)
-        { [weak self] (notification) in
-            guard let strongSelf = self,
-                let selectionID = strongSelf.selectedObjectID else {
-                return
-            }
-
-            undoManager.setActionIsDiscardable(true)
-            undoManager.registerUndo(withTarget: strongSelf) { (target) in
-                target.selectedObjectID = selectionID
-            }
         }
     }
 }

@@ -144,6 +144,7 @@
 		99DEF28F22F33A790020A7CE /* ModelID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DEF28E22F33A790020A7CE /* ModelID.swift */; };
 		99DEF29322F33ABB0020A7CE /* ModelIDTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DEF29222F33ABB0020A7CE /* ModelIDTests.swift */; };
 		99E944FB2368683F00DFAB95 /* NSImage+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E944FA2368683F00DFAB95 /* NSImage+M3Extensions.swift */; };
+		99F084F123A280A5008D2ACA /* ModelRelationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F084F023A280A5008D2ACA /* ModelRelationship.swift */; };
 		99FE019122CD1037004D380D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FE019022CD1037004D380D /* AppDelegate.swift */; };
 		99FE019322CD1037004D380D /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FE019222CD1037004D380D /* Document.swift */; };
 		99FE019822CD1038004D380D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99FE019722CD1038004D380D /* Assets.xcassets */; };
@@ -312,6 +313,7 @@
 		99DEF28E22F33A790020A7CE /* ModelID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelID.swift; sourceTree = "<group>"; };
 		99DEF29222F33ABB0020A7CE /* ModelIDTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelIDTests.swift; sourceTree = "<group>"; };
 		99E944FA2368683F00DFAB95 /* NSImage+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+M3Extensions.swift"; sourceTree = "<group>"; };
+		99F084F023A280A5008D2ACA /* ModelRelationship.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelRelationship.swift; sourceTree = "<group>"; };
 		99FE018D22CD1037004D380D /* Bubbles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bubbles.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		99FE019022CD1037004D380D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		99FE019222CD1037004D380D /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
@@ -367,6 +369,7 @@
 				990B6A3822EB482D00523C06 /* ModelObject.swift */,
 				99DEF28E22F33A790020A7CE /* ModelID.swift */,
 				99FFF9C723439DB500EF02A0 /* ModelObservation.swift */,
+				99F084F023A280A5008D2ACA /* ModelRelationship.swift */,
 			);
 			path = "Model Infrastructure";
 			sourceTree = "<group>";
@@ -519,6 +522,19 @@
 				9965FC4523844910002FE10D /* TextEditorInspectorContentView.xib */,
 			);
 			path = "Text Editor Inspector";
+			sourceTree = "<group>";
+		};
+		9976611A23A3EB2C000D1741 /* Unit Tests */ = {
+			isa = PBXGroup;
+			children = (
+				9957B086239FD3CA00BA3C0B /* DocumentWindow */,
+				99581079230D758700D996C4 /* Editors */,
+				99DEF28D22F33A2E0020A7CE /* Model */,
+				99D4D59622F864E200F69C1F /* Sidebar */,
+				99A8F57B230C3BD800C3F08A /* Page Selector */,
+				99A0B858238D72C2005FCF25 /* Inspectors */,
+			);
+			path = "Unit Tests";
 			sourceTree = "<group>";
 		};
 		9976A49423674412004D573D /* Model Infrastructure */ = {
@@ -865,14 +881,9 @@
 			isa = PBXGroup;
 			children = (
 				9923B06A22F45F7E0035D8C6 /* TestObjects.swift */,
-				9957B086239FD3CA00BA3C0B /* DocumentWindow */,
+				9976611A23A3EB2C000D1741 /* Unit Tests */,
 				997711C8239E9AD900FCC8C7 /* Helpers */,
 				99868F3D23981142009AC0F7 /* Resources */,
-				99581079230D758700D996C4 /* Editors */,
-				99DEF28D22F33A2E0020A7CE /* Model */,
-				99D4D59622F864E200F69C1F /* Sidebar */,
-				99A8F57B230C3BD800C3F08A /* Page Selector */,
-				99A0B858238D72C2005FCF25 /* Inspectors */,
 				99FE01A822CD1038004D380D /* Info.plist */,
 			);
 			path = BubblesTests;
@@ -1074,6 +1085,7 @@
 				99868F352396AD73009AC0F7 /* ImageEditorInspectorViewController.swift in Sources */,
 				99D8E37A237EDB890098CF3B /* PageInspectorViewModel.swift in Sources */,
 				990D243D23560169001B1FD9 /* LayoutEngineArrow.swift in Sources */,
+				99F084F123A280A5008D2ACA /* ModelRelationship.swift in Sources */,
 				99C865202302E256004C7B89 /* ImageEditorViewController.swift in Sources */,
 				99C8650923016EB2004C7B89 /* TextEditorViewModel.swift in Sources */,
 				9925B2622386A0DF001A8ADC /* TextEditorInspectorTypes.swift in Sources */,

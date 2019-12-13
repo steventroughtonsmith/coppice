@@ -55,20 +55,36 @@ class ModelCollection<ModelType: CollectableModelObject> {
         self.modelController?.pushChangeGroup()
         let newObject = ModelType()
         newObject.collection = self
-        self.all.insert(newObject)
         self.disableUndo {
-            newObject.objectWasInserted()
             setupBlock?(newObject)
         }
-        self.notifyOfChange(to: newObject, changeType: .insert)
+        self.insert(newObject)
         self.modelController?.popChangeGroup()
         return newObject
     }
 
+    private func insert(_ object: ModelType) {
+        self.all.insert(object)
+
+        self.registerUndoAction() { collection in
+            collection.delete(object)
+        }
+
+        self.disableUndo {
+            object.objectWasInserted()
+        }
+        self.notifyOfChange(to: object, changeType: .insert)
+    }
+
     func delete(_ object: ModelType) {
         if let index = self.all.firstIndex(where: {$0.id == object.id}) {
-            object.objectWillBeDeleted()
+            self.registerUndoAction() { collection in
+                collection.insert(object)
+            }
             self.all.remove(at: index)
+            self.disableUndo {
+                object.objectWasDeleted()
+            }
             self.notifyOfChange(to: object, changeType: .delete)
         }
     }

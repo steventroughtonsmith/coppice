@@ -10,44 +10,46 @@ import XCTest
 @testable import Bubbles
 
 class CanvasPageTests: XCTestCase {
+    var modelController: BubblesModelController!
 
     override func setUp() {
         super.setUp()
 
+        self.modelController = BubblesModelController(undoManager: UndoManager())
     }
 
     func test_plistRepresentation_containsID() throws {
-        let canvasPage = CanvasPage()
+        let canvasPage = CanvasPage.create(in: self.modelController)
         let id = try XCTUnwrap(canvasPage.plistRepresentation["id"] as? String)
         XCTAssertEqual(id, canvasPage.id.stringRepresentation)
     }
 
     func test_plistRepresentation_containsFrame() throws {
-        let canvasPage = CanvasPage()
+        let canvasPage = CanvasPage.create(in: self.modelController)
         canvasPage.frame = CGRect(x: 20, y: 30, width: 40, height: 50)
         let frame = try XCTUnwrap(canvasPage.plistRepresentation["frame"] as? String)
         XCTAssertEqual(frame, NSStringFromRect(CGRect(x: 20, y: 30, width: 40, height: 50)))
     }
 
     func test_plistRepresentation_containsPageID() throws {
-        let page = Page()
-        let canvasPage = CanvasPage()
+        let page = Page.create(in: self.modelController)
+        let canvasPage = CanvasPage.create(in: self.modelController)
         canvasPage.page = page
         let pageID = try XCTUnwrap(canvasPage.plistRepresentation["page"] as? String)
         XCTAssertEqual(pageID, page.id.stringRepresentation)
     }
 
     func test_plistRepresentation_containsCanvasID() throws {
-        let canvas = Canvas()
-        let canvasPage = CanvasPage()
+        let canvas = Canvas.create(in: self.modelController)
+        let canvasPage = CanvasPage.create(in: self.modelController)
         canvasPage.canvas = canvas
         let canvasID = try XCTUnwrap(canvasPage.plistRepresentation["canvas"] as? String)
         XCTAssertEqual(canvasID, canvas.id.stringRepresentation)
     }
 
     func test_plistRepresentation_containsParentID() throws {
-        let parent = CanvasPage()
-        let canvasPage = CanvasPage()
+        let parent = CanvasPage.create(in: self.modelController)
+        let canvasPage = CanvasPage.create(in: self.modelController)
         canvasPage.parent = parent
         let parentID = try XCTUnwrap(canvasPage.plistRepresentation["parent"] as? String)
         XCTAssertEqual(parentID, parent.id.stringRepresentation)

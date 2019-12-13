@@ -46,11 +46,7 @@ class CanvasEditorViewModel: ViewModel {
             }
         }
         self.canvasPageObserver = self.modelController.collection(for: CanvasPage.self).addObserver() { [weak self] (canvas, changeType) in
-            if changeType == .update {
-                self?.updatePages()
-            } else if changeType == .insert {
-                self?.updatePages()
-            }
+            self?.updatePages()
         }
     }
 
