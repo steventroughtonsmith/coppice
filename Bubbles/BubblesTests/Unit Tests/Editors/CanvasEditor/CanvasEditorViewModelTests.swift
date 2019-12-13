@@ -279,6 +279,22 @@ class CanvasEditorViewModelTests: XCTestCase {
     }
 
 
+    //MARK: - Observation/Undo
+    func test_updatesPagesIfCanvasPageAddedToCanvas() {
+        XCTAssertEqual(self.viewModel.canvasPages.count, 2)
+        CanvasPage.create(in: self.modelController) { $0.canvas = self.canvas }
+
+        XCTAssertEqual(self.viewModel.canvasPages.count, 3)
+    }
+
+    func test_updatesPagesIfCanvasPageRemovedFromCanvas() {
+        XCTAssertEqual(self.viewModel.canvasPages.count, 2)
+        self.canvasPage1.canvas = nil
+
+        XCTAssertEqual(self.viewModel.canvasPages.count, 1)
+    }
+
+
     //MARK: - Helpers
     class TestCanvasEditorView: CanvasEditorView {
         var updateZoomFactorCalled = false

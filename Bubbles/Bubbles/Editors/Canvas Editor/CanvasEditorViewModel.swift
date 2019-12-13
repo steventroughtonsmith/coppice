@@ -118,11 +118,11 @@ class CanvasEditorViewModel: ViewModel {
         let removedPages = self.canvasPages.subtracting(newPages)
         let remainingPages = newPages.subtracting(addedPages)
 
+        self.canvasPages = newPages
+
         self.addPages(addedPages)
         self.removePages(removedPages)
         self.updatePages(remainingPages)
-
-        self.canvasPages = newPages
     }
 
     func createTestPage() {

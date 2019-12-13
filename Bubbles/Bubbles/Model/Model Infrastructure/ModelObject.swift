@@ -86,7 +86,7 @@ extension CollectableModelObject {
         return self.collection?.modelController
     }
 
-    static func create(in modelController: ModelController, setupBlock: ((Self) -> Void)? = nil) -> Self {
+    @discardableResult static func create(in modelController: ModelController, setupBlock: ((Self) -> Void)? = nil) -> Self {
         return modelController.collection(for: Self.self).newObject(setupBlock: setupBlock)
     }
 
@@ -102,7 +102,7 @@ extension CollectableModelObject {
         }
     }
 
-    func didChangeRelationship<T: CollectableModelObject>(_ keyPath: ReferenceWritableKeyPath<Self, T?>, oldValue: T?, inverseKeyPath: KeyPath<T, Set<Self>>) {
+    func didChangeRelationship<T: CollectableModelObject>(_ keyPath: ReferenceWritableKeyPath<Self, T?>, oldValue: T?) {
         guard let relationshipObject = oldValue ?? self[keyPath: keyPath],
               let selfCollection = self.collection,
               let relationshipCollection = relationshipObject.collection else {

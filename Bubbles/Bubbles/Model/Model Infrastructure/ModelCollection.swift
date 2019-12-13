@@ -55,10 +55,11 @@ class ModelCollection<ModelType: CollectableModelObject> {
         self.modelController?.pushChangeGroup()
         let newObject = ModelType()
         newObject.collection = self
+        self.insert(newObject)
         self.disableUndo {
             setupBlock?(newObject)
         }
-        self.insert(newObject)
+        self.notifyOfChange(to: newObject, changeType: .insert)
         self.modelController?.popChangeGroup()
         return newObject
     }
@@ -125,14 +126,14 @@ class ModelCollection<ModelType: CollectableModelObject> {
 
 
     //MARK: - Undo
-    func disableUndo(_ caller: () -> Void) {
+    func disableUndo(_ caller: () throws -> Void) rethrows {
         guard let undoManager = self.modelController?.undoManager else {
-            caller()
+            try caller()
             return
         }
 
         undoManager.disableUndoRegistration()
-        caller()
+        try caller()
         undoManager.enableUndoRegistration()
     }
 

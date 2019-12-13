@@ -537,6 +537,13 @@
 			path = "Unit Tests";
 			sourceTree = "<group>";
 		};
+		9976611B23A3EB61000D1741 /* Functional Tests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Functional Tests";
+			sourceTree = "<group>";
+		};
 		9976A49423674412004D573D /* Model Infrastructure */ = {
 			isa = PBXGroup;
 			children = (
@@ -881,6 +888,7 @@
 			isa = PBXGroup;
 			children = (
 				9923B06A22F45F7E0035D8C6 /* TestObjects.swift */,
+				9976611B23A3EB61000D1741 /* Functional Tests */,
 				9976611A23A3EB2C000D1741 /* Unit Tests */,
 				997711C8239E9AD900FCC8C7 /* Helpers */,
 				99868F3D23981142009AC0F7 /* Resources */,

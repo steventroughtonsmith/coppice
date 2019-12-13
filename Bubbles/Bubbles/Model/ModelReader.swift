@@ -48,50 +48,54 @@ class ModelReader: NSObject {
 
     private func createAndDeleteObjects<T: CollectableModelObject>(ofType type: T.Type, using plistItems: [ModelID: [String: Any]]) {
         let collection = self.modelController.collection(for: type)
-        let existingIDs = Set(collection.all.map { $0.id })
-        let newIDs = Set(plistItems.keys)
+        collection.disableUndo {
+            let existingIDs = Set(collection.all.map { $0.id })
+            let newIDs = Set(plistItems.keys)
 
-        let itemsToAdd = newIDs.subtracting(existingIDs)
-        let itemsToRemove = existingIDs.subtracting(newIDs)
+            let itemsToAdd = newIDs.subtracting(existingIDs)
+            let itemsToRemove = existingIDs.subtracting(newIDs)
 
-        for id in itemsToRemove {
-            if let item = collection.objectWithID(id) {
-                collection.delete(item)
+            for id in itemsToRemove {
+                if let item = collection.objectWithID(id) {
+                    collection.delete(item)
+                }
             }
-        }
 
-        for id in itemsToAdd {
-            collection.newObject() { $0.id = id }
+            for id in itemsToAdd {
+                collection.newObject() { $0.id = id }
+            }
         }
     }
 
     private func updateObjects<T: CollectableModelObject>(ofType type: T.Type, using plist: [ModelID: [String: Any]], content: [String: FileWrapper]) throws {
         let collection = self.modelController.collection(for: type)
 
-        for (id, plistItem) in plist {
-            guard let item = collection.objectWithID(id) else {
-                return
-            }
-
-            var plistItemWithModelFiles = plistItem
-            for modelFileProperty in type.modelFileProperties {
-                let modelFilePlist = plistItemWithModelFiles[modelFileProperty] as? [String: Any]
-                guard let type = modelFilePlist?["type"] as? String else {
-                    continue
+        try collection.disableUndo {
+            for (id, plistItem) in plist {
+                guard let item = collection.objectWithID(id) else {
+                    return
                 }
 
-                let metadata = modelFilePlist?["metadata"] as? [String: Any]
-                let modelFile: ModelFile
-                if let filename = modelFilePlist?["filename"] as? String {
-                    let data = content[filename]?.regularFileContents
-                    modelFile = ModelFile(type: type, filename: filename, data: data, metadata: metadata)
-                } else {
-                    modelFile = ModelFile(type: type, filename: nil, data: nil, metadata: metadata)
-                }
+                var plistItemWithModelFiles = plistItem
+                for modelFileProperty in type.modelFileProperties {
+                    let modelFilePlist = plistItemWithModelFiles[modelFileProperty] as? [String: Any]
+                    guard let type = modelFilePlist?["type"] as? String else {
+                        continue
+                    }
 
-                plistItemWithModelFiles[modelFileProperty] = modelFile
+                    let metadata = modelFilePlist?["metadata"] as? [String: Any]
+                    let modelFile: ModelFile
+                    if let filename = modelFilePlist?["filename"] as? String {
+                        let data = content[filename]?.regularFileContents
+                        modelFile = ModelFile(type: type, filename: filename, data: data, metadata: metadata)
+                    } else {
+                        modelFile = ModelFile(type: type, filename: nil, data: nil, metadata: metadata)
+                    }
+
+                    plistItemWithModelFiles[modelFileProperty] = modelFile
+                }
+                try item.update(fromPlistRepresentation: plistItemWithModelFiles)
             }
-            try item.update(fromPlistRepresentation: plistItemWithModelFiles)
         }
     }
 }

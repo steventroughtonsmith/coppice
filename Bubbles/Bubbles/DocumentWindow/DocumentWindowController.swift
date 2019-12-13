@@ -49,6 +49,7 @@ class DocumentWindowController: NSWindowController {
     init(viewModel: DocumentWindowViewModel) {
         self.viewModel = viewModel
         super.init(window: nil)
+        viewModel.window = self
     }
 
     override var windowNibName: NSNib.Name? {
@@ -157,6 +158,20 @@ class DocumentWindowController: NSWindowController {
             responder = responder?.nextResponder
         }
     }
+}
+
+extension DocumentWindowController: DocumentWindow {
+    func showAlert(_ alert: Alert, callback: @escaping (Int) -> Void) {
+        guard let window = self.window else {
+            return
+        }
+
+        alert.nsAlert.beginSheetModal(for: window) { (response) in
+            callback(response.rawValue)
+        }
+    }
+
+
 }
 
 

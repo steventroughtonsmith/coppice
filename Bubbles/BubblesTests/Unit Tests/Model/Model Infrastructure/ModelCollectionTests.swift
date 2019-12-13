@@ -403,7 +403,7 @@ class ModelCollectionTests: XCTestCase {
             observerExpectation.fulfill()
         }
 
-        child1.didChangeRelationship(\.inverseRelationship, oldValue: nil, inverseKeyPath: \.relationship)
+        child1.didChangeRelationship(\.inverseRelationship, oldValue: nil)
         wait(for: [observerExpectation], timeout: 0)
     }
 
@@ -413,7 +413,7 @@ class ModelCollectionTests: XCTestCase {
         child1.inverseRelationship = parent
 
         self.modelController.undoManager.removeAllActions() // Clean up
-        child1.didChangeRelationship(\.inverseRelationship, oldValue: nil, inverseKeyPath: \.relationship)
+        child1.didChangeRelationship(\.inverseRelationship, oldValue: nil)
 
         XCTAssertTrue(self.modelController.undoManager.canUndo)
 
@@ -430,7 +430,7 @@ class ModelCollectionTests: XCTestCase {
             observerExpectation.fulfill()
         }
 
-        child1.didChangeRelationship(\.inverseRelationship, oldValue: parent, inverseKeyPath: \.relationship)
+        child1.didChangeRelationship(\.inverseRelationship, oldValue: parent)
         wait(for: [observerExpectation], timeout: 0)
     }
 
@@ -443,7 +443,7 @@ class ModelCollectionTests: XCTestCase {
             observerExpectation.fulfill()
         }
 
-        child1.didChangeRelationship(\.inverseRelationship, oldValue: nil, inverseKeyPath: \.relationship)
+        child1.didChangeRelationship(\.inverseRelationship, oldValue: nil)
         wait(for: [observerExpectation], timeout: 0)
     }
 
