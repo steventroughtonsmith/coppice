@@ -52,41 +52,9 @@ class TextEditorViewModel: ViewModel {
         self.view?.addLink(with: page.linkToPage(from: self.textContent.page).url, to: range)
     }
 
-    private var changeRange: NSRange?
-
-    func textWillChange(in range: NSRange) {
-        self.changeRange = range
+    var undoManager: UndoManager {
+        return self.modelController.undoManager
     }
-
-    func textDidChange() {
-        guard let changeRange = self.changeRange else {
-            return
-        }
-
-//        let newLinks = self.textAutoLinker.findNewLinks(in: self.attributedText, forChangeIn: changeRange)
-//        for link in newLinks {
-//            self.view?.addLink(with: link.url, to: link.range)
-//        }
-
-        self.changeRange = nil
-//        let maxTitleRange = 10
-//        let start = max(changeRange.location - maxTitleRange, 0)
-//        let end = min(NSMaxRange(changeRange) + maxTitleRange, self.attributedText.length)
-//
-//        let range = NSRange(location: start, length: end-start)
-//        let searchString = (self.attributedText.string as NSString).substring(with: range)
-
-
-        //Need to add auto links when typing
-        //Need to update auto links when changing page title
-        //Need to update auto links when adding/removing page
-        //Need to verify auto links when opening a page
-    }
-
-    private func findAndCreateLinks(in range: NSRange) {
-
-    }
-
 }
 
 

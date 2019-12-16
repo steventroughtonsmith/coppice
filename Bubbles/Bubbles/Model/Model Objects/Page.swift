@@ -124,3 +124,14 @@ final class Page: NSObject, CollectableModelObject {
         return value
     }
 }
+
+
+extension ModelCollection where ModelType == Page {
+    func setContentValue<Value, ContentType>(_ value: Value, for keyPath: ReferenceWritableKeyPath<ContentType, Value>, ofPageWithID id: ModelID) {
+        guard let page = self.objectWithID(id),
+            let content = page.content as? ContentType else {
+            return
+        }
+        content[keyPath: keyPath] = value
+    }
+}

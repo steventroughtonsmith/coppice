@@ -18,18 +18,13 @@ class TextLinkFinder: NSObject {
         }
 
         let links = self.combineAndSort(existingLinks: existingLinks, autoLinks: autoLinks)
-        print("all links")
-        links.forEach { print("\($0.description)") }
         var linkToAdd = [Link]()
         var linkToRemove = [Link]()
         var index = 0
         while (index < links.count) {
             let scratchPad = self.createScratchPad(from: links, currentIndex: &index)
-            print("scratchPad: \(scratchPad.links.map { $0.description })")
             self.validateManualLinks(in: scratchPad)
             self.validateAutoLinks(in: scratchPad)
-            print("scratchPad after: \(scratchPad.links.map { $0.description })")
-            print("===")
             for linkInfo in scratchPad.links {
                 //We want to add any valid new links
                 if (linkInfo.age == .new) && (linkInfo.state == .accepted) {
@@ -171,33 +166,7 @@ class TextLinkFinder: NSObject {
                 currentLink?.state = .accepted
             }
         }
-        //For each position
-            //get unrejected links at position
-            //If only 1 link
-                //accept that link
-            //else if one link is accepted
-                //reject the rest
-            //else
-                //enumerated links
-                    //if !currentLink
-                        //Set currentLink to link
-                        //continue
-                    //if currentLink.length > link.length
-                        //reject link
-                    //if currentLink.length < link.length
-                        //reject currentLink
-                        //currentLink = link
-                    //if currentLink.length == link.length
-                        //if link.age == new
-                            //reject link
-                        //else
-                        //reject currentLink
-                        //currentLink = link
-                //end enumeration
-                //accept current link
     }
-
-
 
 
     struct LinkChanges {

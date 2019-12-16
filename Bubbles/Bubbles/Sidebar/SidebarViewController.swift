@@ -45,6 +45,15 @@ class SidebarViewController: NSViewController {
     }
 
     override func keyDown(with event: NSEvent) {
+        guard let specialKey = event.specialKey else {
+            return
+        }
+
+        //For some reason NSEvent.SpecialKey.delete does not use NSDeleteFunctionKey, but NSEvent does
+        guard (specialKey == .backspace) || (specialKey == .init(rawValue: NSDeleteFunctionKey)) || (specialKey == .deleteForward) else {
+            return
+        }
+
         self.viewModel.deleteSelectedObject()
     }
 }

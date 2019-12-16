@@ -34,7 +34,6 @@ class PageLinkManager: NSObject {
 
     weak var textStorage: NSTextStorage? {
         didSet {
-            self.textStorage?.delegate = self
             self.reparseLinks()
         }
     }

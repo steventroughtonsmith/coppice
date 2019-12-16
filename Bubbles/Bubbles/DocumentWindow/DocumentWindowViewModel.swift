@@ -222,9 +222,14 @@ class DocumentWindowViewModel: NSObject {
                 return
             }
             let selectionID = strongSelf.selectedSidebarObjectID
+            print("selection ID: \(selectionID)")
             undoManager.setActionIsDiscardable(true)
             undoManager.registerUndo(withTarget: strongSelf) { (target) in
+                let oldValue = target.selectedSidebarObjectID
                 target.selectedSidebarObjectID = selectionID
+                undoManager.registerUndo(withTarget: strongSelf) { (target) in
+                    target.selectedSidebarObjectID = oldValue
+                }
             }
         }
     }

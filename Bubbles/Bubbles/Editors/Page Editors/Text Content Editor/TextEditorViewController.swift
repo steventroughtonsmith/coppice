@@ -28,11 +28,14 @@ class TextEditorViewController: NSViewController, InspectableTextEditor {
 
 
     private var selectableBinding: AnyCancellable!
+    private var attributedTextObserver: AnyCancellable!
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.selectableBinding = self.publisher(for: \.enabled).assign(to: \.isSelectable, on: self.editingTextView)
+        self.attributedTextObserver = self.publisher(for: \.viewModel.attributedText).sink { self.updateTextView(with: $0)}
 
+        self.editingTextView.textStorage?.delegate = self
         self.pageLinkManager.textStorage = self.editingTextView.textStorage
     }
 
@@ -95,6 +98,36 @@ class TextEditorViewController: NSViewController, InspectableTextEditor {
         }
         self.updateSelectionAttributes()
     }
+
+
+    //MARK: - Update Model
+    private func updateTextView(with text: NSAttributedString) {
+        guard (self.updatingText == false) else {
+            return
+        }
+        self.editingTextView.textStorage?.setAttributedString(text)
+    }
+
+    private func textNeedsUpating(singleCharacterChange: Bool) {
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(updateText), object: nil)
+        //This is to stop recording any edits while undoing/redoing
+        guard (self.viewModel.undoManager.isUndoing == false) && (self.viewModel.undoManager.isRedoing == false) && !self.updatingText else {
+            return
+        }
+
+        if !singleCharacterChange {
+            self.updateText()
+        } else {
+            self.perform(#selector(updateText), with: nil, afterDelay: 1)
+        }
+    }
+
+    private var updatingText = false
+    @objc dynamic private func updateText() {
+        self.updatingText = true
+        self.viewModel.attributedText = self.editingTextView.attributedString().copy() as! NSAttributedString
+        self.updatingText = false
+    }
 }
 
 
@@ -125,6 +158,20 @@ extension TextEditorViewController: PageLinkManagerDelegate {
 }
 
 
+extension TextEditorViewController: NSTextStorageDelegate {
+    func textStorage(_ textStorage: NSTextStorage, didProcessEditing editedMask: NSTextStorageEditActions, range editedRange: NSRange, changeInLength delta: Int) {
+        //Both the page link manager and ourselves need this call but only one can be the delegate
+        self.pageLinkManager.textStorage(textStorage, didProcessEditing: editedMask, range: editedRange, changeInLength: delta)
+
+        if (editedMask.contains(.editedCharacters) && (abs(delta) == 1)) {
+            self.textNeedsUpating(singleCharacterChange: true)
+        } else {
+            self.textNeedsUpating(singleCharacterChange: false)
+        }
+    }
+}
+
+
 extension TextEditorViewController: NSTextViewDelegate {
     func textView(_ view: NSTextView, menu: NSMenu, for event: NSEvent, at charIndex: Int) -> NSMenu? {
         menu.addItem(NSMenuItem.separator())
@@ -150,17 +197,5 @@ extension TextEditorViewController: NSTextViewDelegate {
             return
         }
         self.updateSelectionAttributes()
-    }
-
-    func textView(_ textView: NSTextView, shouldChangeTextIn affectedCharRange: NSRange, replacementString: String?) -> Bool {
-        if let string = replacementString {
-            self.viewModel.textWillChange(in: NSRange(location: affectedCharRange.location, length: string.count))
-        }
-
-        return true
-    }
-
-    func textDidChange(_ notification: Notification) {
-        self.viewModel.textDidChange()
     }
 }
