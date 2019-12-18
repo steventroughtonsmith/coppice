@@ -25,7 +25,6 @@ class EditorContainerViewModel: ViewModel {
     var selectedObjectObservation: AnyCancellable?
     private func setupObservation() {
         self.selectedObjectObservation = self.documentWindowViewModel.$selectedSidebarObjectID
-            .receive(on: RunLoop.main)
             .map({[weak self] (modelID) in
                 guard let modelID = modelID else {
                     return nil

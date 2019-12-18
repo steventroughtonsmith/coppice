@@ -19,6 +19,7 @@ class EditorContainerViewController: NSViewController {
     init(viewModel: EditorContainerViewModel) {
         self.viewModel = viewModel
         super.init(nibName: "EditorContainerViewController", bundle: nil)
+        self.identifier = NSUserInterfaceItemIdentifier(rawValue: "EditorContainer")
         self.viewModel.view = self
     }
 

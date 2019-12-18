@@ -158,6 +158,22 @@ class DocumentWindowController: NSWindowController {
             responder = responder?.nextResponder
         }
     }
+
+
+    //MARK: - State Restoration
+    override func encodeRestorableState(with coder: NSCoder) {
+        coder.encode(self.viewModel.selectedSidebarObjectID?.stringRepresentation, forKey: "selectedSidebarObjectID")
+        super.encodeRestorableState(with: coder)
+    }
+
+    override func restoreState(with coder: NSCoder) {
+        if let modelIDString = coder.decodeObject(forKey: "selectedSidebarObjectID") as? String,
+            let modelID = ModelID(string: modelIDString) {
+            self.viewModel.selectedSidebarObjectID = modelID
+        }
+//        self.editorContainerViewController?.restoreState(with: coder)
+        super.restoreState(with: coder)
+    }
 }
 
 extension DocumentWindowController: DocumentWindow {

@@ -10,6 +10,9 @@ import Cocoa
 @testable import Bubbles
 
 class MockWindow: DocumentWindow {
+    func invalidateRestorableState() {
+    }
+
     var suppliedAlert: Alert?
     var callback: ((Int) -> Void)?
     func showAlert(_ alert: Alert, callback: @escaping (Int) -> Void) {

@@ -112,6 +112,8 @@ class CanvasEditorViewModel: ViewModel {
         guard !self.updatesDisable else {
             return
         }
+        //We need to temporarily disable updates in case our changes cause updates themselves
+        self.updatesDisable = true
 
         let newPages = self.canvas.pages
         let addedPages = newPages.subtracting(self.canvasPages)
@@ -123,6 +125,8 @@ class CanvasEditorViewModel: ViewModel {
         self.addPages(addedPages)
         self.removePages(removedPages)
         self.updatePages(remainingPages)
+
+        self.updatesDisable = false
     }
 
     func createTestPage() {

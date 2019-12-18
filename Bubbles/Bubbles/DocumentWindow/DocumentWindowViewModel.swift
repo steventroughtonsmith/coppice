@@ -10,12 +10,17 @@ import Foundation
 
 protocol DocumentWindow: class {
     func showAlert(_ alert: Alert, callback: @escaping (Int) -> Void)
+    func invalidateRestorableState()
 }
 
 class DocumentWindowViewModel: NSObject {
     weak var document: Document?
     weak var window: DocumentWindow?
-    @Published var selectedSidebarObjectID: ModelID?
+    @Published var selectedSidebarObjectID: ModelID? {
+        didSet {
+            self.window?.invalidateRestorableState()
+        }
+    }
     @Published var currentInspectors: [Inspector] = []
 
     let modelController: ModelController
@@ -222,7 +227,6 @@ class DocumentWindowViewModel: NSObject {
                 return
             }
             let selectionID = strongSelf.selectedSidebarObjectID
-            print("selection ID: \(selectionID)")
             undoManager.setActionIsDiscardable(true)
             undoManager.registerUndo(withTarget: strongSelf) { (target) in
                 let oldValue = target.selectedSidebarObjectID

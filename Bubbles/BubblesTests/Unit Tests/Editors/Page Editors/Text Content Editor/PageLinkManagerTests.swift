@@ -69,6 +69,8 @@ class PageLinkManagerTests: XCTestCase {
         let page = self.modelController.collection(for: Page.self).newObject() { $0.title = "Hello World" }
         self.pageLinkManager.textStorage = storage
 
+        storage.delegate = self.pageLinkManager //This is forwarded in the real app as the main view controller/model needs it too
+
         storage.beginEditing()
         storage.insert(NSAttributedString(string: "Hello World"), at: 5)
         storage.endEditing()

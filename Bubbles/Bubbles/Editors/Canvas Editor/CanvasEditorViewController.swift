@@ -16,6 +16,7 @@ class CanvasEditorViewController: NSViewController {
     init(viewModel: CanvasEditorViewModel) {
         self.viewModel = viewModel
         super.init(nibName: "CanvasEditorViewController", bundle: nil)
+        self.identifier = NSUserInterfaceItemIdentifier(rawValue: "CanavsEditor")
         self.viewModel.view = self
         self.viewModel.layoutEngine.view = self
         self.originOffsetFromScrollPoint = self.viewModel.viewPortInCanvasSpace?.origin
@@ -23,6 +24,21 @@ class CanvasEditorViewController: NSViewController {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func encodeRestorableState(with coder: NSCoder) {
+        if let offset = self.originOffsetFromScrollPoint {
+            coder.encode(NSStringFromPoint(offset), forKey: "originOffsetFromScrollPoint")
+        }
+        super.encodeRestorableState(with: coder)
+    }
+
+    override func restoreState(with coder: NSCoder) {
+        super.restoreState(with: coder)
+        if let pointString = coder.decodeObject(forKey: "originOffsetFromScrollPoint") as? String {
+            self.originOffsetFromScrollPoint = NSPointFromString(pointString)
+        }
+
     }
 
     var layoutEngine: CanvasLayoutEngine {
@@ -81,6 +97,8 @@ class CanvasEditorViewController: NSViewController {
     private var originOffsetFromScrollPoint: CGPoint? {
         didSet {
             self.updateCanvasViewPort()
+            self.invalidateRestorableState()
+            self.scrollView.invalidateRestorableState()
         }
     }
 
@@ -112,6 +130,10 @@ class CanvasEditorViewController: NSViewController {
     }
 
     private func updateCanvasViewPort() {
+        guard self.performedInitialLayout else {
+            return
+        }
+
         guard let origin = self.originOffsetFromScrollPoint else {
             self.viewModel.viewPortInCanvasSpace = nil
             return

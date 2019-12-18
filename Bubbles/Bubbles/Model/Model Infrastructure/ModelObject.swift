@@ -72,6 +72,12 @@ protocol CollectableModelObject: ModelObject, Hashable {
     func didChange<T>(_ keyPath: ReferenceWritableKeyPath<Self, T>, oldValue: T)
 
 
+    /// Register an undo action for a change to a replationship
+    /// - Parameters:
+    ///   - keyPath: The keypath of the relationship to change
+    ///   - oldValue: The old value of the relationship
+    func didChangeRelationship<T: CollectableModelObject>(_ keyPath: ReferenceWritableKeyPath<Self, T?>, oldValue: T?)
+
     /// Return the objects for a to-many relationship
     /// - Parameter keyPath: The keypath on the returned type that holds the inverse relationship
     func relationship<T: CollectableModelObject>(for keyPath: ReferenceWritableKeyPath<T, Self?>) -> Set<T>

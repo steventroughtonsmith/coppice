@@ -80,10 +80,12 @@ extension SidebarViewController: SidebarView {
 
     func reloadCanvases() {
         self.canvasesTable.reloadData()
+        self.reloadSelection()
     }
 
     func reloadPages() {
         self.pagesTable.reloadData()
+        self.reloadSelection()
     }
 
     func showAlert(_ alert: Alert, callback: @escaping (Int) -> Void) {
