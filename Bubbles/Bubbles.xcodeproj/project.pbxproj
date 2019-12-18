@@ -55,6 +55,9 @@
 		9970975D23A816F000CD189B /* EmptyPageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970975C23A816F000CD189B /* EmptyPageContent.swift */; };
 		9970975F23A816F800CD189B /* TextPageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970975E23A816F800CD189B /* TextPageContent.swift */; };
 		9970976123A8170600CD189B /* ImagePageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970976023A8170600CD189B /* ImagePageContent.swift */; };
+		9970976523AA896C00CD189B /* CanvasEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970976423AA896C00CD189B /* CanvasEventContext.swift */; };
+		9970976723AA8B5A00CD189B /* RemovePageEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970976623AA8B5A00CD189B /* RemovePageEventContext.swift */; };
+		9970976923AA8B6C00CD189B /* KeyboardMovePageEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970976823AA8B6C00CD189B /* KeyboardMovePageEventContext.swift */; };
 		9976A49323674254004D573D /* ModelWriterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9976A49223674254004D573D /* ModelWriterTests.swift */; };
 		9976A49723674430004D573D /* PageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9976A49623674430004D573D /* PageTests.swift */; };
 		9976A49923674448004D573D /* CanvasTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9976A49823674448004D573D /* CanvasTests.swift */; };
@@ -227,6 +230,9 @@
 		9970975C23A816F000CD189B /* EmptyPageContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyPageContent.swift; sourceTree = "<group>"; };
 		9970975E23A816F800CD189B /* TextPageContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextPageContent.swift; sourceTree = "<group>"; };
 		9970976023A8170600CD189B /* ImagePageContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePageContent.swift; sourceTree = "<group>"; };
+		9970976423AA896C00CD189B /* CanvasEventContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasEventContext.swift; sourceTree = "<group>"; };
+		9970976623AA8B5A00CD189B /* RemovePageEventContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemovePageEventContext.swift; sourceTree = "<group>"; };
+		9970976823AA8B6C00CD189B /* KeyboardMovePageEventContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardMovePageEventContext.swift; sourceTree = "<group>"; };
 		9976A49223674254004D573D /* ModelWriterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelWriterTests.swift; sourceTree = "<group>"; };
 		9976A49623674430004D573D /* PageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageTests.swift; sourceTree = "<group>"; };
 		9976A49823674448004D573D /* CanvasTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasTests.swift; sourceTree = "<group>"; };
@@ -692,9 +698,12 @@
 		99C03EF523293D8A00EB7516 /* Event Contexts */ = {
 			isa = PBXGroup;
 			children = (
+				9970976423AA896C00CD189B /* CanvasEventContext.swift */,
 				99C03EF623293D8A00EB7516 /* CanvasSelectionEventContext.swift */,
 				99C03EF723293D8A00EB7516 /* SelectAndMoveEventContext.swift */,
 				99C03EF823293D8A00EB7516 /* ResizePageEventContext.swift */,
+				9970976823AA8B6C00CD189B /* KeyboardMovePageEventContext.swift */,
+				9970976623AA8B5A00CD189B /* RemovePageEventContext.swift */,
 			);
 			path = "Event Contexts";
 			sourceTree = "<group>";
@@ -1099,6 +1108,7 @@
 				99C03EF123293D6C00EB7516 /* Array+M3Extensions.swift in Sources */,
 				99C865292306D141004C7B89 /* PageSelectorViewController.swift in Sources */,
 				99C03F07232A8ED200EB7516 /* CanvasElementView.swift in Sources */,
+				9970976523AA896C00CD189B /* CanvasEventContext.swift in Sources */,
 				99581082230D7EFB00D996C4 /* CanvasEditorViewController.swift in Sources */,
 				9970975F23A816F800CD189B /* TextPageContent.swift in Sources */,
 				99581092230D92C600D996C4 /* CanvasPageViewController.swift in Sources */,
@@ -1117,11 +1127,13 @@
 				99C8650923016EB2004C7B89 /* TextEditorViewModel.swift in Sources */,
 				9925B2622386A0DF001A8ADC /* TextEditorInspectorTypes.swift in Sources */,
 				99E944FB2368683F00DFAB95 /* NSImage+M3Extensions.swift in Sources */,
+				9970976723AA8B5A00CD189B /* RemovePageEventContext.swift in Sources */,
 				99FFF9CC234E2F2F00EF02A0 /* FlippedView.swift in Sources */,
 				9965FC43238448FF002FE10D /* TextEditorInspectorViewModel.swift in Sources */,
 				9977119A239E89B200FCC8C7 /* DocumentWindowController.swift in Sources */,
 				99D8E38B237F58FA0098CF3B /* NIBInstantiable.swift in Sources */,
 				99AD88A5237B1700000453E1 /* DocumentWindowViewModel.swift in Sources */,
+				9970976923AA8B6C00CD189B /* KeyboardMovePageEventContext.swift in Sources */,
 				99581095230D93F700D996C4 /* CanvasPageViewModel.swift in Sources */,
 				99AD88762374665D000453E1 /* Alert+AppKit.swift in Sources */,
 				99C03F03232A8E9500EB7516 /* EdgeResizable.swift in Sources */,

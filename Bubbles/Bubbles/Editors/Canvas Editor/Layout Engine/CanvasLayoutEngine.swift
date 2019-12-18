@@ -26,14 +26,11 @@ protocol CanvasLayoutView: class {
 
 protocol CanvasLayoutEngineDelegate: class {
     func moved(pages: [LayoutEnginePage], in layout: CanvasLayoutEngine)
+    func remove(pages: [LayoutEnginePage], from layout: CanvasLayoutEngine)
 }
 
 
-protocol CanvasEventContext {
-    func downEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: CanvasLayoutEngine)
-    func draggedEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: CanvasLayoutEngine)
-    func upEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: CanvasLayoutEngine)
-}
+
 
 
 class CanvasLayoutEngine: NSObject {
@@ -165,6 +162,10 @@ class CanvasLayoutEngine: NSObject {
         self.delegate?.moved(pages: pages, in: self)
     }
 
+    func tellDelegateToRemove(_ pages: [LayoutEnginePage]) {
+        self.delegate?.remove(pages: pages, from: self)
+    }
+
     private func movePageToFront(_ page: LayoutEnginePage) {
         guard let index = self.pages.firstIndex(of: page) else {
             return // Page doesn't exist
@@ -266,10 +267,10 @@ class CanvasLayoutEngine: NSObject {
     }
 
 
-    //MARK: - Manage Events
-    private var currentEventContext: CanvasEventContext?
+    //MARK: - Manage Mouse Events
+    private var currentMouseEventContext: CanvasEventContext?
 
-    private func createEventContext(for location: CGPoint) -> CanvasEventContext? {
+    private func createMouseEventContext(for location: CGPoint) -> CanvasEventContext? {
         //Canvas click
         guard let page = self.page(atCanvasPoint: location) else {
             return CanvasSelectionEventContext(originalSelection: self.selectedPages)
@@ -291,34 +292,74 @@ class CanvasLayoutEngine: NSObject {
     }
 
     func downEvent(at location: CGPoint, modifiers: LayoutEventModifiers = [], eventCount: Int = 1) {
-        self.currentEventContext = self.createEventContext(for: location)
-        self.currentEventContext?.downEvent(at: location, modifiers: modifiers, eventCount: eventCount, in: self)
+        self.currentMouseEventContext = self.createMouseEventContext(for: location)
+        self.currentMouseEventContext?.downEvent(at: location, modifiers: modifiers, eventCount: eventCount, in: self)
         self.informOfLayoutChange(with: LayoutContext())
     }
 
     func draggedEvent(at location: CGPoint, modifiers: LayoutEventModifiers = [], eventCount: Int = 1) {
-        self.currentEventContext?.draggedEvent(at: location, modifiers: modifiers, eventCount: eventCount, in: self)
+        self.currentMouseEventContext?.draggedEvent(at: location, modifiers: modifiers, eventCount: eventCount, in: self)
         self.informOfLayoutChange(with: LayoutContext())
     }
 
     func upEvent(at location: CGPoint, modifiers: LayoutEventModifiers = [], eventCount: Int = 1) {
-        self.currentEventContext?.upEvent(at: location, modifiers: modifiers, eventCount: eventCount, in: self)
+        self.currentMouseEventContext?.upEvent(at: location, modifiers: modifiers, eventCount: eventCount, in: self)
         let canvasSizeContext = self.recalculateCanvasSize()
         let fullContext = LayoutContext(selectionChanged: self.hasSelectionChanged()).merged(with: canvasSizeContext)
         self.informOfLayoutChange(with: fullContext)
-        self.currentEventContext = nil
+        self.currentMouseEventContext = nil
     }
 
+
+    //MARK: - Manage Key Events
+    private var keyEvents = [UInt16: CanvasEventContext]()
+
+    private func keyEventContext(for keyCode: UInt16) -> CanvasEventContext? {
+        if let event = self.keyEvents[keyCode] {
+            return event
+        }
+
+        let newEvent: CanvasEventContext
+        if KeyboardMovePageEventContext.acceptedKeyCodes.contains(keyCode) {
+            newEvent = KeyboardMovePageEventContext()
+        } else if RemovePageEventContext.acceptedKeyCodes.contains(keyCode) {
+            newEvent = RemovePageEventContext()
+        } else {
+            return nil
+        }
+
+        self.keyEvents[keyCode] = newEvent
+        return newEvent
+    }
+
+    func keyDownEvent(keyCode: UInt16, modifiers: LayoutEventModifiers = [], isARepeat: Bool = false) {
+        guard let event = self.keyEventContext(for: keyCode) else {
+            return
+        }
+
+        event.keyDown(withCode: keyCode, modifiers: modifiers, isARepeat: isARepeat, in: self)
+        self.informOfLayoutChange(with: LayoutContext())
+    }
+
+    func keyUpEvent(keyCode: UInt16, modifiers: LayoutEventModifiers = []) {
+        guard let event = self.keyEventContext(for: keyCode) else {
+            return
+        }
+        event.keyUp(withCode: keyCode, modifiers: modifiers, in: self)
+        self.keyEvents[keyCode] = nil
+        self.informOfLayoutChange(with: LayoutContext())
+    }
+
+    //MARK: - Manage View
     func viewPortChanged() {
         //We don't care about view port changes while another event is happening
-        guard self.currentEventContext == nil else {
+        guard self.currentMouseEventContext == nil else {
             return
         }
         self.informOfLayoutChange(with: self.recalculateCanvasSize())
     }
 
 
-    //MARK: - Manage View
     private func informOfLayoutChange(with context: LayoutContext) {
         self.view?.layoutChanged(with: context)
     }

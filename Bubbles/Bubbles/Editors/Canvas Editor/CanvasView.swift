@@ -104,6 +104,14 @@ class CanvasView: NSView {
         self.stopAutoscrolling()
     }
 
+    override func keyDown(with event: NSEvent) {
+        self.layoutEngine?.keyDownEvent(keyCode: event.keyCode, modifiers: event.layoutEventModifiers, isARepeat: event.isARepeat)
+    }
+
+    override func keyUp(with event: NSEvent) {
+        self.layoutEngine?.keyUpEvent(keyCode: event.keyCode, modifiers: event.layoutEventModifiers)
+    }
+
     override func hitTest(_ point: NSPoint) -> NSView? {
         guard let view = self.pageLayer.hitTest(point) else {
             return self

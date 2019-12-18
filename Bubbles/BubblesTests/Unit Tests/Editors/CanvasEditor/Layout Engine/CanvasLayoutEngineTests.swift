@@ -8,6 +8,7 @@
 
 import XCTest
 @testable import Bubbles
+import Carbon.HIToolbox
 
 let testLayoutASCII = """
           |
@@ -558,15 +559,7 @@ class CanvasLayoutEngineTests: XCTestCase {
     }
 
     func test_moving_mouseUpInformsDelegateOfChangeToPages() throws {
-        class TestDelegate: CanvasLayoutEngineDelegate {
-            var movedPages: [LayoutEnginePage]?
-
-            func moved(pages: [LayoutEnginePage], in layout: CanvasLayoutEngine) {
-                self.movedPages = pages
-            }
-        }
-
-        let delegate = TestDelegate()
+        let delegate = TestLayoutDelegate()
 
         self.layoutEngine.delegate = delegate
 
@@ -1419,5 +1412,284 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertEqual(child2ArrowFrame?.height, oldChild2ArrowFrame.height)
 
         engine.upEvent(at: engine.convertPointToCanvasSpace(.zero))
+    }
+
+
+    //MARK: - Keyboard Moving
+    private func layoutFrames(shiftingSelectedBy delta: CGPoint = .zero) -> [CGRect] {
+        var frames = [CGRect]()
+        for page in [self.page1!, self.page2!, self.page3!] {
+            var frame = page.layoutFrame
+            if page.selected {
+                frame = frame.offsetBy(dx: delta.x, dy: delta.y)
+            }
+            frames.append(frame)
+        }
+        return frames
+    }
+
+    private func performKeyboardMoveTest(keyCode: Int, downEventCount: Int = 1, expectedShift: CGPoint = .zero, modifiers: (Int) -> LayoutEventModifiers = {_ in []}) -> (actual: [CGRect], expected: [CGRect]) {
+        let expectedFrames = self.layoutFrames(shiftingSelectedBy: expectedShift)
+
+        self.layoutEngine.keyDownEvent(keyCode: UInt16(keyCode), modifiers: modifiers(0))
+        (1..<downEventCount).forEach {
+            self.layoutEngine.keyDownEvent(keyCode: UInt16(keyCode), modifiers: modifiers($0), isARepeat: true)
+        }
+        self.layoutEngine.keyUpEvent(keyCode: UInt16(keyCode), modifiers: modifiers(downEventCount))
+
+        return (self.layoutFrames(), expectedFrames)
+    }
+
+    func test_keyboardMoving_pressingUpArrowWithNoSelectionDoesNothing() {
+        let frames = self.performKeyboardMoveTest(keyCode: kVK_UpArrow)
+        XCTAssertEqual(frames.actual, frames.expected)
+    }
+
+    func test_keyboardMoving_pressingDownArrowWithNoSelectionDoesNothing() {
+        let frames = self.performKeyboardMoveTest(keyCode: kVK_DownArrow)
+        XCTAssertEqual(frames.actual, frames.expected)
+    }
+
+    func test_keyboardMoving_pressingLeftArrowWithNoSelectionDoesNothing() {
+        let frames = self.performKeyboardMoveTest(keyCode: kVK_LeftArrow)
+        XCTAssertEqual(frames.actual, frames.expected)
+    }
+
+    func test_keyboardMoving_pressingRightArrowWithNoSelectionDoesNothing() {
+        let frames = self.performKeyboardMoveTest(keyCode: kVK_RightArrow)
+        XCTAssertEqual(frames.actual, frames.expected)
+    }
+
+    func test_keyboardMoving_pressingUpArrowOnceMovesSelectionUp() {
+        self.page1.selected = true
+        self.page2.selected = false
+        self.page3.selected = false
+        let frames = self.performKeyboardMoveTest(keyCode: kVK_UpArrow, expectedShift: CGPoint(x: 0, y: -1))
+        XCTAssertEqual(frames.actual, frames.expected)
+    }
+
+    func test_keyboardMoving_pressingDownArrowOnceMovesSelectionDown() {
+        self.page1.selected = false
+        self.page2.selected = true
+        self.page3.selected = false
+        let frames = self.performKeyboardMoveTest(keyCode: kVK_DownArrow, expectedShift: CGPoint(x: 0, y: 1))
+        XCTAssertEqual(frames.actual, frames.expected)
+    }
+
+    func test_keyboardMoving_pressingLeftArrowOnceMovesSelectionToLeft() {
+        self.page1.selected = true
+        self.page2.selected = false
+        self.page3.selected = true
+        let frames = self.performKeyboardMoveTest(keyCode: kVK_LeftArrow, expectedShift: CGPoint(x: -1, y: 0))
+        XCTAssertEqual(frames.actual, frames.expected)
+    }
+
+    func test_keyboardMoving_pressingRightArrowOnceMovesSelectionToRight() {
+        self.page1.selected = false
+        self.page2.selected = true
+        self.page3.selected = false
+        let frames = self.performKeyboardMoveTest(keyCode: kVK_RightArrow, expectedShift: CGPoint(x: 1, y: 0))
+        XCTAssertEqual(frames.actual, frames.expected)
+    }
+
+    func test_keyboardMoving_pressingUpArrowAndHoldingFor10EventsMovesSelection10StepsUp() {
+        self.page1.selected = true
+        self.page2.selected = false
+        self.page3.selected = false
+        let frames = self.performKeyboardMoveTest(keyCode: kVK_UpArrow, downEventCount: 10, expectedShift: CGPoint(x: 0, y: -10))
+        XCTAssertEqual(frames.actual, frames.expected)
+    }
+
+    func test_keyboardMoving_pressingDownArrowAndHoldingFor10EventsMovesSelection10StepsDown() {
+        self.page1.selected = false
+        self.page2.selected = true
+        self.page3.selected = true
+        let frames = self.performKeyboardMoveTest(keyCode: kVK_DownArrow, downEventCount: 10, expectedShift: CGPoint(x: 0, y: 10))
+        XCTAssertEqual(frames.actual, frames.expected)
+    }
+
+    func test_keyboardMoving_pressingLeftArrowAndHoldingFor10EventsMovesSelection10StepsToLeft() {
+        self.page1.selected = true
+        self.page2.selected = false
+        self.page3.selected = false
+        let frames = self.performKeyboardMoveTest(keyCode: kVK_LeftArrow, downEventCount: 10, expectedShift: CGPoint(x: -10, y: 0))
+        XCTAssertEqual(frames.actual, frames.expected)
+    }
+
+    func test_keyboardMoving_pressingRightArrowAndHoldingFor10EventsMovesSelection10StepsToRight() {
+        self.page1.selected = false
+        self.page2.selected = true
+        self.page3.selected = false
+        let frames = self.performKeyboardMoveTest(keyCode: kVK_RightArrow, downEventCount: 10, expectedShift: CGPoint(x: 10, y: 0))
+        XCTAssertEqual(frames.actual, frames.expected)
+    }
+
+    func test_keyboardMoving_pressingUpArrowOnceWhileHoldingShiftMovesSelectionUp10Steps() {
+        self.page1.selected = true
+        self.page2.selected = false
+        self.page3.selected = true
+        let frames = self.performKeyboardMoveTest(keyCode: kVK_UpArrow, expectedShift: CGPoint(x: 0, y: -10)) { _ in .shift }
+        XCTAssertEqual(frames.actual, frames.expected)
+    }
+
+    func test_keyboardMoving_pressingDownArrowOnceWhileHoldingShiftMovesSelectionDown10Steps() {
+        self.page1.selected = false
+        self.page2.selected = true
+        self.page3.selected = false
+        let frames = self.performKeyboardMoveTest(keyCode: kVK_DownArrow, expectedShift: CGPoint(x: 0, y: 10)) { _ in .shift }
+        XCTAssertEqual(frames.actual, frames.expected)
+    }
+
+    func test_keyboardMoving_pressingLeftArrowOnceWhileHoldingShiftMovesSelectionLeft10Steps() {
+        self.page1.selected = true
+        self.page2.selected = false
+        self.page3.selected = false
+        let frames = self.performKeyboardMoveTest(keyCode: kVK_LeftArrow, expectedShift: CGPoint(x: -10, y: 0)) { _ in .shift }
+        XCTAssertEqual(frames.actual, frames.expected)
+    }
+
+    func test_keyboardMoving_pressingRightArrowOnceWhileHoldingShiftMovesSelectionRight10Steps() {
+        self.page1.selected = false
+        self.page2.selected = true
+        self.page3.selected = true
+        let frames = self.performKeyboardMoveTest(keyCode: kVK_RightArrow, expectedShift: CGPoint(x: 10, y: 0)) { _ in .shift }
+        XCTAssertEqual(frames.actual, frames.expected)
+    }
+
+    func test_keyboardMoving_pressingUpArrowAndHoldingWhileHoldingShiftFor10EventsMovesSelection100StepsUp() {
+        self.page1.selected = true
+        self.page2.selected = false
+        self.page3.selected = false
+        let frames = self.performKeyboardMoveTest(keyCode: kVK_UpArrow, downEventCount: 10, expectedShift: CGPoint(x: 0, y: -100)) { _ in .shift }
+        XCTAssertEqual(frames.actual, frames.expected)
+    }
+
+    func test_keyboardMoving_pressingDownArrowAndHoldingWhileHoldingShiftFor10EventsMovesSelection100StepsDown() {
+        self.page1.selected = false
+        self.page2.selected = true
+        self.page3.selected = false
+        let frames = self.performKeyboardMoveTest(keyCode: kVK_DownArrow, downEventCount: 10, expectedShift: CGPoint(x: 0, y: 100)) { _ in .shift }
+        XCTAssertEqual(frames.actual, frames.expected)
+    }
+
+    func test_keyboardMoving_pressingLeftArrowAndHoldingWhileHoldingShiftFor10EventsMovesSelection100StepsToLeft() {
+        self.page1.selected = true
+        self.page2.selected = false
+        self.page3.selected = true
+        let frames = self.performKeyboardMoveTest(keyCode: kVK_LeftArrow, downEventCount: 10, expectedShift: CGPoint(x: -100, y: 0)) { _ in .shift }
+        XCTAssertEqual(frames.actual, frames.expected)
+    }
+
+    func test_keyboardMoving_pressingRightArrowAndHoldingWhileHoldingShiftFor10EventsMovesSelection100StepsToRight() {
+        self.page1.selected = false
+        self.page2.selected = true
+        self.page3.selected = false
+        let frames = self.performKeyboardMoveTest(keyCode: kVK_RightArrow, downEventCount: 10, expectedShift: CGPoint(x: 100, y: 0)) { _ in .shift }
+        XCTAssertEqual(frames.actual, frames.expected)
+    }
+
+    func test_keyboardMoving_pressingUpArrowAndHoldingWhileAlternatingShiftOnAndOffFor10EventsMovesSelection55StepsUp() {
+        self.page1.selected = true
+        self.page2.selected = false
+        self.page3.selected = false
+        let frames = self.performKeyboardMoveTest(keyCode: kVK_UpArrow, downEventCount: 10, expectedShift: CGPoint(x: 0, y: -55)) { (($0 % 2) == 0) ? .shift : [] }
+        XCTAssertEqual(frames.actual, frames.expected)
+    }
+
+    func test_keyboardMoving_pressingDownArrowAndHoldingWhileAlternatingShiftOnAndOffFor10EventsMovesSelection55StepsDown() {
+        self.page1.selected = false
+        self.page2.selected = true
+        self.page3.selected = true
+        let frames = self.performKeyboardMoveTest(keyCode: kVK_DownArrow, downEventCount: 10, expectedShift: CGPoint(x: 0, y: 55)) { (($0 % 2) == 0) ? .shift : [] }
+        XCTAssertEqual(frames.actual, frames.expected)
+    }
+
+    func test_keyboardMoving_pressingLeftArrowAndHoldingWhileAlternatingShiftOnAndOffFor10EventsMovesSelection55StepsToLeft() {
+        self.page1.selected = true
+        self.page2.selected = false
+        self.page3.selected = false
+        let frames = self.performKeyboardMoveTest(keyCode: kVK_LeftArrow, downEventCount: 10, expectedShift: CGPoint(x: -55, y: 0)) { (($0 % 2) == 0) ? .shift : [] }
+        XCTAssertEqual(frames.actual, frames.expected)
+    }
+
+    func test_keyboardMoving_pressingRightArrowAndHoldingWhileAlternatingShiftOnAndOffFor10EventsMovesSelection55StepsToRight() {
+        self.page1.selected = false
+        self.page2.selected = true
+        self.page3.selected = false
+        let frames = self.performKeyboardMoveTest(keyCode: kVK_RightArrow, downEventCount: 10, expectedShift: CGPoint(x: 55, y: 0)) { (($0 % 2) == 0) ? .shift : [] }
+        XCTAssertEqual(frames.actual, frames.expected)
+    }
+
+    func test_keyboardMoving_callsDelegateAfterMovingPages() {
+        let delegate = TestLayoutDelegate()
+        self.layoutEngine.delegate = delegate
+
+        self.page1.selected = true
+        self.page2.selected = false
+        self.page3.selected = true
+        _ = self.performKeyboardMoveTest(keyCode: kVK_LeftArrow, expectedShift: CGPoint(x: -1, y: 0))
+
+        XCTAssertEqual(delegate.movedPages, [self.page1, self.page3])
+    }
+
+
+    //MARK: - Keyboard Deleting
+    func test_keyboardDeletion_pressingBackspaceWithNothingSelectedDoesNothing() {
+        let delegate = TestLayoutDelegate()
+        self.layoutEngine.delegate = delegate
+
+        self.layoutEngine.keyDownEvent(keyCode: UInt16(kVK_Delete))
+        self.layoutEngine.keyUpEvent(keyCode: UInt16(kVK_Delete))
+
+        XCTAssertNil(delegate.removePages)
+    }
+
+    func test_keyboardDeletion_pressingBackspaceRemovesSelectedPages() {
+        let delegate = TestLayoutDelegate()
+        self.layoutEngine.delegate = delegate
+
+        self.page1.selected = true
+        self.page3.selected = true
+
+        self.layoutEngine.keyDownEvent(keyCode: UInt16(kVK_Delete))
+        self.layoutEngine.keyUpEvent(keyCode: UInt16(kVK_Delete))
+
+        XCTAssertEqual(delegate.removePages, [self.page1, self.page3])
+    }
+
+    func test_keyboardDeletion_pressingDeleteWithNothingSelectedDoesNothing() {
+        let delegate = TestLayoutDelegate()
+        self.layoutEngine.delegate = delegate
+
+        self.layoutEngine.keyDownEvent(keyCode: UInt16(kVK_ForwardDelete))
+        self.layoutEngine.keyUpEvent(keyCode: UInt16(kVK_ForwardDelete))
+
+        XCTAssertNil(delegate.removePages)
+    }
+
+    func test_keyboardDeletion_pressingDeleteRemovesSelectedPages() {
+        let delegate = TestLayoutDelegate()
+        self.layoutEngine.delegate = delegate
+
+        self.page1.selected = true
+        self.page3.selected = true
+
+        self.layoutEngine.keyDownEvent(keyCode: UInt16(kVK_ForwardDelete))
+        self.layoutEngine.keyUpEvent(keyCode: UInt16(kVK_ForwardDelete))
+
+        XCTAssertEqual(delegate.removePages, [self.page1, self.page3])
+    }
+}
+
+
+private class TestLayoutDelegate: CanvasLayoutEngineDelegate {
+    var movedPages: [LayoutEnginePage]?
+    func moved(pages: [LayoutEnginePage], in layout: CanvasLayoutEngine) {
+        self.movedPages = pages
+    }
+
+    var removePages: [LayoutEnginePage]?
+    func remove(pages: [LayoutEnginePage], from layout: CanvasLayoutEngine) {
+        self.removePages = pages
     }
 }

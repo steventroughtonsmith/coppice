@@ -202,6 +202,15 @@ class CanvasEditorViewModel: ViewModel {
 }
 
 extension CanvasEditorViewModel: CanvasLayoutEngineDelegate {
+    func remove(pages: [LayoutEnginePage], from layout: CanvasLayoutEngine) {
+        for page in pages {
+            guard let canvasPage = self.canvasPage(with: page.id) else {
+                continue
+            }
+            self.close(canvasPage)
+        }
+    }
+
     func moved(pages: [LayoutEnginePage], in layout: CanvasLayoutEngine) {
         self.updatesDisable = true
         for page in pages {
