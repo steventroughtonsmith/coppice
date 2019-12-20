@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15400" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15702" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15400"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15702"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -12,6 +12,7 @@
                 <outlet property="inspectorContainer" destination="vle-dL-M8g" id="Whu-sk-7QN"/>
                 <outlet property="sidebarContainer" destination="wbm-Kc-dgB" id="cAE-F0-Db6"/>
                 <outlet property="splitView" destination="3KB-c4-2lR" id="9AT-sC-fkP"/>
+                <outlet property="splitViewControl" destination="aCJ-vR-5Ss" id="EzN-eO-CcN"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -80,10 +81,32 @@
                             <action selector="newPage:" target="-1" id="auY-Xh-mjg"/>
                         </connections>
                     </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="2B6058DC-C8C5-45BC-BF49-974943E8FBE8" label="Views" paletteLabel="Views" id="UjW-Vu-9qp">
+                        <nil key="toolTip"/>
+                        <size key="minSize" width="71" height="24"/>
+                        <size key="maxSize" width="71" height="24"/>
+                        <segmentedControl key="view" verticalHuggingPriority="750" id="aCJ-vR-5Ss">
+                            <rect key="frame" x="0.0" y="14" width="71" height="24"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="selectAny" id="hOH-HD-2M4">
+                                <font key="font" metaFont="system"/>
+                                <segments>
+                                    <segment image="NSColumnViewTemplate" width="32" selected="YES"/>
+                                    <segment image="NSColumnViewTemplate" width="32" selected="YES" tag="1"/>
+                                </segments>
+                            </segmentedCell>
+                        </segmentedControl>
+                        <connections>
+                            <action selector="splitViewControlChanged:" target="-2" id="g2q-lZ-3iz"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="Yn2-Qc-qMJ"/>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
                     <toolbarItem reference="UfH-lU-K3v"/>
                     <toolbarItem reference="k5J-mT-QAA"/>
+                    <toolbarItem reference="Yn2-Qc-qMJ"/>
+                    <toolbarItem reference="UjW-Vu-9qp"/>
                 </defaultToolbarItems>
             </toolbar>
             <connections>
@@ -95,6 +118,7 @@
     <resources>
         <image name="NSAddTemplate" width="11" height="11"/>
         <image name="NSBookmarksTemplate" width="17" height="18"/>
+        <image name="NSColumnViewTemplate" width="16" height="10"/>
         <namedColor name="EditorBackground">
             <color red="0.25099998712539673" green="0.25099998712539673" blue="0.25099998712539673" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>

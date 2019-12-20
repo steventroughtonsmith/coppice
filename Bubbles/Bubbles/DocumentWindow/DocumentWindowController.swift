@@ -11,6 +11,7 @@ import Combine
 
 class DocumentWindowController: NSWindowController {
     @IBOutlet weak var splitView: NSSplitView!
+    @IBOutlet weak var splitViewControl: NSSegmentedControl!
 
     @IBOutlet weak var sidebarContainer: NSView!
     @IBOutlet weak var editorContainer: NSView!
@@ -63,6 +64,8 @@ class DocumentWindowController: NSWindowController {
     override func windowDidLoad(){
         super.windowDidLoad()
 
+        self.splitViewController.splitView = self.splitView
+        self.splitViewController.delegate = self as SplitViewControllerDelegate
         self.setupViewControllers()
     }
 
@@ -160,6 +163,20 @@ class DocumentWindowController: NSWindowController {
     }
 
 
+    //MARK: - Split View Management
+    private let splitViewController = SplitViewController()
+
+    @IBAction func splitViewControlChanged(_ sender: Any) {
+        self.splitViewController.isSidebarCollapsed = !self.splitViewControl.isSelected(forSegment: 0)
+        self.splitViewController.isInspectorCollapsed = !self.splitViewControl.isSelected(forSegment: 1)
+    }
+
+    private func updateSplitViewControl() {
+        self.splitViewControl.setSelected(!self.splitViewController.isSidebarCollapsed, forSegment: 0)
+        self.splitViewControl.setSelected(!self.splitViewController.isInspectorCollapsed, forSegment: 1)
+    }
+
+
     //MARK: - State Restoration
     override func encodeRestorableState(with coder: NSCoder) {
         coder.encode(self.viewModel.selectedSidebarObjectID?.stringRepresentation, forKey: "selectedSidebarObjectID")
@@ -171,7 +188,6 @@ class DocumentWindowController: NSWindowController {
             let modelID = ModelID(string: modelIDString) {
             self.viewModel.selectedSidebarObjectID = modelID
         }
-//        self.editorContainerViewController?.restoreState(with: coder)
         super.restoreState(with: coder)
     }
 }
@@ -186,13 +202,18 @@ extension DocumentWindowController: DocumentWindow {
             callback(response.rawValue)
         }
     }
-
-
 }
 
 
 extension DocumentWindowController: EditorContainerViewControllerDelegate {
     func open(_ page: PageLink, from viewController: EditorContainerViewController) {
         self.openPage(at: page)
+    }
+}
+
+
+extension DocumentWindowController: SplitViewControllerDelegate {
+    func collapsedStatedDidChange(in splitViewController: SplitViewController) {
+        self.updateSplitViewControl()
     }
 }
