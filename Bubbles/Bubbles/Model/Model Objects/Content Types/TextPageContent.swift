@@ -33,5 +33,12 @@ class TextPageContent: NSObject, PageContent {
         let filename = (self.page != nil) ? "\(self.page!.id.uuid.uuidString).rtf" : nil
         return ModelFile(type: self.contentType.rawValue, filename: filename, data: textData, metadata: nil)
     }
+
+    func isMatchForSearch(_ searchTerm: String?) -> Bool {
+        guard let term = searchTerm, term.count > 0 else {
+            return true
+        }
+        return self.text.string.localizedCaseInsensitiveContains(term)
+    }
 }
 

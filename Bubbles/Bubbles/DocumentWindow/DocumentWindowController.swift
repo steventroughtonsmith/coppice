@@ -17,6 +17,8 @@ class DocumentWindowController: NSWindowController {
     @IBOutlet weak var editorContainer: NSView!
     @IBOutlet weak var inspectorContainer: NSView!
 
+    @IBOutlet weak var searchField: NSSearchField!
+
     private var pageSelectorWindowController: PageSelectorWindowController?
 
     var sidebarViewController: SidebarViewController? {
@@ -46,7 +48,7 @@ class DocumentWindowController: NSWindowController {
         }
     }
 
-    let viewModel: DocumentWindowViewModel
+    @objc dynamic let viewModel: DocumentWindowViewModel
     init(viewModel: DocumentWindowViewModel) {
         self.viewModel = viewModel
         super.init(window: nil)
@@ -189,6 +191,11 @@ class DocumentWindowController: NSWindowController {
             self.viewModel.selectedSidebarObjectID = modelID
         }
         super.restoreState(with: coder)
+    }
+
+
+    @IBAction func findInDocument(_ sender: Any?) {
+        self.window?.makeFirstResponder(self.searchField)
     }
 }
 

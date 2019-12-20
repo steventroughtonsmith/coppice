@@ -45,6 +45,7 @@ class SidebarViewModel: ViewModel {
     private var canvasObserver: ModelCollection<Canvas>.Observation?
     private var pageObserver: ModelCollection<Page>.Observation?
     private var windowStateSidebarObserver: AnyCancellable?
+    private var windowSearchObserver: AnyCancellable?
 
     func startObserving() {
         self.canvasObserver = self.canvases.addObserver { canvas, change in self.handleChange(to: canvas, changeType: change) }
@@ -52,6 +53,9 @@ class SidebarViewModel: ViewModel {
         self.windowStateSidebarObserver = self.documentWindowViewModel.$selectedSidebarObjectID
                                             .receive(on: RunLoop.main)
                                             .assign(to: \.selectedObjectID, on: self)
+        self.windowSearchObserver = self.documentWindowViewModel.publisher(for: \.searchString).sink { _ in
+            self.updateSearch()
+        }
     }
 
     func stopObserving() {
@@ -84,7 +88,9 @@ class SidebarViewModel: ViewModel {
         if let cachedItems = self.cachedCanvasItems {
             return cachedItems
         }
-        let items = self.canvases.all.sorted { $0.sortIndex < $1.sortIndex }.map { CanvasSidebarItem(canvas: $0)}
+        let items = self.canvases.objects(matchingSearchTerm: self.documentWindowViewModel.searchString)
+            .sorted { $0.sortIndex < $1.sortIndex }
+            .map { CanvasSidebarItem(canvas: $0)}
         self.cachedCanvasItems = items
         return items
     }
@@ -109,7 +115,9 @@ class SidebarViewModel: ViewModel {
         if let cachedItems = self.cachedPageItems {
             return cachedItems
         }
-        let items = self.pages.all.sorted { $0.title < $1.title }.map { PageSidebarItem(page: $0)}
+        let items = self.pages.objects(matchingSearchTerm: self.documentWindowViewModel.searchString)
+            .sorted { $0.title < $1.title }
+            .map { PageSidebarItem(page: $0)}
         self.cachedPageItems = items
         return items
     }
@@ -221,5 +229,13 @@ class SidebarViewModel: ViewModel {
             }
             self.selectedObjectID = self.pageItems[newValue].id
         }
+    }
+
+
+    //MARK: - Search
+    private func updateSearch() {
+        print("search: \(self.documentWindowViewModel.searchString)")
+        self.reloadPages()
+        self.reloadCanvases()
     }
 }

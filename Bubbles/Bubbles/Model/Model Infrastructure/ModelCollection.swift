@@ -50,6 +50,13 @@ class ModelCollection<ModelType: CollectableModelObject> {
         return self.all.first { $0.id == id }
     }
 
+    func objects(matchingSearchTerm searchTerm: String?) -> Set<ModelType> {
+        guard let term = searchTerm, term.count > 0 else {
+            return self.all
+        }
+        return self.all.filter { $0.isMatchForSearch(term) }
+    }
+
     typealias ModelSetupBlock = (ModelType) -> Void
     @discardableResult func newObject(setupBlock: ModelSetupBlock? = nil) -> ModelType {
         self.modelController?.pushChangeGroup()

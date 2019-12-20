@@ -59,6 +59,7 @@
 		9970976723AA8B5A00CD189B /* RemovePageEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970976623AA8B5A00CD189B /* RemovePageEventContext.swift */; };
 		9970976923AA8B6C00CD189B /* KeyboardMovePageEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970976823AA8B6C00CD189B /* KeyboardMovePageEventContext.swift */; };
 		9970976B23ACFD2900CD189B /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970976A23ACFD2900CD189B /* SplitViewController.swift */; };
+		9970976D23AD1A7A00CD189B /* MockPageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970976C23AD1A7A00CD189B /* MockPageContent.swift */; };
 		9976A49323674254004D573D /* ModelWriterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9976A49223674254004D573D /* ModelWriterTests.swift */; };
 		9976A49723674430004D573D /* PageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9976A49623674430004D573D /* PageTests.swift */; };
 		9976A49923674448004D573D /* CanvasTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9976A49823674448004D573D /* CanvasTests.swift */; };
@@ -235,6 +236,7 @@
 		9970976623AA8B5A00CD189B /* RemovePageEventContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemovePageEventContext.swift; sourceTree = "<group>"; };
 		9970976823AA8B6C00CD189B /* KeyboardMovePageEventContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardMovePageEventContext.swift; sourceTree = "<group>"; };
 		9970976A23ACFD2900CD189B /* SplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewController.swift; sourceTree = "<group>"; };
+		9970976C23AD1A7A00CD189B /* MockPageContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPageContent.swift; sourceTree = "<group>"; };
 		9976A49223674254004D573D /* ModelWriterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelWriterTests.swift; sourceTree = "<group>"; };
 		9976A49623674430004D573D /* PageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageTests.swift; sourceTree = "<group>"; };
 		9976A49823674448004D573D /* CanvasTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasTests.swift; sourceTree = "<group>"; };
@@ -603,6 +605,7 @@
 			isa = PBXGroup;
 			children = (
 				997711C9239E9AF400FCC8C7 /* MockDocumentWindowViewModel.swift */,
+				9970976C23AD1A7A00CD189B /* MockPageContent.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1223,6 +1226,7 @@
 				99771196239C530700FCC8C7 /* PageLinkManagerTests.swift in Sources */,
 				99DEF29322F33ABB0020A7CE /* ModelIDTests.swift in Sources */,
 				9957B088239FD3D800BA3C0B /* DocumentWindowViewModelTests.swift in Sources */,
+				9970976D23AD1A7A00CD189B /* MockPageContent.swift in Sources */,
 				9958107C230D75AA00D996C4 /* TextEditorViewModelTests.swift in Sources */,
 				990D243F23560688001B1FD9 /* CanvasLayoutEngineTests.swift in Sources */,
 				9923B07422F485480035D8C6 /* ModelCollectionTests.swift in Sources */,

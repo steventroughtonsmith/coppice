@@ -10,6 +10,7 @@
             <connections>
                 <outlet property="editorContainer" destination="BJE-TL-Rpa" id="2Qf-ld-nYR"/>
                 <outlet property="inspectorContainer" destination="vle-dL-M8g" id="Whu-sk-7QN"/>
+                <outlet property="searchField" destination="4ma-yw-p7D" id="EfM-8g-d3k"/>
                 <outlet property="sidebarContainer" destination="wbm-Kc-dgB" id="cAE-F0-Db6"/>
                 <outlet property="splitView" destination="3KB-c4-2lR" id="9AT-sC-fkP"/>
                 <outlet property="splitViewControl" destination="aCJ-vR-5Ss" id="EzN-eO-CcN"/>
@@ -101,12 +102,28 @@
                         </connections>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="Yn2-Qc-qMJ"/>
+                    <toolbarItem implicitItemIdentifier="033B4A53-EBE9-40A3-B3B3-DE6E54751B72" label="Search" paletteLabel="Search" sizingBehavior="auto" id="Ld8-cL-wK4">
+                        <nil key="toolTip"/>
+                        <searchField key="view" wantsLayer="YES" verticalHuggingPriority="750" textCompletion="NO" id="4ma-yw-p7D">
+                            <rect key="frame" x="0.0" y="14" width="96" height="22"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" usesSingleLineMode="YES" bezelStyle="round" id="V5a-ay-KW4">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </searchFieldCell>
+                            <connections>
+                                <binding destination="-2" name="value" keyPath="self.viewModel.searchString" id="XmJ-c1-iM1"/>
+                            </connections>
+                        </searchField>
+                    </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
                     <toolbarItem reference="UfH-lU-K3v"/>
                     <toolbarItem reference="k5J-mT-QAA"/>
                     <toolbarItem reference="Yn2-Qc-qMJ"/>
                     <toolbarItem reference="UjW-Vu-9qp"/>
+                    <toolbarItem reference="Ld8-cL-wK4"/>
                 </defaultToolbarItems>
             </toolbar>
             <connections>

@@ -295,4 +295,72 @@ class CanvasTests: XCTestCase {
         let canvasPage = canvas.add(page, centredOn: CGPoint(x: 60, y: 30))
         XCTAssertEqual(canvasPage.frame, CGRect(x: 50, y: 20, width: 20, height: 20))
     }
+
+
+    //MARK: - isMatchForSearch(_:)
+    func test_isMatchForSearch_returnsTrueForNilSearchTerm() {
+        let canvas = Canvas()
+        canvas.title = "Hello"
+        XCTAssertTrue(canvas.isMatchForSearch(nil))
+    }
+
+    func test_isMatchForSearch_returnsTrueForEmptySearchTerm() {
+        let canvas = Canvas()
+        canvas.title = "Hello"
+        XCTAssertTrue(canvas.isMatchForSearch(""))
+    }
+
+    func test_isMatchForSearch_returnsTrueIfTitleIsSearchTerm() {
+        let canvas = Canvas()
+        canvas.title = "Hello World"
+        XCTAssertTrue(canvas.isMatchForSearch("Hello World"))
+    }
+
+    func test_isMatchForSearch_returnsTrueIfTitleContainsSearchTerm() {
+        let canvas = Canvas()
+        canvas.title = "Foo Bar Baz"
+        XCTAssertTrue(canvas.isMatchForSearch("Bar B"))
+    }
+
+    func test_isMatchForSearch_returnsTrueIfTitleContainsSearchTermIgnoringCase() {
+        let canvas = Canvas()
+        canvas.title = "I am SHOUTING loudly"
+        XCTAssertTrue(canvas.isMatchForSearch("shouting"))
+    }
+
+    func test_isMatchForSearch_returnsTrueIfAnyPagesOnCanvasMatchSearchTerm() {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+        let canvas = Canvas.create(in: modelController)
+        canvas.title = "test"
+
+        let matchingPage = Page.create(in: modelController) {
+            $0.title = "This is a matching page"
+        }
+        canvas.add(matchingPage)
+
+        let nonMatchingPage = Page.create(in: modelController) {
+            $0.title = "This doesnt affect the outcome"
+        }
+        canvas.add(nonMatchingPage)
+
+        XCTAssertTrue(canvas.isMatchForSearch("matching"))
+    }
+
+    func test_isMatchForSearch_returnsFalseIfTitleAndNoPagesMatchSearchTerm() {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+        let canvas = Canvas.create(in: modelController)
+        canvas.title = "test"
+
+        let page1 = Page.create(in: modelController) {
+            $0.title = "This page doesnt match"
+        }
+        canvas.add(page1)
+
+        let page2 = Page.create(in: modelController) {
+            $0.title = "Neither does this"
+        }
+        canvas.add(page2)
+
+        XCTAssertFalse(canvas.isMatchForSearch("POSSUM"))
+    }
 }

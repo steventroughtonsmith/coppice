@@ -462,4 +462,60 @@ class ModelCollectionTests: XCTestCase {
         XCTAssertTrue(relationship.contains(o3))
     }
 
+
+    //MARK: - objects(matchingSearchTerm:)
+    func test_objectsMatchingSearchTerm_returnsAllItemsIfSearchTermIsNil() {
+        let o1 = self.collection.newObject()
+        let o2 = self.collection.newObject()
+        let o3 = self.collection.newObject()
+
+        let objects = self.collection.objects(matchingSearchTerm: nil)
+        XCTAssertEqual(objects.count, 3)
+        XCTAssertTrue(objects.contains(o1))
+        XCTAssertTrue(objects.contains(o2))
+        XCTAssertTrue(objects.contains(o3))
+    }
+
+    func test_objectsMatchingSearchTerm_returnsAllItemsIfSearchTermIsEmptyString() {
+        let o1 = self.collection.newObject()
+        let o2 = self.collection.newObject()
+        let o3 = self.collection.newObject()
+
+        let objects = self.collection.objects(matchingSearchTerm: "")
+        XCTAssertEqual(objects.count, 3)
+        XCTAssertTrue(objects.contains(o1))
+        XCTAssertTrue(objects.contains(o2))
+        XCTAssertTrue(objects.contains(o3))
+    }
+
+    func test_objectsMatchingSearchTerm_returnsEmptySetIfCollectionIsEmpty() {
+        let objects = self.collection.objects(matchingSearchTerm: "Hello World")
+        XCTAssertEqual(objects.count, 0)
+    }
+
+    func test_objectsMatchingSearchTerm_returnsOnlyObjectsMatchingSearchTerm() {
+        self.collection.newObject()
+        let match1 = self.collection.newObject()
+        match1.isMatch = true
+        self.collection.newObject()
+        let match2 = self.collection.newObject()
+        match2.isMatch = true
+        self.collection.newObject()
+
+        let objects = self.collection.objects(matchingSearchTerm: "Foo Bar")
+        XCTAssertEqual(objects.count, 2)
+        XCTAssertTrue(objects.contains(match1))
+        XCTAssertTrue(objects.contains(match2))
+    }
+
+    func test_objectsMatchingSearchTerm_returnsEmptyArrayIfNoObjectsMatchSearchTerm() {
+        self.collection.newObject()
+        self.collection.newObject()
+        self.collection.newObject()
+        self.collection.newObject()
+        self.collection.newObject()
+
+        let objects = self.collection.objects(matchingSearchTerm: "Foo Bar")
+        XCTAssertEqual(objects.count, 0)
+    }
 }

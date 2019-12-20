@@ -366,4 +366,63 @@ class PageTests: XCTestCase {
         XCTAssertEqual(canvasPage2.frame, CGRect(x: 60, y: 70, width: 50, height: 30))
     }
 
+
+    //MARK: - isMatchForSearch(_:)
+    func test_isMatchForSearch_returnsTrueForNilString() {
+        let page = Page()
+        page.title = "Test"
+        page.content = MockPageContent()
+
+        XCTAssertTrue(page.isMatchForSearch(nil))
+    }
+
+    func test_isMatchForSearch_returnsTrueForEmptyString() {
+        let page = Page()
+        page.title = "Test"
+        page.content = MockPageContent()
+
+        XCTAssertTrue(page.isMatchForSearch(""))
+    }
+
+    func test_isMatchForSearch_returnsTrueIfTitleIsSearchTerm() {
+        let page = Page()
+        page.title = "Hello World"
+        page.content = MockPageContent()
+
+        XCTAssertTrue(page.isMatchForSearch("Hello World"))
+    }
+
+    func test_isMatchForSearch_returnsTrueIfTitleContainsSearchTerm() {
+        let page = Page()
+        page.title = "Foo Bar Baz"
+        page.content = MockPageContent()
+
+        XCTAssertTrue(page.isMatchForSearch("Bar B"))
+    }
+
+    func test_isMatchForSearch_returnsTrueIfTitleMatchesSearchTermIgnoringCase() {
+        let page = Page()
+        page.title = "I am SHOUTING loudly"
+        page.content = MockPageContent()
+
+        XCTAssertTrue(page.isMatchForSearch("shouting"))
+    }
+
+    func test_isMatchForSearch_returnsTrueIfContentMatchesSearchTerm() {
+        let page = Page()
+        page.title = "Foo Bar Baz"
+        let content = MockPageContent()
+        content.isMatchReturn = true
+        page.content = content
+
+        XCTAssertTrue(page.isMatchForSearch("Hello"))
+    }
+
+    func test_isMatchForSearch_returnsFalseIfTitleAndContentDontMatchSearchTerm() {
+        let page = Page()
+        page.title = "Test"
+        page.content = MockPageContent()
+
+        XCTAssertFalse(page.isMatchForSearch("Hello"))
+    }
 }

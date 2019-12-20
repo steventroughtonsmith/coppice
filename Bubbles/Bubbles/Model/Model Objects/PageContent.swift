@@ -40,6 +40,8 @@ protocol PageContent: class {
     var contentSize: CGSize? { get }
     var page: Page? { get set }
     var modelFile: ModelFile { get }
+
+    func isMatchForSearch(_ searchTerm: String?) -> Bool
 }
 
 extension PageContent {
@@ -53,6 +55,10 @@ extension PageContent {
         page.collection?.registerUndoAction { (collection) in
             collection.setContentValue(oldValue, for: keyPath, ofPageWithID: pageID)
         }
+    }
+
+    func isMatchForSearch(_ searchTerm: String?) -> Bool {
+        return false
     }
 }
 

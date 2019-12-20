@@ -61,6 +61,11 @@ final class TestCollectableModelObject: NSObject, CollectableModelObject {
     }
 
     @ModelObjectReference var inverseRelationship: RelationshipModelObject?
+
+    var isMatch: Bool = false
+    func isMatchForSearch(_ searchTerm: String?) -> Bool {
+        return self.isMatch
+    }
 }
 
 final class RelationshipModelObject: NSObject, CollectableModelObject {

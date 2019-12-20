@@ -83,6 +83,8 @@ protocol CollectableModelObject: ModelObject, Hashable {
     func relationship<T: CollectableModelObject>(for keyPath: ReferenceWritableKeyPath<T, Self?>) -> Set<T>
 
     func performUpdate(_ updateBlock: (Self) -> Void)
+
+    func isMatchForSearch(_ searchTerm: String?) -> Bool
 }
 
 
@@ -141,6 +143,10 @@ extension CollectableModelObject {
         self.modelController?.pushChangeGroup()
         updateBlock(self)
         self.modelController?.popChangeGroup()
+    }
+
+    func isMatchForSearch(_ searchTerm: String?) -> Bool {
+        return false
     }
 }
 

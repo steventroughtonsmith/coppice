@@ -31,6 +31,10 @@ class DocumentWindowViewModel: NSObject {
     }
 
 
+    //MARK: - Search
+    @objc dynamic var searchString: String?
+    
+
     //MARK: - Model Helpers
     var pageCollection: ModelCollection<Page> {
         return self.modelController.collection(for: Page.self)
