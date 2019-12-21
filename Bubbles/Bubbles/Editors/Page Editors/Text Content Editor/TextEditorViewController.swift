@@ -29,14 +29,21 @@ class TextEditorViewController: NSViewController, InspectableTextEditor {
 
     private var selectableBinding: AnyCancellable!
     private var attributedTextObserver: AnyCancellable!
+    private var highlightedRangeObserver: AnyCancellable!
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.selectableBinding = self.publisher(for: \.enabled).assign(to: \.isSelectable, on: self.editingTextView)
         self.attributedTextObserver = self.publisher(for: \.viewModel.attributedText).sink { self.updateTextView(with: $0)}
+        self.highlightedRangeObserver = self.viewModel.$highlightedRange.sink { self.highlight($0) }
 
         self.editingTextView.textStorage?.delegate = self
         self.pageLinkManager.textStorage = self.editingTextView.textStorage
+    }
+
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        self.highlight(self.viewModel.highlightedRange)
     }
 
     @objc dynamic var enabled: Bool = true
@@ -127,6 +134,16 @@ class TextEditorViewController: NSViewController, InspectableTextEditor {
         self.updatingText = true
         self.viewModel.attributedText = self.editingTextView.attributedString().copy() as! NSAttributedString
         self.updatingText = false
+    }
+
+
+    //MARK: - Search
+    private func highlight(_ range: NSRange?) {
+        guard let highlightRange = range else {
+            self.editingTextView.showFindIndicator(for: NSRange(location: NSNotFound, length: 0))
+            return
+        }
+        self.editingTextView.showFindIndicator(for: highlightRange)
     }
 }
 

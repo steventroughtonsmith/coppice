@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 protocol TextEditorView: Editor {
     func addLink(with url: URL, to range: NSRange)
@@ -27,6 +28,13 @@ class TextEditorViewModel: ViewModel {
         self.textContent = textContent
         self.textAutoLinker = textAutoLinker
         super.init(documentWindowViewModel: documentWindowViewModel)
+    }
+
+    var searchStringObserver: AnyCancellable?
+    override func setup() {
+        self.searchStringObserver = self.documentWindowViewModel.publisher(for: \.searchString).sink { [weak self] searchTerm in
+            self?.updateHighlightedRange(with: searchTerm)
+        }
     }
 
     override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
@@ -54,6 +62,23 @@ class TextEditorViewModel: ViewModel {
 
     var undoManager: UndoManager {
         return self.modelController.undoManager
+    }
+
+    //MARK: - Search
+    @Published var highlightedRange: NSRange?
+
+    private func updateHighlightedRange(with searchTerm: String?) {
+        guard let term = searchTerm else {
+            self.highlightedRange = nil
+            return
+        }
+
+        let range = (self.attributedText.string as NSString).range(of: term, options: .caseInsensitive)
+        guard range.location != NSNotFound else {
+            self.highlightedRange = nil
+            return
+        }
+        self.highlightedRange = range
     }
 }
 
