@@ -30,6 +30,11 @@ class FileDropView: NSView {
     private func sharedSetup() {
         self.registerForDraggedTypes([.fileURL])
     }
+    
+
+    override var acceptsFirstResponder: Bool {
+        return true
+    }
 
     //MARK: - Dragging before image has gone
     private var isValidDrop = false

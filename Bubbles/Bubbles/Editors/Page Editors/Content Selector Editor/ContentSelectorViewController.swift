@@ -30,6 +30,11 @@ class ContentSelectorViewController: NSViewController {
         }
     }
 
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        self.view.window?.makeFirstResponder(self.view)
+    }
+
     var enabled: Bool = true
 
     @objc func typeSelected(_ sender: NSButton?) {
@@ -53,6 +58,12 @@ class ContentSelectorViewController: NSViewController {
         button.isBordered = false
         button.imageScaling = .scaleProportionallyUpOrDown
         self.stackView.addArrangedSubview(button)
+    }
+
+    @objc dynamic func paste(_ sender: Any?) {
+        if !self.viewModel.createContentFromPasteboard() {
+            NSSound.beep()
+        }
     }
 }
 

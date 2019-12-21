@@ -6,7 +6,7 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import Foundation
+import AppKit
 
 protocol ContentSelectorViewModelDelegate: class {
     func selectedType(in viewModel: ContentSelectorViewModel)
@@ -59,8 +59,41 @@ class ContentSelectorViewModel: ViewModel {
         }
 
         self.page.content = contentType.createContent(data: data)
+        self.page.title = url.lastPathComponent
         self.delegate?.selectedType(in: self)
         return true
+    }
+
+
+    func createContentFromPasteboard() -> Bool {
+        let pb = NSPasteboard.general
+        if let type = pb.availableType(from: [.fileURL]) {
+            guard let data = pb.data(forType: type),
+                let url = URL(dataRepresentation: data, relativeTo: nil) else {
+                    return false
+            }
+            return self.createContent(fromFileAt: url)
+        }
+        if let type = pb.availableType(from: [.rtf, .tabularText, .string]) {
+            guard let data = pb.data(forType: type),
+                let attributedString = try? NSAttributedString(data: data, options: [:], documentAttributes: nil) else {
+                    return false
+            }
+            let content = TextPageContent()
+            content.text = attributedString
+            self.page.content = content
+            return true
+        }
+        if let type = pb.availableType(from: [.png, .tiff]) {
+            guard let data = pb.data(forType: type), let image = NSImage(data: data) else {
+                return false
+            }
+            let content = ImagePageContent()
+            content.image = image
+            self.page.content = content
+            return true
+        }
+        return false
     }
 }
 
