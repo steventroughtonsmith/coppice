@@ -550,6 +550,13 @@
 			path = "Content Types";
 			sourceTree = "<group>";
 		};
+		9970976E23AEEE5700CD189B /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		9976611A23A3EB2C000D1741 /* Unit Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -902,6 +909,7 @@
 				992A5C9D22DCCDA20012CCB6 /* Extensions */,
 				99C41B6F22DCA94000C82DDE /* Model */,
 				99FE01E122D4C22B004D380D /* DocumentWindow */,
+				9970976E23AEEE5700CD189B /* New Group */,
 				992A5C9022DCB2EE0012CCB6 /* Sidebar */,
 				992A5CA022DDF4820012CCB6 /* Editors */,
 				99D8E361237EDB890098CF3B /* Inspectors */,

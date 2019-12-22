@@ -241,4 +241,22 @@ class DocumentWindowViewModel: NSObject {
             }
         }
     }
+
+
+    //MARK: - Import/Export
+    func importFiles(at urls: [URL]) {
+        var canvas: Canvas?
+        if let canvasID = self.selectedSidebarObjectID, canvasID.modelType == Canvas.modelType {
+            canvas = self.canvasCollection.objectWithID(canvasID)
+        }
+        for url in urls {
+            if let page = self.modelController.collection(for: Page.self).newPage(fromFileAt: url) {
+                canvas?.add(page)
+            }
+        }
+    }
+
+    func export(_ pages: [Page], to url: URL) {
+        print("export \(pages) to url: \(url)")
+    }
 }

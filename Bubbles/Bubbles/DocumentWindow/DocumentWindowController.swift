@@ -197,6 +197,22 @@ class DocumentWindowController: NSWindowController {
     @IBAction func findInDocument(_ sender: Any?) {
         self.window?.makeFirstResponder(self.searchField)
     }
+
+
+    @IBAction func importFiles(_ sender: Any?) {
+        guard let window = self.window else {
+            return
+        }
+        let panel = NSOpenPanel()
+        panel.allowedFileTypes = [kUTTypeText as String, kUTTypeImage as String]
+        panel.allowsMultipleSelection = true
+        panel.beginSheetModal(for: window) { [weak self] (response) in
+            guard response == .OK else {
+                return
+            }
+            self?.viewModel.importFiles(at: panel.urls)
+        }
+    }
 }
 
 extension DocumentWindowController: DocumentWindow {

@@ -66,7 +66,7 @@ extension BubblesModelController {
 
 //MARK: - Collection extensions
 extension ModelCollection where ModelType == Page {
-    func newPage(fromFileAt url: URL) -> Page? {
+    @discardableResult func newPage(fromFileAt url: URL) -> Page? {
         guard let resourceValues = try? url.resourceValues(forKeys: Set([.typeIdentifierKey])),
             let typeIdentifier = resourceValues.typeIdentifier else {
             return nil
