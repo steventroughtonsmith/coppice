@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class SidebarViewController: NSViewController {
+class SidebarViewController: NSViewController, NSMenuItemValidation {
     let viewModel: SidebarViewModel
 
     init(viewModel: SidebarViewModel) {
@@ -55,6 +55,20 @@ class SidebarViewController: NSViewController {
         }
 
         self.viewModel.deleteSelectedObject()
+    }
+
+
+    //MARK: - Menu Actions
+
+    @IBAction func exportPages(_ sender: Any?) {
+        guard let window = self.view.window else {
+            return
+        }
+        PageExporter.export(self.viewModel.selectedPages, displayingOn: window)
+    }
+
+    func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+        return PageExporter.validate(menuItem, forExporting: self.viewModel.selectedPages)
     }
 }
 

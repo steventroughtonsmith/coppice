@@ -231,6 +231,13 @@ class SidebarViewModel: ViewModel {
         }
     }
 
+    var selectedPages: [Page] {
+        guard self.selectedPageRow > -1 else {
+            return []
+        }
+        return [self.pageItems[self.selectedPageRow].page]
+    }
+
 
     //MARK: - Search
     private func updateSearch() {

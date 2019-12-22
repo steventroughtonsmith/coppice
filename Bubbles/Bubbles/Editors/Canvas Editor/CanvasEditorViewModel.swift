@@ -80,6 +80,11 @@ class CanvasEditorViewModel: ViewModel {
     //MARK: - Page Management
     private(set) var canvasPages = Set<CanvasPage>()
 
+    var selectedCanvasPages: Set<CanvasPage> {
+        let selectedPageIDs = self.layoutEngine.selectedPages.map { $0.id }
+        return self.canvasPages.filter { selectedPageIDs.contains($0.id.uuid) }
+    }
+
     func close(_ canvasPage: CanvasPage) {
         self.documentWindowViewModel.remove(canvasPage)
     }

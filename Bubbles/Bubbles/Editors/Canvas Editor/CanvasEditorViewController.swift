@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class CanvasEditorViewController: NSViewController {
+class CanvasEditorViewController: NSViewController, NSMenuItemValidation {
 
     @IBOutlet weak var scrollView: NSScrollView!
     @IBOutlet weak var canvasView: CanvasView!
@@ -344,6 +344,19 @@ class CanvasEditorViewController: NSViewController {
     private lazy var canvasInspector: CanvasInspectorViewController = {
         return CanvasInspectorViewController(viewModel: self.viewModel.canvasInspectorViewModel)
     }()
+
+
+    //MARK: - Menu Items
+    @IBAction func exportPages(_ sender: Any?) {
+        guard let window = self.view.window else {
+            return
+        }
+        PageExporter.export(self.viewModel.selectedCanvasPages.compactMap { $0.page }, displayingOn: window)
+    }
+
+    func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+        return PageExporter.validate(menuItem, forExporting: self.viewModel.selectedCanvasPages.compactMap { $0.page })
+    }
 }
 
 
