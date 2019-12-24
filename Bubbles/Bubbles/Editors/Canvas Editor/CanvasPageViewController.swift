@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import Combine
 
 protocol CanvasPageViewControllerDelegate: class {
     func close(_ page: CanvasPageViewController)
@@ -15,6 +16,7 @@ protocol CanvasPageViewControllerDelegate: class {
 class CanvasPageViewController: NSViewController, CanvasPageView {
     weak var delegate: CanvasPageViewControllerDelegate?
 
+    @IBOutlet weak var titleLabel: NSTextField!
 
     @IBOutlet weak var contentContainer: NSView!
     var uuid: UUID {
@@ -61,6 +63,7 @@ class CanvasPageViewController: NSViewController, CanvasPageView {
         self.typedView.boxView.borderWidth = size
     }
 
+    private var labelBinding: AnyCancellable!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -71,6 +74,12 @@ class CanvasPageViewController: NSViewController, CanvasPageView {
             self.typedView.contentContainer.addSubview(pageEditor.view, withInsets: NSEdgeInsetsZero)
             self.addChild(pageEditor)
         }
+
+        self.labelBinding = self.viewModel.publisher(for: \.title).assign(to: \.stringValue, on: self.titleLabel)
+    }
+
+    deinit {
+        self.labelBinding?.cancel()
     }
 
     func apply(_ layoutPage: LayoutEnginePage) {

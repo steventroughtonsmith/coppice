@@ -61,7 +61,7 @@ class DocumentWindowViewModel: NSObject {
         }
 
         if let canvas = self.canvasCollection.objectWithID(selectedObjectID) {
-            canvas.add(page)
+            canvas.addPages([page])
         }
         self.modelController.undoManager.endUndoGrouping()
         return page
@@ -72,7 +72,7 @@ class DocumentWindowViewModel: NSObject {
         self.modelController.undoManager.setActionName(NSLocalizedString("Create Pages", comment: "Create Page Undo Action Name"))
         let newPages = fileURLs.compactMap { self.pageCollection.newPage(fromFileAt: $0) }
         if let canvas = canvas {
-            newPages.forEach { canvas.add($0) }
+            canvas.addPages(newPages, centredOn: point)
         }
 
         self.modelController.popChangeGroup()
@@ -142,12 +142,12 @@ class DocumentWindowViewModel: NSObject {
         }
         self.modelController.undoManager.setActionName(NSLocalizedString("Add Page to Canvas", comment: "Add Page To Canvas Undo Action Name"))
 
-        var sourcePage: CanvasPage? = nil
-        if let source = link.source {
-            sourcePage = self.canvasPageCollection.objectWithID(source)
+        guard let source = link.source,
+            let sourcePage = self.canvasPageCollection.objectWithID(source) else {
+                return canvas.addPages([page]).first
         }
 
-        return canvas.add(page, linkedFrom: sourcePage, centredOn: point)
+        return canvas.add(page, linkedFrom: sourcePage)
     }
 
 
@@ -249,11 +249,10 @@ class DocumentWindowViewModel: NSObject {
         if let canvasID = self.selectedSidebarObjectID, canvasID.modelType == Canvas.modelType {
             canvas = self.canvasCollection.objectWithID(canvasID)
         }
-        for url in urls {
-            if let page = self.modelController.collection(for: Page.self).newPage(fromFileAt: url) {
-                canvas?.add(page)
-            }
-        }
+
+        let pageCollection = self.modelController.collection(for: Page.self)
+        let pages = urls.compactMap { pageCollection.newPage(fromFileAt: $0) }
+        canvas?.addPages(pages)
     }
 
     func export(_ pages: [Page], to url: URL) {

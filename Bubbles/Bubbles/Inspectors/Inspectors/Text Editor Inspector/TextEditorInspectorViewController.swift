@@ -40,13 +40,13 @@ class TextEditorInspectorViewController: BaseInspectorViewController {
             let menu = popUpButton.menu else {
             return
         }
-        self.textColoursObserver = self.typedViewModel.publisher(for: \.textColours)
-            .map { $0.generateMenuItems() }
-            .sink {
-                let (menuItems, selectedItem) = $0
-                menu.items = menuItems
-                popUpButton.select(selectedItem)
-            }
+//        self.textColoursObserver = self.typedViewModel.publisher(for: \.textColours)
+//            .map { $0.generateMenuItems() }
+//            .sink {
+//                let (menuItems, selectedItem) = $0
+//                menu.items = menuItems
+//                popUpButton.select(selectedItem)
+//            }
     }
 
     @IBAction func colourPopUpButtonChanged(_ sender: Any) {
@@ -79,10 +79,10 @@ class TextEditorInspectorViewController: BaseInspectorViewController {
         alignmentControl.setTag(NSTextAlignment.left.rawValue, forSegment: 0)
         alignmentControl.setTag(NSTextAlignment.center.rawValue, forSegment: 1)
         alignmentControl.setTag(NSTextAlignment.right.rawValue, forSegment: 2)
-
-        self.alignmentObserver = self.typedViewModel.publisher(for: \.rawAlignment)
-                                                    .map {alignmentControl.segment(forTag: $0) }
-                                                    .assign(to: \.selectedSegment, on: alignmentControl)
+//
+//        self.alignmentObserver = self.typedViewModel.publisher(for: \.rawAlignment)
+//                                                    .map {alignmentControl.segment(forTag: $0) }
+//                                                    .assign(to: \.selectedSegment, on: alignmentControl)
     }
 
     @IBAction func alignmentClicked(_ sender: Any) {
@@ -97,14 +97,14 @@ class TextEditorInspectorViewController: BaseInspectorViewController {
     private var strikethroughObserver: AnyCancellable!
     private func setupStyleControl() {
         let styleControl = self.styleControl
-        self.boldObserver = self.typedViewModel.publisher(for: \.isBold)
-                                               .sink { styleControl?.setSelected($0, forSegment: 0) }
-        self.italicObserver = self.typedViewModel.publisher(for: \.isItalic)
-                                                 .sink { styleControl?.setSelected($0, forSegment: 1) }
-        self.underlineObserver = self.typedViewModel.publisher(for: \.isUnderlined)
-                                                    .sink { styleControl?.setSelected($0, forSegment: 2) }
-        self.strikethroughObserver = self.typedViewModel.publisher(for: \.isStruckthrough)
-                                                        .sink { styleControl?.setSelected($0, forSegment: 3) }
+//        self.boldObserver = self.typedViewModel.publisher(for: \.isBold)
+//                                               .sink { styleControl?.setSelected($0, forSegment: 0) }
+//        self.italicObserver = self.typedViewModel.publisher(for: \.isItalic)
+//                                                 .sink { styleControl?.setSelected($0, forSegment: 1) }
+//        self.underlineObserver = self.typedViewModel.publisher(for: \.isUnderlined)
+//                                                    .sink { styleControl?.setSelected($0, forSegment: 2) }
+//        self.strikethroughObserver = self.typedViewModel.publisher(for: \.isStruckthrough)
+//                                                        .sink { styleControl?.setSelected($0, forSegment: 3) }
     }
 
     @IBAction func styleControlClicked(_ sender: Any) {

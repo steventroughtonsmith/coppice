@@ -38,27 +38,6 @@ final class Canvas: NSObject, CollectableModelObject {
     }
 
 
-    //MARK: - Helpers
-    @discardableResult func add(_ page: Page, linkedFrom sourcePage: CanvasPage? = nil, centredOn point: CGPoint? = nil) -> CanvasPage {
-        guard let collection = self.modelController?.collection(for: CanvasPage.self) else {
-            fatalError("Could not find canvas page collection")
-        }
-
-        return collection.newObject() { canvasPage in
-            canvasPage.page = page
-            canvasPage.parent = sourcePage
-
-            let halfSize = CGPoint(x: canvasPage.frame.size.width / 2, y: canvasPage.frame.size.height / 2)
-            if let point = point {
-                canvasPage.frame.origin = point.minus(halfSize).rounded()
-            } else if let viewPort = self.viewPort {
-                canvasPage.frame.origin = viewPort.midPoint.minus(halfSize).rounded()
-            }
-            canvasPage.canvas = self
-        }
-    }
-
-
     //MARK: - Plists
     var plistRepresentation: [String : Any] {
         var plist: [String: Any] = [

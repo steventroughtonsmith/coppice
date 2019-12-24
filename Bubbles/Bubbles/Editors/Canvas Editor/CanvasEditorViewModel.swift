@@ -54,6 +54,9 @@ class CanvasEditorViewModel: ViewModel {
         if let observer = self.canvasObserver {
             self.modelController.collection(for: Canvas.self).removeObserver(observer)
         }
+        if let observer = self.canvasPageObserver {
+            self.modelController.collection(for: CanvasPage.self).removeObserver(observer)
+        }
     }
 
 

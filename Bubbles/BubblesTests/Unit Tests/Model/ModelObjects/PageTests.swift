@@ -322,7 +322,7 @@ class PageTests: XCTestCase {
 
 
     //MARK: - updatePageSizes()
-    func test_updatePagesSizes_doesntUpdateAnySizesIfUserPreferredSizeIsSet() {
+    func test_updatePagesSizes_doesntUpdateAnySizesIfUserPreferredSizeIsSet() throws {
         let modelController = BubblesModelController(undoManager: UndoManager())
         let page = modelController.collection(for: Page.self).newObject() {
             let content = ImagePageContent()
@@ -331,8 +331,8 @@ class PageTests: XCTestCase {
         }
         let canvas1 = modelController.collection(for: Canvas.self).newObject()
         let canvas2 = modelController.collection(for: Canvas.self).newObject()
-        let canvasPage1 = canvas1.add(page)
-        let canvasPage2 = canvas2.add(page)
+        let canvasPage1 = try XCTUnwrap(canvas1.addPages([page]).first)
+        let canvasPage2 = try XCTUnwrap(canvas2.addPages([page]).first)
 
         canvasPage1.frame = CGRect(x: 20, y: 30, width: 40, height: 50)
         canvasPage2.frame = CGRect(x: 60, y: 70, width: 80, height: 90)
@@ -345,7 +345,7 @@ class PageTests: XCTestCase {
         XCTAssertEqual(canvasPage2.frame, CGRect(x: 60, y: 70, width: 80, height: 90))
     }
 
-    func test_updatePageSizes_updatesFrameSizeOfPageOnAllCanvasesIfUserPreferredSizeIsNotSet() {
+    func test_updatePageSizes_updatesFrameSizeOfPageOnAllCanvasesIfUserPreferredSizeIsNotSet() throws{
         let modelController = BubblesModelController(undoManager: UndoManager())
         let page = modelController.collection(for: Page.self).newObject() {
             let content = ImagePageContent()
@@ -354,8 +354,8 @@ class PageTests: XCTestCase {
         }
         let canvas1 = modelController.collection(for: Canvas.self).newObject()
         let canvas2 = modelController.collection(for: Canvas.self).newObject()
-        let canvasPage1 = canvas1.add(page)
-        let canvasPage2 = canvas2.add(page)
+        let canvasPage1 = try XCTUnwrap(canvas1.addPages([page]).first)
+        let canvasPage2 = try XCTUnwrap(canvas2.addPages([page]).first)
 
         canvasPage1.frame = CGRect(x: 20, y: 30, width: 40, height: 50)
         canvasPage2.frame = CGRect(x: 60, y: 70, width: 80, height: 90)

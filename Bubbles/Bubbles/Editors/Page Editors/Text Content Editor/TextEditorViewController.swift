@@ -33,9 +33,10 @@ class TextEditorViewController: NSViewController, InspectableTextEditor {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.selectableBinding = self.publisher(for: \.enabled).assign(to: \.isSelectable, on: self.editingTextView)
-        self.attributedTextObserver = self.publisher(for: \.viewModel.attributedText).sink { self.updateTextView(with: $0)}
-        self.highlightedRangeObserver = self.viewModel.$highlightedRange.sink { self.highlight($0) }
+//        self.selectableBinding = self.publisher(for: \.enabled).assign(to: \.isSelectable, on: self.editingTextView)
+//        self.attributedTextObserver = self.publisher(for: \.viewModel.attributedText).sink { self.updateTextView(with: $0)}
+        self.updateTextView(with: self.viewModel.attributedText)
+//        self.highlightedRangeObserver = self.viewModel.$highlightedRange.sink { self.highlight($0) }
 
         self.editingTextView.textStorage?.delegate = self
         self.pageLinkManager.textStorage = self.editingTextView.textStorage

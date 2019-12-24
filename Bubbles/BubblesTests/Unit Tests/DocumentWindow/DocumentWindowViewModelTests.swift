@@ -345,8 +345,8 @@ class DocumentWindowViewModelTests: XCTestCase {
     func test_deletePage_undoAddsPageBackToAnyCanvasesItWasPreviouslyOn() throws {
         let secondCanvas = self.viewModel.canvasCollection.newObject()
         let page = self.viewModel.pageCollection.newObject()
-        let canvasPage1 = self.canvas.add(page, linkedFrom: self.canvasPage, centredOn: nil)
-        let canvasPage2 = secondCanvas.add(page)
+        let canvasPage1 = self.canvas.add(page, linkedFrom: self.canvasPage)
+        let canvasPage2 = try XCTUnwrap(secondCanvas.addPages([page]).first)
 
         let window = MockWindow()
         self.viewModel.window = window
@@ -399,8 +399,8 @@ class DocumentWindowViewModelTests: XCTestCase {
     func test_deletePage_redoingRemovesPageFromCanvasesAgainButWithoutAnyAlert() throws {
         let secondCanvas = self.viewModel.canvasCollection.newObject()
         let page = self.viewModel.pageCollection.newObject()
-        let canvasPage1 = self.canvas.add(page, linkedFrom: self.canvasPage, centredOn: nil)
-        let canvasPage2 = secondCanvas.add(page)
+        let canvasPage1 = self.canvas.add(page, linkedFrom: self.canvasPage)
+        let canvasPage2 = try XCTUnwrap(secondCanvas.addPages([page]).first)
 
         let window = MockWindow()
         self.viewModel.window = window
@@ -632,7 +632,7 @@ class DocumentWindowViewModelTests: XCTestCase {
 
         let canvas = self.viewModel.canvasCollection.newObject()
         let secondPage = self.viewModel.pageCollection.newObject()
-        let canvasPage1 = canvas.add(self.page, centredOn: CGPoint(x: -40, y: -30))
+        let canvasPage1 = try XCTUnwrap(canvas.addPages([self.page], centredOn: CGPoint(x: -40, y: -30)).first)
         let canvasPage2 = canvas.add(secondPage, linkedFrom: canvasPage1)
         self.modelController.undoManager.removeAllActions()
 
@@ -687,7 +687,7 @@ class DocumentWindowViewModelTests: XCTestCase {
 
         let canvas = self.viewModel.canvasCollection.newObject()
         let secondPage = self.viewModel.pageCollection.newObject()
-        let canvasPage1 = canvas.add(self.page, centredOn: CGPoint(x: -40, y: -30))
+        let canvasPage1 = try XCTUnwrap(canvas.addPages([self.page], centredOn: CGPoint(x: -40, y: -30)).first)
         let canvasPage2 = canvas.add(secondPage, linkedFrom: canvasPage1)
         self.modelController.undoManager.removeAllActions()
 

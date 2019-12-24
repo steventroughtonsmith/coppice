@@ -241,59 +241,566 @@ class CanvasTests: XCTestCase {
     }
 
 
-    //MARK: - add(_:linkedFrom:centredOn:)
-    func test_addPage_createsANewCanvasPageWithSuppliedPage() {
+    //MARK: - add(_:linkedFrom:)
+    func test_addPageLinkedFrom_createsNewCanvasPageWithSuppliedPageAndSetsParentAsSource() {
         let modelController = BubblesModelController(undoManager: UndoManager())
 
-        let canvas = modelController.collection(for: Canvas.self).newObject()
-        let page = modelController.collection(for: Page.self).newObject() {
-            $0.contentSize = CGSize(width: 20, height: 20)
-        }
+        let canvas = Canvas.create(in: modelController)
+        let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
+        let canvasPage = CanvasPage.create(in: modelController)
 
-        let canvasPage = canvas.add(page)
-        XCTAssertEqual(canvasPage.page, page)
-        XCTAssertTrue(modelController.collection(for: CanvasPage.self).all.contains(canvasPage))
+        let newCanvasPage = canvas.add(page, linkedFrom: canvasPage)
+        XCTAssertEqual(newCanvasPage.page, page)
+        XCTAssertEqual(newCanvasPage.parent, canvasPage)
+        XCTAssertTrue(modelController.collection(for: CanvasPage.self).all.contains(newCanvasPage))
     }
 
-    func test_addPage_createsANewCanvasPageWithSourcePageAsParent() {
+    func test_addPageLinkedFrom_addsNewPageToRightIfNoOtherPageThere() {
         let modelController = BubblesModelController(undoManager: UndoManager())
 
-        let sourcePage = modelController.collection(for: CanvasPage.self).newObject()
-        let canvas = modelController.collection(for: Canvas.self).newObject()
-        let page = modelController.collection(for: Page.self).newObject() {
-            $0.contentSize = CGSize(width: 20, height: 20)
+        let canvas = Canvas.create(in: modelController)
+        let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
+        let parentPage = CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
+            $0.canvas = canvas
         }
 
-        let canvasPage = canvas.add(page, linkedFrom: sourcePage)
-        XCTAssertEqual(canvasPage.parent, sourcePage)
+        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        XCTAssertEqual(newCanvasPage.frame, CGRect(x: 30 + GlobalConstants.linkedPageOffset, y: 30, width: 20, height: 20))
     }
 
-    func test_addPage_centresCanvasPageOnViewPortIfNoPointSupplied() {
+    func test_addPageLinkedFrom_addsNewPageToLeftIfPageOnRightAndNoOtherPageThere() {
         let modelController = BubblesModelController(undoManager: UndoManager())
 
-        let canvas = modelController.collection(for: Canvas.self).newObject() {
+        let canvas = Canvas.create(in: modelController)
+        let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
+        let parentPage = CanvasPage.create(in: modelController) { $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20) }
+
+        CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 40, y: 20, width: 100, height: 100)
+            $0.canvas = canvas
+        } //Left
+
+        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        XCTAssertEqual(newCanvasPage.frame, CGRect(x: 10 - GlobalConstants.linkedPageOffset - 20, y: 30, width: 20, height: 20))
+    }
+
+    func test_addPageLinkedFrom_addsNewPageToBottomIfPagesOnLeftAndRightAndNoOtherPageThere() {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+
+        let canvas = Canvas.create(in: modelController)
+        let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
+        let parentPage = CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
+            $0.canvas = canvas
+        }
+
+        CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 40, y: 20, width: 100, height: 100)
+            $0.canvas = canvas
+        } //Left
+        CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: -50, y: 20, width: 50, height: 20)
+            $0.canvas = canvas
+        } // Right
+
+        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        XCTAssertEqual(newCanvasPage.frame, CGRect(x: 10, y: 50 + GlobalConstants.linkedPageOffset, width: 20, height: 20))
+    }
+
+    func test_addPageLinkedFrom_addsNewPageToTopIfPagesOnLeftRightAndBottomAndNoOtherPageThere() {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+
+        let canvas = Canvas.create(in: modelController)
+        let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
+        let parentPage = CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
+            $0.canvas = canvas
+        }
+
+        CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 40, y: 20, width: 100, height: 100)
+            $0.canvas = canvas
+        } //Left
+        CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: -50, y: 20, width: 50, height: 20)
+            $0.canvas = canvas
+        } // Right
+        CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 0, y: 60, width: 50, height: 40)
+            $0.canvas = canvas
+        } // Bottom
+
+        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        XCTAssertEqual(newCanvasPage.frame, CGRect(x: 10, y: 30 - GlobalConstants.linkedPageOffset - 20, width: 20, height: 20))
+    }
+
+    func test_addPageLinkedFrom_addsNewPageToRightIfPagesOnAllSides() {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+
+        let canvas = Canvas.create(in: modelController)
+        let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
+        let parentPage = CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
+            $0.canvas = canvas
+        }
+
+        CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 40, y: 20, width: 100, height: 100)
+            $0.canvas = canvas
+        } //Left
+        CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: -50, y: 20, width: 50, height: 20)
+            $0.canvas = canvas
+        } // Right
+        CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 0, y: 60, width: 50, height: 40)
+            $0.canvas = canvas
+        } // Bottom
+        CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 0, y: -20, width: 50, height: 40)
+            $0.canvas = canvas
+        } // Top
+
+        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        XCTAssertEqual(newCanvasPage.frame, CGRect(x: 30 + GlobalConstants.linkedPageOffset, y: 30, width: 20, height: 20))
+    }
+
+    func test_addPageLinkedFrom_addsNewPageToLeftIfParentOfSourceSetAndOnRightAndNoOtherPageExistsThere() {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+
+        let canvas = Canvas.create(in: modelController)
+        let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
+        let rootPage = CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 40, y: 40, width: 20, height: 20)
+            $0.canvas = canvas
+        }
+        let parentPage = CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
+            $0.canvas = canvas
+            $0.parent = rootPage
+        }
+
+        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        XCTAssertEqual(newCanvasPage.frame, CGRect(x: 10 + GlobalConstants.linkedPageOffset + 20, y: 30, width: 20, height: 20))
+    }
+
+    func test_addPageLinkedFrom_addsNewPageToTopIfParentOfSourceSetAndOnBottomAndNoOtherPageExistsThere() {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+
+        let canvas = Canvas.create(in: modelController)
+        let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
+        let rootPage = CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 10, y: 90, width: 20, height: 20)
+            $0.canvas = canvas
+        }
+        let parentPage = CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
+            $0.canvas = canvas
+            $0.parent = rootPage
+        }
+
+        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        XCTAssertEqual(newCanvasPage.frame, CGRect(x: 10, y: 30 - GlobalConstants.linkedPageOffset - 20, width: 20, height: 20))
+    }
+
+    func test_addPageLinkedFrom_addsNewPageToBottomIfParentOfSourceSetAndOnTopAndNoOtherPageExistsThere() {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+
+        let canvas = Canvas.create(in: modelController)
+        let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
+        let rootPage = CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 10, y: -90, width: 20, height: 20)
+            $0.canvas = canvas
+        }
+        let parentPage = CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
+            $0.canvas = canvas
+            $0.parent = rootPage
+        }
+
+        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        XCTAssertEqual(newCanvasPage.frame, CGRect(x: 10, y: 50 + GlobalConstants.linkedPageOffset, width: 20, height: 20))
+    }
+
+    func test_addPageLinkedFrom_ifChildAlreadyExistsOnRightAddsAbove() {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+
+        let canvas = Canvas.create(in: modelController)
+        let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
+        let parentPage = CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
+            $0.canvas = canvas
+        }
+
+        CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 90, y: 30, width: 20, height: 20)
+            $0.parent = parentPage
+            $0.canvas = canvas
+        } //existing child
+
+        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        XCTAssertEqual(newCanvasPage.frame, CGRect(x: 90, y: 30 - GlobalConstants.linkedPageOffset - 20, width: 20, height: 20))
+    }
+
+    func test_addPageLinkedFrom_ifChildAlreadyExistsOnTopRightAddsToBottomRight() {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+
+        let canvas = Canvas.create(in: modelController)
+        let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
+        let parentPage = CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
+            $0.canvas = canvas
+        }
+
+        CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 90, y: 30, width: 20, height: 20)
+            $0.parent = parentPage
+            $0.canvas = canvas
+        } //existing right child
+
+        CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 90, y: -30, width: 20, height: 20)
+            $0.parent = parentPage
+            $0.canvas = canvas
+        } //existing top right child
+
+        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        XCTAssertEqual(newCanvasPage.frame, CGRect(x: 90, y: 50 + GlobalConstants.linkedPageOffset, width: 20, height: 20))
+    }
+
+    func test_addPageLinkedFrom_ifChildAlreadyExistsOnBottomRightAddsToTopRight() {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+
+        let canvas = Canvas.create(in: modelController)
+        let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
+        let parentPage = CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
+            $0.canvas = canvas
+        }
+
+        CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 90, y: 20, width: 20, height: 20)
+            $0.parent = parentPage
+            $0.canvas = canvas
+        } //existing right child
+
+        CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 90, y: 80, width: 20, height: 20)
+            $0.parent = parentPage
+            $0.canvas = canvas
+        } //existing bottom right child
+
+        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        XCTAssertEqual(newCanvasPage.frame, CGRect(x: 90, y: 20 - GlobalConstants.linkedPageOffset - 20, width: 20, height: 20))
+    }
+
+    func test_addPageLinkedFrom_ifChildAlreadyExistsOnLeftAddsAbove() {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+
+        let canvas = Canvas.create(in: modelController)
+        let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
+        let parentPage = CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
+            $0.canvas = canvas
+        }
+
+        CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: -110, y: 30, width: 20, height: 20)
+            $0.parent = parentPage
+            $0.canvas = canvas
+        } //existing child
+
+        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        XCTAssertEqual(newCanvasPage.frame, CGRect(x: -110, y: 30 - GlobalConstants.linkedPageOffset - 20, width: 20, height: 20))
+    }
+
+    func test_addPageLinkedFrom_ifChildAlreadyExistsOnTopLeftAddsToBottomLeft() {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+
+        let canvas = Canvas.create(in: modelController)
+        let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
+        let parentPage = CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
+            $0.canvas = canvas
+        }
+
+        CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: -110, y: 30, width: 20, height: 20)
+            $0.parent = parentPage
+            $0.canvas = canvas
+        } //existing right child
+
+        CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: -110, y: -30, width: 20, height: 20)
+            $0.parent = parentPage
+            $0.canvas = canvas
+        } //existing top left child
+
+        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        XCTAssertEqual(newCanvasPage.frame, CGRect(x: -110, y: 50 + GlobalConstants.linkedPageOffset, width: 20, height: 20))
+    }
+
+    func test_addPageLinkedFrom_ifChildAlreadyExistsOnBottomLeftAddsToTopLeft() {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+
+        let canvas = Canvas.create(in: modelController)
+        let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
+        let parentPage = CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
+            $0.canvas = canvas
+        }
+
+        CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: -110, y: 20, width: 20, height: 20)
+            $0.parent = parentPage
+            $0.canvas = canvas
+        } //existing right child
+
+        CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: -110, y: 80, width: 20, height: 20)
+            $0.parent = parentPage
+            $0.canvas = canvas
+        } //existing bottom left child
+
+        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        XCTAssertEqual(newCanvasPage.frame, CGRect(x: -110, y: 20 - GlobalConstants.linkedPageOffset - 20, width: 20, height: 20))
+    }
+
+    func test_addPageLinkedFrom_ifChildAlreadyExistsOnTopAddsToRight() {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+
+        let canvas = Canvas.create(in: modelController)
+        let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
+        let parentPage = CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
+            $0.canvas = canvas
+        }
+
+        CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 10, y: -90, width: 20, height: 20)
+            $0.parent = parentPage
+            $0.canvas = canvas
+        } //existing child
+
+        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        XCTAssertEqual(newCanvasPage.frame, CGRect(x: 10 + GlobalConstants.linkedPageOffset + 20, y: -90, width: 20, height: 20))
+    }
+
+    func test_addPageLinkedFrom_ifChildAlreadyExistsOnTopLeftAddsToTopRight() {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+
+        let canvas = Canvas.create(in: modelController)
+        let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
+        let parentPage = CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
+            $0.canvas = canvas
+        }
+
+        CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 10, y: -90, width: 20, height: 20)
+            $0.parent = parentPage
+            $0.canvas = canvas
+        } //existing top child
+
+        CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: -20, y: -90, width: 20, height: 20)
+            $0.parent = parentPage
+            $0.canvas = canvas
+        } //existing top left child
+
+        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        XCTAssertEqual(newCanvasPage.frame, CGRect(x: 10 + GlobalConstants.linkedPageOffset + 20, y: -90, width: 20, height: 20))
+    }
+
+    func test_addPageLinkedFrom_ifChildAlreadyExistsOnTopRightAddsToTopLeft() {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+
+        let canvas = Canvas.create(in: modelController)
+        let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
+        let parentPage = CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
+            $0.canvas = canvas
+        }
+
+        CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 20, y: -90, width: 20, height: 20)
+            $0.parent = parentPage
+            $0.canvas = canvas
+        } //existing top child
+
+        CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 60, y: -90, width: 20, height: 20)
+            $0.parent = parentPage
+            $0.canvas = canvas
+        } //existing top right child
+
+        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        XCTAssertEqual(newCanvasPage.frame, CGRect(x: 20 - GlobalConstants.linkedPageOffset - 20, y: -90, width: 20, height: 20))
+    }
+
+    func test_addPageLinkedFrom_ifChildAlreadyExistsOnBottomAddsToRight() {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+
+        let canvas = Canvas.create(in: modelController)
+        let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
+        let parentPage = CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
+            $0.canvas = canvas
+        }
+
+        CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 10, y: 110, width: 20, height: 20)
+            $0.parent = parentPage
+            $0.canvas = canvas
+        } //existing child
+
+        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        XCTAssertEqual(newCanvasPage.frame, CGRect(x: 10 + GlobalConstants.linkedPageOffset + 20, y: 110, width: 20, height: 20))
+    }
+
+    func test_addPageLinkedFrom_ifChildAlreadyExistsOnBottomLeftAddsToBottomRight() {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+
+        let canvas = Canvas.create(in: modelController)
+        let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
+        let parentPage = CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
+            $0.canvas = canvas
+        }
+
+        CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 10, y: 110, width: 20, height: 20)
+            $0.parent = parentPage
+            $0.canvas = canvas
+        } //existing bottom child
+
+        CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: -20, y: 110, width: 20, height: 20)
+            $0.parent = parentPage
+            $0.canvas = canvas
+        } //existing bottom left child
+
+        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        XCTAssertEqual(newCanvasPage.frame, CGRect(x: 10 + GlobalConstants.linkedPageOffset + 20, y: 110, width: 20, height: 20))
+    }
+
+    func test_addPageLinkedFrom_ifChildAlreadyExistsOnBottomRightAddsToBottomLeft() {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+
+        let canvas = Canvas.create(in: modelController)
+        let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
+        let parentPage = CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
+            $0.canvas = canvas
+        }
+
+        CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 20, y: 110, width: 20, height: 20)
+            $0.parent = parentPage
+            $0.canvas = canvas
+        } //existing bottom child
+
+        CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 60, y: 110, width: 20, height: 20)
+            $0.parent = parentPage
+            $0.canvas = canvas
+        } //existing bottom right child
+
+        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        XCTAssertEqual(newCanvasPage.frame, CGRect(x: 20 - GlobalConstants.linkedPageOffset - 20, y: 110, width: 20, height: 20))
+    }
+
+
+    //MARK: - addPages(_:centredOn:)
+    func test_addPagesCentredOn_createsNewCanvasPageForEachSuppliedPage() {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+
+        let canvas = Canvas.create(in: modelController)
+        let page1 = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
+        let page2 = Page.create(in: modelController) { $0.contentSize = CGSize(width: 30, height: 40) }
+        let page3 = Page.create(in: modelController) { $0.contentSize = CGSize(width: 50, height: 30) }
+
+        let newCanvasPages = canvas.addPages([page1, page2, page3])
+        XCTAssertEqual(newCanvasPages.count, 3)
+        if let canvasPage = newCanvasPages[safe: 0] {
+            XCTAssertEqual(canvasPage.page, page1)
+            XCTAssertTrue(modelController.collection(for: CanvasPage.self).all.contains(canvasPage))
+        } else {
+            XCTFail()
+        }
+
+        if let canvasPage = newCanvasPages[safe: 1] {
+            XCTAssertEqual(canvasPage.page, page2)
+            XCTAssertTrue(modelController.collection(for: CanvasPage.self).all.contains(canvasPage))
+        } else {
+            XCTFail()
+        }
+
+        if let canvasPage = newCanvasPages[safe: 2] {
+            XCTAssertEqual(canvasPage.page, page3)
+            XCTAssertTrue(modelController.collection(for: CanvasPage.self).all.contains(canvasPage))
+        } else {
+            XCTFail()
+        }
+    }
+
+    func test_addPagesCentredOn_centresFirstPageOnSuppliedPoint() {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+
+        let canvas = Canvas.create(in: modelController) {
             $0.viewPort = CGRect(x: 40, y: 40, width: 100, height: 100)
         }
-        let page = modelController.collection(for: Page.self).newObject() {
-            $0.contentSize = CGSize(width: 20, height: 20)
-        }
+        let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 80, height: 90) }
+        let page2 = Page.create(in: modelController) { $0.contentSize = CGSize(width: 100, height: 50) }
+        let page3 = Page.create(in: modelController) { $0.contentSize = CGSize(width: 50, height: 120) }
 
-        let canvasPage = canvas.add(page)
-        XCTAssertEqual(canvasPage.frame, CGRect(x: 80, y: 80, width: 20, height: 20))
+        let canvasPages = canvas.addPages([page, page2, page3], centredOn: CGPoint(x: 60, y: 30))
+        XCTAssertEqual(canvasPages.first?.frame, CGRect(x: 20, y: -15, width: 80, height: 90))
     }
 
-    func test_addPage_centresCanvasPageOnSuppliedPoint() {
+    func test_addPagesCentredOn_centresFirstPageInViewPortIfNoPointSupplied() {
         let modelController = BubblesModelController(undoManager: UndoManager())
 
-        let canvas = modelController.collection(for: Canvas.self).newObject() {
+        let canvas = Canvas.create(in: modelController) {
             $0.viewPort = CGRect(x: 40, y: 40, width: 100, height: 100)
         }
-        let page = modelController.collection(for: Page.self).newObject() {
-            $0.contentSize = CGSize(width: 20, height: 20)
-        }
+        let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 80, height: 90) }
+        let page2 = Page.create(in: modelController) { $0.contentSize = CGSize(width: 100, height: 50) }
+        let page3 = Page.create(in: modelController) { $0.contentSize = CGSize(width: 50, height: 120) }
 
-        let canvasPage = canvas.add(page, centredOn: CGPoint(x: 60, y: 30))
-        XCTAssertEqual(canvasPage.frame, CGRect(x: 50, y: 20, width: 20, height: 20))
+        let canvasPages = canvas.addPages([page, page2, page3])
+        XCTAssertEqual(canvasPages.first?.frame, CGRect(x: 50, y: 45, width: 80, height: 90))
+    }
+
+    func test_addPagesCentredOn_stacksSubsequentPagesDownFromFirstIfGivenPoint() {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+
+        let canvas = Canvas.create(in: modelController) {
+            $0.viewPort = CGRect(x: 40, y: 40, width: 100, height: 100)
+        }
+        let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 80, height: 90) }
+        let page2 = Page.create(in: modelController) { $0.contentSize = CGSize(width: 100, height: 50) }
+        let page3 = Page.create(in: modelController) { $0.contentSize = CGSize(width: 50, height: 120) }
+
+        let canvasPages = canvas.addPages([page, page2, page3], centredOn: CGPoint(x: 60, y: 30))
+        XCTAssertEqual(canvasPages[safe: 1]?.frame, CGRect(x: 40, y: 5, width: 100, height: 50))
+        XCTAssertEqual(canvasPages[safe: 2]?.frame, CGRect(x: 60, y: 25, width: 50, height: 120))
+    }
+
+    func test_addPagesCentredOn_stacksSubsequentPagesDownFromFirstIfNoPointSupplieds() {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+
+        let canvas = Canvas.create(in: modelController) {
+            $0.viewPort = CGRect(x: 40, y: 40, width: 100, height: 100)
+        }
+        let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 80, height: 90) }
+        let page2 = Page.create(in: modelController) { $0.contentSize = CGSize(width: 100, height: 50) }
+        let page3 = Page.create(in: modelController) { $0.contentSize = CGSize(width: 50, height: 120) }
+
+        let canvasPages = canvas.addPages([page, page2, page3])
+        XCTAssertEqual(canvasPages[safe: 1]?.frame, CGRect(x: 70, y: 65, width: 100, height: 50))
+        XCTAssertEqual(canvasPages[safe: 2]?.frame, CGRect(x: 90, y: 85, width: 50, height: 120))
     }
 
 
@@ -336,12 +843,12 @@ class CanvasTests: XCTestCase {
         let matchingPage = Page.create(in: modelController) {
             $0.title = "This is a matching page"
         }
-        canvas.add(matchingPage)
+        canvas.addPages([matchingPage])
 
         let nonMatchingPage = Page.create(in: modelController) {
             $0.title = "This doesnt affect the outcome"
         }
-        canvas.add(nonMatchingPage)
+        canvas.addPages([nonMatchingPage])
 
         XCTAssertTrue(canvas.isMatchForSearch("matching"))
     }
@@ -354,12 +861,12 @@ class CanvasTests: XCTestCase {
         let page1 = Page.create(in: modelController) {
             $0.title = "This page doesnt match"
         }
-        canvas.add(page1)
+        canvas.addPages([page1])
 
         let page2 = Page.create(in: modelController) {
             $0.title = "Neither does this"
         }
-        canvas.add(page2)
+        canvas.addPages([page2])
 
         XCTAssertFalse(canvas.isMatchForSearch("POSSUM"))
     }

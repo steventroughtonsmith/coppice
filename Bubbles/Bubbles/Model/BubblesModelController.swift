@@ -18,7 +18,7 @@ class BubblesModelController: NSObject, ModelController {
 
         self.addModelCollection(for: Canvas.self)
         self.addModelCollection(for: CanvasPage.self)
-        self.addModelCollection(for: Page.self) 
+        self.addModelCollection(for: Page.self)
     }
 
     func object(with id: ModelID) -> ModelObject? {

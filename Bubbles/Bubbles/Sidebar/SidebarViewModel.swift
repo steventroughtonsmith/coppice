@@ -53,9 +53,10 @@ class SidebarViewModel: ViewModel {
         self.windowStateSidebarObserver = self.documentWindowViewModel.$selectedSidebarObjectID
                                             .receive(on: RunLoop.main)
                                             .assign(to: \.selectedObjectID, on: self)
-        self.windowSearchObserver = self.documentWindowViewModel.publisher(for: \.searchString).sink { _ in
-            self.updateSearch()
-        }
+        
+//        self.windowSearchObserver = self.documentWindowViewModel.publisher(for: \.searchString).sink { _ in
+//            self.updateSearch()
+//        }
     }
 
     func stopObserving() {

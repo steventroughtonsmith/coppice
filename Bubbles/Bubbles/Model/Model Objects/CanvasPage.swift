@@ -19,6 +19,16 @@ final class CanvasPage: NSObject, CollectableModelObject {
         didSet { self.didChange(\.frame, oldValue: oldValue) }
     }
 
+    @objc dynamic var title : String {
+        var title = self.page?.title ?? "Untitled"
+        var currentPage = self.parent
+        while currentPage != nil {
+            title += " : \(currentPage?.page?.title ?? "Untitled")"
+            currentPage = currentPage?.parent
+        }
+        return title
+    }
+
     
     //MARK: - Relationships
     @ModelObjectReference @objc dynamic var page: Page? {
@@ -26,7 +36,9 @@ final class CanvasPage: NSObject, CollectableModelObject {
             if let page = self.page {
                 self.frame.size = page.contentSize
             }
+            self.willChangeValue(for: \.title)
             self.didChangeRelationship(\.page, oldValue: oldValue)
+            self.didChangeValue(for: \.title)
         }
     }
     @ModelObjectReference var canvas: Canvas? {
@@ -34,7 +46,11 @@ final class CanvasPage: NSObject, CollectableModelObject {
     }
 
     @ModelObjectReference @objc dynamic var parent: CanvasPage? {
-        didSet { self.didChangeRelationship(\.parent, oldValue: oldValue) }
+        didSet {
+            self.willChangeValue(for: \.title)
+            self.didChangeRelationship(\.parent, oldValue: oldValue)
+            self.didChangeValue(for: \.title)
+        }
     }
     
     var children: Set<CanvasPage> {
