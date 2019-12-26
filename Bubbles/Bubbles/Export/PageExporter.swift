@@ -32,10 +32,15 @@ class PageExporter {
 
     static func export(_ pages: [Page], displayingOn window: NSWindow) {
         let panel = NSOpenPanel()
+        panel.message = NSLocalizedString("Select a location to export to:", comment: "Export pages sheet message")
         panel.canChooseDirectories = true
         panel.canChooseFiles = false
         panel.canCreateDirectories = true
-
+        if (pages.count == 1) {
+            panel.prompt = NSLocalizedString("Export Page", comment: "Export single page button title")
+        } else {
+            panel.prompt = NSLocalizedString("Export Pages", comment: "Export multiple pages button title")
+        }
         panel.beginSheetModal(for: window) { (response) in
             guard response == .OK, let destinationURL = panel.url else {
                 return

@@ -206,6 +206,7 @@ class DocumentWindowController: NSWindowController {
         let panel = NSOpenPanel()
         panel.allowedFileTypes = [kUTTypeText as String, kUTTypeImage as String]
         panel.allowsMultipleSelection = true
+        panel.prompt = NSLocalizedString("Import", comment: "Import button title")
         panel.beginSheetModal(for: window) { [weak self] (response) in
             guard response == .OK else {
                 return
