@@ -719,6 +719,12 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="K79-hu-nXg"/>
+                            <menuItem title="Show Canvas Origin" id="DeL-Pr-Wp8">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <binding destination="dmx-ad-XFr" name="value" keyPath="values.debugShowCanvasOrigin" id="bte-YU-xIi"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="Add Test Canvas Page" id="ac0-f9-nPz">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>

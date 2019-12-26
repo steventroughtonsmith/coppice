@@ -20,6 +20,8 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation {
         self.viewModel.view = self
         self.viewModel.layoutEngine.view = self
         self.originOffsetFromScrollPoint = self.viewModel.viewPortInCanvasSpace?.origin
+
+        self.setupObservers()
     }
 
     required init?(coder: NSCoder) {
@@ -38,7 +40,14 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation {
         if let pointString = coder.decodeObject(forKey: "originOffsetFromScrollPoint") as? String {
             self.originOffsetFromScrollPoint = NSPointFromString(pointString)
         }
+    }
 
+
+    var defaultsObserver: NSObjectProtocol?
+    private func setupObservers() {
+        self.defaultsObserver = NotificationCenter.default.addObserver(forName: UserDefaults.didChangeNotification, object: nil, queue: nil) { [weak self] _ in
+            self?.updatePageSpaceOrigin()
+        }
     }
 
     var layoutEngine: CanvasLayoutEngine {
@@ -187,7 +196,15 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation {
             self.updateLastOriginOffset()
         }
 
-        self.canvasView.pageSpaceOrigin = self.layoutEngine.convertPointToCanvasSpace(.zero)
+        self.updatePageSpaceOrigin()
+    }
+
+    private func updatePageSpaceOrigin() {
+        if (UserDefaults.standard.bool(forKey: UserDefaultsKeys.debugShowCanvasOrigin.rawValue)) {
+            self.canvasView.pageSpaceOrigin = self.layoutEngine.convertPointToCanvasSpace(.zero)
+        } else {
+            self.canvasView.pageSpaceOrigin = nil
+        }
     }
 
     private func updateSelectionRect() {
