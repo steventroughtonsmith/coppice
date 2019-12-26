@@ -12,4 +12,6 @@ class ImageEditorInspectorViewController: BaseInspectorViewController {
     override var contentViewNibName: NSNib.Name? {
         return "ImageEditorInspectorContentView"
     }
+
+    override var ranking: InspectorRanking { return .content }
 }

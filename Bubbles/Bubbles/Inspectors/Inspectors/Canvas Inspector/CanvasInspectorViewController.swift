@@ -12,4 +12,6 @@ class CanvasInspectorViewController: BaseInspectorViewController {
     override var contentViewNibName: NSNib.Name? {
         return "CanvasInspectorContentView"
     }
+
+    override var ranking: InspectorRanking { return .canvas }
 }

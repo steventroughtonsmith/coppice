@@ -8,10 +8,18 @@
 
 import Cocoa
 
+enum InspectorRanking: Int {
+    case canvas = 10
+    case page = 20
+    case canvasPage = 30
+    case content = 40
+}
 
 protocol Inspector {
     var title: String? { get }
     var collapseIdentifier: String { get }
+
+    var ranking: InspectorRanking { get }
 }
 
 

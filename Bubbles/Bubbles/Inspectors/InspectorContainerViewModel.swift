@@ -24,7 +24,7 @@ class InspectorContainerViewModel: ViewModel {
     private var inspectorObserver: AnyCancellable?
     private func setupObservers() {
         self.inspectorObserver = self.documentWindowViewModel.$currentInspectors.sink { [weak self] (inspectors) in
-            self?.inspectors = inspectors
+            self?.inspectors = inspectors.sorted { $0.ranking.rawValue < $1.ranking.rawValue }
         }
     }
 

@@ -33,6 +33,8 @@ class BaseInspectorViewController: NSViewController, Inspector {
         self.loadContentView()
     }
 
+    var ranking: InspectorRanking { return InspectorRanking(rawValue: 0)! }
+
 
     //MARK: - Row management
     var contentViewNibName: NSNib.Name? {
