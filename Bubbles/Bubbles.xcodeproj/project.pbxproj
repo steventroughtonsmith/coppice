@@ -62,6 +62,7 @@
 		9970976D23AD1A7A00CD189B /* MockPageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970976C23AD1A7A00CD189B /* MockPageContent.swift */; };
 		9970977223AF9BE600CD189B /* PageExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970977123AF9BE600CD189B /* PageExporter.swift */; };
 		9970977423B0180F00CD189B /* Canvas+AddingPages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970977323B0180F00CD189B /* Canvas+AddingPages.swift */; };
+		9970977623B93A5800CD189B /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9970977523B93A5800CD189B /* Icons.xcassets */; };
 		9976A49323674254004D573D /* ModelWriterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9976A49223674254004D573D /* ModelWriterTests.swift */; };
 		9976A49723674430004D573D /* PageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9976A49623674430004D573D /* PageTests.swift */; };
 		9976A49923674448004D573D /* CanvasTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9976A49823674448004D573D /* CanvasTests.swift */; };
@@ -241,6 +242,7 @@
 		9970976C23AD1A7A00CD189B /* MockPageContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPageContent.swift; sourceTree = "<group>"; };
 		9970977123AF9BE600CD189B /* PageExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageExporter.swift; sourceTree = "<group>"; };
 		9970977323B0180F00CD189B /* Canvas+AddingPages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Canvas+AddingPages.swift"; sourceTree = "<group>"; };
+		9970977523B93A5800CD189B /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
 		9976A49223674254004D573D /* ModelWriterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelWriterTests.swift; sourceTree = "<group>"; };
 		9976A49623674430004D573D /* PageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageTests.swift; sourceTree = "<group>"; };
 		9976A49823674448004D573D /* CanvasTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasTests.swift; sourceTree = "<group>"; };
@@ -922,6 +924,7 @@
 				99C865242306D0CC004C7B89 /* Page Selector */,
 				99FE019722CD1038004D380D /* Assets.xcassets */,
 				99C03F08232A99F400EB7516 /* Cursors.xcassets */,
+				9970977523B93A5800CD189B /* Icons.xcassets */,
 				99FE019922CD1038004D380D /* MainMenu.xib */,
 				99FE019C22CD1038004D380D /* Info.plist */,
 				99FE019D22CD1038004D380D /* Bubbles.entitlements */,
@@ -1096,6 +1099,7 @@
 				99FE01E522D4CC8A004D380D /* DocumentWindow.xib in Resources */,
 				99D8E380237EDB890098CF3B /* InspectorViewController.xib in Resources */,
 				99FE019B22CD1038004D380D /* MainMenu.xib in Resources */,
+				9970977623B93A5800CD189B /* Icons.xcassets in Resources */,
 				99D8E379237EDB890098CF3B /* PageInspectorContentView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

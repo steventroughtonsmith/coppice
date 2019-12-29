@@ -68,32 +68,46 @@
             </view>
             <toolbar key="toolbar" implicitIdentifier="70B77CBD-7734-4DB0-B1CC-5CF88AD75C15" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="wrD-DS-DMi">
                 <allowedToolbarItems>
-                    <toolbarItem implicitItemIdentifier="FDF995B5-86EC-4387-B61F-DA4BB1F3105A" label="New Canvas" paletteLabel="New Canvas" tag="-1" image="NSAddTemplate" id="UfH-lU-K3v">
-                        <size key="minSize" width="11" height="11"/>
-                        <size key="maxSize" width="11" height="11"/>
+                    <toolbarItem implicitItemIdentifier="91E22082-FF2E-4572-9DF1-26C3D1FC9959" label="New Canvas" paletteLabel="New Canvas" image="AddBoard" sizingBehavior="auto" id="TPX-ea-tFb">
+                        <nil key="toolTip"/>
+                        <button key="view" verticalHuggingPriority="750" id="whH-7M-104">
+                            <rect key="frame" x="14" y="14" width="44" height="25"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="AddBoard" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ztx-XQ-TYz">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </button>
                         <connections>
-                            <action selector="newCanvas:" target="-1" id="uBB-H2-0xZ"/>
+                            <action selector="newCanvas:" target="-1" id="8tL-zR-xxk"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="2ABAF4DE-DACE-4684-BAC4-9F5AD5B97469" label="New Page" paletteLabel="New Page" tag="-1" image="NSBookmarksTemplate" id="k5J-mT-QAA">
-                        <size key="minSize" width="17" height="18"/>
-                        <size key="maxSize" width="17" height="18"/>
+                    <toolbarItem implicitItemIdentifier="7783F56F-7B48-4535-B45F-A5FD527B337C" label="New Page" paletteLabel="New Page" image="AddPage" sizingBehavior="auto" id="sEp-q4-Ytz">
+                        <nil key="toolTip"/>
+                        <button key="view" verticalHuggingPriority="750" id="xJX-eS-tYi">
+                            <rect key="frame" x="8" y="14" width="44" height="25"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="AddPage" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="MW6-Rc-ORK">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </button>
                         <connections>
-                            <action selector="newPage:" target="-1" id="auY-Xh-mjg"/>
+                            <action selector="newPage:" target="-1" id="XuL-hs-YAD"/>
                         </connections>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="2B6058DC-C8C5-45BC-BF49-974943E8FBE8" label="Views" paletteLabel="Views" id="UjW-Vu-9qp">
                         <nil key="toolTip"/>
-                        <size key="minSize" width="71" height="24"/>
-                        <size key="maxSize" width="71" height="24"/>
+                        <size key="minSize" width="71" height="23"/>
+                        <size key="maxSize" width="96" height="24"/>
                         <segmentedControl key="view" verticalHuggingPriority="750" id="aCJ-vR-5Ss">
-                            <rect key="frame" x="0.0" y="14" width="71" height="24"/>
+                            <rect key="frame" x="0.0" y="14" width="95" height="23"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="selectAny" id="hOH-HD-2M4">
                                 <font key="font" metaFont="system"/>
                                 <segments>
-                                    <segment image="NSColumnViewTemplate" width="32" selected="YES"/>
-                                    <segment image="NSColumnViewTemplate" width="32" selected="YES" tag="1"/>
+                                    <segment image="ToggleSidebar" width="44" selected="YES"/>
+                                    <segment image="ToggleInspector" width="44" selected="YES" tag="1"/>
                                 </segments>
                             </segmentedCell>
                         </segmentedControl>
@@ -121,8 +135,8 @@
                     </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
-                    <toolbarItem reference="UfH-lU-K3v"/>
-                    <toolbarItem reference="k5J-mT-QAA"/>
+                    <toolbarItem reference="TPX-ea-tFb"/>
+                    <toolbarItem reference="sEp-q4-Ytz"/>
                     <toolbarItem reference="Yn2-Qc-qMJ"/>
                     <toolbarItem reference="UjW-Vu-9qp"/>
                     <toolbarItem reference="Ld8-cL-wK4"/>
@@ -135,9 +149,10 @@
         </window>
     </objects>
     <resources>
-        <image name="NSAddTemplate" width="11" height="11"/>
-        <image name="NSBookmarksTemplate" width="17" height="18"/>
-        <image name="NSColumnViewTemplate" width="16" height="10"/>
+        <image name="AddBoard" width="19" height="19"/>
+        <image name="AddPage" width="19" height="19"/>
+        <image name="ToggleInspector" width="19" height="19"/>
+        <image name="ToggleSidebar" width="19" height="19"/>
         <namedColor name="EditorBackground">
             <color red="0.25099998712539673" green="0.25099998712539673" blue="0.25099998712539673" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
