@@ -128,29 +128,6 @@
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                                 <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
-                                                <prototypeCellViews>
-                                                    <tableCellView id="9OC-9x-Qhp">
-                                                        <rect key="frame" x="1" y="1" width="225" height="17"/>
-                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                        <subviews>
-                                                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5wa-Po-sxA">
-                                                                <rect key="frame" x="0.0" y="0.0" width="225" height="17"/>
-                                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                                                <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="Xcf-AP-5Sp">
-                                                                    <font key="font" metaFont="system"/>
-                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                                </textFieldCell>
-                                                                <connections>
-                                                                    <binding destination="9OC-9x-Qhp" name="value" keyPath="objectValue.title" id="F0r-IC-PuM"/>
-                                                                </connections>
-                                                            </textField>
-                                                        </subviews>
-                                                        <connections>
-                                                            <outlet property="textField" destination="5wa-Po-sxA" id="hAa-0F-DBf"/>
-                                                        </connections>
-                                                    </tableCellView>
-                                                </prototypeCellViews>
                                             </tableColumn>
                                         </tableColumns>
                                         <connections>
@@ -183,7 +160,7 @@
                 <real value="250"/>
                 <real value="250"/>
             </holdingPriorities>
-            <point key="canvasLocation" x="-70" y="159"/>
+            <point key="canvasLocation" x="-487" y="154"/>
         </splitView>
     </objects>
 </document>

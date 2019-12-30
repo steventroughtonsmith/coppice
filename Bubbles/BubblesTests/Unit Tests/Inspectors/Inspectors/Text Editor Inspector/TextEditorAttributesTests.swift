@@ -162,7 +162,7 @@ class TextEditorAttributesTests: XCTestCase {
         XCTAssertEqual((newAttributes[.font] as? NSFont), NSFont(name: "Menlo-Italic", size: 14)!)
     }
 
-    func test_applyTo_updatesFontKeepingFamilyAndItalicSameIfBoldSet() {
+    func test_applyTo_keepsFamilyAndItalicTheSameButAddsBoldIfSetToTrue() {
         let baseAttributes: [NSAttributedString.Key: Any] = [
             .font: NSFont(name: "Helvetica-Oblique", size: 14)!
         ]
@@ -173,7 +173,29 @@ class TextEditorAttributesTests: XCTestCase {
         XCTAssertEqual((newAttributes[.font] as? NSFont), NSFont(name: "Helvetica-BoldOblique", size: 14)!)
     }
 
-    func test_applyTo_updatesFontKeepingFamilyAndBoldSameIfItalicSet() {
+    func test_applyTo_keepsFamilyAndItalicTheSameButRemovesBoldIfSetToFalse() {
+        let baseAttributes: [NSAttributedString.Key: Any] = [
+            .font: NSFont(name: "Helvetica-BoldOblique", size: 14)!
+        ]
+
+        let editorAttributes = TextEditorAttributes(isBold: false)
+        let newAttributes = editorAttributes.apply(to: baseAttributes)
+
+        XCTAssertEqual((newAttributes[.font] as? NSFont), NSFont(name: "Helvetica-Oblique", size: 14)!)
+    }
+
+    func test_applyTo_keepsFamilyAndBoldTheSameButAddsItalicIfSetToTrue() {
+        let baseAttributes: [NSAttributedString.Key: Any] = [
+            .font: NSFont(name: "Helvetica-Bold", size: 14)!
+        ]
+
+        let editorAttributes = TextEditorAttributes(isItalic: true)
+        let newAttributes = editorAttributes.apply(to: baseAttributes)
+
+        XCTAssertEqual((newAttributes[.font] as? NSFont), NSFont(name: "Helvetica-BoldOblique", size: 14)!)
+    }
+
+    func test_applyTo_keepsFamilyAndBoldTheSameButRemovesItalicIfSetToFalse() {
         let baseAttributes: [NSAttributedString.Key: Any] = [
             .font: NSFont(name: "Helvetica-BoldOblique", size: 14)!
         ]

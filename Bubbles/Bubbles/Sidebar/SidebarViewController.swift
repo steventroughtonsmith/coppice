@@ -31,6 +31,8 @@ class SidebarViewController: NSViewController, NSMenuItemValidation {
         self.canvasesTable.registerForDraggedTypes([ModelID.PasteboardType, .fileURL])
         self.pagesTable.setDraggingSourceOperationMask(.copy, forLocal: false)
         self.pagesTable.registerForDraggedTypes([.fileURL])
+
+        self.pagesTable.register(NSNib(nibNamed: "PageCell", bundle: nil), forIdentifier: PageCell.identifier)
         // Do view setup here.
     }
 
@@ -231,6 +233,14 @@ extension SidebarViewController: NSTableViewDataSource {
 }
 
 extension SidebarViewController: NSTableViewDelegate {
+    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+        if (tableView == self.pagesTable) {
+            return tableView.makeView(withIdentifier: PageCell.identifier, owner: nil)
+        }
+
+        return nil
+    }
+
     func tableViewSelectionDidChange(_ notification: Notification) {
         guard let tableView = notification.object as? NSTableView else {
             return

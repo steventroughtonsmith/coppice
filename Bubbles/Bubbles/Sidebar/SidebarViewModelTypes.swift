@@ -6,7 +6,7 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import Foundation
+import AppKit
 
 protocol SidebarItem: class {
     var id: ModelID { get }
@@ -31,4 +31,5 @@ class PageSidebarItem: NSObject, SidebarItem {
 
     var id: ModelID { self.page.id }
     @objc dynamic var title: String { self.page.title }
+    @objc dynamic var icon: NSImage? { self.page.content.contentType.icon }
 }
