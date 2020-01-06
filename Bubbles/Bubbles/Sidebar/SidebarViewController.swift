@@ -85,12 +85,31 @@ class SidebarViewController: NSViewController, NSMenuItemValidation {
     }
 
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
-        return PageExporter.validate(menuItem, forExporting: self.viewModel.selectedPages)
+        if menuItem.action == #selector(exportPages(_:)) {
+            return PageExporter.validate(menuItem, forExporting: self.viewModel.selectedPages)
+        }
+
+        if menuItem.action == #selector(editCanvasTitle(_:)) {
+            return (self.canvasesTable.clickedRow >= 0)
+        }
+
+        if menuItem.action == #selector(deleteCanvas(_:)) {
+            return (self.canvasesTable.clickedRow >= 0)
+        }
+
+        return false
     }
 
 
     //MARK: - Context Menu
     @IBOutlet var canvasContextMenu: NSMenu!
+    @IBAction func editCanvasTitle(_ sender: Any) {
+        print("edit cell")
+    }
+
+    @IBAction func deleteCanvas(_ sender: Any) {
+        self.viewModel.deleteCanvas(atIndex: self.canvasesTable.clickedRow)
+    }
 }
 
 

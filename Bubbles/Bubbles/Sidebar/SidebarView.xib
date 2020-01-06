@@ -38,7 +38,7 @@
                                         <tableColumns>
                                             <tableColumn width="225" minWidth="40" maxWidth="1000" id="DUd-FR-Xxl">
                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
-                                                    <font key="font" metaFont="message" size="11"/>
+                                                    <font key="font" metaFont="controlContent" size="11"/>
                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                 </tableHeaderCell>
@@ -120,7 +120,7 @@
                                         <tableColumns>
                                             <tableColumn width="225" minWidth="40" maxWidth="1000" id="QUv-LA-rOC">
                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
-                                                    <font key="font" metaFont="message" size="11"/>
+                                                    <font key="font" metaFont="controlContent" size="11"/>
                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                 </tableHeaderCell>
@@ -166,6 +166,25 @@
         </splitView>
         <menu id="WMw-nL-qeD">
             <items>
+                <menuItem title="New Canvas" id="QxX-pM-gik">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="newCanvas:" target="-1" id="dew-ad-6q5"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Edit Canvas Title…" id="AFh-3g-P81">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="editCanvasTitle:" target="-2" id="5XO-CK-1Qs"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Delete Canvas" id="Kgf-c7-q1e">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="deleteCanvas:" target="-2" id="JCy-mY-KVQ"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="lKE-0f-jyg"/>
                 <menuItem title="Use Small Thumbnails" id="t40-BC-Yy3">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>

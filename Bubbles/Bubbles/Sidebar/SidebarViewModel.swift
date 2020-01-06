@@ -150,6 +150,26 @@ class SidebarViewModel: ViewModel {
             }
         }
     }
+
+    func deleteCanvas(atIndex index: Int) {
+        guard (index >= 0) && (index < self.canvasItems.count) else {
+            return
+        }
+
+        let canvas = self.canvasItems[index].canvas
+        self.documentWindowViewModel.delete(canvas)
+    }
+
+    func deletePage(atIndex index: Int) {
+        guard (index >= 0) && (index < self.pageItems.count) else {
+            return
+        }
+
+        let page = self.pageItems[index].page
+        self.documentWindowViewModel.delete(page)
+    }
+
+
     
 
     //MARK: - Re-ordering
