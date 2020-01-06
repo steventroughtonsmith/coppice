@@ -41,14 +41,21 @@ final class Canvas: NSObject, CollectableModelObject {
 
 
     //MARK: - Plists
+    static var modelFileProperties: [String] {
+        return ["thumbnail"]
+    }
+
     var plistRepresentation: [String : Any] {
         var plist: [String: Any] = [
             "id": self.id.stringRepresentation,
             "title": self.title,
             "dateCreated": self.dateCreated,
             "dateModified": self.dateModified,
-            "sortIndex": self.sortIndex
+            "sortIndex": self.sortIndex,
         ]
+        if let thumbnailData = self.thumbnail?.pngData() {
+            plist["thumbnail"] = ModelFile(type: "thumbnail", filename: "\(self.id.uuid.uuidString)-thumbnail.png", data: thumbnailData, metadata: [:])
+        }
         if let viewPort = self.viewPort  {
             plist["viewPort"] = NSStringFromRect(viewPort)
         }
@@ -69,6 +76,14 @@ final class Canvas: NSObject, CollectableModelObject {
             self.viewPort = NSRectFromString(viewPortString)
         } else {
             self.viewPort = nil
+        }
+
+        if let thumbnail = plist["thumbnail"] as? ModelFile {
+            if let data = thumbnail.data {
+                self.thumbnail = NSImage(data: data)
+            }
+        } else {
+            self.thumbnail = nil
         }
     }
 
