@@ -19,6 +19,9 @@
                         <constraint firstAttribute="height" constant="32" id="ZFt-d7-1Rk"/>
                     </constraints>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSActionTemplate" id="BfQ-bH-q9g"/>
+                    <connections>
+                        <binding destination="jeQ-Ih-RHj" name="value" keyPath="objectValue.thumbnail" id="tnC-BT-Hre"/>
+                    </connections>
                 </imageView>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MZ2-ib-WRg">
                     <rect key="frame" x="41" y="11" width="115" height="16"/>

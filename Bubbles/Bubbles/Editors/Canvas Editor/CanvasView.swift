@@ -263,6 +263,39 @@ class CanvasView: NSView {
             self.setNeedsDisplay(self.bounds)
         }
     }
+
+
+    //MARK: - Thumbnail Helper
+    private var thumbnailRect: CGRect {
+        var thumbnailRect: CGRect? = nil
+        for subview in self.pageLayer.subviews {
+            guard let rect = thumbnailRect else {
+                thumbnailRect = subview.frame
+                continue
+            }
+
+            thumbnailRect = rect.union(subview.frame)
+        }
+
+        guard let finalRect = thumbnailRect else {
+            return self.bounds
+        }
+        let inset: CGFloat = 40
+        return finalRect.insetBy(dx: -inset, dy: -inset)
+    }
+
+    func generateThumbnail() -> NSImage? {
+        let thumbnailRect = self.thumbnailRect
+        guard let bitmapRep = self.bitmapImageRepForCachingDisplay(in: thumbnailRect) else {
+            return nil
+        }
+
+        self.cacheDisplay(in: thumbnailRect, to: bitmapRep)
+
+        let image = NSImage(size: thumbnailRect.size)
+        image.addRepresentation(bitmapRep)
+        return image
+    }
 }
 
 

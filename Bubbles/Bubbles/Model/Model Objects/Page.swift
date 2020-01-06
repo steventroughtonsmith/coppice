@@ -54,6 +54,7 @@ final class Page: NSObject, CollectableModelObject {
         didSet {
             self.content.page = self
             NotificationCenter.default.post(name: Page.contentChangedNotification, object: self)
+            self.didChange(\.content, oldValue: oldValue)
         }
     }
 

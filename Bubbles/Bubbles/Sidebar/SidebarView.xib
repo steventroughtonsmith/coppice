@@ -38,7 +38,7 @@
                                         <tableColumns>
                                             <tableColumn width="225" minWidth="40" maxWidth="1000" id="DUd-FR-Xxl">
                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
-                                                    <font key="font" metaFont="label" size="11"/>
+                                                    <font key="font" metaFont="message" size="11"/>
                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                 </tableHeaderCell>
@@ -120,7 +120,7 @@
                                         <tableColumns>
                                             <tableColumn width="225" minWidth="40" maxWidth="1000" id="QUv-LA-rOC">
                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
-                                                    <font key="font" metaFont="label" size="11"/>
+                                                    <font key="font" metaFont="message" size="11"/>
                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                 </tableHeaderCell>
@@ -166,14 +166,14 @@
         </splitView>
         <menu id="WMw-nL-qeD">
             <items>
-                <menuItem title="Use Small Cells" id="t40-BC-Yy3">
+                <menuItem title="Use Small Thumbnails" id="t40-BC-Yy3">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <binding destination="-2" name="value" keyPath="self.viewModel.useSmallCanvasCells" id="gRQ-0l-U6m"/>
                     </connections>
                 </menuItem>
             </items>
-            <point key="canvasLocation" x="-274" y="152"/>
+            <point key="canvasLocation" x="-238" y="145"/>
         </menu>
     </objects>
 </document>

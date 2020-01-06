@@ -24,9 +24,12 @@ class DocumentWindowViewModel: NSObject {
     @Published var currentInspectors: [Inspector] = []
 
     let modelController: ModelController
+    let thumbnailController: ThumbnailController
     init(modelController: ModelController) {
         self.modelController = modelController
+        self.thumbnailController = ThumbnailController(modelController: modelController)
         super.init()
+        self.thumbnailController.documentViewModel = self
         self.setupSelectionUndo()
     }
 

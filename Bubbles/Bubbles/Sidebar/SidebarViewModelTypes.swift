@@ -14,13 +14,22 @@ protocol SidebarItem: class {
 }
 
 class CanvasSidebarItem: NSObject, SidebarItem {
-    let canvas: Canvas
+    @objc dynamic let canvas: Canvas
     init(canvas: Canvas) {
         self.canvas = canvas
     }
 
     var id: ModelID { self.canvas.id }
     @objc dynamic var title: String { self.canvas.title }
+    @objc dynamic var thumbnail: NSImage? { self.canvas.thumbnail }
+
+    override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
+        var keyPaths = super.keyPathsForValuesAffectingValue(forKey: key)
+        if (key == #keyPath(thumbnail)) {
+            keyPaths.insert("self.canvas.thumbnail")
+        }
+        return keyPaths
+    }
 }
 
 class PageSidebarItem: NSObject, SidebarItem {

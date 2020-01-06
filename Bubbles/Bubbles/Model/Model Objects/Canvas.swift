@@ -31,6 +31,8 @@ final class Canvas: NSObject, CollectableModelObject {
 
     var viewPort: CGRect?
 
+    @objc dynamic var thumbnail: NSImage?
+
 
     //MARK: - Relationships
     var pages: Set<CanvasPage> {

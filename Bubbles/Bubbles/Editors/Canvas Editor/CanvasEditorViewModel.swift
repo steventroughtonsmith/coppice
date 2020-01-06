@@ -225,7 +225,9 @@ extension CanvasEditorViewModel: CanvasLayoutEngineDelegate {
             guard let canvasPage = self.canvasPage(with: page.id) else {
                 continue
             }
-            canvasPage.frame = page.contentFrame
+            if canvasPage.frame != page.contentFrame {
+                canvasPage.frame = page.contentFrame
+            }
         }
         self.updatesDisable = false
     }
