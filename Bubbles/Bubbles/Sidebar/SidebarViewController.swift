@@ -7,9 +7,10 @@
 //
 
 import Cocoa
+import Combine
 
 class SidebarViewController: NSViewController, NSMenuItemValidation {
-    let viewModel: SidebarViewModel
+    @objc dynamic let viewModel: SidebarViewModel
 
     init(viewModel: SidebarViewModel) {
         self.viewModel = viewModel
@@ -33,7 +34,10 @@ class SidebarViewController: NSViewController, NSMenuItemValidation {
         self.pagesTable.registerForDraggedTypes([.fileURL])
 
         self.pagesTable.register(NSNib(nibNamed: "PageCell", bundle: nil), forIdentifier: PageCell.identifier)
-        // Do view setup here.
+        self.canvasesTable.register(NSNib(nibNamed: "SmallCanvasCell", bundle: nil), forIdentifier: SmallCanvasCell.identifier)
+        self.canvasesTable.register(NSNib(nibNamed: "LargeCanvasCell", bundle: nil), forIdentifier: LargeCanvasCell.identifier)
+
+        self.setupObservation()
     }
 
     override func viewWillAppear() {
@@ -45,6 +49,18 @@ class SidebarViewController: NSViewController, NSMenuItemValidation {
         super.viewDidDisappear()
         self.viewModel.stopObserving()
     }
+
+
+    //MARK: - Observation
+    var smallCanvasCellObservation: AnyCancellable!
+    private func setupObservation() {
+        self.smallCanvasCellObservation = self.viewModel.publisher(for: \.useSmallCanvasCells).sink { [weak self] (_) in
+            self?.canvasesTable.reloadData()
+        }
+    }
+
+
+    //MARK: - Keyboard shortcuts
 
     override func keyDown(with event: NSEvent) {
         guard let specialKey = event.specialKey else {
@@ -61,7 +77,6 @@ class SidebarViewController: NSViewController, NSMenuItemValidation {
 
 
     //MARK: - Menu Actions
-
     @IBAction func exportPages(_ sender: Any?) {
         guard let window = self.view.window else {
             return
@@ -72,6 +87,10 @@ class SidebarViewController: NSViewController, NSMenuItemValidation {
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         return PageExporter.validate(menuItem, forExporting: self.viewModel.selectedPages)
     }
+
+
+    //MARK: - Context Menu
+    @IBOutlet var canvasContextMenu: NSMenu!
 }
 
 
@@ -238,7 +257,8 @@ extension SidebarViewController: NSTableViewDelegate {
             return tableView.makeView(withIdentifier: PageCell.identifier, owner: nil)
         }
 
-        return nil
+        let identifier = self.viewModel.useSmallCanvasCells ? SmallCanvasCell.identifier : LargeCanvasCell.identifier
+        return tableView.makeView(withIdentifier: identifier, owner: nil)
     }
 
     func tableViewSelectionDidChange(_ notification: Notification) {

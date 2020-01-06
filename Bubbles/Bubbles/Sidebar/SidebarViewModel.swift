@@ -242,8 +242,20 @@ class SidebarViewModel: ViewModel {
 
     //MARK: - Search
     private func updateSearch() {
-        print("search: \(self.documentWindowViewModel.searchString)")
         self.reloadPages()
         self.reloadCanvases()
+    }
+
+
+    //MARK: - Cell Size
+    @objc dynamic var useSmallCanvasCells: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: .useSmallCanvasCells)
+        }
+        set {
+            self.willChangeValue(for: \.useSmallCanvasCells)
+            UserDefaults.standard.set(newValue, forKey: .useSmallCanvasCells)
+            self.didChangeValue(for: \.useSmallCanvasCells)
+        }
     }
 }

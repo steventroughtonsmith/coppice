@@ -23,6 +23,3 @@ struct GlobalConstants {
 
 }
 
-enum UserDefaultsKeys: String {
-    case debugShowCanvasOrigin
-}

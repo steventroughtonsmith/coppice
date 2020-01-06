@@ -7,6 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SidebarViewController" customModule="Bubbles" customModuleProvider="target">
             <connections>
+                <outlet property="canvasContextMenu" destination="WMw-nL-qeD" id="EZE-7F-cr0"/>
                 <outlet property="canvasesTable" destination="xKe-Ct-mXE" id="zUa-eV-3kv"/>
                 <outlet property="pagesTable" destination="KyP-MZ-pBo" id="qNW-MK-osv"/>
                 <outlet property="view" destination="WRf-IH-Kxq" id="xuX-of-KZ1"/>
@@ -28,7 +29,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="228" height="190"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" id="xKe-Ct-mXE">
+                                    <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" multipleSelection="NO" autosaveColumns="NO" usesAutomaticRowHeights="YES" viewBased="YES" id="xKe-Ct-mXE">
                                         <rect key="frame" x="0.0" y="0.0" width="228" height="190"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <size key="intercellSpacing" width="3" height="2"/>
@@ -37,7 +38,7 @@
                                         <tableColumns>
                                             <tableColumn width="225" minWidth="40" maxWidth="1000" id="DUd-FR-Xxl">
                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
-                                                    <font key="font" metaFont="controlContent" size="11"/>
+                                                    <font key="font" metaFont="label" size="11"/>
                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                 </tableHeaderCell>
@@ -75,6 +76,7 @@
                                         <connections>
                                             <outlet property="dataSource" destination="-2" id="K0i-v3-hUa"/>
                                             <outlet property="delegate" destination="-2" id="cOM-fj-LgZ"/>
+                                            <outlet property="menu" destination="WMw-nL-qeD" id="xuD-Jy-b1w"/>
                                         </connections>
                                     </tableView>
                                 </subviews>
@@ -118,7 +120,7 @@
                                         <tableColumns>
                                             <tableColumn width="225" minWidth="40" maxWidth="1000" id="QUv-LA-rOC">
                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
-                                                    <font key="font" metaFont="controlContent" size="11"/>
+                                                    <font key="font" metaFont="label" size="11"/>
                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                 </tableHeaderCell>
@@ -162,5 +164,16 @@
             </holdingPriorities>
             <point key="canvasLocation" x="-487" y="154"/>
         </splitView>
+        <menu id="WMw-nL-qeD">
+            <items>
+                <menuItem title="Use Small Cells" id="t40-BC-Yy3">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <binding destination="-2" name="value" keyPath="self.viewModel.useSmallCanvasCells" id="gRQ-0l-U6m"/>
+                    </connections>
+                </menuItem>
+            </items>
+            <point key="canvasLocation" x="-274" y="152"/>
+        </menu>
     </objects>
 </document>

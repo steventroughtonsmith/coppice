@@ -9,11 +9,6 @@
 import Cocoa
 
 class SmallCanvasCell: NSTableCellView {
-
-    override func draw(_ dirtyRect: NSRect) {
-        super.draw(dirtyRect)
-
-        // Drawing code here.
-    }
+    static var identifier = NSUserInterfaceItemIdentifier(rawValue: "SmallCanvasCell")
     
 }
