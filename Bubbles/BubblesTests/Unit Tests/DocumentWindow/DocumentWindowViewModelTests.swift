@@ -39,26 +39,26 @@ class DocumentWindowViewModelTests: XCTestCase {
         XCTAssertTrue(self.viewModel.pageCollection.all.contains(page))
     }
 
-    func test_createPage_ifSelectedSidebarObjectIsNilSetsToNewPage() {
+    func test_createPage_ifSelectedSidebarObjectsIsEmptySetsToNewPage() {
         let page = self.viewModel.createPage()
 
-        XCTAssertEqual(self.viewModel.selectedSidebarObjectID, page.id)
+        XCTAssertEqual(self.viewModel.selectedSidebarObjectIDs.first, page.id)
     }
 
-    func test_createPage_ifSelectedSidebarObjectIsPageSetsToNewPage() {
-        self.viewModel.selectedSidebarObjectID = self.page.id
+    func test_createPage_ifSelectedSidebarObjectContainsPageSetsToNewPage() {
+        self.viewModel.selectedSidebarObjectIDs = Set([self.page.id])
         let page = self.viewModel.createPage()
-        XCTAssertEqual(self.viewModel.selectedSidebarObjectID, page.id)
+        XCTAssertEqual(self.viewModel.selectedSidebarObjectIDs.first, page.id)
     }
 
-    func test_createPage_ifSelectedSidebarObjectIsCanvasDoesntChangeSidebar() {
-        self.viewModel.selectedSidebarObjectID = self.canvas.id
+    func test_createPage_ifSelectedSidebarObjectsContainsCanvasDoesntChangeSidebar() {
+        self.viewModel.selectedSidebarObjectIDs = Set([self.canvas.id])
         self.viewModel.createPage()
-        XCTAssertEqual(self.viewModel.selectedSidebarObjectID, self.canvas.id)
+        XCTAssertEqual(self.viewModel.selectedSidebarObjectIDs.first, self.canvas.id)
     }
 
-    func test_createPage_ifSelectedSidebarObjectIsCanvasAddsPageToCanvas() {
-        self.viewModel.selectedSidebarObjectID = self.canvas.id
+    func test_createPage_ifSelectedSidebarObjectsContainsOneCanvasAddsPageToCanvas() {
+        self.viewModel.selectedSidebarObjectIDs = Set([self.canvas.id])
         let page = self.viewModel.createPage()
         XCTAssertEqual(page.canvases.first?.canvas, self.canvas)
     }
@@ -72,18 +72,18 @@ class DocumentWindowViewModelTests: XCTestCase {
     func test_createPage_undoingRevertsSidebarToNilIfNoSelection() {
         self.viewModel.createPage()
         self.modelController.undoManager.undo()
-        XCTAssertNil(self.viewModel.selectedSidebarObjectID)
+        XCTAssertEqual(self.viewModel.selectedSidebarObjectIDs.count, 0)
     }
 
-    func test_createPage_undoingRevertsSidebarToPreviousPageIfOneWasSelected() {
-        self.viewModel.selectedSidebarObjectID = self.page.id
+    func test_createPage_undoingRevertsSidebarToPreviouslySelectedPage() {
+        self.viewModel.selectedSidebarObjectIDs = Set([self.page.id])
         self.viewModel.createPage()
         self.modelController.undoManager.undo()
-        XCTAssertEqual(self.viewModel.selectedSidebarObjectID, self.page.id)
+        XCTAssertEqual(self.viewModel.selectedSidebarObjectIDs.first, self.page.id)
     }
 
     func test_createPage_removesPageFromCanvasIfOneWasSelected() {
-        self.viewModel.selectedSidebarObjectID = self.canvas.id
+        self.viewModel.selectedSidebarObjectIDs = Set([self.canvas.id])
         let page = self.viewModel.createPage()
 
         self.modelController.undoManager.undo()
@@ -106,7 +106,7 @@ class DocumentWindowViewModelTests: XCTestCase {
     }
 
     func test_createPage_redoRecreatesPageOnCanvasIfOneWasSelected() throws {
-        self.viewModel.selectedSidebarObjectID = self.canvas.id
+        self.viewModel.selectedSidebarObjectIDs = Set([self.canvas.id])
         let page = self.viewModel.createPage()
 
         self.modelController.undoManager.undo()
@@ -316,11 +316,11 @@ class DocumentWindowViewModelTests: XCTestCase {
 
     func test_deletePage_setsSelectedSidebarObjectIDToNilIfPageWasSelected() {
         let page = self.viewModel.pageCollection.newObject()
-        self.viewModel.selectedSidebarObjectID = page.id
+        self.viewModel.selectedSidebarObjectIDs = Set([page.id])
 
         self.viewModel.delete(page)
 
-        XCTAssertNil(self.viewModel.selectedSidebarObjectID)
+        XCTAssertEqual(self.viewModel.selectedSidebarObjectIDs.count, 0)
     }
 
     func test_deletePage_undoRecreatesPageWithSameIDAndAttributes() throws {
@@ -372,13 +372,13 @@ class DocumentWindowViewModelTests: XCTestCase {
 
     func test_deletePage_undoSetsSidebarSelectionBackToPageIfItWasSelecte() throws {
         let page = self.viewModel.pageCollection.newObject()
-        self.viewModel.selectedSidebarObjectID = page.id
+        self.viewModel.selectedSidebarObjectIDs = Set([page.id])
 
         self.modelController.undoManager.removeAllActions()
         self.viewModel.delete(page)
         self.modelController.undoManager.undo()
 
-        XCTAssertEqual(self.viewModel.selectedSidebarObjectID, page.id)
+        XCTAssertEqual(self.viewModel.selectedSidebarObjectIDs.first, page.id)
     }
 
     func test_deletePage_redoingDeletesPageAgainButWithoutAnyAlert() {
@@ -602,11 +602,11 @@ class DocumentWindowViewModelTests: XCTestCase {
 
     func test_deleteCanvas_setsSelectedSidebarObjectIDToNilIfCanvasWasSelected() {
         let canvas = self.viewModel.canvasCollection.newObject()
-        self.viewModel.selectedSidebarObjectID = canvas.id
+        self.viewModel.selectedSidebarObjectIDs = Set([canvas.id])
 
         self.viewModel.delete(canvas)
 
-        XCTAssertNil(self.viewModel.selectedSidebarObjectID)
+        XCTAssertEqual(self.viewModel.selectedSidebarObjectIDs.count, 0)
     }
 
     func test_deleteCanvas_undoRecreatesCanvasWithSameIDAndAttributes() throws {
@@ -657,13 +657,13 @@ class DocumentWindowViewModelTests: XCTestCase {
 
     func test_deleteCanvas_undoSetsSidebarSelectionBackToCanavsIfItWasSelected() throws {
         let canvas = self.viewModel.canvasCollection.newObject()
-        self.viewModel.selectedSidebarObjectID = canvas.id
+        self.viewModel.selectedSidebarObjectIDs = Set([canvas.id])
         self.modelController.undoManager.removeAllActions()
 
         self.viewModel.delete(canvas)
         self.modelController.undoManager.undo()
 
-        XCTAssertEqual(self.viewModel.selectedSidebarObjectID, canvas.id)
+        XCTAssertEqual(self.viewModel.selectedSidebarObjectIDs.first, canvas.id)
     }
 
     func test_deleteCanvas_redoingDeletesCanvasAgainButWithoutAnyAlert() {

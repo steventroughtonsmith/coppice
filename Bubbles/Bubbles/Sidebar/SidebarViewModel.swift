@@ -50,9 +50,9 @@ class SidebarViewModel: ViewModel {
     func startObserving() {
         self.canvasObserver = self.canvases.addObserver { canvas, change in self.handleChange(to: canvas, changeType: change) }
         self.pageObserver = self.pages.addObserver { page, change in self.handleChange(to: page, changeType: change)}
-        self.windowStateSidebarObserver = self.documentWindowViewModel.$selectedSidebarObjectID
+        self.windowStateSidebarObserver = self.documentWindowViewModel.$selectedSidebarObjectIDs
                                             .receive(on: RunLoop.main)
-                                            .assign(to: \.selectedObjectID, on: self)
+                                            .assign(to: \.selectedObjectIDs, on: self)
         
         self.windowSearchObserver = self.documentWindowViewModel.publisher(for: \.searchString).sink { _ in
             self.updateSearch()
@@ -75,7 +75,7 @@ class SidebarViewModel: ViewModel {
     private func handleChange(to canvas: Canvas, changeType: ModelCollection<Canvas>.ChangeType) {
         self.reloadCanvases()
         if (changeType == .insert) {
-            self.selectedObjectID = canvas.id
+            self.selectedObjectIDs = Set([canvas.id])
         }
     }
 
@@ -101,8 +101,8 @@ class SidebarViewModel: ViewModel {
     private func handleChange(to page: Page, changeType: ModelCollection<Page>.ChangeType) {
         self.reloadPages()
         //Only want to select the page in the sidebar if the user has a page selected (otherwise it will appear in the canvas)
-        if ((self.selectedPageRow != -1) && changeType == .insert) {
-            self.selectedObjectID = page.id
+        if ((self.selectedPageRowIndexes.count > 0) && changeType == .insert) {
+            self.selectedObjectIDs = Set([page.id])
         }
     }
 
@@ -135,19 +135,23 @@ class SidebarViewModel: ViewModel {
 
 
     //MARK: - Deleting
-    func deleteSelectedObject() {
-        guard let selectedID = self.selectedObjectID else {
-            return
+    func deleteCanvases(atIndexes indexes: IndexSet) {
+        for index in indexes {
+            guard (index >= 0) && (index < self.canvasItems.count) else {
+                continue
+            }
+            let canvas = self.canvasItems[index].canvas
+            self.documentWindowViewModel.delete(canvas)
         }
+    }
 
-        if selectedID.modelType == Page.modelType {
-            if let page = self.pages.objectWithID(selectedID) {
-                self.documentWindowViewModel.delete(page)
+    func deletePages(atIndexes indexes: IndexSet) {
+        for index in indexes {
+            guard (index >= 0) && (index < self.pageItems.count) else {
+                continue
             }
-        } else if selectedID.modelType == Canvas.modelType {
-            if let canvas = self.canvases.objectWithID(selectedID) {
-                self.documentWindowViewModel.delete(canvas)
-            }
+            let page = self.pageItems[index].page
+            self.documentWindowViewModel.delete(page)
         }
     }
 
@@ -210,53 +214,88 @@ class SidebarViewModel: ViewModel {
 
 
     //MARK: - Selection
-    var selectedObjectID: ModelID? {
+    var selectedObjectIDs = Set<ModelID>() {
         didSet {
-            guard self.selectedObjectID != oldValue else {
+            guard self.selectedObjectIDs != oldValue else {
                 return
             }
             let undoManager = self.modelController.undoManager
             if (undoManager.isUndoing || undoManager.isRedoing) {
-                let selectedObjectID = self.selectedObjectID
+                let selectedObjectID = self.selectedObjectIDs
                 undoManager.setActionIsDiscardable(true)
                 undoManager.registerUndo(withTarget: self, handler: { (target) in
-                    target.selectedObjectID = selectedObjectID
+                    target.selectedObjectIDs = selectedObjectID
                 })
             }
             self.view?.reloadSelection()
-            self.documentWindowViewModel.selectedSidebarObjectID = self.selectedObjectID
+            self.documentWindowViewModel.selectedSidebarObjectIDs = self.selectedObjectIDs
         }
     }
 
-    var selectedCanvasRow: Int {
+    private var selectedCanvasID: ModelID? {
+        let canvasIDs = self.selectedObjectIDs.filter { $0.modelType == Canvas.modelType }
+        guard canvasIDs.count == 1 else {
+            return nil
+        }
+        return canvasIDs.first
+    }
+
+    var selectedCanvasRowIndexes: IndexSet {
         get {
-            return self.canvasItems.firstIndex(where: { $0.id == self.selectedObjectID }) ?? -1
+            guard let index = self.canvasItems.firstIndex(where: { $0.id == self.selectedCanvasID }) else {
+                return IndexSet()
+            }
+            return IndexSet(integer: index)
         }
         set {
-            guard (newValue >= 0) && (newValue < self.canvasItems.count) else {
+            var newSelectedIDs = Set<ModelID>()
+            for index in newValue {
+                guard (index >= 0) && (index < self.canvasItems.count) else {
+                    continue
+                }
+                newSelectedIDs.insert(self.canvasItems[index].id)
+            }
+
+            guard newSelectedIDs.count == newValue.count else {
                 return
             }
-            self.selectedObjectID = self.canvasItems[newValue].id
+            self.selectedObjectIDs = newSelectedIDs
         }
     }
 
-    var selectedPageRow: Int {
+    private var selectedPageIDs: Set<ModelID> {
+        return self.selectedObjectIDs.filter { $0.modelType == Page.modelType }
+    }
+
+    var selectedPageRowIndexes: IndexSet {
         get {
-            return self.pageItems.firstIndex(where: { $0.id == self.selectedObjectID }) ?? -1
+            var indexSet = IndexSet()
+            for pageID in self.selectedPageIDs {
+                guard let index = self.pageItems.firstIndex(where: { $0.id == pageID}) else {
+                    continue
+                }
+                indexSet.insert(index)
+            }
+            return indexSet
         }
         set {
-            guard (newValue >= 0) && (newValue < self.pageItems.count) else {
+            var newSelectedIDs = Set<ModelID>()
+            for index in newValue {
+                guard (index >= 0) && (index < self.pageItems.count) else {
+                    continue
+                }
+                newSelectedIDs.insert(self.pageItems[index].id)
+            }
+
+            guard newSelectedIDs.count == newValue.count else {
                 return
             }
-            self.selectedObjectID = self.pageItems[newValue].id
+            self.selectedObjectIDs = newSelectedIDs
         }
     }
 
     var selectedPages: [Page] {
-        guard self.selectedPageRow > -1 else {
-            return []
-        }
-        return [self.pageItems[self.selectedPageRow].page]
+        return self.selectedPageIDs.compactMap { self.pages.objectWithID($0) }
     }
 
 

@@ -246,12 +246,12 @@ class SidebarViewModelTests: XCTestCase {
     }
 
 
-    //MARK: - .selectedObjectID
+    //MARK: - .selectedObjectIDs
     func test_selectedObjectID_settingDoesntAddUndoIfUndoManagerIsntUndoingOrRedoing() {
         XCTAssertFalse(self.undoManager.canUndo)
 
         let viewModel = self.createViewModel()
-        viewModel.selectedObjectID = Canvas.modelID(with: UUID())
+        viewModel.selectedObjectIDs = Set([Canvas.modelID(with: UUID())])
 
         XCTAssertFalse(self.undoManager.canUndo)
     }
@@ -262,7 +262,7 @@ class SidebarViewModelTests: XCTestCase {
         let viewModel = self.createViewModel()
         viewModel.view = mockSidebarView
 
-        viewModel.selectedObjectID = Canvas.modelID(with: UUID())
+        viewModel.selectedObjectIDs = Set([Canvas.modelID(with: UUID())])
 
         XCTAssertTrue(mockSidebarView.reloadSelectionCalled)
     }
@@ -271,131 +271,141 @@ class SidebarViewModelTests: XCTestCase {
         let viewModel = self.createViewModel()
         let expectedID = Canvas.modelID(with: UUID())
 
-        viewModel.selectedObjectID = expectedID
+        viewModel.selectedObjectIDs = Set([expectedID])
 
-        XCTAssertEqual(self.documentWindowViewModel.selectedSidebarObjectID, expectedID)
+        XCTAssertEqual(self.documentWindowViewModel.selectedSidebarObjectIDs.first, expectedID)
     }
 
 
     //MARK: - .selectedCanvasRow
-    func test_selectedCanvasRow_returnsIndexOfCanvasIfOneIsSelected() {
+    func test_selectedCanvasRowIndexes_returnsIndexOfCanvasIfOneIsSelected() {
         let (_, _, _, selectedCanvas, _) = self.createCanvasObjects()
 
         let viewModel = self.createViewModel()
-        viewModel.selectedObjectID = selectedCanvas.id
+        viewModel.selectedObjectIDs = Set([selectedCanvas.id])
 
-        XCTAssertEqual(viewModel.selectedCanvasRow, 3)
+        XCTAssertEqual(viewModel.selectedCanvasRowIndexes, IndexSet(integer: 3))
     }
 
-    func test_selectedCanvasRow_returnsMinus1IfPageSelected() {
+    func test_selectedCanvasRowIndexes_returnsMinus1IfPageSelected() {
         _ = self.createCanvasObjects()
         let selectedPage = self.pageCollection.newObject()
 
         let viewModel = self.createViewModel()
-        viewModel.selectedObjectID = selectedPage.id
+        viewModel.selectedObjectIDs = Set([selectedPage.id])
 
-        XCTAssertEqual(viewModel.selectedCanvasRow, -1)
+        XCTAssertEqual(viewModel.selectedCanvasRowIndexes, IndexSet())
     }
 
-    func test_selectedCanvasRow_returnsMinus1IfCanvasNotInCollectionIsSelected() {
+    func test_selectedCanvasRowIndexes_returnsMinus1IfCanvasNotInCollectionIsSelected() {
         _ = self.createCanvasObjects()
 
         let viewModel = self.createViewModel()
-        viewModel.selectedObjectID = Canvas.modelID(with: UUID())
+        viewModel.selectedObjectIDs = Set([Canvas.modelID(with: UUID())])
 
-        XCTAssertEqual(viewModel.selectedCanvasRow, -1)
+        XCTAssertEqual(viewModel.selectedCanvasRowIndexes, IndexSet())
     }
 
-    func test_selectedCanvasRow_setsSelectedObjectIDToCanvasAtSuppliedIndex() {
+    func test_selectedCanvasRowIndexes_setsSelectedObjectIDToCanvasAtSuppliedIndex() {
         let (_, expectedCanvas, _, _, _) = self.createCanvasObjects()
 
         let viewModel = self.createViewModel()
-        viewModel.selectedCanvasRow = 1
+        viewModel.selectedCanvasRowIndexes = IndexSet(integer: 1)
 
-        XCTAssertEqual(viewModel.selectedObjectID, expectedCanvas.id)
+        XCTAssertEqual(viewModel.selectedObjectIDs.first, expectedCanvas.id)
     }
 
-    func test_selectedCanvasRow_doesntChangeSelectedObjectIDIfNewIndexIsLessThan0() {
+    func test_selectedCanvasRowIndexes_doesntChangeSelectedObjectIDIfNewIndexIsLessThan0() {
         let (_, expectedCanvas, _, _, _) = self.createCanvasObjects()
 
         let viewModel = self.createViewModel()
-        viewModel.selectedObjectID = expectedCanvas.id
+        viewModel.selectedObjectIDs = Set([expectedCanvas.id])
 
-        viewModel.selectedCanvasRow = -1
+        viewModel.selectedCanvasRowIndexes = IndexSet(integer: -1)
 
-        XCTAssertEqual(viewModel.selectedObjectID, expectedCanvas.id)
+        XCTAssertEqual(viewModel.selectedObjectIDs.first, expectedCanvas.id)
     }
 
-    func test_selectedCanvasRow_doesntChangeSelectedObjectIDIfNewIndexIsBeyondBounds() {
+    func test_selectedCanvasRowIndexes_doesntChangeSelectedObjectIDIfNewIndexIsBeyondBounds() {
         let (_, _, _, expectedCanvas, _) = self.createCanvasObjects()
 
         let viewModel = self.createViewModel()
-        viewModel.selectedObjectID = expectedCanvas.id
+        viewModel.selectedObjectIDs = Set([expectedCanvas.id])
 
-        viewModel.selectedCanvasRow = 5
+        viewModel.selectedCanvasRowIndexes = IndexSet(integer: 5)
 
-        XCTAssertEqual(viewModel.selectedObjectID, expectedCanvas.id)
+        XCTAssertEqual(viewModel.selectedObjectIDs.first, expectedCanvas.id)
     }
 
 
-    //MARK: - .selectedPageRow
-    func test_selectedPageRow_returnsIndexOfPageIfOneIsSelected() {
+    //MARK: - .selectedPageRowIndexes
+    func test_selectedPageRowIndexes_returnsIndexOfPageIfOneIsSelected() {
         let (_, _, selectedPage, _, _) = self.createPageObjects()
 
         let viewModel = self.createViewModel()
-        viewModel.selectedObjectID = selectedPage.id
+        viewModel.selectedObjectIDs = Set([selectedPage.id])
 
-        XCTAssertEqual(viewModel.selectedPageRow, 2)
+        XCTAssertEqual(viewModel.selectedPageRowIndexes, IndexSet(integer: 2))
     }
 
-    func test_selectedPageRow_returnsMinus1IfCanvasSelected() {
+    func test_selectedPageRowIndexes_returnsIndexesOfPagesIfMultipleAreSelected() {
+        let (_, selectedPage1, _ , selectedPage2, _) = self.createPageObjects()
+
+        let viewModel = self.createViewModel()
+        viewModel.selectedObjectIDs = Set([selectedPage1.id, selectedPage2.id])
+
+        XCTAssertEqual(viewModel.selectedPageRowIndexes, IndexSet([1, 3]))
+    }
+
+    func test_selectedPageRowIndexes_returnsMinus1IfCanvasSelected() {
         _ = self.createPageObjects()
         let selectedCanvas = self.canvasCollection.newObject()
 
         let viewModel = self.createViewModel()
-        viewModel.selectedObjectID = selectedCanvas.id
+        viewModel.selectedObjectIDs = Set([selectedCanvas.id])
 
-        XCTAssertEqual(viewModel.selectedPageRow, -1)
+        XCTAssertEqual(viewModel.selectedPageRowIndexes, IndexSet())
     }
 
-    func test_selectedPageRow_returnsMinus1IfPageNotInCollectionIsSelected() {
+    func test_selectedPageRowIndexes_returnsMinus1IfPageNotInCollectionIsSelected() {
         _ = self.createPageObjects()
 
         let viewModel = self.createViewModel()
-        viewModel.selectedObjectID = Page.modelID(with: UUID())
+        viewModel.selectedObjectIDs = Set([Page.modelID(with: UUID())])
 
-        XCTAssertEqual(viewModel.selectedPageRow, -1)
+        XCTAssertEqual(viewModel.selectedPageRowIndexes, IndexSet())
     }
 
-    func test_selectedPageRow_setsSelectedObjectIDToPageAtSuppliedIndex() {
-        let (_, _, expectedPage, _, _) = self.createPageObjects()
+    func test_selectedPageRowIndexes_setsSelectedObjectIDsToPagesAtSuppliedIndex() {
+        let (_, _, expectedPage, _, expectedPage2) = self.createPageObjects()
 
         let viewModel = self.createViewModel()
-        viewModel.selectedPageRow = 2
+        viewModel.selectedPageRowIndexes = IndexSet([2, 4])
 
-        XCTAssertEqual(viewModel.selectedObjectID, expectedPage.id)
+        XCTAssertTrue(viewModel.selectedObjectIDs.contains(expectedPage.id))
+        XCTAssertTrue(viewModel.selectedObjectIDs.contains(expectedPage2.id))
     }
 
-    func test_selectedPageRow_doesntChangeSelectedObjectIDIfNewIndexIsLessThan0() {
+    func test_selectedPageRowIndexes_doesntChangeSelectedObjectIDIfNewIndexIsLessThan0() {
         let (_, _, _, expectedPage, _) = self.createPageObjects()
 
         let viewModel = self.createViewModel()
-        viewModel.selectedObjectID = expectedPage.id
+        viewModel.selectedObjectIDs = Set([expectedPage.id])
 
-        viewModel.selectedPageRow = -1
+        viewModel.selectedPageRowIndexes = IndexSet(integer: -1)
 
-        XCTAssertEqual(viewModel.selectedObjectID, expectedPage.id)
+        XCTAssertEqual(viewModel.selectedObjectIDs.first, expectedPage.id)
     }
 
-    func test_selectedPageRow_doesntChangeSelectedObjectIDIfNewIndexIsBeyondBounds() {
+    func test_selectedPageRowIndexes_doesntChangeSelectedObjectIDIfNewIndexIsBeyondBounds() {
         let (_, expectedPage, _, _, _) = self.createPageObjects()
 
         let viewModel = self.createViewModel()
-        viewModel.selectedObjectID = expectedPage.id
+        viewModel.selectedObjectIDs = Set([expectedPage.id])
 
-        viewModel.selectedPageRow = 5
+        viewModel.selectedPageRowIndexes = IndexSet(integer: 5)
 
-        XCTAssertEqual(viewModel.selectedObjectID, expectedPage.id)
+        XCTAssertEqual(viewModel.selectedObjectIDs.first, expectedPage.id)
     }
 
 
@@ -405,11 +415,11 @@ class SidebarViewModelTests: XCTestCase {
 
         let viewModel = self.createViewModel()
         viewModel.startObserving()
-        viewModel.selectedObjectID = c2.id
+        viewModel.selectedObjectIDs = Set([c2.id])
 
         let newCanvas = self.canvasCollection.newObject()
 
-        XCTAssertEqual(viewModel.selectedObjectID, newCanvas.id)
+        XCTAssertEqual(viewModel.selectedObjectIDs.first, newCanvas.id)
     }
 
     func test_observation_selectsNewlyCreatedPageIfPageAlreadySelected() {
@@ -417,11 +427,11 @@ class SidebarViewModelTests: XCTestCase {
 
         let viewModel = self.createViewModel()
         viewModel.startObserving()
-        viewModel.selectedObjectID = p3.id
+        viewModel.selectedObjectIDs = Set([p3.id])
 
         let newPage = self.pageCollection.newObject()
 
-        XCTAssertEqual(viewModel.selectedObjectID, newPage.id)
+        XCTAssertEqual(viewModel.selectedObjectIDs.first, newPage.id)
     }
 
     func test_observation_doesntSelectNewlyCreatedPageIfCanvasSelected() {
@@ -430,289 +440,54 @@ class SidebarViewModelTests: XCTestCase {
 
         let viewModel = self.createViewModel()
         viewModel.startObserving()
-        viewModel.selectedObjectID = c2.id
+        viewModel.selectedObjectIDs = Set([c2.id])
 
         self.pageCollection.newObject()
 
-        XCTAssertEqual(viewModel.selectedObjectID, c2.id)
+        XCTAssertEqual(viewModel.selectedObjectIDs.first, c2.id)
     }
 
 
-    //MARK: - deleteSelectedObject()
-
-    func test_deleteSelectedObject_doesntDeleteAnythingIfNoObjectSelected() {
-        self.createPageObjects()
-        self.createCanvasObjects()
+    //MARK: - deleteCanvases(atIndexes:)
+    func test_deleteCanvasesAtIndexes_deletesCanvasAtSuppliedIndex() {
+        let (_, _, c3, _, _) = self.createCanvasObjects()
 
         let viewModel = self.createViewModel()
-        viewModel.deleteSelectedObject()
+        viewModel.deleteCanvases(atIndexes: IndexSet(integer: 2))
 
-        XCTAssertEqual(self.pageCollection.all.count, 5)
+        XCTAssertFalse(self.canvasCollection.all.contains(c3))
+        XCTAssertEqual(self.canvasCollection.all.count, 4)
+    }
+
+    func test_deleteCanvasesAtIndexes_doesntDeleteCanvasesIfIndexesAreOutsideOfBounds() {
+        _ = self.createCanvasObjects()
+
+        let viewModel = self.createViewModel()
+        viewModel.deleteCanvases(atIndexes: IndexSet([-1, 6]))
+
         XCTAssertEqual(self.canvasCollection.all.count, 5)
     }
 
-    func test_deleteSelectedObject_deletesPageWithNoCanvasesWithoutAlert() {
-        let (page, _, _, _, _) = self.createPageObjects()
 
-        self.modelController.addModelCollection(for: CanvasPage.self)
+    //MARK: - deletePages(atIndexes:)
+    func test_deletePagesAtIndexes_deletesPagesAtSuppliedIndex() {
+        let (p1, _, p3, _, _) = self.createPageObjects()
 
         let viewModel = self.createViewModel()
-        viewModel.selectedObjectID = page.id
+        viewModel.deletePages(atIndexes: IndexSet([0, 2]))
 
-        let window = MockWindow()
-        viewModel.documentWindowViewModel.window = window
-
-        viewModel.deleteSelectedObject()
-
-        XCTAssertNil(window.suppliedAlert)
-        XCTAssertNil(window.callback)
-
-        XCTAssertFalse(self.pageCollection.all.contains(page))
+        XCTAssertFalse(self.pageCollection.all.contains(p1))
+        XCTAssertFalse(self.pageCollection.all.contains(p3))
+        XCTAssertEqual(self.pageCollection.all.count, 3)
     }
 
-    func test_deleteSelectedObject_ifPageOnCanvasesThenShowsAlert() {
-        let (page, _, _, _, _) = self.createPageObjects()
-        let (canvas, _, _, _, _) = self.createCanvasObjects()
-        let canvasPageCollection = self.modelController.addModelCollection(for: CanvasPage.self)
-        canvasPageCollection.modelController = self.modelController
-
-        canvasPageCollection.newObject {
-            $0.page = page
-            $0.canvas = canvas
-        }
+    func test_deletePagesAtIndexes_doesntDeletePagesIfIndexesAreOutsideOfBounds() {
+        _ = self.createPageObjects()
 
         let viewModel = self.createViewModel()
-        viewModel.selectedObjectID = page.id
+        viewModel.deletePages(atIndexes: IndexSet([-1, 6]))
 
-        let window = MockWindow()
-        viewModel.documentWindowViewModel.window = window
-
-        viewModel.deleteSelectedObject()
-
-        XCTAssertNotNil(window.suppliedAlert)
-    }
-
-    func test_deleteSelectedObject_doesntDeletePageIfAlertCallbackNotCalled() {
-        let (page, _, _, _, _) = self.createPageObjects()
-        let (canvas, _, _, _, _) = self.createCanvasObjects()
-        let canvasPageCollection = self.modelController.addModelCollection(for: CanvasPage.self)
-        canvasPageCollection.modelController = self.modelController
-
-        let canvasPage = canvasPageCollection.newObject {
-            $0.page = page
-            $0.canvas = canvas
-        }
-
-        let viewModel = self.createViewModel()
-        viewModel.selectedObjectID = page.id
-
-        let window = MockWindow()
-        viewModel.documentWindowViewModel.window = window
-
-        viewModel.deleteSelectedObject()
-
-        XCTAssertNotNil(window.callback)
-
-        XCTAssertTrue(self.pageCollection.all.contains(page))
-        XCTAssertTrue(canvasPageCollection.all.contains(canvasPage))
-    }
-
-    func test_deleteSelectedObject_doesntDeletePageIfAlertCancels() {
-        let (page, _, _, _, _) = self.createPageObjects()
-        let (canvas, _, _, _, _) = self.createCanvasObjects()
-        let canvasPageCollection = self.modelController.addModelCollection(for: CanvasPage.self)
-        canvasPageCollection.modelController = self.modelController
-
-        let canvasPage = canvasPageCollection.newObject {
-            $0.page = page
-            $0.canvas = canvas
-        }
-
-        let viewModel = self.createViewModel()
-        viewModel.selectedObjectID = page.id
-
-        let window = MockWindow()
-        viewModel.documentWindowViewModel.window = window
-
-        viewModel.deleteSelectedObject()
-
-        XCTAssertNotNil(window.callback)
-
-        window.callback?(1)
-
-        XCTAssertTrue(self.pageCollection.all.contains(page))
-        XCTAssertTrue(canvasPageCollection.all.contains(canvasPage))
-    }
-
-    func test_deleteSelectedObject_deletesPageAndAllLinkedCanvasPagesIfAlertConfirms() {
-        let (page, page2, _, _, _) = self.createPageObjects()
-        let (canvas, canvas2, _, _, _) = self.createCanvasObjects()
-        let canvasPageCollection = self.modelController.addModelCollection(for: CanvasPage.self)
-        canvasPageCollection.modelController = self.modelController
-
-        let canvasPage1 = canvasPageCollection.newObject {
-            $0.page = page
-            $0.canvas = canvas
-        }
-
-        let canvasPage2 = canvasPageCollection.newObject {
-            $0.page = page
-            $0.canvas = canvas2
-        }
-
-        let canvasPage3 = canvasPageCollection.newObject {
-            $0.page = page2
-            $0.canvas = canvas
-        }
-
-        let viewModel = self.createViewModel()
-        viewModel.selectedObjectID = page.id
-
-        let window = MockWindow()
-        viewModel.documentWindowViewModel.window = window
-
-        viewModel.deleteSelectedObject()
-
-        XCTAssertNotNil(window.callback)
-
-        window.callback?(0)
-
-        XCTAssertFalse(self.pageCollection.all.contains(page))
-        XCTAssertFalse(canvasPageCollection.all.contains(canvasPage1))
-        XCTAssertFalse(canvasPageCollection.all.contains(canvasPage2))
-        XCTAssertTrue(canvasPageCollection.all.contains(canvasPage3))
-    }
-
-    func test_deleteSelectedObject_deletesCanvasWithNoPagesWithoutAlert() {
-        let (canvas, _, _, _, _) = self.createCanvasObjects()
-
-        self.modelController.addModelCollection(for: CanvasPage.self)
-
-        let viewModel = self.createViewModel()
-        viewModel.selectedObjectID = canvas.id
-
-        let window = MockWindow()
-        viewModel.documentWindowViewModel.window = window
-
-        viewModel.deleteSelectedObject()
-
-        XCTAssertNil(window.suppliedAlert)
-        XCTAssertNil(window.callback)
-
-        XCTAssertFalse(self.canvasCollection.all.contains(canvas))
-    }
-
-    func test_deleteSelectedObject_ifCanvasHasPagesThenShowsAlert() {
-        let (page, _, _, _, _) = self.createPageObjects()
-        let (canvas, _, _, _, _) = self.createCanvasObjects()
-        let canvasPageCollection = self.modelController.addModelCollection(for: CanvasPage.self)
-        canvasPageCollection.modelController = self.modelController
-
-        canvasPageCollection.newObject {
-            $0.page = page
-            $0.canvas = canvas
-        }
-
-        let viewModel = self.createViewModel()
-        viewModel.selectedObjectID = canvas.id
-
-        let window = MockWindow()
-        viewModel.documentWindowViewModel.window = window
-
-        viewModel.deleteSelectedObject()
-
-        XCTAssertNotNil(window.suppliedAlert)
-    }
-
-    func test_deleteSelectedObject_doesntDeleteCanvasIfAlertCallbackNotCalled() {
-        let (page, _, _, _, _) = self.createPageObjects()
-        let (canvas, _, _, _, _) = self.createCanvasObjects()
-        let canvasPageCollection = self.modelController.addModelCollection(for: CanvasPage.self)
-        canvasPageCollection.modelController = self.modelController
-
-        let canvasPage = canvasPageCollection.newObject {
-            $0.page = page
-            $0.canvas = canvas
-        }
-
-        let viewModel = self.createViewModel()
-        viewModel.selectedObjectID = canvas.id
-
-        let window = MockWindow()
-        viewModel.documentWindowViewModel.window = window
-
-        viewModel.deleteSelectedObject()
-
-        XCTAssertNotNil(window.callback)
-
-        XCTAssertTrue(self.canvasCollection.all.contains(canvas))
-        XCTAssertTrue(canvasPageCollection.all.contains(canvasPage))
-    }
-
-    func test_deleteSelectedObject_doesntDeleteCanvasIfAlertCancels() {
-        let (page, _, _, _, _) = self.createPageObjects()
-        let (canvas, _, _, _, _) = self.createCanvasObjects()
-        let canvasPageCollection = self.modelController.addModelCollection(for: CanvasPage.self)
-        canvasPageCollection.modelController = self.modelController
-
-        let canvasPage = canvasPageCollection.newObject {
-            $0.page = page
-            $0.canvas = canvas
-        }
-
-        let viewModel = self.createViewModel()
-        viewModel.selectedObjectID = canvas.id
-
-        let window = MockWindow()
-        viewModel.documentWindowViewModel.window = window
-
-        viewModel.deleteSelectedObject()
-
-        XCTAssertNotNil(window.callback)
-
-        window.callback?(1)
-
-        XCTAssertTrue(self.canvasCollection.all.contains(canvas))
-        XCTAssertTrue(canvasPageCollection.all.contains(canvasPage))
-    }
-
-    func test_deleteSelectedObject_deletesCanvasAndAllLinkedCanvasPagesIfAlertConfirms() {
-        let (page, page2, _, _, _) = self.createPageObjects()
-        let (canvas, canvas2, _, _, _) = self.createCanvasObjects()
-        let canvasPageCollection = self.modelController.addModelCollection(for: CanvasPage.self)
-        canvasPageCollection.modelController = self.modelController
-
-        let canvasPage1 = canvasPageCollection.newObject {
-            $0.page = page
-            $0.canvas = canvas
-        }
-
-        let canvasPage2 = canvasPageCollection.newObject {
-            $0.page = page
-            $0.canvas = canvas2
-        }
-
-        let canvasPage3 = canvasPageCollection.newObject {
-            $0.page = page2
-            $0.canvas = canvas
-        }
-
-        let viewModel = self.createViewModel()
-        viewModel.selectedObjectID = canvas.id
-
-        let window = MockWindow()
-        viewModel.documentWindowViewModel.window = window
-
-        viewModel.deleteSelectedObject()
-
-        XCTAssertNotNil(window.callback)
-
-        window.callback?(0)
-
-        XCTAssertFalse(self.canvasCollection.all.contains(canvas))
-        XCTAssertFalse(canvasPageCollection.all.contains(canvasPage1))
-        XCTAssertTrue(canvasPageCollection.all.contains(canvasPage2))
-        XCTAssertFalse(canvasPageCollection.all.contains(canvasPage3))
+        XCTAssertEqual(self.pageCollection.all.count, 5)
     }
 
 

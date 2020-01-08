@@ -45,13 +45,16 @@ class EditorContainerViewController: NSViewController {
 
     //MARK: - Editor Generation
     func createEditor() -> (Editor & NSViewController)? {
-        if let canvas = self.viewModel.currentObject as? Canvas {
+        switch self.viewModel.currentSelection {
+        case .canvas(let canvas):
             return canvas.createEditor(with: self.viewModel.documentWindowViewModel)
-        }
-        if let page = self.viewModel.currentObject as? Page {
+        case .page(let page):
             return page.createEditor(with: self.viewModel.documentWindowViewModel)
+        case .multiple(_):
+            return nil
+        case .none:
+            return nil
         }
-        return nil
     }
 }
 

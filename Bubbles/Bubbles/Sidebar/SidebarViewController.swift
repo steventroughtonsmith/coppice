@@ -61,18 +61,27 @@ class SidebarViewController: NSViewController, NSMenuItemValidation {
 
 
     //MARK: - Keyboard shortcuts
-
     override func keyDown(with event: NSEvent) {
         guard let specialKey = event.specialKey else {
             return
         }
 
         //For some reason NSEvent.SpecialKey.delete does not use NSDeleteFunctionKey, but NSEvent does
-        guard (specialKey == .backspace) || (specialKey == .init(rawValue: NSDeleteFunctionKey)) || (specialKey == .deleteForward) else {
+        guard (specialKey == .backspace) || (specialKey == .delete) || (specialKey == .deleteForward) else {
             return
         }
 
-        self.viewModel.deleteSelectedObject()
+        guard let table = self.windowController?.window?.firstResponder as? NSTableView else {
+            return
+        }
+
+        if table == self.canvasesTable {
+            self.viewModel.deleteCanvases(atIndexes: self.viewModel.selectedCanvasRowIndexes)
+        } else if table == self.pagesTable {
+            self.viewModel.deletePages(atIndexes: self.viewModel.selectedPageRowIndexes)
+        } else {
+            NSSound.beep()
+        }
     }
 
 
@@ -94,7 +103,13 @@ class SidebarViewController: NSViewController, NSMenuItemValidation {
         }
 
         if menuItem.action == #selector(deleteCanvas(_:)) {
-            return (self.canvasesTable.clickedRow >= 0)
+            let rowIndexes = self.canvasRowIndexesForAction
+            if (rowIndexes.count == 1) {
+                menuItem.title = NSLocalizedString("Delete Canvas…", comment: "Delete single canvas menu item title")
+            } else {
+                menuItem.title = NSLocalizedString("Delete Canvases…", comment: "Delete multiple canvases menu item title")
+            }
+            return (rowIndexes.count > 0)
         }
 
         return false
@@ -108,29 +123,30 @@ class SidebarViewController: NSViewController, NSMenuItemValidation {
     }
 
     @IBAction func deleteCanvas(_ sender: Any) {
-        self.viewModel.deleteCanvas(atIndex: self.canvasesTable.clickedRow)
+        self.viewModel.deleteCanvases(atIndexes: self.canvasRowIndexesForAction)
     }
+
+    private var canvasRowIndexesForAction: IndexSet {
+        let selectedIndexes = self.viewModel.selectedCanvasRowIndexes
+        let clickedRow = self.canvasesTable.clickedRow
+        if selectedIndexes.contains(clickedRow) {
+            return selectedIndexes
+        }
+        return (clickedRow >= 0) ? IndexSet(integer: clickedRow) : IndexSet()
+    }
+
+
+    //MARK: - Selection
+    private var isReloadingSelection = false
 }
 
 
 extension SidebarViewController: SidebarView {
     func reloadSelection() {
-        if (self.viewModel.selectedCanvasRow >= 0) {
-            self.canvasesTable.selectRowIndexes(IndexSet(integer: self.viewModel.selectedCanvasRow),
-                                                byExtendingSelection: false)
-            #warning("For some reason this causes a loop, we ideally need to find a better way of doing it")
-//            self.view.window?.makeFirstResponder(self.canvasesTable)
-        } else {
-            self.canvasesTable.deselectRow(self.canvasesTable.selectedRow)
-        }
-
-        if (self.viewModel.selectedPageRow >= 0) {
-            self.pagesTable.selectRowIndexes(IndexSet(integer: self.viewModel.selectedPageRow),
-                                             byExtendingSelection: false)
-//            self.view.window?.makeFirstResponder(self.pagesTable)
-        } else {
-            self.pagesTable.deselectAll(nil)
-        }
+        self.isReloadingSelection = true
+        self.canvasesTable.selectRowIndexes(self.viewModel.selectedCanvasRowIndexes, byExtendingSelection: false)
+        self.pagesTable.selectRowIndexes(self.viewModel.selectedPageRowIndexes, byExtendingSelection: false)
+        self.isReloadingSelection = false
     }
 
     func reloadCanvases() {
@@ -240,23 +256,25 @@ extension SidebarViewController: NSTableViewDataSource {
     }
 
     private func acceptObjectDrop(on table: NSTableView, with info: NSDraggingInfo, row: Int, dropOperation: NSTableView.DropOperation) -> Bool {
-        guard let item = info.draggingPasteboard.pasteboardItems?.first,
-            let id = ModelID(pasteboardItem: item) else {
+        guard let items = info.draggingPasteboard.pasteboardItems else {
             return false
         }
 
-        if (id.modelType == Canvas.modelType) {
+        let modelIDs = items.compactMap({ ModelID(pasteboardItem: $0) })
+
+        if modelIDs.count == 1, let id = modelIDs.first, (id.modelType == Canvas.modelType) {
             self.viewModel.moveCanvas(with: id, aboveCanvasAtIndex: row)
             self.reloadCanvases()
             return true
         }
 
-        if (id.modelType == Page.modelType) {
-            self.viewModel.addPage(with: id, toCanvasAtIndex: row)
-            return true
+        for modelID in modelIDs {
+            if (modelID.modelType == Page.modelType) {
+                self.viewModel.addPage(with: modelID, toCanvasAtIndex: row)
+            }
         }
 
-        return false
+        return (modelIDs.count > 0)
     }
 
     private func acceptFileDrop(on table: NSTableView, with info: NSDraggingInfo, row: Int, dropOperation: NSTableView.DropOperation) -> Bool {
@@ -281,14 +299,18 @@ extension SidebarViewController: NSTableViewDelegate {
     }
 
     func tableViewSelectionDidChange(_ notification: Notification) {
+        //This prevents us updating the view model in response to us reloading the selection which can cause loops and odd behaviour
+        guard self.isReloadingSelection == false else {
+            return
+        }
         guard let tableView = notification.object as? NSTableView else {
             return
         }
 
         if (tableView == self.canvasesTable) {
-            self.viewModel.selectedCanvasRow = self.canvasesTable.selectedRow
+            self.viewModel.selectedCanvasRowIndexes = self.canvasesTable.selectedRowIndexes
         } else {
-            self.viewModel.selectedPageRow = self.pagesTable.selectedRow
+            self.viewModel.selectedPageRowIndexes = self.pagesTable.selectedRowIndexes
         }
     }
 }

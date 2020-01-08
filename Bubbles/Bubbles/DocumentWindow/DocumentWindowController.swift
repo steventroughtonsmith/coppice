@@ -114,8 +114,7 @@ class DocumentWindowController: NSWindowController {
             return false
         }
 
-        let selectedObjectID = self.sidebarViewController?.viewModel.selectedObjectID
-        guard (selectedObjectID?.modelType != Canvas.modelType) else {
+        guard self.viewModel.selectedCanvasInSidebar == nil else {
             //In theory canvasEditor should always be set if the selected object is a Canvas but we want to exit early regardless as it's a bit more predicatable
             guard let canvasEditor = self.editorContainerViewController?.mainEditor as? CanvasEditorViewController else {
                 return false
@@ -129,7 +128,7 @@ class DocumentWindowController: NSWindowController {
     }
 
     func selectObject(with id: ModelID) {
-        self.viewModel.selectedSidebarObjectID = id
+        self.viewModel.selectedSidebarObjectIDs = Set([id])
     }
 
 
@@ -181,14 +180,15 @@ class DocumentWindowController: NSWindowController {
 
     //MARK: - State Restoration
     override func encodeRestorableState(with coder: NSCoder) {
-        coder.encode(self.viewModel.selectedSidebarObjectID?.stringRepresentation, forKey: "selectedSidebarObjectID")
+        let selectedIDStrings = self.viewModel.selectedSidebarObjectIDs.map { $0.stringRepresentation }
+        coder.encode(selectedIDStrings, forKey: "selectedSidebarObjectIDs")
         super.encodeRestorableState(with: coder)
     }
 
     override func restoreState(with coder: NSCoder) {
-        if let modelIDString = coder.decodeObject(forKey: "selectedSidebarObjectID") as? String,
-            let modelID = ModelID(string: modelIDString) {
-            self.viewModel.selectedSidebarObjectID = modelID
+        if let modelIDStrings = coder.decodeObject(forKey: "selectedSidebarObjectIDs") as? [String] {
+            let selectedIDs = Set(modelIDStrings.compactMap { ModelID(string: $0) })
+            self.viewModel.selectedSidebarObjectIDs = selectedIDs
         }
         super.restoreState(with: coder)
     }

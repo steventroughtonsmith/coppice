@@ -16,7 +16,7 @@ protocol DocumentWindow: class {
 class DocumentWindowViewModel: NSObject {
     weak var document: Document?
     weak var window: DocumentWindow?
-    @Published var selectedSidebarObjectID: ModelID? {
+    @Published var selectedSidebarObjectIDs = Set<ModelID>() {
         didSet {
             self.window?.invalidateRestorableState()
         }
@@ -52,20 +52,40 @@ class DocumentWindowViewModel: NSObject {
     }
 
 
+    //MARK: - Selection Helpers
+    var selectedCanvasInSidebar: Canvas? {
+        guard self.selectedSidebarObjectIDs.count == 1,
+            let canvasID = self.selectedSidebarObjectIDs.first else {
+                return nil
+        }
+
+        return self.canvasCollection.objectWithID(canvasID)
+    }
+
+    var selectedPagesInSidebar: [Page] {
+        var pages = [Page]()
+        for pageID in self.selectedSidebarObjectIDs {
+            guard let page = self.pageCollection.objectWithID(pageID) else {
+                return []
+            }
+            pages.append(page)
+        }
+        return pages
+    }
+
+
     //MARK: - Creating Pages
     @discardableResult func createPage() -> Page {
         self.modelController.undoManager.beginUndoGrouping()
         self.modelController.undoManager.setActionName(NSLocalizedString("Create Page", comment: "Create Page Undo Action Name"))
         let page = self.pageCollection.newObject()
-        guard let selectedObjectID = self.selectedSidebarObjectID, (selectedObjectID.modelType == Canvas.modelType) else {
-            self.selectedSidebarObjectID = page.id
+        guard let selectedCanvas = self.selectedCanvasInSidebar else {
+            self.selectedSidebarObjectIDs = [page.id]
             self.modelController.undoManager.endUndoGrouping()
             return page
         }
 
-        if let canvas = self.canvasCollection.objectWithID(selectedObjectID) {
-            canvas.addPages([page])
-        }
+        selectedCanvas.addPages([page])
         self.modelController.undoManager.endUndoGrouping()
         return page
     }
@@ -82,7 +102,6 @@ class DocumentWindowViewModel: NSObject {
 
         return newPages
     }
-
 
 
     //MARK: - Deleting Pages
@@ -132,9 +151,7 @@ class DocumentWindowViewModel: NSObject {
         self.pageCollection.delete(page)
         self.modelController.popChangeGroup()
 
-        if self.selectedSidebarObjectID == page.id {
-            self.selectedSidebarObjectID = nil
-        }
+        self.selectedSidebarObjectIDs.remove(page.id)
     }
 
 
@@ -197,9 +214,7 @@ class DocumentWindowViewModel: NSObject {
         self.canvasCollection.delete(canvas)
         self.modelController.popChangeGroup()
 
-        if self.selectedSidebarObjectID == canvas.id {
-            self.selectedSidebarObjectID = nil
-        }
+        self.selectedSidebarObjectIDs.remove(canvas.id)
     }
 
 
@@ -233,13 +248,13 @@ class DocumentWindowViewModel: NSObject {
             guard let strongSelf = self else {
                 return
             }
-            let selectionID = strongSelf.selectedSidebarObjectID
+            let selectionID = strongSelf.selectedSidebarObjectIDs
             undoManager.setActionIsDiscardable(true)
             undoManager.registerUndo(withTarget: strongSelf) { (target) in
-                let oldValue = target.selectedSidebarObjectID
-                target.selectedSidebarObjectID = selectionID
+                let oldValue = target.selectedSidebarObjectIDs
+                target.selectedSidebarObjectIDs = selectionID
                 undoManager.registerUndo(withTarget: strongSelf) { (target) in
-                    target.selectedSidebarObjectID = oldValue
+                    target.selectedSidebarObjectIDs = oldValue
                 }
             }
         }
@@ -248,14 +263,9 @@ class DocumentWindowViewModel: NSObject {
 
     //MARK: - Import/Export
     func importFiles(at urls: [URL]) {
-        var canvas: Canvas?
-        if let canvasID = self.selectedSidebarObjectID, canvasID.modelType == Canvas.modelType {
-            canvas = self.canvasCollection.objectWithID(canvasID)
-        }
-
         let pageCollection = self.modelController.collection(for: Page.self)
         let pages = urls.compactMap { pageCollection.newPage(fromFileAt: $0) }
-        canvas?.addPages(pages)
+        self.selectedCanvasInSidebar?.addPages(pages)
     }
 
     func export(_ pages: [Page], to url: URL) {
