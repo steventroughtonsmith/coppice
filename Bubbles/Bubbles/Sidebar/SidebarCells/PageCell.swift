@@ -8,6 +8,6 @@
 
 import Cocoa
 
-class PageCell: NSTableCellView {
+class PageCell: EditableLabelCell {
     static var identifier = NSUserInterfaceItemIdentifier(rawValue: "PageCell")
 }

@@ -9,11 +9,11 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <tableCellView id="n2x-lI-c1M" customClass="LargeCanvasCell" customModule="Bubbles" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="178" height="150"/>
+            <rect key="frame" x="0.0" y="0.0" width="178" height="154"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="twU-IQ-ufL">
-                    <rect key="frame" x="9" y="27" width="160" height="120"/>
+                    <rect key="frame" x="9" y="31" width="160" height="120"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="120" id="S1c-Nz-m9G"/>
                         <constraint firstAttribute="width" constant="160" id="Zbu-Jx-PXh"/>
@@ -24,7 +24,10 @@
                     </connections>
                 </imageView>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="COr-GF-9fc">
-                    <rect key="frame" x="39" y="3" width="100" height="16"/>
+                    <rect key="frame" x="1" y="3" width="176" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="a6s-kh-V2R"/>
+                    </constraints>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="Table View Cell" id="ek4-NE-V3F">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -37,8 +40,9 @@
             </subviews>
             <constraints>
                 <constraint firstItem="twU-IQ-ufL" firstAttribute="top" secondItem="n2x-lI-c1M" secondAttribute="top" constant="3" id="0ly-Wk-G5s"/>
-                <constraint firstItem="COr-GF-9fc" firstAttribute="centerX" secondItem="twU-IQ-ufL" secondAttribute="centerX" id="QEP-fQ-fq1"/>
+                <constraint firstItem="COr-GF-9fc" firstAttribute="leading" secondItem="n2x-lI-c1M" secondAttribute="leading" constant="3" id="Eiz-F4-0XZ"/>
                 <constraint firstItem="COr-GF-9fc" firstAttribute="top" secondItem="twU-IQ-ufL" secondAttribute="bottom" constant="8" id="WAl-N9-7kX"/>
+                <constraint firstAttribute="trailing" secondItem="COr-GF-9fc" secondAttribute="trailing" constant="3" id="gU0-hO-ilB"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="twU-IQ-ufL" secondAttribute="trailing" constant="3" id="pih-VI-v1J"/>
                 <constraint firstItem="twU-IQ-ufL" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="n2x-lI-c1M" secondAttribute="leading" constant="3" id="sp1-cy-1FQ"/>
                 <constraint firstItem="twU-IQ-ufL" firstAttribute="centerX" secondItem="n2x-lI-c1M" secondAttribute="centerX" id="vOk-Ik-xyh"/>

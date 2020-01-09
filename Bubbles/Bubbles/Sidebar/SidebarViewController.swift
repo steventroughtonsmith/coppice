@@ -87,6 +87,13 @@ class SidebarViewController: NSViewController, NSMenuItemValidation {
 
     //MARK: - Page Menu Actions
     @IBAction func editPageTitle(_ sender: Any) {
+        guard self.pagesTable.clickedRow > -1 else {
+            return
+        }
+        guard let cell = self.pagesTable.view(atColumn: 0, row: self.pagesTable.clickedRow, makeIfNecessary: false) as? EditableLabelCell else {
+            return
+        }
+        cell.startEditing()
     }
 
     @IBAction func deletePage(_ sender: Any) {
@@ -111,7 +118,13 @@ class SidebarViewController: NSViewController, NSMenuItemValidation {
 
     //MARK: - Canvas Menu Actions
     @IBAction func editCanvasTitle(_ sender: Any) {
-        print("edit cell")
+        guard self.canvasesTable.clickedRow > -1 else {
+            return
+        }
+        guard let cell = self.canvasesTable.view(atColumn: 0, row: self.canvasesTable.clickedRow, makeIfNecessary: false) as? EditableLabelCell else {
+            return
+        }
+        cell.startEditing()
     }
 
     @IBAction func deleteCanvas(_ sender: Any) {

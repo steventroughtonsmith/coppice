@@ -39,7 +39,7 @@
                                         <tableColumns>
                                             <tableColumn width="225" minWidth="40" maxWidth="1000" id="DUd-FR-Xxl">
                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
-                                                    <font key="font" metaFont="label" size="11"/>
+                                                    <font key="font" metaFont="controlContent" size="11"/>
                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                 </tableHeaderCell>
@@ -75,6 +75,7 @@
                                             </tableColumn>
                                         </tableColumns>
                                         <connections>
+                                            <action trigger="doubleAction" selector="editCanvasTitle:" target="-2" id="Kof-ll-32K"/>
                                             <outlet property="dataSource" destination="-2" id="K0i-v3-hUa"/>
                                             <outlet property="delegate" destination="-2" id="cOM-fj-LgZ"/>
                                             <outlet property="menu" destination="WMw-nL-qeD" id="xuD-Jy-b1w"/>
@@ -121,7 +122,7 @@
                                         <tableColumns>
                                             <tableColumn width="225" minWidth="40" maxWidth="1000" id="QUv-LA-rOC">
                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
-                                                    <font key="font" metaFont="label" size="11"/>
+                                                    <font key="font" metaFont="controlContent" size="11"/>
                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                 </tableHeaderCell>
@@ -134,6 +135,7 @@
                                             </tableColumn>
                                         </tableColumns>
                                         <connections>
+                                            <action trigger="doubleAction" selector="editPageTitle:" target="-2" id="4JY-df-vd1"/>
                                             <outlet property="dataSource" destination="-2" id="YFk-3G-YEn"/>
                                             <outlet property="delegate" destination="-2" id="vtq-vP-xpQ"/>
                                             <outlet property="menu" destination="Kc9-fp-hh9" id="gc0-x7-9nX"/>

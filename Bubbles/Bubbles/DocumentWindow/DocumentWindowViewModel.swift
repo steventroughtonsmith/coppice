@@ -230,7 +230,6 @@ class DocumentWindowViewModel: NSObject {
         self.selectedSidebarObjectIDs.remove(canvas.id)
     }
 
-
     //Removing page from canvas
     func remove(_ canvasPage: CanvasPage) {
         self.modelController.pushChangeGroup()

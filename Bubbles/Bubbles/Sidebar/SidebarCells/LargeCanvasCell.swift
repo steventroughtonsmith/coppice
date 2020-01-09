@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class LargeCanvasCell: NSTableCellView {
+class LargeCanvasCell: EditableLabelCell {
     static var identifier = NSUserInterfaceItemIdentifier(rawValue: "LargeCanvasCell")
     
 }

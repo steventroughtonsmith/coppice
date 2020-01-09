@@ -40,6 +40,7 @@
 		99488AAB23C36756009954AF /* BubblesUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99488AAA23C36756009954AF /* BubblesUserDefaults.swift */; };
 		99488AAE23C37B98009954AF /* ThumbnailGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99488AAD23C37B98009954AF /* ThumbnailGenerator.swift */; };
 		99488AB023C37BB7009954AF /* ThumbnailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99488AAF23C37BB7009954AF /* ThumbnailController.swift */; };
+		99488ACE23C78087009954AF /* EditableLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99488ACD23C78087009954AF /* EditableLabelCell.swift */; };
 		9951C26C230AEFAB006CAD4D /* PageSelectorWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9951C26B230AEFAB006CAD4D /* PageSelectorWindowController.swift */; };
 		9951C26E230AF011006CAD4D /* PageSelectorWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9951C26D230AF011006CAD4D /* PageSelectorWindow.swift */; };
 		9957B088239FD3D800BA3C0B /* DocumentWindowViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9957B087239FD3D800BA3C0B /* DocumentWindowViewModelTests.swift */; };
@@ -229,6 +230,7 @@
 		99488AAA23C36756009954AF /* BubblesUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubblesUserDefaults.swift; sourceTree = "<group>"; };
 		99488AAD23C37B98009954AF /* ThumbnailGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailGenerator.swift; sourceTree = "<group>"; };
 		99488AAF23C37BB7009954AF /* ThumbnailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailController.swift; sourceTree = "<group>"; };
+		99488ACD23C78087009954AF /* EditableLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableLabelCell.swift; sourceTree = "<group>"; };
 		9951C26B230AEFAB006CAD4D /* PageSelectorWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageSelectorWindowController.swift; sourceTree = "<group>"; };
 		9951C26D230AF011006CAD4D /* PageSelectorWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageSelectorWindow.swift; sourceTree = "<group>"; };
 		9957B087239FD3D800BA3C0B /* DocumentWindowViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentWindowViewModelTests.swift; sourceTree = "<group>"; };
@@ -479,6 +481,7 @@
 		99488A9723BA38E6009954AF /* SidebarCells */ = {
 			isa = PBXGroup;
 			children = (
+				99488ACD23C78087009954AF /* EditableLabelCell.swift */,
 				99488A9823BA3912009954AF /* PageCell.swift */,
 				99488AA823BA3A05009954AF /* PageCell.xib */,
 				99488A9A23BA392E009954AF /* SmallCanvasCell.swift */,
@@ -1256,6 +1259,7 @@
 				9951C26C230AEFAB006CAD4D /* PageSelectorWindowController.swift in Sources */,
 				99868F322396AD55009AC0F7 /* ImageEditorInspectorViewModel.swift in Sources */,
 				99D8E37F237EDB890098CF3B /* InspectorViewController.swift in Sources */,
+				99488ACE23C78087009954AF /* EditableLabelCell.swift in Sources */,
 				99C865142301A852004C7B89 /* ContentSelectorViewModel.swift in Sources */,
 				99D8E39323800FB90098CF3B /* BaseInspectorViewModel.swift in Sources */,
 				9958107F230D7EEB00D996C4 /* CanvasEditorViewModel.swift in Sources */,

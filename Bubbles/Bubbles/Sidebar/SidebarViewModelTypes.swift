@@ -20,7 +20,10 @@ class CanvasSidebarItem: NSObject, SidebarItem {
     }
 
     var id: ModelID { self.canvas.id }
-    @objc dynamic var title: String { self.canvas.title }
+    @objc dynamic var title: String {
+        get { self.canvas.title }
+        set { self.canvas.title = newValue }
+    }
     @objc dynamic var thumbnail: NSImage? { self.canvas.thumbnail }
 
     override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
@@ -39,6 +42,9 @@ class PageSidebarItem: NSObject, SidebarItem {
     }
 
     var id: ModelID { self.page.id }
-    @objc dynamic var title: String { self.page.title }
+    @objc dynamic var title: String {
+        get { self.page.title }
+        set { self.page.title = newValue }
+    }
     @objc dynamic var icon: NSImage? { self.page.content.contentType.icon }
 }
