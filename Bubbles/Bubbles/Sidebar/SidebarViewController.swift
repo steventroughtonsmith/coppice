@@ -85,7 +85,14 @@ class SidebarViewController: NSViewController, NSMenuItemValidation {
     }
 
 
-    //MARK: - Menu Actions
+    //MARK: - Page Menu Actions
+    @IBAction func editPageTitle(_ sender: Any) {
+    }
+
+    @IBAction func deletePage(_ sender: Any) {
+        self.viewModel.deletePages(atIndexes: self.pageRowIndexesForAction)
+    }
+
     @IBAction func exportPages(_ sender: Any?) {
         guard let window = self.view.window else {
             return
@@ -93,9 +100,53 @@ class SidebarViewController: NSViewController, NSMenuItemValidation {
         PageExporter.export(self.viewModel.selectedPages, displayingOn: window)
     }
 
+    @IBAction func addToCanvas(_ sender: Any?) {
+        guard let menuItem = sender as? NSMenuItem else {
+            return
+        }
+
+        self.viewModel.addPages(atIndexes: self.pageRowIndexesForAction, toCanvasAtindex: menuItem.tag)
+    }
+
+
+    //MARK: - Canvas Menu Actions
+    @IBAction func editCanvasTitle(_ sender: Any) {
+        print("edit cell")
+    }
+
+    @IBAction func deleteCanvas(_ sender: Any) {
+        self.viewModel.deleteCanvases(atIndexes: self.canvasRowIndexesForAction)
+    }
+
+
+    //MARK: - Context Menus
+    @IBOutlet var pageContextMenu: NSMenu!
+    @IBOutlet var canvasContextMenu: NSMenu!
+
+
+    //MARK: - Menu Validation
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+        if menuItem.action == #selector(editPageTitle(_:)) {
+            return (self.pagesTable.clickedRow >= 0)
+        }
+
+        if menuItem.action == #selector(deletePage(_:)) {
+            let rowIndexes = self.pageRowIndexesForAction
+            if (rowIndexes.count == 1) {
+                menuItem.title = NSLocalizedString("Delete Page…", comment: "Delete single page menu item title")
+            } else {
+                menuItem.title = NSLocalizedString("Delete Pages…", comment: "Delete multiple pages menu item title")
+            }
+            return (rowIndexes.count > 0)
+        }
+
         if menuItem.action == #selector(exportPages(_:)) {
-            return PageExporter.validate(menuItem, forExporting: self.viewModel.selectedPages)
+            let pages = self.viewModel.pageItems[self.pageRowIndexesForAction].map { $0.page }
+            return PageExporter.validate(menuItem, forExporting: pages)
+        }
+
+        if menuItem.action == #selector(addToCanvas(_:)) {
+            return (self.pageRowIndexesForAction.count > 0)
         }
 
         if menuItem.action == #selector(editCanvasTitle(_:)) {
@@ -116,14 +167,14 @@ class SidebarViewController: NSViewController, NSMenuItemValidation {
     }
 
 
-    //MARK: - Context Menu
-    @IBOutlet var canvasContextMenu: NSMenu!
-    @IBAction func editCanvasTitle(_ sender: Any) {
-        print("edit cell")
-    }
-
-    @IBAction func deleteCanvas(_ sender: Any) {
-        self.viewModel.deleteCanvases(atIndexes: self.canvasRowIndexesForAction)
+    //MARK: - Action Items
+    private var pageRowIndexesForAction: IndexSet {
+        let selectedIndexes = self.viewModel.selectedPageRowIndexes
+        let clickedRow = self.pagesTable.clickedRow
+        if selectedIndexes.contains(clickedRow) {
+            return selectedIndexes
+        }
+        return (clickedRow >= 0) ? IndexSet(integer: clickedRow) : IndexSet()
     }
 
     private var canvasRowIndexesForAction: IndexSet {
@@ -288,6 +339,7 @@ extension SidebarViewController: NSTableViewDataSource {
     }
 }
 
+
 extension SidebarViewController: NSTableViewDelegate {
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         if (tableView == self.pagesTable) {
@@ -312,5 +364,21 @@ extension SidebarViewController: NSTableViewDelegate {
         } else {
             self.viewModel.selectedPageRowIndexes = self.pagesTable.selectedRowIndexes
         }
+    }
+}
+
+
+
+extension SidebarViewController: NSMenuDelegate {
+    func numberOfItems(in menu: NSMenu) -> Int {
+        return self.viewModel.canvasItems.count
+    }
+
+    func menu(_ menu: NSMenu, update item: NSMenuItem, at index: Int, shouldCancel: Bool) -> Bool {
+        item.title = self.viewModel.canvasItems[index].canvas.title
+        item.tag = index
+        item.target = self
+        item.action = #selector(addToCanvas(_:))
+        return true
     }
 }

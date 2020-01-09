@@ -170,6 +170,19 @@ class DocumentWindowViewModel: NSObject {
         return canvas.add(page, linkedFrom: sourcePage)
     }
 
+    @discardableResult func addPages(_ pages: [Page], to canvas: Canvas, centredOn point: CGPoint? = nil) -> [CanvasPage] {
+        guard pages.count > 0 else {
+            return []
+        }
+        if pages.count == 1 {
+        	self.modelController.undoManager.setActionName(NSLocalizedString("Add Page to Canvas", comment: "Add Page To Canvas Undo Action Name"))
+        } else {
+            self.modelController.undoManager.setActionName(NSLocalizedString("Add Pages to Canvas", comment: "Add Pages To Canvas Undo Action Name"))
+        }
+
+        return canvas.addPages(pages, centredOn: point)
+    }
+
 
     //MARK: - Creating Canvases
     @discardableResult func createCanvas() -> Canvas {

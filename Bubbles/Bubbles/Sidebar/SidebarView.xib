@@ -9,6 +9,7 @@
             <connections>
                 <outlet property="canvasContextMenu" destination="WMw-nL-qeD" id="EZE-7F-cr0"/>
                 <outlet property="canvasesTable" destination="xKe-Ct-mXE" id="zUa-eV-3kv"/>
+                <outlet property="pageContextMenu" destination="Kc9-fp-hh9" id="nN7-iq-Moy"/>
                 <outlet property="pagesTable" destination="KyP-MZ-pBo" id="qNW-MK-osv"/>
                 <outlet property="view" destination="WRf-IH-Kxq" id="xuX-of-KZ1"/>
             </connections>
@@ -135,6 +136,7 @@
                                         <connections>
                                             <outlet property="dataSource" destination="-2" id="YFk-3G-YEn"/>
                                             <outlet property="delegate" destination="-2" id="vtq-vP-xpQ"/>
+                                            <outlet property="menu" destination="Kc9-fp-hh9" id="gc0-x7-9nX"/>
                                         </connections>
                                     </tableView>
                                 </subviews>
@@ -193,6 +195,56 @@
                 </menuItem>
             </items>
             <point key="canvasLocation" x="-238" y="145"/>
+        </menu>
+        <menu id="Kc9-fp-hh9">
+            <items>
+                <menuItem title="New Page" id="PYu-se-QIV">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="newPage:" target="-1" id="she-dk-nbv"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Edit Page Title" id="mjT-1T-KoB">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="editPageTitle:" target="-2" id="hxP-lo-64A"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Delete Pages…" id="cd0-Af-pTh">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="deletePage:" target="-2" id="Hnr-BN-JgG"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="O2q-mr-Xy4"/>
+                <menuItem title="Add to Canvas" id="IH3-F1-hys">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Add to Canvas" id="BS1-dN-fqV">
+                        <items>
+                            <menuItem title="Item" id="uDL-El-Crd">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                        </items>
+                        <connections>
+                            <outlet property="delegate" destination="-2" id="AsA-BW-7wh"/>
+                        </connections>
+                    </menu>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="Z7R-JD-9LV"/>
+                <menuItem title="Import Files…" id="LPL-4Z-Ogo">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="importFiles:" target="-1" id="nfi-bb-PNB"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Export Files…" id="s1X-il-dlt">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="exportPages:" target="-2" id="BVk-Uk-cdT"/>
+                    </connections>
+                </menuItem>
+            </items>
+            <point key="canvasLocation" x="-261" y="-74"/>
         </menu>
     </objects>
 </document>

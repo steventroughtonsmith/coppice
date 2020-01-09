@@ -133,6 +133,16 @@ class SidebarViewModel: ViewModel {
         self.documentWindowViewModel.addPage(at: pageLink, to: canvas, centredOn: centrePoint)
     }
 
+    func addPages(atIndexes indexes: IndexSet, toCanvasAtindex canvasIndex: Int) {
+        guard let canvas = self.canvasItems[safe: canvasIndex]?.canvas else {
+            return
+        }
+
+        let pages = self.pageItems[indexes].map { $0.page }
+        self.documentWindowViewModel.addPages(pages, to: canvas)
+    }
+
+
 
     //MARK: - Deleting
     func deleteCanvases(atIndexes indexes: IndexSet) {
