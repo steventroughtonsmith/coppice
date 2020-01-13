@@ -38,8 +38,8 @@ class EditableLabelCell: NSTableCellView {
         }
         textField.isEditable = false
         textField.isBordered = false
+        textField.backgroundColor = nil
         textField.drawsBackground = false
-        textField.backgroundColor = NSColor.clear
     }
 
     override func cancelOperation(_ sender: Any?) {

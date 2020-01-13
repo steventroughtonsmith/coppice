@@ -13,7 +13,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wdn-ho-ujI">
-                    <rect key="frame" x="3" y="2" width="17" height="17"/>
+                    <rect key="frame" x="10" y="2" width="17" height="17"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="17" id="o7Q-Cg-Cpp"/>
                         <constraint firstAttribute="width" constant="17" id="pyJ-N8-hNg"/>
@@ -24,7 +24,7 @@
                     </connections>
                 </imageView>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oi3-HJ-PMi">
-                    <rect key="frame" x="25" y="2" width="104" height="16"/>
+                    <rect key="frame" x="32" y="2" width="97" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="Z8z-sK-TwC">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -36,7 +36,7 @@
                 </textField>
             </subviews>
             <constraints>
-                <constraint firstItem="wdn-ho-ujI" firstAttribute="leading" secondItem="g8s-dO-xs9" secondAttribute="leading" constant="3" id="2Ic-Ee-95G"/>
+                <constraint firstItem="wdn-ho-ujI" firstAttribute="leading" secondItem="g8s-dO-xs9" secondAttribute="leading" constant="10" id="2Ic-Ee-95G"/>
                 <constraint firstItem="wdn-ho-ujI" firstAttribute="centerY" secondItem="g8s-dO-xs9" secondAttribute="centerY" id="7nI-SL-nCf"/>
                 <constraint firstAttribute="trailing" secondItem="oi3-HJ-PMi" secondAttribute="trailing" constant="3" id="JOh-N2-olf"/>
                 <constraint firstItem="oi3-HJ-PMi" firstAttribute="centerY" secondItem="g8s-dO-xs9" secondAttribute="centerY" id="c55-Cy-Dah"/>

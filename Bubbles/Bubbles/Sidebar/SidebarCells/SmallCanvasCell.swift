@@ -10,5 +10,18 @@ import Cocoa
 
 class SmallCanvasCell: EditableLabelCell {
     static var identifier = NSUserInterfaceItemIdentifier(rawValue: "SmallCanvasCell")
-    
+
+    @IBOutlet weak var canvasPreview: CanvasPreviewView!
+    override var objectValue: Any? {
+        didSet {
+            guard let canvasItem = self.objectValue as? CanvasSidebarItem else {
+                return
+            }
+            self.canvasPreview.previewImage = canvasItem.thumbnail
+        }
+    }
+
+    override func awakeFromNib() {
+        self.canvasPreview.preferredMaxDimensions = CGSize(width: 43, height: 32)
+    }
 }
