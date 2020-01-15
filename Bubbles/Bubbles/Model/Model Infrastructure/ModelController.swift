@@ -11,6 +11,7 @@ import Foundation
 protocol ModelController: class, ModelChangeGroupHandler {
     var undoManager: UndoManager { get }
     var collections: [ModelType: Any] {get set}
+    var settings: ModelSettings { get }
     @discardableResult func addModelCollection<T: CollectableModelObject>(for type: T.Type) -> ModelCollection<T>
     func removeModelCollection<T: CollectableModelObject>(for type: T.Type)
 

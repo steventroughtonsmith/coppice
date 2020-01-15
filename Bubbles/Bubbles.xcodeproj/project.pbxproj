@@ -98,6 +98,8 @@
 		99868F4523995739009AC0F7 /* PageLinkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99868F4423995739009AC0F7 /* PageLinkManager.swift */; };
 		99868F4723995B4F009AC0F7 /* TextLinkFinderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99868F4623995B4F009AC0F7 /* TextLinkFinderTests.swift */; };
 		999DAACA23CCC5D80013EC36 /* SidebarHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999DAAC923CCC5D80013EC36 /* SidebarHeaderView.swift */; };
+		999DAACC23CDFE6B0013EC36 /* PagesSidebarDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999DAACB23CDFE6B0013EC36 /* PagesSidebarDataSource.swift */; };
+		999DAACE23CF484A0013EC36 /* ModelSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999DAACD23CF484A0013EC36 /* ModelSettings.swift */; };
 		99A0B853238961BF005FCF25 /* NSColor+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B852238961BF005FCF25 /* NSColor+M3Extensions.swift */; };
 		99A0B855238C2F46005FCF25 /* TextEditorAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B854238C2F46005FCF25 /* TextEditorAttributes.swift */; };
 		99A0B857238D6F74005FCF25 /* NSTextView+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B856238D6F74005FCF25 /* NSTextView+M3Extensions.swift */; };
@@ -288,6 +290,8 @@
 		99868F4423995739009AC0F7 /* PageLinkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageLinkManager.swift; sourceTree = "<group>"; };
 		99868F4623995B4F009AC0F7 /* TextLinkFinderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLinkFinderTests.swift; sourceTree = "<group>"; };
 		999DAAC923CCC5D80013EC36 /* SidebarHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarHeaderView.swift; sourceTree = "<group>"; };
+		999DAACB23CDFE6B0013EC36 /* PagesSidebarDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagesSidebarDataSource.swift; sourceTree = "<group>"; };
+		999DAACD23CF484A0013EC36 /* ModelSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelSettings.swift; sourceTree = "<group>"; };
 		99A0B852238961BF005FCF25 /* NSColor+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+M3Extensions.swift"; sourceTree = "<group>"; };
 		99A0B854238C2F46005FCF25 /* TextEditorAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorAttributes.swift; sourceTree = "<group>"; };
 		99A0B856238D6F74005FCF25 /* NSTextView+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextView+M3Extensions.swift"; sourceTree = "<group>"; };
@@ -416,6 +420,7 @@
 				99DEF28E22F33A790020A7CE /* ModelID.swift */,
 				99FFF9C723439DB500EF02A0 /* ModelObservation.swift */,
 				99F084F023A280A5008D2ACA /* ModelRelationship.swift */,
+				999DAACD23CF484A0013EC36 /* ModelSettings.swift */,
 			);
 			path = "Model Infrastructure";
 			sourceTree = "<group>";
@@ -428,6 +433,7 @@
 				992A5C9122DCB7530012CCB6 /* SidebarViewController.swift */,
 				992A5C9522DCB7790012CCB6 /* SidebarView.xib */,
 				999DAAC923CCC5D80013EC36 /* SidebarHeaderView.swift */,
+				999DAACB23CDFE6B0013EC36 /* PagesSidebarDataSource.swift */,
 				99488A9723BA38E6009954AF /* SidebarCells */,
 			);
 			path = Sidebar;
@@ -1183,7 +1189,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				999DAACE23CF484A0013EC36 /* ModelSettings.swift in Sources */,
 				992A5CAA22DDF5000012CCB6 /* DebugCanvasEditor.swift in Sources */,
+				999DAACC23CDFE6B0013EC36 /* PagesSidebarDataSource.swift in Sources */,
 				99C03EF123293D6C00EB7516 /* Array+M3Extensions.swift in Sources */,
 				99C865292306D141004C7B89 /* PageSelectorViewController.swift in Sources */,
 				99C03F07232A8ED200EB7516 /* CanvasElementView.swift in Sources */,

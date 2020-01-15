@@ -27,7 +27,6 @@ class SidebarViewModel: ViewModel {
 
 
     //MARK: - Convenience Methods
-
     var canvases: ModelCollection<Canvas> {
         return self.modelController.collection(for: Canvas.self)
     }
@@ -98,6 +97,42 @@ class SidebarViewModel: ViewModel {
 
 
     //MARK: - Pages
+    enum PageSortKey: String, CaseIterable {
+        case title
+        case lastEdited
+        case dateCreated
+
+        var localizedName: String {
+            switch self {
+            case .title:
+				return NSLocalizedString("Title", comment: "Title sorting name")
+            case .lastEdited:
+                return NSLocalizedString("Last Edited", comment: "Last Edited sorting name")
+            case .dateCreated:
+                return NSLocalizedString("Date Created", comment: "Date Created sorting name")
+            }
+        }
+    }
+    var sortKey: PageSortKey {
+        get {
+            guard let sortKeyString = self.modelController.settings.string(for: ModelSettings.pageSortKeySetting),
+                let sortKey = PageSortKey(rawValue: sortKeyString) else {
+                    return .title
+            }
+            return sortKey
+        }
+        set {
+            let oldValue = self.sortKey
+            self.modelController.undoManager.registerUndo(withTarget: self) { (target) in
+                target.sortKey = oldValue
+            }
+            self.modelController.undoManager.setActionName("Sort Pages")
+            self.modelController.settings.set(newValue.rawValue, for: ModelSettings.pageSortKeySetting)
+            self.sortCachedItems()
+            self.view?.reloadPages()
+        }
+    }
+
     private func handleChange(to page: Page, changeType: ModelCollection<Page>.ChangeType) {
         self.reloadPages()
         //Only want to select the page in the sidebar if the user has a page selected (otherwise it will appear in the canvas)
@@ -117,10 +152,23 @@ class SidebarViewModel: ViewModel {
             return cachedItems
         }
         let items = self.pages.objects(matchingSearchTerm: self.documentWindowViewModel.searchString)
-            .sorted { $0.title < $1.title }
             .map { PageSidebarItem(page: $0)}
         self.cachedPageItems = items
+        self.sortCachedItems()
         return items
+    }
+
+    private func sortCachedItems() {
+        self.cachedPageItems?.sort { item1, item2 in
+            switch self.sortKey {
+            case .title:
+                return item1.page.title < item2.page.title
+            case .lastEdited:
+                return item1.page.dateModified > item2.page.dateModified
+            case .dateCreated:
+                return item1.page.dateCreated > item2.page.dateCreated
+            }
+        }
     }
 
     func addPage(with id: ModelID, toCanvasAtIndex index: Int) {

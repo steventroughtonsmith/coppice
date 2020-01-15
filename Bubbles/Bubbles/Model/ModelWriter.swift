@@ -30,6 +30,8 @@ class ModelWriter: NSObject {
         plist["canvasPages"] = canvasPages
         content.append(contentsOf: canvasPageContent)
 
+        plist["settings"] = self.modelController.settings.plistRepresentation
+
         let plistData = try PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
         let dataPlistWrapper = FileWrapper(regularFileWithContents: plistData)
         let contentFileWrapper = self.fileWrapper(forContent: content)

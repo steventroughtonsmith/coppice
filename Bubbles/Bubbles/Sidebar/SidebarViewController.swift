@@ -11,9 +11,11 @@ import Combine
 
 class SidebarViewController: NSViewController, NSMenuItemValidation {
     @objc dynamic let viewModel: SidebarViewModel
+    private let pagesDataSource: PagesSidebarDataSource
 
     init(viewModel: SidebarViewModel) {
         self.viewModel = viewModel
+        self.pagesDataSource = PagesSidebarDataSource(viewModel: viewModel)
         super.init(nibName: "SidebarView", bundle: nil)
         self.viewModel.view = self
     }
@@ -28,12 +30,11 @@ class SidebarViewController: NSViewController, NSMenuItemValidation {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.pagesDataSource.tableView = self.pagesTable
+
         self.canvasesTable.setDraggingSourceOperationMask(.copy, forLocal: true)
         self.canvasesTable.registerForDraggedTypes([ModelID.PasteboardType, .fileURL])
-        self.pagesTable.setDraggingSourceOperationMask(.copy, forLocal: false)
-        self.pagesTable.registerForDraggedTypes([.fileURL])
 
-        self.pagesTable.register(NSNib(nibNamed: "PageCell", bundle: nil), forIdentifier: PageCell.identifier)
         self.canvasesTable.register(NSNib(nibNamed: "SmallCanvasCell", bundle: nil), forIdentifier: SmallCanvasCell.identifier)
         self.canvasesTable.register(NSNib(nibNamed: "LargeCanvasCell", bundle: nil), forIdentifier: LargeCanvasCell.identifier)
 
@@ -115,6 +116,15 @@ class SidebarViewController: NSViewController, NSMenuItemValidation {
         self.viewModel.addPages(atIndexes: self.pageRowIndexesForAction, toCanvasAtindex: menuItem.tag)
     }
 
+    @IBAction func changePageSorting(_ sender: Any?) {
+        guard let menuItem = sender as? NSMenuItem,
+            let sortKeyString = menuItem.representedObject as? String,
+            let sortKey = SidebarViewModel.PageSortKey(rawValue: sortKeyString) else {
+            return
+        }
+        self.viewModel.sortKey = sortKey
+    }
+
 
     //MARK: - Canvas Menu Actions
     @IBAction func editCanvasTitle(_ sender: Any) {
@@ -174,6 +184,10 @@ class SidebarViewController: NSViewController, NSMenuItemValidation {
                 menuItem.title = NSLocalizedString("Delete Canvases…", comment: "Delete multiple canvases menu item title")
             }
             return (rowIndexes.count > 0)
+        }
+
+        if menuItem.action == #selector(changePageSorting(_:)) {
+            return true
         }
 
         return false
@@ -237,24 +251,14 @@ extension SidebarViewController: SidebarView {
 
 extension SidebarViewController: NSTableViewDataSource {
     func numberOfRows(in tableView: NSTableView) -> Int {
-        if (tableView == self.canvasesTable) {
-            return self.viewModel.canvasItems.count
-        }
-        return self.viewModel.pageItems.count
+        return self.viewModel.canvasItems.count
     }
 
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
-        if (tableView == self.canvasesTable) {
-            return self.viewModel.canvasItems[row]
-        }
-        return self.viewModel.pageItems[row]
+        return self.viewModel.canvasItems[row]
     }
 
     func tableView(_ tableView: NSTableView, pasteboardWriterForRow row: Int) -> NSPasteboardWriting? {
-        if (tableView == self.pagesTable) {
-            return self.viewModel.pageItems[row].id.pasteboardItem
-        }
-
         return self.viewModel.canvasItems[row].id.pasteboardItem
     }
 
@@ -293,11 +297,7 @@ extension SidebarViewController: NSTableViewDataSource {
     }
 
     private func validateFileDrop(on table: NSTableView, with info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableView.DropOperation) -> NSDragOperation {
-        if table == self.pagesTable {
-            self.pagesTable.setDropRow(-1, dropOperation: .on)
-            return .copy
-        }
-        if (table == self.canvasesTable) && (row < table.numberOfRows) {
+        if (row < table.numberOfRows) {
             self.canvasesTable.setDropRow(row, dropOperation: .on)
             return .copy
         }
@@ -347,7 +347,7 @@ extension SidebarViewController: NSTableViewDataSource {
         }
 
         let urls = items.compactMap{ $0.data(forType: .fileURL) }.compactMap { URL(dataRepresentation: $0, relativeTo: nil) }
-        let newPages = self.viewModel.addPages(fromFilesAtURLs: urls, toCanvasAtIndex: (table == self.canvasesTable) ? row : nil)
+        let newPages = self.viewModel.addPages(fromFilesAtURLs: urls, toCanvasAtIndex: row)
         return (newPages.count > 0) // Accept the drop if at least one file led to a new page
     }
 }
@@ -355,10 +355,6 @@ extension SidebarViewController: NSTableViewDataSource {
 
 extension SidebarViewController: NSTableViewDelegate {
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        if (tableView == self.pagesTable) {
-            return tableView.makeView(withIdentifier: PageCell.identifier, owner: nil)
-        }
-
         let identifier = self.viewModel.useSmallCanvasCells ? SmallCanvasCell.identifier : LargeCanvasCell.identifier
         return tableView.makeView(withIdentifier: identifier, owner: nil)
     }
@@ -368,15 +364,8 @@ extension SidebarViewController: NSTableViewDelegate {
         guard self.isReloadingSelection == false else {
             return
         }
-        guard let tableView = notification.object as? NSTableView else {
-            return
-        }
 
-        if (tableView == self.canvasesTable) {
-            self.viewModel.selectedCanvasRowIndexes = self.canvasesTable.selectedRowIndexes
-        } else {
-            self.viewModel.selectedPageRowIndexes = self.pagesTable.selectedRowIndexes
-        }
+        self.viewModel.selectedCanvasRowIndexes = self.canvasesTable.selectedRowIndexes
     }
 }
 
@@ -384,10 +373,23 @@ extension SidebarViewController: NSTableViewDelegate {
 
 extension SidebarViewController: NSMenuDelegate {
     func numberOfItems(in menu: NSMenu) -> Int {
+        if (menu.identifier == NSUserInterfaceItemIdentifier("SortPagesMenu")) {
+            return SidebarViewModel.PageSortKey.allCases.count
+        }
         return self.viewModel.canvasItems.count
     }
 
     func menu(_ menu: NSMenu, update item: NSMenuItem, at index: Int, shouldCancel: Bool) -> Bool {
+        if (menu.identifier == NSUserInterfaceItemIdentifier("SortPagesMenu")) {
+            let sortKey = SidebarViewModel.PageSortKey.allCases[index]
+            item.title = sortKey.localizedName
+            item.representedObject = sortKey.rawValue
+            item.state = (self.viewModel.sortKey == sortKey) ? .on : .off
+            item.target = self
+            item.action = #selector(changePageSorting(_:))
+            return true
+        }
+
         item.title = self.viewModel.canvasItems[index].canvas.title
         item.tag = index
         item.target = self

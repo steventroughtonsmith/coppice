@@ -47,4 +47,10 @@ extension UserDefaults {
     func set(_ value: Any?, forKey key: UserDefaultsKeys) {
         self.set(value, forKey: key.rawValue)
     }
+
+    func register(defaults defaultsDicts: [UserDefaultsKeys: Any]) {
+        var defaults = [String: Any]()
+        defaultsDicts.forEach { defaults[$0.rawValue] = $1 }
+        self.register(defaults: defaults)
+    }
 }

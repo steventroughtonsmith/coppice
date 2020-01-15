@@ -37,6 +37,8 @@ class ModelReader: NSObject {
         }
         let plist = try ModelPlist(plist: plistDict)
 
+        self.modelController.settings.update(withPlist: plist.settings)
+
         self.createAndDeleteObjects(ofType: CanvasPage.self, using: plist.canvasPages)
         self.createAndDeleteObjects(ofType: Canvas.self, using: plist.canvases)
         self.createAndDeleteObjects(ofType: Page.self, using: plist.pages)
@@ -44,6 +46,7 @@ class ModelReader: NSObject {
         try self.updateObjects(ofType: Page.self, using: plist.pages, content: contentWrappers)
         try self.updateObjects(ofType: Canvas.self, using: plist.canvases, content: contentWrappers)
         try self.updateObjects(ofType: CanvasPage.self, using: plist.canvasPages, content: contentWrappers)
+
     }
 
     private func createAndDeleteObjects<T: CollectableModelObject>(ofType type: T.Type, using plistItems: [ModelID: [String: Any]]) {
@@ -105,6 +108,7 @@ private struct ModelPlist {
     let canvases: [ModelID: [String: Any]]
     let pages: [ModelID: [String: Any]]
     let canvasPages: [ModelID: [String: Any]]
+    let settings: [String: Any]
 
     init(plist: [String: Any]) throws {
         guard let canvasPlist = plist["canvases"] as? [[String: Any]] else {
@@ -120,6 +124,8 @@ private struct ModelPlist {
         self.canvases = try ModelPlist.mapToModelIDKeys(canvasPlist)
         self.pages = try ModelPlist.mapToModelIDKeys(pagesPlist)
         self.canvasPages = try ModelPlist.mapToModelIDKeys(canvasPagesPlist)
+
+        self.settings = (plist["settings"] as? [String: Any]) ?? [:]
     }
 
     private static func mapToModelIDKeys(_ collection: [[String: Any]]) throws -> [ModelID: [String: Any]] {

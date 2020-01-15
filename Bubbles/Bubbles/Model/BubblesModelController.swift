@@ -10,6 +10,7 @@ import Cocoa
 
 class BubblesModelController: NSObject, ModelController {
     var collections = [ModelType: Any]()
+    let settings = ModelSettings()
 
     let undoManager: UndoManager
     init(undoManager: UndoManager) {
@@ -86,4 +87,10 @@ extension ModelCollection where ModelType == Page {
         }
         return page
     }
+}
+
+
+//MARK: - ModelSettingsKeys
+extension ModelSettings {
+    static let pageSortKeySetting = Setting(rawValue: "pageSortKey")
 }

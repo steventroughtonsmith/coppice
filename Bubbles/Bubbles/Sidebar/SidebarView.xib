@@ -43,7 +43,7 @@
                                                 <tableColumns>
                                                     <tableColumn width="225" minWidth="40" maxWidth="1000" id="DUd-FR-Xxl">
                                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
-                                                            <font key="font" metaFont="menu" size="11"/>
+                                                            <font key="font" metaFont="label" size="11"/>
                                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                         </tableHeaderCell>
@@ -159,7 +159,7 @@
                                                 <tableColumns>
                                                     <tableColumn width="225" minWidth="40" maxWidth="1000" id="QUv-LA-rOC">
                                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
-                                                            <font key="font" metaFont="menu" size="11"/>
+                                                            <font key="font" metaFont="label" size="11"/>
                                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                         </tableHeaderCell>
@@ -203,7 +203,7 @@
                             <rect key="frame" x="0.0" y="419" width="228" height="30"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yNA-I0-Svc">
-                                    <rect key="frame" x="6" y="8" width="216" height="14"/>
+                                    <rect key="frame" x="6" y="8" width="38" height="14"/>
                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Pages" id="4pC-H8-Hkj">
                                         <font key="font" metaFont="smallSystemBold"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -212,7 +212,6 @@
                                 </textField>
                             </subviews>
                             <constraints>
-                                <constraint firstAttribute="trailing" secondItem="yNA-I0-Svc" secondAttribute="trailing" constant="8" id="0eG-Lk-jYQ"/>
                                 <constraint firstItem="yNA-I0-Svc" firstAttribute="centerY" secondItem="IUT-0a-ndm" secondAttribute="centerY" id="814-35-3s9"/>
                                 <constraint firstItem="yNA-I0-Svc" firstAttribute="leading" secondItem="IUT-0a-ndm" secondAttribute="leading" constant="8" id="Ymi-sU-h3L"/>
                                 <constraint firstAttribute="height" constant="30" id="bIv-gI-N49"/>
@@ -320,6 +319,20 @@
                     <connections>
                         <action selector="exportPages:" target="-2" id="BVk-Uk-cdT"/>
                     </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="9de-jw-GId"/>
+                <menuItem title="Sort by" id="SST-Dm-5b4">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Sort by" identifier="SortPagesMenu" id="g55-0m-9EK">
+                        <items>
+                            <menuItem title="Options" id="Jxd-gV-RCc">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                        </items>
+                        <connections>
+                            <outlet property="delegate" destination="-2" id="Log-yG-EcF"/>
+                        </connections>
+                    </menu>
                 </menuItem>
             </items>
             <point key="canvasLocation" x="-261" y="-74"/>
