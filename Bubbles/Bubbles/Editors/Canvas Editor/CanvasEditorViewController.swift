@@ -75,7 +75,7 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation {
         self.canvasView.layer?.masksToBounds = false
 
         self.canvasView.delegate = self
-        self.canvasView.registerForDraggedTypes([ModelID.PasteboardType])
+        self.canvasView.registerForDraggedTypes([ModelID.PasteboardType, .fileURL])
     }
 
     override func viewDidAppear() {
@@ -390,6 +390,10 @@ extension CanvasEditorViewController: Editor {
 extension CanvasEditorViewController: CanvasViewDelegate {
     func didDropPage(with id: ModelID, at point: CGPoint, on canvasView: CanvasView) {
         self.viewModel.addPage(at: PageLink(destination: id), centredOn: point)
+    }
+
+    func didDropFiles(withURLs urls: [URL], at point: CGPoint, on canvasView: CanvasView) {
+        self.viewModel.addPages(forFilesAtURLs: urls, centredOn: point)
     }
 }
 

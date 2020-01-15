@@ -113,6 +113,7 @@ class SidebarViewModel: ViewModel {
             }
         }
     }
+    
     var sortKey: PageSortKey {
         get {
             guard let sortKeyString = self.modelController.settings.string(for: ModelSettings.pageSortKeySetting),

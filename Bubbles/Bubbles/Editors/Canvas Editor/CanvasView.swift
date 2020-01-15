@@ -10,6 +10,7 @@ import Cocoa
 
 protocol CanvasViewDelegate: class {
     func didDropPage(with id: ModelID, at point: CGPoint, on canvasView: CanvasView)
+    func didDropFiles(withURLs urls: [URL], at point: CGPoint, on canvasView: CanvasView)
 }
 
 class CanvasView: NSView {
@@ -195,6 +196,40 @@ class CanvasView: NSView {
     }
 
     override func draggingUpdated(_ sender: NSDraggingInfo) -> NSDragOperation {
+        guard let types = sender.draggingPasteboard.types else {
+            return []
+        }
+
+        if types.contains(ModelID.PasteboardType) {
+            return self.pageDraggingUpdates(sender)
+        }
+        if types.contains(.fileURL) {
+            return self.fileDraggingUpdates(sender)
+        }
+        return []
+    }
+
+    override func prepareForDragOperation(_ sender: NSDraggingInfo) -> Bool {
+        return true
+    }
+
+    override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
+        guard let types = sender.draggingPasteboard.types else {
+            return false
+        }
+
+        if types.contains(ModelID.PasteboardType) {
+            return self.performPageDragOperation(sender)
+        }
+        if types.contains(.fileURL) {
+            return self.performFileDragOperation(sender)
+        }
+        return false
+    }
+
+
+    //MARK: - Page Drag & Drop
+    func pageDraggingUpdates(_ sender: NSDraggingInfo) -> NSDragOperation {
         guard let item = sender.draggingPasteboard.pasteboardItems?.first,
             let id = ModelID(pasteboardItem: item) else {
                 return []
@@ -205,15 +240,11 @@ class CanvasView: NSView {
         return []
     }
 
-    override func prepareForDragOperation(_ sender: NSDraggingInfo) -> Bool {
-        return true
-    }
-
-    override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
+    func performPageDragOperation(_ sender: NSDraggingInfo) -> Bool {
         guard let item = sender.draggingPasteboard.pasteboardItems?.first,
             let id = ModelID(pasteboardItem: item),
             id.modelType == Page.modelType else {
-            return false
+                return false
         }
 
         let dropPoint = self.convert(sender.draggingLocation, from: nil)
@@ -221,6 +252,24 @@ class CanvasView: NSView {
         return true
     }
 
+    //MARK: - File Drag & Drop
+    func fileDraggingUpdates(_ sender: NSDraggingInfo) -> NSDragOperation {
+        guard let items = sender.draggingPasteboard.pasteboardItems else {
+            return []
+        }
+        return (items.count > 0) ? .copy : []
+    }
+
+    func performFileDragOperation(_ sender: NSDraggingInfo) -> Bool {
+        guard let items = sender.draggingPasteboard.pasteboardItems else {
+            return false
+        }
+
+        let urls = items.compactMap{ $0.data(forType: .fileURL) }.compactMap { URL(dataRepresentation: $0, relativeTo: nil) }
+        let dropPoint = self.convert(sender.draggingLocation, from: nil)
+        self.delegate?.didDropFiles(withURLs: urls, at: dropPoint, on: self)
+        return true
+    }
 
     //MARK: - Cursor Handling
     override func updateTrackingAreas() {

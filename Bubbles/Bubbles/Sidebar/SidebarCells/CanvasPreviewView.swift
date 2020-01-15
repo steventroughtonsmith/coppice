@@ -56,7 +56,6 @@ class CanvasPreviewView: NSView {
 
     //MARK: - Drawing
     override func draw(_ dirtyRect: NSRect) {
-        print("drawing: \(self.bounds)")
         if let image = self.previewImage {
             NSGraphicsContext.saveGraphicsState()
             let clipPath = NSBezierPath(roundedRect: self.bounds, xRadius: self.cornerRadius, yRadius: self.cornerRadius)

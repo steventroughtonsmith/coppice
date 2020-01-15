@@ -154,6 +154,11 @@ class CanvasEditorViewModel: ViewModel {
         self.documentWindowViewModel.addPage(at: link, to: self.canvas, centredOn: pagePosition)
     }
 
+    func addPages(forFilesAtURLs urls: [URL], centredOn point: CGPoint? = nil) {
+        let pagePosition = (point != nil) ? self.layoutEngine.convertPointToPageSpace(point!) : nil
+        self.documentWindowViewModel.createPages(fromFilesAtURLs: urls, addingTo: self.canvas, centredOn: pagePosition)
+    }
+
 
     //MARK: - Zooming
     @objc dynamic var zoomFactor: CGFloat = 1 {

@@ -90,7 +90,7 @@ class DocumentWindowViewModel: NSObject {
         return page
     }
 
-    func createPages(fromFilesAtURLs fileURLs: [URL], addingTo canvas: Canvas? = nil, centredOn point: CGPoint? = nil) -> [Page] {
+    @discardableResult func createPages(fromFilesAtURLs fileURLs: [URL], addingTo canvas: Canvas? = nil, centredOn point: CGPoint? = nil) -> [Page] {
         self.modelController.pushChangeGroup()
         self.modelController.undoManager.setActionName(NSLocalizedString("Create Pages", comment: "Create Page Undo Action Name"))
         let newPages = fileURLs.compactMap { self.pageCollection.newPage(fromFileAt: $0) }
