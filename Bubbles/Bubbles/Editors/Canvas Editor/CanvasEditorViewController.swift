@@ -372,6 +372,9 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation {
     }
 
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+        if menuItem.action == #selector(zoomControlChanged(_:)) {
+            return true
+        }
         return PageExporter.validate(menuItem, forExporting: self.viewModel.selectedCanvasPages.compactMap { $0.page })
     }
 }

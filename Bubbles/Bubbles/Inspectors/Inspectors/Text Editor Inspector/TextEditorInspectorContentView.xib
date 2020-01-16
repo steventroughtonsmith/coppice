@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15702" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15702"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -18,7 +18,7 @@
             <rect key="frame" x="0.0" y="0.0" width="280" height="114"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pqU-O1-BJI">
+                <popUpButton toolTip="Choose the font family" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pqU-O1-BJI">
                     <rect key="frame" x="-2" y="90" width="285" height="25"/>
                     <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="XWt-ie-f1O" id="xrz-Pa-l2m">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -36,7 +36,7 @@
                         <binding destination="-2" name="selectedValue" keyPath="self.viewModel.selectedFontFamily" previousBinding="JwZ-O0-wgl" id="MoO-pm-ZNl"/>
                     </connections>
                 </popUpButton>
-                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="U7t-eh-okS">
+                <popUpButton toolTip="Choose the typeface" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="U7t-eh-okS">
                     <rect key="frame" x="-2" y="59" width="208" height="25"/>
                     <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="DcM-Aj-qkw" id="sWc-mi-lkM">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -61,7 +61,7 @@
                         <binding destination="-2" name="contentValues" keyPath="self.viewModel.typefaces.displayName" previousBinding="CUr-iE-ie4" id="hGo-9W-h5t"/>
                     </connections>
                 </popUpButton>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tVJ-Wa-8Xo">
+                <textField toolTip="Choose the text size" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tVJ-Wa-8Xo">
                     <rect key="frame" x="213" y="62" width="50" height="21"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="50" id="pbu-RP-YEn"/>
@@ -92,7 +92,7 @@
                         <binding destination="-2" name="value" keyPath="self.viewModel.fontSize" id="ANJ-Uy-ROM"/>
                     </connections>
                 </stepper>
-                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fgc-lj-oNC">
+                <popUpButton toolTip="Choose the text colour" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fgc-lj-oNC">
                     <rect key="frame" x="-2" y="28" width="161" height="25"/>
                     <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="Enl-Df-FmW" id="7v2-2O-MaC">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -109,7 +109,7 @@
                         <action selector="colourPopUpButtonChanged:" target="-2" id="ygm-kU-jAw"/>
                     </connections>
                 </popUpButton>
-                <segmentedControl horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lJO-MO-Qab">
+                <segmentedControl toolTip="Choose the text alignment" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lJO-MO-Qab">
                     <rect key="frame" x="162" y="29" width="120" height="24"/>
                     <segmentedCell key="cell" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="rounded" trackingMode="selectOne" id="JpO-VM-NgB">
                         <font key="font" metaFont="system"/>
@@ -123,7 +123,7 @@
                         <action selector="alignmentClicked:" target="-2" id="WmK-KG-Cnd"/>
                     </connections>
                 </segmentedControl>
-                <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1fJ-zV-rDa">
+                <segmentedControl toolTip="Choose the text styles" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1fJ-zV-rDa">
                     <rect key="frame" x="-2" y="-2" width="242" height="24"/>
                     <segmentedCell key="cell" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="rounded" trackingMode="selectAny" id="bxG-Y2-CcR">
                         <font key="font" metaFont="system"/>
@@ -138,7 +138,7 @@
                         <action selector="styleControlClicked:" target="-2" id="sia-pJ-wff"/>
                     </connections>
                 </segmentedControl>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="b02-Xt-Yqt">
+                <button toolTip="Open the font panel" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="b02-Xt-Yqt">
                     <rect key="frame" x="242" y="-7" width="44" height="32"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="32" id="RYF-EP-vks"/>
