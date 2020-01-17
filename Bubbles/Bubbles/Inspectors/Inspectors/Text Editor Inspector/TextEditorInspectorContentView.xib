@@ -8,18 +8,17 @@
         <customObject id="-2" userLabel="File's Owner" customClass="TextEditorInspectorViewController" customModule="Bubbles" customModuleProvider="target">
             <connections>
                 <outlet property="alignmentControl" destination="lJO-MO-Qab" id="GrE-G3-hKc"/>
-                <outlet property="colourPopUpButton" destination="fgc-lj-oNC" id="5he-Ll-BMd"/>
                 <outlet property="styleControl" destination="1fJ-zV-rDa" id="LGY-8F-asz"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="Hz6-mo-xeY">
-            <rect key="frame" x="0.0" y="0.0" width="280" height="114"/>
+            <rect key="frame" x="0.0" y="0.0" width="280" height="117"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <popUpButton toolTip="Choose the font family" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pqU-O1-BJI">
-                    <rect key="frame" x="-2" y="90" width="285" height="25"/>
+                    <rect key="frame" x="-2" y="93" width="285" height="25"/>
                     <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="XWt-ie-f1O" id="xrz-Pa-l2m">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -37,7 +36,7 @@
                     </connections>
                 </popUpButton>
                 <popUpButton toolTip="Choose the typeface" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="U7t-eh-okS">
-                    <rect key="frame" x="-2" y="59" width="208" height="25"/>
+                    <rect key="frame" x="-2" y="62" width="208" height="25"/>
                     <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="DcM-Aj-qkw" id="sWc-mi-lkM">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -62,7 +61,7 @@
                     </connections>
                 </popUpButton>
                 <textField toolTip="Choose the text size" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tVJ-Wa-8Xo">
-                    <rect key="frame" x="213" y="62" width="50" height="21"/>
+                    <rect key="frame" x="213" y="65" width="50" height="21"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="50" id="pbu-RP-YEn"/>
                     </constraints>
@@ -86,37 +85,20 @@
                     </connections>
                 </textField>
                 <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gJM-Vb-Oux">
-                    <rect key="frame" x="264" y="59" width="19" height="28"/>
+                    <rect key="frame" x="264" y="62" width="19" height="28"/>
                     <stepperCell key="cell" continuous="YES" alignment="left" maxValue="999" id="iIB-a3-m2I"/>
                     <connections>
                         <binding destination="-2" name="value" keyPath="self.viewModel.fontSize" id="ANJ-Uy-ROM"/>
                     </connections>
                 </stepper>
-                <popUpButton toolTip="Choose the text colour" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fgc-lj-oNC">
-                    <rect key="frame" x="-2" y="28" width="161" height="25"/>
-                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="Enl-Df-FmW" id="7v2-2O-MaC">
-                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                        <menu key="menu" id="fh6-0a-HPr">
-                            <items>
-                                <menuItem title="Item 1" state="on" id="Enl-Df-FmW"/>
-                                <menuItem title="Item 2" id="LlD-k9-52C"/>
-                                <menuItem title="Item 3" id="mqJ-hX-pKg"/>
-                            </items>
-                        </menu>
-                    </popUpButtonCell>
-                    <connections>
-                        <action selector="colourPopUpButtonChanged:" target="-2" id="ygm-kU-jAw"/>
-                    </connections>
-                </popUpButton>
-                <segmentedControl toolTip="Choose the text alignment" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lJO-MO-Qab">
-                    <rect key="frame" x="162" y="29" width="120" height="24"/>
+                <segmentedControl toolTip="Choose the text alignment" horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lJO-MO-Qab">
+                    <rect key="frame" x="162" y="31" width="120" height="24"/>
                     <segmentedCell key="cell" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="rounded" trackingMode="selectOne" id="JpO-VM-NgB">
                         <font key="font" metaFont="system"/>
                         <segments>
-                            <segment label="􀌀"/>
-                            <segment label="􀌁" tag="1"/>
-                            <segment label="􀌂"/>
+                            <segment image="TextAlignLeft"/>
+                            <segment image="TextAlignCenter" tag="1"/>
+                            <segment image="TextAlignRight"/>
                         </segments>
                     </segmentedCell>
                     <connections>
@@ -128,10 +110,10 @@
                     <segmentedCell key="cell" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="rounded" trackingMode="selectAny" id="bxG-Y2-CcR">
                         <font key="font" metaFont="system"/>
                         <segments>
-                            <segment label="􀅓"/>
-                            <segment label="􀅔" selected="YES" tag="1"/>
-                            <segment label="􀅕"/>
-                            <segment label="􀅖"/>
+                            <segment image="TextBold"/>
+                            <segment image="TextItalic" selected="YES" tag="1"/>
+                            <segment image="TextUnderline"/>
+                            <segment image="TextStrikethrough"/>
                         </segments>
                     </segmentedCell>
                     <connections>
@@ -143,36 +125,52 @@
                     <constraints>
                         <constraint firstAttribute="width" constant="32" id="RYF-EP-vks"/>
                     </constraints>
-                    <buttonCell key="cell" type="push" title="􀅒" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="eg9-Zg-fO5">
+                    <buttonCell key="cell" type="push" bezelStyle="rounded" image="TextFontPanel" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="eg9-Zg-fO5">
                         <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                         <font key="font" size="13" name="SFCompactDisplay-Regular"/>
                     </buttonCell>
                 </button>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="332-eu-rTh" customClass="TextColourPicker" customModule="Bubbles" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="31" width="156" height="24"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="156" id="YUk-3p-EaQ"/>
+                    </constraints>
+                </customView>
             </subviews>
             <constraints>
+                <constraint firstItem="1fJ-zV-rDa" firstAttribute="top" secondItem="332-eu-rTh" secondAttribute="bottom" constant="10" id="Bvo-m6-83l"/>
                 <constraint firstAttribute="trailing" secondItem="b02-Xt-Yqt" secondAttribute="trailing" id="C99-O7-A0d"/>
                 <constraint firstItem="gJM-Vb-Oux" firstAttribute="centerY" secondItem="U7t-eh-okS" secondAttribute="centerY" id="FQc-nX-ref"/>
                 <constraint firstItem="U7t-eh-okS" firstAttribute="top" secondItem="pqU-O1-BJI" secondAttribute="bottom" constant="10" id="Hsn-oI-lnE"/>
                 <constraint firstItem="tVJ-Wa-8Xo" firstAttribute="firstBaseline" secondItem="U7t-eh-okS" secondAttribute="firstBaseline" id="O5u-fz-y0N"/>
-                <constraint firstItem="fgc-lj-oNC" firstAttribute="top" secondItem="U7t-eh-okS" secondAttribute="bottom" constant="10" id="P7Z-69-Jso"/>
-                <constraint firstItem="fgc-lj-oNC" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="PZ6-Sy-52Z"/>
                 <constraint firstItem="b02-Xt-Yqt" firstAttribute="leading" secondItem="1fJ-zV-rDa" secondAttribute="trailing" constant="10" id="QPj-qd-nXX"/>
-                <constraint firstItem="lJO-MO-Qab" firstAttribute="leading" secondItem="fgc-lj-oNC" secondAttribute="trailing" constant="8" id="Ub4-h7-Jg0"/>
                 <constraint firstItem="U7t-eh-okS" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="UxW-kX-J1g"/>
                 <constraint firstItem="1fJ-zV-rDa" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="We2-Vo-nXE"/>
                 <constraint firstAttribute="trailing" secondItem="lJO-MO-Qab" secondAttribute="trailing" id="aPg-5F-4MY"/>
-                <constraint firstItem="lJO-MO-Qab" firstAttribute="firstBaseline" secondItem="fgc-lj-oNC" secondAttribute="firstBaseline" id="bJm-lL-KQC"/>
+                <constraint firstItem="332-eu-rTh" firstAttribute="top" secondItem="U7t-eh-okS" secondAttribute="bottom" constant="10" id="b64-QC-mlD"/>
                 <constraint firstItem="b02-Xt-Yqt" firstAttribute="centerY" secondItem="1fJ-zV-rDa" secondAttribute="centerY" id="bym-Hv-3No"/>
+                <constraint firstItem="lJO-MO-Qab" firstAttribute="centerY" secondItem="332-eu-rTh" secondAttribute="centerY" id="e96-cn-2O6"/>
                 <constraint firstItem="pqU-O1-BJI" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="fdG-o5-Icf"/>
                 <constraint firstItem="tVJ-Wa-8Xo" firstAttribute="leading" secondItem="U7t-eh-okS" secondAttribute="trailing" constant="10" id="htk-xC-TC7"/>
                 <constraint firstAttribute="bottom" secondItem="1fJ-zV-rDa" secondAttribute="bottom" id="lL8-yY-ZCJ"/>
-                <constraint firstItem="1fJ-zV-rDa" firstAttribute="top" secondItem="fgc-lj-oNC" secondAttribute="bottom" constant="10" id="nu6-c9-ezC"/>
+                <constraint firstItem="332-eu-rTh" firstAttribute="leading" secondItem="U7t-eh-okS" secondAttribute="leading" id="qLS-VT-2uP"/>
                 <constraint firstItem="gJM-Vb-Oux" firstAttribute="leading" secondItem="tVJ-Wa-8Xo" secondAttribute="trailing" constant="4" id="ro3-OG-h7w"/>
                 <constraint firstAttribute="trailing" secondItem="pqU-O1-BJI" secondAttribute="trailing" id="rwv-cd-bpI"/>
+                <constraint firstItem="lJO-MO-Qab" firstAttribute="leading" secondItem="332-eu-rTh" secondAttribute="trailing" constant="8" id="tqW-d0-kbx"/>
                 <constraint firstItem="pqU-O1-BJI" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="xNV-Dm-SdA"/>
                 <constraint firstAttribute="trailing" secondItem="gJM-Vb-Oux" secondAttribute="trailing" id="yu2-WY-scs"/>
             </constraints>
-            <point key="canvasLocation" x="6" y="140"/>
+            <point key="canvasLocation" x="-124" y="102.5"/>
         </customView>
     </objects>
+    <resources>
+        <image name="TextAlignCenter" width="17" height="17"/>
+        <image name="TextAlignLeft" width="17" height="17"/>
+        <image name="TextAlignRight" width="17" height="17"/>
+        <image name="TextBold" width="17" height="17"/>
+        <image name="TextFontPanel" width="17" height="17"/>
+        <image name="TextItalic" width="17" height="17"/>
+        <image name="TextStrikethrough" width="17" height="17"/>
+        <image name="TextUnderline" width="11" height="12.5"/>
+    </resources>
 </document>

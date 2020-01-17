@@ -14,6 +14,7 @@
 		990D243D23560169001B1FD9 /* LayoutEngineArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990D243C23560169001B1FD9 /* LayoutEngineArrow.swift */; };
 		990D243F23560688001B1FD9 /* CanvasLayoutEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03F0023293DAD00EB7516 /* CanvasLayoutEngineTests.swift */; };
 		990D2441235DEFE2001B1FD9 /* PageArrowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990D2440235DEFE2001B1FD9 /* PageArrowView.swift */; };
+		9919B93123D09FBB00C7A44D /* TextColourPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9919B93023D09FBB00C7A44D /* TextColourPicker.swift */; };
 		9923B06B22F45F7E0035D8C6 /* TestObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9923B06A22F45F7E0035D8C6 /* TestObjects.swift */; };
 		9923B07122F47AE30035D8C6 /* ModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9923B07022F47AE30035D8C6 /* ModelController.swift */; };
 		9923B07422F485480035D8C6 /* ModelCollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9923B07322F485480035D8C6 /* ModelCollectionTests.swift */; };
@@ -208,6 +209,7 @@
 		990B6A3822EB482D00523C06 /* ModelObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelObject.swift; sourceTree = "<group>"; };
 		990D243C23560169001B1FD9 /* LayoutEngineArrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutEngineArrow.swift; sourceTree = "<group>"; };
 		990D2440235DEFE2001B1FD9 /* PageArrowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageArrowView.swift; sourceTree = "<group>"; };
+		9919B93023D09FBB00C7A44D /* TextColourPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextColourPicker.swift; sourceTree = "<group>"; };
 		9923B06A22F45F7E0035D8C6 /* TestObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestObjects.swift; sourceTree = "<group>"; };
 		9923B07022F47AE30035D8C6 /* ModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelController.swift; sourceTree = "<group>"; };
 		9923B07322F485480035D8C6 /* ModelCollectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelCollectionTests.swift; sourceTree = "<group>"; };
@@ -598,6 +600,7 @@
 				9965FC42238448FF002FE10D /* TextEditorInspectorViewModel.swift */,
 				9965FC4423844910002FE10D /* TextEditorInspectorViewController.swift */,
 				9965FC4523844910002FE10D /* TextEditorInspectorContentView.xib */,
+				9919B93023D09FBB00C7A44D /* TextColourPicker.swift */,
 			);
 			path = "Text Editor Inspector";
 			sourceTree = "<group>";
@@ -1232,6 +1235,7 @@
 				99C86511230174B9004C7B89 /* PageContent.swift in Sources */,
 				99FFF9CE2350BAE400EF02A0 /* PageEditorViewController.swift in Sources */,
 				99AD8874237464C4000453E1 /* Alert.swift in Sources */,
+				9919B93123D09FBB00C7A44D /* TextColourPicker.swift in Sources */,
 				99FE019322CD1037004D380D /* Document.swift in Sources */,
 				99C41B7122DCA96700C82DDE /* BubblesModelController.swift in Sources */,
 				99488AAB23C36756009954AF /* BubblesUserDefaults.swift in Sources */,

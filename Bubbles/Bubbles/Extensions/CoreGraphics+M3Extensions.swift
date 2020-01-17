@@ -63,6 +63,17 @@ extension CGSize {
         let height = round(self.height)
         return CGSize(width: width, height: height)
     }
+
+    func multiplied(by value: CGFloat) -> CGSize {
+        var size = self
+        size.width *= value
+        size.height *= value
+        return size
+    }
+
+    func toRect(withOrigin origin: CGPoint = .zero) -> CGRect {
+        return CGRect(origin: origin, size: self)
+    }
 }
 
 extension CGRect {
