@@ -24,8 +24,16 @@ extension CGPoint {
         return newPoint
     }
 
+    func plus(x: CGFloat = 0, y: CGFloat = 0) -> CGPoint {
+        return self.plus(CGPoint(x: x, y: y))
+    }
+
     func minus(_ point: CGPoint) -> CGPoint {
         return self.plus(point.multiplied(by: -1))
+    }
+
+    func minus(x: CGFloat = 0, y: CGFloat = 0) -> CGPoint {
+        return self.minus(CGPoint(x: x, y: y))
     }
 
     func bounded(within rect: CGRect) -> CGPoint {
@@ -74,6 +82,10 @@ extension CGSize {
     func toRect(withOrigin origin: CGPoint = .zero) -> CGRect {
         return CGRect(origin: origin, size: self)
     }
+
+    func toPoint() -> CGPoint {
+        return CGPoint(x: self.width, y: self.height)
+    }
 }
 
 extension CGRect {
@@ -89,7 +101,35 @@ extension CGRect {
         self.init(x: x.rounded(), y: y.rounded(), width: width, height: height)
     }
 
+    enum RectPoint {
+        case min
+        case mid
+        case max
+    }
+
+    func point(atX x: RectPoint, y: RectPoint) -> CGPoint {
+        var point = CGPoint()
+        switch x {
+        case .min:
+            point.x = self.minX
+        case .mid:
+            point.x = self.midX
+        case .max:
+            point.x = self.maxX
+        }
+
+        switch y {
+        case .min:
+            point.y = self.minY
+        case .mid:
+            point.y = self.midY
+        case .max:
+            point.y = self.maxY
+        }
+        return point
+    }
+
     var midPoint: CGPoint {
-        return CGPoint(x: self.midX, y: midY)
+        return self.point(atX: .mid, y: .mid)
     }
 }

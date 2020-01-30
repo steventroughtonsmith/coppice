@@ -43,4 +43,45 @@ extension NSColor {
             return true
         }
     }
+
+    convenience init?(hexString: String) {
+        var string = hexString
+        if (string.hasPrefix("#")) {
+            string = (string as NSString).substring(from: 1)
+        }
+        if string.count == 3 {
+            let rString = string.substring(at: 0) + string.substring(at: 0)
+            let gString = string.substring(at: 1) + string.substring(at: 1)
+            let bString = string.substring(at: 2) + string.substring(at: 2)
+
+            let r = CGFloat(strtol(rString, nil, 16))
+            let g = CGFloat(strtol(gString, nil, 16))
+            let b = CGFloat(strtol(bString, nil, 16))
+
+            self.init(red: r / 255.0, green: g / 255.0, blue: b / 255.0, alpha: 1)
+            return
+        }
+        if string.count == 6 {
+            let rString = string.substring(at: 0, length: 2)
+            let gString = string.substring(at: 2, length: 2)
+            let bString = string.substring(at: 4, length: 2)
+
+            let r = CGFloat(strtol(rString, nil, 16))
+            let g = CGFloat(strtol(gString, nil, 16))
+            let b = CGFloat(strtol(bString, nil, 16))
+
+            self.init(red: r / 255.0, green: g / 255.0, blue: b / 255.0, alpha: 1)
+            return
+        }
+        return nil
+    }
+}
+
+
+extension String {
+    func substring(at index: Int, length: Int = 1) -> String {
+        let startIndex = self.index(self.startIndex, offsetBy: index)
+        let endIndex = self.index(startIndex, offsetBy: length)
+        return String(self[startIndex..<endIndex])
+    }
 }

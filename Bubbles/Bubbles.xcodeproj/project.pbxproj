@@ -170,6 +170,8 @@
 		99DEF28C22F33A2A0020A7CE /* ModelObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DEF28B22F33A2A0020A7CE /* ModelObjectTests.swift */; };
 		99DEF28F22F33A790020A7CE /* ModelID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DEF28E22F33A790020A7CE /* ModelID.swift */; };
 		99DEF29322F33ABB0020A7CE /* ModelIDTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DEF29222F33ABB0020A7CE /* ModelIDTests.swift */; };
+		99E93E2923D32F15004CF4BB /* ColourGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E93E2823D32F15004CF4BB /* ColourGridView.swift */; };
+		99E93E2B23D32F61004CF4BB /* ColourGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E93E2A23D32F61004CF4BB /* ColourGridCell.swift */; };
 		99E944FB2368683F00DFAB95 /* NSImage+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E944FA2368683F00DFAB95 /* NSImage+M3Extensions.swift */; };
 		99F084F123A280A5008D2ACA /* ModelRelationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F084F023A280A5008D2ACA /* ModelRelationship.swift */; };
 		99FE019122CD1037004D380D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FE019022CD1037004D380D /* AppDelegate.swift */; };
@@ -364,6 +366,8 @@
 		99DEF28B22F33A2A0020A7CE /* ModelObjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelObjectTests.swift; sourceTree = "<group>"; };
 		99DEF28E22F33A790020A7CE /* ModelID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelID.swift; sourceTree = "<group>"; };
 		99DEF29222F33ABB0020A7CE /* ModelIDTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelIDTests.swift; sourceTree = "<group>"; };
+		99E93E2823D32F15004CF4BB /* ColourGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColourGridView.swift; sourceTree = "<group>"; };
+		99E93E2A23D32F61004CF4BB /* ColourGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColourGridCell.swift; sourceTree = "<group>"; };
 		99E944FA2368683F00DFAB95 /* NSImage+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+M3Extensions.swift"; sourceTree = "<group>"; };
 		99F084F023A280A5008D2ACA /* ModelRelationship.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelRelationship.swift; sourceTree = "<group>"; };
 		99FE018D22CD1037004D380D /* Bubbles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bubbles.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -600,7 +604,7 @@
 				9965FC42238448FF002FE10D /* TextEditorInspectorViewModel.swift */,
 				9965FC4423844910002FE10D /* TextEditorInspectorViewController.swift */,
 				9965FC4523844910002FE10D /* TextEditorInspectorContentView.xib */,
-				9919B93023D09FBB00C7A44D /* TextColourPicker.swift */,
+				99E93E2723D32ECE004CF4BB /* Colour Picker */,
 			);
 			path = "Text Editor Inspector";
 			sourceTree = "<group>";
@@ -944,6 +948,16 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		99E93E2723D32ECE004CF4BB /* Colour Picker */ = {
+			isa = PBXGroup;
+			children = (
+				9919B93023D09FBB00C7A44D /* TextColourPicker.swift */,
+				99E93E2823D32F15004CF4BB /* ColourGridView.swift */,
+				99E93E2A23D32F61004CF4BB /* ColourGridCell.swift */,
+			);
+			path = "Colour Picker";
+			sourceTree = "<group>";
+		};
 		99FE018422CD1037004D380D = {
 			isa = PBXGroup;
 			children = (
@@ -1228,6 +1242,7 @@
 				99AD88A5237B1700000453E1 /* DocumentWindowViewModel.swift in Sources */,
 				99488AAE23C37B98009954AF /* ThumbnailGenerator.swift in Sources */,
 				9970976923AA8B6C00CD189B /* KeyboardMovePageEventContext.swift in Sources */,
+				99E93E2923D32F15004CF4BB /* ColourGridView.swift in Sources */,
 				99581095230D93F700D996C4 /* CanvasPageViewModel.swift in Sources */,
 				9970977223AF9BE600CD189B /* PageExporter.swift in Sources */,
 				99AD88762374665D000453E1 /* Alert+AppKit.swift in Sources */,
@@ -1253,6 +1268,7 @@
 				99C03F0D2334D04200EB7516 /* NSScrollView+M3Extensions.swift in Sources */,
 				9970976B23ACFD2900CD189B /* SplitViewController.swift in Sources */,
 				990B6A3922EB482D00523C06 /* ModelObject.swift in Sources */,
+				99E93E2B23D32F61004CF4BB /* ColourGridCell.swift in Sources */,
 				9962AB8923732D9400337834 /* BubblesDocumentController.swift in Sources */,
 				99DEF28822F1D72D0020A7CE /* SidebarViewModelTypes.swift in Sources */,
 				99488A9F23BA3954009954AF /* LargeCanvasCell.swift in Sources */,

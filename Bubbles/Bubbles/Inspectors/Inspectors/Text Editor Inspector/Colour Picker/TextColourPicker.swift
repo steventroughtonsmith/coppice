@@ -27,9 +27,10 @@ class TextColourPicker: NSView {
 
 
     //MARK: - Colour
-    var colour: NSColor = NSColor(red: 0, green: 0.4, blue: 0, alpha: 0.8) {
+    var colour: NSColor = NSColor(hexString: "#00a000")! {
         didSet {
             self.setNeedsDisplay(self.bounds)
+            self.colourGridView.selectedColour = self.colour
         }
     }
 
@@ -207,6 +208,7 @@ class TextColourPicker: NSView {
 
     override func mouseUp(with event: NSEvent) {
         self.isHighlighted = false
+        self.showPopoverPanel()
     }
 
     private var draggingSession: NSDraggingSession?
@@ -263,6 +265,20 @@ class TextColourPicker: NSView {
 
         self.colour = colour
         return true
+    }
+
+
+    //MARK: - Popover
+    private let colourGridView = ColourGridView()
+    func showPopoverPanel() {
+        let vc = NSViewController()
+        vc.view = self.colourGridView
+        self.colourGridView.selectedColour = self.colour
+
+        let popover = NSPopover()
+        popover.behavior = .transient
+        popover.contentViewController = vc
+        popover.show(relativeTo: self.bounds, of: self, preferredEdge: .minY)
     }
 }
 
