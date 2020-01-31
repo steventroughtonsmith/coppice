@@ -7,9 +7,10 @@
 //
 
 import Cocoa
+import Combine
 
 @IBDesignable
-class TextColourPicker: NSView {
+class TextColourPicker: NSControl {
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         self.setup()
@@ -27,7 +28,7 @@ class TextColourPicker: NSView {
 
 
     //MARK: - Colour
-    var colour: NSColor = NSColor(hexString: "#00a000")! {
+    @objc dynamic var colour: NSColor = NSColor(hexString: "#00a000")! {
         didSet {
             self.setNeedsDisplay(self.bounds)
             self.colourGridView.selectedColour = self.colour
@@ -37,12 +38,6 @@ class TextColourPicker: NSView {
 
     //MARK: - View State
     private var isMouseInside = false {
-        didSet {
-            self.setNeedsDisplay(self.bounds)
-        }
-    }
-
-    private var isHighlighted = false {
         didSet {
             self.setNeedsDisplay(self.bounds)
         }
@@ -203,11 +198,9 @@ class TextColourPicker: NSView {
 
     override func mouseDown(with event: NSEvent) {
         self.mouseDownLocation = event.locationInWindow
-        self.isHighlighted = true
     }
 
     override func mouseUp(with event: NSEvent) {
-        self.isHighlighted = false
         self.showPopoverPanel()
     }
 
@@ -269,7 +262,12 @@ class TextColourPicker: NSView {
 
 
     //MARK: - Popover
-    private let colourGridView = ColourGridView()
+    private lazy var colourGridView: ColourGridView = {
+        let view = ColourGridView()
+        view.delegate = self
+        return view
+    }()
+
     func showPopoverPanel() {
         let vc = NSViewController()
         vc.view = self.colourGridView
@@ -289,5 +287,12 @@ extension TextColourPicker: NSDraggingSource {
 
     func draggingSession(_ session: NSDraggingSession, endedAt screenPoint: NSPoint, operation: NSDragOperation) {
         self.draggingSession = nil
+    }
+}
+
+extension TextColourPicker: ColourGridViewDelegate {
+    func didSelect(_ colour: NSColor, in gridView: ColourGridView) {
+        self.colour = colour
+        self.sendAction(self.action, to: self.target)
     }
 }

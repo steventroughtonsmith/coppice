@@ -34,7 +34,6 @@ class TextEditorInspectorViewModel: BaseInspectorViewModel {
             self.keyPathsAffectedByAttributes.forEach {
                 self.willChangeValue(forKey: $0)
                 self.didChangeValue(forKey: $0)
-                _ = self.textColours
             }
         }
     }
@@ -57,7 +56,6 @@ class TextEditorInspectorViewModel: BaseInspectorViewModel {
         #keyPath(isItalic),
         #keyPath(isUnderlined),
         #keyPath(isStruckthrough),
-        #keyPath(textColours)
     ]
 
 
@@ -65,9 +63,6 @@ class TextEditorInspectorViewModel: BaseInspectorViewModel {
         var keyPaths = super.keyPathsForValuesAffectingValue(forKey: key)
         if (key == #keyPath(typefaces)) {
             keyPaths.insert("selectedFontFamily")
-        }
-        if (key == #keyPath(textColours)) {
-            keyPaths.insert("textColour")
         }
 
         return keyPaths
@@ -86,23 +81,6 @@ class TextEditorInspectorViewModel: BaseInspectorViewModel {
         }
 
         return members.compactMap { Typeface(memberInfo: $0) }.sorted { $0.weight < $1.weight }
-    }
-
-    @objc dynamic var textColours: TextColourList {
-        let textColourList = TextColourList()
-        guard let colourList = NSColorList(named: "Apple") else {
-            return textColourList
-        }
-
-        colourList.allKeys.forEach {
-            guard let colour = colourList.color(withKey: $0) else {
-                return
-            }
-            textColourList.add(TextColour(name: $0, colour: colour))
-        }
-
-        textColourList.selectedColour = self.textColour
-        return textColourList
     }
 
 

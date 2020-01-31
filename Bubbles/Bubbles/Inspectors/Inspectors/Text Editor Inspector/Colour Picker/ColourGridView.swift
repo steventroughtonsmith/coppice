@@ -8,7 +8,12 @@
 
 import AppKit
 
+protocol ColourGridViewDelegate: class {
+    func didSelect(_ colour: NSColor, in gridView: ColourGridView)
+}
+
 class ColourGridView: NSView {
+    weak var delegate: ColourGridViewDelegate?
     let numberOfColumns = 5
 
     private let colours = [
@@ -49,7 +54,7 @@ class ColourGridView: NSView {
         return button
     }()
 
-    private var cells = [ColourGridCell]()
+    private var buttons = [ColourGridButton]()
 
     func setupGrid() {
         let stackView = self.stackView
@@ -89,9 +94,8 @@ class ColourGridView: NSView {
         stackView.spacing = 2
 
         for colour in colours {
-            let colourView = ColourGridCell()
-            colourView.colour = colour
-            self.cells.append(colourView)
+            let colourView = ColourGridButton(colour: colour, target: self, action: #selector(selectColour(_:)))
+            self.buttons.append(colourView)
             stackView.addArrangedSubview(colourView)
         }
 
@@ -107,14 +111,28 @@ class ColourGridView: NSView {
     }
 
     private func updateSelection() {
-        for cell in self.cells {
-            cell.selected = (cell.colour == self.selectedColour)
+        for button in self.buttons {
+            button.selected = (button.colour == self.selectedColour)
         }
     }
 
+    @objc dynamic func selectColour(_ sender: ColourGridButton?) {
+        if let colour = sender?.colour {
+            self.delegate?.didSelect(colour, in: self)
+        }
+    }
 
     //MARK: - Colour Panel
     @IBAction func showColorPanel(_ sender: Any?) {
+//        NSColorPanel.shared.setTarget(self)
+//        NSColorPanel.shared.setAction(#selector(colourPanelSelected(_:)))
+        NSColorPanel.shared.makeKeyAndOrderFront(self)
+        if let colour = self.selectedColour {
+            NSColorPanel.shared.color = colour
+        }
+    }
 
+    @IBAction func colourPanelSelected(_ sender: Any?) {
+        self.delegate?.didSelect(NSColorPanel.shared.color, in: self)
     }
 }

@@ -16,7 +16,7 @@ class TextEditorInspectorViewController: BaseInspectorViewController {
 
     override var ranking: InspectorRanking { return .content }
     
-    @IBOutlet weak var colourPopUpButton: NSPopUpButton!
+    @IBOutlet weak var colourPicker: TextColourPicker!
     @IBOutlet weak var styleControl: NSSegmentedControl!
     @IBOutlet weak var alignmentControl: NSSegmentedControl!
 
@@ -31,45 +31,24 @@ class TextEditorInspectorViewController: BaseInspectorViewController {
 
         self.setupAlignmentControl()
         self.setupStyleControl()
-        self.setupColourPopUpButton()
+        self.setupColourPicker()
     }
 
 
     //MARK: - Colour Control
-    private var textColoursObserver: AnyCancellable!
-    private func setupColourPopUpButton() {
-        guard let popUpButton = self.colourPopUpButton,
-            let menu = popUpButton.menu else {
-            return
-        }
-        self.textColoursObserver = self.typedViewModel.publisher(for: \.textColours)
-            .map { $0.generateMenuItems() }
-            .sink {
-                let (menuItems, selectedItem) = $0
-                menu.items = menuItems
-                popUpButton.select(selectedItem)
-            }
-    }
-
-    @IBAction func colourPopUpButtonChanged(_ sender: Any) {
-        guard let selectedItem = self.colourPopUpButton.selectedItem else {
+    private var textColourObserver: AnyCancellable!
+    private func setupColourPicker() {
+        guard let colourPicker = self.colourPicker else {
             return
         }
 
-        if selectedItem.tag == -1 {
-            let panel = NSColorPanel.shared
-            panel.setTarget(self)
-            panel.setAction(#selector(colourPanelChanged(_:)))
-            panel.makeKeyAndOrderFront(self)
-
-        }
-        else if let textColour = selectedItem.representedObject as? TextColour{
-            self.typedViewModel.textColour = textColour.colour
-        }
+        self.textColourObserver = self.typedViewModel.publisher(for: \.textColour)
+            .map { $0 ?? .clear }
+            .assign(to: \.colour, on: colourPicker)
     }
 
-    @objc dynamic func colourPanelChanged(_ sender: Any?) {
-        self.typedViewModel.textColour = NSColorPanel.shared.color
+    @IBAction func colourChanged(_ sender: Any) {
+        self.typedViewModel.textColour = self.colourPicker.colour
     }
 
     //MARK: - Alignment Control
@@ -122,50 +101,5 @@ class TextEditorInspectorViewController: BaseInspectorViewController {
             return
         }
         self.typedViewModel[keyPath: keyPath] = selected
-    }
-}
-
-
-extension TextColourList {
-    func generateMenuItems() -> ([NSMenuItem], selected: NSMenuItem?) {
-        var menuItems = [NSMenuItem]()
-        for textColour in self.colours {
-            let item = NSMenuItem(title: textColour.name, action: nil, keyEquivalent: "")
-            item.representedObject = textColour
-            item.image = self.image(for: textColour.colour)
-            menuItems.append(item)
-        }
-        menuItems.append(NSMenuItem.separator())
-
-        let customMenuItem = NSMenuItem(title: NSLocalizedString("Custom", comment: "Custom colour item"),
-                                        action: nil,
-                                        keyEquivalent: "")
-        customMenuItem.tag = -1
-
-        var selectedItem: NSMenuItem? = nil
-        if let selectedColour = self.selectedColour {
-            let selected = TextColour(colour: selectedColour)
-            if let existingItem = menuItems.first(where: { ($0.representedObject as? TextColour) == selected}) {
-                selectedItem = existingItem
-            } else {
-                customMenuItem.representedObject = TextColour(name: "Custom", colour: selectedColour)
-                customMenuItem.image = self.image(for: selectedColour)
-                selectedItem = customMenuItem
-            }
-        }
-        menuItems.append(customMenuItem)
-        return (menuItems, selectedItem)
-    }
-
-    private func image(for colour: NSColor) -> NSImage {
-        return NSImage.init(size: NSSize(width: 16, height: 16), flipped: false) { (rect) -> Bool in
-            colour.set()
-            rect.fill()
-
-            let bezierPath = NSBezierPath(rect: rect.insetBy(dx: 0.5, dy: 0.5))
-            NSColor.black.set()
-            bezierPath.stroke()
-            return true
-        }
     }
 }

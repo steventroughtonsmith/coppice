@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15702" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15705" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15702"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15705"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TextEditorInspectorViewController" customModule="Bubbles" customModuleProvider="target">
             <connections>
                 <outlet property="alignmentControl" destination="lJO-MO-Qab" id="GrE-G3-hKc"/>
+                <outlet property="colourPicker" destination="332-eu-rTh" id="Y6F-i2-4z4"/>
                 <outlet property="styleControl" destination="1fJ-zV-rDa" id="LGY-8F-asz"/>
             </connections>
         </customObject>
@@ -135,6 +136,9 @@
                     <constraints>
                         <constraint firstAttribute="width" constant="156" id="YUk-3p-EaQ"/>
                     </constraints>
+                    <connections>
+                        <action selector="colourChanged:" target="-2" id="Zez-hq-PYB"/>
+                    </connections>
                 </customView>
             </subviews>
             <constraints>

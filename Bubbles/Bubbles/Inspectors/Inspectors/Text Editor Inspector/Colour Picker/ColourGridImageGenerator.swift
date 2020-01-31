@@ -1,62 +1,48 @@
 //
-//  ColourCell.swift
+//  ColourGridImageGenerator.swift
 //  Bubbles
 //
-//  Created by Martin Pilkington on 18/01/2020.
+//  Created by Martin Pilkington on 31/01/2020.
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
 import AppKit
 
-class ColourGridCell: NSView {
-    var colour: NSColor = .black {
-        didSet {
-            self.setNeedsDisplay(self.bounds)
+class ColourGridImageGenerator {
+    private let cache = NSCache<NSColor, NSImage>()
+    func image(for colour: NSColor, size: CGSize, selected: Bool) -> NSImage {
+        if let cachedImage = self.cache.object(forKey: colour) {
+            return cachedImage
         }
-    }
-
-    override var intrinsicContentSize: CGSize {
-        return CGSize(width: 40, height: 24)
-    }
-
-    var selected: Bool = false {
-        didSet {
-            self.setNeedsDisplay(self.bounds)
+        let image = NSImage(size: size, flipped: false) { (rect) -> Bool in
+            colour.set()
+            rect.fill()
+            self.drawBorder(in: rect)
+            if selected {
+                self.drawSelection(in: rect)
+            }
+            return true
         }
+
+        cache.setObject(image, forKey: colour)
+
+        return image
     }
 
-
-    //MARK: - Drawing
-    override func draw(_ dirtyRect: NSRect) {
-        self.drawBackground()
-        self.drawBorder()
-        self.drawSelection()
-    }
-
-    private func drawBorder() {
+    private func drawBorder(in rect: CGRect) {
         //Draw Border
         if (NSApp.effectiveAppearance.name == .darkAqua) {
             NSColor.white.withAlphaComponent(0.3).set()
         } else {
             NSColor.black.withAlphaComponent(0.3).set()
         }
-        NSBezierPath(rect: self.bounds).stroke()
+        NSBezierPath(rect: rect).stroke()
     }
 
-    private func drawBackground() {
-        //Draw Colour
-        self.colour.set()
-        self.bounds.fill()
-    }
-
-    private func drawSelection() {
-        guard self.selected else {
-            return
-        }
-
-        NSBezierPath(rect: self.bounds.insetBy(dx: 0.5, dy: 0.5)).setClip()
+    private func drawSelection(in rect: CGRect) {
+        NSBezierPath(rect: rect.insetBy(dx: 0.5, dy: 0.5)).setClip()
         let size: CGFloat = 17
-        let origin = self.bounds.point(atX: .max, y: .min).minus(x: size)
+        let origin = rect.point(atX: .max, y: .min).minus(x: size)
         let selectionFrame = CGRect(origin: origin, size: CGSize(width: size, height: size))
 
         let selectionPath = NSBezierPath()
@@ -84,5 +70,4 @@ class ColourGridCell: NSView {
 
         string.draw(in: tickRect, withAttributes: attributes)
     }
-
 }

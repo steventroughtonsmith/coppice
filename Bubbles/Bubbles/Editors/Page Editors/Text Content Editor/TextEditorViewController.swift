@@ -135,6 +135,7 @@ class TextEditorViewController: NSViewController, InspectableTextEditor {
         self.updatingText = true
         self.viewModel.attributedText = self.editingTextView.attributedString().copy() as! NSAttributedString
         self.updatingText = false
+        self.updateSelectionAttributes()
     }
 
 
@@ -211,7 +212,8 @@ extension TextEditorViewController: NSTextViewDelegate {
     }
 
     func textViewDidChangeSelection(_ notification: Notification) {
-        guard self.view.window?.firstResponder == self.editingTextView else {
+        print("selection changed")
+        guard (notification.object as? NSTextView) == self.editingTextView else {
             return
         }
         self.updateSelectionAttributes()

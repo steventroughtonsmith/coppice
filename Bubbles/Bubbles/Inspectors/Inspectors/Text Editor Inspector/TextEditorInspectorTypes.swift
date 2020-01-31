@@ -38,38 +38,6 @@ class Typeface: NSObject {
     }
 }
 
-class TextColourList: NSObject {
-    private(set) var colours = [TextColour]()
-    func add(_ textColour: TextColour) {
-        colours.append(textColour)
-    }
-
-    var selectedColour: NSColor?
-}
-
-
-class TextColour: NSObject {
-    let name: String
-    let colour: NSColor
-    init(name: String = "", colour: NSColor) {
-        self.name = name
-        self.colour = colour
-        super.init()
-    }
-
-    var identifier: String {
-        return self.colour.identifier ?? self.name
-    }
-
-    override func isEqual(_ object: Any?) -> Bool {
-        guard let otherColour = object as? TextColour else {
-            return false
-        }
-        return self.identifier == otherColour.identifier
-    }
-}
-
-
 
 protocol InspectableTextEditor {
     var selectionAttributes: TextEditorAttributes? { get }
