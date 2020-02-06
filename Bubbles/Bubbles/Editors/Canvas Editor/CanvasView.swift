@@ -11,6 +11,8 @@ import Cocoa
 protocol CanvasViewDelegate: class {
     func didDropPage(with id: ModelID, at point: CGPoint, on canvasView: CanvasView)
     func didDropFiles(withURLs urls: [URL], at point: CGPoint, on canvasView: CanvasView)
+
+    func dragImageForPage(with id: ModelID, in canvasView: CanvasView) -> NSImage?
 }
 
 class CanvasView: NSView {
@@ -252,6 +254,22 @@ class CanvasView: NSView {
         return true
     }
 
+    override func updateDraggingItemsForDrag(_ sender: NSDraggingInfo?) {
+        sender?.enumerateDraggingItems(for: nil, classes: [NSPasteboardItem.self], using: { (draggingItem, index, stop) in
+            guard let pasteboardItem = draggingItem.item as? NSPasteboardItem,
+                let modelID = ModelID(pasteboardItem: pasteboardItem),
+                modelID.modelType == Page.modelType else {
+                    return
+            }
+            guard let image = self.delegate?.dragImageForPage(with: modelID, in: self) else {
+                return
+            }
+
+            draggingItem.setDraggingFrame(CGRect(origin: .zero, size: image.size), contents: image)
+        })
+    }
+
+
     //MARK: - File Drag & Drop
     func fileDraggingUpdates(_ sender: NSDraggingInfo) -> NSDragOperation {
         guard let items = sender.draggingPasteboard.pasteboardItems else {
@@ -270,6 +288,7 @@ class CanvasView: NSView {
         self.delegate?.didDropFiles(withURLs: urls, at: dropPoint, on: self)
         return true
     }
+
 
     //MARK: - Cursor Handling
     override func updateTrackingAreas() {
