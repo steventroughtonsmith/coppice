@@ -259,7 +259,7 @@ extension SidebarViewController: NSTableViewDataSource {
     }
 
     func tableView(_ tableView: NSTableView, pasteboardWriterForRow row: Int) -> NSPasteboardWriting? {
-        return self.viewModel.canvasItems[row].id.pasteboardItem
+        return self.viewModel.canvasItems[row].canvas.pasteboardWriter
     }
 
 

@@ -6,7 +6,7 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import Foundation
+import AppKit
 
 class TextPageContent: NSObject, PageContent {
     let contentType = PageContentType.text

@@ -53,6 +53,8 @@ protocol PageContent: class {
     var modelFile: ModelFile { get }
 
     func isMatchForSearch(_ searchTerm: String?) -> Bool
+
+    var filePromiseProvider: ExtendableFilePromiseProvider? { get }
 }
 
 extension PageContent {
@@ -70,6 +72,10 @@ extension PageContent {
 
     func isMatchForSearch(_ searchTerm: String?) -> Bool {
         return false
+    }
+
+    var filePromiseProvider: ExtendableFilePromiseProvider? {
+        return nil
     }
 }
 

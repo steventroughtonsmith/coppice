@@ -99,6 +99,7 @@
 		99868F4523995739009AC0F7 /* PageLinkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99868F4423995739009AC0F7 /* PageLinkManager.swift */; };
 		99868F4723995B4F009AC0F7 /* TextLinkFinderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99868F4623995B4F009AC0F7 /* TextLinkFinderTests.swift */; };
 		998F178B23E46B4900B3437A /* ColourGridImageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998F178A23E46B4900B3437A /* ColourGridImageGenerator.swift */; };
+		998F178F23EB229200B3437A /* ModelObjects+Pasteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998F178E23EB229200B3437A /* ModelObjects+Pasteboard.swift */; };
 		999DAACA23CCC5D80013EC36 /* SidebarHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999DAAC923CCC5D80013EC36 /* SidebarHeaderView.swift */; };
 		999DAACC23CDFE6B0013EC36 /* PagesSidebarDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999DAACB23CDFE6B0013EC36 /* PagesSidebarDataSource.swift */; };
 		999DAACE23CF484A0013EC36 /* ModelSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999DAACD23CF484A0013EC36 /* ModelSettings.swift */; };
@@ -295,6 +296,7 @@
 		99868F4423995739009AC0F7 /* PageLinkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageLinkManager.swift; sourceTree = "<group>"; };
 		99868F4623995B4F009AC0F7 /* TextLinkFinderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLinkFinderTests.swift; sourceTree = "<group>"; };
 		998F178A23E46B4900B3437A /* ColourGridImageGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColourGridImageGenerator.swift; sourceTree = "<group>"; };
+		998F178E23EB229200B3437A /* ModelObjects+Pasteboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelObjects+Pasteboard.swift"; sourceTree = "<group>"; };
 		999DAAC923CCC5D80013EC36 /* SidebarHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarHeaderView.swift; sourceTree = "<group>"; };
 		999DAACB23CDFE6B0013EC36 /* PagesSidebarDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagesSidebarDataSource.swift; sourceTree = "<group>"; };
 		999DAACD23CF484A0013EC36 /* ModelSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelSettings.swift; sourceTree = "<group>"; };
@@ -877,6 +879,7 @@
 				99C41B7422DCA9A100C82DDE /* Canvas.swift */,
 				990B6A3622E5F84400523C06 /* CanvasPage.swift */,
 				9970977323B0180F00CD189B /* Canvas+AddingPages.swift */,
+				998F178E23EB229200B3437A /* ModelObjects+Pasteboard.swift */,
 			);
 			path = "Model Objects";
 			sourceTree = "<group>";
@@ -1262,6 +1265,7 @@
 				99AD88A9237C36D0000453E1 /* Editor.swift in Sources */,
 				99A0B853238961BF005FCF25 /* NSColor+M3Extensions.swift in Sources */,
 				9902F4A923882ADA00AF646F /* NSSegmentedControl+M3Extensions.swift in Sources */,
+				998F178F23EB229200B3437A /* ModelObjects+Pasteboard.swift in Sources */,
 				990D2441235DEFE2001B1FD9 /* PageArrowView.swift in Sources */,
 				99C9AF1D23671FD8009F909A /* ModelReader.swift in Sources */,
 				992A5CAE22DDF50F0012CCB6 /* DebugPageEditor.swift in Sources */,

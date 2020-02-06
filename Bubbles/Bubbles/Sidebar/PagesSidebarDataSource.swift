@@ -49,7 +49,7 @@ extension PagesSidebarDataSource: NSTableViewDataSource {
     }
 
     func tableView(_ tableView: NSTableView, pasteboardWriterForRow row: Int) -> NSPasteboardWriting? {
-        return self.viewModel.pageItems[row].id.pasteboardItem
+        return self.viewModel.pageItems[row].page.pasteboardWriter
     }
 
 

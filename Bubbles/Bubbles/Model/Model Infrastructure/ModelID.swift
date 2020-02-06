@@ -48,9 +48,12 @@ extension ModelID {
     static let PasteboardType = NSPasteboard.PasteboardType("com.mcubedsw.bubbles.modelID")
     var pasteboardItem: NSPasteboardItem {
         let pasteboardItem = NSPasteboardItem()
-        pasteboardItem.setPropertyList([ModelID.UUIDKey: self.uuid.uuidString, ModelID.modelTypeKey: self.modelType.rawValue],
-                                       forType: ModelID.PasteboardType)
+        pasteboardItem.setPropertyList(self.plistRepresentation, forType: ModelID.PasteboardType)
         return pasteboardItem
+    }
+
+    var plistRepresentation: Any {
+        return [ModelID.UUIDKey: self.uuid.uuidString, ModelID.modelTypeKey: self.modelType.rawValue]
     }
 
     init?(pasteboardItem: NSPasteboardItem) {
