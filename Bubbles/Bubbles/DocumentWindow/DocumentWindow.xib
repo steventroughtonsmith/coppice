@@ -28,7 +28,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="1100" height="675"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
-                    <splitView arrangesAllSubviews="NO" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3KB-c4-2lR">
+                    <splitView arrangesAllSubviews="NO" autosaveName="MainSplitView" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3KB-c4-2lR">
                         <rect key="frame" x="0.0" y="0.0" width="1100" height="675"/>
                         <subviews>
                             <customView fixedFrame="YES" id="wbm-Kc-dgB" userLabel="Sidebar Container">
