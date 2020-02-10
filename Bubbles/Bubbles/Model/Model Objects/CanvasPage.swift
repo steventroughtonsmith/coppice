@@ -29,6 +29,19 @@ final class CanvasPage: NSObject, CollectableModelObject {
         return title
     }
 
+    var titleBarAppearsOverContent: Bool {
+        guard let contentType = self.page?.content.contentType else {
+            return false
+        }
+
+        switch contentType {
+        case .image:
+            return true
+        case .text, .empty:
+            return false
+        }
+    }
+
     
     //MARK: - Relationships
     @ModelObjectReference @objc dynamic var page: Page? {

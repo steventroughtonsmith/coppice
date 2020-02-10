@@ -100,6 +100,7 @@ class CanvasEditorViewModel: ViewModel {
         canvasPages.forEach { (canvasPage) in
             self.layoutEngine.addPage(withID: canvasPage.id.uuid,
                                       contentFrame: canvasPage.frame,
+                                      titleBarAppearsOverContent: canvasPage.titleBarAppearsOverContent,
                                       parentID: canvasPage.parent?.id.uuid)
         }
     }
@@ -111,7 +112,9 @@ class CanvasEditorViewModel: ViewModel {
     }
 
     private func updatePages(_ canvasPages: Set<CanvasPage>) {
-        canvasPages.forEach { self.layoutEngine.updateContentFrame($0.frame, ofPageWithID: $0.id.uuid) }
+        canvasPages.forEach {
+            self.layoutEngine.updateContentFrame($0.frame, titleBarAppearsOverContent: $0.titleBarAppearsOverContent, ofPageWithID: $0.id.uuid)
+        }
     }
 
     private var updatesDisable = false
