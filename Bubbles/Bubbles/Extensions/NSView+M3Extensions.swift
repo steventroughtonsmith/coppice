@@ -23,4 +23,20 @@ extension NSView {
                                                      views: ["view": subview])
         NSLayoutConstraint.activate(constraints)
     }
+
+
+    //MARK: - Animation
+
+    static func animate(withDuration duration: TimeInterval, animations: () -> Void) {
+        self.animate(withDuration: duration, animations: animations, completion: nil)
+    }
+
+    static func animate(withDuration duration: TimeInterval, timingFunction: CAMediaTimingFunction? = nil, animations: () -> Void, completion: (() -> Void)? = nil) {
+        NSAnimationContext.runAnimationGroup({ (context) in
+            context.allowsImplicitAnimation = true
+            context.duration = duration
+            context.timingFunction = timingFunction
+            animations()
+        }, completionHandler: completion)
+    }
 }

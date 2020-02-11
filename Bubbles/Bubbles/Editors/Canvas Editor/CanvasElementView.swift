@@ -44,8 +44,7 @@ class CanvasElementView: NSView  {
     let cornerSize: CGFloat = 8
     let edgeSize: CGFloat = 5
 
-    @IBOutlet var titleBar: NSView!
-    @IBOutlet var titleLabel: NSTextField!
+    @IBOutlet var titleView: CanvasPageTitleView!
     @IBOutlet var boxView: NSBox!
     @IBOutlet weak var contentContainer: NSView!
 
@@ -64,12 +63,14 @@ class CanvasElementView: NSView  {
     func apply(_ layoutPage: LayoutEnginePage) {
         self.updateResizeRects(with: layoutPage)
         self.updateSubviews(with: layoutPage)
+
+        self.titleView.style = layoutPage.titleBarAppearsOverContent ? .transient : .standard
     }
 
     //MARK: - Subviews
     private func updateSubviews(with layoutPage: LayoutEnginePage) {
         self.boxView.frame = layoutPage.visualPageFrame
-        self.titleBar.frame = layoutPage.titleFrameInsideVisualPage
+        self.titleView.frame = layoutPage.titleFrameInsideVisualPage
         self.contentContainer.frame = layoutPage.contentFrameInsideVisualPage
         self.disabledContentMouseStealer.frame = layoutPage.contentFrameInsideVisualPage
     }
@@ -113,7 +114,7 @@ class CanvasElementView: NSView  {
             return self
         }
         let hitView = super.hitTest(point)
-        if (hitView == self.titleBar || hitView == self.titleLabel || hitView == self.boxView || hitView == self.disabledContentMouseStealer) {
+        if (hitView == self.titleView || hitView == self.titleView || hitView == self.boxView || hitView == self.disabledContentMouseStealer) {
             return self
         }
         return hitView
@@ -124,9 +125,35 @@ class CanvasElementView: NSView  {
     }
 
 
+    //MARK: - Hovering
+    private var hoverTrackingArea: NSTrackingArea?
+    override func updateTrackingAreas() {
+        super.updateTrackingAreas()
+        if let oldTrackingArea = self.hoverTrackingArea {
+            self.removeTrackingArea(oldTrackingArea)
+        }
+
+        let trackingArea = NSTrackingArea(rect: self.bounds, options: [.activeInActiveApp, .mouseEnteredAndExited], owner: self, userInfo: nil)
+        self.addTrackingArea(trackingArea)
+        self.hoverTrackingArea = trackingArea
+    }
+
+    override func mouseEntered(with event: NSEvent) {
+        NSView.animate(withDuration: 0.3) {
+            self.titleView.isFocused = true
+        }
+    }
+
+    override func mouseExited(with event: NSEvent) {
+        NSView.animate(withDuration: 0.3) {
+            self.titleView.isFocused = false
+        }
+    }
+
+
     //MARK: - Cursor Handling
     func cursor(for point: CGPoint) -> NSCursor? {
-        let cursorRects = self.resizeRects + [(.titleBar, self.titleBar.frame)]
+        let cursorRects = self.resizeRects + [(.titleBar, self.titleView.frame)]
         for (type, rect) in cursorRects {
             if (rect.contains(point)) {
                 return type.cursor()

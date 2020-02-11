@@ -9,7 +9,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="CanvasPageViewController" customModule="Bubbles" customModuleProvider="target">
             <connections>
                 <outlet property="contentContainer" destination="wWQ-K4-REw" id="God-zR-8Qr"/>
-                <outlet property="titleLabel" destination="8QV-BG-GXx" id="fhP-Hk-gHK"/>
+                <outlet property="titleView" destination="AZo-jd-3Q7" id="8oK-TM-sep"/>
                 <outlet property="view" destination="z97-7h-MV3" id="UJC-Zc-64D"/>
             </connections>
         </customObject>
@@ -29,43 +29,9 @@
                                 <rect key="frame" x="0.0" y="32" width="510" height="447"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                             </customView>
-                            <customView ambiguous="YES" placeholderIntrinsicWidth="510" placeholderIntrinsicHeight="32" translatesAutoresizingMaskIntoConstraints="NO" id="AZo-jd-3Q7">
+                            <customView fixedFrame="YES" placeholderIntrinsicWidth="510" placeholderIntrinsicHeight="32" translatesAutoresizingMaskIntoConstraints="NO" id="AZo-jd-3Q7" customClass="CanvasPageTitleView" customModule="Bubbles" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="447" width="510" height="32"/>
-                                <subviews>
-                                    <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="Po8-NE-6NC">
-                                        <rect key="frame" x="0.0" y="-2" width="510" height="5"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="1" id="pqg-jD-9Zx"/>
-                                        </constraints>
-                                    </box>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8QV-BG-GXx">
-                                        <rect key="frame" x="238" y="8" width="35" height="16"/>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Title" id="3mW-dd-igw">
-                                            <font key="font" usesAppearanceFont="YES"/>
-                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YuF-c0-uxg">
-                                        <rect key="frame" x="8" y="7" width="17" height="18"/>
-                                        <buttonCell key="cell" type="inline" bezelStyle="inline" image="NSStopProgressFreestandingTemplate" imagePosition="overlaps" alignment="center" inset="2" id="nC9-7v-fWz">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="smallSystemBold"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="close:" target="-2" id="Q5G-BF-SKh"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="YuF-c0-uxg" firstAttribute="centerY" secondItem="AZo-jd-3Q7" secondAttribute="centerY" id="11X-6G-B8d"/>
-                                    <constraint firstAttribute="bottom" secondItem="Po8-NE-6NC" secondAttribute="bottom" id="9mi-Fe-Cor"/>
-                                    <constraint firstItem="8QV-BG-GXx" firstAttribute="centerY" secondItem="AZo-jd-3Q7" secondAttribute="centerY" id="Aew-Bw-qdK"/>
-                                    <constraint firstItem="8QV-BG-GXx" firstAttribute="centerX" secondItem="AZo-jd-3Q7" secondAttribute="centerX" id="EPN-GW-vSg"/>
-                                    <constraint firstItem="YuF-c0-uxg" firstAttribute="leading" secondItem="AZo-jd-3Q7" secondAttribute="leading" constant="8" id="j1V-hf-ehq"/>
-                                    <constraint firstAttribute="trailing" secondItem="Po8-NE-6NC" secondAttribute="trailing" id="kid-oT-tCk"/>
-                                    <constraint firstItem="Po8-NE-6NC" firstAttribute="leading" secondItem="AZo-jd-3Q7" secondAttribute="leading" id="p0b-XZ-Yin"/>
-                                </constraints>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="translatesAutoresizingMaskIntoConstraints" value="YES"/>
                                 </userDefinedRuntimeAttributes>
@@ -85,14 +51,12 @@
             <connections>
                 <outlet property="boxView" destination="0hL-Hb-tOc" id="w1K-Rf-wFl"/>
                 <outlet property="contentContainer" destination="wWQ-K4-REw" id="rHD-7e-q6F"/>
-                <outlet property="titleBar" destination="AZo-jd-3Q7" id="zoQ-ip-XI7"/>
-                <outlet property="titleLabel" destination="8QV-BG-GXx" id="YRw-Ba-wIr"/>
+                <outlet property="titleView" destination="AZo-jd-3Q7" id="dQu-kA-k0C"/>
             </connections>
             <point key="canvasLocation" x="90" y="294.5"/>
         </customView>
     </objects>
     <resources>
-        <image name="NSStopProgressFreestandingTemplate" width="14" height="14"/>
         <namedColor name="PageViewBackground">
             <color red="0.21600000560283661" green="0.21600000560283661" blue="0.21600000560283661" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

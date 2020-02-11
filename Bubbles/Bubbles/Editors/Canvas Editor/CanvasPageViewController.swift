@@ -16,8 +16,6 @@ protocol CanvasPageViewControllerDelegate: class {
 class CanvasPageViewController: NSViewController, CanvasPageView {
     weak var delegate: CanvasPageViewControllerDelegate?
 
-    @IBOutlet weak var titleLabel: NSTextField!
-
     @IBOutlet weak var contentContainer: NSView!
     var uuid: UUID {
         return self.viewModel.canvasPage.id.uuid
@@ -75,7 +73,7 @@ class CanvasPageViewController: NSViewController, CanvasPageView {
             self.addChild(pageEditor)
         }
 
-        self.labelBinding = self.viewModel.publisher(for: \.title).assign(to: \.stringValue, on: self.titleLabel)
+        self.labelBinding = self.viewModel.publisher(for: \.title).assign(to: \.title, on: self.typedView.titleView)
     }
 
     deinit {

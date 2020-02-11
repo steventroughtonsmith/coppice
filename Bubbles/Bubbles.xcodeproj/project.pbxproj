@@ -88,6 +88,7 @@
 		9977119A239E89B200FCC8C7 /* DocumentWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FE01E222D4CC8A004D380D /* DocumentWindowController.swift */; };
 		9977119C239E91FD00FCC8C7 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9977119B239E91FD00FCC8C7 /* ViewModel.swift */; };
 		997711CA239E9AF400FCC8C7 /* MockDocumentWindowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997711C9239E9AF400FCC8C7 /* MockDocumentWindowViewModel.swift */; };
+		9985F4D923F2E13600B96DC7 /* CanvasPageTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9985F4D823F2E13600B96DC7 /* CanvasPageTitleView.swift */; };
 		99868F322396AD55009AC0F7 /* ImageEditorInspectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99868F312396AD55009AC0F7 /* ImageEditorInspectorViewModel.swift */; };
 		99868F352396AD73009AC0F7 /* ImageEditorInspectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99868F332396AD73009AC0F7 /* ImageEditorInspectorViewController.swift */; };
 		99868F362396AD73009AC0F7 /* ImageEditorInspectorContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99868F342396AD73009AC0F7 /* ImageEditorInspectorContentView.xib */; };
@@ -285,6 +286,7 @@
 		99771195239C530700FCC8C7 /* PageLinkManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageLinkManagerTests.swift; sourceTree = "<group>"; };
 		9977119B239E91FD00FCC8C7 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		997711C9239E9AF400FCC8C7 /* MockDocumentWindowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDocumentWindowViewModel.swift; sourceTree = "<group>"; };
+		9985F4D823F2E13600B96DC7 /* CanvasPageTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageTitleView.swift; sourceTree = "<group>"; };
 		99868F312396AD55009AC0F7 /* ImageEditorInspectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorInspectorViewModel.swift; sourceTree = "<group>"; };
 		99868F332396AD73009AC0F7 /* ImageEditorInspectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorInspectorViewController.swift; sourceTree = "<group>"; };
 		99868F342396AD73009AC0F7 /* ImageEditorInspectorContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageEditorInspectorContentView.xib; sourceTree = "<group>"; };
@@ -562,6 +564,7 @@
 				99581094230D93F700D996C4 /* CanvasPageViewModel.swift */,
 				99581090230D92C600D996C4 /* CanvasPageViewController.swift */,
 				99581091230D92C600D996C4 /* CanvasPageViewController.xib */,
+				9985F4D823F2E13600B96DC7 /* CanvasPageTitleView.swift */,
 				99C03F06232A8ED200EB7516 /* CanvasElementView.swift */,
 				990D2440235DEFE2001B1FD9 /* PageArrowView.swift */,
 				9958108B230D908200D996C4 /* Test CanvasPage View */,
@@ -1290,6 +1293,7 @@
 				99DEF28F22F33A790020A7CE /* ModelID.swift in Sources */,
 				998F178B23E46B4900B3437A /* ColourGridImageGenerator.swift in Sources */,
 				99C865232302E267004C7B89 /* ImageEditorViewModel.swift in Sources */,
+				9985F4D923F2E13600B96DC7 /* CanvasPageTitleView.swift in Sources */,
 				99FE019122CD1037004D380D /* AppDelegate.swift in Sources */,
 				99A0B857238D6F74005FCF25 /* NSTextView+M3Extensions.swift in Sources */,
 				9923B07122F47AE30035D8C6 /* ModelController.swift in Sources */,

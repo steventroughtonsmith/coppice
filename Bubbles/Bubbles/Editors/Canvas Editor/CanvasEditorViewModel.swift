@@ -15,7 +15,7 @@ protocol CanvasEditorView: class {
 class CanvasEditorViewModel: ViewModel {
     weak var view: CanvasEditorView?
 
-    let layoutEngine = CanvasLayoutEngine(configuration: .init(pageTitleHeight: 32,
+    let layoutEngine = CanvasLayoutEngine(configuration: .init(pageTitleHeight: 24,
                                                                pageResizeEdgeHandleSize: 5,
                                                                pageResizeCornerHandleSize: 8,
                                                                pageResizeHandleOffset: 2,

@@ -20,13 +20,7 @@ final class CanvasPage: NSObject, CollectableModelObject {
     }
 
     @objc dynamic var title : String {
-        var title = self.page?.title ?? "Untitled"
-        var currentPage = self.parent
-        while currentPage != nil {
-            title += " : \(currentPage?.page?.title ?? "Untitled")"
-            currentPage = currentPage?.parent
-        }
-        return title
+        return self.page?.title ?? "Untitled"
     }
 
     var titleBarAppearsOverContent: Bool {
