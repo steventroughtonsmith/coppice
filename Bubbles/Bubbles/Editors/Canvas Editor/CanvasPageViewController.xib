@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15702" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16085" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15702"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16085"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="CanvasPageViewController" customModule="Bubbles" customModuleProvider="target">
             <connections>
-                <outlet property="contentContainer" destination="wWQ-K4-REw" id="God-zR-8Qr"/>
-                <outlet property="titleView" destination="AZo-jd-3Q7" id="8oK-TM-sep"/>
                 <outlet property="view" destination="z97-7h-MV3" id="UJC-Zc-64D"/>
             </connections>
         </customObject>
@@ -18,50 +15,7 @@
         <customView id="z97-7h-MV3" customClass="CanvasElementView" customModule="Bubbles" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="516" height="485"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <subviews>
-                <box boxType="custom" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="0hL-Hb-tOc">
-                    <rect key="frame" x="2" y="2" width="512" height="481"/>
-                    <view key="contentView" id="5Ho-x6-fcy" customClass="FlippedView" customModule="Bubbles" customModuleProvider="target">
-                        <rect key="frame" x="1" y="1" width="510" height="479"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <customView fixedFrame="YES" placeholderIntrinsicWidth="510" placeholderIntrinsicHeight="32" translatesAutoresizingMaskIntoConstraints="NO" id="AZo-jd-3Q7" customClass="CanvasPageTitleView" customModule="Bubbles" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="447" width="510" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="translatesAutoresizingMaskIntoConstraints" value="YES"/>
-                                </userDefinedRuntimeAttributes>
-                            </customView>
-                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wWQ-K4-REw">
-                                <rect key="frame" x="0.0" y="32" width="510" height="447"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                            </customView>
-                        </subviews>
-                    </view>
-                    <color key="borderColor" name="PageViewBorder"/>
-                    <color key="fillColor" name="PageViewBackground"/>
-                </box>
-            </subviews>
-            <constraints>
-                <constraint firstAttribute="trailing" secondItem="0hL-Hb-tOc" secondAttribute="trailing" constant="2" id="EHF-do-Ztx"/>
-                <constraint firstItem="0hL-Hb-tOc" firstAttribute="top" secondItem="z97-7h-MV3" secondAttribute="top" constant="2" id="OGJ-hr-aCN"/>
-                <constraint firstItem="0hL-Hb-tOc" firstAttribute="leading" secondItem="z97-7h-MV3" secondAttribute="leading" constant="2" id="kqZ-XE-peq"/>
-                <constraint firstAttribute="bottom" secondItem="0hL-Hb-tOc" secondAttribute="bottom" constant="2" id="ySx-hS-ZI8"/>
-            </constraints>
-            <connections>
-                <outlet property="boxView" destination="0hL-Hb-tOc" id="w1K-Rf-wFl"/>
-                <outlet property="contentContainer" destination="wWQ-K4-REw" id="rHD-7e-q6F"/>
-                <outlet property="titleView" destination="AZo-jd-3Q7" id="dQu-kA-k0C"/>
-            </connections>
             <point key="canvasLocation" x="90" y="294.5"/>
         </customView>
     </objects>
-    <resources>
-        <namedColor name="PageViewBackground">
-            <color red="0.21600000560283661" green="0.21600000560283661" blue="0.21600000560283661" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="PageViewBorder">
-            <color red="0.37299999594688416" green="0.37299999594688416" blue="0.37299999594688416" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-    </resources>
 </document>

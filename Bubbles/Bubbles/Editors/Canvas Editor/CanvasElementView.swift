@@ -44,10 +44,6 @@ class CanvasElementView: NSView  {
     let cornerSize: CGFloat = 8
     let edgeSize: CGFloat = 5
 
-    @IBOutlet var titleView: CanvasPageTitleView!
-    @IBOutlet var boxView: NSBox!
-    @IBOutlet weak var contentContainer: NSView!
-
     private lazy var disabledContentMouseStealer = NSView()
 
     override var isFlipped: Bool {
@@ -65,14 +61,56 @@ class CanvasElementView: NSView  {
         self.updateSubviews(with: layoutPage)
     }
 
+    override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+        self.setupSubviews()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        self.setupSubviews()
+    }
+
+
     //MARK: - Subviews
+    lazy var titleView: CanvasPageTitleView = {
+        let view = CanvasPageTitleView()
+        return view
+    }()
+
+    lazy var contentContainer: NSView = {
+        let view = NSView()
+        view.wantsLayer = true
+        view.layer?.backgroundColor = NSColor.red.cgColor
+        return view
+    }()
+
+    private lazy var backgroundView: CanvasPageBackgroundView = {
+        let view = CanvasPageBackgroundView()
+        return view
+    }()
+
+    private func setupSubviews() {
+        self.addSubview(self.backgroundView, withInsets: self.shadowInsets)
+
+        self.backgroundView.addSubview(self.titleView)
+        self.backgroundView.addSubview(self.contentContainer)
+    }
+
+    private let shadowInsets = NSEdgeInsets(top: 5, left: 10, bottom: 10, right: 10)
+
+
+
     private func updateSubviews(with layoutPage: LayoutEnginePage) {
-        self.boxView.frame = layoutPage.visualPageFrame
+        self.backgroundView.frame = layoutPage.visualPageFrame
         self.titleView.frame = layoutPage.titleFrameInsideVisualPage
         self.contentContainer.frame = layoutPage.contentFrameInsideVisualPage
         self.disabledContentMouseStealer.frame = layoutPage.contentFrameInsideVisualPage
     }
 
+
+
+    //MARK: - Mouse Stealer
     private func updateMouseStealerVisibility() {
         if (self.enabled) {
             self.disabledContentMouseStealer.removeFromSuperview()
@@ -112,7 +150,7 @@ class CanvasElementView: NSView  {
             return self
         }
         let hitView = super.hitTest(point)
-        if (hitView == self.titleView || hitView == self.titleView || hitView == self.boxView || hitView == self.disabledContentMouseStealer) {
+        if (hitView == self.titleView || hitView == self.titleView || hitView == self.backgroundView || hitView == self.disabledContentMouseStealer) {
             return self
         }
         return hitView
@@ -120,32 +158,6 @@ class CanvasElementView: NSView  {
 
     override func mouseDown(with event: NSEvent) {
         self.canvasView?.mouseDown(with: event)
-    }
-
-
-    //MARK: - Hovering
-    private var hoverTrackingArea: NSTrackingArea?
-    override func updateTrackingAreas() {
-        super.updateTrackingAreas()
-//        if let oldTrackingArea = self.hoverTrackingArea {
-//            self.removeTrackingArea(oldTrackingArea)
-//        }
-//
-//        let trackingArea = NSTrackingArea(rect: self.bounds, options: [.activeInActiveApp, .mouseEnteredAndExited], owner: self, userInfo: nil)
-//        self.addTrackingArea(trackingArea)
-//        self.hoverTrackingArea = trackingArea
-    }
-
-    override func mouseEntered(with event: NSEvent) {
-        NSView.animate(withDuration: 0.3) {
-            self.titleView.isFocused = true
-        }
-    }
-
-    override func mouseExited(with event: NSEvent) {
-        NSView.animate(withDuration: 0.3) {
-            self.titleView.isFocused = false
-        }
     }
 
 

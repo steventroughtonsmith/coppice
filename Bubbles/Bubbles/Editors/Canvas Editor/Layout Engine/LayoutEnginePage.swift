@@ -21,10 +21,14 @@ class LayoutEnginePage: Equatable {
     let id: UUID
     let parentID: UUID?
     var selected: Bool = false
+    var titleVisible: Bool = false
 
+    /// Enabled pages can be edited
     var enabled: Bool {
         return (self.layoutEngine?.enabledPage == self)
     }
+
+
 
     //MARK: - Content
 
@@ -39,11 +43,16 @@ class LayoutEnginePage: Equatable {
 
 
     //MARK: - Layout Frames
+    private func layoutFrameMargins(for config: CanvasLayoutEngine.Configuration) -> CanvasLayoutMargins {
+        return config.page.shadowOffset.adding(self.borderMargins(for: config))
+    }
 
     var minimumLayoutSize: CGSize {
-        guard let margins = self.layoutEngine?.configuration.layoutFrameOffsetFromContent else {
+        guard let config = self.layoutEngine?.configuration else {
             return self.minimumContentSize
         }
+
+        let margins = self.layoutFrameMargins(for: config)
         return CGRect(origin: .zero, size: self.minimumContentSize).grow(by: margins).size
     }
 
@@ -51,19 +60,21 @@ class LayoutEnginePage: Equatable {
         get {
             let canvasOrigin = self.layoutEngine?.convertPointToCanvasSpace(self.contentFrame.origin) ?? self.contentFrame.origin
             let canvasFrame = CGRect(origin: canvasOrigin, size: self.contentFrame.size)
-            guard let margins = self.layoutEngine?.configuration.layoutFrameOffsetFromContent else {
+            guard let config = self.layoutEngine?.configuration else {
                 return canvasFrame
             }
+            let margins = self.layoutFrameMargins(for: config)
             return canvasFrame.grow(by: margins)
         }
         set {
 
             let pageOrigin = self.layoutEngine?.convertPointToPageSpace(newValue.origin) ?? newValue.origin
             let contentFrame = CGRect(origin: pageOrigin, size: newValue.size)
-            guard let margins = self.layoutEngine?.configuration.layoutFrameOffsetFromContent else {
+            guard let config = self.layoutEngine?.configuration else {
                 self.contentFrame = contentFrame
                 return
             }
+            let margins = self.layoutFrameMargins(for: config)
             self.contentFrame = contentFrame.shrink(by: margins)
         }
     }
@@ -74,26 +85,33 @@ class LayoutEnginePage: Equatable {
     }
 
     //MARK: - Calculated Frames For Layout
+    private func borderMargins(for config: CanvasLayoutEngine.Configuration) -> CanvasLayoutMargins {
+        return CanvasLayoutMargins(default: config.page.borderSize, top: config.page.titleHeight)
+    }
+
     var visualPageFrame: CGRect {
         let visualFrame = CGRect(origin: .zero, size: self.layoutFrame.size)
-        guard let margins = self.layoutEngine?.configuration.visibleFrameInset else {
+        guard let config = self.layoutEngine?.configuration else {
             return visualFrame
         }
-        return visualFrame.shrink(by: margins)
+        return visualFrame.shrink(by: config.page.shadowOffset)
     }
 
     var titleFrameInsideVisualPage: CGRect {
         let visualPageFrame = self.visualPageFrame
-        let titleHeight = self.layoutEngine?.configuration.pageTitleHeight ?? 0
+        let titleHeight = self.layoutEngine?.configuration.page.titleHeight ?? 0
 
         return CGRect(x: 0, y: 0, width: visualPageFrame.size.width, height: titleHeight)
     }
 
     var contentFrameInsideVisualPage: CGRect {
-        let visualPageFrame = self.visualPageFrame
-        let titleHeight = self.layoutEngine?.configuration.pageTitleHeight ?? 0
+        guard let config = self.layoutEngine?.configuration else {
+            return .zero
+        }
 
-        return CGRect(x: 0, y: titleHeight, width: visualPageFrame.size.width, height: visualPageFrame.size.height - titleHeight)
+        let visualFrame = CGRect(origin: .zero, size: self.visualPageFrame.size)
+        let margins = self.borderMargins(for: config)
+        return visualFrame.shrink(by: margins)
     }
 
     weak var layoutEngine: CanvasLayoutEngine?
@@ -132,7 +150,7 @@ class LayoutEnginePage: Equatable {
         }
         if (component == .titleBar) {
             var titleBarRect = self.visualPageFrame
-            titleBarRect.size.height = configuration.pageTitleHeight
+            titleBarRect.size.height = configuration.page.titleHeight
             return titleBarRect
         }
         if (component == .content) {
@@ -144,21 +162,21 @@ class LayoutEnginePage: Equatable {
         var width: CGFloat = 0
         var height: CGFloat = 0
 
-        let layoutSize = self.layoutFrame.size
+        let layoutSize = self.visualPageFrame.size
 
         if (component.isCorner) {
-            width = configuration.pageResizeCornerHandleSize
-            height = configuration.pageResizeCornerHandleSize
+            width = configuration.page.cornerResizeHandleSize
+            height = configuration.page.cornerResizeHandleSize
         }
         else if (component == .resizeRight || component == .resizeLeft) {
-            y = configuration.pageResizeCornerHandleSize
-            width = configuration.pageResizeEdgeHandleSize
-            height = layoutSize.height - (2 * configuration.pageResizeCornerHandleSize)
+            y = configuration.page.cornerResizeHandleSize
+            width = configuration.page.edgeResizeHandleSize
+            height = layoutSize.height - (2 * configuration.page.cornerResizeHandleSize)
         }
         else if (component == .resizeTop || component == .resizeBottom) {
-            x = configuration.pageResizeCornerHandleSize
-            width = layoutSize.width - (2 * configuration.pageResizeCornerHandleSize)
-            height = configuration.pageResizeEdgeHandleSize
+            x = configuration.page.cornerResizeHandleSize
+            width = layoutSize.width - (2 * configuration.page.cornerResizeHandleSize)
+            height = configuration.page.edgeResizeHandleSize
         }
 
         if (component.isRight) {
@@ -168,7 +186,7 @@ class LayoutEnginePage: Equatable {
             y = layoutSize.height - height
         }
 
-        return CGRect(x: x, y: y, width: width, height: height)
+        return CGRect(x: x + self.visualPageFrame.minX, y: y + self.visualPageFrame.minY, width: width, height: height)
     }
 
 

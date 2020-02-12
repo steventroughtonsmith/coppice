@@ -55,10 +55,7 @@ class CanvasPageViewController: NSViewController, CanvasPageView {
     }
 
     private func updateBorder() {
-        let colour = self.selected ? NSColor.selectedControlColor : NSColor(named: "PageViewBorder")!
-        let size: CGFloat = self.selected ? 2 : 1
-        self.typedView.boxView.borderColor = colour
-        self.typedView.boxView.borderWidth = size
+
     }
 
     private var labelBinding: AnyCancellable!
