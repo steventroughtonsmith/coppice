@@ -129,13 +129,13 @@ class CanvasElementView: NSView  {
     private var hoverTrackingArea: NSTrackingArea?
     override func updateTrackingAreas() {
         super.updateTrackingAreas()
-        if let oldTrackingArea = self.hoverTrackingArea {
-            self.removeTrackingArea(oldTrackingArea)
-        }
-
-        let trackingArea = NSTrackingArea(rect: self.bounds, options: [.activeInActiveApp, .mouseEnteredAndExited], owner: self, userInfo: nil)
-        self.addTrackingArea(trackingArea)
-        self.hoverTrackingArea = trackingArea
+//        if let oldTrackingArea = self.hoverTrackingArea {
+//            self.removeTrackingArea(oldTrackingArea)
+//        }
+//
+//        let trackingArea = NSTrackingArea(rect: self.bounds, options: [.activeInActiveApp, .mouseEnteredAndExited], owner: self, userInfo: nil)
+//        self.addTrackingArea(trackingArea)
+//        self.hoverTrackingArea = trackingArea
     }
 
     override func mouseEntered(with event: NSEvent) {

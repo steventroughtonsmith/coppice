@@ -129,7 +129,9 @@ class SidebarViewModel: ViewModel {
             }
             self.modelController.undoManager.setActionName("Sort Pages")
             self.modelController.settings.set(newValue.rawValue, for: ModelSettings.pageSortKeySetting)
-            self.sortCachedItems()
+            if let cachedItems = self.cachedPageItems {
+                self.cachedPageItems = self.sort(cachedItems)
+            }
             self.view?.reloadPages()
         }
     }
@@ -152,15 +154,14 @@ class SidebarViewModel: ViewModel {
         if let cachedItems = self.cachedPageItems {
             return cachedItems
         }
-        let items = self.pages.objects(matchingSearchTerm: self.documentWindowViewModel.searchString)
-            .map { PageSidebarItem(page: $0)}
-        self.cachedPageItems = items
-        self.sortCachedItems()
-        return items
+        let items = self.pages.objects(matchingSearchTerm: self.documentWindowViewModel.searchString).map { PageSidebarItem(page: $0)}
+        let sortedItems = self.sort(items)
+        self.cachedPageItems = sortedItems
+        return sortedItems
     }
 
-    private func sortCachedItems() {
-        self.cachedPageItems?.sort { item1, item2 in
+    private func sort(_ pageItems: [PageSidebarItem]) -> [PageSidebarItem] {
+        return pageItems.sorted { item1, item2 in
             switch self.sortKey {
             case .title:
                 return item1.page.title < item2.page.title

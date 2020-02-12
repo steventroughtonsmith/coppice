@@ -135,6 +135,7 @@ class SidebarViewModelTests: XCTestCase {
         o3.title = "Baz"
 
         let viewModel = self.createViewModel()
+        viewModel.sortKey = .title
 
         let pageItems = viewModel.pageItems
 

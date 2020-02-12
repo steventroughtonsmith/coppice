@@ -86,6 +86,8 @@ final class RelationshipModelObject: NSObject, CollectableModelObject {
 }
 
 class TestModelController: NSObject, ModelController {
+    var settings = ModelSettings()
+
     var undoManager = UndoManager()
     var collections = [ModelType : Any]()
 

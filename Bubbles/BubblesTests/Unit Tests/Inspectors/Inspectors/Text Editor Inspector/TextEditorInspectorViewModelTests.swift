@@ -55,17 +55,6 @@ class TextEditorInspectorViewModelTests: XCTestCase {
         XCTAssertEqual(typefaceNames, expectedNames)
     }
 
-    func test_textColours_containsAllStandardColours() {
-        let expectedColourNames = Set(["Black", "Blue", "Brown", "Cyan", "Green", "Magenta", "Orange", "Purple", "Red", "Yellow", "White"])
-        let colourNames = Set(self.viewModel.textColours.colours.map { $0.name })
-        XCTAssertEqual(colourNames, expectedColourNames)
-    }
-
-    func test_textColours_containsSelectedColour() {
-        self.editor.selectionAttributes = TextEditorAttributes(textColour: NSColor.blue)
-        XCTAssertEqual(self.viewModel.textColours.selectedColour, NSColor.blue)
-    }
-
     func test_selectedFontFamily_getReturnsFamilyFromAttributes() {
         self.editor.selectionAttributes = TextEditorAttributes(fontFamily: "Helvetica")
         XCTAssertEqual(self.viewModel.selectedFontFamily, "Helvetica")

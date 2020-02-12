@@ -79,21 +79,23 @@ class ModelWriterTests: XCTestCase {
         let writer = ModelWriter(modelController: self.testModel)
         let fileWrapper = try writer.generateFileWrapper()
         let data = try XCTUnwrap(fileWrapper.fileWrappers?["data.plist"]?.regularFileContents)
-        let plist = try XCTUnwrap(try PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: [[String: Any]]])
-        XCTAssertEqual(plist["pages"]?.count, 3)
+        let plist = try XCTUnwrap(try PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: Any])
+        let pages = try XCTUnwrap(plist["pages"] as? [[String: Any]])
+        XCTAssertEqual(pages.count, 3)
     }
 
     func test_plist_pagesContainTypeAndFilenameOfContent() throws {
         let writer = ModelWriter(modelController: self.testModel)
         let fileWrapper = try writer.generateFileWrapper()
         let data = try XCTUnwrap(fileWrapper.fileWrappers?["data.plist"]?.regularFileContents)
-        let plist = try XCTUnwrap(try PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: [[String: Any]]])
+        let plist = try XCTUnwrap(try PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: Any])
+        let pages = try XCTUnwrap(plist["pages"] as? [[String: Any]])
 
-        let page1Content = plist["pages"]?[0]["content"] as? [String: String]
+        let page1Content = pages[0]["content"] as? [String: String]
         XCTAssertEqual(page1Content, ["type": "text", "filename": "\(self.pages[0].id.uuid.uuidString).rtf"])
-        let page2Content = plist["pages"]?[1]["content"] as? [String: String]
+        let page2Content = pages[1]["content"] as? [String: String]
         XCTAssertEqual(page2Content, ["type": "empty"])
-        let page3Content = plist["pages"]?[2]["content"] as? [String: String]
+        let page3Content = pages[2]["content"] as? [String: String]
         XCTAssertEqual(page3Content, ["type": "image", "filename": "\(self.pages[2].id.uuid.uuidString).png"])
     }
 
@@ -101,16 +103,18 @@ class ModelWriterTests: XCTestCase {
         let writer = ModelWriter(modelController: self.testModel)
         let fileWrapper = try writer.generateFileWrapper()
         let data = try XCTUnwrap(fileWrapper.fileWrappers?["data.plist"]?.regularFileContents)
-        let plist = try XCTUnwrap(try PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: [[String: Any]]])
-        XCTAssertEqual(plist["canvasPages"]?.count, 3)
+        let plist = try XCTUnwrap(try PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: Any])
+        let canvasPages = try XCTUnwrap(plist["canvasPages"] as? [[String: Any]])
+        XCTAssertEqual(canvasPages.count, 3)
     }
 
     func test_plist_containsAllCanvases() throws {
         let writer = ModelWriter(modelController: self.testModel)
         let fileWrapper = try writer.generateFileWrapper()
         let data = try XCTUnwrap(fileWrapper.fileWrappers?["data.plist"]?.regularFileContents)
-        let plist = try XCTUnwrap(try PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: [[String: Any]]])
-        XCTAssertEqual(plist["canvases"]?.count, 2)
+        let plist = try XCTUnwrap(try PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: Any])
+        let canvases = try XCTUnwrap(plist["canvases"] as? [[String: Any]])
+        XCTAssertEqual(canvases.count, 2)
     }
 
     func test_content_fileWrapperContainsContentDirectoryAtRoot() throws {

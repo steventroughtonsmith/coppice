@@ -96,7 +96,7 @@ class CanvasLayoutEngine: NSObject {
     @discardableResult func addPage(withID id: UUID,
                                     contentFrame: CGRect,
                                     minimumContentSize: CGSize = GlobalConstants.minimumPageSize,
-                                    titleBarAppearsOverContent: Bool,
+                                    titleBarAppearsOverContent: Bool = false,
                                     parentID: UUID? = nil) -> LayoutEnginePage {
 
         let page = LayoutEnginePage(id: id,
@@ -119,7 +119,7 @@ class CanvasLayoutEngine: NSObject {
         self.informOfLayoutChange(with: self.recalculateCanvasSize())
     }
 
-    func updateContentFrame(_ frame: CGRect, titleBarAppearsOverContent: Bool, ofPageWithID uuid: UUID) {
+    func updateContentFrame(_ frame: CGRect, titleBarAppearsOverContent: Bool = false, ofPageWithID uuid: UUID) {
         guard let page = self.pagesByUUID[uuid] else {
             return
         }
@@ -195,6 +195,7 @@ class CanvasLayoutEngine: NSObject {
 
     func deselectAll() {
         self.selectedPages.forEach { $0.selected = false }
+        self.updateEnabledPage()
         self.informOfLayoutChange(with: LayoutContext())
     }
 
