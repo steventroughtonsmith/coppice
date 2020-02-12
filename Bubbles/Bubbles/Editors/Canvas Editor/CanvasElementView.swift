@@ -63,8 +63,6 @@ class CanvasElementView: NSView  {
     func apply(_ layoutPage: LayoutEnginePage) {
         self.updateResizeRects(with: layoutPage)
         self.updateSubviews(with: layoutPage)
-
-        self.titleView.style = layoutPage.titleBarAppearsOverContent ? .transient : .standard
     }
 
     //MARK: - Subviews

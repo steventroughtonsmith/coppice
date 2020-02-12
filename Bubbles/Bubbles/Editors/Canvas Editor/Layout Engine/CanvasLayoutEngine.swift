@@ -93,18 +93,8 @@ class CanvasLayoutEngine: NSObject {
     private(set) var pages = [LayoutEnginePage]()
     private var pagesByUUID = [UUID: LayoutEnginePage]()
 
-    @discardableResult func addPage(withID id: UUID,
-                                    contentFrame: CGRect,
-                                    minimumContentSize: CGSize = GlobalConstants.minimumPageSize,
-                                    titleBarAppearsOverContent: Bool = false,
-                                    parentID: UUID? = nil) -> LayoutEnginePage {
-
-        let page = LayoutEnginePage(id: id,
-                                    contentFrame: contentFrame,
-                                    minimumContentSize: minimumContentSize,
-                                    titleBarAppearsOverContent: titleBarAppearsOverContent,
-                                    parentID: parentID,
-                                    layoutEngine: self)
+    @discardableResult func addPage(withID id: UUID, contentFrame: CGRect, minimumContentSize: CGSize = GlobalConstants.minimumPageSize, parentID: UUID? = nil) -> LayoutEnginePage {
+        let page = LayoutEnginePage(id: id, contentFrame: contentFrame, minimumContentSize: minimumContentSize, parentID: parentID, layoutEngine: self)
         self.pages.append(page)
         self.pagesByUUID[id] = page
         self.informOfLayoutChange(with: self.recalculateCanvasSize())
@@ -119,20 +109,20 @@ class CanvasLayoutEngine: NSObject {
         self.informOfLayoutChange(with: self.recalculateCanvasSize())
     }
 
-    func updateContentFrame(_ frame: CGRect, titleBarAppearsOverContent: Bool = false, ofPageWithID uuid: UUID) {
+    func updateContentFrame(_ frame: CGRect, ofPageWithID uuid: UUID) {
         guard let page = self.pagesByUUID[uuid] else {
             return
         }
         guard page.contentFrame != frame else {
             return
         }
-        page.titleBarAppearsOverContent = titleBarAppearsOverContent
         page.contentFrame = frame
         self.informOfLayoutChange(with: self.recalculateCanvasSize())
     }
 
 
     //MARK: - Retrieving Pages
+
     func page(atCanvasPoint canvasPoint: CGPoint) -> LayoutEnginePage? {
         for page in self.pages.reversed() {
             if page.layoutFrame.contains(canvasPoint) {
@@ -406,23 +396,6 @@ extension CanvasLayoutEngine {
         var layoutFrameOffsetFromContent: LayoutMargins {
             return LayoutMargins(left: self.pageResizeHandleOffset,
                                  top: self.pageResizeHandleOffset + self.pageTitleHeight,
-                                 right: self.pageResizeHandleOffset,
-                                 bottom: self.pageResizeHandleOffset)
-        }
-        struct LayoutFrameOptions: OptionSet {
-            let rawValue: Int
-
-            static let includeTitleBar = LayoutFrameOptions(rawValue: 1 << 1)
-        }
-
-        func layoutFrameOffsetFromContent(options: LayoutFrameOptions) -> LayoutMargins {
-            var top = self.pageResizeHandleOffset
-            if options.contains(.includeTitleBar) {
-                top += self.pageTitleHeight
-            }
-
-            return LayoutMargins(left: self.pageResizeHandleOffset,
-                                 top: top,
                                  right: self.pageResizeHandleOffset,
                                  bottom: self.pageResizeHandleOffset)
         }

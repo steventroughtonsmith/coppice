@@ -22,44 +22,9 @@ class LayoutEnginePage: Equatable {
     let parentID: UUID?
     var selected: Bool = false
 
-    var titleBarAppearsOverContent: Bool
-
     var enabled: Bool {
         return (self.layoutEngine?.enabledPage == self)
     }
-
-
-    //MARK: - Initialisation
-    weak var layoutEngine: CanvasLayoutEngine?
-    init(id: UUID,
-         contentFrame: CGRect,
-         minimumContentSize: CGSize = CGSize(width: 150, height: 100),
-         titleBarAppearsOverContent: Bool = false,
-         parentID: UUID? = nil,
-         layoutEngine: CanvasLayoutEngine) {
-        self.id = id
-        self.contentFrame = contentFrame
-        self.minimumContentSize = minimumContentSize
-        self.titleBarAppearsOverContent = titleBarAppearsOverContent
-        self.parentID = parentID
-        self.layoutEngine = layoutEngine
-        self.validateSize()
-    }
-
-    static func == (lhs: LayoutEnginePage, rhs: LayoutEnginePage) -> Bool {
-        return lhs.id == rhs.id
-    }
-
-    private func validateSize() {
-        var boundedSize = self.contentFrame.size
-        boundedSize.width = max(boundedSize.width, self.minimumContentSize.width)
-        boundedSize.height = max(boundedSize.height, self.minimumContentSize.height)
-
-        if boundedSize != self.contentFrame.size {
-            self.contentFrame.size = boundedSize
-        }
-    }
-
 
     //MARK: - Content
 
@@ -74,15 +39,9 @@ class LayoutEnginePage: Equatable {
 
 
     //MARK: - Layout Frames
-    private var layoutOffsets: CanvasLayoutEngine.LayoutMargins? {
-        if self.titleBarAppearsOverContent {
-            return self.layoutEngine?.configuration.layoutFrameOffsetFromContent(options: [])
-        }
-        return self.layoutEngine?.configuration.layoutFrameOffsetFromContent(options: .includeTitleBar)
-    }
 
     var minimumLayoutSize: CGSize {
-        guard let margins = self.layoutOffsets else {
+        guard let margins = self.layoutEngine?.configuration.layoutFrameOffsetFromContent else {
             return self.minimumContentSize
         }
         return CGRect(origin: .zero, size: self.minimumContentSize).grow(by: margins).size
@@ -92,15 +51,16 @@ class LayoutEnginePage: Equatable {
         get {
             let canvasOrigin = self.layoutEngine?.convertPointToCanvasSpace(self.contentFrame.origin) ?? self.contentFrame.origin
             let canvasFrame = CGRect(origin: canvasOrigin, size: self.contentFrame.size)
-            guard let margins = self.layoutOffsets else {
+            guard let margins = self.layoutEngine?.configuration.layoutFrameOffsetFromContent else {
                 return canvasFrame
             }
             return canvasFrame.grow(by: margins)
         }
         set {
+
             let pageOrigin = self.layoutEngine?.convertPointToPageSpace(newValue.origin) ?? newValue.origin
             let contentFrame = CGRect(origin: pageOrigin, size: newValue.size)
-            guard let margins = self.layoutOffsets else {
+            guard let margins = self.layoutEngine?.configuration.layoutFrameOffsetFromContent else {
                 self.contentFrame = contentFrame
                 return
             }
@@ -112,7 +72,6 @@ class LayoutEnginePage: Equatable {
         let pageOrigin = self.layoutEngine?.convertPointToPageSpace(self.layoutFrame.origin) ?? self.layoutFrame.origin
         return CGRect(origin: pageOrigin, size: self.layoutFrame.size)
     }
-
 
     //MARK: - Calculated Frames For Layout
     var visualPageFrame: CGRect {
@@ -132,16 +91,37 @@ class LayoutEnginePage: Equatable {
 
     var contentFrameInsideVisualPage: CGRect {
         let visualPageFrame = self.visualPageFrame
-
         let titleHeight = self.layoutEngine?.configuration.pageTitleHeight ?? 0
-        var y: CGFloat = 0
-        var height = visualPageFrame.size.height
-        if !self.titleBarAppearsOverContent {
-            y = titleHeight
-            height -= titleHeight
-        }
 
-        return CGRect(x: 0, y: y, width: visualPageFrame.size.width, height: height)
+        return CGRect(x: 0, y: titleHeight, width: visualPageFrame.size.width, height: visualPageFrame.size.height - titleHeight)
+    }
+
+    weak var layoutEngine: CanvasLayoutEngine?
+    init(id: UUID,
+         contentFrame: CGRect,
+         minimumContentSize: CGSize = CGSize(width: 150, height: 100),
+         parentID: UUID? = nil,
+         layoutEngine: CanvasLayoutEngine) {
+        self.id = id
+        self.contentFrame = contentFrame
+        self.minimumContentSize = minimumContentSize
+        self.parentID = parentID
+        self.layoutEngine = layoutEngine
+        self.validateSize()
+    }
+
+    static func == (lhs: LayoutEnginePage, rhs: LayoutEnginePage) -> Bool {
+        return lhs.id == rhs.id
+    }
+
+    private func validateSize() {
+        var boundedSize = self.contentFrame.size
+        boundedSize.width = max(boundedSize.width, self.minimumContentSize.width)
+        boundedSize.height = max(boundedSize.height, self.minimumContentSize.height)
+
+        if boundedSize != self.contentFrame.size {
+            self.contentFrame.size = boundedSize
+        }
     }
 
 
