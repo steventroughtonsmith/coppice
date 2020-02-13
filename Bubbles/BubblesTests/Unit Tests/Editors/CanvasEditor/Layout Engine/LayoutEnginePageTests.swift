@@ -226,7 +226,7 @@ class LayoutEnginePageTests: XCTestCase {
 
         let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 110, height: 220), minimumContentSize: .zero)
 
-        XCTAssertEqual(page.titleFrameInsideVisualPage, CGRect(x: 0, y: 0, width: 110, height: 42))
+        XCTAssertEqual(page.titleBarFrame, CGRect(x: 0, y: 0, width: 110, height: 42))
     }
 
     func test_contentFrame_fillsBottomOfVisualPageFrameOffsetByTitleHeight() {
@@ -238,7 +238,7 @@ class LayoutEnginePageTests: XCTestCase {
 
         let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 110, height: 220), minimumContentSize: .zero)
 
-        XCTAssertEqual(page.contentFrameInsideVisualPage, CGRect(x: 0, y: 42, width: 110, height: 220))
+        XCTAssertEqual(page.contentFrame, CGRect(x: 0, y: 42, width: 110, height: 220))
     }
 
 

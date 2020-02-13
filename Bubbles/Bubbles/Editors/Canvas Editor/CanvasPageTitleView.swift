@@ -22,25 +22,6 @@ class CanvasPageTitleView: NSView {
 
     weak var delegate: CanvasPageTitleViewDelegate?
 
-    var style: Style = .standard {
-        didSet {
-            if oldValue != self.style {
-                self.updateTitleBackground()
-            }
-        }
-    }
-
-    var isFocused: Bool = true {
-        didSet {
-            guard self.style == .transient else {
-                self.titleBackground.alphaValue = 1
-                return
-            }
-            self.titleBackground.alphaValue = self.isFocused ? 1 : 0
-        }
-    }
-
-
     //MARK: - Setup
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
@@ -53,41 +34,31 @@ class CanvasPageTitleView: NSView {
     }
 
     private func setupSubviews() {
-        self.titleBackground.addSubview(self.titleLabel)
-        self.addSubview(self.titleBackground, withInsets: NSEdgeInsetsZero)
+        self.addSubview(self.titleLabel)
         self.addSubview(self.button)
 
-        let labelCenterX = self.titleLabel.centerXAnchor.constraint(equalTo: self.titleBackground.centerXAnchor)
+        let labelCenterX = self.titleLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor)
         labelCenterX.priority = .init(749)
         NSLayoutConstraint.activate([
-            self.button.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            self.button.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 1),
             self.button.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5),
             self.button.widthAnchor.constraint(equalToConstant: 16),
             self.button.heightAnchor.constraint(equalToConstant: 16),
             labelCenterX,
-            self.titleLabel.centerYAnchor.constraint(equalTo: self.titleBackground.centerYAnchor),
+            self.titleLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 1),
             self.titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: self.button.trailingAnchor, constant: 5),
-            self.titleBackground.trailingAnchor.constraint(greaterThanOrEqualTo: self.titleLabel.trailingAnchor, constant: 5),
+            self.trailingAnchor.constraint(greaterThanOrEqualTo: self.titleLabel.trailingAnchor, constant: 5),
         ])
-        self.updateTitleBackground()
     }
 
 
     //MARK: - Subviews
-    private lazy var titleBackground: NSBox = {
-        let view = NSBox()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.wantsLayer = true
-        view.boxType = .custom
-        view.borderType = .noBorder
-        view.fillColor = .clear
-        return view
-    }()
-
     private lazy var titleLabel: NSTextField = {
         let label = NSTextField(labelWithString: self.title)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.lineBreakMode = .byTruncatingTail
+        label.textColor = .labelColor
+        label.font = NSFont.systemFont(ofSize: 12)
         return label
     }()
 
@@ -101,30 +72,8 @@ class CanvasPageTitleView: NSView {
     }()
 
 
-    private func updateTitleBackground() {
-        switch self.style {
-        case .standard:
-            self.titleBackground.fillColor = .clear
-            self.titleLabel.textColor = NSColor.textColor
-            self.titleBackground.alphaValue = 1
-        case .transient:
-            self.titleBackground.fillColor = NSColor(white: 0, alpha: 0.8)
-            self.titleLabel.textColor = NSColor.white
-            self.titleBackground.alphaValue = 0
-        }
-        self.updateTrackingAreas()
-    }
-
-
     //MARK: - Actions
     @objc dynamic func closeClicked(_ sender: Any?) {
         self.delegate?.closeClicked(in: self)
-    }
-
-
-    //MARK: - Sub Types
-    enum Style: Equatable {
-        case standard
-        case transient
     }
 }

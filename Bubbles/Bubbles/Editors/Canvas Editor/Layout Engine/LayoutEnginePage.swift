@@ -15,8 +15,8 @@ import Foundation
 ///
 /// - Page View (`layoutFrame`): the view inside the canvas
 ///     - Visual Page (`visualPageFrame`): the page as drawn on screen
-///         - Title Bar (`titleFrameInsideVisualPage`): The title bar for moving
-///         - Content (`contentFrameInsideVisualPage`): The actual page content
+///     - Title Bar (`titleBarFrame`): The title bar for moving
+///     - Content (`contentContainerFrame`): The actual page content
 class LayoutEnginePage: Equatable {
     let id: UUID
     let parentID: UUID?
@@ -97,19 +97,20 @@ class LayoutEnginePage: Equatable {
         return visualFrame.shrink(by: config.page.shadowOffset)
     }
 
-    var titleFrameInsideVisualPage: CGRect {
-        let visualPageFrame = self.visualPageFrame
+    var titleBarFrame: CGRect {
+        var visualPageFrame = self.visualPageFrame
         let titleHeight = self.layoutEngine?.configuration.page.titleHeight ?? 0
+        visualPageFrame.size.height = titleHeight
 
-        return CGRect(x: 0, y: 0, width: visualPageFrame.size.width, height: titleHeight)
+        return visualPageFrame
     }
 
-    var contentFrameInsideVisualPage: CGRect {
+    var contentContainerFrame: CGRect {
         guard let config = self.layoutEngine?.configuration else {
             return .zero
         }
 
-        let visualFrame = CGRect(origin: .zero, size: self.visualPageFrame.size)
+        let visualFrame = self.visualPageFrame
         let margins = self.borderMargins(for: config)
         return visualFrame.shrink(by: margins)
     }
@@ -154,7 +155,7 @@ class LayoutEnginePage: Equatable {
             return titleBarRect
         }
         if (component == .content) {
-            return self.contentFrameInsideVisualPage
+            return self.contentContainerFrame
         }
 
         var x: CGFloat = 0

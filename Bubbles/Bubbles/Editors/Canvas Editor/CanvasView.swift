@@ -107,6 +107,13 @@ class CanvasView: NSView {
         self.stopAutoscrolling()
     }
 
+    override func mouseMoved(with event: NSEvent) {
+        let point = self.convert(event.locationInWindow, from: nil)
+
+        self.updateCursor(forPageAt: point)
+        self.updateHoverState(for: point)
+    }
+
     override func keyDown(with event: NSEvent) {
         self.layoutEngine?.keyDownEvent(keyCode: event.keyCode, modifiers: event.layoutEventModifiers, isARepeat: event.isARepeat)
     }
@@ -290,7 +297,7 @@ class CanvasView: NSView {
     }
 
 
-    //MARK: - Cursor Handling
+    //MARK: - Tracking Areas
     override func updateTrackingAreas() {
         for area in self.trackingAreas {
             self.removeTrackingArea(area)
@@ -314,14 +321,32 @@ class CanvasView: NSView {
         self.addTrackingArea(area)
     }
 
-    override func mouseMoved(with event: NSEvent) {
-        let point = self.convert(event.locationInWindow, from: nil)
+
+    //MARK: - Cursor Handling
+    private func updateCursor(forPageAt point: CGPoint) {
         guard let pageView = self.pageView(at: point) else {
             NSCursor.arrow.set()
             return
         }
         let pagePoint = self.convert(point, to: pageView)
         pageView.cursor(for: pagePoint)?.set()
+    }
+
+
+    //MARK: - Hover State
+    private var hoveredPage: CanvasElementView?
+    private func updateHoverState(for point: CGPoint) {
+        guard let pageView = self.pageView(at: point) else {
+            self.hoveredPage?.isMouseInside = false
+            self.hoveredPage = nil
+            return
+        }
+
+        if self.hoveredPage != pageView {
+            self.hoveredPage?.isMouseInside = false
+            self.hoveredPage = pageView
+        }
+        pageView.isMouseInside = true
     }
 
 

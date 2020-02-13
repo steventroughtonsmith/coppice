@@ -16,17 +16,39 @@ class CanvasPageBackgroundView: NSView {
     //MARK: - Initialisation
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
+        self.wantsLayer = true
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+
+    //MARK: - Drawing
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
 
-        NSColor.blue.set()
-        self.bounds.fill()
+        self.drawOuterStroke()
+        self.drawBackground()
+        self.drawInnerStroke()
+    }
+
+    private func drawOuterStroke() {
+        NSColor(named: "PageViewStroke")?.set()
+        let path = NSBezierPath(roundedRect: self.bounds, xRadius: 5, yRadius: 5)
+        path.fill()
+    }
+
+    private func drawBackground() {
+        NSColor(named: "PageViewBackground")?.set()
+        let path = NSBezierPath(roundedRect: self.bounds.insetBy(dx: 1, dy: 1), xRadius: 5, yRadius: 5)
+        path.fill()
+    }
+
+    private func drawInnerStroke() {
+        NSColor(named: "PageViewInnerStroke")?.set()
+        let path = NSBezierPath(roundedRect: self.bounds.insetBy(dx: 1.5, dy: 1.5), xRadius: 4.5, yRadius: 4.5)
+        path.stroke()
     }
     
 }

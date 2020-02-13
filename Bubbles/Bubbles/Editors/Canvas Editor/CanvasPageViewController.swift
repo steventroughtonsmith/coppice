@@ -28,7 +28,7 @@ class CanvasPageViewController: NSViewController, CanvasPageView {
 
     var selected: Bool = false {
         didSet {
-            self.updateBorder()
+            self.typedView.selected = self.selected
         }
     }
 
@@ -52,10 +52,6 @@ class CanvasPageViewController: NSViewController, CanvasPageView {
     
     @IBAction func close(_ sender: Any) {
         self.delegate?.close(self)
-    }
-
-    private func updateBorder() {
-
     }
 
     private var labelBinding: AnyCancellable!
