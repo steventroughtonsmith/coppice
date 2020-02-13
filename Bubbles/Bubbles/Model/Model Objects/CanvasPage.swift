@@ -19,6 +19,14 @@ final class CanvasPage: NSObject, CollectableModelObject {
         didSet { self.didChange(\.frame, oldValue: oldValue) }
     }
 
+    override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
+        var keyPaths = super.keyPathsForValuesAffectingValue(forKey: key)
+        if key == "title" {
+            keyPaths.insert("self.page.title")
+        }
+        return keyPaths
+    }
+
     @objc dynamic var title : String {
         return self.page?.title ?? "Untitled"
     }

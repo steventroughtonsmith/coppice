@@ -49,10 +49,6 @@ class CanvasPageViewController: NSViewController, CanvasPageView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    @IBAction func close(_ sender: Any) {
-        self.delegate?.close(self)
-    }
 
     private var labelBinding: AnyCancellable!
     override func viewDidLoad() {
@@ -67,6 +63,8 @@ class CanvasPageViewController: NSViewController, CanvasPageView {
         }
 
         self.labelBinding = self.viewModel.publisher(for: \.title).assign(to: \.title, on: self.typedView.titleView)
+
+        self.typedView.titleView.delegate = self
     }
 
     deinit {
@@ -93,5 +91,11 @@ extension CanvasPageViewController: Editor {
 
     func open(_ link: PageLink) {
         self.parentEditor?.open(link.withSource(self.viewModel.canvasPage.id))
+    }
+}
+
+extension CanvasPageViewController: CanvasPageTitleViewDelegate {
+    func closeClicked(in titleView: CanvasPageTitleView) {
+        self.delegate?.close(self)
     }
 }
