@@ -37,10 +37,11 @@ class CanvasLayoutEngineTests: XCTestCase {
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
 
-        self.layoutEngine = CanvasLayoutEngine(configuration: .init(pageTitleHeight: 5,
-                                                                    pageResizeEdgeHandleSize: 1,
-                                                                    pageResizeCornerHandleSize: 1,
-                                                                    pageResizeHandleOffset: 0,
+        self.layoutEngine = CanvasLayoutEngine(configuration: .init(page: .init(titleHeight: 5,
+                                                                                borderSize: 0,
+                                                                                shadowOffset: .zero,
+                                                                                edgeResizeHandleSize: 1,
+                                                                                cornerResizeHandleSize: 1),
                                                                     contentBorder: 20,
                                                                     arrowWidth: 5))
 
@@ -184,12 +185,14 @@ class CanvasLayoutEngineTests: XCTestCase {
     func test_pointConversion_convertsPointFromPageSpaceToCanvasSpaceForEmptyEngine() {
         let basePoint = CGPoint(x: 10, y: 42)
 
-        let emptyEngine = CanvasLayoutEngine(configuration: .init(pageTitleHeight: 5,
-                                                                  pageResizeEdgeHandleSize: 1,
-                                                                  pageResizeCornerHandleSize: 1,
-                                                                  pageResizeHandleOffset: 0,
+        let emptyEngine = CanvasLayoutEngine(configuration: .init(page: .init(titleHeight: 5,
+                                                                              borderSize: 0,
+                                                                              shadowOffset: .zero,
+                                                                              edgeResizeHandleSize: 1,
+                                                                              cornerResizeHandleSize: 1),
                                                                   contentBorder: 20,
                                                                   arrowWidth: 5))
+
         let expectedPoint = basePoint
         XCTAssertEqual(emptyEngine.convertPointToCanvasSpace(basePoint), expectedPoint)
     }
@@ -204,10 +207,11 @@ class CanvasLayoutEngineTests: XCTestCase {
     func test_pointConversion_convertsPointFromCanvasSpaceToPageSpaceForEmptyEngine() {
         let basePoint = CGPoint(x: 15, y: 31)
 
-        let emptyEngine = CanvasLayoutEngine(configuration: .init(pageTitleHeight: 5,
-                                                                  pageResizeEdgeHandleSize: 1,
-                                                                  pageResizeCornerHandleSize: 1,
-                                                                  pageResizeHandleOffset: 0,
+        let emptyEngine = CanvasLayoutEngine(configuration: .init(page: .init(titleHeight: 5,
+                                                                              borderSize: 0,
+                                                                              shadowOffset: .zero,
+                                                                              edgeResizeHandleSize: 1,
+                                                                              cornerResizeHandleSize: 1),
                                                                   contentBorder: 20,
                                                                   arrowWidth: 5))
         let expectedPoint = basePoint
@@ -1071,74 +1075,13 @@ class CanvasLayoutEngineTests: XCTestCase {
     }
 
 
-    //MARK: - Config
-    func test_config_increasesLayoutFrameOffsetFromContentForTitleHeight() {
-        let config = CanvasLayoutEngine.Configuration(pageTitleHeight: 15,
-                                                      pageResizeEdgeHandleSize: 0,
-                                                      pageResizeCornerHandleSize: 0,
-                                                      pageResizeHandleOffset: 0,
-                                                      contentBorder: 20,
-                                                      arrowWidth: 5)
-        XCTAssertEqual(config.layoutFrameOffsetFromContent, .init(left: 0, top: 15, right: 0, bottom: 0))
-    }
-
-    func test_config_doesntIncreaseMarginsForResizeHandlesIfOffset0() {
-        let config = CanvasLayoutEngine.Configuration(pageTitleHeight: 0,
-                                                      pageResizeEdgeHandleSize: 4,
-                                                      pageResizeCornerHandleSize: 4,
-                                                      pageResizeHandleOffset: 0,
-                                                      contentBorder: 20,
-                                                      arrowWidth: 5)
-        XCTAssertEqual(config.layoutFrameOffsetFromContent, .zero)
-    }
-
-    func test_config_increasesLayoutFrameOffsetFromContentForResizeHandlesByOffset() {
-        let config = CanvasLayoutEngine.Configuration(pageTitleHeight: 0,
-                                                      pageResizeEdgeHandleSize: 4,
-                                                      pageResizeCornerHandleSize: 8,
-                                                      pageResizeHandleOffset: 3,
-                                                      contentBorder: 20,
-                                                      arrowWidth: 5)
-        XCTAssertEqual(config.layoutFrameOffsetFromContent, .init(left: 3, top: 3, right: 3, bottom: 3))
-    }
-
-    func test_config_increaseLayoutFrameOffsetFromContentToAccountForTitleAndResizeHandleOffset() {
-        let config = CanvasLayoutEngine.Configuration(pageTitleHeight: 42,
-                                                      pageResizeEdgeHandleSize: 16,
-                                                      pageResizeCornerHandleSize: 31,
-                                                      pageResizeHandleOffset: 8,
-                                                      contentBorder: 20,
-                                                      arrowWidth: 5)
-        XCTAssertEqual(config.layoutFrameOffsetFromContent, .init(left: 8, top: 50, right: 8, bottom: 8))
-    }
-
-    func test_config_visibleFrameInsetsIsZeroIfHandleOffsetIsZero() {
-        let config = CanvasLayoutEngine.Configuration(pageTitleHeight: 12,
-                                                      pageResizeEdgeHandleSize: 13,
-                                                      pageResizeCornerHandleSize: 14,
-                                                      pageResizeHandleOffset: 0,
-                                                      contentBorder: 20,
-                                                      arrowWidth: 5)
-        XCTAssertEqual(config.visibleFrameInset, .zero)
-    }
-
-    func test_config_visibleFrameInsetOnlyTakesResizeHandleOffsetIntoAccountRegardlessOfTitleHeight() {
-        let config = CanvasLayoutEngine.Configuration(pageTitleHeight: 31,
-                                                      pageResizeEdgeHandleSize: 32,
-                                                      pageResizeCornerHandleSize: 33,
-                                                      pageResizeHandleOffset: 16,
-                                                      contentBorder: 20,
-                                                      arrowWidth: 5)
-        XCTAssertEqual(config.visibleFrameInset, .init(left: 16, top: 16, right: 16, bottom: 16))
-    }
-
-
     //MARK: - Arrows
     func arrowBetweenPage(at page1Origin: CGPoint, andPageAt page2Origin: CGPoint, arrowWidth: CGFloat) -> LayoutEngineArrow? {
-        let layoutEngine = CanvasLayoutEngine(configuration: .init(pageTitleHeight: 0,
-                                                                   pageResizeEdgeHandleSize: 0,
-                                                                   pageResizeCornerHandleSize: 0,
-                                                                   pageResizeHandleOffset: 0,
+        let layoutEngine = CanvasLayoutEngine(configuration: .init(page: .init(titleHeight: 0,
+                                                                               borderSize: 0,
+                                                                               shadowOffset: .zero,
+                                                                               edgeResizeHandleSize: 0,
+                                                                               cornerResizeHandleSize: 0),
                                                                    contentBorder: 0,
                                                                    arrowWidth: arrowWidth))
 
@@ -1256,10 +1199,11 @@ class CanvasLayoutEngineTests: XCTestCase {
     //MARK: - Arrow Moving & Resizing
 
     func createInitialArrowModificationTestPages() -> (CanvasLayoutEngine, LayoutEnginePage, [LayoutEnginePage]) {
-        let config = CanvasLayoutEngine.Configuration(pageTitleHeight: 10,
-                                                      pageResizeEdgeHandleSize: 1,
-                                                      pageResizeCornerHandleSize: 1,
-                                                      pageResizeHandleOffset: 0,
+        let config = CanvasLayoutEngine.Configuration(page: .init(titleHeight: 10,
+                                                                  borderSize: 0,
+                                                                  shadowOffset: .zero,
+                                                                  edgeResizeHandleSize: 1,
+                                                                  cornerResizeHandleSize: 1),
                                                       contentBorder: 20,
                                                       arrowWidth: 5)
         let layoutEngine = CanvasLayoutEngine(configuration: config)

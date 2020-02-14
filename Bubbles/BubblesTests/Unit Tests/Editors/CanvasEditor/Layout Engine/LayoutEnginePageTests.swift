@@ -74,8 +74,8 @@ class LayoutEnginePageTests: XCTestCase {
     }
 
 
-    //MARK: - Layout Frames
-    func test_minimumLayoutSize_matchesContentSizeIfConfigIsAllZeros() {
+    //MARK: - .minimumLayoutSize
+    func test_minimumLayoutSize_matchesContentSizeIfConfigIfShadowBorderAndTitleAreAllZero() {
         let layoutEngine = self.layoutEngine()
 
         let expectedSize = CGSize(width: 120, height: 40)
@@ -86,22 +86,25 @@ class LayoutEnginePageTests: XCTestCase {
         XCTAssertEqual(page.minimumLayoutSize, expectedSize)
     }
 
-    func test_minimumLayoutSize_increasesSizeToAccountForConfig() {
+    func test_minimumLayoutSize_increasesSizeToAccountForShadowBorderAndTitle() {
         let layoutEngine = self.layoutEngine(pageTitleHeight: 30,
-                                             pageResizeEdgeHandleSize: 7,
-                                             pageResizeCornerHandleSize: 12,
-                                             pageResizeHandleOffset: 2)
+                                             pageBorderSize: 2,
+                                             pageShadowOffset: CanvasLayoutMargins(default: 8, top: 5, bottom: 6),
+                                             pageEdgeResizeHandleSize: 7,
+                                             pageCornerResizeHandleSize: 12)
 
-        let contentSize = CGSize(width: 120, height: 40)
+        let minimumContentSize = CGSize(width: 120, height: 40)
         let page = layoutEngine.addPage(withID: UUID(),
                                         contentFrame: .zero,
-                                        minimumContentSize:contentSize)
+                                        minimumContentSize:minimumContentSize)
 
-        let expectedSize = contentSize.plus(width: 4, height: 34)
+        let expectedSize = minimumContentSize.plus(width: 20, height: 43)
         XCTAssertEqual(page.minimumLayoutSize, expectedSize)
     }
 
-    func test_layoutFrame_convertsContentFrameOriginToCanvasSpaceIfConfigIsAllZeros() {
+
+    //MARK: - .layoutFrame
+    func test_layoutFrame_originMatchesContentFrameOriginIfTitleBorderAndShadowAreAllZero() {
         let layoutEngine = self.layoutEngine()
 
         layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: -30, y: -20, width: 10, height: 10), minimumContentSize: .zero)
@@ -110,7 +113,7 @@ class LayoutEnginePageTests: XCTestCase {
         XCTAssertEqual(page.layoutFrame.origin, CGPoint(x: 50, y: 40))
     }
 
-    func test_layoutFrame_matchesContentFrameSizeIfConfigIsAllZeros() {
+    func test_layoutFrame_get_sizeMatchesContentFrameSizeIfTitleBorderAndShadowAreAllZero() {
         let layoutEngine = self.layoutEngine()
 
         layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: -30, y: -20, width: 10, height: 10), minimumContentSize: .zero)
@@ -119,20 +122,22 @@ class LayoutEnginePageTests: XCTestCase {
         XCTAssertEqual(page.layoutFrame.size, CGSize(width: 110, height: 220))
     }
 
-    func test_layoutFrame_modifiesOriginAndSizeToAccountForConfig() {
+    func test_layoutFrame_get_adjustsOriginAndSizeUsingTitleBorderAndShadow() {
         let layoutEngine = self.layoutEngine(pageTitleHeight: 10,
-                                             pageResizeEdgeHandleSize: 3,
-                                             pageResizeCornerHandleSize: 5,
-                                             pageResizeHandleOffset: 3,
+                                             pageBorderSize: 3,
+                                             pageShadowOffset: CanvasLayoutMargins(default: 3, left: 8, bottom: 4),
+                                             pageEdgeResizeHandleSize: 3,
+                                             pageCornerResizeHandleSize: 5,
                                              contentBorder: 20)
 
+        //Add page to change the offset
         layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: -30, y: -20, width: 10, height: 10), minimumContentSize: .zero)
         let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 110, height: 220), minimumContentSize: .zero)
 
-        XCTAssertEqual(page.layoutFrame, CGRect(x: 50, y: 40, width: 116, height: 236))
+        XCTAssertEqual(page.layoutFrame, CGRect(x: 50, y: 40, width: 127, height: 240))
     }
 
-    func test_layoutFrame_settingFrameConvertsOriginToPageSpaceAndSetsContentFrameIfConfigIsAllZeroes() {
+    func test_layoutFrame_set_convertsOriginToPageSpaceBeforeUpdatingContentFrameIfTitleBorderAndShadowAreZero() {
         let layoutEngine = self.layoutEngine()
         layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: -30, y: -20, width: 10, height: 10), minimumContentSize: .zero)
         let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 110, height: 220), minimumContentSize: .zero)
@@ -142,7 +147,7 @@ class LayoutEnginePageTests: XCTestCase {
         XCTAssertEqual(page.contentFrame.origin, CGPoint(x: 10, y: 20))
     }
 
-    func test_layoutFrame_settingFrameSetsContentFrameSizeToSameIfConfigIsAllZeroes() {
+    func test_layoutFrame_set_updatesContentFrameWithSuppliedSizeIfTitleBorderAndShadowAreZero() {
         let layoutEngine = self.layoutEngine()
         layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: -30, y: -20, width: 10, height: 10), minimumContentSize: .zero)
         let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 110, height: 220), minimumContentSize: .zero)
@@ -152,102 +157,99 @@ class LayoutEnginePageTests: XCTestCase {
         XCTAssertEqual(page.contentFrame.size, CGSize(width: 130, height: 240))
     }
 
-    func test_layoutFrame_settingFrameModifiesFrameUsingConfigBeforeSettingToContentFrame() {
+    func test_layoutFrame_set_modifiesFrameUsingTitleBorderAndShadowBeforeUpdatingContentFrame() {
         let layoutEngine = self.layoutEngine(pageTitleHeight: 10,
-                                             pageResizeEdgeHandleSize: 3,
-                                             pageResizeCornerHandleSize: 5,
-                                             pageResizeHandleOffset: 3,
+                                             pageBorderSize: 6,
+                                             pageShadowOffset: CanvasLayoutMargins(default: 2, left: 3, top: 1),
+                                             pageEdgeResizeHandleSize: 3,
+                                             pageCornerResizeHandleSize: 5,
                                              contentBorder: 20)
         layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: -30, y: -20, width: 10, height: 10), minimumContentSize: .zero)
         let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 110, height: 220), minimumContentSize: .zero)
 
         page.layoutFrame = CGRect(x: 60, y: 60, width: 130, height: 240)
 
-        XCTAssertEqual(page.contentFrame, CGRect(x: 10, y: 20, width: 124, height: 224))
+        XCTAssertEqual(page.contentFrame, CGRect(x: 10, y: 20, width: 113, height: 221))
     }
 
+
+    //MARK: - .layoutFrameInPageSpace
     func test_layoutFrameInPageSpace_convertsTheLayoutFrameOriginToPageSpace() {
         let layoutEngine = self.layoutEngine(pageTitleHeight: 10,
-                                             pageResizeEdgeHandleSize: 3,
-                                             pageResizeCornerHandleSize: 5,
-                                             pageResizeHandleOffset: 3,
+                                             pageBorderSize: 9,
+                                             pageShadowOffset: CanvasLayoutMargins(default: 8),
+                                             pageEdgeResizeHandleSize: 3,
+                                             pageCornerResizeHandleSize: 5,
                                              contentBorder: 20)
 
         layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: -30, y: -20, width: 10, height: 10), minimumContentSize: .zero)
         let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 220, height: 110), minimumContentSize: .zero)
 
-        XCTAssertEqual(page.layoutFrameInPageSpace, CGRect(origin: CGPoint(x: -3, y: -13), size: page.layoutFrame.size))
+        XCTAssertEqual(page.layoutFrameInPageSpace, CGRect(origin: CGPoint(x: -17, y: -18), size: page.layoutFrame.size))
     }
     
 
-    //MARK: - Component Frames
-    func test_visualPageFrame_isSameSizeAsLayoutFrameAndAtPointZeroIfResizeHandleOffsetIs0() {
+    //MARK: - .visualPageFrame
+    func test_visualPageFrame_isSameSizeAsLayoutFrameWithZeroOriginIfShadowIsZero() {
+        let layoutEngine = self.layoutEngine(pageTitleHeight: 3,
+                                             pageBorderSize: 5,
+                                             pageEdgeResizeHandleSize: 3,
+                                             pageCornerResizeHandleSize: 5,
+                                             contentBorder: 20)
+
+        let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 110, height: 220), minimumContentSize: .zero)
+
+        XCTAssertEqual(page.visualPageFrame, CGRect(origin: .zero, size: page.layoutFrame.size))
+    }
+
+    func test_visualPageFrame_isInsetFromLayoutFrameByByShadow() {
         let layoutEngine = self.layoutEngine(pageTitleHeight: 0,
-                                             pageResizeEdgeHandleSize: 3,
-                                             pageResizeCornerHandleSize: 5,
-                                             pageResizeHandleOffset: 0,
+                                             pageBorderSize: 3,
+                                             pageShadowOffset: CanvasLayoutMargins(left: 1, top: 2, right: 3, bottom: 4),
+                                             pageEdgeResizeHandleSize: 3,
+                                             pageCornerResizeHandleSize: 5,
                                              contentBorder: 20)
 
         let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 110, height: 220), minimumContentSize: .zero)
 
-        XCTAssertEqual(page.visualPageFrame, CGRect(x: 0, y: 0, width: 110, height: 220))
+        XCTAssertEqual(page.visualPageFrame, CGRect(x: 1, y: 2, width: page.layoutFrame.width - 4, height: page.layoutFrame.height - 6))
     }
 
-    func test_visualPageFrame_isInsetFromLayoutFrameByResizeHandleOffset() {
-        let layoutEngine = self.layoutEngine(pageTitleHeight: 0,
-                                             pageResizeEdgeHandleSize: 3,
-                                             pageResizeCornerHandleSize: 5,
-                                             pageResizeHandleOffset: 7,
-                                             contentBorder: 20)
-
-        let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 110, height: 220), minimumContentSize: .zero)
-
-        XCTAssertEqual(page.visualPageFrame, CGRect(x: 7, y: 7, width: 110, height: 220))
-    }
-
-    func test_visualPageFrame_hasSizeIncreasedByTitleHeightIfNotZero() {
+    func test_titleBarFrame_hasSameOriginAndWidthAsVisualFrameAndHeightFromConfig() {
         let layoutEngine = self.layoutEngine(pageTitleHeight: 42,
-                                             pageResizeEdgeHandleSize: 3,
-                                             pageResizeCornerHandleSize: 5,
-                                             pageResizeHandleOffset: 0,
+                                             pageBorderSize: 5,
+                                             pageShadowOffset: CanvasLayoutMargins(left: 5, top: 6, right: 7, bottom: 8),
+                                             pageEdgeResizeHandleSize: 3,
+                                             pageCornerResizeHandleSize: 5,
                                              contentBorder: 20)
 
         let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 110, height: 220), minimumContentSize: .zero)
 
-        XCTAssertEqual(page.visualPageFrame, CGRect(x: 0, y: 0, width: 110, height: 262))
+        var expectedFrame = page.visualPageFrame
+        expectedFrame.size.height = 42
+        XCTAssertEqual(page.titleBarFrame, expectedFrame)
     }
 
-    func test_titleFrame_fillsTopOfVisualPageFrameWithTitleHeight() {
+    func test_contentContainerFrame_originIsInsetByShadowTitleAndBorderAndSizeMatchesContentFrame() {
         let layoutEngine = self.layoutEngine(pageTitleHeight: 42,
-                                             pageResizeEdgeHandleSize: 3,
-                                             pageResizeCornerHandleSize: 5,
-                                             pageResizeHandleOffset: 0,
+                                             pageBorderSize: 4,
+                                             pageShadowOffset: CanvasLayoutMargins(left: 2, top: 6, right: 4, bottom: 1),
+                                             pageEdgeResizeHandleSize: 3,
+                                             pageCornerResizeHandleSize: 5,
                                              contentBorder: 20)
 
         let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 110, height: 220), minimumContentSize: .zero)
 
-        XCTAssertEqual(page.titleBarFrame, CGRect(x: 0, y: 0, width: 110, height: 42))
-    }
-
-    func test_contentFrame_fillsBottomOfVisualPageFrameOffsetByTitleHeight() {
-        let layoutEngine = self.layoutEngine(pageTitleHeight: 42,
-                                             pageResizeEdgeHandleSize: 3,
-                                             pageResizeCornerHandleSize: 5,
-                                             pageResizeHandleOffset: 0,
-                                             contentBorder: 20)
-
-        let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 110, height: 220), minimumContentSize: .zero)
-
-        XCTAssertEqual(page.contentFrame, CGRect(x: 0, y: 42, width: 110, height: 220))
+        XCTAssertEqual(page.contentContainerFrame, CGRect(x: 6, y: 48, width: 110, height: 220))
     }
 
 
     //MARK: - component(at:)
     func performPageComponentTest(_ block: (LayoutEnginePage) throws -> Void) throws {
         let layoutEngine = self.layoutEngine(pageTitleHeight: 10,
-                                             pageResizeEdgeHandleSize: 3,
-                                             pageResizeCornerHandleSize: 5,
-                                             pageResizeHandleOffset: 0,
+                                             pageEdgeResizeHandleSize: 3,
+                                             pageCornerResizeHandleSize: 5,
+//                                             pageResizeHandleOffset: 0,
                                              contentBorder: 20)
 
         let page = layoutEngine.addPage(withID: UUID(),
@@ -416,15 +418,17 @@ class LayoutEnginePageTests: XCTestCase {
 
     //MARK: - Helpers
     func layoutEngine(pageTitleHeight: CGFloat = 0,
-                      pageResizeEdgeHandleSize: CGFloat = 0,
-                      pageResizeCornerHandleSize: CGFloat = 0,
-                      pageResizeHandleOffset: CGFloat = 0,
+                      pageBorderSize: CGFloat = 0,
+                      pageShadowOffset: CanvasLayoutMargins = .zero,
+                      pageEdgeResizeHandleSize: CGFloat = 0,
+                      pageCornerResizeHandleSize: CGFloat = 0,
                       contentBorder: CGFloat = 20,
                       arrowWidth: CGFloat = 5) -> CanvasLayoutEngine {
-        return CanvasLayoutEngine(configuration: .init(pageTitleHeight: pageTitleHeight,
-                                                       pageResizeEdgeHandleSize: pageResizeEdgeHandleSize,
-                                                       pageResizeCornerHandleSize: pageResizeCornerHandleSize,
-                                                       pageResizeHandleOffset: pageResizeHandleOffset,
+        return CanvasLayoutEngine(configuration: .init(page: .init(titleHeight: pageTitleHeight,
+                                                                   borderSize: pageBorderSize,
+                                                                   shadowOffset: pageShadowOffset,
+                                                                   edgeResizeHandleSize: pageEdgeResizeHandleSize,
+                                                                   cornerResizeHandleSize: pageCornerResizeHandleSize),
                                                        contentBorder: contentBorder,
                                                        arrowWidth: arrowWidth))
     }

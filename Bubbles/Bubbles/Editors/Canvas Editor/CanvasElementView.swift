@@ -185,7 +185,6 @@ class CanvasElementView: NSView  {
 
     //MARK: - Mouse Stealer
     private func updateMouseStealerVisibility() {
-        print("mouse stealer")
         if (self.enabled) {
             self.disabledContentMouseStealer.removeFromSuperview()
         } else {
