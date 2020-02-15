@@ -27,6 +27,12 @@ class PageArrowView: NSView {
     }
 
     override func draw(_ dirtyRect: NSRect) {
+        NSColor.yellow.withAlphaComponent(0.7).set()
+        self.bounds.fill()
+        NSColor.black.set()
+        NSBezierPath(rect: self.bounds.insetBy(dx: 0.5, dy: 0.5)).stroke()
+        return
+
         let linePath = self.linePath()
         NSColor(white: 0.9, alpha: 1).setStroke()
         linePath.stroke()

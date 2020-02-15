@@ -210,6 +210,17 @@ class CanvasLayoutEngine: NSObject {
     //MARK: - Manage Arrows
     private(set) var arrows = [LayoutEngineArrow]()
 
+    //Find all pages with no parents
+    //Enumerate those parents
+        //calculate arrows for page
+
+    //calculateArrows(for page: Page, parentArrow: Arrow?) -> [Arrow]
+        //get page.children
+        //if children.count == 0
+            //return parentArrow ? [parentArrow!] : []
+
+        //getseg
+
     func updateArrows() {
         var arrows = [LayoutEngineArrow]()
         for page in self.pages {

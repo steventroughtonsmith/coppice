@@ -133,6 +133,8 @@
 		99C41B7122DCA96700C82DDE /* BubblesModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C41B7022DCA96700C82DDE /* BubblesModelController.swift */; };
 		99C41B7322DCA98600C82DDE /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C41B7222DCA98600C82DDE /* Page.swift */; };
 		99C41B7522DCA9A100C82DDE /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C41B7422DCA9A100C82DDE /* Canvas.swift */; };
+		99C4AD8923F6F13B003B9A38 /* ArrowLayoutEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C4AD8823F6F13B003B9A38 /* ArrowLayoutEngine.swift */; };
+		99C4AD8B23F707DF003B9A38 /* ArrowLayoutEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C4AD8A23F707DF003B9A38 /* ArrowLayoutEngineTests.swift */; };
 		99C8650923016EB2004C7B89 /* TextEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C8650823016EB2004C7B89 /* TextEditorViewModel.swift */; };
 		99C8650D23016EE5004C7B89 /* TextEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99C8650C23016EE5004C7B89 /* TextEditorViewController.xib */; };
 		99C8650F23017222004C7B89 /* TextEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C8650E23017222004C7B89 /* TextEditorViewController.swift */; };
@@ -334,6 +336,8 @@
 		99C41B7022DCA96700C82DDE /* BubblesModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubblesModelController.swift; sourceTree = "<group>"; };
 		99C41B7222DCA98600C82DDE /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		99C41B7422DCA9A100C82DDE /* Canvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
+		99C4AD8823F6F13B003B9A38 /* ArrowLayoutEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrowLayoutEngine.swift; sourceTree = "<group>"; };
+		99C4AD8A23F707DF003B9A38 /* ArrowLayoutEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrowLayoutEngineTests.swift; sourceTree = "<group>"; };
 		99C8650823016EB2004C7B89 /* TextEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorViewModel.swift; sourceTree = "<group>"; };
 		99C8650C23016EE5004C7B89 /* TextEditorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextEditorViewController.xib; sourceTree = "<group>"; };
 		99C8650E23017222004C7B89 /* TextEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorViewController.swift; sourceTree = "<group>"; };
@@ -783,6 +787,7 @@
 			children = (
 				99C03EF423293D8A00EB7516 /* CanvasLayoutEngine.swift */,
 				9985F4DC23F44EE300B96DC7 /* CanvasLayoutEngine+Configuration.swift */,
+				99C4AD8823F6F13B003B9A38 /* ArrowLayoutEngine.swift */,
 				99C03EF323293D8A00EB7516 /* LayoutEnginePage.swift */,
 				990D243C23560169001B1FD9 /* LayoutEngineArrow.swift */,
 				99C03EF523293D8A00EB7516 /* Event Contexts */,
@@ -816,6 +821,7 @@
 			isa = PBXGroup;
 			children = (
 				99C03F0023293DAD00EB7516 /* CanvasLayoutEngineTests.swift */,
+				99C4AD8A23F707DF003B9A38 /* ArrowLayoutEngineTests.swift */,
 				99FFF9C923463DFD00EF02A0 /* LayoutEnginePageTests.swift */,
 			);
 			path = "Layout Engine";
@@ -1283,6 +1289,7 @@
 				9970975D23A816F000CD189B /* EmptyPageContent.swift in Sources */,
 				99D8E37D237EDB890098CF3B /* CanvasInspectorViewController.swift in Sources */,
 				99C03F0D2334D04200EB7516 /* NSScrollView+M3Extensions.swift in Sources */,
+				99C4AD8923F6F13B003B9A38 /* ArrowLayoutEngine.swift in Sources */,
 				9970976B23ACFD2900CD189B /* SplitViewController.swift in Sources */,
 				990B6A3922EB482D00523C06 /* ModelObject.swift in Sources */,
 				99E93E2B23D32F61004CF4BB /* ColourGridButton.swift in Sources */,
@@ -1358,6 +1365,7 @@
 				99771196239C530700FCC8C7 /* PageLinkManagerTests.swift in Sources */,
 				99DEF29322F33ABB0020A7CE /* ModelIDTests.swift in Sources */,
 				9957B088239FD3D800BA3C0B /* DocumentWindowViewModelTests.swift in Sources */,
+				99C4AD8B23F707DF003B9A38 /* ArrowLayoutEngineTests.swift in Sources */,
 				9970976D23AD1A7A00CD189B /* MockPageContent.swift in Sources */,
 				9958107C230D75AA00D996C4 /* TextEditorViewModelTests.swift in Sources */,
 				990D243F23560688001B1FD9 /* CanvasLayoutEngineTests.swift in Sources */,
