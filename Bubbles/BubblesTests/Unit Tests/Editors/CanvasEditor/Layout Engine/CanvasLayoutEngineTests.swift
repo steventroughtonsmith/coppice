@@ -137,50 +137,6 @@ class CanvasLayoutEngineTests: XCTestCase {
     }
 
 
-    //MARK: - Page Children
-    func test_allChildren_returnsEmptyArrayIfSuppliedPageHasNoChildren() {
-        //Add child to other page just to be sure
-        self.layoutEngine.addPage(withID: UUID(), contentFrame: .zero, minimumContentSize: .zero, parentID: self.page1.id)
-        XCTAssertEqual(self.layoutEngine.allChildren(of: self.page2), [])
-    }
-
-    func test_allChildren_returnsPagesThatHaveSuppliedPageAsParentID() {
-        //Add child to other page just to be sure
-        self.layoutEngine.addPage(withID: UUID(), contentFrame: .zero, minimumContentSize: .zero, parentID: self.page2.id)
-
-        let child1 = self.layoutEngine.addPage(withID: UUID(), contentFrame: .zero, minimumContentSize: .zero, parentID: self.page1.id)
-        let child2 = self.layoutEngine.addPage(withID: UUID(), contentFrame: .zero, minimumContentSize: .zero, parentID: self.page1.id)
-
-        let children = self.layoutEngine.allChildren(of: self.page1)
-        XCTAssertEqual(children.count, 2)
-        XCTAssertTrue(children.contains(child1))
-        XCTAssertTrue(children.contains(child2))
-    }
-
-    func test_allChildren_returnsAllChildrenGrandChildrenEtcOfSuppliedPage() {
-        //Add child to other page just to be sure
-        self.layoutEngine.addPage(withID: UUID(), contentFrame: .zero, minimumContentSize: .zero, parentID: self.page2.id)
-
-        let child1 = self.layoutEngine.addPage(withID: UUID(), contentFrame: .zero, minimumContentSize: .zero, parentID: self.page3.id)
-        let child2 = self.layoutEngine.addPage(withID: UUID(), contentFrame: .zero, minimumContentSize: .zero, parentID: self.page3.id)
-        let grandchild1 = self.layoutEngine.addPage(withID: UUID(), contentFrame: .zero, minimumContentSize: .zero, parentID: child1.id)
-        let grandchild2 = self.layoutEngine.addPage(withID: UUID(), contentFrame: .zero, minimumContentSize: .zero, parentID: child2.id)
-        let grandchild3 = self.layoutEngine.addPage(withID: UUID(), contentFrame: .zero, minimumContentSize: .zero, parentID: child2.id)
-        let greatGrandchild1 = self.layoutEngine.addPage(withID: UUID(), contentFrame: .zero, minimumContentSize: .zero, parentID: grandchild1.id)
-        let greatGrandchild2 = self.layoutEngine.addPage(withID: UUID(), contentFrame: .zero, minimumContentSize: .zero, parentID: grandchild1.id)
-
-        let children = self.layoutEngine.allChildren(of: self.page3)
-        XCTAssertEqual(children.count, 7)
-        XCTAssertTrue(children.contains(child1))
-        XCTAssertTrue(children.contains(child2))
-        XCTAssertTrue(children.contains(grandchild1))
-        XCTAssertTrue(children.contains(grandchild2))
-        XCTAssertTrue(children.contains(grandchild3))
-        XCTAssertTrue(children.contains(greatGrandchild1))
-        XCTAssertTrue(children.contains(greatGrandchild2))
-    }
-
-
     //MARK: - Point Conversion
     func test_pointConversion_convertsPointFromPageSpaceToCanvasSpaceForEmptyEngine() {
         let basePoint = CGPoint(x: 10, y: 42)

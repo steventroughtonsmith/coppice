@@ -94,7 +94,10 @@ class CanvasLayoutEngine: NSObject {
     private var pagesByUUID = [UUID: LayoutEnginePage]()
 
     @discardableResult func addPage(withID id: UUID, contentFrame: CGRect, minimumContentSize: CGSize = GlobalConstants.minimumPageSize, parentID: UUID? = nil) -> LayoutEnginePage {
-        let page = LayoutEnginePage(id: id, contentFrame: contentFrame, minimumContentSize: minimumContentSize, parentID: parentID, layoutEngine: self)
+        let page = LayoutEnginePage(id: id, contentFrame: contentFrame, minimumContentSize: minimumContentSize, layoutEngine: self)
+        if let parentID = parentID, let parent = self.pagesByUUID[parentID] {
+            parent.addChild(page)
+        }
         self.pages.append(page)
         self.pagesByUUID[id] = page
         self.informOfLayoutChange(with: self.recalculateCanvasSize())
@@ -104,6 +107,7 @@ class CanvasLayoutEngine: NSObject {
     func remove(_ pages: [LayoutEnginePage]) {
         self.pages = self.pages.filter { !pages.contains($0) }
         for page in pages {
+            page.parent?.removeChild(page)
             self.pagesByUUID.removeValue(forKey: page.id)
         }
         self.informOfLayoutChange(with: self.recalculateCanvasSize())
@@ -140,17 +144,6 @@ class CanvasLayoutEngine: NSObject {
             }
         }
         return pagesInRect
-    }
-
-    func allChildren(of rootPage: LayoutEnginePage) -> [LayoutEnginePage] {
-        var pages = [LayoutEnginePage]()
-        for page in self.pages {
-            if rootPage.id == page.parentID {
-                pages.append(page)
-                pages.append(contentsOf: self.allChildren(of: page))
-            }
-        }
-        return pages
     }
 
     func modified(_ pages: [LayoutEnginePage]) {
@@ -224,8 +217,7 @@ class CanvasLayoutEngine: NSObject {
     func updateArrows() {
         var arrows = [LayoutEngineArrow]()
         for page in self.pages {
-            guard let parentID = page.parentID,
-                let parent = self.pagesByUUID[parentID] else {
+            guard let parent = page.parent else {
                 continue
             }
             arrows.append(self.calculateArrowBetween(parent: parent, andChild: page))

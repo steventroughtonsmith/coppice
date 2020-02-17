@@ -19,7 +19,6 @@ import Foundation
 ///     - Content (`contentContainerFrame`): The actual page content
 class LayoutEnginePage: Equatable {
     let id: UUID
-    let parentID: UUID?
     var selected: Bool = false
     var titleVisible: Bool = false
 
@@ -29,15 +28,98 @@ class LayoutEnginePage: Equatable {
     }
 
 
-
     //MARK: - Content
-
     var minimumContentSize: CGSize
 
     /// The frame of the page's content in pageSpace
     var contentFrame: CGRect {
         didSet {
             self.validateSize()
+        }
+    }
+
+
+    //MARK: - Relationships
+    private(set) weak var parent: LayoutEnginePage?
+    private(set) var edgeFromParent: Edge?
+
+    private(set) var children = [LayoutEnginePage]()
+
+    var allDescendants: [LayoutEnginePage] {
+        var pages = [LayoutEnginePage]()
+        for child in self.children {
+            pages.append(child)
+            pages.append(contentsOf: child.allDescendants)
+        }
+        return pages
+    }
+
+    func children(for edge: Edge) -> [LayoutEnginePage] {
+        return self.children.filter { $0.edgeFromParent == edge }
+    }
+
+    func addChild(_ child: LayoutEnginePage) {
+        self.children.append(child)
+        child.parent = self
+        let childFrame = child.layoutFrame
+        let selfFrame = self.layoutFrame
+
+        let midPoint = childFrame.midPoint
+        //Check if inside
+        guard selfFrame.contains(midPoint) == false else {
+            child.edgeFromParent = (midPoint.x < selfFrame.midX) ? .left : .right
+            return
+        }
+
+        //Check if directly to side
+        if (midPoint.y >= selfFrame.minY) && (midPoint.y <= selfFrame.maxY) {
+            child.edgeFromParent = (midPoint.x > selfFrame.maxX) ? .right : .left
+            return
+        }
+
+        //Check if directly above or below
+        if (midPoint.x >= selfFrame.minX) && (midPoint.x <= selfFrame.maxX) {
+            child.edgeFromParent = (midPoint.y > selfFrame.maxY) ? .bottom : .top
+            return
+        }
+
+        //Check Top Left
+        if (midPoint.x < selfFrame.minX) && (midPoint.y < selfFrame.minY) {
+            //y = x + (-p.x + p.y)
+            let expectedY = midPoint.x + (-selfFrame.minX + selfFrame.minY)
+            child.edgeFromParent = (expectedY <= midPoint.y) ? .left : .top
+            return
+        }
+
+        //Check Top Right
+        if (midPoint.x > selfFrame.minX) && (midPoint.y < selfFrame.minY) {
+            //y = -x + (p.x + p.y)
+            let expectedY = -midPoint.x + (selfFrame.maxX + selfFrame.minY)
+            child.edgeFromParent = (expectedY >= midPoint.y) ? .top : .right
+            return
+        }
+
+        //Check Bottom Right
+        if (midPoint.x > selfFrame.minX) && (midPoint.y > selfFrame.maxY) {
+            //y = x + (-p.x + p.y)
+            let expectedY = midPoint.x + (-selfFrame.maxX + selfFrame.maxY)
+            child.edgeFromParent = (expectedY >= midPoint.y) ? .right : .bottom
+            return
+        }
+
+        //Check Bottom Left
+        if (midPoint.x < selfFrame.minX) && (midPoint.y > selfFrame.minY) {
+            //y = x + (-p.x + p.y)
+            let expectedY = -midPoint.x + (selfFrame.minX + selfFrame.maxY)
+            child.edgeFromParent = (expectedY <= midPoint.y) ? .bottom : .left
+            return
+        }
+    }
+
+    func removeChild(_ child: LayoutEnginePage) {
+        child.parent = nil
+        if let index = self.children.firstIndex(of: child) {
+            self.children.remove(at: index)
         }
     }
 
@@ -84,6 +166,7 @@ class LayoutEnginePage: Equatable {
         return CGRect(origin: pageOrigin, size: self.layoutFrame.size)
     }
 
+
     //MARK: - Calculated Frames For Layout
     private func borderMargins(for config: CanvasLayoutEngine.Configuration) -> CanvasLayoutMargins {
         return CanvasLayoutMargins(default: config.page.borderSize, top: config.page.titleHeight)
@@ -119,12 +202,10 @@ class LayoutEnginePage: Equatable {
     init(id: UUID,
          contentFrame: CGRect,
          minimumContentSize: CGSize = CGSize(width: 150, height: 100),
-         parentID: UUID? = nil,
          layoutEngine: CanvasLayoutEngine) {
         self.id = id
         self.contentFrame = contentFrame
         self.minimumContentSize = minimumContentSize
-        self.parentID = parentID
         self.layoutEngine = layoutEngine
         self.validateSize()
     }
@@ -190,15 +271,34 @@ class LayoutEnginePage: Equatable {
         return CGRect(x: x + self.visualPageFrame.minX, y: y + self.visualPageFrame.minY, width: width, height: height)
     }
 
-
     func component(at point: CGPoint) -> LayoutEnginePageComponent? {
         for component in LayoutEnginePageComponent.orderedCases {
             if self.rectInLayoutFrame(for: component).contains(point) {
                 return component
             }
         }
-
         return nil
+    }
+
+
+    enum Edge: CaseIterable, Equatable {
+        case left
+        case top
+        case right
+        case bottom
+
+        var opposite: Edge {
+            switch self {
+            case .left:
+                return .right
+            case .top:
+                return .bottom
+            case .right:
+                return .left
+            case .bottom:
+                return .top
+            }
+        }
     }
 }
 

@@ -32,7 +32,7 @@ class SelectAndMoveEventContext: CanvasEventContext {
         }
 
         if (eventCount == 2) {
-            let pages = layout.allChildren(of: self.page)
+            let pages = self.page.allDescendants
             pages.forEach { $0.selected = true }
             self.didDoubleClick = true
         }

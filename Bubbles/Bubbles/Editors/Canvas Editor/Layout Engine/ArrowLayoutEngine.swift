@@ -9,27 +9,55 @@
 import Foundation
 
 class ArrowLayoutEngine {
-    static func trees(from pages: [LayoutEnginePage]) -> [LayoutTree] {
-        //create node for each page
-        //create relationships
-        //eliminate orphans
-        //Return roots
-        return []
-    }
-
-    let trees: [LayoutTree]
-    init(trees: [LayoutTree]) {
-        self.trees = trees
+    let pages: [LayoutEnginePage]
+    init(pages: [LayoutEnginePage]) {
+        self.pages = pages
     }
 
     func calculateArrows() -> [Arrow] {
-
-        return []
+        var arrows = [Arrow]()
+        for page in pages {
+            guard page.parent == nil else {
+                continue
+            }
+            let (_, pageArrows) = self.calculateArrows(from: page)
+            arrows.append(contentsOf: pageArrows)
+        }
+        return arrows
     }
 
-    private func calculateArrows(for tree: LayoutTree, directionFromParent: Direction? = nil) -> (ArrowPoint?, [Arrow]) {
-        //if direction != nil
-            //Create Parent Point
+    private func calculateArrows(from page: LayoutEnginePage, edgeFromParent: LayoutEnginePage.Edge? = nil) -> (ArrowPoint?, [Arrow]) {
+        var pagePoint: ArrowPoint? = nil
+        if let parentEdge = edgeFromParent {
+            let point = self.location(for: parentEdge.opposite, of: page)
+            pagePoint = ArrowPoint(point: point, edge: parentEdge.opposite)
+        }
+        guard page.children.count > 0 else {
+            return (pagePoint, [])
+        }
+
+        var arrows = [Arrow]()
+        for edge in LayoutEnginePage.Edge.allCases {
+            var pointsToProcess = [ArrowPoint]()
+            for child in page.children(for: edge) {
+                let (point, pageArrows) = self.calculateArrows(from: child, edgeFromParent: edge)
+                if let point = point {
+                    pointsToProcess.append(point)
+                }
+                arrows.append(contentsOf: pageArrows)
+            }
+
+            let includeParent = (pagePoint?.edge == edge)
+            guard (pointsToProcess.count > 0) || includeParent else {
+                continue
+            }
+
+            let (parentPoint, processedArrows) = self.process(pointsToProcess, for: edge, of: page, parent: (includeParent ? pagePoint : nil))
+            if let point = parentPoint {
+                pagePoint = point
+            }
+            arrows.append(contentsOf: processedArrows)
+        }
         //for direction in directions
             //for child in direction
                 //(point, arrows) = calculateArrows(for: child, directionFromParent: direction)
@@ -41,10 +69,17 @@ class ArrowLayoutEngine {
             //arrows += arrows
         //return (parentPoint, arrows)
 
-        return (nil, [])
+        return (pagePoint, arrows)
     }
 
-    private func process(_ points: [ArrowPoint], for direction: Direction, of page: LayoutEnginePage, parent: ArrowPoint? = nil) -> (ArrowPoint?, [Arrow]) {
+    private func process(_ points: [ArrowPoint], for edge: LayoutEnginePage.Edge, of page: LayoutEnginePage, parent: ArrowPoint? = nil) -> (ArrowPoint?, [Arrow]) {
+        switch edge {
+        case .top, .bottom:
+            return self.processHorizontalPoints(points, forEdge: edge, of: page, parent: parent)
+        case .left, .right:
+            return self.processVerticalPoints(points, forEdge: edge, of: page, parent: parent)
+        }
+
         //count = points.count
         //if parent set then count += 1
         //sort points
@@ -55,132 +90,78 @@ class ArrowLayoutEngine {
             //else
                 //endPoint = sectionSize * (i + 0.5)
                 //arrow += Arrow(startPoint: point, endPoint: endPoint)
-        
-        return (nil, [])
     }
 
+    private func processHorizontalPoints(_ points: [ArrowPoint], forEdge edge: LayoutEnginePage.Edge, of page: LayoutEnginePage, parent: ArrowPoint?) -> (ArrowPoint?, [Arrow]) {
+        var pointsToProcess = points
+        if let parent = parent {
+            pointsToProcess.append(parent)
+        }
+        let sortedPoints = pointsToProcess.sorted { $0.point.x < $1.point.x }
+        let sectionSize = page.layoutFrame.width / CGFloat(sortedPoints.count)
+        let y = (edge == .top) ? page.layoutFrame.minY : page.layoutFrame.maxY
 
-    enum Direction: CaseIterable {
-        case left
-        case top
-        case right
-        case bottom
-
-        var opposite: Direction {
-            switch self {
-            case .left:
-                return .right
-            case .top:
-                return .bottom
-            case .right:
-                return .left
-            case .bottom:
-                return .top
+        var arrows = [Arrow]()
+        var parentPoint = parent
+        (0..<sortedPoints.count).forEach {
+            let point = sortedPoints[$0]
+            let x = sectionSize * (CGFloat($0) + 0.5) + page.layoutFrame.minX
+            if point == parentPoint {
+                parentPoint = ArrowPoint(point: CGPoint(x: x, y: y).rounded(), edge: point.edge)
+            } else {
+                let startPoint = ArrowPoint(point: CGPoint(x: x, y: y).rounded(), edge: point.edge.opposite)
+                arrows.append(Arrow(startPoint: startPoint, endPoint: point))
             }
+        }
+
+        return (parentPoint, arrows)
+    }
+
+    private func processVerticalPoints(_ points: [ArrowPoint], forEdge edge: LayoutEnginePage.Edge, of page: LayoutEnginePage, parent: ArrowPoint?) -> (ArrowPoint?, [Arrow]) {
+        var pointsToProcess = points
+        if let parent = parent {
+            pointsToProcess.append(parent)
+        }
+        let sortedPoints = pointsToProcess.sorted { $0.point.y < $1.point.y }
+        let sectionSize = page.layoutFrame.height / CGFloat(sortedPoints.count)
+        let x = (edge == .left) ? page.layoutFrame.minX : page.layoutFrame.maxX
+
+        var arrows = [Arrow]()
+        var parentPoint = parent
+        (0..<sortedPoints.count).forEach {
+            let point = sortedPoints[$0]
+            let y = (sectionSize * (CGFloat($0) + 0.5)) + page.layoutFrame.minY
+            if point == parentPoint {
+                parentPoint = ArrowPoint(point: CGPoint(x: x, y: y).rounded(), edge: point.edge)
+            } else {
+                let startPoint = ArrowPoint(point: CGPoint(x: x, y: y).rounded(), edge: point.edge.opposite)
+                arrows.append(Arrow(startPoint: startPoint, endPoint: point))
+            }
+        }
+
+        return (parentPoint, arrows)
+    }
+
+    private func location(for edge: LayoutEnginePage.Edge, of page: LayoutEnginePage) -> CGPoint {
+        switch edge {
+        case .left:
+            return page.layoutFrame.point(atX: .min, y: .mid).rounded()
+        case .right:
+            return page.layoutFrame.point(atX: .max, y: .mid).rounded()
+        case .top:
+            return page.layoutFrame.point(atX: .mid, y: .min).rounded()
+        case .bottom:
+            return page.layoutFrame.point(atX: .mid, y: .max).rounded()
         }
     }
 }
 
-struct ArrowPoint {
+struct ArrowPoint: Equatable {
     let point: CGPoint
-    let direction: ArrowLayoutEngine.Direction
+    let edge: LayoutEnginePage.Edge
 }
 
-class Arrow {
-}
-
-class LayoutTree: Equatable {
-    static func == (lhs: LayoutTree, rhs: LayoutTree) -> Bool {
-        return (lhs.parent == rhs.parent) &&
-            (lhs.children == rhs.children) &&
-            (lhs.frame == rhs.frame)
-    }
-
-    private(set) var parent: LayoutTree?
-
-    let frame: CGRect
-    init(frame: CGRect) {
-        self.frame = frame
-    }
-
-    private var children: [ArrowLayoutEngine.Direction: [LayoutTree]] = [
-        .left: [],
-        .right: [],
-        .top: [],
-        .bottom: []
-    ]
-
-    func children(for direction: ArrowLayoutEngine.Direction) -> [LayoutTree] {
-        return self.children[direction] ?? []
-    }
-
-    func addChild(_ child: LayoutTree) {
-        child.parent = self
-
-        let midPoint = child.frame.midPoint
-        //Check if inside
-        guard self.frame.contains(midPoint) == false else {
-            self.children[(midPoint.x < self.frame.midX) ? .left : .right]?.append(child)
-            return
-        }
-
-        //Check if directly to side
-        if (midPoint.y >= self.frame.minY) && (midPoint.y <= self.frame.maxY) {
-            if (midPoint.x > self.frame.maxX) {
-                self.children[.right]?.append(child)
-                return
-            }
-            self.children[.left]?.append(child)
-            return
-        }
-
-        //Check if directly above or below
-        if (midPoint.x >= self.frame.minX) && (midPoint.x <= self.frame.maxX) {
-            if (midPoint.y > self.frame.maxY) {
-                self.children[.bottom]?.append(child)
-                return
-            }
-            self.children[.top]?.append(child)
-            return
-        }
-
-        //Check Top Left
-        if (midPoint.x < self.frame.minX) && (midPoint.y < self.frame.minY) {
-            //y = x + (-p.x + p.y)
-            let expectedY = midPoint.x + (-self.frame.minX + self.frame.minY)
-            self.children[(expectedY <= midPoint.y) ? .left : .top]?.append(child)
-            return
-        }
-
-        //Check Top Right
-        if (midPoint.x > self.frame.minX) && (midPoint.y < self.frame.minY) {
-            //y = -x + (p.x + p.y)
-            let expectedY = -midPoint.x + (self.frame.maxX + self.frame.minY)
-            self.children[(expectedY >= midPoint.y) ? .top : .right]?.append(child)
-            return
-        }
-
-        //Check Bottom Right
-        if (midPoint.x > self.frame.minX) && (midPoint.y > self.frame.maxY) {
-            //y = x + (-p.x + p.y)
-            let expectedY = midPoint.x + (-self.frame.maxX + self.frame.maxY)
-            self.children[(expectedY >= midPoint.y) ? .right : .bottom]?.append(child)
-            return
-        }
-
-        //Check Bottom Left
-        if (midPoint.x < self.frame.minX) && (midPoint.y > self.frame.minY) {
-            //y = x + (-p.x + p.y)
-            let expectedY = -midPoint.x + (self.frame.minX + self.frame.maxY)
-            self.children[(expectedY <= midPoint.y) ? .bottom : .left]?.append(child)
-            return
-        }
-
-        //Direction
-        //1. Check if inside
-        //2. Check if directly to side
-        //3. Check if at angle
-    }
-
-
+struct Arrow: Equatable {
+    let startPoint: ArrowPoint
+    let endPoint: ArrowPoint
 }
