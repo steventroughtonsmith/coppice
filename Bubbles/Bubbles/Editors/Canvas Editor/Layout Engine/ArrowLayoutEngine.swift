@@ -20,33 +20,37 @@ class ArrowLayoutEngine {
             guard page.parent == nil else {
                 continue
             }
-            let (_, pageArrows) = self.calculateArrows(from: page)
+            let (_, pageArrows) = self.calculateArrows(for: page)
             arrows.append(contentsOf: pageArrows)
         }
         return arrows
     }
 
-    private func calculateArrows(from page: LayoutEnginePage, edgeFromParent: LayoutEnginePage.Edge? = nil) -> (ArrowPoint?, [Arrow]) {
+    private func calculateArrows(for page: LayoutEnginePage, edgeFromParent: LayoutEnginePage.Edge? = nil) -> (ArrowPoint?, [Arrow]) {
         var pagePoint: ArrowPoint? = nil
+        //If the edge from the parent is set then we want to create an arrow for ourselves that will point back to the parent
         if let parentEdge = edgeFromParent {
             let point = self.location(for: parentEdge.opposite, of: page)
-            pagePoint = ArrowPoint(point: point, edge: parentEdge.opposite)
+            pagePoint = ArrowPoint(point: point, edge: parentEdge.opposite, pageID: page.id)
         }
+        //We can exit early if we're a leaf of the tree
         guard page.children.count > 0 else {
             return (pagePoint, [])
         }
 
         var arrows = [Arrow]()
+        //For each edge we want to get all arrows so we can calculate their start points
         for edge in LayoutEnginePage.Edge.allCases {
             var pointsToProcess = [ArrowPoint]()
             for child in page.children(for: edge) {
-                let (point, pageArrows) = self.calculateArrows(from: child, edgeFromParent: edge)
+                let (point, pageArrows) = self.calculateArrows(for: child, edgeFromParent: edge)
                 if let point = point {
                     pointsToProcess.append(point)
                 }
                 arrows.append(contentsOf: pageArrows)
             }
 
+            //If the parent is on this edge then we need to include it in the calculation, in case there are children on the same edge
             let includeParent = (pagePoint?.edge == edge)
             guard (pointsToProcess.count > 0) || includeParent else {
                 continue
@@ -58,17 +62,6 @@ class ArrowLayoutEngine {
             }
             arrows.append(contentsOf: processedArrows)
         }
-        //for direction in directions
-            //for child in direction
-                //(point, arrows) = calculateArrows(for: child, directionFromParent: direction)
-                //points += point
-                //arrows += arrows
-
-            //(parent, arrows) = processPoints(points, (parentPoint.direction == direction) ? parentPoint : nil)
-            //if parent then parentPoint = parent
-            //arrows += arrows
-        //return (parentPoint, arrows)
-
         return (pagePoint, arrows)
     }
 
@@ -79,17 +72,6 @@ class ArrowLayoutEngine {
         case .left, .right:
             return self.processVerticalPoints(points, forEdge: edge, of: page, parent: parent)
         }
-
-        //count = points.count
-        //if parent set then count += 1
-        //sort points
-        //sectionSize = page.size / count
-        //for point
-            //if point == parent
-                //parent = sectionSize * (i + 0.5)
-            //else
-                //endPoint = sectionSize * (i + 0.5)
-                //arrow += Arrow(startPoint: point, endPoint: endPoint)
     }
 
     private func processHorizontalPoints(_ points: [ArrowPoint], forEdge edge: LayoutEnginePage.Edge, of page: LayoutEnginePage, parent: ArrowPoint?) -> (ArrowPoint?, [Arrow]) {
@@ -97,19 +79,23 @@ class ArrowLayoutEngine {
         if let parent = parent {
             pointsToProcess.append(parent)
         }
+        //We want to sort points left to right and place them equally
         let sortedPoints = pointsToProcess.sorted { $0.point.x < $1.point.x }
-        let sectionSize = page.layoutFrame.width / CGFloat(sortedPoints.count)
-        let y = (edge == .top) ? page.layoutFrame.minY : page.layoutFrame.maxY
+        let sectionSize = page.frameForArrows.width / CGFloat(sortedPoints.count)
+        let y = (edge == .top) ? page.frameForArrows.minY : page.frameForArrows.maxY
 
         var arrows = [Arrow]()
         var parentPoint = parent
         (0..<sortedPoints.count).forEach {
             let point = sortedPoints[$0]
-            let x = sectionSize * (CGFloat($0) + 0.5) + page.layoutFrame.minX
+            let x = sectionSize * (CGFloat($0) + 0.5) + page.frameForArrows.minX
             if point == parentPoint {
-                parentPoint = ArrowPoint(point: CGPoint(x: x, y: y).rounded(), edge: point.edge)
+                //The parent point is just going to be the *end* point of the arrow from the parent that will be passed back up to the parent
+                //We need to change this to account for any children on the same side
+                parentPoint = ArrowPoint(point: CGPoint(x: x, y: y).rounded(), edge: point.edge, pageID: point.pageID)
             } else {
-                let startPoint = ArrowPoint(point: CGPoint(x: x, y: y).rounded(), edge: point.edge.opposite)
+                //For children we want to create the start point based on the end point we were given
+                let startPoint = ArrowPoint(point: CGPoint(x: x, y: y).rounded(), edge: point.edge.opposite, pageID: page.id)
                 arrows.append(Arrow(startPoint: startPoint, endPoint: point))
             }
         }
@@ -122,19 +108,23 @@ class ArrowLayoutEngine {
         if let parent = parent {
             pointsToProcess.append(parent)
         }
+        //We want to sort points left to right and place them equally
         let sortedPoints = pointsToProcess.sorted { $0.point.y < $1.point.y }
-        let sectionSize = page.layoutFrame.height / CGFloat(sortedPoints.count)
-        let x = (edge == .left) ? page.layoutFrame.minX : page.layoutFrame.maxX
+        let sectionSize = page.frameForArrows.height / CGFloat(sortedPoints.count)
+        let x = (edge == .left) ? page.frameForArrows.minX : page.frameForArrows.maxX
 
         var arrows = [Arrow]()
         var parentPoint = parent
         (0..<sortedPoints.count).forEach {
             let point = sortedPoints[$0]
-            let y = (sectionSize * (CGFloat($0) + 0.5)) + page.layoutFrame.minY
+            let y = (sectionSize * (CGFloat($0) + 0.5)) + page.frameForArrows.minY
             if point == parentPoint {
-                parentPoint = ArrowPoint(point: CGPoint(x: x, y: y).rounded(), edge: point.edge)
+                //The parent point is just going to be the *end* point of the arrow from the parent that will be passed back up to the parent
+                //We need to change this to account for any children on the same side
+                parentPoint = ArrowPoint(point: CGPoint(x: x, y: y).rounded(), edge: point.edge, pageID: point.pageID)
             } else {
-                let startPoint = ArrowPoint(point: CGPoint(x: x, y: y).rounded(), edge: point.edge.opposite)
+                //For children we want to create the start point based on the end point we were given
+                let startPoint = ArrowPoint(point: CGPoint(x: x, y: y).rounded(), edge: point.edge.opposite, pageID: page.id)
                 arrows.append(Arrow(startPoint: startPoint, endPoint: point))
             }
         }
@@ -145,13 +135,13 @@ class ArrowLayoutEngine {
     private func location(for edge: LayoutEnginePage.Edge, of page: LayoutEnginePage) -> CGPoint {
         switch edge {
         case .left:
-            return page.layoutFrame.point(atX: .min, y: .mid).rounded()
+            return page.frameForArrows.point(atX: .min, y: .mid).rounded()
         case .right:
-            return page.layoutFrame.point(atX: .max, y: .mid).rounded()
+            return page.frameForArrows.point(atX: .max, y: .mid).rounded()
         case .top:
-            return page.layoutFrame.point(atX: .mid, y: .min).rounded()
+            return page.frameForArrows.point(atX: .mid, y: .min).rounded()
         case .bottom:
-            return page.layoutFrame.point(atX: .mid, y: .max).rounded()
+            return page.frameForArrows.point(atX: .mid, y: .max).rounded()
         }
     }
 }
@@ -159,9 +149,18 @@ class ArrowLayoutEngine {
 struct ArrowPoint: Equatable {
     let point: CGPoint
     let edge: LayoutEnginePage.Edge
+    let pageID: UUID
 }
 
 struct Arrow: Equatable {
     let startPoint: ArrowPoint
     let endPoint: ArrowPoint
+
+    var layoutFrame: CGRect {
+        return CGRect(points: [self.startPoint.point, self.endPoint.point]) ?? .zero
+    }
+
+    func betweenSamePages(as otherArrow: Arrow) -> Bool {
+        return (otherArrow.startPoint.pageID == self.startPoint.pageID) && (otherArrow.endPoint.pageID == self.startPoint.pageID)
+    }
 }

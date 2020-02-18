@@ -31,10 +31,7 @@ protocol CanvasLayoutEngineDelegate: class {
 
 
 
-
-
 class CanvasLayoutEngine: NSObject {
-
     weak var view: CanvasLayoutView?
     weak var delegate: CanvasLayoutEngineDelegate?
 
@@ -93,15 +90,18 @@ class CanvasLayoutEngine: NSObject {
     private(set) var pages = [LayoutEnginePage]()
     private var pagesByUUID = [UUID: LayoutEnginePage]()
 
-    @discardableResult func addPage(withID id: UUID, contentFrame: CGRect, minimumContentSize: CGSize = GlobalConstants.minimumPageSize, parentID: UUID? = nil) -> LayoutEnginePage {
-        let page = LayoutEnginePage(id: id, contentFrame: contentFrame, minimumContentSize: minimumContentSize, layoutEngine: self)
-        if let parentID = parentID, let parent = self.pagesByUUID[parentID] {
-            parent.addChild(page)
+    func add(_ pages: [LayoutEnginePage]) {
+        for page in pages {
+            guard self.pagesByUUID[page.id] == nil else {
+                assertionFailure("Adding a page to the layout engine twice: \(page.id)")
+                continue
+            }
+            page.layoutEngine = self
+            self.pages.append(page)
+            self.pagesByUUID[page.id] = page
         }
-        self.pages.append(page)
-        self.pagesByUUID[id] = page
+
         self.informOfLayoutChange(with: self.recalculateCanvasSize())
-        return page
     }
 
     func remove(_ pages: [LayoutEnginePage]) {
@@ -126,6 +126,9 @@ class CanvasLayoutEngine: NSObject {
 
 
     //MARK: - Retrieving Pages
+    func page(withID uuid: UUID) -> LayoutEnginePage? {
+        return self.pagesByUUID[uuid]
+    }
 
     func page(atCanvasPoint canvasPoint: CGPoint) -> LayoutEnginePage? {
         for page in self.pages.reversed() {
@@ -201,73 +204,11 @@ class CanvasLayoutEngine: NSObject {
 
 
     //MARK: - Manage Arrows
-    private(set) var arrows = [LayoutEngineArrow]()
-
-    //Find all pages with no parents
-    //Enumerate those parents
-        //calculate arrows for page
-
-    //calculateArrows(for page: Page, parentArrow: Arrow?) -> [Arrow]
-        //get page.children
-        //if children.count == 0
-            //return parentArrow ? [parentArrow!] : []
-
-        //getseg
+    private(set) var arrows = [Arrow]()
 
     func updateArrows() {
-        var arrows = [LayoutEngineArrow]()
-        for page in self.pages {
-            guard let parent = page.parent else {
-                continue
-            }
-            arrows.append(self.calculateArrowBetween(parent: parent, andChild: page))
-        }
-
-        self.arrows = arrows
-    }
-
-    private func calculateArrowBetween(parent: LayoutEnginePage, andChild child: LayoutEnginePage) -> LayoutEngineArrow {
-        let arrowWidth = self.configuration.arrowWidth
-        assert((Int(arrowWidth) % 2) == 1, "Arrow width should be an odd number!")
-        let arrowOffset = (arrowWidth - 1) / 2
-
-        let parentFrame = parent.layoutFrame
-        let childFrame = child.layoutFrame
-
-        let x: CGFloat
-        let width: CGFloat
-        let horizontalDirection: LayoutEngineArrow.Direction
-        if (childFrame.midX > parentFrame.midX) {
-            x = parentFrame.midX
-            width = childFrame.midX - parentFrame.midX
-            horizontalDirection = .maxEdge
-        } else {
-            x = childFrame.midX
-            width = max(parentFrame.midX - childFrame.midX, 1) //ensure a minimum width of 1
-            horizontalDirection = .minEdge
-        }
-
-        let y: CGFloat
-        let height: CGFloat
-        let verticalDirection: LayoutEngineArrow.Direction
-        if (childFrame.midY > parentFrame.midY) {
-            y = parentFrame.midY
-            height = childFrame.midY - parentFrame.midY
-            verticalDirection = .maxEdge
-        } else {
-            y = childFrame.midY
-            height = max(parentFrame.midY - childFrame.midY, 1) //ensure a minimum height of 1
-            verticalDirection = .minEdge
-        }
-
-        let frame = CGRect(x: x, y: y, width: width, height: height)
-        let offsetFrame = frame.insetBy(dx: -arrowOffset, dy: -arrowOffset)
-
-        return LayoutEngineArrow(parentID: parent.id,
-                                 childID: child.id,
-                                 frame: offsetFrame,
-                                 horizontalDirection: horizontalDirection,
-                                 verticalDirection: verticalDirection)
+        let engine = ArrowLayoutEngine(pages: self.pages)
+        self.arrows = engine.calculateArrows()
     }
 
 

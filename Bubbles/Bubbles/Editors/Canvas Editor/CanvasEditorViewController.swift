@@ -231,11 +231,11 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation {
 
     private func updateArrows() {
         var existingViews = self.arrowViews
-        var newArrows = [LayoutEngineArrow]()
+        var newArrows = [Arrow]()
         for arrow in self.layoutEngine.arrows {
             let arrowView = self.arrowView(for: arrow)
             arrowView.arrow = arrow
-            arrowView.frame = arrow.frame
+            arrowView.frame = arrow.layoutFrame
 
             newArrows.append(arrow)
             if let index = existingViews.firstIndex(of: arrowView) {
@@ -304,8 +304,8 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation {
         return self.canvasView.arrowLayer.subviews.compactMap { $0 as? PageArrowView }
     }
 
-    private func arrowView(for arrow: LayoutEngineArrow) -> PageArrowView {
-        if let arrowView = self.arrowViews.first(where: { $0.arrow?.childID == arrow.childID && $0.arrow?.parentID == arrow.parentID }) {
+    private func arrowView(for arrow: Arrow) -> PageArrowView {
+        if let arrowView = self.arrowViews.first(where: { $0.arrow?.betweenSamePages(as: arrow) ?? false }) {
             return arrowView
         }
 

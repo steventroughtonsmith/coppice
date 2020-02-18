@@ -9,7 +9,7 @@
 import AppKit
 
 class PageArrowView: NSView {
-    var arrow: LayoutEngineArrow?
+    var arrow: Arrow?
 
     let lineWidth: CGFloat
     init(lineWidth: CGFloat) {
@@ -49,31 +49,31 @@ class PageArrowView: NSView {
             return path
         }
 
-        let offset = self.lineWidth / 2
-        let startX: CGFloat
-        let endX: CGFloat
-        if (arrow.horizontalDirection == .minEdge) {
-            startX = self.bounds.maxX - offset
-            endX = self.bounds.minX + offset
-        } else {
-            startX = self.bounds.minX + offset
-            endX = self.bounds.maxX - offset
-        }
-
-        let startY: CGFloat
-        let endY: CGFloat
-        if (arrow.verticalDirection == .minEdge) {
-            startY = self.bounds.maxY - offset
-            endY = self.bounds.minY + offset
-        } else {
-            startY = self.bounds.minY + offset
-            endY = self.bounds.maxY - offset
-        }
-
-        path.move(to: CGPoint(x: startX, y: startY))
-        path.line(to: CGPoint(x: endX, y: endY))
-
-        path.lineWidth = self.lineWidth
+//        let offset = self.lineWidth / 2
+//        let startX: CGFloat
+//        let endX: CGFloat
+//        if (arrow.horizontalDirection == .minEdge) {
+//            startX = self.bounds.maxX - offset
+//            endX = self.bounds.minX + offset
+//        } else {
+//            startX = self.bounds.minX + offset
+//            endX = self.bounds.maxX - offset
+//        }
+//
+//        let startY: CGFloat
+//        let endY: CGFloat
+//        if (arrow.verticalDirection == .minEdge) {
+//            startY = self.bounds.maxY - offset
+//            endY = self.bounds.minY + offset
+//        } else {
+//            startY = self.bounds.minY + offset
+//            endY = self.bounds.maxY - offset
+//        }
+//
+//        path.move(to: CGPoint(x: startX, y: startY))
+//        path.line(to: CGPoint(x: endX, y: endY))
+//
+//        path.lineWidth = self.lineWidth
         return path
     }
 
@@ -99,21 +99,22 @@ class PageArrowView: NSView {
     }
 
     private func angleFromOrigin() -> CGFloat {
-        guard let arrow = self.arrow else {
-            return 0.0
-        }
-
-        let innerAngle = atan(self.bounds.height/self.bounds.width)
-        switch (arrow.horizontalDirection, arrow.verticalDirection) {
-        case (.maxEdge, .minEdge):
-            return innerAngle
-        case (.minEdge, .minEdge):
-            return CGFloat.pi - innerAngle
-        case (.minEdge, .maxEdge):
-            return CGFloat.pi + innerAngle
-        case (.maxEdge, .maxEdge):
-            return (2 * CGFloat.pi) - innerAngle
-        }
+        return 0
+//        guard let arrow = self.arrow else {
+//            return 0.0
+//        }
+//
+//        let innerAngle = atan(self.bounds.height/self.bounds.width)
+//        switch (arrow.horizontalDirection, arrow.verticalDirection) {
+//        case (.maxEdge, .minEdge):
+//            return innerAngle
+//        case (.minEdge, .minEdge):
+//            return CGFloat.pi - innerAngle
+//        case (.minEdge, .maxEdge):
+//            return CGFloat.pi + innerAngle
+//        case (.maxEdge, .maxEdge):
+//            return (2 * CGFloat.pi) - innerAngle
+//        }
     }
 
     func arrowSize() -> CGFloat {

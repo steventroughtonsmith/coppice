@@ -92,11 +92,27 @@ class CanvasEditorViewModel: ViewModel {
     }
 
     private func addPages(_ canvasPages: Set<CanvasPage>) {
-        canvasPages.forEach { (canvasPage) in
-            self.layoutEngine.addPage(withID: canvasPage.id.uuid,
-                                      contentFrame: canvasPage.frame,
-                                      parentID: canvasPage.parent?.id.uuid)
+        let newPages = canvasPages.map { LayoutEnginePage(id: $0.id.uuid, contentFrame: $0.frame) }
+
+        let newPagesByID = newPages.indexed(by: \.id)
+
+        for canvasPage in canvasPages {
+            guard let parentID = canvasPage.parent?.id.uuid else {
+                continue
+            }
+            guard let parentPage = newPagesByID[parentID] ?? self.layoutEngine.page(withID: parentID) else {
+                assertionFailure("Parent (\(parentID)) did not exist in newly created pages or layout engine")
+                continue
+            }
+
+            guard let page = newPagesByID[canvasPage.id.uuid] else {
+                assertionFailure("WTF?! You should have literally just added this page (\(canvasPage.id.uuid)). Where has it gone?")
+                continue
+            }
+            parentPage.addChild(page)
         }
+
+        self.layoutEngine.add(newPages)
     }
 
     private func removePages(_ canvasPages: Set<CanvasPage>) {

@@ -101,6 +101,23 @@ extension CGRect {
         self.init(x: x.rounded(), y: y.rounded(), width: width, height: height)
     }
 
+    init?(points: [CGPoint]) {
+        var containingRect: CGRect? = nil
+        for point in points {
+            let pointRect = CGRect(origin: point, size: .zero)
+            guard let rect = containingRect else {
+                containingRect = pointRect
+                continue
+            }
+            containingRect = rect.union(pointRect)
+        }
+
+        guard let rect = containingRect else {
+            return nil
+        }
+        self.init(origin: rect.origin, size: rect.size)
+    }
+
     enum RectPoint {
         case min
         case mid

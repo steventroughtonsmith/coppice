@@ -212,7 +212,6 @@ extension TextEditorViewController: NSTextViewDelegate {
     }
 
     func textViewDidChangeSelection(_ notification: Notification) {
-        print("selection changed")
         guard (notification.object as? NSTextView) == self.editingTextView else {
             return
         }

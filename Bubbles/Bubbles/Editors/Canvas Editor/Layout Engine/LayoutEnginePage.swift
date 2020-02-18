@@ -27,6 +27,15 @@ class LayoutEnginePage: Equatable {
         return (self.layoutEngine?.enabledPage == self)
     }
 
+    weak var layoutEngine: CanvasLayoutEngine?
+    init(id: UUID,
+         contentFrame: CGRect,
+         minimumContentSize: CGSize = GlobalConstants.minimumPageSize) {
+        self.id = id
+        self.contentFrame = contentFrame
+        self.minimumContentSize = minimumContentSize
+        self.validateSize()
+    }
 
     //MARK: - Content
     var minimumContentSize: CGSize
@@ -198,16 +207,10 @@ class LayoutEnginePage: Equatable {
         return visualFrame.shrink(by: margins)
     }
 
-    weak var layoutEngine: CanvasLayoutEngine?
-    init(id: UUID,
-         contentFrame: CGRect,
-         minimumContentSize: CGSize = CGSize(width: 150, height: 100),
-         layoutEngine: CanvasLayoutEngine) {
-        self.id = id
-        self.contentFrame = contentFrame
-        self.minimumContentSize = minimumContentSize
-        self.layoutEngine = layoutEngine
-        self.validateSize()
+    var frameForArrows: CGRect {
+        var frame = self.contentContainerFrame
+        frame.origin = frame.origin.plus(self.layoutFrame.origin)
+        return frame
     }
 
     static func == (lhs: LayoutEnginePage, rhs: LayoutEnginePage) -> Bool {
