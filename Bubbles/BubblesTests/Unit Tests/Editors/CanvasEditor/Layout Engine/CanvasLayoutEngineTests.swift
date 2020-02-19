@@ -45,17 +45,18 @@ class CanvasLayoutEngineTests: XCTestCase {
                                                                     contentBorder: 20,
                                                                     arrowWidth: 5))
 
-        self.page1 = self.layoutEngine.addPage(withID: UUID(),
-                                               contentFrame: CGRect(x: 40, y: 40, width: 10, height: 10),
-                                               minimumContentSize: CGSize(width: 0, height: 0))
+        self.page1 = LayoutEnginePage(id: UUID(),
+                                      contentFrame: CGRect(x: 40, y: 40, width: 10, height: 10),
+                                      minimumContentSize: CGSize(width: 0, height: 0))
 
-        self.page2 = self.layoutEngine.addPage(withID: UUID(),
-                                               contentFrame: CGRect(x: -30, y: -20, width: 20, height: 40),
-                                               minimumContentSize: CGSize(width: 0, height: 0))
+        self.page2 = LayoutEnginePage(id: UUID(),
+                                      contentFrame: CGRect(x: -30, y: -20, width: 20, height: 40),
+                                      minimumContentSize: CGSize(width: 0, height: 0))
 
-        self.page3 = self.layoutEngine.addPage(withID: UUID(),
-                                               contentFrame: CGRect(x: 30, y: -30, width: 30, height: 20),
-                                               minimumContentSize: CGSize(width: 0, height: 0))
+        self.page3 = LayoutEnginePage(id: UUID(),
+                                      contentFrame: CGRect(x: 30, y: -30, width: 30, height: 20),
+                                      minimumContentSize: CGSize(width: 0, height: 0))
+        self.layoutEngine.add([self.page1, self.page2, self.page3])
 
         self.contentFrame = self.page1.layoutFrame.union(self.page2.layoutFrame).union(self.page3.layoutFrame)
         self.expectedOffset = CGPoint(x: 50, y: 55) //This is (50, 50) for the content frame, but we have a 5pt title which pushes the y up a bit
@@ -71,11 +72,19 @@ class CanvasLayoutEngineTests: XCTestCase {
 
     //MARK: - Adding/Removing Pages
     func test_addPage_addsPageWithSuppliedValuesToPagesArray() {
-        let page = self.layoutEngine.addPage(withID: UUID(),
-                                             contentFrame: CGRect(x: 0, y: 1, width: 2, height: 3),
-                                             minimumContentSize: CGSize(width: 4, height: 5),
-                                             parentID: UUID())
+        let page = LayoutEnginePage(id: UUID(),
+                                    contentFrame: CGRect(x: 0, y: 1, width: 2, height: 3),
+                                    minimumContentSize: CGSize(width: 4, height: 5))
+        self.layoutEngine.add([page])
         XCTAssertTrue(self.layoutEngine.pages.contains(page))
+    }
+
+    func test_addPage_setsLayoutEngineOfSuppliedPages() {
+        let page = LayoutEnginePage(id: UUID(),
+                                    contentFrame: CGRect(x: 0, y: 1, width: 2, height: 3),
+                                    minimumContentSize: CGSize(width: 4, height: 5))
+        self.layoutEngine.add([page])
+        XCTAssertTrue(page.layoutEngine === self.layoutEngine)
     }
 
     func test_removePages_removesSuppliedPagesFromPagesArray() {
@@ -539,14 +548,15 @@ class CanvasLayoutEngineTests: XCTestCase {
     }
 
     func test_moving_downEventWithCount2SelectsAllChildPages() {
-        let child1 = self.layoutEngine.addPage(withID: UUID(),
-                                               contentFrame: CGRect(x: 120, y: 120, width: 30, height: 30),
-                                               minimumContentSize: .zero,
-                                               parentID: self.page1.id)
-        let child2 = self.layoutEngine.addPage(withID: UUID(),
-                                               contentFrame: CGRect(x: 150, y: 180, width: 30, height: 30),
-                                               minimumContentSize: .zero,
-                                               parentID: self.page1.id)
+        let child1 = LayoutEnginePage(id: UUID(),
+                                      contentFrame: CGRect(x: 120, y: 120, width: 30, height: 30),
+                                      minimumContentSize: .zero)
+        let child2 = LayoutEnginePage(id: UUID(),
+                                      contentFrame: CGRect(x: 150, y: 180, width: 30, height: 30),
+                                      minimumContentSize: .zero)
+        self.page1.addChild(child1)
+        self.page1.addChild(child2)
+        self.layoutEngine.add([child1, child2])
 
         self.layoutEngine.downEvent(at: self.page1.layoutFrame.origin.plus(.identity), eventCount: 2)
         XCTAssertTrue(self.page1.selected)
@@ -1028,290 +1038,6 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertEqual(self.page1.layoutFrame.origin, page1Origin.plus(CGPoint(x: 10, y: 20)))
         XCTAssertEqual(self.page2.layoutFrame.origin, page2Origin)
         XCTAssertEqual(self.page3.layoutFrame.origin, page3Origin)
-    }
-
-
-    //MARK: - Arrows
-    func arrowBetweenPage(at page1Origin: CGPoint, andPageAt page2Origin: CGPoint, arrowWidth: CGFloat) -> LayoutEngineArrow? {
-        let layoutEngine = CanvasLayoutEngine(configuration: .init(page: .init(titleHeight: 0,
-                                                                               borderSize: 0,
-                                                                               shadowOffset: .zero,
-                                                                               edgeResizeHandleSize: 0,
-                                                                               cornerResizeHandleSize: 0),
-                                                                   contentBorder: 0,
-                                                                   arrowWidth: arrowWidth))
-
-        let page1 = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(origin: page1Origin, size: CGSize(width: 20, height: 20)), minimumContentSize: .zero)
-        layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(origin: page2Origin, size: CGSize(width: 20, height: 20)), minimumContentSize: .zero, parentID: page1.id)
-        return layoutEngine.arrows.first
-    }
-
-
-    func test_arrows_addingPageWithParentAddsArrowBetweenPages() throws {
-        XCTAssertEqual(self.layoutEngine.arrows.count, 0)
-        let page = self.layoutEngine.addPage(withID: UUID(),
-                                             contentFrame: CGRect(x: 0, y: 0, width: 20, height: 20),
-                                             minimumContentSize: .zero,
-                                             parentID: self.page1.id)
-
-        XCTAssertEqual(self.layoutEngine.arrows.count, 1)
-        let arrow = try XCTUnwrap(self.layoutEngine.arrows.first)
-        XCTAssertEqual(arrow.childID, page.id)
-        XCTAssertEqual(arrow.parentID, self.page1.id)
-
-    }
-
-    func test_arrows_childDirectlyToRightOfParentHasStraightLineOfArrowWidthSizeBetweenCentres() throws {
-        let arrow = try XCTUnwrap(self.arrowBetweenPage(at: CGPoint(x: 0, y: 0), andPageAt: CGPoint(x: 40, y: 0), arrowWidth: 5))
-        //We remove 2 from the centre as our 5pt line is centred on 10, 10, so we want to start (width-1)/2 away. Same for increasing the width
-        XCTAssertEqual(arrow.frame, CGRect(x: 8, y: 8, width: 44, height: 5))
-    }
-
-    func test_arrows_childDirectlyToRightOfParentHasMaxHorizontalAndMinVerticalDirections() throws {
-        let arrow = try XCTUnwrap(self.arrowBetweenPage(at: CGPoint(x: 0, y: 0), andPageAt: CGPoint(x: 40, y: 0), arrowWidth: 5))
-        XCTAssertEqual(arrow.horizontalDirection, .maxEdge)
-        XCTAssertEqual(arrow.verticalDirection, .minEdge)
-    }
-
-    func test_arrows_childDirectlyToLeftOfParentHasStraightLineOfArrowWidthSizeBetweenCentres() throws {
-        let arrow = try XCTUnwrap(self.arrowBetweenPage(at: CGPoint(x: 0, y: 0), andPageAt: CGPoint(x: -40, y: 0), arrowWidth: 5))
-        //Our frame origin is the same as above as time the whole canvas has grown to the left
-        XCTAssertEqual(arrow.frame, CGRect(x: 8, y: 8, width: 44, height: 5))
-    }
-
-    func test_arrows_childDirectlyToLeftOfParentHasMinHorizontalAndVerticalDirections() throws {
-        let arrow = try XCTUnwrap(self.arrowBetweenPage(at: CGPoint(x: 0, y: 0), andPageAt: CGPoint(x: -40, y: 0), arrowWidth: 5))
-        XCTAssertEqual(arrow.horizontalDirection, .minEdge)
-        XCTAssertEqual(arrow.verticalDirection, .minEdge)
-    }
-
-    func test_arrows_childDirectlyAboveParentHasStraightLineOfArrowWidthSizeBetweenCentres() throws {
-        let arrow = try XCTUnwrap(self.arrowBetweenPage(at: CGPoint(x: 0, y: 0), andPageAt: CGPoint(x: 0, y: -50), arrowWidth: 7))
-        XCTAssertEqual(arrow.frame, CGRect(x: 7, y: 7, width: 7, height: 56))
-    }
-
-    func test_arrows_childDirectlyAboveParentHasMinHorizontalAndVerticalDirections() throws {
-        let arrow = try XCTUnwrap(self.arrowBetweenPage(at: CGPoint(x: 0, y: 0), andPageAt: CGPoint(x: 0, y: -50), arrowWidth: 7))
-        XCTAssertEqual(arrow.horizontalDirection, .minEdge)
-        XCTAssertEqual(arrow.verticalDirection, .minEdge)
-    }
-
-    func test_arrows_childDirectlyBelowParentHasStraightLineOfArrowWidthSizeBetweenCentres() throws {
-        let arrow = try XCTUnwrap(self.arrowBetweenPage(at: CGPoint(x: 0, y: 0), andPageAt: CGPoint(x: 0, y: 50), arrowWidth: 7))
-        XCTAssertEqual(arrow.frame, CGRect(x: 7, y: 7, width: 7, height: 56))
-    }
-
-    func test_arrows_childDirectlyBelowParentHasMinHorizontalAndMaxVerticalDirections() throws {
-        let arrow = try XCTUnwrap(self.arrowBetweenPage(at: CGPoint(x: 0, y: 0), andPageAt: CGPoint(x: 0, y: 50), arrowWidth: 7))
-        XCTAssertEqual(arrow.horizontalDirection, .minEdge)
-        XCTAssertEqual(arrow.verticalDirection, .maxEdge)
-    }
-
-    func test_arrows_childToTopLeftOfParentHasFrameContainingBothCentres() throws {
-        let arrow = try XCTUnwrap(self.arrowBetweenPage(at: CGPoint(x: 0, y: 0), andPageAt: CGPoint(x: -60, y: -60), arrowWidth: 3))
-        XCTAssertEqual(arrow.frame, CGRect(x: 9, y: 9, width: 62, height: 62))
-    }
-
-    func test_arrows_childToTopLeftOfParentHasMinHorizontalAndVerticalDirections() throws {
-        let arrow = try XCTUnwrap(self.arrowBetweenPage(at: CGPoint(x: 0, y: 0), andPageAt: CGPoint(x: -60, y: -60), arrowWidth: 3))
-        XCTAssertEqual(arrow.horizontalDirection, .minEdge)
-        XCTAssertEqual(arrow.verticalDirection, .minEdge)
-    }
-
-    func test_arrows_childToTopRightOfParentHasFrameContainingBothCentres() throws {
-        let arrow = try XCTUnwrap(self.arrowBetweenPage(at: CGPoint(x: 0, y: 0), andPageAt: CGPoint(x: 50, y: -60), arrowWidth: 3))
-        XCTAssertEqual(arrow.frame, CGRect(x: 9, y: 9, width: 52, height: 62))
-    }
-
-    func test_arrows_childToTopRightOfParentHasMaxHorizontalAndMinVerticalDirections() throws {
-        let arrow = try XCTUnwrap(self.arrowBetweenPage(at: CGPoint(x: 0, y: 0), andPageAt: CGPoint(x: 50, y: -60), arrowWidth: 3))
-        XCTAssertEqual(arrow.horizontalDirection, .maxEdge)
-        XCTAssertEqual(arrow.verticalDirection, .minEdge)
-    }
-
-    func test_arrows_childToBottomLeftOfParentHasFrameContainingBothCentres() throws {
-        let arrow = try XCTUnwrap(self.arrowBetweenPage(at: CGPoint(x: 0, y: 0), andPageAt: CGPoint(x: -30, y: 40), arrowWidth: 3))
-        XCTAssertEqual(arrow.frame, CGRect(x: 9, y: 9, width: 32, height: 42))
-    }
-
-    func test_arrows_childToBottomLeftOfParentHasMinHorizontalAndMaxVerticalDirections() throws {
-        let arrow = try XCTUnwrap(self.arrowBetweenPage(at: CGPoint(x: 0, y: 0), andPageAt: CGPoint(x: -30, y: 40), arrowWidth: 3))
-        XCTAssertEqual(arrow.horizontalDirection, .minEdge)
-        XCTAssertEqual(arrow.verticalDirection, .maxEdge)
-    }
-
-    func test_arrows_childToBottomRightOfParentHasFrameContainingBothCentres() throws {
-        let arrow = try XCTUnwrap(self.arrowBetweenPage(at: CGPoint(x: 0, y: 0), andPageAt: CGPoint(x: 45, y: 54), arrowWidth: 3))
-        XCTAssertEqual(arrow.frame, CGRect(x: 9, y: 9, width: 47, height: 56))
-    }
-
-    func test_arrows_childToBottomRightOfParentHasMaxHorizontalAndVerticalDirections() throws {
-        let arrow = try XCTUnwrap(self.arrowBetweenPage(at: CGPoint(x: 0, y: 0), andPageAt: CGPoint(x: 45, y: 54), arrowWidth: 3))
-        XCTAssertEqual(arrow.horizontalDirection, .maxEdge)
-        XCTAssertEqual(arrow.verticalDirection, .maxEdge)
-    }
-
-
-    //MARK: - Arrow Moving & Resizing
-
-    func createInitialArrowModificationTestPages() -> (CanvasLayoutEngine, LayoutEnginePage, [LayoutEnginePage]) {
-        let config = CanvasLayoutEngine.Configuration(page: .init(titleHeight: 10,
-                                                                  borderSize: 0,
-                                                                  shadowOffset: .zero,
-                                                                  edgeResizeHandleSize: 1,
-                                                                  cornerResizeHandleSize: 1),
-                                                      contentBorder: 20,
-                                                      arrowWidth: 5)
-        let layoutEngine = CanvasLayoutEngine(configuration: config)
-        let parent = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 20, height: 20), minimumContentSize: .zero, parentID: nil)
-        let child1 = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 40, y: -30, width: 20, height: 20), minimumContentSize: .zero, parentID: parent.id)
-        let child2 = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 30, y: 30, width: 20, height: 20), minimumContentSize: .zero, parentID: parent.id)
-
-        return (layoutEngine, parent, [child1, child2])
-    }
-
-    func test_arrows_movingChildResizesArrow() {
-        let (engine, _, children) = self.createInitialArrowModificationTestPages()
-
-        guard let oldChild2Arrow = engine.arrows.first(where: { $0.childID == children[1].id }) else {
-            XCTFail("No Arrow found for child 1")
-            return
-        }
-
-        engine.downEvent(at: engine.convertPointToCanvasSpace(CGPoint(x: 35, y: 25)))
-        engine.draggedEvent(at: engine.convertPointToCanvasSpace(CGPoint(x: 40, y: 20)))
-
-        let arrowFrame = engine.arrows.first(where: { $0.childID == children[1].id })?.frame
-
-        XCTAssertEqual(arrowFrame?.minX, oldChild2Arrow.frame.minX)
-        XCTAssertEqual(arrowFrame?.minY, oldChild2Arrow.frame.minY)
-        XCTAssertEqual(arrowFrame?.width, oldChild2Arrow.frame.width + 5)
-        XCTAssertEqual(arrowFrame?.height, oldChild2Arrow.frame.height - 5)
-
-        engine.upEvent(at: engine.convertPointToCanvasSpace(CGPoint(x: 40, y: 20)))
-    }
-
-    func test_arrows_movingParentResizesAllChildArrows() {
-        let (engine, _, children) = self.createInitialArrowModificationTestPages()
-
-        guard let oldChild1ArrowFrame = engine.arrows.first(where: { $0.childID == children[0].id })?.frame,
-            let oldChild2ArrowFrame = engine.arrows.first(where: { $0.childID == children[1].id })?.frame else {
-            XCTFail("No Arrows found for children")
-                return
-        }
-
-        engine.downEvent(at: engine.convertPointToCanvasSpace(CGPoint(x: 5, y: -5)))
-        engine.draggedEvent(at: engine.convertPointToCanvasSpace(CGPoint(x: 0, y: 0)))
-
-        let child1ArrowFrame = engine.arrows.first(where: { $0.childID == children[0].id })?.frame
-        XCTAssertEqual(child1ArrowFrame?.minX, oldChild1ArrowFrame.minX - 5)
-        XCTAssertEqual(child1ArrowFrame?.minY, oldChild1ArrowFrame.minY)
-        XCTAssertEqual(child1ArrowFrame?.width, oldChild1ArrowFrame.width + 5)
-        XCTAssertEqual(child1ArrowFrame?.height, oldChild1ArrowFrame.height + 5)
-
-        let child2ArrowFrame = engine.arrows.first(where: { $0.childID == children[1].id })?.frame
-        XCTAssertEqual(child2ArrowFrame?.minX, oldChild2ArrowFrame.minX - 5)
-        XCTAssertEqual(child2ArrowFrame?.minY, oldChild2ArrowFrame.minY + 5)
-        XCTAssertEqual(child2ArrowFrame?.width, oldChild2ArrowFrame.width + 5)
-        XCTAssertEqual(child2ArrowFrame?.height, oldChild2ArrowFrame.height - 5)
-
-        engine.upEvent(at: engine.convertPointToCanvasSpace(.zero))
-    }
-
-    func test_arrows_resizingChildOnArrowEdgeResizesArrow() {
-        let (engine, _, children) = self.createInitialArrowModificationTestPages()
-
-        guard let oldArrowFrame = engine.arrows.first(where: { $0.childID == children[0].id }) else {
-            XCTFail("No Arrow found for child 1")
-            return
-        }
-
-        engine.downEvent(at: engine.convertPointToCanvasSpace(CGPoint(x: 40, y: -25)))
-        engine.draggedEvent(at: engine.convertPointToCanvasSpace(CGPoint(x: 35, y: -20)))
-
-        let arrowFrame = engine.arrows.first(where: { $0.childID == children[0].id })?.frame
-
-        XCTAssertEqual(arrowFrame?.minX, oldArrowFrame.frame.minX)
-        XCTAssertEqual(arrowFrame?.minY, oldArrowFrame.frame.minY)
-        XCTAssertEqual(arrowFrame?.width, oldArrowFrame.frame.width - 2.5)
-        XCTAssertEqual(arrowFrame?.height, oldArrowFrame.frame.height)
-
-        engine.upEvent(at: engine.convertPointToCanvasSpace(CGPoint(x: 35, y: -20)))
-    }
-
-    func test_arrows_resizingChildOnNonArrowEdgeResizesArrow() {
-        let (engine, _, children) = self.createInitialArrowModificationTestPages()
-
-        guard let oldArrowFrame = engine.arrows.first(where: { $0.childID == children[1].id })?.frame else {
-            XCTFail("No Arrow found for child 2")
-            return
-        }
-
-        engine.downEvent(at: engine.convertPointToCanvasSpace(CGPoint(x: 49, y: 35)))
-        engine.draggedEvent(at: engine.convertPointToCanvasSpace(CGPoint(x: 59, y: 30)))
-
-        let arrowFrame = engine.arrows.first(where: { $0.childID == children[1].id })?.frame
-
-        XCTAssertEqual(arrowFrame?.minX, oldArrowFrame.minX)
-        XCTAssertEqual(arrowFrame?.minY, oldArrowFrame.minY)
-        XCTAssertEqual(arrowFrame?.width, oldArrowFrame.width + 5)
-        XCTAssertEqual(arrowFrame?.height, oldArrowFrame.height)
-
-        engine.upEvent(at: engine.convertPointToCanvasSpace(CGPoint(x: 60, y: 30)))
-    }
-
-    func test_arrows_resizingParentOnArrowEdgeResizesArrow() {
-        let (engine, _, children) = self.createInitialArrowModificationTestPages()
-
-        guard let oldChild1ArrowFrame = engine.arrows.first(where: { $0.childID == children[0].id })?.frame,
-            let oldChild2ArrowFrame = engine.arrows.first(where: { $0.childID == children[1].id })?.frame else {
-            XCTFail("No Arrows found for children")
-                return
-        }
-
-        engine.downEvent(at: engine.convertPointToCanvasSpace(CGPoint(x: 19, y: 5)))
-        engine.draggedEvent(at: engine.convertPointToCanvasSpace(CGPoint(x: 24, y: 10)))
-
-        let child1ArrowFrame = engine.arrows.first(where: { $0.childID == children[0].id })?.frame
-        XCTAssertEqual(child1ArrowFrame?.minX, oldChild1ArrowFrame.minX + 2.5)
-        XCTAssertEqual(child1ArrowFrame?.minY, oldChild1ArrowFrame.minY)
-        XCTAssertEqual(child1ArrowFrame?.width, oldChild1ArrowFrame.width - 2.5)
-        XCTAssertEqual(child1ArrowFrame?.height, oldChild1ArrowFrame.height)
-
-        let child2ArrowFrame = engine.arrows.first(where: { $0.childID == children[1].id })?.frame
-        XCTAssertEqual(child2ArrowFrame?.minX, oldChild2ArrowFrame.minX + 2.5)
-        XCTAssertEqual(child2ArrowFrame?.minY, oldChild2ArrowFrame.minY)
-        XCTAssertEqual(child2ArrowFrame?.width, oldChild2ArrowFrame.width - 2.5)
-        XCTAssertEqual(child2ArrowFrame?.height, oldChild2ArrowFrame.height)
-
-        engine.upEvent(at: engine.convertPointToCanvasSpace(.zero))
-    }
-
-    func test_arrows_resizingParentOnNonArrowEdgeResizesArrow() {
-        let (engine, _, children) = self.createInitialArrowModificationTestPages()
-
-        guard let oldChild1ArrowFrame = engine.arrows.first(where: { $0.childID == children[0].id })?.frame,
-            let oldChild2ArrowFrame = engine.arrows.first(where: { $0.childID == children[1].id })?.frame else {
-            XCTFail("No Arrows found for children")
-                return
-        }
-
-        engine.downEvent(at: engine.convertPointToCanvasSpace(CGPoint(x: 0, y: 5)))
-        engine.draggedEvent(at: engine.convertPointToCanvasSpace(CGPoint(x: -10, y: 10)))
-
-        let child1ArrowFrame = engine.arrows.first(where: { $0.childID == children[0].id })?.frame
-        XCTAssertEqual(child1ArrowFrame?.minX, oldChild1ArrowFrame.minX - 5)
-        XCTAssertEqual(child1ArrowFrame?.minY, oldChild1ArrowFrame.minY)
-        XCTAssertEqual(child1ArrowFrame?.width, oldChild1ArrowFrame.width + 5)
-        XCTAssertEqual(child1ArrowFrame?.height, oldChild1ArrowFrame.height)
-
-        let child2ArrowFrame = engine.arrows.first(where: { $0.childID == children[1].id })?.frame
-        XCTAssertEqual(child2ArrowFrame?.minX, oldChild2ArrowFrame.minX - 5)
-        XCTAssertEqual(child2ArrowFrame?.minY, oldChild2ArrowFrame.minY)
-        XCTAssertEqual(child2ArrowFrame?.width, oldChild2ArrowFrame.width + 5)
-        XCTAssertEqual(child2ArrowFrame?.height, oldChild2ArrowFrame.height)
-
-        engine.upEvent(at: engine.convertPointToCanvasSpace(.zero))
     }
 
 

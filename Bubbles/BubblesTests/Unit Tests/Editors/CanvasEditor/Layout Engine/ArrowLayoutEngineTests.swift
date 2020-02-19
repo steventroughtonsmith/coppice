@@ -15,7 +15,8 @@ class ArrowLayoutEngineTests: XCTestCase {
     var rootPage: LayoutEnginePage!
     override func setUpWithError() throws {
         self.layoutEngine = self.createLayoutEngine()
-        self.rootPage = self.layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 20, height: 40), minimumContentSize: .zero)
+        self.rootPage = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 20, height: 40), minimumContentSize: .zero)
+        self.layoutEngine.add([self.rootPage])
     }
 
     override func tearDownWithError() throws {
@@ -453,7 +454,10 @@ class ArrowLayoutEngineTests: XCTestCase {
     }
 
     func createPage(frame: CGRect, parent: LayoutEnginePage? = nil) -> LayoutEnginePage {
-        return self.layoutEngine.addPage(withID: UUID(), contentFrame: frame, minimumContentSize: .zero, parentID: parent?.id)
+        let page = LayoutEnginePage(id: UUID(), contentFrame: frame, minimumContentSize: .zero)
+        parent?.addChild(page)
+        self.layoutEngine.add([page])
+        return page
     }
 
     func arrowPoint(x: CGFloat, y: CGFloat, edge: LayoutEnginePage.Edge, page: LayoutEnginePage) -> ArrowPoint {

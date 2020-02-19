@@ -25,19 +25,19 @@ class LayoutEnginePageTests: XCTestCase {
         let expectedUUID = UUID()
         let expectedContentFrame = CGRect(x: 31, y: 42, width: 73, height: 37)
         let expectedMinContentSize = CGSize(width: 20, height: 30)
-        let page = layoutEngine.addPage(withID: expectedUUID, contentFrame: expectedContentFrame, minimumContentSize: expectedMinContentSize)
+        let page = LayoutEnginePage(id: expectedUUID, contentFrame: expectedContentFrame, minimumContentSize: expectedMinContentSize)
 
         XCTAssertEqual(page.id, expectedUUID)
         XCTAssertEqual(page.contentFrame, expectedContentFrame)
         XCTAssertEqual(page.minimumContentSize, expectedMinContentSize)
-        XCTAssertTrue(page.layoutEngine === layoutEngine)
     }
 
     func test_init_increasesContentSizeIfBelowMinimum() {
         let layoutEngine = self.layoutEngine()
-        let page = layoutEngine.addPage(withID: UUID(),
-                                        contentFrame: CGRect(x: 0, y: 0, width:20, height: 40),
-                                        minimumContentSize: CGSize(width: 50, height: 60))
+        let page = LayoutEnginePage(id: UUID(),
+                                    contentFrame: CGRect(x: 0, y: 0, width:20, height: 40),
+                                    minimumContentSize: CGSize(width: 50, height: 60))
+        layoutEngine.add([page])
         XCTAssertEqual(page.contentFrame, CGRect(x: 0, y: 0, width: 50, height: 60))
     }
 
@@ -45,30 +45,30 @@ class LayoutEnginePageTests: XCTestCase {
     //MARK: - Size Validation
     func test_validateSize_doesntChangeContentFrameIfBiggerThanMinSize() {
         let layoutEngine = self.layoutEngine()
-        let page = layoutEngine.addPage(withID: UUID(),
-                                        contentFrame: .zero)
+        let page = LayoutEnginePage(id: UUID(), contentFrame: .zero)
         page.minimumContentSize = CGSize(width: 50, height: 100)
         page.contentFrame = CGRect(x: 0, y: 0, width: 60, height: 110)
+        layoutEngine.add([page])
 
         XCTAssertEqual(page.contentFrame, CGRect(x: 0, y: 0, width: 60, height: 110))
     }
 
     func test_validateSize_setsContentFrameWidthToMinimumIfSmallerThanMinSize() {
         let layoutEngine = self.layoutEngine()
-        let page = layoutEngine.addPage(withID: UUID(),
-                                        contentFrame: .zero)
+        let page = LayoutEnginePage(id: UUID(), contentFrame: .zero)
         page.minimumContentSize = CGSize(width: 50, height: 100)
         page.contentFrame = CGRect(x: 0, y: 0, width: 20, height: 110)
+        layoutEngine.add([page])
 
         XCTAssertEqual(page.contentFrame, CGRect(x: 0, y: 0, width: 50, height: 110))
     }
 
     func test_validateSize_setsContentFrameHeightToMinimumIfSmallerThanMinSize() {
         let layoutEngine = self.layoutEngine()
-        let page = layoutEngine.addPage(withID: UUID(),
-                                        contentFrame: .zero)
+        let page = LayoutEnginePage(id: UUID(), contentFrame: .zero)
         page.minimumContentSize = CGSize(width: 50, height: 100)
         page.contentFrame = CGRect(x: 0, y: 0, width: 60, height: 80)
+        layoutEngine.add([page])
 
         XCTAssertEqual(page.contentFrame, CGRect(x: 0, y: 0, width: 60, height: 100))
     }
@@ -79,9 +79,8 @@ class LayoutEnginePageTests: XCTestCase {
         let layoutEngine = self.layoutEngine()
 
         let expectedSize = CGSize(width: 120, height: 40)
-        let page = layoutEngine.addPage(withID: UUID(),
-                                        contentFrame: .zero,
-                                        minimumContentSize: expectedSize)
+        let page = LayoutEnginePage(id: UUID(), contentFrame: .zero, minimumContentSize: expectedSize)
+        layoutEngine.add([page])
 
         XCTAssertEqual(page.minimumLayoutSize, expectedSize)
     }
@@ -94,9 +93,8 @@ class LayoutEnginePageTests: XCTestCase {
                                              pageCornerResizeHandleSize: 12)
 
         let minimumContentSize = CGSize(width: 120, height: 40)
-        let page = layoutEngine.addPage(withID: UUID(),
-                                        contentFrame: .zero,
-                                        minimumContentSize:minimumContentSize)
+        let page = LayoutEnginePage(id: UUID(), contentFrame: .zero, minimumContentSize:minimumContentSize)
+        layoutEngine.add([page])
 
         let expectedSize = minimumContentSize.plus(width: 20, height: 43)
         XCTAssertEqual(page.minimumLayoutSize, expectedSize)
@@ -107,8 +105,9 @@ class LayoutEnginePageTests: XCTestCase {
     func test_layoutFrame_originMatchesContentFrameOriginIfTitleBorderAndShadowAreAllZero() {
         let layoutEngine = self.layoutEngine()
 
-        layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: -30, y: -20, width: 10, height: 10), minimumContentSize: .zero)
-        let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 110, height: 220), minimumContentSize: .zero)
+        let otherPage = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: -30, y: -20, width: 10, height: 10), minimumContentSize: .zero)
+        let page = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 110, height: 220), minimumContentSize: .zero)
+        layoutEngine.add([page, otherPage])
 
         XCTAssertEqual(page.layoutFrame.origin, CGPoint(x: 50, y: 40))
     }
@@ -116,8 +115,9 @@ class LayoutEnginePageTests: XCTestCase {
     func test_layoutFrame_get_sizeMatchesContentFrameSizeIfTitleBorderAndShadowAreAllZero() {
         let layoutEngine = self.layoutEngine()
 
-        layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: -30, y: -20, width: 10, height: 10), minimumContentSize: .zero)
-        let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 110, height: 220), minimumContentSize: .zero)
+        let otherPage = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: -30, y: -20, width: 10, height: 10), minimumContentSize: .zero)
+        let page = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 110, height: 220), minimumContentSize: .zero)
+        layoutEngine.add([page, otherPage])
 
         XCTAssertEqual(page.layoutFrame.size, CGSize(width: 110, height: 220))
     }
@@ -131,16 +131,18 @@ class LayoutEnginePageTests: XCTestCase {
                                              contentBorder: 20)
 
         //Add page to change the offset
-        layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: -30, y: -20, width: 10, height: 10), minimumContentSize: .zero)
-        let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 110, height: 220), minimumContentSize: .zero)
+        let otherPage = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: -30, y: -20, width: 10, height: 10), minimumContentSize: .zero)
+        let page = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 110, height: 220), minimumContentSize: .zero)
+        layoutEngine.add([page, otherPage])
 
         XCTAssertEqual(page.layoutFrame, CGRect(x: 50, y: 40, width: 127, height: 240))
     }
 
     func test_layoutFrame_set_convertsOriginToPageSpaceBeforeUpdatingContentFrameIfTitleBorderAndShadowAreZero() {
         let layoutEngine = self.layoutEngine()
-        layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: -30, y: -20, width: 10, height: 10), minimumContentSize: .zero)
-        let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 110, height: 220), minimumContentSize: .zero)
+        let otherPage = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: -30, y: -20, width: 10, height: 10), minimumContentSize: .zero)
+        let page = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 110, height: 220), minimumContentSize: .zero)
+        layoutEngine.add([page, otherPage])
 
         page.layoutFrame = CGRect(x: 60, y: 60, width: 130, height: 240)
 
@@ -149,8 +151,9 @@ class LayoutEnginePageTests: XCTestCase {
 
     func test_layoutFrame_set_updatesContentFrameWithSuppliedSizeIfTitleBorderAndShadowAreZero() {
         let layoutEngine = self.layoutEngine()
-        layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: -30, y: -20, width: 10, height: 10), minimumContentSize: .zero)
-        let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 110, height: 220), minimumContentSize: .zero)
+        let otherPage = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: -30, y: -20, width: 10, height: 10), minimumContentSize: .zero)
+        let page = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 110, height: 220), minimumContentSize: .zero)
+        layoutEngine.add([page, otherPage])
 
         page.layoutFrame = CGRect(x: 60, y: 60, width: 130, height: 240)
 
@@ -164,8 +167,9 @@ class LayoutEnginePageTests: XCTestCase {
                                              pageEdgeResizeHandleSize: 3,
                                              pageCornerResizeHandleSize: 5,
                                              contentBorder: 20)
-        layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: -30, y: -20, width: 10, height: 10), minimumContentSize: .zero)
-        let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 110, height: 220), minimumContentSize: .zero)
+        let otherPage = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: -30, y: -20, width: 10, height: 10), minimumContentSize: .zero)
+        let page = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 110, height: 220), minimumContentSize: .zero)
+        layoutEngine.add([page, otherPage])
 
         page.layoutFrame = CGRect(x: 60, y: 60, width: 130, height: 240)
 
@@ -182,8 +186,9 @@ class LayoutEnginePageTests: XCTestCase {
                                              pageCornerResizeHandleSize: 5,
                                              contentBorder: 20)
 
-        layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: -30, y: -20, width: 10, height: 10), minimumContentSize: .zero)
-        let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 220, height: 110), minimumContentSize: .zero)
+        let otherPage = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: -30, y: -20, width: 10, height: 10), minimumContentSize: .zero)
+        let page = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 220, height: 110), minimumContentSize: .zero)
+        layoutEngine.add([page, otherPage])
 
         XCTAssertEqual(page.layoutFrameInPageSpace, CGRect(origin: CGPoint(x: -17, y: -18), size: page.layoutFrame.size))
     }
@@ -197,7 +202,8 @@ class LayoutEnginePageTests: XCTestCase {
                                              pageCornerResizeHandleSize: 5,
                                              contentBorder: 20)
 
-        let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 110, height: 220), minimumContentSize: .zero)
+        let page = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 110, height: 220), minimumContentSize: .zero)
+        layoutEngine.add([page])
 
         XCTAssertEqual(page.visualPageFrame, CGRect(origin: .zero, size: page.layoutFrame.size))
     }
@@ -210,7 +216,9 @@ class LayoutEnginePageTests: XCTestCase {
                                              pageCornerResizeHandleSize: 5,
                                              contentBorder: 20)
 
-        let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 110, height: 220), minimumContentSize: .zero)
+        let page = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 110, height: 220), minimumContentSize: .zero)
+
+        layoutEngine.add([page])
 
         XCTAssertEqual(page.visualPageFrame, CGRect(x: 1, y: 2, width: page.layoutFrame.width - 4, height: page.layoutFrame.height - 6))
     }
@@ -223,7 +231,8 @@ class LayoutEnginePageTests: XCTestCase {
                                              pageCornerResizeHandleSize: 5,
                                              contentBorder: 20)
 
-        let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 110, height: 220), minimumContentSize: .zero)
+        let page = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 110, height: 220), minimumContentSize: .zero)
+        layoutEngine.add([page])
 
         var expectedFrame = page.visualPageFrame
         expectedFrame.size.height = 42
@@ -238,7 +247,8 @@ class LayoutEnginePageTests: XCTestCase {
                                              pageCornerResizeHandleSize: 5,
                                              contentBorder: 20)
 
-        let page = layoutEngine.addPage(withID: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 110, height: 220), minimumContentSize: .zero)
+        let page = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 110, height: 220), minimumContentSize: .zero)
+        layoutEngine.add([page])
 
         XCTAssertEqual(page.contentContainerFrame, CGRect(x: 6, y: 48, width: 110, height: 220))
     }
@@ -252,9 +262,8 @@ class LayoutEnginePageTests: XCTestCase {
 //                                             pageResizeHandleOffset: 0,
                                              contentBorder: 20)
 
-        let page = layoutEngine.addPage(withID: UUID(),
-                                        contentFrame: CGRect(x: 20, y: 40, width: 30, height: 20),
-                                        minimumContentSize: .zero)
+        let page = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 40, width: 30, height: 20), minimumContentSize: .zero)
+        layoutEngine.add([page])
         try block(page)
     }
 
@@ -418,171 +427,190 @@ class LayoutEnginePageTests: XCTestCase {
     //MARK: - addChild(_:)
     func test_addChild_setsParentOfSuppliedChildToReceiver() {
         let layoutEngine = self.layoutEngine()
-        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 100, height: 200), minimumContentSize: .zero, layoutEngine: layoutEngine)
-        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 30, width: 50, height: 60), minimumContentSize: .zero, layoutEngine: layoutEngine)
+        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 100, height: 200), minimumContentSize: .zero)
+        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 30, width: 50, height: 60), minimumContentSize: .zero)
         root.addChild(child)
+        layoutEngine.add([root, child])
 
         XCTAssertEqual(child.parent, root)
     }
 
     func test_addChild_assignsChildLeftDirectionIfCenterInsideLeftOfParentRect() {
         let layoutEngine = self.layoutEngine()
-        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 30, height: 60), minimumContentSize: .zero, layoutEngine: layoutEngine)
-        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: -5, y: -5, width: 20, height: 20), minimumContentSize: .zero, layoutEngine: layoutEngine)
+        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 30, height: 60), minimumContentSize: .zero)
+        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: -5, y: -5, width: 20, height: 20), minimumContentSize: .zero)
         root.addChild(child)
+        layoutEngine.add([root, child])
 
         XCTAssertTrue(root.children(for: .left).contains(child))
     }
 
     func test_addChild_assignsChildRightDirectionifCenterInsideRightOfParentRect() {
         let layoutEngine = self.layoutEngine()
-        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 30, height: 60), minimumContentSize: .zero, layoutEngine: layoutEngine)
-        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 40, width: 15, height: 15), minimumContentSize: .zero, layoutEngine: layoutEngine)
+        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 30, height: 60), minimumContentSize: .zero)
+        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 40, width: 15, height: 15), minimumContentSize: .zero)
         root.addChild(child)
+        layoutEngine.add([root, child])
 
         XCTAssertTrue(root.children(for: .right).contains(child))
     }
 
     func test_addChild_assignsChildLeftDirectionIfCenterWithinTopAndBottomOfParentAndToLeft() {
         let layoutEngine = self.layoutEngine()
-        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 30, height: 60), minimumContentSize: .zero, layoutEngine: layoutEngine)
-        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: -40, y: -10, width: 20, height: 30), minimumContentSize: .zero, layoutEngine: layoutEngine)
+        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 30, height: 60), minimumContentSize: .zero)
+        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: -40, y: -10, width: 20, height: 30), minimumContentSize: .zero)
         root.addChild(child)
+        layoutEngine.add([root, child])
 
         XCTAssertTrue(root.children(for: .left).contains(child))
     }
 
     func test_addChild_assignsChildRightDirectionIfCenterWithinTopAndBottomOfParentAndToRight() {
         let layoutEngine = self.layoutEngine()
-        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 30, height: 60), minimumContentSize: .zero, layoutEngine: layoutEngine)
-        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 40, y: 50, width: 10, height: 20), minimumContentSize: .zero, layoutEngine: layoutEngine)
+        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 30, height: 60), minimumContentSize: .zero)
+        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 40, y: 50, width: 10, height: 20), minimumContentSize: .zero)
         root.addChild(child)
+        layoutEngine.add([root, child])
 
         XCTAssertTrue(root.children(for: .right).contains(child))
     }
 
     func test_addChild_assignsChildTopDirectionIfCenterWithinLeftAndRightOfParentAndToTop() {
         let layoutEngine = self.layoutEngine()
-        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 30, height: 60), minimumContentSize: .zero, layoutEngine: layoutEngine)
-        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: -5, y: -30, width: 15, height: 20), minimumContentSize: .zero, layoutEngine: layoutEngine)
+        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 30, height: 60), minimumContentSize: .zero)
+        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: -5, y: -30, width: 15, height: 20), minimumContentSize: .zero)
         root.addChild(child)
+        layoutEngine.add([root, child])
 
         XCTAssertTrue(root.children(for: .top).contains(child))
     }
 
     func test_addChild_assignsChildBottomDirectionifCenterWithinLeftAndRightOfParentAndToBottom() {
         let layoutEngine = self.layoutEngine()
-        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 30, height: 60), minimumContentSize: .zero, layoutEngine: layoutEngine)
-        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 70, width: 15, height: 30), minimumContentSize: .zero, layoutEngine: layoutEngine)
+        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 30, height: 60), minimumContentSize: .zero)
+        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 70, width: 15, height: 30), minimumContentSize: .zero)
         root.addChild(child)
+        layoutEngine.add([root, child])
 
         XCTAssertTrue(root.children(for: .bottom).contains(child))
     }
 
     func test_addChild_assignsChildLeftDirectionIfCenterIsToTopLeftButBelowDiagonal() {
         let layoutEngine = self.layoutEngine()
-        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 30, height: 60), minimumContentSize: .zero, layoutEngine: layoutEngine)
-        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: -7, y: -6, width: 10, height: 10), minimumContentSize: .zero, layoutEngine: layoutEngine)
+        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 30, height: 60), minimumContentSize: .zero)
+        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: -7, y: -6, width: 10, height: 10), minimumContentSize: .zero)
         root.addChild(child)
+        layoutEngine.add([root, child])
 
         XCTAssertTrue(root.children(for: .left).contains(child))
     }
 
     func test_addChild_assignsChildLeftDirectionIfCenterIsToTopLeftAndOnDiagonal() {
         let layoutEngine = self.layoutEngine()
-        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 30, height: 60), minimumContentSize: .zero, layoutEngine: layoutEngine)
-        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: -7, y: -7, width: 10, height: 10), minimumContentSize: .zero, layoutEngine: layoutEngine)
+        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 30, height: 60), minimumContentSize: .zero)
+        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: -7, y: -7, width: 10, height: 10), minimumContentSize: .zero)
         root.addChild(child)
+        layoutEngine.add([root, child])
 
         XCTAssertTrue(root.children(for: .left).contains(child))
     }
 
     func test_addChild_assignsChildTopDirectionIfCenterIsToTopLeftAndAboveDiagonal() {
         let layoutEngine = self.layoutEngine()
-        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 30, height: 60), minimumContentSize: .zero, layoutEngine: layoutEngine)
-        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: -7, y: -8, width: 10, height: 10), minimumContentSize: .zero, layoutEngine: layoutEngine)
+        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 30, height: 60), minimumContentSize: .zero)
+        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: -7, y: -8, width: 10, height: 10), minimumContentSize: .zero)
         root.addChild(child)
+        layoutEngine.add([root, child])
 
         XCTAssertTrue(root.children(for: .top).contains(child))
     }
 
     func test_addChild_assignsChildTopDirectionIfCenterIsToTopRightAndAboveDiagonal() {
         let layoutEngine = self.layoutEngine()
-        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 30, height: 60), minimumContentSize: .zero, layoutEngine: layoutEngine)
-        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 27, y: -8, width: 10, height: 10), minimumContentSize: .zero, layoutEngine: layoutEngine)
+        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 30, height: 60), minimumContentSize: .zero)
+        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 27, y: -8, width: 10, height: 10), minimumContentSize: .zero)
         root.addChild(child)
+        layoutEngine.add([root, child])
 
         XCTAssertTrue(root.children(for: .top).contains(child))
     }
 
     func test_addChild_assignsChildTopDirectionIfCenterIsToTopRightAndOnDiagonal() {
         let layoutEngine = self.layoutEngine()
-        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 30, height: 60), minimumContentSize: .zero, layoutEngine: layoutEngine)
-        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 27, y: -7, width: 10, height: 10), minimumContentSize: .zero, layoutEngine: layoutEngine)
+        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 30, height: 60), minimumContentSize: .zero)
+        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 27, y: -7, width: 10, height: 10), minimumContentSize: .zero)
         root.addChild(child)
+        layoutEngine.add([root, child])
 
         XCTAssertTrue(root.children(for: .top).contains(child))
     }
 
     func test_addChild_assignsChildRightDirectionIfCenterIsToTopRightAndBelowDiagonal() {
         let layoutEngine = self.layoutEngine()
-        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 30, height: 60), minimumContentSize: .zero, layoutEngine: layoutEngine)
-        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 27, y: -6, width: 10, height: 10), minimumContentSize: .zero, layoutEngine: layoutEngine)
+        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 30, height: 60), minimumContentSize: .zero)
+        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 27, y: -6, width: 10, height: 10), minimumContentSize: .zero)
         root.addChild(child)
+        layoutEngine.add([root, child])
 
         XCTAssertTrue(root.children(for: .right).contains(child))
     }
 
     func test_addChild_assignsChildRightDirectionIfCenterIsToBottomRightAndAboveDiagonal() {
         let layoutEngine = self.layoutEngine()
-        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 30, height: 60), minimumContentSize: .zero, layoutEngine: layoutEngine)
-        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 27, y: 56, width: 10, height: 10), minimumContentSize: .zero, layoutEngine: layoutEngine)
+        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 30, height: 60), minimumContentSize: .zero)
+        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 27, y: 56, width: 10, height: 10), minimumContentSize: .zero)
         root.addChild(child)
+        layoutEngine.add([root, child])
 
         XCTAssertTrue(root.children(for: .right).contains(child))
     }
 
     func test_addChild_assignsChildRightDirctionIfCenterIsToBottomRightAndOnDiagonal() {
         let layoutEngine = self.layoutEngine()
-        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 30, height: 60), minimumContentSize: .zero, layoutEngine: layoutEngine)
-        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 27, y: 57, width: 10, height: 10), minimumContentSize: .zero, layoutEngine: layoutEngine)
+        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 30, height: 60), minimumContentSize: .zero)
+        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 27, y: 57, width: 10, height: 10), minimumContentSize: .zero)
         root.addChild(child)
+        layoutEngine.add([root, child])
 
         XCTAssertTrue(root.children(for: .right).contains(child))
     }
 
     func test_addChild_assignsChildBottomDirectionIfCenterIsToBottomRightAndBelowDiagonal() {
         let layoutEngine = self.layoutEngine()
-        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 30, height: 60), minimumContentSize: .zero, layoutEngine: layoutEngine)
-        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 27, y: 58, width: 10, height: 10), minimumContentSize: .zero, layoutEngine: layoutEngine)
+        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 30, height: 60), minimumContentSize: .zero)
+        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 27, y: 58, width: 10, height: 10), minimumContentSize: .zero)
         root.addChild(child)
+        layoutEngine.add([root, child])
 
         XCTAssertTrue(root.children(for: .bottom).contains(child))
     }
 
     func test_addChild_assignsChildBottomDirectionIfCenterIsToBottomLeftAndBelowDiagonal() {
         let layoutEngine = self.layoutEngine()
-        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 30, height: 60), minimumContentSize: .zero, layoutEngine: layoutEngine)
-        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: -7, y: 58, width: 10, height: 10), minimumContentSize: .zero, layoutEngine: layoutEngine)
+        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 30, height: 60), minimumContentSize: .zero)
+        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: -7, y: 58, width: 10, height: 10), minimumContentSize: .zero)
         root.addChild(child)
+        layoutEngine.add([root, child])
 
         XCTAssertTrue(root.children(for: .bottom).contains(child))
     }
 
     func test_addChild_assignChildBottomDirectionIfCenterIsToBottomLeftAndOnDiagonal() {
         let layoutEngine = self.layoutEngine()
-        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 30, height: 60), minimumContentSize: .zero, layoutEngine: layoutEngine)
-        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: -7, y: 57, width: 10, height: 10), minimumContentSize: .zero, layoutEngine: layoutEngine)
+        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 30, height: 60), minimumContentSize: .zero)
+        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: -7, y: 57, width: 10, height: 10), minimumContentSize: .zero)
         root.addChild(child)
+        layoutEngine.add([root, child])
 
         XCTAssertTrue(root.children(for: .bottom).contains(child))
     }
 
     func test_addChild_assignChildLeftDirectionIfCenterIsToBottomLeftAndAboveDiagonal() {
         let layoutEngine = self.layoutEngine()
-        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 30, height: 60), minimumContentSize: .zero, layoutEngine: layoutEngine)
-        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: -7, y: 56, width: 10, height: 10), minimumContentSize: .zero, layoutEngine: layoutEngine)
+        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 30, height: 60), minimumContentSize: .zero)
+        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: -7, y: 56, width: 10, height: 10), minimumContentSize: .zero)
         root.addChild(child)
+        layoutEngine.add([root, child])
 
         XCTAssertTrue(root.children(for: .left).contains(child))
     }
@@ -591,22 +619,29 @@ class LayoutEnginePageTests: XCTestCase {
     //MARK: - .allDescendents
     func test_allDesecendents_returnsEmptyArrayIfSuppliedPageHasNoChildren() {
         let layoutEngine = self.layoutEngine()
-        let page1 = layoutEngine.addPage(withID: UUID(), contentFrame: .zero)
-        let page2 = layoutEngine.addPage(withID: UUID(), contentFrame: .zero)
+        let page1 = LayoutEnginePage(id: UUID(), contentFrame: .zero)
+        let page2 = LayoutEnginePage(id: UUID(), contentFrame: .zero)
         //Add child to other page just to be sure
-        layoutEngine.addPage(withID: UUID(), contentFrame: .zero, minimumContentSize: .zero, parentID: page1.id)
+        let otherPage = LayoutEnginePage(id: UUID(), contentFrame: .zero)
+
+        layoutEngine.add([page1, page2, otherPage])
         XCTAssertEqual(page2.allDescendants, [])
     }
 
     func test_allDesecendents_returnsPagesThatHaveSuppliedPageAsParentID() {
         let layoutEngine = self.layoutEngine()
-        let page1 = layoutEngine.addPage(withID: UUID(), contentFrame: .zero)
-        let page2 = layoutEngine.addPage(withID: UUID(), contentFrame: .zero)
+        let page1 = LayoutEnginePage(id: UUID(), contentFrame: .zero)
+        let page2 = LayoutEnginePage(id: UUID(), contentFrame: .zero)
         //Add child to other page just to be sure
-        layoutEngine.addPage(withID: UUID(), contentFrame: .zero, minimumContentSize: .zero, parentID: page2.id)
+        let otherPage = LayoutEnginePage(id: UUID(), contentFrame: .zero)
+        page2.addChild(otherPage)
 
-        let child1 = layoutEngine.addPage(withID: UUID(), contentFrame: .zero, minimumContentSize: .zero, parentID: page1.id)
-        let child2 = layoutEngine.addPage(withID: UUID(), contentFrame: .zero, minimumContentSize: .zero, parentID: page1.id)
+        let child1 = LayoutEnginePage(id: UUID(), contentFrame: .zero)
+        let child2 = LayoutEnginePage(id: UUID(), contentFrame: .zero)
+        page1.addChild(child1)
+        page1.addChild(child2)
+
+        layoutEngine.add([page1, page2, otherPage, child1, child2])
 
         let children = page1.allDescendants
         XCTAssertEqual(children.count, 2)
@@ -616,19 +651,29 @@ class LayoutEnginePageTests: XCTestCase {
 
     func test_allDesecendents_returnsAllChildrenGrandChildrenEtcOfSuppliedPage() {
         let layoutEngine = self.layoutEngine()
-        _ = layoutEngine.addPage(withID: UUID(), contentFrame: .zero)
-        let page2 = layoutEngine.addPage(withID: UUID(), contentFrame: .zero)
-        let page3 = layoutEngine.addPage(withID: UUID(), contentFrame: .zero)
+        let page1 = LayoutEnginePage(id: UUID(), contentFrame: .zero)
+        let page2 = LayoutEnginePage(id: UUID(), contentFrame: .zero)
+        let page3 = LayoutEnginePage(id: UUID(), contentFrame: .zero)
         //Add child to other page just to be sure
-        layoutEngine.addPage(withID: UUID(), contentFrame: .zero, minimumContentSize: .zero, parentID: page2.id)
+        let otherPage = LayoutEnginePage(id: UUID(), contentFrame: .zero)
+        page2.addChild(otherPage)
 
-        let child1 = layoutEngine.addPage(withID: UUID(), contentFrame: .zero, minimumContentSize: .zero, parentID: page3.id)
-        let child2 = layoutEngine.addPage(withID: UUID(), contentFrame: .zero, minimumContentSize: .zero, parentID: page3.id)
-        let grandchild1 = layoutEngine.addPage(withID: UUID(), contentFrame: .zero, minimumContentSize: .zero, parentID: child1.id)
-        let grandchild2 = layoutEngine.addPage(withID: UUID(), contentFrame: .zero, minimumContentSize: .zero, parentID: child2.id)
-        let grandchild3 = layoutEngine.addPage(withID: UUID(), contentFrame: .zero, minimumContentSize: .zero, parentID: child2.id)
-        let greatGrandchild1 = layoutEngine.addPage(withID: UUID(), contentFrame: .zero, minimumContentSize: .zero, parentID: grandchild1.id)
-        let greatGrandchild2 = layoutEngine.addPage(withID: UUID(), contentFrame: .zero, minimumContentSize: .zero, parentID: grandchild1.id)
+        let child1 = LayoutEnginePage(id: UUID(), contentFrame: .zero)
+        page3.addChild(child1)
+        let child2 = LayoutEnginePage(id: UUID(), contentFrame: .zero)
+        page3.addChild(child2)
+        let grandchild1 = LayoutEnginePage(id: UUID(), contentFrame: .zero)
+        child1.addChild(grandchild1)
+        let grandchild2 = LayoutEnginePage(id: UUID(), contentFrame: .zero)
+        child2.addChild(grandchild2)
+        let grandchild3 = LayoutEnginePage(id: UUID(), contentFrame: .zero)
+        child2.addChild(grandchild3)
+        let greatGrandchild1 = LayoutEnginePage(id: UUID(), contentFrame: .zero)
+        grandchild1.addChild(greatGrandchild1)
+        let greatGrandchild2 = LayoutEnginePage(id: UUID(), contentFrame: .zero)
+        grandchild1.addChild(greatGrandchild2)
+
+        layoutEngine.add([page1, page2, page3, otherPage, child1, child2, grandchild1, grandchild2, grandchild3, greatGrandchild1, greatGrandchild2])
 
         let children = page3.allDescendants
         XCTAssertEqual(children.count, 7)

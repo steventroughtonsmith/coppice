@@ -27,7 +27,11 @@ class LayoutEnginePage: Equatable {
         return (self.layoutEngine?.enabledPage == self)
     }
 
-    weak var layoutEngine: CanvasLayoutEngine?
+    weak var layoutEngine: CanvasLayoutEngine? {
+        didSet {
+            self.recalculateEdgeFromParent()
+        }
+    }
     init(id: UUID,
          contentFrame: CGRect,
          minimumContentSize: CGSize = GlobalConstants.minimumPageSize) {
@@ -44,12 +48,18 @@ class LayoutEnginePage: Equatable {
     var contentFrame: CGRect {
         didSet {
             self.validateSize()
+            self.recalculateEdgeFromParent()
+            self.children.forEach { $0.recalculateEdgeFromParent() }
         }
     }
 
 
     //MARK: - Relationships
-    private(set) weak var parent: LayoutEnginePage?
+    private(set) weak var parent: LayoutEnginePage? {
+        didSet {
+            self.recalculateEdgeFromParent()
+        }
+    }
     private(set) var edgeFromParent: Edge?
 
     private(set) var children = [LayoutEnginePage]()
@@ -70,57 +80,62 @@ class LayoutEnginePage: Equatable {
     func addChild(_ child: LayoutEnginePage) {
         self.children.append(child)
         child.parent = self
-        let childFrame = child.layoutFrame
-        let selfFrame = self.layoutFrame
+    }
 
-        let midPoint = childFrame.midPoint
+    private func recalculateEdgeFromParent() {
+        guard let parentFrame = self.parent?.layoutFrame else {
+            self.edgeFromParent = nil
+            return
+        }
+
+        let midPoint = self.layoutFrame.midPoint
         //Check if inside
-        guard selfFrame.contains(midPoint) == false else {
-            child.edgeFromParent = (midPoint.x < selfFrame.midX) ? .left : .right
+        guard parentFrame.contains(midPoint) == false else {
+            self.edgeFromParent = (midPoint.x < parentFrame.midX) ? .left : .right
             return
         }
 
         //Check if directly to side
-        if (midPoint.y >= selfFrame.minY) && (midPoint.y <= selfFrame.maxY) {
-            child.edgeFromParent = (midPoint.x > selfFrame.maxX) ? .right : .left
+        if (midPoint.y >= parentFrame.minY) && (midPoint.y <= parentFrame.maxY) {
+            self.edgeFromParent = (midPoint.x > parentFrame.maxX) ? .right : .left
             return
         }
 
         //Check if directly above or below
-        if (midPoint.x >= selfFrame.minX) && (midPoint.x <= selfFrame.maxX) {
-            child.edgeFromParent = (midPoint.y > selfFrame.maxY) ? .bottom : .top
+        if (midPoint.x >= parentFrame.minX) && (midPoint.x <= parentFrame.maxX) {
+            self.edgeFromParent = (midPoint.y > parentFrame.maxY) ? .bottom : .top
             return
         }
 
         //Check Top Left
-        if (midPoint.x < selfFrame.minX) && (midPoint.y < selfFrame.minY) {
+        if (midPoint.x < parentFrame.minX) && (midPoint.y < parentFrame.minY) {
             //y = x + (-p.x + p.y)
-            let expectedY = midPoint.x + (-selfFrame.minX + selfFrame.minY)
-            child.edgeFromParent = (expectedY <= midPoint.y) ? .left : .top
+            let expectedY = midPoint.x + (-parentFrame.minX + parentFrame.minY)
+            self.edgeFromParent = (expectedY <= midPoint.y) ? .left : .top
             return
         }
 
         //Check Top Right
-        if (midPoint.x > selfFrame.minX) && (midPoint.y < selfFrame.minY) {
+        if (midPoint.x > parentFrame.minX) && (midPoint.y < parentFrame.minY) {
             //y = -x + (p.x + p.y)
-            let expectedY = -midPoint.x + (selfFrame.maxX + selfFrame.minY)
-            child.edgeFromParent = (expectedY >= midPoint.y) ? .top : .right
+            let expectedY = -midPoint.x + (parentFrame.maxX + parentFrame.minY)
+            self.edgeFromParent = (expectedY >= midPoint.y) ? .top : .right
             return
         }
 
         //Check Bottom Right
-        if (midPoint.x > selfFrame.minX) && (midPoint.y > selfFrame.maxY) {
+        if (midPoint.x > parentFrame.minX) && (midPoint.y > parentFrame.maxY) {
             //y = x + (-p.x + p.y)
-            let expectedY = midPoint.x + (-selfFrame.maxX + selfFrame.maxY)
-            child.edgeFromParent = (expectedY >= midPoint.y) ? .right : .bottom
+            let expectedY = midPoint.x + (-parentFrame.maxX + parentFrame.maxY)
+            self.edgeFromParent = (expectedY >= midPoint.y) ? .right : .bottom
             return
         }
 
         //Check Bottom Left
-        if (midPoint.x < selfFrame.minX) && (midPoint.y > selfFrame.minY) {
+        if (midPoint.x < parentFrame.minX) && (midPoint.y > parentFrame.minY) {
             //y = x + (-p.x + p.y)
-            let expectedY = -midPoint.x + (selfFrame.minX + selfFrame.maxY)
-            child.edgeFromParent = (expectedY <= midPoint.y) ? .bottom : .left
+            let expectedY = -midPoint.x + (parentFrame.minX + parentFrame.maxY)
+            self.edgeFromParent = (expectedY <= midPoint.y) ? .bottom : .left
             return
         }
     }
