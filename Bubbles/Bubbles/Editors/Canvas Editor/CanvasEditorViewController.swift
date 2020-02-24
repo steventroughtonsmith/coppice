@@ -231,7 +231,7 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation {
 
     private func updateArrows() {
         var existingViews = self.arrowViews
-        var newArrows = [Arrow]()
+        var newArrows = [LayoutEngineArrow]()
         for arrow in self.layoutEngine.arrows {
             let arrowView = self.arrowView(for: arrow)
             arrowView.arrow = arrow
@@ -304,12 +304,13 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation {
         return self.canvasView.arrowLayer.subviews.compactMap { $0 as? PageArrowView }
     }
 
-    private func arrowView(for arrow: Arrow) -> PageArrowView {
+    private func arrowView(for arrow: LayoutEngineArrow) -> PageArrowView {
         if let arrowView = self.arrowViews.first(where: { $0.arrow?.betweenSamePages(as: arrow) ?? false }) {
             return arrowView
         }
 
-        let newArrowView = PageArrowView(lineWidth: self.layoutEngine.configuration.arrowWidth)
+        let newArrowView = PageArrowView(config: self.layoutEngine.configuration.arrow)
+        newArrowView.lineColour = NSColor(named: "ArrowColour") ?? .black
         self.canvasView.arrowLayer.addSubview(newArrowView)
         return newArrowView
     }

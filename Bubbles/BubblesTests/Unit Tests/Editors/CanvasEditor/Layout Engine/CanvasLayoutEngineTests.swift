@@ -43,7 +43,7 @@ class CanvasLayoutEngineTests: XCTestCase {
                                                                                 edgeResizeHandleSize: 1,
                                                                                 cornerResizeHandleSize: 1),
                                                                     contentBorder: 20,
-                                                                    arrowWidth: 5))
+                                                                    arrowHeadSize: 5))
 
         self.page1 = LayoutEnginePage(id: UUID(),
                                       contentFrame: CGRect(x: 40, y: 40, width: 10, height: 10),
@@ -156,7 +156,7 @@ class CanvasLayoutEngineTests: XCTestCase {
                                                                               edgeResizeHandleSize: 1,
                                                                               cornerResizeHandleSize: 1),
                                                                   contentBorder: 20,
-                                                                  arrowWidth: 5))
+                                                                  arrowHeadSize: 5))
 
         let expectedPoint = basePoint
         XCTAssertEqual(emptyEngine.convertPointToCanvasSpace(basePoint), expectedPoint)
@@ -178,7 +178,7 @@ class CanvasLayoutEngineTests: XCTestCase {
                                                                               edgeResizeHandleSize: 1,
                                                                               cornerResizeHandleSize: 1),
                                                                   contentBorder: 20,
-                                                                  arrowWidth: 5))
+                                                                  arrowHeadSize: 5))
         let expectedPoint = basePoint
         XCTAssertEqual(emptyEngine.convertPointToPageSpace(basePoint), expectedPoint)
     }

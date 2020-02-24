@@ -38,7 +38,7 @@ class CanvasView: NSView {
     }
 
     private func setupLayers() {
-        let layers = [self.pageLayer, self.selectionLayer, self.arrowLayer, ]
+        let layers = [self.arrowLayer, self.pageLayer, self.selectionLayer]
         for layer in layers {
             layer.frame = self.bounds
             layer.autoresizingMask = [.height,  .width]

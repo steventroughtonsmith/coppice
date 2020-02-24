@@ -695,13 +695,13 @@ class LayoutEnginePageTests: XCTestCase {
                       pageEdgeResizeHandleSize: CGFloat = 0,
                       pageCornerResizeHandleSize: CGFloat = 0,
                       contentBorder: CGFloat = 20,
-                      arrowWidth: CGFloat = 5) -> CanvasLayoutEngine {
+                      arrowHeadSize: CGFloat = 5) -> CanvasLayoutEngine {
         return CanvasLayoutEngine(configuration: .init(page: .init(titleHeight: pageTitleHeight,
                                                                    borderSize: pageBorderSize,
                                                                    shadowOffset: pageShadowOffset,
                                                                    edgeResizeHandleSize: pageEdgeResizeHandleSize,
                                                                    cornerResizeHandleSize: pageCornerResizeHandleSize),
                                                        contentBorder: contentBorder,
-                                                       arrowWidth: arrowWidth))
+                                                       arrowHeadSize: arrowHeadSize))
     }
 }

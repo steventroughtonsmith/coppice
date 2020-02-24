@@ -11,7 +11,6 @@
 		990825D922EDF2FE00273A1D /* ModelCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990825D822EDF2FE00273A1D /* ModelCollection.swift */; };
 		990B6A3722E5F84400523C06 /* CanvasPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990B6A3622E5F84400523C06 /* CanvasPage.swift */; };
 		990B6A3922EB482D00523C06 /* ModelObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990B6A3822EB482D00523C06 /* ModelObject.swift */; };
-		990D243D23560169001B1FD9 /* LayoutEngineArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990D243C23560169001B1FD9 /* LayoutEngineArrow.swift */; };
 		990D243F23560688001B1FD9 /* CanvasLayoutEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03F0023293DAD00EB7516 /* CanvasLayoutEngineTests.swift */; };
 		990D2441235DEFE2001B1FD9 /* PageArrowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990D2440235DEFE2001B1FD9 /* PageArrowView.swift */; };
 		9919B93123D09FBB00C7A44D /* TextColourPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9919B93023D09FBB00C7A44D /* TextColourPicker.swift */; };
@@ -103,6 +102,7 @@
 		99868F4723995B4F009AC0F7 /* TextLinkFinderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99868F4623995B4F009AC0F7 /* TextLinkFinderTests.swift */; };
 		998F178B23E46B4900B3437A /* ColourGridImageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998F178A23E46B4900B3437A /* ColourGridImageGenerator.swift */; };
 		998F178F23EB229200B3437A /* ModelObjects+Pasteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998F178E23EB229200B3437A /* ModelObjects+Pasteboard.swift */; };
+		999BB0B323FEB73E00FAF3D2 /* LayoutEngineArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999BB0B223FEB73E00FAF3D2 /* LayoutEngineArrow.swift */; };
 		999DAACA23CCC5D80013EC36 /* SidebarHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999DAAC923CCC5D80013EC36 /* SidebarHeaderView.swift */; };
 		999DAACC23CDFE6B0013EC36 /* PagesSidebarDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999DAACB23CDFE6B0013EC36 /* PagesSidebarDataSource.swift */; };
 		999DAACE23CF484A0013EC36 /* ModelSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999DAACD23CF484A0013EC36 /* ModelSettings.swift */; };
@@ -216,7 +216,6 @@
 		990825D822EDF2FE00273A1D /* ModelCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelCollection.swift; sourceTree = "<group>"; };
 		990B6A3622E5F84400523C06 /* CanvasPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPage.swift; sourceTree = "<group>"; };
 		990B6A3822EB482D00523C06 /* ModelObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelObject.swift; sourceTree = "<group>"; };
-		990D243C23560169001B1FD9 /* LayoutEngineArrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutEngineArrow.swift; sourceTree = "<group>"; };
 		990D2440235DEFE2001B1FD9 /* PageArrowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageArrowView.swift; sourceTree = "<group>"; };
 		9919B93023D09FBB00C7A44D /* TextColourPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextColourPicker.swift; sourceTree = "<group>"; };
 		9923B06A22F45F7E0035D8C6 /* TestObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestObjects.swift; sourceTree = "<group>"; };
@@ -305,6 +304,7 @@
 		99868F4623995B4F009AC0F7 /* TextLinkFinderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLinkFinderTests.swift; sourceTree = "<group>"; };
 		998F178A23E46B4900B3437A /* ColourGridImageGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColourGridImageGenerator.swift; sourceTree = "<group>"; };
 		998F178E23EB229200B3437A /* ModelObjects+Pasteboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelObjects+Pasteboard.swift"; sourceTree = "<group>"; };
+		999BB0B223FEB73E00FAF3D2 /* LayoutEngineArrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutEngineArrow.swift; sourceTree = "<group>"; };
 		999DAAC923CCC5D80013EC36 /* SidebarHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarHeaderView.swift; sourceTree = "<group>"; };
 		999DAACB23CDFE6B0013EC36 /* PagesSidebarDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagesSidebarDataSource.swift; sourceTree = "<group>"; };
 		999DAACD23CF484A0013EC36 /* ModelSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelSettings.swift; sourceTree = "<group>"; };
@@ -789,7 +789,7 @@
 				9985F4DC23F44EE300B96DC7 /* CanvasLayoutEngine+Configuration.swift */,
 				99C4AD8823F6F13B003B9A38 /* ArrowLayoutEngine.swift */,
 				99C03EF323293D8A00EB7516 /* LayoutEnginePage.swift */,
-				990D243C23560169001B1FD9 /* LayoutEngineArrow.swift */,
+				999BB0B223FEB73E00FAF3D2 /* LayoutEngineArrow.swift */,
 				99C03EF523293D8A00EB7516 /* Event Contexts */,
 			);
 			path = "Layout Engine";
@@ -1247,7 +1247,6 @@
 				99DEF28A22F32D350020A7CE /* DebugCanvasViewModelTypes.swift in Sources */,
 				99868F352396AD73009AC0F7 /* ImageEditorInspectorViewController.swift in Sources */,
 				99D8E37A237EDB890098CF3B /* PageInspectorViewModel.swift in Sources */,
-				990D243D23560169001B1FD9 /* LayoutEngineArrow.swift in Sources */,
 				99F084F123A280A5008D2ACA /* ModelRelationship.swift in Sources */,
 				99C865202302E256004C7B89 /* ImageEditorViewController.swift in Sources */,
 				99C8650923016EB2004C7B89 /* TextEditorViewModel.swift in Sources */,
@@ -1256,6 +1255,7 @@
 				9970976723AA8B5A00CD189B /* RemovePageEventContext.swift in Sources */,
 				99FFF9CC234E2F2F00EF02A0 /* FlippedView.swift in Sources */,
 				9985F4DD23F44EE300B96DC7 /* CanvasLayoutEngine+Configuration.swift in Sources */,
+				999BB0B323FEB73E00FAF3D2 /* LayoutEngineArrow.swift in Sources */,
 				9965FC43238448FF002FE10D /* TextEditorInspectorViewModel.swift in Sources */,
 				99488AF023C8C327009954AF /* CanvasPreviewView.swift in Sources */,
 				9977119A239E89B200FCC8C7 /* DocumentWindowController.swift in Sources */,

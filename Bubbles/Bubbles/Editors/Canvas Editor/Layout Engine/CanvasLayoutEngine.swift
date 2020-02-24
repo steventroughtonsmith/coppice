@@ -204,10 +204,10 @@ class CanvasLayoutEngine: NSObject {
 
 
     //MARK: - Manage Arrows
-    private(set) var arrows = [Arrow]()
+    private(set) var arrows = [LayoutEngineArrow]()
 
     func updateArrows() {
-        let engine = ArrowLayoutEngine(pages: self.pages)
+        let engine = ArrowLayoutEngine(pages: self.pages, layoutEngine: self)
         self.arrows = engine.calculateArrows()
     }
 

@@ -20,27 +20,18 @@ extension CanvasLayoutEngine {
             static let mac = Page(titleHeight: 24, borderSize: 3, shadowOffset: .init(left: 10, top: 5, right: 10, bottom: 10), edgeResizeHandleSize: 5, cornerResizeHandleSize: 8)
         }
 
+        struct Arrow {
+            let endLength: CGFloat
+            let cornerSize: CGFloat
+            let arrowHeadSize: CGFloat
+            let lineWidth: CGFloat
+
+            static let standard = Arrow(endLength: 20, cornerSize: 40, arrowHeadSize: 20, lineWidth: 3)
+        }
+
         let page: Page
-
         let contentBorder: CGFloat
-
-        //Must be odd number
-        let arrowWidth: CGFloat
-
-
-//        /// The margins from around the content to get to the layout
-//        var layoutFrameOffsetFromContent: LayoutMargins {
-//            return LayoutMargins(left: self.page.borderSize,
-//                                 top: self.page.borderSize + self.page.titleHeight,
-//                                 right: self.page.borderSize,
-//                                 bottom: self.page.borderSize)
-//        }
-//
-//        /// The margins inside the layoutFrame to get the visible frame
-//        var visibleFrameInset: LayoutMargins {
-//            return LayoutMargins(left: self.page.borderSize, top: self.page.borderSize, right: self.page.borderSize, bottom: self.page.borderSize)
-//        }
-
+        let arrow: Arrow
     }
 }
 
