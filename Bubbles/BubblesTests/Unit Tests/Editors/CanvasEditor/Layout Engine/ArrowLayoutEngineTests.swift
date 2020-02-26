@@ -449,7 +449,7 @@ class ArrowLayoutEngineTests: XCTestCase {
     func createLayoutEngine() -> CanvasLayoutEngine {
         let engine = CanvasLayoutEngine(configuration: .init(page: .init(titleHeight: 0, borderSize: 0, shadowOffset: .zero, edgeResizeHandleSize: 0, cornerResizeHandleSize: 0),
                                                              contentBorder: 0,
-                                                             arrowHeadSize: 11))
+                                                             arrow: .standard))
         return engine
     }
 

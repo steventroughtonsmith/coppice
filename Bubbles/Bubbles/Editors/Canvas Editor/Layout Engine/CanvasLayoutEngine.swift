@@ -250,9 +250,32 @@ class CanvasLayoutEngine: NSObject {
     func upEvent(at location: CGPoint, modifiers: LayoutEventModifiers = [], eventCount: Int = 1) {
         self.currentMouseEventContext?.upEvent(at: location, modifiers: modifiers, eventCount: eventCount, in: self)
         let canvasSizeContext = self.recalculateCanvasSize()
-        let fullContext = LayoutContext(selectionChanged: self.hasSelectionChanged()).merged(with: canvasSizeContext)
+        let selectionChanged = self.hasSelectionChanged()
+        let fullContext = LayoutContext(selectionChanged: selectionChanged, backgroundVisibilityChanged: selectionChanged).merged(with: canvasSizeContext)
         self.informOfLayoutChange(with: fullContext)
         self.currentMouseEventContext = nil
+    }
+
+    func moveEvent(at location: CGPoint, modifiers: LayoutEventModifiers = []) {
+        self.currentlyHoveredPage = self.page(atCanvasPoint: location)
+    }
+
+
+    //MARK: - Hovering
+    var currentlyHoveredPage: LayoutEnginePage? {
+        didSet {
+            guard oldValue != self.currentlyHoveredPage else {
+                return
+            }
+            if oldValue?.selected == true {
+                return
+            }
+
+            if self.currentlyHoveredPage?.selected == true {
+                return
+            }
+            self.informOfLayoutChange(with: LayoutContext(backgroundVisibilityChanged: true))
+        }
     }
 
 
@@ -304,7 +327,6 @@ class CanvasLayoutEngine: NSObject {
         self.informOfLayoutChange(with: self.recalculateCanvasSize())
     }
 
-
     private func informOfLayoutChange(with context: LayoutContext) {
         self.view?.layoutChanged(with: context)
     }
@@ -316,11 +338,13 @@ extension CanvasLayoutEngine {
         var sizeChanged = false
         var pageOffsetChange: CGPoint?
         var selectionChanged = false
+        var backgroundVisibilityChanged = false
 
         func merged(with context: LayoutContext) -> LayoutContext {
             return LayoutContext(sizeChanged: self.sizeChanged || context.sizeChanged,
                                  pageOffsetChange: self.pageOffsetChange ?? context.pageOffsetChange,
-                                 selectionChanged: self.selectionChanged || context.selectionChanged)
+                                 selectionChanged: self.selectionChanged || context.selectionChanged,
+                                 backgroundVisibilityChanged: self.backgroundVisibilityChanged || context.backgroundVisibilityChanged)
         }
     }
 }

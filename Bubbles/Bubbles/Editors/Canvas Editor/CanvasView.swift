@@ -54,7 +54,7 @@ class CanvasView: NSView {
         self.pageLayer.addSubview(view)
     }
 
-    private func pageView(at point: CGPoint) -> CanvasElementView? {
+    func pageView(at point: CGPoint) -> CanvasElementView? {
         for subview in self.pageLayer.subviews.reversed() {
             if let pageView = subview as? CanvasElementView,
                 pageView.frame.contains(point)
@@ -111,7 +111,7 @@ class CanvasView: NSView {
         let point = self.convert(event.locationInWindow, from: nil)
 
         self.updateCursor(forPageAt: point)
-        self.updateHoverState(for: point)
+        self.layoutEngine?.moveEvent(at: point, modifiers: event.layoutEventModifiers)
     }
 
     override func keyDown(with event: NSEvent) {
@@ -330,23 +330,6 @@ class CanvasView: NSView {
         }
         let pagePoint = self.convert(point, to: pageView)
         pageView.cursor(for: pagePoint)?.set()
-    }
-
-
-    //MARK: - Hover State
-    private var hoveredPage: CanvasElementView?
-    private func updateHoverState(for point: CGPoint) {
-        guard let pageView = self.pageView(at: point) else {
-            self.hoveredPage?.isMouseInside = false
-            self.hoveredPage = nil
-            return
-        }
-
-        if self.hoveredPage != pageView {
-            self.hoveredPage?.isMouseInside = false
-            self.hoveredPage = pageView
-        }
-        pageView.isMouseInside = true
     }
 
 

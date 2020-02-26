@@ -36,6 +36,19 @@ class LayoutEngineArrow: Equatable {
         return (otherArrow.startPoint.pageID == self.startPoint.pageID) && (otherArrow.endPoint.pageID == self.startPoint.pageID)
     }
 
+
+    //MARK: - Pages
+    var startPage: LayoutEnginePage? {
+        return self.layoutEngine?.page(withID: self.startPoint.pageID)
+    }
+
+    var endPage: LayoutEnginePage? {
+        return self.layoutEngine?.page(withID: self.endPoint.pageID)
+    }
+
+
+    //MARK: - Frames
+
     var layoutFrame: CGRect {
         guard let basicFrame = CGRect(points: [self.startPoint.point, self.endPoint.point]) else {
             return .zero
@@ -70,6 +83,37 @@ class LayoutEngineArrow: Equatable {
     var endPointInLayoutFrame: ArrowPoint {
         var endPoint = self.endPoint
         endPoint.point = endPoint.point.minus(self.layoutFrame.origin)
+
+        guard let config = self.layoutEngine?.configuration else {
+            return endPoint
+        }
+
+        let lineWidth = config.arrow.lineWidth
+
+        let backgroundVisible = self.endPage?.showBackground ?? false
+        //Reduce to account for line width and border visibility
+        switch endPoint.edge {
+        case .left:
+            endPoint.point.x -= lineWidth
+            if backgroundVisible {
+                endPoint.point.x -= config.page.borderSize
+            }
+        case .top:
+            endPoint.point.y -= lineWidth
+            if backgroundVisible {
+                endPoint.point.y -= config.page.titleHeight
+            }
+        case .right:
+            endPoint.point.x += lineWidth
+            if backgroundVisible {
+                endPoint.point.x += config.page.borderSize
+            }
+        case .bottom:
+            endPoint.point.y += lineWidth
+            if backgroundVisible {
+                endPoint.point.y += config.page.borderSize
+            }
+        }
         return endPoint
     }
 }

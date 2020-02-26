@@ -56,21 +56,10 @@ class CanvasElementView: NSView  {
         }
     }
 
-    var selected: Bool = false {
-        didSet {
-            guard self.selected != oldValue else {
-                return
-            }
-            self.updateBackgroundVisibility(animated: true)
-        }
-    }
+    var selected: Bool = false
 
-    var isMouseInside: Bool = false {
+    var showBackground: Bool = false {
         didSet {
-            guard self.isMouseInside != oldValue else {
-                return
-            }
-
             self.updateBackgroundVisibility(animated: true)
         }
     }
@@ -78,6 +67,7 @@ class CanvasElementView: NSView  {
     func apply(_ layoutPage: LayoutEnginePage) {
         self.updateResizeRects(with: layoutPage)
         self.updateSubviews(with: layoutPage)
+        self.showBackground = layoutPage.showBackground
     }
 
     override init(frame frameRect: NSRect) {
@@ -157,7 +147,7 @@ class CanvasElementView: NSView  {
     }
 
     private var contentContainerBorderColor: NSColor? {
-        if self.isMouseInside || self.selected {
+        if self.showBackground || self.selected {
             return NSColor(named: "PageViewContentBorder")
         } else {
             return NSColor(named: "PageViewStroke")
@@ -169,16 +159,12 @@ class CanvasElementView: NSView  {
 
 
     private func updateBackgroundVisibility(animated: Bool) {
-        let backgroundVisible = self.isMouseInside || self.selected
+        let backgroundVisible = self.showBackground
 
         NSView.animate(withDuration: animated ? 0.3 : 0) {
             self.titleView.alphaValue = (backgroundVisible ? 1 : 0)
             self.backgroundView.alphaValue = (backgroundVisible ? 1 : 0)
             self.contentContainerShadow.alphaValue = (backgroundVisible ? 0 : 1)
-//            #error("TODO")
-            // Need to change layout so content view isn't inside the background but layout view
-            // Need to change title view to be inside background, don't need to layout beyond setting height
-            // Need to fade in/out shadow on content as border changes
         }
     }
 

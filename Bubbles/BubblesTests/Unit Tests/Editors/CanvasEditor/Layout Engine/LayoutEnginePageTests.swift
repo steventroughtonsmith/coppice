@@ -702,6 +702,6 @@ class LayoutEnginePageTests: XCTestCase {
                                                                    edgeResizeHandleSize: pageEdgeResizeHandleSize,
                                                                    cornerResizeHandleSize: pageCornerResizeHandleSize),
                                                        contentBorder: contentBorder,
-                                                       arrowHeadSize: arrowHeadSize))
+                                                       arrow: .standard))
     }
 }

@@ -43,7 +43,7 @@ class CanvasLayoutEngineTests: XCTestCase {
                                                                                 edgeResizeHandleSize: 1,
                                                                                 cornerResizeHandleSize: 1),
                                                                     contentBorder: 20,
-                                                                    arrowHeadSize: 5))
+                                                                    arrow: .standard))
 
         self.page1 = LayoutEnginePage(id: UUID(),
                                       contentFrame: CGRect(x: 40, y: 40, width: 10, height: 10),
@@ -113,15 +113,8 @@ class CanvasLayoutEngineTests: XCTestCase {
     }
 
     func test_updateFrame_notifiesViewOfLayoutChange() {
-        class TestCanvasView: CanvasLayoutView {
-            var context: CanvasLayoutEngine.LayoutContext?
-            func layoutChanged(with context: CanvasLayoutEngine.LayoutContext) {
-                self.context = context
-            }
-            var viewPortFrame: CGRect = CGRect(x: 50, y: 50, width: 10, height: 10)
-        }
-
         let view = TestCanvasView()
+        view.viewPortFrame = CGRect(x: 50, y: 50, width: 10, height: 10)
         self.layoutEngine.view = view
         self.layoutEngine.updateContentFrame(CGRect(x: -20, y: -10, width: 20, height: 40), ofPageWithID: self.page2.id)
 
@@ -130,15 +123,8 @@ class CanvasLayoutEngineTests: XCTestCase {
     }
 
     func test_updateFrame_doesntUpdateLayoutIfFrameHasNotChanged() {
-        class TestCanvasView: CanvasLayoutView {
-            var context: CanvasLayoutEngine.LayoutContext?
-            func layoutChanged(with context: CanvasLayoutEngine.LayoutContext) {
-                self.context = context
-            }
-            var viewPortFrame: CGRect = CGRect(x: 50, y: 50, width: 10, height: 10)
-        }
-
         let view = TestCanvasView()
+        view.viewPortFrame = CGRect(x: 50, y: 50, width: 10, height: 10)
         self.layoutEngine.view = view
         self.layoutEngine.updateContentFrame(CGRect(x: -30, y: -20, width: 20, height: 40), ofPageWithID: self.page2.id)
 
@@ -156,7 +142,7 @@ class CanvasLayoutEngineTests: XCTestCase {
                                                                               edgeResizeHandleSize: 1,
                                                                               cornerResizeHandleSize: 1),
                                                                   contentBorder: 20,
-                                                                  arrowHeadSize: 5))
+                                                                  arrow: .standard))
 
         let expectedPoint = basePoint
         XCTAssertEqual(emptyEngine.convertPointToCanvasSpace(basePoint), expectedPoint)
@@ -178,7 +164,7 @@ class CanvasLayoutEngineTests: XCTestCase {
                                                                               edgeResizeHandleSize: 1,
                                                                               cornerResizeHandleSize: 1),
                                                                   contentBorder: 20,
-                                                                  arrowHeadSize: 5))
+                                                                  arrow: .standard))
         let expectedPoint = basePoint
         XCTAssertEqual(emptyEngine.convertPointToPageSpace(basePoint), expectedPoint)
     }
@@ -227,7 +213,6 @@ class CanvasLayoutEngineTests: XCTestCase {
         self.layoutEngine.downEvent(at: clickPoint)
 
         XCTAssertTrue(self.layoutEngine.selectedPages.first === self.page3)
-
     }
 
     func test_selection_mouseDownWithNoModifiersOnUnselectedPageTitleDeselectsCurrentSelectionAndSelectsThatPage() throws {
@@ -321,24 +306,17 @@ class CanvasLayoutEngineTests: XCTestCase {
     }
 
     func test_selection_informsViewOfSelectionChangeAfterUpEvent() throws {
-        class TestCanvasView: CanvasLayoutView {
-            var selectionChanged: Bool?
-            func layoutChanged(with context: CanvasLayoutEngine.LayoutContext) {
-                self.selectionChanged = context.selectionChanged
-            }
-            var viewPortFrame: CGRect = .zero
-        }
 
         let testCanvas = TestCanvasView()
         self.layoutEngine.view = testCanvas
 
         XCTAssertEqual(self.layoutEngine.selectedPages.count, 0)
         self.layoutEngine.downEvent(at: self.page1.layoutFrame.origin.plus(.identity))
-        XCTAssertFalse(try XCTUnwrap(testCanvas.selectionChanged))
+        XCTAssertFalse(try XCTUnwrap(testCanvas.context?.selectionChanged))
         self.layoutEngine.draggedEvent(at: self.page1.layoutFrame.origin.plus(.identity))
-        XCTAssertFalse(try XCTUnwrap(testCanvas.selectionChanged))
+        XCTAssertFalse(try XCTUnwrap(testCanvas.context?.selectionChanged))
         self.layoutEngine.upEvent(at: self.page1.layoutFrame.origin.plus(.identity))
-        XCTAssertTrue(try XCTUnwrap(testCanvas.selectionChanged))
+        XCTAssertTrue(try XCTUnwrap(testCanvas.context?.selectionChanged))
     }
 
 
@@ -410,23 +388,15 @@ class CanvasLayoutEngineTests: XCTestCase {
     }
 
     func test_selectionRect_informsViewOfSelectionChangeAfterUpEvent() throws {
-        class TestCanvasView: CanvasLayoutView {
-            var selectionChanged: Bool?
-            func layoutChanged(with context: CanvasLayoutEngine.LayoutContext) {
-                self.selectionChanged = context.selectionChanged
-            }
-            var viewPortFrame: CGRect = .zero
-        }
-
         let testCanvas = TestCanvasView()
         self.layoutEngine.view = testCanvas
 
         self.layoutEngine.downEvent(at: CGPoint(x: 10, y: 10))
-        XCTAssertFalse(try XCTUnwrap(testCanvas.selectionChanged))
+        XCTAssertFalse(try XCTUnwrap(testCanvas.context?.selectionChanged))
         self.layoutEngine.draggedEvent(at: CGPoint(x: 85, y: 35))
-        XCTAssertFalse(try XCTUnwrap(testCanvas.selectionChanged))
+        XCTAssertFalse(try XCTUnwrap(testCanvas.context?.selectionChanged))
         self.layoutEngine.upEvent(at: CGPoint(x: 85, y: 35))
-        XCTAssertTrue(try XCTUnwrap(testCanvas.selectionChanged))
+        XCTAssertTrue(try XCTUnwrap(testCanvas.context?.selectionChanged))
     }
 
 
@@ -923,17 +893,221 @@ class CanvasLayoutEngineTests: XCTestCase {
     }
 
 
+    //MARK: - Background
+    func test_pageBackground_noPageShowsBackgroundIfMouseMovedOverCanvasAndNothingSelected() {
+        XCTAssertEqual(self.layoutEngine.pages.filter(\.showBackground).count, 0)
+
+        self.layoutEngine.moveEvent(at: CGPoint(x: 40, y: 100))
+
+        XCTAssertEqual(self.layoutEngine.pages.filter(\.showBackground).count, 0)
+    }
+
+    func test_pageBackground_pageShowsBackgroundIfMouseMovesOverPage() {
+        XCTAssertEqual(self.layoutEngine.pages.filter(\.showBackground).count, 0)
+
+        self.layoutEngine.moveEvent(at: self.page2.layoutFrame.origin.plus(CGPoint(x: 3, y: 3)))
+
+        XCTAssertFalse(self.page1.showBackground)
+        XCTAssertTrue(self.page2.showBackground)
+        XCTAssertFalse(self.page3.showBackground)
+    }
+
+    func test_pageBackground_pageStillShowsBackgroundIfMouseMovesFurtherOverPage() {
+        XCTAssertEqual(self.layoutEngine.pages.filter(\.showBackground).count, 0)
+
+        self.layoutEngine.moveEvent(at: self.page2.layoutFrame.origin.plus(CGPoint(x: 3, y: 3)))
+
+        XCTAssertFalse(self.page1.showBackground)
+        XCTAssertTrue(self.page2.showBackground)
+        XCTAssertFalse(self.page3.showBackground)
+
+        self.layoutEngine.moveEvent(at: self.page2.layoutFrame.origin.plus(CGPoint(x: 5, y: 4)))
+
+        XCTAssertFalse(self.page1.showBackground)
+        XCTAssertTrue(self.page2.showBackground)
+        XCTAssertFalse(self.page3.showBackground)
+    }
+
+    func test_pageBackground_pageDoesntShowBackgroundIfMouseMovesOffPage() {
+        XCTAssertEqual(self.layoutEngine.pages.filter(\.showBackground).count, 0)
+
+        self.layoutEngine.moveEvent(at: self.page2.layoutFrame.origin.plus(CGPoint(x: 3, y: 3)))
+
+        XCTAssertFalse(self.page1.showBackground)
+        XCTAssertTrue(self.page2.showBackground)
+        XCTAssertFalse(self.page3.showBackground)
+
+        self.layoutEngine.moveEvent(at: self.page2.layoutFrame.origin.plus(CGPoint(x: -2, y: -2)))
+
+        XCTAssertFalse(self.page1.showBackground)
+        XCTAssertFalse(self.page2.showBackground)
+        XCTAssertFalse(self.page3.showBackground)
+    }
+
+    func test_pageBackground_pagesShowBackgroundIfSelected() {
+        XCTAssertEqual(self.layoutEngine.selectedPages.count, 0)
+
+        let clickPoint1 = self.page1.layoutFrame.midPoint
+        self.layoutEngine.downEvent(at: clickPoint1)
+
+        let clickPoint3 = self.page3.layoutFrame.midPoint
+        self.layoutEngine.downEvent(at: clickPoint3, modifiers: .shift)
+
+        XCTAssertEqual(self.layoutEngine.selectedPages.count, 2)
+
+        XCTAssertTrue(self.page1.showBackground)
+        XCTAssertFalse(self.page2.showBackground)
+        XCTAssertTrue(self.page3.showBackground)
+    }
+
+    func test_pageBackground_pageStillShowsBackgroundIfSelectedAndMouseMovesOver() {
+        let clickPoint1 = self.page1.layoutFrame.midPoint
+        self.layoutEngine.downEvent(at: clickPoint1)
+
+        self.layoutEngine.moveEvent(at: clickPoint1.plus(CGPoint(x: 2, y: 3)))
+
+        XCTAssertTrue(self.page1.showBackground)
+        XCTAssertFalse(self.page2.showBackground)
+        XCTAssertFalse(self.page3.showBackground)
+    }
+
+    func test_pageBackground_pageStillShowsBackgroundIfSelectedAndMouseMovesOff() {
+        XCTAssertEqual(self.layoutEngine.selectedPages.count, 0)
+
+        let clickPoint = self.page3.layoutFrame.midPoint
+        self.layoutEngine.downEvent(at: clickPoint)
+
+        self.layoutEngine.moveEvent(at: self.page3.layoutFrame.origin.minus(CGPoint(x: 10, y: 10)))
+
+        XCTAssertFalse(self.page1.showBackground)
+        XCTAssertFalse(self.page2.showBackground)
+        XCTAssertTrue(self.page3.showBackground)
+    }
+
+    func test_pageBackground_allSelectedPagesAndTheHoveredPageShowBackground() {
+        XCTAssertEqual(self.layoutEngine.selectedPages.count, 0)
+
+        let clickPoint1 = self.page1.layoutFrame.midPoint
+        self.layoutEngine.downEvent(at: clickPoint1)
+
+        let clickPoint3 = self.page3.layoutFrame.midPoint
+        self.layoutEngine.downEvent(at: clickPoint3, modifiers: .shift)
+
+        XCTAssertEqual(self.layoutEngine.selectedPages.count, 2)
+
+        self.layoutEngine.moveEvent(at: self.page2.layoutFrame.midPoint)
+
+        XCTAssertTrue(self.page1.showBackground)
+        XCTAssertTrue(self.page2.showBackground)
+        XCTAssertTrue(self.page3.showBackground)
+    }
+
+    func test_pageBackground_onlySelectedPagesShowBackgroundAfterMouseMovesOffHoveredPage() {
+        XCTAssertEqual(self.layoutEngine.selectedPages.count, 0)
+
+        let clickPoint1 = self.page1.layoutFrame.midPoint
+        self.layoutEngine.downEvent(at: clickPoint1)
+
+        let clickPoint3 = self.page3.layoutFrame.midPoint
+        self.layoutEngine.downEvent(at: clickPoint3, modifiers: .shift)
+
+        XCTAssertEqual(self.layoutEngine.selectedPages.count, 2)
+
+        self.layoutEngine.moveEvent(at: self.page2.layoutFrame.midPoint)
+        self.layoutEngine.moveEvent(at: self.page2.layoutFrame.origin.minus(x: 10, y: 10))
+
+        XCTAssertTrue(self.page1.showBackground)
+        XCTAssertFalse(self.page2.showBackground)
+        XCTAssertTrue(self.page3.showBackground)
+    }
+
+    func test_pageBackground_notifiesViewWhenPageHoveredOver() throws {
+        let view = TestCanvasView()
+        self.layoutEngine.view = view
+
+        self.layoutEngine.moveEvent(at: self.page2.layoutFrame.origin.plus(CGPoint(x: 3, y: 3)))
+
+        XCTAssertTrue(try XCTUnwrap(view.context?.backgroundVisibilityChanged))
+    }
+
+    func test_pageBackground_notifiesViewWhenMovedAwayFromHoveredPage() {
+        let view = TestCanvasView()
+        self.layoutEngine.view = view
+
+        self.layoutEngine.moveEvent(at: self.page2.layoutFrame.origin.plus(x: 3, y: 3))
+        view.context = nil
+
+        self.layoutEngine.moveEvent(at: self.page2.layoutFrame.origin.minus(x: 3, y: 3))
+
+        XCTAssertTrue(try XCTUnwrap(view.context?.backgroundVisibilityChanged))
+    }
+
+    func test_pageBackground_doesntNotifyViewWhenMovingOverHoveredPage() {
+        let view = TestCanvasView()
+        self.layoutEngine.view = view
+
+        self.layoutEngine.moveEvent(at: self.page2.layoutFrame.origin.plus(x: 3, y: 3))
+        view.context = nil
+
+        self.layoutEngine.moveEvent(at: self.page2.layoutFrame.origin.plus(x: 4, y: 4))
+
+        XCTAssertNil(view.context)
+    }
+
+    func test_pageBackground_doesntNotifyViewWhenMovingOntoSelectedPage() {
+        self.page2.selected = true
+        let view = TestCanvasView()
+        self.layoutEngine.view = view
+
+        self.layoutEngine.moveEvent(at: self.page2.layoutFrame.origin.plus(x: 3, y: 3))
+        XCTAssertNil(view.context)
+    }
+
+    func test_pageBackground_doesntNotifyViewWhenMovingOffSelectedPageToCanvas() {
+        self.page2.selected = true
+        let view = TestCanvasView()
+        self.layoutEngine.view = view
+
+        self.layoutEngine.moveEvent(at: self.page2.layoutFrame.origin.plus(x: 3, y: 3))
+        XCTAssertNil(view.context)
+
+        self.layoutEngine.moveEvent(at: self.page2.layoutFrame.origin.minus(x: 4, y: 4))
+        XCTAssertNil(view.context)
+    }
+
+    func test_pageBackground_notifiesViewWhenMovingOffSelectedPageToOtherUnselectedPage() {
+        self.page2.selected = true
+        let view = TestCanvasView()
+        self.layoutEngine.view = view
+
+        self.layoutEngine.moveEvent(at: self.page2.layoutFrame.origin.plus(x: 3, y: 3))
+        XCTAssertNil(view.context)
+
+        self.layoutEngine.moveEvent(at: self.page3.layoutFrame.midPoint)
+        XCTAssertNil(view.context)
+    }
+
+    func test_pageBackground_doesntNotifyViewWhenMovingOffSelectedPageToOtherSelectedPage() {
+        self.page2.selected = true
+        self.page3.selected = true
+        let view = TestCanvasView()
+        self.layoutEngine.view = view
+
+        self.layoutEngine.moveEvent(at: self.page2.layoutFrame.origin.plus(x: 3, y: 3))
+        XCTAssertNil(view.context)
+
+        self.layoutEngine.moveEvent(at: self.page3.layoutFrame.midPoint)
+        XCTAssertNil(view.context)
+    }
+
+
+
     //MARK: - Canvas Size and Offset
     func test_canvasSize_canvasSizeShouldEqualContentBoundsPlusCanvasBorderOnEachSize() {
         XCTAssertEqual(self.layoutEngine.canvasSize, self.contentFrame.insetBy(dx: -20, dy: -20).size)
     }
 
     func test_canvasSize_canvasSizeShouldBeBiggerThanContentBoundsPlusCanvasBorderIfViewPortFrameIsOutside() {
-        class TestCanvasView: CanvasLayoutView {
-            func layoutChanged(with context: CanvasLayoutEngine.LayoutContext) {}
-            var viewPortFrame: CGRect = .zero
-        }
-
         let testCanvas = TestCanvasView()
         testCanvas.viewPortFrame = CGRect(x: 60, y: 60, width: 80, height: 80)
         self.layoutEngine.view = testCanvas
@@ -1318,4 +1492,12 @@ private class TestLayoutDelegate: CanvasLayoutEngineDelegate {
     func remove(pages: [LayoutEnginePage], from layout: CanvasLayoutEngine) {
         self.removePages = pages
     }
+}
+
+private class TestCanvasView: CanvasLayoutView {
+    var context: CanvasLayoutEngine.LayoutContext?
+    func layoutChanged(with context: CanvasLayoutEngine.LayoutContext) {
+        self.context = context
+    }
+    var viewPortFrame: CGRect = .zero
 }

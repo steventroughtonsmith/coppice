@@ -259,7 +259,6 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation {
         self.canvasView.pageLayer.subviews = pageViews
     }
 
-
     //MARK: - Page Selections
     var selectedPages: [CanvasPageViewController] {
         return self.pageViewControllers.filter { $0.selected }

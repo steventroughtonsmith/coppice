@@ -20,7 +20,12 @@ import Foundation
 class LayoutEnginePage: Equatable {
     let id: UUID
     var selected: Bool = false
-    var titleVisible: Bool = false
+    var showBackground: Bool {
+        if self.layoutEngine?.currentlyHoveredPage == self {
+            return true
+        }
+        return self.selected
+    }
 
     /// Enabled pages can be edited
     var enabled: Bool {
