@@ -282,9 +282,13 @@ class CanvasLayoutEngine: NSObject {
     //MARK: - Manage Key Events
     private var keyEvents = [UInt16: CanvasEventContext]()
 
-    private func keyEventContext(for keyCode: UInt16) -> CanvasEventContext? {
+    private func keyEventContext(for keyCode: UInt16, createIfNeeded: Bool) -> CanvasEventContext? {
         if let event = self.keyEvents[keyCode] {
             return event
+        }
+
+        guard createIfNeeded else {
+            return nil
         }
 
         let newEvent: CanvasEventContext
@@ -301,7 +305,7 @@ class CanvasLayoutEngine: NSObject {
     }
 
     func keyDownEvent(keyCode: UInt16, modifiers: LayoutEventModifiers = [], isARepeat: Bool = false) {
-        guard let event = self.keyEventContext(for: keyCode) else {
+        guard let event = self.keyEventContext(for: keyCode, createIfNeeded: true) else {
             return
         }
 
@@ -310,7 +314,9 @@ class CanvasLayoutEngine: NSObject {
     }
 
     func keyUpEvent(keyCode: UInt16, modifiers: LayoutEventModifiers = []) {
-        guard let event = self.keyEventContext(for: keyCode) else {
+        //So if something else has first responder (like a text view), we'll still receive keyup even though we don't get key down
+        //So we only want to fetch an existing event, not create a new one here. That way we only act if we also got the associated key down
+        guard let event = self.keyEventContext(for: keyCode, createIfNeeded: false) else {
             return
         }
         event.keyUp(withCode: keyCode, modifiers: modifiers, in: self)

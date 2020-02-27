@@ -29,7 +29,8 @@ class CanvasPageViewModel: ViewModel {
     }
 
     @objc dynamic var title: String {
-        return self.canvasPage.title
+        get { return self.canvasPage.title }
+        set { self.canvasPage.page?.title = newValue }
     }
 
 

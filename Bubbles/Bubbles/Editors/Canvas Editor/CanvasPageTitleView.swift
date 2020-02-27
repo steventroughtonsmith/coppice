@@ -10,11 +10,12 @@ import Cocoa
 
 protocol CanvasPageTitleViewDelegate: class {
     func closeClicked(in titleView: CanvasPageTitleView)
+    func didChangeTitle(to newTitle: String, in titleView: CanvasPageTitleView)
 }
 
 class CanvasPageTitleView: NSView {
     //MARK: - Public API
-    var title: String = "" {
+    @objc dynamic var title: String = "" {
         didSet {
             self.titleLabel.stringValue = title
         }
@@ -53,12 +54,15 @@ class CanvasPageTitleView: NSView {
 
 
     //MARK: - Subviews
-    private lazy var titleLabel: NSTextField = {
+    lazy var titleLabel: NSTextField = {
         let label = NSTextField(labelWithString: self.title)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.lineBreakMode = .byTruncatingTail
         label.textColor = .labelColor
         label.font = NSFont.systemFont(ofSize: 12)
+        label.alignment = .center
+        label.focusRingType = .none
+        label.delegate = self
         return label
     }()
 
@@ -75,5 +79,30 @@ class CanvasPageTitleView: NSView {
     //MARK: - Actions
     @objc dynamic func closeClicked(_ sender: Any?) {
         self.delegate?.closeClicked(in: self)
+    }
+
+
+
+    //MARK: - Title Editability
+    override func mouseDown(with event: NSEvent) {
+        let localPoint = self.convert(event.locationInWindow, from: nil)
+        guard self.titleLabel.frame.contains(localPoint) && (event.clickCount == 2) else {
+            super.mouseDown(with: event)
+            return
+        }
+        self.makeTitleEditable()
+    }
+
+    private func makeTitleEditable() {
+        self.titleLabel.isEditable = true
+        self.window?.makeFirstResponder(self.titleLabel)
+    }
+}
+
+
+extension CanvasPageTitleView: NSTextFieldDelegate {
+    func controlTextDidEndEditing(_ obj: Notification) {
+        self.delegate?.didChangeTitle(to: self.titleLabel.stringValue, in: self)
+        self.titleLabel.isEditable = false
     }
 }

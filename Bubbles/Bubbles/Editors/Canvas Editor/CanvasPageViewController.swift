@@ -98,4 +98,8 @@ extension CanvasPageViewController: CanvasPageTitleViewDelegate {
     func closeClicked(in titleView: CanvasPageTitleView) {
         self.delegate?.close(self)
     }
+
+    func didChangeTitle(to newTitle: String, in titleView: CanvasPageTitleView) {
+        self.viewModel.title = newTitle
+    }
 }
