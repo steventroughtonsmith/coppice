@@ -33,7 +33,7 @@ class LayoutEngineArrow: Equatable {
     }
 
     func betweenSamePages(as otherArrow: LayoutEngineArrow) -> Bool {
-        return (otherArrow.startPoint.pageID == self.startPoint.pageID) && (otherArrow.endPoint.pageID == self.startPoint.pageID)
+        return (otherArrow.startPoint.pageID == self.startPoint.pageID) && (otherArrow.endPoint.pageID == self.endPoint.pageID)
     }
 
 
@@ -54,21 +54,23 @@ class LayoutEngineArrow: Equatable {
             return .zero
         }
 
-        guard let config = layoutEngine?.configuration.arrow else {
+        guard let config = layoutEngine?.configuration else {
             return basicFrame
         }
 
-        let invertedArrowOffset = config.endLength + config.cornerSize + config.lineWidth
+        let arrowConfig = config.arrow
+
+        let invertedArrowOffset = arrowConfig.endLength + arrowConfig.cornerSize
 
         var xInset: CGFloat = 0
         var yInset: CGFloat = 0
         switch self.startPoint.edge {
         case .top, .bottom:
-            xInset = -config.arrowHeadSize
-            yInset = -invertedArrowOffset
+            xInset = -(arrowConfig.arrowHeadSize / 2) - arrowConfig.lineWidth
+            yInset = -(invertedArrowOffset / 2) - arrowConfig.lineWidth - config.page.titleHeight
         case .left, .right:
-            xInset = -invertedArrowOffset
-            yInset = -config.arrowHeadSize
+            xInset = -(invertedArrowOffset / 2) - arrowConfig.lineWidth
+            yInset = -(arrowConfig.arrowHeadSize / 2) - arrowConfig.lineWidth
         }
 
         return basicFrame.insetBy(dx: xInset, dy: yInset)

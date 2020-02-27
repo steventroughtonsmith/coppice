@@ -148,6 +148,7 @@
 		99C865262306D12B004C7B89 /* PageSelectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C865252306D12B004C7B89 /* PageSelectorViewModel.swift */; };
 		99C865292306D141004C7B89 /* PageSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C865272306D141004C7B89 /* PageSelectorViewController.swift */; };
 		99C8652A2306D141004C7B89 /* PageSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99C865282306D141004C7B89 /* PageSelectorViewController.xib */; };
+		99C88EE22406BDEE00339880 /* LayoutEngineArrowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C88EE12406BDEE00339880 /* LayoutEngineArrowTests.swift */; };
 		99C9AF1423631348009F909A /* CanvasTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9AF1323631348009F909A /* CanvasTextView.swift */; };
 		99C9AF1623632349009F909A /* NSView+CanvasLookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9AF1523632349009F909A /* NSView+CanvasLookup.swift */; };
 		99C9AF1923671DB0009F909A /* PageLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9AF1823671DB0009F909A /* PageLink.swift */; };
@@ -351,6 +352,7 @@
 		99C865252306D12B004C7B89 /* PageSelectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageSelectorViewModel.swift; sourceTree = "<group>"; };
 		99C865272306D141004C7B89 /* PageSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageSelectorViewController.swift; sourceTree = "<group>"; };
 		99C865282306D141004C7B89 /* PageSelectorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PageSelectorViewController.xib; sourceTree = "<group>"; };
+		99C88EE12406BDEE00339880 /* LayoutEngineArrowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutEngineArrowTests.swift; sourceTree = "<group>"; };
 		99C9AF1323631348009F909A /* CanvasTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasTextView.swift; sourceTree = "<group>"; };
 		99C9AF1523632349009F909A /* NSView+CanvasLookup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+CanvasLookup.swift"; sourceTree = "<group>"; };
 		99C9AF1823671DB0009F909A /* PageLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageLink.swift; sourceTree = "<group>"; };
@@ -823,6 +825,7 @@
 				99C03F0023293DAD00EB7516 /* CanvasLayoutEngineTests.swift */,
 				99C4AD8A23F707DF003B9A38 /* ArrowLayoutEngineTests.swift */,
 				99FFF9C923463DFD00EF02A0 /* LayoutEnginePageTests.swift */,
+				99C88EE12406BDEE00339880 /* LayoutEngineArrowTests.swift */,
 			);
 			path = "Layout Engine";
 			sourceTree = "<group>";
@@ -1370,6 +1373,7 @@
 				9958107C230D75AA00D996C4 /* TextEditorViewModelTests.swift in Sources */,
 				990D243F23560688001B1FD9 /* CanvasLayoutEngineTests.swift in Sources */,
 				9923B07422F485480035D8C6 /* ModelCollectionTests.swift in Sources */,
+				99C88EE22406BDEE00339880 /* LayoutEngineArrowTests.swift in Sources */,
 				99DEF28C22F33A2A0020A7CE /* ModelObjectTests.swift in Sources */,
 				9976A49D2367524D004D573D /* ModelReaderTests.swift in Sources */,
 				99A0B85E238D730E005FCF25 /* TextEditorInspectorTypesTests.swift in Sources */,
