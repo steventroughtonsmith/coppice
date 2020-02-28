@@ -6,7 +6,7 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import Foundation
+import AppKit
 
 protocol CanvasEditorView: class {
     func updateZoomFactor()
@@ -15,7 +15,7 @@ protocol CanvasEditorView: class {
 class CanvasEditorViewModel: ViewModel {
     weak var view: CanvasEditorView?
 
-    let layoutEngine = CanvasLayoutEngine(configuration: .init(page: .mac, contentBorder: 1000, arrow: .standard))
+    let layoutEngine = CanvasLayoutEngine(configuration: .init(page: .mac, contentBorder: 10, arrow: .standard))
 
     let canvas: Canvas
     init(canvas: Canvas, documentWindowViewModel: DocumentWindowViewModel) {
@@ -161,13 +161,24 @@ class CanvasEditorViewModel: ViewModel {
     }
 
     func addPage(at link: PageLink, centredOn point: CGPoint? = nil) {
-        let pagePosition = (point != nil) ? self.layoutEngine.convertPointToPageSpace(point!) : nil
-        self.documentWindowViewModel.addPage(at: link, to: self.canvas, centredOn: pagePosition)
+        self.documentWindowViewModel.addPage(at: link, to: self.canvas)
+    }
+
+    func addPage(with id: ModelID, centredOn point: CGPoint? = nil) {
+        guard let page = self.modelController.collection(for: Page.self).objectWithID(id) else {
+            return
+        }
+
+        self.documentWindowViewModel.addPages([page], to: self.canvas, centredOn: point)
     }
 
     func addPages(forFilesAtURLs urls: [URL], centredOn point: CGPoint? = nil) {
         let pagePosition = (point != nil) ? self.layoutEngine.convertPointToPageSpace(point!) : nil
         self.documentWindowViewModel.createPages(fromFilesAtURLs: urls, addingTo: self.canvas, centredOn: pagePosition)
+    }
+
+    func dragImageForPage(with id: ModelID) -> NSImage? {
+        return self.documentWindowViewModel.pageImageController.imageForPage(with: id)
     }
 
 

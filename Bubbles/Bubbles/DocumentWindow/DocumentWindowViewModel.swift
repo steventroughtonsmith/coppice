@@ -25,11 +25,14 @@ class DocumentWindowViewModel: NSObject {
 
     let modelController: ModelController
     let thumbnailController: ThumbnailController
+    let pageImageController: PageImageController
     init(modelController: ModelController) {
         self.modelController = modelController
         self.thumbnailController = ThumbnailController(modelController: modelController)
+        self.pageImageController = PageImageController(modelController: modelController)
         super.init()
         self.thumbnailController.documentViewModel = self
+        self.pageImageController.documentViewModel = self
         self.setupSelectionUndo()
     }
 

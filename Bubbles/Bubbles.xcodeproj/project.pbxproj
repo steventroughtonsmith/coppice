@@ -148,6 +148,7 @@
 		99C865292306D141004C7B89 /* PageSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C865272306D141004C7B89 /* PageSelectorViewController.swift */; };
 		99C8652A2306D141004C7B89 /* PageSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99C865282306D141004C7B89 /* PageSelectorViewController.xib */; };
 		99C88EE22406BDEE00339880 /* LayoutEngineArrowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C88EE12406BDEE00339880 /* LayoutEngineArrowTests.swift */; };
+		99C88EE42409631800339880 /* PageImageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C88EE32409631800339880 /* PageImageController.swift */; };
 		99C9AF1423631348009F909A /* CanvasTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9AF1323631348009F909A /* CanvasTextView.swift */; };
 		99C9AF1623632349009F909A /* NSView+CanvasLookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9AF1523632349009F909A /* NSView+CanvasLookup.swift */; };
 		99C9AF1923671DB0009F909A /* PageLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9AF1823671DB0009F909A /* PageLink.swift */; };
@@ -351,6 +352,7 @@
 		99C865272306D141004C7B89 /* PageSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageSelectorViewController.swift; sourceTree = "<group>"; };
 		99C865282306D141004C7B89 /* PageSelectorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PageSelectorViewController.xib; sourceTree = "<group>"; };
 		99C88EE12406BDEE00339880 /* LayoutEngineArrowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutEngineArrowTests.swift; sourceTree = "<group>"; };
+		99C88EE32409631800339880 /* PageImageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageImageController.swift; sourceTree = "<group>"; };
 		99C9AF1323631348009F909A /* CanvasTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasTextView.swift; sourceTree = "<group>"; };
 		99C9AF1523632349009F909A /* NSView+CanvasLookup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+CanvasLookup.swift"; sourceTree = "<group>"; };
 		99C9AF1823671DB0009F909A /* PageLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageLink.swift; sourceTree = "<group>"; };
@@ -529,6 +531,7 @@
 			children = (
 				99488AAF23C37BB7009954AF /* ThumbnailController.swift */,
 				99488AAD23C37B98009954AF /* ThumbnailGenerator.swift */,
+				99C88EE32409631800339880 /* PageImageController.swift */,
 			);
 			path = "Thumbnail Generation";
 			sourceTree = "<group>";
@@ -1326,6 +1329,7 @@
 				9958107F230D7EEB00D996C4 /* CanvasEditorViewModel.swift in Sources */,
 				99C41B7322DCA98600C82DDE /* Page.swift in Sources */,
 				99C41B7522DCA9A100C82DDE /* Canvas.swift in Sources */,
+				99C88EE42409631800339880 /* PageImageController.swift in Sources */,
 				99C865262306D12B004C7B89 /* PageSelectorViewModel.swift in Sources */,
 				99A0B855238C2F46005FCF25 /* TextEditorAttributes.swift in Sources */,
 				992A5C9F22DCCDB30012CCB6 /* NSView+M3Extensions.swift in Sources */,

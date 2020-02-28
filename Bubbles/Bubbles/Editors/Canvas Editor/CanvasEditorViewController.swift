@@ -392,7 +392,8 @@ extension CanvasEditorViewController: Editor {
 
 extension CanvasEditorViewController: CanvasViewDelegate {
     func didDropPage(with id: ModelID, at point: CGPoint, on canvasView: CanvasView) {
-        self.viewModel.addPage(at: PageLink(destination: id), centredOn: point)
+        let pageSpacePoint = self.layoutEngine.convertPointToPageSpace(point)
+        self.viewModel.addPage(with: id, centredOn: pageSpacePoint)
     }
 
     func didDropFiles(withURLs urls: [URL], at point: CGPoint, on canvasView: CanvasView) {
@@ -400,7 +401,7 @@ extension CanvasEditorViewController: CanvasViewDelegate {
     }
 
     func dragImageForPage(with id: ModelID, in canvasView: CanvasView) -> NSImage? {
-        return nil
+        return self.viewModel.dragImageForPage(with: id)
     }
 }
 

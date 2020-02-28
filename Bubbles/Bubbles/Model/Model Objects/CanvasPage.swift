@@ -35,7 +35,7 @@ final class CanvasPage: NSObject, CollectableModelObject {
     //MARK: - Relationships
     @ModelObjectReference @objc dynamic var page: Page? {
         didSet {
-            if let page = self.page {
+            if let page = self.page, self.frame.size == .zero {
                 self.frame.size = page.contentSize
             }
             self.willChangeValue(for: \.title)

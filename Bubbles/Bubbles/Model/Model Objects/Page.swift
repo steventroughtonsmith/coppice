@@ -14,7 +14,7 @@ struct Tag {
 
 final class Page: NSObject, CollectableModelObject {
     static let modelType: ModelType = ModelType(rawValue: "Page")!
-    static let standardSize = CGSize(width: 300, height: 400)
+    static let standardSize = CGSize(width: 300, height: 200)
     static let contentChangedNotification = Notification.Name("PageContentChangedNotification")
     static let localizedDefaultTitle = "Untitled Page"
 

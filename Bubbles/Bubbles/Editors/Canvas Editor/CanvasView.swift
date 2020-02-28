@@ -219,6 +219,8 @@ class CanvasView: NSView {
     }
 
     override func prepareForDragOperation(_ sender: NSDraggingInfo) -> Bool {
+//        sender.animatesToDestination = true
+        sender.draggingFormation = .none
         return true
     }
 
@@ -257,7 +259,16 @@ class CanvasView: NSView {
         }
 
         let dropPoint = self.convert(sender.draggingLocation, from: nil)
-        self.delegate?.didDropPage(with: id, at: dropPoint, on: self)
+        var dragItemPoint: CGPoint? = nil
+        sender.enumerateDraggingItems(for: nil, classes: [NSPasteboardItem.self]) { (draggingItem, index, stop) in
+            let frame = draggingItem.draggingFrame
+            let windowFrame = self.window!.convertFromScreen(frame)
+            if (dragItemPoint == nil) {
+                dragItemPoint = self.convert(windowFrame, from: nil).midPoint
+            }
+            draggingItem.draggingFrame = frame
+        }
+        self.delegate?.didDropPage(with: id, at: dragItemPoint ?? dropPoint, on: self)
         return true
     }
 
@@ -272,7 +283,7 @@ class CanvasView: NSView {
                 return
             }
 
-            draggingItem.setDraggingFrame(CGRect(origin: .zero, size: image.size), contents: image)
+            draggingItem.setDraggingFrame(CGRect(origin: CGPoint(x: 1280, y: 720), size: image.size), contents: image)
         })
     }
 
