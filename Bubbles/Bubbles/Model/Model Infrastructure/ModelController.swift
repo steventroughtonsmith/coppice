@@ -33,7 +33,7 @@ extension ModelController {
 
     func collection<T: CollectableModelObject>(for type: T.Type) -> ModelCollection<T> {
         guard let model = self.collections[type.modelType] as? ModelCollection<T> else {
-            fatalError("Collection with type '\(type.modelType)' does not exist")
+            preconditionFailure("Collection with type '\(type.modelType)' does not exist")
         }
         return model
     }

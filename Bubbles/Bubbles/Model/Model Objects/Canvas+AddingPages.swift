@@ -13,7 +13,7 @@ extension Canvas {
 
     @discardableResult func add(_ page: Page, linkedFrom sourcePage: CanvasPage) -> CanvasPage {
         guard let collection = self.modelController?.collection(for: CanvasPage.self) else {
-            fatalError("Could not find canvas page collection")
+            preconditionFailure("Could not find canvas page collection")
         }
 
         let frame = self.frame(for: page, linkedFrom: sourcePage)
@@ -27,7 +27,7 @@ extension Canvas {
 
     @discardableResult func addPages(_ pages: [Page], centredOn point: CGPoint? = nil) -> [CanvasPage] {
         guard let collection = self.modelController?.collection(for: CanvasPage.self) else {
-            fatalError("Could not find canvas page collection")
+            preconditionFailure("Could not find canvas page collection")
         }
         guard let firstPage = pages.first else {
             return []

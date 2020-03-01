@@ -31,7 +31,8 @@ class BubblesModelController: NSObject, ModelController {
         case CanvasPage.modelType:
             return self.collection(for: CanvasPage.self).objectWithID(id)
         default:
-            fatalError("Model type '\(id.modelType)' does not exist")
+            assertionFailure("Model type '\(id.modelType)' does not exist")
+            return nil
         }
     }
 }

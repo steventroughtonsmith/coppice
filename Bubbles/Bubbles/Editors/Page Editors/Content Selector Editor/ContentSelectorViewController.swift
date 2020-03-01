@@ -19,7 +19,7 @@ class ContentSelectorViewController: NSViewController {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        preconditionFailure("init(coder:) has not been implemented")
     }
 
     override func viewDidLoad() {
@@ -47,7 +47,7 @@ class ContentSelectorViewController: NSViewController {
 
     private func addButton(for type: ContentTypeModel) {
         guard let icon = NSImage(named: type.iconName) else {
-			fatalError("Could not find type icon with name '\(type.iconName)'")
+			preconditionFailure("Could not find type icon with name '\(type.iconName)'")
         }
         let button = NSButton(title: type.localizedName, image: icon, target: self, action: #selector(typeSelected(_:)))
         button.tag = self.stackView.arrangedSubviews.count

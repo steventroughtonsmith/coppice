@@ -65,7 +65,7 @@ struct PageLink {
             urlComponents.queryItems = queryItems
         }
         guard let url = urlComponents.url else {
-            fatalError("Failed to create url from components: \(urlComponents)")
+            preconditionFailure("Failed to create url from components: \(urlComponents)")
         }
         return url
     }
