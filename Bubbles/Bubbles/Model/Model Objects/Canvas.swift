@@ -9,6 +9,22 @@
 import Cocoa
 
 final class Canvas: NSObject, CollectableModelObject {
+    enum Theme: String, CaseIterable {
+        case auto
+        case dark
+        case light
+
+        var localizedName: String {
+            switch self {
+            case .auto: return NSLocalizedString("Automatic", comment: "Automatic theme name")
+            case .dark: return NSLocalizedString("Dark", comment: "Dark theme name")
+            case .light: return NSLocalizedString("Light", comment: "Light theme name")
+            }
+        }
+    }
+
+
+
     static let modelType: ModelType = ModelType(rawValue: "Canvas")!
 
     var id = ModelID(modelType: Canvas.modelType)
@@ -27,6 +43,10 @@ final class Canvas: NSObject, CollectableModelObject {
     var dateModified = Date()
     @objc dynamic var sortIndex = 0 {
         didSet { self.didChange(\.sortIndex, oldValue: oldValue) }
+    }
+
+    var theme: Theme = .auto {
+        didSet { self.didChange(\.theme, oldValue: oldValue)}
     }
 
     var viewPort: CGRect?
@@ -52,6 +72,7 @@ final class Canvas: NSObject, CollectableModelObject {
             "dateCreated": self.dateCreated,
             "dateModified": self.dateModified,
             "sortIndex": self.sortIndex,
+            "theme": self.theme.rawValue
         ]
         if let thumbnailData = self.thumbnail?.pngData() {
             plist["thumbnail"] = ModelFile(type: "thumbnail", filename: "\(self.id.uuid.uuidString)-thumbnail.png", data: thumbnailData, metadata: [:])
@@ -71,6 +92,12 @@ final class Canvas: NSObject, CollectableModelObject {
         self.dateCreated = try self.attribute(withKey: "dateCreated", from: plist)
         self.dateModified = try self.attribute(withKey: "dateModified", from: plist)
         self.sortIndex = try self.attribute(withKey: "sortIndex", from: plist)
+
+        let rawTheme: String = try self.attribute(withKey: "theme", from: plist)
+        guard let theme = Theme(rawValue: rawTheme) else {
+            throw ModelObjectUpdateErrors.attributeNotFound("theme")
+        }
+        self.theme = theme
 
         if let viewPortString = plist["viewPort"] as? String {
             self.viewPort = NSRectFromString(viewPortString)

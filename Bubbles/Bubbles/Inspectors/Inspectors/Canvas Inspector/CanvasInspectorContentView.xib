@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16085" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16085"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -9,11 +9,11 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="ehY-F7-MGj">
-            <rect key="frame" x="0.0" y="0.0" width="307" height="21"/>
+            <rect key="frame" x="0.0" y="0.0" width="307" height="50"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="b0f-QP-nLp">
-                    <rect key="frame" x="35" y="0.0" width="272" height="21"/>
+                    <rect key="frame" x="50" y="29" width="257" height="21"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="2n3-qS-CN5">
                         <font key="font" usesAppearanceFont="YES"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -24,8 +24,34 @@
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VTj-SJ-Zad">
-                    <rect key="frame" x="-2" y="2" width="31" height="16"/>
+                    <rect key="frame" x="-2" y="31" width="46" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Title" id="gqQ-0A-VwJ">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Kri-qI-nSO">
+                    <rect key="frame" x="48" y="-3" width="262" height="25"/>
+                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="zAD-di-hl3" id="eNE-Ou-a6G">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <menu key="menu" id="LfI-KY-Dbj">
+                            <items>
+                                <menuItem title="Item 1" state="on" id="zAD-di-hl3"/>
+                                <menuItem title="Item 2" id="bfM-5z-W0I"/>
+                                <menuItem title="Item 3" id="DfD-4q-J1P"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <connections>
+                        <binding destination="-2" name="contentValues" keyPath="self.viewModel.themes" id="Jy9-Vy-kwx"/>
+                        <binding destination="-2" name="selectedIndex" keyPath="self.viewModel.selectedThemeIndex" previousBinding="Jy9-Vy-kwx" id="g3a-sG-ZMn"/>
+                    </connections>
+                </popUpButton>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IBt-e7-HOq">
+                    <rect key="frame" x="-2" y="3" width="46" height="16"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Theme" id="s1P-mu-Ye4">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -33,14 +59,20 @@
                 </textField>
             </subviews>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="Kri-qI-nSO" secondAttribute="trailing" id="3wh-0j-aUc"/>
+                <constraint firstItem="Kri-qI-nSO" firstAttribute="top" secondItem="b0f-QP-nLp" secondAttribute="bottom" constant="8" id="8ch-ud-kD0"/>
                 <constraint firstAttribute="trailing" secondItem="b0f-QP-nLp" secondAttribute="trailing" id="Act-sR-nMp"/>
                 <constraint firstItem="b0f-QP-nLp" firstAttribute="top" secondItem="ehY-F7-MGj" secondAttribute="top" id="Pf1-p6-b1a"/>
+                <constraint firstItem="IBt-e7-HOq" firstAttribute="firstBaseline" secondItem="Kri-qI-nSO" secondAttribute="firstBaseline" id="cim-aC-YJh"/>
                 <constraint firstItem="VTj-SJ-Zad" firstAttribute="firstBaseline" secondItem="b0f-QP-nLp" secondAttribute="firstBaseline" id="cwp-qL-Ozp"/>
+                <constraint firstItem="Kri-qI-nSO" firstAttribute="leading" secondItem="IBt-e7-HOq" secondAttribute="trailing" constant="8" id="drv-Dj-aMb"/>
+                <constraint firstAttribute="bottom" secondItem="Kri-qI-nSO" secondAttribute="bottom" id="hcR-Tl-icP"/>
+                <constraint firstItem="IBt-e7-HOq" firstAttribute="leading" secondItem="VTj-SJ-Zad" secondAttribute="leading" id="ibD-OF-j1z"/>
                 <constraint firstItem="b0f-QP-nLp" firstAttribute="leading" secondItem="VTj-SJ-Zad" secondAttribute="trailing" constant="8" id="o6b-TB-L9J"/>
                 <constraint firstItem="VTj-SJ-Zad" firstAttribute="leading" secondItem="ehY-F7-MGj" secondAttribute="leading" id="sWc-Oj-OkF"/>
-                <constraint firstAttribute="bottom" secondItem="b0f-QP-nLp" secondAttribute="bottom" id="zxb-rq-fBL"/>
+                <constraint firstItem="IBt-e7-HOq" firstAttribute="trailing" secondItem="VTj-SJ-Zad" secondAttribute="trailing" id="z7X-tq-RJA"/>
             </constraints>
-            <point key="canvasLocation" x="13.5" y="10.5"/>
+            <point key="canvasLocation" x="13.5" y="39.5"/>
         </customView>
     </objects>
 </document>

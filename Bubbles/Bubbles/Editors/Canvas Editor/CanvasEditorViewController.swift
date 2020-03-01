@@ -162,6 +162,7 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation {
 
     @objc func layout() {
         self.isLayingOut = true
+        self.updateAppearance()
         self.updateCanvas()
         self.updateSelectionRect()
         self.updatePages()
@@ -172,6 +173,19 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation {
         self.isLayingOut = false
         self.hasLaidOut = true
         self.currentLayoutContext = nil
+    }
+
+    private func updateAppearance() {
+        let appearance: NSAppearance?
+        switch self.viewModel.canvas.theme {
+        case .dark:
+            appearance = NSAppearance(named: .darkAqua)
+        case .light:
+            appearance = NSAppearance(named: .aqua)
+        default:
+            appearance = nil
+        }
+        self.view.appearance = appearance
     }
 
     private func updateCanvas() {

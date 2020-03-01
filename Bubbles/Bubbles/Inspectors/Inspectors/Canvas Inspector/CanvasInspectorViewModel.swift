@@ -44,4 +44,17 @@ class CanvasInspectorViewModel: BaseInspectorViewModel {
         get { self.canvas.title }
         set { self.canvas.title = newValue }
     }
+
+    @objc dynamic var themes: [String] {
+        return Canvas.Theme.allCases.map(\.localizedName)
+    }
+
+    @objc dynamic var selectedThemeIndex: Int {
+        get {
+            return Canvas.Theme.allCases.firstIndex(of: self.canvas.theme) ?? 0
+        }
+        set {
+            self.canvas.theme = Canvas.Theme.allCases[newValue]
+        }
+    }
 }
