@@ -149,6 +149,7 @@
 		99C8652A2306D141004C7B89 /* PageSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99C865282306D141004C7B89 /* PageSelectorViewController.xib */; };
 		99C88EE22406BDEE00339880 /* LayoutEngineArrowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C88EE12406BDEE00339880 /* LayoutEngineArrowTests.swift */; };
 		99C88EE42409631800339880 /* PageImageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C88EE32409631800339880 /* PageImageController.swift */; };
+		99C88EE6240BC79A00339880 /* EditorBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C88EE5240BC79A00339880 /* EditorBackgroundView.swift */; };
 		99C9AF1423631348009F909A /* CanvasTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9AF1323631348009F909A /* CanvasTextView.swift */; };
 		99C9AF1623632349009F909A /* NSView+CanvasLookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9AF1523632349009F909A /* NSView+CanvasLookup.swift */; };
 		99C9AF1923671DB0009F909A /* PageLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9AF1823671DB0009F909A /* PageLink.swift */; };
@@ -353,6 +354,7 @@
 		99C865282306D141004C7B89 /* PageSelectorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PageSelectorViewController.xib; sourceTree = "<group>"; };
 		99C88EE12406BDEE00339880 /* LayoutEngineArrowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutEngineArrowTests.swift; sourceTree = "<group>"; };
 		99C88EE32409631800339880 /* PageImageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageImageController.swift; sourceTree = "<group>"; };
+		99C88EE5240BC79A00339880 /* EditorBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorBackgroundView.swift; sourceTree = "<group>"; };
 		99C9AF1323631348009F909A /* CanvasTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasTextView.swift; sourceTree = "<group>"; };
 		99C9AF1523632349009F909A /* NSView+CanvasLookup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+CanvasLookup.swift"; sourceTree = "<group>"; };
 		99C9AF1823671DB0009F909A /* PageLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageLink.swift; sourceTree = "<group>"; };
@@ -780,6 +782,7 @@
 			isa = PBXGroup;
 			children = (
 				99AD8873237464C4000453E1 /* Alert.swift */,
+				99C88EE5240BC79A00339880 /* EditorBackgroundView.swift */,
 			);
 			path = "Generic Types";
 			sourceTree = "<group>";
@@ -1349,6 +1352,7 @@
 				99C9AF1623632349009F909A /* NSView+CanvasLookup.swift in Sources */,
 				9965FC4023843155002FE10D /* CanvasPageInspectorViewModel.swift in Sources */,
 				99D8E39023800F9A0098CF3B /* BaseInspectorViewController.swift in Sources */,
+				99C88EE6240BC79A00339880 /* EditorBackgroundView.swift in Sources */,
 				99C03EFA23293D8A00EB7516 /* CanvasLayoutEngine.swift in Sources */,
 				99C8650F23017222004C7B89 /* TextEditorViewController.swift in Sources */,
 				992A5CB122DDF5210012CCB6 /* DebugCanvasEditorViewModel.swift in Sources */,

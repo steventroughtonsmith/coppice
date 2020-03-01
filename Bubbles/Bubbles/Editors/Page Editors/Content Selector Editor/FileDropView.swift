@@ -113,6 +113,8 @@ class FileDropView: NSView {
     }
 
     override func draw(_ dirtyRect: NSRect) {
+        NSColor(named: "PageBackground")?.set()
+        self.bounds.fill()
         guard self.drawDropHighlight else {
             return
         }
