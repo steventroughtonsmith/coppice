@@ -78,6 +78,29 @@ class SplitViewController: NSObject {
             self.lastInspectorSize = views[2].frame.width
         }
     }
+
+
+    @IBAction func toggleSidebar(_ sender: Any?) {
+        self.isSidebarCollapsed = !self.isSidebarCollapsed
+    }
+
+    @IBAction func toggleInspectors(_ sender: Any?) {
+        self.isInspectorCollapsed = !self.isInspectorCollapsed
+    }
+
+    func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+        if menuItem.action == #selector(toggleSidebar(_:)) {
+            menuItem.title = (self.isSidebarCollapsed ? NSLocalizedString("Hide Sidebar", comment: "Hide sidebar menu item") :
+                                                        NSLocalizedString("Show Sidebar", comment: "Show sidebar menu item"))
+            return true
+        }
+        if menuItem.action == #selector(toggleInspectors(_:)) {
+            menuItem.title = (self.isInspectorCollapsed ? NSLocalizedString("Hide Inspectors", comment: "Hide inspectors menu item") :
+                                                          NSLocalizedString("Show Inspectors", comment: "Show inspectors menu item"))
+            return true
+        }
+        return false
+    }
 }
 
 

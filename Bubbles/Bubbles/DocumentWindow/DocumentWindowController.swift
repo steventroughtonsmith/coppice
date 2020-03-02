@@ -141,6 +141,9 @@ class DocumentWindowController: NSWindowController {
             editor.responds(to: action) {
             return editor
         }
+        if self.splitViewController.responds(to: action) {
+            return self.splitViewController
+        }
         return super.supplementalTarget(forAction: action, sender: sender)
     }
 

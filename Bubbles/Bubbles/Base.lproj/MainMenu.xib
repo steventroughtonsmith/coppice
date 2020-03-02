@@ -367,6 +367,132 @@
                         </items>
                     </menu>
                 </menuItem>
+                <menuItem title="View" id="H8h-7b-M4v">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="View" id="HyV-fh-RgO">
+                        <items>
+                            <menuItem title="Show Toolbar" keyEquivalent="t" id="snW-S8-Cw5">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="toggleToolbarShown:" target="-1" id="BXY-wc-z0C"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Customize Toolbar…" id="1UK-8n-QPP">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="runToolbarCustomizationPalette:" target="-1" id="pQI-g3-MTW"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="fnm-LZ-sFQ"/>
+                            <menuItem title="Show Sidebar" keyEquivalent="s" id="kIP-vf-haE">
+                                <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                <connections>
+                                    <action selector="toggleSidebar:" target="-1" id="GSW-OG-ATb"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Show Inspectors" keyEquivalent="i" id="NRZ-IL-Ttt">
+                                <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                <connections>
+                                    <action selector="toggleInspectors:" target="-1" id="DOt-xD-u1G"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="Jwz-eT-xzl"/>
+                            <menuItem title="Sort Pages By" id="w59-WT-yIR">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Sort Pages By" id="yI2-qg-ApM">
+                                    <items>
+                                        <menuItem title="Title" id="7YV-Eu-bWg">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem title="Last Edited" id="eNo-Eq-XnA">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem title="Date Created" id="8J4-R7-UDC">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="hB3-LF-h0Y"/>
+                            <menuItem title="Enter Full Screen" keyEquivalent="f" id="4J7-dP-txa">
+                                <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                <connections>
+                                    <action selector="toggleFullScreen:" target="-1" id="dU3-MA-1Rq"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Canvas" id="lX0-Lo-gqe">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Canvas" id="Luh-N3-YuJ">
+                        <items>
+                            <menuItem title="Add Page…" id="1YE-0Q-j41">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem title="Remove Selected Page" id="zz9-Kb-Ifx">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="y0O-ht-5iO"/>
+                            <menuItem title="Theme" id="ivo-7s-W5i">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Theme" id="UKj-fI-79N">
+                                    <items>
+                                        <menuItem title="Item" id="slr-A6-ze0">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="UjE-Gx-zYR"/>
+                            <menuItem title="Zoom" id="oBz-3v-LAO">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Zoom" id="U30-9b-1rR">
+                                    <items>
+                                        <menuItem title="Zoom In" keyEquivalent="+" id="6e5-Ie-zZy">
+                                            <connections>
+                                                <action selector="zoomIn:" target="-1" id="tk2-9b-zdY"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Zoom Out" keyEquivalent="-" id="d1g-Mg-kRF">
+                                            <connections>
+                                                <action selector="zoomOut:" target="-1" id="jNi-9E-lbe"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Zoom To 100%" keyEquivalent="0" id="mbZ-cX-aM3">
+                                            <connections>
+                                                <action selector="zoomTo100:" target="-1" id="AQf-12-rdw"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Page" id="UB9-80-owz">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Page" id="paa-hx-EBq">
+                        <items>
+                            <menuItem title="Delete Page…" id="SAj-jc-4Yd">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="MFS-tf-nzH"/>
+                            <menuItem title="Jump to Page" keyEquivalent="J" id="XFg-Um-Khw">
+                                <connections>
+                                    <action selector="jumpToPage:" target="-1" id="7Y7-SF-mU7"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="hAC-oJ-HIS"/>
+                            <menuItem title="Link to Page…" id="UkZ-4o-fVA">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem title="Create New Linked Page…" id="R2M-0X-HKt">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
                 <menuItem title="Format" id="jxT-CU-nIS">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Format" id="GEO-Iw-cKr">
@@ -625,60 +751,6 @@
                                         </menuItem>
                                     </items>
                                 </menu>
-                            </menuItem>
-                        </items>
-                    </menu>
-                </menuItem>
-                <menuItem title="View" id="H8h-7b-M4v">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="View" id="HyV-fh-RgO">
-                        <items>
-                            <menuItem title="Show Toolbar" keyEquivalent="t" id="snW-S8-Cw5">
-                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
-                                <connections>
-                                    <action selector="toggleToolbarShown:" target="-1" id="BXY-wc-z0C"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Customize Toolbar…" id="1UK-8n-QPP">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="runToolbarCustomizationPalette:" target="-1" id="pQI-g3-MTW"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="fnm-LZ-sFQ"/>
-                            <menuItem title="Zoom In" keyEquivalent="+" id="qqo-58-jVY">
-                                <connections>
-                                    <action selector="zoomIn:" target="-1" id="w74-e5-mvl"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Zoom Out" keyEquivalent="-" id="Srl-KO-7Ad">
-                                <connections>
-                                    <action selector="zoomOut:" target="-1" id="QTt-3g-Btv"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Zoom To 100%" keyEquivalent="0" id="Ri2-Zh-Ffj">
-                                <connections>
-                                    <action selector="zoomTo100:" target="-1" id="yDs-cD-454"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="8k8-FA-Qao"/>
-                            <menuItem title="Jump to Page" keyEquivalent="J" id="XFg-Um-Khw">
-                                <connections>
-                                    <action selector="jumpToPage:" target="-1" id="7Y7-SF-mU7"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="hB3-LF-h0Y"/>
-                            <menuItem title="Show Sidebar" keyEquivalent="s" id="kIP-vf-haE">
-                                <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
-                                <connections>
-                                    <action selector="toggleSidebar:" target="-1" id="iwa-gc-5KM"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Enter Full Screen" keyEquivalent="f" id="4J7-dP-txa">
-                                <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
-                                <connections>
-                                    <action selector="toggleFullScreen:" target="-1" id="dU3-MA-1Rq"/>
-                                </connections>
                             </menuItem>
                         </items>
                     </menu>
