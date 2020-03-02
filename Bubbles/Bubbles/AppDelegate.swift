@@ -14,7 +14,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let documentController = BubblesDocumentController()
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        
+        //Expires 1st June 2020
+        if Date.timeIntervalSinceReferenceDate >= 612705600.0 {
+            let alert = NSAlert()
+            alert.messageText = "This version has expired"
+            alert.informativeText = "Please contact M Cubed Software or download the latest version"
+            alert.runModal()
+            NSApplication.shared.terminate(self)
+        }
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
