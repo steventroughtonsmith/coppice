@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import Combine
 
 class CanvasEditorViewController: NSViewController, NSMenuItemValidation {
 
@@ -63,6 +64,8 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation {
                                                selector: #selector(scrollingChanged(_:)),
                                                name: NSView.boundsDidChangeNotification,
                                                object: self.scrollView.contentView)
+
+        self.setupZoomObservation()
         self.updateZoomControl()
     }
 
@@ -361,6 +364,17 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation {
 
     @IBAction func zoomControlChanged(_ sender: Any?) {
         self.viewModel.selectedZoomLevel = self.zoomControl.indexOfSelectedItem
+    }
+
+    private var zoomObservation: AnyCancellable!
+    private func setupZoomObservation() {
+        self.zoomObservation = NotificationCenter.default.publisher(for: NSScrollView.didEndLiveMagnifyNotification, object: self.scrollView)
+            .sink { [weak self] (notification) in
+                guard let strongSelf = self else {
+                    return
+                }
+                strongSelf.viewModel.zoomFactor = strongSelf.scrollView.magnification
+            }
     }
 
 
