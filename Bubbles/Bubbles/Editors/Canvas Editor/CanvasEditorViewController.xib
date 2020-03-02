@@ -31,7 +31,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" name="Canvas Background"/>
+                        <color key="backgroundColor" name="CanvasBackground"/>
                     </clipView>
                     <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="qrD-Pn-Wt2">
                         <rect key="frame" x="0.0" y="256" width="480" height="16"/>
@@ -76,8 +76,8 @@
         </customView>
     </objects>
     <resources>
-        <namedColor name="Canvas Background">
-            <color red="0.25098234415054321" green="0.25097692012786865" blue="0.25098058581352234" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        <namedColor name="CanvasBackground">
+            <color red="0.85100001096725464" green="0.85100001096725464" blue="0.85100001096725464" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

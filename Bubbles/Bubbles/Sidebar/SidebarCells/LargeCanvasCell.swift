@@ -13,6 +13,8 @@ class LargeCanvasCell: EditableLabelCell {
     static var identifier = NSUserInterfaceItemIdentifier(rawValue: "LargeCanvasCell")
 
     @IBOutlet weak var canvasPreview: CanvasPreviewView!
+
+    private var thumbnailObserver: AnyCancellable?
     override var objectValue: Any? {
         didSet {
             guard let canvasItem = self.objectValue as? CanvasSidebarItem else {

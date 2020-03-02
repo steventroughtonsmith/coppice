@@ -92,7 +92,7 @@ class DocumentWindowController: NSWindowController {
 
     @IBAction func jumpToPage(_ sender: Any?) {
         self.showPageSelector(title: "Jump to page…") { [weak self] page in
-            self?.openPage(at: page.linkToPage())
+            self?.viewModel.openPage(at: page.linkToPage())
         }
     }
 
@@ -107,31 +107,6 @@ class DocumentWindowController: NSWindowController {
         }
         self.pageSelectorWindowController = PageSelectorWindowController(viewModel: viewModel)
         self.pageSelectorWindowController?.show(over: self.window)
-    }
-
-
-    //MARK: - Displaying Page
-    @discardableResult func openPage(at pageLink: PageLink) -> Bool {
-        guard let document = self.document as? Document,
-            (document.modelController.object(with: pageLink.destination) != nil) else {
-            return false
-        }
-
-        guard self.viewModel.selectedCanvasInSidebar == nil else {
-            //In theory canvasEditor should always be set if the selected object is a Canvas but we want to exit early regardless as it's a bit more predicatable
-            guard let canvasEditor = self.editorContainerViewController?.mainEditor as? CanvasEditorViewController else {
-                return false
-            }
-            canvasEditor.viewModel.addPage(at: pageLink)
-            return true
-        }
-
-        self.selectObject(with: pageLink.destination)
-        return true
-    }
-
-    func selectObject(with id: ModelID) {
-        self.viewModel.selectedSidebarObjectIDs = Set([id])
     }
 
 
@@ -155,6 +130,28 @@ class DocumentWindowController: NSWindowController {
 
     @IBAction func newCanvas(_ sender: Any?) {
         self.viewModel.createCanvas()
+    }
+
+    @IBAction func deletePage(_ sender: Any?) {
+        if (self.viewModel.selectedPagesInSidebar.count == 1), let page = self.viewModel.selectedPagesInSidebar.first {
+            self.viewModel.delete(page)
+        }
+    }
+
+    @IBAction func deleteCanvas(_ sender: Any?) {
+        if let canvas = self.viewModel.selectedCanvasInSidebar {
+            self.viewModel.delete(canvas)
+        }
+    }
+
+    func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+        if menuItem.action == #selector(deletePage(_:)) {
+            return (self.viewModel.selectedPagesInSidebar.count == 1)
+        }
+        if menuItem.action == #selector(deleteCanvas(_:)) {
+            return (self.viewModel.selectedCanvasInSidebar != nil)
+        }
+        return true
     }
 
 
@@ -236,8 +233,8 @@ extension DocumentWindowController: DocumentWindow {
 
 
 extension DocumentWindowController: EditorContainerViewControllerDelegate {
-    func open(_ page: PageLink, from viewController: EditorContainerViewController) {
-        self.openPage(at: page)
+    func open(_ pageLink: PageLink, from viewController: EditorContainerViewController) {
+        self.viewModel.handle(pageLink)
     }
 }
 

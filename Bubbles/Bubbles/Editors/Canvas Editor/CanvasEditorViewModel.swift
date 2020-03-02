@@ -217,12 +217,24 @@ class CanvasEditorViewModel: ViewModel {
         }
     }
 
+    var canZoomIn: Bool {
+        return self.selectedZoomLevel < (zoomLevels.count - 1)
+    }
+
     func zoomIn() {
         self.selectedZoomLevel += 1
     }
 
+    var canZoomOut: Bool {
+        return self.selectedZoomLevel > 0
+    }
+
     func zoomOut() {
         self.selectedZoomLevel -= 1
+    }
+
+    var canZoomTo100: Bool {
+        return self.zoomFactor != 1
     }
 
     func zoomTo100() {

@@ -51,7 +51,9 @@ final class Canvas: NSObject, CollectableModelObject {
 
     var viewPort: CGRect?
 
-    @objc dynamic var thumbnail: NSImage?
+    @objc dynamic var thumbnail: NSImage? {
+        didSet { self.didChange(\.thumbnail, oldValue: oldValue) }
+    }
 
 
     //MARK: - Relationships

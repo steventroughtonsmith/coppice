@@ -158,6 +158,32 @@ class DocumentWindowViewModel: NSObject {
     }
 
 
+    //MARK: - Navigating Pages
+
+    /// Either opens the page or adds it to the canvas, depending on what is selected in the sidebar
+    /// - Parameter pageLink: The PageLink to handle
+    /// - Returns: True if the page link was handled, false if it wasn't
+    @discardableResult func handle(_ pageLink: PageLink) -> Bool {
+        guard self.modelController.object(with: pageLink.destination) != nil else {
+            return false
+        }
+
+        guard self.selectedCanvasInSidebar == nil else {
+            self.addPage(at: pageLink, to: self.selectedCanvasInSidebar!)
+            return true
+        }
+
+        self.openPage(at: pageLink)
+        return true
+    }
+
+    /// Displays the page at the supplied link in the main editor
+    /// - Parameter pageLink: The page link to open
+    func openPage(at pageLink: PageLink) {
+        self.selectedSidebarObjectIDs = Set([pageLink.destination])
+    }
+
+
     //MARK: - Adding Pages To Canvas
     @discardableResult func addPage(at link: PageLink, to canvas: Canvas, centredOn point: CGPoint? = nil) -> CanvasPage? {
         guard let page = self.pageCollection.objectWithID(link.destination) else {

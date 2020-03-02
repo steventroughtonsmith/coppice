@@ -24,15 +24,7 @@ class CanvasSidebarItem: NSObject, SidebarItem {
         get { self.canvas.title }
         set { self.canvas.title = newValue }
     }
-    @objc dynamic var thumbnail: NSImage? { self.canvas.thumbnail }
-
-    override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
-        var keyPaths = super.keyPathsForValuesAffectingValue(forKey: key)
-        if (key == #keyPath(thumbnail)) {
-            keyPaths.insert("self.canvas.thumbnail")
-        }
-        return keyPaths
-    }
+    dynamic var thumbnail: NSImage? { self.canvas.thumbnail }
 }
 
 class PageSidebarItem: NSObject, SidebarItem {

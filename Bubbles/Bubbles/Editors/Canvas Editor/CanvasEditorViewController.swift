@@ -378,6 +378,20 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation {
 
 
     //MARK: - Menu Items
+    @IBAction func addPageToCanvas(_ sender: Any?) {
+        guard let windowController = self.windowController as? DocumentWindowController else {
+            return
+        }
+
+        windowController.showPageSelector(title: NSLocalizedString("Add page to canvas…", comment: "Add page selector title")) { [weak self] (page) in
+            self?.viewModel.addPage(with: page.id)
+        }
+    }
+
+    @IBAction func removeSelectedPages(_ sender: Any?) {
+        self.viewModel.selectedCanvasPages.forEach { self.viewModel.close($0) }
+    }
+
     @IBAction func exportPages(_ sender: Any?) {
         guard let window = self.view.window else {
             return
@@ -385,9 +399,41 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation {
         PageExporter.export(self.viewModel.selectedCanvasPages.compactMap { $0.page }, displayingOn: window)
     }
 
+    @IBAction func deletePage(_ sender: Any?) {
+        guard (self.viewModel.selectedCanvasPages.count == 1), let page = self.viewModel.selectedCanvasPages.first?.page else {
+            return
+        }
+
+        self.viewModel.documentWindowViewModel.delete(page)
+    }
+
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         if menuItem.action == #selector(zoomControlChanged(_:)) {
             return true
+        }
+        if menuItem.action == #selector(addPageToCanvas(_:)) {
+            return true
+        }
+        if menuItem.action == #selector(removeSelectedPages(_:)) {
+            let selectedPagesCount = self.viewModel.selectedCanvasPages.count
+            if selectedPagesCount == 1 {
+                menuItem.title = NSLocalizedString("Remove Selected Page", comment: "Remove selected page singular menu item")
+            } else {
+                menuItem.title = NSLocalizedString("Remove Selected Pages", comment: "Remove selected pages plural menu item")
+            }
+            return (selectedPagesCount > 0)
+        }
+        if menuItem.action == #selector(deletePage(_:)) {
+            return (self.viewModel.selectedCanvasPages.count == 1)
+        }
+        if menuItem.action == #selector(zoomIn(_:)) {
+            return self.viewModel.canZoomIn
+        }
+        if menuItem.action == #selector(zoomOut(_:)) {
+            return self.viewModel.canZoomOut
+        }
+        if menuItem.action == #selector(zoomTo100(_:)) {
+            return self.viewModel.canZoomTo100
         }
         return PageExporter.validate(menuItem, forExporting: self.viewModel.selectedCanvasPages.compactMap { $0.page })
     }

@@ -396,23 +396,6 @@
                                     <action selector="toggleInspectors:" target="-1" id="DOt-xD-u1G"/>
                                 </connections>
                             </menuItem>
-                            <menuItem isSeparatorItem="YES" id="Jwz-eT-xzl"/>
-                            <menuItem title="Sort Pages By" id="w59-WT-yIR">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Sort Pages By" id="yI2-qg-ApM">
-                                    <items>
-                                        <menuItem title="Title" id="7YV-Eu-bWg">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                        </menuItem>
-                                        <menuItem title="Last Edited" id="eNo-Eq-XnA">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                        </menuItem>
-                                        <menuItem title="Date Created" id="8J4-R7-UDC">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                        </menuItem>
-                                    </items>
-                                </menu>
-                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="hB3-LF-h0Y"/>
                             <menuItem title="Enter Full Screen" keyEquivalent="f" id="4J7-dP-txa">
                                 <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
@@ -429,22 +412,24 @@
                         <items>
                             <menuItem title="Add Page…" id="1YE-0Q-j41">
                                 <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="addPageToCanvas:" target="-1" id="bsb-Y7-7UU"/>
+                                </connections>
                             </menuItem>
                             <menuItem title="Remove Selected Page" id="zz9-Kb-Ifx">
                                 <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="removeSelectedPages:" target="-1" id="UcO-bW-GPy"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="wAA-dT-LsV"/>
+                            <menuItem title="Delete Canvas…" id="aR6-bM-W9z">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="deleteCanvas:" target="-1" id="zUl-ob-hqp"/>
+                                </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="y0O-ht-5iO"/>
-                            <menuItem title="Theme" id="ivo-7s-W5i">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Theme" id="UKj-fI-79N">
-                                    <items>
-                                        <menuItem title="Item" id="slr-A6-ze0">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                        </menuItem>
-                                    </items>
-                                </menu>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="UjE-Gx-zYR"/>
                             <menuItem title="Zoom" id="oBz-3v-LAO">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Zoom" id="U30-9b-1rR">
@@ -476,6 +461,9 @@
                         <items>
                             <menuItem title="Delete Page…" id="SAj-jc-4Yd">
                                 <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="deletePage:" target="-1" id="gzN-Wb-20c"/>
+                                </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="MFS-tf-nzH"/>
                             <menuItem title="Jump to Page" keyEquivalent="J" id="XFg-Um-Khw">

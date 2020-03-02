@@ -53,7 +53,7 @@ class Document: NSDocument {
             let windowController = self.windowControllers.first as? DocumentWindowController else {
             return false
         }
-        return windowController.openPage(at: pageLink)
+        return windowController.viewModel.handle(pageLink)
     }
 
 }
