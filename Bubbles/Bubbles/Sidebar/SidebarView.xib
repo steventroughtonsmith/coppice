@@ -25,7 +25,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="228" height="190"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <subviews>
-                        <visualEffectView blendingMode="behindWindow" material="appearanceBased" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="O7Z-8y-A2Y">
+                        <visualEffectView blendingMode="behindWindow" material="sidebar" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="O7Z-8y-A2Y">
                             <rect key="frame" x="0.0" y="0.0" width="228" height="158"/>
                             <subviews>
                                 <scrollView identifier="CanvasTable" borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xiy-A8-vhX">
@@ -141,7 +141,7 @@
                     <rect key="frame" x="0.0" y="191" width="228" height="449"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <subviews>
-                        <visualEffectView blendingMode="behindWindow" material="appearanceBased" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="psb-18-AkA">
+                        <visualEffectView blendingMode="behindWindow" material="sidebar" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="psb-18-AkA">
                             <rect key="frame" x="0.0" y="0.0" width="228" height="419"/>
                             <subviews>
                                 <scrollView identifier="PageTable" borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3uI-hu-t1R">
@@ -336,11 +336,6 @@
             </items>
             <point key="canvasLocation" x="-261" y="-74"/>
         </menu>
-        <visualEffectView blendingMode="behindWindow" material="appearanceBased" state="followsWindowActiveState" id="usI-CT-l7u">
-            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-            <autoresizingMask key="autoresizingMask"/>
-            <point key="canvasLocation" x="-272" y="338"/>
-        </visualEffectView>
     </objects>
     <resources>
         <namedColor name="SidebarSplitDivider">

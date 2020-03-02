@@ -35,6 +35,7 @@ class ModelReaderTests: XCTestCase {
                 "dateCreated": Date(timeIntervalSinceReferenceDate: 30),
                 "dateModified": Date(timeIntervalSinceReferenceDate: 300),
                 "sortIndex": 2,
+                "theme": "auto",
                 "viewPort": NSStringFromRect(CGRect(x: 10, y: 20, width: 30, height: 40))
             ],
             [
@@ -42,7 +43,8 @@ class ModelReaderTests: XCTestCase {
                 "title": "Canvas 2",
                 "dateCreated": Date(timeIntervalSinceReferenceDate: 42),
                 "dateModified": Date(timeIntervalSinceReferenceDate: 42),
-                "sortIndex": 1
+                "sortIndex": 1,
+                "theme": "light",
             ],
         ]
 

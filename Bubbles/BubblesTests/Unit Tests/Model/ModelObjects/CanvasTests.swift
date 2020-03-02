@@ -89,7 +89,8 @@ class CanvasTests: XCTestCase {
             "title": "Hello Bar",
             "dateCreated": Date(timeIntervalSinceReferenceDate: 31),
             "dateModified": Date(timeIntervalSinceReferenceDate: 1454),
-            "sortIndex": 4
+            "sortIndex": 4,
+            "theme": "auto",
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: plist))
@@ -103,7 +104,8 @@ class CanvasTests: XCTestCase {
             "id": canvas.id.stringRepresentation,
             "dateCreated": Date(timeIntervalSinceReferenceDate: 30),
             "dateModified": Date(timeIntervalSinceReferenceDate: 1453),
-            "sortIndex": 5
+            "sortIndex": 5,
+            "theme": "auto",
         ]
 
         XCTAssertThrowsError(try canvas.update(fromPlistRepresentation: plist), "") {
@@ -118,7 +120,8 @@ class CanvasTests: XCTestCase {
             "title": "Hello Bar",
             "dateCreated": Date(timeIntervalSinceReferenceDate: 32),
             "dateModified": Date(timeIntervalSinceReferenceDate: 1455),
-            "sortIndex": 3
+            "sortIndex": 3,
+            "theme": "auto",
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: plist))
@@ -132,7 +135,8 @@ class CanvasTests: XCTestCase {
             "id": canvas.id.stringRepresentation,
             "title": "Hello Bar",
             "dateModified": Date(timeIntervalSinceReferenceDate: 1453),
-            "sortIndex": 5
+            "sortIndex": 5,
+            "theme": "auto",
         ]
 
         XCTAssertThrowsError(try canvas.update(fromPlistRepresentation: plist), "") {
@@ -147,7 +151,8 @@ class CanvasTests: XCTestCase {
             "title": "Hello Bar",
             "dateCreated": Date(timeIntervalSinceReferenceDate: 33),
             "dateModified": Date(timeIntervalSinceReferenceDate: 1456),
-            "sortIndex": 2
+            "sortIndex": 2,
+            "theme": "auto",
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: plist))
@@ -161,7 +166,8 @@ class CanvasTests: XCTestCase {
             "id": canvas.id.stringRepresentation,
             "title": "Hello Bar",
             "dateCreated": Date(timeIntervalSinceReferenceDate: 30),
-            "sortIndex": 5
+            "sortIndex": 5,
+            "theme": "auto",
         ]
 
         XCTAssertThrowsError(try canvas.update(fromPlistRepresentation: plist), "") {
@@ -176,7 +182,8 @@ class CanvasTests: XCTestCase {
             "title": "Hello Bar",
             "dateCreated": Date(timeIntervalSinceReferenceDate: 32),
             "dateModified": Date(timeIntervalSinceReferenceDate: 1455),
-            "sortIndex": 1
+            "sortIndex": 1,
+            "theme": "auto",
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: plist))
@@ -191,6 +198,7 @@ class CanvasTests: XCTestCase {
             "title": "Hello Bar",
             "dateCreated": Date(timeIntervalSinceReferenceDate: 30),
             "dateModified": Date(timeIntervalSinceReferenceDate: 1453),
+            "theme": "auto",
         ]
 
         XCTAssertThrowsError(try canvas.update(fromPlistRepresentation: plist), "") {
@@ -206,7 +214,8 @@ class CanvasTests: XCTestCase {
             "dateCreated": Date(timeIntervalSinceReferenceDate: 32),
             "dateModified": Date(timeIntervalSinceReferenceDate: 1455),
             "sortIndex": 1,
-            "viewPort": NSStringFromRect(CGRect(x: 9, y: 8, width: 7, height: 6))
+            "theme": "auto",
+            "viewPort": NSStringFromRect(CGRect(x: 9, y: 8, width: 7, height: 6)),
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: plist))
@@ -223,6 +232,7 @@ class CanvasTests: XCTestCase {
             "dateCreated": Date(timeIntervalSinceReferenceDate: 32),
             "dateModified": Date(timeIntervalSinceReferenceDate: 1455),
             "sortIndex": 1,
+            "theme": "auto",
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: plist))

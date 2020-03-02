@@ -149,7 +149,6 @@ extension Canvas {
             let origin = CGPoint(x: x, y: childPage.frame.minY)
             return CGRect(origin: origin, size: size)
         }
-        return .zero
     }
 
     private func combinedFrameOfSiblings(of canvasPage: CanvasPage, in direction: PageDirection) -> CGRect {
