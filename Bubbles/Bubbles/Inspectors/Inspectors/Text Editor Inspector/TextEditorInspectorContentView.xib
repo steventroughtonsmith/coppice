@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15705" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16085" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15705"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16085"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -9,6 +9,8 @@
             <connections>
                 <outlet property="alignmentControl" destination="lJO-MO-Qab" id="GrE-G3-hKc"/>
                 <outlet property="colourPicker" destination="332-eu-rTh" id="Y6F-i2-4z4"/>
+                <outlet property="firstKeyView" destination="pqU-O1-BJI" id="l79-fs-Ycv"/>
+                <outlet property="lastKeyView" destination="b02-Xt-Yqt" id="kRQ-tu-eg7"/>
                 <outlet property="styleControl" destination="1fJ-zV-rDa" id="LGY-8F-asz"/>
             </connections>
         </customObject>
@@ -34,6 +36,7 @@
                     <connections>
                         <binding destination="-2" name="contentValues" keyPath="self.viewModel.fontFamilies" id="JwZ-O0-wgl"/>
                         <binding destination="-2" name="selectedValue" keyPath="self.viewModel.selectedFontFamily" previousBinding="JwZ-O0-wgl" id="MoO-pm-ZNl"/>
+                        <outlet property="nextKeyView" destination="U7t-eh-okS" id="cDL-dO-qcG"/>
                     </connections>
                 </popUpButton>
                 <popUpButton toolTip="Choose the typeface" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="U7t-eh-okS">
@@ -59,6 +62,7 @@
                         <binding destination="-2" name="contentObjects" keyPath="self.viewModel.typefaces" previousBinding="w1y-tj-DfP" id="CUr-iE-ie4"/>
                         <binding destination="-2" name="content" keyPath="self.viewModel.typefaces" id="w1y-tj-DfP"/>
                         <binding destination="-2" name="contentValues" keyPath="self.viewModel.typefaces.displayName" previousBinding="CUr-iE-ie4" id="hGo-9W-h5t"/>
+                        <outlet property="nextKeyView" destination="tVJ-Wa-8Xo" id="9w2-7i-NsE"/>
                     </connections>
                 </popUpButton>
                 <textField toolTip="Choose the text size" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tVJ-Wa-8Xo">
@@ -83,6 +87,7 @@
                                 <string key="NSNullPlaceholder">-</string>
                             </dictionary>
                         </binding>
+                        <outlet property="nextKeyView" destination="gJM-Vb-Oux" id="KIJ-MN-Tal"/>
                     </connections>
                 </textField>
                 <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gJM-Vb-Oux">
@@ -90,6 +95,7 @@
                     <stepperCell key="cell" continuous="YES" alignment="left" maxValue="999" id="iIB-a3-m2I"/>
                     <connections>
                         <binding destination="-2" name="value" keyPath="self.viewModel.fontSize" id="ANJ-Uy-ROM"/>
+                        <outlet property="nextKeyView" destination="332-eu-rTh" id="CPn-VI-1dc"/>
                     </connections>
                 </stepper>
                 <segmentedControl toolTip="Choose the text alignment" horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lJO-MO-Qab">
@@ -104,6 +110,7 @@
                     </segmentedCell>
                     <connections>
                         <action selector="alignmentClicked:" target="-2" id="WmK-KG-Cnd"/>
+                        <outlet property="nextKeyView" destination="1fJ-zV-rDa" id="QBu-F4-aZw"/>
                     </connections>
                 </segmentedControl>
                 <segmentedControl toolTip="Choose the text styles" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1fJ-zV-rDa">
@@ -119,6 +126,7 @@
                     </segmentedCell>
                     <connections>
                         <action selector="styleControlClicked:" target="-2" id="sia-pJ-wff"/>
+                        <outlet property="nextKeyView" destination="b02-Xt-Yqt" id="19l-7V-MEN"/>
                     </connections>
                 </segmentedControl>
                 <button toolTip="Open the font panel" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="b02-Xt-Yqt">
@@ -138,6 +146,7 @@
                     </constraints>
                     <connections>
                         <action selector="colourChanged:" target="-2" id="Zez-hq-PYB"/>
+                        <outlet property="nextKeyView" destination="lJO-MO-Qab" id="lvv-2g-0XQ"/>
                     </connections>
                 </customView>
             </subviews>

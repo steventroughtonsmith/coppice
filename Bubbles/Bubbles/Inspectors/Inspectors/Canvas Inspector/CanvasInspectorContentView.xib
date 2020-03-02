@@ -5,7 +5,12 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="CanvasInspectorViewController" customModule="Bubbles" customModuleProvider="target"/>
+        <customObject id="-2" userLabel="File's Owner" customClass="CanvasInspectorViewController" customModule="Bubbles" customModuleProvider="target">
+            <connections>
+                <outlet property="firstKeyView" destination="b0f-QP-nLp" id="3Al-oa-MMF"/>
+                <outlet property="lastKeyView" destination="Kri-qI-nSO" id="1u2-hb-9nJ"/>
+            </connections>
+        </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="ehY-F7-MGj">
@@ -21,6 +26,7 @@
                     </textFieldCell>
                     <connections>
                         <binding destination="-2" name="value" keyPath="self.viewModel.canvasTitle" id="XdU-H6-0jB"/>
+                        <outlet property="nextKeyView" destination="Kri-qI-nSO" id="7Zm-6h-2Rk"/>
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VTj-SJ-Zad">

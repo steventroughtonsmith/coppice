@@ -36,6 +36,10 @@ class BaseInspectorViewController: NSViewController, Inspector {
     var ranking: InspectorRanking { return InspectorRanking(rawValue: 0)! }
 
 
+    @IBOutlet var firstKeyView: NSView?
+    @IBOutlet var lastKeyView: NSView?
+
+
     //MARK: - Row management
     var contentViewNibName: NSNib.Name? {
         return nil

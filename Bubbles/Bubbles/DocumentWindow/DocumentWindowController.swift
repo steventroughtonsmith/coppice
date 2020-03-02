@@ -69,6 +69,9 @@ class DocumentWindowController: NSWindowController {
         self.splitViewController.splitView = self.splitView
         self.splitViewController.delegate = self as SplitViewControllerDelegate
         self.setupViewControllers()
+
+        self.sidebarViewController?.pagesTable.nextKeyView = self.editorContainerViewController?.view
+        self.editorContainerViewController?.view.nextKeyView = self.inspectorContainerViewController?.view
     }
 
     private func setupViewControllers() {

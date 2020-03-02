@@ -40,6 +40,7 @@ class InspectorContainerViewController: NSViewController {
         didSet {
             oldValue.forEach { $0.view.removeFromSuperview() }
             self.children = self.inspectorViewControllers
+            var previous: BaseInspectorViewController? = nil
             self.inspectorViewControllers.forEach {
                 self.stackView.addArrangedSubview($0.view)
                 let constraints = [
@@ -47,7 +48,13 @@ class InspectorContainerViewController: NSViewController {
                     $0.view.trailingAnchor.constraint(equalTo: self.stackView.trailingAnchor)
                 ]
                 NSLayoutConstraint.activate(constraints)
+
+                //Do this after the code above so the NIBs are loaded
+                previous?.lastKeyView?.nextKeyView = $0.firstKeyView
+                previous = $0
             }
+
+            self.view.nextKeyView = self.inspectorViewControllers.first?.firstKeyView
         }
     }
 

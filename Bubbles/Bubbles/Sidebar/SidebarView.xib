@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15702" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16085" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15702"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16085"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -28,7 +28,7 @@
                         <visualEffectView blendingMode="behindWindow" material="appearanceBased" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="O7Z-8y-A2Y">
                             <rect key="frame" x="0.0" y="0.0" width="228" height="158"/>
                             <subviews>
-                                <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xiy-A8-vhX">
+                                <scrollView identifier="CanvasTable" borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xiy-A8-vhX">
                                     <rect key="frame" x="0.0" y="0.0" width="228" height="158"/>
                                     <clipView key="contentView" drawsBackground="NO" id="Kfl-NS-isZ">
                                         <rect key="frame" x="0.0" y="0.0" width="228" height="158"/>
@@ -43,7 +43,6 @@
                                                 <tableColumns>
                                                     <tableColumn width="225" minWidth="40" maxWidth="1000" id="DUd-FR-Xxl">
                                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
-                                                            <font key="font" metaFont="label" size="11"/>
                                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                         </tableHeaderCell>
@@ -83,6 +82,7 @@
                                                     <outlet property="dataSource" destination="-2" id="K0i-v3-hUa"/>
                                                     <outlet property="delegate" destination="-2" id="cOM-fj-LgZ"/>
                                                     <outlet property="menu" destination="WMw-nL-qeD" id="xuD-Jy-b1w"/>
+                                                    <outlet property="nextKeyView" destination="KyP-MZ-pBo" id="dhI-hL-TW0"/>
                                                 </connections>
                                             </tableView>
                                         </subviews>
@@ -144,7 +144,7 @@
                         <visualEffectView blendingMode="behindWindow" material="appearanceBased" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="psb-18-AkA">
                             <rect key="frame" x="0.0" y="0.0" width="228" height="419"/>
                             <subviews>
-                                <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3uI-hu-t1R">
+                                <scrollView identifier="PageTable" borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3uI-hu-t1R">
                                     <rect key="frame" x="0.0" y="0.0" width="228" height="419"/>
                                     <clipView key="contentView" drawsBackground="NO" id="4To-Ay-e5f">
                                         <rect key="frame" x="0.0" y="0.0" width="228" height="419"/>
@@ -159,7 +159,6 @@
                                                 <tableColumns>
                                                     <tableColumn width="225" minWidth="40" maxWidth="1000" id="QUv-LA-rOC">
                                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
-                                                            <font key="font" metaFont="label" size="11"/>
                                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                         </tableHeaderCell>
@@ -345,7 +344,7 @@
     </objects>
     <resources>
         <namedColor name="SidebarSplitDivider">
-            <color red="0.0" green="0.0" blue="0.0" alpha="0.29959875345230103" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.0" blue="0.0" alpha="0.30000001192092896" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

@@ -64,15 +64,18 @@ class SidebarViewController: NSViewController, NSMenuItemValidation {
     //MARK: - Keyboard shortcuts
     override func keyDown(with event: NSEvent) {
         guard let specialKey = event.specialKey else {
+            super.keyDown(with: event)
             return
         }
 
         //For some reason NSEvent.SpecialKey.delete does not use NSDeleteFunctionKey, but NSEvent does
         guard (specialKey == .backspace) || (specialKey == .delete) || (specialKey == .deleteForward) else {
+            super.keyDown(with: event)
             return
         }
 
         guard let table = self.windowController?.window?.firstResponder as? NSTableView else {
+            super.keyDown(with: event)
             return
         }
 
