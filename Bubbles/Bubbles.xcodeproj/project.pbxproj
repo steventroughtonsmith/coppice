@@ -1519,6 +1519,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MARKETING_VERSION = 1.0a3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Bubbles;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG TEST";
@@ -1699,6 +1700,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MARKETING_VERSION = 1.0a3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Bubbles;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1719,6 +1721,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MARKETING_VERSION = 1.0a3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Bubbles;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
