@@ -14,6 +14,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let documentController = BubblesDocumentController()
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        #if !DEBUG
+        if let debugMenu = NSApplication.shared.mainMenu?.item(withTag: -31) {
+            NSApplication.shared.mainMenu?.removeItem(debugMenu)
+        }
+        #endif
+
         //Expires 1st June 2020
         if Date.timeIntervalSinceReferenceDate >= 612705600.0 {
             let alert = NSAlert()

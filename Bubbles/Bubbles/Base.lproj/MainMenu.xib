@@ -768,7 +768,7 @@
                         </items>
                     </menu>
                 </menuItem>
-                <menuItem title="**DEBUG**" id="MEe-GM-s4t">
+                <menuItem title="**DEBUG**" tag="-31" id="MEe-GM-s4t">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="**DEBUG**" id="Zxp-4f-sTY">
                         <items>
