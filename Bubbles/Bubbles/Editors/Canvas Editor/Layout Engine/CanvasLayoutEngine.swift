@@ -228,6 +228,7 @@ class CanvasLayoutEngine: NSObject {
             return nil
         }
 
+        print("component: \(pageComponent), location: \(location.minus(page.layoutFrame.origin)), componentRect: \(page.rectInLayoutFrame(for: pageComponent))")
         switch pageComponent {
         case .titleBar, .content:
             return SelectAndMoveEventContext(page: page)

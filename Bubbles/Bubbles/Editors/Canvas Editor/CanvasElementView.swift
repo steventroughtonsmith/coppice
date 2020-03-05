@@ -9,34 +9,26 @@
 import Cocoa
 
 extension LayoutEnginePageComponent {
+    static let horizontalResizeCursor = NSCursor(image: NSImage(named: "left-rightcursor")!, hotSpot: CGPoint(x: 11, y: 11))
+    static let verticalResizeCursor = NSCursor(image: NSImage(named: "up-downcursor")!, hotSpot: CGPoint(x: 11, y: 11))
+    static let topLeftDiagonalResizeCursor = NSCursor(image: NSImage(named: "topleft-bottomrightcursor")!, hotSpot: CGPoint(x: 11, y: 11))
+    static let bottomLeftDiagonalResizeCursor = NSCursor(image: NSImage(named: "bottomleft-toprightcursor")!, hotSpot: CGPoint(x: 11, y: 11))
+
     func cursor(isAtLimit: Bool = false) -> NSCursor {
-        var cursorImage: NSImage? = nil
         switch (self) {
-        case .resizeLeft:
-            cursorImage = NSImage(named: "left-rightcursor")
-        case .resizeRight:
-            cursorImage = NSImage(named: "left-rightcursor")
-        case .resizeTop:
-            cursorImage = NSImage(named: "up-downcursor")
-        case .resizeBottom:
-            cursorImage = NSImage(named: "up-downcursor")
-        case .resizeTopLeft:
-            cursorImage = NSImage(named: "topleft-bottomrightcursor")
-        case .resizeTopRight:
-            cursorImage = NSImage(named: "bottomleft-toprightcursor")
-        case .resizeBottomLeft:
-            cursorImage = NSImage(named: "bottomleft-toprightcursor")
-        case .resizeBottomRight:
-            cursorImage = NSImage(named: "topleft-bottomrightcursor")
+        case .resizeLeft, .resizeRight:
+            return LayoutEnginePageComponent.horizontalResizeCursor
+        case .resizeTop, .resizeBottom:
+            return LayoutEnginePageComponent.verticalResizeCursor
+        case .resizeTopLeft, .resizeBottomRight:
+            return LayoutEnginePageComponent.topLeftDiagonalResizeCursor
+        case .resizeTopRight, .resizeBottomLeft:
+            return LayoutEnginePageComponent.bottomLeftDiagonalResizeCursor
         default:
             break
         }
 
-
-        guard let image = cursorImage else {
-            return NSCursor.arrow
-        }
-        return NSCursor(image: image, hotSpot: NSPoint(x: 11, y: 11))
+        return NSCursor.arrow
     }
 }
 
@@ -65,8 +57,8 @@ class CanvasElementView: NSView  {
     }
 
     func apply(_ layoutPage: LayoutEnginePage) {
-        self.updateResizeRects(with: layoutPage)
         self.updateSubviews(with: layoutPage)
+        self.updateResizeRects(with: layoutPage)
         self.showBackground = layoutPage.showBackground
     }
 
@@ -109,6 +101,12 @@ class CanvasElementView: NSView  {
         return view
     }()
 
+    private lazy var debugView: RectDrawingView = {
+        let view = RectDrawingView()
+        view.autoresizingMask = [.height, .width]
+        return view
+    }()
+
     private func setupSubviews() {
         self.wantsLayer = true
         self.addSubview(self.backgroundView, withInsets: self.shadowInsets)
@@ -116,6 +114,9 @@ class CanvasElementView: NSView  {
         self.addSubview(self.titleView)
         self.addSubview(self.contentContainerShadow)
         self.addSubview(self.contentContainer)
+//        self.addSubview(self.debugView)
+        self.debugView.frame = self.bounds
+        
 
         self.updateBackgroundVisibility(animated: false)
     }
@@ -189,6 +190,13 @@ class CanvasElementView: NSView  {
             }
             self.resizeRects[resizeComponent] = layoutPage.rectInLayoutFrame(for: resizeComponent)
         }
+
+        self.debugView.rects = [
+            (layoutPage.rectInLayoutFrame(for: .resizeLeft), NSColor.blue.withAlphaComponent(0.7)),
+            (layoutPage.rectInLayoutFrame(for: .resizeRight), NSColor.yellow.withAlphaComponent(0.7)),
+            (layoutPage.rectInLayoutFrame(for: .resizeTop), NSColor.green.withAlphaComponent(0.7)),
+            (layoutPage.rectInLayoutFrame(for: .resizeBottom), NSColor.red.withAlphaComponent(0.7))
+        ]
     }
 
     private func isPointInResizeRect(_ point: CGPoint) -> Bool {
@@ -225,6 +233,7 @@ class CanvasElementView: NSView  {
         let cursorRects = self.resizeRects + [(.titleBar, self.titleView.frame)]
         for (type, rect) in cursorRects {
             if (rect.contains(point)) {
+                print("type: \(type), rect: \(rect), point: \(point)")
                 return type.cursor()
             }
         }

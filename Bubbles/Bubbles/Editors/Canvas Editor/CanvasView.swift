@@ -348,13 +348,24 @@ class CanvasView: NSView {
 
 
     //MARK: - Cursor Handling
+    var currentCursor: NSCursor?
     private func updateCursor(forPageAt point: CGPoint) {
         guard let pageView = self.pageView(at: point) else {
             NSCursor.arrow.set()
             return
         }
+        //If for some reason you're wondering "Why is the cursor flickering away from what I set it to?" try quitting Photoshop
+        //Don't ask me why, instead ask Adobe how they manage to fuck up the whole OS
         let pagePoint = self.convert(point, to: pageView)
-        pageView.cursor(for: pagePoint)?.set()
+        if let cursor = pageView.cursor(for: pagePoint) {
+            cursor.set()
+            self.currentCursor = cursor
+        } else if (self.currentCursor != nil) {
+            //Because the content view (especially text views) may have an inset its scroll view then they won't take over the cursor setting
+            //So the first time we get a nil cursor we want to reset to an arrow, so our custom cursor doesn't stick around too long
+            NSCursor.arrow.set()
+            self.currentCursor = nil
+        }
     }
 
 
