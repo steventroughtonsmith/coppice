@@ -15,7 +15,7 @@ protocol CanvasEditorView: class {
 class CanvasEditorViewModel: ViewModel {
     weak var view: CanvasEditorView?
 
-    let layoutEngine = CanvasLayoutEngine(configuration: .init(page: .mac, contentBorder: 10, arrow: .standard))
+    let layoutEngine = CanvasLayoutEngine(configuration: .init(page: .mac, contentBorder: 1000, arrow: .standard))
 
     let canvas: Canvas
     init(canvas: Canvas, documentWindowViewModel: DocumentWindowViewModel) {
