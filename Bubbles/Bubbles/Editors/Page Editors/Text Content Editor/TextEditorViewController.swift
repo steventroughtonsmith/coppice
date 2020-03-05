@@ -34,7 +34,7 @@ class TextEditorViewController: NSViewController, InspectableTextEditor {
         super.viewDidLoad()
 
 //        self.selectableBinding = self.publisher(for: \.enabled).assign(to: \.isSelectable, on: self.editingTextView)
-//        self.attributedTextObserver = self.publisher(for: \.viewModel.attributedText).sink { self.updateTextView(with: $0)}
+        self.attributedTextObserver = self.publisher(for: \.viewModel.attributedText).sink { self.updateTextView(with: $0) }
         self.updateTextView(with: self.viewModel.attributedText)
 //        self.highlightedRangeObserver = self.viewModel.$highlightedRange.sink { self.highlight($0) }
 
@@ -109,11 +109,14 @@ class TextEditorViewController: NSViewController, InspectableTextEditor {
 
 
     //MARK: - Update Model
+    private var editingText = false
     private func updateTextView(with text: NSAttributedString) {
-        guard (self.updatingText == false) else {
+        guard (self.updatingText == false) && (self.editingText == false) else {
             return
         }
+        self.updatingText = true
         self.editingTextView.textStorage?.setAttributedString(text)
+        self.updatingText = false
     }
 
     private func textNeedsUpating(singleCharacterChange: Bool) {
@@ -126,7 +129,7 @@ class TextEditorViewController: NSViewController, InspectableTextEditor {
         if !singleCharacterChange {
             self.updateText()
         } else {
-            self.perform(#selector(updateText), with: nil, afterDelay: 1)
+            self.perform(#selector(updateText), with: nil, afterDelay: 0.5)
         }
     }
 
@@ -162,6 +165,18 @@ extension TextEditorViewController: TextEditorView {
         self.editingTextView.modifyText(in: [range]) { (textStorage) in
             textStorage.addAttribute(.link, value: url, range: range)
         }
+    }
+}
+
+extension TextEditorViewController: NSTextDelegate {
+    func textDidBeginEditing(_ notification: Notification) {
+        self.editingText = true
+        print("start")
+    }
+
+    func textDidEndEditing(_ notification: Notification) {
+        self.editingText = false
+        print("end")
     }
 }
 
