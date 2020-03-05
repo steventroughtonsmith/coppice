@@ -36,10 +36,6 @@ class PageEditorViewModel: ViewModel {
 
     var contentEditor: (Editor & NSViewController) {
         switch self.page.content.contentType {
-        case .empty:
-            let viewModel = ContentSelectorViewModel(page: self.page, documentWindowViewModel: self.documentWindowViewModel)
-            viewModel.delegate = self
-            return ContentSelectorViewController(viewModel: viewModel)
         case .text:
             let viewModel = TextEditorViewModel(textContent: (self.page.content as! TextPageContent),
                                                 documentWindowViewModel: self.documentWindowViewModel)
@@ -54,12 +50,5 @@ class PageEditorViewModel: ViewModel {
 
     var pageInspectorViewModel: PageInspectorViewModel {
         return PageInspectorViewModel(page: self.page, modelController: self.modelController)
-    }
-}
-
-
-extension PageEditorViewModel: ContentSelectorViewModelDelegate {
-    func selectedType(in viewModel: ContentSelectorViewModel) {
-        self.view?.contentChanged()
     }
 }

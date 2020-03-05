@@ -9,10 +9,6 @@
 import AppKit
 
 class PageExporter {
-    private static func exportablePages(from pages: [Page]) -> [Page] {
-        return pages.filter { $0.content.contentType != .empty }
-    }
-
     private static func menuItemTitle(forExporting pages: [Page]) -> String {
         if pages.count == 1 {
             return NSLocalizedString("Export Selected Page…", comment: "Export single page menu item title")
@@ -25,7 +21,7 @@ class PageExporter {
             return false
         }
 
-        let selectedPages = self.exportablePages(from: pages)
+        let selectedPages = pages
         menuItem.title = self.menuItemTitle(forExporting: selectedPages)
         return selectedPages.count > 0
     }

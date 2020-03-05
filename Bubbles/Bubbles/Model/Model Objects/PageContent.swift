@@ -8,15 +8,12 @@
 
 import AppKit
 
-enum PageContentType: String, Equatable {
-    case empty
+enum PageContentType: String, Equatable, CaseIterable {
     case text
     case image
 
     func createContent(data: Data? = nil, metadata: [String: Any]? = nil) -> PageContent {
         switch self {
-        case .empty:
-            return EmptyPageContent()
         case .text:
             return TextPageContent(data: data)
         case .image:
@@ -40,8 +37,32 @@ enum PageContentType: String, Equatable {
             return NSImage(named: "TextPageSmall")
         case .image:
 			return NSImage(named: "ImagePageSmall")
-        default:
-            return nil
+        }
+    }
+
+    var localizedName: String {
+        switch self {
+        case .text:
+            return NSLocalizedString("Text Page", comment: "Text content name")
+        case .image:
+            return NSLocalizedString("Image page", comment: "Image content name")
+        }
+    }
+
+    var keyEquivalent: String {
+        switch self {
+        case .text, .image:
+            return "N"
+
+        }
+    }
+
+    var keyEquivalentModifierMask: NSEvent.ModifierFlags {
+        switch self {
+        case .text:
+            return [.command, .shift]
+        case .image:
+            return [.option, .command]
         }
     }
 }

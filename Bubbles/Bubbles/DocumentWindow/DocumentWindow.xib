@@ -68,6 +68,29 @@
             </view>
             <toolbar key="toolbar" implicitIdentifier="70B77CBD-7734-4DB0-B1CC-5CF88AD75C15" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="wrD-DS-DMi">
                 <allowedToolbarItems>
+                    <toolbarItem implicitItemIdentifier="D2BBD00B-8BA1-4721-91C3-16331792FD39" label="New Page" paletteLabel="New Page" image="AddPage" id="yJV-fh-W1y">
+                        <nil key="toolTip"/>
+                        <size key="minSize" width="47" height="24"/>
+                        <size key="maxSize" width="47" height="24"/>
+                        <popUpButton key="view" verticalHuggingPriority="750" id="6Ai-AI-X1H">
+                            <rect key="frame" x="7" y="14" width="47" height="24"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="AddPage" imagePosition="only" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="0CS-GJ-ZH2" id="Twi-4V-TzH">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                                <menu key="menu" id="Br5-bc-W3s">
+                                    <items>
+                                        <menuItem state="on" image="AddPage" hidden="YES" id="0CS-GJ-ZH2"/>
+                                        <menuItem title="Item 2" id="AwL-OC-vtC"/>
+                                        <menuItem title="Item 3" id="eFG-l7-ncm"/>
+                                    </items>
+                                    <connections>
+                                        <outlet property="delegate" destination="vF9-dA-dmp" id="Hre-Wy-7k5"/>
+                                    </connections>
+                                </menu>
+                            </popUpButtonCell>
+                        </popUpButton>
+                    </toolbarItem>
                     <toolbarItem implicitItemIdentifier="91E22082-FF2E-4572-9DF1-26C3D1FC9959" label="New Canvas" paletteLabel="New Canvas" image="AddBoard" sizingBehavior="auto" id="TPX-ea-tFb">
                         <nil key="toolTip"/>
                         <button key="view" verticalHuggingPriority="750" id="whH-7M-104">
@@ -80,20 +103,6 @@
                         </button>
                         <connections>
                             <action selector="newCanvas:" target="-1" id="8tL-zR-xxk"/>
-                        </connections>
-                    </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="7783F56F-7B48-4535-B45F-A5FD527B337C" label="New Page" paletteLabel="New Page" image="AddPage" sizingBehavior="auto" id="sEp-q4-Ytz">
-                        <nil key="toolTip"/>
-                        <button key="view" verticalHuggingPriority="750" id="xJX-eS-tYi">
-                            <rect key="frame" x="8" y="14" width="44" height="25"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="AddPage" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="MW6-Rc-ORK">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                        </button>
-                        <connections>
-                            <action selector="newPage:" target="-1" id="XuL-hs-YAD"/>
                         </connections>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="2B6058DC-C8C5-45BC-BF49-974943E8FBE8" label="Views" paletteLabel="Views" id="UjW-Vu-9qp">
@@ -135,7 +144,7 @@
                     </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
-                    <toolbarItem reference="sEp-q4-Ytz"/>
+                    <toolbarItem reference="yJV-fh-W1y"/>
                     <toolbarItem reference="TPX-ea-tFb"/>
                     <toolbarItem reference="Yn2-Qc-qMJ"/>
                     <toolbarItem reference="UjW-Vu-9qp"/>
@@ -147,6 +156,7 @@
             </connections>
             <point key="canvasLocation" x="472" y="-402"/>
         </window>
+        <customObject id="vF9-dA-dmp" customClass="NewPageMenuDelegate" customModule="Bubbles" customModuleProvider="target"/>
     </objects>
     <resources>
         <image name="AddBoard" width="19" height="19"/>

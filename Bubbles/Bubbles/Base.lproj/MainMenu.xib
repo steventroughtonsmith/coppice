@@ -13,6 +13,7 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Bubbles" customModuleProvider="target"/>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
+        <customObject id="S7z-Mc-1OZ" customClass="NewPageMenuDelegate" customModule="Bubbles" customModuleProvider="target"/>
         <menu title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
             <items>
                 <menuItem title="Bubbles" id="1Xt-HY-uBw">
@@ -63,30 +64,31 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="File" id="bib-Uj-vzu">
                         <items>
-                            <menuItem title="New" id="eWm-Qz-wsP">
+                            <menuItem title="New Document" keyEquivalent="n" id="yNA-4I-lag">
+                                <connections>
+                                    <action selector="newDocument:" target="-1" id="eur-Ou-IUP"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="New Page" id="eWm-Qz-wsP">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="New" id="KJU-2r-oLa">
+                                <menu key="submenu" title="New Page" id="KJU-2r-oLa">
                                     <items>
-                                        <menuItem title="Document" keyEquivalent="n" id="yNA-4I-lag">
-                                            <connections>
-                                                <action selector="newDocument:" target="-1" id="eur-Ou-IUP"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="acC-IX-dS0"/>
-                                        <menuItem title="Canvas" keyEquivalent="n" id="bK3-YV-tYa">
-                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
-                                            <connections>
-                                                <action selector="newCanvas:" target="-1" id="Rwh-Qz-UVG"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Page" keyEquivalent="N" id="51p-ab-XQr">
-                                            <connections>
-                                                <action selector="newPage:" target="-1" id="zeG-9w-QHe"/>
-                                            </connections>
+                                        <menuItem title="Item" id="kV1-sU-NXR">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
                                     </items>
+                                    <connections>
+                                        <outlet property="delegate" destination="S7z-Mc-1OZ" id="iNc-T8-Tmh"/>
+                                    </connections>
                                 </menu>
                             </menuItem>
+                            <menuItem title="New Canvas" keyEquivalent="n" id="bK3-YV-tYa">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="newCanvas:" target="-1" id="Rwh-Qz-UVG"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="acC-IX-dS0"/>
                             <menuItem title="Open…" keyEquivalent="o" id="IAo-SY-fd9">
                                 <connections>
                                     <action selector="openDocument:" target="-1" id="bVn-NM-KNZ"/>

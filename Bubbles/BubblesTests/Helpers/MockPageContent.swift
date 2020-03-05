@@ -11,7 +11,7 @@ import Foundation
 
 class MockPageContent: PageContent {
     var contentType: PageContentType {
-        return .empty
+        return .text
     }
 
     var contentSize: CGSize?

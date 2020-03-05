@@ -94,7 +94,7 @@ class ModelWriterTests: XCTestCase {
         let page1Content = pages[0]["content"] as? [String: String]
         XCTAssertEqual(page1Content, ["type": "text", "filename": "\(self.pages[0].id.uuid.uuidString).rtf"])
         let page2Content = pages[1]["content"] as? [String: String]
-        XCTAssertEqual(page2Content, ["type": "empty"])
+        XCTAssertEqual(page2Content, ["type": "text", "filename": "\(self.pages[1].id.uuid.uuidString).rtf"])
         let page3Content = pages[2]["content"] as? [String: String]
         XCTAssertEqual(page3Content, ["type": "image", "filename": "\(self.pages[2].id.uuid.uuidString).png"])
     }

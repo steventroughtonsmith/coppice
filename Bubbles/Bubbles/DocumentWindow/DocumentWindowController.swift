@@ -110,6 +110,12 @@ class DocumentWindowController: NSWindowController {
     }
 
 
+    //MARK: - Toolbar
+    func setupNewPageToolbarItem() {
+        
+    }
+
+
     //MARK: - Responder Chain
     override func supplementalTarget(forAction action: Selector, sender: Any?) -> Any? {
         if let editor = self.editorContainerViewController?.mainEditor,
@@ -125,7 +131,13 @@ class DocumentWindowController: NSWindowController {
 
     //MARK: - Actions
     @IBAction func newPage(_ sender: Any?) {
-        self.viewModel.createPage()
+        guard let menuItem = sender as? NSMenuItem,
+            let rawType = menuItem.representedObject as? String,
+            let type = PageContentType(rawValue: rawType) else {
+                self.viewModel.createPage()
+                return
+        }
+        self.viewModel.createPage(ofType: type)
     }
 
     @IBAction func newCanvas(_ sender: Any?) {

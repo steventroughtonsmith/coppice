@@ -27,7 +27,7 @@ final class Page: NSObject, CollectableModelObject {
 
     override init() {
         self.title = Page.localizedDefaultTitle
-        self.content = EmptyPageContent()
+        self.content = TextPageContent()
         super.init()
         self.content.page = self
     }

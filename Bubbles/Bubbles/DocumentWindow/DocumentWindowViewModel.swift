@@ -78,10 +78,16 @@ class DocumentWindowViewModel: NSObject {
 
 
     //MARK: - Creating Pages
-    @discardableResult func createPage() -> Page {
+    @discardableResult func createPage(ofType contentType: PageContentType = .text) -> Page {
         self.modelController.undoManager.beginUndoGrouping()
         self.modelController.undoManager.setActionName(NSLocalizedString("Create Page", comment: "Create Page Undo Action Name"))
-        let page = self.pageCollection.newObject()
+        let page = self.pageCollection.newObject() {
+            //No need to change the content type if it's already the default
+            guard contentType != $0.content.contentType else {
+                return
+            }
+            $0.content = contentType.createContent()
+        }
         guard let selectedCanvas = self.selectedCanvasInSidebar else {
             self.selectedSidebarObjectIDs = [page.id]
             self.modelController.undoManager.endUndoGrouping()

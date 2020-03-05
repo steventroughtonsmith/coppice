@@ -63,7 +63,7 @@ class ModelReaderTests: XCTestCase {
                 "dateCreated": Date(timeIntervalSinceReferenceDate: 0),
                 "dateModified": Date(timeIntervalSinceReferenceDate: 0),
                 "userPreferredSize": NSStringFromSize(CGSize(width: 1024, height: 768)),
-                "content": ["type": "empty"]
+                "content": ["type": "text"]
             ],
             [
                 "id": Page.modelID(with: self.pageIDs[2]).stringRepresentation,
