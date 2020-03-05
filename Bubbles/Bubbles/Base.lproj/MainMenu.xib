@@ -436,6 +436,11 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Zoom" id="U30-9b-1rR">
                                     <items>
+                                        <menuItem title="Actual Size" keyEquivalent="0" id="mbZ-cX-aM3">
+                                            <connections>
+                                                <action selector="zoomTo100:" target="-1" id="AQf-12-rdw"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem title="Zoom In" keyEquivalent="+" id="6e5-Ie-zZy">
                                             <connections>
                                                 <action selector="zoomIn:" target="-1" id="tk2-9b-zdY"/>
@@ -444,11 +449,6 @@
                                         <menuItem title="Zoom Out" keyEquivalent="-" id="d1g-Mg-kRF">
                                             <connections>
                                                 <action selector="zoomOut:" target="-1" id="jNi-9E-lbe"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Zoom To 100%" keyEquivalent="0" id="mbZ-cX-aM3">
-                                            <connections>
-                                                <action selector="zoomTo100:" target="-1" id="AQf-12-rdw"/>
                                             </connections>
                                         </menuItem>
                                     </items>
