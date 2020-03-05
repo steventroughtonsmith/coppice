@@ -36,7 +36,7 @@ final class Canvas: NSObject, CollectableModelObject {
 
     
     //MARK: - Attributes
-    @objc var title: String = "New Canvas" {
+    @objc dynamic var title: String = "New Canvas" {
         didSet { self.didChange(\.title, oldValue: oldValue) }
     }
     var dateCreated = Date()
