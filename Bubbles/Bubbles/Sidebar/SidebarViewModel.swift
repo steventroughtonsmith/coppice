@@ -47,7 +47,7 @@ class SidebarViewModel: ViewModel {
     private var windowSearchObserver: AnyCancellable?
 
     func startObserving() {
-        self.canvasObserver = self.canvases.addObserver { canvas, change in self.handleChange(to: canvas, changeType: change) }
+//        self.canvasObserver = self.canvases.addObserver { canvas, change in self.handleChange(to: canvas, changeType: change) }
         self.pageObserver = self.pages.addObserver { page, change in self.handleChange(to: page, changeType: change)}
         self.windowStateSidebarObserver = self.documentWindowViewModel.$selectedSidebarObjectIDs
                                             .receive(on: RunLoop.main)
@@ -72,27 +72,15 @@ class SidebarViewModel: ViewModel {
 
     //MARK: - Canvases
     private func handleChange(to canvas: Canvas, changeType: ModelCollection<Canvas>.ChangeType) {
-        self.reloadCanvases()
+//        self.reloadCanvases()
         if (changeType == .insert) {
             self.selectedObjectIDs = Set([canvas.id])
         }
     }
 
-    private func reloadCanvases() {
-        self.cachedCanvasItems = nil
-        self.view?.reloadCanvases()
-    }
-
     private var cachedCanvasItems: [CanvasSidebarItem]?
     var canvasItems: [CanvasSidebarItem] {
-        if let cachedItems = self.cachedCanvasItems {
-            return cachedItems
-        }
-        let items = self.canvases.objects(matchingSearchTerm: self.documentWindowViewModel.searchString)
-            .sorted { $0.sortIndex < $1.sortIndex }
-            .map { CanvasSidebarItem(canvas: $0)}
-        self.cachedCanvasItems = items
-        return items
+        return []
     }
 
 
@@ -173,16 +161,6 @@ class SidebarViewModel: ViewModel {
         }
     }
 
-    func addPage(with id: ModelID, toCanvasAtIndex index: Int) {
-        let pageLink = PageLink(destination: id)
-        let canvas = self.canvasItems[index].canvas
-        var centrePoint = CGPoint.zero
-        if let viewPort = canvas.viewPort {
-            centrePoint = CGPoint(x: viewPort.midX, y: viewPort.midY)
-        }
-        self.documentWindowViewModel.addPage(at: pageLink, to: canvas, centredOn: centrePoint)
-    }
-
     func addPages(atIndexes indexes: IndexSet, toCanvasAtindex canvasIndex: Int) {
         guard let canvas = self.canvasItems[safe: canvasIndex]?.canvas else {
             return
@@ -195,15 +173,6 @@ class SidebarViewModel: ViewModel {
 
 
     //MARK: - Deleting
-    func deleteCanvases(atIndexes indexes: IndexSet) {
-        for index in indexes {
-            guard (index >= 0) && (index < self.canvasItems.count) else {
-                continue
-            }
-            let canvas = self.canvasItems[index].canvas
-            self.documentWindowViewModel.delete(canvas)
-        }
-    }
 
     func deletePages(atIndexes indexes: IndexSet) {
         for index in indexes {
@@ -231,34 +200,6 @@ class SidebarViewModel: ViewModel {
 
         let page = self.pageItems[index].page
         self.documentWindowViewModel.delete(page)
-    }
-
-
-    
-
-    //MARK: - Re-ordering
-    func moveCanvas(with id: ModelID, aboveCanvasAtIndex index: Int) {
-        guard id.modelType == Canvas.modelType else {
-            return
-        }
-
-        var canvases: [Canvas?] = self.canvasItems.map { $0.canvas }
-        guard let currentIndex = canvases.firstIndex(where: { $0?.id == id}) else {
-            return
-        }
-
-        let canvasToMove = canvases[currentIndex]
-        canvases[currentIndex] = nil
-        canvases.insert(canvasToMove, at: index)
-
-        var sortIndex = 0
-        for canvas in canvases {
-            if canvas != nil {
-                canvas?.sortIndex = sortIndex
-                sortIndex += 1
-            }
-        }
-        self.cachedCanvasItems = nil
     }
 
 
@@ -362,7 +303,6 @@ class SidebarViewModel: ViewModel {
     //MARK: - Search
     private func updateSearch() {
         self.reloadPages()
-        self.reloadCanvases()
     }
 
 

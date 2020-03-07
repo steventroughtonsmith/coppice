@@ -22,7 +22,9 @@ class Document: NSDocument {
     }
 
     override func makeWindowControllers() {
-        let newWindowController = DocumentWindowController(viewModel: DocumentWindowViewModel(modelController: self.modelController))
+        let documentViewModel = DocumentWindowViewModel(modelController: self.modelController)
+        documentViewModel.document = self
+        let newWindowController = DocumentWindowController(viewModel: documentViewModel)
         self.addWindowController(newWindowController)
     }
 

@@ -14,14 +14,15 @@ class SmallCanvasCell: EditableLabelCell {
     @IBOutlet weak var canvasPreview: CanvasPreviewView!
     override var objectValue: Any? {
         didSet {
-            guard let canvasItem = self.objectValue as? CanvasSidebarItem else {
+            guard let canvas = self.objectValue as? Canvas else {
                 return
             }
-            self.canvasPreview.previewImage = canvasItem.thumbnail
+            self.canvasPreview.previewImage = canvas.thumbnail
+            self.canvasPreview.toolTip = canvas.title
         }
     }
 
     override func awakeFromNib() {
-        self.canvasPreview.preferredMaxDimensions = CGSize(width: 43, height: 32)
+        self.canvasPreview.preferredMaxDimensions = CGSize(width: 48, height: 48)
     }
 }

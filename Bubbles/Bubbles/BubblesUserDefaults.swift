@@ -13,6 +13,8 @@ enum UserDefaultsKeys: String {
     case debugShowCanvasOrigin
 
     case useSmallCanvasCells
+
+    case canvasListIsCompact
 }
 
 extension UserDefaults {

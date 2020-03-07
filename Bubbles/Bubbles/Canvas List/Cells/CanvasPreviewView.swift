@@ -50,7 +50,7 @@ class CanvasPreviewView: NSView {
             size.height = maxSize.height
         }
 
-        return size
+        return size.rounded()
     }
 
 

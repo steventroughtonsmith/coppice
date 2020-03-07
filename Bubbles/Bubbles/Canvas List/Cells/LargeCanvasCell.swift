@@ -17,10 +17,10 @@ class LargeCanvasCell: EditableLabelCell {
     private var thumbnailObserver: AnyCancellable?
     override var objectValue: Any? {
         didSet {
-            guard let canvasItem = self.objectValue as? CanvasSidebarItem else {
+            guard let canvas = self.objectValue as? Canvas else {
                 return
             }
-            self.canvasPreview.previewImage = canvasItem.thumbnail
+            self.canvasPreview.previewImage = canvas.thumbnail
         }
     }
 

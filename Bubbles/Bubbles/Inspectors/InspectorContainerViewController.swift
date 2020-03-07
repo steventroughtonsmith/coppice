@@ -9,7 +9,7 @@
 import Cocoa
 import Combine
 
-class InspectorContainerViewController: NSViewController {
+class InspectorContainerViewController: NSViewController, RootViewController {
     let viewModel: InspectorContainerViewModel
 
     @IBOutlet weak var stackView: NSStackView!
@@ -58,6 +58,14 @@ class InspectorContainerViewController: NSViewController {
         }
     }
 
+
+    //MARK: - RootViewController
+    lazy var splitViewItem: NSSplitViewItem = {
+        let item = NSSplitViewItem(viewController: self)
+        item.holdingPriority = NSLayoutConstraint.Priority(260)
+        item.canCollapse = true
+        return item
+    }()
 }
 
 extension InspectorContainerViewController: InspectorContainerView {

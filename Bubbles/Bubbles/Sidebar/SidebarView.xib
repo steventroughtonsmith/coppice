@@ -8,8 +8,6 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SidebarViewController" customModule="Bubbles" customModuleProvider="target">
             <connections>
-                <outlet property="canvasContextMenu" destination="WMw-nL-qeD" id="EZE-7F-cr0"/>
-                <outlet property="canvasesTable" destination="xKe-Ct-mXE" id="zUa-eV-3kv"/>
                 <outlet property="pageContextMenu" destination="Kc9-fp-hh9" id="nN7-iq-Moy"/>
                 <outlet property="pagesTable" destination="KyP-MZ-pBo" id="qNW-MK-osv"/>
                 <outlet property="view" destination="WRf-IH-Kxq" id="xuX-of-KZ1"/>
@@ -27,83 +25,6 @@
                     <subviews>
                         <visualEffectView blendingMode="behindWindow" material="sidebar" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="O7Z-8y-A2Y">
                             <rect key="frame" x="0.0" y="0.0" width="228" height="158"/>
-                            <subviews>
-                                <scrollView identifier="CanvasTable" borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xiy-A8-vhX">
-                                    <rect key="frame" x="0.0" y="0.0" width="228" height="158"/>
-                                    <clipView key="contentView" drawsBackground="NO" id="Kfl-NS-isZ">
-                                        <rect key="frame" x="0.0" y="0.0" width="228" height="158"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        <subviews>
-                                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" multipleSelection="NO" autosaveColumns="NO" usesAutomaticRowHeights="YES" viewBased="YES" id="xKe-Ct-mXE">
-                                                <rect key="frame" x="0.0" y="0.0" width="228" height="158"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                <size key="intercellSpacing" width="3" height="2"/>
-                                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="displayP3"/>
-                                                <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
-                                                <tableColumns>
-                                                    <tableColumn width="225" minWidth="40" maxWidth="1000" id="DUd-FR-Xxl">
-                                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
-                                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                                            <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
-                                                        </tableHeaderCell>
-                                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" title="Text Cell" id="8mY-eg-oPG">
-                                                            <font key="font" metaFont="system"/>
-                                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                        </textFieldCell>
-                                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
-                                                        <prototypeCellViews>
-                                                            <tableCellView id="BDe-0a-KAI">
-                                                                <rect key="frame" x="1" y="1" width="225" height="17"/>
-                                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                                <subviews>
-                                                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5xN-S2-bNl">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="225" height="17"/>
-                                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="zzU-ro-UTQ">
-                                                                            <font key="font" metaFont="system"/>
-                                                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                                        </textFieldCell>
-                                                                        <connections>
-                                                                            <binding destination="BDe-0a-KAI" name="value" keyPath="objectValue.title" id="FTt-F6-QAK"/>
-                                                                        </connections>
-                                                                    </textField>
-                                                                </subviews>
-                                                                <connections>
-                                                                    <outlet property="textField" destination="5xN-S2-bNl" id="EVd-Rv-Jsa"/>
-                                                                </connections>
-                                                            </tableCellView>
-                                                        </prototypeCellViews>
-                                                    </tableColumn>
-                                                </tableColumns>
-                                                <connections>
-                                                    <action trigger="doubleAction" selector="editCanvasTitle:" target="-2" id="Kof-ll-32K"/>
-                                                    <outlet property="dataSource" destination="-2" id="K0i-v3-hUa"/>
-                                                    <outlet property="delegate" destination="-2" id="cOM-fj-LgZ"/>
-                                                    <outlet property="menu" destination="WMw-nL-qeD" id="xuD-Jy-b1w"/>
-                                                    <outlet property="nextKeyView" destination="KyP-MZ-pBo" id="dhI-hL-TW0"/>
-                                                </connections>
-                                            </tableView>
-                                        </subviews>
-                                        <nil key="backgroundColor"/>
-                                    </clipView>
-                                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="dBm-PZ-ohL">
-                                        <rect key="frame" x="0.0" y="140" width="226" height="16"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                    </scroller>
-                                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="xQr-gL-mhd">
-                                        <rect key="frame" x="224" y="17" width="15" height="102"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                    </scroller>
-                                </scrollView>
-                            </subviews>
-                            <constraints>
-                                <constraint firstAttribute="bottom" secondItem="Xiy-A8-vhX" secondAttribute="bottom" id="WGM-X5-AkZ"/>
-                                <constraint firstAttribute="trailing" secondItem="Xiy-A8-vhX" secondAttribute="trailing" id="WoR-3w-kfv"/>
-                                <constraint firstItem="Xiy-A8-vhX" firstAttribute="top" secondItem="O7Z-8y-A2Y" secondAttribute="top" id="fQY-Yb-tIW"/>
-                                <constraint firstItem="Xiy-A8-vhX" firstAttribute="leading" secondItem="O7Z-8y-A2Y" secondAttribute="leading" id="hK3-jm-OMa"/>
-                            </constraints>
                         </visualEffectView>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="UEn-m9-Hkc" customClass="SidebarHeaderView" customModule="Bubbles" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="158" width="228" height="32"/>
@@ -242,36 +163,6 @@
             </userDefinedRuntimeAttributes>
             <point key="canvasLocation" x="-534" y="145"/>
         </splitView>
-        <menu id="WMw-nL-qeD">
-            <items>
-                <menuItem title="New Canvas" id="QxX-pM-gik">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="newCanvas:" target="-1" id="dew-ad-6q5"/>
-                    </connections>
-                </menuItem>
-                <menuItem title="Edit Canvas Title…" id="AFh-3g-P81">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="editCanvasTitle:" target="-2" id="5XO-CK-1Qs"/>
-                    </connections>
-                </menuItem>
-                <menuItem title="Delete Canvas" id="Kgf-c7-q1e">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="deleteCanvas:" target="-2" id="JCy-mY-KVQ"/>
-                    </connections>
-                </menuItem>
-                <menuItem isSeparatorItem="YES" id="lKE-0f-jyg"/>
-                <menuItem title="Use Small Thumbnails" id="t40-BC-Yy3">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <binding destination="-2" name="value" keyPath="self.viewModel.useSmallCanvasCells" id="gRQ-0l-U6m"/>
-                    </connections>
-                </menuItem>
-            </items>
-            <point key="canvasLocation" x="-238" y="145"/>
-        </menu>
         <menu id="Kc9-fp-hh9">
             <items>
                 <menuItem title="New Page" id="PYu-se-QIV">

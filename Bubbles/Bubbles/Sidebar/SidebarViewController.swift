@@ -9,7 +9,7 @@
 import Cocoa
 import Combine
 
-class SidebarViewController: NSViewController, NSMenuItemValidation {
+class SidebarViewController: NSViewController, NSMenuItemValidation, RootViewController {
     @objc dynamic let viewModel: SidebarViewModel
     private let pagesDataSource: PagesSidebarDataSource
 
@@ -24,21 +24,12 @@ class SidebarViewController: NSViewController, NSMenuItemValidation {
         preconditionFailure("init(coder:) has not been implemented")
     }
 
-    @IBOutlet weak var canvasesTable: NSTableView!
     @IBOutlet weak var pagesTable: NSTableView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.pagesDataSource.tableView = self.pagesTable
-
-        self.canvasesTable.setDraggingSourceOperationMask(.copy, forLocal: true)
-        self.canvasesTable.registerForDraggedTypes([ModelID.PasteboardType, .fileURL])
-
-        self.canvasesTable.register(NSNib(nibNamed: "SmallCanvasCell", bundle: nil), forIdentifier: SmallCanvasCell.identifier)
-        self.canvasesTable.register(NSNib(nibNamed: "LargeCanvasCell", bundle: nil), forIdentifier: LargeCanvasCell.identifier)
-
-        self.setupObservation()
     }
 
     override func viewWillAppear() {
@@ -52,13 +43,11 @@ class SidebarViewController: NSViewController, NSMenuItemValidation {
     }
 
 
-    //MARK: - Observation
-    var smallCanvasCellObservation: AnyCancellable!
-    private func setupObservation() {
-        self.smallCanvasCellObservation = self.viewModel.publisher(for: \.useSmallCanvasCells).sink { [weak self] (_) in
-            self?.canvasesTable.reloadData()
-        }
-    }
+    //MARK: - RootViewController
+    lazy var splitViewItem: NSSplitViewItem = {
+        let item = NSSplitViewItem(sidebarWithViewController: self)
+        return item
+    }()
 
 
     //MARK: - Keyboard shortcuts
@@ -74,18 +63,7 @@ class SidebarViewController: NSViewController, NSMenuItemValidation {
             return
         }
 
-        guard let table = self.windowController?.window?.firstResponder as? NSTableView else {
-            super.keyDown(with: event)
-            return
-        }
-
-        if table == self.canvasesTable {
-            self.viewModel.deleteCanvases(atIndexes: self.viewModel.selectedCanvasRowIndexes)
-        } else if table == self.pagesTable {
-            self.viewModel.deletePages(atIndexes: self.viewModel.selectedPageRowIndexes)
-        } else {
-            NSSound.beep()
-        }
+        self.viewModel.deletePages(atIndexes: self.viewModel.selectedPageRowIndexes)
     }
 
 
@@ -129,25 +107,9 @@ class SidebarViewController: NSViewController, NSMenuItemValidation {
     }
 
 
-    //MARK: - Canvas Menu Actions
-    @IBAction func editCanvasTitle(_ sender: Any) {
-        guard self.canvasesTable.clickedRow > -1 else {
-            return
-        }
-        guard let cell = self.canvasesTable.view(atColumn: 0, row: self.canvasesTable.clickedRow, makeIfNecessary: false) as? EditableLabelCell else {
-            return
-        }
-        cell.startEditing()
-    }
-
-    @IBAction func deleteCanvas(_ sender: Any) {
-        self.viewModel.deleteCanvases(atIndexes: self.canvasRowIndexesForAction)
-    }
-
 
     //MARK: - Context Menus
     @IBOutlet var pageContextMenu: NSMenu!
-    @IBOutlet var canvasContextMenu: NSMenu!
 
 
     //MARK: - Menu Validation
@@ -175,20 +137,6 @@ class SidebarViewController: NSViewController, NSMenuItemValidation {
             return (self.pageRowIndexesForAction.count > 0)
         }
 
-        if menuItem.action == #selector(editCanvasTitle(_:)) {
-            return (self.canvasesTable.clickedRow >= 0)
-        }
-
-        if menuItem.action == #selector(deleteCanvas(_:)) {
-            let rowIndexes = self.canvasRowIndexesForAction
-            if (rowIndexes.count == 1) {
-                menuItem.title = NSLocalizedString("Delete Canvas…", comment: "Delete single canvas menu item title")
-            } else {
-                menuItem.title = NSLocalizedString("Delete Canvases…", comment: "Delete multiple canvases menu item title")
-            }
-            return (rowIndexes.count > 0)
-        }
-
         if menuItem.action == #selector(changePageSorting(_:)) {
             return true
         }
@@ -207,14 +155,7 @@ class SidebarViewController: NSViewController, NSMenuItemValidation {
         return (clickedRow >= 0) ? IndexSet(integer: clickedRow) : IndexSet()
     }
 
-    private var canvasRowIndexesForAction: IndexSet {
-        let selectedIndexes = self.viewModel.selectedCanvasRowIndexes
-        let clickedRow = self.canvasesTable.clickedRow
-        if selectedIndexes.contains(clickedRow) {
-            return selectedIndexes
-        }
-        return (clickedRow >= 0) ? IndexSet(integer: clickedRow) : IndexSet()
-    }
+
 
 
     //MARK: - Selection
@@ -225,14 +166,11 @@ class SidebarViewController: NSViewController, NSMenuItemValidation {
 extension SidebarViewController: SidebarView {
     func reloadSelection() {
         self.isReloadingSelection = true
-        self.canvasesTable.selectRowIndexes(self.viewModel.selectedCanvasRowIndexes, byExtendingSelection: false)
         self.pagesTable.selectRowIndexes(self.viewModel.selectedPageRowIndexes, byExtendingSelection: false)
         self.isReloadingSelection = false
     }
 
     func reloadCanvases() {
-        self.canvasesTable.reloadData()
-        self.reloadSelection()
     }
 
     func reloadPages() {
@@ -250,128 +188,6 @@ extension SidebarViewController: SidebarView {
         }
     }
 }
-
-
-extension SidebarViewController: NSTableViewDataSource {
-    func numberOfRows(in tableView: NSTableView) -> Int {
-        return self.viewModel.canvasItems.count
-    }
-
-    func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
-        return self.viewModel.canvasItems[row]
-    }
-
-    func tableView(_ tableView: NSTableView, pasteboardWriterForRow row: Int) -> NSPasteboardWriting? {
-        return self.viewModel.canvasItems[row].canvas.pasteboardWriter
-    }
-
-
-    //MARK: - Validate drop
-    func tableView(_ tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableView.DropOperation) -> NSDragOperation {
-        guard let types = info.draggingPasteboard.types else {
-            return []
-        }
-        if types.contains(ModelID.PasteboardType) {
-            return self.validateObjectDrop(on: tableView, with: info, proposedRow: row, proposedDropOperation: dropOperation)
-        }
-        if types.contains(.fileURL) {
-            return self.validateFileDrop(on: tableView, with: info, proposedRow: row, proposedDropOperation: dropOperation)
-        }
-        return []
-    }
-
-    private func validateObjectDrop(on table: NSTableView, with info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableView.DropOperation) -> NSDragOperation {
-        guard let item = info.draggingPasteboard.pasteboardItems?.first,
-            let id = ModelID(pasteboardItem: item) else {
-                return []
-        }
-
-        if (id.modelType == Canvas.modelType) {
-            self.canvasesTable.setDropRow(row, dropOperation: .above)
-            return .move
-        }
-
-        if (id.modelType == Page.modelType), case .on = dropOperation {
-            self.canvasesTable.setDropRow(row, dropOperation: .on)
-            return .copy
-        }
-
-        return []
-    }
-
-    private func validateFileDrop(on table: NSTableView, with info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableView.DropOperation) -> NSDragOperation {
-        if (row < table.numberOfRows) {
-            self.canvasesTable.setDropRow(row, dropOperation: .on)
-            return .copy
-        }
-        return []
-    }
-
-
-    //MARK: - Accept drop
-    func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableView.DropOperation) -> Bool {
-        guard let types = info.draggingPasteboard.types else {
-            return false
-        }
-        if (types.contains(ModelID.PasteboardType)) {
-            return self.acceptObjectDrop(on: tableView, with: info, row: row, dropOperation: dropOperation)
-        }
-        if types.contains(.fileURL) {
-            return self.acceptFileDrop(on: tableView, with: info, row: row, dropOperation: dropOperation)
-        }
-        return false
-    }
-
-    private func acceptObjectDrop(on table: NSTableView, with info: NSDraggingInfo, row: Int, dropOperation: NSTableView.DropOperation) -> Bool {
-        guard let items = info.draggingPasteboard.pasteboardItems else {
-            return false
-        }
-
-        let modelIDs = items.compactMap({ ModelID(pasteboardItem: $0) })
-
-        if modelIDs.count == 1, let id = modelIDs.first, (id.modelType == Canvas.modelType) {
-            self.viewModel.moveCanvas(with: id, aboveCanvasAtIndex: row)
-            self.reloadCanvases()
-            return true
-        }
-
-        for modelID in modelIDs {
-            if (modelID.modelType == Page.modelType) {
-                self.viewModel.addPage(with: modelID, toCanvasAtIndex: row)
-            }
-        }
-
-        return (modelIDs.count > 0)
-    }
-
-    private func acceptFileDrop(on table: NSTableView, with info: NSDraggingInfo, row: Int, dropOperation: NSTableView.DropOperation) -> Bool {
-        guard let items = info.draggingPasteboard.pasteboardItems else {
-            return false
-        }
-
-        let urls = items.compactMap{ $0.data(forType: .fileURL) }.compactMap { URL(dataRepresentation: $0, relativeTo: nil) }
-        let newPages = self.viewModel.addPages(fromFilesAtURLs: urls, toCanvasAtIndex: row)
-        return (newPages.count > 0) // Accept the drop if at least one file led to a new page
-    }
-}
-
-
-extension SidebarViewController: NSTableViewDelegate {
-    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        let identifier = self.viewModel.useSmallCanvasCells ? SmallCanvasCell.identifier : LargeCanvasCell.identifier
-        return tableView.makeView(withIdentifier: identifier, owner: nil)
-    }
-
-    func tableViewSelectionDidChange(_ notification: Notification) {
-        //This prevents us updating the view model in response to us reloading the selection which can cause loops and odd behaviour
-        guard self.isReloadingSelection == false else {
-            return
-        }
-
-        self.viewModel.selectedCanvasRowIndexes = self.canvasesTable.selectedRowIndexes
-    }
-}
-
 
 
 extension SidebarViewController: NSMenuDelegate {

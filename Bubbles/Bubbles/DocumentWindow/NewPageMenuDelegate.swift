@@ -20,12 +20,10 @@ class NewPageMenuDelegate: NSObject, NSMenuDelegate {
     func menu(_ menu: NSMenu, update item: NSMenuItem, at index: Int, shouldCancel: Bool) -> Bool {
         //We're in a menu hierarchy
         guard menu.supermenu == nil else {
-            print("menu")
             self.update(item, with: PageContentType.allCases[index], includeKeyEquivalents: menu.isInMainMenu)
             return true
         }
 
-        print("control")
         //We're the root menu in a control
         if index == 0 {
             item.image = NSImage(named: "AddPage")

@@ -31,6 +31,11 @@
 		992A5CAF22DDF50F0012CCB6 /* DebugPageEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 992A5CAD22DDF50F0012CCB6 /* DebugPageEditor.xib */; };
 		992A5CB122DDF5210012CCB6 /* DebugCanvasEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992A5CB022DDF5210012CCB6 /* DebugCanvasEditorViewModel.swift */; };
 		992A5CB322DDF53C0012CCB6 /* DebugPageEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992A5CB222DDF53C0012CCB6 /* DebugPageEditorViewModel.swift */; };
+		993D2BD824127E29002E5BAC /* CanvasListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993D2BD624127E29002E5BAC /* CanvasListViewController.swift */; };
+		993D2BD924127E29002E5BAC /* CanvasListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 993D2BD724127E29002E5BAC /* CanvasListView.xib */; };
+		993D2BDB24127E3B002E5BAC /* CanvasListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993D2BDA24127E3B002E5BAC /* CanvasListViewModel.swift */; };
+		993D2BF92412B053002E5BAC /* NestableSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993D2BF82412B053002E5BAC /* NestableSplitView.swift */; };
+		993D2BFE2412FB1C002E5BAC /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993D2BFD2412FB1C002E5BAC /* RootViewController.swift */; };
 		99488A9923BA3912009954AF /* PageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99488A9823BA3912009954AF /* PageCell.swift */; };
 		99488A9B23BA392E009954AF /* SmallCanvasCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99488A9A23BA392E009954AF /* SmallCanvasCell.swift */; };
 		99488A9F23BA3954009954AF /* LargeCanvasCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99488A9E23BA3954009954AF /* LargeCanvasCell.swift */; };
@@ -69,7 +74,7 @@
 		9970976523AA896C00CD189B /* CanvasEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970976423AA896C00CD189B /* CanvasEventContext.swift */; };
 		9970976723AA8B5A00CD189B /* RemovePageEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970976623AA8B5A00CD189B /* RemovePageEventContext.swift */; };
 		9970976923AA8B6C00CD189B /* KeyboardMovePageEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970976823AA8B6C00CD189B /* KeyboardMovePageEventContext.swift */; };
-		9970976B23ACFD2900CD189B /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970976A23ACFD2900CD189B /* SplitViewController.swift */; };
+		9970976B23ACFD2900CD189B /* SplitViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970976A23ACFD2900CD189B /* SplitViewControllers.swift */; };
 		9970976D23AD1A7A00CD189B /* MockPageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970976C23AD1A7A00CD189B /* MockPageContent.swift */; };
 		9970977223AF9BE600CD189B /* PageExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970977123AF9BE600CD189B /* PageExporter.swift */; };
 		9970977423B0180F00CD189B /* Canvas+AddingPages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970977323B0180F00CD189B /* Canvas+AddingPages.swift */; };
@@ -236,6 +241,11 @@
 		992A5CAD22DDF50F0012CCB6 /* DebugPageEditor.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DebugPageEditor.xib; sourceTree = "<group>"; };
 		992A5CB022DDF5210012CCB6 /* DebugCanvasEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugCanvasEditorViewModel.swift; sourceTree = "<group>"; };
 		992A5CB222DDF53C0012CCB6 /* DebugPageEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugPageEditorViewModel.swift; sourceTree = "<group>"; };
+		993D2BD624127E29002E5BAC /* CanvasListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasListViewController.swift; sourceTree = "<group>"; };
+		993D2BD724127E29002E5BAC /* CanvasListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CanvasListView.xib; sourceTree = "<group>"; };
+		993D2BDA24127E3B002E5BAC /* CanvasListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasListViewModel.swift; sourceTree = "<group>"; };
+		993D2BF82412B053002E5BAC /* NestableSplitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NestableSplitView.swift; sourceTree = "<group>"; };
+		993D2BFD2412FB1C002E5BAC /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		99488A9823BA3912009954AF /* PageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageCell.swift; sourceTree = "<group>"; };
 		99488A9A23BA392E009954AF /* SmallCanvasCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallCanvasCell.swift; sourceTree = "<group>"; };
 		99488A9E23BA3954009954AF /* LargeCanvasCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeCanvasCell.swift; sourceTree = "<group>"; };
@@ -273,7 +283,7 @@
 		9970976423AA896C00CD189B /* CanvasEventContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasEventContext.swift; sourceTree = "<group>"; };
 		9970976623AA8B5A00CD189B /* RemovePageEventContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemovePageEventContext.swift; sourceTree = "<group>"; };
 		9970976823AA8B6C00CD189B /* KeyboardMovePageEventContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardMovePageEventContext.swift; sourceTree = "<group>"; };
-		9970976A23ACFD2900CD189B /* SplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewController.swift; sourceTree = "<group>"; };
+		9970976A23ACFD2900CD189B /* SplitViewControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewControllers.swift; sourceTree = "<group>"; };
 		9970976C23AD1A7A00CD189B /* MockPageContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPageContent.swift; sourceTree = "<group>"; };
 		9970977123AF9BE600CD189B /* PageExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageExporter.swift; sourceTree = "<group>"; };
 		9970977323B0180F00CD189B /* Canvas+AddingPages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Canvas+AddingPages.swift"; sourceTree = "<group>"; };
@@ -512,17 +522,34 @@
 			path = "Debug Editors";
 			sourceTree = "<group>";
 		};
-		99488A9723BA38E6009954AF /* SidebarCells */ = {
+		993D2BD52411B421002E5BAC /* Canvas List */ = {
 			isa = PBXGroup;
 			children = (
-				99488ACD23C78087009954AF /* EditableLabelCell.swift */,
-				99488A9823BA3912009954AF /* PageCell.swift */,
-				99488AA823BA3A05009954AF /* PageCell.xib */,
+				993D2BDA24127E3B002E5BAC /* CanvasListViewModel.swift */,
+				993D2BD624127E29002E5BAC /* CanvasListViewController.swift */,
+				993D2BD724127E29002E5BAC /* CanvasListView.xib */,
+				993D2BFC2412F978002E5BAC /* Cells */,
+			);
+			path = "Canvas List";
+			sourceTree = "<group>";
+		};
+		993D2BFC2412F978002E5BAC /* Cells */ = {
+			isa = PBXGroup;
+			children = (
 				99488A9A23BA392E009954AF /* SmallCanvasCell.swift */,
 				99488AA223BA3983009954AF /* SmallCanvasCell.xib */,
 				99488A9E23BA3954009954AF /* LargeCanvasCell.swift */,
 				99488AA623BA3993009954AF /* LargeCanvasCell.xib */,
 				99488AEF23C8C327009954AF /* CanvasPreviewView.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		99488A9723BA38E6009954AF /* SidebarCells */ = {
+			isa = PBXGroup;
+			children = (
+				99488A9823BA3912009954AF /* PageCell.swift */,
+				99488AA823BA3A05009954AF /* PageCell.xib */,
 			);
 			path = SidebarCells;
 			sourceTree = "<group>";
@@ -738,6 +765,7 @@
 				998D0778241137A3004ADFF8 /* RectDrawingView.swift */,
 				99C88EE5240BC79A00339880 /* EditorBackgroundView.swift */,
 				99868F372397F005009AC0F7 /* FileDropView.swift */,
+				99488ACD23C78087009954AF /* EditableLabelCell.swift */,
 			);
 			path = "Generic Views";
 			sourceTree = "<group>";
@@ -1009,6 +1037,7 @@
 				99FE01E122D4C22B004D380D /* DocumentWindow */,
 				9970976E23AEEE5700CD189B /* Export */,
 				992A5C9022DCB2EE0012CCB6 /* Sidebar */,
+				993D2BD52411B421002E5BAC /* Canvas List */,
 				992A5CA022DDF4820012CCB6 /* Editors */,
 				99D8E361237EDB890098CF3B /* Inspectors */,
 				99C865242306D0CC004C7B89 /* Page Selector */,
@@ -1051,7 +1080,9 @@
 				998D077A2411513F004ADFF8 /* NewPageMenuDelegate.swift */,
 				99FE01E222D4CC8A004D380D /* DocumentWindowController.swift */,
 				99FE01E322D4CC8A004D380D /* DocumentWindow.xib */,
-				9970976A23ACFD2900CD189B /* SplitViewController.swift */,
+				9970976A23ACFD2900CD189B /* SplitViewControllers.swift */,
+				993D2BF82412B053002E5BAC /* NestableSplitView.swift */,
+				993D2BFD2412FB1C002E5BAC /* RootViewController.swift */,
 			);
 			path = DocumentWindow;
 			sourceTree = "<group>";
@@ -1183,6 +1214,7 @@
 				99488AA323BA3983009954AF /* SmallCanvasCell.xib in Resources */,
 				9965FC4723844910002FE10D /* TextEditorInspectorContentView.xib in Resources */,
 				99581083230D7EFB00D996C4 /* CanvasEditorViewController.xib in Resources */,
+				993D2BD924127E29002E5BAC /* CanvasListView.xib in Resources */,
 				99581093230D92C600D996C4 /* CanvasPageViewController.xib in Resources */,
 				9965FC3E23843143002FE10D /* CanvasPageInspectorContentView.xib in Resources */,
 				99C03F09232A99F400EB7516 /* Cursors.xcassets in Resources */,
@@ -1260,6 +1292,7 @@
 				99AD88A5237B1700000453E1 /* DocumentWindowViewModel.swift in Sources */,
 				99488AAE23C37B98009954AF /* ThumbnailGenerator.swift in Sources */,
 				9970976923AA8B6C00CD189B /* KeyboardMovePageEventContext.swift in Sources */,
+				993D2BF92412B053002E5BAC /* NestableSplitView.swift in Sources */,
 				99E93E2923D32F15004CF4BB /* ColourGridView.swift in Sources */,
 				99581095230D93F700D996C4 /* CanvasPageViewModel.swift in Sources */,
 				9970977223AF9BE600CD189B /* PageExporter.swift in Sources */,
@@ -1279,15 +1312,17 @@
 				998F178F23EB229200B3437A /* ModelObjects+Pasteboard.swift in Sources */,
 				990D2441235DEFE2001B1FD9 /* PageArrowView.swift in Sources */,
 				99C9AF1D23671FD8009F909A /* ModelReader.swift in Sources */,
+				993D2BFE2412FB1C002E5BAC /* RootViewController.swift in Sources */,
 				992A5CAE22DDF50F0012CCB6 /* DebugPageEditor.swift in Sources */,
 				99C03EFD23293D8A00EB7516 /* ResizePageEventContext.swift in Sources */,
 				99D8E37D237EDB890098CF3B /* CanvasInspectorViewController.swift in Sources */,
 				99C03F0D2334D04200EB7516 /* NSScrollView+M3Extensions.swift in Sources */,
 				99C4AD8923F6F13B003B9A38 /* ArrowLayoutEngine.swift in Sources */,
-				9970976B23ACFD2900CD189B /* SplitViewController.swift in Sources */,
+				9970976B23ACFD2900CD189B /* SplitViewControllers.swift in Sources */,
 				990B6A3922EB482D00523C06 /* ModelObject.swift in Sources */,
 				99E93E2B23D32F61004CF4BB /* ColourGridButton.swift in Sources */,
 				9962AB8923732D9400337834 /* BubblesDocumentController.swift in Sources */,
+				993D2BDB24127E3B002E5BAC /* CanvasListViewModel.swift in Sources */,
 				99DEF28822F1D72D0020A7CE /* SidebarViewModelTypes.swift in Sources */,
 				99488A9F23BA3954009954AF /* LargeCanvasCell.swift in Sources */,
 				99FFF9C823439DB500EF02A0 /* ModelObservation.swift in Sources */,
@@ -1341,6 +1376,7 @@
 				9965FC4023843155002FE10D /* CanvasPageInspectorViewModel.swift in Sources */,
 				99D8E39023800F9A0098CF3B /* BaseInspectorViewController.swift in Sources */,
 				99C88EE6240BC79A00339880 /* EditorBackgroundView.swift in Sources */,
+				993D2BD824127E29002E5BAC /* CanvasListViewController.swift in Sources */,
 				99C03EFA23293D8A00EB7516 /* CanvasLayoutEngine.swift in Sources */,
 				99C8650F23017222004C7B89 /* TextEditorViewController.swift in Sources */,
 				992A5CB122DDF5210012CCB6 /* DebugCanvasEditorViewModel.swift in Sources */,

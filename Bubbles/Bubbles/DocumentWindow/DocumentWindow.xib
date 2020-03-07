@@ -2,17 +2,12 @@
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16085" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16085"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="DocumentWindowController" customModule="Bubbles" customModuleProvider="target">
             <connections>
-                <outlet property="editorContainer" destination="BJE-TL-Rpa" id="2Qf-ld-nYR"/>
-                <outlet property="inspectorContainer" destination="vle-dL-M8g" id="Whu-sk-7QN"/>
                 <outlet property="searchField" destination="4ma-yw-p7D" id="EfM-8g-d3k"/>
-                <outlet property="sidebarContainer" destination="wbm-Kc-dgB" id="cAE-F0-Db6"/>
-                <outlet property="splitView" destination="3KB-c4-2lR" id="9AT-sC-fkP"/>
                 <outlet property="splitViewControl" destination="aCJ-vR-5Ss" id="EzN-eO-CcN"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
@@ -27,44 +22,6 @@
             <view key="contentView" id="se5-gp-TjO">
                 <rect key="frame" x="0.0" y="0.0" width="1100" height="675"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                <subviews>
-                    <splitView arrangesAllSubviews="NO" autosaveName="MainSplitView" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3KB-c4-2lR">
-                        <rect key="frame" x="0.0" y="0.0" width="1100" height="675"/>
-                        <subviews>
-                            <customView fixedFrame="YES" id="wbm-Kc-dgB" userLabel="Sidebar Container">
-                                <rect key="frame" x="0.0" y="0.0" width="186" height="675"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                            </customView>
-                            <box fixedFrame="YES" boxType="custom" borderType="none" title="Box" titlePosition="noTitle" id="9A6-YZ-VoA">
-                                <rect key="frame" x="187" y="0.0" width="690" height="675"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <view key="contentView" id="BJE-TL-Rpa">
-                                    <rect key="frame" x="0.0" y="0.0" width="690" height="675"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                </view>
-                                <color key="fillColor" name="EditorBackground"/>
-                            </box>
-                            <customView id="vle-dL-M8g" userLabel="Inspector Container">
-                                <rect key="frame" x="878" y="0.0" width="222" height="675"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="220" id="1t9-tW-Gfm"/>
-                                </constraints>
-                            </customView>
-                        </subviews>
-                        <holdingPriorities>
-                            <real value="250"/>
-                            <real value="249"/>
-                            <real value="252"/>
-                        </holdingPriorities>
-                    </splitView>
-                </subviews>
-                <constraints>
-                    <constraint firstItem="3KB-c4-2lR" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" id="BEZ-97-ReR"/>
-                    <constraint firstItem="3KB-c4-2lR" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" id="Fm4-eH-wOP"/>
-                    <constraint firstAttribute="bottom" secondItem="3KB-c4-2lR" secondAttribute="bottom" id="mic-zb-DBn"/>
-                    <constraint firstAttribute="trailing" secondItem="3KB-c4-2lR" secondAttribute="trailing" id="qOV-1D-6QN"/>
-                </constraints>
             </view>
             <toolbar key="toolbar" implicitIdentifier="70B77CBD-7734-4DB0-B1CC-5CF88AD75C15" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="wrD-DS-DMi">
                 <allowedToolbarItems>
@@ -163,8 +120,5 @@
         <image name="AddPage" width="19" height="19"/>
         <image name="ToggleInspector" width="19" height="19"/>
         <image name="ToggleSidebar" width="19" height="19"/>
-        <namedColor name="EditorBackground">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </namedColor>
     </resources>
 </document>

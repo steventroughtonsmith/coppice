@@ -171,12 +171,10 @@ extension TextEditorViewController: TextEditorView {
 extension TextEditorViewController: NSTextDelegate {
     func textDidBeginEditing(_ notification: Notification) {
         self.editingText = true
-        print("start")
     }
 
     func textDidEndEditing(_ notification: Notification) {
         self.editingText = false
-        print("end")
     }
 }
 

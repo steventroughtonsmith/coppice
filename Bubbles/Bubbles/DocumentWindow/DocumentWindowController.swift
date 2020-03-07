@@ -13,45 +13,25 @@ class DocumentWindowController: NSWindowController {
     @IBOutlet weak var splitView: NSSplitView!
     @IBOutlet weak var splitViewControl: NSSegmentedControl!
 
-    @IBOutlet weak var sidebarContainer: NSView!
-    @IBOutlet weak var editorContainer: NSView!
-    @IBOutlet weak var inspectorContainer: NSView!
+    let splitViewController: RootSplitViewController
 
     @IBOutlet weak var searchField: NSSearchField!
 
     private var pageSelectorWindowController: PageSelectorWindowController?
 
-    var sidebarViewController: SidebarViewController? {
-        didSet {
-            oldValue?.view.removeFromSuperview()
-            if let newVC = self.sidebarViewController {
-                self.sidebarContainer.addSubview(newVC.view, withInsets: NSEdgeInsetsZero)
-            }
-        }
-    }
 
-    var editorContainerViewController: EditorContainerViewController? {
-        didSet {
-            oldValue?.view.removeFromSuperview()
-            if let newVC = self.editorContainerViewController {
-                self.editorContainer.addSubview(newVC.view, withInsets: NSEdgeInsetsZero)
-            }
-        }
-    }
-
-    var inspectorContainerViewController: InspectorContainerViewController? {
-        didSet {
-            oldValue?.view.removeFromSuperview()
-            if let newVC = self.inspectorContainerViewController {
-                self.inspectorContainer.addSubview(newVC.view, withInsets: NSEdgeInsetsZero)
-            }
-        }
-    }
 
     @objc dynamic let viewModel: DocumentWindowViewModel
     init(viewModel: DocumentWindowViewModel) {
         self.viewModel = viewModel
+
+        self.splitViewController = RootSplitViewController(sidebarViewController: SidebarViewController(viewModel: .init(documentWindowViewModel: viewModel)),
+                                                           canvasListViewController: CanvasListViewController(viewModel: .init(documentWindowViewModel: viewModel)),
+                                                           editorContainerViewController: EditorContainerViewController(viewModel: .init(documentWindowViewModel: viewModel)),
+                                                           inspectorContainerViewController: InspectorContainerViewController(viewModel: .init(documentWindowViewModel: viewModel)))
         super.init(window: nil)
+
+        self.contentViewController = self.splitViewController
         viewModel.window = self
     }
 
@@ -66,29 +46,11 @@ class DocumentWindowController: NSWindowController {
     override func windowDidLoad(){
         super.windowDidLoad()
 
-        self.splitViewController.splitView = self.splitView
-        self.splitViewController.delegate = self as SplitViewControllerDelegate
-        self.setupViewControllers()
+        self.contentViewController = self.splitViewController
 
-        self.sidebarViewController?.pagesTable.nextKeyView = self.editorContainerViewController?.view
-        self.editorContainerViewController?.view.nextKeyView = self.inspectorContainerViewController?.view
+//        self.sidebarViewController.pagesTable.nextKeyView = self.editorContainerViewController.view
+//        self.editorContainerViewController.view.nextKeyView = self.inspectorContainerViewController.view
     }
-
-    private func setupViewControllers() {
-        guard let document = self.document as? Document else {
-            return
-        }
-
-        self.viewModel.document = document
-
-        let sidebarVM = SidebarViewModel(documentWindowViewModel: self.viewModel)
-        self.sidebarViewController = SidebarViewController(viewModel: sidebarVM)
-
-        self.editorContainerViewController = EditorContainerViewController(viewModel: EditorContainerViewModel(documentWindowViewModel: self.viewModel))
-        self.editorContainerViewController?.delegate = self
-        self.inspectorContainerViewController = InspectorContainerViewController(viewModel: InspectorContainerViewModel(documentWindowViewModel: self.viewModel))
-    }
-
 
     @IBAction func jumpToPage(_ sender: Any?) {
         self.showPageSelector(title: "Jump to page…") { [weak self] page in
@@ -118,12 +80,10 @@ class DocumentWindowController: NSWindowController {
 
     //MARK: - Responder Chain
     override func supplementalTarget(forAction action: Selector, sender: Any?) -> Any? {
-        if let editor = self.editorContainerViewController?.mainEditor,
+        if let editor = self.splitViewController.editorSplitViewController.editorContainerViewController.mainEditor,
             editor.responds(to: action) {
+            print("calling to editor from window with \(action)")
             return editor
-        }
-        if self.splitViewController.responds(to: action) {
-            return self.splitViewController
         }
         return super.supplementalTarget(forAction: action, sender: sender)
     }
@@ -179,20 +139,6 @@ class DocumentWindowController: NSWindowController {
     }
 
 
-    //MARK: - Split View Management
-    private let splitViewController = SplitViewController()
-
-    @IBAction func splitViewControlChanged(_ sender: Any) {
-        self.splitViewController.isSidebarCollapsed = !self.splitViewControl.isSelected(forSegment: 0)
-        self.splitViewController.isInspectorCollapsed = !self.splitViewControl.isSelected(forSegment: 1)
-    }
-
-    private func updateSplitViewControl() {
-        self.splitViewControl.setSelected(!self.splitViewController.isSidebarCollapsed, forSegment: 0)
-        self.splitViewControl.setSelected(!self.splitViewController.isInspectorCollapsed, forSegment: 1)
-    }
-
-
     //MARK: - State Restoration
     override func encodeRestorableState(with coder: NSCoder) {
         let selectedIDStrings = self.viewModel.selectedSidebarObjectIDs.map { $0.stringRepresentation }
@@ -209,10 +155,10 @@ class DocumentWindowController: NSWindowController {
     }
 
 
+    //MARK: - Actions
     @IBAction func findInDocument(_ sender: Any?) {
         self.window?.makeFirstResponder(self.searchField)
     }
-
 
     @IBAction func importFiles(_ sender: Any?) {
         guard let window = self.window else {
@@ -229,6 +175,21 @@ class DocumentWindowController: NSWindowController {
             self?.viewModel.importFiles(at: panel.urls)
         }
     }
+
+
+
+    //MARK: - Split View Management
+
+    @IBAction func splitViewControlChanged(_ sender: Any) {
+        //        self.splitViewController.isSidebarCollapsed = !self.splitViewControl.isSelected(forSegment: 0)
+        //        self.splitViewController.isInspectorCollapsed = !self.splitViewControl.isSelected(forSegment: 1)
+    }
+
+    private func updateSplitViewControl() {
+        //        self.splitViewControl.setSelected(!self.splitViewController.isSidebarCollapsed, forSegment: 0)
+        //        self.splitViewControl.setSelected(!self.splitViewController.isInspectorCollapsed, forSegment: 1)
+    }
+
 }
 
 extension DocumentWindowController: DocumentWindow {
@@ -240,19 +201,5 @@ extension DocumentWindowController: DocumentWindow {
         alert.nsAlert.beginSheetModal(for: window) { (response) in
             callback(response.rawValue)
         }
-    }
-}
-
-
-extension DocumentWindowController: EditorContainerViewControllerDelegate {
-    func open(_ pageLink: PageLink, from viewController: EditorContainerViewController) {
-        self.viewModel.handle(pageLink)
-    }
-}
-
-
-extension DocumentWindowController: SplitViewControllerDelegate {
-    func collapsedStatedDidChange(in splitViewController: SplitViewController) {
-        self.updateSplitViewControl()
     }
 }

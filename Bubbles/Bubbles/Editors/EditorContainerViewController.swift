@@ -8,12 +8,8 @@
 
 import Cocoa
 
-protocol EditorContainerViewControllerDelegate: class {
-    func open(_ page: PageLink, from viewController: EditorContainerViewController)
-}
 
-class EditorContainerViewController: NSViewController {
-    weak var delegate: EditorContainerViewControllerDelegate?
+class EditorContainerViewController: NSViewController, RootViewController {
 
     let viewModel: EditorContainerViewModel
     init(viewModel: EditorContainerViewModel) {
@@ -56,6 +52,14 @@ class EditorContainerViewController: NSViewController {
             return nil
         }
     }
+
+
+    //MARK: - RootViewController
+    lazy var splitViewItem: NSSplitViewItem = {
+        let item = NSSplitViewItem(viewController: self)
+        item.holdingPriority = NSLayoutConstraint.Priority(249)
+        return item
+    }()
 }
 
 extension EditorContainerViewController: Editor {
@@ -68,7 +72,7 @@ extension EditorContainerViewController: Editor {
     }
 
     func open(_ page: PageLink) {
-        self.delegate?.open(page, from: self)
+        self.viewModel.documentWindowViewModel.openPage(at: page)
     }
 }
 

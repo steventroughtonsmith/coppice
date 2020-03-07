@@ -1,0 +1,107 @@
+//
+//  CanvasListViewModel.swift
+//  Bubbles
+//
+//  Created by Martin Pilkington on 06/03/2020.
+//  Copyright © 2020 M Cubed Software. All rights reserved.
+//
+
+import Cocoa
+
+protocol CanvasListView: class {
+    func reload()
+}
+
+class CanvasListViewModel: ViewModel {
+    weak var view: CanvasListView?
+
+    //MARK: - Observation
+    private var canvasObserver: ModelCollection<Canvas>.Observation?
+    func startObserving() {
+        self.canvasObserver = self.canvasCollection.addObserver { [weak self] canvas, change in
+            self?.reloadCanvases()
+        }
+    }
+
+    func stopObserving() {
+
+    }
+
+
+    //MARK: - Fetching Canvases
+    private var canvasCollection: ModelCollection<Canvas> {
+        return self.modelController.collection(for: Canvas.self)
+    }
+
+    private var cachedCanvases: [Canvas]?
+    var canvases: [Canvas] {
+        if let cachedCanvases = self.cachedCanvases {
+            return cachedCanvases
+        }
+
+        let items = self.canvasCollection.objects(matchingSearchTerm: self.documentWindowViewModel.searchString)
+            .sorted { $0.sortIndex < $1.sortIndex }
+        self.cachedCanvases = items
+        return items
+    }
+
+    private func reloadCanvases() {
+        self.cachedCanvases = nil
+        self.view?.reload()
+    }
+
+
+    //MARK: Modifying Canvases
+    func addPage(with id: ModelID, toCanvasAtIndex index: Int) {
+        let pageLink = PageLink(destination: id)
+        let canvas = self.canvases[index]
+        var centrePoint = CGPoint.zero
+        if let viewPort = canvas.viewPort {
+            centrePoint = CGPoint(x: viewPort.midX, y: viewPort.midY)
+        }
+        self.documentWindowViewModel.addPage(at: pageLink, to: canvas, centredOn: centrePoint)
+    }
+
+    func addPages(fromFilesAtURLs fileURLs: [URL], toCanvasAtIndex canvasIndex: Int?) -> [Page] {
+        var canvas: Canvas?
+        if let index = canvasIndex {
+            canvas = self.canvases[index]
+        }
+
+        return self.documentWindowViewModel.createPages(fromFilesAtURLs: fileURLs, addingTo: canvas)
+    }
+
+    func moveCanvas(with id: ModelID, aboveCanvasAtIndex index: Int) {
+        guard id.modelType == Canvas.modelType else {
+            return
+        }
+
+        var canvases: [Canvas?] = self.canvases
+        guard let currentIndex = canvases.firstIndex(where: { $0?.id == id}) else {
+            return
+        }
+
+        let canvasToMove = canvases[currentIndex]
+        canvases[currentIndex] = nil
+        canvases.insert(canvasToMove, at: index)
+
+        var sortIndex = 0
+        for canvas in canvases {
+            if canvas != nil {
+                canvas?.sortIndex = sortIndex
+                sortIndex += 1
+            }
+        }
+        self.cachedCanvases = nil
+    }
+
+    func deleteCanvases(atIndexes indexes: IndexSet) {
+        for index in indexes {
+            guard (index >= 0) && (index < self.canvases.count) else {
+                continue
+            }
+            let canvas = self.canvases[index]
+            self.documentWindowViewModel.delete(canvas)
+        }
+    }
+}
