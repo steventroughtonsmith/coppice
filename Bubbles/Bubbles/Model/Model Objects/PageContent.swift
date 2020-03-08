@@ -31,12 +31,12 @@ enum PageContentType: String, Equatable, CaseIterable {
         return nil
     }
 
-    var icon: NSImage? {
+    var icon: NSImage {
         switch self {
         case .text:
-            return NSImage(named: "TextPageSmall")
+            return NSImage(named: "TextPageSmall")!
         case .image:
-			return NSImage(named: "ImagePageSmall")
+			return NSImage(named: "ImagePageSmall")!
         }
     }
 

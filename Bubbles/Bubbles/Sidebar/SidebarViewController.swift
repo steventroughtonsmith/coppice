@@ -11,11 +11,9 @@ import Combine
 
 class SidebarViewController: NSViewController, NSMenuItemValidation, RootViewController {
     @objc dynamic let viewModel: SidebarViewModel
-    private let pagesDataSource: PagesSidebarDataSource
 
     init(viewModel: SidebarViewModel) {
         self.viewModel = viewModel
-        self.pagesDataSource = PagesSidebarDataSource(viewModel: viewModel)
         super.init(nibName: "SidebarView", bundle: nil)
         self.viewModel.view = self
     }
@@ -24,22 +22,21 @@ class SidebarViewController: NSViewController, NSMenuItemValidation, RootViewCon
         preconditionFailure("init(coder:) has not been implemented")
     }
 
-    @IBOutlet weak var pagesTable: NSTableView!
+    @IBOutlet weak var outlineView: NSOutlineView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.pagesDataSource.tableView = self.pagesTable
+        self.reloadSidebarItems()
     }
 
     override func viewWillAppear() {
         super.viewWillAppear()
-        self.viewModel.startObserving()
+//        self.viewModel.startObserving()
     }
 
     override func viewDidDisappear() {
         super.viewDidDisappear()
-        self.viewModel.stopObserving()
+//        self.viewModel.stopObserving()
     }
 
 
@@ -63,49 +60,39 @@ class SidebarViewController: NSViewController, NSMenuItemValidation, RootViewCon
             return
         }
 
-        self.viewModel.deletePages(atIndexes: self.viewModel.selectedPageRowIndexes)
+//        self.viewModel.deletePages(atIndexes: self.viewModel.selectedPageRowIndexes)
     }
 
 
     //MARK: - Page Menu Actions
     @IBAction func editPageTitle(_ sender: Any) {
-        guard self.pagesTable.clickedRow > -1 else {
-            return
-        }
-        guard let cell = self.pagesTable.view(atColumn: 0, row: self.pagesTable.clickedRow, makeIfNecessary: false) as? EditableLabelCell else {
-            return
-        }
-        cell.startEditing()
+//        guard self.pagesTable.clickedRow > -1 else {
+//            return
+//        }
+//        guard let cell = self.pagesTable.view(atColumn: 0, row: self.pagesTable.clickedRow, makeIfNecessary: false) as? EditableLabelCell else {
+//            return
+//        }
+//        cell.startEditing()
     }
 
     @IBAction func deletePage(_ sender: Any) {
-        self.viewModel.deletePages(atIndexes: self.pageRowIndexesForAction)
+//        self.viewModel.deletePages(atIndexes: self.pageRowIndexesForAction)
     }
 
     @IBAction func exportPages(_ sender: Any?) {
-        guard let window = self.view.window else {
+        guard self.view.window != nil else {
             return
         }
-        PageExporter.export(self.viewModel.selectedPages, displayingOn: window)
+//        PageExporter.export(self.viewModel.selectedPages, displayingOn: window)
     }
 
     @IBAction func addToCanvas(_ sender: Any?) {
-        guard let menuItem = sender as? NSMenuItem else {
+        guard (sender as? NSMenuItem) != nil else {
             return
         }
 
-        self.viewModel.addPages(atIndexes: self.pageRowIndexesForAction, toCanvasAtindex: menuItem.tag)
+//        self.viewModel.addPages(atIndexes: self.pageRowIndexesForAction, toCanvasAtindex: menuItem.tag)
     }
-
-    @IBAction func changePageSorting(_ sender: Any?) {
-        guard let menuItem = sender as? NSMenuItem,
-            let sortKeyString = menuItem.representedObject as? String,
-            let sortKey = SidebarViewModel.PageSortKey(rawValue: sortKeyString) else {
-            return
-        }
-        self.viewModel.sortKey = sortKey
-    }
-
 
 
     //MARK: - Context Menus
@@ -115,7 +102,7 @@ class SidebarViewController: NSViewController, NSMenuItemValidation, RootViewCon
     //MARK: - Menu Validation
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         if menuItem.action == #selector(editPageTitle(_:)) {
-            return (self.pagesTable.clickedRow >= 0)
+//            return (self.pagesTable.clickedRow >= 0)
         }
 
         if menuItem.action == #selector(deletePage(_:)) {
@@ -128,53 +115,68 @@ class SidebarViewController: NSViewController, NSMenuItemValidation, RootViewCon
             return (rowIndexes.count > 0)
         }
 
-        if menuItem.action == #selector(exportPages(_:)) {
-            let pages = self.viewModel.pageItems[self.pageRowIndexesForAction].map { $0.page }
-            return PageExporter.validate(menuItem, forExporting: pages)
-        }
+//        if menuItem.action == #selector(exportPages(_:)) {
+//            let pages = self.viewModel.pageItems[self.pageRowIndexesForAction].map { $0.page }
+//            return PageExporter.validate(menuItem, forExporting: pages)
+//        }
 
         if menuItem.action == #selector(addToCanvas(_:)) {
             return (self.pageRowIndexesForAction.count > 0)
         }
-
-        if menuItem.action == #selector(changePageSorting(_:)) {
-            return true
-        }
-
+        
         return false
     }
 
 
     //MARK: - Action Items
     private var pageRowIndexesForAction: IndexSet {
-        let selectedIndexes = self.viewModel.selectedPageRowIndexes
-        let clickedRow = self.pagesTable.clickedRow
-        if selectedIndexes.contains(clickedRow) {
-            return selectedIndexes
-        }
-        return (clickedRow >= 0) ? IndexSet(integer: clickedRow) : IndexSet()
+        return IndexSet()
+//        let selectedIndexes = self.viewModel.selectedPageRowIndexes
+//        let clickedRow = self.pagesTable.clickedRow
+//        if selectedIndexes.contains(clickedRow) {
+//            return selectedIndexes
+//        }
+//        return (clickedRow >= 0) ? IndexSet(integer: clickedRow) : IndexSet()
     }
 
 
 
 
     //MARK: - Selection
-    private var isReloadingSelection = false
+    var sidebarItems = [SidebarItem]()
+    private func reloadSidebarItems() {
+        self.sidebarItems.append(SidebarItem(title: "Canvases", image: NSImage(named: "Canvas"), cellType: .bigCell))
+        let pagesGroup = SidebarItem(title: "Pages", image: nil, cellType: .groupCell)
+        self.sidebarItems.append(pagesGroup)
+
+        pagesGroup.addChild(SidebarItem(title: "Page 1", image: NSImage(named: "TextPage")))
+        pagesGroup.addChild(SidebarItem(title: "Page 2", image: NSImage(named: "TextPage")))
+        pagesGroup.addChild(SidebarItem(title: "Page 3", image: NSImage(named: "ImagePage")))
+
+        let folder = SidebarItem(title: "Folder 1", image: NSImage(named: "Folder"))
+        folder.addChild(SidebarItem(title: "Page 4", image: NSImage(named: "TextPage")))
+        folder.addChild(SidebarItem(title: "Page 5", image: NSImage(named: "ImagePage")))
+        pagesGroup.addChild(folder)
+
+
+        self.outlineView.reloadData()
+        self.outlineView.expandItem(pagesGroup)
+    }
 }
 
 
 extension SidebarViewController: SidebarView {
     func reloadSelection() {
-        self.isReloadingSelection = true
-        self.pagesTable.selectRowIndexes(self.viewModel.selectedPageRowIndexes, byExtendingSelection: false)
-        self.isReloadingSelection = false
+//        self.isReloadingSelection = true
+//        self.pagesTable.selectRowIndexes(self.viewModel.selectedPageRowIndexes, byExtendingSelection: false)
+//        self.isReloadingSelection = false
     }
 
     func reloadCanvases() {
     }
 
     func reloadPages() {
-        self.pagesTable.reloadData()
+//        self.pagesTable.reloadData()
         self.reloadSelection()
     }
 
@@ -190,29 +192,130 @@ extension SidebarViewController: SidebarView {
 }
 
 
-extension SidebarViewController: NSMenuDelegate {
-    func numberOfItems(in menu: NSMenu) -> Int {
-        if (menu.identifier == NSUserInterfaceItemIdentifier("SortPagesMenu")) {
-            return SidebarViewModel.PageSortKey.allCases.count
+
+extension SidebarViewController: NSOutlineViewDataSource {
+    func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
+        guard item != nil else {
+            return self.sidebarItems.count
         }
-        return self.viewModel.canvasItems.count
+        guard let sidebarItem = item as? SidebarItem else {
+            return 0
+        }
+        return sidebarItem.children.count
     }
 
-    func menu(_ menu: NSMenu, update item: NSMenuItem, at index: Int, shouldCancel: Bool) -> Bool {
-        if (menu.identifier == NSUserInterfaceItemIdentifier("SortPagesMenu")) {
-            let sortKey = SidebarViewModel.PageSortKey.allCases[index]
-            item.title = sortKey.localizedName
-            item.representedObject = sortKey.rawValue
-            item.state = (self.viewModel.sortKey == sortKey) ? .on : .off
-            item.target = self
-            item.action = #selector(changePageSorting(_:))
+    func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
+        guard item != nil else {
+            return self.sidebarItems[index]
+        }
+        guard let sidebarItem = item as? SidebarItem else {
+            preconditionFailure("Encountered an item that isn't a sidebar item: \(item!)")
+        }
+        return sidebarItem.children[index]
+    }
+
+    func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
+        guard let sidebarItem = item as? SidebarItem else {
+            return false
+        }
+        return (sidebarItem.children.count > 0)
+    }
+
+    func outlineView(_ outlineView: NSOutlineView, shouldSelectItem item: Any) -> Bool {
+        guard let sidebarItem = item as? SidebarItem else {
             return true
         }
-
-        item.title = self.viewModel.canvasItems[index].canvas.title
-        item.tag = index
-        item.target = self
-        item.action = #selector(addToCanvas(_:))
-        return true
+        switch sidebarItem.cellType {
+        case .bigCell, .smallCell:
+            return true
+        case .groupCell:
+            return false
+        }
     }
 }
+
+
+extension SidebarViewController: NSOutlineViewDelegate {
+    func outlineView(_ outlineView: NSOutlineView, isGroupItem item: Any) -> Bool {
+        guard let sidebarItem = item as? SidebarItem else {
+            return false
+        }
+        switch sidebarItem.cellType {
+        case .bigCell, .smallCell:
+            return false
+        case .groupCell:
+            return true
+        }
+    }
+
+    func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
+        guard let sidebarItem = item as? SidebarItem else {
+            return nil
+        }
+        let view: NSTableCellView?
+        switch sidebarItem.cellType {
+        case .bigCell:
+            view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("BigCell"), owner: self) as? NSTableCellView
+        case .smallCell:
+            view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("SmallCell"), owner: self) as? NSTableCellView
+        case .groupCell:
+            view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("GroupCell"), owner: self) as? NSTableCellView
+        }
+        view?.textField?.stringValue = sidebarItem.title
+        view?.imageView?.image = sidebarItem.image
+        return view
+    }
+
+    func outlineView(_ outlineView: NSOutlineView, heightOfRowByItem item: Any) -> CGFloat {
+        guard let sidebarItem = item as? SidebarItem else {
+            return 22
+        }
+        switch sidebarItem.cellType {
+        case .bigCell:
+            return 34
+        case .smallCell, .groupCell:
+            return 22
+        }
+    }
+}
+
+
+
+class SidebarOutlineView: NSOutlineView {
+    override func frameOfCell(atColumn column: Int, row: Int) -> NSRect {
+        var rect = super.frameOfCell(atColumn: column, row: row)
+        if row == 0 {
+            rect.size.width += (rect.origin.x - 2)
+            rect.origin.x = 2
+        }
+        return rect
+    }
+}
+
+
+//extension SidebarViewController: NSMenuDelegate {
+//    func numberOfItems(in menu: NSMenu) -> Int {
+//        if (menu.identifier == NSUserInterfaceItemIdentifier("SortPagesMenu")) {
+//            return SidebarViewModel.PageSortKey.allCases.count
+//        }
+//        return self.viewModel.canvasItems.count
+//    }
+//
+//    func menu(_ menu: NSMenu, update item: NSMenuItem, at index: Int, shouldCancel: Bool) -> Bool {
+//        if (menu.identifier == NSUserInterfaceItemIdentifier("SortPagesMenu")) {
+//            let sortKey = SidebarViewModel.PageSortKey.allCases[index]
+//            item.title = sortKey.localizedName
+//            item.representedObject = sortKey.rawValue
+//            item.state = (self.viewModel.sortKey == sortKey) ? .on : .off
+//            item.target = self
+//            item.action = #selector(changePageSorting(_:))
+//            return true
+//        }
+//
+//        item.title = self.viewModel.canvasItems[index].canvas.title
+//        item.tag = index
+//        item.target = self
+//        item.action = #selector(addToCanvas(_:))
+//        return true
+//    }
+//}

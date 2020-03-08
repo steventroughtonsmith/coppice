@@ -8,35 +8,26 @@
 
 import AppKit
 
-protocol SidebarItem: class {
-    var id: ModelID { get }
-    var title: String { get }
-}
+class SidebarItem {
+    enum CellType {
+        case bigCell
+        case smallCell
+        case groupCell
+    }
+    let title: String
+    let image: NSImage?
+    let cellType: CellType
 
-class CanvasSidebarItem: NSObject, SidebarItem {
-    @objc dynamic let canvas: Canvas
-    init(canvas: Canvas) {
-        self.canvas = canvas
+    init(title: String, image: NSImage?, cellType: CellType = .smallCell) {
+        self.title = title
+        self.image = image
+        self.cellType = cellType
     }
 
-    var id: ModelID { self.canvas.id }
-    @objc dynamic var title: String {
-        get { self.canvas.title }
-        set { self.canvas.title = newValue }
+    weak var parent: SidebarItem?
+    private(set) var children = [SidebarItem]()
+    func addChild(_ child: SidebarItem) {
+        child.parent = self
+        self.children.append(child)
     }
-    dynamic var thumbnail: NSImage? { self.canvas.thumbnail }
-}
-
-class PageSidebarItem: NSObject, SidebarItem {
-    let page: Page
-    init(page: Page) {
-        self.page = page
-    }
-
-    var id: ModelID { self.page.id }
-    @objc dynamic var title: String {
-        get { self.page.title }
-        set { self.page.title = newValue }
-    }
-    @objc dynamic var icon: NSImage? { self.page.content.contentType.icon }
 }
