@@ -418,7 +418,7 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation {
             return
         }
 
-        self.viewModel.documentWindowViewModel.delete(page)
+        self.viewModel.documentWindowViewModel.delete([.page(page.id)])
     }
 
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {

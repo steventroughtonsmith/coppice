@@ -6,7 +6,7 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import Foundation
+import Cocoa
 
 struct GlobalConstants {
     static let urlScheme = "bubbles"
@@ -19,5 +19,13 @@ struct GlobalConstants {
 
     static let minimumPageSize = CGSize(width: 150, height: 100)
     static let linkedPageOffset: CGFloat = 40.0
+}
+
+extension NSImage.Name {
+    //Sidebar
+    static let sidebarCanvas = "Canvas"
+    static let sidebarFolder = "Folder"
+    static let textPage = "TextPage"
+    static let imagePage = "ImagePage"
 }
 

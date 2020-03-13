@@ -105,23 +105,25 @@ class DocumentWindowController: NSWindowController {
     }
 
     @IBAction func deletePage(_ sender: Any?) {
-        if (self.viewModel.selectedPagesInSidebar.count == 1), let page = self.viewModel.selectedPagesInSidebar.first {
-            self.viewModel.delete(page)
-        }
+        #warning("Add functionality back")
+//        if (self.viewModel.selectedPagesInSidebar.count == 1), let page = self.viewModel.selectedPagesInSidebar.first {
+//            self.viewModel.delete(page)
+//        }
     }
 
     @IBAction func deleteCanvas(_ sender: Any?) {
-        if let canvas = self.viewModel.selectedCanvasInSidebar {
-            self.viewModel.delete(canvas)
-        }
+        #warning("Add functionality back")
+//        if let canvas = self.viewModel.selectedCanvasInSidebar {
+//            self.viewModel.delete(canvas)
+//        }
     }
 
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         if menuItem.action == #selector(deletePage(_:)) {
-            return (self.viewModel.selectedPagesInSidebar.count == 1)
+//            return (self.viewModel.selectedPagesInSidebar.count == 1)
         }
         if menuItem.action == #selector(deleteCanvas(_:)) {
-            return (self.viewModel.selectedCanvasInSidebar != nil)
+//            return (self.viewModel.selectedCanvasInSidebar != nil)
         }
         return true
     }

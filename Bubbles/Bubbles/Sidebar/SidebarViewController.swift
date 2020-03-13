@@ -26,17 +26,17 @@ class SidebarViewController: NSViewController, NSMenuItemValidation, RootViewCon
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.reloadSidebarItems()
+        self.reloadSidebarNodes()
     }
 
     override func viewWillAppear() {
         super.viewWillAppear()
-//        self.viewModel.startObserving()
+        self.viewModel.startObserving()
     }
 
     override func viewDidDisappear() {
         super.viewDidDisappear()
-//        self.viewModel.stopObserving()
+        self.viewModel.stopObserving()
     }
 
 
@@ -66,13 +66,13 @@ class SidebarViewController: NSViewController, NSMenuItemValidation, RootViewCon
 
     //MARK: - Page Menu Actions
     @IBAction func editPageTitle(_ sender: Any) {
-//        guard self.pagesTable.clickedRow > -1 else {
-//            return
-//        }
-//        guard let cell = self.pagesTable.view(atColumn: 0, row: self.pagesTable.clickedRow, makeIfNecessary: false) as? EditableLabelCell else {
-//            return
-//        }
-//        cell.startEditing()
+        guard self.outlineView.clickedRow > -1 else {
+            return
+        }
+        guard let cell = self.outlineView.view(atColumn: 0, row: self.outlineView.clickedRow, makeIfNecessary: false) as? EditableLabelCell else {
+            return
+        }
+        cell.startEditing()
     }
 
     @IBAction func deletePage(_ sender: Any) {
@@ -142,30 +142,23 @@ class SidebarViewController: NSViewController, NSMenuItemValidation, RootViewCon
 
 
 
-    //MARK: - Selection
-    var sidebarItems = [SidebarItem]()
-    private func reloadSidebarItems() {
-        self.sidebarItems.append(SidebarItem(title: "Canvases", image: NSImage(named: "Canvas"), cellType: .bigCell))
-        let pagesGroup = SidebarItem(title: "Pages", image: nil, cellType: .groupCell)
-        self.sidebarItems.append(pagesGroup)
-
-        pagesGroup.addChild(SidebarItem(title: "Page 1", image: NSImage(named: "TextPage")))
-        pagesGroup.addChild(SidebarItem(title: "Page 2", image: NSImage(named: "TextPage")))
-        pagesGroup.addChild(SidebarItem(title: "Page 3", image: NSImage(named: "ImagePage")))
-
-        let folder = SidebarItem(title: "Folder 1", image: NSImage(named: "Folder"))
-        folder.addChild(SidebarItem(title: "Page 4", image: NSImage(named: "TextPage")))
-        folder.addChild(SidebarItem(title: "Page 5", image: NSImage(named: "ImagePage")))
-        pagesGroup.addChild(folder)
-
-
+    //MARK: - Reload
+    private func reloadSidebarNodes() {
         self.outlineView.reloadData()
-        self.outlineView.expandItem(pagesGroup)
+        let rootFolder = self.viewModel.documentWindowViewModel.rootFolder
+        if let pagesGroup = self.viewModel.rootSidebarNodes.first(where: { $0.item == .folder(rootFolder.id)}) {
+            self.outlineView.expandItem(pagesGroup)
+        }
     }
+
 }
 
 
 extension SidebarViewController: SidebarView {
+    func reload() {
+        self.reloadSidebarNodes()
+    }
+
     func reloadSelection() {
 //        self.isReloadingSelection = true
 //        self.pagesTable.selectRowIndexes(self.viewModel.selectedPageRowIndexes, byExtendingSelection: false)
@@ -196,9 +189,9 @@ extension SidebarViewController: SidebarView {
 extension SidebarViewController: NSOutlineViewDataSource {
     func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
         guard item != nil else {
-            return self.sidebarItems.count
+            return self.viewModel.rootSidebarNodes.count
         }
-        guard let sidebarItem = item as? SidebarItem else {
+        guard let sidebarItem = item as? SidebarNode else {
             return 0
         }
         return sidebarItem.children.count
@@ -206,23 +199,23 @@ extension SidebarViewController: NSOutlineViewDataSource {
 
     func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
         guard item != nil else {
-            return self.sidebarItems[index]
+            return self.viewModel.rootSidebarNodes[index]
         }
-        guard let sidebarItem = item as? SidebarItem else {
+        guard let sidebarItem = item as? SidebarNode else {
             preconditionFailure("Encountered an item that isn't a sidebar item: \(item!)")
         }
         return sidebarItem.children[index]
     }
 
     func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
-        guard let sidebarItem = item as? SidebarItem else {
+        guard let sidebarItem = item as? SidebarNode else {
             return false
         }
         return (sidebarItem.children.count > 0)
     }
 
     func outlineView(_ outlineView: NSOutlineView, shouldSelectItem item: Any) -> Bool {
-        guard let sidebarItem = item as? SidebarItem else {
+        guard let sidebarItem = item as? SidebarNode else {
             return true
         }
         switch sidebarItem.cellType {
@@ -237,7 +230,7 @@ extension SidebarViewController: NSOutlineViewDataSource {
 
 extension SidebarViewController: NSOutlineViewDelegate {
     func outlineView(_ outlineView: NSOutlineView, isGroupItem item: Any) -> Bool {
-        guard let sidebarItem = item as? SidebarItem else {
+        guard let sidebarItem = item as? SidebarNode else {
             return false
         }
         switch sidebarItem.cellType {
@@ -249,7 +242,7 @@ extension SidebarViewController: NSOutlineViewDelegate {
     }
 
     func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
-        guard let sidebarItem = item as? SidebarItem else {
+        guard let sidebarItem = item as? SidebarNode else {
             return nil
         }
         let view: NSTableCellView?
@@ -261,13 +254,12 @@ extension SidebarViewController: NSOutlineViewDelegate {
         case .groupCell:
             view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("GroupCell"), owner: self) as? NSTableCellView
         }
-        view?.textField?.stringValue = sidebarItem.title
-        view?.imageView?.image = sidebarItem.image
+        view?.objectValue = item
         return view
     }
 
     func outlineView(_ outlineView: NSOutlineView, heightOfRowByItem item: Any) -> CGFloat {
-        guard let sidebarItem = item as? SidebarItem else {
+        guard let sidebarItem = item as? SidebarNode else {
             return 22
         }
         switch sidebarItem.cellType {
@@ -277,20 +269,16 @@ extension SidebarViewController: NSOutlineViewDelegate {
             return 22
         }
     }
-}
 
-
-
-class SidebarOutlineView: NSOutlineView {
-    override func frameOfCell(atColumn column: Int, row: Int) -> NSRect {
-        var rect = super.frameOfCell(atColumn: column, row: row)
-        if row == 0 {
-            rect.size.width += (rect.origin.x - 2)
-            rect.origin.x = 2
-        }
-        return rect
+    func outlineViewSelectionDidChange(_ notification: Notification) {
+        let selectedNodes = self.outlineView.selectedRowIndexes.compactMap { self.outlineView.item(atRow: $0) as? SidebarNode }
+        self.viewModel.updateSelectedNodes(selectedNodes)
     }
 }
+
+
+
+
 
 
 //extension SidebarViewController: NSMenuDelegate {

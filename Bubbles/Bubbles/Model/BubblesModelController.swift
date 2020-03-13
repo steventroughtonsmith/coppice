@@ -20,6 +20,7 @@ class BubblesModelController: NSObject, ModelController {
         self.addModelCollection(for: Canvas.self)
         self.addModelCollection(for: CanvasPage.self)
         self.addModelCollection(for: Page.self)
+        self.addModelCollection(for: Folder.self)
     }
 
     func object(with id: ModelID) -> ModelObject? {
@@ -30,12 +31,15 @@ class BubblesModelController: NSObject, ModelController {
             return self.collection(for: Page.self).objectWithID(id)
         case CanvasPage.modelType:
             return self.collection(for: CanvasPage.self).objectWithID(id)
+        case Folder.modelType:
+            return self.collection(for: Folder.self).objectWithID(id)
         default:
             assertionFailure("Model type '\(id.modelType)' does not exist")
             return nil
         }
     }
 }
+
 
 extension BubblesModelController {
     func createTestData() {
@@ -92,6 +96,7 @@ extension ModelCollection where ModelType == Page {
 
 
 //MARK: - ModelSettingsKeys
-extension ModelSettings {
-    static let pageSortKeySetting = Setting(rawValue: "pageSortKey")
+extension ModelSettings.Setting {
+    static let pageSortKeySetting = ModelSettings.Setting(rawValue: "pageSortKey")
+    static let rootFolder = ModelSettings.Setting(rawValue: "rootFolder")
 }

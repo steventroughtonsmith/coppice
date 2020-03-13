@@ -54,31 +54,113 @@ class DocumentWindowViewModel: NSObject {
         return self.modelController.collection(for: CanvasPage.self)
     }
 
-
-    //MARK: - Selection Helpers
-    var selectedCanvasInSidebar: Canvas? {
-        guard self.selectedSidebarObjectIDs.count == 1,
-            let canvasID = self.selectedSidebarObjectIDs.first else {
-                return nil
-        }
-
-        return self.canvasCollection.objectWithID(canvasID)
+    var foldersCollection: ModelCollection<Folder> {
+        return self.modelController.collection(for: Folder.self)
     }
 
-    var selectedPagesInSidebar: [Page] {
-        var pages = [Page]()
-        for pageID in self.selectedSidebarObjectIDs {
-            guard let page = self.pageCollection.objectWithID(pageID) else {
-                return []
+
+    //MARK: - Selection Logic
+    enum SidebarItem: Equatable {
+        case canvases
+        case page(ModelID)
+        case folder(ModelID)
+    }
+    var selectedCanvasID: ModelID?
+
+    @Published private(set) var sidebarSelection: [SidebarItem] = []
+
+    //Updates the sidebar selection and the editor
+    func updateSelection(_ selection: [SidebarItem]) {
+        self.sidebarSelection = selection
+        self.updateEditor(basedOnNewSelection: selection)
+    }
+
+
+    //MARK: - Editor Logic
+    enum Editor: Equatable {
+        case none
+        case canvas
+        case page(Page)
+    }
+    @Published var currentEditor: Editor = .none
+
+    private func updateEditor(basedOnNewSelection selection: [SidebarItem]) {
+        //We won't update the editor if we have multiple items selected
+        guard selection.count <= 1 else {
+            return
+        }
+
+        //If nothing is selected then display nothing
+        guard let selectedItem = selection.first else {
+            self.currentEditor = .none
+            return
+        }
+
+        switch selectedItem {
+        case .canvases:
+            self.currentEditor = .canvas
+        case .page(let modelID):
+            guard let page = self.pageCollection.objectWithID(modelID) else {
+                self.currentEditor = .none
+                return
             }
-            pages.append(page)
+            self.currentEditor = .page(page)
+        //Don't bother changing for a folder
+        case .folder(_):
+            return
         }
-        return pages
     }
+
+
+    //MARK: - New Page Helpers
+    var canvasForNewPages: Canvas? {
+        guard self.sidebarSelection.firstIndex(of: .canvases) != nil else {
+            return nil
+        }
+
+        guard let selectedCanvasID = self.selectedCanvasID else {
+            return nil
+        }
+
+        return self.canvasCollection.objectWithID(selectedCanvasID)
+    }
+
+    var folderForNewPages: Folder {
+        guard let selection = self.sidebarSelection.last(where: { $0 != .canvases }) else {
+            return self.rootFolder
+        }
+
+        switch selection {
+        case .canvases:
+            return self.rootFolder
+        case .page(let modelID):
+            return self.pageCollection.objectWithID(modelID)?.containingFolder ?? self.rootFolder
+        case .folder(let modelID):
+            return self.foldersCollection.objectWithID(modelID) ?? self.rootFolder
+        }
+    }
+
+
+    //MARK: - Folders
+    lazy var rootFolder: Folder = {
+        if let id = self.modelController.settings.modelID(for: .rootFolder),
+            let rootFolder = self.foldersCollection.objectWithID(id) {
+            return rootFolder
+        }
+
+        var folder: Folder!
+        self.foldersCollection.disableUndo {
+            folder = self.foldersCollection.newObject() { $0.title = Folder.rootFolderTitle }
+        }
+
+        self.modelController.settings.set(folder.id, for: .rootFolder)
+
+        return folder
+    }()
 
 
     //MARK: - Creating Pages
-    @discardableResult func createPage(ofType contentType: PageContentType = .text) -> Page {
+    @discardableResult func createPage(ofType contentType: PageContentType = .text, in folder: Folder? = nil) -> Page {
         self.modelController.undoManager.beginUndoGrouping()
         self.modelController.undoManager.setActionName(NSLocalizedString("Create Page", comment: "Create Page Undo Action Name"))
         let page = self.pageCollection.newObject() {
@@ -88,24 +170,28 @@ class DocumentWindowViewModel: NSObject {
             }
             $0.content = contentType.createContent()
         }
-        guard let selectedCanvas = self.selectedCanvasInSidebar else {
-            self.selectedSidebarObjectIDs = [page.id]
-            self.modelController.undoManager.endUndoGrouping()
-            return page
+
+        (folder ?? self.folderForNewPages).insert([page])
+
+        if self.sidebarSelection.contains(.canvases) {
+            self.canvasForNewPages?.addPages([page])
+        } else {
+            self.updateSelection([.page(page.id)])
         }
 
-        selectedCanvas.addPages([page])
         self.modelController.undoManager.endUndoGrouping()
         return page
     }
 
-    @discardableResult func createPages(fromFilesAtURLs fileURLs: [URL], addingTo canvas: Canvas? = nil, centredOn point: CGPoint? = nil) -> [Page] {
+    @discardableResult func createPages(fromFilesAtURLs fileURLs: [URL], in folder: Folder? = nil, addingTo canvas: Canvas? = nil, centredOn point: CGPoint? = nil) -> [Page] {
         self.modelController.pushChangeGroup()
         self.modelController.undoManager.setActionName(NSLocalizedString("Create Pages", comment: "Create Page Undo Action Name"))
         let newPages = fileURLs.compactMap { self.pageCollection.newPage(fromFileAt: $0) }
         if let canvas = canvas {
             canvas.addPages(newPages, centredOn: point)
         }
+
+        (folder ?? self.folderForNewPages).insert(newPages)
 
         self.modelController.popChangeGroup()
 
@@ -114,21 +200,46 @@ class DocumentWindowViewModel: NSObject {
 
 
     //MARK: - Deleting Pages
-    func delete(_ page: Page) {
-        guard let alert = alertForDeleting(page) else {
-            self.actuallyDelete(page)
+    func delete(_ sidebarItems: [SidebarItem]) {
+        guard let alert = self.alertForDeleting(sidebarItems) else {
+            self.actuallyDelete(sidebarItems)
             return
         }
 
         self.window?.showAlert(alert, callback: { (index) in
             let (type, _) = alert.buttons[index]
             if (type == .confirm) {
-                self.actuallyDelete(page)
+                self.actuallyDelete(sidebarItems)
             }
         })
     }
 
-    private func alertForDeleting(_ page: Page) -> Alert? {
+    private func alertForDeleting(_ sidebarItems: [SidebarItem]) -> Alert? {
+        guard sidebarItems.count <= 1 else {
+            return self.alertForDeletingMultipleItems(sidebarItems)
+        }
+
+        guard let item = sidebarItems.first else {
+            return nil
+        }
+
+        switch item {
+        case .page(let modelID):
+            guard let page = self.pageCollection.objectWithID(modelID) else {
+                return nil
+            }
+            return self.alertForDeletingSinglePage(page)
+        case .folder(let modelID):
+            guard let folder = self.foldersCollection.objectWithID(modelID) else {
+                return nil
+            }
+            return self.alertForDeletingSingleFolder(folder)
+        default:
+            return nil
+        }
+    }
+
+    private func alertForDeletingSinglePage(_ page: Page) -> Alert? {
         let canvases = Set(page.canvases.compactMap { $0.canvas })
         guard canvases.count > 0 else {
             return nil
@@ -151,16 +262,129 @@ class DocumentWindowViewModel: NSObject {
                      confirmButtonTitle: NSLocalizedString("Delete", comment: "Delete alert confirm button"))
     }
 
-    private func actuallyDelete(_ page: Page) {
+    private func alertForDeletingSingleFolder(_ folder: Folder) -> Alert? {
+        guard folder.contents.count > 0 else {
+            return nil
+        }
+        return Alert(title: NSLocalizedString("Delete Folder", comment: "Delete folder alert title"),
+                     message: NSLocalizedString("This will also delete any items contained in this folder", comment: "Delete Folder single alert message"),
+                     confirmButtonTitle: NSLocalizedString("Delete", comment: "Delete alert confirm button"))
+    }
+
+    private func alertForDeletingMultipleItems(_ items: [SidebarItem]) -> Alert? {
+        var hasPages = false
+        var hasFolders = false
+        for item in items {
+            switch item {
+            case .page(_):
+                hasPages = true
+            case .folder(_):
+                hasFolders = true
+            case .canvases:
+                continue
+            }
+
+            if hasPages && hasFolders {
+                break
+            }
+        }
+
+        let localizedTitle: String
+        let localizedMessage: String
+        if hasPages && !hasFolders {
+            localizedTitle = NSLocalizedString("Delete multiple pages", comment: "Delete multiple pages alert title")
+            localizedMessage = NSLocalizedString("This will also remove these pages from any canvases they are on", comment: "Delete multiple pages alert message")
+        } else if hasFolders && !hasPages {
+            localizedTitle = NSLocalizedString("Delete multiple folders", comment: "Delete multiple folders alert title")
+            localizedMessage = NSLocalizedString("This will also delete any items contained in these folders", comment: "Delete multiple folders alert message")
+        } else {
+            localizedTitle = NSLocalizedString("Delete multiple items", comment: "Delete multiple folders alert title")
+            localizedMessage = NSLocalizedString("This will also delete any items contained in folders and remove pages from any canvases they are on", comment: "Delete multiple items alert message")
+        }
+
+        return Alert(title: localizedTitle,
+                     message: localizedMessage,
+                     confirmButtonTitle: NSLocalizedString("Delete", comment: "Delete alert confirm button"))
+    }
+
+    private func actuallyDelete(_ items: [SidebarItem]) {
         self.modelController.pushChangeGroup()
-        self.modelController.undoManager.setActionName(NSLocalizedString("Delete Page", comment: "Delete Page Undo Action Name"))
+        self.modelController.undoManager.setActionName(self.undoActionName(for: items))
+        var itemsToRemoveFromSelection = items
+        for item in items {
+            switch item {
+            case .page(let modelID):
+                guard let page = self.pageCollection.objectWithID(modelID) else {
+                    continue
+                }
+                self.actuallyDelete(page)
+            case .folder(let modelID):
+                guard let folder = self.foldersCollection.objectWithID(modelID) else {
+                    continue
+                }
+                let deletedContents = self.actuallyDelete(folder)
+                itemsToRemoveFromSelection.append(contentsOf: deletedContents)
+            case .canvases:
+                continue
+            }
+        }
+
+        let newSelection = self.sidebarSelection.filter { !itemsToRemoveFromSelection.contains($0) }
+        self.updateSelection(newSelection)
+
+        self.modelController.popChangeGroup()
+    }
+
+    private func actuallyDelete(_ page: Page) {
         page.canvases.forEach {
             self.canvasPageCollection.delete($0)
         }
-        self.pageCollection.delete(page)
-        self.modelController.popChangeGroup()
 
-        self.selectedSidebarObjectIDs.remove(page.id)
+        page.containingFolder?.remove([page])
+        self.pageCollection.delete(page)
+    }
+
+    private func actuallyDelete(_ folder: Folder) -> [SidebarItem] {
+        var contentItemsDeleted = [SidebarItem]()
+        folder.contents.forEach { (containable) in
+            if let folder = containable as? Folder {
+                contentItemsDeleted.append(contentsOf: self.actuallyDelete(folder))
+                contentItemsDeleted.append(.folder(folder.id))
+            } else if let page = containable as? Page {
+                self.actuallyDelete(page)
+                contentItemsDeleted.append(.page(page.id))
+            }
+        }
+        folder.containingFolder?.remove([folder])
+        self.foldersCollection.delete(folder)
+        return contentItemsDeleted
+    }
+
+    private func undoActionName(for items: [SidebarItem]) -> String {
+        var hasPages = false
+        var hasFolders = false
+        for item in items {
+            switch item {
+            case .page(_):
+                hasPages = true
+            case .folder(_):
+                hasFolders = true
+            case .canvases:
+                continue
+            }
+
+            if hasPages && hasFolders {
+                break
+            }
+        }
+
+        if hasPages && !hasFolders {
+            return NSLocalizedString("Delete Pages", comment: "Delete Pages undo action")
+        } else if hasFolders && !hasPages {
+            return NSLocalizedString("Delete Folders", comment: "Delete Folders undo action")
+        } else {
+            return NSLocalizedString("Delete Items", comment: "Delete Items undo action")
+        }
     }
 
 
@@ -174,10 +398,10 @@ class DocumentWindowViewModel: NSObject {
             return false
         }
 
-        guard self.selectedCanvasInSidebar == nil else {
-            self.addPage(at: pageLink, to: self.selectedCanvasInSidebar!)
-            return true
-        }
+//        guard self.selectedCanvasInSidebar == nil else {
+//            self.addPage(at: pageLink, to: self.selectedCanvasInSidebar!)
+//            return true
+//        }
 
         self.openPage(at: pageLink)
         return true
@@ -311,8 +535,8 @@ class DocumentWindowViewModel: NSObject {
     //MARK: - Import/Export
     func importFiles(at urls: [URL]) {
         let pageCollection = self.modelController.collection(for: Page.self)
-        let pages = urls.compactMap { pageCollection.newPage(fromFileAt: $0) }
-        self.selectedCanvasInSidebar?.addPages(pages)
+        _ = urls.compactMap { pageCollection.newPage(fromFileAt: $0) }
+//        self.selectedCanvasInSidebar?.addPages(pages)
     }
 
     func export(_ pages: [Page], to url: URL) {

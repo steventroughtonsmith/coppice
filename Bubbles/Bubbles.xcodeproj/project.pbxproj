@@ -36,6 +36,10 @@
 		993D2BDB24127E3B002E5BAC /* CanvasListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993D2BDA24127E3B002E5BAC /* CanvasListViewModel.swift */; };
 		993D2BF92412B053002E5BAC /* NestableSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993D2BF82412B053002E5BAC /* NestableSplitView.swift */; };
 		993D2BFE2412FB1C002E5BAC /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993D2BFD2412FB1C002E5BAC /* RootViewController.swift */; };
+		993D2C0024157196002E5BAC /* SidebarOutlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993D2BFF24157196002E5BAC /* SidebarOutlineView.swift */; };
+		993D2C0224157735002E5BAC /* Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993D2C0124157735002E5BAC /* Folder.swift */; };
+		993D2C0424164D72002E5BAC /* FolderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993D2C0324164D72002E5BAC /* FolderTests.swift */; };
+		993D2C0E241674F2002E5BAC /* FolderContainable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993D2C0D241674F2002E5BAC /* FolderContainable.swift */; };
 		99488A9923BA3912009954AF /* PageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99488A9823BA3912009954AF /* PageCell.swift */; };
 		99488A9B23BA392E009954AF /* SmallCanvasCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99488A9A23BA392E009954AF /* SmallCanvasCell.swift */; };
 		99488A9F23BA3954009954AF /* LargeCanvasCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99488A9E23BA3954009954AF /* LargeCanvasCell.swift */; };
@@ -246,6 +250,10 @@
 		993D2BDA24127E3B002E5BAC /* CanvasListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasListViewModel.swift; sourceTree = "<group>"; };
 		993D2BF82412B053002E5BAC /* NestableSplitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NestableSplitView.swift; sourceTree = "<group>"; };
 		993D2BFD2412FB1C002E5BAC /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
+		993D2BFF24157196002E5BAC /* SidebarOutlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarOutlineView.swift; sourceTree = "<group>"; };
+		993D2C0124157735002E5BAC /* Folder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Folder.swift; sourceTree = "<group>"; };
+		993D2C0324164D72002E5BAC /* FolderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderTests.swift; sourceTree = "<group>"; };
+		993D2C0D241674F2002E5BAC /* FolderContainable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderContainable.swift; sourceTree = "<group>"; };
 		99488A9823BA3912009954AF /* PageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageCell.swift; sourceTree = "<group>"; };
 		99488A9A23BA392E009954AF /* SmallCanvasCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallCanvasCell.swift; sourceTree = "<group>"; };
 		99488A9E23BA3954009954AF /* LargeCanvasCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeCanvasCell.swift; sourceTree = "<group>"; };
@@ -463,6 +471,7 @@
 				992A5C9B22DCC6090012CCB6 /* SidebarViewModel.swift */,
 				99DEF28722F1D72D0020A7CE /* SidebarViewModelTypes.swift */,
 				992A5C9122DCB7530012CCB6 /* SidebarViewController.swift */,
+				993D2BFF24157196002E5BAC /* SidebarOutlineView.swift */,
 				992A5C9522DCB7790012CCB6 /* SidebarView.xib */,
 				999DAAC923CCC5D80013EC36 /* SidebarHeaderView.swift */,
 				999DAACB23CDFE6B0013EC36 /* PagesSidebarDataSource.swift */,
@@ -709,6 +718,7 @@
 				99AD88772376FCF0000453E1 /* PageContentTests.swift */,
 				9976A49A23674454004D573D /* CanvasPageTests.swift */,
 				99771191239AA6EB00FCC8C7 /* PageLinkTests.swift */,
+				993D2C0324164D72002E5BAC /* FolderTests.swift */,
 			);
 			path = ModelObjects;
 			sourceTree = "<group>";
@@ -908,6 +918,7 @@
 			isa = PBXGroup;
 			children = (
 				99C41B7222DCA98600C82DDE /* Page.swift */,
+				993D2C0124157735002E5BAC /* Folder.swift */,
 				99C9AF1823671DB0009F909A /* PageLink.swift */,
 				99C86510230174B9004C7B89 /* PageContent.swift */,
 				9970975B23A816D700CD189B /* Content Types */,
@@ -915,6 +926,7 @@
 				990B6A3622E5F84400523C06 /* CanvasPage.swift */,
 				9970977323B0180F00CD189B /* Canvas+AddingPages.swift */,
 				998F178E23EB229200B3437A /* ModelObjects+Pasteboard.swift */,
+				993D2C0D241674F2002E5BAC /* FolderContainable.swift */,
 			);
 			path = "Model Objects";
 			sourceTree = "<group>";
@@ -1273,11 +1285,13 @@
 				99488A9923BA3912009954AF /* PageCell.swift in Sources */,
 				99DEF28A22F32D350020A7CE /* DebugCanvasViewModelTypes.swift in Sources */,
 				99868F352396AD73009AC0F7 /* ImageEditorInspectorViewController.swift in Sources */,
+				993D2C0024157196002E5BAC /* SidebarOutlineView.swift in Sources */,
 				998D077B2411513F004ADFF8 /* NewPageMenuDelegate.swift in Sources */,
 				99D8E37A237EDB890098CF3B /* PageInspectorViewModel.swift in Sources */,
 				99F084F123A280A5008D2ACA /* ModelRelationship.swift in Sources */,
 				99C865202302E256004C7B89 /* ImageEditorViewController.swift in Sources */,
 				99C8650923016EB2004C7B89 /* TextEditorViewModel.swift in Sources */,
+				993D2C0224157735002E5BAC /* Folder.swift in Sources */,
 				9925B2622386A0DF001A8ADC /* TextEditorInspectorTypes.swift in Sources */,
 				99E944FB2368683F00DFAB95 /* NSImage+M3Extensions.swift in Sources */,
 				9970976723AA8B5A00CD189B /* RemovePageEventContext.swift in Sources */,
@@ -1345,6 +1359,7 @@
 				99C9AF1B23671FD0009F909A /* ModelWriter.swift in Sources */,
 				992A5CA522DDF4C50012CCB6 /* EditorContainerViewController.swift in Sources */,
 				99581078230D71E100D996C4 /* NSViewController+M3Extensions.swift in Sources */,
+				993D2C0E241674F2002E5BAC /* FolderContainable.swift in Sources */,
 				9965FC3D23843143002FE10D /* CanvasPageInspectorViewController.swift in Sources */,
 				9951C26C230AEFAB006CAD4D /* PageSelectorWindowController.swift in Sources */,
 				99868F322396AD55009AC0F7 /* ImageEditorInspectorViewModel.swift in Sources */,
@@ -1404,6 +1419,7 @@
 				9923B07422F485480035D8C6 /* ModelCollectionTests.swift in Sources */,
 				99C88EE22406BDEE00339880 /* LayoutEngineArrowTests.swift in Sources */,
 				99DEF28C22F33A2A0020A7CE /* ModelObjectTests.swift in Sources */,
+				993D2C0424164D72002E5BAC /* FolderTests.swift in Sources */,
 				9976A49D2367524D004D573D /* ModelReaderTests.swift in Sources */,
 				99A0B85E238D730E005FCF25 /* TextEditorInspectorTypesTests.swift in Sources */,
 				99A0B85C238D72F0005FCF25 /* TextEditorAttributesTests.swift in Sources */,

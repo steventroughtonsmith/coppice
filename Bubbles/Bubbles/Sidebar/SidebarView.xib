@@ -107,7 +107,7 @@
                                         </textFieldCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         <prototypeCellViews>
-                                            <tableCellView identifier="SmallCell" id="bGF-qo-JyG">
+                                            <tableCellView identifier="SmallCell" id="bGF-qo-JyG" customClass="EditableLabelCell" customModule="Bubbles" customModuleProvider="target">
                                                 <rect key="frame" x="1" y="0.0" width="225" height="17"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
@@ -118,6 +118,9 @@
                                                             <constraint firstAttribute="width" constant="16" id="p2C-Ya-5Hr"/>
                                                         </constraints>
                                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSActionTemplate" id="5El-Yy-oIy"/>
+                                                        <connections>
+                                                            <binding destination="bGF-qo-JyG" name="value" keyPath="objectValue.image" id="8tp-P3-D9s"/>
+                                                        </connections>
                                                     </imageView>
                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dog-G9-UoS">
                                                         <rect key="frame" x="24" y="1" width="201" height="16"/>
@@ -126,6 +129,9 @@
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
+                                                        <connections>
+                                                            <binding destination="bGF-qo-JyG" name="value" keyPath="objectValue.title" id="CgU-iN-aMe"/>
+                                                        </connections>
                                                     </textField>
                                                 </subviews>
                                                 <constraints>
@@ -151,6 +157,9 @@
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
+                                                        <connections>
+                                                            <binding destination="c0H-2g-hDf" name="value" keyPath="objectValue.title" id="pxi-VV-dwI"/>
+                                                        </connections>
                                                     </textField>
                                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="z8b-K0-KCH">
                                                         <rect key="frame" x="3" y="4" width="32" height="32"/>
@@ -159,6 +168,9 @@
                                                             <constraint firstAttribute="height" constant="32" id="zjO-iq-k2x"/>
                                                         </constraints>
                                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSActionTemplate" id="Wng-Ly-dZN"/>
+                                                        <connections>
+                                                            <binding destination="c0H-2g-hDf" name="value" keyPath="objectValue.image" id="xQ7-hd-69L"/>
+                                                        </connections>
                                                     </imageView>
                                                 </subviews>
                                                 <constraints>
@@ -184,6 +196,9 @@
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
+                                                        <connections>
+                                                            <binding destination="x4W-Lu-pR2" name="value" keyPath="objectValue.title" id="K3h-sd-ACF"/>
+                                                        </connections>
                                                     </textField>
                                                 </subviews>
                                                 <constraints>
@@ -199,6 +214,7 @@
                                     </tableColumn>
                                 </tableColumns>
                                 <connections>
+                                    <action trigger="doubleAction" selector="editPageTitle:" target="-2" id="GDf-JY-Ehw"/>
                                     <outlet property="dataSource" destination="-2" id="OFQ-EZ-ZF7"/>
                                     <outlet property="delegate" destination="-2" id="86V-a8-H6v"/>
                                 </connections>

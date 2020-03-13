@@ -12,7 +12,7 @@ struct Tag {
     let name: String
 }
 
-final class Page: NSObject, CollectableModelObject {
+final class Page: NSObject, CollectableModelObject, FolderContainable {
     static let modelType: ModelType = ModelType(rawValue: "Page")!
     static let standardSize = CGSize(width: 300, height: 200)
     static let contentChangedNotification = Notification.Name("PageContentChangedNotification")
@@ -32,6 +32,7 @@ final class Page: NSObject, CollectableModelObject {
         self.content.page = self
     }
 
+
     // MARK: - Attributes
     @objc dynamic var title: String {
         didSet { self.didChange(\.title, oldValue: oldValue) }
@@ -47,6 +48,9 @@ final class Page: NSObject, CollectableModelObject {
             self.userPreferredSize = newValue
         }
     }
+
+
+    weak var containingFolder: Folder?
 
 
     // MARK: - Relationships
