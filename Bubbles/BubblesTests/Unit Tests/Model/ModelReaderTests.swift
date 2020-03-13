@@ -17,6 +17,8 @@ class ModelReaderTests: XCTestCase {
     var plistPages: [[String: Any]]!
     var canvasPageIDs: [UUID]!
     var plistCanvasPages: [[String: Any]]!
+    var folderIDs: [UUID]!
+    var plistFolders: [[String: Any]]!
 
     var content: [String: Data]!
 
@@ -102,11 +104,32 @@ class ModelReaderTests: XCTestCase {
             "\(self.pageIDs[2].uuidString).png": NSImage(named: "NSAddTemplate")!.pngData()!,
         ]
 
+        self.folderIDs = [UUID(), UUID()]
+        self.plistFolders = [
+            [
+                "id": Folder.modelID(with: self.folderIDs[0]).stringRepresentation,
+                "title": Folder.rootFolderTitle,
+                "contents": [
+                    Page.modelID(with: self.pageIDs[0]).stringRepresentation,
+                    Folder.modelID(with: self.folderIDs[1]).stringRepresentation,
+                    Page.modelID(with: self.pageIDs[2]).stringRepresentation,
+                ]
+            ],
+            [
+                "id": Folder.modelID(with: self.folderIDs[1]).stringRepresentation,
+                "title": "My New Folder",
+                "contents": [
+                    Page.modelID(with: self.pageIDs[1]).stringRepresentation
+                ]
+            ]
+        ]
+
 
         let plist = [
             "canvases": self.plistCanvases,
             "pages": self.plistPages,
-            "canvasPages": self.plistCanvasPages
+            "canvasPages": self.plistCanvasPages,
+            "folders": self.plistFolders
         ]
 
         let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
@@ -162,6 +185,17 @@ class ModelReaderTests: XCTestCase {
         XCTAssertTrue(ids.contains(CanvasPage.modelID(with: self.canvasPageIDs[0])))
         XCTAssertTrue(ids.contains(CanvasPage.modelID(with: self.canvasPageIDs[1])))
         XCTAssertTrue(ids.contains(CanvasPage.modelID(with: self.canvasPageIDs[2])))
+    }
+
+    func test_read_createsAllFoldersFromPlist() {
+        XCTAssertNoThrow(try self.modelReader.read(self.testFileWrapper))
+
+        let folders = self.modelController.collection(for: Folder.self).all
+        XCTAssertEqual(folders.count, 2)
+
+        let ids = folders.map { $0.id }
+        XCTAssertTrue(ids.contains(Folder.modelID(with: self.folderIDs[0])))
+        XCTAssertTrue(ids.contains(Folder.modelID(with: self.folderIDs[1])))
     }
 
     func test_read_doesntCreateNewCanvasIfOneAlreadyExistsWithID() {
@@ -227,6 +261,21 @@ class ModelReaderTests: XCTestCase {
         XCTAssertTrue(ids.contains(CanvasPage.modelID(with: self.canvasPageIDs[2])))
     }
 
+    func test_read_doesntCreatenewFolderIfOneAlreadyExistsWithID() {
+        self.modelController.collection(for: Folder.self).newObject() {
+            $0.id = Folder.modelID(with: self.folderIDs[0])
+        }
+
+        XCTAssertNoThrow(try self.modelReader.read(self.testFileWrapper))
+
+        let folders = self.modelController.collection(for: Folder.self).all
+        XCTAssertEqual(folders.count, 2)
+
+        let ids = folders.map { $0.id }
+        XCTAssertTrue(ids.contains(Folder.modelID(with: self.folderIDs[0])))
+        XCTAssertTrue(ids.contains(Folder.modelID(with: self.folderIDs[1])))
+    }
+
     func test_read_removesAllExtraCanvasesFromModelController() {
         let canvasToRemove = self.modelController.collection(for: Canvas.self).newObject()
 
@@ -270,6 +319,19 @@ class ModelReaderTests: XCTestCase {
         XCTAssertFalse(ids.contains(canvasPageToRemove.id))
     }
 
+    func test_read_removesAllExtraFoldersFromModelController() {
+        let folderToRemove = self.modelController.collection(for: Folder.self).newObject()
+        XCTAssertNoThrow(try self.modelReader.read(self.testFileWrapper))
+
+        let folders = self.modelController.collection(for: Folder.self).all
+        XCTAssertEqual(folders.count, 2)
+
+        let ids = folders.map { $0.id }
+        XCTAssertTrue(ids.contains(Folder.modelID(with: self.folderIDs[0])))
+        XCTAssertTrue(ids.contains(Folder.modelID(with: self.folderIDs[1])))
+        XCTAssertFalse(ids.contains(folderToRemove.id))
+    }
+
     func test_read_allRelationshipsAreCompleted() throws {
         XCTAssertNoThrow(try self.modelReader.read(self.testFileWrapper))
 
@@ -279,9 +341,13 @@ class ModelReaderTests: XCTestCase {
 
         let page1 = try XCTUnwrap(self.modelController.collection(for: Page.self).objectWithID(Page.modelID(with: self.pageIDs[0])))
         let page2 = try XCTUnwrap(self.modelController.collection(for: Page.self).objectWithID(Page.modelID(with: self.pageIDs[1])))
+        let page3 = try XCTUnwrap(self.modelController.collection(for: Page.self).objectWithID(Page.modelID(with: self.pageIDs[2])))
 
         let canvas1 = try XCTUnwrap(self.modelController.collection(for: Canvas.self).objectWithID(Canvas.modelID(with: self.canvasIDs[0])))
         let canvas2 = try XCTUnwrap(self.modelController.collection(for: Canvas.self).objectWithID(Canvas.modelID(with: self.canvasIDs[1])))
+
+        let folder1 = try XCTUnwrap(self.modelController.collection(for: Folder.self).objectWithID(Folder.modelID(with: self.folderIDs[0])))
+        let folder2 = try XCTUnwrap(self.modelController.collection(for: Folder.self).objectWithID(Folder.modelID(with: self.folderIDs[1])))
 
         XCTAssertEqual(canvasPage1.page, page1)
         XCTAssertEqual(canvasPage2.page, page2)
@@ -292,6 +358,16 @@ class ModelReaderTests: XCTestCase {
         XCTAssertEqual(canvasPage3.canvas, canvas2)
 
         XCTAssertEqual(canvasPage2.parent, canvasPage1)
+
+        XCTAssertEqual(folder1.contents[safe: 0]?.id, page1.id)
+        XCTAssertEqual(page1.containingFolder, folder1)
+        XCTAssertEqual(folder1.contents[safe: 1]?.id, folder2.id)
+        XCTAssertEqual(folder2.containingFolder, folder1)
+        XCTAssertEqual(folder1.contents[safe: 2]?.id, page3.id)
+        XCTAssertEqual(page3.containingFolder, folder1)
+
+        XCTAssertEqual(folder2.contents[safe: 0]?.id, page2.id)
+        XCTAssertEqual(page2.containingFolder, folder2)
     }
 
     func test_read_allContentIsReadFromDisk() {
@@ -348,7 +424,7 @@ class ModelReaderTests: XCTestCase {
     }
 
     func test_errors_throwsMissingCollectionErrorIfCanvasesMissing() {
-        let plist = ["pages": [[String: Any]](), "canvasPages": [[String: Any]]()]
+        let plist = ["pages": [[String: Any]](), "canvasPages": [[String: Any]](), "folders": [[String: Any]]()]
         let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
 
         let fileWrapper = FileWrapper(directoryWithFileWrappers: [
@@ -366,7 +442,7 @@ class ModelReaderTests: XCTestCase {
     }
 
     func test_errors_throwsMissingCollectionErrorIfPagesMissing() {
-        let plist = ["canvases": [[String: Any]](), "canvasPages": [[String: Any]]()]
+        let plist = ["canvases": [[String: Any]](), "canvasPages": [[String: Any]](), "folders": [[String: Any]]()]
         let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
 
         let fileWrapper = FileWrapper(directoryWithFileWrappers: [
@@ -384,7 +460,7 @@ class ModelReaderTests: XCTestCase {
     }
 
     func test_errors_throwsMissingCollectionErrorIfCanvasPagesMissing() {
-        let plist = ["pages": [[String: Any]](), "canvases": [[String: Any]]()]
+        let plist = ["pages": [[String: Any]](), "canvases": [[String: Any]](), "folders": [[String: Any]]()]
         let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
 
         let fileWrapper = FileWrapper(directoryWithFileWrappers: [
@@ -401,11 +477,30 @@ class ModelReaderTests: XCTestCase {
         }
     }
 
+    func test_errors_throwsMissingCollectionErrorIfFoldersMissing() {
+        let plist = ["pages": [[String: Any]](), "canvases": [[String: Any]](), "canvasPages": [[String: Any]]()]
+        let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
+
+        let fileWrapper = FileWrapper(directoryWithFileWrappers: [
+            "data.plist": FileWrapper(regularFileWithContents: plistData),
+            "content": FileWrapper(directoryWithFileWrappers: [:])
+        ])
+        do {
+            try self.modelReader.read(fileWrapper)
+            XCTFail("Error not thrown")
+        } catch ModelReader.Errors.missingCollection("folders") {
+            //Correct
+        } catch let e {
+            XCTFail("Threw incorrect error: \(e)")
+        }
+    }
+
     func test_errors_throwsMissingIDErrorIfACanvasIsMissingAnID() {
         let plist: [String: [[String: Any]]] = [
             "canvases": [["title": "Canvas Without ID"]],
             "pages": [],
-            "canvasPages": []
+            "canvasPages": [],
+            "folders": [],
         ]
         let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
 
@@ -430,7 +525,8 @@ class ModelReaderTests: XCTestCase {
                 ["id": Page.modelID(with: UUID()).stringRepresentation, "title": "Page With ID"],
                 ["title": "Page Without ID"]
             ],
-            "canvasPages": []
+            "canvasPages": [],
+            "folders": [],
         ]
         let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
 
@@ -455,7 +551,8 @@ class ModelReaderTests: XCTestCase {
             "canvasPages": [
                 ["id": Page.modelID(with: UUID()).stringRepresentation, "frame": NSStringFromRect(CGRect(x: 0, y: 2, width: 8, height: 9))],
                 ["frame": NSStringFromRect(CGRect(x: 0, y: 12, width: 5, height: 4))]
-            ]
+            ],
+            "folders": [],
         ]
         let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
 
@@ -473,13 +570,41 @@ class ModelReaderTests: XCTestCase {
         }
     }
 
+    func test_errors_throwsMissingIDErrorIfAFolderIsMissingAnID() {
+        let plist: [String: [[String: Any]]] = [
+            "canvases": [],
+            "pages": [],
+            "canvasPages": [],
+            "folders": [
+                ["id": Page.modelID(with: UUID()).stringRepresentation, "title": "My Folder", "contents": []],
+                ["title": "Second Folder", "contents": []],
+            ]
+        ]
+        let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
+
+        let fileWrapper = FileWrapper(directoryWithFileWrappers: [
+            "data.plist": FileWrapper(regularFileWithContents: plistData),
+            "content": FileWrapper(directoryWithFileWrappers: [:])
+        ])
+        do {
+            try self.modelReader.read(fileWrapper)
+            XCTFail("Error not thrown")
+        } catch ModelReader.Errors.missingID(let object) {
+            XCTAssertEqual(object["title"] as? String, "Second Folder")
+            XCTAssertEqual(object["contents"] as? [String], [])
+        } catch let e {
+            XCTFail("Threw incorrect error: \(e)")
+        }
+    }
+
     func test_errors_throwsModelObjectUpdateErrorIfCanvasUpdateFailed() {
         let plist: [String: [[String: Any]]] = [
             "canvases": [
                 ["id": Canvas.modelID(with: UUID()).stringRepresentation]
             ],
             "pages": [],
-            "canvasPages": []
+            "canvasPages": [],
+            "folders": [],
         ]
         let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
 
@@ -503,7 +628,8 @@ class ModelReaderTests: XCTestCase {
             "pages": [
                 ["id": Page.modelID(with: UUID()).stringRepresentation]
             ],
-            "canvasPages": []
+            "canvasPages": [],
+            "folders": [],
         ]
         let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
 
@@ -527,7 +653,33 @@ class ModelReaderTests: XCTestCase {
             "pages": [],
             "canvasPages": [
                 ["id": CanvasPage.modelID(with: UUID()).stringRepresentation]
-            ]
+            ],
+            "folders": [],
+        ]
+        let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
+
+        let fileWrapper = FileWrapper(directoryWithFileWrappers: [
+            "data.plist": FileWrapper(regularFileWithContents: plistData),
+            "content": FileWrapper(directoryWithFileWrappers: [:])
+        ])
+        do {
+            try self.modelReader.read(fileWrapper)
+            XCTFail("Error not thrown")
+        } catch ModelObjectUpdateErrors.attributeNotFound {
+            //Passes
+        } catch let e {
+            XCTFail("Threw incorrect error: \(e)")
+        }
+    }
+
+    func test_errors_throwsModelObjectUpdateErrorIfFolderUpdateFailed() {
+        let plist: [String: [[String: Any]]] = [
+            "canvases": [],
+            "pages": [],
+            "canvasPages": [],
+            "folders": [
+                ["id": Folder.modelID(with: UUID()).stringRepresentation]
+            ],
         ]
         let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
 

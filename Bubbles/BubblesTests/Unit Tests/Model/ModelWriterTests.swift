@@ -15,6 +15,7 @@ class ModelWriterTests: XCTestCase {
     var pages: [Page]!
     var canvases: [Canvas]!
     var canvasPages: [CanvasPage]!
+    var folders: [Folder]!
 
     override func setUp() {
         super.setUp()
@@ -66,6 +67,21 @@ class ModelWriterTests: XCTestCase {
         ]
 
         self.canvasPages[1].parent = self.canvasPages[0]
+
+        let foldersCollection = self.testModel.collection(for: Folder.self)
+
+        self.folders = [
+            foldersCollection.newObject() {
+                $0.title = Folder.rootFolderTitle
+            },
+            foldersCollection.newObject() {
+                $0.title = "My Folder"
+            }
+        ]
+        self.testModel.settings.set(self.folders[0].id, for: .rootFolder)
+
+        self.folders[0].insert([self.pages[0], self.folders[1], self.pages[2]])
+        self.folders[1].insert([self.pages[1]])
     }
 
     func test_plist_fileWrapperContainsDataPlistAtRoot() throws {
@@ -115,6 +131,15 @@ class ModelWriterTests: XCTestCase {
         let plist = try XCTUnwrap(try PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: Any])
         let canvases = try XCTUnwrap(plist["canvases"] as? [[String: Any]])
         XCTAssertEqual(canvases.count, 2)
+    }
+
+    func test_plist_containsAllFolders() throws {
+        let writer = ModelWriter(modelController: self.testModel)
+        let fileWrapper = try writer.generateFileWrapper()
+        let data = try XCTUnwrap(fileWrapper.fileWrappers?["data.plist"]?.regularFileContents)
+        let plist = try XCTUnwrap(try PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: Any])
+        let folders = try XCTUnwrap(plist["folders"] as? [[String : Any]])
+        XCTAssertEqual(folders.count, 2)
     }
 
     func test_content_fileWrapperContainsContentDirectoryAtRoot() throws {

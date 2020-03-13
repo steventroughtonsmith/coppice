@@ -30,6 +30,10 @@ class ModelWriter: NSObject {
         plist["canvasPages"] = canvasPages
         content.append(contentsOf: canvasPageContent)
 
+        let (folders, folderContent) = self.generateData(for: Folder.self)
+        plist["folders"] = folders
+        content.append(contentsOf: folderContent)
+
         plist["settings"] = self.modelController.settings.plistRepresentation
 
         let plistData = try PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)

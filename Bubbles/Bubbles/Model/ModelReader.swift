@@ -42,11 +42,12 @@ class ModelReader: NSObject {
         self.createAndDeleteObjects(ofType: CanvasPage.self, using: plist.canvasPages)
         self.createAndDeleteObjects(ofType: Canvas.self, using: plist.canvases)
         self.createAndDeleteObjects(ofType: Page.self, using: plist.pages)
+        self.createAndDeleteObjects(ofType: Folder.self, using: plist.folders)
 
         try self.updateObjects(ofType: Page.self, using: plist.pages, content: contentWrappers)
         try self.updateObjects(ofType: Canvas.self, using: plist.canvases, content: contentWrappers)
         try self.updateObjects(ofType: CanvasPage.self, using: plist.canvasPages, content: contentWrappers)
-
+        try self.updateObjects(ofType: Folder.self, using: plist.folders, content: contentWrappers)
     }
 
     private func createAndDeleteObjects<T: CollectableModelObject>(ofType type: T.Type, using plistItems: [ModelID: [String: Any]]) {
@@ -108,6 +109,7 @@ private struct ModelPlist {
     let canvases: [ModelID: [String: Any]]
     let pages: [ModelID: [String: Any]]
     let canvasPages: [ModelID: [String: Any]]
+    let folders: [ModelID: [String: Any]]
     let settings: [String: Any]
 
     init(plist: [String: Any]) throws {
@@ -120,10 +122,14 @@ private struct ModelPlist {
         guard let canvasPagesPlist = plist["canvasPages"] as? [[String: Any]] else {
             throw ModelReader.Errors.missingCollection("canvasPages")
         }
+        guard let foldersPlist = plist["folders"] as? [[String: Any]] else {
+            throw ModelReader.Errors.missingCollection("folders")
+        }
 
         self.canvases = try ModelPlist.mapToModelIDKeys(canvasPlist)
         self.pages = try ModelPlist.mapToModelIDKeys(pagesPlist)
         self.canvasPages = try ModelPlist.mapToModelIDKeys(canvasPagesPlist)
+        self.folders = try ModelPlist.mapToModelIDKeys(foldersPlist)
 
         self.settings = (plist["settings"] as? [String: Any]) ?? [:]
     }
