@@ -25,14 +25,14 @@ final class Folder: NSObject, CollectableModelObject, FolderContainable {
         didSet { self.didChange(\.contents, oldValue: oldValue) }
     }
 
-    func insert(_ objects: [FolderContainable], above item: FolderContainable? = nil) {
+    func insert(_ objects: [FolderContainable], below item: FolderContainable? = nil) {
         self.modelController?.pushChangeGroup()
         var contents: [FolderContainable?] = self.contents
 
         //We need to get the index before processing as the item we're inserting above might be an existing item
         var index: Int? = nil
-        if let item = item {
-            index = contents.firstIndex(where: { $0?.id == item.id })
+        if let item = item, let indexOfItem = contents.firstIndex(where: { $0?.id == item.id }) {
+            index = contents.index(after: indexOfItem)
         }
 
         for object in objects {
@@ -49,7 +49,7 @@ final class Folder: NSObject, CollectableModelObject, FolderContainable {
         if let insertionIndex = index {
             contents.insert(contentsOf: objects, at: insertionIndex)
         } else {
-            contents.append(contentsOf: objects)
+            contents.insert(contentsOf: objects, at: 0)
         }
 
         self.contents = contents.compactMap { $0 }

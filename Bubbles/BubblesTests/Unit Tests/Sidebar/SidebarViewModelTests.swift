@@ -79,6 +79,7 @@ class SidebarViewModelTests: XCTestCase {
         }
 
         rootFolder.insert([page1, page2, folder1, page3, folder2])
+        vm.reloadSidebarNodes()
 
         let sidebarNodes = vm.rootSidebarNodes
         XCTAssertEqual(sidebarNodes.count, 2)
@@ -158,6 +159,7 @@ class SidebarViewModelTests: XCTestCase {
         rootFolder.insert([page1, folder1, folder2])
 
 
+        vm.reloadSidebarNodes()
         let sidebarNodes = vm.rootSidebarNodes
         XCTAssertEqual(sidebarNodes.count, 2)
 
@@ -214,12 +216,193 @@ class SidebarViewModelTests: XCTestCase {
         XCTAssertEqual(folder2Page1Item.title, folder2Page1.title)
         XCTAssertEqual(folder2Page1Item.image, NSImage(named: .textPage))
     }
+
+    func test_rootSidebarNodes_reloadsNodesWhenPageAdded() throws {
+        let vm = self.createViewModel()
+        vm.startObserving()
+
+        let initialSidebarNodes = vm.rootSidebarNodes
+        let initialPagesItem = try XCTUnwrap(initialSidebarNodes[safe: 1])
+        XCTAssertEqual(initialPagesItem.children.count, 0)
+
+        let rootFolder = self.documentWindowViewModel.rootFolder
+        let page1 = self.modelController.collection(for: Page.self).newObject()
+        rootFolder.insert([page1])
+
+        vm.reloadSidebarNodes()
+
+        let sidebarNodes = vm.rootSidebarNodes
+        let pagesItem = try XCTUnwrap(sidebarNodes[safe: 1])
+        XCTAssertEqual(pagesItem.children.count, 1)
+    }
+
+    func test_rootSidebarNodes_reloadsNodesWhenPageRemoved() throws {
+        let vm = self.createViewModel()
+
+        let rootFolder = self.documentWindowViewModel.rootFolder
+        let page1 = self.modelController.collection(for: Page.self).newObject()
+        rootFolder.insert([page1])
+
+        vm.reloadSidebarNodes()
+
+        let initialSidebarNodes = vm.rootSidebarNodes
+        let initialPagesItem = try XCTUnwrap(initialSidebarNodes[safe: 1])
+        XCTAssertEqual(initialPagesItem.children.count, 1)
+
+        self.documentWindowViewModel.delete([.page(page1.id)])
+
+        vm.reloadSidebarNodes()
+
+        let sidebarNodes = vm.rootSidebarNodes
+        let pagesItem = try XCTUnwrap(sidebarNodes[safe: 1])
+        XCTAssertEqual(pagesItem.children.count, 0)
+    }
+
+    func test_rootSidebarNodes_reloadsNodesWhenFolderAdded() throws {
+        let vm = self.createViewModel()
+        vm.reloadSidebarNodes()
+
+        let initialSidebarNodes = vm.rootSidebarNodes
+        let initialPagesItem = try XCTUnwrap(initialSidebarNodes[safe: 1])
+        XCTAssertEqual(initialPagesItem.children.count, 0)
+
+
+        let rootFolder = self.documentWindowViewModel.rootFolder
+        let folder1 = self.modelController.collection(for: Folder.self).newObject()
+        rootFolder.insert([folder1])
+
+        vm.reloadSidebarNodes()
+
+        let sidebarNodes = vm.rootSidebarNodes
+        let pagesItem = try XCTUnwrap(sidebarNodes[safe: 1])
+        XCTAssertEqual(pagesItem.children.count, 1)
+    }
+
+    func test_rootSidebarNodes_reloadsNodesWhenFolderRemoved() throws {
+        let vm = self.createViewModel()
+
+        let rootFolder = self.documentWindowViewModel.rootFolder
+        let folder1 = self.modelController.collection(for: Folder.self).newObject()
+        rootFolder.insert([folder1])
+
+        vm.reloadSidebarNodes()
+
+        let initialSidebarNodes = vm.rootSidebarNodes
+        let initialPagesItem = try XCTUnwrap(initialSidebarNodes[safe: 1])
+        XCTAssertEqual(initialPagesItem.children.count, 1)
+
+        self.documentWindowViewModel.delete([.folder(folder1.id)])
+
+        vm.reloadSidebarNodes()
+
+        let sidebarNodes = vm.rootSidebarNodes
+        let pagesItem = try XCTUnwrap(sidebarNodes[safe: 1])
+        XCTAssertEqual(pagesItem.children.count, 0)
+    }
+
+    func test_rootSidebarNodes_reloadsNodesWhenItemMovedToNewFolder() throws {
+        let vm = self.createViewModel()
+        vm.startObserving()
+
+        let rootFolder = self.documentWindowViewModel.rootFolder
+        let folder1 = self.modelController.collection(for: Folder.self).newObject()
+        let page1 = self.modelController.collection(for: Page.self).newObject()
+        rootFolder.insert([folder1, page1])
+
+        vm.reloadSidebarNodes()
+
+        let initialSidebarNodes = vm.rootSidebarNodes
+        let initialPagesItem = try XCTUnwrap(initialSidebarNodes[safe: 1])
+        XCTAssertEqual(initialPagesItem.children.count, 2)
+        let initialFolderItem = try XCTUnwrap(initialPagesItem.children[safe: 0])
+        XCTAssertEqual(initialFolderItem.children.count, 0)
+
+        folder1.insert([page1])
+
+        vm.reloadSidebarNodes()
+
+        let sidebarNodes = vm.rootSidebarNodes
+        let pagesItem = try XCTUnwrap(sidebarNodes[safe: 1])
+        XCTAssertEqual(pagesItem.children.count, 1)
+        let folderItem = try XCTUnwrap(pagesItem.children[safe: 0])
+        XCTAssertEqual(folderItem.children.count, 1)
+    }
+
+    func test_rootSidebarNodes_rootNodesAreIdenticalAcrossReloads() throws {
+        let vm = self.createViewModel()
+        vm.startObserving()
+
+        let initialSidebarNodes = vm.rootSidebarNodes
+        let initialCanvases = try XCTUnwrap(initialSidebarNodes[safe: 0])
+        let initialPageGroup = try XCTUnwrap(initialSidebarNodes[safe: 1])
+        self.modelController.collection(for: Page.self).newObject()
+
+        vm.reloadSidebarNodes()
+
+        let sidebarNodes = vm.rootSidebarNodes
+        let canvases = try XCTUnwrap(sidebarNodes[safe: 0])
+        let pageGroup = try XCTUnwrap(sidebarNodes[safe: 1])
+
+        XCTAssertTrue(initialCanvases === canvases)
+        XCTAssertTrue(initialPageGroup === pageGroup)
+    }
+
+    func test_rootSidebarNodes_pageNodesAreIdenticalAcrossReloads() throws {
+        let vm = self.createViewModel()
+        vm.startObserving()
+
+        let rootFolder = self.documentWindowViewModel.rootFolder
+        let page1 = self.modelController.collection(for: Page.self).newObject()
+        rootFolder.insert([page1])
+        vm.reloadSidebarNodes()
+
+        let initialSidebarNodes = vm.rootSidebarNodes
+        let initialPageGroup = try XCTUnwrap(initialSidebarNodes[safe: 1])
+        let initialPageNode = try XCTUnwrap(initialPageGroup.children[safe: 0])
+
+        self.modelController.collection(for: Page.self).newObject()
+
+        vm.reloadSidebarNodes()
+
+        let sidebarNodes = vm.rootSidebarNodes
+        let pageGroup = try XCTUnwrap(sidebarNodes[safe: 1])
+        let pageNode = try XCTUnwrap(pageGroup.children[safe: 0])
+
+        XCTAssertTrue(initialPageNode === pageNode)
+    }
+
+    func test_rootSidebarNodes_folderNodesAreIdenticalAcrossReloads() throws {
+        let vm = self.createViewModel()
+        vm.startObserving()
+
+        let rootFolder = self.documentWindowViewModel.rootFolder
+        let folder1 = self.modelController.collection(for: Folder.self).newObject()
+        rootFolder.insert([folder1])
+        vm.reloadSidebarNodes()
+
+        let initialSidebarNodes = vm.rootSidebarNodes
+        let initialPageGroup = try XCTUnwrap(initialSidebarNodes[safe: 1])
+        let initialFolderNode = try XCTUnwrap(initialPageGroup.children[safe: 0])
+
+        self.modelController.collection(for: Folder.self).newObject()
+
+        vm.reloadSidebarNodes()
+
+        let sidebarNodes = vm.rootSidebarNodes
+        let pageGroup = try XCTUnwrap(sidebarNodes[safe: 1])
+        let folderNode = try XCTUnwrap(pageGroup.children[safe: 0])
+
+        XCTAssertTrue(initialFolderNode === folderNode)
+    }
 }
 
 
 //MARK: - Helpers
 
 private class MockSidebarView: SidebarView {
+    func prepareForReload() {
+
+    }
     var reloadCalled = false
     func reload() {
         self.reloadCalled = true

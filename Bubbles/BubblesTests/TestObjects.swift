@@ -89,7 +89,7 @@ class TestModelController: NSObject, ModelController {
     var settings = ModelSettings()
 
     var undoManager = UndoManager()
-    var collections = [ModelType : Any]()
+    var allCollections = [ModelType : Any]()
 
     func object(with id: ModelID) -> ModelObject? {
         return self.collection(for: TestCollectableModelObject.self).objectWithID(id)

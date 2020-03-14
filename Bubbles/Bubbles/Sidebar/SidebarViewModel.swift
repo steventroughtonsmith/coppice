@@ -21,16 +21,18 @@ class SidebarViewModel: ViewModel {
         self.notificationCenter = notificationCenter
 
         super.init(documentWindowViewModel: documentWindowViewModel)
+
+        self.reloadSidebarNodes()
     }
 
     var pagesObserver: ModelCollection<Page>.Observation?
     var foldersObserver: ModelCollection<Folder>.Observation?
     func startObserving() {
-        self.pagesObserver = self.modelController.collection(for: Page.self).addObserver(changeHandler: { [weak self] (_, _) in
-            self?.forceReload()
+        self.pagesObserver = self.modelController.collection(for: Page.self).addObserver(changeHandler: { [weak self] (page, type) in
+            self?.setNeedsReload()
         })
-        self.foldersObserver = self.modelController.collection(for: Folder.self).addObserver(changeHandler: { [weak self] (_, _) in
-            self?.forceReload()
+        self.foldersObserver = self.modelController.collection(for: Folder.self).addObserver(changeHandler: { [weak self] (folder, type) in
+            self?.setNeedsReload()
         })
     }
 
@@ -44,10 +46,7 @@ class SidebarViewModel: ViewModel {
     }
 
 
-    private func forceReload() {
-        self.cachedRootSidebarNodes = nil
-        self.view?.reload()
-    }
+
 
 //
 //    func addPages(atIndexes indexes: IndexSet, toCanvasAtindex canvasIndex: Int) {
@@ -61,53 +60,147 @@ class SidebarViewModel: ViewModel {
 
 
     //MARK: - Sidebar Items
-    private var cachedRootSidebarNodes: [SidebarNode]?
     var rootSidebarNodes: [SidebarNode] {
-        if let items = self.cachedRootSidebarNodes {
-            return items
-        }
-        let newItems = self.regenerateSidebarNodes()
-        self.cachedRootSidebarNodes = newItems
-        return newItems
+        return [self.canvasesNode, self.pagesGroupNode]
     }
 
-    private func regenerateSidebarNodes() -> [SidebarNode] {
-        var nodes = [SidebarNode]()
-        nodes.append(CanvasesSidebarNode())
+    lazy var canvasesNode: SidebarNode = {
+        let node = CanvasesSidebarNode()
+        self.nodesByItem[.canvases] = node
+        return node
+    }()
 
-        let rootFolder = self.documentWindowViewModel.rootFolder
-        let pagesGroup = PagesGroupSidebarNode(rootFolder: rootFolder)
+    lazy var pagesGroupNode: SidebarNode = {
+        let node = PagesGroupSidebarNode(rootFolder: self.documentWindowViewModel.rootFolder)
+        self.nodesByItem[.folder(self.documentWindowViewModel.rootFolder.id)] = node
+        return node
+    }()
 
-        pagesGroup.addChildren(self.sidebarNodes(for: rootFolder))
-        nodes.append(pagesGroup)
-        return nodes
+
+    var allNodes: [SidebarNode] {
+        return Array(nodesByItem.values)
     }
 
-    func sidebarNodes(for folder: Folder) -> [SidebarNode] {
-        var nodes = [SidebarNode]()
-        for item in folder.contents {
-            if let page = item as? Page {
-                nodes.append(PageSidebarNode(page: page))
+    private var nodesByItem = [DocumentWindowViewModel.SidebarItem: SidebarNode]()
+
+    func setNeedsReload() {
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(reloadSidebarNodes), object: nil)
+        self.perform(#selector(reloadSidebarNodes), with: nil, afterDelay: 0)
+    }
+
+    @objc dynamic func reloadSidebarNodes() {
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(reloadSidebarNodes), object: nil)
+        self.addAndRemoveNodes()
+        self.updateHierarchy()
+        self.view?.reload()
+    }
+
+    private func addAndRemoveNodes() {
+        var oldItems = Array(nodesByItem.keys)
+
+        for page in self.documentWindowViewModel.pageCollection.all {
+            let node = self.node(for: page, createIfNeeded: true)!
+            if let index = oldItems.firstIndex(of: node.item) {
+                oldItems.remove(at: index)
             }
-            else if let folder = item as? Folder {
-                let folderNode = FolderSidebarNode(folder: folder)
-                folderNode.addChildren(self.sidebarNodes(for: folder))
-                nodes.append(folderNode)
+        }
+
+        for folder in self.documentWindowViewModel.foldersCollection.all {
+            let node = self.node(for: folder, createIfNeeded: true)!
+            if let index = oldItems.firstIndex(of: node.item) {
+                oldItems.remove(at: index)
             }
         }
-        return nodes
+
+        //Remove root sidebar nodes
+        for node in self.rootSidebarNodes {
+            if let index = oldItems.firstIndex(of: node.item) {
+                oldItems.remove(at: index)
+            }
+        }
+
+        //Remove old items
+        for item in oldItems {
+            self.nodesByItem[item] = nil
+        }
+    }
+
+    private func updateHierarchy() {
+        for folder in self.documentWindowViewModel.foldersCollection.all {
+            guard let node = self.node(for: .folder(folder.id)) else {
+                continue
+            }
+
+            let folderContentsIDs: [DocumentWindowViewModel.SidebarItem] = folder.contents.compactMap {
+                if $0.id.modelType == Page.modelType {
+                    return .page($0.id)
+                }
+                if $0.id.modelType == Folder.modelType {
+                    return .folder($0.id)
+                }
+                return nil
+            }
+
+            let folderNodes = folderContentsIDs.compactMap { self.node(for: $0) }
+            node.children = folderNodes
+        }
     }
 
 
-    //MARK: - Folder
-    func createFolder() {
+
+
+    func node(for item: DocumentWindowViewModel.SidebarItem) -> SidebarNode? {
+        return self.nodesByItem[item]
+    }
+
+    private func node(for page: Page, createIfNeeded: Bool) -> SidebarNode? {
+        if let node = self.nodesByItem[.page(page.id)] {
+            return node
+        }
+
+        if createIfNeeded {
+            let node = PageSidebarNode(page: page)
+            self.nodesByItem[.page(page.id)] = node
+            return node
+        }
+
+        return nil
+    }
+
+    private func node(for folder: Folder, createIfNeeded: Bool) -> SidebarNode? {
+        if let node = self.nodesByItem[.folder(folder.id)] {
+            return node
+        }
+
+        if createIfNeeded {
+            let node = FolderSidebarNode(folder: folder)
+            self.nodesByItem[.folder(folder.id)] = node
+            return node
+        }
+
+        return nil
+    }
+
+
+    //MARK: - Creation
+    func createPage(ofType type: PageContentType, underNodes collection: SidebarNodeCollection) {
+        let lastNode = collection.nodes.last
+        self.documentWindowViewModel.createPage(ofType: type, in: lastNode?.folderForCreation, below: lastNode?.folderItemForCreation)
+    }
+
+    func createFolder(underNodes collection: SidebarNodeCollection) {
+        let lastNode = collection.nodes.last
+        self.documentWindowViewModel.createFolder(in: lastNode?.folderForCreation, below: lastNode?.folderItemForCreation)
+    }
+
+    func createFolder(usingSelection: SidebarNodeCollection) {
 
     }
 
 
     //MARK: - Deleting
-    func deleteItems(at indexes: IndexSet) {
-
+    func delete(_ nodes: [SidebarNode]) {
+        self.documentWindowViewModel.delete(nodes.map(\.item))
     }
 
 

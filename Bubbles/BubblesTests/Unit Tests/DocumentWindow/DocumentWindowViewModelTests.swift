@@ -12,7 +12,6 @@ import XCTest
 class DocumentWindowViewModelTests: XCTestCase {
 
     var modelController: ModelController!
-    var viewModel: DocumentWindowViewModel!
 
     var canvas: Canvas!
     var canvasPage: CanvasPage!
@@ -28,8 +27,6 @@ class DocumentWindowViewModelTests: XCTestCase {
             $0.page = self.page
             $0.canvas = self.canvas
         }
-
-        self.viewModel = DocumentWindowViewModel(modelController: modelController)
     }
 
 
@@ -38,7 +35,8 @@ class DocumentWindowViewModelTests: XCTestCase {
         let folderCollection = self.modelController.collection(for: Folder.self)
         XCTAssertEqual(folderCollection.all.count, 0)
 
-        let rootFolder = self.viewModel.rootFolder
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        let rootFolder = viewModel.rootFolder
 
         XCTAssertNotNil(folderCollection.objectWithID(rootFolder.id))
     }
@@ -49,7 +47,8 @@ class DocumentWindowViewModelTests: XCTestCase {
 
         self.modelController.settings.set(Folder.modelID(with: UUID()), for: .rootFolder)
 
-        let rootFolder = self.viewModel.rootFolder
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        let rootFolder = viewModel.rootFolder
 
         XCTAssertNotNil(folderCollection.objectWithID(rootFolder.id))
     }
@@ -60,7 +59,8 @@ class DocumentWindowViewModelTests: XCTestCase {
 
         self.modelController.settings.set(expectedRootFolder.id, for: .rootFolder)
 
-        let rootFolder = self.viewModel.rootFolder
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        let rootFolder = viewModel.rootFolder
 
         XCTAssertEqual(rootFolder, expectedRootFolder)
     }
@@ -68,245 +68,280 @@ class DocumentWindowViewModelTests: XCTestCase {
 
     //MARK: - .canvasesForNewPages
     func test_canvasForNewPages_returnsNilIfNothingSelectedInSidebar() {
-        XCTAssertNil(self.viewModel.canvasForNewPages)
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        XCTAssertNil(viewModel.canvasForNewPages)
     }
 
     func test_canvasForNewPages_returnsNilIfSidebarSelectionDoesntContainCanvases() {
-        self.viewModel.updateSelection([.page(self.page.id)])
-        self.viewModel.selectedCanvasID = self.canvas.id
-        XCTAssertNil(self.viewModel.canvasForNewPages)
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        viewModel.updateSelection([.page(self.page.id)])
+        viewModel.selectedCanvasID = self.canvas.id
+        XCTAssertNil(viewModel.canvasForNewPages)
     }
 
     func test_canvasForNewPages_returnsNilIfCanvasesSelectedInSidebarNoCanvasSelected() {
-        self.viewModel.updateSelection([.canvases])
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        viewModel.updateSelection([.canvases])
 
-        XCTAssertNil(self.viewModel.canvasForNewPages)
+        XCTAssertNil(viewModel.canvasForNewPages)
     }
 
     func test_canvasForNewPages_returnsCanvasIfSelectedInSidebarAndCanvasSelected() {
-        self.viewModel.updateSelection([.canvases])
-        self.viewModel.selectedCanvasID = self.canvas.id
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        viewModel.updateSelection([.canvases])
+        viewModel.selectedCanvasID = self.canvas.id
 
-        XCTAssertEqual(self.viewModel.canvasForNewPages, self.canvas)
+        XCTAssertEqual(viewModel.canvasForNewPages, self.canvas)
     }
 
 
     //MARK: - .folderForNewPages
     func test_folderForNewPages_returnsRootFolderAndNilIfNothingSelectedInSidebar() {
-        XCTAssertEqual(self.viewModel.folderForNewPages, self.viewModel.rootFolder)
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        XCTAssertEqual(viewModel.folderForNewPages, viewModel.rootFolder)
     }
 
     func test_folderForNewPages_returnsRootFolderAndNilIfOnlyCanvasesSelected() {
-        self.viewModel.updateSelection([.canvases])
-        XCTAssertEqual(self.viewModel.folderForNewPages, self.viewModel.rootFolder)
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        viewModel.updateSelection([.canvases])
+        XCTAssertEqual(viewModel.folderForNewPages, viewModel.rootFolder)
     }
 
     func test_folderForNewPages_returnsFolderAndNilIfOnlyThatFolderIsSelected() {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let folder = self.modelController.collection(for: Folder.self).newObject()
-        self.viewModel.updateSelection([.folder(folder.id)])
-        XCTAssertEqual(self.viewModel.folderForNewPages, folder)
+        viewModel.updateSelection([.folder(folder.id)])
+        XCTAssertEqual(viewModel.folderForNewPages, folder)
     }
 
     func test_folderForNewPages_returnsFolderAndNilIfItIsTheLastsItemSelected() {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let page2 = self.modelController.collection(for: Page.self).newObject()
         let folder = self.modelController.collection(for: Folder.self).newObject()
-        self.viewModel.updateSelection([.page(self.page.id), .page(page2.id), .folder(folder.id)])
-        XCTAssertEqual(self.viewModel.folderForNewPages, folder)
+        viewModel.updateSelection([.page(self.page.id), .page(page2.id), .folder(folder.id)])
+        XCTAssertEqual(viewModel.folderForNewPages, folder)
     }
 
     func test_folderForNewPages_returnsFolderAndNilIfItIsTheLastsNonCanvasesItemSelected() {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let page2 = self.modelController.collection(for: Page.self).newObject()
         let folder = self.modelController.collection(for: Folder.self).newObject()
-        self.viewModel.updateSelection([.page(self.page.id), .page(page2.id), .folder(folder.id), .canvases])
-        XCTAssertEqual(self.viewModel.folderForNewPages, folder)
+        viewModel.updateSelection([.page(self.page.id), .page(page2.id), .folder(folder.id), .canvases])
+        XCTAssertEqual(viewModel.folderForNewPages, folder)
     }
 
     func test_folderForNewPages_returnsContainingFolderAndPageIfOnlyPageIsSelected() {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let folder = self.modelController.collection(for: Folder.self).newObject()
         folder.insert([self.page])
-        self.viewModel.updateSelection([.page(self.page.id)])
-        XCTAssertEqual(self.viewModel.folderForNewPages, folder)
+        viewModel.updateSelection([.page(self.page.id)])
+        XCTAssertEqual(viewModel.folderForNewPages, folder)
     }
 
     func test_folderForNewPages_returnsContainingFolderAndPageIfPageIsLastItemSelected() {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let folder = self.modelController.collection(for: Folder.self).newObject()
         folder.insert([self.page])
 
         let page2 = self.modelController.collection(for: Page.self).newObject()
-        self.viewModel.updateSelection([.page(page2.id), .page(self.page.id)])
-        XCTAssertEqual(self.viewModel.folderForNewPages, folder)
+        viewModel.updateSelection([.page(page2.id), .page(self.page.id)])
+        XCTAssertEqual(viewModel.folderForNewPages, folder)
     }
 
     func test_folderForNewPages_returnsContainingFolderAndPageIfPageIsLastNonCanvasesItemSelected() {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let folder = self.modelController.collection(for: Folder.self).newObject()
         folder.insert([self.page])
 
         let page2 = self.modelController.collection(for: Page.self).newObject()
-        self.viewModel.updateSelection([.page(page2.id), .page(self.page.id), .canvases])
-        XCTAssertEqual(self.viewModel.folderForNewPages, folder)
+        viewModel.updateSelection([.page(page2.id), .page(self.page.id), .canvases])
+        XCTAssertEqual(viewModel.folderForNewPages, folder)
     }
 
 
     //MARK: - .currentEditor
     func test_currentEditor_editorIsNoneIfSelectionIsEmpty() {
-        XCTAssertEqual(self.viewModel.currentEditor, .none)
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        XCTAssertEqual(viewModel.currentEditor, .none)
     }
 
     func test_currentEditor_editorIsCanvasIfCanvasesSelected() {
-        self.viewModel.updateSelection([.canvases])
-        XCTAssertEqual(self.viewModel.currentEditor, .canvas)
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        viewModel.updateSelection([.canvases])
+        XCTAssertEqual(viewModel.currentEditor, .canvas)
     }
 
     func test_currentEditor_editorIsPageIfPageSelected() {
-        self.viewModel.updateSelection([.page(self.page.id)])
-        XCTAssertEqual(self.viewModel.currentEditor, .page(self.page))
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        viewModel.updateSelection([.page(self.page.id)])
+        XCTAssertEqual(viewModel.currentEditor, .page(self.page))
     }
 
     func test_currentEditor_editorReturnsToNoneIfSelectionRemoved() {
-        self.viewModel.updateSelection([.page(self.page.id)])
-        self.viewModel.updateSelection([])
-        XCTAssertEqual(self.viewModel.currentEditor, .none)
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        viewModel.updateSelection([.page(self.page.id)])
+        viewModel.updateSelection([])
+        XCTAssertEqual(viewModel.currentEditor, .none)
     }
 
     func test_currentEditor_editorStaysOnCanvasIfSwitchFromCanvasToFolder() {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let folder = self.modelController.collection(for: Folder.self).newObject()
-        self.viewModel.updateSelection([.canvases])
-        self.viewModel.updateSelection([.folder(folder.id)])
-        XCTAssertEqual(self.viewModel.currentEditor, .canvas)
+        viewModel.updateSelection([.canvases])
+        viewModel.updateSelection([.folder(folder.id)])
+        XCTAssertEqual(viewModel.currentEditor, .canvas)
     }
 
     func test_currentEditor_editorStaysOnPageIfSwitchFromPageToFolder() {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let folder = self.modelController.collection(for: Folder.self).newObject()
-        self.viewModel.updateSelection([.page(self.page.id)])
-        self.viewModel.updateSelection([.folder(folder.id)])
-        XCTAssertEqual(self.viewModel.currentEditor, .page(self.page))
+        viewModel.updateSelection([.page(self.page.id)])
+        viewModel.updateSelection([.folder(folder.id)])
+        XCTAssertEqual(viewModel.currentEditor, .page(self.page))
     }
 
     func test_currentEditor_editorStaysOnCanvasIfAnotherItemSelected() {
-        self.viewModel.updateSelection([.canvases])
-        self.viewModel.updateSelection([.canvases, .page(self.page.id)])
-        XCTAssertEqual(self.viewModel.currentEditor, .canvas)
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        viewModel.updateSelection([.canvases])
+        viewModel.updateSelection([.canvases, .page(self.page.id)])
+        XCTAssertEqual(viewModel.currentEditor, .canvas)
     }
 
     func test_currentEditor_editorStaysOnPageIfAnotherItemIsSelected() {
-        self.viewModel.updateSelection([.page(self.page.id)])
-        self.viewModel.updateSelection([.canvases, .page(self.page.id)])
-        XCTAssertEqual(self.viewModel.currentEditor, .page(self.page))
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        viewModel.updateSelection([.page(self.page.id)])
+        viewModel.updateSelection([.canvases, .page(self.page.id)])
+        XCTAssertEqual(viewModel.currentEditor, .page(self.page))
     }
 
     func test_currentEditor_editorSwitchesToPageIfPageAddedToSelectionAndThenOtherPageDeselected() {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let page = self.modelController.collection(for: Page.self).newObject()
-        self.viewModel.updateSelection([.page(self.page.id)])
-        self.viewModel.updateSelection([.page(page.id), .page(self.page.id)])
-        self.viewModel.updateSelection([.page(page.id)])
-        XCTAssertEqual(self.viewModel.currentEditor, .page(page))
+        viewModel.updateSelection([.page(self.page.id)])
+        viewModel.updateSelection([.page(page.id), .page(self.page.id)])
+        viewModel.updateSelection([.page(page.id)])
+        XCTAssertEqual(viewModel.currentEditor, .page(page))
     }
 
     func test_currentEditor_editorSwitchesToPageIfPageAddedToSelectionAndThenCanvasesDeselected() {
-        self.viewModel.updateSelection([.canvases])
-        self.viewModel.updateSelection([.canvases, .page(self.page.id)])
-        self.viewModel.updateSelection([.page(self.page.id)])
-        XCTAssertEqual(self.viewModel.currentEditor, .page(self.page))
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        viewModel.updateSelection([.canvases])
+        viewModel.updateSelection([.canvases, .page(self.page.id)])
+        viewModel.updateSelection([.page(self.page.id)])
+        XCTAssertEqual(viewModel.currentEditor, .page(self.page))
     }
 
     func test_currentEditor_editorSwitchesToPageIfPageAddedToSelectionAndThenFolderDeselected() {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let folder = self.modelController.collection(for: Folder.self).newObject()
-        self.viewModel.updateSelection([.folder(folder.id)])
-        self.viewModel.updateSelection([.folder(folder.id), .page(self.page.id)])
-        self.viewModel.updateSelection([.page(self.page.id)])
-        XCTAssertEqual(self.viewModel.currentEditor, .page(self.page))
+        viewModel.updateSelection([.folder(folder.id)])
+        viewModel.updateSelection([.folder(folder.id), .page(self.page.id)])
+        viewModel.updateSelection([.page(self.page.id)])
+        XCTAssertEqual(viewModel.currentEditor, .page(self.page))
     }
 
 
     //MARK: - createPage()
     func test_createPage_addsANewPageToCollection() {
-        let page = self.viewModel.createPage()
-        XCTAssertTrue(self.viewModel.pageCollection.all.contains(page))
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        let page = viewModel.createPage()
+        XCTAssertTrue(viewModel.pageCollection.all.contains(page))
     }
 
     func test_createPage_ifSidebarSelectionIsEmptySetsToNewPage() {
-        let page = self.viewModel.createPage()
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        let page = viewModel.createPage()
 
-        XCTAssertEqual(self.viewModel.sidebarSelection.first, .page(page.id))
+        XCTAssertEqual(viewModel.sidebarSelection.first, .page(page.id))
     }
 
     func test_createPage_ifSidebarSelectionContainsOnlyPageSetsToNewPage() {
-        self.viewModel.updateSelection([.page(self.page.id)])
-        let page = self.viewModel.createPage()
-        XCTAssertEqual(self.viewModel.sidebarSelection.first, .page(page.id))
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        viewModel.updateSelection([.page(self.page.id)])
+        let page = viewModel.createPage()
+        XCTAssertEqual(viewModel.sidebarSelection.first, .page(page.id))
     }
 
     func test_createPage_ifSidebarSelectionContainsCanvasesDoesntChangeSidebar() {
-        self.viewModel.updateSelection([.canvases, .page(self.page.id)])
-        self.viewModel.createPage()
-        XCTAssertEqual(self.viewModel.sidebarSelection.first, .canvases)
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        viewModel.updateSelection([.canvases, .page(self.page.id)])
+        viewModel.createPage()
+        XCTAssertEqual(viewModel.sidebarSelection.first, .canvases)
     }
 
     func test_createPage_ifSidebarSelectionContainsCanvasesAndCanvasSelectedThenAddsPageToCanvas() {
-        self.viewModel.updateSelection([.canvases])
-        self.viewModel.selectedCanvasID = self.canvas.id
-        let page = self.viewModel.createPage()
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        viewModel.updateSelection([.canvases])
+        viewModel.selectedCanvasID = self.canvas.id
+        let page = viewModel.createPage()
         XCTAssertEqual(page.canvases.first?.canvas, self.canvas)
     }
 
     func test_createPage_ifSuppliedFolderIsNilThenAddsToFolderForNewPages() {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let folder = self.modelController.collection(for: Folder.self).newObject()
         let page = self.modelController.collection(for: Page.self).newObject()
         folder.insert([page])
 
-        self.viewModel.updateSelection([.page(page.id)])
+        viewModel.updateSelection([.page(page.id)])
 
-        let newPage = self.viewModel.createPage()
+        let newPage = viewModel.createPage()
         XCTAssertEqual(newPage.containingFolder, folder)
         XCTAssertTrue(folder.contents.contains(where: { $0.id == newPage.id }))
     }
 
     func test_createPage_ifSuppliedFolderIsSetThenAddsToThatFolderRatherThanFolderForNewPages() {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let folder = self.modelController.collection(for: Folder.self).newObject()
         let page = self.modelController.collection(for: Page.self).newObject()
-        self.viewModel.rootFolder.insert([page])
+        viewModel.rootFolder.insert([page])
 
-        self.viewModel.updateSelection([.page(self.page.id)])
+        viewModel.updateSelection([.page(self.page.id)])
 
-        let newPage = self.viewModel.createPage(in: folder)
+        let newPage = viewModel.createPage(in: folder)
         XCTAssertEqual(newPage.containingFolder, folder)
         XCTAssertTrue(folder.contents.contains(where: { $0.id == newPage.id }))
     }
 
     func test_createPage_undoingRemovesPageFromCollection() {
-        let page = self.viewModel.createPage()
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        let page = viewModel.createPage()
         self.modelController.undoManager.undo()
-        XCTAssertNil(self.viewModel.pageCollection.objectWithID(page.id))
+        XCTAssertNil(viewModel.pageCollection.objectWithID(page.id))
     }
 
     func test_createPage_undoingRevertsSidebarToNilIfNoSelection() {
-        self.viewModel.createPage()
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        viewModel.createPage()
         self.modelController.undoManager.undo()
-        XCTAssertEqual(self.viewModel.selectedSidebarObjectIDs.count, 0)
+        XCTAssertEqual(viewModel.selectedSidebarObjectIDs.count, 0)
     }
 
     func test_createPage_undoingRevertsSidebarToPreviouslySelectedPage() {
-        self.viewModel.selectedSidebarObjectIDs = Set([self.page.id])
-        self.viewModel.createPage()
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        viewModel.selectedSidebarObjectIDs = Set([self.page.id])
+        viewModel.createPage()
         self.modelController.undoManager.undo()
-        XCTAssertEqual(self.viewModel.selectedSidebarObjectIDs.first, self.page.id)
+        XCTAssertEqual(viewModel.selectedSidebarObjectIDs.first, self.page.id)
     }
 
     func test_createPage_removesPageFromCanvasIfOneWasSelected() {
-        self.viewModel.selectedSidebarObjectIDs = Set([self.canvas.id])
-        let page = self.viewModel.createPage()
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        viewModel.selectedSidebarObjectIDs = Set([self.canvas.id])
+        let page = viewModel.createPage()
 
         self.modelController.undoManager.undo()
         XCTAssertNil(self.canvas.pages.first(where: { $0.page?.id == page.id }))
     }
 
     func test_createPage_redoRecreatesPageWithSameIDAndProperties() throws {
-        let page = self.viewModel.createPage()
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        let page = viewModel.createPage()
 
         self.modelController.undoManager.undo()
         self.modelController.undoManager.redo()
 
-        let redonePage = try XCTUnwrap(self.viewModel.pageCollection.objectWithID(page.id))
+        let redonePage = try XCTUnwrap(viewModel.pageCollection.objectWithID(page.id))
 
         XCTAssertEqual(redonePage.title, page.title)
         XCTAssertEqual(redonePage.dateCreated, page.dateCreated)
@@ -316,62 +351,67 @@ class DocumentWindowViewModelTests: XCTestCase {
     }
 
     func test_createPage_redoRecreatesPageOnCanvasIfOneWasSelected() throws {
-        self.viewModel.updateSelection([.canvases])
-        self.viewModel.selectedCanvasID = self.canvas.id
-        let page = self.viewModel.createPage()
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        viewModel.updateSelection([.canvases])
+        viewModel.selectedCanvasID = self.canvas.id
+        let page = viewModel.createPage()
 
         self.modelController.undoManager.undo()
         self.modelController.undoManager.redo()
 
-        let redonePage = try XCTUnwrap(self.viewModel.pageCollection.objectWithID(page.id))
+        let redonePage = try XCTUnwrap(viewModel.pageCollection.objectWithID(page.id))
         XCTAssertNotNil(self.canvas.pages.first(where: { $0.page?.id == redonePage.id}))
     }
 
 
     //MARK: - createPages(fromFilesAtURLs:addingTo:centredOn:)
     func test_createPagesFromFilesAtURLs_createsNewPagesForSuppliedFileURLs() {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let bundle = Bundle(for: type(of: self))
         let fileURLs = [
             bundle.url(forResource: "test-image", withExtension: "png")!,
             bundle.url(forResource: "test-rtf", withExtension: "rtf")!
         ]
 
-        let pages = self.viewModel.createPages(fromFilesAtURLs: fileURLs)
+        let pages = viewModel.createPages(fromFilesAtURLs: fileURLs)
         XCTAssertEqual(pages.count, 2)
         XCTAssertEqual(pages.first?.content.contentType, .image)
         XCTAssertEqual(pages.last?.content.contentType, .text)
     }
 
     func test_createPagesFromFilesAtURLs_doesntAddPagesToCanvasIfNoneSupplied() {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let bundle = Bundle(for: type(of: self))
         let fileURLs = [
             bundle.url(forResource: "test-image", withExtension: "png")!,
             bundle.url(forResource: "test-rtf", withExtension: "rtf")!
         ]
 
-        let pages = self.viewModel.createPages(fromFilesAtURLs: fileURLs)
+        let pages = viewModel.createPages(fromFilesAtURLs: fileURLs)
         XCTAssertEqual(pages.first?.canvases.count, 0)
         XCTAssertEqual(pages.last?.canvases.count, 0)
     }
 
     func test_createPagesFromFilesAtURLs_addsPagesToCanvasIfOneSupplied() {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let bundle = Bundle(for: type(of: self))
         let fileURLs = [
             bundle.url(forResource: "test-image", withExtension: "png")!,
             bundle.url(forResource: "test-rtf", withExtension: "rtf")!
         ]
 
-        let pages = self.viewModel.createPages(fromFilesAtURLs: fileURLs, addingTo: self.canvas)
+        let pages = viewModel.createPages(fromFilesAtURLs: fileURLs, addingTo: self.canvas)
         XCTAssertEqual(pages.first?.canvases.first?.canvas, self.canvas)
         XCTAssertEqual(pages.last?.canvases.first?.canvas, self.canvas)
     }
 
     func test_createPagesFromFilesAtURLs_ifFolderIsNilThenAddsPagesToFolderForNewPages() {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let folder = self.modelController.collection(for: Folder.self).newObject()
         let page = self.modelController.collection(for: Page.self).newObject()
         folder.insert([page])
 
-        self.viewModel.updateSelection([.page(page.id)])
+        viewModel.updateSelection([.page(page.id)])
 
         let bundle = Bundle(for: type(of: self))
         let fileURLs = [
@@ -379,7 +419,7 @@ class DocumentWindowViewModelTests: XCTestCase {
             bundle.url(forResource: "test-rtf", withExtension: "rtf")!
         ]
 
-        let pages = self.viewModel.createPages(fromFilesAtURLs: fileURLs, addingTo: self.canvas)
+        let pages = viewModel.createPages(fromFilesAtURLs: fileURLs, addingTo: self.canvas)
         XCTAssertEqual(pages.first?.containingFolder, folder)
         XCTAssertEqual(pages.last?.containingFolder, folder)
 
@@ -388,11 +428,12 @@ class DocumentWindowViewModelTests: XCTestCase {
     }
 
     func test_createPagesFromFilesAtURLs_ifFolderIsSetThenAddsPagesToSuppliedFolder() {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let folder = self.modelController.collection(for: Folder.self).newObject()
         let page = self.modelController.collection(for: Page.self).newObject()
-        self.viewModel.rootFolder.insert([page])
+        viewModel.rootFolder.insert([page])
 
-        self.viewModel.updateSelection([.page(page.id)])
+        viewModel.updateSelection([.page(page.id)])
 
         let bundle = Bundle(for: type(of: self))
         let fileURLs = [
@@ -400,7 +441,7 @@ class DocumentWindowViewModelTests: XCTestCase {
             bundle.url(forResource: "test-rtf", withExtension: "rtf")!
         ]
 
-        let pages = self.viewModel.createPages(fromFilesAtURLs: fileURLs, in: folder, addingTo: self.canvas)
+        let pages = viewModel.createPages(fromFilesAtURLs: fileURLs, in: folder, addingTo: self.canvas)
         XCTAssertEqual(pages.first?.containingFolder, folder)
         XCTAssertEqual(pages.last?.containingFolder, folder)
 
@@ -409,30 +450,32 @@ class DocumentWindowViewModelTests: XCTestCase {
     }
 
     func test_createPagesFromFilesAtURLs_undoingRemovesPagesFromCollection() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let bundle = Bundle(for: type(of: self))
         let fileURLs = [
             bundle.url(forResource: "test-image", withExtension: "png")!,
             bundle.url(forResource: "test-rtf", withExtension: "rtf")!
         ]
 
-        let pages = self.viewModel.createPages(fromFilesAtURLs: fileURLs)
+        let pages = viewModel.createPages(fromFilesAtURLs: fileURLs)
         let imagePage = try XCTUnwrap(pages.first)
         let textPage = try XCTUnwrap(pages.last)
 
         self.modelController.undoManager.undo()
 
-        XCTAssertNil(self.viewModel.pageCollection.objectWithID(imagePage.id))
-        XCTAssertNil(self.viewModel.pageCollection.objectWithID(textPage.id))
+        XCTAssertNil(viewModel.pageCollection.objectWithID(imagePage.id))
+        XCTAssertNil(viewModel.pageCollection.objectWithID(textPage.id))
     }
 
     func test_createPagesFromFilesAtURLs_undoingRemovesPagesFromCanvasIfOneWasSupplied() throws{
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let bundle = Bundle(for: type(of: self))
         let fileURLs = [
             bundle.url(forResource: "test-image", withExtension: "png")!,
             bundle.url(forResource: "test-rtf", withExtension: "rtf")!
         ]
 
-        let pages = self.viewModel.createPages(fromFilesAtURLs: fileURLs, addingTo: self.canvas)
+        let pages = viewModel.createPages(fromFilesAtURLs: fileURLs, addingTo: self.canvas)
         let imagePage = try XCTUnwrap(pages.first)
         let textPage = try XCTUnwrap(pages.last)
 
@@ -443,27 +486,28 @@ class DocumentWindowViewModelTests: XCTestCase {
     }
 
     func test_createPagesFromFilesAtURLs_redoingRecreatesPagesWithSameIDsAndContent() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let bundle = Bundle(for: type(of: self))
         let fileURLs = [
             bundle.url(forResource: "test-image", withExtension: "png")!,
             bundle.url(forResource: "test-rtf", withExtension: "rtf")!
         ]
 
-        let pages = self.viewModel.createPages(fromFilesAtURLs: fileURLs, addingTo: self.canvas)
+        let pages = viewModel.createPages(fromFilesAtURLs: fileURLs, addingTo: self.canvas)
         let imagePage = try XCTUnwrap(pages.first)
         let textPage = try XCTUnwrap(pages.last)
 
         self.modelController.undoManager.undo()
         self.modelController.undoManager.redo()
 
-        let redoneImagePage = try XCTUnwrap(self.viewModel.pageCollection.objectWithID(imagePage.id))
+        let redoneImagePage = try XCTUnwrap(viewModel.pageCollection.objectWithID(imagePage.id))
         XCTAssertEqual(redoneImagePage.title, imagePage.title)
         XCTAssertEqual(redoneImagePage.dateCreated, imagePage.dateCreated)
         XCTAssertEqual(redoneImagePage.dateModified, imagePage.dateModified)
         XCTAssertEqual(redoneImagePage.content.contentType, imagePage.content.contentType)
         XCTAssertEqual((redoneImagePage.content as? ImagePageContent)?.image, (imagePage.content as? ImagePageContent)?.image)
 
-        let redoneTextPage = try XCTUnwrap(self.viewModel.pageCollection.objectWithID(textPage.id))
+        let redoneTextPage = try XCTUnwrap(viewModel.pageCollection.objectWithID(textPage.id))
         XCTAssertEqual(redoneTextPage.title, textPage.title)
         XCTAssertEqual(redoneTextPage.dateCreated, textPage.dateCreated)
         XCTAssertEqual(redoneTextPage.dateModified, textPage.dateModified)
@@ -472,13 +516,14 @@ class DocumentWindowViewModelTests: XCTestCase {
     }
 
     func test_createPagesFromFilesAtURLs_redoingAddsPagesBackToCanvas() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let bundle = Bundle(for: type(of: self))
         let fileURLs = [
             bundle.url(forResource: "test-image", withExtension: "png")!,
             bundle.url(forResource: "test-rtf", withExtension: "rtf")!
         ]
 
-        let pages = self.viewModel.createPages(fromFilesAtURLs: fileURLs, addingTo: self.canvas)
+        let pages = viewModel.createPages(fromFilesAtURLs: fileURLs, addingTo: self.canvas)
         let imagePage = try XCTUnwrap(pages.first)
         let textPage = try XCTUnwrap(pages.last)
 
@@ -492,29 +537,32 @@ class DocumentWindowViewModelTests: XCTestCase {
 
     //MARK: - delete(_: [SideBarItem]) - Single Page
     func test_deleteSidebarItems_singlePage_deletesThatPageIfNotOnCanvas() {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
         let page = self.modelController.collection(for: Page.self).newObject()
-        self.viewModel.delete([.page(page.id)])
+        viewModel.delete([.page(page.id)])
 
         XCTAssertNil(self.modelController.collection(for: Page.self).objectWithID(page.id))
     }
 
     func test_deleteSidebarItems_singlePage_showsAlertIfThatPageOnACanvas() {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
-        self.viewModel.delete([.page(self.page.id)])
+        viewModel.delete([.page(self.page.id)])
 
         XCTAssertNotNil(window.suppliedAlert)
     }
 
     func test_deleteSidebarItems_singlePage_doesntDeletePageIfAlertReturnsCancel() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
-        self.viewModel.delete([.page(self.page.id)])
+        viewModel.delete([.page(self.page.id)])
 
         let callback = try XCTUnwrap(window.callback)
         callback(1)
@@ -523,13 +571,14 @@ class DocumentWindowViewModelTests: XCTestCase {
     }
 
     func test_deleteSidebarItems_singlePage_deletesPageAndRemovesFromCanvasesIfAlertReturnsOK() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
         let canvas = self.modelController.collection(for: Canvas.self).newObject()
         let canvasPage = canvas.addPages([self.page])[0]
 
-        self.viewModel.delete([.page(self.page.id)])
+        viewModel.delete([.page(self.page.id)])
 
         let callback = try XCTUnwrap(window.callback)
         callback(0)
@@ -540,53 +589,57 @@ class DocumentWindowViewModelTests: XCTestCase {
     }
 
     func test_deleteSidebarItems_singlePage_removesPageFromSidebarSelectionIfItsThere() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
         let page = self.modelController.collection(for: Page.self).newObject()
-        self.viewModel.updateSelection([.page(page.id), .page(self.page.id)])
+        viewModel.updateSelection([.page(page.id), .page(self.page.id)])
 
-        self.viewModel.delete([.page(self.page.id)])
+        viewModel.delete([.page(self.page.id)])
 
         let callback = try XCTUnwrap(window.callback)
         callback(0)
 
-        XCTAssertEqual(self.viewModel.sidebarSelection, [.page(page.id)])
+        XCTAssertEqual(viewModel.sidebarSelection, [.page(page.id)])
     }
 
     func test_deleteSidebarItems_singlePage_doesntChangeSidebarSelectionIfDeletedPageIsntInSelection() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
         let page = self.modelController.collection(for: Page.self).newObject()
-        self.viewModel.updateSelection([.page(page.id), .canvases])
+        viewModel.updateSelection([.page(page.id), .canvases])
 
-        let previousSelection = self.viewModel.sidebarSelection
+        let previousSelection = viewModel.sidebarSelection
 
-        self.viewModel.delete([.page(self.page.id)])
+        viewModel.delete([.page(self.page.id)])
 
         let callback = try XCTUnwrap(window.callback)
         callback(0)
 
-        XCTAssertEqual(self.viewModel.sidebarSelection, previousSelection)
+        XCTAssertEqual(viewModel.sidebarSelection, previousSelection)
     }
 
     func test_deleteSidebarItems_singlePage_removesPageFromContainingFolder() {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
         let page = self.modelController.collection(for: Page.self).newObject()
         let folder = self.modelController.collection(for: Folder.self).newObject()
         folder.insert([page])
 
-        self.viewModel.delete([.page(page.id)])
+        viewModel.delete([.page(page.id)])
 
         XCTAssertFalse(folder.contents.contains(where: { $0.id == page.id }))
     }
 
     func test_deleteSidebarItems_singlePage_undoRecreatesPageWithSameIDAndAnyAttribtues() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
         let page = self.modelController.collection(for: Page.self).newObject() {
             $0.title = "Test Page"
@@ -594,7 +647,7 @@ class DocumentWindowViewModelTests: XCTestCase {
             $0.content = ImagePageContent()
         }
         self.modelController.undoManager.removeAllActions()
-        self.viewModel.delete([.page(page.id)])
+        viewModel.delete([.page(page.id)])
 
         self.modelController.undoManager.undo()
 
@@ -607,13 +660,14 @@ class DocumentWindowViewModelTests: XCTestCase {
     }
 
     func test_deleteSidebarItem_singlePage_undoAddsPagesAndReLinksPagesBackToAnyCanvases() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
         let childPage = self.modelController.collection(for: Page.self).newObject()
         let childCanvasPage = self.canvas.add(childPage, linkedFrom: self.canvasPage)
         self.modelController.undoManager.removeAllActions()
-        self.viewModel.delete([.page(self.page.id)])
+        viewModel.delete([.page(self.page.id)])
 
         let callback = try XCTUnwrap(window.callback)
         callback(0)
@@ -628,14 +682,15 @@ class DocumentWindowViewModelTests: XCTestCase {
     }
 
     func test_deleteSidebarItem_singlePage_undoAddsPageBackToPreviousFolder() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
         let page = self.modelController.collection(for: Page.self).newObject()
         let folder = self.modelController.collection(for: Folder.self).newObject()
         folder.insert([page])
         self.modelController.undoManager.removeAllActions()
-        self.viewModel.delete([.page(page.id)])
+        viewModel.delete([.page(page.id)])
 
         self.modelController.undoManager.undo()
 
@@ -645,13 +700,14 @@ class DocumentWindowViewModelTests: XCTestCase {
     }
 
     func test_deleteSidebarItem_singlePage_redoDeletesPageAgain() {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
         let page = self.modelController.collection(for: Page.self).newObject()
 
         self.modelController.undoManager.removeAllActions()
-        self.viewModel.delete([.page(page.id)])
+        viewModel.delete([.page(page.id)])
 
         self.modelController.undoManager.undo()
         self.modelController.undoManager.redo()
@@ -660,11 +716,12 @@ class DocumentWindowViewModelTests: XCTestCase {
     }
 
     func test_deleteSidebarItem_singlePage_redoDeletesPageAgainWithoutShowingAlert() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
         self.modelController.undoManager.removeAllActions()
-        self.viewModel.delete([.page(self.page.id)])
+        viewModel.delete([.page(self.page.id)])
 
         let callback = try XCTUnwrap(window.callback)
         callback(0)
@@ -678,11 +735,12 @@ class DocumentWindowViewModelTests: XCTestCase {
     }
 
     func test_deleteSidebarItem_singlePage_redoRemovesPageFromAnyCanvasesAgain() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
         self.modelController.undoManager.removeAllActions()
-        self.viewModel.delete([.page(self.page.id)])
+        viewModel.delete([.page(self.page.id)])
 
         let callback = try XCTUnwrap(window.callback)
         callback(0)
@@ -696,15 +754,16 @@ class DocumentWindowViewModelTests: XCTestCase {
     }
 
     func test_deleteSidebarItem_singlePage_redoRemovesPageFromItsContainingFolderAgain() {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
         let page = self.modelController.collection(for: Page.self).newObject()
         let folder = self.modelController.collection(for: Folder.self).newObject()
         folder.insert([page])
 
         self.modelController.undoManager.removeAllActions()
-        self.viewModel.delete([.page(page.id)])
+        viewModel.delete([.page(page.id)])
 
         self.modelController.undoManager.undo()
         self.modelController.undoManager.redo()
@@ -715,36 +774,39 @@ class DocumentWindowViewModelTests: XCTestCase {
 
     //MARK: - delete(_: [SideBarItem]) - Single Folder
     func test_deleteSidebarItems_singleFolder_deletesThatFolderIfEmpty() {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
         let folder = self.modelController.collection(for: Folder.self).newObject()
 
-        self.viewModel.delete([.folder(folder.id)])
+        viewModel.delete([.folder(folder.id)])
 
         XCTAssertNil(self.modelController.collection(for: Folder.self).objectWithID(folder.id))
     }
 
     func test_deleteSidebarItems_singleFolder_showsAlertIfFolderContainsItems() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
         let folder = self.modelController.collection(for: Folder.self).newObject()
         folder.insert([self.page])
 
-        self.viewModel.delete([.folder(folder.id)])
+        viewModel.delete([.folder(folder.id)])
 
         XCTAssertNotNil(window.suppliedAlert)
     }
 
     func test_deleteSidebarItems_singleFolder_doesntDeleteFolderIfAlertReturnsCancel() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
         let folder = self.modelController.collection(for: Folder.self).newObject()
         folder.insert([self.page])
 
-        self.viewModel.delete([.folder(folder.id)])
+        viewModel.delete([.folder(folder.id)])
 
         let callback = try XCTUnwrap(window.callback)
         callback(1)
@@ -753,14 +815,15 @@ class DocumentWindowViewModelTests: XCTestCase {
     }
 
     func test_deleteSidebarItems_singleFolder_deletesFolderAndContentsIfAlertReturnsOK() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
         let page = self.modelController.collection(for: Page.self).newObject()
         let folder = self.modelController.collection(for: Folder.self).newObject()
         folder.insert([page])
 
-        self.viewModel.delete([.folder(folder.id)])
+        viewModel.delete([.folder(folder.id)])
 
         let callback = try XCTUnwrap(window.callback)
         callback(0)
@@ -770,76 +833,81 @@ class DocumentWindowViewModelTests: XCTestCase {
     }
 
     func test_deleteSidebarItems_singleFolder_removesFolderFromSidebarSelection() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
         let page = self.modelController.collection(for: Page.self).newObject()
         let folder = self.modelController.collection(for: Folder.self).newObject()
         folder.insert([page])
 
-        self.viewModel.updateSelection([.page(self.page.id), .folder(folder.id)])
+        viewModel.updateSelection([.page(self.page.id), .folder(folder.id)])
 
-        self.viewModel.delete([.folder(folder.id)])
+        viewModel.delete([.folder(folder.id)])
 
         let callback = try XCTUnwrap(window.callback)
         callback(0)
 
-        XCTAssertEqual(self.viewModel.sidebarSelection, [.page(self.page.id)])
+        XCTAssertEqual(viewModel.sidebarSelection, [.page(self.page.id)])
     }
 
     func test_deleteSidebarItems_singleFolder_removesContainedItemsFromSidebarSelection() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
         let page = self.modelController.collection(for: Page.self).newObject()
         let folder = self.modelController.collection(for: Folder.self).newObject()
         folder.insert([page])
 
-        self.viewModel.updateSelection([.page(page.id), .page(self.page.id)])
+        viewModel.updateSelection([.page(page.id), .page(self.page.id)])
 
-        self.viewModel.delete([.folder(folder.id)])
+        viewModel.delete([.folder(folder.id)])
 
         let callback = try XCTUnwrap(window.callback)
         callback(0)
 
-        XCTAssertEqual(self.viewModel.sidebarSelection, [.page(self.page.id)])
+        XCTAssertEqual(viewModel.sidebarSelection, [.page(self.page.id)])
     }
 
     func test_deleteSidebarItems_singleFolder_removesFolderFromContainingFolder() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
         let folder = self.modelController.collection(for: Folder.self).newObject()
-        self.viewModel.rootFolder.insert([folder])
+        viewModel.rootFolder.insert([folder])
 
-        self.viewModel.delete([.folder(folder.id)])
+        viewModel.delete([.folder(folder.id)])
 
-        XCTAssertFalse(self.viewModel.rootFolder.contents.contains(where: { $0.id == folder.id }))
+        XCTAssertFalse(viewModel.rootFolder.contents.contains(where: { $0.id == folder.id }))
     }
 
     func test_deleteSidebarItems_singleFolder_doesntDoAnythingIfAttemptingToDeleteRootFolder() {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
-        let rootFolder = self.viewModel.rootFolder
-        self.viewModel.delete([.folder(rootFolder.id)])
+        let rootFolder = viewModel.rootFolder
+        viewModel.delete([.folder(rootFolder.id)])
 
         XCTAssertNil(window.suppliedAlert)
         XCTAssertNil(window.callback)
 
-        XCTAssertEqual(self.viewModel.rootFolder, rootFolder)
+        XCTAssertEqual(viewModel.rootFolder, rootFolder)
     }
 
     func test_deleteSidebarItems_singleFolder_undoRecreatesFolderWithSameIDAndAttributes() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
         let folder = self.modelController.collection(for: Folder.self).newObject() {
             $0.title = "My Great Folder"
         }
 
         self.modelController.undoManager.removeAllActions()
-        self.viewModel.delete([.folder(folder.id)])
+        viewModel.delete([.folder(folder.id)])
 
         self.modelController.undoManager.undo()
 
@@ -848,8 +916,9 @@ class DocumentWindowViewModelTests: XCTestCase {
     }
 
     func test_deleteSidebarItem_singleFolder_undoRecreatesFolderContents() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
         let page = self.modelController.collection(for: Page.self).newObject()
         let page2 = self.modelController.collection(for: Page.self).newObject()
@@ -860,7 +929,7 @@ class DocumentWindowViewModelTests: XCTestCase {
         childFolder.insert([childPage])
 
         self.modelController.undoManager.removeAllActions()
-        self.viewModel.delete([.folder(folder.id)])
+        viewModel.delete([.folder(folder.id)])
 
         let callback = try XCTUnwrap(window.callback)
         callback(0)
@@ -879,25 +948,27 @@ class DocumentWindowViewModelTests: XCTestCase {
     }
 
     func test_deleteSidebarItem_singleFolder_undoAddsFolderBackToPreviousFolder() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
         let folder = self.modelController.collection(for: Folder.self).newObject()
-        self.viewModel.rootFolder.insert([folder])
+        viewModel.rootFolder.insert([folder])
 
         self.modelController.undoManager.removeAllActions()
-        self.viewModel.delete([.folder(folder.id)])
+        viewModel.delete([.folder(folder.id)])
 
         self.modelController.undoManager.undo()
 
         let undoneFolder = try XCTUnwrap(self.modelController.collection(for: Folder.self).objectWithID(folder.id))
-        XCTAssertTrue(self.viewModel.rootFolder.contents.contains(where: { $0.id == undoneFolder.id }))
-        XCTAssertEqual(undoneFolder.containingFolder, self.viewModel.rootFolder)
+        XCTAssertTrue(viewModel.rootFolder.contents.contains(where: { $0.id == undoneFolder.id }))
+        XCTAssertEqual(undoneFolder.containingFolder, viewModel.rootFolder)
     }
 
     func test_deleteSidebarItem_singleFolder_redoDeletesFolderAndContentsAgainWithoutDisplayingAlert() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
         let page = self.modelController.collection(for: Page.self).newObject()
         let page2 = self.modelController.collection(for: Page.self).newObject()
@@ -908,7 +979,7 @@ class DocumentWindowViewModelTests: XCTestCase {
         childFolder.insert([childPage])
 
         self.modelController.undoManager.removeAllActions()
-        self.viewModel.delete([.folder(folder.id)])
+        viewModel.delete([.folder(folder.id)])
 
         let callback = try XCTUnwrap(window.callback)
         callback(0)
@@ -926,25 +997,27 @@ class DocumentWindowViewModelTests: XCTestCase {
 
     //MARK: - delete(_: [SideBarItem]) - Multiple Items
     func test_deleteSidebarItems_multipleItems_showsSimpleAlert() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
         let page = self.modelController.collection(for: Page.self).newObject()
         let folder = self.modelController.collection(for: Folder.self).newObject()
 
-        self.viewModel.delete([.page(page.id), .folder(folder.id)])
+        viewModel.delete([.page(page.id), .folder(folder.id)])
 
         XCTAssertNotNil(window.suppliedAlert)
     }
 
     func test_deleteSidebarItems_multipleItems_doesntDeleteItemsIfAlertReturnsCancel() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
         let page = self.modelController.collection(for: Page.self).newObject()
         let folder = self.modelController.collection(for: Folder.self).newObject()
 
-        self.viewModel.delete([.page(page.id), .folder(folder.id)])
+        viewModel.delete([.page(page.id), .folder(folder.id)])
 
         let callback = try XCTUnwrap(window.callback)
         callback(1)
@@ -954,13 +1027,14 @@ class DocumentWindowViewModelTests: XCTestCase {
     }
 
     func test_deleteSidebarItems_multipleItems_deletesItemsIfAlertReturnsOK() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
         let page = self.modelController.collection(for: Page.self).newObject()
         let folder = self.modelController.collection(for: Folder.self).newObject()
 
-        self.viewModel.delete([.page(page.id), .folder(folder.id)])
+        viewModel.delete([.page(page.id), .folder(folder.id)])
 
         let callback = try XCTUnwrap(window.callback)
         callback(0)
@@ -970,34 +1044,36 @@ class DocumentWindowViewModelTests: XCTestCase {
     }
 
     func test_deleteSidebarItems_multipleItems_removesItemsFromSidebarSelection() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
         let page = self.modelController.collection(for: Page.self).newObject()
         let folder = self.modelController.collection(for: Folder.self).newObject()
 
-        self.viewModel.updateSelection([.page(self.page.id), .folder(folder.id), .canvases, .page(page.id)])
+        viewModel.updateSelection([.page(self.page.id), .folder(folder.id), .canvases, .page(page.id)])
 
-        self.viewModel.delete([.page(page.id), .folder(folder.id)])
+        viewModel.delete([.page(page.id), .folder(folder.id)])
 
         let callback = try XCTUnwrap(window.callback)
         callback(0)
 
-        XCTAssertEqual(self.viewModel.sidebarSelection, [.page(self.page.id), .canvases])
+        XCTAssertEqual(viewModel.sidebarSelection, [.page(self.page.id), .canvases])
     }
 
     func test_deleteSidebarItems_multipleItems_removesItemsEvenIfSuppliedItemIsContainedInASuppliedFolder() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
         let page = self.modelController.collection(for: Page.self).newObject()
         let childPage = self.modelController.collection(for: Page.self).newObject()
         let folder = self.modelController.collection(for: Folder.self).newObject()
         folder.insert([childPage])
 
-        self.viewModel.updateSelection([.page(self.page.id), .folder(folder.id), .canvases, .page(page.id)])
+        viewModel.updateSelection([.page(self.page.id), .folder(folder.id), .canvases, .page(page.id)])
 
-        self.viewModel.delete([.page(childPage.id), .folder(folder.id)])
+        viewModel.delete([.page(childPage.id), .folder(folder.id)])
 
         let callback = try XCTUnwrap(window.callback)
         callback(0)
@@ -1007,27 +1083,29 @@ class DocumentWindowViewModelTests: XCTestCase {
     }
 
     func test_deleteSidebarItems_multipleItems_removesItemsFromContainingFolder() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
         let page = self.modelController.collection(for: Page.self).newObject()
         let folder = self.modelController.collection(for: Folder.self).newObject()
-        self.viewModel.rootFolder.insert([page, folder])
+        viewModel.rootFolder.insert([page, folder])
 
-        self.viewModel.updateSelection([.page(self.page.id), .folder(folder.id), .canvases, .page(page.id)])
+        viewModel.updateSelection([.page(self.page.id), .folder(folder.id), .canvases, .page(page.id)])
 
-        self.viewModel.delete([.page(page.id), .folder(folder.id)])
+        viewModel.delete([.page(page.id), .folder(folder.id)])
 
         let callback = try XCTUnwrap(window.callback)
         callback(0)
 
-        XCTAssertFalse(self.viewModel.rootFolder.contents.contains(where: { $0.id == page.id }))
-        XCTAssertFalse(self.viewModel.rootFolder.contents.contains(where: { $0.id == folder.id }))
+        XCTAssertFalse(viewModel.rootFolder.contents.contains(where: { $0.id == page.id }))
+        XCTAssertFalse(viewModel.rootFolder.contents.contains(where: { $0.id == folder.id }))
     }
 
     func test_deleteSidebarItems_multipleItems_undoRecreatesItemsWithSameIDAndAnyAttributes() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
         let page = self.modelController.collection(for: Page.self).newObject() {
             $0.title = "Foobar"
@@ -1037,9 +1115,9 @@ class DocumentWindowViewModelTests: XCTestCase {
             $0.title = "Test Folder"
         }
 
-        self.viewModel.updateSelection([.page(self.page.id), .folder(folder.id), .canvases, .page(page.id)])
+        viewModel.updateSelection([.page(self.page.id), .folder(folder.id), .canvases, .page(page.id)])
         self.modelController.undoManager.removeAllActions()
-        self.viewModel.delete([.page(page.id), .folder(folder.id)])
+        viewModel.delete([.page(page.id), .folder(folder.id)])
 
         let callback = try XCTUnwrap(window.callback)
         callback(0)
@@ -1056,38 +1134,40 @@ class DocumentWindowViewModelTests: XCTestCase {
     }
 
     func test_deleteSidebarItem_multipleItems_undoAddsItemsBackToPreviousFolders() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
         let page = self.modelController.collection(for: Page.self).newObject()
         let folder = self.modelController.collection(for: Folder.self).newObject()
-        self.viewModel.rootFolder.insert([page, folder])
+        viewModel.rootFolder.insert([page, folder])
 
-        self.viewModel.updateSelection([.page(self.page.id), .folder(folder.id), .canvases, .page(page.id)])
+        viewModel.updateSelection([.page(self.page.id), .folder(folder.id), .canvases, .page(page.id)])
         self.modelController.undoManager.removeAllActions()
-        self.viewModel.delete([.page(page.id), .folder(folder.id)])
+        viewModel.delete([.page(page.id), .folder(folder.id)])
 
         let callback = try XCTUnwrap(window.callback)
         callback(0)
 
         self.modelController.undoManager.undo()
 
-        XCTAssertEqual(self.viewModel.rootFolder.contents.first?.id, page.id)
-        XCTAssertEqual(self.viewModel.rootFolder.contents.last?.id, folder.id)
+        XCTAssertEqual(viewModel.rootFolder.contents.first?.id, page.id)
+        XCTAssertEqual(viewModel.rootFolder.contents.last?.id, folder.id)
     }
 
     func test_deleteSidebarItem_multipleItems_undoAddsContentsBackToAnyFolders() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
         let page = self.modelController.collection(for: Page.self).newObject()
         let childPage = self.modelController.collection(for: Page.self).newObject()
         let folder = self.modelController.collection(for: Folder.self).newObject()
         folder.insert([childPage])
 
-        self.viewModel.updateSelection([.page(self.page.id), .folder(folder.id), .canvases, .page(page.id)])
+        viewModel.updateSelection([.page(self.page.id), .folder(folder.id), .canvases, .page(page.id)])
         self.modelController.undoManager.removeAllActions()
-        self.viewModel.delete([.page(page.id), .folder(folder.id)])
+        viewModel.delete([.page(page.id), .folder(folder.id)])
 
         let callback = try XCTUnwrap(window.callback)
         callback(0)
@@ -1099,17 +1179,18 @@ class DocumentWindowViewModelTests: XCTestCase {
     }
 
     func test_deleteSidebarItem_multipleItems_redoDeletesItemsAgainWithoutShowingAlert() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
         let page = self.modelController.collection(for: Page.self).newObject()
         let childPage = self.modelController.collection(for: Page.self).newObject()
         let folder = self.modelController.collection(for: Folder.self).newObject()
         folder.insert([childPage])
 
-        self.viewModel.updateSelection([.page(self.page.id), .folder(folder.id), .canvases, .page(page.id)])
+        viewModel.updateSelection([.page(self.page.id), .folder(folder.id), .canvases, .page(page.id)])
         self.modelController.undoManager.removeAllActions()
-        self.viewModel.delete([.page(page.id), .folder(folder.id)])
+        viewModel.delete([.page(page.id), .folder(folder.id)])
 
         let callback = try XCTUnwrap(window.callback)
         callback(0)
@@ -1125,36 +1206,40 @@ class DocumentWindowViewModelTests: XCTestCase {
 
     //MARK: - addPage(at:to:centredOn:)
     func test_addPage_addsPageMatchingLinkToCanvas() {
-        let page = self.viewModel.pageCollection.newObject()
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        let page = viewModel.pageCollection.newObject()
         let link = PageLink(destination: page.id)
-        self.viewModel.addPage(at: link, to: self.canvas)
+        viewModel.addPage(at: link, to: self.canvas)
 
         XCTAssertEqual(self.canvas.pages.count, 2)
         XCTAssertTrue(self.canvas.pages.map { $0.page }.contains(page))
     }
 
     func test_addPage_addedPageDoesntHaveParentIfLinkDoesntHaveSource() {
-        let page = self.viewModel.pageCollection.newObject()
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        let page = viewModel.pageCollection.newObject()
         let link = PageLink(destination: page.id)
-        self.viewModel.addPage(at: link, to: self.canvas)
+        viewModel.addPage(at: link, to: self.canvas)
 
         let canvasPage = self.canvas.pages.first(where: { $0.page == page })
         XCTAssertNil(canvasPage?.parent)
     }
 
     func test_addPage_addingPageSetsSourcePageAsParent() {
-        let page = self.viewModel.pageCollection.newObject()
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        let page = viewModel.pageCollection.newObject()
         let link = PageLink(destination: page.id, source: self.canvasPage.id)
-        self.viewModel.addPage(at: link, to: self.canvas)
+        viewModel.addPage(at: link, to: self.canvas)
 
         let canvasPage = self.canvas.pages.first(where: { $0.page == page })
         XCTAssertEqual(canvasPage?.parent, self.canvasPage)
     }
 
     func test_addPage_undoingRemovesPageFromCanvas() {
-        let page = self.viewModel.pageCollection.newObject()
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        let page = viewModel.pageCollection.newObject()
         let link = PageLink(destination: page.id)
-        self.viewModel.addPage(at: link, to: self.canvas)
+        viewModel.addPage(at: link, to: self.canvas)
 
         self.modelController.undoManager.undo()
 
@@ -1162,19 +1247,21 @@ class DocumentWindowViewModelTests: XCTestCase {
     }
 
     func test_addPage_undoingDeletesCanvasPage() throws {
-        let page = self.viewModel.pageCollection.newObject()
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        let page = viewModel.pageCollection.newObject()
         let link = PageLink(destination: page.id)
-        let canvasPage = try XCTUnwrap(self.viewModel.addPage(at: link, to: self.canvas))
+        let canvasPage = try XCTUnwrap(viewModel.addPage(at: link, to: self.canvas))
 
         self.modelController.undoManager.undo()
 
-        XCTAssertNil(self.viewModel.canvasPageCollection.objectWithID(canvasPage.id))
+        XCTAssertNil(viewModel.canvasPageCollection.objectWithID(canvasPage.id))
     }
 
     func test_addPage_undoingRemovesPageFromSourcePagesChildren() throws {
-        let page = self.viewModel.pageCollection.newObject()
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        let page = viewModel.pageCollection.newObject()
         let link = PageLink(destination: page.id, source: self.canvasPage.id)
-        self.viewModel.addPage(at: link, to: self.canvas)
+        viewModel.addPage(at: link, to: self.canvas)
 
         self.modelController.undoManager.undo()
 
@@ -1182,14 +1269,15 @@ class DocumentWindowViewModelTests: XCTestCase {
     }
 
     func test_addPage_redoingAddsBackThePageWithSameIDAndProperties() throws {
-        let page = self.viewModel.pageCollection.newObject()
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        let page = viewModel.pageCollection.newObject()
         let link = PageLink(destination: page.id, source: self.canvasPage.id)
-        let canvasPage = try XCTUnwrap(self.viewModel.addPage(at: link, to: self.canvas))
+        let canvasPage = try XCTUnwrap(viewModel.addPage(at: link, to: self.canvas))
 
         self.modelController.undoManager.undo()
         self.modelController.undoManager.redo()
 
-        let undoneCanvasPage = try XCTUnwrap(self.viewModel.canvasPageCollection.objectWithID(canvasPage.id))
+        let undoneCanvasPage = try XCTUnwrap(viewModel.canvasPageCollection.objectWithID(canvasPage.id))
         XCTAssertEqual(undoneCanvasPage.parent, self.canvasPage)
         XCTAssertEqual(undoneCanvasPage.frame, canvasPage.frame)
     }
@@ -1197,25 +1285,28 @@ class DocumentWindowViewModelTests: XCTestCase {
 
     //MARK: - createCanvas()
     func test_createCanvas_createsNewCanvas() {
-        let canvas = self.viewModel.createCanvas()
-        XCTAssert(self.viewModel.canvasCollection.all.contains(canvas))
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        let canvas = viewModel.createCanvas()
+        XCTAssert(viewModel.canvasCollection.all.contains(canvas))
     }
 
     func test_createCanvas_undoingCanvasCreationRemovesCanvas() {
-        let canvas = self.viewModel.createCanvas()
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        let canvas = viewModel.createCanvas()
         self.modelController.undoManager.undo()
-        XCTAssertNil(self.viewModel.canvasCollection.objectWithID(canvas.id))
+        XCTAssertNil(viewModel.canvasCollection.objectWithID(canvas.id))
     }
 
     func test_createCanvas_redoingRecreatesCanvasWithSameIDAndProperties() throws {
-        let canvas = self.viewModel.createCanvas()
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        let canvas = viewModel.createCanvas()
         canvas.title = "Foo Bar Baz"
         canvas.sortIndex = 3
         canvas.viewPort = CGRect(x: 3, y: 90, width: 100, height: 240)
         self.modelController.undoManager.undo()
         self.modelController.undoManager.redo()
 
-        let redoneCanvas = try XCTUnwrap(self.viewModel.canvasCollection.objectWithID(canvas.id))
+        let redoneCanvas = try XCTUnwrap(viewModel.canvasCollection.objectWithID(canvas.id))
         XCTAssertEqual(redoneCanvas.title, canvas.title)
         XCTAssertEqual(redoneCanvas.dateCreated, canvas.dateCreated)
         XCTAssertEqual(redoneCanvas.dateModified, canvas.dateModified)
@@ -1226,101 +1317,109 @@ class DocumentWindowViewModelTests: XCTestCase {
 
     //MARK: - delete(_:Canvas)
     func test_deleteCanvas_showsAlertIfCanvasHasPages() {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
-        self.viewModel.delete(self.canvas)
+        viewModel.delete(self.canvas)
 
         XCTAssertNotNil(window.suppliedAlert)
     }
 
     func test_deleteCanvas_doesntShowAlertIfCanvasDoesntHaveAnyPages() {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
-        let canvas = self.viewModel.canvasCollection.newObject()
+        let canvas = viewModel.canvasCollection.newObject()
 
-        self.viewModel.delete(canvas)
+        viewModel.delete(canvas)
 
         XCTAssertNil(window.suppliedAlert)
     }
 
     func test_deleteCanvas_deletesCanvasIfItDoesntHaveAnyPages() {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
-        let canvas = self.viewModel.canvasCollection.newObject()
+        let canvas = viewModel.canvasCollection.newObject()
 
-        self.viewModel.delete(canvas)
+        viewModel.delete(canvas)
 
-        XCTAssertFalse(self.viewModel.canvasCollection.all.contains(canvas))
+        XCTAssertFalse(viewModel.canvasCollection.all.contains(canvas))
     }
 
     func test_deleteCanvas_doesntDeleteCanvasIfItHasPagesButAlertReturnsCancel() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
-        self.viewModel.delete(self.canvas)
+        viewModel.delete(self.canvas)
 
         let callback = try XCTUnwrap(window.callback)
         callback(1)
 
-        XCTAssertTrue(self.viewModel.canvasCollection.all.contains(self.canvas))
-        XCTAssertTrue(self.viewModel.canvasPageCollection.all.contains(self.canvasPage))
+        XCTAssertTrue(viewModel.canvasCollection.all.contains(self.canvas))
+        XCTAssertTrue(viewModel.canvasPageCollection.all.contains(self.canvasPage))
     }
 
     func test_deleteCanvas_deletesCanvasIfItHasPagesAndAlertReturnsOK() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
-        self.viewModel.delete(self.canvas)
+        viewModel.delete(self.canvas)
 
         let callback = try XCTUnwrap(window.callback)
         callback(0)
 
-        XCTAssertFalse(self.viewModel.canvasCollection.all.contains(self.canvas))
+        XCTAssertFalse(viewModel.canvasCollection.all.contains(self.canvas))
     }
 
     func test_deleteCanvas_deletingCanvasRemovesAllCanvasPages() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
-        let page2 = self.viewModel.pageCollection.newObject()
-        let canvasPage2 = self.viewModel.canvasPageCollection.newObject() {
+        let page2 = viewModel.pageCollection.newObject()
+        let canvasPage2 = viewModel.canvasPageCollection.newObject() {
             $0.canvas = self.canvas
             $0.page = page2
         }
 
-        self.viewModel.delete(self.canvas)
+        viewModel.delete(self.canvas)
 
         let callback = try XCTUnwrap(window.callback)
         callback(0)
 
-        XCTAssertFalse(self.viewModel.canvasCollection.all.contains(self.canvas))
-        XCTAssertFalse(self.viewModel.canvasPageCollection.all.contains(self.canvasPage))
-        XCTAssertFalse(self.viewModel.canvasPageCollection.all.contains(canvasPage2))
+        XCTAssertFalse(viewModel.canvasCollection.all.contains(self.canvas))
+        XCTAssertFalse(viewModel.canvasPageCollection.all.contains(self.canvasPage))
+        XCTAssertFalse(viewModel.canvasPageCollection.all.contains(canvasPage2))
     }
 
     func test_deleteCanvas_setsSelectedSidebarObjectIDToNilIfCanvasWasSelected() {
-        let canvas = self.viewModel.canvasCollection.newObject()
-        self.viewModel.selectedSidebarObjectIDs = Set([canvas.id])
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        let canvas = viewModel.canvasCollection.newObject()
+        viewModel.selectedSidebarObjectIDs = Set([canvas.id])
 
-        self.viewModel.delete(canvas)
+        viewModel.delete(canvas)
 
-        XCTAssertEqual(self.viewModel.selectedSidebarObjectIDs.count, 0)
+        XCTAssertEqual(viewModel.selectedSidebarObjectIDs.count, 0)
     }
 
     func test_deleteCanvas_undoRecreatesCanvasWithSameIDAndAttributes() throws {
-        let canvas = self.viewModel.canvasCollection.newObject()
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        let canvas = viewModel.canvasCollection.newObject()
         canvas.title = "Hello World"
         canvas.viewPort = CGRect(x: 30, y: 40, width: 50, height: 60)
 
         self.modelController.undoManager.removeAllActions()
 
-        self.viewModel.delete(canvas)
+        viewModel.delete(canvas)
         self.modelController.undoManager.undo()
 
-        let undoneCanvas = try XCTUnwrap(self.viewModel.canvasCollection.objectWithID(canvas.id))
+        let undoneCanvas = try XCTUnwrap(viewModel.canvasCollection.objectWithID(canvas.id))
         XCTAssertEqual(undoneCanvas.title, canvas.title)
         XCTAssertEqual(undoneCanvas.dateCreated, canvas.dateCreated)
         XCTAssertEqual(undoneCanvas.dateModified, canvas.dateModified)
@@ -1328,23 +1427,24 @@ class DocumentWindowViewModelTests: XCTestCase {
     }
 
     func test_deleteCanvas_undoAddsAnyPagesBackToCanvasWithSameFrames() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
-        let canvas = self.viewModel.canvasCollection.newObject()
-        let secondPage = self.viewModel.pageCollection.newObject()
+        let canvas = viewModel.canvasCollection.newObject()
+        let secondPage = viewModel.pageCollection.newObject()
         let canvasPage1 = try XCTUnwrap(canvas.addPages([self.page], centredOn: CGPoint(x: -40, y: -30)).first)
         let canvasPage2 = canvas.add(secondPage, linkedFrom: canvasPage1)
         self.modelController.undoManager.removeAllActions()
 
-        self.viewModel.delete(canvas)
+        viewModel.delete(canvas)
         let callback = try XCTUnwrap(window.callback)
         callback(0)
 
         self.modelController.undoManager.undo()
 
-        let undoneCanvasPage1 = try XCTUnwrap(self.viewModel.canvasPageCollection.objectWithID(canvasPage1.id))
-        let undoneCanvasPage2 = try XCTUnwrap(self.viewModel.canvasPageCollection.objectWithID(canvasPage2.id))
+        let undoneCanvasPage1 = try XCTUnwrap(viewModel.canvasPageCollection.objectWithID(canvasPage1.id))
+        let undoneCanvasPage2 = try XCTUnwrap(viewModel.canvasPageCollection.objectWithID(canvasPage2.id))
 
         XCTAssertEqual(undoneCanvasPage1.canvas, canvas)
         XCTAssertEqual(undoneCanvasPage1.frame, canvasPage1.frame)
@@ -1357,68 +1457,74 @@ class DocumentWindowViewModelTests: XCTestCase {
     }
 
     func test_deleteCanvas_undoSetsSidebarSelectionBackToCanavsIfItWasSelected() throws {
-        let canvas = self.viewModel.canvasCollection.newObject()
-        self.viewModel.selectedSidebarObjectIDs = Set([canvas.id])
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        let canvas = viewModel.canvasCollection.newObject()
+        viewModel.selectedSidebarObjectIDs = Set([canvas.id])
         self.modelController.undoManager.removeAllActions()
 
-        self.viewModel.delete(canvas)
+        viewModel.delete(canvas)
         self.modelController.undoManager.undo()
 
-        XCTAssertEqual(self.viewModel.selectedSidebarObjectIDs.first, canvas.id)
+        XCTAssertEqual(viewModel.selectedSidebarObjectIDs.first, canvas.id)
     }
 
     func test_deleteCanvas_redoingDeletesCanvasAgainButWithoutAnyAlert() {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
-        let canvas = self.viewModel.canvasCollection.newObject()
+        let canvas = viewModel.canvasCollection.newObject()
         self.modelController.undoManager.removeAllActions()
 
-        self.viewModel.delete(canvas)
+        viewModel.delete(canvas)
         self.modelController.undoManager.undo()
         self.modelController.undoManager.redo()
 
         XCTAssertNil(window.suppliedAlert)
-        XCTAssertNil(self.viewModel.canvasCollection.objectWithID(canvas.id))
+        XCTAssertNil(viewModel.canvasCollection.objectWithID(canvas.id))
     }
 
     func test_deleteCanvas_redoingRemovesPagesFromCanvasAgainButWithoutAnyAlert() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let window = MockWindow()
-        self.viewModel.window = window
+        viewModel.window = window
 
-        let canvas = self.viewModel.canvasCollection.newObject()
-        let secondPage = self.viewModel.pageCollection.newObject()
+        let canvas = viewModel.canvasCollection.newObject()
+        let secondPage = viewModel.pageCollection.newObject()
         let canvasPage1 = try XCTUnwrap(canvas.addPages([self.page], centredOn: CGPoint(x: -40, y: -30)).first)
         let canvasPage2 = canvas.add(secondPage, linkedFrom: canvasPage1)
         self.modelController.undoManager.removeAllActions()
 
-        self.viewModel.delete(canvas)
+        viewModel.delete(canvas)
         let callback = try XCTUnwrap(window.callback)
         callback(0)
 
         self.modelController.undoManager.undo()
         self.modelController.undoManager.redo()
 
-        XCTAssertNil(self.viewModel.canvasCollection.objectWithID(canvas.id))
-        XCTAssertNil(self.viewModel.canvasPageCollection.objectWithID(canvasPage1.id))
-        XCTAssertNil(self.viewModel.canvasPageCollection.objectWithID(canvasPage2.id))
+        XCTAssertNil(viewModel.canvasCollection.objectWithID(canvas.id))
+        XCTAssertNil(viewModel.canvasPageCollection.objectWithID(canvasPage1.id))
+        XCTAssertNil(viewModel.canvasPageCollection.objectWithID(canvasPage2.id))
     }
 
 
     //MARK: - remove(_: CanvasPage)
     func test_removeCanvasPage_removesCanvasPageFromCanvas() {
-        self.viewModel.remove(self.canvasPage)
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        viewModel.remove(self.canvasPage)
         XCTAssertNil(self.canvasPage.canvas)
         XCTAssertFalse(self.canvas.pages.contains(self.canvasPage))
     }
 
     func test_removeCanvasPage_deletesCanvasPage() {
-        self.viewModel.remove(self.canvasPage)
-        XCTAssertNil(self.viewModel.canvasPageCollection.objectWithID(self.canvasPage.id))
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        viewModel.remove(self.canvasPage)
+        XCTAssertNil(viewModel.canvasPageCollection.objectWithID(self.canvasPage.id))
     }
 
     func test_removeCanvasPage_removesAllChildPagesFromCanvas() {
-        let canvasPageCollection = self.viewModel.canvasPageCollection
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        let canvasPageCollection = viewModel.canvasPageCollection
         let child1 = canvasPageCollection.newObject() {
             $0.canvas = self.canvas
             $0.parent = self.canvasPage
@@ -1428,7 +1534,7 @@ class DocumentWindowViewModelTests: XCTestCase {
             $0.parent = self.canvasPage
         }
 
-        self.viewModel.remove(self.canvasPage)
+        viewModel.remove(self.canvasPage)
         XCTAssertNil(child1.canvas)
         XCTAssertFalse(self.canvas.pages.contains(child1))
         XCTAssertNil(child2.canvas)
@@ -1436,7 +1542,8 @@ class DocumentWindowViewModelTests: XCTestCase {
     }
 
     func test_removeCanvasPage_deletesChildCanvasPages() {
-        let canvasPageCollection = self.viewModel.canvasPageCollection
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        let canvasPageCollection = viewModel.canvasPageCollection
         let child1 = canvasPageCollection.newObject() {
             $0.canvas = self.canvas
             $0.parent = self.canvasPage
@@ -1446,39 +1553,42 @@ class DocumentWindowViewModelTests: XCTestCase {
             $0.parent = self.canvasPage
         }
 
-        self.viewModel.remove(self.canvasPage)
+        viewModel.remove(self.canvasPage)
         XCTAssertNil(canvasPageCollection.objectWithID(child1.id))
         XCTAssertNil(canvasPageCollection.objectWithID(child2.id))
     }
 
     func test_removeCanvasPage_undoingRecreatesCanvasPageWithSameIDAndProperties() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         self.modelController.undoManager.removeAllActions()
-        self.viewModel.remove(self.canvasPage)
+        viewModel.remove(self.canvasPage)
 
         //Sanity check
-        XCTAssertFalse(self.viewModel.canvasPageCollection.all.contains(self.canvasPage))
+        XCTAssertFalse(viewModel.canvasPageCollection.all.contains(self.canvasPage))
 
         self.modelController.undoManager.undo()
 
-        let undonePage = try XCTUnwrap(self.viewModel.canvasPageCollection.objectWithID(self.canvasPage.id))
+        let undonePage = try XCTUnwrap(viewModel.canvasPageCollection.objectWithID(self.canvasPage.id))
         XCTAssertEqual(undonePage.frame, self.canvasPage.frame)
     }
 
     func test_removeCanvasPage_undoingAddsCanvasPageBackToCanvas() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         self.modelController.undoManager.removeAllActions()
-        self.viewModel.remove(self.canvasPage)
+        viewModel.remove(self.canvasPage)
 
         //Sanity Check
         XCTAssertFalse(self.canvas.pages.contains(self.canvasPage))
 
         self.modelController.undoManager.undo()
 
-        let undonePage = try XCTUnwrap(self.viewModel.canvasPageCollection.objectWithID(self.canvasPage.id))
+        let undonePage = try XCTUnwrap(viewModel.canvasPageCollection.objectWithID(self.canvasPage.id))
         XCTAssertEqual(undonePage.canvas, self.canvas)
     }
 
     func test_removeCanvasPage_undoingRecreatesAllChildPagesWithSameIDsAndProperties() throws {
-        let canvasPageCollection = self.viewModel.canvasPageCollection
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        let canvasPageCollection = viewModel.canvasPageCollection
         let child1 = canvasPageCollection.newObject() {
             $0.canvas = self.canvas
             $0.parent = self.canvasPage
@@ -1491,18 +1601,19 @@ class DocumentWindowViewModelTests: XCTestCase {
         }
         self.modelController.undoManager.removeAllActions()
 
-        self.viewModel.remove(self.canvasPage)
+        viewModel.remove(self.canvasPage)
 
         self.modelController.undoManager.undo()
 
-        let undoneChild1 = try XCTUnwrap(self.viewModel.canvasPageCollection.objectWithID(child1.id))
+        let undoneChild1 = try XCTUnwrap(viewModel.canvasPageCollection.objectWithID(child1.id))
         XCTAssertEqual(undoneChild1.frame, child1.frame)
-        let undoneChild2 = try XCTUnwrap(self.viewModel.canvasPageCollection.objectWithID(child2.id))
+        let undoneChild2 = try XCTUnwrap(viewModel.canvasPageCollection.objectWithID(child2.id))
         XCTAssertEqual(undoneChild2.frame, child2.frame)
     }
 
     func test_removeCanvasPage_undoingAddsAllChildPagesBacktoCanvas() throws {
-        let canvasPageCollection = self.viewModel.canvasPageCollection
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        let canvasPageCollection = viewModel.canvasPageCollection
         let child1 = canvasPageCollection.newObject() {
             $0.canvas = self.canvas
             $0.parent = self.canvasPage
@@ -1513,7 +1624,7 @@ class DocumentWindowViewModelTests: XCTestCase {
         }
         self.modelController.undoManager.removeAllActions()
 
-        self.viewModel.remove(self.canvasPage)
+        viewModel.remove(self.canvasPage)
 
         self.modelController.undoManager.undo()
 
@@ -1524,7 +1635,8 @@ class DocumentWindowViewModelTests: XCTestCase {
     }
 
     func test_removeCanvasPage_undoingCorrectlyConnectsAllParentChildRelationships() throws {
-        let canvasPageCollection = self.viewModel.canvasPageCollection
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        let canvasPageCollection = viewModel.canvasPageCollection
         let child1 = canvasPageCollection.newObject() {
             $0.canvas = self.canvas
             $0.parent = self.canvasPage
@@ -1535,7 +1647,7 @@ class DocumentWindowViewModelTests: XCTestCase {
         }
         self.modelController.undoManager.removeAllActions()
 
-        self.viewModel.remove(self.canvasPage)
+        viewModel.remove(self.canvasPage)
 
         self.modelController.undoManager.undo()
 
@@ -1547,7 +1659,8 @@ class DocumentWindowViewModelTests: XCTestCase {
     }
 
     func test_removeCanvasPage_redoingRemovesAndDeletesAllCanvasPagesAgain() {
-        let canvasPageCollection = self.viewModel.canvasPageCollection
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        let canvasPageCollection = viewModel.canvasPageCollection
         let child1 = canvasPageCollection.newObject() {
             $0.canvas = self.canvas
             $0.parent = self.canvasPage
@@ -1558,7 +1671,7 @@ class DocumentWindowViewModelTests: XCTestCase {
         }
         self.modelController.undoManager.removeAllActions()
 
-        self.viewModel.remove(self.canvasPage)
+        viewModel.remove(self.canvasPage)
 
         self.modelController.undoManager.undo()
         self.modelController.undoManager.redo()

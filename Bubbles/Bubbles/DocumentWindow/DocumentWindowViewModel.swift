@@ -33,6 +33,9 @@ class DocumentWindowViewModel: NSObject {
         super.init()
         self.thumbnailController.documentViewModel = self
         self.pageImageController.documentViewModel = self
+
+        //Force the root folder to load immediately so we don't end up with observation loops later
+        _ = self.rootFolder
         self.setupSelectionUndo()
     }
 
@@ -60,10 +63,41 @@ class DocumentWindowViewModel: NSObject {
 
 
     //MARK: - Selection Logic
-    enum SidebarItem: Equatable {
+    enum SidebarItem: Equatable, Hashable {
         case canvases
         case page(ModelID)
         case folder(ModelID)
+
+        var persistentRepresentation: String {
+            switch self {
+            case .canvases:
+                return "canvases"
+            case .page(let modelID):
+                return "page::\(modelID.stringRepresentation)"
+            case .folder(let modelID):
+                return "folder::\(modelID.stringRepresentation)"
+            }
+        }
+
+        static func from(persistentRepresentation: String) -> Self? {
+            let components = (persistentRepresentation as NSString).components(separatedBy: "::")
+            if components[0] == "canvases" {
+                return .canvases
+            }
+
+            guard components.count == 2,
+                let modelID = ModelID(string: components[1]) else {
+                    return nil
+            }
+
+            if components[0] == "page" {
+                return .page(modelID)
+            }
+            if components[0] == "folder" {
+                return .folder(modelID)
+            }
+            return nil
+        }
     }
     var selectedCanvasID: ModelID?
 
@@ -158,9 +192,19 @@ class DocumentWindowViewModel: NSObject {
         return folder
     }()
 
+    @discardableResult func createFolder(in parentFolder: Folder? = nil, below item: FolderContainable? = nil, withInitialContents contents: [FolderContainable] = []) -> Folder {
+        self.modelController.undoManager.beginUndoGrouping()
+        let folder = self.foldersCollection.newObject()
+
+        (parentFolder ?? self.folderForNewPages).insert([folder], below: item)
+        folder.insert(contents)
+        self.modelController.undoManager.endUndoGrouping()
+        return folder
+    }
+
 
     //MARK: - Creating Pages
-    @discardableResult func createPage(ofType contentType: PageContentType = .text, in folder: Folder? = nil) -> Page {
+    @discardableResult func createPage(ofType contentType: PageContentType = .text, in parentFolder: Folder? = nil, below item: FolderContainable? = nil) -> Page {
         self.modelController.undoManager.beginUndoGrouping()
         self.modelController.undoManager.setActionName(NSLocalizedString("Create Page", comment: "Create Page Undo Action Name"))
         let page = self.pageCollection.newObject() {
@@ -171,7 +215,7 @@ class DocumentWindowViewModel: NSObject {
             $0.content = contentType.createContent()
         }
 
-        (folder ?? self.folderForNewPages).insert([page])
+        (parentFolder ?? self.folderForNewPages).insert([page], below: item)
 
         if self.sidebarSelection.contains(.canvases) {
             self.canvasForNewPages?.addPages([page])
@@ -183,7 +227,7 @@ class DocumentWindowViewModel: NSObject {
         return page
     }
 
-    @discardableResult func createPages(fromFilesAtURLs fileURLs: [URL], in folder: Folder? = nil, addingTo canvas: Canvas? = nil, centredOn point: CGPoint? = nil) -> [Page] {
+    @discardableResult func createPages(fromFilesAtURLs fileURLs: [URL], in folder: Folder? = nil, below item: FolderContainable? = nil, addingTo canvas: Canvas? = nil, centredOn point: CGPoint? = nil) -> [Page] {
         self.modelController.pushChangeGroup()
         self.modelController.undoManager.setActionName(NSLocalizedString("Create Pages", comment: "Create Page Undo Action Name"))
         let newPages = fileURLs.compactMap { self.pageCollection.newPage(fromFileAt: $0) }
@@ -191,7 +235,7 @@ class DocumentWindowViewModel: NSObject {
             canvas.addPages(newPages, centredOn: point)
         }
 
-        (folder ?? self.folderForNewPages).insert(newPages)
+        (folder ?? self.folderForNewPages).insert(newPages, below: item)
 
         self.modelController.popChangeGroup()
 

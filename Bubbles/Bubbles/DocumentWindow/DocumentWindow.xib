@@ -110,7 +110,7 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
-            <point key="canvasLocation" x="472" y="-402"/>
+            <point key="canvasLocation" x="429" y="-404"/>
         </window>
         <customObject id="vF9-dA-dmp" customClass="NewPageMenuDelegate" customModule="Bubbles" customModuleProvider="target"/>
     </objects>

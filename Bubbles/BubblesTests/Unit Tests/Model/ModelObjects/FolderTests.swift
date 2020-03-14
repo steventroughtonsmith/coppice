@@ -26,7 +26,7 @@ class FolderTests: XCTestCase {
 
 
     //MARK: - insert(_:above:)
-    func test_insertObjectsAbove_appendsObjectsToEmptyFolder() {
+    func test_insertObjectsBelow_addsObjectsToEmptyFolder() {
         let folder = self.foldersCollection.newObject()
 
         let object1 = self.pagesCollection.newObject()
@@ -40,7 +40,7 @@ class FolderTests: XCTestCase {
         XCTAssertEqual(folder.contents[2].id, object3.id)
     }
 
-    func test_insertObjectsAbove_appendsObjectsToFolderIfItemIsNil() {
+    func test_insertObjectsBelow_addsObjectsToTopOfFolderIfItemIsNil() {
         let folder = self.foldersCollection.newObject()
 
         let existingItem1 = self.pagesCollection.newObject()
@@ -51,32 +51,14 @@ class FolderTests: XCTestCase {
         let object2 = self.foldersCollection.newObject()
         let object3 = self.pagesCollection.newObject()
 
-        folder.insert([object1, object2, object3], above: nil)
-
-        XCTAssertEqual(folder.contents[2].id, object1.id)
-        XCTAssertEqual(folder.contents[3].id, object2.id)
-        XCTAssertEqual(folder.contents[4].id, object3.id)
-    }
-
-    func test_insertObjectsAbove_insertsObjectsAtStartOfFolderIfItemIsFirstItem() {
-        let folder = self.foldersCollection.newObject()
-
-        let existingItem1 = self.pagesCollection.newObject()
-        let existingItem2 = self.foldersCollection.newObject()
-        folder.insert([existingItem1, existingItem2])
-
-        let object1 = self.pagesCollection.newObject()
-        let object2 = self.foldersCollection.newObject()
-        let object3 = self.pagesCollection.newObject()
-
-        folder.insert([object1, object2, object3], above: existingItem1)
+        folder.insert([object1, object2, object3], below: nil)
 
         XCTAssertEqual(folder.contents[0].id, object1.id)
         XCTAssertEqual(folder.contents[1].id, object2.id)
         XCTAssertEqual(folder.contents[2].id, object3.id)
     }
 
-    func test_insertObjectsAbove_insertsObjectsAboveSuppliedItem() {
+    func test_insertObjectsBelow_addsObjectsToEndOfFolderIfItemIsLastItem() {
         let folder = self.foldersCollection.newObject()
 
         let existingItem1 = self.pagesCollection.newObject()
@@ -87,14 +69,32 @@ class FolderTests: XCTestCase {
         let object2 = self.foldersCollection.newObject()
         let object3 = self.pagesCollection.newObject()
 
-        folder.insert([object1, object2, object3], above: existingItem2)
+        folder.insert([object1, object2, object3], below: existingItem2)
+
+        XCTAssertEqual(folder.contents[2].id, object1.id)
+        XCTAssertEqual(folder.contents[3].id, object2.id)
+        XCTAssertEqual(folder.contents[4].id, object3.id)
+    }
+
+    func test_insertObjectsBelow_insertsObjectsBelowSuppliedItem() {
+        let folder = self.foldersCollection.newObject()
+
+        let existingItem1 = self.pagesCollection.newObject()
+        let existingItem2 = self.foldersCollection.newObject()
+        folder.insert([existingItem1, existingItem2])
+
+        let object1 = self.pagesCollection.newObject()
+        let object2 = self.foldersCollection.newObject()
+        let object3 = self.pagesCollection.newObject()
+
+        folder.insert([object1, object2, object3], below: existingItem1)
 
         XCTAssertEqual(folder.contents[1].id, object1.id)
         XCTAssertEqual(folder.contents[2].id, object2.id)
         XCTAssertEqual(folder.contents[3].id, object3.id)
     }
 
-    func test_insertObjectsAbove_setsContainingFolderOfInsertedItemsToReceiver() {
+    func test_insertObjectsBelow_setsContainingFolderOfInsertedItemsToReceiver() {
         let folder = self.foldersCollection.newObject()
 
         let existingItem1 = self.pagesCollection.newObject()
@@ -105,7 +105,7 @@ class FolderTests: XCTestCase {
         let object2 = self.foldersCollection.newObject()
         let object3 = self.pagesCollection.newObject()
 
-        folder.insert([object1, object2, object3], above: nil)
+        folder.insert([object1, object2, object3], below: nil)
 
         XCTAssertEqual(folder.contents[0].containingFolder, folder)
         XCTAssertEqual(folder.contents[1].containingFolder, folder)
@@ -114,7 +114,7 @@ class FolderTests: XCTestCase {
         XCTAssertEqual(folder.contents[4].containingFolder, folder)
     }
 
-    func test_insertObjectsAbove_ifObjectsAlreadyInADifferentFolderRemovesFromThatFolder() {
+    func test_insertObjectsBelow_ifObjectsAlreadyInADifferentFolderRemovesFromThatFolder() {
         let oldFolder = self.foldersCollection.newObject()
         let object1 = self.pagesCollection.newObject()
         let object2 = self.pagesCollection.newObject()
@@ -126,7 +126,7 @@ class FolderTests: XCTestCase {
         let existingObject2 = self.foldersCollection.newObject()
         newFolder.insert([existingObject1, existingObject2])
 
-        newFolder.insert([object1, object3], above: existingObject2)
+        newFolder.insert([object1, object3], below: existingObject1)
 
         XCTAssertEqual(oldFolder.contents.count, 1)
         XCTAssertFalse(oldFolder.contents.contains(where: {$0.id == object1.id}))
@@ -141,7 +141,7 @@ class FolderTests: XCTestCase {
         XCTAssertEqual(object3.containingFolder, newFolder)
     }
 
-    func test_insertObjectsAbove_ifObjectsInSeveralDifferentFoldersRemovesFromAllThoseFolders() {
+    func test_insertObjectsBelow_ifObjectsInSeveralDifferentFoldersRemovesFromAllThoseFolders() {
         let oldFolder1 = self.foldersCollection.newObject()
         let object1 = self.pagesCollection.newObject()
         let object2 = self.pagesCollection.newObject()
@@ -157,7 +157,7 @@ class FolderTests: XCTestCase {
         let existingObject2 = self.foldersCollection.newObject()
         newFolder.insert([existingObject1, existingObject2])
 
-        newFolder.insert([object1, object3], above: existingObject2)
+        newFolder.insert([object1, object3], below: existingObject1)
 
         XCTAssertEqual(oldFolder1.contents.count, 1)
         XCTAssertFalse(oldFolder1.contents.contains(where: {$0.id == object1.id}))
@@ -175,7 +175,7 @@ class FolderTests: XCTestCase {
         XCTAssertEqual(object3.containingFolder, newFolder)
     }
 
-    func test_insertObjectsAbove_ifObjectsInReceiverInsertsAboveSuppliedItem() {
+    func test_insertObjectsBelow_ifObjectsInReceiverInsertsBelowSuppliedItem() {
         let folder = self.foldersCollection.newObject()
 
         let existingItem1 = self.pagesCollection.newObject()
@@ -186,17 +186,17 @@ class FolderTests: XCTestCase {
         let existingItem6 = self.foldersCollection.newObject()
         folder.insert([existingItem1, existingItem2, existingItem3, existingItem4, existingItem5, existingItem6])
 
-        folder.insert([existingItem3, existingItem1], above: existingItem5)
+        folder.insert([existingItem3, existingItem1], below: existingItem5)
 
         XCTAssertEqual(folder.contents[0].id, existingItem2.id)
         XCTAssertEqual(folder.contents[1].id, existingItem4.id)
-        XCTAssertEqual(folder.contents[2].id, existingItem3.id)
-        XCTAssertEqual(folder.contents[3].id, existingItem1.id)
-        XCTAssertEqual(folder.contents[4].id, existingItem5.id)
+        XCTAssertEqual(folder.contents[2].id, existingItem5.id)
+        XCTAssertEqual(folder.contents[3].id, existingItem3.id)
+        XCTAssertEqual(folder.contents[4].id, existingItem1.id)
         XCTAssertEqual(folder.contents[5].id, existingItem6.id)
     }
 
-    func test_insertObjectsAbove_ifObjectsInReceiverAndSuppliedItemIsOneOfObjectsInsertsAboveSuppliedItemsPreviousIndex() {
+    func test_insertObjectsBelow_ifObjectsInReceiverAndSuppliedItemIsOneOfObjectsInsertsBelowSuppliedItemsPreviousIndex() {
         let folder = self.foldersCollection.newObject()
 
         let existingItem1 = self.pagesCollection.newObject()
@@ -207,14 +207,14 @@ class FolderTests: XCTestCase {
         let object1 = self.pagesCollection.newObject()
         let object2 = self.foldersCollection.newObject()
 
-        folder.insert([object1, existingItem2, object2], above: existingItem2)
+        folder.insert([object1, existingItem2, object2], below: existingItem2)
 
         XCTAssertEqual(folder.contents[1].id, object1.id)
         XCTAssertEqual(folder.contents[2].id, existingItem2.id)
         XCTAssertEqual(folder.contents[3].id, object2.id)
     }
 
-    func test_insertObjectsAbove_ifObjectsFromAMixOfPlacesRemovesFromOtherFoldersAndInsertsAboveSuppliedItem() {
+    func test_insertObjectsBelow_ifObjectsFromAMixOfPlacesRemovesFromOtherFoldersAndInsertsBelowSuppliedItem() {
         let oldFolder1 = self.foldersCollection.newObject()
         let object1 = self.pagesCollection.newObject()
         let object2 = self.pagesCollection.newObject()
@@ -231,7 +231,7 @@ class FolderTests: XCTestCase {
         let existingObject3 = self.pagesCollection.newObject()
         newFolder.insert([existingObject1, existingObject2, existingObject3])
 
-        newFolder.insert([object1, existingObject2, object3], above: existingObject3)
+        newFolder.insert([object1, existingObject2, object3], below: existingObject1)
 
         XCTAssertEqual(oldFolder1.contents.count, 1)
         XCTAssertFalse(oldFolder1.contents.contains(where: {$0.id == object1.id}))

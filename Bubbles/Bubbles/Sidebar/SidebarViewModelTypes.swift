@@ -8,6 +8,35 @@
 
 import AppKit
 
+class SidebarNodeCollection: NSObject {
+    private(set) var containsPages: Bool = false
+    private(set) var containsFolders: Bool = false
+    private(set) var containsCanvases: Bool = false
+
+    private(set) var nodesShareParent: Bool = true
+
+    private(set) var nodes: [SidebarNode] = []
+
+    var count: Int {
+        return nodes.count
+    }
+
+    func add(_ node: SidebarNode) {
+        if let lastNode = self.nodes.last, self.nodesShareParent {
+            self.nodesShareParent = (lastNode.parent === node.parent)
+        }
+
+        nodes.append(node)
+        switch node.item {
+        case .canvases:
+            self.containsCanvases = true
+        case .page(_):
+            self.containsPages = true
+        case .folder(_):
+            self.containsFolders = true
+        }
+    }
+}
 
 class SidebarNode: NSObject {
     enum CellType {
@@ -33,10 +62,29 @@ class SidebarNode: NSObject {
     }
 
     weak var parent: SidebarNode?
-    private(set) var children = [SidebarNode]()
-    func addChildren(_ children: [SidebarNode]) {
-        children.forEach { $0.parent = self }
-        self.children.append(contentsOf: children)
+    var children = [SidebarNode]() {
+        didSet {
+            self.children.forEach { $0.parent = self }
+        }
+    }
+
+    var folderForCreation: Folder? {
+        return nil
+    }
+
+    var folderItemForCreation: FolderContainable? {
+        return nil
+    }
+
+    override func isEqual(_ object: Any?) -> Bool {
+        guard let otherNode = object as? SidebarNode else {
+            return false
+        }
+        return self.item == otherNode.item
+    }
+
+    static func == (lhs: SidebarNode, rhs: SidebarNode) -> Bool {
+        return lhs.item == rhs.item
     }
 }
 
@@ -95,6 +143,14 @@ class FolderSidebarNode: SidebarNode {
     override var image: NSImage? {
         return NSImage(named: .sidebarFolder)
     }
+
+    override var folderForCreation: Folder? {
+        return self.folder
+    }
+
+    override var folderItemForCreation: FolderContainable? {
+        return self.folder.contents.last
+    }
 }
 
 
@@ -121,6 +177,14 @@ class PageSidebarNode: SidebarNode {
 
     override var image: NSImage? {
         return self.page.content.contentType.icon
+    }
+
+    override var folderForCreation: Folder? {
+        return self.page.containingFolder
+    }
+
+    override var folderItemForCreation: FolderContainable? {
+        return self.page
     }
 }
 

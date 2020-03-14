@@ -83,7 +83,7 @@ class ModelCollectionTests: XCTestCase {
 
     func test_newObject_notifiesObserversOfInsert() {
         var changedObject: TestCollectableModelObject? = nil
-        var changeType: ModelCollection<TestCollectableModelObject>.ChangeType? = nil
+        var changeType: ModelChangeType? = nil
 
         let expectation = self.expectation(description: "ObserverCalled")
         _ = self.collection.addObserver { (object, change) in
@@ -148,7 +148,7 @@ class ModelCollectionTests: XCTestCase {
         let objectToDelete = self.collection.newObject()
 
         var changedObject: TestCollectableModelObject? = nil
-        var changeType: ModelCollection<TestCollectableModelObject>.ChangeType? = nil
+        var changeType: ModelChangeType? = nil
 
         let expectation = self.expectation(description: "ObserverCalled")
         _ = self.collection.addObserver { (object, change) in

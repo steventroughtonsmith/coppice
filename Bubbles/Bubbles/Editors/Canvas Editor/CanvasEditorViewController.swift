@@ -413,7 +413,7 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation {
         PageExporter.export(self.viewModel.selectedCanvasPages.compactMap { $0.page }, displayingOn: window)
     }
 
-    @IBAction func deletePage(_ sender: Any?) {
+    @IBAction func deleteItems(_ sender: Any?) {
         guard (self.viewModel.selectedCanvasPages.count == 1), let page = self.viewModel.selectedCanvasPages.first?.page else {
             return
         }
@@ -437,7 +437,7 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation {
             }
             return (selectedPagesCount > 0)
         }
-        if menuItem.action == #selector(deletePage(_:)) {
+        if menuItem.action == #selector(deleteItems(_:)) {
             return (self.viewModel.selectedCanvasPages.count == 1)
         }
         if menuItem.action == #selector(zoomIn(_:)) {

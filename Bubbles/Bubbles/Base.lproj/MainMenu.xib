@@ -464,7 +464,7 @@
                             <menuItem title="Delete Page…" id="SAj-jc-4Yd">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="deletePage:" target="-1" id="gzN-Wb-20c"/>
+                                    <action selector="deleteItems:" target="-1" id="gzN-Wb-20c"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="MFS-tf-nzH"/>

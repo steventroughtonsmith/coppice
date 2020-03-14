@@ -8,21 +8,22 @@
 
 import Foundation
 
+enum ModelChangeType: Equatable {
+    case update
+    case insert
+    case delete
+}
 
 
 class ModelCollection<ModelType: CollectableModelObject> {
-    enum ChangeType: Equatable {
-        case update
-        case insert
-        case delete
-    }
+
 
     struct Observation {
         fileprivate let id = UUID()
         fileprivate let filterIDs: [ModelID]?
-        fileprivate let changeHandler: (ModelType, ChangeType) -> Void
+        fileprivate let changeHandler: (ModelType, ModelChangeType) -> Void
 
-        fileprivate func notifyOfChange(to object: ModelType, changeType: ChangeType) {
+        fileprivate func notifyOfChange(to object: ModelType, changeType: ModelChangeType) {
             if ((self.filterIDs == nil) || (self.filterIDs?.contains(object.id) == true)) {
                 changeHandler(object, changeType)
             }
@@ -30,8 +31,8 @@ class ModelCollection<ModelType: CollectableModelObject> {
     }
 
     class ChangeGroup {
-        private(set) var changes = [ModelType: ChangeType]()
-        func registerChange(for object: ModelType, ofType changeType: ChangeType) {
+        private(set) var changes = [ModelType: ModelChangeType]()
+        func registerChange(for object: ModelType, ofType changeType: ModelChangeType) {
             self.changes[object] = changeType
         }
 
@@ -107,7 +108,7 @@ class ModelCollection<ModelType: CollectableModelObject> {
     //MARK: - Observation
     private var observers = [Observation]()
 
-    func addObserver(filterBy uuids: [ModelID]? = nil, changeHandler: @escaping (ModelType, ChangeType) -> Void) -> Observation {
+    func addObserver(filterBy uuids: [ModelID]? = nil, changeHandler: @escaping (ModelType, ModelChangeType) -> Void) -> Observation {
         let observer = Observation(filterIDs: uuids, changeHandler: changeHandler)
         self.observers.append(observer)
         return observer
@@ -119,7 +120,7 @@ class ModelCollection<ModelType: CollectableModelObject> {
         }
     }
 
-    func notifyOfChange(to object: ModelType, changeType: ModelCollection.ChangeType = .update) {
+    func notifyOfChange(to object: ModelType, changeType: ModelChangeType = .update) {
         guard let currentChangeGroup = self.changeGroups.last else {
             let changeGroup = ChangeGroup()
             changeGroup.registerChange(for: object, ofType: changeType)

@@ -9,7 +9,7 @@
 import Cocoa
 
 class BubblesModelController: NSObject, ModelController {
-    var collections = [ModelType: Any]()
+    var allCollections = [ModelType: Any]()
     let settings = ModelSettings()
 
     let undoManager: UndoManager

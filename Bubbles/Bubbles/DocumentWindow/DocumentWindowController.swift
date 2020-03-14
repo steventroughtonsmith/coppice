@@ -85,30 +85,17 @@ class DocumentWindowController: NSWindowController {
             print("calling to editor from window with \(action)")
             return editor
         }
+        if self.splitViewController.sidebarViewController.responds(to: action) {
+            return self.splitViewController.sidebarViewController
+        }
         return super.supplementalTarget(forAction: action, sender: sender)
     }
 
 
     //MARK: - Actions
-    @IBAction func newPage(_ sender: Any?) {
-        guard let menuItem = sender as? NSMenuItem,
-            let rawType = menuItem.representedObject as? String,
-            let type = PageContentType(rawValue: rawType) else {
-                self.viewModel.createPage()
-                return
-        }
-        self.viewModel.createPage(ofType: type)
-    }
 
     @IBAction func newCanvas(_ sender: Any?) {
         self.viewModel.createCanvas()
-    }
-
-    @IBAction func deletePage(_ sender: Any?) {
-        #warning("Add functionality back")
-//        if (self.viewModel.selectedPagesInSidebar.count == 1), let page = self.viewModel.selectedPagesInSidebar.first {
-//            self.viewModel.delete(page)
-//        }
     }
 
     @IBAction func deleteCanvas(_ sender: Any?) {
@@ -119,14 +106,13 @@ class DocumentWindowController: NSWindowController {
     }
 
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
-        if menuItem.action == #selector(deletePage(_:)) {
-//            return (self.viewModel.selectedPagesInSidebar.count == 1)
-        }
         if menuItem.action == #selector(deleteCanvas(_:)) {
 //            return (self.viewModel.selectedCanvasInSidebar != nil)
         }
         return true
     }
+
+
 
 
     //MARK: - Debugging

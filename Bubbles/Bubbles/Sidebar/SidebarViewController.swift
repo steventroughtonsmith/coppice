@@ -26,7 +26,8 @@ class SidebarViewController: NSViewController, NSMenuItemValidation, RootViewCon
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.reloadSidebarNodes()
+//        self.reloadSidebarNodes()
+        self.setupContextMenu()
     }
 
     override func viewWillAppear() {
@@ -60,12 +61,60 @@ class SidebarViewController: NSViewController, NSMenuItemValidation, RootViewCon
             return
         }
 
-//        self.viewModel.deletePages(atIndexes: self.viewModel.selectedPageRowIndexes)
+        self.viewModel.delete(self.selectedNodes.nodes)
     }
 
 
-    //MARK: - Page Menu Actions
-    @IBAction func editPageTitle(_ sender: Any) {
+    //MARK: - Menus
+    @IBOutlet weak var addPullDownButton: NSPopUpButton!
+    @IBOutlet weak var actionPullDownButton: NSPopUpButton!
+    @IBOutlet var newPageMenuDelegate: NewPageMenuDelegate!
+
+    private func setupContextMenu() {
+        let contextMenu = NSMenu()
+
+        if let addMenuItems = self.addPullDownButton.menu?.items {
+            (1..<addMenuItems.count).forEach {
+                contextMenu.addItem(addMenuItems[$0].copy() as! NSMenuItem)
+            }
+        }
+        contextMenu.addItem(NSMenuItem.separator())
+
+        if let actionMenuItems = self.actionPullDownButton.menu?.items {
+            (1..<actionMenuItems.count).forEach {
+                contextMenu.addItem(actionMenuItems[$0].copy() as! NSMenuItem)
+            }
+        }
+
+        self.outlineView.menu = contextMenu
+    }
+
+
+    //MARK: - Create Menu Actions
+    @IBAction func newPage(_ sender: Any?) {
+        self.createdItem = true
+        guard let menuItem = sender as? NSMenuItem,
+            let rawType = menuItem.representedObject as? String,
+            let type = PageContentType(rawValue: rawType) else {
+                self.viewModel.createPage(ofType: .text, underNodes: self.nodesForAction)
+                return
+        }
+        self.viewModel.createPage(ofType: type, underNodes: self.nodesForAction)
+    }
+
+    @IBAction func newFolder(_ sender: Any) {
+        self.createdItem = true
+        self.viewModel.createFolder(underNodes: self.nodesForAction)
+    }
+
+    @IBAction func newFolderFromSelection(_ sender: Any) {
+        self.createdItem = true
+        self.viewModel.createFolder(usingSelection: self.selectedNodes)
+    }
+
+
+    //MARK: - Action Menu Actions
+    @IBAction func editItemTitle(_ sender: Any) {
         guard self.outlineView.clickedRow > -1 else {
             return
         }
@@ -75,8 +124,9 @@ class SidebarViewController: NSViewController, NSMenuItemValidation, RootViewCon
         cell.startEditing()
     }
 
-    @IBAction func deletePage(_ sender: Any) {
+    @IBAction func deleteItems(_ sender: Any) {
 //        self.viewModel.deletePages(atIndexes: self.pageRowIndexesForAction)
+        self.viewModel.delete(self.nodesForAction.nodes)
     }
 
     @IBAction func exportPages(_ sender: Any?) {
@@ -95,60 +145,118 @@ class SidebarViewController: NSViewController, NSMenuItemValidation, RootViewCon
     }
 
 
-    //MARK: - Context Menus
-    @IBOutlet var pageContextMenu: NSMenu!
-
-
     //MARK: - Menu Validation
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
-        if menuItem.action == #selector(editPageTitle(_:)) {
-//            return (self.pagesTable.clickedRow >= 0)
+        if menuItem.action == #selector(newPage(_:)) ||
+           menuItem.action == #selector(newFolder(_:)) {
+            return true
         }
 
-        if menuItem.action == #selector(deletePage(_:)) {
-            let rowIndexes = self.pageRowIndexesForAction
-            if (rowIndexes.count == 1) {
-                menuItem.title = NSLocalizedString("Delete Page…", comment: "Delete single page menu item title")
-            } else {
-                menuItem.title = NSLocalizedString("Delete Pages…", comment: "Delete multiple pages menu item title")
+        if menuItem.action == #selector(newFolderFromSelection(_:)) {
+            let selection = self.nodesForAction
+            guard selection.count > 0 else {
+                return false
             }
-            return (rowIndexes.count > 0)
+            return selection.nodesShareParent
         }
 
-//        if menuItem.action == #selector(exportPages(_:)) {
+        if menuItem.action == #selector(editItemTitle(_:)) {
+            let nodesCollection = self.nodesForAction
+            return (nodesCollection.count == 1) && (nodesCollection.containsCanvases == false)
+        }
+
+        if menuItem.action == #selector(deleteItems(_:)) {
+            return self.validateDeleteItemMenuItem(menuItem)
+        }
+
+        if menuItem.action == #selector(exportPages(_:)) {
 //            let pages = self.viewModel.pageItems[self.pageRowIndexesForAction].map { $0.page }
 //            return PageExporter.validate(menuItem, forExporting: pages)
-//        }
+        }
 
         if menuItem.action == #selector(addToCanvas(_:)) {
-            return (self.pageRowIndexesForAction.count > 0)
+            return (self.nodesForAction.count > 0)
         }
         
         return false
     }
 
+    private func validateDeleteItemMenuItem(_ menuItem: NSMenuItem) -> Bool {
+        let nodes = self.nodesForAction
+
+        guard nodes.containsCanvases == false else {
+            return false
+        }
+
+        if nodes.count == 1 {
+            if nodes.containsPages {
+                menuItem.title = NSLocalizedString("Delete Page", comment: "Delete single page menu item")
+                return true
+            }
+            if nodes.containsFolders {
+                menuItem.title = NSLocalizedString("Delete Folder", comment: "Delete single folder menu item")
+                return true
+            }
+            return false
+        }
+
+        if nodes.containsPages && !nodes.containsFolders {
+            menuItem.title = NSLocalizedString("Delete Pages", comment: "Delete multiple pages menu item")
+        }
+        else if nodes.containsFolders && !nodes.containsPages {
+            menuItem.title = NSLocalizedString("Delete Folders", comment: "Delete multiple folders menu item")
+        }
+        else {
+            menuItem.title = NSLocalizedString("Delete Items", comment: "Delete multiple items menu item")
+        }
+        return (nodes.count > 1)
+    }
+
 
     //MARK: - Action Items
-    private var pageRowIndexesForAction: IndexSet {
-        return IndexSet()
-//        let selectedIndexes = self.viewModel.selectedPageRowIndexes
-//        let clickedRow = self.pagesTable.clickedRow
-//        if selectedIndexes.contains(clickedRow) {
-//            return selectedIndexes
-//        }
-//        return (clickedRow >= 0) ? IndexSet(integer: clickedRow) : IndexSet()
+    private var nodesForAction: SidebarNodeCollection {
+        let selectedIndexes = self.outlineView.selectedRowIndexes
+        let clickedRow = self.outlineView.clickedRow
+
+        if selectedIndexes.contains(clickedRow) || (clickedRow == -1) {
+            return self.selectedNodes
+        }
+        let collection = SidebarNodeCollection()
+        if clickedRow >= 0, let clickedNode = self.outlineView.item(atRow: clickedRow) as? SidebarNode {
+            collection.add(clickedNode)
+        }
+        return collection
     }
 
 
 
 
     //MARK: - Reload
+    private var createdItem: Bool = false
     private func reloadSidebarNodes() {
-        self.outlineView.reloadData()
-        let rootFolder = self.viewModel.documentWindowViewModel.rootFolder
-        if let pagesGroup = self.viewModel.rootSidebarNodes.first(where: { $0.item == .folder(rootFolder.id)}) {
-            self.outlineView.expandItem(pagesGroup)
+        self.outlineView.reloadItem(nil, reloadChildren: true)
+        self.expandPagesGroupIfNeeded()
+    }
+
+    private func expandPagesGroupIfNeeded() {
+        guard self.createdItem else {
+            return
         }
+        self.outlineView.expandItem(self.viewModel.pagesGroupNode)
+
+        self.createdItem = false
+    }
+
+
+    //MARK: - Selection
+    var selectedNodes: SidebarNodeCollection {
+        let collection = SidebarNodeCollection()
+        self.outlineView.selectedRowIndexes.forEach {
+            if let node = self.outlineView.item(atRow: $0) as? SidebarNode {
+                collection.add(node)
+            }
+        }
+        return collection
     }
 
 }
@@ -157,20 +265,6 @@ class SidebarViewController: NSViewController, NSMenuItemValidation, RootViewCon
 extension SidebarViewController: SidebarView {
     func reload() {
         self.reloadSidebarNodes()
-    }
-
-    func reloadSelection() {
-//        self.isReloadingSelection = true
-//        self.pagesTable.selectRowIndexes(self.viewModel.selectedPageRowIndexes, byExtendingSelection: false)
-//        self.isReloadingSelection = false
-    }
-
-    func reloadCanvases() {
-    }
-
-    func reloadPages() {
-//        self.pagesTable.reloadData()
-        self.reloadSelection()
     }
 
     func showAlert(_ alert: Alert, callback: @escaping (Int) -> Void) {
@@ -225,6 +319,25 @@ extension SidebarViewController: NSOutlineViewDataSource {
             return false
         }
     }
+
+    func outlineView(_ outlineView: NSOutlineView, persistentObjectForItem item: Any?) -> Any? {
+        guard let sidebarNode = item as? SidebarNode else {
+            return nil
+        }
+
+        return sidebarNode.item.persistentRepresentation
+    }
+
+    func outlineView(_ outlineView: NSOutlineView, itemForPersistentObject object: Any) -> Any? {
+        guard let string = object as? String,
+            let persistentRepresentation = DocumentWindowViewModel.SidebarItem.from(persistentRepresentation: string) else {
+                return nil
+        }
+
+        let node = self.viewModel.node(for: persistentRepresentation)
+        print("node: \(node)")
+        return node
+    }
 }
 
 
@@ -271,8 +384,7 @@ extension SidebarViewController: NSOutlineViewDelegate {
     }
 
     func outlineViewSelectionDidChange(_ notification: Notification) {
-        let selectedNodes = self.outlineView.selectedRowIndexes.compactMap { self.outlineView.item(atRow: $0) as? SidebarNode }
-        self.viewModel.updateSelectedNodes(selectedNodes)
+        self.viewModel.updateSelectedNodes(self.selectedNodes.nodes)
     }
 }
 

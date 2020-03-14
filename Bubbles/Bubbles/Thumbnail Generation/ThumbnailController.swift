@@ -51,17 +51,17 @@ class ThumbnailController: NSObject {
 
 
     //MARK: - Handle Changes
-    private func changed(_ canvas: Canvas, changeType: ModelCollection<Canvas>.ChangeType) {
+    private func changed(_ canvas: Canvas, changeType: ModelChangeType) {
         self.needsUpdatedThumbnail(for: canvas)
     }
 
-    private func changed(_ canvasPage: CanvasPage, changeType: ModelCollection<CanvasPage>.ChangeType) {
+    private func changed(_ canvasPage: CanvasPage, changeType: ModelChangeType) {
         if let canvas = canvasPage.canvas {
             self.needsUpdatedThumbnail(for: canvas)
         }
     }
 
-    private func changed(_ page: Page, changeType: ModelCollection<Page>.ChangeType) {
+    private func changed(_ page: Page, changeType: ModelChangeType) {
         for canvasPage in page.canvases {
             if let canvas = canvasPage.canvas {
                 self.needsUpdatedThumbnail(for: canvas)

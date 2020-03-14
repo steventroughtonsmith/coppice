@@ -10,7 +10,7 @@ import Foundation
 
 protocol ModelController: class, ModelChangeGroupHandler {
     var undoManager: UndoManager { get }
-    var collections: [ModelType: Any] {get set}
+    var allCollections: [ModelType: Any] {get set}
     var settings: ModelSettings { get }
     @discardableResult func addModelCollection<T: CollectableModelObject>(for type: T.Type) -> ModelCollection<T>
     func removeModelCollection<T: CollectableModelObject>(for type: T.Type)
@@ -23,29 +23,29 @@ extension ModelController {
     @discardableResult func addModelCollection<T: CollectableModelObject>(for type: T.Type) -> ModelCollection<T> {
         let modelCollection = ModelCollection<T>()
         modelCollection.modelController = self
-        self.collections[type.modelType] = modelCollection
+        self.allCollections[type.modelType] = modelCollection
         return modelCollection
     }
 
     func removeModelCollection<T: CollectableModelObject>(for type: T.Type) {
-        self.collections.removeValue(forKey: type.modelType)
+        self.allCollections.removeValue(forKey: type.modelType)
     }
 
     func collection<T: CollectableModelObject>(for type: T.Type) -> ModelCollection<T> {
-        guard let model = self.collections[type.modelType] as? ModelCollection<T> else {
+        guard let model = self.allCollections[type.modelType] as? ModelCollection<T> else {
             preconditionFailure("Collection with type '\(type.modelType)' does not exist")
         }
         return model
     }
 
     func pushChangeGroup() {
-        self.collections.values
+        self.allCollections.values
             .compactMap { $0 as? ModelChangeGroupHandler }
             .forEach { $0.pushChangeGroup() }
     }
 
     func popChangeGroup() {
-        self.collections.values
+        self.allCollections.values
             .compactMap { $0 as? ModelChangeGroupHandler }
             .forEach { $0.popChangeGroup() }
     }
