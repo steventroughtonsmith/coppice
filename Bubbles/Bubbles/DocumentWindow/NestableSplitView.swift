@@ -19,7 +19,14 @@ class NestableSplitView: NSSplitView {
 
     override func mouseDown(with event: NSEvent) {
         self.nestableDelegate?.willStartDrag(in: self)
+        NotificationCenter.default.post(name: .nestableSplitViewWillStartDrag, object: self)
         super.mouseDown(with: event)
+        NotificationCenter.default.post(name: .nestableSplitViewDidEndDrag, object: self)
         self.nestableDelegate?.didFinishDrag(in: self)
     }
+}
+
+extension Notification.Name {
+    static let nestableSplitViewWillStartDrag = Notification.Name(rawValue: "SplitViewWillStartDrag")
+    static let nestableSplitViewDidEndDrag = Notification.Name(rawValue: "SplitViewDidEndDrag")
 }

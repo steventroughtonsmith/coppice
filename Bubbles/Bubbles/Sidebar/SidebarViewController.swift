@@ -9,7 +9,7 @@
 import Cocoa
 import Combine
 
-class SidebarViewController: NSViewController, NSMenuItemValidation, SplitViewContainableViewController {
+class SidebarViewController: NSViewController, NSMenuItemValidation, SplitViewContainable {
     @objc dynamic let viewModel: SidebarViewModel
 
     init(viewModel: SidebarViewModel) {
@@ -225,8 +225,6 @@ class SidebarViewController: NSViewController, NSMenuItemValidation, SplitViewCo
         }
         return collection
     }
-
-
 
 
     //MARK: - Reload

@@ -40,16 +40,23 @@ class RootSplitViewController: NSSplitViewController {
             self.editorContainerViewController.splitViewItem,
             self.inspectorContainerViewController.splitViewItem,
         ]
-    }
-}
 
-extension RootSplitViewController: NestableSplitViewDelegate {
-    func willStartDrag(in splitView: NestableSplitView) {
+        NotificationCenter.default.addObserver(self, selector: #selector(willStartDrag(_:)), name: .nestableSplitViewWillStartDrag, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didEndDrag(_:)), name: .nestableSplitViewDidEndDrag, object: nil)
+    }
+
+    @objc func willStartDrag(_ notification: Notification) {
+        guard let splitView = notification.object as? NSSplitView, splitView != self.splitView else {
+            return
+        }
         self.sidebarViewController.splitViewItem.holdingPriority = .init(490)
         self.inspectorContainerViewController.splitViewItem.holdingPriority = .init(490)
     }
 
-    func didFinishDrag(in splitView: NestableSplitView) {
+    @objc func didEndDrag(_ notification: Notification) {
+        guard let splitView = notification.object as? NSSplitView, splitView != self.splitView else {
+            return
+        }
         self.sidebarViewController.splitViewItem.holdingPriority = .init(260)
         self.inspectorContainerViewController.splitViewItem.holdingPriority = .init(260)
     }

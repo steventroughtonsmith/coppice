@@ -9,7 +9,7 @@
 import Cocoa
 import Combine
 
-class InspectorContainerViewController: NSViewController, SplitViewContainableViewController {
+class InspectorContainerViewController: NSViewController, SplitViewContainable {
     let viewModel: InspectorContainerViewModel
 
     @IBOutlet weak var stackView: NSStackView!

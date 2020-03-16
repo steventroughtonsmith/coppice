@@ -7,16 +7,36 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="CanvasesViewController" customModule="Bubbles" customModuleProvider="target">
             <connections>
-                <outlet property="splitView" destination="Rk5-s6-mPe" id="Od2-st-Djl"/>
-                <outlet property="view" destination="Rk5-s6-mPe" id="A9X-sh-9bB"/>
+                <outlet property="splitView" destination="Qig-MZ-x6Q" id="Phx-XE-lop"/>
+                <outlet property="view" destination="LkU-ve-WUx" id="bqs-KU-kXt"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <splitView arrangesAllSubviews="NO" dividerStyle="thin" vertical="YES" id="Rk5-s6-mPe" customClass="NestableSplitView" customModule="Bubbles" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="387" height="220"/>
+        <customView id="LkU-ve-WUx">
+            <rect key="frame" x="0.0" y="0.0" width="683" height="708"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <point key="canvasLocation" x="51.5" y="-81"/>
-        </splitView>
+            <subviews>
+                <splitView arrangesAllSubviews="NO" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qig-MZ-x6Q" customClass="NestableSplitView" customModule="Bubbles" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="683" height="708"/>
+                    <subviews>
+                        <customView fixedFrame="YES" id="YlA-96-0A1">
+                            <rect key="frame" x="0.0" y="0.0" width="683" height="708"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </customView>
+                    </subviews>
+                    <holdingPriorities>
+                        <real value="250"/>
+                    </holdingPriorities>
+                </splitView>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="Qig-MZ-x6Q" secondAttribute="trailing" id="1Qk-yk-r2c"/>
+                <constraint firstAttribute="bottom" secondItem="Qig-MZ-x6Q" secondAttribute="bottom" id="SKd-Jl-lZa"/>
+                <constraint firstItem="Qig-MZ-x6Q" firstAttribute="leading" secondItem="LkU-ve-WUx" secondAttribute="leading" id="ZDG-Vk-eJB"/>
+                <constraint firstItem="Qig-MZ-x6Q" firstAttribute="top" secondItem="LkU-ve-WUx" secondAttribute="top" id="dff-RT-Xvw"/>
+            </constraints>
+            <point key="canvasLocation" x="42.5" y="66"/>
+        </customView>
     </objects>
 </document>

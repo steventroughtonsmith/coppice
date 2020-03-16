@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class CanvasListViewController: NSViewController, SplitViewContainableViewController {
+class CanvasListViewController: NSViewController, SplitViewContainable {
     @IBOutlet weak var tableView: NSTableView!
 
     let viewModel: CanvasListViewModel
@@ -51,6 +51,9 @@ class CanvasListViewController: NSViewController, SplitViewContainableViewContro
         item.minimumThickness = 130
         return item
     }()
+
+
+    var isChangingSelection: Bool = false
 
 
     //MARK: - Visual State
@@ -149,6 +152,19 @@ class CanvasListViewController: NSViewController, SplitViewContainableViewContro
 extension CanvasListViewController: CanvasListView {
     func reload() {
         self.tableView.reloadData()
+        self.reloadSelection()
+    }
+
+    func reloadSelection() {
+        guard self.isChangingSelection == false else {
+            return
+        }
+
+        guard let selectedIndex = self.viewModel.selectedCanvasIndex else {
+            self.tableView.deselectAll(nil)
+            return
+        }
+        self.tableView.selectRowIndexes(IndexSet(integer: selectedIndex), byExtendingSelection: false)
     }
 }
 
@@ -261,5 +277,11 @@ extension CanvasListViewController: NSTableViewDelegate {
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         let identifier = self.isCompact ? SmallCanvasCell.identifier : LargeCanvasCell.identifier
         return tableView.makeView(withIdentifier: identifier, owner: nil)
+    }
+
+    func tableViewSelectionDidChange(_ notification: Notification) {
+        self.isChangingSelection = true
+        self.viewModel.selectCanvas(atIndex: self.tableView.selectedRow)
+        self.isChangingSelection = false
     }
 }

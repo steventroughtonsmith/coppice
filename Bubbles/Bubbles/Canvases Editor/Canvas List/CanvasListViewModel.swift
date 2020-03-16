@@ -7,9 +7,11 @@
 //
 
 import Cocoa
+import Combine
 
 protocol CanvasListView: class {
     func reload()
+    func reloadSelection()
 }
 
 class CanvasListViewModel: ViewModel {
@@ -17,9 +19,13 @@ class CanvasListViewModel: ViewModel {
 
     //MARK: - Observation
     private var canvasObserver: ModelCollection<Canvas>.Observation?
+    private var selectedCanvasObserver: AnyCancellable?
     func startObserving() {
         self.canvasObserver = self.canvasCollection.addObserver { [weak self] canvas, change in
             self?.reloadCanvases()
+        }
+        self.selectedCanvasObserver = self.documentWindowViewModel.$selectedCanvasID.sink { [weak self] _ in
+            self?.view?.reloadSelection()
         }
     }
 
@@ -48,6 +54,18 @@ class CanvasListViewModel: ViewModel {
     private func reloadCanvases() {
         self.cachedCanvases = nil
         self.view?.reload()
+    }
+
+    var selectedCanvasIndex: Int? {
+        return self.canvases.firstIndex { $0.id == self.documentWindowViewModel.selectedCanvasID }
+    }
+
+    func selectCanvas(atIndex index: Int) {
+        guard index >= 0 && index < self.canvases.count else {
+            self.documentWindowViewModel.selectedCanvasID = nil
+            return
+        }
+        self.documentWindowViewModel.selectedCanvasID = self.canvases[index].id
     }
 
 

@@ -99,7 +99,7 @@ class DocumentWindowViewModel: NSObject {
             return nil
         }
     }
-    var selectedCanvasID: ModelID?
+    @Published var selectedCanvasID: ModelID?
 
     @Published private(set) var sidebarSelection: [SidebarItem] = []
 
@@ -490,7 +490,9 @@ class DocumentWindowViewModel: NSObject {
     //MARK: - Creating Canvases
     @discardableResult func createCanvas() -> Canvas {
         self.modelController.undoManager.setActionName(NSLocalizedString("Create Canvas", comment: "Create Canvas Undo Action Name"))
-        return self.modelController.collection(for: Canvas.self).newObject()
+        let canvas = self.modelController.collection(for: Canvas.self).newObject()
+        self.selectedCanvasID = canvas.id
+        return canvas
     }
 
 

@@ -24,20 +24,29 @@ class CanvasesViewController: NSSplitViewController {
         return CanvasListViewController(viewModel: viewModel)
     }()
 
+    let noCanvasViewController = NoCanvasViewController()
+
+    var enabled: Bool = true
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.splitViewItems = [
-            self.canvasListViewController.splitViewItem
-        ]
+        self.updateSplitViewItems()
     }
 
+
+    private func updateSplitViewItems() {
+        self.splitViewItems = [
+            self.canvasListViewController.splitViewItem,
+            self.noCanvasViewController.splitViewItem
+        ]
+    }
 
 }
 
 
 extension CanvasesViewController: Editor {
-    var inspector: [Inspector] {
+    var inspectors: [Inspector] {
         return []
     }
 }

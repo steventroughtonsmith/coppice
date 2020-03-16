@@ -9,7 +9,7 @@
 import Cocoa
 
 
-class EditorContainerViewController: NSViewController, SplitViewContainableViewController {
+class EditorContainerViewController: NSViewController, SplitViewContainable {
 
     let viewModel: EditorContainerViewModel
     init(viewModel: EditorContainerViewModel) {
