@@ -146,9 +146,6 @@ class SidebarViewModel: ViewModel {
         }
     }
 
-
-
-
     func node(for item: DocumentWindowViewModel.SidebarItem) -> SidebarNode? {
         return self.nodesByItem[item]
     }
@@ -179,6 +176,81 @@ class SidebarViewModel: ViewModel {
         }
 
         return nil
+    }
+
+
+    func canDropItems(with ids: [ModelID], onto node: SidebarNode?, atChildIndex index: Int) -> (Bool, SidebarNode?, Int) {
+        guard let sidebarNode = node, case .folder(let folderID) = sidebarNode.item else {
+            return (false, node, index)
+        }
+
+        guard let folder = self.documentWindowViewModel.foldersCollection.objectWithID(folderID),
+              self.validate(ids: ids, and: folder) else {
+                return (false, node, index)
+        }
+        return (true, node, index)
+    }
+
+    func canDropFiles(at urls: [URL], onto node: SidebarNode?, atChildIndex index: Int) -> (Bool, SidebarNode?, Int) {
+        //nil, .canvases, .rootFolder -> true if urls are of valid type, nil, -1
+
+        //on page -> false
+        //on folder -> true if urls are of valid type
+        //in folder -> true if urls are of valid type
+        return (true, node, index)
+    }
+
+    func dropItems(with ids: [ModelID], onto node: SidebarNode?, atChildIndex index: Int) -> Bool {
+        guard let sidebarNode = node, case .folder(let folderID) = sidebarNode.item else {
+            return false
+        }
+
+        guard let folder = self.documentWindowViewModel.foldersCollection.objectWithID(folderID),
+              self.validate(ids: ids, and: folder) else {
+                return false
+        }
+
+        let items = ids.compactMap { self.modelController.object(with: $0) as? FolderContainable }
+
+        if index == -1 {
+            folder.insert(items, below: folder.contents.last)
+            return true
+        } else {
+            let trueIndex = index - 1
+            if (trueIndex == -1) {
+                folder.insert(items, below: nil)
+                return true
+            } else if let item = folder.contents[safe: trueIndex] {
+                folder.insert(items, below: item)
+                return true
+            }
+        }
+
+        return false
+    }
+
+    func dropFiles(at urls: [URL], onto node: SidebarNode?, atChildIndex index: Int) -> Bool {
+        return false
+    }
+
+
+    private func validate(ids: [ModelID], and folder: Folder) -> Bool {
+        var currentFolder: Folder? = folder
+        while currentFolder != nil {
+            guard ids.contains(currentFolder!.id) == false else {
+                return false
+            }
+            currentFolder = currentFolder?.containingFolder
+        }
+
+        //Check all ids are valid
+        for id in ids {
+            guard (id.modelType == Page.modelType) || (id.modelType == Folder.modelType) else {
+                return false
+            }
+        }
+
+        return true
     }
 
 

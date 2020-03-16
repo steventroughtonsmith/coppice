@@ -24,6 +24,12 @@ extension Page {
     }
 }
 
+extension Folder {
+    var pasteboardWriter: NSPasteboardWriting {
+        return self.id.pasteboardItem
+    }
+}
+
 extension TextPageContent: NSFilePromiseProviderDelegate {
     var filePromiseProvider: ExtendableFilePromiseProvider? {
         return ExtendableFilePromiseProvider(fileType: (kUTTypeRTF as String), delegate: self)

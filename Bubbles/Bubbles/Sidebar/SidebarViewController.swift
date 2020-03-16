@@ -26,7 +26,9 @@ class SidebarViewController: NSViewController, NSMenuItemValidation, RootViewCon
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.reloadSidebarNodes()
+
+        self.outlineView.registerForDraggedTypes([.fileURL, ModelID.PasteboardType])
+
         self.setupContextMenu()
     }
 
@@ -125,7 +127,6 @@ class SidebarViewController: NSViewController, NSMenuItemValidation, RootViewCon
     }
 
     @IBAction func deleteItems(_ sender: Any) {
-//        self.viewModel.deletePages(atIndexes: self.pageRowIndexesForAction)
         self.viewModel.delete(self.nodesForAction.nodes)
     }
 
@@ -334,9 +335,70 @@ extension SidebarViewController: NSOutlineViewDataSource {
                 return nil
         }
 
-        let node = self.viewModel.node(for: persistentRepresentation)
-        print("node: \(node)")
-        return node
+        return self.viewModel.node(for: persistentRepresentation)
+    }
+
+
+    //MARK: - Drag & Drop
+    func outlineView(_ outlineView: NSOutlineView, pasteboardWriterForItem item: Any) -> NSPasteboardWriting? {
+        guard let sidebarNode = item as? SidebarNode else {
+            return nil
+        }
+        return sidebarNode.pasteboardWriter
+    }
+
+    func outlineView(_ outlineView: NSOutlineView, validateDrop info: NSDraggingInfo, proposedItem item: Any?, proposedChildIndex index: Int) -> NSDragOperation {
+        //If we have an item but it's not a sidebar node then something has gone wrong
+        if (item != nil) && ((item as? SidebarNode) == nil) {
+            return []
+        }
+
+        guard let types = info.draggingPasteboard.types, let items = info.draggingPasteboard.pasteboardItems else {
+            return []
+        }
+
+        if types.contains(ModelID.PasteboardType) {
+            let modelIDs = items.compactMap { ModelID(pasteboardItem: $0) }
+            let (canDrop, targetNode, targetIndex) = self.viewModel.canDropItems(with: modelIDs, onto: (item as? SidebarNode), atChildIndex: index)
+            guard canDrop else {
+                return []
+            }
+            outlineView.setDropItem(targetNode, dropChildIndex: targetIndex)
+            return .generic
+        }
+        if types.contains(.fileURL) {
+            let fileURLs = items.compactMap { $0.data(forType: .fileURL) }.compactMap { URL(dataRepresentation: $0, relativeTo: nil)}
+            let (canDrop, targetNode, targetIndex) = self.viewModel.canDropFiles(at: fileURLs, onto: (item as? SidebarNode), atChildIndex: index)
+            guard canDrop else {
+                return []
+            }
+            outlineView.setDropItem(targetNode, dropChildIndex: targetIndex)
+            return .generic
+        }
+
+        return []
+    }
+
+    func outlineView(_ outlineView: NSOutlineView, acceptDrop info: NSDraggingInfo, item: Any?, childIndex index: Int) -> Bool {
+        if (item != nil) && ((item as? SidebarNode) == nil) {
+            return false
+        }
+
+        guard let types = info.draggingPasteboard.types, let items = info.draggingPasteboard.pasteboardItems else {
+            return false
+        }
+
+        if types.contains(ModelID.PasteboardType) {
+            let modelIDs = items.compactMap { ModelID(pasteboardItem: $0) }
+            return self.viewModel.dropItems(with: modelIDs, onto: (item as? SidebarNode), atChildIndex: index)
+        }
+
+        if types.contains(.fileURL) {
+            let fileURLs = items.compactMap { $0.data(forType: .fileURL) }.compactMap { URL(dataRepresentation: $0, relativeTo: nil)}
+            return self.viewModel.dropFiles(at: fileURLs, onto: (item as? SidebarNode), atChildIndex: index)
+        }
+
+        return false
     }
 }
 

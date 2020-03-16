@@ -76,6 +76,10 @@ class SidebarNode: NSObject {
         return nil
     }
 
+    var pasteboardWriter: NSPasteboardWriting? {
+        return nil
+    }
+
     override func isEqual(_ object: Any?) -> Bool {
         guard let otherNode = object as? SidebarNode else {
             return false
@@ -151,6 +155,10 @@ class FolderSidebarNode: SidebarNode {
     override var folderItemForCreation: FolderContainable? {
         return self.folder.contents.last
     }
+
+    override var pasteboardWriter: NSPasteboardWriting? {
+        return self.folder.pasteboardWriter
+    }
 }
 
 
@@ -185,6 +193,10 @@ class PageSidebarNode: SidebarNode {
 
     override var folderItemForCreation: FolderContainable? {
         return self.page
+    }
+
+    override var pasteboardWriter: NSPasteboardWriting? {
+        return self.page.pasteboardWriter
     }
 }
 
