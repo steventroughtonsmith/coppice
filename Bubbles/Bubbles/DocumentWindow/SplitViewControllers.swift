@@ -11,7 +11,7 @@ import AppKit
 
 class RootSplitViewController: NSSplitViewController {
     let sidebarViewController: SidebarViewController
-    let editorSplitViewController: EditorSplitViewController
+    let editorContainerViewController: EditorContainerViewController
     let inspectorContainerViewController: InspectorContainerViewController
 
 
@@ -22,12 +22,9 @@ class RootSplitViewController: NSSplitViewController {
          inspectorContainerViewController: InspectorContainerViewController)
     {
         self.sidebarViewController = sidebarViewController
-        self.editorSplitViewController = EditorSplitViewController(canvasListViewController: canvasListViewController,
-                                                                   editorContainerViewController: editorContainerViewController)
+        self.editorContainerViewController = editorContainerViewController
         self.inspectorContainerViewController = inspectorContainerViewController
         super.init(nibName: nil, bundle: nil)
-
-        self.editorSplitViewController.nestableSplitView.nestableDelegate = self
     }
 
     required init?(coder: NSCoder) {
@@ -36,16 +33,11 @@ class RootSplitViewController: NSSplitViewController {
 
 
     //MARK: - SplitView Items
-    lazy var editorSplitViewItem: NSSplitViewItem = {
-        let item = NSSplitViewItem(viewController: self.editorSplitViewController)
-        return item
-    }()
-
     override func viewDidLoad() {
         super.viewDidLoad()
         self.splitViewItems = [
             self.sidebarViewController.splitViewItem,
-            self.editorSplitViewItem,
+            self.editorContainerViewController.splitViewItem,
             self.inspectorContainerViewController.splitViewItem,
         ]
     }

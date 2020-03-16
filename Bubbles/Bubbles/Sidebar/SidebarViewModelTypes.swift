@@ -68,11 +68,18 @@ class SidebarNode: NSObject {
         }
     }
 
+    /// The folder to create an item in if this item is selected
     var folderForCreation: Folder? {
         return nil
     }
 
+    /// The item to create an item below inside the folderForCreation
     var folderItemForCreation: FolderContainable? {
+        return nil
+    }
+
+    /// The item to be added to a folder containing this item
+    var folderContainable: FolderContainable? {
         return nil
     }
 
@@ -156,6 +163,10 @@ class FolderSidebarNode: SidebarNode {
         return self.folder.contents.last
     }
 
+    override var folderContainable: FolderContainable? {
+        return self.folder
+    }
+
     override var pasteboardWriter: NSPasteboardWriting? {
         return self.folder.pasteboardWriter
     }
@@ -197,6 +208,10 @@ class PageSidebarNode: SidebarNode {
 
     override var pasteboardWriter: NSPasteboardWriting? {
         return self.page.pasteboardWriter
+    }
+
+    override var folderContainable: FolderContainable? {
+        return self.page
     }
 }
 

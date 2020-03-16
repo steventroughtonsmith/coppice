@@ -9,7 +9,7 @@
 import Cocoa
 import Combine
 
-class SidebarViewController: NSViewController, NSMenuItemValidation, RootViewController {
+class SidebarViewController: NSViewController, NSMenuItemValidation, SplitViewContainableViewController {
     @objc dynamic let viewModel: SidebarViewModel
 
     init(viewModel: SidebarViewModel) {
@@ -94,24 +94,21 @@ class SidebarViewController: NSViewController, NSMenuItemValidation, RootViewCon
 
     //MARK: - Create Menu Actions
     @IBAction func newPage(_ sender: Any?) {
-        self.createdItem = true
         guard let menuItem = sender as? NSMenuItem,
             let rawType = menuItem.representedObject as? String,
             let type = PageContentType(rawValue: rawType) else {
-                self.viewModel.createPage(ofType: .text, underNodes: self.nodesForAction)
+                self.createdItem = self.viewModel.createPage(ofType: .text, underNodes: self.nodesForAction)
                 return
         }
-        self.viewModel.createPage(ofType: type, underNodes: self.nodesForAction)
+        self.createdItem = self.viewModel.createPage(ofType: type, underNodes: self.nodesForAction)
     }
 
     @IBAction func newFolder(_ sender: Any) {
-        self.createdItem = true
-        self.viewModel.createFolder(underNodes: self.nodesForAction)
+        self.createdItem = self.viewModel.createFolder(underNodes: self.nodesForAction)
     }
 
     @IBAction func newFolderFromSelection(_ sender: Any) {
-        self.createdItem = true
-        self.viewModel.createFolder(usingSelection: self.selectedNodes)
+        self.createdItem = self.viewModel.createFolder(usingSelection: self.selectedNodes)
     }
 
 
@@ -233,19 +230,27 @@ class SidebarViewController: NSViewController, NSMenuItemValidation, RootViewCon
 
 
     //MARK: - Reload
-    private var createdItem: Bool = false
+    private var createdItem: DocumentWindowViewModel.SidebarItem?
     private func reloadSidebarNodes() {
+        let selectedItems = self.outlineView.selectedRowIndexes.compactMap { self.outlineView.item(atRow: $0) }
         self.outlineView.reloadItem(nil, reloadChildren: true)
-        self.expandPagesGroupIfNeeded()
+        let selectedIndexes = selectedItems.map { self.outlineView.row(forItem: $0) }.filter { $0 > -1 }
+        self.outlineView.selectRowIndexes(IndexSet(selectedIndexes), byExtendingSelection: false)
+
+        self.handleNewItem()
     }
 
-    private func expandPagesGroupIfNeeded() {
-        guard self.createdItem else {
+    private func handleNewItem() {
+        guard let item = self.createdItem else {
             return
         }
         self.outlineView.expandItem(self.viewModel.pagesGroupNode)
+        if let sidebarNode = self.viewModel.node(for: item) {
+            let index = self.outlineView.row(forItem: sidebarNode)
+            self.outlineView.selectRowIndexes(IndexSet(integer: index), byExtendingSelection: false)
+        }
 
-        self.createdItem = false
+        self.createdItem = nil
     }
 
 

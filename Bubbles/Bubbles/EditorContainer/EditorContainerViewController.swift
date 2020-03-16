@@ -9,7 +9,7 @@
 import Cocoa
 
 
-class EditorContainerViewController: NSViewController, RootViewController {
+class EditorContainerViewController: NSViewController, SplitViewContainableViewController {
 
     let viewModel: EditorContainerViewModel
     init(viewModel: EditorContainerViewModel) {
@@ -41,13 +41,11 @@ class EditorContainerViewController: NSViewController, RootViewController {
 
     //MARK: - Editor Generation
     func createEditor() -> (Editor & NSViewController)? {
-        switch self.viewModel.currentSelection {
-        case .canvas(let canvas):
-            return canvas.createEditor(with: self.viewModel.documentWindowViewModel)
+        switch self.viewModel.currentEditor {
+        case .canvas:
+            return CanvasesViewController(viewModel: .init(documentWindowViewModel: self.viewModel.documentWindowViewModel))
         case .page(let page):
             return page.createEditor(with: self.viewModel.documentWindowViewModel)
-        case .multiple(_):
-            return nil
         case .none:
             return nil
         }

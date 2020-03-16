@@ -8,6 +8,6 @@
 
 import Cocoa
 
-protocol RootViewController {
+protocol SplitViewContainableViewController {
     var splitViewItem: NSSplitViewItem { get }
 }

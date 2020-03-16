@@ -179,6 +179,7 @@ class SidebarViewModel: ViewModel {
     }
 
 
+    //MARK: - Item Drag & Drop
     func canDropItems(with ids: [ModelID], onto node: SidebarNode?, atChildIndex index: Int) -> (Bool, SidebarNode?, Int) {
         guard let sidebarNode = node, case .folder(let folderID) = sidebarNode.item else {
             return (false, node, index)
@@ -188,15 +189,6 @@ class SidebarViewModel: ViewModel {
               self.validate(ids: ids, and: folder) else {
                 return (false, node, index)
         }
-        return (true, node, index)
-    }
-
-    func canDropFiles(at urls: [URL], onto node: SidebarNode?, atChildIndex index: Int) -> (Bool, SidebarNode?, Int) {
-        //nil, .canvases, .rootFolder -> true if urls are of valid type, nil, -1
-
-        //on page -> false
-        //on folder -> true if urls are of valid type
-        //in folder -> true if urls are of valid type
         return (true, node, index)
     }
 
@@ -229,11 +221,6 @@ class SidebarViewModel: ViewModel {
         return false
     }
 
-    func dropFiles(at urls: [URL], onto node: SidebarNode?, atChildIndex index: Int) -> Bool {
-        return false
-    }
-
-
     private func validate(ids: [ModelID], and folder: Folder) -> Bool {
         var currentFolder: Folder? = folder
         while currentFolder != nil {
@@ -254,19 +241,46 @@ class SidebarViewModel: ViewModel {
     }
 
 
+    //MARK: - File Drag & Drop
+    func canDropFiles(at urls: [URL], onto node: SidebarNode?, atChildIndex index: Int) -> (Bool, SidebarNode?, Int) {
+        //nil, .canvases, .rootFolder -> true if urls are of valid type, nil, -1
+
+        //on page -> false
+        //on folder -> true if urls are of valid type
+        //in folder -> true if urls are of valid type
+        return (true, node, index)
+    }
+
+    func dropFiles(at urls: [URL], onto node: SidebarNode?, atChildIndex index: Int) -> Bool {
+        return false
+    }
+
+
+
+
+
     //MARK: - Creation
-    func createPage(ofType type: PageContentType, underNodes collection: SidebarNodeCollection) {
+    func createPage(ofType type: PageContentType, underNodes collection: SidebarNodeCollection) -> DocumentWindowViewModel.SidebarItem {
         let lastNode = collection.nodes.last
-        self.documentWindowViewModel.createPage(ofType: type, in: lastNode?.folderForCreation, below: lastNode?.folderItemForCreation)
+        let page = self.documentWindowViewModel.createPage(ofType: type, in: lastNode?.folderForCreation, below: lastNode?.folderItemForCreation)
+        return .page(page.id)
     }
 
-    func createFolder(underNodes collection: SidebarNodeCollection) {
+    func createFolder(underNodes collection: SidebarNodeCollection) -> DocumentWindowViewModel.SidebarItem {
         let lastNode = collection.nodes.last
-        self.documentWindowViewModel.createFolder(in: lastNode?.folderForCreation, below: lastNode?.folderItemForCreation)
+        let folder = self.documentWindowViewModel.createFolder(in: lastNode?.folderForCreation, below: lastNode?.folderItemForCreation)
+        return .folder(folder.id)
     }
 
-    func createFolder(usingSelection: SidebarNodeCollection) {
-
+    func createFolder(usingSelection collection: SidebarNodeCollection) -> DocumentWindowViewModel.SidebarItem? {
+        guard let lastNode = collection.nodes.last else {
+            return nil
+        }
+        let containingFolder = lastNode.folderForCreation?.containingFolder ?? self.documentWindowViewModel.rootFolder
+        let newFolder = self.documentWindowViewModel.createFolder(in: containingFolder,
+                                                                  below: containingFolder.contents.last,
+                                                                  withInitialContents: collection.nodes.compactMap(\.folderContainable))
+        return .folder(newFolder.id)
     }
 
 

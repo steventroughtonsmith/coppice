@@ -80,7 +80,7 @@ class DocumentWindowController: NSWindowController {
 
     //MARK: - Responder Chain
     override func supplementalTarget(forAction action: Selector, sender: Any?) -> Any? {
-        if let editor = self.splitViewController.editorSplitViewController.editorContainerViewController.mainEditor,
+        if let editor = self.splitViewController.editorContainerViewController.mainEditor,
             editor.responds(to: action) {
             print("calling to editor from window with \(action)")
             return editor

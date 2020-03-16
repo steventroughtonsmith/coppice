@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class CanvasListViewController: NSViewController, RootViewController {
+class CanvasListViewController: NSViewController, SplitViewContainableViewController {
     @IBOutlet weak var tableView: NSTableView!
 
     let viewModel: CanvasListViewModel
