@@ -8,11 +8,10 @@
 
 import Cocoa
 
-class NoCanvasViewController: NSViewController {
-}
-
-extension NoCanvasViewController: SplitViewContainable {
-    var splitViewItem: NSSplitViewItem {
-        return NSSplitViewItem(viewController: self)
-    }
+class NoCanvasViewController: NSViewController, SplitViewContainable {
+    lazy var splitViewItem: NSSplitViewItem = {
+        let splitViewItem = NSSplitViewItem(viewController: self)
+        splitViewItem.holdingPriority = NSLayoutConstraint.Priority(rawValue: 249)
+        return splitViewItem
+    }()
 }

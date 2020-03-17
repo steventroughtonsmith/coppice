@@ -13,6 +13,7 @@ class CanvasesViewController: NSSplitViewController {
     init(viewModel: CanvasesViewModel) {
         self.viewModel = viewModel
         super.init(nibName: "CanvasEditorContainerView", bundle: nil)
+        viewModel.view = self
     }
 
     required init?(coder: NSCoder) {
@@ -34,20 +35,71 @@ class CanvasesViewController: NSSplitViewController {
         self.updateSplitViewItems()
     }
 
-
-    private func updateSplitViewItems() {
-        self.splitViewItems = [
-            self.canvasListViewController.splitViewItem,
-            self.noCanvasViewController.splitViewItem
-        ]
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        self.viewModel.startObserving()
     }
 
+    override func viewDidDisappear() {
+        super.viewDidDisappear()
+        self.viewModel.stopObserving()
+    }
+
+
+    private func updateSplitViewItems() {
+        var splitViewItems = [self.canvasListViewController.splitViewItem]
+
+        if let canvasEditor = self.currentCanvasEditor {
+            splitViewItems.append(canvasEditor.splitViewItem)
+        } else {
+            splitViewItems.append(self.noCanvasViewController.splitViewItem)
+        }
+
+        self.splitViewItems = splitViewItems
+        self.inspectorsDidChange()
+    }
+
+    var currentCanvasEditor: CanvasEditorViewController? {
+        didSet {
+            self.updateSplitViewItems()
+        }
+    }
+    private func updateCanvasEditor() {
+        guard let canvas = self.viewModel.currentCanvas else {
+            self.currentCanvasEditor = nil
+            return
+        }
+        guard self.currentCanvasEditor?.viewModel.canvas != canvas else {
+            return
+        }
+        self.currentCanvasEditor = canvas.createEditor(with: self.viewModel.documentWindowViewModel) as? CanvasEditorViewController
+    }
+
+
+    //MARK: - SplitViewDelegate
+    override func splitView(_ splitView: NSSplitView, constrainSplitPosition proposedPosition: CGFloat, ofSubviewAt dividerIndex: Int) -> CGFloat {
+        //If we're getting smaller than the minimum regular size we want to see if we want to switch to compact
+        if proposedPosition < CanvasListViewController.regularMinimumSize {
+            //We switch to compact if we're over half way towards compact sized
+            let crossOverPoint = (CanvasListViewController.regularMinimumSize + CanvasListViewController.compactSize) / 2
+            self.canvasListViewController.isCompact = (proposedPosition < crossOverPoint)
+            return self.canvasListViewController.splitViewItem.minimumThickness
+        }
+        return proposedPosition
+    }
+}
+
+
+extension CanvasesViewController: CanvasesView {
+    func currentCanvasChanged() {
+        self.updateCanvasEditor()
+    }
 }
 
 
 extension CanvasesViewController: Editor {
     var inspectors: [Inspector] {
-        return []
+        return self.currentCanvasEditor?.inspectors ?? []
     }
 }
 

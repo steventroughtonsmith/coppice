@@ -9,7 +9,7 @@
 import Cocoa
 
 protocol CanvasViewDelegate: class {
-    func didDropPage(with id: ModelID, at point: CGPoint, on canvasView: CanvasView)
+    func didDropPages(with ids: [ModelID], at point: CGPoint, on canvasView: CanvasView)
     func didDropFiles(withURLs urls: [URL], at point: CGPoint, on canvasView: CanvasView)
 
     func dragImageForPage(with id: ModelID, in canvasView: CanvasView) -> NSImage?
@@ -252,6 +252,29 @@ class CanvasView: NSView {
         return false
     }
 
+    override func updateDraggingItemsForDrag(_ sender: NSDraggingInfo?) {
+        guard let draggingInfo = sender else {
+            return
+        }
+        draggingInfo.enumerateDraggingItems(for: nil, classes: [NSPasteboardItem.self], using: { (draggingItem, index, stop) in
+            guard let pasteboardItem = draggingItem.item as? NSPasteboardItem,
+                let modelID = ModelID(pasteboardItem: pasteboardItem),
+                modelID.modelType == Page.modelType else {
+                    return
+            }
+            guard let image = self.delegate?.dragImageForPage(with: modelID, in: self) else {
+                return
+            }
+
+
+            let draggingFrame = draggingItem.draggingFrame.rounded()
+            let midPoint = draggingFrame.midPoint
+            let frameOrigin = midPoint.minus(x: image.size.width / 2, y: image.size.height / 2).rounded()
+
+            draggingItem.setDraggingFrame(CGRect(origin: frameOrigin, size: image.size), contents: image)
+        })
+    }
+
 
     //MARK: - Page Drag & Drop
     func pageDraggingUpdates(_ sender: NSDraggingInfo) -> NSDragOperation {
@@ -266,11 +289,11 @@ class CanvasView: NSView {
     }
 
     func performPageDragOperation(_ sender: NSDraggingInfo) -> Bool {
-        guard let item = sender.draggingPasteboard.pasteboardItems?.first,
-            let id = ModelID(pasteboardItem: item),
-            id.modelType == Page.modelType else {
-                return false
+        guard let items = sender.draggingPasteboard.pasteboardItems else {
+            return false
         }
+
+        let ids = items.compactMap { ModelID(pasteboardItem: $0) }.filter { $0.modelType == Page.modelType }
 
         let dropPoint = self.convert(sender.draggingLocation, from: nil)
         var dragItemPoint: CGPoint? = nil
@@ -282,23 +305,8 @@ class CanvasView: NSView {
             }
             draggingItem.draggingFrame = frame
         }
-        self.delegate?.didDropPage(with: id, at: dragItemPoint ?? dropPoint, on: self)
+        self.delegate?.didDropPages(with: ids, at: dragItemPoint ?? dropPoint, on: self)
         return true
-    }
-
-    override func updateDraggingItemsForDrag(_ sender: NSDraggingInfo?) {
-        sender?.enumerateDraggingItems(for: nil, classes: [NSPasteboardItem.self], using: { (draggingItem, index, stop) in
-            guard let pasteboardItem = draggingItem.item as? NSPasteboardItem,
-                let modelID = ModelID(pasteboardItem: pasteboardItem),
-                modelID.modelType == Page.modelType else {
-                    return
-            }
-            guard let image = self.delegate?.dragImageForPage(with: modelID, in: self) else {
-                return
-            }
-
-            draggingItem.setDraggingFrame(CGRect(origin: CGPoint(x: 1280, y: 720), size: image.size), contents: image)
-        })
     }
 
 

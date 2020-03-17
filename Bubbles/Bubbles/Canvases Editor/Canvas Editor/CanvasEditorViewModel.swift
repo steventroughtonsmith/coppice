@@ -164,12 +164,10 @@ class CanvasEditorViewModel: ViewModel {
         self.documentWindowViewModel.addPage(at: link, to: self.canvas)
     }
 
-    func addPage(with id: ModelID, centredOn point: CGPoint? = nil) {
-        guard let page = self.modelController.collection(for: Page.self).objectWithID(id) else {
-            return
-        }
+    func addPages(with ids: [ModelID], centredOn point: CGPoint? = nil) {
+        let pages = ids.compactMap { self.documentWindowViewModel.pageCollection.objectWithID($0) }
 
-        self.documentWindowViewModel.addPages([page], to: self.canvas, centredOn: point)
+        self.documentWindowViewModel.addPages(pages, to: self.canvas, centredOn: point)
     }
 
     func addPages(forFilesAtURLs urls: [URL], centredOn point: CGPoint? = nil) {

@@ -233,7 +233,6 @@ class CanvasElementView: NSView  {
         let cursorRects = self.resizeRects + [(.titleBar, self.titleView.frame)]
         for (type, rect) in cursorRects {
             if (rect.contains(point)) {
-                print("type: \(type), rect: \(rect), point: \(point)")
                 return type.cursor()
             }
         }

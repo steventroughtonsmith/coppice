@@ -9,7 +9,7 @@
 import Cocoa
 import Combine
 
-class CanvasEditorViewController: NSViewController, NSMenuItemValidation {
+class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitViewContainable {
 
     @IBOutlet weak var scrollView: NSScrollView!
     @IBOutlet weak var canvasView: CanvasView!
@@ -398,7 +398,7 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation {
         }
 
         windowController.showPageSelector(title: NSLocalizedString("Add page to canvas…", comment: "Add page selector title")) { [weak self] (page) in
-            self?.viewModel.addPage(with: page.id)
+            self?.viewModel.addPages(with: [page.id])
         }
     }
 
@@ -451,6 +451,14 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation {
         }
         return PageExporter.validate(menuItem, forExporting: self.viewModel.selectedCanvasPages.compactMap { $0.page })
     }
+
+
+    //MARK: - SplitViewContainable
+    lazy var splitViewItem: NSSplitViewItem = {
+        let splitViewItem = NSSplitViewItem(viewController: self)
+        splitViewItem.holdingPriority = NSLayoutConstraint.Priority(rawValue: 249)
+        return splitViewItem
+    }()
 }
 
 
@@ -465,9 +473,9 @@ extension CanvasEditorViewController: Editor {
 
 
 extension CanvasEditorViewController: CanvasViewDelegate {
-    func didDropPage(with id: ModelID, at point: CGPoint, on canvasView: CanvasView) {
+    func didDropPages(with ids: [ModelID], at point: CGPoint, on canvasView: CanvasView) {
         let pageSpacePoint = self.layoutEngine.convertPointToPageSpace(point)
-        self.viewModel.addPage(with: id, centredOn: pageSpacePoint)
+        self.viewModel.addPages(with: ids, centredOn: pageSpacePoint)
     }
 
     func didDropFiles(withURLs urls: [URL], at point: CGPoint, on canvasView: CanvasView) {

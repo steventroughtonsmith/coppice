@@ -10,17 +10,10 @@ import AppKit
 
 extension NSImage {
     func pngData() -> Data? {
-        return self.bitmapRepresentation()?.representation(using: .png, properties: [:])
-    }
-
-    private func bitmapRepresentation() -> NSBitmapImageRep? {
-        if let rep = self.representations.first(where: {$0 is NSBitmapImageRep}) {
-            return (rep as! NSBitmapImageRep)
-        }
-
         guard let data = self.tiffRepresentation else {
             return nil
         }
-        return NSBitmapImageRep(data: data)
+        let rep = NSBitmapImageRep(data: data)
+        return rep?.representation(using: .png, properties: [.compressionMethod: NSBitmapImageRep.TIFFCompression.none])
     }
 }

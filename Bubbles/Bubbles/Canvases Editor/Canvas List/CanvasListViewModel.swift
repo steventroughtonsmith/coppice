@@ -30,7 +30,13 @@ class CanvasListViewModel: ViewModel {
     }
 
     func stopObserving() {
+        if let observer = self.canvasObserver {
+        	self.canvasCollection.removeObserver(observer)
+        }
+        self.canvasObserver = nil
 
+        self.selectedCanvasObserver?.cancel()
+        self.selectedCanvasObserver = nil
     }
 
 
