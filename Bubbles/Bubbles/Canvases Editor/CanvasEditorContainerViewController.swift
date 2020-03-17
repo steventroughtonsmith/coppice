@@ -76,13 +76,18 @@ class CanvasesViewController: NSSplitViewController {
     }
 
 
+    var isSidebarCompact: Bool {
+        get { UserDefaults.standard.bool(forKey: .canvasListIsCompact) }
+        set { UserDefaults.standard.set(newValue, forKey: .canvasListIsCompact) }
+    }
+
     //MARK: - SplitViewDelegate
     override func splitView(_ splitView: NSSplitView, constrainSplitPosition proposedPosition: CGFloat, ofSubviewAt dividerIndex: Int) -> CGFloat {
         //If we're getting smaller than the minimum regular size we want to see if we want to switch to compact
         if proposedPosition < CanvasListViewController.regularMinimumSize {
             //We switch to compact if we're over half way towards compact sized
             let crossOverPoint = (CanvasListViewController.regularMinimumSize + CanvasListViewController.compactSize) / 2
-            self.canvasListViewController.isCompact = (proposedPosition < crossOverPoint)
+            self.isSidebarCompact = (proposedPosition < crossOverPoint)
             return self.canvasListViewController.splitViewItem.minimumThickness
         }
         return proposedPosition

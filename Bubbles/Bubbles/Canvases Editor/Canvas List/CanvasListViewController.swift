@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import Combine
 
 class CanvasListViewController: NSViewController, SplitViewContainable {
     @IBOutlet weak var tableView: NSTableView!
@@ -22,6 +23,7 @@ class CanvasListViewController: NSViewController, SplitViewContainable {
         fatalError("init(coder:) has not been implemented")
     }
 
+    var defaultsObserver: AnyCancellable?
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -37,12 +39,22 @@ class CanvasListViewController: NSViewController, SplitViewContainable {
 
     override func viewDidAppear() {
         super.viewDidAppear()
+        UserDefaults.standard.addObserver(self, forKeyPath: UserDefaultsKeys.canvasListIsCompact.rawValue, options: [], context: nil)
         self.viewModel.startObserving()
     }
 
     override func viewDidDisappear() {
         super.viewDidDisappear()
+        UserDefaults.standard.removeObserver(self, forKeyPath: UserDefaultsKeys.canvasListIsCompact.rawValue)
         self.viewModel.stopObserving()
+    }
+
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        guard keyPath == UserDefaultsKeys.canvasListIsCompact.rawValue else {
+            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
+            return
+        }
+        self.updateCanvasListState()
     }
 
     lazy var splitViewItem: NSSplitViewItem = {
@@ -58,11 +70,7 @@ class CanvasListViewController: NSViewController, SplitViewContainable {
 
     //MARK: - Visual State
     var isCompact: Bool {
-        get { UserDefaults.standard.bool(forKey: .canvasListIsCompact) }
-        set {
-            UserDefaults.standard.set(newValue, forKey: .canvasListIsCompact)
-            self.updateCanvasListState()
-        }
+        UserDefaults.standard.bool(forKey: .canvasListIsCompact)
     }
 
     static let compactSize: CGFloat = 64

@@ -52,7 +52,7 @@
                                 <rect key="frame" x="419" y="3" width="53" height="18"/>
                                 <popUpButtonCell key="cell" type="roundTextured" title="100%" bezelStyle="texturedRounded" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" selectedItem="sLc-r6-goS" id="1Fw-Vb-jEB">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="message" size="11"/>
+                                    <font key="font" metaFont="menu" size="11"/>
                                     <menu key="menu" id="G43-Yk-PmC">
                                         <items>
                                             <menuItem title="25%" id="P07-uM-cbk"/>
@@ -66,10 +66,22 @@
                                     <action selector="zoomControlChanged:" target="-2" id="sSX-YU-klR"/>
                                 </connections>
                             </popUpButton>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="g2M-Yk-OJX">
+                                <rect key="frame" x="8" y="4" width="16" height="16"/>
+                                <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="CanvasSidebar" imagePosition="only" alignment="center" controlSize="small" imageScaling="proportionallyDown" inset="2" id="lmW-gL-D2E">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                                    <font key="font" metaFont="menu" size="11"/>
+                                </buttonCell>
+                                <connections>
+                                    <binding destination="QYY-Jy-Z2h" name="value" keyPath="values.canvasListIsCompact" id="ZmW-0H-R0C"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="7ch-X7-loO" secondAttribute="trailing" constant="8" id="Eg0-eO-nJf"/>
+                            <constraint firstItem="g2M-Yk-OJX" firstAttribute="centerY" secondItem="tvb-iS-VfP" secondAttribute="centerY" id="OoO-fG-Ejy"/>
                             <constraint firstItem="7ch-X7-loO" firstAttribute="centerY" secondItem="tvb-iS-VfP" secondAttribute="centerY" id="PRK-PL-6BZ"/>
+                            <constraint firstItem="g2M-Yk-OJX" firstAttribute="leading" secondItem="tvb-iS-VfP" secondAttribute="leading" constant="8" id="jnO-cg-ytF"/>
                         </constraints>
                     </view>
                     <constraints>
@@ -90,8 +102,10 @@
             </constraints>
             <point key="canvasLocation" x="139" y="154"/>
         </customView>
+        <userDefaultsController representsSharedInstance="YES" id="QYY-Jy-Z2h"/>
     </objects>
     <resources>
+        <image name="CanvasSidebar" width="16" height="16"/>
         <namedColor name="CanvasBackground">
             <color red="0.85100001096725464" green="0.85100001096725464" blue="0.85100001096725464" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
