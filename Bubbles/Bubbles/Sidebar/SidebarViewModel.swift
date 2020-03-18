@@ -11,6 +11,7 @@ import Combine
 
 protocol SidebarView: class {
     func reload()
+    func reloadSelection()
 }
 
 class SidebarViewModel: ViewModel {
@@ -27,6 +28,7 @@ class SidebarViewModel: ViewModel {
 
     var pagesObserver: ModelCollection<Page>.Observation?
     var foldersObserver: ModelCollection<Folder>.Observation?
+    var selectionObserver: AnyCancellable?
     func startObserving() {
         self.pagesObserver = self.modelController.collection(for: Page.self).addObserver(changeHandler: { [weak self] (page, type) in
             self?.setNeedsReload()
@@ -34,6 +36,10 @@ class SidebarViewModel: ViewModel {
         self.foldersObserver = self.modelController.collection(for: Folder.self).addObserver(changeHandler: { [weak self] (folder, type) in
             self?.setNeedsReload()
         })
+
+        self.selectionObserver = self.documentWindowViewModel.$sidebarSelection.sink { [weak self] newItem in
+            self?.updateSelectedNodes(with: newItem)
+        }
     }
 
     func stopObserving() {
@@ -93,6 +99,7 @@ class SidebarViewModel: ViewModel {
         self.addAndRemoveNodes()
         self.updateHierarchy()
         self.view?.reload()
+        self.updateSelectedNodes(with: self.documentWindowViewModel.sidebarSelection)
     }
 
     private func addAndRemoveNodes() {
@@ -176,6 +183,25 @@ class SidebarViewModel: ViewModel {
         }
 
         return nil
+    }
+
+
+    //MARK: - Selection
+    var selectedNodes: [SidebarNode] = [] {
+        didSet {
+            self.isUpdatingSelection = true
+            self.documentWindowViewModel.updateSelection(self.selectedNodes.map(\.item))
+            self.isUpdatingSelection = false
+        }
+    }
+
+    private var isUpdatingSelection = false
+    func updateSelectedNodes(with items: [DocumentWindowViewModel.SidebarItem]) {
+        guard self.isUpdatingSelection == false else {
+            return
+        }
+        self.selectedNodes = items.compactMap { self.node(for: $0) }
+        self.view?.reloadSelection()
     }
 
 
@@ -321,9 +347,4 @@ class SidebarViewModel: ViewModel {
 //        return self.documentWindowViewModel.createPages(fromFilesAtURLs: fileURLs, addingTo: canvas)
 //    }
 
-
-    //MARK: - Selection
-    func updateSelectedNodes(_ newSelection: [SidebarNode]) {
-        self.documentWindowViewModel.updateSelection(newSelection.map(\.item))
-    }
 }

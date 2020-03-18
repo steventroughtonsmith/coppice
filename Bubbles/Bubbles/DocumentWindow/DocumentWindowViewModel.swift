@@ -198,6 +198,7 @@ class DocumentWindowViewModel: NSObject {
 
         (parentFolder ?? self.folderForNewPages).insert([folder], below: item)
         folder.insert(contents)
+        self.sidebarSelection = [.folder(folder.id)]
         self.modelController.undoManager.endUndoGrouping()
         return folder
     }
@@ -492,6 +493,7 @@ class DocumentWindowViewModel: NSObject {
         self.modelController.undoManager.setActionName(NSLocalizedString("Create Canvas", comment: "Create Canvas Undo Action Name"))
         let canvas = self.modelController.collection(for: Canvas.self).newObject()
         self.selectedCanvasID = canvas.id
+        self.sidebarSelection = [.canvases]
         return canvas
     }
 
@@ -532,7 +534,7 @@ class DocumentWindowViewModel: NSObject {
         self.canvasCollection.delete(canvas)
         self.modelController.popChangeGroup()
 
-        self.selectedSidebarObjectIDs.remove(canvas.id)
+        self.selectedCanvasID = nil
     }
 
     //Removing page from canvas

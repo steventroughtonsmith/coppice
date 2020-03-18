@@ -233,12 +233,10 @@ class SidebarViewController: NSViewController, NSMenuItemValidation, SplitViewCo
     //MARK: - Reload
     private var createdItem: DocumentWindowViewModel.SidebarItem?
     private func reloadSidebarNodes() {
-        let selectedItems = self.outlineView.selectedRowIndexes.compactMap { self.outlineView.item(atRow: $0) }
         self.outlineView.reloadItem(nil, reloadChildren: true)
-        let selectedIndexes = selectedItems.map { self.outlineView.row(forItem: $0) }.filter { $0 > -1 }
-        self.outlineView.selectRowIndexes(IndexSet(selectedIndexes), byExtendingSelection: false)
 
-        self.handleNewItem()
+        self.reloadSelection()
+//        self.handleNewItem()
     }
 
     private func handleNewItem() {
@@ -252,6 +250,11 @@ class SidebarViewController: NSViewController, NSMenuItemValidation, SplitViewCo
         }
 
         self.createdItem = nil
+    }
+
+    func reloadSelection() {
+        let selectedIndexes = self.viewModel.selectedNodes.map { self.outlineView.row(forItem: $0) }.filter { $0 > -1 }
+        self.outlineView.selectRowIndexes(IndexSet(selectedIndexes), byExtendingSelection: false)
     }
 
 
@@ -452,7 +455,7 @@ extension SidebarViewController: NSOutlineViewDelegate {
     }
 
     func outlineViewSelectionDidChange(_ notification: Notification) {
-        self.viewModel.updateSelectedNodes(self.selectedNodes.nodes)
+        self.viewModel.selectedNodes = self.selectedNodes.nodes
     }
 }
 
