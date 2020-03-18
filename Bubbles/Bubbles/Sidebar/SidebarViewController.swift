@@ -23,6 +23,7 @@ class SidebarViewController: NSViewController, NSMenuItemValidation, SplitViewCo
     }
 
     @IBOutlet weak var outlineView: NSOutlineView!
+    @IBOutlet weak var bottomBarConstraint: NSLayoutConstraint!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +31,8 @@ class SidebarViewController: NSViewController, NSMenuItemValidation, SplitViewCo
         self.outlineView.registerForDraggedTypes([.fileURL, ModelID.PasteboardType])
 
         self.setupContextMenu()
+
+        self.bottomBarConstraint.constant = GlobalConstants.bottomBarHeight
     }
 
     override func viewWillAppear() {

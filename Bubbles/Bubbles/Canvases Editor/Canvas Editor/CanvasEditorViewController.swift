@@ -13,6 +13,7 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
 
     @IBOutlet weak var scrollView: NSScrollView!
     @IBOutlet weak var canvasView: CanvasView!
+    @IBOutlet weak var bottomBarConstraint: NSLayoutConstraint!
     @objc dynamic let viewModel: CanvasEditorViewModel
     init(viewModel: CanvasEditorViewModel) {
         self.viewModel = viewModel
@@ -67,6 +68,8 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
 
         self.setupZoomObservation()
         self.updateZoomControl()
+
+        self.bottomBarConstraint.constant = GlobalConstants.bottomBarHeight
     }
 
     var enabled: Bool = true

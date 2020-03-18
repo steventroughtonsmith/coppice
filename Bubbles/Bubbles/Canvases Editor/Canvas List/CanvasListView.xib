@@ -8,6 +8,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="CanvasListViewController" customModule="Bubbles" customModuleProvider="target">
             <connections>
                 <outlet property="actionButton" destination="x9y-AL-d7u" id="sRT-Pv-aVS"/>
+                <outlet property="bottomBarConstraint" destination="F5N-od-H9t" id="TJk-Dy-h6M"/>
                 <outlet property="contextMenu" destination="BeW-gw-tnK" id="XbT-XT-QAv"/>
                 <outlet property="tableView" destination="ZY4-2Z-8n6" id="fk3-dE-fEz"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
@@ -89,11 +90,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <popUpButton translatesAutoresizingMaskIntoConstraints="NO" id="x9y-AL-d7u">
-                                <rect key="frame" x="25" y="0.0" width="35" height="23"/>
+                                <rect key="frame" x="27" y="0.0" width="35" height="23"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="35" id="1bG-yT-rpF"/>
+                                    <constraint firstAttribute="width" constant="35" id="LQf-m7-cqx"/>
                                 </constraints>
-                                <popUpButtonCell key="cell" type="bevel" bezelStyle="rounded" imagePosition="trailing" alignment="left" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" pullsDown="YES" id="jOC-L1-fCK">
+                                <popUpButtonCell key="cell" type="bevel" bezelStyle="rounded" imagePosition="only" alignment="left" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" pullsDown="YES" id="jOC-L1-fCK">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                     <menu key="menu" id="bqd-2s-yoR">
@@ -104,9 +105,9 @@
                                 </popUpButtonCell>
                             </popUpButton>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4jD-Iv-NuW">
-                                <rect key="frame" x="0.0" y="0.0" width="25" height="23"/>
+                                <rect key="frame" x="0.0" y="0.0" width="27" height="23"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="25" id="EAy-Jk-KId"/>
+                                    <constraint firstAttribute="width" constant="27" id="Zy8-xa-teq"/>
                                 </constraints>
                                 <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="NSAddTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="ioe-mS-bLv">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -129,6 +130,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="25" id="F5N-od-H9t"/>
                     </constraints>
+                    <color key="borderColor" red="1" green="1" blue="1" alpha="0.24683508211678831" colorSpace="custom" customColorSpace="sRGB"/>
                     <color key="fillColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                 </box>
             </subviews>

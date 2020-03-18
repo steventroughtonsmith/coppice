@@ -8,6 +8,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="CanvasEditorViewController" customModule="Bubbles" customModuleProvider="target">
             <connections>
+                <outlet property="bottomBarConstraint" destination="cIE-Y9-6bZ" id="Aip-DH-S2N"/>
                 <outlet property="canvasView" destination="PUw-B3-8ie" id="pZV-PX-WgV"/>
                 <outlet property="scrollView" destination="WXD-co-iCD" id="Unx-zF-neD"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
@@ -52,7 +53,7 @@
                                 <rect key="frame" x="419" y="3" width="53" height="18"/>
                                 <popUpButtonCell key="cell" type="roundTextured" title="100%" bezelStyle="texturedRounded" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" selectedItem="sLc-r6-goS" id="1Fw-Vb-jEB">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="menu" size="11"/>
+                                    <font key="font" metaFont="controlContent" size="11"/>
                                     <menu key="menu" id="G43-Yk-PmC">
                                         <items>
                                             <menuItem title="25%" id="P07-uM-cbk"/>
@@ -70,7 +71,7 @@
                                 <rect key="frame" x="8" y="4" width="16" height="16"/>
                                 <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="CanvasSidebar" imagePosition="only" alignment="center" controlSize="small" imageScaling="proportionallyDown" inset="2" id="lmW-gL-D2E">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
-                                    <font key="font" metaFont="menu" size="11"/>
+                                    <font key="font" metaFont="controlContent" size="11"/>
                                 </buttonCell>
                                 <connections>
                                     <binding destination="QYY-Jy-Z2h" name="value" keyPath="values.canvasListIsCompact" id="ZmW-0H-R0C"/>

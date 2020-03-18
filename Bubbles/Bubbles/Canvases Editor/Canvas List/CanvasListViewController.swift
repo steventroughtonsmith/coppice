@@ -23,7 +23,8 @@ class CanvasListViewController: NSViewController, SplitViewContainable {
         fatalError("init(coder:) has not been implemented")
     }
 
-    var defaultsObserver: AnyCancellable?
+    @IBOutlet weak var bottomBarConstraint: NSLayoutConstraint!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -35,6 +36,8 @@ class CanvasListViewController: NSViewController, SplitViewContainable {
 
         self.updateCanvasListState()
         self.setupActionButton()
+
+        self.bottomBarConstraint.constant = GlobalConstants.bottomBarHeight
     }
 
     override func viewDidAppear() {
