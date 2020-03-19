@@ -80,10 +80,13 @@ class DocumentWindowController: NSWindowController {
 
     //MARK: - Responder Chain
     override func supplementalTarget(forAction action: Selector, sender: Any?) -> Any? {
-        if let editor = self.splitViewController.editorContainerViewController.mainEditor,
-            editor.responds(to: action) {
-            print("calling to editor from window with \(action)")
-            return editor
+        if let editor = self.splitViewController.editorContainerViewController.mainEditor {
+            if let target = editor.supplementalTarget(forAction: action, sender: sender) {
+                return target
+            }
+            if editor.responds(to: action) {
+                return editor
+            }
         }
         if self.splitViewController.sidebarViewController.responds(to: action) {
             return self.splitViewController.sidebarViewController
@@ -98,17 +101,7 @@ class DocumentWindowController: NSWindowController {
         self.viewModel.createCanvas()
     }
 
-    @IBAction func deleteCanvas(_ sender: Any?) {
-        #warning("Add functionality back")
-//        if let canvas = self.viewModel.selectedCanvasInSidebar {
-//            self.viewModel.delete(canvas)
-//        }
-    }
-
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
-        if menuItem.action == #selector(deleteCanvas(_:)) {
-//            return (self.viewModel.selectedCanvasInSidebar != nil)
-        }
         return true
     }
 

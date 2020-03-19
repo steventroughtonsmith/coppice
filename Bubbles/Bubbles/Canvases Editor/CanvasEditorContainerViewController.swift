@@ -81,6 +81,17 @@ class CanvasesViewController: NSSplitViewController {
         set { UserDefaults.standard.set(newValue, forKey: .canvasListIsCompact) }
     }
 
+
+    override func supplementalTarget(forAction action: Selector, sender: Any?) -> Any? {
+        if self.canvasListViewController.responds(to: action) {
+            return self.canvasListViewController
+        }
+        if let editor = self.currentCanvasEditor, editor.responds(to: action) {
+            return editor
+        }
+        return super.supplementalTarget(forAction: action, sender: sender)
+    }
+
     //MARK: - SplitViewDelegate
     override func splitView(_ splitView: NSSplitView, constrainSplitPosition proposedPosition: CGFloat, ofSubviewAt dividerIndex: Int) -> CGFloat {
         //If we're getting smaller than the minimum regular size we want to see if we want to switch to compact

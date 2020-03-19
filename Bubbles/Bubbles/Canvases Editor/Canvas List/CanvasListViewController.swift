@@ -9,7 +9,7 @@
 import Cocoa
 import Combine
 
-class CanvasListViewController: NSViewController, SplitViewContainable {
+class CanvasListViewController: NSViewController, SplitViewContainable, NSMenuItemValidation {
     @IBOutlet weak var tableView: NSTableView!
 
     let viewModel: CanvasListViewModel
@@ -100,17 +100,17 @@ class CanvasListViewController: NSViewController, SplitViewContainable {
 
 
     //MARK: - Canvas Menu Actions
-    private var rowIndexesForAction: IndexSet {
-        let selectedIndexes = self.tableView.selectedRowIndexes
+    private var rowForAction: Int {
         let clickedRow = self.tableView.clickedRow
-        if selectedIndexes.contains(clickedRow) || (clickedRow == -1) {
-            return selectedIndexes
+        if clickedRow != -1 {
+            return clickedRow
         }
-        return (clickedRow >= 0) ? IndexSet(integer: clickedRow) : IndexSet()
+        return self.tableView.selectedRow
     }
 
     @IBAction func editCanvasTitle(_ sender: Any) {
-        guard self.rowIndexesForAction.count == 1, let row = self.rowIndexesForAction.first else {
+        let row = self.rowForAction
+        guard row != -1 else {
             return
         }
         guard let cell = self.tableView.view(atColumn: 0, row: row, makeIfNecessary: false) as? EditableLabelCell else {
@@ -120,22 +120,16 @@ class CanvasListViewController: NSViewController, SplitViewContainable {
     }
 
     @IBAction func deleteCanvas(_ sender: Any) {
-        self.viewModel.deleteCanvases(atIndexes: self.rowIndexesForAction)
+        self.viewModel.deleteCanvas(atIndex: self.rowForAction)
     }
 
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         if menuItem.action == #selector(editCanvasTitle(_:)) {
-            return (self.rowIndexesForAction.count == 1)
+            return (self.rowForAction != -1) && (self.isCompact == false)
         }
 
         if menuItem.action == #selector(deleteCanvas(_:)) {
-            let rowIndexes = self.rowIndexesForAction
-            if (rowIndexes.count == 1) {
-                menuItem.title = NSLocalizedString("Delete Canvas…", comment: "Delete single canvas menu item title")
-            } else {
-                menuItem.title = NSLocalizedString("Delete Canvases…", comment: "Delete multiple canvases menu item title")
-            }
-            return (rowIndexes.count > 0)
+            return (self.rowForAction != -1)
         }
         return false
     }
@@ -154,7 +148,7 @@ class CanvasListViewController: NSViewController, SplitViewContainable {
             return
         }
 
-        self.viewModel.deleteCanvases(atIndexes: self.rowIndexesForAction)
+        self.viewModel.deleteCanvas(atIndex: self.rowForAction)
     }
 
 }

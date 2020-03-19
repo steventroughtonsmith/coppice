@@ -156,13 +156,13 @@
                 <menuItem title="Edit Canvas Title…" id="Hfr-KH-nha">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="editCanvasTitle:" target="-1" id="0mA-PQ-VGn"/>
+                        <action selector="editCanvasTitle:" target="-2" id="O1L-0m-eGR"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Delete Canvas" id="ilu-Bu-pCz">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="deleteCanvas:" target="-1" id="t5G-Ca-VwG"/>
+                        <action selector="deleteCanvas:" target="-2" id="STi-LT-HSA"/>
                     </connections>
                 </menuItem>
             </items>

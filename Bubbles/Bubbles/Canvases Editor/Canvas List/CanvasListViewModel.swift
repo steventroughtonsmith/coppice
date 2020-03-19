@@ -119,13 +119,15 @@ class CanvasListViewModel: ViewModel {
         self.cachedCanvases = nil
     }
 
-    func deleteCanvases(atIndexes indexes: IndexSet) {
-        for index in indexes {
-            guard (index >= 0) && (index < self.canvases.count) else {
-                continue
-            }
-            let canvas = self.canvases[index]
-            self.documentWindowViewModel.delete(canvas)
+    func deleteCanvas(atIndex index: Int) {
+        guard index >= 0 else {
+            return
         }
+
+        guard let canvas = self.canvases[safe: index] else {
+            return
+        }
+
+        self.documentWindowViewModel.delete(canvas)
     }
 }

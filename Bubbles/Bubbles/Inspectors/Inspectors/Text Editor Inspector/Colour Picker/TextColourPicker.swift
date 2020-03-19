@@ -165,7 +165,7 @@ class TextColourPicker: NSControl {
     }
 
     override var intrinsicContentSize: NSSize {
-        return NSSize(width: 200, height: 21)
+        return NSSize(width: NSView.noIntrinsicMetric, height: 21)
     }
 
 
