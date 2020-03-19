@@ -12,6 +12,17 @@ class BubblesModelController: NSObject, ModelController {
     var allCollections = [ModelType: Any]()
     let settings = ModelSettings()
 
+    lazy var identifier: UUID = {
+        if let identifierString = self.settings.string(for: .documentIdentifier),
+            let identifier = UUID(uuidString: identifierString) {
+            return identifier
+        }
+
+        let identifier = UUID()
+        self.settings.set(identifier.uuidString, for: .documentIdentifier)
+        return identifier
+    }()
+
     let undoManager: UndoManager
     init(undoManager: UndoManager) {
         self.undoManager = undoManager
@@ -99,4 +110,5 @@ extension ModelCollection where ModelType == Page {
 extension ModelSettings.Setting {
     static let pageSortKeySetting = ModelSettings.Setting(rawValue: "pageSortKey")
     static let rootFolder = ModelSettings.Setting(rawValue: "rootFolder")
+    static let documentIdentifier = ModelSettings.Setting(rawValue: "identifier")
 }

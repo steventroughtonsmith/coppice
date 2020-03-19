@@ -25,7 +25,13 @@ class EditorContainerViewController: NSViewController, SplitViewContainable {
 
     var enabled: Bool = true
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+//        self.view.widthAnchor.constraint(greaterThanOrEqualToConstant: 300).isActive = true
+    }
 
+
+    //MARK: - Editor Generation
     private(set) var mainEditor: (Editor & NSViewController)? {
         didSet {
             oldValue?.view.removeFromSuperview()
@@ -38,8 +44,6 @@ class EditorContainerViewController: NSViewController, SplitViewContainable {
         }
     }
 
-
-    //MARK: - Editor Generation
     func createEditor() -> (Editor & NSViewController)? {
         switch self.viewModel.currentEditor {
         case .canvas:
@@ -47,7 +51,7 @@ class EditorContainerViewController: NSViewController, SplitViewContainable {
         case .page(let page):
             return page.createEditor(with: self.viewModel.documentWindowViewModel)
         case .none:
-            return nil
+            return NoEditorViewController()
         }
     }
 
@@ -56,6 +60,7 @@ class EditorContainerViewController: NSViewController, SplitViewContainable {
     lazy var splitViewItem: NSSplitViewItem = {
         let item = NSSplitViewItem(viewController: self)
         item.holdingPriority = NSLayoutConstraint.Priority(249)
+        item.preferredThicknessFraction = 0.8
         return item
     }()
 }

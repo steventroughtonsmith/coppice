@@ -9,6 +9,7 @@
 import Cocoa
 import Combine
 
+
 class DocumentWindowController: NSWindowController {
     @IBOutlet weak var splitView: NSSplitView!
     @IBOutlet weak var splitViewControl: NSSegmentedControl!
@@ -31,7 +32,6 @@ class DocumentWindowController: NSWindowController {
                                                            inspectorContainerViewController: InspectorContainerViewController(viewModel: .init(documentWindowViewModel: viewModel)))
         super.init(window: nil)
 
-        self.contentViewController = self.splitViewController
         viewModel.window = self
     }
 
@@ -46,6 +46,9 @@ class DocumentWindowController: NSWindowController {
     override func windowDidLoad(){
         super.windowDidLoad()
 
+        if let contentView = self.window?.contentView {
+            self.splitViewController.view.frame = contentView.bounds
+        }
         self.contentViewController = self.splitViewController
 
 //        self.sidebarViewController.pagesTable.nextKeyView = self.editorContainerViewController.view

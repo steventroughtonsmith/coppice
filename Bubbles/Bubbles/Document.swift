@@ -21,17 +21,26 @@ class Document: NSDocument {
         return true
     }
 
+    var isBrandNewDocument = true
+
     override func makeWindowControllers() {
         let documentViewModel = DocumentWindowViewModel(modelController: self.modelController)
         documentViewModel.document = self
         let newWindowController = DocumentWindowController(viewModel: documentViewModel)
+        //Need to temporarily disable window cascading for anything but a brand new document (i.e. opened via File -> New Document)
+        newWindowController.shouldCascadeWindows = self.isBrandNewDocument
+        newWindowController.windowFrameAutosaveName = "DocumentWindow-\(self.modelController.identifier)"
         self.addWindowController(newWindowController)
+        //We need to force the window to open before we re-enable cascading
+        newWindowController.window?.makeKeyAndOrderFront(self)
+        newWindowController.shouldCascadeWindows = true
     }
 
     override func read(from fileWrapper: FileWrapper, ofType typeName: String) throws {
         let modelReader = ModelReader(modelController: self.modelController)
         do {
             try modelReader.read(fileWrapper)
+            self.isBrandNewDocument = false
         } catch {
             throw NSError(domain: GlobalConstants.appErrorDomain,
                           code: GlobalConstants.ErrorCodes.readingDocumentFailed.rawValue,

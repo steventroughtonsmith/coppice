@@ -52,19 +52,6 @@ class SidebarViewModel: ViewModel {
     }
 
 
-
-
-//
-//    func addPages(atIndexes indexes: IndexSet, toCanvasAtindex canvasIndex: Int) {
-//        guard let canvas = self.canvasItems[safe: canvasIndex]?.canvas else {
-//            return
-//        }
-//
-//        let pages = self.pageItems[indexes].map { $0.page }
-//        self.documentWindowViewModel.addPages(pages, to: canvas)
-//    }
-
-
     //MARK: - Sidebar Items
     var rootSidebarNodes: [SidebarNode] {
         return [self.canvasesNode, self.pagesGroupNode]
@@ -315,6 +302,20 @@ class SidebarViewModel: ViewModel {
         self.documentWindowViewModel.delete(nodes.map(\.item))
     }
 
+
+    //MARK: - Canvases
+    var canvases: [Canvas] {
+        return self.documentWindowViewModel.canvasCollection.all.sorted { $0.sortIndex < $1.sortIndex }
+    }
+
+    func addNodes(_ nodeCollection: SidebarNodeCollection, to canvas: Canvas) {
+        guard (nodeCollection.containsCanvases == false) && (nodeCollection.containsFolders == false) else {
+            return
+        }
+
+        let pages = nodeCollection.nodes.compactMap { ($0 as? PageSidebarNode)?.page }
+        canvas.addPages(pages)
+    }
 
 
 //    func deletePages(atIndexes indexes: IndexSet) {

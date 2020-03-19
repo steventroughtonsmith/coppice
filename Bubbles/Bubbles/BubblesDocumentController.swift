@@ -13,4 +13,10 @@ class BubblesDocumentController: NSDocumentController {
         print("document controller error: \(error)")
         return error
     }
+
+//    override func openUntitledDocumentAndDisplay(_ displayDocument: Bool) throws -> NSDocument {
+//        let document = try super.openUntitledDocumentAndDisplay(displayDocument)
+//        print("document:\(document)")
+//        return document
+//    }
 }

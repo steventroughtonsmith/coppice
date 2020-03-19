@@ -21,6 +21,8 @@ struct GlobalConstants {
     static let linkedPageOffset: CGFloat = 40.0
 
     static let bottomBarHeight: CGFloat = 27.0
+
+    static let newWindowSize = CGSize(width: 900, height: 600)
 }
 
 extension NSImage.Name {

@@ -24,7 +24,7 @@ class RootSplitViewController: NSSplitViewController {
         self.sidebarViewController = sidebarViewController
         self.editorContainerViewController = editorContainerViewController
         self.inspectorContainerViewController = inspectorContainerViewController
-        super.init(nibName: nil, bundle: nil)
+        super.init(nibName: "RootSplitViewController", bundle: nil)
     }
 
     required init?(coder: NSCoder) {

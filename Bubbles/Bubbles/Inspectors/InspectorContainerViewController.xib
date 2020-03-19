@@ -35,7 +35,7 @@
                     </clipView>
                     <constraints>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="210" id="IN1-pr-iCa"/>
-                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="210" id="RHN-jS-goW"/>
+                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="310" id="RHN-jS-goW"/>
                     </constraints>
                     <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="Nsn-oy-slE">
                         <rect key="frame" x="-100" y="-100" width="184" height="16"/>

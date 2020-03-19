@@ -117,10 +117,15 @@ class SidebarViewController: NSViewController, NSMenuItemValidation, SplitViewCo
 
     //MARK: - Action Menu Actions
     @IBAction func editItemTitle(_ sender: Any) {
-        guard self.outlineView.clickedRow > -1 else {
+        let nodes = self.nodesForAction
+        guard nodes.count == 1, let node = nodes.nodes.first else {
             return
         }
-        guard let cell = self.outlineView.view(atColumn: 0, row: self.outlineView.clickedRow, makeIfNecessary: false) as? EditableLabelCell else {
+        let row = self.outlineView.row(forItem: node)
+        guard row > -1 else {
+            return
+        }
+        guard let cell = self.outlineView.view(atColumn: 0, row: row, makeIfNecessary: false) as? EditableLabelCell else {
             return
         }
         cell.startEditing()
@@ -138,11 +143,11 @@ class SidebarViewController: NSViewController, NSMenuItemValidation, SplitViewCo
     }
 
     @IBAction func addToCanvas(_ sender: Any?) {
-        guard (sender as? NSMenuItem) != nil else {
+        guard let menuItem = sender as? NSMenuItem, let canvas = menuItem.representedObject as? Canvas else {
             return
         }
 
-//        self.viewModel.addPages(atIndexes: self.pageRowIndexesForAction, toCanvasAtindex: menuItem.tag)
+        self.viewModel.addNodes(self.nodesForAction, to: canvas)
     }
 
 
@@ -177,6 +182,8 @@ class SidebarViewController: NSViewController, NSMenuItemValidation, SplitViewCo
 
         if menuItem.action == #selector(addToCanvas(_:)) {
             return (self.nodesForAction.count > 0)
+                && (self.nodesForAction.containsFolders == false)
+                && (self.nodesForAction.containsCanvases == false)
         }
         
         return false
@@ -464,29 +471,17 @@ extension SidebarViewController: NSOutlineViewDelegate {
 
 
 
-//extension SidebarViewController: NSMenuDelegate {
-//    func numberOfItems(in menu: NSMenu) -> Int {
-//        if (menu.identifier == NSUserInterfaceItemIdentifier("SortPagesMenu")) {
-//            return SidebarViewModel.PageSortKey.allCases.count
-//        }
-//        return self.viewModel.canvasItems.count
-//    }
-//
-//    func menu(_ menu: NSMenu, update item: NSMenuItem, at index: Int, shouldCancel: Bool) -> Bool {
-//        if (menu.identifier == NSUserInterfaceItemIdentifier("SortPagesMenu")) {
-//            let sortKey = SidebarViewModel.PageSortKey.allCases[index]
-//            item.title = sortKey.localizedName
-//            item.representedObject = sortKey.rawValue
-//            item.state = (self.viewModel.sortKey == sortKey) ? .on : .off
-//            item.target = self
-//            item.action = #selector(changePageSorting(_:))
-//            return true
-//        }
-//
-//        item.title = self.viewModel.canvasItems[index].canvas.title
-//        item.tag = index
-//        item.target = self
-//        item.action = #selector(addToCanvas(_:))
-//        return true
-//    }
-//}
+extension SidebarViewController: NSMenuDelegate {
+    func numberOfItems(in menu: NSMenu) -> Int {
+        return self.viewModel.canvases.count
+    }
+
+    func menu(_ menu: NSMenu, update item: NSMenuItem, at index: Int, shouldCancel: Bool) -> Bool {//
+        let canvas = self.viewModel.canvases[index]
+        item.title = canvas.title
+        item.representedObject = canvas
+        item.target = self
+        item.action = #selector(addToCanvas(_:))
+        return true
+    }
+}
