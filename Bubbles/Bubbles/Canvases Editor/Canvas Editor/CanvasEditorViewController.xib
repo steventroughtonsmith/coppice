@@ -10,6 +10,7 @@
             <connections>
                 <outlet property="bottomBarConstraint" destination="cIE-Y9-6bZ" id="Aip-DH-S2N"/>
                 <outlet property="canvasView" destination="PUw-B3-8ie" id="pZV-PX-WgV"/>
+                <outlet property="emptyStateView" destination="dCb-kT-jJL" id="gC8-g4-rny"/>
                 <outlet property="scrollView" destination="WXD-co-iCD" id="Unx-zF-neD"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
                 <outlet property="zoomControl" destination="7ch-X7-loO" id="eBK-wO-l4u"/>
@@ -53,7 +54,7 @@
                                 <rect key="frame" x="419" y="3" width="53" height="18"/>
                                 <popUpButtonCell key="cell" type="roundTextured" title="100%" bezelStyle="texturedRounded" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" selectedItem="sLc-r6-goS" id="1Fw-Vb-jEB">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="controlContent" size="11"/>
+                                    <font key="font" metaFont="message" size="11"/>
                                     <menu key="menu" id="G43-Yk-PmC">
                                         <items>
                                             <menuItem title="25%" id="P07-uM-cbk"/>
@@ -71,7 +72,7 @@
                                 <rect key="frame" x="8" y="4" width="16" height="16"/>
                                 <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="CanvasSidebar" imagePosition="only" alignment="center" controlSize="small" imageScaling="proportionallyDown" inset="2" id="lmW-gL-D2E">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
-                                    <font key="font" metaFont="controlContent" size="11"/>
+                                    <font key="font" metaFont="message" size="11"/>
                                 </buttonCell>
                                 <connections>
                                     <binding destination="QYY-Jy-Z2h" name="value" keyPath="values.canvasListIsCompact" id="ZmW-0H-R0C"/>
@@ -104,6 +105,37 @@
             <point key="canvasLocation" x="139" y="154"/>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="QYY-Jy-Z2h"/>
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="dCb-kT-jJL">
+            <rect key="frame" x="0.0" y="0.0" width="432" height="55"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yvE-wG-L7l">
+                    <rect key="frame" x="-2" y="0.0" width="436" height="16"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Drag pages from the sidebar to get started" id="AwE-QI-wIe">
+                        <font key="font" usesAppearanceFont="YES"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KvT-jD-rWe">
+                    <rect key="frame" x="-2" y="27" width="436" height="28"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Welcome to your new Canvas" id="u33-Xb-wpy">
+                        <font key="font" metaFont="systemSemibold" size="24"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="yvE-wG-L7l" firstAttribute="leading" secondItem="dCb-kT-jJL" secondAttribute="leading" id="01V-Lt-Zk1"/>
+                <constraint firstItem="yvE-wG-L7l" firstAttribute="top" secondItem="KvT-jD-rWe" secondAttribute="bottom" constant="11" id="8SX-9b-Bwf"/>
+                <constraint firstItem="KvT-jD-rWe" firstAttribute="top" secondItem="dCb-kT-jJL" secondAttribute="top" id="PH2-48-YOe"/>
+                <constraint firstAttribute="bottom" secondItem="yvE-wG-L7l" secondAttribute="bottom" id="RYS-fM-rP1"/>
+                <constraint firstItem="KvT-jD-rWe" firstAttribute="leading" secondItem="dCb-kT-jJL" secondAttribute="leading" id="STV-MU-Jq5"/>
+                <constraint firstAttribute="trailing" secondItem="KvT-jD-rWe" secondAttribute="trailing" id="TMu-SF-aac"/>
+                <constraint firstAttribute="trailing" secondItem="yvE-wG-L7l" secondAttribute="trailing" id="uH7-GY-0ur"/>
+            </constraints>
+            <point key="canvasLocation" x="273" y="464.5"/>
+        </customView>
     </objects>
     <resources>
         <image name="CanvasSidebar" width="16" height="16"/>

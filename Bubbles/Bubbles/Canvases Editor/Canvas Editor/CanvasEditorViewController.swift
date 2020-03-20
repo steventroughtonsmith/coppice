@@ -173,6 +173,7 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
         self.updateSelectionRect()
         self.updatePages()
         self.updateArrows()
+        self.updateEmptyState()
         self.sortViews()
         self.updateCanvasViewPort()
         self.updateInspectorsIfNeeded()
@@ -315,6 +316,26 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
         }
         viewController.view.removeFromSuperview()
         viewController.removeFromParent()
+    }
+
+
+    //MARK: - Empty State
+    @IBOutlet var emptyStateView: NSView!
+    private func updateEmptyState() {
+        let isEmpty = (self.pageViewControllers.count == 0)
+        if isEmpty {
+            self.view.addSubview(self.emptyStateView)
+            NSLayoutConstraint.activate([
+                self.emptyStateView.centerXAnchor.constraint(equalTo: self.scrollView.centerXAnchor),
+                self.emptyStateView.centerYAnchor.constraint(equalTo: self.scrollView.centerYAnchor),
+            ])
+            self.scrollView.hasHorizontalScroller = false
+            self.scrollView.hasVerticalScroller = false
+        } else {
+            self.emptyStateView.removeFromSuperview()
+            self.scrollView.hasHorizontalScroller = true
+            self.scrollView.hasVerticalScroller = true
+        }
     }
 
 
