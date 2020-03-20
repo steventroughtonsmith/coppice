@@ -581,7 +581,7 @@ class DocumentWindowViewModel: NSObject {
 
 
     //MARK: - Import/Export
-    func importFiles(at urls: [URL]) {
+    func importFiles(at urls: [URL], into folder: Folder) {
         let pageCollection = self.modelController.collection(for: Page.self)
         _ = urls.compactMap { pageCollection.newPage(fromFileAt: $0) }
 //        self.selectedCanvasInSidebar?.addPages(pages)

@@ -144,23 +144,6 @@ class DocumentWindowController: NSWindowController {
         self.window?.makeFirstResponder(self.searchField)
     }
 
-    @IBAction func importFiles(_ sender: Any?) {
-        guard let window = self.window else {
-            return
-        }
-        let panel = NSOpenPanel()
-        panel.allowedFileTypes = [kUTTypeText as String, kUTTypeImage as String]
-        panel.allowsMultipleSelection = true
-        panel.prompt = NSLocalizedString("Import", comment: "Import button title")
-        panel.beginSheetModal(for: window) { [weak self] (response) in
-            guard response == .OK else {
-                return
-            }
-            self?.viewModel.importFiles(at: panel.urls)
-        }
-    }
-
-
 
     //MARK: - Split View Management
 

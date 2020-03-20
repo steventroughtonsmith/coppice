@@ -296,6 +296,11 @@ class SidebarViewModel: ViewModel {
         return .folder(newFolder.id)
     }
 
+    func createPages(fromFilesAt urls: [URL], underNodes collection: SidebarNodeCollection) {
+        let lastNode = collection.nodes.last
+        self.documentWindowViewModel.createPages(fromFilesAtURLs: urls, in: lastNode?.folderForCreation, below: lastNode?.folderForCreation)
+    }
+
 
     //MARK: - Deleting
     func delete(_ nodes: [SidebarNode]) {

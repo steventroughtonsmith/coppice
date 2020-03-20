@@ -9,24 +9,39 @@
 import AppKit
 
 class PageExporter {
-    private static func menuItemTitle(forExporting pages: [Page]) -> String {
+    //MARK: - Validation
+    static func validate(_ menuItem: NSMenuItem, forExporting nodeCollection: SidebarNodeCollection) -> Bool {
+        let pages = self.pagesToExport(from: nodeCollection)
         if pages.count == 1 {
-            return NSLocalizedString("Export Selected Page…", comment: "Export single page menu item title")
+            let localizedFormat = NSLocalizedString("Export \"%@\"…", comment: "Export single page menu title")
+            menuItem.title = String(format: localizedFormat, pages[0].title)
+            return true
+        } else if pages.count > 1 {
+            let localizedFormat = NSLocalizedString("Export %d Pages…", comment: "Export multiple pages menu title")
+            menuItem.title = String(format: localizedFormat, pages.count)
+            return true
         }
-        return NSLocalizedString("Export Selected Pages…", comment: "Export multiple pages menu item title")
+
+        menuItem.title = NSLocalizedString("Export Pages…", comment: "Default export pages menu title")
+        return false
     }
 
-    static func validate(_ menuItem: NSMenuItem, forExporting pages: [Page]) -> Bool {
-        guard menuItem.action == NSSelectorFromString("exportPages:") else {
-            return false
+    private static func pagesToExport(from nodeCollection: SidebarNodeCollection) -> [Page] {
+        guard (nodeCollection.containsCanvases == false) && (nodeCollection.containsFolders == false) else {
+            return []
         }
 
-        let selectedPages = pages
-        menuItem.title = self.menuItemTitle(forExporting: selectedPages)
-        return selectedPages.count > 0
+        return nodeCollection.nodes.compactMap { ($0 as? PageSidebarNode)?.page }
     }
 
-    static func export(_ pages: [Page], displayingOn window: NSWindow) {
+
+    //MARK: - Export
+    static func export(_ nodeCollection: SidebarNodeCollection, displayingOn window: NSWindow) {
+        let pages = self.pagesToExport(from: nodeCollection)
+        guard pages.count > 0 else {
+            return
+        }
+
         let panel = NSOpenPanel()
         panel.message = NSLocalizedString("Select a location to export to:", comment: "Export pages sheet message")
         panel.canChooseDirectories = true

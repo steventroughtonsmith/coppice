@@ -409,13 +409,6 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
         self.viewModel.selectedCanvasPages.forEach { self.viewModel.close($0) }
     }
 
-    @IBAction func exportPages(_ sender: Any?) {
-        guard let window = self.view.window else {
-            return
-        }
-        PageExporter.export(self.viewModel.selectedCanvasPages.compactMap { $0.page }, displayingOn: window)
-    }
-
     @IBAction func deleteItems(_ sender: Any?) {
         guard (self.viewModel.selectedCanvasPages.count == 1), let page = self.viewModel.selectedCanvasPages.first?.page else {
             return
@@ -452,7 +445,7 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
         if menuItem.action == #selector(zoomTo100(_:)) {
             return self.viewModel.canZoomTo100
         }
-        return PageExporter.validate(menuItem, forExporting: self.viewModel.selectedCanvasPages.compactMap { $0.page })
+        return false
     }
 
 

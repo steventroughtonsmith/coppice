@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class PageEditorViewController: NSViewController, NSMenuItemValidation {
+class PageEditorViewController: NSViewController {
     let viewModel: PageEditorViewModel
     init(viewModel: PageEditorViewModel) {
         self.viewModel = viewModel
@@ -52,18 +52,6 @@ class PageEditorViewController: NSViewController, NSMenuItemValidation {
     private lazy var pageInspectorViewController: PageInspectorViewController = {
         return PageInspectorViewController(viewModel: self.viewModel.pageInspectorViewModel)
     }()
-
-
-    @IBAction func exportPages(_ sender: Any?) {
-        guard let window = self.view.window else {
-            return
-        }
-        PageExporter.export([self.viewModel.page], displayingOn: window)
-    }
-
-    func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
-        return PageExporter.validate(menuItem, forExporting: [self.viewModel.page])
-    }
 }
 
 

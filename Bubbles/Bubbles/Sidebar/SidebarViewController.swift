@@ -135,19 +135,36 @@ class SidebarViewController: NSViewController, NSMenuItemValidation, SplitViewCo
         self.viewModel.delete(self.nodesForAction.nodes)
     }
 
-    @IBAction func exportPages(_ sender: Any?) {
-        guard self.view.window != nil else {
-            return
-        }
-//        PageExporter.export(self.viewModel.selectedPages, displayingOn: window)
-    }
-
     @IBAction func addToCanvas(_ sender: Any?) {
         guard let menuItem = sender as? NSMenuItem, let canvas = menuItem.representedObject as? Canvas else {
             return
         }
 
         self.viewModel.addNodes(self.nodesForAction, to: canvas)
+    }
+
+    @IBAction func importFiles(_ sender: Any?) {
+        guard let window = self.view.window else {
+            return
+        }
+        let nodes = self.nodesForAction
+        let panel = NSOpenPanel()
+        panel.allowedFileTypes = [kUTTypeText as String, kUTTypeImage as String]
+        panel.allowsMultipleSelection = true
+        panel.prompt = NSLocalizedString("Import", comment: "Import button title")
+        panel.beginSheetModal(for: window) { [weak self] (response) in
+            guard response == .OK else {
+                return
+            }
+            self?.viewModel.createPages(fromFilesAt: panel.urls, underNodes: nodes)
+        }
+    }
+
+    @IBAction func exportPages(_ sender: Any?) {
+        guard let window = self.view.window else {
+            return
+        }
+        PageExporter.export(self.nodesForAction, displayingOn: window)
     }
 
 
@@ -175,9 +192,12 @@ class SidebarViewController: NSViewController, NSMenuItemValidation, SplitViewCo
             return self.validateDeleteItemMenuItem(menuItem)
         }
 
+        if menuItem.action == #selector(importFiles(_:)) {
+            return true
+        }
+
         if menuItem.action == #selector(exportPages(_:)) {
-//            let pages = self.viewModel.pageItems[self.pageRowIndexesForAction].map { $0.page }
-//            return PageExporter.validate(menuItem, forExporting: pages)
+            return PageExporter.validate(menuItem, forExporting: self.nodesForAction)
         }
 
         if menuItem.action == #selector(addToCanvas(_:)) {
