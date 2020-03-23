@@ -269,9 +269,6 @@ class SidebarViewModel: ViewModel {
     }
 
 
-
-
-
     //MARK: - Creation
     func createPage(ofType type: PageContentType, underNodes collection: SidebarNodeCollection) -> DocumentWindowViewModel.SidebarItem {
         let lastNode = collection.nodes.last
@@ -323,34 +320,35 @@ class SidebarViewModel: ViewModel {
     }
 
 
-//    func deletePages(atIndexes indexes: IndexSet) {
-//        for index in indexes {
-//            guard (index >= 0) && (index < self.pageItems.count) else {
-//                continue
-//            }
-//            let page = self.pageItems[index].page
-//            self.documentWindowViewModel.delete(page)
-//        }
-//    }
-//
-//    func deletePage(atIndex index: Int) {
-//        guard (index >= 0) && (index < self.pageItems.count) else {
-//            return
-//        }
-//
-//        let page = self.pageItems[index].page
-//        self.documentWindowViewModel.delete(page)
-//    }
+    //MARK: - Folders
+    enum FolderSortingMethod: CaseIterable {
+        case title
+        case type
+        case dateCreated
+        case lastModified
 
+        var localizedString: String {
+            switch self {
+            case .title: return NSLocalizedString("Title", comment: "Title folder sorting method")
+            case .type: return NSLocalizedString("Type", comment: "Type folder sorting method")
+            case .dateCreated: return NSLocalizedString("Date Created", comment: "Date Created folder sorting method")
+            case .lastModified: return NSLocalizedString("Last Modified", comment: "Last Modified folder sorting method")
+            }
+        }
 
-    //MARK: - Adding Files
-//    func addPages(fromFilesAtURLs fileURLs: [URL], toCanvasAtIndex canvasIndex: Int?) -> [Page] {
-//        var canvas: Canvas?
-//        if let index = canvasIndex {
-//            canvas = self.canvasItems[index].canvas
-//        }
-//
-//        return self.documentWindowViewModel.createPages(fromFilesAtURLs: fileURLs, addingTo: canvas)
-//    }
+        func compare(_ first: FolderContainable, _ second: FolderContainable) -> Bool {
+            switch self {
+            case .title: return first.title < second.title
+            case .type: return first.sortType < second.sortType
+            case .dateCreated: return first.dateCreated > second.dateCreated
+            case .lastModified: return first.dateModified > second.dateModified
+            }
+        }
+    }
+
+    func sort(_ folder: Folder, using method: FolderSortingMethod) {
+        let contents = folder.contents.sorted(by: method.compare)
+        folder.contents = contents
+    }
 
 }

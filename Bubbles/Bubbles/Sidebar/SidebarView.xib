@@ -12,6 +12,7 @@
                 <outlet property="bottomBarConstraint" destination="fVw-uG-Q53" id="F67-Fb-Kxz"/>
                 <outlet property="newPageMenuDelegate" destination="1CQ-Ez-MOk" id="yTp-Tg-Hpk"/>
                 <outlet property="outlineView" destination="lUZ-o0-8kA" id="UpE-Yg-5BT"/>
+                <outlet property="sortFolderMenu" destination="etc-JA-9ps" id="4Jf-vq-tvP"/>
                 <outlet property="view" destination="EkW-XH-sRX" id="eZ7-RY-tbh"/>
             </connections>
         </customObject>
@@ -69,8 +70,8 @@
                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                         <connections>
-                                                            <binding destination="bGF-qo-JyG" name="value" keyPath="objectValue.title" id="CgU-iN-aMe"/>
                                                             <binding destination="bGF-qo-JyG" name="textColor" keyPath="objectValue.textColor" id="6Y3-il-MPR"/>
+                                                            <binding destination="bGF-qo-JyG" name="value" keyPath="objectValue.title" id="CgU-iN-aMe"/>
                                                         </connections>
                                                     </textField>
                                                 </subviews>
@@ -244,6 +245,11 @@
                                                 </menu>
                                             </menuItem>
                                             <menuItem isSeparatorItem="YES" id="zS6-rq-134"/>
+                                            <menuItem title="Sort Folder by" id="jCm-Se-cBM">
+                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                                <menu key="submenu" title="Sort Folder by" id="etc-JA-9ps"/>
+                                            </menuItem>
+                                            <menuItem isSeparatorItem="YES" id="pv6-Eo-pZ3"/>
                                             <menuItem title="Import Files…" id="Wcq-Dk-YFW">
                                                 <modifierMask key="keyEquivalentModifierMask"/>
                                                 <connections>

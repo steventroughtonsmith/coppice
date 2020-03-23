@@ -30,6 +30,7 @@ class SidebarViewController: NSViewController, NSMenuItemValidation, SplitViewCo
 
         self.outlineView.registerForDraggedTypes([.fileURL, ModelID.PasteboardType])
 
+        self.setupSortFolderMenu()
         self.setupContextMenu()
 
         self.bottomBarConstraint.constant = GlobalConstants.bottomBarHeight
@@ -200,6 +201,11 @@ class SidebarViewController: NSViewController, NSMenuItemValidation, SplitViewCo
             return PageExporter.validate(menuItem, forExporting: self.nodesForAction)
         }
 
+        if menuItem.action == #selector(sortFolder(_:)) {
+            let selection = self.nodesForAction
+            return (selection.count == 1) && selection.containsFolders
+        }
+
         if menuItem.action == #selector(addToCanvas(_:)) {
             return (self.nodesForAction.count > 0)
                 && (self.nodesForAction.containsFolders == false)
@@ -294,6 +300,40 @@ class SidebarViewController: NSViewController, NSMenuItemValidation, SplitViewCo
             }
         }
         return collection
+    }
+
+
+    //MARK: - Folder Sorting
+    @IBOutlet weak var sortFolderMenu: NSMenu!
+    private func setupSortFolderMenu() {
+        self.sortFolderMenu.items = SidebarViewModel.FolderSortingMethod.allCases.enumerated().map { (index, element) in
+            let menuItem = NSMenuItem(title: element.localizedString, action: #selector(sortFolder(_:)), keyEquivalent: "")
+            menuItem.target = self
+            menuItem.tag = index
+            return menuItem
+        }
+    }
+
+    @IBAction func sortFolder(_ sender: Any?) {
+        guard let menuItem = sender as? NSMenuItem else {
+            return
+        }
+        
+        let selection = self.nodesForAction
+        guard (selection.count == 1) && selection.containsFolders else {
+            return
+        }
+
+        guard let sortMethod = SidebarViewModel.FolderSortingMethod.allCases[safe: menuItem.tag] else {
+            return
+        }
+
+        if let folder = (selection.nodes[0] as? FolderSidebarNode)?.folder {
+            self.viewModel.sort(folder, using: sortMethod)
+        }
+        else if let folder = (selection.nodes[0] as? PagesGroupSidebarNode)?.rootFolder {
+            self.viewModel.sort(folder, using: sortMethod)
+        }
     }
 
 }

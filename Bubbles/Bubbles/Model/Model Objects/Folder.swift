@@ -20,9 +20,24 @@ final class Folder: NSObject, CollectableModelObject, FolderContainable {
         didSet { self.didChange(\.title, oldValue: oldValue) }
     }
 
+    var dateCreated: Date = Date()
+
+    var dateModified: Date {
+        guard self.contents.count > 0 else {
+            return self.dateCreated
+        }
+
+        let sorted = self.contents.sorted(by: { $0.dateModified > $1.dateModified })
+        return sorted[0].dateModified
+    }
+
     weak var containingFolder: Folder?
     var contents: [FolderContainable] = [] {
         didSet { self.didChange(\.contents, oldValue: oldValue) }
+    }
+
+    var sortType: String {
+        return "0Folder"
     }
 
     func insert(_ objects: [FolderContainable], below item: FolderContainable? = nil) {
@@ -65,13 +80,13 @@ final class Folder: NSObject, CollectableModelObject, FolderContainable {
     }
 
 
-
     //MARK: - Plist
     var plistRepresentation: [String : Any] {
         return [
             "id": self.id.stringRepresentation,
             "title": self.title,
-            "contents": self.contents.map { $0.id.stringRepresentation }
+            "contents": self.contents.map { $0.id.stringRepresentation },
+            "dateCreated": self.dateCreated
         ]
     }
 
@@ -84,6 +99,11 @@ final class Folder: NSObject, CollectableModelObject, FolderContainable {
             throw ModelObjectUpdateErrors.attributeNotFound("title")
         }
         self.title = title
+
+        guard let dateCreated = plist["dateCreated"] as? Date else {
+            throw ModelObjectUpdateErrors.attributeNotFound("dateCreated")
+        }
+        self.dateCreated = dateCreated
 
         guard let contentsStrings = plist["contents"] as? [String] else {
             throw ModelObjectUpdateErrors.attributeNotFound("contents")

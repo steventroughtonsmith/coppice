@@ -50,7 +50,14 @@ final class Page: NSObject, CollectableModelObject, FolderContainable {
     }
 
 
+    //MARK: - FolderContainable
     weak var containingFolder: Folder?
+
+    var sortType: String {
+        let type = self.content.contentType
+        let index = PageContentType.allCases.firstIndex(of: type) ?? -1
+        return "\(index + 1)\(type.rawValue)"
+    }
 
 
     // MARK: - Relationships

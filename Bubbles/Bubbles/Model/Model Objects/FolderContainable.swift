@@ -11,6 +11,10 @@ import Foundation
 /// An object that can be contained in a folder
 protocol FolderContainable: ModelObject {
     var containingFolder: Folder? { get set }
+    var dateCreated: Date { get }
+    var dateModified: Date { get }
+    var title: String { get }
+    var sortType: String { get }
 
     func removeFromContainingFolder()
 }

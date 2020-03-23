@@ -1398,16 +1398,6 @@ class DocumentWindowViewModelTests: XCTestCase {
         XCTAssertFalse(viewModel.canvasPageCollection.all.contains(canvasPage2))
     }
 
-    func test_deleteCanvas_setsSelectedSidebarObjectIDToNilIfCanvasWasSelected() {
-        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
-        let canvas = viewModel.canvasCollection.newObject()
-        viewModel.selectedSidebarObjectIDs = Set([canvas.id])
-
-        viewModel.delete(canvas)
-
-        XCTAssertEqual(viewModel.selectedSidebarObjectIDs.count, 0)
-    }
-
     func test_deleteCanvas_undoRecreatesCanvasWithSameIDAndAttributes() throws {
         let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let canvas = viewModel.canvasCollection.newObject()
