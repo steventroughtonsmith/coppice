@@ -70,6 +70,7 @@
                                                         </textFieldCell>
                                                         <connections>
                                                             <binding destination="bGF-qo-JyG" name="value" keyPath="objectValue.title" id="CgU-iN-aMe"/>
+                                                            <binding destination="bGF-qo-JyG" name="textColor" keyPath="objectValue.textColor" id="6Y3-il-MPR"/>
                                                         </connections>
                                                     </textField>
                                                 </subviews>

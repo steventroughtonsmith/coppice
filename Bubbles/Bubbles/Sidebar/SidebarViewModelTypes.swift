@@ -53,6 +53,10 @@ class SidebarNode: NSObject {
         return nil
     }
 
+    @objc dynamic var textColor: NSColor {
+        return .textColor
+    }
+
     let item: DocumentWindowViewModel.SidebarItem
     let cellType: CellType
 
@@ -183,15 +187,22 @@ class PageSidebarNode: SidebarNode {
 
     override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
         var keyPaths = super.keyPathsForValuesAffectingValue(forKey: key)
-        if key == #keyPath(title) {
+        if (key == #keyPath(title)) || (key == #keyPath(textColor)) {
             keyPaths.insert("self.page.title")
         }
         return keyPaths
     }
 
     @objc dynamic override var title: String {
-        get { return self.page.title  }
+        get {
+            let title = self.page.title
+            return (title.count > 0) ? title : "Untitled Page"
+        }
         set { self.page.title = newValue }
+    }
+
+    override var textColor: NSColor {
+        return (self.page.title.count > 0) ? .textColor : .placeholderTextColor
     }
 
     override var image: NSImage? {

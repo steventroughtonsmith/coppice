@@ -40,8 +40,11 @@ class PageInspectorViewModel: BaseInspectorViewModel {
         return keyPaths
     }
 
-    @objc dynamic var pageTitle: String {
-        get { self.page.title }
-        set { self.page.title = newValue }
+    @objc dynamic var pageTitle: String? {
+        get {
+            let title = self.page.title
+            return (title.count > 0) ? title : nil
+        }
+        set { self.page.title = newValue ?? "" }
     }
 }

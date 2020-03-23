@@ -26,7 +26,7 @@ final class Page: NSObject, CollectableModelObject, FolderContainable {
     }
 
     override init() {
-        self.title = Page.localizedDefaultTitle
+        self.title = ""
         self.content = TextPageContent()
         super.init()
         self.content.page = self

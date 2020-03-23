@@ -28,7 +28,8 @@ final class CanvasPage: NSObject, CollectableModelObject {
     }
 
     @objc dynamic var title : String {
-        return self.page?.title ?? "Untitled"
+        let title = self.page?.title ?? ""
+        return (title.count > 0) ? title : "Untitled Page"
     }
 
     
