@@ -17,7 +17,7 @@ class CanvasPageTitleView: NSView {
     //MARK: - Public API
     @objc dynamic var title: String = "" {
         didSet {
-            self.titleLabel.stringValue = title
+            self.updateTitleState()
         }
     }
 
@@ -50,12 +50,13 @@ class CanvasPageTitleView: NSView {
             self.titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: self.button.trailingAnchor, constant: 5),
             self.trailingAnchor.constraint(greaterThanOrEqualTo: self.titleLabel.trailingAnchor, constant: 5),
         ])
+        self.updateTitleState()
     }
 
 
     //MARK: - Subviews
     lazy var titleLabel: NSTextField = {
-        let label = NSTextField(labelWithString: self.title)
+        let label = NSTextField(labelWithString: "")
         label.translatesAutoresizingMaskIntoConstraints = false
         label.lineBreakMode = .byTruncatingTail
         label.textColor = .labelColor
@@ -82,6 +83,17 @@ class CanvasPageTitleView: NSView {
     }
 
 
+    //MARK: - Title State
+    private func updateTitleState() {
+        if self.title.count > 0 {
+            self.titleLabel.textColor = .textColor
+            self.titleLabel.stringValue = self.title
+        } else {
+            self.titleLabel.textColor = .placeholderTextColor
+            self.titleLabel.stringValue = Page.localizedDefaultTitle
+        }
+    }
+
 
     //MARK: - Title Editability
     override func mouseDown(with event: NSEvent) {
@@ -95,6 +107,7 @@ class CanvasPageTitleView: NSView {
 
     private func makeTitleEditable() {
         self.titleLabel.isEditable = true
+        self.titleLabel.textColor = .textColor
         self.window?.makeFirstResponder(self.titleLabel)
     }
 }
