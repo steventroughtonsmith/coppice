@@ -285,6 +285,14 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
         return self.pageViewControllers.filter { $0.selected }
     }
 
+    @IBAction override func selectAll(_ sender: Any?) {
+        self.layoutEngine.selectAll()
+    }
+
+    @IBAction func deselectAll(_ sender: Any?) {
+        self.layoutEngine.deselectAll()
+    }
+
 
     //MARK: - Page View Controller Management
     private var pageViewControllers: [CanvasPageViewController] {
@@ -465,6 +473,10 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
         }
         if menuItem.action == #selector(zoomTo100(_:)) {
             return self.viewModel.canZoomTo100
+        }
+        if menuItem.action == #selector(selectAll(_:)) ||
+            menuItem.action == #selector(deselectAll(_:)) {
+            return true
         }
         return false
     }

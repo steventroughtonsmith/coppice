@@ -186,9 +186,15 @@
                                     <action selector="delete:" target="-1" id="0Mk-Ml-PaM"/>
                                 </connections>
                             </menuItem>
+                            <menuItem isSeparatorItem="YES" id="f42-gC-alE"/>
                             <menuItem title="Select All" keyEquivalent="a" id="Ruw-6m-B2m">
                                 <connections>
                                     <action selector="selectAll:" target="-1" id="VNm-Mi-diN"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Deselect All" keyEquivalent="A" id="I7T-CH-b7g">
+                                <connections>
+                                    <action selector="deselectAll:" target="-1" id="jqt-GJ-TuF"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="uyl-h8-XO2"/>

@@ -179,6 +179,12 @@ class CanvasLayoutEngine: NSObject {
 
     var selectionRect: CGRect?
 
+    func selectAll() {
+        self.pages.forEach { $0.selected = true }
+        self.updateEnabledPage()
+        self.informOfLayoutChange(with: LayoutContext(selectionChanged: true))
+    }
+
     func deselectAll() {
         self.selectedPages.forEach { $0.selected = false }
         self.updateEnabledPage()
