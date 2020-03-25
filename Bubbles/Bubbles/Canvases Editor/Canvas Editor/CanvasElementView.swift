@@ -60,6 +60,7 @@ class CanvasElementView: NSView  {
         self.updateSubviews(with: layoutPage)
         self.updateResizeRects(with: layoutPage)
         self.showBackground = layoutPage.showBackground
+        self.selectionView.isHidden = !layoutPage.selected
     }
 
     override init(frame frameRect: NSRect) {
@@ -101,6 +102,8 @@ class CanvasElementView: NSView  {
         return view
     }()
 
+    private let selectionView = SelectionView()
+
     private lazy var debugView: RectDrawingView = {
         let view = RectDrawingView()
         view.autoresizingMask = [.height, .width]
@@ -114,6 +117,7 @@ class CanvasElementView: NSView  {
         self.addSubview(self.titleView)
         self.addSubview(self.contentContainerShadow)
         self.addSubview(self.contentContainer)
+        self.addSubview(self.selectionView)
 //        self.addSubview(self.debugView)
         self.debugView.frame = self.bounds
         
@@ -124,12 +128,12 @@ class CanvasElementView: NSView  {
     private let shadowInsets = NSEdgeInsets(top: 5, left: 10, bottom: 10, right: 10)
 
 
-
     private func updateSubviews(with layoutPage: LayoutEnginePage) {
         self.backgroundView.frame = layoutPage.visualPageFrame
         self.titleView.frame = layoutPage.titleBarFrame
         self.contentContainer.frame = layoutPage.contentContainerFrame
         self.contentContainerShadow.frame = layoutPage.contentContainerFrame.insetBy(dx: -1, dy: -1)
+        self.selectionView.frame = layoutPage.visualPageFrame.insetBy(dx: -1, dy: -1)
         self.disabledContentMouseStealer.frame = layoutPage.contentContainerFrame
     }
 
@@ -252,5 +256,18 @@ class ShadowView: NSView {
         let path = NSBezierPath(roundedRect: self.bounds, xRadius: 5, yRadius: 5)
         NSColor(named: "PageViewStroke")?.set()
         path.fill()
+    }
+}
+
+class SelectionView: NSView {
+    override var isFlipped: Bool {
+        return true
+    }
+
+    override func draw(_ dirtyRect: NSRect) {
+        let path = NSBezierPath(roundedRect: self.bounds.insetBy(dx: 1, dy: 1), xRadius: 5, yRadius: 5)
+        path.lineWidth = 2
+        NSColor.controlAccentColor.set()
+        path.stroke()
     }
 }
