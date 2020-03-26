@@ -9,22 +9,7 @@
 import Foundation
 
 extension Canvas {
-    //MARK: - Helpers
-
-    @discardableResult func add(_ page: Page, linkedFrom sourcePage: CanvasPage) -> CanvasPage {
-        guard let collection = self.modelController?.collection(for: CanvasPage.self) else {
-            preconditionFailure("Could not find canvas page collection")
-        }
-
-        let frame = self.frame(for: page, linkedFrom: sourcePage)
-        return collection.newObject() { canvasPage in
-            canvasPage.page = page
-            canvasPage.parent = sourcePage
-            canvasPage.canvas = self
-            canvasPage.frame = frame
-        }
-    }
-
+    //MARK: - Add New Pages
     @discardableResult func addPages(_ pages: [Page], centredOn point: CGPoint? = nil) -> [CanvasPage] {
         guard let collection = self.modelController?.collection(for: CanvasPage.self) else {
             preconditionFailure("Could not find canvas page collection")
@@ -52,6 +37,70 @@ extension Canvas {
 
         return canvasPages
     }
+
+
+    //MARK: - Open & Close Pages
+    @discardableResult func open(_ page: Page, linkedFrom sourcePage: CanvasPage) -> [CanvasPage] {
+        guard let collection = self.modelController?.collection(for: CanvasPage.self) else {
+            preconditionFailure("Could not find canvas page collection")
+        }
+
+        guard let existingHierarchy = self.closedPageHierarchies[sourcePage.id]?[page.id] else {
+            let frame = self.frame(for: page, linkedFrom: sourcePage)
+            let canvasPage = collection.newObject() {
+                $0.page = page
+                $0.parent = sourcePage
+                $0.canvas = self
+                $0.frame = frame
+            }
+            return [canvasPage]
+        }
+
+        self.closedPageHierarchies[sourcePage.id]?[page.id] = nil
+        return self.open(existingHierarchy, linkedFrom: sourcePage)
+    }
+
+    private func open(_ hierarchy: PageHierarchy, linkedFrom sourcePage: CanvasPage) -> [CanvasPage] {
+        guard let canvasPageCollection = self.modelController?.collection(for: CanvasPage.self),
+            let pageCollection = self.modelController?.collection(for: Page.self) else {
+                preconditionFailure("Could not find canvas page collection")
+        }
+
+        var canvasPages = [CanvasPage]()
+
+        let pageForHierarchy = canvasPageCollection.newObject() {
+            $0.id = hierarchy.id
+            $0.page = pageCollection.objectWithID(hierarchy.pageID)
+            $0.frame = hierarchy.frame
+            $0.canvas = self
+            $0.parent = sourcePage
+        }
+        canvasPages.append(pageForHierarchy)
+        for child in hierarchy.children {
+            canvasPages.append(contentsOf: self.open(child, linkedFrom: pageForHierarchy))
+        }
+
+        return canvasPages
+    }
+
+    func close(_ canvasPage: CanvasPage) {
+        if let parent = canvasPage.parent, let page = canvasPage.page, let hierarchy = PageHierarchy(canvasPage: canvasPage) {
+            var hierarchies = self.closedPageHierarchies[parent.id] ?? [ModelID: PageHierarchy]()
+            hierarchies[page.id] = hierarchy
+            self.closedPageHierarchies[parent.id] = hierarchies
+        }
+
+        self.removeCanvasPages(startingFrom: canvasPage)
+    }
+
+    private func removeCanvasPages(startingFrom canvasPage: CanvasPage) {
+        for child in canvasPage.children {
+            self.removeCanvasPages(startingFrom: child)
+        }
+        canvasPage.parent = nil
+        canvasPage.collection?.delete(canvasPage)
+    }
+
 
     //MARK: - Frame calculation
     private enum PageDirection : Equatable {

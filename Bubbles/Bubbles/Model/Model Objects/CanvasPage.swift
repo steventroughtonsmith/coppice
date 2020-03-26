@@ -59,6 +59,16 @@ final class CanvasPage: NSObject, CollectableModelObject {
         self.relationship(for: \.parent)
     }
 
+    func existingCanvasPage(for page: Page) -> CanvasPage? {
+        if self.page?.id == page.id {
+            return self
+        }
+        if let child = self.children.first(where: {$0.page?.id == page.id }) {
+            return child
+        }
+        return nil
+    }
+
     func objectWasInserted() {
         self.$page.modelController = self.modelController
         self.$canvas.modelController = self.modelController

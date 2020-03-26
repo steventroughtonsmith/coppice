@@ -10,6 +10,7 @@ import AppKit
 
 protocol CanvasEditorView: class {
     func updateZoomFactor()
+    func flash(_ canvasPage: CanvasPage)
 }
 
 class CanvasEditorViewModel: ViewModel {
@@ -84,7 +85,7 @@ class CanvasEditorViewModel: ViewModel {
     }
 
     func close(_ canvasPage: CanvasPage) {
-        self.documentWindowViewModel.remove(canvasPage)
+        self.documentWindowViewModel.close(canvasPage)
     }
 
     func canvasPage(with uuid: UUID) -> CanvasPage? {
@@ -161,7 +162,9 @@ class CanvasEditorViewModel: ViewModel {
     }
 
     func addPage(at link: PageLink, centredOn point: CGPoint? = nil) {
-        self.documentWindowViewModel.addPage(at: link, to: self.canvas)
+        for canvasPage in self.documentWindowViewModel.openPage(at: link, on: self.canvas) {
+            self.view?.flash(canvasPage)
+        }
     }
 
     func addPages(with ids: [ModelID], centredOn point: CGPoint? = nil) {

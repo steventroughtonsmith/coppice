@@ -259,7 +259,7 @@ class CanvasTests: XCTestCase {
         let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
         let canvasPage = CanvasPage.create(in: modelController)
 
-        let newCanvasPage = canvas.add(page, linkedFrom: canvasPage)
+        let newCanvasPage = canvas.open(page, linkedFrom: canvasPage)
         XCTAssertEqual(newCanvasPage.page, page)
         XCTAssertEqual(newCanvasPage.parent, canvasPage)
         XCTAssertTrue(modelController.collection(for: CanvasPage.self).all.contains(newCanvasPage))
@@ -275,7 +275,7 @@ class CanvasTests: XCTestCase {
             $0.canvas = canvas
         }
 
-        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        let newCanvasPage = canvas.open(page, linkedFrom: parentPage)
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 30 + GlobalConstants.linkedPageOffset, y: 30, width: 20, height: 20))
     }
 
@@ -291,7 +291,7 @@ class CanvasTests: XCTestCase {
             $0.canvas = canvas
         } //Left
 
-        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        let newCanvasPage = canvas.open(page, linkedFrom: parentPage)
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 10 - GlobalConstants.linkedPageOffset - 20, y: 30, width: 20, height: 20))
     }
 
@@ -314,7 +314,7 @@ class CanvasTests: XCTestCase {
             $0.canvas = canvas
         } // Right
 
-        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        let newCanvasPage = canvas.open(page, linkedFrom: parentPage)
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 10, y: 50 + GlobalConstants.linkedPageOffset, width: 20, height: 20))
     }
 
@@ -341,7 +341,7 @@ class CanvasTests: XCTestCase {
             $0.canvas = canvas
         } // Bottom
 
-        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        let newCanvasPage = canvas.open(page, linkedFrom: parentPage)
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 10, y: 30 - GlobalConstants.linkedPageOffset - 20, width: 20, height: 20))
     }
 
@@ -372,7 +372,7 @@ class CanvasTests: XCTestCase {
             $0.canvas = canvas
         } // Top
 
-        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        let newCanvasPage = canvas.open(page, linkedFrom: parentPage)
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 30 + GlobalConstants.linkedPageOffset, y: 30, width: 20, height: 20))
     }
 
@@ -391,7 +391,7 @@ class CanvasTests: XCTestCase {
             $0.parent = rootPage
         }
 
-        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        let newCanvasPage = canvas.open(page, linkedFrom: parentPage)
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 10 + GlobalConstants.linkedPageOffset + 20, y: 30, width: 20, height: 20))
     }
 
@@ -410,7 +410,7 @@ class CanvasTests: XCTestCase {
             $0.parent = rootPage
         }
 
-        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        let newCanvasPage = canvas.open(page, linkedFrom: parentPage)
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 10, y: 30 - GlobalConstants.linkedPageOffset - 20, width: 20, height: 20))
     }
 
@@ -429,7 +429,7 @@ class CanvasTests: XCTestCase {
             $0.parent = rootPage
         }
 
-        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        let newCanvasPage = canvas.open(page, linkedFrom: parentPage)
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 10, y: 50 + GlobalConstants.linkedPageOffset, width: 20, height: 20))
     }
 
@@ -449,7 +449,7 @@ class CanvasTests: XCTestCase {
             $0.canvas = canvas
         } //existing child
 
-        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        let newCanvasPage = canvas.open(page, linkedFrom: parentPage)
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 90, y: 30 - GlobalConstants.linkedPageOffset - 20, width: 20, height: 20))
     }
 
@@ -475,7 +475,7 @@ class CanvasTests: XCTestCase {
             $0.canvas = canvas
         } //existing top right child
 
-        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        let newCanvasPage = canvas.open(page, linkedFrom: parentPage)
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 90, y: 50 + GlobalConstants.linkedPageOffset, width: 20, height: 20))
     }
 
@@ -501,7 +501,7 @@ class CanvasTests: XCTestCase {
             $0.canvas = canvas
         } //existing bottom right child
 
-        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        let newCanvasPage = canvas.open(page, linkedFrom: parentPage)
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 90, y: 20 - GlobalConstants.linkedPageOffset - 20, width: 20, height: 20))
     }
 
@@ -521,7 +521,7 @@ class CanvasTests: XCTestCase {
             $0.canvas = canvas
         } //existing child
 
-        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        let newCanvasPage = canvas.open(page, linkedFrom: parentPage)
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: -110, y: 30 - GlobalConstants.linkedPageOffset - 20, width: 20, height: 20))
     }
 
@@ -547,7 +547,7 @@ class CanvasTests: XCTestCase {
             $0.canvas = canvas
         } //existing top left child
 
-        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        let newCanvasPage = canvas.open(page, linkedFrom: parentPage)
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: -110, y: 50 + GlobalConstants.linkedPageOffset, width: 20, height: 20))
     }
 
@@ -573,7 +573,7 @@ class CanvasTests: XCTestCase {
             $0.canvas = canvas
         } //existing bottom left child
 
-        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        let newCanvasPage = canvas.open(page, linkedFrom: parentPage)
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: -110, y: 20 - GlobalConstants.linkedPageOffset - 20, width: 20, height: 20))
     }
 
@@ -593,7 +593,7 @@ class CanvasTests: XCTestCase {
             $0.canvas = canvas
         } //existing child
 
-        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        let newCanvasPage = canvas.open(page, linkedFrom: parentPage)
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 10 + GlobalConstants.linkedPageOffset + 20, y: -90, width: 20, height: 20))
     }
 
@@ -619,7 +619,7 @@ class CanvasTests: XCTestCase {
             $0.canvas = canvas
         } //existing top left child
 
-        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        let newCanvasPage = canvas.open(page, linkedFrom: parentPage)
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 10 + GlobalConstants.linkedPageOffset + 20, y: -90, width: 20, height: 20))
     }
 
@@ -645,7 +645,7 @@ class CanvasTests: XCTestCase {
             $0.canvas = canvas
         } //existing top right child
 
-        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        let newCanvasPage = canvas.open(page, linkedFrom: parentPage)
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 20 - GlobalConstants.linkedPageOffset - 20, y: -90, width: 20, height: 20))
     }
 
@@ -665,7 +665,7 @@ class CanvasTests: XCTestCase {
             $0.canvas = canvas
         } //existing child
 
-        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        let newCanvasPage = canvas.open(page, linkedFrom: parentPage)
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 10 + GlobalConstants.linkedPageOffset + 20, y: 110, width: 20, height: 20))
     }
 
@@ -691,7 +691,7 @@ class CanvasTests: XCTestCase {
             $0.canvas = canvas
         } //existing bottom left child
 
-        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        let newCanvasPage = canvas.open(page, linkedFrom: parentPage)
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 10 + GlobalConstants.linkedPageOffset + 20, y: 110, width: 20, height: 20))
     }
 
@@ -717,7 +717,7 @@ class CanvasTests: XCTestCase {
             $0.canvas = canvas
         } //existing bottom right child
 
-        let newCanvasPage = canvas.add(page, linkedFrom: parentPage)
+        let newCanvasPage = canvas.open(page, linkedFrom: parentPage)
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 20 - GlobalConstants.linkedPageOffset - 20, y: 110, width: 20, height: 20))
     }
 

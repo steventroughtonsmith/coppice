@@ -455,25 +455,11 @@ class DocumentWindowViewModel: NSObject {
     /// Displays the page at the supplied link in the main editor
     /// - Parameter pageLink: The page link to open
     func openPage(at pageLink: PageLink) {
-        self.selectedSidebarObjectIDs = Set([pageLink.destination])
+        self.updateSelection([.page(pageLink.destination)])
     }
 
 
     //MARK: - Adding Pages To Canvas
-    @discardableResult func addPage(at link: PageLink, to canvas: Canvas, centredOn point: CGPoint? = nil) -> CanvasPage? {
-        guard let page = self.pageCollection.objectWithID(link.destination) else {
-            return nil
-        }
-        self.modelController.undoManager.setActionName(NSLocalizedString("Add Page to Canvas", comment: "Add Page To Canvas Undo Action Name"))
-
-        guard let source = link.source,
-            let sourcePage = self.canvasPageCollection.objectWithID(source) else {
-                return canvas.addPages([page]).first
-        }
-
-        return canvas.add(page, linkedFrom: sourcePage)
-    }
-
     @discardableResult func addPages(_ pages: [Page], to canvas: Canvas, centredOn point: CGPoint? = nil) -> [CanvasPage] {
         guard pages.count > 0 else {
             return []
@@ -537,22 +523,39 @@ class DocumentWindowViewModel: NSObject {
         self.selectedCanvasID = nil
     }
 
-    //Removing page from canvas
-    func remove(_ canvasPage: CanvasPage) {
-        self.modelController.pushChangeGroup()
-        self.modelController.undoManager.setActionName(NSLocalizedString("Remove Page From Canvas", comment: "Remove Page From Canvas Undo Action Name"))
-        self.closeChildren(of: canvasPage)
-        canvasPage.canvas = nil
-        self.canvasPageCollection.delete(canvasPage)
-        self.modelController.popChangeGroup()
+
+    //MARK: - Opening & Closing Canvas Pages
+
+    @discardableResult func openPage(at link: PageLink, on canvas: Canvas) -> [CanvasPage] {
+        guard let page = self.pageCollection.objectWithID(link.destination) else {
+            return []
+        }
+
+        let undoActionName = NSLocalizedString("Open Page Link", comment: "Open Page Link Undo Action Name")
+
+        guard let source = link.source,
+            let sourcePage = self.canvasPageCollection.objectWithID(source) else {
+                self.modelController.undoManager.setActionName(undoActionName)
+                return canvas.addPages([page])
+        }
+
+        if let existingPage = sourcePage.existingCanvasPage(for: page) {
+            return [existingPage]
+        }
+
+        self.modelController.undoManager.setActionName(undoActionName)
+        return canvas.open(page, linkedFrom: sourcePage)
     }
 
-    private func closeChildren(of canvasPage: CanvasPage) {
-        for child in canvasPage.children {
-            self.closeChildren(of: child)
-            child.canvas = nil
-            self.canvasPageCollection.delete(child)
+    //Removing page from canvas
+    func close(_ canvasPage: CanvasPage) {
+        guard let canvas = canvasPage.canvas else {
+            return
         }
+        self.modelController.pushChangeGroup()
+        self.modelController.undoManager.setActionName(NSLocalizedString("Close Pages", comment: "Close Pages From Canvas Undo Action Name"))
+        canvas.close(canvasPage)
+        self.modelController.popChangeGroup()
     }
 
 

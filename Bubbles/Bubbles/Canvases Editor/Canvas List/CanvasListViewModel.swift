@@ -77,13 +77,15 @@ class CanvasListViewModel: ViewModel {
 
     //MARK: Modifying Canvases
     func addPage(with id: ModelID, toCanvasAtIndex index: Int) {
-        let pageLink = PageLink(destination: id)
+        guard let page = self.documentWindowViewModel.pageCollection.objectWithID(id) else {
+            return
+        }
         let canvas = self.canvases[index]
         var centrePoint = CGPoint.zero
         if let viewPort = canvas.viewPort {
             centrePoint = CGPoint(x: viewPort.midX, y: viewPort.midY)
         }
-        self.documentWindowViewModel.addPage(at: pageLink, to: canvas, centredOn: centrePoint)
+        self.documentWindowViewModel.addPages([page], to: canvas, centredOn: centrePoint)
     }
 
     func addPages(fromFilesAtURLs fileURLs: [URL], toCanvasAtIndex canvasIndex: Int?) -> [Page] {

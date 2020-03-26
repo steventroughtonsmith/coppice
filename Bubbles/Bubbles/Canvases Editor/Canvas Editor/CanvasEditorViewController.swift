@@ -326,6 +326,10 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
         viewController.removeFromParent()
     }
 
+    private func pageViewController(for canvasPage: CanvasPage) -> CanvasPageViewController? {
+        return self.pageViewControllers.first { $0.viewModel.canvasPage.id == canvasPage.id }
+    }
+
 
     //MARK: - Empty State
     @IBOutlet var emptyStateView: NSView!
@@ -498,6 +502,10 @@ extension CanvasEditorViewController: Editor {
         }
         return self.selectedPages[0].inspectors + [self.canvasInspector]
     }
+
+    func open(_ link: PageLink) {
+        self.viewModel.addPage(at: link)
+    }
 }
 
 
@@ -521,6 +529,10 @@ extension CanvasEditorViewController: CanvasEditorView {
     func updateZoomFactor() {
         self.zoom(to: self.viewModel.zoomFactor)
         self.updateZoomControl()
+    }
+
+    func flash(_ canvasPage: CanvasPage) {
+        self.pageViewController(for: canvasPage)?.flash()
     }
 }
 

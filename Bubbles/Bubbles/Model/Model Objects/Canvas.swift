@@ -55,6 +55,8 @@ final class Canvas: NSObject, CollectableModelObject {
         didSet { self.didChange(\.thumbnail, oldValue: oldValue) }
     }
 
+    var closedPageHierarchies: [ModelID: [ModelID: PageHierarchy]] = [:]
+
 
     //MARK: - Relationships
     var pages: Set<CanvasPage> {
@@ -74,7 +76,7 @@ final class Canvas: NSObject, CollectableModelObject {
             "dateCreated": self.dateCreated,
             "dateModified": self.dateModified,
             "sortIndex": self.sortIndex,
-            "theme": self.theme.rawValue
+            "theme": self.theme.rawValue,
         ]
         if let thumbnailData = self.thumbnail?.pngData() {
             plist["thumbnail"] = ModelFile(type: "thumbnail", filename: "\(self.id.uuid.uuidString)-thumbnail.png", data: thumbnailData, metadata: [:])
@@ -82,6 +84,15 @@ final class Canvas: NSObject, CollectableModelObject {
         if let viewPort = self.viewPort  {
             plist["viewPort"] = NSStringFromRect(viewPort)
         }
+
+        
+        let plistableHierarchy = Dictionary(uniqueKeysWithValues: self.closedPageHierarchies.map { key, value in
+            return (key.stringRepresentation, Dictionary(uniqueKeysWithValues: value.map { key, value in
+                return (key.stringRepresentation, value.plistRepresentation)
+            }))
+        })
+        plist["closedPageHierarchies"] = plistableHierarchy
+
         return plist
     }
 
@@ -113,6 +124,24 @@ final class Canvas: NSObject, CollectableModelObject {
             }
         } else {
             self.thumbnail = nil
+        }
+
+        if let plistableHierarchy = plist["closedPageHierarchies"] as? [String: [String: [String: Any]]] {
+            let hierarchy = plistableHierarchy.compactMap { key, value -> (ModelID, [ModelID: PageHierarchy])? in
+                guard let canvasPageID = ModelID(string: key) else {
+                    return nil
+                }
+                let pageList = value.compactMap { key, value -> (ModelID, PageHierarchy)? in
+                    guard let pageID = ModelID(string: key), let pageHierarchy = PageHierarchy(plistRepresentation: value) else {
+                        return nil
+                    }
+                    return (pageID, pageHierarchy)
+                }
+                return (canvasPageID, Dictionary(uniqueKeysWithValues: pageList))
+            }
+            self.closedPageHierarchies = Dictionary(uniqueKeysWithValues: hierarchy)
+        } else {
+            self.closedPageHierarchies = [:]
         }
     }
 

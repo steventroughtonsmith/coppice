@@ -81,6 +81,21 @@ class CanvasPageViewController: NSViewController, CanvasPageView {
     private lazy var canvasPageInspectorViewController: CanvasPageInspectorViewController = {
         return CanvasPageInspectorViewController(viewModel: self.viewModel.canvasPageInspectorViewModel)
     }()
+
+    func flash() {
+        let animation = CAKeyframeAnimation(keyPath: #keyPath(CALayer.transform))
+        var transform = CATransform3DIdentity
+        transform = CATransform3DTranslate(transform, self.view.bounds.width/2, self.view.bounds.height/2, 0)
+        transform = CATransform3DScale(transform, 1.1, 1.1, 1)
+        transform = CATransform3DTranslate(transform, -self.view.bounds.width/2, -self.view.bounds.height/2, 0)
+
+        animation.values = [CATransform3DIdentity, transform, CATransform3DIdentity]
+        animation.keyTimes = [0, 0.3, 1]
+        animation.duration = 0.5
+        animation.timingFunctions = [CAMediaTimingFunction(name: .linear), CAMediaTimingFunction(name: .easeOut)]
+
+        self.view.layer?.add(animation, forKey: "flashAnimation")
+    }
 }
 
 extension CanvasPageViewController: Editor {

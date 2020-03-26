@@ -81,11 +81,12 @@
 		9970976B23ACFD2900CD189B /* SplitViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970976A23ACFD2900CD189B /* SplitViewControllers.swift */; };
 		9970976D23AD1A7A00CD189B /* MockPageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970976C23AD1A7A00CD189B /* MockPageContent.swift */; };
 		9970977223AF9BE600CD189B /* PageExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970977123AF9BE600CD189B /* PageExporter.swift */; };
-		9970977423B0180F00CD189B /* Canvas+AddingPages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970977323B0180F00CD189B /* Canvas+AddingPages.swift */; };
+		9970977423B0180F00CD189B /* Canvas+Pages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970977323B0180F00CD189B /* Canvas+Pages.swift */; };
 		9970977623B93A5800CD189B /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9970977523B93A5800CD189B /* Icons.xcassets */; };
 		9973737A2423AD6C000D5F21 /* NoEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997373782423AD6C000D5F21 /* NoEditorViewController.swift */; };
 		9973737B2423AD6C000D5F21 /* NoEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 997373792423AD6C000D5F21 /* NoEditorViewController.xib */; };
 		9973737D2423BAD1000D5F21 /* RootSplitViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9973737C2423BAD1000D5F21 /* RootSplitViewController.xib */; };
+		9973741B242CD5BF000D5F21 /* PageHierarchy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9973741A242CD5BF000D5F21 /* PageHierarchy.swift */; };
 		9976A49323674254004D573D /* ModelWriterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9976A49223674254004D573D /* ModelWriterTests.swift */; };
 		9976A49723674430004D573D /* PageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9976A49623674430004D573D /* PageTests.swift */; };
 		9976A49923674448004D573D /* CanvasTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9976A49823674448004D573D /* CanvasTests.swift */; };
@@ -302,11 +303,12 @@
 		9970976A23ACFD2900CD189B /* SplitViewControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewControllers.swift; sourceTree = "<group>"; };
 		9970976C23AD1A7A00CD189B /* MockPageContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPageContent.swift; sourceTree = "<group>"; };
 		9970977123AF9BE600CD189B /* PageExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageExporter.swift; sourceTree = "<group>"; };
-		9970977323B0180F00CD189B /* Canvas+AddingPages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Canvas+AddingPages.swift"; sourceTree = "<group>"; };
+		9970977323B0180F00CD189B /* Canvas+Pages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Canvas+Pages.swift"; sourceTree = "<group>"; };
 		9970977523B93A5800CD189B /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
 		997373782423AD6C000D5F21 /* NoEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoEditorViewController.swift; sourceTree = "<group>"; };
 		997373792423AD6C000D5F21 /* NoEditorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoEditorViewController.xib; sourceTree = "<group>"; };
 		9973737C2423BAD1000D5F21 /* RootSplitViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RootSplitViewController.xib; sourceTree = "<group>"; };
+		9973741A242CD5BF000D5F21 /* PageHierarchy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageHierarchy.swift; sourceTree = "<group>"; };
 		9976A49223674254004D573D /* ModelWriterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelWriterTests.swift; sourceTree = "<group>"; };
 		9976A49623674430004D573D /* PageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageTests.swift; sourceTree = "<group>"; };
 		9976A49823674448004D573D /* CanvasTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasTests.swift; sourceTree = "<group>"; };
@@ -955,8 +957,9 @@
 				99C86510230174B9004C7B89 /* PageContent.swift */,
 				9970975B23A816D700CD189B /* Content Types */,
 				99C41B7422DCA9A100C82DDE /* Canvas.swift */,
+				9973741A242CD5BF000D5F21 /* PageHierarchy.swift */,
 				990B6A3622E5F84400523C06 /* CanvasPage.swift */,
-				9970977323B0180F00CD189B /* Canvas+AddingPages.swift */,
+				9970977323B0180F00CD189B /* Canvas+Pages.swift */,
 				998F178E23EB229200B3437A /* ModelObjects+Pasteboard.swift */,
 				993D2C0D241674F2002E5BAC /* FolderContainable.swift */,
 			);
@@ -1325,6 +1328,7 @@
 				99C03F07232A8ED200EB7516 /* CanvasElementView.swift in Sources */,
 				9970976523AA896C00CD189B /* CanvasEventContext.swift in Sources */,
 				99581082230D7EFB00D996C4 /* CanvasEditorViewController.swift in Sources */,
+				9973741B242CD5BF000D5F21 /* PageHierarchy.swift in Sources */,
 				998D077D2411578B004ADFF8 /* NSMenu+M3Extensions.swift in Sources */,
 				9970975F23A816F800CD189B /* TextPageContent.swift in Sources */,
 				99581092230D92C600D996C4 /* CanvasPageViewController.swift in Sources */,
@@ -1439,7 +1443,7 @@
 				99C03EF023293D6C00EB7516 /* CoreGraphics+M3Extensions.swift in Sources */,
 				99D8E37E237EDB890098CF3B /* CanvasInspectorViewModel.swift in Sources */,
 				99902260241FDD52009A8446 /* NoCanvasViewController.swift in Sources */,
-				9970977423B0180F00CD189B /* Canvas+AddingPages.swift in Sources */,
+				9970977423B0180F00CD189B /* Canvas+Pages.swift in Sources */,
 				992A5CA222DDF4B60012CCB6 /* EditorContainerViewModel.swift in Sources */,
 				99AD88A7237C35C7000453E1 /* EditableModelObject.swift in Sources */,
 				992A5C9222DCB7530012CCB6 /* SidebarViewController.swift in Sources */,

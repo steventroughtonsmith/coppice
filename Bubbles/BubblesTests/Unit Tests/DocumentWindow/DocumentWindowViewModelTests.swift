@@ -665,7 +665,7 @@ class DocumentWindowViewModelTests: XCTestCase {
         viewModel.window = window
 
         let childPage = self.modelController.collection(for: Page.self).newObject()
-        let childCanvasPage = self.canvas.add(childPage, linkedFrom: self.canvasPage)
+        let childCanvasPage = self.canvas.open(childPage, linkedFrom: self.canvasPage)
         self.modelController.undoManager.removeAllActions()
         viewModel.delete([.page(self.page.id)])
 
@@ -1209,7 +1209,7 @@ class DocumentWindowViewModelTests: XCTestCase {
         let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let page = viewModel.pageCollection.newObject()
         let link = PageLink(destination: page.id)
-        viewModel.addPage(at: link, to: self.canvas)
+        viewModel.openPage(at: link, on: self.canvas)
 
         XCTAssertEqual(self.canvas.pages.count, 2)
         XCTAssertTrue(self.canvas.pages.map { $0.page }.contains(page))
@@ -1219,7 +1219,7 @@ class DocumentWindowViewModelTests: XCTestCase {
         let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let page = viewModel.pageCollection.newObject()
         let link = PageLink(destination: page.id)
-        viewModel.addPage(at: link, to: self.canvas)
+        viewModel.openPage(at: link, on: self.canvas)
 
         let canvasPage = self.canvas.pages.first(where: { $0.page == page })
         XCTAssertNil(canvasPage?.parent)
@@ -1229,7 +1229,7 @@ class DocumentWindowViewModelTests: XCTestCase {
         let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let page = viewModel.pageCollection.newObject()
         let link = PageLink(destination: page.id, source: self.canvasPage.id)
-        viewModel.addPage(at: link, to: self.canvas)
+        viewModel.openPage(at: link, on: self.canvas)
 
         let canvasPage = self.canvas.pages.first(where: { $0.page == page })
         XCTAssertEqual(canvasPage?.parent, self.canvasPage)
@@ -1239,7 +1239,7 @@ class DocumentWindowViewModelTests: XCTestCase {
         let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let page = viewModel.pageCollection.newObject()
         let link = PageLink(destination: page.id)
-        viewModel.addPage(at: link, to: self.canvas)
+        viewModel.openPage(at: link, on: self.canvas)
 
         self.modelController.undoManager.undo()
 
@@ -1250,7 +1250,7 @@ class DocumentWindowViewModelTests: XCTestCase {
         let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let page = viewModel.pageCollection.newObject()
         let link = PageLink(destination: page.id)
-        let canvasPage = try XCTUnwrap(viewModel.addPage(at: link, to: self.canvas))
+        let canvasPage = try XCTUnwrap(viewModel.openPage(at: link, on: self.canvas))
 
         self.modelController.undoManager.undo()
 
@@ -1261,7 +1261,7 @@ class DocumentWindowViewModelTests: XCTestCase {
         let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let page = viewModel.pageCollection.newObject()
         let link = PageLink(destination: page.id, source: self.canvasPage.id)
-        viewModel.addPage(at: link, to: self.canvas)
+        viewModel.openPage(at: link, on: self.canvas)
 
         self.modelController.undoManager.undo()
 
@@ -1272,7 +1272,7 @@ class DocumentWindowViewModelTests: XCTestCase {
         let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let page = viewModel.pageCollection.newObject()
         let link = PageLink(destination: page.id, source: self.canvasPage.id)
-        let canvasPage = try XCTUnwrap(viewModel.addPage(at: link, to: self.canvas))
+        let canvasPage = try XCTUnwrap(viewModel.openPage(at: link, on: self.canvas))
 
         self.modelController.undoManager.undo()
         self.modelController.undoManager.redo()
@@ -1424,7 +1424,7 @@ class DocumentWindowViewModelTests: XCTestCase {
         let canvas = viewModel.canvasCollection.newObject()
         let secondPage = viewModel.pageCollection.newObject()
         let canvasPage1 = try XCTUnwrap(canvas.addPages([self.page], centredOn: CGPoint(x: -40, y: -30)).first)
-        let canvasPage2 = canvas.add(secondPage, linkedFrom: canvasPage1)
+        let canvasPage2 = canvas.open(secondPage, linkedFrom: canvasPage1)
         self.modelController.undoManager.removeAllActions()
 
         viewModel.delete(canvas)
@@ -1482,7 +1482,7 @@ class DocumentWindowViewModelTests: XCTestCase {
         let canvas = viewModel.canvasCollection.newObject()
         let secondPage = viewModel.pageCollection.newObject()
         let canvasPage1 = try XCTUnwrap(canvas.addPages([self.page], centredOn: CGPoint(x: -40, y: -30)).first)
-        let canvasPage2 = canvas.add(secondPage, linkedFrom: canvasPage1)
+        let canvasPage2 = canvas.open(secondPage, linkedFrom: canvasPage1)
         self.modelController.undoManager.removeAllActions()
 
         viewModel.delete(canvas)
@@ -1498,17 +1498,17 @@ class DocumentWindowViewModelTests: XCTestCase {
     }
 
 
-    //MARK: - remove(_: CanvasPage)
+    //MARK: - close(_: CanvasPage)
     func test_removeCanvasPage_removesCanvasPageFromCanvas() {
         let viewModel = DocumentWindowViewModel(modelController: self.modelController)
-        viewModel.remove(self.canvasPage)
+        viewModel.close(self.canvasPage)
         XCTAssertNil(self.canvasPage.canvas)
         XCTAssertFalse(self.canvas.pages.contains(self.canvasPage))
     }
 
     func test_removeCanvasPage_deletesCanvasPage() {
         let viewModel = DocumentWindowViewModel(modelController: self.modelController)
-        viewModel.remove(self.canvasPage)
+        viewModel.close(self.canvasPage)
         XCTAssertNil(viewModel.canvasPageCollection.objectWithID(self.canvasPage.id))
     }
 
@@ -1524,7 +1524,7 @@ class DocumentWindowViewModelTests: XCTestCase {
             $0.parent = self.canvasPage
         }
 
-        viewModel.remove(self.canvasPage)
+        viewModel.close(self.canvasPage)
         XCTAssertNil(child1.canvas)
         XCTAssertFalse(self.canvas.pages.contains(child1))
         XCTAssertNil(child2.canvas)
@@ -1543,7 +1543,7 @@ class DocumentWindowViewModelTests: XCTestCase {
             $0.parent = self.canvasPage
         }
 
-        viewModel.remove(self.canvasPage)
+        viewModel.close(self.canvasPage)
         XCTAssertNil(canvasPageCollection.objectWithID(child1.id))
         XCTAssertNil(canvasPageCollection.objectWithID(child2.id))
     }
@@ -1551,7 +1551,7 @@ class DocumentWindowViewModelTests: XCTestCase {
     func test_removeCanvasPage_undoingRecreatesCanvasPageWithSameIDAndProperties() throws {
         let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         self.modelController.undoManager.removeAllActions()
-        viewModel.remove(self.canvasPage)
+        viewModel.close(self.canvasPage)
 
         //Sanity check
         XCTAssertFalse(viewModel.canvasPageCollection.all.contains(self.canvasPage))
@@ -1565,7 +1565,7 @@ class DocumentWindowViewModelTests: XCTestCase {
     func test_removeCanvasPage_undoingAddsCanvasPageBackToCanvas() throws {
         let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         self.modelController.undoManager.removeAllActions()
-        viewModel.remove(self.canvasPage)
+        viewModel.close(self.canvasPage)
 
         //Sanity Check
         XCTAssertFalse(self.canvas.pages.contains(self.canvasPage))
@@ -1591,7 +1591,7 @@ class DocumentWindowViewModelTests: XCTestCase {
         }
         self.modelController.undoManager.removeAllActions()
 
-        viewModel.remove(self.canvasPage)
+        viewModel.close(self.canvasPage)
 
         self.modelController.undoManager.undo()
 
@@ -1614,7 +1614,7 @@ class DocumentWindowViewModelTests: XCTestCase {
         }
         self.modelController.undoManager.removeAllActions()
 
-        viewModel.remove(self.canvasPage)
+        viewModel.close(self.canvasPage)
 
         self.modelController.undoManager.undo()
 
@@ -1637,7 +1637,7 @@ class DocumentWindowViewModelTests: XCTestCase {
         }
         self.modelController.undoManager.removeAllActions()
 
-        viewModel.remove(self.canvasPage)
+        viewModel.close(self.canvasPage)
 
         self.modelController.undoManager.undo()
 
@@ -1661,7 +1661,7 @@ class DocumentWindowViewModelTests: XCTestCase {
         }
         self.modelController.undoManager.removeAllActions()
 
-        viewModel.remove(self.canvasPage)
+        viewModel.close(self.canvasPage)
 
         self.modelController.undoManager.undo()
         self.modelController.undoManager.redo()
