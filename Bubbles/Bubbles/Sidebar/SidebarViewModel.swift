@@ -211,8 +211,9 @@ class SidebarViewModel: ViewModel {
         }
 
         guard let folder = self.documentWindowViewModel.foldersCollection.objectWithID(folderID),
-              self.validate(ids: ids, and: folder) else {
-                return false
+              self.validate(ids: ids, and: folder) else
+        {
+            return false
         }
 
         let items = ids.compactMap { self.modelController.object(with: $0) as? FolderContainable }
@@ -256,16 +257,53 @@ class SidebarViewModel: ViewModel {
 
     //MARK: - File Drag & Drop
     func canDropFiles(at urls: [URL], onto node: SidebarNode?, atChildIndex index: Int) -> (Bool, SidebarNode?, Int) {
-        //nil, .canvases, .rootFolder -> true if urls are of valid type, nil, -1
+        guard let sidebarNode = node else {
+            return (self.validateFiles(at: urls), self.pagesGroupNode, -1)
+        }
+        guard case .folder(_) = sidebarNode.item else {
+            return (false, node, index)
+        }
 
-        //on page -> false
-        //on folder -> true if urls are of valid type
-        //in folder -> true if urls are of valid type
-        return (true, node, index)
+        return (self.validateFiles(at: urls), node, index)
     }
 
     func dropFiles(at urls: [URL], onto node: SidebarNode?, atChildIndex index: Int) -> Bool {
-        return false
+        guard let sidebarNode = node, case .folder(let folderID) = sidebarNode.item else {
+            return false
+        }
+
+        guard let folder = self.documentWindowViewModel.foldersCollection.objectWithID(folderID),
+            self.validateFiles(at: urls) else
+        {
+            return false
+        }
+
+        if index == -1 {
+            self.documentWindowViewModel.createPages(fromFilesAtURLs: urls, in: folder, below: folder.contents.last)
+            return true
+        }
+        
+        let trueIndex = index - 1
+        if (trueIndex == -1) {
+            self.documentWindowViewModel.createPages(fromFilesAtURLs: urls, in: folder, below: nil)
+        } else {
+            self.documentWindowViewModel.createPages(fromFilesAtURLs: urls, in: folder, below: folder.contents[safe: trueIndex])
+        }
+        return true
+    }
+
+    private func validateFiles(at urls: [URL]) -> Bool {
+        for url in urls {
+            guard let resourceValues = try? url.resourceValues(forKeys: Set([.typeIdentifierKey])),
+                let typeIdentifier = resourceValues.typeIdentifier else {
+                    return false
+            }
+
+            if PageContentType.contentType(forUTI: typeIdentifier) == nil {
+                return false
+            }
+        }
+        return true
     }
 
 
