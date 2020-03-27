@@ -14,6 +14,13 @@ class RootSplitViewController: NSSplitViewController {
     let editorContainerViewController: EditorContainerViewController
     let inspectorContainerViewController: InspectorContainerViewController
 
+    var toolbarControl: NSSegmentedControl? {
+        didSet {
+            self.toolbarControl?.target = self
+            self.toolbarControl?.action = #selector(toolbarControlChanged(_:))
+        }
+    }
+
 
     //MARK: - Initialisation
     init(sidebarViewController: SidebarViewController,
@@ -60,44 +67,24 @@ class RootSplitViewController: NSSplitViewController {
         self.sidebarViewController.splitViewItem.holdingPriority = .init(260)
         self.inspectorContainerViewController.splitViewItem.holdingPriority = .init(260)
     }
-}
 
 
-class EditorSplitViewController: NSSplitViewController {
-    let canvasListViewController: CanvasListViewController
-    let editorContainerViewController: EditorContainerViewController
-
-
-    //MARK: - Initialisation
-    init(canvasListViewController: CanvasListViewController, editorContainerViewController: EditorContainerViewController) {
-        self.canvasListViewController = canvasListViewController
-        self.editorContainerViewController = editorContainerViewController
-        super.init(nibName: nil, bundle: nil)
-
-        let splitView = NestableSplitView()
-        splitView.arrangesAllSubviews = false
-        splitView.isVertical = true
-        splitView.dividerStyle = .thin
-        self.splitView = splitView
+    //MARK: - ToolbarControl
+    @IBAction func toolbarControlChanged(_ sender: Any) {
+        guard let toolbarControl = self.toolbarControl else {
+            return
+        }
+        self.sidebarViewController.splitViewItem.animator().isCollapsed = !toolbarControl.isSelected(forSegment: 0)
+        self.inspectorContainerViewController.splitViewItem.animator().isCollapsed = !toolbarControl.isSelected(forSegment: 1)
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    private func updateSplitViewControl() {
+        self.toolbarControl?.setSelected(!self.sidebarViewController.splitViewItem.isCollapsed, forSegment: 0)
+        self.toolbarControl?.setSelected(!self.inspectorContainerViewController.splitViewItem.isCollapsed, forSegment: 1)
     }
 
-    var nestableSplitView: NestableSplitView {
-        return self.splitView as! NestableSplitView
+    override func splitViewDidResizeSubviews(_ notification: Notification) {
+        super.splitViewDidResizeSubviews(notification)
+        self.updateSplitViewControl()
     }
-
-    override func viewDidLoad() {
-        self.splitViewItems = [
-            self.canvasListViewController.splitViewItem,
-            self.editorContainerViewController.splitViewItem,
-        ]
-        super.viewDidLoad()
-    }
-
-    
-
-
 }

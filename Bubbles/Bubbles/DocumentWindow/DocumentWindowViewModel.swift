@@ -16,11 +16,6 @@ protocol DocumentWindow: class {
 class DocumentWindowViewModel: NSObject {
     weak var document: Document?
     weak var window: DocumentWindow?
-    @Published var selectedSidebarObjectIDs = Set<ModelID>() {
-        didSet {
-            self.window?.invalidateRestorableState()
-        }
-    }
     @Published var currentInspectors: [Inspector] = []
 
     let modelController: ModelController
@@ -99,9 +94,17 @@ class DocumentWindowViewModel: NSObject {
             return nil
         }
     }
-    @Published var selectedCanvasID: ModelID?
+    @Published var selectedCanvasID: ModelID? {
+        didSet {
+            self.window?.invalidateRestorableState()
+        }
+    }
 
-    @Published private(set) var sidebarSelection: [SidebarItem] = []
+    @Published private(set) var sidebarSelection: [SidebarItem] = [] {
+        didSet {
+            self.window?.invalidateRestorableState()
+        }
+    }
 
     //Updates the sidebar selection and the editor
     func updateSelection(_ selection: [SidebarItem]) {
@@ -115,6 +118,29 @@ class DocumentWindowViewModel: NSObject {
         case none
         case canvas
         case page(Page)
+
+        var persistentRepresentation: String {
+            switch self {
+            case .none: return "none"
+            case .canvas: return "canvas"
+            case .page(let page): return "page::\(page.id.stringRepresentation)"
+            }
+        }
+
+        static func from(persistentRepresentation: String, pagesCollection: ModelCollection<Page>) -> Self {
+            if persistentRepresentation == "canvas" {
+                return .canvas
+            }
+            if persistentRepresentation.hasPrefix("page") {
+                if let modelIDString = persistentRepresentation.components(separatedBy: "::").last,
+                    let modelID = ModelID(string: modelIDString),
+                    let page = pagesCollection.objectWithID(modelID)
+                {
+                    return .page(page)
+                }
+            }
+            return .none
+        }
     }
     @Published var currentEditor: Editor = .none
 
@@ -142,6 +168,27 @@ class DocumentWindowViewModel: NSObject {
         //Don't bother changing for a folder
         case .folder(_):
             return
+        }
+    }
+
+
+    //MARK: - State Restoration
+    func encodeRestorableState(with coder: NSCoder) {
+        coder.encode(self.sidebarSelection.map(\.persistentRepresentation), forKey: "sidebarSelection")
+        coder.encode(self.selectedCanvasID?.stringRepresentation, forKey: "selectedCanvasID")
+        coder.encode(self.currentEditor.persistentRepresentation, forKey: "currentEditor")
+    }
+
+    func restoreState(with coder: NSCoder) {
+        if let sidebarSelectionStrings = coder.decodeObject(forKey: "sidebarSelection") as? [String] {
+            self.sidebarSelection = sidebarSelectionStrings.compactMap { SidebarItem.from(persistentRepresentation: $0) }
+
+        }
+        if let canvasIDString = coder.decodeObject(forKey: "selectedCanvasID") as? String {
+            self.selectedCanvasID = ModelID(string: canvasIDString)
+        }
+        if let currentEditorString = coder.decodeObject(forKey: "currentEditor") as? String {
+            self.currentEditor = Editor.from(persistentRepresentation: currentEditorString, pagesCollection: self.pageCollection)
         }
     }
 
@@ -570,13 +617,17 @@ class DocumentWindowViewModel: NSObject {
             guard let strongSelf = self else {
                 return
             }
-            let selectionID = strongSelf.selectedSidebarObjectIDs
+            let sidebarSelection = strongSelf.sidebarSelection
+            let selectedCanvas = strongSelf.selectedCanvasID
             undoManager.setActionIsDiscardable(true)
             undoManager.registerUndo(withTarget: strongSelf) { (target) in
-                let oldValue = target.selectedSidebarObjectIDs
-                target.selectedSidebarObjectIDs = selectionID
+                let oldSelection = target.sidebarSelection
+                let oldCanvas = target.selectedCanvasID
+                target.updateSelection(sidebarSelection)
+                target.selectedCanvasID = selectedCanvas
                 undoManager.registerUndo(withTarget: strongSelf) { (target) in
-                    target.selectedSidebarObjectIDs = oldValue
+                    target.updateSelection(oldSelection)
+                    target.selectedCanvasID = oldCanvas
                 }
             }
         }

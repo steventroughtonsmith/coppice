@@ -49,6 +49,7 @@ class DocumentWindowController: NSWindowController {
         if let contentView = self.window?.contentView {
             self.splitViewController.view.frame = contentView.bounds
         }
+        self.splitViewController.toolbarControl = self.splitViewControl
         self.contentViewController = self.splitViewController
 
 //        self.sidebarViewController.pagesTable.nextKeyView = self.editorContainerViewController.view
@@ -122,19 +123,21 @@ class DocumentWindowController: NSWindowController {
         }
     }
 
+    @IBAction func add10PagesToCanvas(_ sender: Any?) {
+        (0..<10).forEach { _ in
+            self.viewModel.createPage(ofType: .text)
+        }
+    }
+
 
     //MARK: - State Restoration
     override func encodeRestorableState(with coder: NSCoder) {
-        let selectedIDStrings = self.viewModel.selectedSidebarObjectIDs.map { $0.stringRepresentation }
-        coder.encode(selectedIDStrings, forKey: "selectedSidebarObjectIDs")
+        self.viewModel.encodeRestorableState(with: coder)
         super.encodeRestorableState(with: coder)
     }
 
     override func restoreState(with coder: NSCoder) {
-        if let modelIDStrings = coder.decodeObject(forKey: "selectedSidebarObjectIDs") as? [String] {
-            let selectedIDs = Set(modelIDStrings.compactMap { ModelID(string: $0) })
-            self.viewModel.selectedSidebarObjectIDs = selectedIDs
-        }
+        self.viewModel.restoreState(with: coder)
         super.restoreState(with: coder)
     }
 
@@ -142,19 +145,6 @@ class DocumentWindowController: NSWindowController {
     //MARK: - Actions
     @IBAction func findInDocument(_ sender: Any?) {
         self.window?.makeFirstResponder(self.searchField)
-    }
-
-
-    //MARK: - Split View Management
-
-    @IBAction func splitViewControlChanged(_ sender: Any) {
-        //        self.splitViewController.isSidebarCollapsed = !self.splitViewControl.isSelected(forSegment: 0)
-        //        self.splitViewController.isInspectorCollapsed = !self.splitViewControl.isSelected(forSegment: 1)
-    }
-
-    private func updateSplitViewControl() {
-        //        self.splitViewControl.setSelected(!self.splitViewController.isSidebarCollapsed, forSegment: 0)
-        //        self.splitViewControl.setSelected(!self.splitViewController.isInspectorCollapsed, forSegment: 1)
     }
 
 }

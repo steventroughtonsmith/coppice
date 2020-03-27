@@ -18,7 +18,7 @@ struct GlobalConstants {
     }
 
     static let minimumPageSize = CGSize(width: 150, height: 100)
-    static let linkedPageOffset: CGFloat = 40.0
+    static let linkedPageOffset: CGFloat = 50.0
 
     static let bottomBarHeight: CGFloat = 27.0
 

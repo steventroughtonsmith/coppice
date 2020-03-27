@@ -266,7 +266,6 @@ class TextLinkFinderTests: XCTestCase {
 
 
     //MARK: - Complex Example
-
     func test_complexExample() {
         let page1 = Page()
         page1.title = "rs.tuv"

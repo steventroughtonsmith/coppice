@@ -78,7 +78,7 @@
 		9970976523AA896C00CD189B /* CanvasEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970976423AA896C00CD189B /* CanvasEventContext.swift */; };
 		9970976723AA8B5A00CD189B /* RemovePageEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970976623AA8B5A00CD189B /* RemovePageEventContext.swift */; };
 		9970976923AA8B6C00CD189B /* KeyboardMovePageEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970976823AA8B6C00CD189B /* KeyboardMovePageEventContext.swift */; };
-		9970976B23ACFD2900CD189B /* SplitViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970976A23ACFD2900CD189B /* SplitViewControllers.swift */; };
+		9970976B23ACFD2900CD189B /* RootSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970976A23ACFD2900CD189B /* RootSplitViewController.swift */; };
 		9970976D23AD1A7A00CD189B /* MockPageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970976C23AD1A7A00CD189B /* MockPageContent.swift */; };
 		9970977223AF9BE600CD189B /* PageExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970977123AF9BE600CD189B /* PageExporter.swift */; };
 		9970977423B0180F00CD189B /* Canvas+Pages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970977323B0180F00CD189B /* Canvas+Pages.swift */; };
@@ -300,7 +300,7 @@
 		9970976423AA896C00CD189B /* CanvasEventContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasEventContext.swift; sourceTree = "<group>"; };
 		9970976623AA8B5A00CD189B /* RemovePageEventContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemovePageEventContext.swift; sourceTree = "<group>"; };
 		9970976823AA8B6C00CD189B /* KeyboardMovePageEventContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardMovePageEventContext.swift; sourceTree = "<group>"; };
-		9970976A23ACFD2900CD189B /* SplitViewControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewControllers.swift; sourceTree = "<group>"; };
+		9970976A23ACFD2900CD189B /* RootSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootSplitViewController.swift; sourceTree = "<group>"; };
 		9970976C23AD1A7A00CD189B /* MockPageContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPageContent.swift; sourceTree = "<group>"; };
 		9970977123AF9BE600CD189B /* PageExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageExporter.swift; sourceTree = "<group>"; };
 		9970977323B0180F00CD189B /* Canvas+Pages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Canvas+Pages.swift"; sourceTree = "<group>"; };
@@ -1142,7 +1142,7 @@
 				998D077A2411513F004ADFF8 /* NewPageMenuDelegate.swift */,
 				99FE01E222D4CC8A004D380D /* DocumentWindowController.swift */,
 				99FE01E322D4CC8A004D380D /* DocumentWindow.xib */,
-				9970976A23ACFD2900CD189B /* SplitViewControllers.swift */,
+				9970976A23ACFD2900CD189B /* RootSplitViewController.swift */,
 				9973737C2423BAD1000D5F21 /* RootSplitViewController.xib */,
 				993D2BF82412B053002E5BAC /* NestableSplitView.swift */,
 				993D2BFD2412FB1C002E5BAC /* SplitViewContainable.swift */,
@@ -1389,7 +1389,7 @@
 				99D8E37D237EDB890098CF3B /* CanvasInspectorViewController.swift in Sources */,
 				99C03F0D2334D04200EB7516 /* NSScrollView+M3Extensions.swift in Sources */,
 				99C4AD8923F6F13B003B9A38 /* ArrowLayoutEngine.swift in Sources */,
-				9970976B23ACFD2900CD189B /* SplitViewControllers.swift in Sources */,
+				9970976B23ACFD2900CD189B /* RootSplitViewController.swift in Sources */,
 				990B6A3922EB482D00523C06 /* ModelObject.swift in Sources */,
 				99E93E2B23D32F61004CF4BB /* ColourGridButton.swift in Sources */,
 				9962AB8923732D9400337834 /* BubblesDocumentController.swift in Sources */,

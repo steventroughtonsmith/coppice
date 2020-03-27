@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16085" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -424,7 +424,7 @@
                                     <action selector="addPageToCanvas:" target="-1" id="bsb-Y7-7UU"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Remove Selected Page" id="zz9-Kb-Ifx">
+                            <menuItem title="Close Selected Page" id="zz9-Kb-Ifx">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="removeSelectedPages:" target="-1" id="UcO-bW-GPy"/>
@@ -793,10 +793,10 @@
                                     <binding destination="dmx-ad-XFr" name="value" keyPath="values.debugShowCanvasOrigin" id="bte-YU-xIi"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Add Test Canvas Page" id="ac0-f9-nPz">
+                            <menuItem title="Add 10 Pages to Canvas" id="ac0-f9-nPz">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="addTestPage:" target="-1" id="hOg-mm-9ku"/>
+                                    <action selector="add10PagesToCanvas:" target="-1" id="yIX-wd-NfI"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Show Key Loop" id="3sN-K9-Kh9">

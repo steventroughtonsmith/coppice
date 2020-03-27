@@ -460,9 +460,9 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
         if menuItem.action == #selector(removeSelectedPages(_:)) {
             let selectedPagesCount = self.viewModel.selectedCanvasPages.count
             if selectedPagesCount == 1 {
-                menuItem.title = NSLocalizedString("Remove Selected Page", comment: "Remove selected page singular menu item")
+                menuItem.title = NSLocalizedString("Close Selected Page", comment: "Close selected page singular menu item")
             } else {
-                menuItem.title = NSLocalizedString("Remove Selected Pages", comment: "Remove selected pages plural menu item")
+                menuItem.title = NSLocalizedString("Close Selected Pages", comment: "Close selected pages plural menu item")
             }
             return (selectedPagesCount > 0)
         }
