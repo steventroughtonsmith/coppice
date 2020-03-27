@@ -23,6 +23,12 @@ class CanvasPageBackgroundView: NSView {
         preconditionFailure("init(coder:) has not been implemented")
     }
 
+    var selected: Bool = false {
+        didSet {
+            self.setNeedsDisplay(self.bounds)
+        }
+    }
+
 
     //MARK: - Drawing
     override func draw(_ dirtyRect: NSRect) {
@@ -31,6 +37,9 @@ class CanvasPageBackgroundView: NSView {
         self.drawOuterStroke()
         self.drawBackground()
         self.drawInnerStroke()
+        if self.selected {
+            self.drawSelectionHighlight()
+        }
     }
 
     private func drawOuterStroke() {
@@ -48,6 +57,13 @@ class CanvasPageBackgroundView: NSView {
     private func drawInnerStroke() {
         NSColor(named: "PageViewInnerStroke")?.set()
         let path = NSBezierPath(roundedRect: self.bounds.insetBy(dx: 1.5, dy: 1.5), xRadius: 4.5, yRadius: 4.5)
+        path.stroke()
+    }
+
+    private func drawSelectionHighlight() {
+        NSColor.controlAccentColor.set()
+        let path = NSBezierPath(roundedRect: self.bounds.insetBy(dx: 1, dy: 1), xRadius: 5, yRadius: 5)
+        path.lineWidth = 2
         path.stroke()
     }
     
