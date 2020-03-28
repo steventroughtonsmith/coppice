@@ -89,7 +89,7 @@ class TextEditorViewController: NSViewController, InspectableTextEditor {
             return
         }
 
-        let ranges = self.editingTextView.selectedRanges.compactMap { $0.rangeValue }
+        let ranges = self.editingTextView.selectedRanges.compactMap { $0.rangeValue }.filter { ($0.lowerBound < textStorage.length) && ($0.upperBound <= textStorage.length) }
         self.selectionAttributes = textStorage.textEditorAttributes(in: ranges, typingAttributes: baseAttributes)
     }
 
