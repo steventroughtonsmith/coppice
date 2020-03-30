@@ -1605,6 +1605,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = Z699XFM6P2;
+				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"TEST=1",
@@ -1615,7 +1616,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0a3;
+				MARKETING_VERSION = 1.0a4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Bubbles;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG TEST";
@@ -1791,12 +1792,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = Z699XFM6P2;
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Bubbles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0a3;
+				MARKETING_VERSION = 1.0a4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Bubbles;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1812,12 +1814,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = Z699XFM6P2;
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Bubbles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0a3;
+				MARKETING_VERSION = 1.0a4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Bubbles;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
