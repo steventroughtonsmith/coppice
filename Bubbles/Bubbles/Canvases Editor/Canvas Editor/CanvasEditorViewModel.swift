@@ -19,8 +19,10 @@ class CanvasEditorViewModel: ViewModel {
     let layoutEngine = CanvasLayoutEngine(configuration: .init(page: .mac, contentBorder: 1000, arrow: .standard))
 
     let canvas: Canvas
-    init(canvas: Canvas, documentWindowViewModel: DocumentWindowViewModel) {
+    let mode: EditorMode
+    init(canvas: Canvas, documentWindowViewModel: DocumentWindowViewModel, mode: EditorMode = .editing) {
         self.canvas = canvas
+        self.mode = mode
         super.init(documentWindowViewModel: documentWindowViewModel)
     }
 
@@ -35,7 +37,11 @@ class CanvasEditorViewModel: ViewModel {
     //MARK: - Observation
     var canvasObserver: ModelCollection<Canvas>.Observation?
     var canvasPageObserver: ModelCollection<CanvasPage>.Observation?
+
     private func setupObservation() {
+        guard self.mode == .editing else {
+            return
+        }
         self.canvasObserver = self.modelController.collection(for: Canvas.self).addObserver(filterBy: [self.canvas.id]) { [weak self] (canvas, changeType) in
             if changeType == .update {
                 self?.updatePages()

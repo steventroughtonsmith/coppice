@@ -13,10 +13,8 @@ class TextEditorViewController: NSViewController, InspectableTextEditor {
     @IBOutlet var editingTextView: NSTextView!
 
     @objc dynamic let viewModel: TextEditorViewModel
-    private let pageLinkManager: PageLinkManager
     init(viewModel: TextEditorViewModel) {
         self.viewModel = viewModel
-        self.pageLinkManager = PageLinkManager(modelController: viewModel.modelController)
         super.init(nibName: "TextEditorViewController", bundle: nil)
         self.viewModel.view = self
     }
@@ -33,13 +31,16 @@ class TextEditorViewController: NSViewController, InspectableTextEditor {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.updateTextView(with: self.viewModel.attributedText)
+
+        guard self.viewModel.mode == .editing else {
+            return
+        }
 //        self.selectableBinding = self.publisher(for: \.enabled).assign(to: \.isSelectable, on: self.editingTextView)
         self.attributedTextObserver = self.publisher(for: \.viewModel.attributedText).sink { self.updateTextView(with: $0) }
-        self.updateTextView(with: self.viewModel.attributedText)
 //        self.highlightedRangeObserver = self.viewModel.$highlightedRange.sink { self.highlight($0) }
 
         self.editingTextView.textStorage?.delegate = self
-        self.pageLinkManager.textStorage = self.editingTextView.textStorage
     }
 
     override func viewDidAppear() {
@@ -109,7 +110,12 @@ class TextEditorViewController: NSViewController, InspectableTextEditor {
 
 
     //MARK: - Update Model
-    private var editingText = false
+    private var editingText = false {
+        didSet {
+            self.updatePageLinkManager()
+        }
+    }
+
     private func updateTextView(with text: NSAttributedString) {
         guard (self.updatingText == false) && (self.editingText == false) else {
             return
@@ -139,6 +145,21 @@ class TextEditorViewController: NSViewController, InspectableTextEditor {
         self.viewModel.attributedText = self.editingTextView.attributedString().copy() as! NSAttributedString
         self.updatingText = false
         self.updateSelectionAttributes()
+    }
+
+    //MARK: - Page Link Manager
+    private var pageLinkManager: PageLinkManager {
+        return self.viewModel.pageLinkManager
+    }
+
+    private func updatePageLinkManager() {
+        guard self.editingText else {
+            self.pageLinkManager.currentTextStorage = nil
+            self.pageLinkManager.delegate = nil
+            return
+        }
+        self.pageLinkManager.delegate = self
+        self.pageLinkManager.currentTextStorage = self.editingTextView.textStorage
     }
 
 

@@ -21,10 +21,12 @@ class DocumentWindowViewModel: NSObject {
     let modelController: ModelController
     let thumbnailController: ThumbnailController
     let pageImageController: PageImageController
+    let pageLinkController: PageLinkController
     init(modelController: ModelController) {
         self.modelController = modelController
         self.thumbnailController = ThumbnailController(modelController: modelController)
         self.pageImageController = PageImageController(modelController: modelController)
+        self.pageLinkController = PageLinkController(modelController: modelController)
         super.init()
         self.thumbnailController.documentViewModel = self
         self.pageImageController.documentViewModel = self

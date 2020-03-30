@@ -8,6 +8,11 @@
 
 import AppKit
 
+enum EditorMode: Equatable {
+    case editing
+    case preview
+}
+
 protocol Editor: class {
     var inspectors: [Inspector] { get }
     var parentEditor: Editor? { get }

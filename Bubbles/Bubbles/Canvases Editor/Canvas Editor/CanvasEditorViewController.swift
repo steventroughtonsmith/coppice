@@ -309,7 +309,8 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
         }
 
         let viewModel = CanvasPageViewModel(canvasPage: canvasPage,
-                                            documentWindowViewModel: self.viewModel.documentWindowViewModel)
+                                            documentWindowViewModel: self.viewModel.documentWindowViewModel,
+                                            mode: self.viewModel.mode)
         let viewController = CanvasPageViewController(viewModel: viewModel)
         viewController.delegate = self
 

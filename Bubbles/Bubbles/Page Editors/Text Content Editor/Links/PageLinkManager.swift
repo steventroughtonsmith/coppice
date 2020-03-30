@@ -13,16 +13,20 @@ protocol PageLinkManagerDelegate: class {
     func textDidChange(in manager: PageLinkManager)
 }
 
+
+
 class PageLinkManager: NSObject {
+    let pageID: ModelID
     let modelController: ModelController
     private var observer: ModelCollection<Page>.Observation!
-    init(modelController: ModelController) {
+    init(pageID: ModelID, modelController: ModelController) {
+        self.pageID = pageID
         self.modelController = modelController
 
         super.init()
 
         self.observer = self.modelController.collection(for: Page.self).addObserver { (_, changeType) in
-            self.reparseLinks()
+            self.setNeedsReparse()
         }
     }
 
@@ -32,24 +36,46 @@ class PageLinkManager: NSObject {
         }
     }
 
-    weak var textStorage: NSTextStorage? {
+    /// The current text storage
+    weak var currentTextStorage: NSTextStorage? {
         didSet {
-            self.reparseLinks()
+            self.setNeedsReparse()
         }
     }
     weak var delegate: PageLinkManagerDelegate?
 
-    //Observer for page changes
-    //Observe for page title changes
-    //Observe for text storage changes
-
     //Update on all of them
-
-    private func reparseLinks() {
-        guard let storage = self.textStorage else {
+    private func setNeedsReparse() {
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(reparseLinks), object: nil)
+        guard self.isReparsing == false else {
             return
         }
 
+        self.perform(#selector(reparseLinks), with: nil, afterDelay: 0.5)
+    }
+
+    private var lastParsedText: NSAttributedString?
+
+    private var isReparsing = false
+    @objc private func reparseLinks() {
+        self.isReparsing = true
+        print("reparse")
+
+        //If we have storage enabled for this page then we want to enable that
+        if let storage = self.currentTextStorage {
+            self.update(storage)
+        //Otherwise we just want to update the content
+        } else if let page = self.modelController.collection(for: Page.self).objectWithID(self.pageID) {
+            self.update(page)
+        }
+
+        self.isReparsing = false
+    }
+
+    private func update(_ storage: NSTextStorage) {
+        guard storage != self.lastParsedText else {
+            return
+        }
         let pages = Array(self.modelController.collection(for: Page.self).all)
         let links = TextLinkFinder().findLinkChanges(in: storage, using: pages)
 
@@ -73,13 +99,39 @@ class PageLinkManager: NSObject {
         }
         storage.endEditing()
 
-
         self.delegate?.textDidChange(in: self)
+        self.lastParsedText = storage
+    }
+
+    private func update(_ page: Page) {
+        guard let textContent = page.content as? TextPageContent,
+            textContent.text != self.lastParsedText else {
+            return
+        }
+        let pages = Array(self.modelController.collection(for: Page.self).all)
+        let links = TextLinkFinder().findLinkChanges(in: textContent.text, using: pages)
+
+        guard (links.linksToAdd.count > 0) || (links.linksToRemove.count > 0) else {
+            return
+        }
+        guard let mutableString = textContent.text.mutableCopy() as? NSMutableAttributedString else {
+            return
+        }
+        for link in links.linksToRemove {
+            mutableString.removeAttribute(.link, range: link.range)
+        }
+        for link in links.linksToAdd {
+            if let url = link.url {
+                mutableString.addAttribute(.link, value: url, range: link.range)
+            }
+        }
+        textContent.text = mutableString
+        self.lastParsedText = mutableString
     }
 }
 
 extension PageLinkManager: NSTextStorageDelegate {
     func textStorage(_ textStorage: NSTextStorage, didProcessEditing editedMask: NSTextStorageEditActions, range editedRange: NSRange, changeInLength delta: Int) {
-        self.reparseLinks()
+        self.setNeedsReparse()
     }
 }

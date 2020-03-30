@@ -17,21 +17,20 @@ class TextEditorViewModel: ViewModel {
     weak var view: TextEditorView?
     
     @objc dynamic let textContent: TextPageContent
-    let textAutoLinker: PageLinkManager
-    convenience init(textContent: TextPageContent, documentWindowViewModel: DocumentWindowViewModel) {
-        self.init(textContent: textContent,
-                  documentWindowViewModel: documentWindowViewModel,
-                  textAutoLinker: PageLinkManager(modelController: documentWindowViewModel.modelController))
-    }
-
-    init(textContent: TextPageContent, documentWindowViewModel: DocumentWindowViewModel, textAutoLinker: PageLinkManager) {
+    let pageLinkManager: PageLinkManager
+    let mode: EditorMode
+    init(textContent: TextPageContent, documentWindowViewModel: DocumentWindowViewModel, pageLinkManager: PageLinkManager, mode: EditorMode = .editing) {
         self.textContent = textContent
-        self.textAutoLinker = textAutoLinker
+        self.pageLinkManager = pageLinkManager
+        self.mode = mode
         super.init(documentWindowViewModel: documentWindowViewModel)
     }
 
     var searchStringObserver: AnyCancellable?
     override func setup() {
+        guard self.mode == .editing else {
+            return
+        }
         self.searchStringObserver = self.documentWindowViewModel.publisher(for: \.searchString).sink { [weak self] searchTerm in
             self?.updateHighlightedRange(with: searchTerm)
         }

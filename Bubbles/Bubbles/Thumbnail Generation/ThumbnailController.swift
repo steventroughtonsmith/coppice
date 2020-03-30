@@ -75,7 +75,7 @@ class ThumbnailController: NSObject {
     func needsUpdatedThumbnail(for canvas: Canvas) {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(updateThumbnails), object: nil)
         self.canvasChangeQueue.add(canvas)
-        self.perform(#selector(updateThumbnails), with: nil, afterDelay: 0)
+        self.perform(#selector(updateThumbnails), with: nil, afterDelay: 3)
     }
 
     @objc dynamic func updateThumbnails() {
@@ -91,7 +91,7 @@ class ThumbnailController: NSObject {
         guard let documentViewModel = self.documentViewModel else {
             return nil
         }
-        let canvasEditor = CanvasEditorViewController(viewModel: CanvasEditorViewModel(canvas: canvas, documentWindowViewModel: documentViewModel))
+        let canvasEditor = CanvasEditorViewController(viewModel: CanvasEditorViewModel(canvas: canvas, documentWindowViewModel: documentViewModel, mode: .preview))
         _ = canvasEditor.view
         guard let canvasView = canvasEditor.canvasView else {
             return nil

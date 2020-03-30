@@ -12,6 +12,9 @@ class TextPageContent: NSObject, PageContent {
     let contentType = PageContentType.text
     @objc dynamic var text: NSAttributedString = NSAttributedString() {
         didSet {
+            guard self.text != oldValue else {
+                return
+            }
             self.didChange(\.text, oldValue: oldValue)
         }
     }
