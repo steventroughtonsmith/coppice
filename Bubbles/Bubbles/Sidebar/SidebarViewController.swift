@@ -269,7 +269,7 @@ class SidebarViewController: NSViewController, NSMenuItemValidation, SplitViewCo
         self.outlineView.reloadItem(nil, reloadChildren: true)
 
         self.reloadSelection()
-//        self.handleNewItem()
+        self.handleNewItem()
     }
 
     private func handleNewItem() {
