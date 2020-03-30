@@ -305,6 +305,8 @@
 		9970977123AF9BE600CD189B /* PageExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageExporter.swift; sourceTree = "<group>"; };
 		9970977323B0180F00CD189B /* Canvas+Pages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Canvas+Pages.swift"; sourceTree = "<group>"; };
 		9970977523B93A5800CD189B /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
+		997344D32432073400DF4EDB /* BubblesDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BubblesDebug.entitlements; sourceTree = "<group>"; };
+		997344D42432076B00DF4EDB /* BubblesTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BubblesTest.entitlements; sourceTree = "<group>"; };
 		997373782423AD6C000D5F21 /* NoEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoEditorViewController.swift; sourceTree = "<group>"; };
 		997373792423AD6C000D5F21 /* NoEditorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoEditorViewController.xib; sourceTree = "<group>"; };
 		9973737C2423BAD1000D5F21 /* RootSplitViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RootSplitViewController.xib; sourceTree = "<group>"; };
@@ -1082,6 +1084,8 @@
 		99FE018F22CD1037004D380D /* Bubbles */ = {
 			isa = PBXGroup;
 			children = (
+				997344D42432076B00DF4EDB /* BubblesTest.entitlements */,
+				997344D32432073400DF4EDB /* BubblesDebug.entitlements */,
 				99FE019022CD1037004D380D /* AppDelegate.swift */,
 				99FE019222CD1037004D380D /* Document.swift */,
 				9962AB8823732D9400337834 /* BubblesDocumentController.swift */,
@@ -1600,12 +1604,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Bubbles/Bubbles.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Bubbles/BubblesTest.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = Z699XFM6P2;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"TEST=1",
@@ -1787,12 +1791,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Bubbles/Bubbles.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Bubbles/BubblesDebug.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = Z699XFM6P2;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				INFOPLIST_FILE = Bubbles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

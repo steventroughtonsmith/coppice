@@ -109,6 +109,7 @@ class ModelReaderTests: XCTestCase {
             [
                 "id": Folder.modelID(with: self.folderIDs[0]).stringRepresentation,
                 "title": Folder.rootFolderTitle,
+                "dateCreated": Date(timeIntervalSinceReferenceDate: 1429),
                 "contents": [
                     Page.modelID(with: self.pageIDs[0]).stringRepresentation,
                     Folder.modelID(with: self.folderIDs[1]).stringRepresentation,
@@ -118,6 +119,7 @@ class ModelReaderTests: XCTestCase {
             [
                 "id": Folder.modelID(with: self.folderIDs[1]).stringRepresentation,
                 "title": "My New Folder",
+                "dateCreated": Date(timeIntervalSinceReferenceDate: 9241),
                 "contents": [
                     Page.modelID(with: self.pageIDs[1]).stringRepresentation
                 ]

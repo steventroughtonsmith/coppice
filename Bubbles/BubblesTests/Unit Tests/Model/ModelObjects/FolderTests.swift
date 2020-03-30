@@ -324,6 +324,7 @@ class FolderTests: XCTestCase {
         let plist: [String: Any] = [
             "id": folder.id.stringRepresentation,
             "title": "Cool Pages",
+            "dateCreated": Date(timeIntervalSinceReferenceDate: 3106),
             "contents": [object1.id.stringRepresentation, object2.id.stringRepresentation]
         ]
 
@@ -353,13 +354,14 @@ class FolderTests: XCTestCase {
         let plist: [String: Any] = [
             "id": folder.id.stringRepresentation,
             "title": "Cool Pages",
+            "dateCreated": Date(timeIntervalSinceReferenceDate: 3100),
             "contents": [object1.id.stringRepresentation, object2.id.stringRepresentation]
         ]
 
         XCTAssertNoThrow(try folder.update(fromPlistRepresentation: plist))
 
-        XCTAssertEqual(folder.contents[0].id, object1.id)
-        XCTAssertEqual(folder.contents[1].id, object2.id)
+        XCTAssertEqual(folder.contents[safe: 0]?.id, object1.id)
+        XCTAssertEqual(folder.contents[safe: 1]?.id, object2.id)
     }
 
     func test_updatesFromPlistRepresentation_throwsIfContentsMissing() {
@@ -367,6 +369,7 @@ class FolderTests: XCTestCase {
 
         let plist: [String: Any] = [
             "id": folder.id.stringRepresentation,
+            "dateCreated": Date(timeIntervalSinceReferenceDate: 3101),
             "title": "Cool Pages",
         ]
 
@@ -380,6 +383,7 @@ class FolderTests: XCTestCase {
         let plist: [String: Any] = [
             "id": folder.id.stringRepresentation,
             "title": "Cool Pages",
+            "dateCreated": Date(timeIntervalSinceReferenceDate: 3101),
             "contents": [1, 4, "5"]
         ]
 
@@ -395,11 +399,43 @@ class FolderTests: XCTestCase {
         let plist: [String: Any] = [
             "id": folder.id.stringRepresentation,
             "title": "Cool Pages",
+            "dateCreated": Date(timeIntervalSinceReferenceDate: 3102),
             "contents": [object1.id.stringRepresentation, "baz", object2.id.stringRepresentation]
         ]
 
         XCTAssertThrowsError(try folder.update(fromPlistRepresentation: plist)) {
             XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .attributeNotFound("contents"))
+        }
+    }
+
+    func test_updatesPlistRepresentation_updatesDateCreated() {
+        let folder = self.foldersCollection.newObject()
+        let object1 = self.pagesCollection.newObject()
+        let object2 = self.foldersCollection.newObject()
+        let plist: [String: Any] = [
+            "id": folder.id.stringRepresentation,
+            "title": "Cool Pages",
+            "dateCreated": Date(timeIntervalSinceReferenceDate: 3106),
+            "contents": [object1.id.stringRepresentation, object2.id.stringRepresentation]
+        ]
+
+        XCTAssertNoThrow(try folder.update(fromPlistRepresentation: plist))
+
+        XCTAssertEqual(folder.dateCreated.timeIntervalSinceReferenceDate, 3106)
+    }
+
+    func test_updatesPlistRepresentation_throwsIfDateCreatedMissing() {
+        let folder = self.foldersCollection.newObject()
+        let object1 = self.pagesCollection.newObject()
+        let object2 = self.foldersCollection.newObject()
+        let plist: [String: Any] = [
+            "id": folder.id.stringRepresentation,
+            "title": "Cool Pages",
+            "contents": [object1.id.stringRepresentation, object2.id.stringRepresentation]
+        ]
+
+        XCTAssertThrowsError(try folder.update(fromPlistRepresentation: plist)) {
+            XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .attributeNotFound("dateCreated"))
         }
     }
 }

@@ -314,24 +314,27 @@ class DocumentWindowViewModelTests: XCTestCase {
         let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         viewModel.createPage()
         self.modelController.undoManager.undo()
-        XCTAssertEqual(viewModel.selectedSidebarObjectIDs.count, 0)
+//        XCTAssertEqual(viewModel.selectedSidebarObjectIDs.count, 0)
+        XCTFail("Need to update")
     }
 
     func test_createPage_undoingRevertsSidebarToPreviouslySelectedPage() {
         let viewModel = DocumentWindowViewModel(modelController: self.modelController)
-        viewModel.selectedSidebarObjectIDs = Set([self.page.id])
+//        viewModel.selectedSidebarObjectIDs = Set([self.page.id])
         viewModel.createPage()
         self.modelController.undoManager.undo()
-        XCTAssertEqual(viewModel.selectedSidebarObjectIDs.first, self.page.id)
+//        XCTAssertEqual(viewModel.selectedSidebarObjectIDs.first, self.page.id)
+        XCTFail("Need to update")
     }
 
     func test_createPage_removesPageFromCanvasIfOneWasSelected() {
         let viewModel = DocumentWindowViewModel(modelController: self.modelController)
-        viewModel.selectedSidebarObjectIDs = Set([self.canvas.id])
+//        viewModel.selectedSidebarObjectIDs = Set([self.canvas.id])
         let page = viewModel.createPage()
 
         self.modelController.undoManager.undo()
         XCTAssertNil(self.canvas.pages.first(where: { $0.page?.id == page.id }))
+        XCTFail("Need to update")
     }
 
     func test_createPage_redoRecreatesPageWithSameIDAndProperties() throws {
@@ -665,7 +668,7 @@ class DocumentWindowViewModelTests: XCTestCase {
         viewModel.window = window
 
         let childPage = self.modelController.collection(for: Page.self).newObject()
-        let childCanvasPage = self.canvas.open(childPage, linkedFrom: self.canvasPage)
+        let childCanvasPage = try XCTUnwrap(self.canvas.open(childPage, linkedFrom: self.canvasPage).first)
         self.modelController.undoManager.removeAllActions()
         viewModel.delete([.page(self.page.id)])
 
@@ -1250,7 +1253,7 @@ class DocumentWindowViewModelTests: XCTestCase {
         let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let page = viewModel.pageCollection.newObject()
         let link = PageLink(destination: page.id)
-        let canvasPage = try XCTUnwrap(viewModel.openPage(at: link, on: self.canvas))
+        let canvasPage = try XCTUnwrap(viewModel.openPage(at: link, on: self.canvas).first)
 
         self.modelController.undoManager.undo()
 
@@ -1272,7 +1275,7 @@ class DocumentWindowViewModelTests: XCTestCase {
         let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let page = viewModel.pageCollection.newObject()
         let link = PageLink(destination: page.id, source: self.canvasPage.id)
-        let canvasPage = try XCTUnwrap(viewModel.openPage(at: link, on: self.canvas))
+        let canvasPage = try XCTUnwrap(viewModel.openPage(at: link, on: self.canvas).first)
 
         self.modelController.undoManager.undo()
         self.modelController.undoManager.redo()
@@ -1424,7 +1427,7 @@ class DocumentWindowViewModelTests: XCTestCase {
         let canvas = viewModel.canvasCollection.newObject()
         let secondPage = viewModel.pageCollection.newObject()
         let canvasPage1 = try XCTUnwrap(canvas.addPages([self.page], centredOn: CGPoint(x: -40, y: -30)).first)
-        let canvasPage2 = canvas.open(secondPage, linkedFrom: canvasPage1)
+        let canvasPage2 = try XCTUnwrap(canvas.open(secondPage, linkedFrom: canvasPage1).first)
         self.modelController.undoManager.removeAllActions()
 
         viewModel.delete(canvas)
@@ -1449,13 +1452,14 @@ class DocumentWindowViewModelTests: XCTestCase {
     func test_deleteCanvas_undoSetsSidebarSelectionBackToCanavsIfItWasSelected() throws {
         let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         let canvas = viewModel.canvasCollection.newObject()
-        viewModel.selectedSidebarObjectIDs = Set([canvas.id])
+//        viewModel.selectedSidebarObjectIDs = Set([canvas.id])
         self.modelController.undoManager.removeAllActions()
 
         viewModel.delete(canvas)
         self.modelController.undoManager.undo()
 
-        XCTAssertEqual(viewModel.selectedSidebarObjectIDs.first, canvas.id)
+//        XCTAssertEqual(viewModel.selectedSidebarObjectIDs.first, canvas.id)
+        XCTFail("Need to update")
     }
 
     func test_deleteCanvas_redoingDeletesCanvasAgainButWithoutAnyAlert() {
@@ -1482,7 +1486,7 @@ class DocumentWindowViewModelTests: XCTestCase {
         let canvas = viewModel.canvasCollection.newObject()
         let secondPage = viewModel.pageCollection.newObject()
         let canvasPage1 = try XCTUnwrap(canvas.addPages([self.page], centredOn: CGPoint(x: -40, y: -30)).first)
-        let canvasPage2 = canvas.open(secondPage, linkedFrom: canvasPage1)
+        let canvasPage2 = try XCTUnwrap(canvas.open(secondPage, linkedFrom: canvasPage1).first)
         self.modelController.undoManager.removeAllActions()
 
         viewModel.delete(canvas)

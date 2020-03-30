@@ -297,6 +297,11 @@ class CanvasEditorViewModelTests: XCTestCase {
 
     //MARK: - Helpers
     class TestCanvasEditorView: CanvasEditorView {
+        var flashedPage: CanvasPage?
+        func flash(_ canvasPage: CanvasPage) {
+            self.flashedPage = canvasPage
+        }
+
         var updateZoomFactorCalled = false
         func updateZoomFactor() {
             self.updateZoomFactorCalled = true
