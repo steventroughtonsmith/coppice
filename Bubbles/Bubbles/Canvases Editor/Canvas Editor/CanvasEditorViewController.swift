@@ -92,6 +92,9 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
     private var performedInitialLayout = false
     override func viewDidLayout() {
         super.viewDidLayout()
+//        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(viewDidResize), object: nil)
+//        self.perform(#selector(viewDidResize), with: nil, afterDelay: 0)
+        self.notifyOfViewPortChangeIfNeeded()
         guard self.performedInitialLayout == false else {
             return
         }
@@ -118,14 +121,14 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
     }
 
     @objc func scrollingChanged(_ sender: Any?) {
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(scrollingEnded), object: nil)
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(notifyOfViewPortChangeIfNeeded), object: nil)
         if !self.isLayingOut {
             self.updateLastOriginOffset()
         }
-        self.perform(#selector(scrollingEnded), with: nil, afterDelay: 0.5)
+        self.perform(#selector(notifyOfViewPortChangeIfNeeded), with: nil, afterDelay: 0.5)
     }
 
-    @objc func scrollingEnded() {
+    @objc func notifyOfViewPortChangeIfNeeded() {
         guard self.hasLaidOut == false else {
             self.hasLaidOut = false
             return

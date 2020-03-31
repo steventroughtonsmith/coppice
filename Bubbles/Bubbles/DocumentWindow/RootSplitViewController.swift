@@ -74,8 +74,8 @@ class RootSplitViewController: NSSplitViewController {
         guard let toolbarControl = self.toolbarControl else {
             return
         }
-        self.sidebarViewController.splitViewItem.animator().isCollapsed = !toolbarControl.isSelected(forSegment: 0)
-        self.inspectorContainerViewController.splitViewItem.animator().isCollapsed = !toolbarControl.isSelected(forSegment: 1)
+        self.sidebarViewController.splitViewItem.isCollapsed = !toolbarControl.isSelected(forSegment: 0)
+        self.inspectorContainerViewController.splitViewItem.isCollapsed = !toolbarControl.isSelected(forSegment: 1)
     }
 
     private func updateSplitViewControl() {
