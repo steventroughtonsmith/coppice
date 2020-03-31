@@ -6,6 +6,20 @@
 	objectVersion = 50;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		999EA6912433973A00BF254E /* Prepare Info.Plist Prefix */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 999EA6922433973A00BF254E /* Build configuration list for PBXAggregateTarget "Prepare Info.Plist Prefix" */;
+			buildPhases = (
+				999EA6962433973E00BF254E /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = "Prepare Info.Plist Prefix";
+			productName = "Update Build Numbers";
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		9902F4A923882ADA00AF646F /* NSSegmentedControl+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9902F4A823882ADA00AF646F /* NSSegmentedControl+M3Extensions.swift */; };
 		990825D922EDF2FE00273A1D /* ModelCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990825D822EDF2FE00273A1D /* ModelCollection.swift */; };
@@ -123,6 +137,8 @@
 		999DAACA23CCC5D80013EC36 /* SidebarHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999DAAC923CCC5D80013EC36 /* SidebarHeaderView.swift */; };
 		999DAACC23CDFE6B0013EC36 /* PagesSidebarDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999DAACB23CDFE6B0013EC36 /* PagesSidebarDataSource.swift */; };
 		999DAACE23CF484A0013EC36 /* ModelSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999DAACD23CF484A0013EC36 /* ModelSettings.swift */; };
+		999EA68D2433913A00BF254E /* Info.plist.prefix in Resources */ = {isa = PBXBuildFile; fileRef = 999EA68C2433913A00BF254E /* Info.plist.prefix */; };
+		999EA69A24339A8400BF254E /* .build_number in Resources */ = {isa = PBXBuildFile; fileRef = 999EA69924339A8400BF254E /* .build_number */; };
 		99A0B853238961BF005FCF25 /* NSColor+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B852238961BF005FCF25 /* NSColor+M3Extensions.swift */; };
 		99A0B855238C2F46005FCF25 /* TextEditorAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B854238C2F46005FCF25 /* TextEditorAttributes.swift */; };
 		99A0B857238D6F74005FCF25 /* NSTextView+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B856238D6F74005FCF25 /* NSTextView+M3Extensions.swift */; };
@@ -215,6 +231,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		999EA6972433976000BF254E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 99FE018522CD1037004D380D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 999EA6912433973A00BF254E;
+			remoteInfo = "Update Build Numbers";
+		};
 		99FE01A322CD1038004D380D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 99FE018522CD1037004D380D /* Project object */;
@@ -347,6 +370,10 @@
 		999DAAC923CCC5D80013EC36 /* SidebarHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarHeaderView.swift; sourceTree = "<group>"; };
 		999DAACB23CDFE6B0013EC36 /* PagesSidebarDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagesSidebarDataSource.swift; sourceTree = "<group>"; };
 		999DAACD23CF484A0013EC36 /* ModelSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelSettings.swift; sourceTree = "<group>"; };
+		999EA68C2433913A00BF254E /* Info.plist.prefix */ = {isa = PBXFileReference; lastKnownFileType = text; path = Info.plist.prefix; sourceTree = "<group>"; };
+		999EA68F243392B600BF254E /* prepare_infoplist_prefix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = prepare_infoplist_prefix.swift; sourceTree = "<group>"; };
+		999EA69924339A8400BF254E /* .build_number */ = {isa = PBXFileReference; lastKnownFileType = text; path = .build_number; sourceTree = "<group>"; };
+		999EA69B2433A38600BF254E /* update_build_number.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = update_build_number.swift; sourceTree = "<group>"; };
 		99A0B852238961BF005FCF25 /* NSColor+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+M3Extensions.swift"; sourceTree = "<group>"; };
 		99A0B854238C2F46005FCF25 /* TextEditorAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorAttributes.swift; sourceTree = "<group>"; };
 		99A0B856238D6F74005FCF25 /* NSTextView+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextView+M3Extensions.swift"; sourceTree = "<group>"; };
@@ -819,6 +846,15 @@
 			path = "No Canvas Editor";
 			sourceTree = "<group>";
 		};
+		999EA68E2433929E00BF254E /* Build Scripts */ = {
+			isa = PBXGroup;
+			children = (
+				999EA68F243392B600BF254E /* prepare_infoplist_prefix.swift */,
+				999EA69B2433A38600BF254E /* update_build_number.swift */,
+			);
+			path = "Build Scripts";
+			sourceTree = "<group>";
+		};
 		99A0B858238D72C2005FCF25 /* Inspectors */ = {
 			isa = PBXGroup;
 			children = (
@@ -1070,6 +1106,7 @@
 				99FE018F22CD1037004D380D /* Bubbles */,
 				99FE01A522CD1038004D380D /* BubblesTests */,
 				99FE01B022CD1038004D380D /* BubblesUITests */,
+				999EA68E2433929E00BF254E /* Build Scripts */,
 				99FE018E22CD1037004D380D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -1115,7 +1152,9 @@
 				9970977523B93A5800CD189B /* Icons.xcassets */,
 				99FE019922CD1038004D380D /* MainMenu.xib */,
 				99FE019C22CD1038004D380D /* Info.plist */,
+				999EA68C2433913A00BF254E /* Info.plist.prefix */,
 				99FE019D22CD1038004D380D /* Bubbles.entitlements */,
+				999EA69924339A8400BF254E /* .build_number */,
 			);
 			path = Bubbles;
 			sourceTree = "<group>";
@@ -1171,6 +1210,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				999EA6982433976000BF254E /* PBXTargetDependency */,
 			);
 			name = Bubbles;
 			productName = Bubbles;
@@ -1223,6 +1263,9 @@
 				LastUpgradeCheck = 1100;
 				ORGANIZATIONNAME = "M Cubed Software";
 				TargetAttributes = {
+					999EA6912433973A00BF254E = {
+						CreatedOnToolsVersion = 11.4;
+					};
 					99FE018C22CD1037004D380D = {
 						CreatedOnToolsVersion = 10.2.1;
 						SystemCapabilities = {
@@ -1260,6 +1303,7 @@
 				99FE018C22CD1037004D380D /* Bubbles */,
 				99FE01A122CD1038004D380D /* BubblesTests */,
 				99FE01AC22CD1038004D380D /* BubblesUITests */,
+				999EA6912433973A00BF254E /* Prepare Info.Plist Prefix */,
 			);
 		};
 /* End PBXProject section */
@@ -1288,6 +1332,7 @@
 				993D2BD924127E29002E5BAC /* CanvasListView.xib in Resources */,
 				99581093230D92C600D996C4 /* CanvasPageViewController.xib in Resources */,
 				9965FC3E23843143002FE10D /* CanvasPageInspectorContentView.xib in Resources */,
+				999EA68D2433913A00BF254E /* Info.plist.prefix in Resources */,
 				99C03F09232A99F400EB7516 /* Cursors.xcassets in Resources */,
 				99D8E39123800F9A0098CF3B /* BaseInspectorViewController.xib in Resources */,
 				99FE01E522D4CC8A004D380D /* DocumentWindow.xib in Resources */,
@@ -1300,6 +1345,7 @@
 				99488AF123C8D5B0009954AF /* Colours.xcassets in Resources */,
 				99D8E379237EDB890098CF3B /* PageInspectorContentView.xib in Resources */,
 				9973737D2423BAD1000D5F21 /* RootSplitViewController.xib in Resources */,
+				999EA69A24339A8400BF254E /* .build_number in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1321,6 +1367,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		999EA6962433973E00BF254E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Bubbles/Info.plist.prefix",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(CONFIGURATION_TEMP_DIR)/Info.plist.prefix",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "GITHASH=$( git rev-parse --short HEAD )\n\"$SRCROOT/Build Scripts/prepare_infoplist_prefix.swift\" --build-number \"$SRCROOT/Bubbles/.build_number\" --git-hash $GITHASH\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		99FE018922CD1037004D380D /* Sources */ = {
@@ -1518,6 +1586,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		999EA6982433976000BF254E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 999EA6912433973A00BF254E /* Prepare Info.Plist Prefix */;
+			targetProxy = 999EA6972433976000BF254E /* PBXContainerItemProxy */;
+		};
 		99FE01A422CD1038004D380D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 99FE018C22CD1037004D380D /* Bubbles */;
@@ -1620,6 +1693,8 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Bubbles/Info.plist;
+				INFOPLIST_PREFIX_HEADER = "$(CONFIGURATION_TEMP_DIR)/Info.plist.prefix";
+				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -1673,6 +1748,163 @@
 				TEST_TARGET_NAME = Bubbles;
 			};
 			name = Test;
+		};
+		999EA6932433973A00BF254E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Z699XFM6P2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		999EA6942433973A00BF254E /* Test */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Z699XFM6P2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Test;
+		};
+		999EA6952433973A00BF254E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Z699XFM6P2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		999EA69C2433A7BB00BF254E /* Archive */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Archive;
+		};
+		999EA69D2433A7BB00BF254E /* Archive */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Bubbles/Bubbles.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = Z699XFM6P2;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = Bubbles/Info.plist;
+				INFOPLIST_PREFIX_HEADER = "$(CONFIGURATION_TEMP_DIR)/Info.plist.prefix";
+				INFOPLIST_PREPROCESS = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0a4;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Bubbles;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Archive;
+		};
+		999EA69E2433A7BB00BF254E /* Archive */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = Z699XFM6P2;
+				INFOPLIST_FILE = BubblesTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.BubblesTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bubbles.app/Contents/MacOS/Bubbles";
+			};
+			name = Archive;
+		};
+		999EA69F2433A7BB00BF254E /* Archive */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = Z699XFM6P2;
+				INFOPLIST_FILE = BubblesUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.BubblesUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = Bubbles;
+			};
+			name = Archive;
+		};
+		999EA6A02433A7BB00BF254E /* Archive */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Z699XFM6P2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Archive;
 		};
 		99FE01B422CD1038004D380D /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -1802,6 +2034,8 @@
 				DEVELOPMENT_TEAM = Z699XFM6P2;
 				ENABLE_HARDENED_RUNTIME = NO;
 				INFOPLIST_FILE = Bubbles/Info.plist;
+				INFOPLIST_PREFIX_HEADER = "$(CONFIGURATION_TEMP_DIR)/Info.plist.prefix";
+				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -1824,6 +2058,8 @@
 				DEVELOPMENT_TEAM = Z699XFM6P2;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Bubbles/Info.plist;
+				INFOPLIST_PREFIX_HEADER = "$(CONFIGURATION_TEMP_DIR)/Info.plist.prefix";
+				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -1922,12 +2158,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		999EA6922433973A00BF254E /* Build configuration list for PBXAggregateTarget "Prepare Info.Plist Prefix" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				999EA6932433973A00BF254E /* Debug */,
+				999EA6942433973A00BF254E /* Test */,
+				999EA6952433973A00BF254E /* Release */,
+				999EA6A02433A7BB00BF254E /* Archive */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		99FE018822CD1037004D380D /* Build configuration list for PBXProject "Bubbles" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				99FE01B422CD1038004D380D /* Debug */,
 				9923B06C22F466080035D8C6 /* Test */,
 				99FE01B522CD1038004D380D /* Release */,
+				999EA69C2433A7BB00BF254E /* Archive */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1938,6 +2186,7 @@
 				99FE01B722CD1038004D380D /* Debug */,
 				9923B06D22F466080035D8C6 /* Test */,
 				99FE01B822CD1038004D380D /* Release */,
+				999EA69D2433A7BB00BF254E /* Archive */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1948,6 +2197,7 @@
 				99FE01BA22CD1038004D380D /* Debug */,
 				9923B06E22F466080035D8C6 /* Test */,
 				99FE01BB22CD1038004D380D /* Release */,
+				999EA69E2433A7BB00BF254E /* Archive */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1958,6 +2208,7 @@
 				99FE01BD22CD1038004D380D /* Debug */,
 				9923B06F22F466080035D8C6 /* Test */,
 				99FE01BE22CD1038004D380D /* Release */,
+				999EA69F2433A7BB00BF254E /* Archive */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
