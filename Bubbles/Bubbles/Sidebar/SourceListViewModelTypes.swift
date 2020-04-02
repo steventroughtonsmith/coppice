@@ -8,20 +8,20 @@
 
 import AppKit
 
-class SidebarNodeCollection: NSObject {
+class SourceListNodeCollection: NSObject {
     private(set) var containsPages: Bool = false
     private(set) var containsFolders: Bool = false
     private(set) var containsCanvases: Bool = false
 
     private(set) var nodesShareParent: Bool = true
 
-    private(set) var nodes: [SidebarNode] = []
+    private(set) var nodes: [SourceListNode] = []
 
     var count: Int {
         return nodes.count
     }
 
-    func add(_ node: SidebarNode) {
+    func add(_ node: SourceListNode) {
         if let lastNode = self.nodes.last, self.nodesShareParent {
             self.nodesShareParent = (lastNode.parent === node.parent)
         }
@@ -38,7 +38,7 @@ class SidebarNodeCollection: NSObject {
     }
 }
 
-class SidebarNode: NSObject {
+class SourceListNode: NSObject {
     enum CellType {
         case bigCell
         case smallCell
@@ -46,7 +46,7 @@ class SidebarNode: NSObject {
     }
 
     @objc dynamic var title: String {
-        get { return "Sidebar Item" }
+        get { return "Source List Item" }
         set { }
     }
     @objc dynamic var image: NSImage? {
@@ -65,8 +65,8 @@ class SidebarNode: NSObject {
         self.cellType = cellType
     }
 
-    weak var parent: SidebarNode?
-    var children = [SidebarNode]() {
+    weak var parent: SourceListNode?
+    var children = [SourceListNode]() {
         didSet {
             self.children.forEach { $0.parent = self }
         }
@@ -92,25 +92,25 @@ class SidebarNode: NSObject {
     }
 
     override func isEqual(_ object: Any?) -> Bool {
-        guard let otherNode = object as? SidebarNode else {
+        guard let otherNode = object as? SourceListNode else {
             return false
         }
         return self.item == otherNode.item
     }
 
-    static func == (lhs: SidebarNode, rhs: SidebarNode) -> Bool {
+    static func == (lhs: SourceListNode, rhs: SourceListNode) -> Bool {
         return lhs.item == rhs.item
     }
 }
 
 
-class CanvasesSidebarNode: SidebarNode {
+class CanvasesSourceListNode: SourceListNode {
     init() {
         super.init(item: .canvases, cellType: .bigCell)
     }
 
     @objc dynamic override var title: String {
-        get { return NSLocalizedString("Canvases", comment: "Canvases sidebar row title") }
+        get { return NSLocalizedString("Canvases", comment: "Canvases source list row title") }
         set { }
     }
 
@@ -120,7 +120,7 @@ class CanvasesSidebarNode: SidebarNode {
 }
 
 
-class PagesGroupSidebarNode: SidebarNode {
+class PagesGroupSourceListNode: SourceListNode {
     let rootFolder: Folder
     init(rootFolder: Folder) {
         self.rootFolder = rootFolder
@@ -128,14 +128,14 @@ class PagesGroupSidebarNode: SidebarNode {
     }
 
     @objc dynamic override var title: String {
-        get { return NSLocalizedString("Pages", comment: "Pages group sidebar row title") }
+        get { return NSLocalizedString("Pages", comment: "Pages group source list row title") }
         set { }
     }
 }
 
 
 //MARK: -
-class FolderSidebarNode: SidebarNode {
+class FolderSourceListNode: SourceListNode {
     @objc dynamic let folder: Folder
     init(folder: Folder) {
         self.folder = folder
@@ -178,7 +178,7 @@ class FolderSidebarNode: SidebarNode {
 
 
 //MARK: -
-class PageSidebarNode: SidebarNode {
+class PageSourceListNode: SourceListNode {
     @objc dynamic let page: Page
     init(page: Page) {
         self.page = page

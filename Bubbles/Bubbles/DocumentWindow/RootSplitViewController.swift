@@ -10,7 +10,7 @@ import AppKit
 
 
 class RootSplitViewController: NSSplitViewController {
-    let sidebarViewController: SidebarViewController
+    let sidebarViewController: SourceListViewController
     let editorContainerViewController: EditorContainerViewController
     let inspectorContainerViewController: InspectorContainerViewController
 
@@ -23,7 +23,7 @@ class RootSplitViewController: NSSplitViewController {
 
 
     //MARK: - Initialisation
-    init(sidebarViewController: SidebarViewController,
+    init(sidebarViewController: SourceListViewController,
          canvasListViewController: CanvasListViewController,
          editorContainerViewController: EditorContainerViewController,
          inspectorContainerViewController: InspectorContainerViewController)

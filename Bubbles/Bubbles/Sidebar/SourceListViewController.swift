@@ -1,5 +1,5 @@
 //
-//  SidebarViewController.swift
+//  SourceListViewController.swift
 //  Bubbles
 //
 //  Created by Martin Pilkington on 15/07/2019.
@@ -9,12 +9,12 @@
 import Cocoa
 import Combine
 
-class SidebarViewController: NSViewController, NSMenuItemValidation, SplitViewContainable {
-    @objc dynamic let viewModel: SidebarViewModel
+class SourceListViewController: NSViewController, NSMenuItemValidation, SplitViewContainable {
+    @objc dynamic let viewModel: SourceListViewModel
 
-    init(viewModel: SidebarViewModel) {
+    init(viewModel: SourceListViewModel) {
         self.viewModel = viewModel
-        super.init(nibName: "SidebarView", bundle: nil)
+        super.init(nibName: "SourceListView", bundle: nil)
         self.viewModel.view = self
     }
 
@@ -248,15 +248,15 @@ class SidebarViewController: NSViewController, NSMenuItemValidation, SplitViewCo
 
 
     //MARK: - Action Items
-    private var nodesForAction: SidebarNodeCollection {
+    private var nodesForAction: SourceListNodeCollection {
         let selectedIndexes = self.outlineView.selectedRowIndexes
         let clickedRow = self.outlineView.clickedRow
 
         if selectedIndexes.contains(clickedRow) || (clickedRow == -1) {
             return self.selectedNodes
         }
-        let collection = SidebarNodeCollection()
-        if clickedRow >= 0, let clickedNode = self.outlineView.item(atRow: clickedRow) as? SidebarNode {
+        let collection = SourceListNodeCollection()
+        if clickedRow >= 0, let clickedNode = self.outlineView.item(atRow: clickedRow) as? SourceListNode {
             collection.add(clickedNode)
         }
         return collection
@@ -265,7 +265,7 @@ class SidebarViewController: NSViewController, NSMenuItemValidation, SplitViewCo
 
     //MARK: - Reload
     private var createdItem: DocumentWindowViewModel.SidebarItem?
-    private func reloadSidebarNodes() {
+    private func reloadSourceListNodes() {
         self.outlineView.reloadItem(nil, reloadChildren: true)
 
         self.reloadSelection()
@@ -277,8 +277,8 @@ class SidebarViewController: NSViewController, NSMenuItemValidation, SplitViewCo
             return
         }
         self.outlineView.expandItem(self.viewModel.pagesGroupNode)
-        if let sidebarNode = self.viewModel.node(for: item) {
-            let index = self.outlineView.row(forItem: sidebarNode)
+        if let sourceListNode = self.viewModel.node(for: item) {
+            let index = self.outlineView.row(forItem: sourceListNode)
             self.outlineView.selectRowIndexes(IndexSet(integer: index), byExtendingSelection: false)
         }
 
@@ -292,10 +292,10 @@ class SidebarViewController: NSViewController, NSMenuItemValidation, SplitViewCo
 
 
     //MARK: - Selection
-    var selectedNodes: SidebarNodeCollection {
-        let collection = SidebarNodeCollection()
+    var selectedNodes: SourceListNodeCollection {
+        let collection = SourceListNodeCollection()
         self.outlineView.selectedRowIndexes.forEach {
-            if let node = self.outlineView.item(atRow: $0) as? SidebarNode {
+            if let node = self.outlineView.item(atRow: $0) as? SourceListNode {
                 collection.add(node)
             }
         }
@@ -306,7 +306,7 @@ class SidebarViewController: NSViewController, NSMenuItemValidation, SplitViewCo
     //MARK: - Folder Sorting
     @IBOutlet weak var sortFolderMenu: NSMenu!
     private func setupSortFolderMenu() {
-        self.sortFolderMenu.items = SidebarViewModel.FolderSortingMethod.allCases.enumerated().map { (index, element) in
+        self.sortFolderMenu.items = SourceListViewModel.FolderSortingMethod.allCases.enumerated().map { (index, element) in
             let menuItem = NSMenuItem(title: element.localizedString, action: #selector(sortFolder(_:)), keyEquivalent: "")
             menuItem.target = self
             menuItem.tag = index
@@ -324,14 +324,14 @@ class SidebarViewController: NSViewController, NSMenuItemValidation, SplitViewCo
             return
         }
 
-        guard let sortMethod = SidebarViewModel.FolderSortingMethod.allCases[safe: menuItem.tag] else {
+        guard let sortMethod = SourceListViewModel.FolderSortingMethod.allCases[safe: menuItem.tag] else {
             return
         }
 
-        if let folder = (selection.nodes[0] as? FolderSidebarNode)?.folder {
+        if let folder = (selection.nodes[0] as? FolderSourceListNode)?.folder {
             self.viewModel.sort(folder, using: sortMethod)
         }
-        else if let folder = (selection.nodes[0] as? PagesGroupSidebarNode)?.rootFolder {
+        else if let folder = (selection.nodes[0] as? PagesGroupSourceListNode)?.rootFolder {
             self.viewModel.sort(folder, using: sortMethod)
         }
     }
@@ -339,9 +339,9 @@ class SidebarViewController: NSViewController, NSMenuItemValidation, SplitViewCo
 }
 
 
-extension SidebarViewController: SidebarView {
+extension SourceListViewController: SourceListView {
     func reload() {
-        self.reloadSidebarNodes()
+        self.reloadSourceListNodes()
     }
 
     func showAlert(_ alert: Alert, callback: @escaping (Int) -> Void) {
@@ -357,39 +357,39 @@ extension SidebarViewController: SidebarView {
 
 
 
-extension SidebarViewController: NSOutlineViewDataSource {
+extension SourceListViewController: NSOutlineViewDataSource {
     func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
         guard item != nil else {
-            return self.viewModel.rootSidebarNodes.count
+            return self.viewModel.rootSourceListNodes.count
         }
-        guard let sidebarItem = item as? SidebarNode else {
+        guard let sourceListNode = item as? SourceListNode else {
             return 0
         }
-        return sidebarItem.children.count
+        return sourceListNode.children.count
     }
 
     func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
         guard item != nil else {
-            return self.viewModel.rootSidebarNodes[index]
+            return self.viewModel.rootSourceListNodes[index]
         }
-        guard let sidebarItem = item as? SidebarNode else {
-            preconditionFailure("Encountered an item that isn't a sidebar item: \(item!)")
+        guard let sourceListItem = item as? SourceListNode else {
+            preconditionFailure("Encountered an item that isn't a source list node: \(item!)")
         }
-        return sidebarItem.children[index]
+        return sourceListItem.children[index]
     }
 
     func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
-        guard let sidebarItem = item as? SidebarNode else {
+        guard let sourceListItem = item as? SourceListNode else {
             return false
         }
-        return (sidebarItem.children.count > 0)
+        return (sourceListItem.children.count > 0)
     }
 
     func outlineView(_ outlineView: NSOutlineView, shouldSelectItem item: Any) -> Bool {
-        guard let sidebarItem = item as? SidebarNode else {
+        guard let sourceListItem = item as? SourceListNode else {
             return true
         }
-        switch sidebarItem.cellType {
+        switch sourceListItem.cellType {
         case .bigCell, .smallCell:
             return true
         case .groupCell:
@@ -398,11 +398,11 @@ extension SidebarViewController: NSOutlineViewDataSource {
     }
 
     func outlineView(_ outlineView: NSOutlineView, persistentObjectForItem item: Any?) -> Any? {
-        guard let sidebarNode = item as? SidebarNode else {
+        guard let sourceListNode = item as? SourceListNode else {
             return nil
         }
 
-        return sidebarNode.item.persistentRepresentation
+        return sourceListNode.item.persistentRepresentation
     }
 
     func outlineView(_ outlineView: NSOutlineView, itemForPersistentObject object: Any) -> Any? {
@@ -417,15 +417,15 @@ extension SidebarViewController: NSOutlineViewDataSource {
 
     //MARK: - Drag & Drop
     func outlineView(_ outlineView: NSOutlineView, pasteboardWriterForItem item: Any) -> NSPasteboardWriting? {
-        guard let sidebarNode = item as? SidebarNode else {
+        guard let sourceListNode = item as? SourceListNode else {
             return nil
         }
-        return sidebarNode.pasteboardWriter
+        return sourceListNode.pasteboardWriter
     }
 
     func outlineView(_ outlineView: NSOutlineView, validateDrop info: NSDraggingInfo, proposedItem item: Any?, proposedChildIndex index: Int) -> NSDragOperation {
-        //If we have an item but it's not a sidebar node then something has gone wrong
-        if (item != nil) && ((item as? SidebarNode) == nil) {
+        //If we have an item but it's not a source list node then something has gone wrong
+        if (item != nil) && ((item as? SourceListNode) == nil) {
             return []
         }
 
@@ -435,7 +435,7 @@ extension SidebarViewController: NSOutlineViewDataSource {
 
         if types.contains(ModelID.PasteboardType) {
             let modelIDs = items.compactMap { ModelID(pasteboardItem: $0) }
-            let (canDrop, targetNode, targetIndex) = self.viewModel.canDropItems(with: modelIDs, onto: (item as? SidebarNode), atChildIndex: index)
+            let (canDrop, targetNode, targetIndex) = self.viewModel.canDropItems(with: modelIDs, onto: (item as? SourceListNode), atChildIndex: index)
             guard canDrop else {
                 return []
             }
@@ -444,7 +444,7 @@ extension SidebarViewController: NSOutlineViewDataSource {
         }
         if types.contains(.fileURL) {
             let fileURLs = items.compactMap { $0.data(forType: .fileURL) }.compactMap { URL(dataRepresentation: $0, relativeTo: nil)}
-            let (canDrop, targetNode, targetIndex) = self.viewModel.canDropFiles(at: fileURLs, onto: (item as? SidebarNode), atChildIndex: index)
+            let (canDrop, targetNode, targetIndex) = self.viewModel.canDropFiles(at: fileURLs, onto: (item as? SourceListNode), atChildIndex: index)
             guard canDrop else {
                 return []
             }
@@ -456,7 +456,7 @@ extension SidebarViewController: NSOutlineViewDataSource {
     }
 
     func outlineView(_ outlineView: NSOutlineView, acceptDrop info: NSDraggingInfo, item: Any?, childIndex index: Int) -> Bool {
-        if (item != nil) && ((item as? SidebarNode) == nil) {
+        if (item != nil) && ((item as? SourceListNode) == nil) {
             return false
         }
 
@@ -466,12 +466,12 @@ extension SidebarViewController: NSOutlineViewDataSource {
 
         if types.contains(ModelID.PasteboardType) {
             let modelIDs = items.compactMap { ModelID(pasteboardItem: $0) }
-            return self.viewModel.dropItems(with: modelIDs, onto: (item as? SidebarNode), atChildIndex: index)
+            return self.viewModel.dropItems(with: modelIDs, onto: (item as? SourceListNode), atChildIndex: index)
         }
 
         if types.contains(.fileURL) {
             let fileURLs = items.compactMap { $0.data(forType: .fileURL) }.compactMap { URL(dataRepresentation: $0, relativeTo: nil)}
-            return self.viewModel.dropFiles(at: fileURLs, onto: (item as? SidebarNode), atChildIndex: index)
+            return self.viewModel.dropFiles(at: fileURLs, onto: (item as? SourceListNode), atChildIndex: index)
         }
 
         return false
@@ -479,12 +479,12 @@ extension SidebarViewController: NSOutlineViewDataSource {
 }
 
 
-extension SidebarViewController: NSOutlineViewDelegate {
+extension SourceListViewController: NSOutlineViewDelegate {
     func outlineView(_ outlineView: NSOutlineView, isGroupItem item: Any) -> Bool {
-        guard let sidebarItem = item as? SidebarNode else {
+        guard let sourceListItem = item as? SourceListNode else {
             return false
         }
-        switch sidebarItem.cellType {
+        switch sourceListItem.cellType {
         case .bigCell, .smallCell:
             return false
         case .groupCell:
@@ -493,11 +493,11 @@ extension SidebarViewController: NSOutlineViewDelegate {
     }
 
     func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
-        guard let sidebarItem = item as? SidebarNode else {
+        guard let sourceListItem = item as? SourceListNode else {
             return nil
         }
         let view: NSTableCellView?
-        switch sidebarItem.cellType {
+        switch sourceListItem.cellType {
         case .bigCell:
             view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("BigCell"), owner: self) as? NSTableCellView
         case .smallCell:
@@ -510,10 +510,10 @@ extension SidebarViewController: NSOutlineViewDelegate {
     }
 
     func outlineView(_ outlineView: NSOutlineView, heightOfRowByItem item: Any) -> CGFloat {
-        guard let sidebarItem = item as? SidebarNode else {
+        guard let sourceListItem = item as? SourceListNode else {
             return 22
         }
-        switch sidebarItem.cellType {
+        switch sourceListItem.cellType {
         case .bigCell:
             return 34
         case .smallCell, .groupCell:
@@ -531,7 +531,7 @@ extension SidebarViewController: NSOutlineViewDelegate {
 
 
 
-extension SidebarViewController: NSMenuDelegate {
+extension SourceListViewController: NSMenuDelegate {
     func numberOfItems(in menu: NSMenu) -> Int {
         return self.viewModel.canvases.count
     }

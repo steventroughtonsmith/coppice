@@ -26,7 +26,7 @@ class DocumentWindowController: NSWindowController {
     init(viewModel: DocumentWindowViewModel) {
         self.viewModel = viewModel
 
-        self.splitViewController = RootSplitViewController(sidebarViewController: SidebarViewController(viewModel: .init(documentWindowViewModel: viewModel)),
+        self.splitViewController = RootSplitViewController(sidebarViewController: SourceListViewController(viewModel: .init(documentWindowViewModel: viewModel)),
                                                            canvasListViewController: CanvasListViewController(viewModel: .init(documentWindowViewModel: viewModel)),
                                                            editorContainerViewController: EditorContainerViewController(viewModel: .init(documentWindowViewModel: viewModel)),
                                                            inspectorContainerViewController: InspectorContainerViewController(viewModel: .init(documentWindowViewModel: viewModel)))

@@ -1,5 +1,5 @@
 //
-//  SidebarOutlineView.swift
+//  SourceListOutlineView.swift
 //  Bubbles
 //
 //  Created by Martin Pilkington on 08/03/2020.
@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class SidebarOutlineView: NSOutlineView {
+class SourceListOutlineView: NSOutlineView {
     //Remove the indent from the canvases row
     override func frameOfCell(atColumn column: Int, row: Int) -> NSRect {
         var rect = super.frameOfCell(atColumn: column, row: row)

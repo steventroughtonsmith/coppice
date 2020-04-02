@@ -35,8 +35,8 @@ class SidebarViewModelTests: XCTestCase {
         self.documentWindowViewModel = nil
     }
 
-    private func createViewModel() -> SidebarViewModel {
-        return  SidebarViewModel(documentWindowViewModel: self.documentWindowViewModel,
+    private func createViewModel() -> SourceListViewModel {
+        return  SourceListViewModel(documentWindowViewModel: self.documentWindowViewModel,
                                  notificationCenter: self.notificationCenter)
     }
 
@@ -79,7 +79,7 @@ class SidebarViewModelTests: XCTestCase {
         }
 
         rootFolder.insert([page1, page2, folder1, page3, folder2])
-        vm.reloadSidebarNodes()
+        vm.reloadSourceListNodes()
 
         let sidebarNodes = vm.rootSidebarNodes
         XCTAssertEqual(sidebarNodes.count, 2)
@@ -159,7 +159,7 @@ class SidebarViewModelTests: XCTestCase {
         rootFolder.insert([page1, folder1, folder2])
 
 
-        vm.reloadSidebarNodes()
+        vm.reloadSourceListNodes()
         let sidebarNodes = vm.rootSidebarNodes
         XCTAssertEqual(sidebarNodes.count, 2)
 
@@ -229,7 +229,7 @@ class SidebarViewModelTests: XCTestCase {
         let page1 = self.modelController.collection(for: Page.self).newObject()
         rootFolder.insert([page1])
 
-        vm.reloadSidebarNodes()
+        vm.reloadSourceListNodes()
 
         let sidebarNodes = vm.rootSidebarNodes
         let pagesItem = try XCTUnwrap(sidebarNodes[safe: 1])
@@ -243,7 +243,7 @@ class SidebarViewModelTests: XCTestCase {
         let page1 = self.modelController.collection(for: Page.self).newObject()
         rootFolder.insert([page1])
 
-        vm.reloadSidebarNodes()
+        vm.reloadSourceListNodes()
 
         let initialSidebarNodes = vm.rootSidebarNodes
         let initialPagesItem = try XCTUnwrap(initialSidebarNodes[safe: 1])
@@ -251,7 +251,7 @@ class SidebarViewModelTests: XCTestCase {
 
         self.documentWindowViewModel.delete([.page(page1.id)])
 
-        vm.reloadSidebarNodes()
+        vm.reloadSourceListNodes()
 
         let sidebarNodes = vm.rootSidebarNodes
         let pagesItem = try XCTUnwrap(sidebarNodes[safe: 1])
@@ -260,7 +260,7 @@ class SidebarViewModelTests: XCTestCase {
 
     func test_rootSidebarNodes_reloadsNodesWhenFolderAdded() throws {
         let vm = self.createViewModel()
-        vm.reloadSidebarNodes()
+        vm.reloadSourceListNodes()
 
         let initialSidebarNodes = vm.rootSidebarNodes
         let initialPagesItem = try XCTUnwrap(initialSidebarNodes[safe: 1])
@@ -271,7 +271,7 @@ class SidebarViewModelTests: XCTestCase {
         let folder1 = self.modelController.collection(for: Folder.self).newObject()
         rootFolder.insert([folder1])
 
-        vm.reloadSidebarNodes()
+        vm.reloadSourceListNodes()
 
         let sidebarNodes = vm.rootSidebarNodes
         let pagesItem = try XCTUnwrap(sidebarNodes[safe: 1])
@@ -285,7 +285,7 @@ class SidebarViewModelTests: XCTestCase {
         let folder1 = self.modelController.collection(for: Folder.self).newObject()
         rootFolder.insert([folder1])
 
-        vm.reloadSidebarNodes()
+        vm.reloadSourceListNodes()
 
         let initialSidebarNodes = vm.rootSidebarNodes
         let initialPagesItem = try XCTUnwrap(initialSidebarNodes[safe: 1])
@@ -293,7 +293,7 @@ class SidebarViewModelTests: XCTestCase {
 
         self.documentWindowViewModel.delete([.folder(folder1.id)])
 
-        vm.reloadSidebarNodes()
+        vm.reloadSourceListNodes()
 
         let sidebarNodes = vm.rootSidebarNodes
         let pagesItem = try XCTUnwrap(sidebarNodes[safe: 1])
@@ -309,7 +309,7 @@ class SidebarViewModelTests: XCTestCase {
         let page1 = self.modelController.collection(for: Page.self).newObject()
         rootFolder.insert([folder1, page1])
 
-        vm.reloadSidebarNodes()
+        vm.reloadSourceListNodes()
 
         let initialSidebarNodes = vm.rootSidebarNodes
         let initialPagesItem = try XCTUnwrap(initialSidebarNodes[safe: 1])
@@ -319,7 +319,7 @@ class SidebarViewModelTests: XCTestCase {
 
         folder1.insert([page1])
 
-        vm.reloadSidebarNodes()
+        vm.reloadSourceListNodes()
 
         let sidebarNodes = vm.rootSidebarNodes
         let pagesItem = try XCTUnwrap(sidebarNodes[safe: 1])
@@ -337,7 +337,7 @@ class SidebarViewModelTests: XCTestCase {
         let initialPageGroup = try XCTUnwrap(initialSidebarNodes[safe: 1])
         self.modelController.collection(for: Page.self).newObject()
 
-        vm.reloadSidebarNodes()
+        vm.reloadSourceListNodes()
 
         let sidebarNodes = vm.rootSidebarNodes
         let canvases = try XCTUnwrap(sidebarNodes[safe: 0])
@@ -354,7 +354,7 @@ class SidebarViewModelTests: XCTestCase {
         let rootFolder = self.documentWindowViewModel.rootFolder
         let page1 = self.modelController.collection(for: Page.self).newObject()
         rootFolder.insert([page1])
-        vm.reloadSidebarNodes()
+        vm.reloadSourceListNodes()
 
         let initialSidebarNodes = vm.rootSidebarNodes
         let initialPageGroup = try XCTUnwrap(initialSidebarNodes[safe: 1])
@@ -362,7 +362,7 @@ class SidebarViewModelTests: XCTestCase {
 
         self.modelController.collection(for: Page.self).newObject()
 
-        vm.reloadSidebarNodes()
+        vm.reloadSourceListNodes()
 
         let sidebarNodes = vm.rootSidebarNodes
         let pageGroup = try XCTUnwrap(sidebarNodes[safe: 1])
@@ -378,7 +378,7 @@ class SidebarViewModelTests: XCTestCase {
         let rootFolder = self.documentWindowViewModel.rootFolder
         let folder1 = self.modelController.collection(for: Folder.self).newObject()
         rootFolder.insert([folder1])
-        vm.reloadSidebarNodes()
+        vm.reloadSourceListNodes()
 
         let initialSidebarNodes = vm.rootSidebarNodes
         let initialPageGroup = try XCTUnwrap(initialSidebarNodes[safe: 1])
@@ -386,7 +386,7 @@ class SidebarViewModelTests: XCTestCase {
 
         self.modelController.collection(for: Folder.self).newObject()
 
-        vm.reloadSidebarNodes()
+        vm.reloadSourceListNodes()
 
         let sidebarNodes = vm.rootSidebarNodes
         let pageGroup = try XCTUnwrap(sidebarNodes[safe: 1])
@@ -399,7 +399,7 @@ class SidebarViewModelTests: XCTestCase {
 
 //MARK: - Helpers
 
-private class MockSidebarView: SidebarView {
+private class MockSidebarView: SourceListView {
     func prepareForReload() {
 
     }

@@ -1,5 +1,5 @@
 //
-//  SidebarViewModel.swift
+//  SourceListViewModel.swift
 //  Bubbles
 //
 //  Created by Martin Pilkington on 15/07/2019.
@@ -9,13 +9,13 @@
 import Cocoa
 import Combine
 
-protocol SidebarView: class {
+protocol SourceListView: class {
     func reload()
     func reloadSelection()
 }
 
-class SidebarViewModel: ViewModel {
-    weak var view: SidebarView?
+class SourceListViewModel: ViewModel {
+    weak var view: SourceListView?
 
     let notificationCenter: NotificationCenter
     init(documentWindowViewModel: DocumentWindowViewModel, notificationCenter: NotificationCenter = NotificationCenter.default) {
@@ -23,7 +23,7 @@ class SidebarViewModel: ViewModel {
 
         super.init(documentWindowViewModel: documentWindowViewModel)
 
-        self.reloadSidebarNodes()
+        self.reloadSourceListNodes()
     }
 
     var pagesObserver: ModelCollection<Page>.Observation?
@@ -52,37 +52,37 @@ class SidebarViewModel: ViewModel {
     }
 
 
-    //MARK: - Sidebar Items
-    var rootSidebarNodes: [SidebarNode] {
+    //MARK: - Source List Items
+    var rootSourceListNodes: [SourceListNode] {
         return [self.canvasesNode, self.pagesGroupNode]
     }
 
-    lazy var canvasesNode: SidebarNode = {
-        let node = CanvasesSidebarNode()
+    lazy var canvasesNode: SourceListNode = {
+        let node = CanvasesSourceListNode()
         self.nodesByItem[.canvases] = node
         return node
     }()
 
-    lazy var pagesGroupNode: SidebarNode = {
-        let node = PagesGroupSidebarNode(rootFolder: self.documentWindowViewModel.rootFolder)
+    lazy var pagesGroupNode: SourceListNode = {
+        let node = PagesGroupSourceListNode(rootFolder: self.documentWindowViewModel.rootFolder)
         self.nodesByItem[.folder(self.documentWindowViewModel.rootFolder.id)] = node
         return node
     }()
 
 
-    var allNodes: [SidebarNode] {
+    var allNodes: [SourceListNode] {
         return Array(nodesByItem.values)
     }
 
-    private var nodesByItem = [DocumentWindowViewModel.SidebarItem: SidebarNode]()
+    private var nodesByItem = [DocumentWindowViewModel.SidebarItem: SourceListNode]()
 
     func setNeedsReload() {
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(reloadSidebarNodes), object: nil)
-        self.perform(#selector(reloadSidebarNodes), with: nil, afterDelay: 0)
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(reloadSourceListNodes), object: nil)
+        self.perform(#selector(reloadSourceListNodes), with: nil, afterDelay: 0)
     }
 
-    @objc dynamic func reloadSidebarNodes() {
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(reloadSidebarNodes), object: nil)
+    @objc dynamic func reloadSourceListNodes() {
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(reloadSourceListNodes), object: nil)
         self.addAndRemoveNodes()
         self.updateHierarchy()
         self.view?.reload()
@@ -106,8 +106,8 @@ class SidebarViewModel: ViewModel {
             }
         }
 
-        //Remove root sidebar nodes
-        for node in self.rootSidebarNodes {
+        //Remove root source list nodes
+        for node in self.rootSourceListNodes {
             if let index = oldItems.firstIndex(of: node.item) {
                 oldItems.remove(at: index)
             }
@@ -140,17 +140,17 @@ class SidebarViewModel: ViewModel {
         }
     }
 
-    func node(for item: DocumentWindowViewModel.SidebarItem) -> SidebarNode? {
+    func node(for item: DocumentWindowViewModel.SidebarItem) -> SourceListNode? {
         return self.nodesByItem[item]
     }
 
-    private func node(for page: Page, createIfNeeded: Bool) -> SidebarNode? {
+    private func node(for page: Page, createIfNeeded: Bool) -> SourceListNode? {
         if let node = self.nodesByItem[.page(page.id)] {
             return node
         }
 
         if createIfNeeded {
-            let node = PageSidebarNode(page: page)
+            let node = PageSourceListNode(page: page)
             self.nodesByItem[.page(page.id)] = node
             return node
         }
@@ -158,13 +158,13 @@ class SidebarViewModel: ViewModel {
         return nil
     }
 
-    private func node(for folder: Folder, createIfNeeded: Bool) -> SidebarNode? {
+    private func node(for folder: Folder, createIfNeeded: Bool) -> SourceListNode? {
         if let node = self.nodesByItem[.folder(folder.id)] {
             return node
         }
 
         if createIfNeeded {
-            let node = FolderSidebarNode(folder: folder)
+            let node = FolderSourceListNode(folder: folder)
             self.nodesByItem[.folder(folder.id)] = node
             return node
         }
@@ -174,7 +174,7 @@ class SidebarViewModel: ViewModel {
 
 
     //MARK: - Selection
-    var selectedNodes: [SidebarNode] = [] {
+    var selectedNodes: [SourceListNode] = [] {
         didSet {
             self.isUpdatingSelection = true
             self.documentWindowViewModel.updateSelection(self.selectedNodes.map(\.item))
@@ -193,8 +193,8 @@ class SidebarViewModel: ViewModel {
 
 
     //MARK: - Item Drag & Drop
-    func canDropItems(with ids: [ModelID], onto node: SidebarNode?, atChildIndex index: Int) -> (Bool, SidebarNode?, Int) {
-        guard let sidebarNode = node, case .folder(let folderID) = sidebarNode.item else {
+    func canDropItems(with ids: [ModelID], onto node: SourceListNode?, atChildIndex index: Int) -> (Bool, SourceListNode?, Int) {
+        guard let sourceListNode = node, case .folder(let folderID) = sourceListNode.item else {
             return (false, node, index)
         }
 
@@ -205,8 +205,8 @@ class SidebarViewModel: ViewModel {
         return (true, node, index)
     }
 
-    func dropItems(with ids: [ModelID], onto node: SidebarNode?, atChildIndex index: Int) -> Bool {
-        guard let sidebarNode = node, case .folder(let folderID) = sidebarNode.item else {
+    func dropItems(with ids: [ModelID], onto node: SourceListNode?, atChildIndex index: Int) -> Bool {
+        guard let sourceListNode = node, case .folder(let folderID) = sourceListNode.item else {
             return false
         }
 
@@ -256,19 +256,19 @@ class SidebarViewModel: ViewModel {
 
 
     //MARK: - File Drag & Drop
-    func canDropFiles(at urls: [URL], onto node: SidebarNode?, atChildIndex index: Int) -> (Bool, SidebarNode?, Int) {
-        guard let sidebarNode = node else {
+    func canDropFiles(at urls: [URL], onto node: SourceListNode?, atChildIndex index: Int) -> (Bool, SourceListNode?, Int) {
+        guard let sourceListNode = node else {
             return (self.validateFiles(at: urls), self.pagesGroupNode, -1)
         }
-        guard case .folder(_) = sidebarNode.item else {
+        guard case .folder(_) = sourceListNode.item else {
             return (false, node, index)
         }
 
         return (self.validateFiles(at: urls), node, index)
     }
 
-    func dropFiles(at urls: [URL], onto node: SidebarNode?, atChildIndex index: Int) -> Bool {
-        guard let sidebarNode = node, case .folder(let folderID) = sidebarNode.item else {
+    func dropFiles(at urls: [URL], onto node: SourceListNode?, atChildIndex index: Int) -> Bool {
+        guard let sourceListNode = node, case .folder(let folderID) = sourceListNode.item else {
             return false
         }
 
@@ -308,19 +308,19 @@ class SidebarViewModel: ViewModel {
 
 
     //MARK: - Creation
-    func createPage(ofType type: PageContentType, underNodes collection: SidebarNodeCollection) -> DocumentWindowViewModel.SidebarItem {
+    func createPage(ofType type: PageContentType, underNodes collection: SourceListNodeCollection) -> DocumentWindowViewModel.SidebarItem {
         let lastNode = collection.nodes.last
         let page = self.documentWindowViewModel.createPage(ofType: type, in: lastNode?.folderForCreation, below: lastNode?.folderItemForCreation)
         return .page(page.id)
     }
 
-    func createFolder(underNodes collection: SidebarNodeCollection) -> DocumentWindowViewModel.SidebarItem {
+    func createFolder(underNodes collection: SourceListNodeCollection) -> DocumentWindowViewModel.SidebarItem {
         let lastNode = collection.nodes.last
         let folder = self.documentWindowViewModel.createFolder(in: lastNode?.folderForCreation, below: lastNode?.folderItemForCreation)
         return .folder(folder.id)
     }
 
-    func createFolder(usingSelection collection: SidebarNodeCollection) -> DocumentWindowViewModel.SidebarItem? {
+    func createFolder(usingSelection collection: SourceListNodeCollection) -> DocumentWindowViewModel.SidebarItem? {
         guard let lastNode = collection.nodes.last else {
             return nil
         }
@@ -331,14 +331,14 @@ class SidebarViewModel: ViewModel {
         return .folder(newFolder.id)
     }
 
-    func createPages(fromFilesAt urls: [URL], underNodes collection: SidebarNodeCollection) {
+    func createPages(fromFilesAt urls: [URL], underNodes collection: SourceListNodeCollection) {
         let lastNode = collection.nodes.last
         self.documentWindowViewModel.createPages(fromFilesAtURLs: urls, in: lastNode?.folderForCreation, below: lastNode?.folderForCreation)
     }
 
 
     //MARK: - Deleting
-    func delete(_ nodes: [SidebarNode]) {
+    func delete(_ nodes: [SourceListNode]) {
         self.documentWindowViewModel.delete(nodes.map(\.item))
     }
 
@@ -348,12 +348,12 @@ class SidebarViewModel: ViewModel {
         return self.documentWindowViewModel.canvasCollection.all.sorted { $0.sortIndex < $1.sortIndex }
     }
 
-    func addNodes(_ nodeCollection: SidebarNodeCollection, to canvas: Canvas) {
+    func addNodes(_ nodeCollection: SourceListNodeCollection, to canvas: Canvas) {
         guard (nodeCollection.containsCanvases == false) && (nodeCollection.containsFolders == false) else {
             return
         }
 
-        let pages = nodeCollection.nodes.compactMap { ($0 as? PageSidebarNode)?.page }
+        let pages = nodeCollection.nodes.compactMap { ($0 as? PageSourceListNode)?.page }
         canvas.addPages(pages)
     }
 

@@ -10,7 +10,7 @@ import AppKit
 
 class PageExporter {
     //MARK: - Validation
-    static func validate(_ menuItem: NSMenuItem, forExporting nodeCollection: SidebarNodeCollection) -> Bool {
+    static func validate(_ menuItem: NSMenuItem, forExporting nodeCollection: SourceListNodeCollection) -> Bool {
         let pages = self.pagesToExport(from: nodeCollection)
         if pages.count == 1 {
             let localizedFormat = NSLocalizedString("Export \"%@\"…", comment: "Export single page menu title")
@@ -26,17 +26,17 @@ class PageExporter {
         return false
     }
 
-    private static func pagesToExport(from nodeCollection: SidebarNodeCollection) -> [Page] {
+    private static func pagesToExport(from nodeCollection: SourceListNodeCollection) -> [Page] {
         guard (nodeCollection.containsCanvases == false) && (nodeCollection.containsFolders == false) else {
             return []
         }
 
-        return nodeCollection.nodes.compactMap { ($0 as? PageSidebarNode)?.page }
+        return nodeCollection.nodes.compactMap { ($0 as? PageSourceListNode)?.page }
     }
 
 
     //MARK: - Export
-    static func export(_ nodeCollection: SidebarNodeCollection, displayingOn window: NSWindow) {
+    static func export(_ nodeCollection: SourceListNodeCollection, displayingOn window: NSWindow) {
         let pages = self.pagesToExport(from: nodeCollection)
         guard pages.count > 0 else {
             return
