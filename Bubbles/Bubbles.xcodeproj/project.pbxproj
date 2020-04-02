@@ -136,6 +136,15 @@
 		999DAACE23CF484A0013EC36 /* ModelSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999DAACD23CF484A0013EC36 /* ModelSettings.swift */; };
 		999EA68D2433913A00BF254E /* Info.plist.prefix in Resources */ = {isa = PBXBuildFile; fileRef = 999EA68C2433913A00BF254E /* Info.plist.prefix */; };
 		999EA69A24339A8400BF254E /* .build_number in Resources */ = {isa = PBXBuildFile; fileRef = 999EA69924339A8400BF254E /* .build_number */; };
+		999EA6B32436097500BF254E /* SidebarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999EA6B02436097500BF254E /* SidebarViewModel.swift */; };
+		999EA6B42436097500BF254E /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999EA6B12436097500BF254E /* SidebarViewController.swift */; };
+		999EA6B52436097500BF254E /* SidebarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 999EA6B22436097500BF254E /* SidebarView.xib */; };
+		999EA6BA243619E700BF254E /* SearchResultsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999EA6B7243619E700BF254E /* SearchResultsViewModel.swift */; };
+		999EA6BB243619E700BF254E /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999EA6B8243619E700BF254E /* SearchResultsViewController.swift */; };
+		999EA6BC243619E700BF254E /* SearchResultsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 999EA6B9243619E700BF254E /* SearchResultsView.xib */; };
+		999EA6C1243628E500BF254E /* SearchResultTableCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 999EA6C0243628E500BF254E /* SearchResultTableCellView.xib */; };
+		999EA6C524362BFF00BF254E /* SearchResultsViewModelTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999EA6C424362BFF00BF254E /* SearchResultsViewModelTypes.swift */; };
+		999EA6C72436384F00BF254E /* SearchResultOutlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999EA6C62436384F00BF254E /* SearchResultOutlineView.swift */; };
 		99A0B853238961BF005FCF25 /* NSColor+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B852238961BF005FCF25 /* NSColor+M3Extensions.swift */; };
 		99A0B855238C2F46005FCF25 /* TextEditorAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B854238C2F46005FCF25 /* TextEditorAttributes.swift */; };
 		99A0B857238D6F74005FCF25 /* NSTextView+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B856238D6F74005FCF25 /* NSTextView+M3Extensions.swift */; };
@@ -368,6 +377,15 @@
 		999EA68F243392B600BF254E /* prepare_infoplist_prefix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = prepare_infoplist_prefix.swift; sourceTree = "<group>"; };
 		999EA69924339A8400BF254E /* .build_number */ = {isa = PBXFileReference; lastKnownFileType = text; path = .build_number; sourceTree = "<group>"; };
 		999EA69B2433A38600BF254E /* update_build_number.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = update_build_number.swift; sourceTree = "<group>"; };
+		999EA6B02436097500BF254E /* SidebarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewModel.swift; sourceTree = "<group>"; };
+		999EA6B12436097500BF254E /* SidebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewController.swift; sourceTree = "<group>"; };
+		999EA6B22436097500BF254E /* SidebarView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SidebarView.xib; sourceTree = "<group>"; };
+		999EA6B7243619E700BF254E /* SearchResultsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewModel.swift; sourceTree = "<group>"; };
+		999EA6B8243619E700BF254E /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
+		999EA6B9243619E700BF254E /* SearchResultsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchResultsView.xib; sourceTree = "<group>"; };
+		999EA6C0243628E500BF254E /* SearchResultTableCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchResultTableCellView.xib; sourceTree = "<group>"; };
+		999EA6C424362BFF00BF254E /* SearchResultsViewModelTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewModelTypes.swift; sourceTree = "<group>"; };
+		999EA6C62436384F00BF254E /* SearchResultOutlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultOutlineView.swift; sourceTree = "<group>"; };
 		99A0B852238961BF005FCF25 /* NSColor+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+M3Extensions.swift"; sourceTree = "<group>"; };
 		99A0B854238C2F46005FCF25 /* TextEditorAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorAttributes.swift; sourceTree = "<group>"; };
 		99A0B856238D6F74005FCF25 /* NSTextView+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextView+M3Extensions.swift"; sourceTree = "<group>"; };
@@ -838,6 +856,37 @@
 			path = "Build Scripts";
 			sourceTree = "<group>";
 		};
+		999EA6A12436037E00BF254E /* Sidebar */ = {
+			isa = PBXGroup;
+			children = (
+				999EA6B02436097500BF254E /* SidebarViewModel.swift */,
+				999EA6B12436097500BF254E /* SidebarViewController.swift */,
+				999EA6B22436097500BF254E /* SidebarView.xib */,
+			);
+			path = Sidebar;
+			sourceTree = "<group>";
+		};
+		999EA6B6243619D600BF254E /* Search Results */ = {
+			isa = PBXGroup;
+			children = (
+				999EA6B7243619E700BF254E /* SearchResultsViewModel.swift */,
+				999EA6C424362BFF00BF254E /* SearchResultsViewModelTypes.swift */,
+				999EA6B8243619E700BF254E /* SearchResultsViewController.swift */,
+				999EA6C62436384F00BF254E /* SearchResultOutlineView.swift */,
+				999EA6B9243619E700BF254E /* SearchResultsView.xib */,
+				999EA6BD243628A700BF254E /* Cells */,
+			);
+			path = "Search Results";
+			sourceTree = "<group>";
+		};
+		999EA6BD243628A700BF254E /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				999EA6C0243628E500BF254E /* SearchResultTableCellView.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		99A0B858238D72C2005FCF25 /* Inspectors */ = {
 			isa = PBXGroup;
 			children = (
@@ -1123,7 +1172,9 @@
 				99C41B6F22DCA94000C82DDE /* Model */,
 				99FE01E122D4C22B004D380D /* DocumentWindow */,
 				9970976E23AEEE5700CD189B /* Export */,
+				999EA6A12436037E00BF254E /* Sidebar */,
 				992A5C9022DCB2EE0012CCB6 /* Source List */,
+				999EA6B6243619D600BF254E /* Search Results */,
 				992A5CA022DDF4820012CCB6 /* EditorContainer */,
 				99FDF127241FD50C00AF1E51 /* Canvases Editor */,
 				99581084230D871C00D996C4 /* Page Editors */,
@@ -1304,6 +1355,7 @@
 				992A5CAF22DDF50F0012CCB6 /* DebugPageEditor.xib in Resources */,
 				9958108F230D909900D996C4 /* TestCanvasPageViewController.xib in Resources */,
 				99868F362396AD73009AC0F7 /* ImageEditorInspectorContentView.xib in Resources */,
+				999EA6B52436097500BF254E /* SidebarView.xib in Resources */,
 				992A5CAB22DDF5000012CCB6 /* DebugCanvasEditor.xib in Resources */,
 				992A5C9622DCB7790012CCB6 /* SourceListView.xib in Resources */,
 				99D8E37C237EDB890098CF3B /* CanvasInspectorContentView.xib in Resources */,
@@ -1315,11 +1367,13 @@
 				99581093230D92C600D996C4 /* CanvasPageViewController.xib in Resources */,
 				9965FC3E23843143002FE10D /* CanvasPageInspectorContentView.xib in Resources */,
 				999EA68D2433913A00BF254E /* Info.plist.prefix in Resources */,
+				999EA6C1243628E500BF254E /* SearchResultTableCellView.xib in Resources */,
 				99C03F09232A99F400EB7516 /* Cursors.xcassets in Resources */,
 				99D8E39123800F9A0098CF3B /* BaseInspectorViewController.xib in Resources */,
 				99FE01E522D4CC8A004D380D /* DocumentWindow.xib in Resources */,
 				99902261241FDD52009A8446 /* NoCanvasViewController.xib in Resources */,
 				99D8E380237EDB890098CF3B /* InspectorViewController.xib in Resources */,
+				999EA6BC243619E700BF254E /* SearchResultsView.xib in Resources */,
 				9973737B2423AD6C000D5F21 /* NoEditorViewController.xib in Resources */,
 				99488AA723BA3993009954AF /* LargeCanvasCell.xib in Resources */,
 				99FE019B22CD1038004D380D /* MainMenu.xib in Resources */,
@@ -1402,13 +1456,16 @@
 				99F084F123A280A5008D2ACA /* ModelRelationship.swift in Sources */,
 				99C865202302E256004C7B89 /* ImageEditorViewController.swift in Sources */,
 				99C8650923016EB2004C7B89 /* TextEditorViewModel.swift in Sources */,
+				999EA6BB243619E700BF254E /* SearchResultsViewController.swift in Sources */,
 				993D2C0224157735002E5BAC /* Folder.swift in Sources */,
 				9925B2622386A0DF001A8ADC /* TextEditorInspectorTypes.swift in Sources */,
 				99E944FB2368683F00DFAB95 /* NSImage+M3Extensions.swift in Sources */,
+				999EA6C72436384F00BF254E /* SearchResultOutlineView.swift in Sources */,
 				9970976723AA8B5A00CD189B /* RemovePageEventContext.swift in Sources */,
 				99FFF9CC234E2F2F00EF02A0 /* FlippedView.swift in Sources */,
 				9985F4DD23F44EE300B96DC7 /* CanvasLayoutEngine+Configuration.swift in Sources */,
 				999BB0B323FEB73E00FAF3D2 /* LayoutEngineArrow.swift in Sources */,
+				999EA6C524362BFF00BF254E /* SearchResultsViewModelTypes.swift in Sources */,
 				9965FC43238448FF002FE10D /* TextEditorInspectorViewModel.swift in Sources */,
 				99488AF023C8C327009954AF /* CanvasPreviewView.swift in Sources */,
 				9977119A239E89B200FCC8C7 /* DocumentWindowController.swift in Sources */,
@@ -1449,6 +1506,7 @@
 				99E93E2B23D32F61004CF4BB /* ColourGridButton.swift in Sources */,
 				9962AB8923732D9400337834 /* BubblesDocumentController.swift in Sources */,
 				993D2BDB24127E3B002E5BAC /* CanvasListViewModel.swift in Sources */,
+				999EA6B32436097500BF254E /* SidebarViewModel.swift in Sources */,
 				997344D62432236300DF4EDB /* PageLinkController.swift in Sources */,
 				99FDF129241FD52800AF1E51 /* CanvasEditorContainerViewModel.swift in Sources */,
 				9973737A2423AD6C000D5F21 /* NoEditorViewController.swift in Sources */,
@@ -1507,7 +1565,9 @@
 				9965FC4023843155002FE10D /* CanvasPageInspectorViewModel.swift in Sources */,
 				99D8E39023800F9A0098CF3B /* BaseInspectorViewController.swift in Sources */,
 				99C88EE6240BC79A00339880 /* EditorBackgroundView.swift in Sources */,
+				999EA6B42436097500BF254E /* SidebarViewController.swift in Sources */,
 				993D2BD824127E29002E5BAC /* CanvasListViewController.swift in Sources */,
+				999EA6BA243619E700BF254E /* SearchResultsViewModel.swift in Sources */,
 				99C03EFA23293D8A00EB7516 /* CanvasLayoutEngine.swift in Sources */,
 				99C8650F23017222004C7B89 /* TextEditorViewController.swift in Sources */,
 				992A5CB122DDF5210012CCB6 /* DebugCanvasEditorViewModel.swift in Sources */,

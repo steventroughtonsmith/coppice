@@ -9,7 +9,7 @@
 import Cocoa
 import Combine
 
-class SourceListViewController: NSViewController, NSMenuItemValidation, SplitViewContainable {
+class SourceListViewController: NSViewController, NSMenuItemValidation {
     @objc dynamic let viewModel: SourceListViewModel
 
     init(viewModel: SourceListViewModel) {
@@ -45,13 +45,6 @@ class SourceListViewController: NSViewController, NSMenuItemValidation, SplitVie
         super.viewDidDisappear()
         self.viewModel.stopObserving()
     }
-
-
-    //MARK: - RootViewController
-    lazy var splitViewItem: NSSplitViewItem = {
-        let item = NSSplitViewItem(sidebarWithViewController: self)
-        return item
-    }()
 
 
     //MARK: - Keyboard shortcuts
