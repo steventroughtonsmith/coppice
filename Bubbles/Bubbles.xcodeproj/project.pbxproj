@@ -54,12 +54,10 @@
 		993D2C0224157735002E5BAC /* Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993D2C0124157735002E5BAC /* Folder.swift */; };
 		993D2C0424164D72002E5BAC /* FolderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993D2C0324164D72002E5BAC /* FolderTests.swift */; };
 		993D2C0E241674F2002E5BAC /* FolderContainable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993D2C0D241674F2002E5BAC /* FolderContainable.swift */; };
-		99488A9923BA3912009954AF /* PageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99488A9823BA3912009954AF /* PageCell.swift */; };
 		99488A9B23BA392E009954AF /* SmallCanvasCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99488A9A23BA392E009954AF /* SmallCanvasCell.swift */; };
 		99488A9F23BA3954009954AF /* LargeCanvasCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99488A9E23BA3954009954AF /* LargeCanvasCell.swift */; };
 		99488AA323BA3983009954AF /* SmallCanvasCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99488AA223BA3983009954AF /* SmallCanvasCell.xib */; };
 		99488AA723BA3993009954AF /* LargeCanvasCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99488AA623BA3993009954AF /* LargeCanvasCell.xib */; };
-		99488AA923BA3A05009954AF /* PageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99488AA823BA3A05009954AF /* PageCell.xib */; };
 		99488AAB23C36756009954AF /* BubblesUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99488AAA23C36756009954AF /* BubblesUserDefaults.swift */; };
 		99488AAE23C37B98009954AF /* ThumbnailGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99488AAD23C37B98009954AF /* ThumbnailGenerator.swift */; };
 		99488AB023C37BB7009954AF /* ThumbnailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99488AAF23C37BB7009954AF /* ThumbnailController.swift */; };
@@ -135,7 +133,6 @@
 		99902261241FDD52009A8446 /* NoCanvasViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9990225F241FDD52009A8446 /* NoCanvasViewController.xib */; };
 		999BB0B323FEB73E00FAF3D2 /* LayoutEngineArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999BB0B223FEB73E00FAF3D2 /* LayoutEngineArrow.swift */; };
 		999DAACA23CCC5D80013EC36 /* SidebarHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999DAAC923CCC5D80013EC36 /* SidebarHeaderView.swift */; };
-		999DAACC23CDFE6B0013EC36 /* PagesSidebarDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999DAACB23CDFE6B0013EC36 /* PagesSidebarDataSource.swift */; };
 		999DAACE23CF484A0013EC36 /* ModelSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999DAACD23CF484A0013EC36 /* ModelSettings.swift */; };
 		999EA68D2433913A00BF254E /* Info.plist.prefix in Resources */ = {isa = PBXBuildFile; fileRef = 999EA68C2433913A00BF254E /* Info.plist.prefix */; };
 		999EA69A24339A8400BF254E /* .build_number in Resources */ = {isa = PBXBuildFile; fileRef = 999EA69924339A8400BF254E /* .build_number */; };
@@ -287,12 +284,10 @@
 		993D2C0124157735002E5BAC /* Folder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Folder.swift; sourceTree = "<group>"; };
 		993D2C0324164D72002E5BAC /* FolderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderTests.swift; sourceTree = "<group>"; };
 		993D2C0D241674F2002E5BAC /* FolderContainable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderContainable.swift; sourceTree = "<group>"; };
-		99488A9823BA3912009954AF /* PageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageCell.swift; sourceTree = "<group>"; };
 		99488A9A23BA392E009954AF /* SmallCanvasCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallCanvasCell.swift; sourceTree = "<group>"; };
 		99488A9E23BA3954009954AF /* LargeCanvasCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeCanvasCell.swift; sourceTree = "<group>"; };
 		99488AA223BA3983009954AF /* SmallCanvasCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SmallCanvasCell.xib; sourceTree = "<group>"; };
 		99488AA623BA3993009954AF /* LargeCanvasCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LargeCanvasCell.xib; sourceTree = "<group>"; };
-		99488AA823BA3A05009954AF /* PageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PageCell.xib; sourceTree = "<group>"; };
 		99488AAA23C36756009954AF /* BubblesUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubblesUserDefaults.swift; sourceTree = "<group>"; };
 		99488AAD23C37B98009954AF /* ThumbnailGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailGenerator.swift; sourceTree = "<group>"; };
 		99488AAF23C37BB7009954AF /* ThumbnailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailController.swift; sourceTree = "<group>"; };
@@ -368,7 +363,6 @@
 		9990225F241FDD52009A8446 /* NoCanvasViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoCanvasViewController.xib; sourceTree = "<group>"; };
 		999BB0B223FEB73E00FAF3D2 /* LayoutEngineArrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutEngineArrow.swift; sourceTree = "<group>"; };
 		999DAAC923CCC5D80013EC36 /* SidebarHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarHeaderView.swift; sourceTree = "<group>"; };
-		999DAACB23CDFE6B0013EC36 /* PagesSidebarDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagesSidebarDataSource.swift; sourceTree = "<group>"; };
 		999DAACD23CF484A0013EC36 /* ModelSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelSettings.swift; sourceTree = "<group>"; };
 		999EA68C2433913A00BF254E /* Info.plist.prefix */ = {isa = PBXFileReference; lastKnownFileType = text; path = Info.plist.prefix; sourceTree = "<group>"; };
 		999EA68F243392B600BF254E /* prepare_infoplist_prefix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = prepare_infoplist_prefix.swift; sourceTree = "<group>"; };
@@ -514,7 +508,7 @@
 			path = "Model Infrastructure";
 			sourceTree = "<group>";
 		};
-		992A5C9022DCB2EE0012CCB6 /* Sidebar */ = {
+		992A5C9022DCB2EE0012CCB6 /* Source List */ = {
 			isa = PBXGroup;
 			children = (
 				992A5C9B22DCC6090012CCB6 /* SourceListViewModel.swift */,
@@ -523,10 +517,8 @@
 				993D2BFF24157196002E5BAC /* SourceListOutlineView.swift */,
 				992A5C9522DCB7790012CCB6 /* SourceListView.xib */,
 				999DAAC923CCC5D80013EC36 /* SidebarHeaderView.swift */,
-				999DAACB23CDFE6B0013EC36 /* PagesSidebarDataSource.swift */,
-				99488A9723BA38E6009954AF /* SidebarCells */,
 			);
-			path = Sidebar;
+			path = "Source List";
 			sourceTree = "<group>";
 		};
 		992A5C9D22DCCDA20012CCB6 /* Extensions */ = {
@@ -599,15 +591,6 @@
 				99488AEF23C8C327009954AF /* CanvasPreviewView.swift */,
 			);
 			path = Cells;
-			sourceTree = "<group>";
-		};
-		99488A9723BA38E6009954AF /* SidebarCells */ = {
-			isa = PBXGroup;
-			children = (
-				99488A9823BA3912009954AF /* PageCell.swift */,
-				99488AA823BA3A05009954AF /* PageCell.xib */,
-			);
-			path = SidebarCells;
 			sourceTree = "<group>";
 		};
 		99488AAC23C37B77009954AF /* Thumbnail Generation */ = {
@@ -1140,7 +1123,7 @@
 				99C41B6F22DCA94000C82DDE /* Model */,
 				99FE01E122D4C22B004D380D /* DocumentWindow */,
 				9970976E23AEEE5700CD189B /* Export */,
-				992A5C9022DCB2EE0012CCB6 /* Sidebar */,
+				992A5C9022DCB2EE0012CCB6 /* Source List */,
 				992A5CA022DDF4820012CCB6 /* EditorContainer */,
 				99FDF127241FD50C00AF1E51 /* Canvases Editor */,
 				99581084230D871C00D996C4 /* Page Editors */,
@@ -1315,7 +1298,6 @@
 			files = (
 				99C8650D23016EE5004C7B89 /* TextEditorViewController.xib in Resources */,
 				99D8E382237EDB890098CF3B /* InspectorContainerViewController.xib in Resources */,
-				99488AA923BA3A05009954AF /* PageCell.xib in Resources */,
 				99C865212302E256004C7B89 /* ImageEditorViewController.xib in Resources */,
 				992A5CA622DDF4C50012CCB6 /* EditorContainerViewController.xib in Resources */,
 				99FDF12D241FD53D00AF1E51 /* CanvasEditorContainerView.xib in Resources */,
@@ -1397,7 +1379,6 @@
 			files = (
 				999DAACE23CF484A0013EC36 /* ModelSettings.swift in Sources */,
 				992A5CAA22DDF5000012CCB6 /* DebugCanvasEditor.swift in Sources */,
-				999DAACC23CDFE6B0013EC36 /* PagesSidebarDataSource.swift in Sources */,
 				99C03EF123293D6C00EB7516 /* Array+M3Extensions.swift in Sources */,
 				99C865292306D141004C7B89 /* PageSelectorViewController.swift in Sources */,
 				99C03F07232A8ED200EB7516 /* CanvasElementView.swift in Sources */,
@@ -1413,7 +1394,6 @@
 				9970976123A8170600CD189B /* ImagePageContent.swift in Sources */,
 				992A5CB322DDF53C0012CCB6 /* DebugPageEditorViewModel.swift in Sources */,
 				99D8E37B237EDB890098CF3B /* InspectorViewModel.swift in Sources */,
-				99488A9923BA3912009954AF /* PageCell.swift in Sources */,
 				99DEF28A22F32D350020A7CE /* DebugCanvasViewModelTypes.swift in Sources */,
 				99868F352396AD73009AC0F7 /* ImageEditorInspectorViewController.swift in Sources */,
 				993D2C0024157196002E5BAC /* SourceListOutlineView.swift in Sources */,
