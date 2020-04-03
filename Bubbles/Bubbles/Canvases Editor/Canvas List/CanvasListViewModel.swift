@@ -24,8 +24,8 @@ class CanvasListViewModel: ViewModel {
         self.canvasObserver = self.canvasCollection.addObserver { [weak self] canvas, change in
             self?.reloadCanvases()
         }
-        self.selectedCanvasObserver = self.documentWindowViewModel.$selectedCanvasID.sink { [weak self] _ in
-            self?.view?.reloadSelection()
+        self.selectedCanvasObserver = self.documentWindowViewModel.$selectedCanvasID.sink { [weak self] canvasID in
+            self?.selectedCanvasIndex = self?.canvases.firstIndex { $0.id == canvasID }
         }
     }
 
@@ -63,7 +63,9 @@ class CanvasListViewModel: ViewModel {
     }
 
     var selectedCanvasIndex: Int? {
-        return self.canvases.firstIndex { $0.id == self.documentWindowViewModel.selectedCanvasID }
+        didSet {
+            self.view?.reloadSelection()
+        }
     }
 
     func selectCanvas(atIndex index: Int) {

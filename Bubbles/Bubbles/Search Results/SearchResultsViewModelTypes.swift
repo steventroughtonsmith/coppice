@@ -29,6 +29,12 @@ class SearchResult: NSObject {
     @objc dynamic var image: NSImage? {
         return nil
     }
+
+    let sidebarItem: DocumentWindowViewModel.SidebarItem
+    init(sidebarItem: DocumentWindowViewModel.SidebarItem) {
+        self.sidebarItem = sidebarItem
+        super.init()
+    }
 }
 
 class PageSearchResult: SearchResult {
@@ -37,7 +43,7 @@ class PageSearchResult: SearchResult {
     init(page: Page, searchTerm: String) {
         self.page = page
         self.searchTerm = searchTerm
-        super.init()
+        super.init(sidebarItem: .page(page.id))
     }
 
     override var title: NSAttributedString? {
@@ -51,7 +57,7 @@ class CanvasSearchResult: SearchResult {
     init(canvas: Canvas, searchTerm: String) {
         self.canvas = canvas
         self.searchTerm = searchTerm
-        super.init()
+        super.init(sidebarItem: .canvas(canvas.id))
     }
 
     override var title: NSAttributedString? {

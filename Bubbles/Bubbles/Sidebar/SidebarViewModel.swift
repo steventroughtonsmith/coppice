@@ -25,7 +25,7 @@ class SidebarViewModel: ViewModel {
     }
 
     func updateSidebar() {
-        guard let searchString = self.documentWindowViewModel.searchString, searchString.count > 2 else {
+        guard let searchString = self.documentWindowViewModel.searchString else {
             self.view?.displaySourceList()
             return
         }

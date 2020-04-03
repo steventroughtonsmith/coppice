@@ -49,6 +49,8 @@ class SourceListViewModel: ViewModel {
         if let observer = self.foldersObserver {
             self.modelController.collection(for: Folder.self).removeObserver(observer)
         }
+        self.selectionObserver?.cancel()
+        self.selectionObserver = nil
     }
 
 
@@ -187,7 +189,13 @@ class SourceListViewModel: ViewModel {
         guard self.isUpdatingSelection == false else {
             return
         }
-        self.selectedNodes = items.compactMap { self.node(for: $0) }
+        let normalisedItems: [DocumentWindowViewModel.SidebarItem] = items.map {
+            if case .canvas(_) = $0 {
+                return .canvases
+            }
+            return $0
+        }
+        self.selectedNodes = normalisedItems.compactMap { self.node(for: $0) }
         self.view?.reloadSelection()
     }
 

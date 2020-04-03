@@ -18,9 +18,9 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="zkp-bR-FET">
-                    <rect key="frame" x="0.0" y="633" width="239" height="32"/>
+                    <rect key="frame" x="0.0" y="637" width="239" height="32"/>
                     <subviews>
-                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3HR-q7-tBD">
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3HR-q7-tBD">
                             <rect key="frame" x="8" y="8" width="191" height="16"/>
                             <textFieldCell key="cell" truncatesLastVisibleLine="YES" title="Matches for" id="1dc-Qy-QXD">
                                 <font key="font" metaFont="system"/>
@@ -55,20 +55,19 @@
                         <constraint firstItem="5mz-Ob-e33" firstAttribute="top" secondItem="3HR-q7-tBD" secondAttribute="bottom" constant="7" id="OPk-o1-eCs"/>
                         <constraint firstItem="7PD-vW-nIR" firstAttribute="leading" secondItem="3HR-q7-tBD" secondAttribute="trailing" constant="20" id="TdI-b2-xis"/>
                         <constraint firstItem="7PD-vW-nIR" firstAttribute="centerY" secondItem="zkp-bR-FET" secondAttribute="centerY" id="UU7-jd-kP8"/>
-                        <constraint firstAttribute="height" constant="32" id="UnY-Hv-JJb"/>
                         <constraint firstItem="5mz-Ob-e33" firstAttribute="leading" secondItem="zkp-bR-FET" secondAttribute="leading" id="Wpm-TD-yiW"/>
                         <constraint firstAttribute="trailing" secondItem="7PD-vW-nIR" secondAttribute="trailing" constant="8" id="icM-75-XJ3"/>
                         <constraint firstItem="3HR-q7-tBD" firstAttribute="leading" secondItem="zkp-bR-FET" secondAttribute="leading" constant="10" id="vVV-rZ-ODB"/>
                     </constraints>
                 </customView>
                 <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="22" horizontalPageScroll="10" verticalLineScroll="22" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Zc-O9-1Mp">
-                    <rect key="frame" x="0.0" y="0.0" width="239" height="633"/>
+                    <rect key="frame" x="0.0" y="0.0" width="239" height="637"/>
                     <clipView key="contentView" drawsBackground="NO" id="Asx-7G-7g3">
-                        <rect key="frame" x="0.0" y="0.0" width="239" height="633"/>
+                        <rect key="frame" x="0.0" y="0.0" width="239" height="637"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" multipleSelection="NO" autosaveColumns="NO" rowHeight="22" viewBased="YES" indentationPerLevel="14" outlineTableColumn="yLr-kG-YDQ" id="vkU-1v-9tc" customClass="SearchResultOutlineView" customModule="Bubbles" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="239" height="633"/>
+                            <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" emptySelection="NO" autosaveColumns="NO" rowHeight="22" viewBased="YES" indentationPerLevel="14" outlineTableColumn="yLr-kG-YDQ" id="vkU-1v-9tc" customClass="SearchResultOutlineView" customModule="Bubbles" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="239" height="637"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <size key="intercellSpacing" width="3" height="0.0"/>
                                 <color key="backgroundColor" name="_sourceListBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -93,7 +92,7 @@
                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="aCX-s2-w2H">
                                                         <rect key="frame" x="1" y="2" width="234" height="14"/>
                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="p4t-nS-taF">
-                                                            <font key="font" metaFont="controlContent" size="11"/>
+                                                            <font key="font" metaFont="message" size="11"/>
                                                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>

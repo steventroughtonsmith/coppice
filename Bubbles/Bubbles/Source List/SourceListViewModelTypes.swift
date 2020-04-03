@@ -28,7 +28,7 @@ class SourceListNodeCollection: NSObject {
 
         nodes.append(node)
         switch node.item {
-        case .canvases:
+        case .canvases, .canvas(_):
             self.containsCanvases = true
         case .page(_):
             self.containsPages = true

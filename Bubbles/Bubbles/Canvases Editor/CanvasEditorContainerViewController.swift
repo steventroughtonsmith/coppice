@@ -47,7 +47,10 @@ class CanvasesViewController: NSSplitViewController {
 
 
     private func updateSplitViewItems() {
-        var splitViewItems = [self.canvasListViewController.splitViewItem]
+        var splitViewItems = [NSSplitViewItem]()
+        if self.viewModel.showCanvasList {
+            splitViewItems.append(self.canvasListViewController.splitViewItem)
+        }
 
         if let canvasEditor = self.currentCanvasEditor {
             splitViewItems.append(canvasEditor.splitViewItem)
@@ -64,6 +67,7 @@ class CanvasesViewController: NSSplitViewController {
             self.updateSplitViewItems()
         }
     }
+
     private func updateCanvasEditor() {
         guard let canvas = self.viewModel.currentCanvas else {
             self.currentCanvasEditor = nil
@@ -109,6 +113,10 @@ class CanvasesViewController: NSSplitViewController {
 extension CanvasesViewController: CanvasesView {
     func currentCanvasChanged() {
         self.updateCanvasEditor()
+    }
+
+    func canvasListStateChanged() {
+        self.updateSplitViewItems()
     }
 }
 

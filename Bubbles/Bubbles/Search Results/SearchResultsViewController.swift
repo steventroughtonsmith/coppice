@@ -38,7 +38,11 @@ class SearchResultsViewController: NSViewController {
 extension SearchResultsViewController: SearchResultsView {
     func reload() {
         self.outlineView.reloadData()
-        self.viewModel.results.forEach { self.outlineView.expandItem($0) }
+        let results = self.viewModel.results
+        results.forEach { self.outlineView.expandItem($0) }
+        if self.outlineView.selectedRowIndexes.count == 0, let firstItem = results.first?.results.first {
+            self.outlineView.selectRowIndexes(IndexSet(integer: self.outlineView.row(forItem: firstItem)), byExtendingSelection: false)
+        }
     }
 }
 
@@ -103,5 +107,13 @@ extension SearchResultsViewController: NSOutlineViewDelegate {
 
     func outlineView(_ outlineView: NSOutlineView, isGroupItem item: Any) -> Bool {
         return (item is SearchResultGroup)
+    }
+
+    func outlineView(_ outlineView: NSOutlineView, shouldSelectItem item: Any) -> Bool {
+        return (item is SearchResult)
+    }
+
+    func outlineViewSelectionDidChange(_ notification: Notification) {
+        self.viewModel.selectedResults = self.outlineView.selectedRowIndexes.compactMap { self.outlineView.item(atRow: $0) as? SearchResult }
     }
 }

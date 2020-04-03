@@ -31,7 +31,9 @@ class SearchResultsViewModel: ViewModel {
             .font: NSFont.systemFont(ofSize: NSFont.systemFontSize)
         ])
 
-        let range = (actualResults as NSString).range(of: self.searchTerm, options: [], range: NSRange(location: 1, length: actualResults.count - 1))
+        let firstQuote = (actualResults as NSString).range(of: "\"")
+        let secondQuote = (actualResults as NSString).range(of: "\"", options: .backwards)
+        let range = NSUnionRange(firstQuote, secondQuote)
         attributes.setAttributes([
             .foregroundColor: NSColor.textColor,
             .font: NSFont.systemFont(ofSize: NSFont.systemFontSize, weight: .medium)
@@ -41,6 +43,12 @@ class SearchResultsViewModel: ViewModel {
 
     func clearSearch() {
         self.documentWindowViewModel.searchString = nil
+    }
+
+    var selectedResults: [SearchResult] = [] {
+        didSet {
+            self.documentWindowViewModel.updateSelection(selectedResults.map(\.sidebarItem))
+        }
     }
 
     private var cachedResults: [SearchResultGroup]?

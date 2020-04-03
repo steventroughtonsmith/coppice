@@ -62,6 +62,7 @@ class DocumentWindowViewModel: NSObject {
     //MARK: - Selection Logic
     enum SidebarItem: Equatable, Hashable {
         case canvases
+        case canvas(ModelID)
         case page(ModelID)
         case folder(ModelID)
 
@@ -69,6 +70,8 @@ class DocumentWindowViewModel: NSObject {
             switch self {
             case .canvases:
                 return "canvases"
+            case .canvas(let modelID):
+                return "canvas::\(modelID.stringRepresentation)"
             case .page(let modelID):
                 return "page::\(modelID.stringRepresentation)"
             case .folder(let modelID):
@@ -92,6 +95,9 @@ class DocumentWindowViewModel: NSObject {
             }
             if components[0] == "folder" {
                 return .folder(modelID)
+            }
+            if components[0] == "canvas" {
+                return .canvas(modelID)
             }
             return nil
         }
@@ -161,6 +167,9 @@ class DocumentWindowViewModel: NSObject {
         switch selectedItem {
         case .canvases:
             self.currentEditor = .canvas
+        case .canvas(let modelID):
+            self.currentEditor = .canvas
+            self.selectedCanvasID = modelID
         case .page(let modelID):
             guard let page = self.pageCollection.objectWithID(modelID) else {
                 self.currentEditor = .none
@@ -214,7 +223,7 @@ class DocumentWindowViewModel: NSObject {
         }
 
         switch selection {
-        case .canvases:
+        case .canvases, .canvas(_):
             return self.rootFolder
         case .page(let modelID):
             return self.pageCollection.objectWithID(modelID)?.containingFolder ?? self.rootFolder
@@ -374,7 +383,7 @@ class DocumentWindowViewModel: NSObject {
                 hasPages = true
             case .folder(_):
                 hasFolders = true
-            case .canvases:
+            case .canvases, .canvas(_):
                 continue
             }
 
@@ -418,7 +427,7 @@ class DocumentWindowViewModel: NSObject {
                 }
                 let deletedContents = self.actuallyDelete(folder)
                 itemsToRemoveFromSelection.append(contentsOf: deletedContents)
-            case .canvases:
+            case .canvases, .canvas(_):
                 continue
             }
         }
@@ -463,7 +472,7 @@ class DocumentWindowViewModel: NSObject {
                 hasPages = true
             case .folder(_):
                 hasFolders = true
-            case .canvases:
+            case .canvases, .canvas(_):
                 continue
             }
 
