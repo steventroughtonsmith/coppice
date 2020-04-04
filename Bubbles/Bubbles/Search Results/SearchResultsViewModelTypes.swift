@@ -35,6 +35,10 @@ class SearchResult: NSObject {
         self.sidebarItem = sidebarItem
         super.init()
     }
+
+    var pasteboardWriter: NSPasteboardWriting? {
+        return nil
+    }
 }
 
 class PageSearchResult: SearchResult {
@@ -48,6 +52,10 @@ class PageSearchResult: SearchResult {
 
     override var title: NSAttributedString? {
         return NSAttributedString(string: self.page.title, attributes: [.foregroundColor: NSColor.textColor])
+    }
+
+    override var pasteboardWriter: NSPasteboardWriting? {
+        return self.page.pasteboardWriter
     }
 }
 

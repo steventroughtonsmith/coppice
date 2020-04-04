@@ -88,6 +88,16 @@ class SearchResultsViewModel: ViewModel {
         self.view?.reload()
     }
 
+    func addPages(with ids: [ModelID], to canvas: Canvas) -> Bool {
+        let viewModel = self.documentWindowViewModel
+
+        let pages = ids.compactMap { viewModel.pageCollection.objectWithID($0) }
+
+        let addedPages = viewModel.addPages(pages, to: canvas)
+
+        return (addedPages.count > 0)
+    }
+
 
 
     //MARK: - KVO

@@ -27,6 +27,8 @@ class SearchResultsViewController: NSViewController {
 
 //        self.outlineView.indentationPerLevel = 10
         self.outlineView.register(NSNib(nibNamed: "SearchResultTableCellView", bundle: nil), forIdentifier: NSUserInterfaceItemIdentifier(rawValue: "SearchResultCell"))
+        self.outlineView.setDraggingSourceOperationMask(.copy, forLocal: false)
+        self.outlineView.registerForDraggedTypes([ModelID.PasteboardType])
     }
 
     @IBAction func clearSearch(_ sender: Any) {
@@ -74,6 +76,30 @@ extension SearchResultsViewController: NSOutlineViewDataSource {
 
     func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
         return (item is SearchResultGroup)
+    }
+
+    func outlineView(_ outlineView: NSOutlineView, pasteboardWriterForItem item: Any) -> NSPasteboardWriting? {
+        return (item as? SearchResult)?.pasteboardWriter
+    }
+
+    func outlineView(_ outlineView: NSOutlineView, validateDrop info: NSDraggingInfo, proposedItem item: Any?, proposedChildIndex index: Int) -> NSDragOperation {
+        return (item is CanvasSearchResult) ? .copy : []
+    }
+
+    func outlineView(_ outlineView: NSOutlineView, acceptDrop info: NSDraggingInfo, item: Any?, childIndex index: Int) -> Bool {
+        guard let result = item as? CanvasSearchResult else {
+            return false
+        }
+
+        guard let types = info.draggingPasteboard.types, types.contains(ModelID.PasteboardType) else {
+            return false
+        }
+
+        guard let items = info.draggingPasteboard.pasteboardItems else {
+            return false
+        }
+        let modelIDs = items.compactMap { ModelID(pasteboardItem: $0) }
+        return self.viewModel.addPages(with: modelIDs, to: result.canvas)
     }
 }
 

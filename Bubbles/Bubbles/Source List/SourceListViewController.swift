@@ -29,6 +29,7 @@ class SourceListViewController: NSViewController, NSMenuItemValidation {
         super.viewDidLoad()
 
         self.outlineView.registerForDraggedTypes([.fileURL, ModelID.PasteboardType])
+        self.outlineView.setDraggingSourceOperationMask(.copy, forLocal: false)
 
         self.setupSortFolderMenu()
         self.setupContextMenu()

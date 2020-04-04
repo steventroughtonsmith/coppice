@@ -66,7 +66,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="239" height="637"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" emptySelection="NO" autosaveColumns="NO" rowHeight="22" viewBased="YES" indentationPerLevel="14" outlineTableColumn="yLr-kG-YDQ" id="vkU-1v-9tc" customClass="SearchResultOutlineView" customModule="Bubbles" customModuleProvider="target">
+                            <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" columnReordering="NO" columnResizing="NO" emptySelection="NO" autosaveColumns="NO" autosaveName="SearchResultsList" rowHeight="22" viewBased="YES" indentationPerLevel="14" outlineTableColumn="yLr-kG-YDQ" id="vkU-1v-9tc" customClass="SearchResultOutlineView" customModule="Bubbles" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="239" height="637"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <size key="intercellSpacing" width="3" height="0.0"/>
