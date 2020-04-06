@@ -25,7 +25,7 @@ class SearchResultsViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        self.outlineView.indentationPerLevel = 10
+        self.outlineView.indentationPerLevel = 0
         self.outlineView.register(NSNib(nibNamed: "SearchResultTableCellView", bundle: nil), forIdentifier: NSUserInterfaceItemIdentifier(rawValue: "SearchResultCell"))
         self.outlineView.setDraggingSourceOperationMask(.copy, forLocal: false)
         self.outlineView.registerForDraggedTypes([ModelID.PasteboardType])
@@ -99,7 +99,7 @@ extension SearchResultsViewController: NSOutlineViewDataSource {
             return false
         }
         let modelIDs = items.compactMap { ModelID(pasteboardItem: $0) }
-        return self.viewModel.addPages(with: modelIDs, to: result.canvas)
+        return self.viewModel.addPages(with: modelIDs, to: result.match.canvas)
     }
 }
 

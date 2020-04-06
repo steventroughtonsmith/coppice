@@ -145,6 +145,7 @@
 		999EA6C1243628E500BF254E /* SearchResultTableCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 999EA6C0243628E500BF254E /* SearchResultTableCellView.xib */; };
 		999EA6C524362BFF00BF254E /* SearchResultsViewModelTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999EA6C424362BFF00BF254E /* SearchResultsViewModelTypes.swift */; };
 		999EA6C72436384F00BF254E /* SearchResultOutlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999EA6C62436384F00BF254E /* SearchResultOutlineView.swift */; };
+		999EA6CB243B413E00BF254E /* ModelObjects+Searching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999EA6CA243B413E00BF254E /* ModelObjects+Searching.swift */; };
 		99A0B853238961BF005FCF25 /* NSColor+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B852238961BF005FCF25 /* NSColor+M3Extensions.swift */; };
 		99A0B855238C2F46005FCF25 /* TextEditorAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B854238C2F46005FCF25 /* TextEditorAttributes.swift */; };
 		99A0B857238D6F74005FCF25 /* NSTextView+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B856238D6F74005FCF25 /* NSTextView+M3Extensions.swift */; };
@@ -386,6 +387,7 @@
 		999EA6C0243628E500BF254E /* SearchResultTableCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchResultTableCellView.xib; sourceTree = "<group>"; };
 		999EA6C424362BFF00BF254E /* SearchResultsViewModelTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewModelTypes.swift; sourceTree = "<group>"; };
 		999EA6C62436384F00BF254E /* SearchResultOutlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultOutlineView.swift; sourceTree = "<group>"; };
+		999EA6CA243B413E00BF254E /* ModelObjects+Searching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelObjects+Searching.swift"; sourceTree = "<group>"; };
 		99A0B852238961BF005FCF25 /* NSColor+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+M3Extensions.swift"; sourceTree = "<group>"; };
 		99A0B854238C2F46005FCF25 /* TextEditorAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorAttributes.swift; sourceTree = "<group>"; };
 		99A0B856238D6F74005FCF25 /* NSTextView+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextView+M3Extensions.swift"; sourceTree = "<group>"; };
@@ -1034,6 +1036,7 @@
 				990B6A3622E5F84400523C06 /* CanvasPage.swift */,
 				9970977323B0180F00CD189B /* Canvas+Pages.swift */,
 				998F178E23EB229200B3437A /* ModelObjects+Pasteboard.swift */,
+				999EA6CA243B413E00BF254E /* ModelObjects+Searching.swift */,
 				993D2C0D241674F2002E5BAC /* FolderContainable.swift */,
 			);
 			path = "Model Objects";
@@ -1523,6 +1526,7 @@
 				99DEF28F22F33A790020A7CE /* ModelID.swift in Sources */,
 				998F178B23E46B4900B3437A /* ColourGridImageGenerator.swift in Sources */,
 				99C865232302E267004C7B89 /* ImageEditorViewModel.swift in Sources */,
+				999EA6CB243B413E00BF254E /* ModelObjects+Searching.swift in Sources */,
 				9985F4D923F2E13600B96DC7 /* CanvasPageTitleView.swift in Sources */,
 				99FE019122CD1037004D380D /* AppDelegate.swift in Sources */,
 				99A0B857238D6F74005FCF25 /* NSTextView+M3Extensions.swift in Sources */,

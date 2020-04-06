@@ -39,40 +39,122 @@ class SearchResult: NSObject {
     var pasteboardWriter: NSPasteboardWriting? {
         return nil
     }
+
+
+    static let standardTitleAttributes: [NSAttributedString.Key : Any] = {
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.lineBreakMode = .byTruncatingTail
+
+        var attributes = [NSAttributedString.Key: Any]()
+        attributes[.font] = NSFont.systemFont(ofSize: NSFont.systemFontSize)
+        attributes[.foregroundColor] = NSColor.labelColor
+        attributes[.paragraphStyle] = paragraph
+
+        return attributes
+    }()
+
+    static let standardBodyAttributes: [NSAttributedString.Key : Any] = {
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.lineBreakMode = .byTruncatingTail
+
+        var attributes = [NSAttributedString.Key: Any]()
+        attributes[.font] = NSFont.systemFont(ofSize: NSFont.smallSystemFontSize)
+        attributes[.foregroundColor] = NSColor.secondaryLabelColor
+        attributes[.paragraphStyle] = paragraph
+
+        return attributes
+    }()
 }
+
 
 class PageSearchResult: SearchResult {
-    let page: Page
+    let match: Page.Match
     let searchTerm: String
-    init(page: Page, searchTerm: String) {
-        self.page = page
+    init(match: Page.Match, searchTerm: String) {
+        self.match = match
         self.searchTerm = searchTerm
-        super.init(sidebarItem: .page(page.id))
+        super.init(sidebarItem: .page(match.page.id))
     }
 
     override var title: NSAttributedString? {
-        return NSAttributedString(string: self.page.title, attributes: [.foregroundColor: NSColor.textColor])
+        let title = NSMutableAttributedString(string: self.match.page.title, attributes: SearchResult.standardTitleAttributes)
+        if case .title(let matchRange) = self.match.matchType {
+            title.setAttributes([
+                .font: NSFont.systemFont(ofSize: NSFont.systemFontSize, weight: .semibold),
+                .underlineStyle: NSUnderlineStyle.single.rawValue,
+            ], range: matchRange)
+        }
+        return title
     }
 
-    override var pasteboardWriter: NSPasteboardWriting? {
-        return self.page.pasteboardWriter
-    }
-}
+    override var body: NSAttributedString? {
+        guard let textContent = self.match.page.content as? TextPageContent else {
+            return nil
+        }
 
-class CanvasSearchResult: SearchResult {
-    let canvas: Canvas
-    let searchTerm: String
-    init(canvas: Canvas, searchTerm: String) {
-        self.canvas = canvas
-        self.searchTerm = searchTerm
-        super.init(sidebarItem: .canvas(canvas.id))
-    }
+        guard case .content(let contentRange) = self.match.matchType else {
+            return NSAttributedString(string: textContent.text.string, attributes: SearchResult.standardBodyAttributes)
+        }
 
-    override var title: NSAttributedString? {
-        return NSAttributedString(string: self.canvas.title)
+        let croppedString = (textContent.text.string as NSString).substring(from: contentRange.location)
+        let attributedString = NSMutableAttributedString(string: "…\(croppedString)", attributes: SearchResult.standardBodyAttributes)
+
+        var newRange = contentRange
+        newRange.location = 1
+        attributedString.setAttributes([
+            .font: NSFont.systemFont(ofSize: NSFont.smallSystemFontSize, weight: .semibold),
+            .underlineStyle: NSUnderlineStyle.single.rawValue,
+        ], range: newRange)
+
+        return attributedString
     }
 
     override var image: NSImage? {
-        return self.canvas.thumbnail
+        guard let imageContent = self.match.page.content as? ImagePageContent else {
+            return nil
+        }
+
+        return imageContent.image
+    }
+
+    override var pasteboardWriter: NSPasteboardWriting? {
+        return self.match.page.pasteboardWriter
+    }
+}
+
+
+class CanvasSearchResult: SearchResult {
+    let match: Canvas.Match
+    let searchTerm: String
+    init(match: Canvas.Match, searchTerm: String) {
+        self.match = match
+        self.searchTerm = searchTerm
+        super.init(sidebarItem: .canvas(match.canvas.id))
+    }
+
+    override var title: NSAttributedString? {
+        let title = NSMutableAttributedString(string: self.match.canvas.title, attributes: SearchResult.standardTitleAttributes)
+        if case .title(let matchRange) = self.match.matchType {
+            title.setAttributes([
+                .font: NSFont.systemFont(ofSize: NSFont.systemFontSize, weight: .semibold),
+                .underlineStyle: NSUnderlineStyle.single.rawValue,
+            ], range: matchRange)
+        }
+        return title
+    }
+
+    override var body: NSAttributedString? {
+        switch self.match.matchType {
+        case .title(_):
+            return nil
+        case .pages(let numberOfPages):
+            let localizedBodyTemplate = NSLocalizedString("%d matching pages", comment: "Canvas search result body text")
+            let localizedBody = String(format: localizedBodyTemplate, numberOfPages)
+            return NSAttributedString(string: localizedBody, attributes: SearchResult.standardBodyAttributes)
+        }
+    }
+
+    override var image: NSImage? {
+        return self.match.canvas.thumbnail
     }
 }

@@ -135,22 +135,6 @@ final class Page: NSObject, CollectableModelObject, FolderContainable {
         }
         return value
     }
-
-
-    //MARK: - Search
-    func isMatchForSearch(_ searchTerm: String?) -> Bool {
-        guard let term = searchTerm, term.count > 0 else {
-            return true
-        }
-
-        if self.title.localizedCaseInsensitiveContains(term) {
-            return true
-        }
-        if self.content.isMatchForSearch(term) {
-            return true
-        }
-        return false
-    }
 }
 
 

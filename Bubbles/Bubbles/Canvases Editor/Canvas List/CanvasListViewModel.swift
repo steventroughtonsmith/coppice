@@ -51,7 +51,7 @@ class CanvasListViewModel: ViewModel {
             return cachedCanvases
         }
 
-        let items = self.canvasCollection.objects(matchingSearchTerm: self.documentWindowViewModel.searchString)
+        let items = self.canvasCollection.all
             .sorted { $0.sortIndex < $1.sortIndex }
         self.cachedCanvases = items
         return items

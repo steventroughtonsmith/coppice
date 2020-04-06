@@ -72,14 +72,20 @@ class SearchResultsViewModel: ViewModel {
     }
 
     private var matchingCanvases: [CanvasSearchResult] {
-        let canvases = self.documentWindowViewModel.canvasCollection.objects(matchingSearchTerm: self.searchTerm)
-        let sortedCanvases = canvases.sorted(by: { $0.sortIndex < $1.sortIndex }).map { CanvasSearchResult(canvas: $0, searchTerm: self.searchTerm)}
+        guard self.searchTerm.count > 0 else {
+            return []
+        }
+        let canvasMatches = self.documentWindowViewModel.canvasCollection.matches(forSearchTerm: self.searchTerm)
+        let sortedCanvases = canvasMatches.map { CanvasSearchResult(match: $0, searchTerm: self.searchTerm)}
         return sortedCanvases
     }
 
     var matchingPages: [PageSearchResult] {
-        let pages = self.documentWindowViewModel.pageCollection.objects(matchingSearchTerm: self.searchTerm)
-        let sortedPages = pages.sorted(by: { $0.dateModified > $1.dateModified }).map { PageSearchResult(page: $0, searchTerm: self.searchTerm)}
+        guard self.searchTerm.count > 0 else {
+            return []
+        }
+        let pageMatches = self.documentWindowViewModel.pageCollection.matches(forSearchTerm: self.searchTerm)
+        let sortedPages = pageMatches.map { PageSearchResult(match: $0, searchTerm: self.searchTerm)}
         return sortedPages
     }
 

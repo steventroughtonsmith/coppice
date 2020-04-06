@@ -73,7 +73,7 @@ protocol PageContent: class {
     var page: Page? { get set }
     var modelFile: ModelFile { get }
 
-    func isMatchForSearch(_ searchTerm: String?) -> Bool
+    func firstRangeOf(_ searchTerm: String) -> NSRange
 
     var filePromiseProvider: ExtendableFilePromiseProvider? { get }
 }
@@ -91,8 +91,8 @@ extension PageContent {
         }
     }
 
-    func isMatchForSearch(_ searchTerm: String?) -> Bool {
-        return false
+    func firstRangeOf(_ searchTerm: String) -> NSRange {
+        return NSRange(location: NSNotFound, length: 0)
     }
 
     var filePromiseProvider: ExtendableFilePromiseProvider? {

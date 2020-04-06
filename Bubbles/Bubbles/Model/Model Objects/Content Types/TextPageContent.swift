@@ -37,11 +37,8 @@ class TextPageContent: NSObject, PageContent {
         return ModelFile(type: self.contentType.rawValue, filename: filename, data: textData, metadata: nil)
     }
 
-    func isMatchForSearch(_ searchTerm: String?) -> Bool {
-        guard let term = searchTerm, term.count > 0 else {
-            return true
-        }
-        return self.text.string.localizedCaseInsensitiveContains(term)
+    func firstRangeOf(_ searchTerm: String) -> NSRange {
+        return (self.text.string as NSString).range(of: searchTerm, options: [.caseInsensitive, .diacriticInsensitive])
     }
 }
 

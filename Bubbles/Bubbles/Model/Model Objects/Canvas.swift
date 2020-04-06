@@ -151,24 +151,4 @@ final class Canvas: NSObject, CollectableModelObject {
         }
         return value
     }
-
-
-    //MARK: - Searching
-
-    func isMatchForSearch(_ searchTerm: String?) -> Bool {
-        guard let term = searchTerm, term.count > 0 else {
-            return true
-        }
-
-        if self.title.localizedCaseInsensitiveContains(term) {
-            return true
-        }
-
-        for page in self.pages {
-            if page.page?.isMatchForSearch(term) == true {
-                return true
-            }
-        }
-        return false
-    }
 }
