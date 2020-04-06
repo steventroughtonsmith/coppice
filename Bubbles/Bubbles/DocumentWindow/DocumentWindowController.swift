@@ -92,8 +92,8 @@ class DocumentWindowController: NSWindowController {
                 return editor
             }
         }
-        if self.splitViewController.sidebarViewController.responds(to: action) {
-            return self.splitViewController.sidebarViewController
+        if let target = self.splitViewController.sidebarViewController.supplementalTarget(forAction: action, sender: sender) {
+            return target
         }
         return super.supplementalTarget(forAction: action, sender: sender)
     }

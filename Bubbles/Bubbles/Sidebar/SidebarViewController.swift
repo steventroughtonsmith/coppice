@@ -63,6 +63,13 @@ class SidebarViewController: NSViewController, SplitViewContainable {
             }
         }
     }
+
+    override func supplementalTarget(forAction action: Selector, sender: Any?) -> Any? {
+        if (self.sourceListViewController.responds(to: action)) {
+            return self.sourceListViewController
+        }
+        return super.supplementalTarget(forAction: action, sender: sender)
+    }
 }
 
 

@@ -270,6 +270,9 @@ class SourceListViewController: NSViewController, NSMenuItemValidation {
         guard let item = self.createdItem else {
             return
         }
+        guard self.selectedNodes.containsPages || self.selectedNodes.containsFolders else {
+            return
+        }
         self.outlineView.expandItem(self.viewModel.pagesGroupNode)
         if let sourceListNode = self.viewModel.node(for: item) {
             let index = self.outlineView.row(forItem: sourceListNode)
