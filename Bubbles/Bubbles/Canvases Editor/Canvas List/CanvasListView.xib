@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16085" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -67,6 +67,7 @@
                                     </tableColumn>
                                 </tableColumns>
                                 <connections>
+                                    <action trigger="doubleAction" selector="editCanvasTitle:" target="-2" id="DAD-Hi-LbI"/>
                                     <outlet property="dataSource" destination="-2" id="B6Z-QC-7S5"/>
                                     <outlet property="delegate" destination="-2" id="m1b-sT-cPq"/>
                                     <outlet property="menu" destination="BeW-gw-tnK" id="dLY-7u-AFU"/>
