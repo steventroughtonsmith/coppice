@@ -11,6 +11,7 @@ import Combine
 
 class TextEditorViewController: NSViewController, InspectableTextEditor {
     @IBOutlet var editingTextView: NSTextView!
+    @IBOutlet weak var scrollView: NSScrollView!
 
     @objc dynamic let viewModel: TextEditorViewModel
     init(viewModel: TextEditorViewModel) {
@@ -39,6 +40,8 @@ class TextEditorViewController: NSViewController, InspectableTextEditor {
 //        self.selectableBinding = self.publisher(for: \.enabled).assign(to: \.isSelectable, on: self.editingTextView)
         self.attributedTextObserver = self.publisher(for: \.viewModel.attributedText).sink { self.updateTextView(with: $0) }
 //        self.highlightedRangeObserver = self.viewModel.$highlightedRange.sink { self.highlight($0) }
+
+        self.scrollView.contentInsets = GlobalConstants.textEditorInsets
 
         self.editingTextView.textStorage?.delegate = self
     }

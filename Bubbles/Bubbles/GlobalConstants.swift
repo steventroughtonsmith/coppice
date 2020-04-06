@@ -23,6 +23,8 @@ struct GlobalConstants {
     static let bottomBarHeight: CGFloat = 27.0
 
     static let newWindowSize = CGSize(width: 900, height: 600)
+
+    static let textEditorInsets = NSEdgeInsets(top: 10, left: 5, bottom: 5, right: 5)
 }
 
 extension NSImage.Name {
