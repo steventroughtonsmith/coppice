@@ -40,6 +40,7 @@ class EditableLabelCell: NSTableCellView {
         textField.isBordered = false
         textField.backgroundColor = nil
         textField.drawsBackground = false
+        textField.placeholderString = NSLocalizedString("Untitled Page", comment: "Untitled Page title placeholder")
     }
 
     override func cancelOperation(_ sender: Any?) {

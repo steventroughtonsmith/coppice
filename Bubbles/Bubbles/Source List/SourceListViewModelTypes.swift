@@ -194,15 +194,8 @@ class PageSourceListNode: SourceListNode {
     }
 
     @objc dynamic override var title: String {
-        get {
-            let title = self.page.title
-            return (title.count > 0) ? title : "Untitled Page"
-        }
+        get { return self.page.title }
         set { self.page.title = newValue }
-    }
-
-    override var textColor: NSColor {
-        return (self.page.title.count > 0) ? .textColor : .placeholderTextColor
     }
 
     override var image: NSImage? {

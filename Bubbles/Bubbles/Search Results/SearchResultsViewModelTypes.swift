@@ -64,6 +64,16 @@ class SearchResult: NSObject {
 
         return attributes
     }()
+
+    static let titleMatchAttributes: [NSAttributedString.Key: Any] = [
+        .font: NSFont.systemFont(ofSize: NSFont.systemFontSize, weight: .semibold),
+        .underlineStyle: NSUnderlineStyle.single.rawValue,
+    ]
+
+    static let bodyMatchAttributes: [NSAttributedString.Key: Any] = [
+        .font: NSFont.systemFont(ofSize: NSFont.smallSystemFontSize, weight: .semibold),
+        .underlineStyle: NSUnderlineStyle.single.rawValue,
+    ]
 }
 
 
@@ -79,12 +89,9 @@ class PageSearchResult: SearchResult {
     override var title: NSAttributedString? {
         let title = NSMutableAttributedString(string: self.match.page.title, attributes: SearchResult.standardTitleAttributes)
         if case .title(let matchRange) = self.match.matchType {
-            title.setAttributes([
-                .font: NSFont.systemFont(ofSize: NSFont.systemFontSize, weight: .semibold),
-                .underlineStyle: NSUnderlineStyle.single.rawValue,
-            ], range: matchRange)
+            title.setAttributes(SearchResult.titleMatchAttributes, range: matchRange)
         }
-        return title
+        return (title.length > 0) ? title : nil
     }
 
     override var body: NSAttributedString? {
@@ -96,15 +103,15 @@ class PageSearchResult: SearchResult {
             return NSAttributedString(string: textContent.text.string, attributes: SearchResult.standardBodyAttributes)
         }
 
-        let croppedString = (textContent.text.string as NSString).substring(from: contentRange.location)
-        let attributedString = NSMutableAttributedString(string: "…\(croppedString)", attributes: SearchResult.standardBodyAttributes)
+        var baseString = textContent.text.string
+        var matchRange = contentRange
+        if contentRange.upperBound >= 20 {
+            baseString = "… \((baseString as NSString).substring(from: contentRange.location))"
+            matchRange.location = 2
+        }
 
-        var newRange = contentRange
-        newRange.location = 1
-        attributedString.setAttributes([
-            .font: NSFont.systemFont(ofSize: NSFont.smallSystemFontSize, weight: .semibold),
-            .underlineStyle: NSUnderlineStyle.single.rawValue,
-        ], range: newRange)
+        let attributedString = NSMutableAttributedString(string: baseString, attributes: SearchResult.standardBodyAttributes)
+        attributedString.setAttributes(SearchResult.bodyMatchAttributes, range: matchRange)
 
         return attributedString
     }

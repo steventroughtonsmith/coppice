@@ -36,19 +36,23 @@
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Jk6-xs-qbl">
                                     <rect key="frame" x="-2" y="18" width="31" height="16"/>
-                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Title" id="09j-cN-bKL">
+                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Title" placeholderString="Untitled Page" id="09j-cN-bKL">
                                         <font key="font" usesAppearanceFont="YES"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                     <connections>
-                                        <binding destination="QA8-LS-8io" name="value" keyPath="objectValue.title" id="5J6-bd-AkH"/>
+                                        <binding destination="QA8-LS-8io" name="value" keyPath="objectValue.title" id="0MF-xf-ktU">
+                                            <dictionary key="options">
+                                                <string key="NSNullPlaceholder">Untitled Page</string>
+                                            </dictionary>
+                                        </binding>
                                     </connections>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="psw-0t-wmi">
                                     <rect key="frame" x="-2" y="0.0" width="31" height="14"/>
                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" title="Body" usesSingleLineMode="YES" id="z1X-Jv-Neu">
-                                        <font key="font" metaFont="controlContent" size="11"/>
+                                        <font key="font" metaFont="label" size="11"/>
                                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
