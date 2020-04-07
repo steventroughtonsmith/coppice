@@ -21,7 +21,7 @@ class CanvasListViewModel: ViewModel {
     private var canvasObserver: ModelCollection<Canvas>.Observation?
     private var selectedCanvasObserver: AnyCancellable?
     func startObserving() {
-        self.canvasObserver = self.canvasCollection.addObserver { [weak self] canvas, change in
+        self.canvasObserver = self.canvasCollection.addObserver { [weak self] _ in
             self?.reloadCanvases()
         }
         self.selectedCanvasObserver = self.documentWindowViewModel.$selectedCanvasID.sink { [weak self] canvasID in

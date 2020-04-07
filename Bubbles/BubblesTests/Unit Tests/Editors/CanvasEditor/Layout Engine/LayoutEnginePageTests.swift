@@ -20,8 +20,6 @@ class LayoutEnginePageTests: XCTestCase {
     }
 
     func test_init_setsAllProperties() {
-        let layoutEngine = self.layoutEngine()
-
         let expectedUUID = UUID()
         let expectedContentFrame = CGRect(x: 31, y: 42, width: 73, height: 37)
         let expectedMinContentSize = CGSize(width: 20, height: 30)

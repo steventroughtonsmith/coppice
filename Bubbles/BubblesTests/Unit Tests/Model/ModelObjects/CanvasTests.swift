@@ -337,7 +337,7 @@ class CanvasTests: XCTestCase {
             $0.canvas = canvas
         } // Right
         CanvasPage.create(in: modelController) {
-            $0.frame = CGRect(x: 0, y: 60, width: 50, height: 40)
+            $0.frame = CGRect(x: 0, y: 60, width: 50, height: 50)
             $0.canvas = canvas
         } // Bottom
 
@@ -364,11 +364,11 @@ class CanvasTests: XCTestCase {
             $0.canvas = canvas
         } // Right
         CanvasPage.create(in: modelController) {
-            $0.frame = CGRect(x: 0, y: 60, width: 50, height: 40)
+            $0.frame = CGRect(x: 0, y: 60, width: 50, height: 50)
             $0.canvas = canvas
         } // Bottom
         CanvasPage.create(in: modelController) {
-            $0.frame = CGRect(x: 0, y: -20, width: 50, height: 40)
+            $0.frame = CGRect(x: 0, y: -30, width: 50, height: 40)
             $0.canvas = canvas
         } // Top
 
@@ -811,73 +811,5 @@ class CanvasTests: XCTestCase {
         let canvasPages = canvas.addPages([page, page2, page3])
         XCTAssertEqual(canvasPages[safe: 1]?.frame, CGRect(x: 70, y: 65, width: 100, height: 50))
         XCTAssertEqual(canvasPages[safe: 2]?.frame, CGRect(x: 90, y: 85, width: 50, height: 120))
-    }
-
-
-    //MARK: - isMatchForSearch(_:)
-    func test_isMatchForSearch_returnsTrueForNilSearchTerm() {
-        let canvas = Canvas()
-        canvas.title = "Hello"
-        XCTAssertTrue(canvas.isMatchForSearch(nil))
-    }
-
-    func test_isMatchForSearch_returnsTrueForEmptySearchTerm() {
-        let canvas = Canvas()
-        canvas.title = "Hello"
-        XCTAssertTrue(canvas.isMatchForSearch(""))
-    }
-
-    func test_isMatchForSearch_returnsTrueIfTitleIsSearchTerm() {
-        let canvas = Canvas()
-        canvas.title = "Hello World"
-        XCTAssertTrue(canvas.isMatchForSearch("Hello World"))
-    }
-
-    func test_isMatchForSearch_returnsTrueIfTitleContainsSearchTerm() {
-        let canvas = Canvas()
-        canvas.title = "Foo Bar Baz"
-        XCTAssertTrue(canvas.isMatchForSearch("Bar B"))
-    }
-
-    func test_isMatchForSearch_returnsTrueIfTitleContainsSearchTermIgnoringCase() {
-        let canvas = Canvas()
-        canvas.title = "I am SHOUTING loudly"
-        XCTAssertTrue(canvas.isMatchForSearch("shouting"))
-    }
-
-    func test_isMatchForSearch_returnsTrueIfAnyPagesOnCanvasMatchSearchTerm() {
-        let modelController = BubblesModelController(undoManager: UndoManager())
-        let canvas = Canvas.create(in: modelController)
-        canvas.title = "test"
-
-        let matchingPage = Page.create(in: modelController) {
-            $0.title = "This is a matching page"
-        }
-        canvas.addPages([matchingPage])
-
-        let nonMatchingPage = Page.create(in: modelController) {
-            $0.title = "This doesnt affect the outcome"
-        }
-        canvas.addPages([nonMatchingPage])
-
-        XCTAssertTrue(canvas.isMatchForSearch("matching"))
-    }
-
-    func test_isMatchForSearch_returnsFalseIfTitleAndNoPagesMatchSearchTerm() {
-        let modelController = BubblesModelController(undoManager: UndoManager())
-        let canvas = Canvas.create(in: modelController)
-        canvas.title = "test"
-
-        let page1 = Page.create(in: modelController) {
-            $0.title = "This page doesnt match"
-        }
-        canvas.addPages([page1])
-
-        let page2 = Page.create(in: modelController) {
-            $0.title = "Neither does this"
-        }
-        canvas.addPages([page2])
-
-        XCTAssertFalse(canvas.isMatchForSearch("POSSUM"))
     }
 }

@@ -22,8 +22,8 @@ class TextPageContent: NSObject, PageContent {
         var contentSize = self.text.boundingRect(with: NSSize(width: Page.standardSize.width * 1.5, height: Page.standardSize.height * 3), options: [.usesLineFragmentOrigin]).size
         let insets = GlobalConstants.textEditorInsets
         //Not sure why but we need to add an additional 10 pt to get the size correct
-        contentSize.width = max(contentSize.width.rounded(.up), Page.standardSize.width) + insets.left + insets.right + 10
-        contentSize.height = max(contentSize.height.rounded(.up), Page.standardSize.height) + insets.top + insets.bottom + 10
+        contentSize.width = max(contentSize.width.rounded(.up) + insets.left + insets.right + 10, Page.standardSize.width)
+        contentSize.height = max(contentSize.height.rounded(.up) + insets.top + insets.bottom + 10, Page.standardSize.height)
         return contentSize
     }
     weak var page: Page?

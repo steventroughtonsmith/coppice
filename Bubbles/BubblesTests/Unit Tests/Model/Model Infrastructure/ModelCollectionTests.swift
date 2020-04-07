@@ -86,9 +86,9 @@ class ModelCollectionTests: XCTestCase {
         var changeType: ModelChangeType? = nil
 
         let expectation = self.expectation(description: "ObserverCalled")
-        _ = self.collection.addObserver { (object, change) in
-            changedObject = object
-            changeType = change
+        _ = self.collection.addObserver { (change) in
+            changedObject = change.object
+            changeType = change.changeType
             expectation.fulfill()
         }
 
@@ -101,7 +101,7 @@ class ModelCollectionTests: XCTestCase {
 
     func test_newObject_doesntNotifyObserversAnyUpdatesInsideSetupBlock() {
         let expectation = self.expectation(description: "ObserverCalled")
-        _ = self.collection.addObserver { (object, change) in
+        _ = self.collection.addObserver { _ in
             expectation.fulfill()
         }
 
@@ -151,9 +151,9 @@ class ModelCollectionTests: XCTestCase {
         var changeType: ModelChangeType? = nil
 
         let expectation = self.expectation(description: "ObserverCalled")
-        _ = self.collection.addObserver { (object, change) in
-            changedObject = object
-            changeType = change
+        _ = self.collection.addObserver { change in
+            changedObject = change.object
+            changeType = change.changeType
             expectation.fulfill()
         }
 
@@ -185,12 +185,12 @@ class ModelCollectionTests: XCTestCase {
     //MARK: - Observation
     func test_observation_notifiesAddedObserversOfChange() {
         let observer1Expectation = self.expectation(description: "Observer 1 Notified")
-        _ = self.collection.addObserver { _, _ in
+        _ = self.collection.addObserver { _ in
             observer1Expectation.fulfill()
         }
 
         let observer2Expectation = self.expectation(description: "Observer 2 Notified")
-        _ = self.collection.addObserver { _, _ in
+        _ = self.collection.addObserver { _ in
             observer2Expectation.fulfill()
         }
 
@@ -202,13 +202,13 @@ class ModelCollectionTests: XCTestCase {
         let object = TestCollectableModelObject()
 
         let observer1Expectation = self.expectation(description: "Observer 1 Notified")
-        _ = self.collection.addObserver(filterBy: [object.id]) { _, _ in
+        _ = self.collection.addObserver(filterBy: [object.id]) { _ in
             observer1Expectation.fulfill()
         }
 
         let observer2Expectation = self.expectation(description: "Observer 2 Notified")
         observer2Expectation.isInverted = true
-        _ = self.collection.addObserver(filterBy: [TestCollectableModelObject.modelID(with: UUID())]) { _, _ in
+        _ = self.collection.addObserver(filterBy: [TestCollectableModelObject.modelID(with: UUID())]) { _ in
             observer2Expectation.fulfill()
         }
 
@@ -219,12 +219,12 @@ class ModelCollectionTests: XCTestCase {
     func test_observation_doesntNotifyObserverIfRemovedBeforeChange() {
         let observer1Expectation = self.expectation(description: "Observer 1 Notified")
         observer1Expectation.isInverted = true
-        let observer1 = self.collection.addObserver { _, _ in
+        let observer1 = self.collection.addObserver { _ in
             observer1Expectation.fulfill()
         }
 
         let observer2Expectation = self.expectation(description: "Observer 2 Notified")
-        _ = self.collection.addObserver { _ , _ in
+        _ = self.collection.addObserver { _ in
             observer2Expectation.fulfill()
         }
 
@@ -239,7 +239,7 @@ class ModelCollectionTests: XCTestCase {
         let newObject = self.collection.newObject()
 
         let stringExpectation = self.expectation(description: "String Property Changed")
-        let stringObserver = self.collection.addObserver { object, change in
+        let stringObserver = self.collection.addObserver { change in
             stringExpectation.fulfill()
         }
 
@@ -249,7 +249,7 @@ class ModelCollectionTests: XCTestCase {
 
 
         let intExpectation = self.expectation(description: "Int Property Changed")
-        let intObserver = self.collection.addObserver { object, change in
+        let intObserver = self.collection.addObserver { change in
             intExpectation.fulfill()
         }
 
@@ -265,7 +265,7 @@ class ModelCollectionTests: XCTestCase {
         self.collection.pushChangeGroup()
         let notCalledExpectation = self.expectation(description: "Not Called")
         notCalledExpectation.isInverted = true
-        let notCalledObserver = self.collection.addObserver { _, _ in
+        let notCalledObserver = self.collection.addObserver { change in
             notCalledExpectation.fulfill()
         }
 
@@ -275,9 +275,10 @@ class ModelCollectionTests: XCTestCase {
         self.collection.removeObserver(notCalledObserver)
 
         let calledExpectation = self.expectation(description: "Observer called")
-        _ = self.collection.addObserver { object, changeType in
-            XCTAssertEqual(object, newObject)
-            XCTAssertEqual(changeType, .update)
+        _ = self.collection.addObserver { change in
+            XCTAssertEqual(change.object, newObject)
+            XCTAssertEqual(change.changeType, .update)
+            XCTAssertTrue(change.updatedKeyPaths.contains(\TestCollectableModelObject.stringProperty))
             calledExpectation.fulfill()
         }
 
@@ -290,9 +291,11 @@ class ModelCollectionTests: XCTestCase {
 
 
         let expectationExpectation = self.expectation(description: "Observer called")
-        _ = self.collection.addObserver { object, changeType in
-            XCTAssertEqual(object, newObject)
-            XCTAssertEqual(changeType, .update)
+        _ = self.collection.addObserver { change in
+            XCTAssertEqual(change.object, newObject)
+            XCTAssertEqual(change.changeType, .update)
+            XCTAssertTrue(change.updatedKeyPaths.contains(\TestCollectableModelObject.stringProperty))
+            XCTAssertTrue(change.updatedKeyPaths.contains(\TestCollectableModelObject.intProperty))
             expectationExpectation.fulfill()
         }
 
@@ -371,7 +374,7 @@ class ModelCollectionTests: XCTestCase {
         let object = self.collection.newObject()
         object.stringProperty = "Foo"
         let observerExpectation = self.expectation(description: "Observer 1 Notified")
-        _ = self.collection.addObserver { _, _ in
+        _ = self.collection.addObserver { _ in
             observerExpectation.fulfill()
         }
 
@@ -399,11 +402,14 @@ class ModelCollectionTests: XCTestCase {
         let child1 = self.collection.newObject()
         child1.inverseRelationship = parent
         let observerExpectation = self.expectation(description: "Observer 1 Notified")
-        _ = self.collection.addObserver { _, _ in
+        _ = self.collection.addObserver { change in
+            XCTAssertEqual(change.object, child1)
+            XCTAssertEqual(change.changeType, .update)
+            XCTAssertTrue(change.updatedKeyPaths.contains(\TestCollectableModelObject.inverseRelationship))
             observerExpectation.fulfill()
         }
 
-        child1.didChangeRelationship(\.inverseRelationship, oldValue: nil)
+        child1.didChangeRelationship(\.inverseRelationship, inverseKeyPath: \.relationship, oldValue: nil)
         wait(for: [observerExpectation], timeout: 0)
     }
 
@@ -413,7 +419,7 @@ class ModelCollectionTests: XCTestCase {
         child1.inverseRelationship = parent
 
         self.modelController.undoManager.removeAllActions() // Clean up
-        child1.didChangeRelationship(\.inverseRelationship, oldValue: nil)
+        child1.didChangeRelationship(\.inverseRelationship, inverseKeyPath: \.relationship, oldValue: nil)
 
         XCTAssertTrue(self.modelController.undoManager.canUndo)
 
@@ -426,11 +432,14 @@ class ModelCollectionTests: XCTestCase {
         let parent = self.relationshipCollection.newObject()
         let child1 = self.collection.newObject()
         let observerExpectation = self.expectation(description: "Observer 1 Notified")
-        _ = self.relationshipCollection.addObserver { _, _ in
+        _ = self.relationshipCollection.addObserver { change in
+            XCTAssertEqual(change.object, parent)
+            XCTAssertEqual(change.changeType, .update)
+            XCTAssertTrue(change.updatedKeyPaths.contains(\RelationshipModelObject.relationship as PartialKeyPath<RelationshipModelObject>))
             observerExpectation.fulfill()
         }
 
-        child1.didChangeRelationship(\.inverseRelationship, oldValue: parent)
+        child1.didChangeRelationship(\.inverseRelationship, inverseKeyPath: \.relationship, oldValue: parent)
         wait(for: [observerExpectation], timeout: 0)
     }
 
@@ -439,11 +448,14 @@ class ModelCollectionTests: XCTestCase {
         let child1 = self.collection.newObject()
         child1.inverseRelationship = parent
         let observerExpectation = self.expectation(description: "Observer 1 Notified")
-        _ = self.relationshipCollection.addObserver { _, _ in
+        _ = self.relationshipCollection.addObserver { change in
+            XCTAssertEqual(change.object, parent)
+            XCTAssertEqual(change.changeType, .update)
+            XCTAssertTrue(change.updatedKeyPaths.contains(\RelationshipModelObject.relationship as PartialKeyPath<RelationshipModelObject>))
             observerExpectation.fulfill()
         }
 
-        child1.didChangeRelationship(\.inverseRelationship, oldValue: nil)
+        child1.didChangeRelationship(\.inverseRelationship, inverseKeyPath: \.relationship, oldValue: nil)
         wait(for: [observerExpectation], timeout: 0)
     }
 
@@ -460,62 +472,5 @@ class ModelCollectionTests: XCTestCase {
         XCTAssertEqual(relationship.count, 2)
         XCTAssertTrue(relationship.contains(o1))
         XCTAssertTrue(relationship.contains(o3))
-    }
-
-
-    //MARK: - objects(matchingSearchTerm:)
-    func test_objectsMatchingSearchTerm_returnsAllItemsIfSearchTermIsNil() {
-        let o1 = self.collection.newObject()
-        let o2 = self.collection.newObject()
-        let o3 = self.collection.newObject()
-
-        let objects = self.collection.objects(matchingSearchTerm: nil)
-        XCTAssertEqual(objects.count, 3)
-        XCTAssertTrue(objects.contains(o1))
-        XCTAssertTrue(objects.contains(o2))
-        XCTAssertTrue(objects.contains(o3))
-    }
-
-    func test_objectsMatchingSearchTerm_returnsAllItemsIfSearchTermIsEmptyString() {
-        let o1 = self.collection.newObject()
-        let o2 = self.collection.newObject()
-        let o3 = self.collection.newObject()
-
-        let objects = self.collection.objects(matchingSearchTerm: "")
-        XCTAssertEqual(objects.count, 3)
-        XCTAssertTrue(objects.contains(o1))
-        XCTAssertTrue(objects.contains(o2))
-        XCTAssertTrue(objects.contains(o3))
-    }
-
-    func test_objectsMatchingSearchTerm_returnsEmptySetIfCollectionIsEmpty() {
-        let objects = self.collection.objects(matchingSearchTerm: "Hello World")
-        XCTAssertEqual(objects.count, 0)
-    }
-
-    func test_objectsMatchingSearchTerm_returnsOnlyObjectsMatchingSearchTerm() {
-        self.collection.newObject()
-        let match1 = self.collection.newObject()
-        match1.isMatch = true
-        self.collection.newObject()
-        let match2 = self.collection.newObject()
-        match2.isMatch = true
-        self.collection.newObject()
-
-        let objects = self.collection.objects(matchingSearchTerm: "Foo Bar")
-        XCTAssertEqual(objects.count, 2)
-        XCTAssertTrue(objects.contains(match1))
-        XCTAssertTrue(objects.contains(match2))
-    }
-
-    func test_objectsMatchingSearchTerm_returnsEmptyArrayIfNoObjectsMatchSearchTerm() {
-        self.collection.newObject()
-        self.collection.newObject()
-        self.collection.newObject()
-        self.collection.newObject()
-        self.collection.newObject()
-
-        let objects = self.collection.objects(matchingSearchTerm: "Foo Bar")
-        XCTAssertEqual(objects.count, 0)
     }
 }

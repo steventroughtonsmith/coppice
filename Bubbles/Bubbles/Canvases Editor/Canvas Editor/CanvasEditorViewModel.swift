@@ -42,12 +42,12 @@ class CanvasEditorViewModel: ViewModel {
         guard self.mode == .editing else {
             return
         }
-        self.canvasObserver = self.modelController.collection(for: Canvas.self).addObserver(filterBy: [self.canvas.id]) { [weak self] (canvas, changeType) in
-            if changeType == .update {
+        self.canvasObserver = self.modelController.collection(for: Canvas.self).addObserver(filterBy: [self.canvas.id]) { [weak self] change in
+            if change.changeType == .update {
                 self?.updatePages()
             }
         }
-        self.canvasPageObserver = self.modelController.collection(for: CanvasPage.self).addObserver() { [weak self] (canvas, changeType) in
+        self.canvasPageObserver = self.modelController.collection(for: CanvasPage.self).addObserver() { [weak self] _ in
             self?.updatePages()
         }
     }

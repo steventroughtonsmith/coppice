@@ -30,10 +30,10 @@ class SourceListViewModel: ViewModel {
     var foldersObserver: ModelCollection<Folder>.Observation?
     var selectionObserver: AnyCancellable?
     func startObserving() {
-        self.pagesObserver = self.modelController.collection(for: Page.self).addObserver(changeHandler: { [weak self] (page, type) in
+        self.pagesObserver = self.modelController.collection(for: Page.self).addObserver(changeHandler: { [weak self] _ in
             self?.setNeedsReload()
         })
-        self.foldersObserver = self.modelController.collection(for: Folder.self).addObserver(changeHandler: { [weak self] (folder, type) in
+        self.foldersObserver = self.modelController.collection(for: Folder.self).addObserver(changeHandler: { [weak self] _ in
             self?.setNeedsReload()
         })
 

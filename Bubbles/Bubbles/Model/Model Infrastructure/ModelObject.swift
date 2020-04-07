@@ -75,8 +75,9 @@ protocol CollectableModelObject: ModelObject, Hashable {
     /// Register an undo action for a change to a replationship
     /// - Parameters:
     ///   - keyPath: The keypath of the relationship to change
+    ///   - inverseKeyPath: The key path of the opposite relationship
     ///   - oldValue: The old value of the relationship
-    func didChangeRelationship<T: CollectableModelObject>(_ keyPath: ReferenceWritableKeyPath<Self, T?>, oldValue: T?)
+    func didChangeRelationship<T: CollectableModelObject>(_ keyPath: ReferenceWritableKeyPath<Self, T?>, inverseKeyPath: KeyPath<T, Set<Self>>, oldValue: T?)
 
     /// Return the objects for a to-many relationship
     /// - Parameter keyPath: The keypath on the returned type that holds the inverse relationship
@@ -102,13 +103,13 @@ extension CollectableModelObject {
     
     func didChange<T>(_ keyPath: ReferenceWritableKeyPath<Self, T>, oldValue: T) {
         let id = self.id
-        self.collection?.notifyOfChange(to: self)
+        self.collection?.notifyOfChange(to: self, changeType: .update, keyPath: keyPath)
         self.collection?.registerUndoAction(withName: nil) { (collection) in
             collection.setValue(oldValue, for: keyPath, ofObjectWithID: id)
         }
     }
 
-    func didChangeRelationship<T: CollectableModelObject>(_ keyPath: ReferenceWritableKeyPath<Self, T?>, oldValue: T?) {
+    func didChangeRelationship<T: CollectableModelObject>(_ keyPath: ReferenceWritableKeyPath<Self, T?>, inverseKeyPath: KeyPath<T, Set<Self>>, oldValue: T?) {
         guard let relationshipObject = oldValue ?? self[keyPath: keyPath],
               let selfCollection = self.collection,
               let relationshipCollection = relationshipObject.collection else {
@@ -116,7 +117,7 @@ extension CollectableModelObject {
         }
         let id = self.id
         let oldID = oldValue?.id
-        selfCollection.notifyOfChange(to: self)
+        selfCollection.notifyOfChange(to: self, changeType: .update, keyPath: keyPath)
         selfCollection.registerUndoAction(withName: nil) { (collection) in
             var value: T? = nil
             if let objectID = oldID,
@@ -126,7 +127,7 @@ extension CollectableModelObject {
             collection.setValue(value, for: keyPath, ofObjectWithID: id)
         }
 
-        relationshipCollection.notifyOfChange(to: relationshipObject)
+        relationshipCollection.notifyOfChange(to: relationshipObject, changeType: .update, keyPath: inverseKeyPath)
     }
 
     func relationship<T: CollectableModelObject>(for keyPath: ReferenceWritableKeyPath<T, Self?>) -> Set<T> {

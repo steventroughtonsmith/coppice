@@ -21,24 +21,59 @@ class ModelCollection<ModelType: CollectableModelObject> {
     struct Observation {
         fileprivate let id = UUID()
         fileprivate let filterIDs: [ModelID]?
-        fileprivate let changeHandler: (ModelType, ModelChangeType) -> Void
+        fileprivate let changeHandler: (Change) -> Void
 
-        fileprivate func notifyOfChange(to object: ModelType, changeType: ModelChangeType) {
-            if ((self.filterIDs == nil) || (self.filterIDs?.contains(object.id) == true)) {
-                changeHandler(object, changeType)
+        fileprivate func notifyOfChange(_ change: Change) {
+            if ((self.filterIDs == nil) || (self.filterIDs?.contains(change.object.id) == true)) {
+                changeHandler(change)
             }
         }
     }
 
+    class Change {
+        let object: ModelType
+        init(object: ModelType) {
+            self.object = object
+        }
+
+        private(set) var changeType: ModelChangeType = .update
+
+        private var keyPaths = Set<PartialKeyPath<ModelType>>()
+        var updatedKeyPaths: Set<PartialKeyPath<ModelType>> {
+            guard self.changeType == .update else {
+                return Set()
+            }
+            return self.keyPaths
+        }
+
+        func registerChange(ofType changeType: ModelChangeType, keyPath: PartialKeyPath<ModelType>? = nil) {
+            if changeType == .update, let keyPath = keyPath {
+                precondition(keyPath != nil, "Must supply a key path for an update change")
+                self.keyPaths.insert(keyPath)
+            }
+            self.changeType = changeType
+        }
+    }
+
     class ChangeGroup {
-        private(set) var changes = [ModelType: ModelChangeType]()
-        func registerChange(for object: ModelType, ofType changeType: ModelChangeType) {
-            self.changes[object] = changeType
+        private(set) var changes = [ModelType: Change]()
+        private func change(for object: ModelType) -> Change{
+            if let change = self.changes[object] {
+                return change
+            }
+
+            let change = Change(object: object)
+            self.changes[object] = change
+            return change
+        }
+
+        func registerChange(to object: ModelType, changeType: ModelChangeType, keyPath: PartialKeyPath<ModelType>? = nil) {
+            self.change(for: object).registerChange(ofType: changeType, keyPath: keyPath)
         }
 
         func notify(_ observers: [Observation]) {
-            for (object, changeType) in self.changes {
-                observers.forEach { $0.notifyOfChange(to: object, changeType: changeType) }
+            for (_, change) in self.changes {
+                observers.forEach { $0.notifyOfChange(change) }
             }
         }
     }
@@ -101,7 +136,7 @@ class ModelCollection<ModelType: CollectableModelObject> {
     //MARK: - Observation
     private var observers = [Observation]()
 
-    func addObserver(filterBy uuids: [ModelID]? = nil, changeHandler: @escaping (ModelType, ModelChangeType) -> Void) -> Observation {
+    func addObserver(filterBy uuids: [ModelID]? = nil, changeHandler: @escaping (Change) -> Void) -> Observation {
         let observer = Observation(filterIDs: uuids, changeHandler: changeHandler)
         self.observers.append(observer)
         return observer
@@ -113,14 +148,14 @@ class ModelCollection<ModelType: CollectableModelObject> {
         }
     }
 
-    func notifyOfChange(to object: ModelType, changeType: ModelChangeType = .update) {
+    func notifyOfChange(to object: ModelType, changeType: ModelChangeType = .update, keyPath: PartialKeyPath<ModelType>? = nil) {
         guard let currentChangeGroup = self.changeGroups.last else {
             let changeGroup = ChangeGroup()
-            changeGroup.registerChange(for: object, ofType: changeType)
+            changeGroup.registerChange(to: object, changeType: changeType, keyPath: keyPath)
             changeGroup.notify(self.observers)
             return
         }
-        currentChangeGroup.registerChange(for: object, ofType: changeType)
+        currentChangeGroup.registerChange(to: object, changeType: changeType, keyPath: keyPath)
     }
 
     private var changeGroups = [ChangeGroup]()

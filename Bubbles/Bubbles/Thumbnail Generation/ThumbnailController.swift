@@ -24,16 +24,16 @@ class ThumbnailController: NSObject {
     var canvasPageObserver: ModelCollection<CanvasPage>.Observation?
     var pageObserver: ModelCollection<Page>.Observation?
     private func setupObservation() {
-        self.canvasObserver = self.modelController.collection(for: Canvas.self).addObserver { [weak self] (canvas, changeType) in
-            self?.changed(canvas, changeType: changeType)
+        self.canvasObserver = self.modelController.collection(for: Canvas.self).addObserver { [weak self] (change) in
+            self?.changed(change.object)
         }
 
-        self.canvasPageObserver = self.modelController.collection(for: CanvasPage.self).addObserver { [weak self] (canvasPage, changeType) in
-            self?.changed(canvasPage, changeType: changeType)
+        self.canvasPageObserver = self.modelController.collection(for: CanvasPage.self).addObserver { [weak self] (change) in
+            self?.changed(change.object)
         }
 
-        self.pageObserver = self.modelController.collection(for: Page.self).addObserver { [weak self] (page, changeType) in
-            self?.changed(page, changeType: changeType)
+        self.pageObserver = self.modelController.collection(for: Page.self).addObserver { [weak self] (change) in
+            self?.changed(change.object)
         }
     }
 
@@ -51,17 +51,17 @@ class ThumbnailController: NSObject {
 
 
     //MARK: - Handle Changes
-    private func changed(_ canvas: Canvas, changeType: ModelChangeType) {
+    private func changed(_ canvas: Canvas) {
         self.needsUpdatedThumbnail(for: canvas)
     }
 
-    private func changed(_ canvasPage: CanvasPage, changeType: ModelChangeType) {
+    private func changed(_ canvasPage: CanvasPage) {
         if let canvas = canvasPage.canvas {
             self.needsUpdatedThumbnail(for: canvas)
         }
     }
 
-    private func changed(_ page: Page, changeType: ModelChangeType) {
+    private func changed(_ page: Page) {
         for canvasPage in page.canvases {
             if let canvas = canvasPage.canvas {
                 self.needsUpdatedThumbnail(for: canvas)

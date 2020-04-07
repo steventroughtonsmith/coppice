@@ -26,9 +26,9 @@ class PageImageController: NSObject {
     //MARK: - Observation
     private var observation: ModelCollection<Page>.Observation?
     private func startObservation() {
-        self.observation = self.modelController.collection(for: Page.self).addObserver { [weak self] (page, changeType) in
-            if changeType == .update || changeType == .delete {
-                self?.cache.removeObject(forKey: (page.id.uuid as NSUUID))
+        self.observation = self.modelController.collection(for: Page.self).addObserver { [weak self] change in
+            if change.changeType == .update || change.changeType == .delete {
+                self?.cache.removeObject(forKey: (change.object.id.uuid as NSUUID))
             }
         }
     }

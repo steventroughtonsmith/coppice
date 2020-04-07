@@ -745,7 +745,7 @@
 				9957B086239FD3CA00BA3C0B /* DocumentWindow */,
 				99581079230D758700D996C4 /* Editors */,
 				99DEF28D22F33A2E0020A7CE /* Model */,
-				99D4D59622F864E200F69C1F /* Sidebar */,
+				99D4D59622F864E200F69C1F /* Source List */,
 				99A8F57B230C3BD800C3F08A /* Page Selector */,
 				99A0B858238D72C2005FCF25 /* Inspectors */,
 			);
@@ -1042,12 +1042,12 @@
 			path = "Model Objects";
 			sourceTree = "<group>";
 		};
-		99D4D59622F864E200F69C1F /* Sidebar */ = {
+		99D4D59622F864E200F69C1F /* Source List */ = {
 			isa = PBXGroup;
 			children = (
 				99D4D59722F8650300F69C1F /* SidebarViewModelTests.swift */,
 			);
-			path = Sidebar;
+			path = "Source List";
 			sourceTree = "<group>";
 		};
 		99D8E361237EDB890098CF3B /* Inspectors */ = {

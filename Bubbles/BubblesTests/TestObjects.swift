@@ -60,7 +60,9 @@ final class TestCollectableModelObject: NSObject, CollectableModelObject {
         didSet { self.didChange(\.intProperty, oldValue: oldValue) }
     }
 
-    @ModelObjectReference var inverseRelationship: RelationshipModelObject?
+    @ModelObjectReference var inverseRelationship: RelationshipModelObject? {
+        didSet { self.didChangeRelationship(\.inverseRelationship, inverseKeyPath: \.relationship, oldValue: oldValue) }
+    }
 
     var isMatch: Bool = false
     func isMatchForSearch(_ searchTerm: String?) -> Bool {

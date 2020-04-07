@@ -25,7 +25,7 @@ class PageLinkManager: NSObject {
 
         super.init()
 
-        self.observer = self.modelController.collection(for: Page.self).addObserver { (_, changeType) in
+        self.observer = self.modelController.collection(for: Page.self).addObserver { (change) in
             self.setNeedsReparse()
         }
     }

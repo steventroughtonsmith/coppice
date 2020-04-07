@@ -39,18 +39,18 @@ final class CanvasPage: NSObject, CollectableModelObject {
                 self.frame.size = page.contentSize
             }
             self.willChangeValue(for: \.title)
-            self.didChangeRelationship(\.page, oldValue: oldValue)
+            self.didChangeRelationship(\.page, inverseKeyPath: \.canvases, oldValue: oldValue)
             self.didChangeValue(for: \.title)
         }
     }
     @ModelObjectReference var canvas: Canvas? {
-        didSet { self.didChangeRelationship(\.canvas, oldValue: oldValue) }
+        didSet { self.didChangeRelationship(\.canvas, inverseKeyPath: \.pages, oldValue: oldValue) }
     }
 
     @ModelObjectReference @objc dynamic var parent: CanvasPage? {
         didSet {
             self.willChangeValue(for: \.title)
-            self.didChangeRelationship(\.parent, oldValue: oldValue)
+            self.didChangeRelationship(\.parent, inverseKeyPath: \.children, oldValue: oldValue)
             self.didChangeValue(for: \.title)
         }
     }
