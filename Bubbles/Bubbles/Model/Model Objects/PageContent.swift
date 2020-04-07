@@ -85,7 +85,7 @@ extension PageContent {
         }
 
         let pageID = page.id
-        page.collection?.notifyOfChange(to: page)
+        page.collection?.notifyOfChange(to: page, keyPath: \Page.content)
         page.collection?.registerUndoAction { (collection) in
             collection.setContentValue(oldValue, for: keyPath, ofPageWithID: pageID)
         }

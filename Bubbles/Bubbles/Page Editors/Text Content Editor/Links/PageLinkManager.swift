@@ -9,10 +9,16 @@
 import Cocoa
 
 protocol PageLinkManagerDelegate: class {
+    func willStartParsing(in manager: PageLinkManager)
+    func didFinishParsing(in manager: PageLinkManager)
     func shouldChangeText(in ranges: [NSRange], manager: PageLinkManager) -> Bool
     func textDidChange(in manager: PageLinkManager)
 }
 
+extension PageLinkManagerDelegate {
+    func willStartParsing(in manager: PageLinkManager) {}
+    func didFinishParsing(in manager: PageLinkManager) {}
+}
 
 
 class PageLinkManager: NSObject {
@@ -25,8 +31,19 @@ class PageLinkManager: NSObject {
 
         super.init()
 
-        self.observer = self.modelController.collection(for: Page.self).addObserver { (change) in
-            self.setNeedsReparse()
+        self.observer = self.modelController.collection(for: Page.self).addObserver { [weak self] (change) in
+            //Update if the current page's content was updated
+            if change.object.id == self?.pageID && change.didUpdate(\.content) {
+                self?.setNeedsReparse()
+                return
+            }
+
+            //Update, ignoring the last parsed text, if a page was added, deleted, or has its title changed
+            guard change.changeType != .update || change.didUpdate(\.title) else {
+                return
+            }
+            self?.lastParsedText = nil
+            self?.setNeedsReparse()
         }
     }
 
@@ -59,7 +76,7 @@ class PageLinkManager: NSObject {
     private var isReparsing = false
     @objc private func reparseLinks() {
         self.isReparsing = true
-        print("reparse")
+        self.delegate?.willStartParsing(in: self)
 
         //If we have storage enabled for this page then we want to enable that
         if let storage = self.currentTextStorage {
@@ -68,6 +85,8 @@ class PageLinkManager: NSObject {
         } else if let page = self.modelController.collection(for: Page.self).objectWithID(self.pageID) {
             self.update(page)
         }
+
+        self.delegate?.didFinishParsing(in: self)
 
         self.isReparsing = false
     }
@@ -100,7 +119,7 @@ class PageLinkManager: NSObject {
         storage.endEditing()
 
         self.delegate?.textDidChange(in: self)
-        self.lastParsedText = storage
+        self.lastParsedText = storage.copy() as? NSAttributedString
     }
 
     private func update(_ page: Page) {
@@ -126,7 +145,7 @@ class PageLinkManager: NSObject {
             }
         }
         textContent.text = mutableString
-        self.lastParsedText = mutableString
+        self.lastParsedText = mutableString.copy() as? NSAttributedString
     }
 }
 
@@ -135,3 +154,6 @@ extension PageLinkManager: NSTextStorageDelegate {
         self.setNeedsReparse()
     }
 }
+
+
+

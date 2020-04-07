@@ -46,10 +46,15 @@ class ModelCollection<ModelType: CollectableModelObject> {
             return self.keyPaths
         }
 
+        func didUpdate<T>(_ keyPath: KeyPath<ModelType, T>) -> Bool {
+            let partialKeyPath = keyPath as PartialKeyPath<ModelType>
+            return self.updatedKeyPaths.contains(partialKeyPath)
+        }
+
         func registerChange(ofType changeType: ModelChangeType, keyPath: PartialKeyPath<ModelType>? = nil) {
-            if changeType == .update, let keyPath = keyPath {
+            if changeType == .update {
                 precondition(keyPath != nil, "Must supply a key path for an update change")
-                self.keyPaths.insert(keyPath)
+                self.keyPaths.insert(keyPath!)
             }
             self.changeType = changeType
         }

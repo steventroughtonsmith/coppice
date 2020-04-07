@@ -133,7 +133,9 @@ class TextLinkFinder: NSObject {
     private func validateAutoLinks(in scratchPad: LinkScratchPad) {
         scratchPad.enumerateUnrejectedPoints { (links) in
             if links.count == 1 {
-                links[0].state = (links[0].age == .new) ? .accepted : .rejected
+                if links[0].state == .unknown {
+                    links[0].state = (links[0].age == .new) ? .accepted : .rejected
+                }
             }
             else if links.filter({ $0.state == .accepted }).count > 0 {
                 links.filter { $0.state != .accepted }.forEach { $0.state = .rejected }
@@ -275,6 +277,7 @@ private class LinkScratchPad {
                 continue
             }
             condensedGroupLinks.append(group)
+            currentGroup = group
         }
         return condensedGroupLinks
     }

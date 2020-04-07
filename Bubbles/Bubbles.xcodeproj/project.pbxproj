@@ -146,6 +146,7 @@
 		999EA6C524362BFF00BF254E /* SearchResultsViewModelTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999EA6C424362BFF00BF254E /* SearchResultsViewModelTypes.swift */; };
 		999EA6C72436384F00BF254E /* SearchResultOutlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999EA6C62436384F00BF254E /* SearchResultOutlineView.swift */; };
 		999EA6CB243B413E00BF254E /* ModelObjects+Searching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999EA6CA243B413E00BF254E /* ModelObjects+Searching.swift */; };
+		999EA6CD243CCCE200BF254E /* XCTestExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999EA6CC243CCCE200BF254E /* XCTestExtensions.swift */; };
 		99A0B853238961BF005FCF25 /* NSColor+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B852238961BF005FCF25 /* NSColor+M3Extensions.swift */; };
 		99A0B855238C2F46005FCF25 /* TextEditorAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B854238C2F46005FCF25 /* TextEditorAttributes.swift */; };
 		99A0B857238D6F74005FCF25 /* NSTextView+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B856238D6F74005FCF25 /* NSTextView+M3Extensions.swift */; };
@@ -388,6 +389,7 @@
 		999EA6C424362BFF00BF254E /* SearchResultsViewModelTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewModelTypes.swift; sourceTree = "<group>"; };
 		999EA6C62436384F00BF254E /* SearchResultOutlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultOutlineView.swift; sourceTree = "<group>"; };
 		999EA6CA243B413E00BF254E /* ModelObjects+Searching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelObjects+Searching.swift"; sourceTree = "<group>"; };
+		999EA6CC243CCCE200BF254E /* XCTestExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestExtensions.swift; sourceTree = "<group>"; };
 		99A0B852238961BF005FCF25 /* NSColor+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+M3Extensions.swift"; sourceTree = "<group>"; };
 		99A0B854238C2F46005FCF25 /* TextEditorAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorAttributes.swift; sourceTree = "<group>"; };
 		99A0B856238D6F74005FCF25 /* NSTextView+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextView+M3Extensions.swift"; sourceTree = "<group>"; };
@@ -1200,6 +1202,7 @@
 			isa = PBXGroup;
 			children = (
 				9923B06A22F45F7E0035D8C6 /* TestObjects.swift */,
+				999EA6CC243CCCE200BF254E /* XCTestExtensions.swift */,
 				9976611B23A3EB61000D1741 /* Functional Tests */,
 				9976611A23A3EB2C000D1741 /* Unit Tests */,
 				997711C8239E9AD900FCC8C7 /* Helpers */,
@@ -1603,6 +1606,7 @@
 				9976A49D2367524D004D573D /* ModelReaderTests.swift in Sources */,
 				99A0B85E238D730E005FCF25 /* TextEditorInspectorTypesTests.swift in Sources */,
 				99A0B85C238D72F0005FCF25 /* TextEditorAttributesTests.swift in Sources */,
+				999EA6CD243CCCE200BF254E /* XCTestExtensions.swift in Sources */,
 				99868F4723995B4F009AC0F7 /* TextLinkFinderTests.swift in Sources */,
 				997711CA239E9AF400FCC8C7 /* MockDocumentWindowViewModel.swift in Sources */,
 				99771192239AA6EB00FCC8C7 /* PageLinkTests.swift in Sources */,

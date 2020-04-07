@@ -35,10 +35,6 @@ struct ModelObjectReference<T: CollectableModelObject> {
     }
 
     mutating func performCleanUp() {
-        guard let value = self.wrappedValue else {
-            return
-        }
-        self.valueCollection?.notifyOfChange(to: value)
         self.modelController = nil
     }
 }

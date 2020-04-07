@@ -194,7 +194,7 @@ class ModelCollectionTests: XCTestCase {
             observer2Expectation.fulfill()
         }
 
-        self.collection.notifyOfChange(to: TestCollectableModelObject())
+        self.collection.notifyOfChange(to: TestCollectableModelObject(), changeType: .update, keyPath: \TestCollectableModelObject.intProperty)
         self.wait(for: [observer1Expectation, observer2Expectation], timeout: 0)
     }
 
@@ -212,7 +212,7 @@ class ModelCollectionTests: XCTestCase {
             observer2Expectation.fulfill()
         }
 
-        self.collection.notifyOfChange(to: object)
+        self.collection.notifyOfChange(to: object, changeType: .update, keyPath: \TestCollectableModelObject.intProperty)
         self.wait(for: [observer1Expectation, observer2Expectation], timeout: 1)
     }
 
@@ -229,7 +229,7 @@ class ModelCollectionTests: XCTestCase {
         }
 
         self.collection.removeObserver(observer1)
-        self.collection.notifyOfChange(to: TestCollectableModelObject())
+        self.collection.notifyOfChange(to: TestCollectableModelObject(), changeType: .update, keyPath: \TestCollectableModelObject.intProperty)
         self.wait(for: [observer1Expectation, observer2Expectation], timeout: 1)
     }
 
