@@ -447,12 +447,12 @@
                                                 <action selector="zoomTo100:" target="-1" id="AQf-12-rdw"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Zoom In" keyEquivalent="+" id="6e5-Ie-zZy">
+                                        <menuItem title="Zoom In" keyEquivalent="&gt;" id="6e5-Ie-zZy">
                                             <connections>
                                                 <action selector="zoomIn:" target="-1" id="tk2-9b-zdY"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Zoom Out" keyEquivalent="-" id="d1g-Mg-kRF">
+                                        <menuItem title="Zoom Out" keyEquivalent="&lt;" id="d1g-Mg-kRF">
                                             <connections>
                                                 <action selector="zoomOut:" target="-1" id="jNi-9E-lbe"/>
                                             </connections>

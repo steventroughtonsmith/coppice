@@ -40,16 +40,23 @@ class CanvasListViewController: NSViewController, SplitViewContainable, NSMenuIt
         self.bottomBarConstraint.constant = GlobalConstants.bottomBarHeight
     }
 
+    var viewAppeared = false
     override func viewDidAppear() {
         super.viewDidAppear()
+        self.viewAppeared = true
         UserDefaults.standard.addObserver(self, forKeyPath: UserDefaultsKeys.canvasListIsCompact.rawValue, options: [], context: nil)
         self.viewModel.startObserving()
     }
 
     override func viewDidDisappear() {
         super.viewDidDisappear()
+        //For some reason viewDidDisappear can be called without viewDidAppear being called, so we need to check here
+        guard self.viewAppeared else {
+            return
+        }
         UserDefaults.standard.removeObserver(self, forKeyPath: UserDefaultsKeys.canvasListIsCompact.rawValue)
         self.viewModel.stopObserving()
+        self.viewAppeared = false
     }
 
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
