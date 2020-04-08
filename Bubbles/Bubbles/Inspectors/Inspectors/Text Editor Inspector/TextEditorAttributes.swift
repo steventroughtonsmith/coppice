@@ -79,9 +79,10 @@ struct TextEditorAttributes: Equatable {
         }
 
         if let alignment = self.alignment {
-            let paragraphStyle = (modifiedAttributes[.paragraphStyle] as? NSMutableParagraphStyle) ?? NSMutableParagraphStyle()
-            paragraphStyle.alignment = alignment
-            modifiedAttributes[.paragraphStyle] = paragraphStyle
+            let paragraphStyle = (modifiedAttributes[.paragraphStyle] as? NSParagraphStyle)
+            let paragraphStyleCopy = (paragraphStyle?.mutableCopy() as? NSMutableParagraphStyle) ?? NSMutableParagraphStyle()
+            paragraphStyleCopy.alignment = alignment
+            modifiedAttributes[.paragraphStyle] = paragraphStyleCopy
         }
 
         if let underlined = self.isUnderlined {
