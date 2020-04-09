@@ -99,7 +99,7 @@ class CanvasEditorViewModel: ViewModel {
     }
 
     private func addPages(_ canvasPages: Set<CanvasPage>) {
-        let newPages = canvasPages.map { LayoutEnginePage(id: $0.id.uuid, contentFrame: $0.frame) }
+        let newPages = canvasPages.map { LayoutEnginePage(id: $0.id.uuid, contentFrame: $0.frame, maintainAspectRatio: $0.maintainAspectRatio) }
 
         let newPagesByID = newPages.indexed(by: \.id)
 

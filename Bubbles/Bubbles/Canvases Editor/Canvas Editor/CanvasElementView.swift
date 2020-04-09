@@ -187,7 +187,10 @@ class CanvasElementView: NSView  {
             guard resizeComponent != .titleBar && resizeComponent != .content else {
                 continue
             }
-            self.resizeRects[resizeComponent] = layoutPage.rectInLayoutFrame(for: resizeComponent)
+            let resizeRect = layoutPage.rectInLayoutFrame(for: resizeComponent)
+            if resizeRect != .zero {
+                self.resizeRects[resizeComponent] = resizeRect
+            }
         }
 
         self.debugView.rects = [

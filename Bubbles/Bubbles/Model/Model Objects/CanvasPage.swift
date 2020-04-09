@@ -31,6 +31,10 @@ final class CanvasPage: NSObject, CollectableModelObject {
         return self.page?.title ?? ""
     }
 
+    var maintainAspectRatio: Bool {
+        return self.page?.content.maintainAspectRatio ?? false
+    }
+
     
     //MARK: - Relationships
     @ModelObjectReference @objc dynamic var page: Page? {

@@ -52,6 +52,10 @@ class PageEditorViewController: NSViewController {
     private lazy var pageInspectorViewController: PageInspectorViewController = {
         return PageInspectorViewController(viewModel: self.viewModel.pageInspectorViewModel)
     }()
+
+    var isInCanvas: Bool {
+        return (self.parentEditor is CanvasPageViewController)
+    }
 }
 
 

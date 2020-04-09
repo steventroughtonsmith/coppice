@@ -72,6 +72,7 @@ protocol PageContent: class {
     var contentSize: CGSize? { get }
     var page: Page? { get set }
     var modelFile: ModelFile { get }
+    var maintainAspectRatio: Bool { get }
 
     func firstRangeOf(_ searchTerm: String) -> NSRange
 

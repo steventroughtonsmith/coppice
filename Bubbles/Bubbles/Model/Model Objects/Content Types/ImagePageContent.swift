@@ -18,9 +18,15 @@ class ImagePageContent: NSObject, PageContent {
             }
         }
     }
+
     var contentSize: CGSize? {
         return self.image?.size
     }
+
+    var maintainAspectRatio: Bool {
+        return true
+    }
+
     @objc dynamic var imageDescription: String?
     weak var page: Page?
 

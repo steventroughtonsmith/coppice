@@ -39,9 +39,11 @@ class LayoutEnginePage: Equatable {
     }
     init(id: UUID,
          contentFrame: CGRect,
+         maintainAspectRatio: Bool = false,
          minimumContentSize: CGSize = GlobalConstants.minimumPageSize) {
         self.id = id
         self.contentFrame = contentFrame
+        self.maintainAspectRatio = maintainAspectRatio
         self.minimumContentSize = minimumContentSize
         self.validateSize()
     }
@@ -57,6 +59,8 @@ class LayoutEnginePage: Equatable {
             self.children.forEach { $0.recalculateEdgeFromParent() }
         }
     }
+
+    let maintainAspectRatio: Bool
 
 
     //MARK: - Relationships
@@ -274,11 +278,17 @@ class LayoutEnginePage: Equatable {
             height = configuration.page.cornerResizeHandleSize
         }
         else if (component == .resizeRight || component == .resizeLeft) {
+            guard self.maintainAspectRatio == false else {
+                return .zero
+            }
             y = configuration.page.cornerResizeHandleSize
             width = configuration.page.edgeResizeHandleSize
             height = layoutSize.height - (2 * configuration.page.cornerResizeHandleSize)
         }
         else if (component == .resizeTop || component == .resizeBottom) {
+            guard self.maintainAspectRatio == false else {
+                return .zero
+            }
             x = configuration.page.cornerResizeHandleSize
             width = layoutSize.width - (2 * configuration.page.cornerResizeHandleSize)
             height = configuration.page.edgeResizeHandleSize

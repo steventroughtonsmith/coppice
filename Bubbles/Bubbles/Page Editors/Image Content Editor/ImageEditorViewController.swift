@@ -27,6 +27,17 @@ class ImageEditorViewController: NSViewController {
     private lazy var imageEditorInspectorViewController: ImageEditorInspectorViewController = {
         return ImageEditorInspectorViewController(viewModel: ImageEditorInspectorViewModel(imageContent: self.viewModel.imageContent, modelController: self.viewModel.modelController))
     }()
+
+    override func viewWillAppear() {
+        super.viewWillAppear()
+        print("view will appear in parent: \(self.isInCanvas)")
+
+        self.imageView.imageScaling = self.isInCanvas ? .scaleProportionallyUpOrDown : .scaleProportionallyDown
+    }
+
+    var isInCanvas: Bool {
+        return (self.parentEditor as? PageEditorViewController)?.isInCanvas ?? false
+    }
 }
 
 

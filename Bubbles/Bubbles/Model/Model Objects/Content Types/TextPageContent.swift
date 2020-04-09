@@ -26,6 +26,9 @@ class TextPageContent: NSObject, PageContent {
         contentSize.height = max(contentSize.height.rounded(.up) + insets.top + insets.bottom + 10, Page.standardSize.height)
         return contentSize
     }
+    var maintainAspectRatio: Bool {
+        return false
+    }
     weak var page: Page?
 
     init(data: Data? = nil) {
