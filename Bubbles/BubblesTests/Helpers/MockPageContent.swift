@@ -10,6 +10,8 @@ import Foundation
 @testable import Bubbles
 
 class MockPageContent: PageContent {
+    var maintainAspectRatio: Bool = false
+
     var contentType: PageContentType {
         return .text
     }

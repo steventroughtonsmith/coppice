@@ -30,7 +30,6 @@ class ImageEditorViewController: NSViewController {
 
     override func viewWillAppear() {
         super.viewWillAppear()
-        print("view will appear in parent: \(self.isInCanvas)")
 
         self.imageView.imageScaling = self.isInCanvas ? .scaleProportionallyUpOrDown : .scaleProportionallyDown
     }

@@ -473,4 +473,74 @@ class ModelCollectionTests: XCTestCase {
         XCTAssertTrue(relationship.contains(o1))
         XCTAssertTrue(relationship.contains(o3))
     }
+
+
+    //MARK: - ModelCollection.Change
+
+    //MARK: - Change.registerChange(ofType:, keyPath:)
+    func test_change_registerChange_updatesChangeType() {
+        let modelObject = TestCollectableModelObject()
+        let change = ModelCollection<TestCollectableModelObject>.Change(object: modelObject)
+
+        change.registerChange(ofType: .insert, keyPath: nil)
+        XCTAssertEqual(change.changeType, .insert)
+        change.registerChange(ofType: .update, keyPath: \TestCollectableModelObject.intProperty)
+        XCTAssertEqual(change.changeType, .update)
+        change.registerChange(ofType: .delete, keyPath: nil)
+        XCTAssertEqual(change.changeType, .delete)
+    }
+
+    func test_change_registerChange_insertsKeyPathIfChangeTypeIsUpdate() {
+        let modelObject = TestCollectableModelObject()
+        let change = ModelCollection<TestCollectableModelObject>.Change(object: modelObject)
+        change.registerChange(ofType: .update, keyPath: \TestCollectableModelObject.intProperty)
+
+        XCTAssertTrue(change.updatedKeyPaths.contains(\TestCollectableModelObject.intProperty))
+    }
+
+    func test_change_registerChange_doesntInsertKeyPathIfChangeTypeIsNotUpdate() {
+        let modelObject = TestCollectableModelObject()
+        let change = ModelCollection<TestCollectableModelObject>.Change(object: modelObject)
+        change.registerChange(ofType: .insert, keyPath: \TestCollectableModelObject.intProperty)
+
+        XCTAssertFalse(change.updatedKeyPaths.contains(\TestCollectableModelObject.intProperty))
+    }
+
+    //MARK: - Change.updatedKeyPaths
+    func test_change_updatedKeyPaths_returnsKeyPathsIfModelTypeIsUpdate() {
+        let modelObject = TestCollectableModelObject()
+        let change = ModelCollection<TestCollectableModelObject>.Change(object: modelObject)
+        change.registerChange(ofType: .update, keyPath: \TestCollectableModelObject.intProperty)
+        change.registerChange(ofType: .update, keyPath: \TestCollectableModelObject.stringProperty)
+
+        XCTAssertTrue(change.updatedKeyPaths.contains(\TestCollectableModelObject.intProperty))
+        XCTAssertTrue(change.updatedKeyPaths.contains(\TestCollectableModelObject.stringProperty))
+    }
+
+    func test_change_updatedKeyPaths_returnsEmptySetIfModelTypeIsNotUpdatedEvenIfKeyPathsAreSet() {
+        let modelObject = TestCollectableModelObject()
+        let change = ModelCollection<TestCollectableModelObject>.Change(object: modelObject)
+        change.registerChange(ofType: .update, keyPath: \TestCollectableModelObject.intProperty)
+        change.registerChange(ofType: .update, keyPath: \TestCollectableModelObject.stringProperty)
+        change.registerChange(ofType: .insert)
+
+        XCTAssertEqual(change.updatedKeyPaths.count, 0)
+    }
+
+    //MARK: - Change.didUpdate(_:)
+    func test_change_didUpdateKeyPath_returnsTrueIfKeyPathsContainSuppliedKeyPath() {
+        let modelObject = TestCollectableModelObject()
+        let change = ModelCollection<TestCollectableModelObject>.Change(object: modelObject)
+        change.registerChange(ofType: .update, keyPath: \TestCollectableModelObject.intProperty)
+
+        XCTAssertTrue(change.didUpdate(\.intProperty))
+    }
+
+    func test_change_didUpdateKeyPath_returnsFalseIfKeyPathsDoesntContainSuppliedKeyPath() {
+        let modelObject = TestCollectableModelObject()
+        let change = ModelCollection<TestCollectableModelObject>.Change(object: modelObject)
+        change.registerChange(ofType: .update, keyPath: \TestCollectableModelObject.intProperty)
+
+        XCTAssertFalse(change.didUpdate(\.stringProperty))
+    }
 }

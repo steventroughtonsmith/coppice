@@ -147,6 +147,8 @@
 		999EA6C72436384F00BF254E /* SearchResultOutlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999EA6C62436384F00BF254E /* SearchResultOutlineView.swift */; };
 		999EA6CB243B413E00BF254E /* ModelObjects+Searching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999EA6CA243B413E00BF254E /* ModelObjects+Searching.swift */; };
 		999EA6CD243CCCE200BF254E /* XCTestExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999EA6CC243CCCE200BF254E /* XCTestExtensions.swift */; };
+		999EA6CF243F6D9F00BF254E /* ModelSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999EA6CE243F6D9F00BF254E /* ModelSettingsTests.swift */; };
+		999EA6D1243F7B1400BF254E /* ModelControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999EA6D0243F7B1400BF254E /* ModelControllerTests.swift */; };
 		99A0B853238961BF005FCF25 /* NSColor+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B852238961BF005FCF25 /* NSColor+M3Extensions.swift */; };
 		99A0B855238C2F46005FCF25 /* TextEditorAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B854238C2F46005FCF25 /* TextEditorAttributes.swift */; };
 		99A0B857238D6F74005FCF25 /* NSTextView+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B856238D6F74005FCF25 /* NSTextView+M3Extensions.swift */; };
@@ -390,6 +392,8 @@
 		999EA6C62436384F00BF254E /* SearchResultOutlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultOutlineView.swift; sourceTree = "<group>"; };
 		999EA6CA243B413E00BF254E /* ModelObjects+Searching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelObjects+Searching.swift"; sourceTree = "<group>"; };
 		999EA6CC243CCCE200BF254E /* XCTestExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestExtensions.swift; sourceTree = "<group>"; };
+		999EA6CE243F6D9F00BF254E /* ModelSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelSettingsTests.swift; sourceTree = "<group>"; };
+		999EA6D0243F7B1400BF254E /* ModelControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelControllerTests.swift; sourceTree = "<group>"; };
 		99A0B852238961BF005FCF25 /* NSColor+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+M3Extensions.swift"; sourceTree = "<group>"; };
 		99A0B854238C2F46005FCF25 /* TextEditorAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorAttributes.swift; sourceTree = "<group>"; };
 		99A0B856238D6F74005FCF25 /* NSTextView+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextView+M3Extensions.swift"; sourceTree = "<group>"; };
@@ -767,6 +771,8 @@
 				99DEF28B22F33A2A0020A7CE /* ModelObjectTests.swift */,
 				99DEF29222F33ABB0020A7CE /* ModelIDTests.swift */,
 				9923B07322F485480035D8C6 /* ModelCollectionTests.swift */,
+				999EA6CE243F6D9F00BF254E /* ModelSettingsTests.swift */,
+				999EA6D0243F7B1400BF254E /* ModelControllerTests.swift */,
 			);
 			path = "Model Infrastructure";
 			sourceTree = "<group>";
@@ -1600,6 +1606,7 @@
 				9958107C230D75AA00D996C4 /* TextEditorViewModelTests.swift in Sources */,
 				990D243F23560688001B1FD9 /* CanvasLayoutEngineTests.swift in Sources */,
 				9923B07422F485480035D8C6 /* ModelCollectionTests.swift in Sources */,
+				999EA6D1243F7B1400BF254E /* ModelControllerTests.swift in Sources */,
 				99C88EE22406BDEE00339880 /* LayoutEngineArrowTests.swift in Sources */,
 				99DEF28C22F33A2A0020A7CE /* ModelObjectTests.swift in Sources */,
 				993D2C0424164D72002E5BAC /* FolderTests.swift in Sources */,
@@ -1617,6 +1624,7 @@
 				99581076230C40FD00D996C4 /* PageSelectorViewModelTests.swift in Sources */,
 				9976A49923674448004D573D /* CanvasTests.swift in Sources */,
 				99AD88782376FCF0000453E1 /* PageContentTests.swift in Sources */,
+				999EA6CF243F6D9F00BF254E /* ModelSettingsTests.swift in Sources */,
 				99D170E6233D0542004EBD70 /* CanvasEditorViewModelTests.swift in Sources */,
 				9923B06B22F45F7E0035D8C6 /* TestObjects.swift in Sources */,
 				9976A49323674254004D573D /* ModelWriterTests.swift in Sources */,

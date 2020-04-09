@@ -27,10 +27,6 @@ class ModelSettings {
         self.settings[setting] = value
     }
 
-    func set(_ modelID: ModelID?, for setting: Setting) {
-        self.settings[setting] = modelID?.stringRepresentation
-    }
-
 
     //MARK: - Typed Setting Accessors
     func string(for setting: Setting) -> String? {
@@ -50,6 +46,10 @@ class ModelSettings {
             return nil
         }
         return ModelID(string: value)
+    }
+
+    func set(_ modelID: ModelID?, for setting: Setting) {
+        self.settings[setting] = modelID?.stringRepresentation
     }
 
 
