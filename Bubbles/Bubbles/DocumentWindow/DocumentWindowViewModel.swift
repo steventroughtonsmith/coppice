@@ -34,6 +34,12 @@ class DocumentWindowViewModel: NSObject {
         //Force the root folder to load immediately so we don't end up with observation loops later
         _ = self.rootFolder
         self.setupSelectionUndo()
+
+        for page in self.pageCollection.all {
+            if page.containingFolder == nil {
+                self.rootFolder.insert([page])
+            }
+        }
     }
 
 

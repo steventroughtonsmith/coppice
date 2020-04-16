@@ -6,10 +6,14 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import Foundation
+import AppKit
 @testable import Bubbles
 
-class MockPageContent: PageContent {
+class MockPageContent: NSObject, PageContent, NSFilePromiseProviderDelegate {
+    var filePromiseProvider: ExtendableFilePromiseProvider {
+        return ExtendableFilePromiseProvider(fileType: (kUTTypeText as String), delegate: self)
+    }
+
     var maintainAspectRatio: Bool = false
 
     var contentType: PageContentType {
@@ -24,9 +28,18 @@ class MockPageContent: PageContent {
         return ModelFile(type: self.contentType.rawValue, filename: nil, data: nil, metadata: nil)
     }
 
+    
 
-    var isMatchReturn = false
-    func isMatchForSearch(_ searchTerm: String?) -> Bool {
-        return self.isMatchReturn
+    var searchRange = NSRange(location: NSNotFound, length: 0)
+    func firstRangeOf(_ searchTerm: String) -> NSRange {
+        self.searchRange
+    }
+
+    func filePromiseProvider(_ filePromiseProvider: NSFilePromiseProvider, fileNameForType fileType: String) -> String {
+        return ""
+    }
+
+    func filePromiseProvider(_ filePromiseProvider: NSFilePromiseProvider, writePromiseTo url: URL, completionHandler: @escaping (Error?) -> Void) {
+        completionHandler(nil)
     }
 }

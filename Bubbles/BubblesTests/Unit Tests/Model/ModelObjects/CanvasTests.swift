@@ -11,6 +11,7 @@ import XCTest
 
 class CanvasTests: XCTestCase {
 
+    //MARK: - .plistRepresentation
     func test_plistRepresentation_containsID() throws {
         let canvas = Canvas()
         let plist = canvas.plistRepresentation
@@ -50,6 +51,14 @@ class CanvasTests: XCTestCase {
         XCTAssertEqual(sortIndex, 4)
     }
 
+    func test_plistRepresentation_containsTheme() throws {
+        let canvas = Canvas()
+        canvas.theme = .dark
+        let plist = canvas.plistRepresentation
+        let theme = try XCTUnwrap(plist["theme"] as? String)
+        XCTAssertEqual(theme, Canvas.Theme.dark.rawValue)
+    }
+
     func test_plistRepresentation_containsViewPortIfSet() throws {
         let canvas = Canvas()
         canvas.viewPort = CGRect(x: 1, y: 2, width: 30, height: 40)
@@ -65,8 +74,60 @@ class CanvasTests: XCTestCase {
         XCTAssertNil(plist["viewPort"])
     }
 
+    func test_plistRepresentation_containsThumbnailIfSet() throws {
+        let canvas = Canvas()
+        canvas.thumbnail = NSImage(named: "NSAddTemplate")!
+        let plist = canvas.plistRepresentation
+        let thumbnail = try XCTUnwrap(plist["thumbnail"] as? ModelFile)
+        XCTAssertEqual(thumbnail.type, "thumbnail")
+        XCTAssertEqual(thumbnail.filename, "\(canvas.id.uuid.uuidString)-thumbnail.png")
+        XCTAssertNotNil(thumbnail.data)
+    }
 
-    //MARK: - Update
+    func test_plistRepresentation_doesntContainThumbnailifNotSet() {
+        let canvas = Canvas()
+        canvas.thumbnail = nil
+        let plist = canvas.plistRepresentation
+        XCTAssertNil(plist["thumbnail"])
+    }
+
+    func test_plistRepresentation_containsClosedPageHierarchies() throws {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+        let canvas = modelController.collection(for: Canvas.self).newObject()
+        let page = modelController.collection(for: Page.self).newObject()
+        let canvasPage1 = modelController.collection(for: CanvasPage.self).newObject() {
+            $0.page = page
+        }
+        let canvasPage2 = modelController.collection(for: CanvasPage.self).newObject() {
+            $0.page = page
+        }
+        let canvasPage3 = modelController.collection(for: CanvasPage.self).newObject() {
+            $0.page = page
+        }
+        var pageHierarchies = [ModelID: [ModelID: PageHierarchy]]()
+        let canvasPageID1 = CanvasPage.modelID(with: UUID())
+        let canvasPageID2 = CanvasPage.modelID(with: UUID())
+        let pageID1 = Page.modelID(with: UUID())
+        let pageID2 = Page.modelID(with: UUID())
+        let pageID3 = Page.modelID(with: UUID())
+        pageHierarchies[canvasPageID1] = [pageID1: PageHierarchy(canvasPage: canvasPage1)!]
+        pageHierarchies[canvasPageID2] = [pageID2: PageHierarchy(canvasPage: canvasPage2)!,
+                                      pageID3: PageHierarchy(canvasPage: canvasPage3)!]
+
+        canvas.closedPageHierarchies = pageHierarchies
+
+        let plist = canvas.plistRepresentation
+        let hierarchies = try XCTUnwrap(plist["closedPageHierarchies"] as? [String : [String : Any ]])
+        let firstHierarchy = try XCTUnwrap(hierarchies[canvasPageID1.stringRepresentation])
+        let secondHierarchy = try XCTUnwrap(hierarchies[canvasPageID2.stringRepresentation])
+
+        XCTAssertNotNil(firstHierarchy[pageID1.stringRepresentation])
+        XCTAssertNotNil(secondHierarchy[pageID2.stringRepresentation])
+        XCTAssertNotNil(secondHierarchy[pageID3.stringRepresentation])
+    }
+
+
+    //MARK: - update(fromPlistRepresentation:)
     func test_updateFromPlistRepresentation_doesntUpdateIfIDsDontMatch() {
         let canvas = Canvas()
         let plist: [String: Any] = [
@@ -206,6 +267,49 @@ class CanvasTests: XCTestCase {
         }
     }
 
+    func test_updateFromPlistRepresentation_updatesTheme() {
+        let canvas = Canvas()
+        let plist: [String: Any] = [
+            "id": canvas.id.stringRepresentation,
+            "title": "Hello Bar",
+            "dateCreated": Date(timeIntervalSinceReferenceDate: 29),
+            "dateModified": Date(timeIntervalSinceReferenceDate: 1452),
+            "sortIndex": 1,
+            "theme": "dark",
+        ]
+        XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: plist))
+        XCTAssertEqual(canvas.theme, .dark)
+    }
+
+    func test_updateFromPlistRepresentation_throwsIfThemeMissing() {
+        let canvas = Canvas()
+        let plist: [String: Any] = [
+            "id": canvas.id.stringRepresentation,
+            "title": "Hello Bar",
+            "dateCreated": Date(timeIntervalSinceReferenceDate: 29),
+            "dateModified": Date(timeIntervalSinceReferenceDate: 1452),
+            "sortIndex": 1,
+        ]
+        XCTAssertThrowsError(try canvas.update(fromPlistRepresentation: plist), "") {
+            XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .attributeNotFound("theme"))
+        }
+    }
+
+    func test_updateFromPlistRepresentation_throwsIfThemeDoesntMatch() {
+        let canvas = Canvas()
+        let plist: [String: Any] = [
+            "id": canvas.id.stringRepresentation,
+            "title": "Hello Bar",
+            "dateCreated": Date(timeIntervalSinceReferenceDate: 29),
+            "dateModified": Date(timeIntervalSinceReferenceDate: 1452),
+            "sortIndex": 1,
+            "theme": "possum",
+        ]
+        XCTAssertThrowsError(try canvas.update(fromPlistRepresentation: plist), "") {
+            XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .attributeNotFound("theme"))
+        }
+    }
+
     func test_updateFromPlistRepresentation_updatesViewPortIfInPlist() {
         let canvas = Canvas()
         let plist: [String: Any] = [
@@ -240,6 +344,95 @@ class CanvasTests: XCTestCase {
         XCTAssertNil(canvas.viewPort)
     }
 
+    func test_updateFromPlistRepresentation_updatesThumbnailIfInPlist() {
+        let canvas = Canvas()
+        canvas.thumbnail = NSImage(named: "NSRemoveTemplate")!
+
+        let expectedImageData = NSImage(named: "NSAddTemplate")!.pngData()!
+        let plist: [String: Any] = [
+            "id": canvas.id.stringRepresentation,
+            "title": "Hello Bar",
+            "dateCreated": Date(timeIntervalSinceReferenceDate: 32),
+            "dateModified": Date(timeIntervalSinceReferenceDate: 1455),
+            "sortIndex": 1,
+            "theme": "auto",
+            "thumbnail": ModelFile(type: "thumbnail", filename: nil, data: expectedImageData, metadata: [:])
+        ]
+
+        XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: plist))
+
+        XCTAssertEqual(canvas.thumbnail?.pngData(), expectedImageData)
+    }
+
+    func test_updateFromPlistRepresentation_setsThumbnailToNilIfNotInPlist() {
+        let canvas = Canvas()
+        canvas.thumbnail = NSImage(named: "NSRemoveTemplate")!
+        let plist: [String: Any] = [
+            "id": canvas.id.stringRepresentation,
+            "title": "Hello Bar",
+            "dateCreated": Date(timeIntervalSinceReferenceDate: 32),
+            "dateModified": Date(timeIntervalSinceReferenceDate: 1455),
+            "sortIndex": 1,
+            "theme": "auto",
+        ]
+
+        XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: plist))
+
+        XCTAssertNil(canvas.thumbnail)
+    }
+
+    func test_updateFromPlistRepresentation_updatesClosedPageHierarchies() throws {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+        let canvas = modelController.collection(for: Canvas.self).newObject()
+        let page = modelController.collection(for: Page.self).newObject()
+        let canvasPage = modelController.collection(for: CanvasPage.self).newObject() { $0.page = page }
+
+        let canvasPageID = CanvasPage.modelID(with: UUID())
+        let pageID = Page.modelID(with: UUID())
+        let hierarchyPlist = PageHierarchy(canvasPage: canvasPage)!.plistRepresentation
+        let hierarchyDict = [canvasPageID.stringRepresentation: [pageID.stringRepresentation: hierarchyPlist]]
+
+        let plist: [String: Any] = [
+            "id": canvas.id.stringRepresentation,
+            "title": "Hello Bar",
+            "dateCreated": Date(timeIntervalSinceReferenceDate: 32),
+            "dateModified": Date(timeIntervalSinceReferenceDate: 1455),
+            "sortIndex": 1,
+            "theme": "auto",
+            "closedPageHierarchies": hierarchyDict
+        ]
+
+        XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: plist))
+
+        let hierarchies = try XCTUnwrap(canvas.closedPageHierarchies[canvasPageID])
+        XCTAssertNotNil(hierarchies[pageID])
+    }
+
+    func test_updateFromPlistRepresentation_setsClosedPageHierarchiesToEmptySetIfNotInPlist() {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+        let canvas = modelController.collection(for: Canvas.self).newObject()
+        let page = modelController.collection(for: Page.self).newObject()
+        let canvasPage = modelController.collection(for: CanvasPage.self).newObject() { $0.page = page }
+
+        let canvasPageID = CanvasPage.modelID(with: UUID())
+        let pageID = Page.modelID(with: UUID())
+        let pageHierarchy = PageHierarchy(canvasPage: canvasPage)!
+
+        canvas.closedPageHierarchies = [canvasPageID: [pageID: pageHierarchy]]
+
+        let plist: [String: Any] = [
+            "id": canvas.id.stringRepresentation,
+            "title": "Hello Bar",
+            "dateCreated": Date(timeIntervalSinceReferenceDate: 32),
+            "dateModified": Date(timeIntervalSinceReferenceDate: 1455),
+            "sortIndex": 1,
+            "theme": "auto",
+        ]
+
+        XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: plist))
+        XCTAssertEqual(canvas.closedPageHierarchies.count, 0)
+    }
+
 
     //MARK: - objectWasInserted()
     func test_objectWasInserted_updatesSortIndexAfterInsertingInCollection() {
@@ -251,8 +444,8 @@ class CanvasTests: XCTestCase {
     }
 
 
-    //MARK: - add(_:linkedFrom:)
-    func test_addPageLinkedFrom_createsNewCanvasPageWithSuppliedPageAndSetsParentAsSource() throws {
+    //MARK: - open(_:linkedFrom:)
+    func test_openPageLinkedFrom_createsNewCanvasPageWithSuppliedPageAndSetsParentAsSource() throws {
         let modelController = BubblesModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -265,7 +458,7 @@ class CanvasTests: XCTestCase {
         XCTAssertTrue(modelController.collection(for: CanvasPage.self).all.contains(newCanvasPage))
     }
 
-    func test_addPageLinkedFrom_addsNewPageToRightIfNoOtherPageThere() throws {
+    func test_openPageLinkedFrom_addsNewPageToRightIfNoOtherPageThere() throws {
         let modelController = BubblesModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -279,7 +472,7 @@ class CanvasTests: XCTestCase {
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 30 + GlobalConstants.linkedPageOffset, y: 30, width: 20, height: 20))
     }
 
-    func test_addPageLinkedFrom_addsNewPageToLeftIfPageOnRightAndNoOtherPageThere() throws {
+    func test_openPageLinkedFrom_addsNewPageToLeftIfPageOnRightAndNoOtherPageThere() throws {
         let modelController = BubblesModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -295,7 +488,7 @@ class CanvasTests: XCTestCase {
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 10 - GlobalConstants.linkedPageOffset - 20, y: 30, width: 20, height: 20))
     }
 
-    func test_addPageLinkedFrom_addsNewPageToBottomIfPagesOnLeftAndRightAndNoOtherPageThere() throws {
+    func test_openPageLinkedFrom_addsNewPageToBottomIfPagesOnLeftAndRightAndNoOtherPageThere() throws {
         let modelController = BubblesModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -318,7 +511,7 @@ class CanvasTests: XCTestCase {
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 10, y: 50 + GlobalConstants.linkedPageOffset, width: 20, height: 20))
     }
 
-    func test_addPageLinkedFrom_addsNewPageToTopIfPagesOnLeftRightAndBottomAndNoOtherPageThere() throws {
+    func test_openPageLinkedFrom_addsNewPageToTopIfPagesOnLeftRightAndBottomAndNoOtherPageThere() throws {
         let modelController = BubblesModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -345,7 +538,7 @@ class CanvasTests: XCTestCase {
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 10, y: 30 - GlobalConstants.linkedPageOffset - 20, width: 20, height: 20))
     }
 
-    func test_addPageLinkedFrom_addsNewPageToRightIfPagesOnAllSides() throws {
+    func test_openPageLinkedFrom_addsNewPageToRightIfPagesOnAllSides() throws {
         let modelController = BubblesModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -376,7 +569,7 @@ class CanvasTests: XCTestCase {
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 30 + GlobalConstants.linkedPageOffset, y: 30, width: 20, height: 20))
     }
 
-    func test_addPageLinkedFrom_addsNewPageToLeftIfParentOfSourceSetAndOnRightAndNoOtherPageExistsThere() throws {
+    func test_openPageLinkedFrom_addsNewPageToLeftIfParentOfSourceSetAndOnRightAndNoOtherPageExistsThere() throws {
         let modelController = BubblesModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -395,7 +588,7 @@ class CanvasTests: XCTestCase {
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 10 + GlobalConstants.linkedPageOffset + 20, y: 30, width: 20, height: 20))
     }
 
-    func test_addPageLinkedFrom_addsNewPageToTopIfParentOfSourceSetAndOnBottomAndNoOtherPageExistsThere() throws {
+    func test_openPageLinkedFrom_addsNewPageToTopIfParentOfSourceSetAndOnBottomAndNoOtherPageExistsThere() throws {
         let modelController = BubblesModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -414,7 +607,7 @@ class CanvasTests: XCTestCase {
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 10, y: 30 - GlobalConstants.linkedPageOffset - 20, width: 20, height: 20))
     }
 
-    func test_addPageLinkedFrom_addsNewPageToBottomIfParentOfSourceSetAndOnTopAndNoOtherPageExistsThere() throws {
+    func test_openPageLinkedFrom_addsNewPageToBottomIfParentOfSourceSetAndOnTopAndNoOtherPageExistsThere() throws {
         let modelController = BubblesModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -433,7 +626,7 @@ class CanvasTests: XCTestCase {
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 10, y: 50 + GlobalConstants.linkedPageOffset, width: 20, height: 20))
     }
 
-    func test_addPageLinkedFrom_ifChildAlreadyExistsOnRightAddsAbove() throws {
+    func test_openPageLinkedFrom_ifChildAlreadyExistsOnRightAddsAbove() throws {
         let modelController = BubblesModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -453,7 +646,7 @@ class CanvasTests: XCTestCase {
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 90, y: 30 - GlobalConstants.linkedPageOffset - 20, width: 20, height: 20))
     }
 
-    func test_addPageLinkedFrom_ifChildAlreadyExistsOnTopRightAddsToBottomRight() throws {
+    func test_openPageLinkedFrom_ifChildAlreadyExistsOnTopRightAddsToBottomRight() throws {
         let modelController = BubblesModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -479,7 +672,7 @@ class CanvasTests: XCTestCase {
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 90, y: 50 + GlobalConstants.linkedPageOffset, width: 20, height: 20))
     }
 
-    func test_addPageLinkedFrom_ifChildAlreadyExistsOnBottomRightAddsToTopRight() throws {
+    func test_openPageLinkedFrom_ifChildAlreadyExistsOnBottomRightAddsToTopRight() throws {
         let modelController = BubblesModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -505,7 +698,7 @@ class CanvasTests: XCTestCase {
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 90, y: 20 - GlobalConstants.linkedPageOffset - 20, width: 20, height: 20))
     }
 
-    func test_addPageLinkedFrom_ifChildAlreadyExistsOnLeftAddsAbove() throws {
+    func test_openPageLinkedFrom_ifChildAlreadyExistsOnLeftAddsAbove() throws {
         let modelController = BubblesModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -525,7 +718,7 @@ class CanvasTests: XCTestCase {
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: -110, y: 30 - GlobalConstants.linkedPageOffset - 20, width: 20, height: 20))
     }
 
-    func test_addPageLinkedFrom_ifChildAlreadyExistsOnTopLeftAddsToBottomLeft() throws {
+    func test_openPageLinkedFrom_ifChildAlreadyExistsOnTopLeftAddsToBottomLeft() throws {
         let modelController = BubblesModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -551,7 +744,7 @@ class CanvasTests: XCTestCase {
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: -110, y: 50 + GlobalConstants.linkedPageOffset, width: 20, height: 20))
     }
 
-    func test_addPageLinkedFrom_ifChildAlreadyExistsOnBottomLeftAddsToTopLeft() throws {
+    func test_openPageLinkedFrom_ifChildAlreadyExistsOnBottomLeftAddsToTopLeft() throws {
         let modelController = BubblesModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -577,7 +770,7 @@ class CanvasTests: XCTestCase {
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: -110, y: 20 - GlobalConstants.linkedPageOffset - 20, width: 20, height: 20))
     }
 
-    func test_addPageLinkedFrom_ifChildAlreadyExistsOnTopAddsToRight() throws {
+    func test_openPageLinkedFrom_ifChildAlreadyExistsOnTopAddsToRight() throws {
         let modelController = BubblesModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -597,7 +790,7 @@ class CanvasTests: XCTestCase {
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 10 + GlobalConstants.linkedPageOffset + 20, y: -90, width: 20, height: 20))
     }
 
-    func test_addPageLinkedFrom_ifChildAlreadyExistsOnTopLeftAddsToTopRight() throws {
+    func test_openPageLinkedFrom_ifChildAlreadyExistsOnTopLeftAddsToTopRight() throws {
         let modelController = BubblesModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -623,7 +816,7 @@ class CanvasTests: XCTestCase {
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 10 + GlobalConstants.linkedPageOffset + 20, y: -90, width: 20, height: 20))
     }
 
-    func test_addPageLinkedFrom_ifChildAlreadyExistsOnTopRightAddsToTopLeft() throws {
+    func test_openPageLinkedFrom_ifChildAlreadyExistsOnTopRightAddsToTopLeft() throws {
         let modelController = BubblesModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -649,7 +842,7 @@ class CanvasTests: XCTestCase {
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 20 - GlobalConstants.linkedPageOffset - 20, y: -90, width: 20, height: 20))
     }
 
-    func test_addPageLinkedFrom_ifChildAlreadyExistsOnBottomAddsToRight() throws {
+    func test_openPageLinkedFrom_ifChildAlreadyExistsOnBottomAddsToRight() throws {
         let modelController = BubblesModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -669,7 +862,7 @@ class CanvasTests: XCTestCase {
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 10 + GlobalConstants.linkedPageOffset + 20, y: 110, width: 20, height: 20))
     }
 
-    func test_addPageLinkedFrom_ifChildAlreadyExistsOnBottomLeftAddsToBottomRight() throws {
+    func test_openPageLinkedFrom_ifChildAlreadyExistsOnBottomLeftAddsToBottomRight() throws {
         let modelController = BubblesModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -695,7 +888,7 @@ class CanvasTests: XCTestCase {
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 10 + GlobalConstants.linkedPageOffset + 20, y: 110, width: 20, height: 20))
     }
 
-    func test_addPageLinkedFrom_ifChildAlreadyExistsOnBottomRightAddsToBottomLeft() throws {
+    func test_openPageLinkedFrom_ifChildAlreadyExistsOnBottomRightAddsToBottomLeft() throws {
         let modelController = BubblesModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -719,6 +912,274 @@ class CanvasTests: XCTestCase {
 
         let newCanvasPage = try XCTUnwrap(canvas.open(page, linkedFrom: parentPage).first)
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 20 - GlobalConstants.linkedPageOffset - 20, y: 110, width: 20, height: 20))
+    }
+
+    func test_openPageLinkedFrom_openingClosedHierarchyCreatesCanvasPageUsingIDPageAndFrameFromHierarchy() throws {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+        let canvas = Canvas.create(in: modelController)
+        let parentPage = CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
+            $0.canvas = canvas
+        }
+        let page = Page.create(in: modelController)
+
+        let canvasPageID = CanvasPage.modelID(with: UUID())
+        let hierarchy = PageHierarchy(id: canvasPageID, pageID: page.id, frame: CGRect(x: 100, y: 20, width: 35, height: 42), children: [])
+
+        canvas.closedPageHierarchies = [parentPage.id: [page.id: hierarchy]]
+
+        let newCanvasPage = try XCTUnwrap(canvas.open(page, linkedFrom: parentPage).first)
+        XCTAssertEqual(newCanvasPage.id, canvasPageID)
+        XCTAssertEqual(newCanvasPage.page, page)
+        XCTAssertEqual(newCanvasPage.frame, CGRect(x: 100, y: 20, width: 35, height: 42))
+    }
+
+    func test_openPageLinkedFrom_openingClosedHierarchyOpensAllChildHierarchiesToo() throws {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+        let canvas = Canvas.create(in: modelController)
+        let parentPage = CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
+            $0.canvas = canvas
+        }
+        let page = Page.create(in: modelController)
+        let page2 = Page.create(in: modelController)
+        let page3 = Page.create(in: modelController)
+
+        let childCanvasPage1ID = CanvasPage.modelID(with: UUID())
+        let childHierarchy1 = PageHierarchy(id: childCanvasPage1ID, pageID: page2.id, frame: CGRect(x: 200, y: 30, width: 42, height: 55), children: [])
+        let childCanvasPage2ID = CanvasPage.modelID(with: UUID())
+        let childHierarchy2 = PageHierarchy(id: childCanvasPage2ID, pageID: page3.id, frame: CGRect(x: 300, y: 40, width: 55, height: 62), children: [])
+        let rootCanvasPageID = CanvasPage.modelID(with: UUID())
+        let rootHierarchy = PageHierarchy(id: rootCanvasPageID, pageID: page.id, frame: CGRect(x: 100, y: 20, width: 35, height: 42), children: [childHierarchy1, childHierarchy2])
+
+        canvas.closedPageHierarchies = [parentPage.id: [page.id: rootHierarchy]]
+
+        let canvasPages = try XCTUnwrap(canvas.open(page, linkedFrom: parentPage))
+        XCTAssertEqual(canvasPages.count, 3)
+        XCTAssertTrue(canvasPages.contains(where: {
+            ($0.id == childCanvasPage1ID) && ($0.page == page2) && ($0.frame == CGRect(x: 200, y: 30, width: 42, height: 55))
+        }))
+        XCTAssertTrue(canvasPages.contains(where: {
+            ($0.id == childCanvasPage2ID) && ($0.page == page3) && ($0.frame == CGRect(x: 300, y: 40, width: 55, height: 62))
+        }))
+    }
+
+    func test_openPageLinkedFrom_openinglosedHierarchySetsCorrectSourcePageOnAllHierarchies() throws {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+        let canvas = Canvas.create(in: modelController)
+        let parentPage = CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
+            $0.canvas = canvas
+        }
+        let page = Page.create(in: modelController)
+        let page2 = Page.create(in: modelController)
+        let page3 = Page.create(in: modelController)
+
+        let childCanvasPage1ID = CanvasPage.modelID(with: UUID())
+        let childHierarchy1 = PageHierarchy(id: childCanvasPage1ID, pageID: page2.id, frame: CGRect(x: 200, y: 30, width: 42, height: 55), children: [])
+        let childCanvasPage2ID = CanvasPage.modelID(with: UUID())
+        let childHierarchy2 = PageHierarchy(id: childCanvasPage2ID, pageID: page3.id, frame: CGRect(x: 300, y: 40, width: 55, height: 62), children: [])
+        let rootCanvasPageID = CanvasPage.modelID(with: UUID())
+        let rootHierarchy = PageHierarchy(id: rootCanvasPageID, pageID: page.id, frame: CGRect(x: 100, y: 20, width: 35, height: 42), children: [childHierarchy1, childHierarchy2])
+
+        canvas.closedPageHierarchies = [parentPage.id: [page.id: rootHierarchy]]
+
+        let canvasPages = try XCTUnwrap(canvas.open(page, linkedFrom: parentPage))
+        XCTAssertEqual(canvasPages.filter({ $0.parent?.id == parentPage.id}).count, 1)
+        XCTAssertEqual(canvasPages.filter({ $0.parent?.id == rootCanvasPageID}).count, 2)
+    }
+
+    func test_openPageLinkedFrom_openingClosedHierarchySetsCanvasToReceiverOnAllPages() throws {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+        let canvas = Canvas.create(in: modelController)
+        let parentPage = CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
+            $0.canvas = canvas
+        }
+        let page = Page.create(in: modelController)
+        let page2 = Page.create(in: modelController)
+        let page3 = Page.create(in: modelController)
+
+        let childCanvasPage1ID = CanvasPage.modelID(with: UUID())
+        let childHierarchy1 = PageHierarchy(id: childCanvasPage1ID, pageID: page2.id, frame: CGRect(x: 200, y: 30, width: 42, height: 55), children: [])
+        let childCanvasPage2ID = CanvasPage.modelID(with: UUID())
+        let childHierarchy2 = PageHierarchy(id: childCanvasPage2ID, pageID: page3.id, frame: CGRect(x: 300, y: 40, width: 55, height: 62), children: [])
+        let rootCanvasPageID = CanvasPage.modelID(with: UUID())
+        let rootHierarchy = PageHierarchy(id: rootCanvasPageID, pageID: page.id, frame: CGRect(x: 100, y: 20, width: 35, height: 42), children: [childHierarchy1, childHierarchy2])
+
+        canvas.closedPageHierarchies = [parentPage.id: [page.id: rootHierarchy]]
+
+        let canvasPages = try XCTUnwrap(canvas.open(page, linkedFrom: parentPage))
+        XCTAssertEqual(canvasPages[safe: 0]?.canvas, canvas)
+        XCTAssertEqual(canvasPages[safe: 1]?.canvas, canvas)
+        XCTAssertEqual(canvasPages[safe: 2]?.canvas, canvas)
+    }
+
+    func test_openPageLinkedFrom_hierarchyIsRemovedFromClosedHierarchiesWhenOpening() throws {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+        let canvas = Canvas.create(in: modelController)
+        let parentPage = CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
+            $0.canvas = canvas
+        }
+        let page = Page.create(in: modelController)
+        let page2 = Page.create(in: modelController)
+        let page3 = Page.create(in: modelController)
+
+        let childCanvasPage1ID = CanvasPage.modelID(with: UUID())
+        let childHierarchy1 = PageHierarchy(id: childCanvasPage1ID, pageID: page2.id, frame: CGRect(x: 200, y: 30, width: 42, height: 55), children: [])
+        let childCanvasPage2ID = CanvasPage.modelID(with: UUID())
+        let childHierarchy2 = PageHierarchy(id: childCanvasPage2ID, pageID: page3.id, frame: CGRect(x: 300, y: 40, width: 55, height: 62), children: [])
+        let rootCanvasPageID = CanvasPage.modelID(with: UUID())
+        let rootHierarchy = PageHierarchy(id: rootCanvasPageID, pageID: page.id, frame: CGRect(x: 100, y: 20, width: 35, height: 42), children: [childHierarchy1, childHierarchy2])
+
+        canvas.closedPageHierarchies = [parentPage.id: [page.id: rootHierarchy]]
+
+        _ = try XCTUnwrap(canvas.open(page, linkedFrom: parentPage))
+
+        XCTAssertEqual(canvas.closedPageHierarchies[parentPage.id]?.count, 0)
+    }
+
+
+    //MARK: - close(_:)
+    func test_closeCanvasPage_createsHierarchyForClosedPage() throws {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+        let canvas = Canvas.create(in: modelController)
+        let parentPage = CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
+            $0.canvas = canvas
+        }
+        let page = Page.create(in: modelController)
+        let canvasPage = CanvasPage.create(in: modelController) {
+            $0.page = page
+            $0.canvas = canvas
+            $0.parent = parentPage
+            $0.frame = CGRect(x: 40, y: 50, width: 60, height: 70)
+        }
+
+        canvas.close(canvasPage)
+
+        let hierarchiesForParent = try XCTUnwrap(canvas.closedPageHierarchies[parentPage.id])
+        let hierarchy = try XCTUnwrap(hierarchiesForParent[page.id])
+
+        XCTAssertEqual(hierarchy.id, canvasPage.id)
+        XCTAssertEqual(hierarchy.pageID, page.id)
+        XCTAssertEqual(hierarchy.frame, canvasPage.frame)
+        XCTAssertEqual(hierarchy.children.count, 0)
+    }
+
+    func test_closeCanvasPage_includesAllChildPagesInCreatedHierarchy() throws {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+        let canvas = Canvas.create(in: modelController)
+        let parentPage = CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
+            $0.canvas = canvas
+        }
+        let page = Page.create(in: modelController)
+        let canvasPage = CanvasPage.create(in: modelController) {
+            $0.page = page
+            $0.canvas = canvas
+            $0.parent = parentPage
+            $0.frame = CGRect(x: 40, y: 50, width: 60, height: 70)
+        }
+
+        let page2 = Page.create(in: modelController)
+        let childPage1 = CanvasPage.create(in: modelController) {
+            $0.page = page2
+            $0.canvas = canvas
+            $0.parent = canvasPage
+            $0.frame = CGRect(x: 80, y: 90, width: 100, height: 110)
+        }
+
+        let page3 = Page.create(in: modelController)
+        let childPage2 = CanvasPage.create(in: modelController) {
+            $0.page = page3
+            $0.canvas = canvas
+            $0.parent = canvasPage
+            $0.frame = CGRect(x: 120, y: 130, width: 140, height: 150)
+        }
+
+        canvas.close(canvasPage)
+
+        let hierarchiesForParent = try XCTUnwrap(canvas.closedPageHierarchies[parentPage.id])
+        let hierarchy = try XCTUnwrap(hierarchiesForParent[page.id])
+        XCTAssertEqual(hierarchy.children.count, 2)
+        XCTAssertTrue(hierarchy.children.contains(where: { $0.id == childPage1.id }))
+        XCTAssertTrue(hierarchy.children.contains(where: { $0.id == childPage2.id }))
+    }
+
+    func test_closeCanvasPage_removesCanvasPageAndAllChildrenFromCanvas() {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+        let canvas = Canvas.create(in: modelController)
+        let parentPage = CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
+            $0.canvas = canvas
+        }
+        let page = Page.create(in: modelController)
+        let canvasPage = CanvasPage.create(in: modelController) {
+            $0.page = page
+            $0.canvas = canvas
+            $0.parent = parentPage
+        }
+
+        let page2 = Page.create(in: modelController)
+        CanvasPage.create(in: modelController) {
+            $0.page = page2
+            $0.canvas = canvas
+            $0.parent = canvasPage
+        }
+
+        let page3 = Page.create(in: modelController)
+        CanvasPage.create(in: modelController) {
+            $0.page = page3
+            $0.canvas = canvas
+            $0.parent = canvasPage
+        }
+
+        XCTAssertEqual(canvas.pages.count, 4)
+
+        canvas.close(canvasPage)
+
+        XCTAssertEqual(canvas.pages.count, 1)
+    }
+
+    func test_closeCanvasPage_deletesCanvasPageAndAllChildrenFromCanvasPageCollection() {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+        let canvas = Canvas.create(in: modelController)
+        let parentPage = CanvasPage.create(in: modelController) {
+            $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
+            $0.canvas = canvas
+        }
+        let page = Page.create(in: modelController)
+        let canvasPage = CanvasPage.create(in: modelController) {
+            $0.page = page
+            $0.canvas = canvas
+            $0.parent = parentPage
+        }
+
+        let page2 = Page.create(in: modelController)
+        let childPage1 = CanvasPage.create(in: modelController) {
+            $0.page = page2
+            $0.canvas = canvas
+            $0.parent = canvasPage
+        }
+
+        let page3 = Page.create(in: modelController)
+        let childPage2 = CanvasPage.create(in: modelController) {
+            $0.page = page3
+            $0.canvas = canvas
+            $0.parent = canvasPage
+        }
+
+        XCTAssertNotNil(modelController.collection(for: CanvasPage.self).objectWithID(canvasPage.id))
+        XCTAssertNotNil(modelController.collection(for: CanvasPage.self).objectWithID(childPage1.id))
+        XCTAssertNotNil(modelController.collection(for: CanvasPage.self).objectWithID(childPage2.id))
+
+        canvas.close(canvasPage)
+
+        XCTAssertNil(modelController.collection(for: CanvasPage.self).objectWithID(canvasPage.id))
+        XCTAssertNil(modelController.collection(for: CanvasPage.self).objectWithID(childPage1.id))
+        XCTAssertNil(modelController.collection(for: CanvasPage.self).objectWithID(childPage2.id))
     }
 
 

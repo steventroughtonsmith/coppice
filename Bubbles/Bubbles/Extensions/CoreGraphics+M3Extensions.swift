@@ -10,11 +10,8 @@ import Foundation
 import CoreGraphics
 
 extension CGPoint {
-    func multiplied(by value: CGFloat) -> CGPoint {
-        var newPoint = self
-        newPoint.x *= value
-        newPoint.y *= value
-        return newPoint
+    static var identity: CGPoint {
+        return CGPoint(x: 1, y: 1)
     }
 
     func plus(_ point: CGPoint) -> CGPoint {
@@ -36,25 +33,40 @@ extension CGPoint {
         return self.minus(CGPoint(x: x, y: y))
     }
 
+    func multiplied(by value: CGFloat) -> CGPoint {
+        var newPoint = self
+        newPoint.x *= value
+        newPoint.y *= value
+        return newPoint
+    }
+
+    func rounded(_ rule: FloatingPointRoundingRule = .toNearestOrAwayFromZero) -> CGPoint {
+        let x = self.x.rounded(rule)
+        let y = self.y.rounded(rule)
+        return CGPoint(x: x, y: y)
+    }
+
     func bounded(within rect: CGRect) -> CGPoint {
         let x = min(max(self.x, rect.minX), (rect.maxX - 1))
         let y = min(max(self.y, rect.minY), (rect.maxY - 1))
         return CGPoint(x: x, y: y)
     }
 
-    static var identity: CGPoint {
-        return CGPoint(x: 1, y: 1)
+    func toRect(with size: CGSize = .zero) -> CGRect {
+        return CGRect(origin: self, size: size)
     }
 
-    func rounded() -> CGPoint {
-        let x = round(self.x)
-        let y = round(self.y)
-        return CGPoint(x: x, y: y)
+    func toSize() -> CGSize {
+        return CGSize(width: self.x, height: self.y)
     }
 }
 
 
 extension CGSize {
+    static var identity: CGSize {
+        return CGSize(width: 1, height: 1)
+    }
+
     func plus(_ size: CGSize) -> CGSize {
         var newSize = self
         newSize.width += size.width
@@ -66,9 +78,17 @@ extension CGSize {
         return self.plus(CGSize(width: width, height: height))
     }
 
-    func rounded() -> CGSize {
-        let width = round(self.width)
-        let height = round(self.height)
+    func minus(_ size: CGSize) -> CGSize {
+        return self.plus(size.multiplied(by: -1))
+    }
+
+    func minus(width: CGFloat = 0, height: CGFloat = 0) -> CGSize {
+        return self.minus(CGSize(width: width, height: height))
+    }
+
+    func rounded(_ rule: FloatingPointRoundingRule = .toNearestOrAwayFromZero) -> CGSize {
+        let width = self.width.rounded(rule)
+        let height = self.height.rounded(rule)
         return CGSize(width: width, height: height)
     }
 
@@ -88,17 +108,18 @@ extension CGSize {
     }
 }
 
+
 extension CGRect {
-    func rounded() -> CGRect {
-        let origin = self.origin.rounded()
-        let size = self.size.rounded()
+    func rounded(_ rule: FloatingPointRoundingRule = .toNearestOrAwayFromZero) -> CGRect {
+        let origin = self.origin.rounded(rule)
+        let size = self.size.rounded(rule)
         return CGRect(origin: origin, size: size)
     }
 
     init(width: CGFloat, height: CGFloat, centredIn rect: CGRect) {
         let x = rect.midX - (width / 2)
         let y = rect.midY - (height / 2)
-        self.init(x: x.rounded(), y: y.rounded(), width: width, height: height)
+        self.init(x: x, y: y, width: width, height: height)
     }
 
     init?(points: [CGPoint]) {

@@ -18,6 +18,8 @@ class CanvasPageTests: XCTestCase {
         self.modelController = BubblesModelController(undoManager: UndoManager())
     }
 
+
+    //MARK: - .plistRepresentation
     func test_plistRepresentation_containsID() throws {
         let canvasPage = CanvasPage.create(in: self.modelController)
         let id = try XCTUnwrap(canvasPage.plistRepresentation["id"] as? String)
@@ -151,5 +153,52 @@ class CanvasPageTests: XCTestCase {
         XCTAssertNoThrow(try canvasPage.update(fromPlistRepresentation: plist))
 
         XCTAssertEqual(canvasPage.parent, parent)
+    }
+
+
+    //MARK: - existingCanvasPage(for:)
+    func test_existingCanvasPageForPage_returnsSelfIfSuppliedPageMatchesReceiversPage() {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+
+        let page = modelController.collection(for: Page.self).newObject()
+        let canvasPage = modelController.collection(for: CanvasPage.self).newObject() {
+            $0.page = page
+        }
+
+        XCTAssertEqual(canvasPage.existingCanvasPage(for: page), canvasPage)
+    }
+
+    func test_existingCanvasPageForPage_returnsChildWithMatchingPageIfOneExists() {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+
+        let page = modelController.collection(for: Page.self).newObject()
+        let canvasPage = modelController.collection(for: CanvasPage.self).newObject() {
+            $0.page = page
+        }
+
+        let childPage = modelController.collection(for: Page.self).newObject()
+        let childCanvasPage = modelController.collection(for: CanvasPage.self).newObject() {
+            $0.page = childPage
+            $0.parent = canvasPage
+        }
+
+        XCTAssertEqual(canvasPage.existingCanvasPage(for: childPage), childCanvasPage)
+    }
+
+    func test_existingCanvasPageForPage_returnsNilIfNoDirectChildMatchesPage() {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+
+        let page = modelController.collection(for: Page.self).newObject()
+        let canvasPage = modelController.collection(for: CanvasPage.self).newObject() {
+            $0.page = page
+        }
+
+        let childPage = modelController.collection(for: Page.self).newObject()
+        modelController.collection(for: CanvasPage.self).newObject() {
+            $0.page = childPage
+            $0.parent = canvasPage
+        }
+
+        XCTAssertNil(canvasPage.existingCanvasPage(for: Page()))
     }
 }

@@ -8,8 +8,6 @@
 
 import Foundation
 
-
-
 extension Page {
     struct Match: Comparable {
         enum MatchType: Equatable {

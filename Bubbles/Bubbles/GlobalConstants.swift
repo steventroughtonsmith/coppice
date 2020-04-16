@@ -25,6 +25,15 @@ struct GlobalConstants {
     static let newWindowSize = CGSize(width: 900, height: 600)
 
     static let textEditorInsets = NSEdgeInsets(top: 10, left: 5, bottom: 5, right: 5)
+
+    static var maxAutomaticTextSize: CGSize {
+        return CGSize(width: Page.standardSize.width * 1.5, height: Page.standardSize.height * 3)
+    }
+
+    static var maxAutomaticTextSizeIncludingInsets: CGSize {
+        return self.maxAutomaticTextSize.plus(width: self.textEditorInsets.left + self.textEditorInsets.right + 10,
+                                              height: self.textEditorInsets.top + self.textEditorInsets.bottom + 10)
+    }
 }
 
 extension NSImage.Name {

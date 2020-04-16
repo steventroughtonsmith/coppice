@@ -16,9 +16,7 @@ extension Canvas {
 
 extension Page {
     var pasteboardWriter: NSPasteboardWriting {
-        guard let filePromiseProvider = self.content.filePromiseProvider else {
-            return self.id.pasteboardItem
-        }
+        let filePromiseProvider = self.content.filePromiseProvider
         filePromiseProvider.additionalItems[ModelID.PasteboardType] = self.id.plistRepresentation
         return filePromiseProvider
     }
@@ -31,7 +29,7 @@ extension Folder {
 }
 
 extension TextPageContent: NSFilePromiseProviderDelegate {
-    var filePromiseProvider: ExtendableFilePromiseProvider? {
+    var filePromiseProvider: ExtendableFilePromiseProvider {
         return ExtendableFilePromiseProvider(fileType: (kUTTypeRTF as String), delegate: self)
     }
 
@@ -57,7 +55,7 @@ extension TextPageContent: NSFilePromiseProviderDelegate {
 }
 
 extension ImagePageContent: NSFilePromiseProviderDelegate {
-    var filePromiseProvider: ExtendableFilePromiseProvider? {
+    var filePromiseProvider: ExtendableFilePromiseProvider {
         return ExtendableFilePromiseProvider(fileType: (kUTTypePNG as String), delegate: self)
     }
 

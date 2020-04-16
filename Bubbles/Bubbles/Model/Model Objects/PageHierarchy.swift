@@ -14,46 +14,45 @@ class PageHierarchy {
     let frame: CGRect
     let children: [PageHierarchy]
 
-    init?(canvasPage: CanvasPage) {
+    convenience init?(canvasPage: CanvasPage) {
         guard let page = canvasPage.page else {
             return nil
         }
-        self.id = canvasPage.id
-        self.pageID = page.id
-        self.frame = canvasPage.frame
-        var children = [PageHierarchy]()
-        for child in canvasPage.children {
-            if let childHierarchy = PageHierarchy(canvasPage: child) {
-                children.append(childHierarchy)
-            }
-        }
+        let children = canvasPage.children.compactMap { PageHierarchy(canvasPage: $0 )}
+        self.init(id: canvasPage.id, pageID: page.id, frame: canvasPage.frame, children: children)
+    }
+
+    init(id: ModelID, pageID: ModelID, frame: CGRect, children: [PageHierarchy]) {
+        self.id = id
+        self.pageID = pageID
+        self.frame = frame
         self.children = children
     }
 
-    init?(plistRepresentation: [String: Any]) {
+    convenience init?(plistRepresentation: [String: Any]) {
         guard let idString = plistRepresentation["id"] as? String, let id = ModelID(string: idString) else {
             return nil
         }
-        self.id = id
 
         guard let pageIDString = plistRepresentation["pageID"] as? String, let pageID = ModelID(string: pageIDString) else {
             return nil
         }
-        self.pageID = pageID
 
         guard let frameString = plistRepresentation["frame"] as? String else {
             return nil
         }
-        self.frame = NSRectFromString(frameString)
+        let frame = NSRectFromString(frameString)
 
         guard let childrenPlists = plistRepresentation["children"] as? [[String: Any]] else {
             return nil
         }
-        self.children = childrenPlists.compactMap { PageHierarchy(plistRepresentation: $0) }
+        let children = childrenPlists.compactMap { PageHierarchy(plistRepresentation: $0) }
+        self.init(id: id, pageID: pageID, frame: frame, children: children)
     }
 
     var plistRepresentation: [String: Any] {
         let childPlists = self.children.map(\.plistRepresentation)
+
         return [
             "id": self.id.stringRepresentation,
             "pageID": self.pageID.stringRepresentation,

@@ -52,60 +52,6 @@ class BubblesModelController: NSObject, ModelController {
 }
 
 
-extension BubblesModelController {
-    func createTestData() {
-        self.collection(for: Canvas.self).disableUndo {
-            self.collection(for: Canvas.self).newObject() { $0.title = "First" }
-            self.collection(for: Canvas.self).newObject() { $0.title = "Second!" }
-        }
-
-        self.collection(for: Page.self).disableUndo {
-            let page1 = self.collection(for: Page.self).newObject() { page in
-                page.title = "Foo"
-                let content = TextPageContent()
-                content.text = NSAttributedString(string: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vehicula sit amet felis ac commodo. Sed quis faucibus nibh. Nam ut urna libero.")
-                page.content = content
-            }
-            self.collection(for: Page.self).newObject() { page in
-                page.title = "Bar"
-                let content = TextPageContent()
-                let mutableText = NSMutableAttributedString(string: "This page links to this page")
-                mutableText.addAttribute(.link, value: page1.linkToPage(from: page).url, range: NSRange(location: 19, length: 9))
-                content.text = mutableText
-                page.content = content
-            }
-            self.collection(for: Page.self).newObject() { $0.title = "Baz" }
-        }
-    }
-
-}
-
-
-//MARK: - Collection extensions
-extension ModelCollection where ModelType == Page {
-    @discardableResult func newPage(fromFileAt url: URL) -> Page? {
-        guard let resourceValues = try? url.resourceValues(forKeys: Set([.typeIdentifierKey])),
-            let typeIdentifier = resourceValues.typeIdentifier else {
-            return nil
-        }
-
-        guard let contentType = PageContentType.contentType(forUTI: typeIdentifier) else {
-            return nil
-        }
-
-        guard let data = try? Data(contentsOf: url) else {
-            return nil
-        }
-
-        let page = self.newObject() {
-            $0.title = (url.lastPathComponent as NSString).deletingPathExtension
-            $0.content = contentType.createContent(data: data)
-        }
-        return page
-    }
-}
-
-
 //MARK: - ModelSettingsKeys
 extension ModelSettings.Setting {
     static let pageSortKeySetting = ModelSettings.Setting(rawValue: "pageSortKey")

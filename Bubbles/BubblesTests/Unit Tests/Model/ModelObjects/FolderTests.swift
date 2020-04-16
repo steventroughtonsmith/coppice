@@ -25,6 +25,25 @@ class FolderTests: XCTestCase {
     }
 
 
+    //MARK: - .dateModified {
+    func test_dateModified_returnsDateCreatedIfNothinginFolder() {
+        let folder = self.foldersCollection.newObject()
+        XCTAssertEqual(folder.dateModified, folder.dateCreated)
+    }
+
+    func test_dateModified_returnsDateOfMostRecentlyModifiedContentItem() {
+        let folder = self.foldersCollection.newObject()
+
+        let object1 = self.pagesCollection.newObject() { $0.dateModified = Date(timeIntervalSinceNow: 200) }
+        let object2 = self.foldersCollection.newObject()  { $0.dateCreated = Date(timeIntervalSinceNow: 150) }
+        let object3 = self.pagesCollection.newObject()  { $0.dateModified = Date(timeIntervalSinceNow: 300) }
+
+        folder.insert([object1, object2, object3])
+
+        XCTAssertEqual(folder.dateModified, object3.dateModified)
+    }
+
+
     //MARK: - insert(_:above:)
     func test_insertObjectsBelow_addsObjectsToEmptyFolder() {
         let folder = self.foldersCollection.newObject()

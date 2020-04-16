@@ -76,7 +76,7 @@ protocol PageContent: class {
 
     func firstRangeOf(_ searchTerm: String) -> NSRange
 
-    var filePromiseProvider: ExtendableFilePromiseProvider? { get }
+    var filePromiseProvider: ExtendableFilePromiseProvider { get }
 }
 
 extension PageContent {
@@ -94,10 +94,6 @@ extension PageContent {
 
     func firstRangeOf(_ searchTerm: String) -> NSRange {
         return NSRange(location: NSNotFound, length: 0)
-    }
-
-    var filePromiseProvider: ExtendableFilePromiseProvider? {
-        return nil
     }
 }
 

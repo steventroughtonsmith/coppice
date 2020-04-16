@@ -10,6 +10,8 @@ import XCTest
 @testable import Bubbles
 
 class PageTests: XCTestCase {
+
+    //MARK: - .plistRepresentation
     func test_plistRepresentation_containsID() throws {
         let page = Page()
         let id = try XCTUnwrap(page.plistRepresentation["id"] as? String)
@@ -336,5 +338,49 @@ class PageTests: XCTestCase {
 
         XCTAssertEqual(canvasPage1.frame, CGRect(x: 20, y: 30, width: 50, height: 30))
         XCTAssertEqual(canvasPage2.frame, CGRect(x: 60, y: 70, width: 50, height: 30))
+    }
+
+
+    //MARK: - .sortType
+    func test_sortType_textPageAppearsAboveImagePage() {
+        let textPage = Page()
+        textPage.content = TextPageContent()
+
+        let imagePage = Page()
+        imagePage.content = ImagePageContent()
+
+        XCTAssertTrue(textPage.sortType < imagePage.sortType)
+    }
+
+
+    //MARK: - ModelCollection<Page>
+
+    //MARK: - setContentValue(_:for:ofPageWithID:)
+    func test_setContentValueForKeyPathOfPageWithID_updatesTheContentIfPageExists() {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+        let collection = modelController.collection(for: Page.self)
+        let content = TextPageContent()
+        content.text = NSAttributedString(string: "Foo Bar")
+        let page = collection.newObject() {
+            $0.content = content
+        }
+
+        let newValue = NSAttributedString(string: "Hello World")
+        collection.setContentValue(newValue, for: \TextPageContent.text, ofPageWithID: page.id)
+        XCTAssertEqual(content.text, newValue)
+    }
+
+    func test_setContentValueForKeyPathOfPageWithID_doesntUpdateTheContentIfPageCantBeFound() {
+        let modelController = BubblesModelController(undoManager: UndoManager())
+        let collection = modelController.collection(for: Page.self)
+        let content = TextPageContent()
+        content.text = NSAttributedString(string: "Foo Bar")
+        _ = collection.newObject() {
+            $0.content = content
+        }
+
+        let newValue = NSAttributedString(string: "Hello World")
+        collection.setContentValue(newValue, for: \TextPageContent.text, ofPageWithID: Page.modelID(with: UUID()))
+        XCTAssertEqual(content.text, NSAttributedString(string: "Foo Bar"))
     }
 }
