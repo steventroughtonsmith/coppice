@@ -12,7 +12,7 @@ class CanvasesViewController: NSSplitViewController {
     let viewModel: CanvasesViewModel
     init(viewModel: CanvasesViewModel) {
         self.viewModel = viewModel
-        super.init(nibName: "CanvasEditorContainerView", bundle: nil)
+        super.init(nibName: "CanvasesView", bundle: nil)
         viewModel.view = self
     }
 

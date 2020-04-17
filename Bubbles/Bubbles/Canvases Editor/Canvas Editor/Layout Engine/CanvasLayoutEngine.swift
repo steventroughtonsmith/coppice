@@ -188,7 +188,7 @@ class CanvasLayoutEngine: NSObject {
     func deselectAll() {
         self.selectedPages.forEach { $0.selected = false }
         self.updateEnabledPage()
-        self.informOfLayoutChange(with: LayoutContext())
+        self.informOfLayoutChange(with: LayoutContext(selectionChanged: true))
     }
 
     private var previousSelectionIDs = Set<UUID>()
@@ -234,7 +234,6 @@ class CanvasLayoutEngine: NSObject {
             return nil
         }
 
-        print("component: \(pageComponent), location: \(location.minus(page.layoutFrame.origin)), componentRect: \(page.rectInLayoutFrame(for: pageComponent))")
         switch pageComponent {
         case .titleBar, .content:
             return SelectAndMoveEventContext(page: page)

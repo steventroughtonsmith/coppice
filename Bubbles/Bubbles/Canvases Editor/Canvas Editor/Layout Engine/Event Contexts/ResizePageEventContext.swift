@@ -31,7 +31,7 @@ class ResizePageEventContext: CanvasEventContext {
         let delta = boundedLocation.minus(lastLocation).rounded()
 
         if (self.page.maintainAspectRatio) {
-            self.performAspectResize(with: delta)
+            self.performAspectResize(with: delta, in: layout)
         } else {
             self.performRegularResize(with: delta)
         }
@@ -82,28 +82,94 @@ class ResizePageEventContext: CanvasEventContext {
         self.page.layoutFrame = layoutFrame
     }
 
-    private func performAspectResize(with delta: CGPoint) {
+    private func performAspectResize(with delta: CGPoint, in layout: CanvasLayoutEngine) {
+        if (self.component.isTop) {
+            self.performTopAspectResize(with: delta, in: layout)
+        }
+        else if (self.component.isBottom) {
+            self.performBottomAspectResize(with: delta, in: layout)
+        }
+    }
+
+    private func performTopAspectResize(with delta: CGPoint, in layout: CanvasLayoutEngine) {
         var layoutFrame = self.page.layoutFrame
 
+        var deltaY = delta.y //deltaY is negative if increasing size, positive if decreasing size
+        var deltaX = deltaY * self.page.aspectRatio
 
-
-        let deltaY = delta.y
-        let deltaX = (delta.y * layoutFrame.width) / layoutFrame.height
-        if (self.component.isBottom) {
-            layoutFrame.size.height += deltaY
-            layoutFrame.size.width += deltaX
-            if (self.component.isLeft) {
-                layoutFrame.origin.x -= deltaX
-            }
+        //Constraint max vertically
+        if layoutFrame.minY + deltaY < 0 {
+            deltaY = -layoutFrame.minY
+            deltaX = deltaY * self.page.aspectRatio
         }
-        else if (self.component.isTop) {
-            layoutFrame.size.height -= deltaY
-            layoutFrame.size.width -= deltaX
 
-            layoutFrame.origin.y += deltaY
-            if (self.component.isLeft) {
-                layoutFrame.origin.x += deltaX
-            }
+        //Constraint max horizontally
+        if self.component.isLeft && (layoutFrame.minX + deltaX < 0) {
+            deltaX = -layoutFrame.minX
+            deltaY = deltaX / self.page.aspectRatio
+        }
+        else if self.component.isRight && ((layoutFrame.maxX - deltaX) > layout.canvasSize.width) {
+            deltaX = -(layout.canvasSize.width - layoutFrame.maxX)
+            deltaY = deltaX / self.page.aspectRatio
+        }
+
+        //Constraint min size
+        if layoutFrame.height - deltaY < self.page.minimumLayoutSize.height {
+            deltaY = layoutFrame.height - self.page.minimumLayoutSize.height
+            deltaX = deltaY * self.page.aspectRatio
+        }
+        if layoutFrame.width - deltaX < self.page.minimumLayoutSize.width {
+            deltaX = layoutFrame.width - self.page.minimumLayoutSize.width
+            deltaY = deltaX / self.page.aspectRatio
+        }
+
+
+        layoutFrame.size.height -= deltaY
+        layoutFrame.size.width -= deltaX
+
+        layoutFrame.origin.y += deltaY
+        if (self.component.isLeft) {
+            layoutFrame.origin.x += deltaX
+        }
+        self.page.layoutFrame = layoutFrame
+    }
+
+    private func performBottomAspectResize(with delta: CGPoint, in layout: CanvasLayoutEngine) {
+        var layoutFrame = self.page.layoutFrame
+
+        var deltaY = delta.y //DeltaY is positive if increasing size, negative if decreasing size
+        var deltaX = deltaY * self.page.aspectRatio
+
+        //Constraint max vertically
+        if (layoutFrame.maxY + deltaY) > layout.canvasSize.height {
+            deltaY = layout.canvasSize.height - layoutFrame.maxY
+            deltaX = deltaY * self.page.aspectRatio
+        }
+
+        //Constraint max horizontally
+        if self.component.isLeft && (layoutFrame.minX - deltaX < 0) {
+            deltaX = layoutFrame.minX
+            deltaY = deltaX / self.page.aspectRatio
+        }
+        else if self.component.isRight && ((layoutFrame.maxX + deltaX) > layout.canvasSize.width) {
+            deltaX = layout.canvasSize.width - layoutFrame.maxX
+            deltaY = deltaX / self.page.aspectRatio
+        }
+
+        //Constraint min size
+        if layoutFrame.height + deltaY < self.page.minimumLayoutSize.height {
+            deltaY = -(layoutFrame.height - self.page.minimumLayoutSize.height)
+            deltaX = deltaY * self.page.aspectRatio
+        }
+        if layoutFrame.width + deltaX < self.page.minimumLayoutSize.width {
+            deltaX = -(layoutFrame.width - self.page.minimumLayoutSize.width)
+            deltaY = deltaX / self.page.aspectRatio
+        }
+
+        layoutFrame.size.height += deltaY
+        layoutFrame.size.width += deltaX
+        if (self.component.isLeft) {
+            layoutFrame.origin.x -= deltaX
         }
 
         self.page.layoutFrame = layoutFrame
