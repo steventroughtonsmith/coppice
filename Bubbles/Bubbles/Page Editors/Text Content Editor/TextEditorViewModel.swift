@@ -49,13 +49,14 @@ class TextEditorViewModel: ViewModel {
         set { self.textContent.text = newValue }
     }
 
-    func createNewLinkedPage(for range: NSRange) {
+    func createNewLinkedPage(for range: NSRange) -> Page {
         let selectedText = self.attributedText.attributedSubstring(from: range)
         self.modelController.undoManager.beginUndoGrouping()
         let page = self.modelController.collection(for: Page.self).newObject()
         page.title = selectedText.string
         self.link(to: page, for: range)
         self.modelController.undoManager.endUndoGrouping()
+        return page
     }
 
     func link(to page: Page, for range: NSRange) {
