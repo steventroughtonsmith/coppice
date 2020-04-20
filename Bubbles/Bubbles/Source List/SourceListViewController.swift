@@ -303,7 +303,7 @@ class SourceListViewController: NSViewController, NSMenuItemValidation {
     //MARK: - Folder Sorting
     @IBOutlet weak var sortFolderMenu: NSMenu!
     private func setupSortFolderMenu() {
-        self.sortFolderMenu.items = SourceListViewModel.FolderSortingMethod.allCases.enumerated().map { (index, element) in
+        self.sortFolderMenu.items = Folder.SortingMethod.allCases.enumerated().map { (index, element) in
             let menuItem = NSMenuItem(title: element.localizedString, action: #selector(sortFolder(_:)), keyEquivalent: "")
             menuItem.target = self
             menuItem.tag = index
@@ -321,15 +321,15 @@ class SourceListViewController: NSViewController, NSMenuItemValidation {
             return
         }
 
-        guard let sortMethod = SourceListViewModel.FolderSortingMethod.allCases[safe: menuItem.tag] else {
+        guard let sortMethod = Folder.SortingMethod.allCases[safe: menuItem.tag] else {
             return
         }
 
         if let folder = (selection.nodes[0] as? FolderSourceListNode)?.folder {
-            self.viewModel.sort(folder, using: sortMethod)
+            folder.sort(using: sortMethod)
         }
         else if let folder = (selection.nodes[0] as? PagesGroupSourceListNode)?.rootFolder {
-            self.viewModel.sort(folder, using: sortMethod)
+            folder.sort(using: sortMethod)
         }
     }
 

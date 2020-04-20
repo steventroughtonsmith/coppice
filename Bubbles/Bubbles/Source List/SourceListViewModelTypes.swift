@@ -39,7 +39,7 @@ class SourceListNodeCollection: NSObject {
 }
 
 class SourceListNode: NSObject {
-    enum CellType {
+    enum CellType: Equatable {
         case bigCell
         case smallCell
         case groupCell

@@ -80,6 +80,37 @@ final class Folder: NSObject, CollectableModelObject, FolderContainable {
     }
 
 
+    //MARK: - Sorting
+    enum SortingMethod: CaseIterable {
+        case title
+        case type
+        case dateCreated
+        case lastModified
+
+        var localizedString: String {
+            switch self {
+            case .title: return NSLocalizedString("Title", comment: "Title folder sorting method")
+            case .type: return NSLocalizedString("Type", comment: "Type folder sorting method")
+            case .dateCreated: return NSLocalizedString("Date Created", comment: "Date Created folder sorting method")
+            case .lastModified: return NSLocalizedString("Last Modified", comment: "Last Modified folder sorting method")
+            }
+        }
+
+        func compare(_ first: FolderContainable, _ second: FolderContainable) -> Bool {
+            switch self {
+            case .title: return first.title < second.title
+            case .type: return first.sortType < second.sortType
+            case .dateCreated: return first.dateCreated > second.dateCreated
+            case .lastModified: return first.dateModified > second.dateModified
+            }
+        }
+    }
+
+    func sort(using method: SortingMethod) {
+        self.contents = self.contents.sorted(by: method.compare)
+    }
+
+
     //MARK: - Plist
     var plistRepresentation: [String : Any] {
         return [

@@ -291,6 +291,75 @@ class FolderTests: XCTestCase {
     }
 
 
+    //MARK: - sort(using:)
+    func test_sortUsingMethod_sortsContentsAscendingByTitle() {
+        let folder = self.foldersCollection.newObject()
+
+        let object1 = self.pagesCollection.newObject() { $0.title = "bee" }
+        let object2 = self.foldersCollection.newObject() { $0.title = "ay" }
+        let object3 = self.pagesCollection.newObject() { $0.title = "cee" }
+
+        folder.insert([object1, object2, object3])
+
+        folder.sort(using: .title)
+
+        XCTAssertEqual(folder.contents[0].id, object2.id)
+        XCTAssertEqual(folder.contents[1].id, object1.id)
+        XCTAssertEqual(folder.contents[2].id, object3.id)
+    }
+
+    func test_sortUsingMethod_sortsContentsAscendingByType() {
+        let folder = self.foldersCollection.newObject()
+
+        let object1 = self.pagesCollection.newObject() { $0.content = ImagePageContent() }
+        let object2 = self.foldersCollection.newObject()
+        let object3 = self.pagesCollection.newObject() { $0.content = TextPageContent() }
+
+        folder.insert([object1, object2, object3])
+
+        folder.sort(using: .type)
+
+        XCTAssertEqual(folder.contents[0].id, object2.id)
+        XCTAssertEqual(folder.contents[1].id, object3.id)
+        XCTAssertEqual(folder.contents[2].id, object1.id)
+    }
+
+    func test_sortUsingMethod_sortsFolderDescendingByDateCreated() {
+        let folder = self.foldersCollection.newObject()
+
+        let object1 = self.pagesCollection.newObject() { $0.dateCreated = Date(timeIntervalSinceReferenceDate: 29) }
+        let object2 = self.foldersCollection.newObject() { $0.dateCreated = Date(timeIntervalSinceReferenceDate: 30) }
+        let object3 = self.pagesCollection.newObject() { $0.dateCreated = Date(timeIntervalSinceReferenceDate: 31) }
+
+        folder.insert([object1, object2, object3])
+
+        folder.sort(using: .dateCreated)
+
+        XCTAssertEqual(folder.contents[0].id, object3.id)
+        XCTAssertEqual(folder.contents[1].id, object2.id)
+        XCTAssertEqual(folder.contents[2].id, object1.id)
+    }
+
+    func test_sortUsingMethod_sortsFolderDescendingUsingLastModified() {
+        let folder = self.foldersCollection.newObject()
+
+        let object1 = self.pagesCollection.newObject() { $0.dateModified = Date(timeIntervalSinceReferenceDate: 29) }
+        let object2 = self.foldersCollection.newObject()
+        let object3 = self.pagesCollection.newObject() { $0.dateModified = Date(timeIntervalSinceReferenceDate: 31) }
+
+        let subObject1 = self.pagesCollection.newObject() { $0.dateModified = Date(timeIntervalSinceReferenceDate: 32) }
+        object2.insert([subObject1])
+
+        folder.insert([object1, object2, object3])
+
+        folder.sort(using: .lastModified)
+
+        XCTAssertEqual(folder.contents[0].id, object2.id)
+        XCTAssertEqual(folder.contents[1].id, object3.id)
+        XCTAssertEqual(folder.contents[2].id, object1.id)
+    }
+
+
 
     //MARK: - .plistRepresentation
     func test_plistRepresentation_containsID() throws {

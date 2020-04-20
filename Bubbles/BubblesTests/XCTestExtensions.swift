@@ -14,6 +14,10 @@ extension XCTestCase {
         block(expectation)
         self.wait(for: [expectation], timeout: seconds)
     }
+
+    var testBundle: Bundle {
+        return Bundle(for: type(of: self))
+    }
 }
 
 

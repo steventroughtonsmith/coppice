@@ -339,9 +339,10 @@ class SourceListViewModel: ViewModel {
         return .folder(newFolder.id)
     }
 
-    func createPages(fromFilesAt urls: [URL], underNodes collection: SourceListNodeCollection) {
+    @discardableResult func createPages(fromFilesAt urls: [URL], underNodes collection: SourceListNodeCollection) -> [DocumentWindowViewModel.SidebarItem] {
         let lastNode = collection.nodes.last
-        self.documentWindowViewModel.createPages(fromFilesAtURLs: urls, in: lastNode?.folderForCreation, below: lastNode?.folderForCreation)
+        let pages = self.documentWindowViewModel.createPages(fromFilesAtURLs: urls, in: lastNode?.folderForCreation, below: lastNode?.folderItemForCreation)
+        return pages.map { .page($0.id) }
     }
 
 
@@ -364,37 +365,4 @@ class SourceListViewModel: ViewModel {
         let pages = nodeCollection.nodes.compactMap { ($0 as? PageSourceListNode)?.page }
         canvas.addPages(pages)
     }
-
-
-    //MARK: - Folders
-    enum FolderSortingMethod: CaseIterable {
-        case title
-        case type
-        case dateCreated
-        case lastModified
-
-        var localizedString: String {
-            switch self {
-            case .title: return NSLocalizedString("Title", comment: "Title folder sorting method")
-            case .type: return NSLocalizedString("Type", comment: "Type folder sorting method")
-            case .dateCreated: return NSLocalizedString("Date Created", comment: "Date Created folder sorting method")
-            case .lastModified: return NSLocalizedString("Last Modified", comment: "Last Modified folder sorting method")
-            }
-        }
-
-        func compare(_ first: FolderContainable, _ second: FolderContainable) -> Bool {
-            switch self {
-            case .title: return first.title < second.title
-            case .type: return first.sortType < second.sortType
-            case .dateCreated: return first.dateCreated > second.dateCreated
-            case .lastModified: return first.dateModified > second.dateModified
-            }
-        }
-    }
-
-    func sort(_ folder: Folder, using method: FolderSortingMethod) {
-        let contents = folder.contents.sorted(by: method.compare)
-        folder.contents = contents
-    }
-
 }
