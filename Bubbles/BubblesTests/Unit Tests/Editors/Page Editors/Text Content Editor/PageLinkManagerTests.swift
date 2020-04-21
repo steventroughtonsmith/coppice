@@ -20,7 +20,9 @@ class PageLinkManagerTests: XCTestCase {
         self.modelController = BubblesModelController(undoManager: UndoManager())
         self.linkedPage = self.modelController.collection(for: Page.self).newObject() { $0.title = "Hello World" }
         self.editingPage = self.modelController.collection(for: Page.self).newObject() { $0.title = "Editing Page" }
-        self.pageLinkManager = PageLinkManager(pageID: self.editingPage.id, modelController: self.modelController)
+        self.pageLinkManager = PageLinkManager(pageID: self.editingPage.id,
+                                               modelController: self.modelController,
+                                               parsingDelay: 0.1)
     }
 
 

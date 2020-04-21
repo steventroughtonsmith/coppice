@@ -25,9 +25,11 @@ class PageLinkManager: NSObject {
     let pageID: ModelID
     let modelController: ModelController
     private var observer: ModelCollection<Page>.Observation!
-    init(pageID: ModelID, modelController: ModelController) {
+    private let parsingDelay: TimeInterval
+    init(pageID: ModelID, modelController: ModelController, parsingDelay: TimeInterval = 0.5) {
         self.pageID = pageID
         self.modelController = modelController
+        self.parsingDelay = parsingDelay
 
         super.init()
 
@@ -68,7 +70,7 @@ class PageLinkManager: NSObject {
             return
         }
 
-        self.perform(#selector(reparseLinks), with: nil, afterDelay: 0.5)
+        self.perform(#selector(reparseLinks), with: nil, afterDelay: self.parsingDelay)
     }
 
     private var lastParsedText: NSAttributedString?

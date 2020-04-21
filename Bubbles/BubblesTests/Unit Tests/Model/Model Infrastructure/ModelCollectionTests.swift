@@ -213,7 +213,7 @@ class ModelCollectionTests: XCTestCase {
         }
 
         self.collection.notifyOfChange(to: object, changeType: .update, keyPath: \TestCollectableModelObject.intProperty)
-        self.wait(for: [observer1Expectation, observer2Expectation], timeout: 1)
+        self.wait(for: [observer1Expectation, observer2Expectation], timeout: 0.2)
     }
 
     func test_observation_doesntNotifyObserverIfRemovedBeforeChange() {
@@ -230,7 +230,7 @@ class ModelCollectionTests: XCTestCase {
 
         self.collection.removeObserver(observer1)
         self.collection.notifyOfChange(to: TestCollectableModelObject(), changeType: .update, keyPath: \TestCollectableModelObject.intProperty)
-        self.wait(for: [observer1Expectation, observer2Expectation], timeout: 1)
+        self.wait(for: [observer1Expectation, observer2Expectation], timeout: 0.2)
     }
 
 

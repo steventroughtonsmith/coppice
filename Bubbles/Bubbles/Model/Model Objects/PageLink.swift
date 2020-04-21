@@ -8,7 +8,7 @@
 
 import Cocoa
 
-struct PageLink {
+struct PageLink: Equatable {
     static let host = "page"
     static let querySourceName = "source"
     static let queryAutoName = "auto"

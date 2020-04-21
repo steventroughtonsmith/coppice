@@ -80,7 +80,7 @@ class SearchResultsViewModel: ViewModel {
         return sortedCanvases
     }
 
-    var matchingPages: [PageSearchResult] {
+    private var matchingPages: [PageSearchResult] {
         guard self.searchTerm.count > 0 else {
             return []
         }

@@ -16,6 +16,7 @@ class CanvasEditorViewModelTests: XCTestCase {
     var canvasPage2: CanvasPage!
 
     var viewModel: CanvasEditorViewModel!
+    var documentViewModel: MockDocumentWindowViewModel!
 
     override func setUp() {
         super.setUp()
@@ -27,7 +28,8 @@ class CanvasEditorViewModelTests: XCTestCase {
         self.canvasPage1 = canvasPageCollection.newObject() { $0.canvas = self.canvas }
         self.canvasPage2 = canvasPageCollection.newObject() { $0.canvas = self.canvas }
 
-        self.viewModel = CanvasEditorViewModel(canvas: self.canvas, documentWindowViewModel: MockDocumentWindowViewModel(modelController: self.modelController))
+        self.documentViewModel = MockDocumentWindowViewModel(modelController: self.modelController)
+        self.viewModel = CanvasEditorViewModel(canvas: self.canvas, documentWindowViewModel: self.documentViewModel)
     }
 
     override func tearDown() {
@@ -144,6 +146,60 @@ class CanvasEditorViewModelTests: XCTestCase {
 
     func test_canvasPageWithUUID_returnsNilIfNoCanvasPageMatchesUUID() {
         XCTAssertNil(self.viewModel.canvasPage(with: UUID()))
+    }
+
+
+    //MARK: - addPage(at:centredOn:)
+    func test_addPageAtLink_tellsDocumentVMToOpenPageOnCanvas() throws {
+        let pageLink = PageLink(destination: Page.modelID(with: UUID()))
+        self.viewModel.addPage(at: pageLink)
+
+        let (link, canvas) = try XCTUnwrap(self.documentViewModel.openPageAtLinkArguments)
+        XCTAssertEqual(link, pageLink)
+        XCTAssertEqual(canvas, self.canvas)
+    }
+
+    func test_addPageAtLink_flashesAllCanvasPagesOpened() throws {
+        let view = TestCanvasEditorView()
+        self.viewModel.view = view
+        let pageLink = PageLink(destination: Page.modelID(with: UUID()))
+        let canvasPage1 = CanvasPage()
+        let canvasPage2 = CanvasPage()
+
+        self.documentViewModel.openPageAtLinkReturn = [canvasPage1, canvasPage2]
+
+        self.viewModel.addPage(at: pageLink)
+
+        XCTAssertEqual(view.flashedPages.count, 2)
+        XCTAssertEqual(view.flashedPages[safe: 0], canvasPage1)
+        XCTAssertEqual(view.flashedPages[safe: 1], canvasPage2)
+    }
+
+
+    //MARK: - addPages(with:centredOn:)
+    func test_addPagesWithIDsCenteredOnPoint_tellsDocumentVMToAddPagesToCanvasAtSuppliedPoint() throws {
+        let page1 = self.modelController.collection(for: Page.self).newObject()
+        let page2 = self.modelController.collection(for: Page.self).newObject()
+
+        self.viewModel.addPages(with: [page1.id, page2.id], centredOn: CGPoint(x: 30, y: 50))
+
+        let (pages, canvas, point) = try XCTUnwrap(self.documentViewModel.addPagesToCanvasArguments)
+        XCTAssertEqual(pages, [page1, page2])
+        XCTAssertEqual(canvas, self.canvas)
+        XCTAssertEqual(point, CGPoint(x: 30, y: 50))
+    }
+
+    //MARK: - addPages(forFilesAtURLs:centredOn:)
+    func test_addPagesForFilesAtURLsCentredOnPoint_tellsDocumentVMToCreatesPagesFromURLsOnCanvasAtSuppliedPoint() throws {
+        let textURL = try XCTUnwrap(self.testBundle.url(forResource: "test-rtf", withExtension: "rtf"))
+        let imageURL = try XCTUnwrap(self.testBundle.url(forResource: "test-image", withExtension: "png"))
+
+        self.viewModel.addPages(forFilesAtURLs: [textURL, imageURL], centredOn: CGPoint(x: 30, y: 50))
+
+        let (urls, _, _, canvas, _) = try XCTUnwrap(self.documentViewModel.createPagesFromFilesAtURLsArguments)
+        XCTAssertEqual(urls, [textURL, imageURL])
+        XCTAssertEqual(canvas, self.canvas)
+//        XCTAssertEqual(point, CGPoint(x: 30, y: 50))
     }
 
 
@@ -278,6 +334,47 @@ class CanvasEditorViewModelTests: XCTestCase {
         XCTAssertEqual(self.viewModel.zoomFactor, 1, accuracy: 0.001)
     }
 
+    //MARK: .canZoomIn/Out/To100
+    func test_canZoomIn_returnsTrueIfSelectedZoomLevelIs0() throws {
+        self.viewModel.selectedZoomLevel = 0
+        XCTAssertTrue(self.viewModel.canZoomIn)
+    }
+
+    func test_canZoomIn_returnsTrueIfSelectedZoomLevelIsPenultimateLevel() throws {
+        self.viewModel.selectedZoomLevel = self.viewModel.zoomLevels.count - 2
+        XCTAssertTrue(self.viewModel.canZoomIn)
+    }
+
+    func test_canZoomIn_returnsFalseIfSelectedZoomLevelIsLastLevel() throws {
+        self.viewModel.selectedZoomLevel = self.viewModel.zoomLevels.count - 1
+        XCTAssertFalse(self.viewModel.canZoomIn)
+    }
+
+    func test_canZoomOut_returnsTrueIfSelectedZoomLevelIsLastLevel() throws {
+        self.viewModel.selectedZoomLevel = self.viewModel.zoomLevels.count - 1
+        XCTAssertTrue(self.viewModel.canZoomOut)
+    }
+
+    func test_canZoomOut_returnsTrueIfSelectedZoomLevelIs1() throws {
+        self.viewModel.selectedZoomLevel = 1
+        XCTAssertTrue(self.viewModel.canZoomOut)
+    }
+
+    func test_canZoomOut_returnsFalseIfSelectedZoomLevelIs0() throws {
+        self.viewModel.selectedZoomLevel = 0
+        XCTAssertFalse(self.viewModel.canZoomOut)
+    }
+
+    func test_canZoomTo100_returnsFalseIfZoomFactorIs1() throws {
+        self.viewModel.zoomFactor = 1
+        XCTAssertFalse(self.viewModel.canZoomTo100)
+    }
+
+    func test_canZoomTo100_returnsTrueIfZoomFactorIsLessThan1() throws {
+        self.viewModel.zoomFactor = 0.9
+        XCTAssertTrue(self.viewModel.canZoomTo100)
+    }
+
 
     //MARK: - Observation/Undo
     func test_updatesPagesIfCanvasPageAddedToCanvas() {
@@ -295,11 +392,51 @@ class CanvasEditorViewModelTests: XCTestCase {
     }
 
 
+
+    //MARK: - CanvasLayoutEngineDelegate
+
+    //MARK: - remove(pages:from:)
+    func test_removePagesFromLayout_closesSuppliedPages() throws {
+        let page = LayoutEnginePage(id: self.canvasPage1.id.uuid, contentFrame: .zero)
+        self.viewModel.remove(pages: [page], from: self.viewModel.layoutEngine)
+
+        XCTAssertNil(self.canvasPage1.canvas)
+        XCTAssertFalse(self.canvas.pages.contains(self.canvasPage1))
+    }
+
+    func test_removePagesFromLayout_doesntTouchOtherPageHierarchies() throws {
+        let page = LayoutEnginePage(id: self.canvasPage1.id.uuid, contentFrame: .zero)
+        self.viewModel.remove(pages: [page], from: self.viewModel.layoutEngine)
+
+        XCTAssertEqual(self.canvasPage2.canvas, self.canvas)
+        XCTAssertTrue(self.canvas.pages.contains(self.canvasPage2))
+    }
+
+
+    //MARK: - moved(pages:in:)
+    func test_movedPagesInLayout_updatesFramesofAllSuppliedPages() throws {
+        let page1 = LayoutEnginePage(id: self.canvasPage1.id.uuid, contentFrame: CGRect(x: 19, y: 20, width: 200, height: 200))
+        let page2 = LayoutEnginePage(id: self.canvasPage2.id.uuid, contentFrame: CGRect(x: -60, y: 40, width: 960, height: 400))
+        self.viewModel.moved(pages: [page1, page2], in: self.viewModel.layoutEngine)
+
+        XCTAssertEqual(self.canvasPage1.frame, CGRect(x: 19, y: 20, width: 200, height: 200))
+        XCTAssertEqual(self.canvasPage2.frame, CGRect(x: -60, y: 40, width: 960, height: 400))
+    }
+
+    func test_movedPagesInLayout_doesntUpdateFramesOfOtherPages() throws {
+        let expectedFrame = self.canvasPage2.frame
+        let page1 = LayoutEnginePage(id: self.canvasPage1.id.uuid, contentFrame: CGRect(x: 19, y: 20, width: 200, height: 200))
+        self.viewModel.moved(pages: [page1], in: self.viewModel.layoutEngine)
+
+        XCTAssertEqual(self.canvasPage2.frame, expectedFrame)
+    }
+
+
     //MARK: - Helpers
     class TestCanvasEditorView: CanvasEditorView {
-        var flashedPage: CanvasPage?
+        var flashedPages = [CanvasPage]()
         func flash(_ canvasPage: CanvasPage) {
-            self.flashedPage = canvasPage
+            self.flashedPages.append(canvasPage)
         }
 
         var updateZoomFactorCalled = false

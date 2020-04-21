@@ -162,6 +162,7 @@
 		999EA6EA244E032A00BF254E /* SidebarViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999EA6E9244E032A00BF254E /* SidebarViewModelTests.swift */; };
 		999EA6ED244E053300BF254E /* SearchResultsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999EA6EC244E053300BF254E /* SearchResultsViewModelTests.swift */; };
 		999EA6EF244E054400BF254E /* SearchResultsViewModelTypesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999EA6EE244E054400BF254E /* SearchResultsViewModelTypesTests.swift */; };
+		999EA6F2244F272E00BF254E /* CanvasPageInspectorViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999EA6F1244F272D00BF254E /* CanvasPageInspectorViewModelTests.swift */; };
 		99A0B853238961BF005FCF25 /* NSColor+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B852238961BF005FCF25 /* NSColor+M3Extensions.swift */; };
 		99A0B855238C2F46005FCF25 /* TextEditorAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B854238C2F46005FCF25 /* TextEditorAttributes.swift */; };
 		99A0B857238D6F74005FCF25 /* NSTextView+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B856238D6F74005FCF25 /* NSTextView+M3Extensions.swift */; };
@@ -420,6 +421,7 @@
 		999EA6E9244E032A00BF254E /* SidebarViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewModelTests.swift; sourceTree = "<group>"; };
 		999EA6EC244E053300BF254E /* SearchResultsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewModelTests.swift; sourceTree = "<group>"; };
 		999EA6EE244E054400BF254E /* SearchResultsViewModelTypesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewModelTypesTests.swift; sourceTree = "<group>"; };
+		999EA6F1244F272D00BF254E /* CanvasPageInspectorViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageInspectorViewModelTests.swift; sourceTree = "<group>"; };
 		99A0B852238961BF005FCF25 /* NSColor+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+M3Extensions.swift"; sourceTree = "<group>"; };
 		99A0B854238C2F46005FCF25 /* TextEditorAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorAttributes.swift; sourceTree = "<group>"; };
 		99A0B856238D6F74005FCF25 /* NSTextView+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextView+M3Extensions.swift"; sourceTree = "<group>"; };
@@ -966,6 +968,14 @@
 			path = "Search Results";
 			sourceTree = "<group>";
 		};
+		999EA6F0244F271100BF254E /* Canvas Page Inspector */ = {
+			isa = PBXGroup;
+			children = (
+				999EA6F1244F272D00BF254E /* CanvasPageInspectorViewModelTests.swift */,
+			);
+			path = "Canvas Page Inspector";
+			sourceTree = "<group>";
+		};
 		99A0B858238D72C2005FCF25 /* Inspectors */ = {
 			isa = PBXGroup;
 			children = (
@@ -977,6 +987,7 @@
 		99A0B859238D72CC005FCF25 /* Inspectors */ = {
 			isa = PBXGroup;
 			children = (
+				999EA6F0244F271100BF254E /* Canvas Page Inspector */,
 				99A0B85A238D72D2005FCF25 /* Text Editor Inspector */,
 			);
 			path = Inspectors;
@@ -1710,6 +1721,7 @@
 				99D170E6233D0542004EBD70 /* CanvasEditorViewModelTests.swift in Sources */,
 				999EA6EF244E054400BF254E /* SearchResultsViewModelTypesTests.swift in Sources */,
 				999EA6E32446003100BF254E /* ModelObjects+PasteboardTests.swift in Sources */,
+				999EA6F2244F272E00BF254E /* CanvasPageInspectorViewModelTests.swift in Sources */,
 				9923B06B22F45F7E0035D8C6 /* TestObjects.swift in Sources */,
 				9976A49323674254004D573D /* ModelWriterTests.swift in Sources */,
 			);
