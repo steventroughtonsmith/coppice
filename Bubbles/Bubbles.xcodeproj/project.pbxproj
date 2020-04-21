@@ -54,6 +54,7 @@
 		993D2C0224157735002E5BAC /* Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993D2C0124157735002E5BAC /* Folder.swift */; };
 		993D2C0424164D72002E5BAC /* FolderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993D2C0324164D72002E5BAC /* FolderTests.swift */; };
 		993D2C0E241674F2002E5BAC /* FolderContainable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993D2C0D241674F2002E5BAC /* FolderContainable.swift */; };
+		994253EF244F49A7008272E6 /* CanvasListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994253EE244F49A7008272E6 /* CanvasListViewModelTests.swift */; };
 		99488A9B23BA392E009954AF /* SmallCanvasCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99488A9A23BA392E009954AF /* SmallCanvasCell.swift */; };
 		99488A9F23BA3954009954AF /* LargeCanvasCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99488A9E23BA3954009954AF /* LargeCanvasCell.swift */; };
 		99488AA323BA3983009954AF /* SmallCanvasCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99488AA223BA3983009954AF /* SmallCanvasCell.xib */; };
@@ -311,6 +312,7 @@
 		993D2C0124157735002E5BAC /* Folder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Folder.swift; sourceTree = "<group>"; };
 		993D2C0324164D72002E5BAC /* FolderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderTests.swift; sourceTree = "<group>"; };
 		993D2C0D241674F2002E5BAC /* FolderContainable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderContainable.swift; sourceTree = "<group>"; };
+		994253EE244F49A7008272E6 /* CanvasListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CanvasListViewModelTests.swift; path = "BubblesTests/Unit Tests/Canvases Editor/CanvasListViewModelTests.swift"; sourceTree = SOURCE_ROOT; };
 		99488A9A23BA392E009954AF /* SmallCanvasCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallCanvasCell.swift; sourceTree = "<group>"; };
 		99488A9E23BA3954009954AF /* LargeCanvasCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeCanvasCell.swift; sourceTree = "<group>"; };
 		99488AA223BA3983009954AF /* SmallCanvasCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SmallCanvasCell.xib; sourceTree = "<group>"; };
@@ -648,6 +650,23 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		994253EC244F498E008272E6 /* Canvas Editor */ = {
+			isa = PBXGroup;
+			children = (
+				99D170E5233D0542004EBD70 /* CanvasEditorViewModelTests.swift */,
+				99C03EFF23293DA400EB7516 /* Layout Engine */,
+			);
+			path = "Canvas Editor";
+			sourceTree = "<group>";
+		};
+		994253ED244F4995008272E6 /* Canvas List */ = {
+			isa = PBXGroup;
+			children = (
+				994253EE244F49A7008272E6 /* CanvasListViewModelTests.swift */,
+			);
+			path = "Canvas List";
+			sourceTree = "<group>";
+		};
 		99488AAC23C37B77009954AF /* Thumbnail Generation */ = {
 			isa = PBXGroup;
 			children = (
@@ -664,15 +683,6 @@
 				9957B087239FD3D800BA3C0B /* DocumentWindowViewModelTests.swift */,
 			);
 			path = DocumentWindow;
-			sourceTree = "<group>";
-		};
-		99581079230D758700D996C4 /* Editors */ = {
-			isa = PBXGroup;
-			children = (
-				99C03EFE23293D9F00EB7516 /* CanvasEditor */,
-				99868F3923981001009AC0F7 /* Page Editors */,
-			);
-			path = Editors;
 			sourceTree = "<group>";
 		};
 		9958107A230D759100D996C4 /* Text Content Editor */ = {
@@ -779,7 +789,8 @@
 			children = (
 				999EA6D2244096AD00BF254E /* Extensions */,
 				9957B086239FD3CA00BA3C0B /* DocumentWindow */,
-				99581079230D758700D996C4 /* Editors */,
+				99C03EFE23293D9F00EB7516 /* Canvases Editor */,
+				99868F3923981001009AC0F7 /* Page Editors */,
 				99DEF28D22F33A2E0020A7CE /* Model */,
 				999EA6E8244E031500BF254E /* Sidebar */,
 				99D4D59622F864E200F69C1F /* Source List */,
@@ -1045,13 +1056,13 @@
 			path = "Event Contexts";
 			sourceTree = "<group>";
 		};
-		99C03EFE23293D9F00EB7516 /* CanvasEditor */ = {
+		99C03EFE23293D9F00EB7516 /* Canvases Editor */ = {
 			isa = PBXGroup;
 			children = (
-				99D170E5233D0542004EBD70 /* CanvasEditorViewModelTests.swift */,
-				99C03EFF23293DA400EB7516 /* Layout Engine */,
+				994253ED244F4995008272E6 /* Canvas List */,
+				994253EC244F498E008272E6 /* Canvas Editor */,
 			);
-			path = CanvasEditor;
+			path = "Canvases Editor";
 			sourceTree = "<group>";
 		};
 		99C03EFF23293DA400EB7516 /* Layout Engine */ = {
@@ -1723,6 +1734,7 @@
 				999EA6E32446003100BF254E /* ModelObjects+PasteboardTests.swift in Sources */,
 				999EA6F2244F272E00BF254E /* CanvasPageInspectorViewModelTests.swift in Sources */,
 				9923B06B22F45F7E0035D8C6 /* TestObjects.swift in Sources */,
+				994253EF244F49A7008272E6 /* CanvasListViewModelTests.swift in Sources */,
 				9976A49323674254004D573D /* ModelWriterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
