@@ -51,4 +51,11 @@ class MockDocumentWindowViewModel: DocumentWindowViewModel {
         }
         return super.createPages(fromFilesAtURLs: fileURLs, in: folder, below: item, addingTo: canvas, centredOn: point)
     }
+
+
+    var deleteCanvasArguments: (Canvas)?
+    override func delete(_ canvas: Canvas) {
+        self.deleteCanvasArguments = (canvas)
+        super.delete(canvas)
+    }
 }
