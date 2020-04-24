@@ -30,42 +30,6 @@ class DocumentWindowViewModelTests: XCTestCase {
     }
 
 
-    //MARK: - .rootFolder
-    func test_rootFolder_createsNewRootFolderIfNotInSettings() {
-        let folderCollection = self.modelController.collection(for: Folder.self)
-        XCTAssertEqual(folderCollection.all.count, 0)
-
-        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
-        let rootFolder = viewModel.rootFolder
-
-        XCTAssertNotNil(folderCollection.objectWithID(rootFolder.id))
-    }
-
-    func test_rootFolder_createsNewRootFolderIfIDInSettingsNotFoundInCollection() {
-        let folderCollection = self.modelController.collection(for: Folder.self)
-        XCTAssertEqual(folderCollection.all.count, 0)
-
-        self.modelController.settings.set(Folder.modelID(with: UUID()), for: .rootFolder)
-
-        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
-        let rootFolder = viewModel.rootFolder
-
-        XCTAssertNotNil(folderCollection.objectWithID(rootFolder.id))
-    }
-
-    func test_rootFolder_returnsExistingRootFolderIfItExistsAndSetInSettings() {
-        let folderCollection = self.modelController.collection(for: Folder.self)
-        let expectedRootFolder = folderCollection.newObject()
-
-        self.modelController.settings.set(expectedRootFolder.id, for: .rootFolder)
-
-        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
-        let rootFolder = viewModel.rootFolder
-
-        XCTAssertEqual(rootFolder, expectedRootFolder)
-    }
-
-
     //MARK: - .canvasesForNewPages
     func test_canvasForNewPages_returnsNilIfNothingSelectedInSidebar() {
         let viewModel = DocumentWindowViewModel(modelController: self.modelController)
@@ -242,300 +206,294 @@ class DocumentWindowViewModelTests: XCTestCase {
 
 
     //MARK: - createPage()
-    func test_createPage_addsANewPageToCollection() {
-        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
-        let page = viewModel.createPage()
-        XCTAssertTrue(viewModel.pageCollection.all.contains(page))
-    }
-
-    func test_createPage_ifSidebarSelectionIsEmptySetsToNewPage() {
-        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
-        let page = viewModel.createPage()
-
-        XCTAssertEqual(viewModel.sidebarSelection.first, .page(page.id))
-    }
-
-    func test_createPage_ifSidebarSelectionContainsOnlyPageSetsToNewPage() {
-        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
-        viewModel.updateSelection([.page(self.page.id)])
-        let page = viewModel.createPage()
-        XCTAssertEqual(viewModel.sidebarSelection.first, .page(page.id))
-    }
-
-    func test_createPage_ifSidebarSelectionContainsCanvasesDoesntChangeSidebar() {
-        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
-        viewModel.updateSelection([.canvases, .page(self.page.id)])
-        viewModel.createPage()
-        XCTAssertEqual(viewModel.sidebarSelection.first, .canvases)
-    }
-
-    func test_createPage_ifSidebarSelectionContainsCanvasesAndCanvasSelectedThenAddsPageToCanvas() {
-        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
-        viewModel.updateSelection([.canvases])
-        viewModel.selectedCanvasID = self.canvas.id
-        let page = viewModel.createPage()
-        XCTAssertEqual(page.canvases.first?.canvas, self.canvas)
-    }
-
-    func test_createPage_ifSuppliedFolderIsNilThenAddsToFolderForNewPages() {
-        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
-        let folder = self.modelController.collection(for: Folder.self).newObject()
-        let page = self.modelController.collection(for: Page.self).newObject()
-        folder.insert([page])
-
-        viewModel.updateSelection([.page(page.id)])
-
-        let newPage = viewModel.createPage()
-        XCTAssertEqual(newPage.containingFolder, folder)
-        XCTAssertTrue(folder.contents.contains(where: { $0.id == newPage.id }))
-    }
-
-    func test_createPage_ifSuppliedFolderIsSetThenAddsToThatFolderRatherThanFolderForNewPages() {
-        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
-        let folder = self.modelController.collection(for: Folder.self).newObject()
-        let page = self.modelController.collection(for: Page.self).newObject()
-        viewModel.rootFolder.insert([page])
-
-        viewModel.updateSelection([.page(self.page.id)])
-
-        let newPage = viewModel.createPage(in: folder)
-        XCTAssertEqual(newPage.containingFolder, folder)
-        XCTAssertTrue(folder.contents.contains(where: { $0.id == newPage.id }))
-    }
-
-    func test_createPage_undoingRemovesPageFromCollection() {
-        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
-        let page = viewModel.createPage()
-        self.modelController.undoManager.undo()
-        XCTAssertNil(viewModel.pageCollection.objectWithID(page.id))
-    }
-
-    func test_createPage_undoingRevertsSidebarToNilIfNoSelection() {
-        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
-        viewModel.createPage()
-        self.modelController.undoManager.undo()
-//        XCTAssertEqual(viewModel.selectedSidebarObjectIDs.count, 0)
-        XCTFail("Need to update")
-    }
-
-    func test_createPage_undoingRevertsSidebarToPreviouslySelectedPage() {
-        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
-//        viewModel.selectedSidebarObjectIDs = Set([self.page.id])
-        viewModel.createPage()
-        self.modelController.undoManager.undo()
-//        XCTAssertEqual(viewModel.selectedSidebarObjectIDs.first, self.page.id)
-        XCTFail("Need to update")
-    }
-
-    func test_createPage_removesPageFromCanvasIfOneWasSelected() {
-        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
-//        viewModel.selectedSidebarObjectIDs = Set([self.canvas.id])
-        let page = viewModel.createPage()
-
-        self.modelController.undoManager.undo()
-        XCTAssertNil(self.canvas.pages.first(where: { $0.page?.id == page.id }))
-        XCTFail("Need to update")
-    }
-
-    func test_createPage_redoRecreatesPageWithSameIDAndProperties() throws {
-        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
-        let page = viewModel.createPage()
-
-        self.modelController.undoManager.undo()
-        self.modelController.undoManager.redo()
-
-        let redonePage = try XCTUnwrap(viewModel.pageCollection.objectWithID(page.id))
-
-        XCTAssertEqual(redonePage.title, page.title)
-        XCTAssertEqual(redonePage.dateCreated, page.dateCreated)
-        XCTAssertEqual(redonePage.dateModified, page.dateModified)
-        XCTAssertEqual(redonePage.content.contentType, page.content.contentType)
-        XCTAssertEqual(redonePage.content.page, redonePage)
-    }
-
-    func test_createPage_redoRecreatesPageOnCanvasIfOneWasSelected() throws {
-        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
-        viewModel.updateSelection([.canvases])
-        viewModel.selectedCanvasID = self.canvas.id
-        let page = viewModel.createPage()
-
-        self.modelController.undoManager.undo()
-        self.modelController.undoManager.redo()
-
-        let redonePage = try XCTUnwrap(viewModel.pageCollection.objectWithID(page.id))
-        XCTAssertNotNil(self.canvas.pages.first(where: { $0.page?.id == redonePage.id}))
-    }
+//    func test_createPage_ifSidebarSelectionIsEmptySetsToNewPage() {
+//        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+//        let page = viewModel.createPage()
+//
+//        XCTAssertEqual(viewModel.sidebarSelection.first, .page(page.id))
+//    }
+//
+//    func test_createPage_ifSidebarSelectionContainsOnlyPageSetsToNewPage() {
+//        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+//        viewModel.updateSelection([.page(self.page.id)])
+//        let page = viewModel.createPage()
+//        XCTAssertEqual(viewModel.sidebarSelection.first, .page(page.id))
+//    }
+//
+//    func test_createPage_ifSidebarSelectionContainsCanvasesDoesntChangeSidebar() {
+//        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+//        viewModel.updateSelection([.canvases, .page(self.page.id)])
+//        viewModel.createPage()
+//        XCTAssertEqual(viewModel.sidebarSelection.first, .canvases)
+//    }
+//
+//    func test_createPage_ifSidebarSelectionContainsCanvasesAndCanvasSelectedThenAddsPageToCanvas() {
+//        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+//        viewModel.updateSelection([.canvases])
+//        viewModel.selectedCanvasID = self.canvas.id
+//        let page = viewModel.createPage()
+//        XCTAssertEqual(page.canvases.first?.canvas, self.canvas)
+//    }
+//
+//    func test_createPage_ifSuppliedFolderIsNilThenAddsToFolderForNewPages() {
+//        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+//        let folder = self.modelController.collection(for: Folder.self).newObject()
+//        let page = self.modelController.collection(for: Page.self).newObject()
+//        folder.insert([page])
+//
+//        viewModel.updateSelection([.page(page.id)])
+//
+//        let newPage = viewModel.createPage()
+//        XCTAssertEqual(newPage.containingFolder, folder)
+//        XCTAssertTrue(folder.contents.contains(where: { $0.id == newPage.id }))
+//    }
+//
+//    func test_createPage_ifSuppliedFolderIsSetThenAddsToThatFolderRatherThanFolderForNewPages() {
+//        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+//        let folder = self.modelController.collection(for: Folder.self).newObject()
+//        let page = self.modelController.collection(for: Page.self).newObject()
+//        viewModel.rootFolder.insert([page])
+//
+//        viewModel.updateSelection([.page(self.page.id)])
+//
+//        let newPage = viewModel.createPage(in: folder)
+//        XCTAssertEqual(newPage.containingFolder, folder)
+//        XCTAssertTrue(folder.contents.contains(where: { $0.id == newPage.id }))
+//    }
+//
+//    func test_createPage_undoingRemovesPageFromCollection() {
+//        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+//        let page = viewModel.createPage()
+//        self.modelController.undoManager.undo()
+//        XCTAssertNil(viewModel.pageCollection.objectWithID(page.id))
+//    }
+//
+//    func test_createPage_undoingRevertsSidebarToNilIfNoSelection() {
+//        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+//        viewModel.createPage()
+//        self.modelController.undoManager.undo()
+////        XCTAssertEqual(viewModel.selectedSidebarObjectIDs.count, 0)
+//        XCTFail("Need to update")
+//    }
+//
+//    func test_createPage_undoingRevertsSidebarToPreviouslySelectedPage() {
+//        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+////        viewModel.selectedSidebarObjectIDs = Set([self.page.id])
+//        viewModel.createPage()
+//        self.modelController.undoManager.undo()
+////        XCTAssertEqual(viewModel.selectedSidebarObjectIDs.first, self.page.id)
+//        XCTFail("Need to update")
+//    }
+//
+//    func test_createPage_removesPageFromCanvasIfOneWasSelected() {
+//        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+////        viewModel.selectedSidebarObjectIDs = Set([self.canvas.id])
+//        let page = viewModel.createPage()
+//
+//        self.modelController.undoManager.undo()
+//        XCTAssertNil(self.canvas.pages.first(where: { $0.page?.id == page.id }))
+//        XCTFail("Need to update")
+//    }
+//
+//    func test_createPage_redoRecreatesPageWithSameIDAndProperties() throws {
+//        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+//        let page = viewModel.createPage()
+//
+//        self.modelController.undoManager.undo()
+//        self.modelController.undoManager.redo()
+//
+//        let redonePage = try XCTUnwrap(viewModel.pageCollection.objectWithID(page.id))
+//
+//        XCTAssertEqual(redonePage.title, page.title)
+//        XCTAssertEqual(redonePage.dateCreated, page.dateCreated)
+//        XCTAssertEqual(redonePage.dateModified, page.dateModified)
+//        XCTAssertEqual(redonePage.content.contentType, page.content.contentType)
+//        XCTAssertEqual(redonePage.content.page, redonePage)
+//    }
+//
+//    func test_createPage_redoRecreatesPageOnCanvasIfOneWasSelected() throws {
+//        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+//        viewModel.updateSelection([.canvases])
+//        viewModel.selectedCanvasID = self.canvas.id
+//        let page = viewModel.createPage()
+//
+//        self.modelController.undoManager.undo()
+//        self.modelController.undoManager.redo()
+//
+//        let redonePage = try XCTUnwrap(viewModel.pageCollection.objectWithID(page.id))
+//        XCTAssertNotNil(self.canvas.pages.first(where: { $0.page?.id == redonePage.id}))
+//    }
 
 
     //MARK: - createPages(fromFilesAtURLs:addingTo:centredOn:)
-    func test_createPagesFromFilesAtURLs_createsNewPagesForSuppliedFileURLs() {
-        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
-        let bundle = Bundle(for: type(of: self))
-        let fileURLs = [
-            bundle.url(forResource: "test-image", withExtension: "png")!,
-            bundle.url(forResource: "test-rtf", withExtension: "rtf")!
-        ]
-
-        let pages = viewModel.createPages(fromFilesAtURLs: fileURLs)
-        XCTAssertEqual(pages.count, 2)
-        XCTAssertEqual(pages.first?.content.contentType, .image)
-        XCTAssertEqual(pages.last?.content.contentType, .text)
-    }
-
-    func test_createPagesFromFilesAtURLs_doesntAddPagesToCanvasIfNoneSupplied() {
-        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
-        let bundle = Bundle(for: type(of: self))
-        let fileURLs = [
-            bundle.url(forResource: "test-image", withExtension: "png")!,
-            bundle.url(forResource: "test-rtf", withExtension: "rtf")!
-        ]
-
-        let pages = viewModel.createPages(fromFilesAtURLs: fileURLs)
-        XCTAssertEqual(pages.first?.canvases.count, 0)
-        XCTAssertEqual(pages.last?.canvases.count, 0)
-    }
-
-    func test_createPagesFromFilesAtURLs_addsPagesToCanvasIfOneSupplied() {
-        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
-        let bundle = Bundle(for: type(of: self))
-        let fileURLs = [
-            bundle.url(forResource: "test-image", withExtension: "png")!,
-            bundle.url(forResource: "test-rtf", withExtension: "rtf")!
-        ]
-
-        let pages = viewModel.createPages(fromFilesAtURLs: fileURLs, addingTo: self.canvas)
-        XCTAssertEqual(pages.first?.canvases.first?.canvas, self.canvas)
-        XCTAssertEqual(pages.last?.canvases.first?.canvas, self.canvas)
-    }
-
-    func test_createPagesFromFilesAtURLs_ifFolderIsNilThenAddsPagesToFolderForNewPages() {
-        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
-        let folder = self.modelController.collection(for: Folder.self).newObject()
-        let page = self.modelController.collection(for: Page.self).newObject()
-        folder.insert([page])
-
-        viewModel.updateSelection([.page(page.id)])
-
-        let bundle = Bundle(for: type(of: self))
-        let fileURLs = [
-            bundle.url(forResource: "test-image", withExtension: "png")!,
-            bundle.url(forResource: "test-rtf", withExtension: "rtf")!
-        ]
-
-        let pages = viewModel.createPages(fromFilesAtURLs: fileURLs, addingTo: self.canvas)
-        XCTAssertEqual(pages.first?.containingFolder, folder)
-        XCTAssertEqual(pages.last?.containingFolder, folder)
-
-        XCTAssertTrue(folder.contents.contains(where: { $0.id == pages[0].id }))
-        XCTAssertTrue(folder.contents.contains(where: { $0.id == pages[1].id }))
-    }
-
-    func test_createPagesFromFilesAtURLs_ifFolderIsSetThenAddsPagesToSuppliedFolder() {
-        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
-        let folder = self.modelController.collection(for: Folder.self).newObject()
-        let page = self.modelController.collection(for: Page.self).newObject()
-        viewModel.rootFolder.insert([page])
-
-        viewModel.updateSelection([.page(page.id)])
-
-        let bundle = Bundle(for: type(of: self))
-        let fileURLs = [
-            bundle.url(forResource: "test-image", withExtension: "png")!,
-            bundle.url(forResource: "test-rtf", withExtension: "rtf")!
-        ]
-
-        let pages = viewModel.createPages(fromFilesAtURLs: fileURLs, in: folder, addingTo: self.canvas)
-        XCTAssertEqual(pages.first?.containingFolder, folder)
-        XCTAssertEqual(pages.last?.containingFolder, folder)
-
-        XCTAssertTrue(folder.contents.contains(where: { $0.id == pages[0].id }))
-        XCTAssertTrue(folder.contents.contains(where: { $0.id == pages[1].id }))
-    }
-
-    func test_createPagesFromFilesAtURLs_undoingRemovesPagesFromCollection() throws {
-        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
-        let bundle = Bundle(for: type(of: self))
-        let fileURLs = [
-            bundle.url(forResource: "test-image", withExtension: "png")!,
-            bundle.url(forResource: "test-rtf", withExtension: "rtf")!
-        ]
-
-        let pages = viewModel.createPages(fromFilesAtURLs: fileURLs)
-        let imagePage = try XCTUnwrap(pages.first)
-        let textPage = try XCTUnwrap(pages.last)
-
-        self.modelController.undoManager.undo()
-
-        XCTAssertNil(viewModel.pageCollection.objectWithID(imagePage.id))
-        XCTAssertNil(viewModel.pageCollection.objectWithID(textPage.id))
-    }
-
-    func test_createPagesFromFilesAtURLs_undoingRemovesPagesFromCanvasIfOneWasSupplied() throws{
-        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
-        let bundle = Bundle(for: type(of: self))
-        let fileURLs = [
-            bundle.url(forResource: "test-image", withExtension: "png")!,
-            bundle.url(forResource: "test-rtf", withExtension: "rtf")!
-        ]
-
-        let pages = viewModel.createPages(fromFilesAtURLs: fileURLs, addingTo: self.canvas)
-        let imagePage = try XCTUnwrap(pages.first)
-        let textPage = try XCTUnwrap(pages.last)
-
-        self.modelController.undoManager.undo()
-
-        XCTAssertNil(self.canvas.pages.first(where: { $0.page?.id == imagePage.id }))
-        XCTAssertNil(self.canvas.pages.first(where: { $0.page?.id == textPage.id }))
-    }
-
-    func test_createPagesFromFilesAtURLs_redoingRecreatesPagesWithSameIDsAndContent() throws {
-        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
-        let bundle = Bundle(for: type(of: self))
-        let fileURLs = [
-            bundle.url(forResource: "test-image", withExtension: "png")!,
-            bundle.url(forResource: "test-rtf", withExtension: "rtf")!
-        ]
-
-        let pages = viewModel.createPages(fromFilesAtURLs: fileURLs, addingTo: self.canvas)
-        let imagePage = try XCTUnwrap(pages.first)
-        let textPage = try XCTUnwrap(pages.last)
-
-        self.modelController.undoManager.undo()
-        self.modelController.undoManager.redo()
-
-        let redoneImagePage = try XCTUnwrap(viewModel.pageCollection.objectWithID(imagePage.id))
-        XCTAssertEqual(redoneImagePage.title, imagePage.title)
-        XCTAssertEqual(redoneImagePage.dateCreated, imagePage.dateCreated)
-        XCTAssertEqual(redoneImagePage.dateModified, imagePage.dateModified)
-        XCTAssertEqual(redoneImagePage.content.contentType, imagePage.content.contentType)
-        XCTAssertEqual((redoneImagePage.content as? ImagePageContent)?.image, (imagePage.content as? ImagePageContent)?.image)
-
-        let redoneTextPage = try XCTUnwrap(viewModel.pageCollection.objectWithID(textPage.id))
-        XCTAssertEqual(redoneTextPage.title, textPage.title)
-        XCTAssertEqual(redoneTextPage.dateCreated, textPage.dateCreated)
-        XCTAssertEqual(redoneTextPage.dateModified, textPage.dateModified)
-        XCTAssertEqual(redoneTextPage.content.contentType, textPage.content.contentType)
-        XCTAssertEqual((redoneTextPage.content as? TextPageContent)?.text, (textPage.content as? TextPageContent)?.text)
-    }
-
-    func test_createPagesFromFilesAtURLs_redoingAddsPagesBackToCanvas() throws {
-        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
-        let bundle = Bundle(for: type(of: self))
-        let fileURLs = [
-            bundle.url(forResource: "test-image", withExtension: "png")!,
-            bundle.url(forResource: "test-rtf", withExtension: "rtf")!
-        ]
-
-        let pages = viewModel.createPages(fromFilesAtURLs: fileURLs, addingTo: self.canvas)
-        let imagePage = try XCTUnwrap(pages.first)
-        let textPage = try XCTUnwrap(pages.last)
-
-        self.modelController.undoManager.undo()
-        self.modelController.undoManager.redo()
-
-        XCTAssertNotNil(self.canvas.pages.first(where: { $0.page?.id == imagePage.id }))
-        XCTAssertNotNil(self.canvas.pages.first(where: { $0.page?.id == textPage.id }))
-    }
+//    func test_createPagesFromFilesAtURLs_createsNewPagesForSuppliedFileURLs() {
+//        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+//        let bundle = Bundle(for: type(of: self))
+//        let fileURLs = [
+//            bundle.url(forResource: "test-image", withExtension: "png")!,
+//            bundle.url(forResource: "test-rtf", withExtension: "rtf")!
+//        ]
+//
+//        let pages = viewModel.createPages(fromFilesAtURLs: fileURLs)
+//        XCTAssertEqual(pages.count, 2)
+//        XCTAssertEqual(pages.first?.content.contentType, .image)
+//        XCTAssertEqual(pages.last?.content.contentType, .text)
+//    }
+//
+//    func test_createPagesFromFilesAtURLs_doesntAddPagesToCanvasIfNoneSupplied() {
+//        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+//        let bundle = Bundle(for: type(of: self))
+//        let fileURLs = [
+//            bundle.url(forResource: "test-image", withExtension: "png")!,
+//            bundle.url(forResource: "test-rtf", withExtension: "rtf")!
+//        ]
+//
+//        let pages = viewModel.createPages(fromFilesAtURLs: fileURLs)
+//        XCTAssertEqual(pages.first?.canvases.count, 0)
+//        XCTAssertEqual(pages.last?.canvases.count, 0)
+//    }
+//
+//    func test_createPagesFromFilesAtURLs_addsPagesToCanvasIfOneSupplied() {
+//        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+//        let bundle = Bundle(for: type(of: self))
+//        let fileURLs = [
+//            bundle.url(forResource: "test-image", withExtension: "png")!,
+//            bundle.url(forResource: "test-rtf", withExtension: "rtf")!
+//        ]
+//
+//        let pages = viewModel.createPages(fromFilesAtURLs: fileURLs, addingTo: self.canvas)
+//        XCTAssertEqual(pages.first?.canvases.first?.canvas, self.canvas)
+//        XCTAssertEqual(pages.last?.canvases.first?.canvas, self.canvas)
+//    }
+//
+//    func test_createPagesFromFilesAtURLs_ifFolderIsNilThenAddsPagesToFolderForNewPages() {
+//        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+//        let folder = self.modelController.collection(for: Folder.self).newObject()
+//        let page = self.modelController.collection(for: Page.self).newObject()
+//        folder.insert([page])
+//
+//        viewModel.updateSelection([.page(page.id)])
+//
+//        let bundle = Bundle(for: type(of: self))
+//        let fileURLs = [
+//            bundle.url(forResource: "test-image", withExtension: "png")!,
+//            bundle.url(forResource: "test-rtf", withExtension: "rtf")!
+//        ]
+//
+//        let pages = viewModel.createPages(fromFilesAtURLs: fileURLs, addingTo: self.canvas)
+//        XCTAssertEqual(pages.first?.containingFolder, folder)
+//        XCTAssertEqual(pages.last?.containingFolder, folder)
+//
+//        XCTAssertTrue(folder.contents.contains(where: { $0.id == pages[0].id }))
+//        XCTAssertTrue(folder.contents.contains(where: { $0.id == pages[1].id }))
+//    }
+//
+//    func test_createPagesFromFilesAtURLs_ifFolderIsSetThenAddsPagesToSuppliedFolder() {
+//        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+//        let folder = self.modelController.collection(for: Folder.self).newObject()
+//        let page = self.modelController.collection(for: Page.self).newObject()
+//        viewModel.rootFolder.insert([page])
+//
+//        viewModel.updateSelection([.page(page.id)])
+//
+//        let bundle = Bundle(for: type(of: self))
+//        let fileURLs = [
+//            bundle.url(forResource: "test-image", withExtension: "png")!,
+//            bundle.url(forResource: "test-rtf", withExtension: "rtf")!
+//        ]
+//
+//        let pages = viewModel.createPages(fromFilesAtURLs: fileURLs, in: folder, addingTo: self.canvas)
+//        XCTAssertEqual(pages.first?.containingFolder, folder)
+//        XCTAssertEqual(pages.last?.containingFolder, folder)
+//
+//        XCTAssertTrue(folder.contents.contains(where: { $0.id == pages[0].id }))
+//        XCTAssertTrue(folder.contents.contains(where: { $0.id == pages[1].id }))
+//    }
+//
+//    func test_createPagesFromFilesAtURLs_undoingRemovesPagesFromCollection() throws {
+//        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+//        let bundle = Bundle(for: type(of: self))
+//        let fileURLs = [
+//            bundle.url(forResource: "test-image", withExtension: "png")!,
+//            bundle.url(forResource: "test-rtf", withExtension: "rtf")!
+//        ]
+//
+//        let pages = viewModel.createPages(fromFilesAtURLs: fileURLs)
+//        let imagePage = try XCTUnwrap(pages.first)
+//        let textPage = try XCTUnwrap(pages.last)
+//
+//        self.modelController.undoManager.undo()
+//
+//        XCTAssertNil(viewModel.pageCollection.objectWithID(imagePage.id))
+//        XCTAssertNil(viewModel.pageCollection.objectWithID(textPage.id))
+//    }
+//
+//    func test_createPagesFromFilesAtURLs_undoingRemovesPagesFromCanvasIfOneWasSupplied() throws{
+//        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+//        let bundle = Bundle(for: type(of: self))
+//        let fileURLs = [
+//            bundle.url(forResource: "test-image", withExtension: "png")!,
+//            bundle.url(forResource: "test-rtf", withExtension: "rtf")!
+//        ]
+//
+//        let pages = viewModel.createPages(fromFilesAtURLs: fileURLs, addingTo: self.canvas)
+//        let imagePage = try XCTUnwrap(pages.first)
+//        let textPage = try XCTUnwrap(pages.last)
+//
+//        self.modelController.undoManager.undo()
+//
+//        XCTAssertNil(self.canvas.pages.first(where: { $0.page?.id == imagePage.id }))
+//        XCTAssertNil(self.canvas.pages.first(where: { $0.page?.id == textPage.id }))
+//    }
+//
+//    func test_createPagesFromFilesAtURLs_redoingRecreatesPagesWithSameIDsAndContent() throws {
+//        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+//        let bundle = Bundle(for: type(of: self))
+//        let fileURLs = [
+//            bundle.url(forResource: "test-image", withExtension: "png")!,
+//            bundle.url(forResource: "test-rtf", withExtension: "rtf")!
+//        ]
+//
+//        let pages = viewModel.createPages(fromFilesAtURLs: fileURLs, addingTo: self.canvas)
+//        let imagePage = try XCTUnwrap(pages.first)
+//        let textPage = try XCTUnwrap(pages.last)
+//
+//        self.modelController.undoManager.undo()
+//        self.modelController.undoManager.redo()
+//
+//        let redoneImagePage = try XCTUnwrap(viewModel.pageCollection.objectWithID(imagePage.id))
+//        XCTAssertEqual(redoneImagePage.title, imagePage.title)
+//        XCTAssertEqual(redoneImagePage.dateCreated, imagePage.dateCreated)
+//        XCTAssertEqual(redoneImagePage.dateModified, imagePage.dateModified)
+//        XCTAssertEqual(redoneImagePage.content.contentType, imagePage.content.contentType)
+//        XCTAssertEqual((redoneImagePage.content as? ImagePageContent)?.image, (imagePage.content as? ImagePageContent)?.image)
+//
+//        let redoneTextPage = try XCTUnwrap(viewModel.pageCollection.objectWithID(textPage.id))
+//        XCTAssertEqual(redoneTextPage.title, textPage.title)
+//        XCTAssertEqual(redoneTextPage.dateCreated, textPage.dateCreated)
+//        XCTAssertEqual(redoneTextPage.dateModified, textPage.dateModified)
+//        XCTAssertEqual(redoneTextPage.content.contentType, textPage.content.contentType)
+//        XCTAssertEqual((redoneTextPage.content as? TextPageContent)?.text, (textPage.content as? TextPageContent)?.text)
+//    }
+//
+//    func test_createPagesFromFilesAtURLs_redoingAddsPagesBackToCanvas() throws {
+//        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+//        let bundle = Bundle(for: type(of: self))
+//        let fileURLs = [
+//            bundle.url(forResource: "test-image", withExtension: "png")!,
+//            bundle.url(forResource: "test-rtf", withExtension: "rtf")!
+//        ]
+//
+//        let pages = viewModel.createPages(fromFilesAtURLs: fileURLs, addingTo: self.canvas)
+//        let imagePage = try XCTUnwrap(pages.first)
+//        let textPage = try XCTUnwrap(pages.last)
+//
+//        self.modelController.undoManager.undo()
+//        self.modelController.undoManager.redo()
+//
+//        XCTAssertNotNil(self.canvas.pages.first(where: { $0.page?.id == imagePage.id }))
+//        XCTAssertNotNil(self.canvas.pages.first(where: { $0.page?.id == textPage.id }))
+//    }
 
 
     //MARK: - delete(_: [SideBarItem]) - Single Page

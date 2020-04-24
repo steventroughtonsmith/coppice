@@ -55,7 +55,6 @@
 		993D2C0424164D72002E5BAC /* FolderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993D2C0324164D72002E5BAC /* FolderTests.swift */; };
 		993D2C0E241674F2002E5BAC /* FolderContainable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993D2C0D241674F2002E5BAC /* FolderContainable.swift */; };
 		994253EF244F49A7008272E6 /* CanvasListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994253EE244F49A7008272E6 /* CanvasListViewModelTests.swift */; };
-		994253F124509404008272E6 /* DocumentWindowViewModel+CreationAndDeletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994253F024509404008272E6 /* DocumentWindowViewModel+CreationAndDeletion.swift */; };
 		99488A9B23BA392E009954AF /* SmallCanvasCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99488A9A23BA392E009954AF /* SmallCanvasCell.swift */; };
 		99488A9F23BA3954009954AF /* LargeCanvasCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99488A9E23BA3954009954AF /* LargeCanvasCell.swift */; };
 		99488AA323BA3983009954AF /* SmallCanvasCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99488AA223BA3983009954AF /* SmallCanvasCell.xib */; };
@@ -117,6 +116,10 @@
 		9985F4D923F2E13600B96DC7 /* CanvasPageTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9985F4D823F2E13600B96DC7 /* CanvasPageTitleView.swift */; };
 		9985F4DB23F44AAD00B96DC7 /* CanvasPageBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9985F4DA23F44AAD00B96DC7 /* CanvasPageBackgroundView.swift */; };
 		9985F4DD23F44EE300B96DC7 /* CanvasLayoutEngine+Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9985F4DC23F44EE300B96DC7 /* CanvasLayoutEngine+Configuration.swift */; };
+		99863DD82451D8BB003D49D0 /* BubblesModelControllerPageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99863DD72451D8BB003D49D0 /* BubblesModelControllerPageTests.swift */; };
+		99863DDA2451D8C9003D49D0 /* BubblesModelControllerFolderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99863DD92451D8C9003D49D0 /* BubblesModelControllerFolderTests.swift */; };
+		99863DDC2451D8D5003D49D0 /* BubblesModelControllerCanvasTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99863DDB2451D8D5003D49D0 /* BubblesModelControllerCanvasTests.swift */; };
+		99863DDE2451D8E1003D49D0 /* BubblesModelControllerCanvasPageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99863DDD2451D8E1003D49D0 /* BubblesModelControllerCanvasPageTests.swift */; };
 		99868F322396AD55009AC0F7 /* ImageEditorInspectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99868F312396AD55009AC0F7 /* ImageEditorInspectorViewModel.swift */; };
 		99868F352396AD73009AC0F7 /* ImageEditorInspectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99868F332396AD73009AC0F7 /* ImageEditorInspectorViewController.swift */; };
 		99868F362396AD73009AC0F7 /* ImageEditorInspectorContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99868F342396AD73009AC0F7 /* ImageEditorInspectorContentView.xib */; };
@@ -314,7 +317,6 @@
 		993D2C0324164D72002E5BAC /* FolderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderTests.swift; sourceTree = "<group>"; };
 		993D2C0D241674F2002E5BAC /* FolderContainable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderContainable.swift; sourceTree = "<group>"; };
 		994253EE244F49A7008272E6 /* CanvasListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CanvasListViewModelTests.swift; path = "BubblesTests/Unit Tests/Canvases Editor/CanvasListViewModelTests.swift"; sourceTree = SOURCE_ROOT; };
-		994253F024509404008272E6 /* DocumentWindowViewModel+CreationAndDeletion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DocumentWindowViewModel+CreationAndDeletion.swift"; sourceTree = "<group>"; };
 		99488A9A23BA392E009954AF /* SmallCanvasCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallCanvasCell.swift; sourceTree = "<group>"; };
 		99488A9E23BA3954009954AF /* LargeCanvasCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeCanvasCell.swift; sourceTree = "<group>"; };
 		99488AA223BA3983009954AF /* SmallCanvasCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SmallCanvasCell.xib; sourceTree = "<group>"; };
@@ -376,6 +378,10 @@
 		9985F4D823F2E13600B96DC7 /* CanvasPageTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageTitleView.swift; sourceTree = "<group>"; };
 		9985F4DA23F44AAD00B96DC7 /* CanvasPageBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageBackgroundView.swift; sourceTree = "<group>"; };
 		9985F4DC23F44EE300B96DC7 /* CanvasLayoutEngine+Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CanvasLayoutEngine+Configuration.swift"; sourceTree = "<group>"; };
+		99863DD72451D8BB003D49D0 /* BubblesModelControllerPageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubblesModelControllerPageTests.swift; sourceTree = "<group>"; };
+		99863DD92451D8C9003D49D0 /* BubblesModelControllerFolderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubblesModelControllerFolderTests.swift; sourceTree = "<group>"; };
+		99863DDB2451D8D5003D49D0 /* BubblesModelControllerCanvasTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubblesModelControllerCanvasTests.swift; sourceTree = "<group>"; };
+		99863DDD2451D8E1003D49D0 /* BubblesModelControllerCanvasPageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubblesModelControllerCanvasPageTests.swift; sourceTree = "<group>"; };
 		99868F312396AD55009AC0F7 /* ImageEditorInspectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorInspectorViewModel.swift; sourceTree = "<group>"; };
 		99868F332396AD73009AC0F7 /* ImageEditorInspectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorInspectorViewController.swift; sourceTree = "<group>"; };
 		99868F342396AD73009AC0F7 /* ImageEditorInspectorContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageEditorInspectorContentView.xib; sourceTree = "<group>"; };
@@ -1210,6 +1216,10 @@
 				9976A49C2367524D004D573D /* ModelReaderTests.swift */,
 				9976A4952367441B004D573D /* ModelObjects */,
 				999EA6D72440BB7000BF254E /* BubblesModelControllerTests.swift */,
+				99863DD72451D8BB003D49D0 /* BubblesModelControllerPageTests.swift */,
+				99863DD92451D8C9003D49D0 /* BubblesModelControllerFolderTests.swift */,
+				99863DDB2451D8D5003D49D0 /* BubblesModelControllerCanvasTests.swift */,
+				99863DDD2451D8E1003D49D0 /* BubblesModelControllerCanvasPageTests.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1326,7 +1336,6 @@
 			isa = PBXGroup;
 			children = (
 				99AD88A4237B1700000453E1 /* DocumentWindowViewModel.swift */,
-				994253F024509404008272E6 /* DocumentWindowViewModel+CreationAndDeletion.swift */,
 				998D077A2411513F004ADFF8 /* NewPageMenuDelegate.swift */,
 				99FE01E222D4CC8A004D380D /* DocumentWindowController.swift */,
 				99FE01E322D4CC8A004D380D /* DocumentWindow.xib */,
@@ -1609,7 +1618,6 @@
 				99D8E37D237EDB890098CF3B /* CanvasInspectorViewController.swift in Sources */,
 				99C03F0D2334D04200EB7516 /* NSScrollView+M3Extensions.swift in Sources */,
 				99C4AD8923F6F13B003B9A38 /* ArrowLayoutEngine.swift in Sources */,
-				994253F124509404008272E6 /* DocumentWindowViewModel+CreationAndDeletion.swift in Sources */,
 				9970976B23ACFD2900CD189B /* RootSplitViewController.swift in Sources */,
 				990B6A3922EB482D00523C06 /* ModelObject.swift in Sources */,
 				99E93E2B23D32F61004CF4BB /* ColourGridButton.swift in Sources */,
@@ -1700,11 +1708,14 @@
 				99FFF9CA23463DFD00EF02A0 /* LayoutEnginePageTests.swift in Sources */,
 				99771196239C530700FCC8C7 /* PageLinkManagerTests.swift in Sources */,
 				99DEF29322F33ABB0020A7CE /* ModelIDTests.swift in Sources */,
+				99863DDC2451D8D5003D49D0 /* BubblesModelControllerCanvasTests.swift in Sources */,
 				9957B088239FD3D800BA3C0B /* DocumentWindowViewModelTests.swift in Sources */,
 				99C4AD8B23F707DF003B9A38 /* ArrowLayoutEngineTests.swift in Sources */,
 				999EA6D4244096DF00BF254E /* Array+M3ExtensionsTests.swift in Sources */,
+				99863DD82451D8BB003D49D0 /* BubblesModelControllerPageTests.swift in Sources */,
 				9970976D23AD1A7A00CD189B /* MockPageContent.swift in Sources */,
 				999EA6ED244E053300BF254E /* SearchResultsViewModelTests.swift in Sources */,
+				99863DDA2451D8C9003D49D0 /* BubblesModelControllerFolderTests.swift in Sources */,
 				9958107C230D75AA00D996C4 /* TextEditorViewModelTests.swift in Sources */,
 				990D243F23560688001B1FD9 /* CanvasLayoutEngineTests.swift in Sources */,
 				999EA6D624409D6C00BF254E /* CoreGraphics+M3ExtensionsTests.swift in Sources */,
@@ -1722,6 +1733,7 @@
 				999EA6CD243CCCE200BF254E /* XCTestExtensions.swift in Sources */,
 				99868F4723995B4F009AC0F7 /* TextLinkFinderTests.swift in Sources */,
 				997711CA239E9AF400FCC8C7 /* MockDocumentWindowViewModel.swift in Sources */,
+				99863DDE2451D8E1003D49D0 /* BubblesModelControllerCanvasPageTests.swift in Sources */,
 				99771192239AA6EB00FCC8C7 /* PageLinkTests.swift in Sources */,
 				9976A49723674430004D573D /* PageTests.swift in Sources */,
 				999EA6D82440BB7000BF254E /* BubblesModelControllerTests.swift in Sources */,

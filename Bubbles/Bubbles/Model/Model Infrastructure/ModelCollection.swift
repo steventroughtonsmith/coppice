@@ -91,6 +91,10 @@ class ModelCollection<ModelType: CollectableModelObject> {
         return self.all.first { $0.id == id }
     }
 
+    func contains(_ object: ModelType) -> Bool {
+        return self.all.contains(object)
+    }
+
     typealias ModelSetupBlock = (ModelType) -> Void
     @discardableResult func newObject(setupBlock: ModelSetupBlock? = nil) -> ModelType {
         self.modelController?.pushChangeGroup()
