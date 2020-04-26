@@ -56,40 +56,102 @@ class BubblesModelController: NSObject, ModelController {
         return self.collection(for: Page.self)
     }
 
-    func createPage(ofType contentType: PageContentType = .text, in parentFolder: Folder, below item: FolderContainable? = nil, withUndoActionName name: String? = nil, setup: ((Page) -> Void)? = nil) -> Page {
-        let page = Page()
-        page.collection = self.pageCollection
+    func createPage(ofType contentType: PageContentType = .text, in parentFolder: Folder, below item: FolderContainable? = nil, setup: ((Page) -> Void)? = nil) -> Page {
+        self.undoManager.beginUndoGrouping()
+
+        let page = Page.create(in: self) {
+            //No need to change the content type if it's already the default
+            guard contentType != $0.content.contentType else {
+                return
+            }
+            $0.content = contentType.createContent()
+        }
+
+        parentFolder.insert([page], below: item)
+
+        setup?(page)
+
+        self.undoManager.setActionName(NSLocalizedString("Create Page", comment: "Create Page Undo Action Name"))
+        self.undoManager.endUndoGrouping()
+
         return page
     }
 
-    func createPages(fromFilesAt urls: [URL], in parentFolder: Folder, below item: FolderContainable? = nil, withUndoActionName name: String? = nil, setup: (([Page]) -> Void)? = nil) -> [Page] {
-        return []
+    func createPages(fromFilesAt urls: [URL], in parentFolder: Folder, below item: FolderContainable? = nil, setup: (([Page]) -> Void)? = nil) -> [Page] {
+        self.pushChangeGroup()
+        self.undoManager.beginUndoGrouping()
+
+        let newPages = urls.compactMap { self.pageCollection.newPage(fromFileAt: $0) }
+        parentFolder.insert(newPages, below: item)
+
+        setup?(newPages)
+
+        self.undoManager.setActionName(NSLocalizedString("Create Pages", comment: "Create Page Undo Action Name"))
+        self.undoManager.endUndoGrouping()
+        self.popChangeGroup()
+        return newPages
     }
 
     func delete(_ page: Page) {
+        self.pushChangeGroup()
+        self.undoManager.beginUndoGrouping()
+        page.canvases.forEach {
+            self.canvasPageCollection.delete($0)
+        }
 
+        page.containingFolder?.remove([page])
+        self.pageCollection.delete(page)
+
+        self.undoManager.setActionName(NSLocalizedString("Delete Page", comment: "Delete Page Undo Action Name"))
+        self.undoManager.endUndoGrouping()
+        self.popChangeGroup()
     }
 
 
     //MARK: - Folder
-    var rootFolder: Folder {
-        let folder = Folder()
-        folder.collection = self.folderCollection
+    lazy var rootFolder: Folder = {
+        if let id = self.settings.modelID(for: .rootFolder),
+            let rootFolder = self.folderCollection.objectWithID(id) {
+            return rootFolder
+        }
+
+        var folder: Folder!
+        self.folderCollection.disableUndo {
+            folder = Folder.create(in: self) { $0.title = Folder.rootFolderTitle }
+        }
+
+        self.settings.set(folder.id, for: .rootFolder)
+
         return folder
-    }
+    }()
 
     var folderCollection: ModelCollection<Folder> {
         return self.collection(for: Folder.self)
     }
 
-    func createFolder(in parentFolder: Folder, below item: FolderContainable? = nil, withUndoActionName name: String? = nil, setup: ((Folder) -> Void)? = nil) -> Folder {
-        let folder = Folder()
-        folder.collection = self.folderCollection
+    func createFolder(in parentFolder: Folder, below item: FolderContainable? = nil, setup: ((Folder) -> Void)? = nil) -> Folder {
+        self.undoManager.beginUndoGrouping()
+        let folder = Folder.create(in: self)
+
+        parentFolder.insert([folder], below: item)
+        setup?(folder)
+
+        self.undoManager.setActionName(NSLocalizedString("Create Folder", comment: "Create Folder Undo Action Name"))
+        self.undoManager.endUndoGrouping()
         return folder
     }
 
-    func delete(_ folder: Folder, withUndoActionName name: String? = nil) {
-
+    func delete(_ folder: Folder) {
+        folder.contents.forEach { item in
+            if let folder = item as? Folder {
+                self.delete(folder)
+            } else if let page = item as? Page {
+                self.delete(page)
+            }
+        }
+        folder.containingFolder?.remove([folder])
+        self.folderCollection.delete(folder)
+        self.undoManager.setActionName(NSLocalizedString("Delete Folder", comment: "Delete Folder Undo Action Name"))
     }
 
 
@@ -98,14 +160,21 @@ class BubblesModelController: NSObject, ModelController {
         return self.collection(for: Canvas.self)
     }
 
-    func createCanvas(withUndoActionName name: String? = nil, setup: ((Canvas) -> Void)? = nil) -> Canvas {
-        let canvas = Canvas()
-        canvas.collection = self.canvasCollection
+    func createCanvas(setup: ((Canvas) -> Void)? = nil) -> Canvas {
+        let canvas = Canvas.create(in: self)
+        setup?(canvas)
+        self.undoManager.setActionName(NSLocalizedString("Create Canvas", comment: "Create Canvas Undo Action Name"))
         return canvas
     }
 
-    func delete(_ canvas: Canvas, withUndoActionName name: String? = nil) {
-
+    func delete(_ canvas: Canvas) {
+        self.pushChangeGroup()
+        canvas.pages.forEach {
+            self.canvasPageCollection.delete($0)
+        }
+        self.canvasCollection.delete(canvas)
+        self.undoManager.setActionName(NSLocalizedString("Delete Canvas", comment: "Delete Canvas Undo Action Name"))
+        self.popChangeGroup()
     }
 
 
@@ -114,16 +183,39 @@ class BubblesModelController: NSObject, ModelController {
         return self.collection(for: CanvasPage.self)
     }
 
-    func addPages(_ pages: [Page], to canvas: Canvas, centredOn point: CGPoint? = nil, withUndoActionName name: String? = nil) -> [CanvasPage] {
+    func addPages(_ pages: [Page], to canvas: Canvas, centredOn point: CGPoint? = nil) -> [CanvasPage] {
         return []
     }
 
-    func openPage(at link: PageLink, on canvas: Canvas, withUndoActionName name: String? = nil) -> [CanvasPage] {
-        return []
+    func openPage(at link: PageLink, on canvas: Canvas) -> [CanvasPage] {
+        guard let page = self.pageCollection.objectWithID(link.destination) else {
+            return []
+        }
+
+        let undoActionName = NSLocalizedString("Open Page Link", comment: "Open Page Link Undo Action Name")
+
+        guard let source = link.source,
+            let sourcePage = self.canvasPageCollection.objectWithID(source) else {
+                self.undoManager.setActionName(undoActionName)
+                return canvas.addPages([page])
+        }
+
+        if let existingPage = sourcePage.existingCanvasPage(for: page) {
+            return [existingPage]
+        }
+
+        self.undoManager.setActionName(undoActionName)
+        return canvas.open(page, linkedFrom: sourcePage)
     }
 
-    func close(_ canvasPage: CanvasPage, withUndoActionName name: String? = nil) {
-        
+    func close(_ canvasPage: CanvasPage) {
+        guard let canvas = canvasPage.canvas else {
+            return
+        }
+        self.pushChangeGroup()
+        canvas.close(canvasPage)
+        self.undoManager.setActionName(NSLocalizedString("Close Pages", comment: "Close Pages From Canvas Undo Action Name"))
+        self.popChangeGroup()
     }
 }
 

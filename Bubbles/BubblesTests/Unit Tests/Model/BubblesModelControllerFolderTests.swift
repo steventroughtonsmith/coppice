@@ -26,7 +26,8 @@ class BubblesModelControllerFolderTests: XCTestCase {
     //MARK: - .rootFolder
     func test_rootFolder_createsNewRootFolderIfNotInSettings() {
         let folderCollection = self.modelController.collection(for: Folder.self)
-        XCTAssertEqual(folderCollection.all.count, 0)
+        XCTAssertEqual(folderCollection.all.count, 1)
+        XCTAssertEqual(folderCollection.all.first, self.parentFolder)
 
         let rootFolder = self.modelController.rootFolder
 
@@ -35,7 +36,8 @@ class BubblesModelControllerFolderTests: XCTestCase {
 
     func test_rootFolder_createsNewRootFolderIfIDInSettingsNotFoundInCollection() {
         let folderCollection = self.modelController.collection(for: Folder.self)
-        XCTAssertEqual(folderCollection.all.count, 0)
+        XCTAssertEqual(folderCollection.all.count, 1)
+        XCTAssertEqual(folderCollection.all.first, self.parentFolder)
 
         self.modelController.settings.set(Folder.modelID(with: UUID()), for: .rootFolder)
 
@@ -62,13 +64,13 @@ class BubblesModelControllerFolderTests: XCTestCase {
         XCTAssertTrue(self.modelController.folderCollection.contains(folder))
     }
 
-    func test_createFolder_addsFolderToEndOfSuppliedFolderIfItemIsNil() throws {
+    func test_createFolder_addsFolderToStartOfSuppliedFolderIfItemIsNil() throws {
         let initialPage1 = Page.create(in: self.modelController)
         let initialPage2 = Page.create(in: self.modelController)
         self.parentFolder.insert([initialPage1, initialPage2])
 
         let folder = self.modelController.createFolder(in: self.parentFolder, below: nil)
-        XCTAssertEqual(self.parentFolder.contents[safe: 2] as? Folder, folder)
+        XCTAssertEqual(self.parentFolder.contents[safe: 0] as? Folder, folder)
     }
 
     func test_createFolder_addsFolderInSuppliedFolderBelowSuppliedItem() throws {
@@ -119,6 +121,7 @@ class BubblesModelControllerFolderTests: XCTestCase {
         let initialPage1 = Page.create(in: self.modelController)
         let initialPage2 = Page.create(in: self.modelController)
         self.parentFolder.insert([initialPage1, initialPage2])
+        self.undoManager.removeAllActions()
 
         let folder = self.modelController.createFolder(in: self.parentFolder, below: initialPage1)
 
@@ -154,7 +157,6 @@ class BubblesModelControllerFolderTests: XCTestCase {
         let page1 = Page.create(in: self.modelController)
         let subFolder1 = Folder.create(in: self.modelController)
         let page2 = Page.create(in: self.modelController)
-
         folder.insert([page1, subFolder1, page2])
 
         self.modelController.delete(folder)
@@ -169,7 +171,6 @@ class BubblesModelControllerFolderTests: XCTestCase {
         let subFolder1 = Folder.create(in: self.modelController)
         let subPage1 = Page.create(in: self.modelController)
         let subPage2 = Page.create(in: self.modelController)
-
         subFolder1.insert([subPage1, subPage2])
         folder.insert([subFolder1])
 
@@ -190,7 +191,6 @@ class BubblesModelControllerFolderTests: XCTestCase {
         let canvasPage1 = try XCTUnwrap(canvas1.addPages([page1]).first)
         let canvasPage2 = try XCTUnwrap(canvas2.addPages([page1]).first)
         let canvasPage3 = try XCTUnwrap(canvas2.addPages([page2]).first)
-
         folder.insert([page1, page2])
 
         self.modelController.delete(folder)
@@ -207,6 +207,8 @@ class BubblesModelControllerFolderTests: XCTestCase {
         let folder = self.modelController.createFolder(in: self.parentFolder)
         folder.title = "Foo Bar"
         folder.dateCreated = Date(timeIntervalSinceNow: 60)
+        self.undoManager.removeAllActions()
+
         self.modelController.delete(folder)
 
         self.undoManager.undo()
@@ -221,6 +223,7 @@ class BubblesModelControllerFolderTests: XCTestCase {
         let initialPage2 = Page.create(in: self.modelController)
         self.parentFolder.insert([initialPage1, initialPage2])
         let folder = self.modelController.createFolder(in: self.parentFolder, below: initialPage1)
+        self.undoManager.removeAllActions()
 
         self.modelController.delete(folder)
 
@@ -238,6 +241,7 @@ class BubblesModelControllerFolderTests: XCTestCase {
         let page2 = Page.create(in: self.modelController) { $0.title = "Foo Bar"}
 
         folder.insert([page1, subFolder1, page2])
+        self.undoManager.removeAllActions()
 
         self.modelController.delete(folder)
 
@@ -261,7 +265,7 @@ class BubblesModelControllerFolderTests: XCTestCase {
         XCTAssertEqual(undonePage1.containingFolder, undoneFolder)
         XCTAssertEqual(undoneFolder.contents[safe: 1] as? Folder, undoneSubFolder1)
         XCTAssertEqual(undonePage1.containingFolder, undoneFolder)
-        XCTAssertEqual(undoneFolder.contents[safe: 2] as? Page, undoneSubFolder1)
+        XCTAssertEqual(undoneFolder.contents[safe: 2] as? Page, undonePage2)
         XCTAssertEqual(undonePage2.containingFolder, undoneFolder)
     }
 
@@ -273,6 +277,7 @@ class BubblesModelControllerFolderTests: XCTestCase {
 
         subFolder1.insert([subPage1, subPage2])
         folder.insert([subFolder1])
+        self.undoManager.removeAllActions()
 
         self.modelController.delete(folder)
 
@@ -299,6 +304,7 @@ class BubblesModelControllerFolderTests: XCTestCase {
         let canvasPage3 = try XCTUnwrap(canvas2.addPages([page2]).first)
 
         folder.insert([page1, page2])
+        self.undoManager.removeAllActions()
 
         self.modelController.delete(folder)
 
@@ -323,6 +329,7 @@ class BubblesModelControllerFolderTests: XCTestCase {
 
     func test_deleteFolder_redoingRemovesFolderFromCollectionAgain() throws {
         let folder = self.modelController.createFolder(in: self.parentFolder)
+        self.undoManager.removeAllActions()
 
         self.modelController.delete(folder)
 
@@ -335,6 +342,7 @@ class BubblesModelControllerFolderTests: XCTestCase {
 
     func test_deleteFolder_redoingRemovesFolderFromParentAgain() throws {
         let folder = self.modelController.createFolder(in: self.parentFolder)
+        self.undoManager.removeAllActions()
 
         self.modelController.delete(folder)
 
@@ -352,6 +360,7 @@ class BubblesModelControllerFolderTests: XCTestCase {
         let page2 = Page.create(in: self.modelController)
 
         folder.insert([page1, subFolder1, page2])
+        self.undoManager.removeAllActions()
 
         self.modelController.delete(folder)
 
@@ -374,6 +383,7 @@ class BubblesModelControllerFolderTests: XCTestCase {
 
         subFolder1.insert([subPage1, subPage2])
         folder.insert([subFolder1])
+        self.undoManager.removeAllActions()
 
         self.modelController.delete(folder)
 
@@ -400,6 +410,7 @@ class BubblesModelControllerFolderTests: XCTestCase {
         let canvasPage3 = try XCTUnwrap(canvas2.addPages([page2]).first)
 
         folder.insert([page1, page2])
+        self.undoManager.removeAllActions()
 
         self.modelController.delete(folder)
 

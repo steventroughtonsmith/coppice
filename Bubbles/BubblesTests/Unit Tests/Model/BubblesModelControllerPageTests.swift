@@ -41,14 +41,14 @@ class BubblesModelControllerPageTests: XCTestCase {
         XCTAssertEqual(page.content.contentType, .image)
     }
 
-    func test_createPageOfType_addsItemToEndOfSuppliedFolderIfItemIsNil() {
+    func test_createPageOfType_addsItemToStartOfSuppliedFolderIfItemIsNil() {
         let initialPage1 = self.modelController.collection(for: Page.self).newObject()
         let initialPage2 = self.modelController.collection(for: Page.self).newObject()
         self.folder.insert([initialPage1, initialPage2])
 
         let newPage = self.modelController.createPage(in: self.folder, below: nil)
         XCTAssertEqual(newPage.containingFolder, self.folder)
-        XCTAssertEqual(self.folder.contents[safe: 2] as? Page, newPage)
+        XCTAssertEqual(self.folder.contents[safe: 0] as? Page, newPage)
     }
 
     func test_createPageOfType_addsItemInSuppliedFolderBelowSuppliedItem() throws {
@@ -129,7 +129,7 @@ class BubblesModelControllerPageTests: XCTestCase {
         XCTAssertEqual(pages[safe: 1]?.content.contentType, .text)
     }
 
-    func test_createPagesFromFilesAtURLs_addsPagesToEndOfSuppliedFolderIfItemIsNil() throws {
+    func test_createPagesFromFilesAtURLs_addsPagesToStartOfSuppliedFolderIfItemIsNil() throws {
         let initialPage1 = self.modelController.collection(for: Page.self).newObject()
         let initialPage2 = self.modelController.collection(for: Page.self).newObject()
         self.folder.insert([initialPage1, initialPage2])
@@ -146,8 +146,8 @@ class BubblesModelControllerPageTests: XCTestCase {
         XCTAssertEqual(imagePage.containingFolder, self.folder)
         XCTAssertEqual(textPage.containingFolder, self.folder)
 
-        XCTAssertEqual(self.folder.contents[safe:2] as? Page, imagePage)
-        XCTAssertEqual(self.folder.contents[safe:3] as? Page, textPage)
+        XCTAssertEqual(self.folder.contents[safe:0] as? Page, imagePage)
+        XCTAssertEqual(self.folder.contents[safe:1] as? Page, textPage)
     }
 
     func test_createPagesFromFilesAtURLs_addsPagesToFolderBelowSuppliedItem() throws {
@@ -232,8 +232,8 @@ class BubblesModelControllerPageTests: XCTestCase {
         let textPage = try XCTUnwrap(pages.last)
 
         self.undoManager.undo()
-        XCTAssertNil(self.modelController.pageCollection.contains(imagePage))
-        XCTAssertNil(self.modelController.pageCollection.contains(textPage))
+        XCTAssertFalse(self.modelController.pageCollection.contains(imagePage))
+        XCTAssertFalse(self.modelController.pageCollection.contains(textPage))
         self.undoManager.redo()
 
         let redoneImagePage = try XCTUnwrap(self.modelController.pageCollection.objectWithID(imagePage.id))
@@ -320,6 +320,7 @@ class BubblesModelControllerPageTests: XCTestCase {
 
     func test_deletePage_undoAddsPageBackToCollectionWithSameIDAndContents() throws {
         let page = self.modelController.createPage(in: self.folder)
+        self.undoManager.removeAllActions()
 
         self.modelController.delete(page)
 
@@ -345,6 +346,7 @@ class BubblesModelControllerPageTests: XCTestCase {
         let canvasPage3 = try XCTUnwrap(canvas2.addPages([page]).first)
         canvasPage3.frame = CGRect(x: -10, y: -20, width: 400, height: 500)
         canvasPage3.parent = canvasPage2
+        self.undoManager.removeAllActions()
 
         self.modelController.delete(page)
 
@@ -367,6 +369,7 @@ class BubblesModelControllerPageTests: XCTestCase {
         self.folder.insert([initialPage1, initialPage2])
 
         let page = self.modelController.createPage(in: self.folder, below: initialPage1)
+        self.undoManager.removeAllActions()
 
         self.modelController.delete(page)
 
@@ -379,6 +382,7 @@ class BubblesModelControllerPageTests: XCTestCase {
 
     func test_deletePage_redoDeletesPageAgain() throws {
         let page = self.modelController.createPage(in: self.folder)
+        self.undoManager.removeAllActions()
 
         self.modelController.delete(page)
 
@@ -398,6 +402,7 @@ class BubblesModelControllerPageTests: XCTestCase {
         canvasPage2.frame = CGRect(x: 10, y: 20, width: 300, height: 400)
         let canvasPage3 = try XCTUnwrap(canvas2.addPages([page]).first)
         canvasPage3.parent = canvasPage2
+        self.undoManager.removeAllActions()
 
         self.modelController.delete(page)
 
@@ -414,7 +419,8 @@ class BubblesModelControllerPageTests: XCTestCase {
 
     func test_deletePage_redoRemovesPageFromFolderAgain() throws {
         let page = self.modelController.createPage(in: self.folder)
-
+        self.undoManager.removeAllActions()
+        
         self.modelController.delete(page)
 
         self.undoManager.undo()
