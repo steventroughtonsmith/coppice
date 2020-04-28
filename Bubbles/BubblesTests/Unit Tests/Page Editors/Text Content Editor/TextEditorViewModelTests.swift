@@ -11,7 +11,7 @@ import XCTest
 
 class TextEditorViewModelTests: XCTestCase {
 
-    var modelController: ModelController!
+    var modelController: BubblesModelController!
     var page: Page!
     var textContent: TextPageContent!
     var documentWindowViewModel: MockDocumentWindowViewModel!

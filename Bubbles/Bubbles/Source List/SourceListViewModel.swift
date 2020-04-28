@@ -348,7 +348,7 @@ class SourceListViewModel: ViewModel {
 
     //MARK: - Deleting
     func delete(_ nodes: [SourceListNode]) {
-        self.documentWindowViewModel.delete(nodes.map(\.item))
+        self.documentWindowViewModel.deleteItems(nodes.compactMap(\.folderContainable))
     }
 
 

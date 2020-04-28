@@ -429,4 +429,133 @@ class BubblesModelControllerFolderTests: XCTestCase {
         XCTAssertFalse(self.modelController.canvasPageCollection.contains(canvasPage2))
         XCTAssertFalse(self.modelController.canvasPageCollection.contains(canvasPage3))
     }
+
+
+    //MARK: - delete(_:[FolderContainable])
+    func test_deleteFolderItems_deletesSinglePage() throws {
+        let page = self.modelController.createPage(in: self.modelController.rootFolder)
+        self.modelController.delete([page])
+
+        XCTAssertNil(self.modelController.pageCollection.objectWithID(page.id))
+        XCTAssertEqual(self.modelController.rootFolder.contents.count, 0)
+    }
+
+    func test_deleteFolderItems_deletesSingleFolder() throws {
+        let folder = self.modelController.createFolder(in: self.modelController.rootFolder)
+        self.modelController.delete([folder])
+
+        XCTAssertNil(self.modelController.folderCollection.objectWithID(folder.id))
+        XCTAssertEqual(self.modelController.rootFolder.contents.count, 0)
+    }
+
+    func test_deleteFolderItems_deletesMultipleItems() throws {
+        let page1 = self.modelController.createPage(in: self.modelController.rootFolder)
+        let folder = self.modelController.createFolder(in: self.modelController.rootFolder)
+        let subPage = self.modelController.createPage(in: folder)
+        let page2 = self.modelController.createPage(in: self.modelController.rootFolder)
+
+        self.modelController.delete([page1, folder, subPage])
+
+        XCTAssertNil(self.modelController.folderCollection.objectWithID(folder.id))
+        XCTAssertNil(self.modelController.pageCollection.objectWithID(page1.id))
+        XCTAssertNil(self.modelController.pageCollection.objectWithID(subPage.id))
+
+        XCTAssertNotNil(self.modelController.pageCollection.objectWithID(page2.id))
+    }
+
+    func test_deleteFolderItems_undoingSinglePageDeleteRestoresPage() throws {
+        let page = self.modelController.createPage(in: self.modelController.rootFolder)
+        page.title = "Foo Bar Baz"
+        self.undoManager.removeAllActions()
+
+        self.modelController.delete([page])
+        self.undoManager.undo()
+
+        let undonePage = try XCTUnwrap(self.modelController.pageCollection.objectWithID(page.id))
+        XCTAssertEqual(undonePage.title, page.title)
+        XCTAssertEqual(undonePage.dateCreated, page.dateCreated)
+        XCTAssertEqual(undonePage.dateModified, page.dateModified)
+        XCTAssertEqual(undonePage.containingFolder, self.modelController.rootFolder)
+
+        XCTAssertEqual(self.modelController.rootFolder.contents[safe: 0] as? Page, undonePage)
+    }
+
+    func test_deleteFolderItems_undoingSingleFolderDeleteRestoresFolder() throws {
+        let folder = self.modelController.createFolder(in: self.modelController.rootFolder)
+        folder.title = "Foo Bar Baz"
+        self.undoManager.removeAllActions()
+
+        self.modelController.delete([folder])
+        self.undoManager.undo()
+
+        let undoneFolder = try XCTUnwrap(self.modelController.folderCollection.objectWithID(folder.id))
+        XCTAssertEqual(undoneFolder.title, folder.title)
+        XCTAssertEqual(undoneFolder.dateCreated, folder.dateCreated)
+        XCTAssertEqual(undoneFolder.containingFolder, self.modelController.rootFolder)
+
+        XCTAssertEqual(self.modelController.rootFolder.contents[safe: 0] as? Folder, undoneFolder)
+    }
+
+    func test_deleteFolderItems_undoingMultipleItemDeletionRestoresAllItems() throws {
+        let page1 = self.modelController.createPage(in: self.modelController.rootFolder)
+        let folder = self.modelController.createFolder(in: self.modelController.rootFolder)
+        let subPage = self.modelController.createPage(in: folder)
+        let page2 = self.modelController.createPage(in: self.modelController.rootFolder)
+        self.undoManager.removeAllActions()
+
+        self.modelController.delete([page1, folder, subPage])
+        self.undoManager.undo()
+
+        XCTAssertNotNil(self.modelController.folderCollection.objectWithID(folder.id))
+        XCTAssertNotNil(self.modelController.pageCollection.objectWithID(page1.id))
+        XCTAssertNotNil(self.modelController.pageCollection.objectWithID(subPage.id))
+
+        XCTAssertNotNil(self.modelController.pageCollection.objectWithID(page2.id))
+    }
+
+    func test_deleteFolderItems_redoingSinglePageDeleteDeletesPageAgain() throws {
+        let page = self.modelController.createPage(in: self.modelController.rootFolder)
+        self.undoManager.removeAllActions()
+
+        self.modelController.delete([page])
+        self.undoManager.undo()
+        XCTAssertNotNil(self.modelController.pageCollection.objectWithID(page.id))
+        self.undoManager.redo()
+        XCTAssertNil(self.modelController.pageCollection.objectWithID(page.id))
+        XCTAssertEqual(self.modelController.rootFolder.contents.count, 0)
+    }
+
+    func test_deleteFolderItems_redoingSingleFolderDeleteDeletesFolderAgain() throws {
+        let folder = self.modelController.createFolder(in: self.modelController.rootFolder)
+        self.undoManager.removeAllActions()
+
+        self.modelController.delete([folder])
+        self.undoManager.undo()
+        XCTAssertNotNil(self.modelController.folderCollection.objectWithID(folder.id))
+        self.undoManager.redo()
+        XCTAssertNil(self.modelController.folderCollection.objectWithID(folder.id))
+        XCTAssertEqual(self.modelController.rootFolder.contents.count, 0)
+    }
+
+    func test_deleteFolderItems_redoingMultipleItemDeletionDeletsAllItemsAgain() throws {
+        let page1 = self.modelController.createPage(in: self.modelController.rootFolder)
+        let folder = self.modelController.createFolder(in: self.modelController.rootFolder)
+        let subPage = self.modelController.createPage(in: folder)
+        let page2 = self.modelController.createPage(in: self.modelController.rootFolder)
+        self.undoManager.removeAllActions()
+
+        self.modelController.delete([page1, folder, subPage])
+        self.undoManager.undo()
+        XCTAssertNotNil(self.modelController.folderCollection.objectWithID(folder.id))
+        XCTAssertNotNil(self.modelController.pageCollection.objectWithID(page1.id))
+        XCTAssertNotNil(self.modelController.pageCollection.objectWithID(subPage.id))
+        XCTAssertNotNil(self.modelController.pageCollection.objectWithID(page2.id))
+        self.undoManager.redo()
+
+        XCTAssertNil(self.modelController.folderCollection.objectWithID(folder.id))
+        XCTAssertNil(self.modelController.pageCollection.objectWithID(page1.id))
+        XCTAssertNil(self.modelController.pageCollection.objectWithID(subPage.id))
+
+        XCTAssertNotNil(self.modelController.pageCollection.objectWithID(page2.id))
+    }
 }

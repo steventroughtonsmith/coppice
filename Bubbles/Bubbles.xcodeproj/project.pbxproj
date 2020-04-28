@@ -234,6 +234,8 @@
 		99D8E39023800F9A0098CF3B /* BaseInspectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D8E38E23800F9A0098CF3B /* BaseInspectorViewController.swift */; };
 		99D8E39123800F9A0098CF3B /* BaseInspectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99D8E38F23800F9A0098CF3B /* BaseInspectorViewController.xib */; };
 		99D8E39323800FB90098CF3B /* BaseInspectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D8E39223800FB90098CF3B /* BaseInspectorViewModel.swift */; };
+		99DA84EC245718D900F19917 /* MockBubblesModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DA84EB245718D900F19917 /* MockBubblesModelController.swift */; };
+		99DA84EE2457203700F19917 /* Mocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DA84ED2457203600F19917 /* Mocking.swift */; };
 		99DEF28822F1D72D0020A7CE /* SourceListViewModelTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DEF28722F1D72D0020A7CE /* SourceListViewModelTypes.swift */; };
 		99DEF28A22F32D350020A7CE /* DebugCanvasViewModelTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DEF28922F32D350020A7CE /* DebugCanvasViewModelTypes.swift */; };
 		99DEF28C22F33A2A0020A7CE /* ModelObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DEF28B22F33A2A0020A7CE /* ModelObjectTests.swift */; };
@@ -499,6 +501,8 @@
 		99D8E38E23800F9A0098CF3B /* BaseInspectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseInspectorViewController.swift; sourceTree = "<group>"; };
 		99D8E38F23800F9A0098CF3B /* BaseInspectorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BaseInspectorViewController.xib; sourceTree = "<group>"; };
 		99D8E39223800FB90098CF3B /* BaseInspectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseInspectorViewModel.swift; sourceTree = "<group>"; };
+		99DA84EB245718D900F19917 /* MockBubblesModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockBubblesModelController.swift; sourceTree = "<group>"; };
+		99DA84ED2457203600F19917 /* Mocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocking.swift; sourceTree = "<group>"; };
 		99DEF28722F1D72D0020A7CE /* SourceListViewModelTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceListViewModelTypes.swift; sourceTree = "<group>"; };
 		99DEF28922F32D350020A7CE /* DebugCanvasViewModelTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugCanvasViewModelTypes.swift; sourceTree = "<group>"; };
 		99DEF28B22F33A2A0020A7CE /* ModelObjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelObjectTests.swift; sourceTree = "<group>"; };
@@ -859,6 +863,7 @@
 			isa = PBXGroup;
 			children = (
 				997711C9239E9AF400FCC8C7 /* MockDocumentWindowViewModel.swift */,
+				99DA84EB245718D900F19917 /* MockBubblesModelController.swift */,
 				9970976C23AD1A7A00CD189B /* MockPageContent.swift */,
 			);
 			path = Helpers;
@@ -1314,6 +1319,7 @@
 			children = (
 				9923B06A22F45F7E0035D8C6 /* TestObjects.swift */,
 				999EA6CC243CCCE200BF254E /* XCTestExtensions.swift */,
+				99DA84ED2457203600F19917 /* Mocking.swift */,
 				9976611B23A3EB61000D1741 /* Functional Tests */,
 				9976611A23A3EB2C000D1741 /* Unit Tests */,
 				997711C8239E9AD900FCC8C7 /* Helpers */,
@@ -1741,6 +1747,7 @@
 				99D4D59822F8650300F69C1F /* SourceListViewModelTests.swift in Sources */,
 				9976A49B23674454004D573D /* CanvasPageTests.swift in Sources */,
 				99581076230C40FD00D996C4 /* PageSelectorViewModelTests.swift in Sources */,
+				99DA84EC245718D900F19917 /* MockBubblesModelController.swift in Sources */,
 				9976A49923674448004D573D /* CanvasTests.swift in Sources */,
 				99AD88782376FCF0000453E1 /* PageContentTests.swift in Sources */,
 				999EA6DB2444C28F00BF254E /* TextPageContentsTests.swift in Sources */,
@@ -1751,6 +1758,7 @@
 				999EA6F2244F272E00BF254E /* CanvasPageInspectorViewModelTests.swift in Sources */,
 				9923B06B22F45F7E0035D8C6 /* TestObjects.swift in Sources */,
 				994253EF244F49A7008272E6 /* CanvasListViewModelTests.swift in Sources */,
+				99DA84EE2457203700F19917 /* Mocking.swift in Sources */,
 				9976A49323674254004D573D /* ModelWriterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

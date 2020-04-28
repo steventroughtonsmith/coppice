@@ -18,11 +18,11 @@ class DocumentWindowViewModel: NSObject {
     weak var window: DocumentWindow?
     @Published var currentInspectors: [Inspector] = []
 
-    let modelController: ModelController
+    let modelController: BubblesModelController
     let thumbnailController: ThumbnailController
     let pageImageController: PageImageController
     let pageLinkController: PageLinkController
-    init(modelController: ModelController) {
+    init(modelController: BubblesModelController) {
         self.modelController = modelController
         self.thumbnailController = ThumbnailController(modelController: modelController)
         self.pageImageController = PageImageController(modelController: modelController)
@@ -40,29 +40,17 @@ class DocumentWindowViewModel: NSObject {
                 self.rootFolder.insert([page])
             }
         }
+
+        self.setupObservation()
+    }
+
+    deinit {
+        self.cleanUpObserveration()
     }
 
 
     //MARK: - Search
     @objc dynamic var searchString: String?
-    
-
-    //MARK: - Model Helpers
-    var pageCollection: ModelCollection<Page> {
-        return self.modelController.collection(for: Page.self)
-    }
-
-    var canvasCollection: ModelCollection<Canvas> {
-        return self.modelController.collection(for: Canvas.self)
-    }
-
-    var canvasPageCollection: ModelCollection<CanvasPage> {
-        return self.modelController.collection(for: CanvasPage.self)
-    }
-
-    var foldersCollection: ModelCollection<Folder> {
-        return self.modelController.collection(for: Folder.self)
-    }
 
 
     //MARK: - Selection Logic
@@ -82,6 +70,85 @@ class DocumentWindowViewModel: NSObject {
     func updateSelection(_ selection: [SidebarItem]) {
         self.sidebarSelection = selection
         self.updateEditor(basedOnNewSelection: selection)
+    }
+
+
+    //MARK: - Observation
+    var canvasObserver: ModelCollection<Canvas>.Observation?
+    var folderObserver: ModelCollection<Folder>.Observation?
+    var pageObserver: ModelCollection<Page>.Observation?
+    private func setupObservation() {
+        self.canvasObserver = self.modelController.canvasCollection.addObserver { [weak self] (change) in
+            self?.handleCanvasChange(change)
+        }
+
+        self.folderObserver = self.modelController.folderCollection.addObserver { [weak self] (change) in
+            self?.handleFolderChange(change)
+        }
+
+        self.pageObserver = self.modelController.pageCollection.addObserver { [weak self] (change) in
+            self?.handlePageChange(change)
+        }
+    }
+
+    private func cleanUpObserveration() {
+        if let observer = self.canvasObserver {
+            self.modelController.canvasCollection.removeObserver(observer)
+        }
+
+        if let observer = self.folderObserver {
+            self.modelController.folderCollection.removeObserver(observer)
+        }
+
+        if let observer = self.pageObserver {
+            self.modelController.pageCollection.removeObserver(observer)
+        }
+    }
+
+    private func handleCanvasChange(_ change: ModelCollection<Canvas>.Change) {
+        switch change.changeType {
+        case .insert:
+            self.selectedCanvasID = change.object.id
+            self.updateSelection([.canvases])
+        case .delete:
+            if self.selectedCanvasID == change.object.id {
+                self.selectedCanvasID = nil
+            }
+        default:
+            break
+        }
+    }
+
+    private func handleFolderChange(_ change: ModelCollection<Folder>.Change) {
+        guard self.currentEditor != .canvas else {
+            return
+        }
+
+        switch change.changeType {
+        case .insert:
+            self.updateSelection([.folder(change.object.id)])
+        case .delete:
+            let newSelection = self.sidebarSelection.filter { $0 != .folder(change.object.id) }
+            self.updateSelection(newSelection)
+        default:
+            break
+        }
+    }
+
+    private func handlePageChange(_ change: ModelCollection<Page>.Change) {
+        guard self.currentEditor != .canvas else {
+            return
+        }
+
+        switch change.changeType {
+        case .insert:
+            self.updateSelection([.page(change.object.id)])
+        case .delete:
+            let newSelection = self.sidebarSelection.filter { $0 != .page(change.object.id) }
+            self.updateSelection(newSelection)
+        default:
+            break
+        }
     }
 
 
@@ -170,6 +237,167 @@ class DocumentWindowViewModel: NSObject {
     }
 
 
+    //MARK: - Deleting Sidebar Items
+
+//    private func actuallyDelete(_ items: [SidebarItem]) {
+//        self.modelController.pushChangeGroup()
+//        for item in items {
+//            switch item {
+//            case .page(let modelID):
+//                guard let page = self.modelController.pageCollection.objectWithID(modelID) else {
+//                    continue
+//                }
+//                self.modelController.delete(page)
+//            case .folder(let modelID):
+//                guard let folder = self.modelController.folderCollection.objectWithID(modelID) else {
+//                    continue
+//                }
+//                self.modelController.delete(folder)
+//            case .canvases, .canvas(_):
+//                continue
+//            }
+//        }
+//        self.modelController.undoManager.setActionName(self.undoActionName(for: items))
+//        self.modelController.popChangeGroup()
+//    }
+
+//    private func undoActionName(for items: [SidebarItem]) -> String {
+//        var hasPages = false
+//        var hasFolders = false
+//        for item in items {
+//            switch item {
+//            case .page(_):
+//                hasPages = true
+//            case .folder(_):
+//                hasFolders = true
+//            case .canvases, .canvas(_):
+//                continue
+//            }
+//
+//            if hasPages && hasFolders {
+//                break
+//            }
+//        }
+//
+//        if hasPages && !hasFolders {
+//            return NSLocalizedString("Delete Pages", comment: "Delete Pages undo action")
+//        } else if hasFolders && !hasPages {
+//            return NSLocalizedString("Delete Folders", comment: "Delete Folders undo action")
+//        } else {
+//            return NSLocalizedString("Delete Items", comment: "Delete Items undo action")
+//        }
+//    }
+
+    func deleteItems(_ folderItems: [FolderContainable]) {
+        guard let alert = self.alertForDeleting(folderItems) else {
+            self.modelController.delete(folderItems)
+            return
+        }
+
+        self.window?.showAlert(alert, callback: { (index) in
+            let (type, _) = alert.buttons[index]
+            if (type == .confirm) {
+                self.modelController.delete(folderItems)
+            }
+        })
+    }
+
+
+
+
+    //MARK: - Deleting Canvas
+    func delete(_ canvas: Canvas) {
+        guard let alert = alertForDeleting(canvas) else {
+            self.modelController.delete(canvas)
+            return
+        }
+
+        self.window?.showAlert(alert, callback: { (index) in
+            let (type, _) = alert.buttons[index]
+            if (type == .confirm) {
+                self.modelController.delete(canvas)
+            }
+        })
+    }
+
+
+    //MARK: - Navigating Pages
+
+    /// Either opens the page or adds it to the canvas, depending on what is selected in the sidebar
+    /// - Parameter pageLink: The PageLink to handle
+    /// - Returns: True if the page link was handled, false if it wasn't
+    @discardableResult func handle(_ pageLink: PageLink) -> Bool {
+        guard self.modelController.object(with: pageLink.destination) != nil else {
+            return false
+        }
+
+//        guard self.selectedCanvasInSidebar == nil else {
+//            self.addPage(at: pageLink, to: self.selectedCanvasInSidebar!)
+//            return true
+//        }
+
+        self.openPage(at: pageLink)
+        return true
+    }
+
+    /// Displays the page at the supplied link in the main editor
+    /// - Parameter pageLink: The page link to open
+    func openPage(at pageLink: PageLink) {
+        self.updateSelection([.page(pageLink.destination)])
+    }
+
+
+    //MARK: - Undo
+    private var undoObservation: NSObjectProtocol?
+    private func setupSelectionUndo() {
+        let undoManager = self.modelController.undoManager
+        self.undoObservation = NotificationCenter.default.addObserver(forName: .NSUndoManagerDidOpenUndoGroup,
+                                                                      object: undoManager,
+                                                                      queue: .main)
+        { [weak self] (notification) in
+            guard let strongSelf = self else {
+                return
+            }
+            let sidebarSelection = strongSelf.sidebarSelection
+            let selectedCanvas = strongSelf.selectedCanvasID
+            undoManager.setActionIsDiscardable(true)
+            undoManager.registerUndo(withTarget: strongSelf) { (target) in
+                let oldSelection = target.sidebarSelection
+                let oldCanvas = target.selectedCanvasID
+                target.updateSelection(sidebarSelection)
+                target.selectedCanvasID = selectedCanvas
+                undoManager.registerUndo(withTarget: strongSelf) { (target) in
+                    target.updateSelection(oldSelection)
+                    target.selectedCanvasID = oldCanvas
+                }
+            }
+        }
+    }
+
+
+
+    
+    //MARK: - TO DELETE
+
+
+    //MARK: - Model Helpers
+    var pageCollection: ModelCollection<Page> {
+        return self.modelController.collection(for: Page.self)
+    }
+
+    var canvasCollection: ModelCollection<Canvas> {
+        return self.modelController.collection(for: Canvas.self)
+    }
+
+    var canvasPageCollection: ModelCollection<CanvasPage> {
+        return self.modelController.collection(for: CanvasPage.self)
+    }
+
+    var foldersCollection: ModelCollection<Folder> {
+        return self.modelController.collection(for: Folder.self)
+    }
+
+
     //MARK: - Folders
     lazy var rootFolder: Folder = {
         if let id = self.modelController.settings.modelID(for: .rootFolder),
@@ -248,52 +476,6 @@ class DocumentWindowViewModel: NSObject {
         return canvas
     }
 
-
-
-
-    //MARK: - Deleting Sidebar Items
-    func delete(_ sidebarItems: [SidebarItem]) {
-        guard let alert = self.alertForDeleting(sidebarItems) else {
-            self.actuallyDelete(sidebarItems)
-            return
-        }
-
-        self.window?.showAlert(alert, callback: { (index) in
-            let (type, _) = alert.buttons[index]
-            if (type == .confirm) {
-                self.actuallyDelete(sidebarItems)
-            }
-        })
-    }
-
-    private func actuallyDelete(_ items: [SidebarItem]) {
-        self.modelController.pushChangeGroup()
-        self.modelController.undoManager.setActionName(self.undoActionName(for: items))
-        var itemsToRemoveFromSelection = items
-        for item in items {
-            switch item {
-            case .page(let modelID):
-                guard let page = self.pageCollection.objectWithID(modelID) else {
-                    continue
-                }
-                self.actuallyDelete(page)
-            case .folder(let modelID):
-                guard let folder = self.foldersCollection.objectWithID(modelID) else {
-                    continue
-                }
-                let deletedContents = self.actuallyDelete(folder)
-                itemsToRemoveFromSelection.append(contentsOf: deletedContents)
-            case .canvases, .canvas(_):
-                continue
-            }
-        }
-
-        let newSelection = self.sidebarSelection.filter { !itemsToRemoveFromSelection.contains($0) }
-        self.updateSelection(newSelection)
-
-        self.modelController.popChangeGroup()
-    }
-
     private func actuallyDelete(_ page: Page) {
         page.canvases.forEach {
             self.canvasPageCollection.delete($0)
@@ -319,22 +501,6 @@ class DocumentWindowViewModel: NSObject {
         return contentItemsDeleted
     }
 
-
-    //MARK: - Deleting Canvas
-    func delete(_ canvas: Canvas) {
-        guard let alert = alertForDeleting(canvas) else {
-            self.actuallyDelete(canvas)
-            return
-        }
-
-        self.window?.showAlert(alert, callback: { (index) in
-            let (type, _) = alert.buttons[index]
-            if (type == .confirm) {
-                self.actuallyDelete(canvas)
-            }
-        })
-    }
-
     private func actuallyDelete(_ canvas: Canvas) {
         self.modelController.pushChangeGroup()
         self.modelController.undoManager.setActionName(NSLocalizedString("Delete Canvas", comment: "Delete Canvas Undo Action Name"))
@@ -345,59 +511,6 @@ class DocumentWindowViewModel: NSObject {
         self.modelController.popChangeGroup()
 
         self.selectedCanvasID = nil
-    }
-
-    private func undoActionName(for items: [SidebarItem]) -> String {
-        var hasPages = false
-        var hasFolders = false
-        for item in items {
-            switch item {
-            case .page(_):
-                hasPages = true
-            case .folder(_):
-                hasFolders = true
-            case .canvases, .canvas(_):
-                continue
-            }
-
-            if hasPages && hasFolders {
-                break
-            }
-        }
-
-        if hasPages && !hasFolders {
-            return NSLocalizedString("Delete Pages", comment: "Delete Pages undo action")
-        } else if hasFolders && !hasPages {
-            return NSLocalizedString("Delete Folders", comment: "Delete Folders undo action")
-        } else {
-            return NSLocalizedString("Delete Items", comment: "Delete Items undo action")
-        }
-    }
-
-
-    //MARK: - Navigating Pages
-
-    /// Either opens the page or adds it to the canvas, depending on what is selected in the sidebar
-    /// - Parameter pageLink: The PageLink to handle
-    /// - Returns: True if the page link was handled, false if it wasn't
-    @discardableResult func handle(_ pageLink: PageLink) -> Bool {
-        guard self.modelController.object(with: pageLink.destination) != nil else {
-            return false
-        }
-
-//        guard self.selectedCanvasInSidebar == nil else {
-//            self.addPage(at: pageLink, to: self.selectedCanvasInSidebar!)
-//            return true
-//        }
-
-        self.openPage(at: pageLink)
-        return true
-    }
-
-    /// Displays the page at the supplied link in the main editor
-    /// - Parameter pageLink: The page link to open
-    func openPage(at pageLink: PageLink) {
-        self.updateSelection([.page(pageLink.destination)])
     }
 
 
@@ -446,70 +559,24 @@ class DocumentWindowViewModel: NSObject {
         canvas.close(canvasPage)
         self.modelController.popChangeGroup()
     }
-
-
-    //MARK: - Undo
-    private var undoObservation: NSObjectProtocol?
-    private func setupSelectionUndo() {
-        let undoManager = self.modelController.undoManager
-        self.undoObservation = NotificationCenter.default.addObserver(forName: .NSUndoManagerDidOpenUndoGroup,
-                                                                      object: undoManager,
-                                                                      queue: .main)
-        { [weak self] (notification) in
-            guard let strongSelf = self else {
-                return
-            }
-            let sidebarSelection = strongSelf.sidebarSelection
-            let selectedCanvas = strongSelf.selectedCanvasID
-            undoManager.setActionIsDiscardable(true)
-            undoManager.registerUndo(withTarget: strongSelf) { (target) in
-                let oldSelection = target.sidebarSelection
-                let oldCanvas = target.selectedCanvasID
-                target.updateSelection(sidebarSelection)
-                target.selectedCanvasID = selectedCanvas
-                undoManager.registerUndo(withTarget: strongSelf) { (target) in
-                    target.updateSelection(oldSelection)
-                    target.selectedCanvasID = oldCanvas
-                }
-            }
-        }
-    }
-}
-
-
-
-//MARK: - State Restoration
-extension DocumentWindowViewModel {
-
 }
 
 
 //MARK: - Alerts
 extension DocumentWindowViewModel {
     //MARK: - SidebarItems
-    private func alertForDeleting(_ sidebarItems: [SidebarItem]) -> Alert? {
-        guard sidebarItems.count <= 1 else {
-            return self.alertForDeletingMultipleItems(sidebarItems)
+    private func alertForDeleting(_ folderItems: [FolderContainable]) -> Alert? {
+        guard folderItems.count <= 1 else {
+            return self.alertForDeletingMultipleItems(folderItems)
         }
 
-        guard let item = sidebarItems.first else {
-            return nil
-        }
-
-        switch item {
-        case .page(let modelID):
-            guard let page = self.pageCollection.objectWithID(modelID) else {
-                return nil
-            }
+        if let page = folderItems.first as? Page {
             return self.alertForDeletingSinglePage(page)
-        case .folder(let modelID):
-            guard let folder = self.foldersCollection.objectWithID(modelID) else {
-                return nil
-            }
-            return self.alertForDeletingSingleFolder(folder)
-        default:
-            return nil
         }
+        else if let folder = folderItems.first as? Folder {
+            return self.alertForDeletingSingleFolder(folder)
+        }
+        return nil
     }
 
     private func alertForDeletingSinglePage(_ page: Page) -> Alert? {
@@ -544,17 +611,15 @@ extension DocumentWindowViewModel {
                      confirmButtonTitle: NSLocalizedString("Delete", comment: "Delete alert confirm button"))
     }
 
-    private func alertForDeletingMultipleItems(_ items: [SidebarItem]) -> Alert? {
+    private func alertForDeletingMultipleItems(_ items: [FolderContainable]) -> Alert? {
         var hasPages = false
         var hasFolders = false
         for item in items {
-            switch item {
-            case .page(_):
+            if item is Page {
                 hasPages = true
-            case .folder(_):
+            }
+            else if item is Folder {
                 hasFolders = true
-            case .canvases, .canvas(_):
-                continue
             }
 
             if hasPages && hasFolders {

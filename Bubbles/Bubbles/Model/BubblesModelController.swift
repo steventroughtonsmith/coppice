@@ -56,7 +56,7 @@ class BubblesModelController: NSObject, ModelController {
         return self.collection(for: Page.self)
     }
 
-    func createPage(ofType contentType: PageContentType = .text, in parentFolder: Folder, below item: FolderContainable? = nil, setup: ((Page) -> Void)? = nil) -> Page {
+    @discardableResult func createPage(ofType contentType: PageContentType = .text, in parentFolder: Folder, below item: FolderContainable? = nil, setup: ((Page) -> Void)? = nil) -> Page {
         self.undoManager.beginUndoGrouping()
 
         let page = Page.create(in: self) {
@@ -77,7 +77,7 @@ class BubblesModelController: NSObject, ModelController {
         return page
     }
 
-    func createPages(fromFilesAt urls: [URL], in parentFolder: Folder, below item: FolderContainable? = nil, setup: (([Page]) -> Void)? = nil) -> [Page] {
+    @discardableResult func createPages(fromFilesAt urls: [URL], in parentFolder: Folder, below item: FolderContainable? = nil, setup: (([Page]) -> Void)? = nil) -> [Page] {
         self.pushChangeGroup()
         self.undoManager.beginUndoGrouping()
 
@@ -129,7 +129,7 @@ class BubblesModelController: NSObject, ModelController {
         return self.collection(for: Folder.self)
     }
 
-    func createFolder(in parentFolder: Folder, below item: FolderContainable? = nil, setup: ((Folder) -> Void)? = nil) -> Folder {
+    @discardableResult func createFolder(in parentFolder: Folder, below item: FolderContainable? = nil, setup: ((Folder) -> Void)? = nil) -> Folder {
         self.undoManager.beginUndoGrouping()
         let folder = Folder.create(in: self)
 
@@ -155,12 +155,55 @@ class BubblesModelController: NSObject, ModelController {
     }
 
 
+    //MARK: - Folder Items
+    func delete(_ folderItems: [FolderContainable]) {
+        self.pushChangeGroup()
+        for item in folderItems {
+            if let page = item as? Page {
+                self.delete(page)
+            }
+            else if let folder = item as? Folder {
+                self.delete(folder)
+            }
+            else {
+                assertionFailure("Tried deleting a folder item that isn't a page or file")
+            }
+        }
+        self.undoManager.setActionName(self.undoActionName(for: folderItems))
+        self.popChangeGroup()
+    }
+
+    private func undoActionName(for items: [FolderContainable]) -> String {
+        var hasPages = false
+        var hasFolders = false
+        for item in items {
+            if item is Page {
+                hasPages = true
+            } else if item is Folder {
+                hasFolders = true
+            }
+
+            if hasPages && hasFolders {
+                break
+            }
+        }
+
+        if hasPages && !hasFolders {
+            return NSLocalizedString("Delete Pages", comment: "Delete Pages undo action")
+        } else if hasFolders && !hasPages {
+            return NSLocalizedString("Delete Folders", comment: "Delete Folders undo action")
+        } else {
+            return NSLocalizedString("Delete Items", comment: "Delete Items undo action")
+        }
+    }
+
+
     //MARK: - Canvas
     var canvasCollection: ModelCollection<Canvas> {
         return self.collection(for: Canvas.self)
     }
 
-    func createCanvas(setup: ((Canvas) -> Void)? = nil) -> Canvas {
+    @discardableResult func createCanvas(setup: ((Canvas) -> Void)? = nil) -> Canvas {
         let canvas = Canvas.create(in: self)
         setup?(canvas)
         self.undoManager.setActionName(NSLocalizedString("Create Canvas", comment: "Create Canvas Undo Action Name"))
@@ -183,11 +226,11 @@ class BubblesModelController: NSObject, ModelController {
         return self.collection(for: CanvasPage.self)
     }
 
-    func addPages(_ pages: [Page], to canvas: Canvas, centredOn point: CGPoint? = nil) -> [CanvasPage] {
+    @discardableResult func addPages(_ pages: [Page], to canvas: Canvas, centredOn point: CGPoint? = nil) -> [CanvasPage] {
         return []
     }
 
-    func openPage(at link: PageLink, on canvas: Canvas) -> [CanvasPage] {
+    @discardableResult func openPage(at link: PageLink, on canvas: Canvas) -> [CanvasPage] {
         guard let page = self.pageCollection.objectWithID(link.destination) else {
             return []
         }

@@ -264,7 +264,7 @@ class SourceListViewModelTests: XCTestCase {
         let initialPagesItem = try XCTUnwrap(initialSourceListNodes[safe: 1])
         XCTAssertEqual(initialPagesItem.children.count, 1)
 
-        self.documentWindowViewModel.delete([.page(page1.id)])
+        self.modelController.delete(page1)
 
         vm.reloadSourceListNodes()
 
@@ -306,7 +306,7 @@ class SourceListViewModelTests: XCTestCase {
         let initialPagesItem = try XCTUnwrap(initialSourceListNodes[safe: 1])
         XCTAssertEqual(initialPagesItem.children.count, 1)
 
-        self.documentWindowViewModel.delete([.folder(folder1.id)])
+        self.modelController.delete(folder1)
 
         vm.reloadSourceListNodes()
 

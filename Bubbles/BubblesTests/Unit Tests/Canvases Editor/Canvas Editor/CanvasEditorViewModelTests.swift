@@ -10,7 +10,7 @@ import XCTest
 @testable import Bubbles
 
 class CanvasEditorViewModelTests: XCTestCase {
-    var modelController: ModelController!
+    var modelController: BubblesModelController!
     var canvas: Canvas!
     var canvasPage1: CanvasPage!
     var canvasPage2: CanvasPage!
