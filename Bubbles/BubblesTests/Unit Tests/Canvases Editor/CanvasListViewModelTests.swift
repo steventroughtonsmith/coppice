@@ -11,7 +11,7 @@ import XCTest
 
 class CanvasListViewModelTests: XCTestCase {
 
-    var modelController: BubblesModelController!
+    var modelController: MockBubblesModelController!
     var documentViewModel: MockDocumentWindowViewModel!
     var viewModel: CanvasListViewModel!
 
@@ -22,7 +22,7 @@ class CanvasListViewModelTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        self.modelController = BubblesModelController(undoManager: UndoManager())
+        self.modelController = MockBubblesModelController(undoManager: UndoManager())
         self.canvas1 = Canvas.create(in: self.modelController) { $0.sortIndex = 0 }
         self.canvas2 = Canvas.create(in: self.modelController) { $0.sortIndex = 1 }
         self.canvas3 = Canvas.create(in: self.modelController) { $0.sortIndex = 2 }
@@ -94,38 +94,35 @@ class CanvasListViewModelTests: XCTestCase {
 
 
     //MARK: - addPage(with:toCanvasAtIndex:)
-    func test_addPageWithIDToCanvasAtIndex_tellsDocumentViewModelToAddPageToCanvasAtIndex() throws {
+    func test_addPageWithIDToCanvasAtIndex_addsPagesToCanvasAtIndex() throws {
         let page = Page.create(in: self.modelController)
 
         self.viewModel.addPage(with: page.id, toCanvasAtIndex: 1)
 
-        let (pages, canvas, _) = try XCTUnwrap(self.documentViewModel.addPagesToCanvasArguments)
-
-        XCTAssertEqual(pages, [page])
-        XCTAssertEqual(canvas, self.canvas2)
+        XCTAssertEqual([page], self.canvas2.pages.compactMap(\.page))
     }
 
-    func test_addPageWithIDToCanvasAtIndex_tellsDocumentViewModelToAddInMiddleOfCanvasViewPort() throws {
+    func test_addPageWithIDToCanvasAtIndex_addsToMiddleOfCanvasViewPort() throws {
         let page = Page.create(in: self.modelController)
         self.canvas2.viewPort = CGRect(x: 10, y: 10, width: 90, height: 90)
 
         self.viewModel.addPage(with: page.id, toCanvasAtIndex: 1)
 
-        let (_, _, centrePoint) = try XCTUnwrap(self.documentViewModel.addPagesToCanvasArguments)
+        let canvasPage = try XCTUnwrap(self.canvas2.pages.first)
 
-        XCTAssertEqual(centrePoint, CGPoint(x: 55, y: 55))
+        XCTAssertEqual(canvasPage.frame.midPoint, CGPoint(x: 55, y: 55))
     }
 
 
     //MARK: - addPages(fromFilesAtURLs:toCanvasAtIndex:)
-    func test_addPagesFromFilesAtURLs_tellsDocumentViewModelToAddFilesToCanvasAtIndex() throws {
+    func test_addPagesFromFilesAtURLs_tellsDocumentViewModelToCreateFiles() throws {
         let url = try XCTUnwrap(self.testBundle.url(forResource: "test-rtf", withExtension: "rtf"))
 
-        _ = self.viewModel.addPages(fromFilesAtURLs: [url], toCanvasAtIndex: 2)
+        let pages = self.viewModel.addPages(fromFilesAtURLs: [url], toCanvasAtIndex: 2)
 
-        let (urls, _, _, canvas, _) = try XCTUnwrap(self.documentViewModel.createPagesFromFilesAtURLsArguments)
+        let (urls, _, _, _) = try XCTUnwrap(self.modelController.createPagesFromFilesMock.arguments.first)
         XCTAssertEqual(urls, [url])
-        XCTAssertEqual(canvas, self.canvas3)
+        XCTAssertEqual(pages.first?.canvases.first?.canvas, self.canvas3)
     }
 
 

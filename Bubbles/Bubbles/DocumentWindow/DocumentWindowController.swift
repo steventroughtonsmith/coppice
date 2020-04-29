@@ -102,7 +102,7 @@ class DocumentWindowController: NSWindowController {
     //MARK: - Actions
 
     @IBAction func newCanvas(_ sender: Any?) {
-        self.viewModel.createCanvas()
+        self.viewModel.modelController.createCanvas()
     }
 
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
@@ -125,7 +125,7 @@ class DocumentWindowController: NSWindowController {
 
     @IBAction func add10PagesToCanvas(_ sender: Any?) {
         (0..<10).forEach { _ in
-            self.viewModel.createPage(ofType: .text)
+            self.viewModel.modelController.createPage(ofType: .text, in: self.viewModel.folderForNewPages)
         }
     }
 

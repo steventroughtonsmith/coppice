@@ -66,8 +66,8 @@ class SourceListViewModel: ViewModel {
     }()
 
     lazy var pagesGroupNode: SourceListNode = {
-        let node = PagesGroupSourceListNode(rootFolder: self.documentWindowViewModel.rootFolder)
-        self.nodesByItem[.folder(self.documentWindowViewModel.rootFolder.id)] = node
+        let node = PagesGroupSourceListNode(rootFolder: self.modelController.rootFolder)
+        self.nodesByItem[.folder(self.modelController.rootFolder.id)] = node
         return node
     }()
 
@@ -94,14 +94,14 @@ class SourceListViewModel: ViewModel {
     private func addAndRemoveNodes() {
         var oldItems = Array(nodesByItem.keys)
 
-        for page in self.documentWindowViewModel.pageCollection.all {
+        for page in self.modelController.pageCollection.all {
             let node = self.node(for: page, createIfNeeded: true)!
             if let index = oldItems.firstIndex(of: node.item) {
                 oldItems.remove(at: index)
             }
         }
 
-        for folder in self.documentWindowViewModel.foldersCollection.all {
+        for folder in self.modelController.folderCollection.all {
             let node = self.node(for: folder, createIfNeeded: true)!
             if let index = oldItems.firstIndex(of: node.item) {
                 oldItems.remove(at: index)
@@ -122,7 +122,7 @@ class SourceListViewModel: ViewModel {
     }
 
     private func updateHierarchy() {
-        for folder in self.documentWindowViewModel.foldersCollection.all {
+        for folder in self.modelController.folderCollection.all {
             guard let node = self.node(for: .folder(folder.id)) else {
                 continue
             }
@@ -206,7 +206,7 @@ class SourceListViewModel: ViewModel {
             return (false, node, index)
         }
 
-        guard let folder = self.documentWindowViewModel.foldersCollection.objectWithID(folderID),
+        guard let folder = self.modelController.folderCollection.objectWithID(folderID),
               self.validate(ids: ids, and: folder) else {
                 return (false, node, index)
         }
@@ -218,7 +218,7 @@ class SourceListViewModel: ViewModel {
             return false
         }
 
-        guard let folder = self.documentWindowViewModel.foldersCollection.objectWithID(folderID),
+        guard let folder = self.modelController.folderCollection.objectWithID(folderID),
               self.validate(ids: ids, and: folder) else
         {
             return false
@@ -280,22 +280,22 @@ class SourceListViewModel: ViewModel {
             return false
         }
 
-        guard let folder = self.documentWindowViewModel.foldersCollection.objectWithID(folderID),
+        guard let folder = self.modelController.folderCollection.objectWithID(folderID),
             self.validateFiles(at: urls) else
         {
             return false
         }
 
         if index == -1 {
-            self.documentWindowViewModel.createPages(fromFilesAtURLs: urls, in: folder, below: folder.contents.last)
+            self.modelController.createPages(fromFilesAt: urls, in: folder, below: folder.contents.last)
             return true
         }
         
         let trueIndex = index - 1
         if (trueIndex == -1) {
-            self.documentWindowViewModel.createPages(fromFilesAtURLs: urls, in: folder, below: nil)
+            self.modelController.createPages(fromFilesAt: urls, in: folder)
         } else {
-            self.documentWindowViewModel.createPages(fromFilesAtURLs: urls, in: folder, below: folder.contents[safe: trueIndex])
+            self.modelController.createPages(fromFilesAt: urls, in: folder, below: folder.contents[safe: trueIndex])
         }
         return true
     }
@@ -318,13 +318,16 @@ class SourceListViewModel: ViewModel {
     //MARK: - Creation
     func createPage(ofType type: PageContentType, underNodes collection: SourceListNodeCollection) -> DocumentWindowViewModel.SidebarItem {
         let lastNode = collection.nodes.last
-        let page = self.documentWindowViewModel.createPage(ofType: type, in: lastNode?.folderForCreation, below: lastNode?.folderItemForCreation)
+        let page = self.modelController.createPage(ofType: type,
+                                                   in: lastNode?.folderForCreation ?? self.documentWindowViewModel.folderForNewPages,
+                                                   below: lastNode?.folderItemForCreation)
         return .page(page.id)
     }
 
     func createFolder(underNodes collection: SourceListNodeCollection) -> DocumentWindowViewModel.SidebarItem {
         let lastNode = collection.nodes.last
-        let folder = self.documentWindowViewModel.createFolder(in: lastNode?.folderForCreation, below: lastNode?.folderItemForCreation)
+        let folder = self.modelController.createFolder(in: lastNode?.folderForCreation ?? self.documentWindowViewModel.folderForNewPages,
+                                                       below: lastNode?.folderItemForCreation)
         return .folder(folder.id)
     }
 
@@ -332,16 +335,18 @@ class SourceListViewModel: ViewModel {
         guard let lastNode = collection.nodes.last else {
             return nil
         }
-        let containingFolder = lastNode.folderForCreation?.containingFolder ?? self.documentWindowViewModel.rootFolder
-        let newFolder = self.documentWindowViewModel.createFolder(in: containingFolder,
-                                                                  below: containingFolder.contents.last,
-                                                                  withInitialContents: collection.nodes.compactMap(\.folderContainable))
+        let containingFolder = lastNode.folderForCreation?.containingFolder ?? self.modelController.rootFolder
+        let newFolder = self.modelController.createFolder(in: containingFolder, below: containingFolder.contents.last) { folder in
+            folder.insert(collection.nodes.compactMap(\.folderContainable))
+        }
         return .folder(newFolder.id)
     }
 
     @discardableResult func createPages(fromFilesAt urls: [URL], underNodes collection: SourceListNodeCollection) -> [DocumentWindowViewModel.SidebarItem] {
         let lastNode = collection.nodes.last
-        let pages = self.documentWindowViewModel.createPages(fromFilesAtURLs: urls, in: lastNode?.folderForCreation, below: lastNode?.folderItemForCreation)
+        let pages = self.modelController.createPages(fromFilesAt: urls,
+                                                     in: (lastNode?.folderForCreation ?? self.documentWindowViewModel.folderForNewPages),
+                                                     below: lastNode?.folderItemForCreation)
         return pages.map { .page($0.id) }
     }
 
@@ -354,7 +359,7 @@ class SourceListViewModel: ViewModel {
 
     //MARK: - Canvases
     var canvases: [Canvas] {
-        return self.documentWindowViewModel.canvasCollection.all.sorted { $0.sortIndex < $1.sortIndex }
+        return self.modelController.canvasCollection.all.sorted { $0.sortIndex < $1.sortIndex }
     }
 
     func addNodes(_ nodeCollection: SourceListNodeCollection, to canvas: Canvas) {

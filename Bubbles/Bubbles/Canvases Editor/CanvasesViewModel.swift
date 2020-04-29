@@ -23,7 +23,7 @@ class CanvasesViewModel: ViewModel {
         self.selectedCanvasObserver = self.documentWindowViewModel.$selectedCanvasID
             .map { [weak self] id -> Canvas? in
                 if let modelID = id {
-                    return self?.documentWindowViewModel.canvasCollection.objectWithID(modelID)
+                    return self?.modelController.canvasCollection.objectWithID(modelID)
                 }
                 return nil
             }.assign(to: \.currentCanvas, on: self)

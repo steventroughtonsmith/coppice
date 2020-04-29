@@ -75,7 +75,7 @@ class SearchResultsViewModel: ViewModel {
         guard self.searchTerm.count > 0 else {
             return []
         }
-        let canvasMatches = self.documentWindowViewModel.canvasCollection.matches(forSearchTerm: self.searchTerm)
+        let canvasMatches = self.modelController.canvasCollection.matches(forSearchTerm: self.searchTerm)
         let sortedCanvases = canvasMatches.map { CanvasSearchResult(match: $0, searchTerm: self.searchTerm)}
         return sortedCanvases
     }
@@ -84,7 +84,7 @@ class SearchResultsViewModel: ViewModel {
         guard self.searchTerm.count > 0 else {
             return []
         }
-        let pageMatches = self.documentWindowViewModel.pageCollection.matches(forSearchTerm: self.searchTerm)
+        let pageMatches = self.modelController.pageCollection.matches(forSearchTerm: self.searchTerm)
         let sortedPages = pageMatches.map { PageSearchResult(match: $0, searchTerm: self.searchTerm)}
         return sortedPages
     }
@@ -95,11 +95,9 @@ class SearchResultsViewModel: ViewModel {
     }
 
     func addPages(with ids: [ModelID], to canvas: Canvas) -> Bool {
-        let viewModel = self.documentWindowViewModel
+        let pages = ids.compactMap { self.modelController.pageCollection.objectWithID($0) }
 
-        let pages = ids.compactMap { viewModel.pageCollection.objectWithID($0) }
-
-        let addedPages = viewModel.addPages(pages, to: canvas)
+        let addedPages = canvas.addPages(pages)
 
         return (addedPages.count > 0)
     }

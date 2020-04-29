@@ -230,13 +230,13 @@ class DocumentWindowViewModelTests: XCTestCase {
     //MARK: - .folderForNewPages
     func test_folderForNewPages_returnsRootFolderAndNilIfNothingSelectedInSidebar() {
         let viewModel = DocumentWindowViewModel(modelController: self.modelController)
-        XCTAssertEqual(viewModel.folderForNewPages, viewModel.rootFolder)
+        XCTAssertEqual(viewModel.folderForNewPages, self.modelController.rootFolder)
     }
 
     func test_folderForNewPages_returnsRootFolderAndNilIfOnlyCanvasesSelected() {
         let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         viewModel.updateSelection([.canvases])
-        XCTAssertEqual(viewModel.folderForNewPages, viewModel.rootFolder)
+        XCTAssertEqual(viewModel.folderForNewPages, self.modelController.rootFolder)
     }
 
     func test_folderForNewPages_returnsFolderAndNilIfOnlyThatFolderIsSelected() {
@@ -478,7 +478,7 @@ class DocumentWindowViewModelTests: XCTestCase {
         let window = MockWindow()
         viewModel.window = window
 
-        let canvas = viewModel.canvasCollection.newObject()
+        let canvas = self.modelController.canvasCollection.newObject()
 
         viewModel.delete(canvas)
 
@@ -490,7 +490,7 @@ class DocumentWindowViewModelTests: XCTestCase {
         let window = MockWindow()
         viewModel.window = window
 
-        let canvas = viewModel.canvasCollection.newObject()
+        let canvas = self.modelController.canvasCollection.newObject()
 
         viewModel.delete(canvas)
 

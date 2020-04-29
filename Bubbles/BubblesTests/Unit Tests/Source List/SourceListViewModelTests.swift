@@ -41,7 +41,7 @@ class SourceListViewModelTests: XCTestCase {
     }
 
     private func addTestData(to viewModel: SourceListViewModel) -> (Page, Folder, Page, Page) {
-        let rootFolder = self.documentWindowViewModel.rootFolder
+        let rootFolder = self.modelController.rootFolder
         let page = self.modelController.collection(for: Page.self).newObject()
         rootFolder.insert([page])
         let folder = self.modelController.collection(for: Folder.self).newObject()
@@ -68,14 +68,14 @@ class SourceListViewModelTests: XCTestCase {
         XCTAssertEqual(canvasNode.children.count, 0)
 
         let pagesItem = try XCTUnwrap(sourceListNodes[safe: 1])
-        XCTAssertEqual(pagesItem.item, .folder(self.documentWindowViewModel.rootFolder.id))
+        XCTAssertEqual(pagesItem.item, .folder(self.modelController.rootFolder.id))
         XCTAssertEqual(pagesItem.children.count, 0)
     }
 
     func test_rootSourceListNodes_returnsNodesInRootFolderAsPartOfPagesGroup() throws {
         let vm = self.createViewModel()
 
-        let rootFolder = self.documentWindowViewModel.rootFolder
+        let rootFolder = self.modelController.rootFolder
         let page1 = self.modelController.collection(for: Page.self).newObject() {
             $0.title = "My First Page"
         }
@@ -136,7 +136,7 @@ class SourceListViewModelTests: XCTestCase {
     func test_rootSourceListNodes_returnsNodesInFoldersInsidePagesGroup() throws {
         let vm = self.createViewModel()
 
-        let rootFolder = self.documentWindowViewModel.rootFolder
+        let rootFolder = self.modelController.rootFolder
             let page1 = self.modelController.collection(for: Page.self).newObject() {
                 $0.title = "My First Page"
             }
@@ -240,7 +240,7 @@ class SourceListViewModelTests: XCTestCase {
         let initialPagesItem = try XCTUnwrap(initialSourceListNodes[safe: 1])
         XCTAssertEqual(initialPagesItem.children.count, 0)
 
-        let rootFolder = self.documentWindowViewModel.rootFolder
+        let rootFolder = self.modelController.rootFolder
         let page1 = self.modelController.collection(for: Page.self).newObject()
         rootFolder.insert([page1])
 
@@ -254,7 +254,7 @@ class SourceListViewModelTests: XCTestCase {
     func test_rootSourceListNodes_reloadsNodesWhenPageRemoved() throws {
         let vm = self.createViewModel()
 
-        let rootFolder = self.documentWindowViewModel.rootFolder
+        let rootFolder = self.modelController.rootFolder
         let page1 = self.modelController.collection(for: Page.self).newObject()
         rootFolder.insert([page1])
 
@@ -282,7 +282,7 @@ class SourceListViewModelTests: XCTestCase {
         XCTAssertEqual(initialPagesItem.children.count, 0)
 
 
-        let rootFolder = self.documentWindowViewModel.rootFolder
+        let rootFolder = self.modelController.rootFolder
         let folder1 = self.modelController.collection(for: Folder.self).newObject()
         rootFolder.insert([folder1])
 
@@ -296,7 +296,7 @@ class SourceListViewModelTests: XCTestCase {
     func test_rootSourceListNodes_reloadsNodesWhenFolderRemoved() throws {
         let vm = self.createViewModel()
 
-        let rootFolder = self.documentWindowViewModel.rootFolder
+        let rootFolder = self.modelController.rootFolder
         let folder1 = self.modelController.collection(for: Folder.self).newObject()
         rootFolder.insert([folder1])
 
@@ -319,7 +319,7 @@ class SourceListViewModelTests: XCTestCase {
         let vm = self.createViewModel()
         vm.startObserving()
 
-        let rootFolder = self.documentWindowViewModel.rootFolder
+        let rootFolder = self.modelController.rootFolder
         let folder1 = self.modelController.collection(for: Folder.self).newObject()
         let page1 = self.modelController.collection(for: Page.self).newObject()
         rootFolder.insert([folder1, page1])
@@ -366,7 +366,7 @@ class SourceListViewModelTests: XCTestCase {
         let vm = self.createViewModel()
         vm.startObserving()
 
-        let rootFolder = self.documentWindowViewModel.rootFolder
+        let rootFolder = self.modelController.rootFolder
         let page1 = self.modelController.collection(for: Page.self).newObject()
         rootFolder.insert([page1])
         vm.reloadSourceListNodes()
@@ -390,7 +390,7 @@ class SourceListViewModelTests: XCTestCase {
         let vm = self.createViewModel()
         vm.startObserving()
 
-        let rootFolder = self.documentWindowViewModel.rootFolder
+        let rootFolder = self.modelController.rootFolder
         let folder1 = self.modelController.collection(for: Folder.self).newObject()
         rootFolder.insert([folder1])
         vm.reloadSourceListNodes()
@@ -416,7 +416,7 @@ class SourceListViewModelTests: XCTestCase {
         let vm = self.createViewModel()
         vm.startObserving()
 
-        let rootFolder = self.documentWindowViewModel.rootFolder
+        let rootFolder = self.modelController.rootFolder
         let page = self.modelController.collection(for: Page.self).newObject()
         rootFolder.insert([page])
         let folder = self.modelController.collection(for: Folder.self).newObject()
@@ -434,7 +434,7 @@ class SourceListViewModelTests: XCTestCase {
         let vm = self.createViewModel()
         vm.startObserving()
 
-        let rootFolder = self.documentWindowViewModel.rootFolder
+        let rootFolder = self.modelController.rootFolder
         let page = self.modelController.collection(for: Page.self).newObject()
         rootFolder.insert([page])
         let folder = self.modelController.collection(for: Folder.self).newObject()
@@ -519,7 +519,7 @@ class SourceListViewModelTests: XCTestCase {
 
         let (_, folder, subpage1, page2) = self.addTestData(to: vm)
         let node = try XCTUnwrap(vm.node(for: .folder(folder.id)))
-        let rootFolder = self.documentWindowViewModel.rootFolder
+        let rootFolder = self.modelController.rootFolder
 
         let (canDrop, _, _) = vm.canDropItems(with: [rootFolder.id, subpage1.id, page2.id], onto: node, atChildIndex: -1)
         XCTAssertFalse(canDrop)
@@ -534,7 +534,7 @@ class SourceListViewModelTests: XCTestCase {
         folder.insert([childFolder])
         vm.reloadSourceListNodes()
         let node = try XCTUnwrap(vm.node(for: .folder(childFolder.id)))
-        let rootFolder = self.documentWindowViewModel.rootFolder
+        let rootFolder = self.modelController.rootFolder
 
         let (canDrop, _, _) = vm.canDropItems(with: [rootFolder.id, subpage1.id, page2.id], onto: node, atChildIndex: -1)
         XCTAssertFalse(canDrop)
@@ -600,7 +600,7 @@ class SourceListViewModelTests: XCTestCase {
 
         let (_, folder, subpage1, page2) = self.addTestData(to: vm)
         let node = try XCTUnwrap(vm.node(for: .folder(folder.id)))
-        let rootFolder = self.documentWindowViewModel.rootFolder
+        let rootFolder = self.modelController.rootFolder
 
         XCTAssertFalse(vm.dropItems(with: [rootFolder.id, subpage1.id, page2.id], onto: node, atChildIndex: -1))
     }
@@ -614,7 +614,7 @@ class SourceListViewModelTests: XCTestCase {
         folder.insert([childFolder])
         vm.reloadSourceListNodes()
         let node = try XCTUnwrap(vm.node(for: .folder(childFolder.id)))
-        let rootFolder = self.documentWindowViewModel.rootFolder
+        let rootFolder = self.modelController.rootFolder
 
         XCTAssertFalse(vm.dropItems(with: [rootFolder.id, subpage1.id, page2.id], onto: node, atChildIndex: -1))
     }
@@ -647,7 +647,7 @@ class SourceListViewModelTests: XCTestCase {
 
         XCTAssertTrue(vm.dropItems(with: [page1.id, folder.id], onto: vm.pagesGroupNode, atChildIndex: -1))
 
-        let rootFolder = self.documentWindowViewModel.rootFolder
+        let rootFolder = self.modelController.rootFolder
         XCTAssertEqual(rootFolder.contents[safe: 1] as? Page, page1)
         XCTAssertEqual(rootFolder.contents[safe: 2] as? Folder, folder)
     }
@@ -660,7 +660,7 @@ class SourceListViewModelTests: XCTestCase {
 
         XCTAssertTrue(vm.dropItems(with: [folder.id, page2.id], onto: vm.pagesGroupNode, atChildIndex: 0))
 
-        let rootFolder = self.documentWindowViewModel.rootFolder
+        let rootFolder = self.modelController.rootFolder
         XCTAssertEqual(rootFolder.contents[safe: 0] as? Folder, folder)
         XCTAssertEqual(rootFolder.contents[safe: 1] as? Page, page2)
     }
@@ -673,7 +673,7 @@ class SourceListViewModelTests: XCTestCase {
 
         XCTAssertTrue(vm.dropItems(with: [page1.id], onto: vm.pagesGroupNode, atChildIndex: 2))
 
-        let rootFolder = self.documentWindowViewModel.rootFolder
+        let rootFolder = self.modelController.rootFolder
         XCTAssertEqual(rootFolder.contents[safe: 1] as? Page, page1)
     }
 
@@ -849,7 +849,7 @@ class SourceListViewModelTests: XCTestCase {
         let textURL = try XCTUnwrap(self.testBundle.url(forResource: "test-rtf", withExtension: "rtf"))
         let imageURL = try XCTUnwrap(self.testBundle.url(forResource: "test-image", withExtension: "png"))
 
-        let rootFolder = self.documentWindowViewModel.rootFolder
+        let rootFolder = self.modelController.rootFolder
         _ = vm.dropFiles(at: [textURL, imageURL], onto: vm.pagesGroupNode, atChildIndex: -1)
 
         XCTAssertTrue((rootFolder.contents[safe: 3] as? Page)?.content is TextPageContent)
@@ -865,7 +865,7 @@ class SourceListViewModelTests: XCTestCase {
         let textURL = try XCTUnwrap(self.testBundle.url(forResource: "test-rtf", withExtension: "rtf"))
         let imageURL = try XCTUnwrap(self.testBundle.url(forResource: "test-image", withExtension: "png"))
 
-        let rootFolder = self.documentWindowViewModel.rootFolder
+        let rootFolder = self.modelController.rootFolder
         _ = vm.dropFiles(at: [textURL, imageURL], onto: vm.pagesGroupNode, atChildIndex: 0)
 
         XCTAssertTrue((rootFolder.contents[safe: 0] as? Page)?.content is TextPageContent)
@@ -881,7 +881,7 @@ class SourceListViewModelTests: XCTestCase {
         let textURL = try XCTUnwrap(self.testBundle.url(forResource: "test-rtf", withExtension: "rtf"))
         let imageURL = try XCTUnwrap(self.testBundle.url(forResource: "test-image", withExtension: "png"))
 
-        let rootFolder = self.documentWindowViewModel.rootFolder
+        let rootFolder = self.modelController.rootFolder
         _ = vm.dropFiles(at: [textURL, imageURL], onto: vm.pagesGroupNode, atChildIndex: 2)
 
         XCTAssertTrue((rootFolder.contents[safe: 2] as? Page)?.content is TextPageContent)
@@ -905,8 +905,8 @@ class SourceListViewModelTests: XCTestCase {
         }
 
         let newPage = try XCTUnwrap(self.modelController.collection(for: Page.self).objectWithID(pageID))
-        XCTAssertEqual(newPage.containingFolder, self.documentWindowViewModel.rootFolder)
-        XCTAssertEqual(self.documentWindowViewModel.rootFolder.contents[safe: 1] as? Page, newPage)
+        XCTAssertEqual(newPage.containingFolder, self.modelController.rootFolder)
+        XCTAssertEqual(self.modelController.rootFolder.contents[safe: 1] as? Page, newPage)
     }
 
 
@@ -928,7 +928,7 @@ class SourceListViewModelTests: XCTestCase {
 
         let newFolder = try XCTUnwrap(self.modelController.collection(for: Folder.self).objectWithID(folderID))
         XCTAssertEqual(newFolder.containingFolder, expectedFolder)
-        XCTAssertEqual(self.documentWindowViewModel.rootFolder.contents[safe: 3] as? Folder, newFolder)
+        XCTAssertEqual(self.modelController.rootFolder.contents[safe: 3] as? Folder, newFolder)
     }
 
 
@@ -1011,7 +1011,7 @@ class SourceListViewModelTests: XCTestCase {
         let textPage = try XCTUnwrap(self.modelController.collection(for: Page.self).objectWithID(textPageID))
         let imagePage = try XCTUnwrap(self.modelController.collection(for: Page.self).objectWithID(imagePageID))
 
-        let rootFolder = self.documentWindowViewModel.rootFolder
+        let rootFolder = self.modelController.rootFolder
         XCTAssertEqual(textPage.containingFolder, rootFolder)
         XCTAssertEqual(imagePage.containingFolder, rootFolder)
         XCTAssertEqual(rootFolder.contents[safe: 1] as? Page, textPage)

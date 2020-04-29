@@ -32,12 +32,12 @@ class DocumentWindowViewModel: NSObject {
         self.pageImageController.documentViewModel = self
 
         //Force the root folder to load immediately so we don't end up with observation loops later
-        _ = self.rootFolder
+        _ = self.modelController.rootFolder
         self.setupSelectionUndo()
 
-        for page in self.pageCollection.all {
+        for page in self.modelController.pageCollection.all {
             if page.containingFolder == nil {
-                self.rootFolder.insert([page])
+                self.modelController.rootFolder.insert([page])
             }
         }
 
@@ -174,7 +174,7 @@ class DocumentWindowViewModel: NSObject {
             self.currentEditor = .canvas
             self.selectedCanvasID = modelID
         case .page(let modelID):
-            guard let page = self.pageCollection.objectWithID(modelID) else {
+            guard let page = self.modelController.pageCollection.objectWithID(modelID) else {
                 self.currentEditor = .none
                 return
             }
@@ -202,7 +202,7 @@ class DocumentWindowViewModel: NSObject {
             self.selectedCanvasID = ModelID(string: canvasIDString)
         }
         if let currentEditorString = coder.decodeObject(forKey: "currentEditor") as? String {
-            self.currentEditor = Editor.from(persistentRepresentation: currentEditorString, pagesCollection: self.pageCollection)
+            self.currentEditor = Editor.from(persistentRepresentation: currentEditorString, pagesCollection: self.modelController.pageCollection)
         }
     }
 
@@ -218,76 +218,26 @@ class DocumentWindowViewModel: NSObject {
             return nil
         }
 
-        return self.canvasCollection.objectWithID(selectedCanvasID)
+        return self.modelController.canvasCollection.objectWithID(selectedCanvasID)
     }
 
     var folderForNewPages: Folder {
         guard let selection = self.sidebarSelection.last(where: { $0 != .canvases }) else {
-            return self.rootFolder
+            return self.modelController.rootFolder
         }
 
         switch selection {
         case .canvases, .canvas(_):
-            return self.rootFolder
+            return self.modelController.rootFolder
         case .page(let modelID):
-            return self.pageCollection.objectWithID(modelID)?.containingFolder ?? self.rootFolder
+            return self.modelController.pageCollection.objectWithID(modelID)?.containingFolder ?? self.modelController.rootFolder
         case .folder(let modelID):
-            return self.foldersCollection.objectWithID(modelID) ?? self.rootFolder
+            return self.modelController.folderCollection.objectWithID(modelID) ?? self.modelController.rootFolder
         }
     }
 
 
     //MARK: - Deleting Sidebar Items
-
-//    private func actuallyDelete(_ items: [SidebarItem]) {
-//        self.modelController.pushChangeGroup()
-//        for item in items {
-//            switch item {
-//            case .page(let modelID):
-//                guard let page = self.modelController.pageCollection.objectWithID(modelID) else {
-//                    continue
-//                }
-//                self.modelController.delete(page)
-//            case .folder(let modelID):
-//                guard let folder = self.modelController.folderCollection.objectWithID(modelID) else {
-//                    continue
-//                }
-//                self.modelController.delete(folder)
-//            case .canvases, .canvas(_):
-//                continue
-//            }
-//        }
-//        self.modelController.undoManager.setActionName(self.undoActionName(for: items))
-//        self.modelController.popChangeGroup()
-//    }
-
-//    private func undoActionName(for items: [SidebarItem]) -> String {
-//        var hasPages = false
-//        var hasFolders = false
-//        for item in items {
-//            switch item {
-//            case .page(_):
-//                hasPages = true
-//            case .folder(_):
-//                hasFolders = true
-//            case .canvases, .canvas(_):
-//                continue
-//            }
-//
-//            if hasPages && hasFolders {
-//                break
-//            }
-//        }
-//
-//        if hasPages && !hasFolders {
-//            return NSLocalizedString("Delete Pages", comment: "Delete Pages undo action")
-//        } else if hasFolders && !hasPages {
-//            return NSLocalizedString("Delete Folders", comment: "Delete Folders undo action")
-//        } else {
-//            return NSLocalizedString("Delete Items", comment: "Delete Items undo action")
-//        }
-//    }
-
     func deleteItems(_ folderItems: [FolderContainable]) {
         guard let alert = self.alertForDeleting(folderItems) else {
             self.modelController.delete(folderItems)
@@ -374,191 +324,6 @@ class DocumentWindowViewModel: NSObject {
         }
     }
 
-
-
-    
-    //MARK: - TO DELETE
-
-
-    //MARK: - Model Helpers
-    var pageCollection: ModelCollection<Page> {
-        return self.modelController.collection(for: Page.self)
-    }
-
-    var canvasCollection: ModelCollection<Canvas> {
-        return self.modelController.collection(for: Canvas.self)
-    }
-
-    var canvasPageCollection: ModelCollection<CanvasPage> {
-        return self.modelController.collection(for: CanvasPage.self)
-    }
-
-    var foldersCollection: ModelCollection<Folder> {
-        return self.modelController.collection(for: Folder.self)
-    }
-
-
-    //MARK: - Folders
-    lazy var rootFolder: Folder = {
-        if let id = self.modelController.settings.modelID(for: .rootFolder),
-            let rootFolder = self.foldersCollection.objectWithID(id) {
-            return rootFolder
-        }
-
-        var folder: Folder!
-        self.foldersCollection.disableUndo {
-            folder = self.foldersCollection.newObject() { $0.title = Folder.rootFolderTitle }
-        }
-
-        self.modelController.settings.set(folder.id, for: .rootFolder)
-
-        return folder
-    }()
-
-    @discardableResult func createFolder(in parentFolder: Folder? = nil, below item: FolderContainable? = nil, withInitialContents contents: [FolderContainable] = []) -> Folder {
-        self.modelController.undoManager.beginUndoGrouping()
-        let folder = self.foldersCollection.newObject()
-
-        (parentFolder ?? self.folderForNewPages).insert([folder], below: item)
-        folder.insert(contents)
-        self.sidebarSelection = [.folder(folder.id)]
-        self.modelController.undoManager.endUndoGrouping()
-        return folder
-    }
-
-
-    //MARK: - Creating Pages
-    @discardableResult func createPage(ofType contentType: PageContentType = .text, in parentFolder: Folder? = nil, below item: FolderContainable? = nil) -> Page {
-        self.modelController.undoManager.beginUndoGrouping()
-        self.modelController.undoManager.setActionName(NSLocalizedString("Create Page", comment: "Create Page Undo Action Name"))
-        let page = self.pageCollection.newObject() {
-            //No need to change the content type if it's already the default
-            guard contentType != $0.content.contentType else {
-                return
-            }
-            $0.content = contentType.createContent()
-        }
-
-        (parentFolder ?? self.folderForNewPages).insert([page], below: item)
-
-        if self.sidebarSelection.contains(.canvases) {
-            self.canvasForNewPages?.addPages([page])
-        } else {
-            self.updateSelection([.page(page.id)])
-        }
-
-        self.modelController.undoManager.endUndoGrouping()
-        return page
-    }
-
-    @discardableResult func createPages(fromFilesAtURLs fileURLs: [URL], in folder: Folder? = nil, below item: FolderContainable? = nil, addingTo canvas: Canvas? = nil, centredOn point: CGPoint? = nil) -> [Page] {
-        self.modelController.pushChangeGroup()
-        self.modelController.undoManager.setActionName(NSLocalizedString("Create Pages", comment: "Create Page Undo Action Name"))
-        let newPages = fileURLs.compactMap { self.pageCollection.newPage(fromFileAt: $0) }
-        if let canvas = canvas {
-            canvas.addPages(newPages, centredOn: point)
-        }
-
-        (folder ?? self.folderForNewPages).insert(newPages, below: item)
-
-        self.modelController.popChangeGroup()
-
-        return newPages
-    }
-
-
-    //MARK: - Creating Canvases
-    @discardableResult func createCanvas() -> Canvas {
-        self.modelController.undoManager.setActionName(NSLocalizedString("Create Canvas", comment: "Create Canvas Undo Action Name"))
-        let canvas = self.modelController.collection(for: Canvas.self).newObject()
-        self.selectedCanvasID = canvas.id
-        self.sidebarSelection = [.canvases]
-        return canvas
-    }
-
-    private func actuallyDelete(_ page: Page) {
-        page.canvases.forEach {
-            self.canvasPageCollection.delete($0)
-        }
-
-        page.containingFolder?.remove([page])
-        self.pageCollection.delete(page)
-    }
-
-    private func actuallyDelete(_ folder: Folder) -> [SidebarItem] {
-        var contentItemsDeleted = [SidebarItem]()
-        folder.contents.forEach { (containable) in
-            if let folder = containable as? Folder {
-                contentItemsDeleted.append(contentsOf: self.actuallyDelete(folder))
-                contentItemsDeleted.append(.folder(folder.id))
-            } else if let page = containable as? Page {
-                self.actuallyDelete(page)
-                contentItemsDeleted.append(.page(page.id))
-            }
-        }
-        folder.containingFolder?.remove([folder])
-        self.foldersCollection.delete(folder)
-        return contentItemsDeleted
-    }
-
-    private func actuallyDelete(_ canvas: Canvas) {
-        self.modelController.pushChangeGroup()
-        self.modelController.undoManager.setActionName(NSLocalizedString("Delete Canvas", comment: "Delete Canvas Undo Action Name"))
-        canvas.pages.forEach {
-            self.canvasPageCollection.delete($0)
-        }
-        self.canvasCollection.delete(canvas)
-        self.modelController.popChangeGroup()
-
-        self.selectedCanvasID = nil
-    }
-
-
-    //MARK: - Adding/Opening & Closing Canvas Pages
-    @discardableResult func addPages(_ pages: [Page], to canvas: Canvas, centredOn point: CGPoint? = nil) -> [CanvasPage] {
-        guard pages.count > 0 else {
-            return []
-        }
-        if pages.count == 1 {
-            self.modelController.undoManager.setActionName(NSLocalizedString("Add Page to Canvas", comment: "Add Page To Canvas Undo Action Name"))
-        } else {
-            self.modelController.undoManager.setActionName(NSLocalizedString("Add Pages to Canvas", comment: "Add Pages To Canvas Undo Action Name"))
-        }
-
-        return canvas.addPages(pages, centredOn: point)
-    }
-
-    @discardableResult func openPage(at link: PageLink, on canvas: Canvas) -> [CanvasPage] {
-        guard let page = self.pageCollection.objectWithID(link.destination) else {
-            return []
-        }
-
-        let undoActionName = NSLocalizedString("Open Page Link", comment: "Open Page Link Undo Action Name")
-
-        guard let source = link.source,
-            let sourcePage = self.canvasPageCollection.objectWithID(source) else {
-                self.modelController.undoManager.setActionName(undoActionName)
-                return canvas.addPages([page])
-        }
-
-        if let existingPage = sourcePage.existingCanvasPage(for: page) {
-            return [existingPage]
-        }
-
-        self.modelController.undoManager.setActionName(undoActionName)
-        return canvas.open(page, linkedFrom: sourcePage)
-    }
-
-    //Removing page from canvas
-    func close(_ canvasPage: CanvasPage) {
-        guard let canvas = canvasPage.canvas else {
-            return
-        }
-        self.modelController.pushChangeGroup()
-        self.modelController.undoManager.setActionName(NSLocalizedString("Close Pages", comment: "Close Pages From Canvas Undo Action Name"))
-        canvas.close(canvasPage)
-        self.modelController.popChangeGroup()
-    }
 }
 
 

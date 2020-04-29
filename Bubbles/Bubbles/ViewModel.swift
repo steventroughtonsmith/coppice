@@ -16,7 +16,7 @@ class ViewModel: NSObject {
         self.setup()
     }
 
-    var modelController: ModelController {
+    var modelController: BubblesModelController {
         return self.documentWindowViewModel.modelController
     }
 

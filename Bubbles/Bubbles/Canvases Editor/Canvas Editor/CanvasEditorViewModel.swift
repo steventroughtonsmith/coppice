@@ -91,7 +91,7 @@ class CanvasEditorViewModel: ViewModel {
     }
 
     func close(_ canvasPage: CanvasPage) {
-        self.documentWindowViewModel.close(canvasPage)
+        self.modelController.close(canvasPage)
     }
 
     func canvasPage(with uuid: UUID) -> CanvasPage? {
@@ -168,20 +168,22 @@ class CanvasEditorViewModel: ViewModel {
     }
 
     func addPage(at link: PageLink, centredOn point: CGPoint? = nil) {
-        for canvasPage in self.documentWindowViewModel.openPage(at: link, on: self.canvas) {
+        for canvasPage in self.modelController.openPage(at: link, on: self.canvas) {
             self.view?.flash(canvasPage)
         }
     }
 
     func addPages(with ids: [ModelID], centredOn point: CGPoint? = nil) {
-        let pages = ids.compactMap { self.documentWindowViewModel.pageCollection.objectWithID($0) }
+        let pages = ids.compactMap { self.modelController.pageCollection.objectWithID($0) }
 
-        self.documentWindowViewModel.addPages(pages, to: self.canvas, centredOn: point)
+        self.canvas.addPages(pages, centredOn: point)
     }
 
     func addPages(forFilesAtURLs urls: [URL], centredOn point: CGPoint? = nil) {
         let pagePosition = (point != nil) ? self.layoutEngine.convertPointToPageSpace(point!) : nil
-        self.documentWindowViewModel.createPages(fromFilesAtURLs: urls, addingTo: self.canvas, centredOn: pagePosition)
+        self.modelController.createPages(fromFilesAt: urls, in: self.documentWindowViewModel.folderForNewPages) { (pages) in
+            self.canvas.addPages(pages, centredOn: pagePosition)
+        }
     }
 
     func dragImageForPage(with id: ModelID) -> NSImage? {

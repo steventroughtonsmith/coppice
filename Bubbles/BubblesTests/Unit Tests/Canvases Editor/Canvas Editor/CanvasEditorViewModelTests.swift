@@ -10,7 +10,7 @@ import XCTest
 @testable import Bubbles
 
 class CanvasEditorViewModelTests: XCTestCase {
-    var modelController: BubblesModelController!
+    var modelController: MockBubblesModelController!
     var canvas: Canvas!
     var canvasPage1: CanvasPage!
     var canvasPage2: CanvasPage!
@@ -21,7 +21,7 @@ class CanvasEditorViewModelTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        self.modelController = BubblesModelController(undoManager: UndoManager())
+        self.modelController = MockBubblesModelController(undoManager: UndoManager())
         self.canvas = self.modelController.collection(for: Canvas.self).newObject()
 
         let canvasPageCollection = self.modelController.collection(for: CanvasPage.self)
@@ -150,11 +150,11 @@ class CanvasEditorViewModelTests: XCTestCase {
 
 
     //MARK: - addPage(at:centredOn:)
-    func test_addPageAtLink_tellsDocumentVMToOpenPageOnCanvas() throws {
+    func test_addPageAtLink_tellsModelControllerToOpenPageOnCanvas() throws {
         let pageLink = PageLink(destination: Page.modelID(with: UUID()))
         self.viewModel.addPage(at: pageLink)
 
-        let (link, canvas) = try XCTUnwrap(self.documentViewModel.openPageAtLinkArguments)
+        let (link, canvas) = try XCTUnwrap(self.modelController.openPageMock.arguments.first)
         XCTAssertEqual(link, pageLink)
         XCTAssertEqual(canvas, self.canvas)
     }
@@ -166,7 +166,7 @@ class CanvasEditorViewModelTests: XCTestCase {
         let canvasPage1 = CanvasPage()
         let canvasPage2 = CanvasPage()
 
-        self.documentViewModel.openPageAtLinkReturn = [canvasPage1, canvasPage2]
+        self.modelController.openPageMock.returnValue = [canvasPage1, canvasPage2]
 
         self.viewModel.addPage(at: pageLink)
 
@@ -177,29 +177,30 @@ class CanvasEditorViewModelTests: XCTestCase {
 
 
     //MARK: - addPages(with:centredOn:)
-    func test_addPagesWithIDsCenteredOnPoint_tellsDocumentVMToAddPagesToCanvasAtSuppliedPoint() throws {
+    func test_addPagesWithIDsCenteredOnPoint_addsPagesToCanvasAtSuppliedPoint() throws {
         let page1 = self.modelController.collection(for: Page.self).newObject()
         let page2 = self.modelController.collection(for: Page.self).newObject()
 
         self.viewModel.addPages(with: [page1.id, page2.id], centredOn: CGPoint(x: 30, y: 50))
 
-        let (pages, canvas, point) = try XCTUnwrap(self.documentViewModel.addPagesToCanvasArguments)
-        XCTAssertEqual(pages, [page1, page2])
-        XCTAssertEqual(canvas, self.canvas)
-        XCTAssertEqual(point, CGPoint(x: 30, y: 50))
+        let pages = self.canvas.pages.compactMap(\.page)
+        XCTAssertTrue(pages.contains(page1))
+        XCTAssertTrue(pages.contains(page2))
+        XCTAssertEqual(page1.canvases.first?.frame.midPoint, CGPoint(x: 30, y: 50))
     }
 
     //MARK: - addPages(forFilesAtURLs:centredOn:)
-    func test_addPagesForFilesAtURLsCentredOnPoint_tellsDocumentVMToCreatesPagesFromURLsOnCanvasAtSuppliedPoint() throws {
+    func test_addPagesForFilesAtURLsCentredOnPoint_tellsModelControllerToCreatesPagesFromURLsAndAddsToCanvas() throws {
         let textURL = try XCTUnwrap(self.testBundle.url(forResource: "test-rtf", withExtension: "rtf"))
         let imageURL = try XCTUnwrap(self.testBundle.url(forResource: "test-image", withExtension: "png"))
 
+        let initialPageCount = self.canvas.pages.count
+
         self.viewModel.addPages(forFilesAtURLs: [textURL, imageURL], centredOn: CGPoint(x: 30, y: 50))
 
-        let (urls, _, _, canvas, _) = try XCTUnwrap(self.documentViewModel.createPagesFromFilesAtURLsArguments)
+        let (urls, _, _, _) = try XCTUnwrap(self.modelController.createPagesFromFilesMock.arguments.first)
         XCTAssertEqual(urls, [textURL, imageURL])
-        XCTAssertEqual(canvas, self.canvas)
-//        XCTAssertEqual(point, CGPoint(x: 30, y: 50))
+        XCTAssertEqual(self.canvas.pages.count, initialPageCount + 2)
     }
 
 
