@@ -196,7 +196,6 @@ class DocumentWindowViewModel: NSObject {
     func restoreState(with coder: NSCoder) {
         if let sidebarSelectionStrings = coder.decodeObject(forKey: "sidebarSelection") as? [String] {
             self.sidebarSelection = sidebarSelectionStrings.compactMap { SidebarItem.from(persistentRepresentation: $0) }
-
         }
         if let canvasIDString = coder.decodeObject(forKey: "selectedCanvasID") as? String {
             self.selectedCanvasID = ModelID(string: canvasIDString)
@@ -276,24 +275,13 @@ class DocumentWindowViewModel: NSObject {
     /// Either opens the page or adds it to the canvas, depending on what is selected in the sidebar
     /// - Parameter pageLink: The PageLink to handle
     /// - Returns: True if the page link was handled, false if it wasn't
-    @discardableResult func handle(_ pageLink: PageLink) -> Bool {
+    @discardableResult func openPage(at pageLink: PageLink) -> Bool {
         guard self.modelController.object(with: pageLink.destination) != nil else {
             return false
         }
 
-//        guard self.selectedCanvasInSidebar == nil else {
-//            self.addPage(at: pageLink, to: self.selectedCanvasInSidebar!)
-//            return true
-//        }
-
-        self.openPage(at: pageLink)
-        return true
-    }
-
-    /// Displays the page at the supplied link in the main editor
-    /// - Parameter pageLink: The page link to open
-    func openPage(at pageLink: PageLink) {
         self.updateSelection([.page(pageLink.destination)])
+        return true
     }
 
 

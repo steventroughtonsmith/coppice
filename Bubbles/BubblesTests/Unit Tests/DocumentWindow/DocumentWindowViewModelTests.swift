@@ -524,4 +524,25 @@ class DocumentWindowViewModelTests: XCTestCase {
         let (deletedCanvas) = try XCTUnwrap(self.modelController.deleteCanvasMock.arguments[safe: 0])
         XCTAssertEqual(deletedCanvas, canvas)
     }
+
+
+    //MARK: - openPage(at:)
+    func test_openPageAtLink_returnsFalseIfLinkDestinationDoesntExist() throws {
+        let pageLink = PageLink(destination: Page.modelID(with: UUID()))
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        XCTAssertFalse(viewModel.openPage(at: pageLink))
+    }
+
+    func test_openPageAtLink_returnsTrueIfLinkDestinationExists() throws {
+        let pageLink = self.page.linkToPage()
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        XCTAssertTrue(viewModel.openPage(at: pageLink))
+    }
+
+    func test_openPageAtLink_selectsLinkedPage() throws {
+        let pageLink = self.page.linkToPage()
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        viewModel.openPage(at: pageLink)
+        XCTAssertEqual(viewModel.sidebarSelection, [.page(self.page.id)])
+    }
 }
