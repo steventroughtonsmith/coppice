@@ -318,9 +318,10 @@ class SourceListViewModel: ViewModel {
     //MARK: - Creation
     func createPage(ofType type: PageContentType, underNodes collection: SourceListNodeCollection) -> DocumentWindowViewModel.SidebarItem {
         let lastNode = collection.nodes.last
-        let page = self.modelController.createPage(ofType: type,
-                                                   in: lastNode?.folderForCreation ?? self.documentWindowViewModel.folderForNewPages,
-                                                   below: lastNode?.folderItemForCreation)
+        let folder = lastNode?.folderForCreation ?? self.documentWindowViewModel.folderForNewPages
+        let page = self.modelController.createPage(ofType: type, in: folder, below: lastNode?.folderItemForCreation) {
+            self.documentWindowViewModel.canvasForNewPages?.addPages([$0])
+        }
         return .page(page.id)
     }
 
