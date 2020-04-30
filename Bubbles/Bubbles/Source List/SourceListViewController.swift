@@ -270,7 +270,8 @@ class SourceListViewController: NSViewController, NSMenuItemValidation {
         guard let item = self.createdItem else {
             return
         }
-        guard self.selectedNodes.containsPages || self.selectedNodes.containsFolders else {
+        //We don't want to select the new item if we're in a canvas, as we don't want to switch the editor
+        guard !self.selectedNodes.containsCanvases else {
             return
         }
         self.outlineView.expandItem(self.viewModel.pagesGroupNode)

@@ -87,8 +87,8 @@ class SourceListViewModel: ViewModel {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(reloadSourceListNodes), object: nil)
         self.addAndRemoveNodes()
         self.updateHierarchy()
-        self.view?.reload()
         self.updateSelectedNodes(with: self.documentWindowViewModel.sidebarSelection)
+        self.view?.reload()
     }
 
     private func addAndRemoveNodes() {
