@@ -17,6 +17,8 @@ protocol ModelController: class, ModelChangeGroupHandler {
 
     func collection<T: CollectableModelObject>(for type: T.Type) -> ModelCollection<T>
     func object(with id: ModelID) -> ModelObject?
+
+    func disableUndo(_ caller: () throws -> Void) rethrows
 }
 
 extension ModelController {
@@ -48,5 +50,11 @@ extension ModelController {
         self.allCollections.values
             .compactMap { $0 as? ModelChangeGroupHandler }
             .forEach { $0.popChangeGroup() }
+    }
+
+    func disableUndo(_ caller: () throws -> Void) rethrows {
+        self.undoManager.disableUndoRegistration()
+        try caller()
+        self.undoManager.enableUndoRegistration()
     }
 }

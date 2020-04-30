@@ -79,12 +79,14 @@ class ThumbnailController: NSObject {
     }
 
     @objc dynamic func updateThumbnails() {
-        for object in self.canvasChangeQueue {
-            if let canvas = object as? Canvas {
-                canvas.thumbnail = self.generateThumbnail(for: canvas)
+        self.modelController.disableUndo {
+            for object in self.canvasChangeQueue {
+                if let canvas = object as? Canvas {
+                    canvas.thumbnail = self.generateThumbnail(for: canvas)
+                }
             }
+            self.canvasChangeQueue.removeAllObjects()
         }
-        self.canvasChangeQueue.removeAllObjects()
     }
 
     func generateThumbnail(for canvas: Canvas) -> NSImage? {
