@@ -58,7 +58,7 @@ class BaseInspectorViewController: NSViewController, Inspector {
         guard let contentView = topLevelObjects?.first(where: { $0 is NSView}) as? NSView else {
             return
         }
-        self.contentContainer.addSubview(contentView, withInsets: NSEdgeInsetsZero)
+        self.contentContainer.addSubview(contentView, withInsets: NSEdgeInsets(top: 0, left: 0, bottom: 20, right: 0))
     }
 
 

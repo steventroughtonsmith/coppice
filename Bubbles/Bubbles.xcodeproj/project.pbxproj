@@ -220,12 +220,9 @@
 		99D8E378237EDB890098CF3B /* PageInspectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D8E368237EDB890098CF3B /* PageInspectorViewController.swift */; };
 		99D8E379237EDB890098CF3B /* PageInspectorContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99D8E369237EDB890098CF3B /* PageInspectorContentView.xib */; };
 		99D8E37A237EDB890098CF3B /* PageInspectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D8E36A237EDB890098CF3B /* PageInspectorViewModel.swift */; };
-		99D8E37B237EDB890098CF3B /* InspectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D8E36B237EDB890098CF3B /* InspectorViewModel.swift */; };
 		99D8E37C237EDB890098CF3B /* CanvasInspectorContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99D8E36D237EDB890098CF3B /* CanvasInspectorContentView.xib */; };
 		99D8E37D237EDB890098CF3B /* CanvasInspectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D8E36E237EDB890098CF3B /* CanvasInspectorViewController.swift */; };
 		99D8E37E237EDB890098CF3B /* CanvasInspectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D8E36F237EDB890098CF3B /* CanvasInspectorViewModel.swift */; };
-		99D8E37F237EDB890098CF3B /* InspectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D8E370237EDB890098CF3B /* InspectorViewController.swift */; };
-		99D8E380237EDB890098CF3B /* InspectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99D8E371237EDB890098CF3B /* InspectorViewController.xib */; };
 		99D8E381237EDB890098CF3B /* InspectorContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D8E372237EDB890098CF3B /* InspectorContainerViewModel.swift */; };
 		99D8E382237EDB890098CF3B /* InspectorContainerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99D8E373237EDB890098CF3B /* InspectorContainerViewController.xib */; };
 		99D8E383237EDB890098CF3B /* InspectorContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D8E374237EDB890098CF3B /* InspectorContainerViewController.swift */; };
@@ -487,12 +484,9 @@
 		99D8E368237EDB890098CF3B /* PageInspectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageInspectorViewController.swift; sourceTree = "<group>"; };
 		99D8E369237EDB890098CF3B /* PageInspectorContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PageInspectorContentView.xib; sourceTree = "<group>"; };
 		99D8E36A237EDB890098CF3B /* PageInspectorViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageInspectorViewModel.swift; sourceTree = "<group>"; };
-		99D8E36B237EDB890098CF3B /* InspectorViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InspectorViewModel.swift; sourceTree = "<group>"; };
 		99D8E36D237EDB890098CF3B /* CanvasInspectorContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CanvasInspectorContentView.xib; sourceTree = "<group>"; };
 		99D8E36E237EDB890098CF3B /* CanvasInspectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasInspectorViewController.swift; sourceTree = "<group>"; };
 		99D8E36F237EDB890098CF3B /* CanvasInspectorViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasInspectorViewModel.swift; sourceTree = "<group>"; };
-		99D8E370237EDB890098CF3B /* InspectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InspectorViewController.swift; sourceTree = "<group>"; };
-		99D8E371237EDB890098CF3B /* InspectorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorViewController.xib; sourceTree = "<group>"; };
 		99D8E372237EDB890098CF3B /* InspectorContainerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InspectorContainerViewModel.swift; sourceTree = "<group>"; };
 		99D8E373237EDB890098CF3B /* InspectorContainerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorContainerViewController.xib; sourceTree = "<group>"; };
 		99D8E374237EDB890098CF3B /* InspectorContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InspectorContainerViewController.swift; sourceTree = "<group>"; };
@@ -1186,9 +1180,6 @@
 				9965FC3A23843131002FE10D /* Canvas Page Inspector */,
 				99D8E367237EDB890098CF3B /* Page Inspector */,
 				99D8E36C237EDB890098CF3B /* Canvas Inspector */,
-				99D8E36B237EDB890098CF3B /* InspectorViewModel.swift */,
-				99D8E370237EDB890098CF3B /* InspectorViewController.swift */,
-				99D8E371237EDB890098CF3B /* InspectorViewController.xib */,
 			);
 			path = Inspectors;
 			sourceTree = "<group>";
@@ -1495,7 +1486,6 @@
 				99D8E39123800F9A0098CF3B /* BaseInspectorViewController.xib in Resources */,
 				99FE01E522D4CC8A004D380D /* DocumentWindow.xib in Resources */,
 				99902261241FDD52009A8446 /* NoCanvasViewController.xib in Resources */,
-				99D8E380237EDB890098CF3B /* InspectorViewController.xib in Resources */,
 				999EA6BC243619E700BF254E /* SearchResultsView.xib in Resources */,
 				9973737B2423AD6C000D5F21 /* NoEditorViewController.xib in Resources */,
 				99488AA723BA3993009954AF /* LargeCanvasCell.xib in Resources */,
@@ -1570,7 +1560,6 @@
 				9977119C239E91FD00FCC8C7 /* ViewModel.swift in Sources */,
 				9970976123A8170600CD189B /* ImagePageContent.swift in Sources */,
 				992A5CB322DDF53C0012CCB6 /* DebugPageEditorViewModel.swift in Sources */,
-				99D8E37B237EDB890098CF3B /* InspectorViewModel.swift in Sources */,
 				99DEF28A22F32D350020A7CE /* DebugCanvasViewModelTypes.swift in Sources */,
 				99868F352396AD73009AC0F7 /* ImageEditorInspectorViewController.swift in Sources */,
 				993D2C0024157196002E5BAC /* SourceListOutlineView.swift in Sources */,
@@ -1660,7 +1649,6 @@
 				9965FC3D23843143002FE10D /* CanvasPageInspectorViewController.swift in Sources */,
 				9951C26C230AEFAB006CAD4D /* PageSelectorWindowController.swift in Sources */,
 				99868F322396AD55009AC0F7 /* ImageEditorInspectorViewModel.swift in Sources */,
-				99D8E37F237EDB890098CF3B /* InspectorViewController.swift in Sources */,
 				99488ACE23C78087009954AF /* EditableLabelCell.swift in Sources */,
 				998D0779241137A3004ADFF8 /* RectDrawingView.swift in Sources */,
 				99D8E39323800FB90098CF3B /* BaseInspectorViewModel.swift in Sources */,
