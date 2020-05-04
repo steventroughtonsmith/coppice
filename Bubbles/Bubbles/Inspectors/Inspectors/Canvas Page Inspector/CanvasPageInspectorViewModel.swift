@@ -92,4 +92,11 @@ class CanvasPageInspectorViewModel: BaseInspectorViewModel {
     @objc dynamic var minimumHeight: Int {
         return Int(GlobalConstants.minimumPageSize.height)
     }
+
+    func sizeToFitContent() {
+        guard let page = self.canvasPage.page else {
+            return
+        }
+        self.canvasPage.frame.size = page.content.sizeToFitContent
+    }
 }

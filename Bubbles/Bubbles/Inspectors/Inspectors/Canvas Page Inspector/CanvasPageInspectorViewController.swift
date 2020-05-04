@@ -13,5 +13,13 @@ class CanvasPageInspectorViewController: BaseInspectorViewController {
         return "CanvasPageInspectorContentView"
     }
 
+    var typedViewModel: CanvasPageInspectorViewModel {
+        return self.viewModel as! CanvasPageInspectorViewModel
+    }
+
     override var ranking: InspectorRanking { return .canvasPage }
+
+    @IBAction func sizeToFitContent(_ sender: Any) {
+        self.typedViewModel.sizeToFitContent()
+    }
 }

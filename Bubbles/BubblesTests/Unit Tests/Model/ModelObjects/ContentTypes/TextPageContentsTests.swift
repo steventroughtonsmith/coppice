@@ -62,9 +62,9 @@ class TextPageContentsTests: XCTestCase {
     }
 
 
-    //MARK: - .contentSize
+    //MARK: - .initialContentSize
     func test_contentSize_contentSizeisAtLeastTheStandardPageSize() throws {
-        let size = try XCTUnwrap(self.content.contentSize)
+        let size = try XCTUnwrap(self.content.initialContentSize)
         XCTAssertGreaterThanOrEqual(size.width, Page.standardSize.width)
         XCTAssertGreaterThanOrEqual(size.height, Page.standardSize.height)
     }
@@ -73,7 +73,7 @@ class TextPageContentsTests: XCTestCase {
         var string = "a b c d e"
         (0..<500).forEach { _ in string = "\(string) a b c d e"}
         self.content.text = NSAttributedString(string: string)
-        let size = try XCTUnwrap(self.content.contentSize)
+        let size = try XCTUnwrap(self.content.initialContentSize)
         let expectedMax = (Page.standardSize.width * 1.5) + GlobalConstants.textEditorInsets.horizontalInsets + 10
         XCTAssertLessThanOrEqual(size.width, expectedMax)
     }
@@ -82,7 +82,7 @@ class TextPageContentsTests: XCTestCase {
         var string = "a b c d e"
         (0..<500).forEach { _ in string = "\(string) a b c d e"}
         self.content.text = NSAttributedString(string: string)
-        let size = try XCTUnwrap(self.content.contentSize)
+        let size = try XCTUnwrap(self.content.initialContentSize)
         let expectedMax = (Page.standardSize.height * 3) + GlobalConstants.textEditorInsets.verticalInsets + 10
         XCTAssertLessThanOrEqual(size.height, expectedMax)
     }

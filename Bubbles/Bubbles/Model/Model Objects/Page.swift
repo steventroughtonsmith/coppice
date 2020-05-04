@@ -42,7 +42,7 @@ final class Page: NSObject, CollectableModelObject, FolderContainable {
     private var userPreferredSize: CGSize?
     var contentSize: CGSize {
         get {
-            return self.userPreferredSize ?? self.content.contentSize ?? Page.standardSize
+            return self.userPreferredSize ?? self.content.initialContentSize ?? Page.standardSize
         }
         set {
             self.userPreferredSize = newValue

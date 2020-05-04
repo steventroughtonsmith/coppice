@@ -69,12 +69,14 @@ enum PageContentType: String, Equatable, CaseIterable {
 
 protocol PageContent: class {
     var contentType: PageContentType { get }
-    var contentSize: CGSize? { get }
     var page: Page? { get set }
     var modelFile: ModelFile { get }
     var maintainAspectRatio: Bool { get }
 
     func firstRangeOf(_ searchTerm: String) -> NSRange
+
+    var initialContentSize: CGSize? { get }
+    var sizeToFitContent: CGSize { get }
 
     var filePromiseProvider: ExtendableFilePromiseProvider { get }
 }

@@ -20,7 +20,7 @@ class MockPageContent: NSObject, PageContent, NSFilePromiseProviderDelegate {
         return .text
     }
 
-    var contentSize: CGSize?
+    var initialContentSize: CGSize?
 
     var page: Page?
 

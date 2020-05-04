@@ -18,17 +18,7 @@ class TextPageContent: NSObject, PageContent {
             self.didChange(\.text, oldValue: oldValue)
         }
     }
-    var contentSize: CGSize? {
-        var contentSize = self.text.boundingRect(with: GlobalConstants.maxAutomaticTextSize, options: [.usesLineFragmentOrigin]).size
-        let insets = GlobalConstants.textEditorInsets
 
-        let adjustedContentSize = contentSize.rounded().plus(width: insets.horizontalInsets, height: insets.verticalInsets)
-
-        //Not sure why but we need to add an additional 10 pt to get the size correct
-        contentSize.width = max(adjustedContentSize.width + 10, Page.standardSize.width)
-        contentSize.height = max(adjustedContentSize.height + 10, Page.standardSize.height)
-        return contentSize
-    }
     var maintainAspectRatio: Bool {
         return false
     }
@@ -50,6 +40,28 @@ class TextPageContent: NSObject, PageContent {
 
     func firstRangeOf(_ searchTerm: String) -> NSRange {
         return (self.text.string as NSString).range(of: searchTerm, options: [.caseInsensitive, .diacriticInsensitive])
+    }
+
+
+    //MARK: - Sizing
+    var initialContentSize: CGSize? {
+        return self.contentSize(insideBounds: GlobalConstants.maxAutomaticTextSize)
+    }
+
+    var sizeToFitContent: CGSize {
+        return self.contentSize(insideBounds: CGSize(width: GlobalConstants.maxAutomaticTextSize.width, height: 20000))
+    }
+
+    private func contentSize(insideBounds bounds: CGSize) -> CGSize {
+        var contentSize = self.text.boundingRect(with: bounds, options: [.usesLineFragmentOrigin]).size
+        let insets = GlobalConstants.textEditorInsets
+
+        let adjustedContentSize = contentSize.rounded().plus(width: insets.horizontalInsets, height: insets.verticalInsets)
+
+        //Not sure why but we need to add an additional 10 pt to get the size correct
+        contentSize.width = max(adjustedContentSize.width + 10, Page.standardSize.width)
+        contentSize.height = max(adjustedContentSize.height + 10, Page.standardSize.height)
+        return contentSize
     }
 }
 

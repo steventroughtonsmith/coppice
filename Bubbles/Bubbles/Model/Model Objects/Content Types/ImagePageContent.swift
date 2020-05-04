@@ -19,7 +19,7 @@ class ImagePageContent: NSObject, PageContent {
         }
     }
 
-    var contentSize: CGSize? {
+    var initialContentSize: CGSize? {
         return self.image?.size
     }
 
@@ -47,5 +47,9 @@ class ImagePageContent: NSObject, PageContent {
             metadata = ["description": description]
         }
         return ModelFile(type: self.contentType.rawValue, filename: filename, data: imageData, metadata: metadata)
+    }
+
+    var sizeToFitContent: CGSize {
+        return self.image?.size ?? .zero
     }
 }

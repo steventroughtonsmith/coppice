@@ -19,10 +19,13 @@
             <subviews>
                 <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bnF-CY-U58">
                     <rect key="frame" x="68" y="-7" width="152" height="32"/>
-                    <buttonCell key="cell" type="push" title="Size to Fit Content" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="NVF-nE-0W3">
+                    <buttonCell key="cell" type="push" title="Size to Fit Content" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="NVF-nE-0W3">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="sizeToFitContent:" target="-2" id="TX7-1B-iqO"/>
+                    </connections>
                 </button>
                 <textField verticalHuggingPriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="RXF-GF-zPJ">
                     <rect key="frame" x="0.0" y="60" width="123" height="21"/>
@@ -43,7 +46,7 @@
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jYf-O7-Kpz">
                     <rect key="frame" x="-2" y="36" width="127" height="20"/>
                     <textFieldCell key="cell" controlSize="small" alignment="center" title="Width" id="KDE-7K-Peb">
-                        <font key="font" metaFont="message" size="11"/>
+                        <font key="font" metaFont="menu" size="11"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -80,7 +83,7 @@
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TER-vx-UUH">
                     <rect key="frame" x="146" y="42" width="127" height="14"/>
                     <textFieldCell key="cell" controlSize="small" alignment="center" title="Height" id="xte-Ym-2QC">
-                        <font key="font" metaFont="message" size="11"/>
+                        <font key="font" metaFont="menu" size="11"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
