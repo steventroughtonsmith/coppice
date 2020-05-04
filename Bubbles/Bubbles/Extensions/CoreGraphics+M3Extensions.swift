@@ -99,6 +99,19 @@ extension CGSize {
         return size
     }
 
+    func scaleDownToFit(width: CGFloat, height: CGFloat) -> CGSize {
+        var newSize = self
+        if newSize.width > width {
+            newSize.height *= (width / newSize.width)
+            newSize.width = width
+        }
+        if newSize.height > height {
+            newSize.width *= (height / newSize.height)
+            newSize.height = height
+        }
+        return newSize
+    }
+
     func toRect(withOrigin origin: CGPoint = .zero) -> CGRect {
         return CGRect(origin: origin, size: self)
     }

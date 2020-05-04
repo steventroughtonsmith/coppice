@@ -412,9 +412,18 @@ class CanvasView: NSView {
 
         self.cacheDisplay(in: thumbnailRect, to: bitmapRep)
 
-        let image = NSImage(size: thumbnailRect.size)
-        image.addRepresentation(bitmapRep)
-        return image
+        let largeImage = NSImage(size: thumbnailRect.size)
+        largeImage.addRepresentation(bitmapRep)
+
+        let newSize = thumbnailRect.size.scaleDownToFit(width: GlobalConstants.maxCanvasThumbnailSize.width, height: GlobalConstants.maxCanvasThumbnailSize.height)
+        let smallImage = NSImage(size: newSize, flipped: false) { (rect) -> Bool in
+            largeImage.size = newSize
+            NSGraphicsContext.current?.imageInterpolation = .high
+            largeImage.draw(in: rect, from: CGRect(origin: .zero, size: newSize), operation: .copy, fraction: 1)
+            return true
+        }
+
+        return smallImage
     }
 }
 

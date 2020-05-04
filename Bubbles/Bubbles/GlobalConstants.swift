@@ -34,6 +34,8 @@ struct GlobalConstants {
         return self.maxAutomaticTextSize.plus(width: self.textEditorInsets.left + self.textEditorInsets.right + 10,
                                               height: self.textEditorInsets.top + self.textEditorInsets.bottom + 10)
     }
+
+    static var maxCanvasThumbnailSize = CGSize(width: 240, height: 120)
 }
 
 extension NSImage.Name {
