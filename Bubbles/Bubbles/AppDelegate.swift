@@ -12,6 +12,7 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     let documentController = BubblesDocumentController()
+    @IBOutlet weak var newLinkedPageMenuDelegate: NewPageMenuDelegate!
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         #if !DEBUG
@@ -28,6 +29,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             alert.runModal()
             NSApplication.shared.terminate(self)
         }
+
+        self.newLinkedPageMenuDelegate.action = #selector(TextEditorViewController.createNewLinkedPage(_:))
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {

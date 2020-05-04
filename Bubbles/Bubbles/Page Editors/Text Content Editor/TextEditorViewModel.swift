@@ -49,12 +49,12 @@ class TextEditorViewModel: ViewModel {
         set { self.textContent.text = newValue }
     }
 
-    @discardableResult func createNewLinkedPage(for range: NSRange) -> Page {
-        #warning("This needs updating")
+    @discardableResult func createNewLinkedPage(ofType type: PageContentType, from range: NSRange) -> Page {
         let selectedText = self.attributedText.attributedSubstring(from: range)
         self.modelController.undoManager.beginUndoGrouping()
-        let page = self.modelController.collection(for: Page.self).newObject()
-        page.title = selectedText.string
+        let page = self.modelController.createPage(ofType: type, in: self.documentWindowViewModel.folderForNewPages) {
+            $0.title = selectedText.string
+        }
         self.link(to: page, for: range)
         self.modelController.undoManager.endUndoGrouping()
         return page

@@ -45,7 +45,7 @@ enum PageContentType: String, Equatable, CaseIterable {
         case .text:
             return NSLocalizedString("Text Page", comment: "Text content name")
         case .image:
-            return NSLocalizedString("Image page", comment: "Image content name")
+            return NSLocalizedString("Image Page", comment: "Image content name")
         }
     }
 

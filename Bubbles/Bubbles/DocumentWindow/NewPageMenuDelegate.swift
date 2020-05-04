@@ -9,6 +9,8 @@
 import Cocoa
 
 class NewPageMenuDelegate: NSObject, NSMenuDelegate {
+    var action: Selector = #selector(newPage(_:))
+
     func numberOfItems(in menu: NSMenu) -> Int {
         let caseCount = PageContentType.allCases.count
         guard menu.supermenu == nil else {
@@ -38,7 +40,7 @@ class NewPageMenuDelegate: NSObject, NSMenuDelegate {
         item.title = contentType.localizedName
         item.representedObject = contentType.rawValue
         item.target = nil
-        item.action = #selector(newPage(_:))
+        item.action = self.action
         if includeKeyEquivalents {
             item.keyEquivalent = contentType.keyEquivalent
             print("\(contentType.keyEquivalentModifierMask)")

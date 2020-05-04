@@ -24,7 +24,11 @@ class TextEditorViewController: NSViewController, InspectableTextEditor {
         preconditionFailure("init(coder:) has not been implemented")
     }
 
-
+    lazy var newPageMenuDelegate: NewPageMenuDelegate = {
+        let delegate = NewPageMenuDelegate()
+        delegate.action = #selector(createNewLinkedPage(_:))
+        return delegate
+    }()
 
     private var selectableBinding: AnyCancellable!
     private var attributedTextObserver: AnyCancellable!
@@ -54,8 +58,16 @@ class TextEditorViewController: NSViewController, InspectableTextEditor {
     @objc dynamic var enabled: Bool = true
 
     @IBAction func createNewLinkedPage(_ sender: Any?) {
+        guard let item = sender as? NSMenuItem else {
+            return
+        }
+
+        guard let rawType = item.representedObject as? String,
+            let type = PageContentType(rawValue: rawType) else {
+            return
+        }
         let selectedRange = self.editingTextView.selectedRange()
-        self.viewModel.createNewLinkedPage(for: selectedRange)
+        self.viewModel.createNewLinkedPage(ofType: type, from: selectedRange)
     }
 
     @IBAction func linkToPage(_ sender: Any?) {
@@ -231,8 +243,12 @@ extension TextEditorViewController: NSTextStorageDelegate {
 extension TextEditorViewController: NSTextViewDelegate {
     func textView(_ view: NSTextView, menu: NSMenu, for event: NSEvent, at charIndex: Int) -> NSMenu? {
         menu.addItem(NSMenuItem.separator())
-        menu.addItem(withTitle: "Create New Linked Page…", action: #selector(createNewLinkedPage(_:)), keyEquivalent: "")
         menu.addItem(withTitle: "Link to Page…", action: #selector(linkToPage(_:)), keyEquivalent: "")
+
+        let createPageItem = menu.addItem(withTitle: "Create New Linked Page", action: nil, keyEquivalent: "")
+        let createPageMenu = NSMenu()
+        createPageMenu.delegate = self.newPageMenuDelegate
+        createPageItem.submenu = createPageMenu
         return menu
     }
 

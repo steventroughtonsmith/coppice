@@ -11,9 +11,14 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Bubbles" customModuleProvider="target"/>
+        <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Bubbles" customModuleProvider="target">
+            <connections>
+                <outlet property="newLinkedPageMenuDelegate" destination="3XH-A1-YuW" id="E0p-Z2-5s3"/>
+            </connections>
+        </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
         <customObject id="S7z-Mc-1OZ" customClass="NewPageMenuDelegate" customModule="Bubbles" customModuleProvider="target"/>
+        <customObject id="3XH-A1-YuW" userLabel="New Linked Page Menu Delegate" customClass="NewPageMenuDelegate" customModule="Bubbles" customModuleProvider="target"/>
         <menu title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
             <items>
                 <menuItem title="Bubbles" id="1Xt-HY-uBw">
@@ -485,8 +490,13 @@
                                     <action selector="linkToPage:" target="-1" id="wiE-PO-GfH"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Create New Linked Page…" id="R2M-0X-HKt">
+                            <menuItem title="Create New Linked Page" id="Pxl-0h-U84">
                                 <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Create New Linked Page" id="0ET-ne-Uso">
+                                    <connections>
+                                        <outlet property="delegate" destination="3XH-A1-YuW" id="NYY-xc-H3q"/>
+                                    </connections>
+                                </menu>
                             </menuItem>
                         </items>
                     </menu>
