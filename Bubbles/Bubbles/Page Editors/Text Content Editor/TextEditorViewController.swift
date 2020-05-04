@@ -53,12 +53,12 @@ class TextEditorViewController: NSViewController, InspectableTextEditor {
 
     @objc dynamic var enabled: Bool = true
 
-    @objc func createNewLinkedPage(_ sender: Any?) {
+    @IBAction func createNewLinkedPage(_ sender: Any?) {
         let selectedRange = self.editingTextView.selectedRange()
         self.viewModel.createNewLinkedPage(for: selectedRange)
     }
 
-    @objc func linkToPage(_ sender: Any?) {
+    @IBAction func linkToPage(_ sender: Any?) {
         guard let windowController = (self.windowController as? DocumentWindowController) else {
             return
         }

@@ -480,8 +480,10 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="hAC-oJ-HIS"/>
-                            <menuItem title="Link to Page…" id="UkZ-4o-fVA">
-                                <modifierMask key="keyEquivalentModifierMask"/>
+                            <menuItem title="Link to Page…" keyEquivalent="l" id="UkZ-4o-fVA">
+                                <connections>
+                                    <action selector="linkToPage:" target="-1" id="wiE-PO-GfH"/>
+                                </connections>
                             </menuItem>
                             <menuItem title="Create New Linked Page…" id="R2M-0X-HKt">
                                 <modifierMask key="keyEquivalentModifierMask"/>
