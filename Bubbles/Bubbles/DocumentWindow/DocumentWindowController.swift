@@ -146,8 +146,8 @@ class DocumentWindowController: NSWindowController {
     @IBAction func findInDocument(_ sender: Any?) {
         self.window?.makeFirstResponder(self.searchField)
     }
-
 }
+
 
 extension DocumentWindowController: DocumentWindow {
     func showAlert(_ alert: Alert, callback: @escaping (Int) -> Void) {

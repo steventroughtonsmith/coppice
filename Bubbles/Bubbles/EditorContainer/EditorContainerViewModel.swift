@@ -36,3 +36,4 @@ class EditorContainerViewModel: ViewModel {
         self.selectedObjectObservation = self.documentWindowViewModel.$currentEditor.assign(to: \.currentEditor, on: self)
     }
 }
+

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16085" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -98,10 +98,27 @@
                             </connections>
                         </searchField>
                     </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="71e-1F-lXX"/>
+                    <toolbarItem implicitItemIdentifier="804F72E1-4F1E-4895-A73F-ECC98356CA90" label="Link To Page" paletteLabel="Link To Page" image="LinkPage" sizingBehavior="auto" id="ONd-MB-hst" customClass="ResponderChainValidatingToolbarItem" customModule="Bubbles" customModuleProvider="target">
+                        <nil key="toolTip"/>
+                        <button key="view" verticalHuggingPriority="750" id="HHh-4W-dVn">
+                            <rect key="frame" x="15" y="14" width="44" height="25"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="LinkPage" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="UFk-oD-NGa">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </button>
+                        <connections>
+                            <action selector="linkToPage:" target="-1" id="gnn-ch-koW"/>
+                        </connections>
+                    </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
                     <toolbarItem reference="yJV-fh-W1y"/>
                     <toolbarItem reference="TPX-ea-tFb"/>
+                    <toolbarItem reference="71e-1F-lXX"/>
+                    <toolbarItem reference="ONd-MB-hst"/>
                     <toolbarItem reference="Yn2-Qc-qMJ"/>
                     <toolbarItem reference="UjW-Vu-9qp"/>
                     <toolbarItem reference="Ld8-cL-wK4"/>
@@ -117,6 +134,7 @@
     <resources>
         <image name="AddBoard" width="19" height="19"/>
         <image name="AddPage" width="19" height="19"/>
+        <image name="LinkPage" width="17" height="17"/>
         <image name="ToggleInspector" width="19" height="19"/>
         <image name="ToggleSidebar" width="19" height="19"/>
     </resources>

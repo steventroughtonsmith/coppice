@@ -80,6 +80,13 @@ class TextEditorViewController: NSViewController, InspectableTextEditor {
         }
     }
 
+    override func responds(to aSelector: Selector!) -> Bool {
+        if aSelector == #selector(linkToPage(_:)) {
+            return (self.editingTextView.selectedRange().length > 0)
+        }
+        return super.responds(to: aSelector)
+    }
+
     private lazy var textEditorInspectorViewController: TextEditorInspectorViewController = {
         return TextEditorInspectorViewController(viewModel: TextEditorInspectorViewModel(editor: self, modelController: self.viewModel.modelController))
     }()
