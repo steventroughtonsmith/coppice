@@ -203,7 +203,10 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
     }
 
     private func updateTextView(with text: NSAttributedString) {
-        guard (self.updatingText == false) && (self.editingText == false) else {
+        guard (self.updatingText == false) else {
+            return
+        }
+        guard (self.editingText == false) || (self.viewModel.undoManager.isUndoing) || (self.viewModel.undoManager.isRedoing) else {
             return
         }
         self.updatingText = true
