@@ -34,8 +34,12 @@
                         </menu>
                     </popUpButtonCell>
                     <connections>
-                        <binding destination="-2" name="contentValues" keyPath="self.viewModel.fontFamilies" id="JwZ-O0-wgl"/>
-                        <binding destination="-2" name="selectedValue" keyPath="self.viewModel.selectedFontFamily" previousBinding="JwZ-O0-wgl" id="MoO-pm-ZNl"/>
+                        <binding destination="-2" name="contentValues" keyPath="self.viewModel.fontFamilies" id="VLq-Ak-tLh">
+                            <dictionary key="options">
+                                <string key="NSNullPlaceholder">-</string>
+                            </dictionary>
+                        </binding>
+                        <binding destination="-2" name="selectedValue" keyPath="self.viewModel.selectedFontFamily" previousBinding="VLq-Ak-tLh" id="ynG-8J-uBX"/>
                         <outlet property="nextKeyView" destination="U7t-eh-okS" id="cDL-dO-qcG"/>
                     </connections>
                 </popUpButton>
@@ -53,15 +57,19 @@
                         </menu>
                     </popUpButtonCell>
                     <connections>
+                        <binding destination="-2" name="contentValues" keyPath="self.viewModel.typefaces.displayName" previousBinding="CUr-iE-ie4" id="BRo-XQ-Czs">
+                            <dictionary key="options">
+                                <string key="NSNullPlaceholder">-</string>
+                            </dictionary>
+                        </binding>
+                        <binding destination="-2" name="selectedObject" keyPath="self.viewModel.selectedTypeface" previousBinding="BRo-XQ-Czs" id="yr6-6j-0N1"/>
                         <binding destination="-2" name="enabled" keyPath="self.viewModel.selectedFontFamily" id="xXs-vm-ev7">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>
                         </binding>
-                        <binding destination="-2" name="selectedObject" keyPath="self.viewModel.selectedTypeface" previousBinding="hGo-9W-h5t" id="R9L-QV-6lM"/>
                         <binding destination="-2" name="contentObjects" keyPath="self.viewModel.typefaces" previousBinding="w1y-tj-DfP" id="CUr-iE-ie4"/>
                         <binding destination="-2" name="content" keyPath="self.viewModel.typefaces" id="w1y-tj-DfP"/>
-                        <binding destination="-2" name="contentValues" keyPath="self.viewModel.typefaces.displayName" previousBinding="CUr-iE-ie4" id="hGo-9W-h5t"/>
                         <outlet property="nextKeyView" destination="tVJ-Wa-8Xo" id="9w2-7i-NsE"/>
                     </connections>
                 </popUpButton>
