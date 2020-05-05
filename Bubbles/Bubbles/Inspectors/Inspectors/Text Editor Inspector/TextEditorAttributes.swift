@@ -186,6 +186,10 @@ extension NSMutableAttributedString {
             self.enumerateAttributes(in: selectionRange, options: []) { (textAttributes, range, _) in
                 let newAttributes = textEditorAttributes.apply(to: textAttributes)
                 self.setAttributes(newAttributes, range: range)
+                //We need to make sure we update the selected font so the font panel syncs up
+                if let newFont = newAttributes[.font] as? NSFont {
+                    NSFontManager.shared.setSelectedFont(newFont, isMultiple: false)
+                }
             }
         }
     }

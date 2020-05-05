@@ -516,12 +516,12 @@
                                         </menuItem>
                                         <menuItem title="Bold" tag="2" keyEquivalent="b" id="GB9-OM-e27">
                                             <connections>
-                                                <action selector="addFontTrait:" target="YLy-65-1bz" id="hqk-hr-sYV"/>
+                                                <action selector="toggleBold:" target="-1" id="Pmv-c9-3fD"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Italic" tag="1" keyEquivalent="i" id="Vjx-xi-njq">
                                             <connections>
-                                                <action selector="addFontTrait:" target="YLy-65-1bz" id="IHV-OB-c03"/>
+                                                <action selector="toggleItalic:" target="-1" id="A4I-7S-auO"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Underline" keyEquivalent="u" id="WRG-CD-K1S">

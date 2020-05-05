@@ -9,7 +9,7 @@
 import Cocoa
 import Combine
 
-class TextEditorViewController: NSViewController, InspectableTextEditor {
+class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuItemValidation {
     @IBOutlet var editingTextView: NSTextView!
     @IBOutlet weak var scrollView: NSScrollView!
 
@@ -131,6 +131,54 @@ class TextEditorViewController: NSViewController, InspectableTextEditor {
     }
 
 
+    //MARK: - Fix Font Menu
+    //For some reason certain fonts won't correctly show they can toggle bold or italic, so we have to handle that ourselves (BUB-190)
+    @IBAction func toggleBold(_ sender: Any?) {
+        guard let attributes = self.selectionAttributes else {
+            return
+        }
+        self.updateSelection(with: TextEditorAttributes(isBold: !(attributes.isBold ?? false)))
+    }
+
+    @IBAction func toggleItalic(_ sender: Any?) {
+        guard let attributes = self.selectionAttributes else {
+            return
+        }
+        self.updateSelection(with: TextEditorAttributes(isItalic: !(attributes.isItalic ?? false)))
+    }
+
+    func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+        if menuItem.action == #selector(toggleBold(_:)) {
+            return self.validateItem(menuItem, keyPath: \.isBold, trait: .boldFontMask)
+        }
+        if menuItem.action == #selector(toggleItalic(_:)) {
+            return self.validateItem(menuItem, keyPath: \.isItalic, trait: .italicFontMask)
+        }
+        return true
+    }
+
+    private func validateItem(_ menuItem: NSMenuItem, keyPath: KeyPath<TextEditorAttributes, Bool?>, trait: NSFontTraitMask) -> Bool {
+        guard let attributes = self.selectionAttributes else {
+            return false
+        }
+        let isTraitTrue = (attributes[keyPath: keyPath] == nil) || (attributes[keyPath: keyPath] == true)
+        if let currentFont = NSFontManager.shared.selectedFont {
+            let newFont: NSFont
+            if isTraitTrue {
+                newFont = NSFontManager.shared.convert(currentFont, toNotHaveTrait: trait)
+            } else {
+                newFont = NSFontManager.shared.convert(currentFont, toHaveTrait: trait)
+            }
+            if newFont == currentFont {
+                return false
+            }
+        }
+        menuItem.state = isTraitTrue ? .on : .off
+
+        return true
+    }
+
+
     //MARK: - Update Model
     private var editingText = false {
         didSet {
@@ -168,6 +216,7 @@ class TextEditorViewController: NSViewController, InspectableTextEditor {
         self.updatingText = false
         self.updateSelectionAttributes()
     }
+
 
     //MARK: - Page Link Manager
     private var pageLinkManager: PageLinkManager {
