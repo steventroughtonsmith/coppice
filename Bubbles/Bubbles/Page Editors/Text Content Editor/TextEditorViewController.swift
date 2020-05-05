@@ -186,12 +186,29 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
         }
     }
 
+    private func setupInitialTextViewAttributesIfNeeded() {
+        guard let storage = self.editingTextView.textStorage, storage.length == 0 else {
+            return
+        }
+
+        let fontCandidates = [
+            NSFont(name: "Helvetica Neue", size: 12),
+            NSFont(name: "Helvetica", size: 12),
+            NSFont(name: "Arial", size: 12),
+        ].compactMap { $0 }
+
+        self.editingTextView.font = fontCandidates.first ?? NSFont.systemFont(ofSize: 12)
+        self.editingTextView.textColor = NSColor.black
+        self.editingTextView.alignment = .natural
+    }
+
     private func updateTextView(with text: NSAttributedString) {
         guard (self.updatingText == false) && (self.editingText == false) else {
             return
         }
         self.updatingText = true
         self.editingTextView.textStorage?.setAttributedString(text)
+        self.setupInitialTextViewAttributesIfNeeded()
         self.updatingText = false
     }
 
