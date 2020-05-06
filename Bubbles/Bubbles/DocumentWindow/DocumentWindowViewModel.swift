@@ -33,7 +33,6 @@ class DocumentWindowViewModel: NSObject {
 
         //Force the root folder to load immediately so we don't end up with observation loops later
         _ = self.modelController.rootFolder
-        self.setupSelectionUndo()
 
         for page in self.modelController.pageCollection.all {
             if page.containingFolder == nil {
@@ -286,29 +285,37 @@ class DocumentWindowViewModel: NSObject {
 
 
     //MARK: - Undo
-    private var undoObservation: NSObjectProtocol?
-    private func setupSelectionUndo() {
-        let undoManager = self.modelController.undoManager
-        self.undoObservation = NotificationCenter.default.addObserver(forName: .NSUndoManagerDidOpenUndoGroup,
-                                                                      object: undoManager,
-                                                                      queue: .main)
-        { [weak self] (notification) in
-            guard let strongSelf = self else {
-                return
-            }
-            let sidebarSelection = strongSelf.sidebarSelection
-            let selectedCanvas = strongSelf.selectedCanvasID
-            undoManager.setActionIsDiscardable(true)
-            undoManager.registerUndo(withTarget: strongSelf) { (target) in
-                let oldSelection = target.sidebarSelection
-                let oldCanvas = target.selectedCanvasID
-                target.updateSelection(sidebarSelection)
-                target.selectedCanvasID = selectedCanvas
-                undoManager.registerUndo(withTarget: strongSelf) { (target) in
-                    target.updateSelection(oldSelection)
-                    target.selectedCanvasID = oldCanvas
-                }
-            }
+    var previousSelectionAtStartOfEditing: ([SidebarItem], ModelID?)? = nil
+    func registerStartOfEditing() {
+        //If there's no previous selection then we've just opened the document
+        guard let previousSelection = self.previousSelectionAtStartOfEditing else {
+            self.previousSelectionAtStartOfEditing = (self.sidebarSelection, self.selectedCanvasID)
+            return
+        }
+        let (previousItems, previousCanvasID) = previousSelection
+        //We only want to register an undo if the selection has changed since the last time we edited something
+        guard (previousItems != self.sidebarSelection) || (previousCanvasID != self.selectedCanvasID) else {
+            return
+        }
+        //Wrap this in its own group to avoid the event coalescing
+        self.modelController.undoManager.beginUndoGrouping()
+        self.modelController.undoManager.registerUndo(withTarget: self) { (target) in
+            target.undoableUpdateSelection(previousItems, selectedCanvasID: previousCanvasID)
+        }
+        self.modelController.undoManager.setActionIsDiscardable(true)
+        self.modelController.undoManager.setActionName("Select Item")
+        self.modelController.undoManager.endUndoGrouping()
+
+        self.previousSelectionAtStartOfEditing = (self.sidebarSelection, self.selectedCanvasID)
+    }
+
+    private func undoableUpdateSelection(_ sidebarItems: [SidebarItem], selectedCanvasID: ModelID?) {
+        let oldItems = self.sidebarSelection
+        let oldCanvasID = self.selectedCanvasID
+        self.updateSelection(sidebarItems)
+        self.selectedCanvasID = selectedCanvasID
+        self.modelController.undoManager.registerUndo(withTarget: self) { (target) in
+            target.undoableUpdateSelection(oldItems, selectedCanvasID: oldCanvasID)
         }
     }
 

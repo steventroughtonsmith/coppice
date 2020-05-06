@@ -282,6 +282,7 @@ extension TextEditorViewController: TextEditorView {
 
 extension TextEditorViewController: NSTextDelegate {
     func textDidBeginEditing(_ notification: Notification) {
+        self.viewModel.documentWindowViewModel.registerStartOfEditing()
         self.editingText = true
     }
 

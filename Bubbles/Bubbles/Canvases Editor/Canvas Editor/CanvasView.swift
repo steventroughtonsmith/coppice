@@ -9,6 +9,7 @@
 import Cocoa
 
 protocol CanvasViewDelegate: class {
+    func willStartEditing(_ canvasView: CanvasView)
     func didDropPages(with ids: [ModelID], at point: CGPoint, on canvasView: CanvasView)
     func didDropFiles(withURLs urls: [URL], at point: CGPoint, on canvasView: CanvasView)
 
@@ -72,6 +73,7 @@ class CanvasView: NSView {
     }
 
     override func becomeFirstResponder() -> Bool {
+        self.delegate?.willStartEditing(self)
         return true
     }
 

@@ -32,6 +32,9 @@ class ImageEditorViewModel: ViewModel {
 
     @objc dynamic var image: NSImage? {
         get { self.imageContent.image }
-        set { self.imageContent.image = newValue }
+        set {
+            self.documentWindowViewModel.registerStartOfEditing()
+            self.imageContent.image = newValue
+        }
     }
 }

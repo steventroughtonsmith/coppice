@@ -514,6 +514,10 @@ extension CanvasEditorViewController: Editor {
 
 
 extension CanvasEditorViewController: CanvasViewDelegate {
+    func willStartEditing(_ canvasView: CanvasView) {
+        self.viewModel.documentWindowViewModel.registerStartOfEditing()
+    }
+    
     func didDropPages(with ids: [ModelID], at point: CGPoint, on canvasView: CanvasView) {
         let pageSpacePoint = self.layoutEngine.convertPointToPageSpace(point)
         self.viewModel.addPages(with: ids, centredOn: pageSpacePoint)

@@ -174,12 +174,14 @@ class CanvasEditorViewModel: ViewModel {
     }
 
     func addPages(with ids: [ModelID], centredOn point: CGPoint? = nil) {
+        self.documentWindowViewModel.registerStartOfEditing()
         let pages = ids.compactMap { self.modelController.pageCollection.objectWithID($0) }
 
         self.canvas.addPages(pages, centredOn: point)
     }
 
     func addPages(forFilesAtURLs urls: [URL], centredOn point: CGPoint? = nil) {
+        self.documentWindowViewModel.registerStartOfEditing()
         let pagePosition = (point != nil) ? self.layoutEngine.convertPointToPageSpace(point!) : nil
         self.modelController.createPages(fromFilesAt: urls, in: self.documentWindowViewModel.folderForNewPages) { (pages) in
             self.canvas.addPages(pages, centredOn: pagePosition)
