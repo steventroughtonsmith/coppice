@@ -270,11 +270,12 @@ class SourceListViewController: NSViewController, NSMenuItemValidation {
         guard let item = self.createdItem else {
             return
         }
+        self.outlineView.expandItem(self.viewModel.pagesGroupNode)
+        
         //We don't want to select the new item if we're in a canvas, as we don't want to switch the editor
         guard !self.selectedNodes.containsCanvases else {
             return
         }
-        self.outlineView.expandItem(self.viewModel.pagesGroupNode)
         if let sourceListNode = self.viewModel.node(for: item) {
             let index = self.outlineView.row(forItem: sourceListNode)
             self.outlineView.selectRowIndexes(IndexSet(integer: index), byExtendingSelection: false)
