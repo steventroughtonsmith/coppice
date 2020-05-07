@@ -87,4 +87,12 @@ class RootSplitViewController: NSSplitViewController {
         super.splitViewDidResizeSubviews(notification)
         self.updateSplitViewControl()
     }
+
+
+    //MARK: - Menu Actions
+    @IBAction func toggleInspectors(_ sender: Any?) {
+        NSView.animate(withDuration: 0.3) {
+            self.inspectorContainerViewController.splitViewItem.isCollapsed.toggle()
+        }
+    }
 }
