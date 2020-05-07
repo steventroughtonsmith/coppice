@@ -25,6 +25,7 @@ class CanvasListViewModel: ViewModel {
             self?.reloadCanvases()
         }
         self.selectedCanvasObserver = self.documentWindowViewModel.$selectedCanvasID.sink { [weak self] canvasID in
+            self?.cachedCanvases = nil //BUB-195: Just in case we receive this before a reload canvases, lets clear the cache
             self?.selectedCanvasIndex = self?.canvases.firstIndex { $0.id == canvasID }
         }
     }
