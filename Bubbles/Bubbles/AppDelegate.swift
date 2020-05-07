@@ -31,6 +31,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
 
         self.newLinkedPageMenuDelegate.action = #selector(TextEditorViewController.createNewLinkedPage(_:))
+        self.newLinkedPageMenuDelegate.includeKeyEquivalents = false
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {

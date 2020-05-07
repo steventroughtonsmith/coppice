@@ -10,6 +10,7 @@ import Cocoa
 
 class NewPageMenuDelegate: NSObject, NSMenuDelegate {
     var action: Selector = #selector(newPage(_:))
+    var includeKeyEquivalents: Bool?
 
     func numberOfItems(in menu: NSMenu) -> Int {
         let caseCount = PageContentType.allCases.count
@@ -22,7 +23,7 @@ class NewPageMenuDelegate: NSObject, NSMenuDelegate {
     func menu(_ menu: NSMenu, update item: NSMenuItem, at index: Int, shouldCancel: Bool) -> Bool {
         //We're in a menu hierarchy
         guard menu.supermenu == nil else {
-            self.update(item, with: PageContentType.allCases[index], includeKeyEquivalents: menu.isInMainMenu)
+            self.update(item, with: PageContentType.allCases[index], includeKeyEquivalents: self.includeKeyEquivalents ?? menu.isInMainMenu)
             return true
         }
 
