@@ -384,6 +384,19 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="View" id="HyV-fh-RgO">
                         <items>
+                            <menuItem title="Show Tab Bar" id="Xmv-Su-1HH">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="toggleTabBar:" target="-1" id="M6W-bn-u20"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Show All Tabs" keyEquivalent="\" id="B0T-w0-QyY">
+                                <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
+                                <connections>
+                                    <action selector="toggleTabOverview:" target="-1" id="qbj-kY-rqi"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="KT4-xD-RgP"/>
                             <menuItem title="Show Toolbar" keyEquivalent="t" id="snW-S8-Cw5">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                 <connections>
