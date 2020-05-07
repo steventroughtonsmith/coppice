@@ -33,6 +33,7 @@ class SidebarViewController: NSViewController, SplitViewContainable {
     //MARK: - RootViewController
     lazy var splitViewItem: NSSplitViewItem = {
         let item = NSSplitViewItem(sidebarWithViewController: self)
+        item.maximumThickness = 650 //Just what seems reasonable, as the default is "as big as you want"
         return item
     }()
 
