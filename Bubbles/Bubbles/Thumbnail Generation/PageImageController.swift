@@ -62,8 +62,6 @@ class PageImageController: NSObject {
             return nil
         }
 
-        print("generate image for page: \(page.title)")
-
         let editorVM = PageEditorViewModel(page: page, documentWindowViewModel: documentViewModel)
         let contentEditor = editorVM.contentEditor
         let editorView = contentEditor.view

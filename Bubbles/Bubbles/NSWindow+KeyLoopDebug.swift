@@ -19,7 +19,6 @@ extension NSWindow {
             guard let view = currentKeyView else {
                 break
             }
-            print("\(view)")
             viewRects.append(view.convert(view.bounds, to: nil))
             currentKeyView = currentKeyView?.nextValidKeyView
             currentIndex += 1

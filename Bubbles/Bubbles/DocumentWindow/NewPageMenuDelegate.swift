@@ -43,7 +43,6 @@ class NewPageMenuDelegate: NSObject, NSMenuDelegate {
         item.action = self.action
         if includeKeyEquivalents {
             item.keyEquivalent = contentType.keyEquivalent
-            print("\(contentType.keyEquivalentModifierMask)")
             item.keyEquivalentModifierMask = contentType.keyEquivalentModifierMask
         }
     }
