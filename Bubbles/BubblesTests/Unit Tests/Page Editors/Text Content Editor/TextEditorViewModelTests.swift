@@ -63,7 +63,7 @@ class TextEditorViewModelTests: XCTestCase {
     func test_createNewLinkedPage_createsNewPageUsingSelectedTextAsTitle() throws {
         self.textContent.text = NSAttributedString(string: "Hello World!")
 
-        let page = self.viewModel.createNewLinkedPage(for: NSMakeRange(6, 5))
+        let page = self.viewModel.createNewLinkedPage(ofType: .text, from: NSMakeRange(6, 5))
         XCTAssertEqual(page.title, "World")
     }
 
@@ -72,7 +72,7 @@ class TextEditorViewModelTests: XCTestCase {
         self.viewModel.view = view
         self.textContent.text = NSAttributedString(string: "Hello World!")
 
-        let page = self.viewModel.createNewLinkedPage(for: NSMakeRange(6, 5))
+        let page = self.viewModel.createNewLinkedPage(ofType: .text, from: NSMakeRange(6, 5))
 
         let (url, range) = try XCTUnwrap(view.addedLink)
         XCTAssertEqual(url, page.linkToPage(from: self.page).url)

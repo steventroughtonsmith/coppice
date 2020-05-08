@@ -10,6 +10,8 @@ import AppKit
 @testable import Bubbles
 
 class MockPageContent: NSObject, PageContent, NSFilePromiseProviderDelegate {
+    var sizeToFitContent: CGSize = .zero
+
     var filePromiseProvider: ExtendableFilePromiseProvider {
         return ExtendableFilePromiseProvider(fileType: (kUTTypeText as String), delegate: self)
     }
