@@ -75,7 +75,7 @@ class PageSelectorResult: NSObject {
 
     @objc dynamic var image: NSImage? {
         guard let imageContent = self.page.content as? ImagePageContent else {
-            return nil
+            return self.page.content.contentType.icon
         }
         return imageContent.image
     }
