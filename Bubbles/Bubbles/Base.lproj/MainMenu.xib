@@ -436,8 +436,8 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Canvas" id="Luh-N3-YuJ">
                         <items>
-                            <menuItem title="Add Page…" id="1YE-0Q-j41">
-                                <modifierMask key="keyEquivalentModifierMask"/>
+                            <menuItem title="Add Page…" keyEquivalent="a" id="1YE-0Q-j41">
+                                <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
                                 <connections>
                                     <action selector="addPageToCanvas:" target="-1" id="bsb-Y7-7UU"/>
                                 </connections>
