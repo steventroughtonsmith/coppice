@@ -90,7 +90,7 @@ class CanvasListViewController: NSViewController, SplitViewContainable, NSMenuIt
     private func updateCanvasListState() {
         self.splitViewItem.minimumThickness = (self.isCompact ? CanvasListViewController.compactSize : CanvasListViewController.regularMinimumSize)
         self.splitViewItem.maximumThickness = (self.isCompact ? CanvasListViewController.compactSize : CanvasListViewController.regularMaximumSize)
-        self.tableView.reloadData()
+        self.reload()
     }
 
 
@@ -157,7 +157,6 @@ class CanvasListViewController: NSViewController, SplitViewContainable, NSMenuIt
 
         self.viewModel.deleteCanvas(atIndex: self.rowForAction)
     }
-
 }
 
 
@@ -295,5 +294,9 @@ extension CanvasListViewController: NSTableViewDelegate {
         self.isChangingSelection = true
         self.viewModel.selectCanvas(atIndex: self.tableView.selectedRow)
         self.isChangingSelection = false
+    }
+
+    func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
+        return RoundSelectionTableRowView()
     }
 }

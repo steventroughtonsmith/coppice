@@ -188,10 +188,17 @@ class CanvasView: NSView {
         return selectionView
     }
 
+    var drawsBackground: Bool = true {
+        didSet {
+            self.setNeedsDisplay(self.bounds)
+        }
+    }
 
     override func draw(_ dirtyRect: NSRect) {
-        NSColor(named: "CanvasBackground")?.set()
-        self.bounds.fill()
+        if self.drawsBackground {
+            NSColor(named: "CanvasBackground")?.set()
+            self.bounds.fill()
+        }
 
         if let pageSpaceOrigin = self.pageSpaceOrigin {
             NSColor(named: "DebugCanvasAxes")?.set()

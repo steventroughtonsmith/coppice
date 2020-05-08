@@ -93,6 +93,12 @@ class ThumbnailController: NSObject {
         guard let documentViewModel = self.documentViewModel else {
             return nil
         }
+        
+        //No need to generate a preview if the canvas contains nothing
+        guard canvas.pages.count > 0 else {
+            return nil
+        }
+
         let canvasEditor = CanvasEditorViewController(viewModel: CanvasEditorViewModel(canvas: canvas, documentWindowViewModel: documentViewModel, mode: .preview))
         _ = canvasEditor.view
         guard let canvasView = canvasEditor.canvasView else {

@@ -58,6 +58,7 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupBackgroundColour()
         self.setupCanvasView()
 
         self.forceFullLayout()
@@ -73,6 +74,11 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
     }
 
     var enabled: Bool = true
+
+    private func setupBackgroundColour() {
+        self.scrollView.drawsBackground = (self.viewModel.mode == .editing)
+        self.canvasView.drawsBackground = (self.viewModel.mode == .editing)
+    }
 
     private func setupCanvasView() {
         self.canvasView.layoutEngine = self.layoutEngine

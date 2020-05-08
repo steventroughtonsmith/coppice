@@ -54,6 +54,8 @@ class CanvasPageViewController: NSViewController, CanvasPageView {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.typedView.drawsShadow = (self.viewModel.mode == .editing)
+
         //We need to make sure we stay pinned to the top left when resizing the view
         self.view.autoresizingMask = [.maxXMargin, .maxYMargin]
 

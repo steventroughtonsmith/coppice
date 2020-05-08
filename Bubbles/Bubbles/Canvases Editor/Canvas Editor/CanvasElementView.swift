@@ -56,6 +56,13 @@ class CanvasElementView: NSView  {
         }
     }
 
+    var drawsShadow: Bool = true {
+        didSet {
+            self.contentContainerShadow.shadow = self.drawsShadow ? self.standardDropShadow : nil
+            self.backgroundView.shadow = self.drawsShadow ? self.standardDropShadow : nil
+        }
+    }
+
     func apply(_ layoutPage: LayoutEnginePage) {
         self.updateSubviews(with: layoutPage)
         self.updateResizeRects(with: layoutPage)

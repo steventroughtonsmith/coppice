@@ -12,21 +12,22 @@ import Combine
 class LargeCanvasCell: EditableLabelCell {
     static var identifier = NSUserInterfaceItemIdentifier(rawValue: "LargeCanvasCell")
 
-    @IBOutlet weak var canvasPreview: CanvasPreviewView!
-
+    @IBOutlet weak var nameLabel: NSTextField!
+    @IBOutlet weak var thumbnailImageView: NSImageView!
     private var thumbnailObserver: AnyCancellable?
     override var objectValue: Any? {
         didSet {
             guard let canvas = self.objectValue as? Canvas else {
                 return
             }
-            self.canvasPreview.previewImage = canvas.thumbnail
+            self.thumbnailImageView.image = canvas.thumbnail
         }
     }
 
     override func layout() {
         super.layout()
-        self.canvasPreview.preferredMaxDimensions = CGSize(width: self.bounds.width - 10, height: 120)
-        super.layout()
+//        self.thumbnailImageView.frame = self.thumbnailImageView.frame.rounded()
+//        self.nameLabel.frame = self.nameLabel.frame.rounded()
     }
+
 }
