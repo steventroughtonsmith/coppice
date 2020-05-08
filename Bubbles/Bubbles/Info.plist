@@ -60,12 +60,12 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>BUNDLEVERSION</string>
-	<key>M3BundleHash</key>
-	<string>BUNDLEHASH</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.productivity</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
+	<key>M3BundleHash</key>
+	<string>BUNDLEHASH</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2019 M Cubed Software. All rights reserved.</string>
 	<key>NSMainNibFile</key>
