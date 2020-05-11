@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16085" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="CanvasInspectorViewController" customModule="Bubbles" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="CanvasInspectorViewController" customModule="Coppice" customModuleProvider="target">
             <connections>
                 <outlet property="firstKeyView" destination="b0f-QP-nLp" id="3Al-oa-MMF"/>
                 <outlet property="lastKeyView" destination="Kri-qI-nSO" id="1u2-hb-9nJ"/>
@@ -19,7 +19,7 @@
             <subviews>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="b0f-QP-nLp">
                     <rect key="frame" x="50" y="29" width="257" height="21"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="2n3-qS-CN5">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="2n3-qS-CN5">
                         <font key="font" usesAppearanceFont="YES"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -51,8 +51,8 @@
                         </menu>
                     </popUpButtonCell>
                     <connections>
-                        <binding destination="-2" name="contentValues" keyPath="self.viewModel.themes" id="Jy9-Vy-kwx"/>
                         <binding destination="-2" name="selectedIndex" keyPath="self.viewModel.selectedThemeIndex" previousBinding="Jy9-Vy-kwx" id="g3a-sG-ZMn"/>
+                        <binding destination="-2" name="contentValues" keyPath="self.viewModel.themes" id="Jy9-Vy-kwx"/>
                     </connections>
                 </popUpButton>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IBt-e7-HOq">

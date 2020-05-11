@@ -5,7 +5,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="SourceListViewController" customModule="Bubbles" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="SourceListViewController" customModule="Coppice" customModuleProvider="target">
             <connections>
                 <outlet property="actionPullDownButton" destination="vAP-07-vCU" id="RmV-dP-cij"/>
                 <outlet property="addPullDownButton" destination="KlR-BB-oJZ" id="mXz-LE-u55"/>
@@ -28,7 +28,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="228" height="372"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <outlineView identifier="SidebarTable" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" columnReordering="NO" columnResizing="NO" autosaveColumns="NO" autosaveName="MainSidebar" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="14" autosaveExpandedItems="YES" outlineTableColumn="Z8W-Zh-S4f" id="lUZ-o0-8kA" customClass="SourceListOutlineView" customModule="Bubbles" customModuleProvider="target">
+                            <outlineView identifier="SidebarTable" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" columnReordering="NO" columnResizing="NO" autosaveColumns="NO" autosaveName="MainSidebar" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="14" autosaveExpandedItems="YES" outlineTableColumn="Z8W-Zh-S4f" id="lUZ-o0-8kA" customClass="SourceListOutlineView" customModule="Coppice" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="228" height="367"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <size key="intercellSpacing" width="3" height="0.0"/>
@@ -47,7 +47,7 @@
                                         </textFieldCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         <prototypeCellViews>
-                                            <tableCellView identifier="SmallCell" id="bGF-qo-JyG" customClass="EditableLabelCell" customModule="Bubbles" customModuleProvider="target">
+                                            <tableCellView identifier="SmallCell" id="bGF-qo-JyG" customClass="EditableLabelCell" customModule="Coppice" customModuleProvider="target">
                                                 <rect key="frame" x="1" y="0.0" width="225" height="17"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
@@ -64,7 +64,7 @@
                                                     </imageView>
                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dog-G9-UoS">
                                                         <rect key="frame" x="24" y="1" width="201" height="16"/>
-                                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Small Table View Cell" id="mUy-Fn-EtT">
+                                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Small Table View Cell" usesSingleLineMode="YES" id="mUy-Fn-EtT">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -92,7 +92,7 @@
                                                 <subviews>
                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z11-3n-4cf">
                                                         <rect key="frame" x="41" y="12" width="178" height="16"/>
-                                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Big Table View Cell" id="12R-Qa-dtM">
+                                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Big Table View Cell" usesSingleLineMode="YES" id="12R-Qa-dtM">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -131,7 +131,7 @@
                                                 <subviews>
                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="8CG-Ji-T5D">
                                                         <rect key="frame" x="0.0" y="1" width="225" height="16"/>
-                                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="0PN-P4-pc2">
+                                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" usesSingleLineMode="YES" id="0PN-P4-pc2">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -293,7 +293,7 @@
             </constraints>
             <point key="canvasLocation" x="-503" y="365.5"/>
         </customView>
-        <customObject id="1CQ-Ez-MOk" customClass="NewPageMenuDelegate" customModule="Bubbles" customModuleProvider="target"/>
+        <customObject id="1CQ-Ez-MOk" customClass="NewPageMenuDelegate" customModule="Coppice" customModuleProvider="target"/>
     </objects>
     <resources>
         <image name="NSActionTemplate" width="14" height="14"/>

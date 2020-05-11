@@ -59,6 +59,7 @@ class CanvasPageTitleView: NSView {
         let label = NSTextField(labelWithString: "")
         label.translatesAutoresizingMaskIntoConstraints = false
         label.lineBreakMode = .byTruncatingTail
+        label.usesSingleLineMode = true
         label.textColor = .labelColor
         label.font = NSFont.systemFont(ofSize: 12)
         label.alignment = .center
