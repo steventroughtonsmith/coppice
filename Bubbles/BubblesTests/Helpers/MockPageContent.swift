@@ -10,7 +10,6 @@ import AppKit
 @testable import Bubbles
 
 class MockPageContent: NSObject, PageContent, NSFilePromiseProviderDelegate {
-    var sizeToFitContent: CGSize = .zero
 
     var filePromiseProvider: ExtendableFilePromiseProvider {
         return ExtendableFilePromiseProvider(fileType: (kUTTypeText as String), delegate: self)
@@ -30,6 +29,9 @@ class MockPageContent: NSObject, PageContent, NSFilePromiseProviderDelegate {
         return ModelFile(type: self.contentType.rawValue, filename: nil, data: nil, metadata: nil)
     }
 
+    func sizeToFitContent(currentSize: CGSize) -> CGSize {
+        return currentSize
+    }
     
 
     var searchRange = NSRange(location: NSNotFound, length: 0)

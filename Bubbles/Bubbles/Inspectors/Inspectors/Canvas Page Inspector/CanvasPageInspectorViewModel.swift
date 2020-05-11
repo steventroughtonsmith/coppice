@@ -97,6 +97,6 @@ class CanvasPageInspectorViewModel: BaseInspectorViewModel {
         guard let page = self.canvasPage.page else {
             return
         }
-        self.canvasPage.frame.size = page.content.sizeToFitContent
+        self.canvasPage.frame.size = page.content.sizeToFitContent(currentSize: self.canvasPage.frame.size)
     }
 }

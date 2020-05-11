@@ -76,7 +76,8 @@ protocol PageContent: class {
     func firstRangeOf(_ searchTerm: String) -> NSRange
 
     var initialContentSize: CGSize? { get }
-    var sizeToFitContent: CGSize { get }
+
+    func sizeToFitContent(currentSize: CGSize) -> CGSize
 
     var filePromiseProvider: ExtendableFilePromiseProvider { get }
 }

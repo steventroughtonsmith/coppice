@@ -49,7 +49,7 @@ class ImagePageContent: NSObject, PageContent {
         return ModelFile(type: self.contentType.rawValue, filename: filename, data: imageData, metadata: metadata)
     }
 
-    var sizeToFitContent: CGSize {
-        return self.image?.size ?? .zero
+    func sizeToFitContent(currentSize: CGSize) -> CGSize {
+        return self.image?.size ?? currentSize
     }
 }

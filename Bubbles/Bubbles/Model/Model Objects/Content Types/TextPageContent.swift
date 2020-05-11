@@ -48,8 +48,10 @@ class TextPageContent: NSObject, PageContent {
         return self.contentSize(insideBounds: GlobalConstants.maxAutomaticTextSize)
     }
 
-    var sizeToFitContent: CGSize {
-        return self.contentSize(insideBounds: CGSize(width: GlobalConstants.maxAutomaticTextSize.width, height: 20000))
+    func sizeToFitContent(currentSize: CGSize) -> CGSize {
+        var newContentSize = self.contentSize(insideBounds: CGSize(width: currentSize.width, height: 20000))
+        newContentSize.width = currentSize.width
+        return newContentSize
     }
 
     private func contentSize(insideBounds bounds: CGSize) -> CGSize {
@@ -58,9 +60,9 @@ class TextPageContent: NSObject, PageContent {
 
         let adjustedContentSize = contentSize.rounded().plus(width: insets.horizontalInsets, height: insets.verticalInsets)
 
-        //Not sure why but we need to add an additional 10 pt to get the size correct
+        //Not sure why but we need to add an additional space to get the size correct
         contentSize.width = max(adjustedContentSize.width + 10, Page.standardSize.width)
-        contentSize.height = max(adjustedContentSize.height + 10, Page.standardSize.height)
+        contentSize.height = max(adjustedContentSize.height + 20, Page.standardSize.height)
         return contentSize
     }
 }
