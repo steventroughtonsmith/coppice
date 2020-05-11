@@ -360,8 +360,8 @@
 		9970977123AF9BE600CD189B /* PageExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageExporter.swift; sourceTree = "<group>"; };
 		9970977323B0180F00CD189B /* Canvas+Pages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Canvas+Pages.swift"; sourceTree = "<group>"; };
 		9970977523B93A5800CD189B /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
-		997344D32432073400DF4EDB /* BubblesDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BubblesDebug.entitlements; sourceTree = "<group>"; };
-		997344D42432076B00DF4EDB /* BubblesTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BubblesTest.entitlements; sourceTree = "<group>"; };
+		997344D32432073400DF4EDB /* CoppiceDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CoppiceDebug.entitlements; sourceTree = "<group>"; };
+		997344D42432076B00DF4EDB /* CoppiceTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CoppiceTest.entitlements; sourceTree = "<group>"; };
 		997344D52432236300DF4EDB /* PageLinkController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageLinkController.swift; sourceTree = "<group>"; };
 		997373782423AD6C000D5F21 /* NoEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoEditorViewController.swift; sourceTree = "<group>"; };
 		997373792423AD6C000D5F21 /* NoEditorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoEditorViewController.xib; sourceTree = "<group>"; };
@@ -515,16 +515,16 @@
 		99FDF128241FD52800AF1E51 /* CanvasesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasesViewModel.swift; sourceTree = "<group>"; };
 		99FDF12A241FD53D00AF1E51 /* CanvasesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasesViewController.swift; sourceTree = "<group>"; };
 		99FDF12B241FD53D00AF1E51 /* CanvasesView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CanvasesView.xib; sourceTree = "<group>"; };
-		99FE018D22CD1037004D380D /* Bubbles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bubbles.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		99FE018D22CD1037004D380D /* Coppice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Coppice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		99FE019022CD1037004D380D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		99FE019222CD1037004D380D /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
 		99FE019722CD1038004D380D /* Colours.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colours.xcassets; sourceTree = "<group>"; };
 		99FE019A22CD1038004D380D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		99FE019C22CD1038004D380D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		99FE019D22CD1038004D380D /* Bubbles.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Bubbles.entitlements; sourceTree = "<group>"; };
-		99FE01A222CD1038004D380D /* BubblesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BubblesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		99FE019D22CD1038004D380D /* Coppice.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Coppice.entitlements; sourceTree = "<group>"; };
+		99FE01A222CD1038004D380D /* CoppiceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoppiceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		99FE01A822CD1038004D380D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		99FE01AD22CD1038004D380D /* BubblesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BubblesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		99FE01AD22CD1038004D380D /* CoppiceUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoppiceUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		99FE01B122CD1038004D380D /* BubblesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubblesUITests.swift; sourceTree = "<group>"; };
 		99FE01B322CD1038004D380D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		99FE01E222D4CC8A004D380D /* DocumentWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentWindowController.swift; sourceTree = "<group>"; };
@@ -1256,9 +1256,9 @@
 		99FE018422CD1037004D380D = {
 			isa = PBXGroup;
 			children = (
-				99FE018F22CD1037004D380D /* Bubbles */,
-				99FE01A522CD1038004D380D /* BubblesTests */,
-				99FE01B022CD1038004D380D /* BubblesUITests */,
+				99FE018F22CD1037004D380D /* Coppice */,
+				99FE01A522CD1038004D380D /* CoppiceTests */,
+				99FE01B022CD1038004D380D /* CoppiceUITests */,
 				999EA68E2433929E00BF254E /* Build Scripts */,
 				99FE018E22CD1037004D380D /* Products */,
 			);
@@ -1267,18 +1267,19 @@
 		99FE018E22CD1037004D380D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				99FE018D22CD1037004D380D /* Bubbles.app */,
-				99FE01A222CD1038004D380D /* BubblesTests.xctest */,
-				99FE01AD22CD1038004D380D /* BubblesUITests.xctest */,
+				99FE018D22CD1037004D380D /* Coppice.app */,
+				99FE01A222CD1038004D380D /* CoppiceTests.xctest */,
+				99FE01AD22CD1038004D380D /* CoppiceUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		99FE018F22CD1037004D380D /* Bubbles */ = {
+		99FE018F22CD1037004D380D /* Coppice */ = {
 			isa = PBXGroup;
 			children = (
-				997344D42432076B00DF4EDB /* BubblesTest.entitlements */,
-				997344D32432073400DF4EDB /* BubblesDebug.entitlements */,
+				99FE019D22CD1038004D380D /* Coppice.entitlements */,
+				997344D42432076B00DF4EDB /* CoppiceTest.entitlements */,
+				997344D32432073400DF4EDB /* CoppiceDebug.entitlements */,
 				99FE019022CD1037004D380D /* AppDelegate.swift */,
 				99FE019222CD1037004D380D /* Document.swift */,
 				9962AB8823732D9400337834 /* BubblesDocumentController.swift */,
@@ -1308,13 +1309,12 @@
 				99FE019922CD1038004D380D /* MainMenu.xib */,
 				99FE019C22CD1038004D380D /* Info.plist */,
 				999EA68C2433913A00BF254E /* Info.plist.prefix */,
-				99FE019D22CD1038004D380D /* Bubbles.entitlements */,
 				999EA69924339A8400BF254E /* .build_number */,
 			);
-			path = Bubbles;
+			path = Coppice;
 			sourceTree = "<group>";
 		};
-		99FE01A522CD1038004D380D /* BubblesTests */ = {
+		99FE01A522CD1038004D380D /* CoppiceTests */ = {
 			isa = PBXGroup;
 			children = (
 				9923B06A22F45F7E0035D8C6 /* TestObjects.swift */,
@@ -1326,16 +1326,16 @@
 				99868F3D23981142009AC0F7 /* Resources */,
 				99FE01A822CD1038004D380D /* Info.plist */,
 			);
-			path = BubblesTests;
+			path = CoppiceTests;
 			sourceTree = "<group>";
 		};
-		99FE01B022CD1038004D380D /* BubblesUITests */ = {
+		99FE01B022CD1038004D380D /* CoppiceUITests */ = {
 			isa = PBXGroup;
 			children = (
 				99FE01B122CD1038004D380D /* BubblesUITests.swift */,
 				99FE01B322CD1038004D380D /* Info.plist */,
 			);
-			path = BubblesUITests;
+			path = CoppiceUITests;
 			sourceTree = "<group>";
 		};
 		99FE01E122D4C22B004D380D /* DocumentWindow */ = {
@@ -1356,9 +1356,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		99FE018C22CD1037004D380D /* Bubbles */ = {
+		99FE018C22CD1037004D380D /* Coppice */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 99FE01B622CD1038004D380D /* Build configuration list for PBXNativeTarget "Bubbles" */;
+			buildConfigurationList = 99FE01B622CD1038004D380D /* Build configuration list for PBXNativeTarget "Coppice" */;
 			buildPhases = (
 				99FE018922CD1037004D380D /* Sources */,
 				99FE018A22CD1037004D380D /* Frameworks */,
@@ -1369,14 +1369,14 @@
 			dependencies = (
 				999EA6982433976000BF254E /* PBXTargetDependency */,
 			);
-			name = Bubbles;
+			name = Coppice;
 			productName = Bubbles;
-			productReference = 99FE018D22CD1037004D380D /* Bubbles.app */;
+			productReference = 99FE018D22CD1037004D380D /* Coppice.app */;
 			productType = "com.apple.product-type.application";
 		};
-		99FE01A122CD1038004D380D /* BubblesTests */ = {
+		99FE01A122CD1038004D380D /* CoppiceTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 99FE01B922CD1038004D380D /* Build configuration list for PBXNativeTarget "BubblesTests" */;
+			buildConfigurationList = 99FE01B922CD1038004D380D /* Build configuration list for PBXNativeTarget "CoppiceTests" */;
 			buildPhases = (
 				99FE019E22CD1038004D380D /* Sources */,
 				99FE019F22CD1038004D380D /* Frameworks */,
@@ -1387,14 +1387,14 @@
 			dependencies = (
 				99FE01A422CD1038004D380D /* PBXTargetDependency */,
 			);
-			name = BubblesTests;
+			name = CoppiceTests;
 			productName = BubblesTests;
-			productReference = 99FE01A222CD1038004D380D /* BubblesTests.xctest */;
+			productReference = 99FE01A222CD1038004D380D /* CoppiceTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		99FE01AC22CD1038004D380D /* BubblesUITests */ = {
+		99FE01AC22CD1038004D380D /* CoppiceUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 99FE01BC22CD1038004D380D /* Build configuration list for PBXNativeTarget "BubblesUITests" */;
+			buildConfigurationList = 99FE01BC22CD1038004D380D /* Build configuration list for PBXNativeTarget "CoppiceUITests" */;
 			buildPhases = (
 				99FE01A922CD1038004D380D /* Sources */,
 				99FE01AA22CD1038004D380D /* Frameworks */,
@@ -1405,9 +1405,9 @@
 			dependencies = (
 				99FE01AF22CD1038004D380D /* PBXTargetDependency */,
 			);
-			name = BubblesUITests;
+			name = CoppiceUITests;
 			productName = BubblesUITests;
-			productReference = 99FE01AD22CD1038004D380D /* BubblesUITests.xctest */;
+			productReference = 99FE01AD22CD1038004D380D /* CoppiceUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -1444,7 +1444,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 99FE018822CD1037004D380D /* Build configuration list for PBXProject "Bubbles" */;
+			buildConfigurationList = 99FE018822CD1037004D380D /* Build configuration list for PBXProject "Coppice" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -1457,9 +1457,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				99FE018C22CD1037004D380D /* Bubbles */,
-				99FE01A122CD1038004D380D /* BubblesTests */,
-				99FE01AC22CD1038004D380D /* BubblesUITests */,
+				99FE018C22CD1037004D380D /* Coppice */,
+				99FE01A122CD1038004D380D /* CoppiceTests */,
+				99FE01AC22CD1038004D380D /* CoppiceUITests */,
 				999EA6912433973A00BF254E /* Prepare Info.Plist Prefix */,
 			);
 		};
@@ -1535,7 +1535,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Bubbles/Info.plist.prefix",
+				"$(SRCROOT)/Coppice/Info.plist.prefix",
 			);
 			outputFileListPaths = (
 			);
@@ -1544,7 +1544,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "GITHASH=$( git rev-parse --short HEAD )\n\"$SRCROOT/Build Scripts/prepare_infoplist_prefix.swift\" --build-number \"$SRCROOT/Bubbles/.build_number\" --git-hash $GITHASH\n";
+			shellScript = "GITHASH=$( git rev-parse --short HEAD )\n\"$SRCROOT/Build Scripts/prepare_infoplist_prefix.swift\" --build-number \"$SRCROOT/Coppice/.build_number\" --git-hash $GITHASH\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1781,12 +1781,12 @@
 		};
 		99FE01A422CD1038004D380D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 99FE018C22CD1037004D380D /* Bubbles */;
+			target = 99FE018C22CD1037004D380D /* Coppice */;
 			targetProxy = 99FE01A322CD1038004D380D /* PBXContainerItemProxy */;
 		};
 		99FE01AF22CD1038004D380D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 99FE018C22CD1037004D380D /* Bubbles */;
+			target = 99FE018C22CD1037004D380D /* Coppice */;
 			targetProxy = 99FE01AE22CD1038004D380D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -1869,7 +1869,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Bubbles/BubblesTest.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Coppice/Coppice.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -1880,7 +1880,7 @@
 					"TEST=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = Bubbles/Info.plist;
+				INFOPLIST_FILE = Coppice/Info.plist;
 				INFOPLIST_PREFIX_HEADER = "$(CONFIGURATION_TEMP_DIR)/Info.plist.prefix";
 				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1888,7 +1888,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0a5;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Bubbles;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG TEST";
 				SWIFT_VERSION = 5.0;
@@ -1913,7 +1913,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.BubblesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bubbles.app/Contents/MacOS/Bubbles";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Coppice.app/Contents/MacOS/Coppice";
 			};
 			name = Test;
 		};
@@ -2023,13 +2023,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Bubbles/Bubbles.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Coppice/Coppice.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = Z699XFM6P2;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = Bubbles/Info.plist;
+				INFOPLIST_FILE = Coppice/Info.plist;
 				INFOPLIST_PREFIX_HEADER = "$(CONFIGURATION_TEMP_DIR)/Info.plist.prefix";
 				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2037,7 +2037,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0a5;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Bubbles;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -2061,7 +2061,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.BubblesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bubbles.app/Contents/MacOS/Bubbles";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Coppice.app/Contents/MacOS/Coppice";
 			};
 			name = Archive;
 		};
@@ -2215,13 +2215,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Bubbles/BubblesDebug.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Coppice/CoppiceDebug.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = Z699XFM6P2;
 				ENABLE_HARDENED_RUNTIME = NO;
-				INFOPLIST_FILE = Bubbles/Info.plist;
+				INFOPLIST_FILE = Coppice/Info.plist;
 				INFOPLIST_PREFIX_HEADER = "$(CONFIGURATION_TEMP_DIR)/Info.plist.prefix";
 				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2229,7 +2229,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0a5;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Bubbles;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -2239,13 +2239,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Bubbles/Bubbles.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Coppice/Coppice.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = Z699XFM6P2;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = Bubbles/Info.plist;
+				INFOPLIST_FILE = Coppice/Info.plist;
 				INFOPLIST_PREFIX_HEADER = "$(CONFIGURATION_TEMP_DIR)/Info.plist.prefix";
 				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2253,7 +2253,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0a5;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Bubbles;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -2277,7 +2277,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.BubblesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bubbles.app/Contents/MacOS/Bubbles";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Coppice.app/Contents/MacOS/Coppice";
 			};
 			name = Debug;
 		};
@@ -2299,7 +2299,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.BubblesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bubbles.app/Contents/MacOS/Bubbles";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Coppice.app/Contents/MacOS/Coppice";
 			};
 			name = Release;
 		};
@@ -2357,7 +2357,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		99FE018822CD1037004D380D /* Build configuration list for PBXProject "Bubbles" */ = {
+		99FE018822CD1037004D380D /* Build configuration list for PBXProject "Coppice" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				99FE01B422CD1038004D380D /* Debug */,
@@ -2368,7 +2368,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		99FE01B622CD1038004D380D /* Build configuration list for PBXNativeTarget "Bubbles" */ = {
+		99FE01B622CD1038004D380D /* Build configuration list for PBXNativeTarget "Coppice" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				99FE01B722CD1038004D380D /* Debug */,
@@ -2379,7 +2379,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		99FE01B922CD1038004D380D /* Build configuration list for PBXNativeTarget "BubblesTests" */ = {
+		99FE01B922CD1038004D380D /* Build configuration list for PBXNativeTarget "CoppiceTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				99FE01BA22CD1038004D380D /* Debug */,
@@ -2390,7 +2390,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		99FE01BC22CD1038004D380D /* Build configuration list for PBXNativeTarget "BubblesUITests" */ = {
+		99FE01BC22CD1038004D380D /* Build configuration list for PBXNativeTarget "CoppiceUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				99FE01BD22CD1038004D380D /* Debug */,

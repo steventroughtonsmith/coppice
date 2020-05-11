@@ -10,14 +10,14 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "# Type a script or drag a script file from your workspace to insert its path.&#10;if [ $CONFIGURATION = &quot;Archive&quot; ] &#10;then&#10;    #exec &gt; ${PROJECT_DIR}/prebuild.log 2&gt;&amp;1&#10;    &quot;$SRCROOT/Build Scripts/update_build_number.swift&quot; --build-number &quot;$SRCROOT/Bubbles/.build_number&quot;&#10;fi&#10;">
+               scriptText = "# Type a script or drag a script file from your workspace to insert its path.&#10;if [ $CONFIGURATION = &quot;Archive&quot; ] &#10;then&#10;    #exec &gt; ${PROJECT_DIR}/prebuild.log 2&gt;&amp;1&#10;    &quot;$SRCROOT/Build Scripts/update_build_number.swift&quot; --build-number &quot;$SRCROOT/Coppice/.build_number&quot;&#10;fi&#10;">
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"
                      BlueprintIdentifier = "99FE018C22CD1037004D380D"
-                     BuildableName = "Bubbles.app"
-                     BlueprintName = "Bubbles"
-                     ReferencedContainer = "container:Bubbles.xcodeproj">
+                     BuildableName = "Coppice.app"
+                     BlueprintName = "Coppice"
+                     ReferencedContainer = "container:Coppice.xcodeproj">
                   </BuildableReference>
                </EnvironmentBuildable>
             </ActionContent>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "99FE018C22CD1037004D380D"
-               BuildableName = "Bubbles.app"
-               BlueprintName = "Bubbles"
-               ReferencedContainer = "container:Bubbles.xcodeproj">
+               BuildableName = "Coppice.app"
+               BlueprintName = "Coppice"
+               ReferencedContainer = "container:Coppice.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -48,7 +48,7 @@
       codeCoverageEnabled = "YES">
       <TestPlans>
          <TestPlanReference
-            reference = "container:../Bubbles.xctestplan"
+            reference = "container:../Coppice.xctestplan"
             default = "YES">
          </TestPlanReference>
       </TestPlans>
@@ -59,9 +59,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "99FE01A122CD1038004D380D"
-               BuildableName = "BubblesTests.xctest"
-               BlueprintName = "BubblesTests"
-               ReferencedContainer = "container:Bubbles.xcodeproj">
+               BuildableName = "CoppiceTests.xctest"
+               BlueprintName = "CoppiceTests"
+               ReferencedContainer = "container:Coppice.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -69,9 +69,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "99FE01AC22CD1038004D380D"
-               BuildableName = "BubblesUITests.xctest"
-               BlueprintName = "BubblesUITests"
-               ReferencedContainer = "container:Bubbles.xcodeproj">
+               BuildableName = "CoppiceUITests.xctest"
+               BlueprintName = "CoppiceUITests"
+               ReferencedContainer = "container:Coppice.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -92,9 +92,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "99FE018C22CD1037004D380D"
-            BuildableName = "Bubbles.app"
-            BlueprintName = "Bubbles"
-            ReferencedContainer = "container:Bubbles.xcodeproj">
+            BuildableName = "Coppice.app"
+            BlueprintName = "Coppice"
+            ReferencedContainer = "container:Coppice.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <CommandLineArguments>
@@ -109,7 +109,7 @@
       </CommandLineArguments>
    </LaunchAction>
    <ProfileAction
-      buildConfiguration = "Release"
+      buildConfiguration = "Debug"
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
@@ -119,9 +119,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "99FE018C22CD1037004D380D"
-            BuildableName = "Bubbles.app"
-            BlueprintName = "Bubbles"
-            ReferencedContainer = "container:Bubbles.xcodeproj">
+            BuildableName = "Coppice.app"
+            BlueprintName = "Coppice"
+            ReferencedContainer = "container:Coppice.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

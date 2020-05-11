@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:Coppice/Coppice.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/martinpilkington/Work/M3/Apps/M Cubed Apps/BubbleNotes/Code/Coppice.xctestplan">
+   </FileRef>
+</Workspace>
