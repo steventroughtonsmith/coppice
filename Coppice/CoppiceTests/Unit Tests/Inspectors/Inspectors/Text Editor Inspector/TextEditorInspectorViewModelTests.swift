@@ -1,6 +1,6 @@
 //
 //  TextEditorInspectorViewModelTests.swift
-//  BubblesTests
+//  CoppiceTests
 //
 //  Created by Martin Pilkington on 26/11/2019.
 //  Copyright © 2019 M Cubed Software. All rights reserved.
@@ -8,7 +8,7 @@
 
 import XCTest
 import Combine
-@testable import Bubbles
+@testable import Coppice
 
 class TestTextEditor: InspectableTextEditor {
     @Published var selectionAttributes: TextEditorAttributes?
@@ -27,13 +27,13 @@ class TestTextEditor: InspectableTextEditor {
 class TextEditorInspectorViewModelTests: XCTestCase {
 
     var editor: TestTextEditor!
-    var modelController: BubblesModelController!
+    var modelController: CoppiceModelController!
     var viewModel: TextEditorInspectorViewModel!
 
     override func setUp() {
         super.setUp()
 
-        self.modelController = BubblesModelController(undoManager: UndoManager())
+        self.modelController = CoppiceModelController(undoManager: UndoManager())
         self.editor = TestTextEditor()
         self.viewModel = TextEditorInspectorViewModel(editor: self.editor, modelController: self.modelController)
     }

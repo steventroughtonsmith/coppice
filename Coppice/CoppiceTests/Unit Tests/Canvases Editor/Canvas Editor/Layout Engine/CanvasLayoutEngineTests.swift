@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import Bubbles
+@testable import Coppice
 import Carbon.HIToolbox
 
 let testLayoutASCII = """

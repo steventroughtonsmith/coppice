@@ -1,6 +1,6 @@
 //
 //  ResponderChainValidatingToolbarItem.swift
-//  Bubbles
+//  Coppice
 //
 //  Created by Martin Pilkington on 04/05/2020.
 //  Copyright © 2020 M Cubed Software. All rights reserved.

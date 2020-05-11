@@ -1,13 +1,13 @@
 //
 //  ModelObjects+SearchingTests.swift
-//  BubblesTests
+//  CoppiceTests
 //
 //  Created by Martin Pilkington on 15/04/2020.
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
 import XCTest
-@testable import Bubbles
+@testable import Coppice
 
 class ModelObjects_SearchingTests: XCTestCase {
 
@@ -106,7 +106,7 @@ class ModelObjects_SearchingTests: XCTestCase {
 
     //MARK: - ModelCollection<Page>.matches(forSearchTerm)
     func test_modelCollectionPage_matchesForSearchTerm_returnsPagesThatMatchInOrderOfBestMatch() {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
         let page1 = Page.create(in: modelController) {
             $0.title = "Foo Bar Baz"
             $0.content = TextPageContent()
@@ -213,7 +213,7 @@ class ModelObjects_SearchingTests: XCTestCase {
     }
 
     func test_canvas_matchForSearchTerm_returnsMatchInTitleEvenIfAlsoMatchesInPages() {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
         let page = Page.create(in: modelController) { $0.title = "possums" }
         let canvas = Canvas.create(in: modelController) { $0.title = "OMG Possums!" }
         _ = CanvasPage.create(in: modelController) {
@@ -228,7 +228,7 @@ class ModelObjects_SearchingTests: XCTestCase {
     }
 
     func test_canvas_matchForSearchTerm_returnsMatchInPagesIfNoneInTitle() {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
         let page = Page.create(in: modelController) { $0.title = "possums" }
         let canvas = Canvas.create(in: modelController) { $0.title = "OMG Possums!" }
         _ = CanvasPage.create(in: modelController) {
@@ -244,7 +244,7 @@ class ModelObjects_SearchingTests: XCTestCase {
 
     //MARK: - ModelCollection<Canvas>.matches(forSearchTerm:)
     func test_modelCollectionCanvas_matchesForSearchTerm_returnsCanvasesThatMatchInOrderOfBestMatch() {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas1 = Canvas.create(in: modelController) { $0.title = "Some Possum content" }
         let canvas2 = Canvas.create(in: modelController) { $0.title = "Page match 1" }

@@ -1,6 +1,6 @@
 //
 //  NSScrollView+M3Extensions.swift
-//  Bubbles
+//  Coppice
 //
 //  Created by Martin Pilkington on 20/09/2019.
 //  Copyright © 2019 M Cubed Software. All rights reserved.

@@ -1,6 +1,6 @@
 //
 //  ViewModel.swift
-//  Bubbles
+//  Coppice
 //
 //  Created by Martin Pilkington on 09/12/2019.
 //  Copyright © 2019 M Cubed Software. All rights reserved.
@@ -16,7 +16,7 @@ class ViewModel: NSObject {
         self.setup()
     }
 
-    var modelController: BubblesModelController {
+    var modelController: CoppiceModelController {
         return self.documentWindowViewModel.modelController
     }
 

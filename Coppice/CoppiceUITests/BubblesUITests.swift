@@ -1,6 +1,6 @@
 //
-//  BubblesUITests.swift
-//  BubblesUITests
+//  CoppiceUITests.swift
+//  CoppiceUITests
 //
 //  Created by Martin Pilkington on 03/07/2019.
 //  Copyright © 2019 M Cubed Software. All rights reserved.
@@ -8,7 +8,7 @@
 
 import XCTest
 
-class BubblesUITests: XCTestCase {
+class CoppiceUITests: XCTestCase {
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.

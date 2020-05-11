@@ -1,6 +1,6 @@
 //
 //  GlobalConstants.swift
-//  Bubbles
+//  Coppice
 //
 //  Created by Martin Pilkington on 14/10/2019.
 //  Copyright © 2019 M Cubed Software. All rights reserved.
@@ -9,9 +9,9 @@
 import Cocoa
 
 struct GlobalConstants {
-    static let urlScheme = "bubbles"
+    static let urlScheme = "coppice"
 
-    static let appErrorDomain = "com.mcubedsw.Bubbles"
+    static let appErrorDomain = "com.mcubedsw.Coppices"
 
     enum ErrorCodes: Int {
         case readingDocumentFailed = 1

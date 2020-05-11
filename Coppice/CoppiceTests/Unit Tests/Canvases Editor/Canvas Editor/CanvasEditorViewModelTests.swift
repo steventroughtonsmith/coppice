@@ -1,16 +1,16 @@
 //
 //  CanvasEditorViewModelTests.swift
-//  BubblesTests
+//  CoppiceTests
 //
 //  Created by Martin Pilkington on 26/09/2019.
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
 import XCTest
-@testable import Bubbles
+@testable import Coppice
 
 class CanvasEditorViewModelTests: XCTestCase {
-    var modelController: MockBubblesModelController!
+    var modelController: MockCoppiceModelController!
     var canvas: Canvas!
     var canvasPage1: CanvasPage!
     var canvasPage2: CanvasPage!
@@ -21,7 +21,7 @@ class CanvasEditorViewModelTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        self.modelController = MockBubblesModelController(undoManager: UndoManager())
+        self.modelController = MockCoppiceModelController(undoManager: UndoManager())
         self.canvas = self.modelController.collection(for: Canvas.self).newObject()
 
         let canvasPageCollection = self.modelController.collection(for: CanvasPage.self)

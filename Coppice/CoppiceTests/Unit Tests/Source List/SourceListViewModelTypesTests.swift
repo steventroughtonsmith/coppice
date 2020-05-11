@@ -1,13 +1,13 @@
 //
 //  SourceListViewModelTypesTests.swift
-//  BubblesTests
+//  CoppiceTests
 //
 //  Created by Martin Pilkington on 19/04/2020.
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
 import XCTest
-@testable import Bubbles
+@testable import Coppice
 
 class SourceListNodeCollectionTests: XCTestCase {
     //MARK: - .count

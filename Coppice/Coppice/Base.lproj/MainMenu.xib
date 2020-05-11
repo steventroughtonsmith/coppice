@@ -11,21 +11,21 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Bubbles" customModuleProvider="target">
+        <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Coppice" customModuleProvider="target">
             <connections>
                 <outlet property="newLinkedPageMenuDelegate" destination="3XH-A1-YuW" id="E0p-Z2-5s3"/>
             </connections>
         </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
-        <customObject id="S7z-Mc-1OZ" customClass="NewPageMenuDelegate" customModule="Bubbles" customModuleProvider="target"/>
-        <customObject id="3XH-A1-YuW" userLabel="New Linked Page Menu Delegate" customClass="NewPageMenuDelegate" customModule="Bubbles" customModuleProvider="target"/>
+        <customObject id="S7z-Mc-1OZ" customClass="NewPageMenuDelegate" customModule="Coppice" customModuleProvider="target"/>
+        <customObject id="3XH-A1-YuW" userLabel="New Linked Page Menu Delegate" customClass="NewPageMenuDelegate" customModule="Coppice" customModuleProvider="target"/>
         <menu title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
             <items>
-                <menuItem title="Bubbles" id="1Xt-HY-uBw">
+                <menuItem title="Coppice" id="1Xt-HY-uBw">
                     <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="Bubbles" systemMenu="apple" id="uQy-DD-JDr">
+                    <menu key="submenu" title="Coppice" systemMenu="apple" id="uQy-DD-JDr">
                         <items>
-                            <menuItem title="About Bubbles" id="5kV-Vb-QxS">
+                            <menuItem title="About Coppice" id="5kV-Vb-QxS">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="orderFrontStandardAboutPanel:" target="-1" id="Exp-CZ-Vem"/>
@@ -39,7 +39,7 @@
                                 <menu key="submenu" title="Services" systemMenu="services" id="hz9-B4-Xy5"/>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="4je-JR-u6R"/>
-                            <menuItem title="Hide Bubbles" keyEquivalent="h" id="Olw-nP-bQN">
+                            <menuItem title="Hide Coppice" keyEquivalent="h" id="Olw-nP-bQN">
                                 <connections>
                                     <action selector="hide:" target="-1" id="PnN-Uc-m68"/>
                                 </connections>
@@ -57,7 +57,7 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="kCx-OE-vgT"/>
-                            <menuItem title="Quit Bubbles" keyEquivalent="q" id="4sb-4s-VLi">
+                            <menuItem title="Quit Coppice" keyEquivalent="q" id="4sb-4s-VLi">
                                 <connections>
                                     <action selector="terminate:" target="-1" id="Te7-pn-YzF"/>
                                 </connections>
@@ -844,7 +844,7 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Help" systemMenu="help" id="F2S-fz-NVQ">
                         <items>
-                            <menuItem title="Bubbles Help" keyEquivalent="?" id="FKE-Sm-Kum">
+                            <menuItem title="Coppice Help" keyEquivalent="?" id="FKE-Sm-Kum">
                                 <connections>
                                     <action selector="showHelp:" target="-1" id="y7X-2Q-9no"/>
                                 </connections>

@@ -1,23 +1,23 @@
 //
 //  SearchResultsViewModelTests.swift
-//  BubblesTests
+//  CoppiceTests
 //
 //  Created by Martin Pilkington on 20/04/2020.
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
 import XCTest
-@testable import Bubbles
+@testable import Coppice
 
 class SearchResultsViewModelTests: XCTestCase {
-    var modelController: BubblesModelController!
+    var modelController: CoppiceModelController!
     var documentViewModel: DocumentWindowViewModel!
     var viewModel: SearchResultsViewModel!
 
     override func setUp() {
         super.setUp()
 
-        self.modelController = BubblesModelController(undoManager: UndoManager())
+        self.modelController = CoppiceModelController(undoManager: UndoManager())
         self.documentViewModel = DocumentWindowViewModel(modelController: self.modelController)
         self.viewModel = SearchResultsViewModel(documentWindowViewModel: self.documentViewModel)
     }

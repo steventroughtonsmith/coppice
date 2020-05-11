@@ -1,21 +1,21 @@
 //
 //  CanvasPageTests.swift
-//  BubblesTests
+//  CoppiceTests
 //
 //  Created by Martin Pilkington on 28/10/2019.
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
 import XCTest
-@testable import Bubbles
+@testable import Coppice
 
 class CanvasPageTests: XCTestCase {
-    var modelController: BubblesModelController!
+    var modelController: CoppiceModelController!
 
     override func setUp() {
         super.setUp()
 
-        self.modelController = BubblesModelController(undoManager: UndoManager())
+        self.modelController = CoppiceModelController(undoManager: UndoManager())
     }
 
 
@@ -67,7 +67,7 @@ class CanvasPageTests: XCTestCase {
     }
 
     func test_updateFromPlistRepresentation_doesntUpdateIfIDsDontMatch() {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let newPage = modelController.collection(for: Page.self).newObject()
         let newCanvas = modelController.collection(for: Canvas.self).newObject()
@@ -88,7 +88,7 @@ class CanvasPageTests: XCTestCase {
     }
 
     func test_updateFromPlistRepresentation_updatesFrame() {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
         let canvasPage = modelController.collection(for: CanvasPage.self).newObject()
 
         let plist: [String: Any] = [
@@ -102,7 +102,7 @@ class CanvasPageTests: XCTestCase {
     }
 
     func test_updateFromPlistRepresentation_updatesPage() {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
 
         modelController.collection(for: Page.self).newObject() //Separate test page
         let newPage = modelController.collection(for: Page.self).newObject()
@@ -120,7 +120,7 @@ class CanvasPageTests: XCTestCase {
     }
 
     func test_updateFromPlistRepresentation_updatesCanvas() {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
 
         modelController.collection(for: Canvas.self).newObject() //Separate test page
         let newCanvas = modelController.collection(for: Canvas.self).newObject()
@@ -138,7 +138,7 @@ class CanvasPageTests: XCTestCase {
     }
 
     func test_updateFromPlistRepresentation_updatesParent() {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
 
         modelController.collection(for: CanvasPage.self).newObject() //Separate test page
         let parent = modelController.collection(for: CanvasPage.self).newObject()
@@ -158,7 +158,7 @@ class CanvasPageTests: XCTestCase {
 
     //MARK: - existingCanvasPage(for:)
     func test_existingCanvasPageForPage_returnsSelfIfSuppliedPageMatchesReceiversPage() {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let page = modelController.collection(for: Page.self).newObject()
         let canvasPage = modelController.collection(for: CanvasPage.self).newObject() {
@@ -169,7 +169,7 @@ class CanvasPageTests: XCTestCase {
     }
 
     func test_existingCanvasPageForPage_returnsChildWithMatchingPageIfOneExists() {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let page = modelController.collection(for: Page.self).newObject()
         let canvasPage = modelController.collection(for: CanvasPage.self).newObject() {
@@ -186,7 +186,7 @@ class CanvasPageTests: XCTestCase {
     }
 
     func test_existingCanvasPageForPage_returnsNilIfNoDirectChildMatchesPage() {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let page = modelController.collection(for: Page.self).newObject()
         let canvasPage = modelController.collection(for: CanvasPage.self).newObject() {

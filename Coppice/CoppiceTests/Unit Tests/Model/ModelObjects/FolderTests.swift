@@ -1,13 +1,13 @@
 //
 //  FolderTests.swift
-//  BubblesTests
+//  CoppiceTests
 //
 //  Created by Martin Pilkington on 09/03/2020.
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
 import XCTest
-@testable import Bubbles
+@testable import Coppice
 
 class FolderTests: XCTestCase {
 
@@ -21,7 +21,7 @@ class FolderTests: XCTestCase {
 
     override func setUpWithError() throws {
         try super.setUpWithError()
-        self.modelController = BubblesModelController(undoManager: UndoManager())
+        self.modelController = CoppiceModelController(undoManager: UndoManager())
     }
 
 

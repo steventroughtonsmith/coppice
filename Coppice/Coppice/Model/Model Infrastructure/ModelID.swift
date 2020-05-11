@@ -1,6 +1,6 @@
 //
 //  ModelID.swift
-//  Bubbles
+//  Coppice
 //
 //  Created by Martin Pilkington on 01/08/2019.
 //  Copyright © 2019 M Cubed Software. All rights reserved.
@@ -45,7 +45,7 @@ extension ModelID {
     private static let UUIDKey = "uuid"
     private static let modelTypeKey = "modelType"
 
-    static let PasteboardType = NSPasteboard.PasteboardType("com.mcubedsw.bubbles.modelID")
+    static let PasteboardType = NSPasteboard.PasteboardType("com.mcubedsw.Coppice.modelID")
     var pasteboardItem: NSPasteboardItem {
         let pasteboardItem = NSPasteboardItem()
         pasteboardItem.setPropertyList(self.plistRepresentation, forType: ModelID.PasteboardType)

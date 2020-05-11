@@ -1,6 +1,6 @@
 //
-//  BubblesModelController.swift
-//  Bubbles
+//  CoppiceModelController.swift
+//  Coppice
 //
 //  Created by Martin Pilkington on 15/07/2019.
 //  Copyright © 2019 M Cubed Software. All rights reserved.
@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class BubblesModelController: NSObject, ModelController {
+class CoppiceModelController: NSObject, ModelController {
     var allCollections = [ModelType: Any]()
     let settings = ModelSettings()
 

@@ -1,23 +1,23 @@
 //
 //  PageLinkManagerTests.swift
-//  BubblesTests
+//  CoppiceTests
 //
 //  Created by Martin Pilkington on 07/12/2019.
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
 import XCTest
-@testable import Bubbles
+@testable import Coppice
 
 class PageLinkManagerTests: XCTestCase {
-    var modelController: BubblesModelController!
+    var modelController: CoppiceModelController!
     var linkedPage: Page!
     var editingPage: Page!
     var pageLinkManager: PageLinkManager!
 
     override func setUp() {
         super.setUp()
-        self.modelController = BubblesModelController(undoManager: UndoManager())
+        self.modelController = CoppiceModelController(undoManager: UndoManager())
         self.linkedPage = self.modelController.collection(for: Page.self).newObject() { $0.title = "Hello World" }
         self.editingPage = self.modelController.collection(for: Page.self).newObject() { $0.title = "Editing Page" }
         self.pageLinkManager = PageLinkManager(pageID: self.editingPage.id,

@@ -1,6 +1,6 @@
 //
 //  NSView+CanvasLookup.swift
-//  Bubbles
+//  Coppice
 //
 //  Created by Martin Pilkington on 25/10/2019.
 //  Copyright © 2019 M Cubed Software. All rights reserved.

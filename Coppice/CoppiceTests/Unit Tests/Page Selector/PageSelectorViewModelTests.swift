@@ -1,13 +1,13 @@
 //
 //  PageSelectorViewModelTests.swift
-//  BubblesTests
+//  CoppiceTests
 //
 //  Created by Martin Pilkington on 20/08/2019.
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
 import XCTest
-@testable import Bubbles
+@testable import Coppice
 
 class PageSelectorViewModelTests: XCTestCase {
 
@@ -20,7 +20,7 @@ class PageSelectorViewModelTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        self.modelController = BubblesModelController(undoManager: UndoManager())
+        self.modelController = CoppiceModelController(undoManager: UndoManager())
         self.applePage = self.modelController.collection(for: Page.self).newObject()
         self.applePage.title = "Apple"
 

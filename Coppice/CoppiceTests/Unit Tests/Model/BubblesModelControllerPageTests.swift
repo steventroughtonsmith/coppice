@@ -1,17 +1,17 @@
 //
-//  BubblesModelControllerPageTests.swift
-//  BubblesTests
+//  CoppiceModelControllerPageTests.swift
+//  CoppiceTests
 //
 //  Created by Martin Pilkington on 23/04/2020.
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
 import XCTest
-@testable import Bubbles
+@testable import Coppice
 
-class BubblesModelControllerPageTests: XCTestCase {
+class CoppiceModelControllerPageTests: XCTestCase {
     var undoManager: UndoManager!
-    var modelController: BubblesModelController!
+    var modelController: CoppiceModelController!
     var folder: Folder!
 
     override func setUp() {
@@ -19,7 +19,7 @@ class BubblesModelControllerPageTests: XCTestCase {
 
         self.undoManager = UndoManager()
 //        self.undoManager.groupsByEvent = false
-        self.modelController = BubblesModelController(undoManager: self.undoManager)
+        self.modelController = CoppiceModelController(undoManager: self.undoManager)
 
         self.folder = Folder.create(in: self.modelController)
     }

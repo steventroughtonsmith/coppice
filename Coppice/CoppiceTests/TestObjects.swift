@@ -1,13 +1,13 @@
 //
 //  TestObjects.swift
-//  BubblesTests
+//  CoppiceTests
 //
 //  Created by Martin Pilkington on 02/08/2019.
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
 import Foundation
-@testable import Bubbles
+@testable import Coppice
 
 class TestModelObject: ModelObject {
     var plistRepresentation = [String : Any]()

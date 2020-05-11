@@ -1,13 +1,13 @@
 //
 //  PageContentTests.swift
-//  BubblesTests
+//  CoppiceTests
 //
 //  Created by Martin Pilkington on 09/11/2019.
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
 import XCTest
-@testable import Bubbles
+@testable import Coppice
 
 class PageContentTests: XCTestCase {
 

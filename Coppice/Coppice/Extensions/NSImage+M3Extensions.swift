@@ -1,6 +1,6 @@
 //
 //  NSImage+M3Extensions.swift
-//  Bubbles
+//  Coppice
 //
 //  Created by Martin Pilkington on 29/10/2019.
 //  Copyright © 2019 M Cubed Software. All rights reserved.

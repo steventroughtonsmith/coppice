@@ -1,13 +1,13 @@
 //
 //  ModelWriterTests.swift
-//  BubblesTests
+//  CoppiceTests
 //
 //  Created by Martin Pilkington on 28/10/2019.
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
 import XCTest
-@testable import Bubbles
+@testable import Coppice
 
 class ModelWriterTests: XCTestCase {
     var testModel: ModelController!
@@ -19,7 +19,7 @@ class ModelWriterTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        self.testModel = BubblesModelController(undoManager: UndoManager())
+        self.testModel = CoppiceModelController(undoManager: UndoManager())
 
         let pageUUIDS = [UUID(), UUID(), UUID()].sorted { $0.uuidString < $1.uuidString }
         let pageCollection = self.testModel.collection(for: Page.self)

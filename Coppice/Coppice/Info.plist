@@ -51,10 +51,10 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.mcubedsw.bubbles</string>
+			<string>com.mcubedsw.Coppice</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>bubbles</string>
+				<string>coppice</string>
 			</array>
 		</dict>
 	</array>

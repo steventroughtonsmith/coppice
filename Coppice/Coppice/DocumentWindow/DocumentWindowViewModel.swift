@@ -1,6 +1,6 @@
 //
 //  DocumentWindowState.swift
-//  Bubbles
+//  Coppice
 //
 //  Created by Martin Pilkington on 12/11/2019.
 //  Copyright © 2019 M Cubed Software. All rights reserved.
@@ -18,11 +18,11 @@ class DocumentWindowViewModel: NSObject {
     weak var window: DocumentWindow?
     @Published var currentInspectors: [Inspector] = []
 
-    let modelController: BubblesModelController
+    let modelController: CoppiceModelController
     let thumbnailController: ThumbnailController
     let pageImageController: PageImageController
     let pageLinkController: PageLinkController
-    init(modelController: BubblesModelController) {
+    init(modelController: CoppiceModelController) {
         self.modelController = modelController
         self.thumbnailController = ThumbnailController(modelController: modelController)
         self.pageImageController = PageImageController(modelController: modelController)

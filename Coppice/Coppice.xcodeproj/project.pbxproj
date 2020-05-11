@@ -59,7 +59,7 @@
 		99488A9F23BA3954009954AF /* LargeCanvasCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99488A9E23BA3954009954AF /* LargeCanvasCell.swift */; };
 		99488AA323BA3983009954AF /* SmallCanvasCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99488AA223BA3983009954AF /* SmallCanvasCell.xib */; };
 		99488AA723BA3993009954AF /* LargeCanvasCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99488AA623BA3993009954AF /* LargeCanvasCell.xib */; };
-		99488AAB23C36756009954AF /* BubblesUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99488AAA23C36756009954AF /* BubblesUserDefaults.swift */; };
+		99488AAB23C36756009954AF /* CoppiceUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99488AAA23C36756009954AF /* CoppiceUserDefaults.swift */; };
 		99488AAE23C37B98009954AF /* ThumbnailGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99488AAD23C37B98009954AF /* ThumbnailGenerator.swift */; };
 		99488AB023C37BB7009954AF /* ThumbnailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99488AAF23C37BB7009954AF /* ThumbnailController.swift */; };
 		99488ACE23C78087009954AF /* EditableLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99488ACD23C78087009954AF /* EditableLabelCell.swift */; };
@@ -80,7 +80,7 @@
 		99581093230D92C600D996C4 /* CanvasPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99581091230D92C600D996C4 /* CanvasPageViewController.xib */; };
 		99581095230D93F700D996C4 /* CanvasPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99581094230D93F700D996C4 /* CanvasPageViewModel.swift */; };
 		9959178724606A1900E8874C /* ResponderChainValidatingToolbarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9959178624606A1900E8874C /* ResponderChainValidatingToolbarItem.swift */; };
-		9962AB8923732D9400337834 /* BubblesDocumentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9962AB8823732D9400337834 /* BubblesDocumentController.swift */; };
+		9962AB8923732D9400337834 /* CoppiceDocumentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9962AB8823732D9400337834 /* CoppiceDocumentController.swift */; };
 		9965FC3D23843143002FE10D /* CanvasPageInspectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9965FC3B23843143002FE10D /* CanvasPageInspectorViewController.swift */; };
 		9965FC3E23843143002FE10D /* CanvasPageInspectorContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9965FC3C23843143002FE10D /* CanvasPageInspectorContentView.xib */; };
 		9965FC4023843155002FE10D /* CanvasPageInspectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9965FC3F23843155002FE10D /* CanvasPageInspectorViewModel.swift */; };
@@ -318,12 +318,12 @@
 		993D2C0124157735002E5BAC /* Folder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Folder.swift; sourceTree = "<group>"; };
 		993D2C0324164D72002E5BAC /* FolderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderTests.swift; sourceTree = "<group>"; };
 		993D2C0D241674F2002E5BAC /* FolderContainable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderContainable.swift; sourceTree = "<group>"; };
-		994253EE244F49A7008272E6 /* CanvasListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CanvasListViewModelTests.swift; path = "BubblesTests/Unit Tests/Canvases Editor/CanvasListViewModelTests.swift"; sourceTree = SOURCE_ROOT; };
+		994253EE244F49A7008272E6 /* CanvasListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CanvasListViewModelTests.swift; path = "CoppiceTests/Unit Tests/Canvases Editor/Canvas List/CanvasListViewModelTests.swift"; sourceTree = SOURCE_ROOT; };
 		99488A9A23BA392E009954AF /* SmallCanvasCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallCanvasCell.swift; sourceTree = "<group>"; };
 		99488A9E23BA3954009954AF /* LargeCanvasCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeCanvasCell.swift; sourceTree = "<group>"; };
 		99488AA223BA3983009954AF /* SmallCanvasCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SmallCanvasCell.xib; sourceTree = "<group>"; };
 		99488AA623BA3993009954AF /* LargeCanvasCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LargeCanvasCell.xib; sourceTree = "<group>"; };
-		99488AAA23C36756009954AF /* BubblesUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubblesUserDefaults.swift; sourceTree = "<group>"; };
+		99488AAA23C36756009954AF /* CoppiceUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoppiceUserDefaults.swift; sourceTree = "<group>"; };
 		99488AAD23C37B98009954AF /* ThumbnailGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailGenerator.swift; sourceTree = "<group>"; };
 		99488AAF23C37BB7009954AF /* ThumbnailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailController.swift; sourceTree = "<group>"; };
 		99488ACD23C78087009954AF /* EditableLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableLabelCell.swift; sourceTree = "<group>"; };
@@ -343,7 +343,7 @@
 		99581091230D92C600D996C4 /* CanvasPageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CanvasPageViewController.xib; sourceTree = "<group>"; };
 		99581094230D93F700D996C4 /* CanvasPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageViewModel.swift; sourceTree = "<group>"; };
 		9959178624606A1900E8874C /* ResponderChainValidatingToolbarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponderChainValidatingToolbarItem.swift; sourceTree = "<group>"; };
-		9962AB8823732D9400337834 /* BubblesDocumentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubblesDocumentController.swift; sourceTree = "<group>"; };
+		9962AB8823732D9400337834 /* CoppiceDocumentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoppiceDocumentController.swift; sourceTree = "<group>"; };
 		9965FC3B23843143002FE10D /* CanvasPageInspectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageInspectorViewController.swift; sourceTree = "<group>"; };
 		9965FC3C23843143002FE10D /* CanvasPageInspectorContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CanvasPageInspectorContentView.xib; sourceTree = "<group>"; };
 		9965FC3F23843155002FE10D /* CanvasPageInspectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageInspectorViewModel.swift; sourceTree = "<group>"; };
@@ -1282,9 +1282,9 @@
 				997344D32432073400DF4EDB /* CoppiceDebug.entitlements */,
 				99FE019022CD1037004D380D /* AppDelegate.swift */,
 				99FE019222CD1037004D380D /* Document.swift */,
-				9962AB8823732D9400337834 /* BubblesDocumentController.swift */,
+				9962AB8823732D9400337834 /* CoppiceDocumentController.swift */,
 				99FFF9D12354C4F600EF02A0 /* GlobalConstants.swift */,
-				99488AAA23C36756009954AF /* BubblesUserDefaults.swift */,
+				99488AAA23C36756009954AF /* CoppiceUserDefaults.swift */,
 				9977119B239E91FD00FCC8C7 /* ViewModel.swift */,
 				99C88EE9240C2F3F00339880 /* NSWindow+KeyLoopDebug.swift */,
 				99488AAC23C37B77009954AF /* Thumbnail Generation */,
@@ -1608,7 +1608,7 @@
 				9919B93123D09FBB00C7A44D /* TextColourPicker.swift in Sources */,
 				99FE019322CD1037004D380D /* Document.swift in Sources */,
 				99C41B7122DCA96700C82DDE /* BubblesModelController.swift in Sources */,
-				99488AAB23C36756009954AF /* BubblesUserDefaults.swift in Sources */,
+				99488AAB23C36756009954AF /* CoppiceUserDefaults.swift in Sources */,
 				990B6A3722E5F84400523C06 /* CanvasPage.swift in Sources */,
 				9958108E230D909900D996C4 /* TestCanvasPageViewController.swift in Sources */,
 				99AD88A9237C36D0000453E1 /* Editor.swift in Sources */,
@@ -1627,7 +1627,7 @@
 				9970976B23ACFD2900CD189B /* RootSplitViewController.swift in Sources */,
 				990B6A3922EB482D00523C06 /* ModelObject.swift in Sources */,
 				99E93E2B23D32F61004CF4BB /* ColourGridButton.swift in Sources */,
-				9962AB8923732D9400337834 /* BubblesDocumentController.swift in Sources */,
+				9962AB8923732D9400337834 /* CoppiceDocumentController.swift in Sources */,
 				993D2BDB24127E3B002E5BAC /* CanvasListViewModel.swift in Sources */,
 				999EA6B32436097500BF254E /* SidebarViewModel.swift in Sources */,
 				997344D62432236300DF4EDB /* PageLinkController.swift in Sources */,
@@ -1904,13 +1904,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = Z699XFM6P2;
-				INFOPLIST_FILE = BubblesTests/Info.plist;
+				INFOPLIST_FILE = CoppiceTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.BubblesTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.CoppiceTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Coppice.app/Contents/MacOS/Coppice";
@@ -1924,16 +1924,16 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = Z699XFM6P2;
-				INFOPLIST_FILE = BubblesUITests/Info.plist;
+				INFOPLIST_FILE = CoppiceUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.BubblesUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.CoppiceUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TEST_TARGET_NAME = Bubbles;
+				TEST_TARGET_NAME = Coppice;
 			};
 			name = Test;
 		};
@@ -2052,13 +2052,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = Z699XFM6P2;
-				INFOPLIST_FILE = BubblesTests/Info.plist;
+				INFOPLIST_FILE = CoppiceTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.BubblesTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.CoppiceTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Coppice.app/Contents/MacOS/Coppice";
@@ -2072,16 +2072,16 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = Z699XFM6P2;
-				INFOPLIST_FILE = BubblesUITests/Info.plist;
+				INFOPLIST_FILE = CoppiceUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.BubblesUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.CoppiceUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TEST_TARGET_NAME = Bubbles;
+				TEST_TARGET_NAME = Coppice;
 			};
 			name = Archive;
 		};
@@ -2268,13 +2268,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = Z699XFM6P2;
-				INFOPLIST_FILE = BubblesTests/Info.plist;
+				INFOPLIST_FILE = CoppiceTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.BubblesTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.CoppiceTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Coppice.app/Contents/MacOS/Coppice";
@@ -2290,13 +2290,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = Z699XFM6P2;
-				INFOPLIST_FILE = BubblesTests/Info.plist;
+				INFOPLIST_FILE = CoppiceTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.BubblesTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.CoppiceTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Coppice.app/Contents/MacOS/Coppice";
@@ -2310,16 +2310,16 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = Z699XFM6P2;
-				INFOPLIST_FILE = BubblesUITests/Info.plist;
+				INFOPLIST_FILE = CoppiceUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.BubblesUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.CoppiceUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TEST_TARGET_NAME = Bubbles;
+				TEST_TARGET_NAME = Coppice;
 			};
 			name = Debug;
 		};
@@ -2330,16 +2330,16 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = Z699XFM6P2;
-				INFOPLIST_FILE = BubblesUITests/Info.plist;
+				INFOPLIST_FILE = CoppiceUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.BubblesUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.CoppiceUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TEST_TARGET_NAME = Bubbles;
+				TEST_TARGET_NAME = Coppice;
 			};
 			name = Release;
 		};

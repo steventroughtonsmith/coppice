@@ -1,13 +1,13 @@
 //
 //  PageTests.swift
-//  BubblesTests
+//  CoppiceTests
 //
 //  Created by Martin Pilkington on 28/10/2019.
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
 import XCTest
-@testable import Bubbles
+@testable import Coppice
 
 class PageTests: XCTestCase {
 
@@ -297,7 +297,7 @@ class PageTests: XCTestCase {
 
     //MARK: - updatePageSizes()
     func test_updatePagesSizes_doesntUpdateAnySizesIfUserPreferredSizeIsSet() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
         let page = modelController.collection(for: Page.self).newObject() {
             let content = ImagePageContent()
             content.image = NSImage(size: NSSize(width: 50, height: 30))
@@ -320,7 +320,7 @@ class PageTests: XCTestCase {
     }
 
     func test_updatePageSizes_updatesFrameSizeOfPageOnAllCanvasesIfUserPreferredSizeIsNotSet() throws{
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
         let page = modelController.collection(for: Page.self).newObject() {
             let content = ImagePageContent()
             content.image = NSImage(size: NSSize(width: 50, height: 30))
@@ -357,7 +357,7 @@ class PageTests: XCTestCase {
 
     //MARK: - setContentValue(_:for:ofPageWithID:)
     func test_setContentValueForKeyPathOfPageWithID_updatesTheContentIfPageExists() {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
         let collection = modelController.collection(for: Page.self)
         let content = TextPageContent()
         content.text = NSAttributedString(string: "Foo Bar")
@@ -371,7 +371,7 @@ class PageTests: XCTestCase {
     }
 
     func test_setContentValueForKeyPathOfPageWithID_doesntUpdateTheContentIfPageCantBeFound() {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
         let collection = modelController.collection(for: Page.self)
         let content = TextPageContent()
         content.text = NSAttributedString(string: "Foo Bar")

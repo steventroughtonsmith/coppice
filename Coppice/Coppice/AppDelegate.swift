@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  Bubbles
+//  Coppice
 //
 //  Created by Martin Pilkington on 03/07/2019.
 //  Copyright © 2019 M Cubed Software. All rights reserved.
@@ -11,7 +11,7 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-    let documentController = BubblesDocumentController()
+    let documentController = CoppiceDocumentController()
     @IBOutlet weak var newLinkedPageMenuDelegate: NewPageMenuDelegate!
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
@@ -48,7 +48,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func application(_ application: NSApplication, open urls: [URL]) {
         let pageURLs = urls.filter { $0.scheme == GlobalConstants.urlScheme }
-        let documents = BubblesDocumentController.shared.documents.compactMap { $0 as? Document }
+        let documents = CoppiceDocumentController.shared.documents.compactMap { $0 as? Document }
 
         pageURLs.forEach { (url) in
             for document in documents {

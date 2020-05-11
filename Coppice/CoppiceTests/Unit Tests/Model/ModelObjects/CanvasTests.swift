@@ -1,13 +1,13 @@
 //
 //  CanvasTests.swift
-//  BubblesTests
+//  CoppiceTests
 //
 //  Created by Martin Pilkington on 28/10/2019.
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
 import XCTest
-@testable import Bubbles
+@testable import Coppice
 
 class CanvasTests: XCTestCase {
 
@@ -92,7 +92,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_plistRepresentation_containsClosedPageHierarchies() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
         let canvas = modelController.collection(for: Canvas.self).newObject()
         let page = modelController.collection(for: Page.self).newObject()
         let canvasPage1 = modelController.collection(for: CanvasPage.self).newObject() {
@@ -382,7 +382,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_updateFromPlistRepresentation_updatesClosedPageHierarchies() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
         let canvas = modelController.collection(for: Canvas.self).newObject()
         let page = modelController.collection(for: Page.self).newObject()
         let canvasPage = modelController.collection(for: CanvasPage.self).newObject() { $0.page = page }
@@ -409,7 +409,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_updateFromPlistRepresentation_setsClosedPageHierarchiesToEmptySetIfNotInPlist() {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
         let canvas = modelController.collection(for: Canvas.self).newObject()
         let page = modelController.collection(for: Page.self).newObject()
         let canvasPage = modelController.collection(for: CanvasPage.self).newObject() { $0.page = page }
@@ -446,7 +446,7 @@ class CanvasTests: XCTestCase {
 
     //MARK: - open(_:linkedFrom:)
     func test_openPageLinkedFrom_createsNewCanvasPageWithSuppliedPageAndSetsParentAsSource() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
         let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
@@ -459,7 +459,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_addsNewPageToRightIfNoOtherPageThere() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
         let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
@@ -473,7 +473,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_addsNewPageToLeftIfPageOnRightAndNoOtherPageThere() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
         let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
@@ -489,7 +489,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_addsNewPageToBottomIfPagesOnLeftAndRightAndNoOtherPageThere() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
         let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
@@ -512,7 +512,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_addsNewPageToTopIfPagesOnLeftRightAndBottomAndNoOtherPageThere() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
         let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
@@ -539,7 +539,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_addsNewPageToRightIfPagesOnAllSides() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
         let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
@@ -570,7 +570,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_addsNewPageToLeftIfParentOfSourceSetAndOnRightAndNoOtherPageExistsThere() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
         let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
@@ -589,7 +589,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_addsNewPageToTopIfParentOfSourceSetAndOnBottomAndNoOtherPageExistsThere() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
         let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
@@ -608,7 +608,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_addsNewPageToBottomIfParentOfSourceSetAndOnTopAndNoOtherPageExistsThere() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
         let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
@@ -627,7 +627,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_ifChildAlreadyExistsOnRightAddsAbove() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
         let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
@@ -647,7 +647,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_ifChildAlreadyExistsOnTopRightAddsToBottomRight() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
         let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
@@ -673,7 +673,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_ifChildAlreadyExistsOnBottomRightAddsToTopRight() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
         let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
@@ -699,7 +699,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_ifChildAlreadyExistsOnLeftAddsAbove() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
         let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
@@ -719,7 +719,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_ifChildAlreadyExistsOnTopLeftAddsToBottomLeft() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
         let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
@@ -745,7 +745,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_ifChildAlreadyExistsOnBottomLeftAddsToTopLeft() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
         let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
@@ -771,7 +771,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_ifChildAlreadyExistsOnTopAddsToRight() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
         let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
@@ -791,7 +791,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_ifChildAlreadyExistsOnTopLeftAddsToTopRight() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
         let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
@@ -817,7 +817,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_ifChildAlreadyExistsOnTopRightAddsToTopLeft() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
         let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
@@ -843,7 +843,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_ifChildAlreadyExistsOnBottomAddsToRight() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
         let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
@@ -863,7 +863,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_ifChildAlreadyExistsOnBottomLeftAddsToBottomRight() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
         let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
@@ -889,7 +889,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_ifChildAlreadyExistsOnBottomRightAddsToBottomLeft() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
         let page = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
@@ -915,7 +915,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_openingClosedHierarchyCreatesCanvasPageUsingIDPageAndFrameFromHierarchy() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
         let canvas = Canvas.create(in: modelController)
         let parentPage = CanvasPage.create(in: modelController) {
             $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
@@ -935,7 +935,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_openingClosedHierarchyOpensAllChildHierarchiesToo() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
         let canvas = Canvas.create(in: modelController)
         let parentPage = CanvasPage.create(in: modelController) {
             $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
@@ -965,7 +965,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_openinglosedHierarchySetsCorrectSourcePageOnAllHierarchies() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
         let canvas = Canvas.create(in: modelController)
         let parentPage = CanvasPage.create(in: modelController) {
             $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
@@ -990,7 +990,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_openingClosedHierarchySetsCanvasToReceiverOnAllPages() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
         let canvas = Canvas.create(in: modelController)
         let parentPage = CanvasPage.create(in: modelController) {
             $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
@@ -1016,7 +1016,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_hierarchyIsRemovedFromClosedHierarchiesWhenOpening() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
         let canvas = Canvas.create(in: modelController)
         let parentPage = CanvasPage.create(in: modelController) {
             $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
@@ -1043,7 +1043,7 @@ class CanvasTests: XCTestCase {
 
     //MARK: - close(_:)
     func test_closeCanvasPage_createsHierarchyForClosedPage() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
         let canvas = Canvas.create(in: modelController)
         let parentPage = CanvasPage.create(in: modelController) {
             $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
@@ -1069,7 +1069,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_closeCanvasPage_includesAllChildPagesInCreatedHierarchy() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
         let canvas = Canvas.create(in: modelController)
         let parentPage = CanvasPage.create(in: modelController) {
             $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
@@ -1109,7 +1109,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_closeCanvasPage_removesCanvasPageAndAllChildrenFromCanvas() {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
         let canvas = Canvas.create(in: modelController)
         let parentPage = CanvasPage.create(in: modelController) {
             $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
@@ -1144,7 +1144,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_closeCanvasPage_deletesCanvasPageAndAllChildrenFromCanvasPageCollection() {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
         let canvas = Canvas.create(in: modelController)
         let parentPage = CanvasPage.create(in: modelController) {
             $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
@@ -1185,7 +1185,7 @@ class CanvasTests: XCTestCase {
 
     //MARK: - addPages(_:centredOn:)
     func test_addPagesCentredOn_createsNewCanvasPageForEachSuppliedPage() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
         let page1 = Page.create(in: modelController) { $0.contentSize = CGSize(width: 20, height: 20) }
@@ -1217,7 +1217,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_addPagesCentredOn_centresFirstPageOnSuppliedPoint() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController) {
             $0.viewPort = CGRect(x: 40, y: 40, width: 100, height: 100)
@@ -1231,7 +1231,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_addPagesCentredOn_centresFirstPageInViewPortIfNoPointSupplied() {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController) {
             $0.viewPort = CGRect(x: 40, y: 40, width: 100, height: 100)
@@ -1245,7 +1245,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_addPagesCentredOn_stacksSubsequentPagesDownFromFirstIfGivenPoint() {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController) {
             $0.viewPort = CGRect(x: 40, y: 40, width: 100, height: 100)
@@ -1260,7 +1260,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_addPagesCentredOn_stacksSubsequentPagesDownFromFirstIfNoPointSupplieds() {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController) {
             $0.viewPort = CGRect(x: 40, y: 40, width: 100, height: 100)

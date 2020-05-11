@@ -1,18 +1,18 @@
 //
 //  SidebarViewModelTests.swift
-//  BubblesTests
+//  CoppiceTests
 //
 //  Created by Martin Pilkington on 20/04/2020.
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
 import XCTest
-@testable import Bubbles
+@testable import Coppice
 
 class SidebarViewModelTests: XCTestCase {
 
     func test_tellsViewToDisplaySourceListIfSearchStringIsNil() {
-        let documentViewModel = DocumentWindowViewModel(modelController: BubblesModelController(undoManager: UndoManager()))
+        let documentViewModel = DocumentWindowViewModel(modelController: CoppiceModelController(undoManager: UndoManager()))
         documentViewModel.searchString = ""
         let sidebarVM = SidebarViewModel(documentWindowViewModel: documentViewModel)
         sidebarVM.setup()
@@ -28,7 +28,7 @@ class SidebarViewModelTests: XCTestCase {
     }
 
     func test_tellsViewToDisplaySearchResultsWithSearchStringIfNotNil() {
-        let documentViewModel = DocumentWindowViewModel(modelController: BubblesModelController(undoManager: UndoManager()))
+        let documentViewModel = DocumentWindowViewModel(modelController: CoppiceModelController(undoManager: UndoManager()))
         let sidebarVM = SidebarViewModel(documentWindowViewModel: documentViewModel)
         sidebarVM.setup()
 

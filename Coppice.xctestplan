@@ -14,9 +14,9 @@
   "testTargets" : [
     {
       "target" : {
-        "containerPath" : "container:Bubbles.xcodeproj",
+        "containerPath" : "container:Coppice.xcodeproj",
         "identifier" : "99FE01A122CD1038004D380D",
-        "name" : "BubblesTests"
+        "name" : "CoppiceTests"
       }
     }
   ],

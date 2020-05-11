@@ -1,13 +1,13 @@
 //
 //  ModelObjects+PasteboardTests.swift
-//  BubblesTests
+//  coppicesTests
 //
 //  Created by Martin Pilkington on 14/04/2020.
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
 import XCTest
-@testable import Bubbles
+@testable import Coppice
 
 class ModelObjects_PasteboardTests: XCTestCase {
 
@@ -121,7 +121,7 @@ class ModelObjects_PasteboardTests: XCTestCase {
         content.text = NSAttributedString(string: "Foo Bar")
 
         let provider = content.filePromiseProvider
-        let url = URL(fileURLWithPath: "\(NSTemporaryDirectory())/bubblestexttest.rtf")
+        let url = URL(fileURLWithPath: "\(NSTemporaryDirectory())/coppicestexttest.rtf")
         try? FileManager.default.removeItem(at: url)
 
         XCTAssertFalse(FileManager.default.fileExists(atPath: url.path))
@@ -145,7 +145,7 @@ class ModelObjects_PasteboardTests: XCTestCase {
         content.text = NSAttributedString(string: "Foo Bar")
 
         let provider = content.filePromiseProvider
-        let url = URL(fileURLWithPath: "\(NSTemporaryDirectory())/bubblestexttest.rtf")
+        let url = URL(fileURLWithPath: "\(NSTemporaryDirectory())/coppicestexttest.rtf")
         try? FileManager.default.removeItem(at: url)
 
         XCTAssertFalse(FileManager.default.fileExists(atPath: url.path))
@@ -168,7 +168,7 @@ class ModelObjects_PasteboardTests: XCTestCase {
         content.text = NSAttributedString(string: "Foo Bar")
 
         let provider = content.filePromiseProvider
-        let url = URL(fileURLWithPath: "/System/bubblestexttest.rtf")
+        let url = URL(fileURLWithPath: "/System/coppicestexttest.rtf")
         try? FileManager.default.removeItem(at: url)
 
         XCTAssertFalse(FileManager.default.fileExists(atPath: url.path))
@@ -191,7 +191,7 @@ class ModelObjects_PasteboardTests: XCTestCase {
         content.image = NSImage(named: "NSAddTemplate")!
 
         let provider = content.filePromiseProvider
-        let url = URL(fileURLWithPath: "\(NSTemporaryDirectory())/bubblesimagetest.png")
+        let url = URL(fileURLWithPath: "\(NSTemporaryDirectory())/coppicesimagetest.png")
         try? FileManager.default.removeItem(at: url)
 
         XCTAssertFalse(FileManager.default.fileExists(atPath: url.path))
@@ -215,7 +215,7 @@ class ModelObjects_PasteboardTests: XCTestCase {
         content.image = NSImage(named: "NSAddTemplate")!
 
         let provider = content.filePromiseProvider
-        let url = URL(fileURLWithPath: "\(NSTemporaryDirectory())/bubblesimagetest.png")
+        let url = URL(fileURLWithPath: "\(NSTemporaryDirectory())/coppicesimagetest.png")
         try? FileManager.default.removeItem(at: url)
 
         XCTAssertFalse(FileManager.default.fileExists(atPath: url.path))
@@ -238,7 +238,7 @@ class ModelObjects_PasteboardTests: XCTestCase {
         content.image = NSImage(named: "NSAddTemplate")!
 
         let provider = content.filePromiseProvider
-        let url = URL(fileURLWithPath: "/System/bubblesimagetest.png")
+        let url = URL(fileURLWithPath: "/System/coppicesimagetest.png")
         try? FileManager.default.removeItem(at: url)
 
         XCTAssertFalse(FileManager.default.fileExists(atPath: url.path))

@@ -1,23 +1,23 @@
 //
-//  BubblesModelControllerCanvasTests.swift
-//  BubblesTests
+//  CoppiceModelControllerCanvasTests.swift
+//  CoppiceTests
 //
 //  Created by Martin Pilkington on 23/04/2020.
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
 import XCTest
-@testable import Bubbles
+@testable import Coppice
 
-class BubblesModelControllerCanvasTests: XCTestCase {
+class CoppiceModelControllerCanvasTests: XCTestCase {
     var undoManager: UndoManager!
-    var modelController: BubblesModelController!
+    var modelController: CoppiceModelController!
 
     override func setUp() {
         super.setUp()
 
         self.undoManager = UndoManager()
-        self.modelController = BubblesModelController(undoManager: self.undoManager)
+        self.modelController = CoppiceModelController(undoManager: self.undoManager)
     }
 
 

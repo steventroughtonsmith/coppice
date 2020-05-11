@@ -1,15 +1,15 @@
 //
-//  MockBubblesModelController.swift
-//  BubblesTests
+//  MockCoppiceModelController.swift
+//  CoppiceTests
 //
 //  Created by Martin Pilkington on 27/04/2020.
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
 import XCTest
-@testable import Bubbles
+@testable import Coppice
 
-class MockBubblesModelController: BubblesModelController {
+class MockCoppiceModelController: CoppiceModelController {
     //MARK: - Page
     let createPageOfTypeMock = MockDetails<(PageContentType, Folder, FolderContainable?, ((Page) -> Void)?), Page>()
     @discardableResult override func createPage(ofType contentType: PageContentType = .text, in parentFolder: Folder, below item: FolderContainable? = nil, setup: ((Page) -> Void)? = nil) -> Page {

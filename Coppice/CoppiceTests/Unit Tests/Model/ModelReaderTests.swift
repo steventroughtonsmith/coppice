@@ -1,13 +1,13 @@
 //
 //  ModelReaderTests.swift
-//  BubblesTests
+//  CoppiceTests
 //
 //  Created by Martin Pilkington on 28/10/2019.
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
 import XCTest
-@testable import Bubbles
+@testable import Coppice
 
 class ModelReaderTests: XCTestCase {
 
@@ -23,7 +23,7 @@ class ModelReaderTests: XCTestCase {
     var content: [String: Data]!
 
     var testFileWrapper: FileWrapper!
-    var modelController: BubblesModelController!
+    var modelController: CoppiceModelController!
     var modelReader: ModelReader!
 
     override func setUp() {
@@ -141,7 +141,7 @@ class ModelReaderTests: XCTestCase {
             "content": FileWrapper(directoryWithFileWrappers: self.content.mapValues { FileWrapper(regularFileWithContents: $0) })
         ])
 
-        self.modelController = BubblesModelController(undoManager: UndoManager())
+        self.modelController = CoppiceModelController(undoManager: UndoManager())
         self.modelReader = ModelReader(modelController: modelController)
     }
 

@@ -1,13 +1,13 @@
 ////
 ////  SourceListViewModelTests.swift
-////  BubblesTests
+////  CoppiceTests
 ////
 ////  Created by Martin Pilkington on 05/08/2019.
 ////  Copyright © 2019 M Cubed Software. All rights reserved.
 ////
 
 import XCTest
-@testable import Bubbles
+@testable import Coppice
 
 
 class SourceListViewModelTests: XCTestCase {
@@ -16,14 +16,14 @@ class SourceListViewModelTests: XCTestCase {
 
     var documentWindowViewModel: DocumentWindowViewModel!
 
-    var modelController: BubblesModelController!
+    var modelController: CoppiceModelController!
 
     override func setUp() {
         super.setUp()
 
         self.notificationCenter = NotificationCenter()
 
-        self.modelController = BubblesModelController(undoManager: UndoManager())
+        self.modelController = CoppiceModelController(undoManager: UndoManager())
 
         self.documentWindowViewModel = MockDocumentWindowViewModel(modelController: self.modelController)
     }

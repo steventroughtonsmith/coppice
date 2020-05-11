@@ -1,13 +1,13 @@
 //
 //  CanvasPageInspectorViewModelTests.swift
-//  BubblesTests
+//  CoppiceTests
 //
 //  Created by Martin Pilkington on 21/04/2020.
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
 import XCTest
-@testable import Bubbles
+@testable import Coppice
 
 class CanvasPageInspectorViewModelTests: XCTestCase {
 
@@ -15,7 +15,7 @@ class CanvasPageInspectorViewModelTests: XCTestCase {
     func test_width_returnsCanvasPageFrameWidth() throws {
         let canvasPage = CanvasPage()
         canvasPage.frame = CGRect(x: 19, y: 31, width: 218, height: 921)
-        let viewModel = CanvasPageInspectorViewModel(canvasPage: canvasPage, modelController: BubblesModelController(undoManager: UndoManager()))
+        let viewModel = CanvasPageInspectorViewModel(canvasPage: canvasPage, modelController: CoppiceModelController(undoManager: UndoManager()))
 
         XCTAssertEqual(viewModel.width, 218)
     }
@@ -23,7 +23,7 @@ class CanvasPageInspectorViewModelTests: XCTestCase {
     func test_width_setsCanvasPageFrameWidthToSuppliedValueIfGreaterThanMinimumWidth() throws {
         let canvasPage = CanvasPage()
         canvasPage.frame = CGRect(x: 19, y: 31, width: 218, height: 921)
-        let viewModel = CanvasPageInspectorViewModel(canvasPage: canvasPage, modelController: BubblesModelController(undoManager: UndoManager()))
+        let viewModel = CanvasPageInspectorViewModel(canvasPage: canvasPage, modelController: CoppiceModelController(undoManager: UndoManager()))
 
         viewModel.width = Int(GlobalConstants.minimumPageSize.width + 1)
         XCTAssertEqual(canvasPage.frame.width, GlobalConstants.minimumPageSize.width + 1)
@@ -32,7 +32,7 @@ class CanvasPageInspectorViewModelTests: XCTestCase {
     func test_width_setsCanvasPageFrameWidthToSuppliedValueIfEqualToMinimumWidth() throws {
         let canvasPage = CanvasPage()
         canvasPage.frame = CGRect(x: 19, y: 31, width: 218, height: 921)
-        let viewModel = CanvasPageInspectorViewModel(canvasPage: canvasPage, modelController: BubblesModelController(undoManager: UndoManager()))
+        let viewModel = CanvasPageInspectorViewModel(canvasPage: canvasPage, modelController: CoppiceModelController(undoManager: UndoManager()))
 
         viewModel.width = Int(GlobalConstants.minimumPageSize.width)
         XCTAssertEqual(canvasPage.frame.width, GlobalConstants.minimumPageSize.width)
@@ -41,14 +41,14 @@ class CanvasPageInspectorViewModelTests: XCTestCase {
     func test_width_setsCanvasPageFrameWidthToMinimumPageWidthIfLessThanMinimumWidth() throws {
         let canvasPage = CanvasPage()
         canvasPage.frame = CGRect(x: 19, y: 31, width: 218, height: 921)
-        let viewModel = CanvasPageInspectorViewModel(canvasPage: canvasPage, modelController: BubblesModelController(undoManager: UndoManager()))
+        let viewModel = CanvasPageInspectorViewModel(canvasPage: canvasPage, modelController: CoppiceModelController(undoManager: UndoManager()))
 
         viewModel.width = Int(GlobalConstants.minimumPageSize.width - 1)
         XCTAssertEqual(canvasPage.frame.width, GlobalConstants.minimumPageSize.width)
     }
 
     func test_width_alsoSetsHeightIfPageContentShouldMaintainAspectRatio() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
         let page = modelController.createPage(ofType: .image, in: modelController.rootFolder)
         let canvasPage = modelController.canvasPageCollection.newObject() {
             $0.page = page
@@ -61,7 +61,7 @@ class CanvasPageInspectorViewModelTests: XCTestCase {
     }
 
     func test_width_usesInitialAspectRatioWhenDeterminingThePageSizeNotModifiedRatio() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
         let page = modelController.createPage(ofType: .image, in: modelController.rootFolder)
         let canvasPage = modelController.canvasPageCollection.newObject() {
             $0.page = page
@@ -76,7 +76,7 @@ class CanvasPageInspectorViewModelTests: XCTestCase {
     }
 
     func test_width_doesntAllowCanvasFrameHeightToGoBelowMinimumPageSizeWhenMaintainingAspectRatioEvenIfWidthIsAboveMinimumWidth() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
         let page = modelController.createPage(ofType: .image, in: modelController.rootFolder)
         let canvasPage = modelController.canvasPageCollection.newObject() {
             $0.page = page
@@ -89,7 +89,7 @@ class CanvasPageInspectorViewModelTests: XCTestCase {
     }
 
     func test_width_doesntAllowCanvasFrameHeightToGoBelowMinimumPageSizeWhenMaintainingAspectRatioWhenWidthIsBelowMinimumWidth() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
         let page = modelController.createPage(ofType: .image, in: modelController.rootFolder)
         let canvasPage = modelController.canvasPageCollection.newObject() {
             $0.page = page
@@ -106,7 +106,7 @@ class CanvasPageInspectorViewModelTests: XCTestCase {
     func test_height_returnsCanvasPageFrameHeight() throws {
         let canvasPage = CanvasPage()
         canvasPage.frame = CGRect(x: 19, y: 31, width: 218, height: 921)
-        let viewModel = CanvasPageInspectorViewModel(canvasPage: canvasPage, modelController: BubblesModelController(undoManager: UndoManager()))
+        let viewModel = CanvasPageInspectorViewModel(canvasPage: canvasPage, modelController: CoppiceModelController(undoManager: UndoManager()))
 
         XCTAssertEqual(viewModel.height, 921)
     }
@@ -114,7 +114,7 @@ class CanvasPageInspectorViewModelTests: XCTestCase {
     func test_height_setsCanvasPageFrameHeightToSuppliedValueIfGreaterThanMinimumHeight() throws {
         let canvasPage = CanvasPage()
         canvasPage.frame = CGRect(x: 19, y: 31, width: 200, height: 218)
-        let viewModel = CanvasPageInspectorViewModel(canvasPage: canvasPage, modelController: BubblesModelController(undoManager: UndoManager()))
+        let viewModel = CanvasPageInspectorViewModel(canvasPage: canvasPage, modelController: CoppiceModelController(undoManager: UndoManager()))
 
         viewModel.height = Int(GlobalConstants.minimumPageSize.height + 1)
         XCTAssertEqual(canvasPage.frame.height, GlobalConstants.minimumPageSize.height + 1)
@@ -123,7 +123,7 @@ class CanvasPageInspectorViewModelTests: XCTestCase {
     func test_height_setsCanvasPageFrameHeightToSuppliedValueIfEqualToMinimumHeight() throws {
         let canvasPage = CanvasPage()
         canvasPage.frame = CGRect(x: 19, y: 31, width: 200, height: 218)
-        let viewModel = CanvasPageInspectorViewModel(canvasPage: canvasPage, modelController: BubblesModelController(undoManager: UndoManager()))
+        let viewModel = CanvasPageInspectorViewModel(canvasPage: canvasPage, modelController: CoppiceModelController(undoManager: UndoManager()))
 
         viewModel.height = Int(GlobalConstants.minimumPageSize.height)
         XCTAssertEqual(canvasPage.frame.height, GlobalConstants.minimumPageSize.height)
@@ -132,14 +132,14 @@ class CanvasPageInspectorViewModelTests: XCTestCase {
     func test_height_setsCanvasPageFrameHeightToSuppliedValueIfLessThanMinimumHeight() throws {
         let canvasPage = CanvasPage()
         canvasPage.frame = CGRect(x: 19, y: 31, width: 200, height: 218)
-        let viewModel = CanvasPageInspectorViewModel(canvasPage: canvasPage, modelController: BubblesModelController(undoManager: UndoManager()))
+        let viewModel = CanvasPageInspectorViewModel(canvasPage: canvasPage, modelController: CoppiceModelController(undoManager: UndoManager()))
 
         viewModel.height = Int(GlobalConstants.minimumPageSize.height - 1)
         XCTAssertEqual(canvasPage.frame.height, GlobalConstants.minimumPageSize.height)
     }
 
     func test_height_alsoSetsWidthIfPageContentShouldMaintainAspectRatio() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
         let page = modelController.createPage(ofType: .image, in: modelController.rootFolder)
         let canvasPage = modelController.canvasPageCollection.newObject() {
             $0.page = page
@@ -152,7 +152,7 @@ class CanvasPageInspectorViewModelTests: XCTestCase {
     }
 
     func test_height_usesInitialAspectRatioWhenDeterminingThePageSizeNotModifiedRatio() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
         let page = modelController.createPage(ofType: .image, in: modelController.rootFolder)
         let canvasPage = modelController.canvasPageCollection.newObject() {
             $0.page = page
@@ -167,7 +167,7 @@ class CanvasPageInspectorViewModelTests: XCTestCase {
     }
 
     func test_height_doesntAllowCanvasFrameWidthToGoBelowMinimumPageSizeWhenMaintainingAspectRatioEvenIfHeightIsAboveMinimumHeight() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
         let page = modelController.createPage(ofType: .image, in: modelController.rootFolder)
         let canvasPage = modelController.canvasPageCollection.newObject() {
             $0.page = page
@@ -180,7 +180,7 @@ class CanvasPageInspectorViewModelTests: XCTestCase {
     }
 
     func test_height_doesntAllowCanvasFrameWidthToGoBelowMinimumPageSizeWhenMaintainingAspectRatioWhenHeightIsBelowMinimumHeight() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
         let page = modelController.createPage(ofType: .image, in: modelController.rootFolder)
         let canvasPage = modelController.canvasPageCollection.newObject() {
             $0.page = page

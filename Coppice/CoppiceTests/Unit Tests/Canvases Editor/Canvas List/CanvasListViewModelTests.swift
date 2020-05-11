@@ -7,11 +7,11 @@
 //
 
 import XCTest
-@testable import Bubbles
+@testable import Coppice
 
 class CanvasListViewModelTests: XCTestCase {
 
-    var modelController: MockBubblesModelController!
+    var modelController: MockCoppiceModelController!
     var documentViewModel: MockDocumentWindowViewModel!
     var viewModel: CanvasListViewModel!
 
@@ -22,7 +22,7 @@ class CanvasListViewModelTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        self.modelController = MockBubblesModelController(undoManager: UndoManager())
+        self.modelController = MockCoppiceModelController(undoManager: UndoManager())
         self.canvas1 = Canvas.create(in: self.modelController) { $0.sortIndex = 0 }
         self.canvas2 = Canvas.create(in: self.modelController) { $0.sortIndex = 1 }
         self.canvas3 = Canvas.create(in: self.modelController) { $0.sortIndex = 2 }

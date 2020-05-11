@@ -1,13 +1,13 @@
 //
 //  MockDocumentWindowViewModel.swift
-//  BubblesTests
+//  CoppiceTests
 //
 //  Created by Martin Pilkington on 09/12/2019.
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
 import Cocoa
-@testable import Bubbles
+@testable import Coppice
 
 class MockWindow: DocumentWindow {
     func invalidateRestorableState() {

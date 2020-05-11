@@ -1,17 +1,17 @@
 //
 //  TextEditorViewModel.swift
-//  BubblesTests
+//  CoppiceTests
 //
 //  Created by Martin Pilkington on 21/08/2019.
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
 import XCTest
-@testable import Bubbles
+@testable import Coppice
 
 class TextEditorViewModelTests: XCTestCase {
 
-    var modelController: BubblesModelController!
+    var modelController: CoppiceModelController!
     var page: Page!
     var textContent: TextPageContent!
     var documentWindowViewModel: MockDocumentWindowViewModel!
@@ -20,7 +20,7 @@ class TextEditorViewModelTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        self.modelController = BubblesModelController(undoManager: UndoManager())
+        self.modelController = CoppiceModelController(undoManager: UndoManager())
         self.textContent = TextPageContent()
 
         self.page = Page.create(in: self.modelController) {

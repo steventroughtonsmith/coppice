@@ -1,6 +1,6 @@
 //
 //  Document.swift
-//  Bubbles
+//  Coppice
 //
 //  Created by Martin Pilkington on 03/07/2019.
 //  Copyright © 2019 M Cubed Software. All rights reserved.
@@ -9,8 +9,8 @@
 import Cocoa
 
 class Document: NSDocument {
-    lazy var modelController: BubblesModelController = {
-        BubblesModelController(undoManager: self.undoManager!)
+    lazy var modelController: CoppiceModelController = {
+        CoppiceModelController(undoManager: self.undoManager!)
     }()
 
     override init() {

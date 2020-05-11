@@ -1,6 +1,6 @@
 //
 //  TextEditorViewController.swift
-//  Bubbles
+//  Coppice
 //
 //  Created by Martin Pilkington on 12/08/2019.
 //  Copyright © 2019 M Cubed Software. All rights reserved.

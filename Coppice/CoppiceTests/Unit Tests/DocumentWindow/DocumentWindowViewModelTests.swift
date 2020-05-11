@@ -1,17 +1,17 @@
 //
 //  DocumentWindowViewModelTests.swift
-//  BubblesTests
+//  CoppiceTests
 //
 //  Created by Martin Pilkington on 10/12/2019.
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
 import XCTest
-@testable import Bubbles
+@testable import Coppice
 
 class DocumentWindowViewModelTests: XCTestCase {
 
-    var modelController: MockBubblesModelController!
+    var modelController: MockCoppiceModelController!
 
     var folder: Folder!
     var canvas: Canvas!
@@ -20,7 +20,7 @@ class DocumentWindowViewModelTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        self.modelController = MockBubblesModelController(undoManager: UndoManager())
+        self.modelController = MockCoppiceModelController(undoManager: UndoManager())
 
         self.folder = self.modelController.createFolder(in: self.modelController.rootFolder)
         self.canvas = self.modelController.createCanvas()

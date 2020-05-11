@@ -1,18 +1,18 @@
 //
 //  SearchResultsViewModelTypesTests.swift
-//  BubblesTests
+//  CoppiceTests
 //
 //  Created by Martin Pilkington on 20/04/2020.
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
 import XCTest
-@testable import Bubbles
+@testable import Coppice
 
 class PageSearchResultTests: XCTestCase {
     //MARK: - .title
     func test_title_returnsPageTitle() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
         let page = modelController.collection(for: Page.self).newObject() { $0.title = "Foo Bar Baz" }
         let result = PageSearchResult(match: .init(page: page, matchType: .title(NSRange(location: 4, length: 3))), searchTerm: "Bar")
 
@@ -22,7 +22,7 @@ class PageSearchResultTests: XCTestCase {
 
     //MARK: - .body
     func test_body_returnsNilIfContentIsImage() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
         let page = modelController.collection(for: Page.self).newObject() {
             $0.title = "Foo Bar Baz"
             $0.content = ImagePageContent()
@@ -33,7 +33,7 @@ class PageSearchResultTests: XCTestCase {
     }
 
     func test_body_returnsBodyTextIfNotContentMatch() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
         let page = modelController.collection(for: Page.self).newObject() {
             $0.title = "Foo Bar Baz"
             let content = TextPageContent()
@@ -46,7 +46,7 @@ class PageSearchResultTests: XCTestCase {
     }
 
     func test_body_startsFromStartOfContentIfRangeWithinFirst20Characters() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
         let page = modelController.collection(for: Page.self).newObject() {
             $0.title = "Foo Bar Baz"
             let content = TextPageContent()
@@ -59,7 +59,7 @@ class PageSearchResultTests: XCTestCase {
     }
 
     func test_body_startsFromStartOfMatchRangeIfOutsideFirst20Characters() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
         let page = modelController.collection(for: Page.self).newObject() {
             $0.title = "Foo Bar Baz"
             let content = TextPageContent()
@@ -76,7 +76,7 @@ class PageSearchResultTests: XCTestCase {
 class CanvasSearchResultTests: XCTestCase {
     //MARK: - .title
     func test_title_returnsCanvasTitle() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
         let canvas = modelController.collection(for: Canvas.self).newObject() { $0.title = "Foo Bar Baz" }
         let result = CanvasSearchResult(match: .init(canvas: canvas, matchType: .title(NSRange(location: 4, length: 3))), searchTerm: "Bar")
 
@@ -85,7 +85,7 @@ class CanvasSearchResultTests: XCTestCase {
 
     //MARK: - .body
     func test_body_returnsNilIfTitleMatch() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
         let canvas = modelController.collection(for: Canvas.self).newObject() { $0.title = "Foo Bar Baz" }
         let result = CanvasSearchResult(match: .init(canvas: canvas, matchType: .title(NSRange(location: 4, length: 3))), searchTerm: "Bar")
 
@@ -93,7 +93,7 @@ class CanvasSearchResultTests: XCTestCase {
     }
 
     func test_body_returnsNumberOfMatchingPagesIfPageMatch() throws {
-        let modelController = BubblesModelController(undoManager: UndoManager())
+        let modelController = CoppiceModelController(undoManager: UndoManager())
         let canvas = modelController.collection(for: Canvas.self).newObject() { $0.title = "Foo Bar Baz" }
         let result = CanvasSearchResult(match: .init(canvas: canvas, matchType: .pages(4)), searchTerm: "Bar")
 

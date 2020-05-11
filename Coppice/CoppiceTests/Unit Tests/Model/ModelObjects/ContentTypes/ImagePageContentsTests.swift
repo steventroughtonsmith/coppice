@@ -1,21 +1,21 @@
 //
 //  ImagePageContentsTests.swift
-//  BubblesTests
+//  CoppiceTests
 //
 //  Created by Martin Pilkington on 13/04/2020.
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
 import XCTest
-@testable import Bubbles
+@testable import Coppice
 
 class ImagePageContentsTests: XCTestCase {
 
-    var modelController: BubblesModelController!
+    var modelController: CoppiceModelController!
 
     override func setUp() {
         super.setUp()
-        self.modelController = BubblesModelController(undoManager: UndoManager())
+        self.modelController = CoppiceModelController(undoManager: UndoManager())
     }
 
     override func tearDown() {

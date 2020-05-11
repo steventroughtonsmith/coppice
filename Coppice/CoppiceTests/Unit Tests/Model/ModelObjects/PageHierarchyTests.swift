@@ -1,24 +1,24 @@
 //
 //  PageHierarchyTests.swift
-//  BubblesTests
+//  CoppiceTests
 //
 //  Created by Martin Pilkington on 14/04/2020.
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
 import XCTest
-@testable import Bubbles
+@testable import Coppice
 
 class PageHierarchyTests: XCTestCase {
 
-    var modelController: BubblesModelController!
+    var modelController: CoppiceModelController!
     var parentPage: CanvasPage!
     var childPage1: CanvasPage!
     var childPage2: CanvasPage!
 
     override func setUp() {
         super.setUp()
-        self.modelController = BubblesModelController(undoManager: UndoManager())
+        self.modelController = CoppiceModelController(undoManager: UndoManager())
         let pageCollection = self.modelController.collection(for: Page.self)
         let page1 = pageCollection.newObject()
         let page2 = pageCollection.newObject()
