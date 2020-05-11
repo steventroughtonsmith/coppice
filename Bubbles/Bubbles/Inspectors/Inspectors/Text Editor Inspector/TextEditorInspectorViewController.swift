@@ -102,4 +102,8 @@ class TextEditorInspectorViewController: BaseInspectorViewController {
         }
         self.typedViewModel[keyPath: keyPath] = selected
     }
+
+    @IBAction func showFontPanel(_ sender: Any?) {
+        NSFontManager.shared.orderFrontFontPanel(sender)
+    }
 }
