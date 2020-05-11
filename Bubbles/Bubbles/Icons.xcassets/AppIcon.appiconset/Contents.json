@@ -21,37 +21,37 @@
       "size" : "32x32"
     },
     {
-      "filename" : "Untitled-1-128px.png",
+      "filename" : "AlphaIcon-128.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "128x128"
     },
     {
-      "filename" : "Untitled-1-256px.png",
+      "filename" : "AlphaIcon-257.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "128x128"
     },
     {
-      "filename" : "Untitled-1-256px-1.png",
+      "filename" : "AlphaIcon-256.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "256x256"
     },
     {
-      "filename" : "Untitled-1-512px.png",
+      "filename" : "AlphaIcon-513.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "256x256"
     },
     {
-      "filename" : "Untitled-1-512px-1.png",
+      "filename" : "AlphaIcon-512.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "512x512"
     },
     {
-      "filename" : "BubblesIcon.png",
+      "filename" : "AlphaIcon-1024.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "512x512"
