@@ -146,6 +146,16 @@ class DocumentWindowController: NSWindowController {
     @IBAction func findInDocument(_ sender: Any?) {
         self.window?.makeFirstResponder(self.searchField)
     }
+
+    #if DEBUG
+    lazy var previewGenerationWindowController: NSWindowController = {
+        return PreviewGenerationDebugWindow(documentViewModel: self.viewModel)
+    }()
+
+    @IBAction func showPreviewGenerationWindow(_ sender: Any?) {
+        self.previewGenerationWindowController.window?.makeKeyAndOrderFront(sender)
+    }
+    #endif
 }
 
 

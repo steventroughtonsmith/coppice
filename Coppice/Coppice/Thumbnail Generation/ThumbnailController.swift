@@ -9,14 +9,20 @@
 import Cocoa
 
 class ThumbnailController: NSObject {
-    let modelController: ModelController
-    init(modelController: ModelController) {
+    let modelController: CoppiceModelController
+    init(modelController: CoppiceModelController) {
         self.modelController = modelController
         super.init()
         self.setupObservation()
     }
 
     weak var documentViewModel: DocumentWindowViewModel?
+    var currentThumbnailSize: CGSize = GlobalConstants.maxCanvasThumbnailSize {
+        didSet {
+            self.modelController.canvasCollection.all.forEach { self.changed($0) }
+            self.updateThumbnails()
+        }
+    }
 
 
     //MARK: - Observation
@@ -24,28 +30,28 @@ class ThumbnailController: NSObject {
     var canvasPageObserver: ModelCollection<CanvasPage>.Observation?
     var pageObserver: ModelCollection<Page>.Observation?
     private func setupObservation() {
-        self.canvasObserver = self.modelController.collection(for: Canvas.self).addObserver { [weak self] (change) in
+        self.canvasObserver = self.modelController.canvasCollection.addObserver { [weak self] (change) in
             self?.changed(change.object)
         }
 
-        self.canvasPageObserver = self.modelController.collection(for: CanvasPage.self).addObserver { [weak self] (change) in
+        self.canvasPageObserver = self.modelController.canvasPageCollection.addObserver { [weak self] (change) in
             self?.changed(change.object)
         }
 
-        self.pageObserver = self.modelController.collection(for: Page.self).addObserver { [weak self] (change) in
+        self.pageObserver = self.modelController.pageCollection.addObserver { [weak self] (change) in
             self?.changed(change.object)
         }
     }
 
     deinit {
         if let observer = self.canvasObserver {
-            self.modelController.collection(for: Canvas.self).removeObserver(observer)
+            self.modelController.canvasCollection.removeObserver(observer)
         }
         if let observer = self.canvasPageObserver {
-            self.modelController.collection(for: CanvasPage.self).removeObserver(observer)
+            self.modelController.canvasPageCollection.removeObserver(observer)
         }
         if let observer = self.pageObserver {
-            self.modelController.collection(for: Page.self).removeObserver(observer)
+            self.modelController.pageCollection.removeObserver(observer)
         }
     }
 
@@ -79,6 +85,7 @@ class ThumbnailController: NSObject {
     }
 
     @objc dynamic func updateThumbnails() {
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(updateThumbnails), object: nil)
         self.modelController.disableUndo {
             for object in self.canvasChangeQueue {
                 if let canvas = object as? Canvas {
@@ -90,21 +97,12 @@ class ThumbnailController: NSObject {
     }
 
     func generateThumbnail(for canvas: Canvas) -> NSImage? {
-        guard let documentViewModel = self.documentViewModel else {
-            return nil
-        }
-        
         //No need to generate a preview if the canvas contains nothing
         guard canvas.pages.count > 0 else {
             return nil
         }
 
-        let canvasEditor = CanvasEditorViewController(viewModel: CanvasEditorViewModel(canvas: canvas, documentWindowViewModel: documentViewModel, mode: .preview))
-        _ = canvasEditor.view
-        guard let canvasView = canvasEditor.canvasView else {
-            return nil
-        }
-        canvasView.setNeedsDisplay(canvasView.bounds)
-        return canvasView.generateThumbnail()
+        let thumbnailController = CanvasThumbnailGenerator(canvas: canvas)
+        return thumbnailController.generateThumbnail(of: self.currentThumbnailSize)
     }
 }

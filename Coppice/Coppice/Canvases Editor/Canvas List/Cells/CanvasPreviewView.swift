@@ -11,12 +11,15 @@ import Cocoa
 @IBDesignable
 class CanvasPreviewView: NSView {
     //MARK: - Content
-    @IBInspectable var previewImage: NSImage? {
+    @IBInspectable var image: NSImage? {
         didSet { self.invalidateIntrinsicContentSize() }
     }
 
 
     //MARK: - Border Style
+    @IBInspectable var backgroundColor: NSColor = .black {
+        didSet { self.setNeedsDisplay(self.bounds)}
+    }
     @IBInspectable var borderColor: NSColor = .white {
         didSet { self.setNeedsDisplay(self.bounds)}
     }
@@ -33,34 +36,20 @@ class CanvasPreviewView: NSView {
         didSet { self.invalidateIntrinsicContentSize() }
     }
 
-    override var intrinsicContentSize: NSSize {
-        guard var size = self.previewImage?.size else {
-            return NSSize(width: NSView.noIntrinsicMetric, height: NSView.noIntrinsicMetric)
-        }
-
-        let maxSize = self.preferredMaxDimensions
-
-        if (maxSize.width > 0) && (size.width > maxSize.width) {
-            size.height = (size.height / size.width) * maxSize.width
-            size.width = maxSize.width
-        }
-
-        if (maxSize.height > 0) && (size.height > maxSize.height) {
-            size.width = (size.width / size.height) * maxSize.height
-            size.height = maxSize.height
-        }
-
-        return size.rounded()
-    }
-
 
     //MARK: - Drawing
     override func draw(_ dirtyRect: NSRect) {
-        if let image = self.previewImage {
+        let contentPath = NSBezierPath(roundedRect: self.bounds, xRadius: self.cornerRadius, yRadius: self.cornerRadius)
+
+        self.backgroundColor.set()
+        contentPath.fill()
+
+        if let image = self.image {
             NSGraphicsContext.saveGraphicsState()
-            let clipPath = NSBezierPath(roundedRect: self.bounds, xRadius: self.cornerRadius, yRadius: self.cornerRadius)
-            clipPath.setClip()
+            contentPath.setClip()
+
             image.draw(in: self.bounds)
+
             NSGraphicsContext.restoreGraphicsState()
         }
 

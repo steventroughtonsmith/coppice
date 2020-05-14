@@ -93,6 +93,11 @@ class CanvasListViewController: NSViewController, SplitViewContainable, NSMenuIt
         self.reload()
     }
 
+    var currentThumbnailSize: CGSize {
+        let canvasCell = self.tableView.view(atColumn: 0, row: 0, makeIfNecessary: true) as? CanvasCell
+        return canvasCell?.thumbnailImageView.frame.size ?? .zero
+    }
+
 
     //MARK: - Menus
     @IBOutlet var contextMenu: NSMenu!

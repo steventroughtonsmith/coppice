@@ -9,7 +9,7 @@
 import Cocoa
 import Combine
 
-class LargeCanvasCell: EditableLabelCell {
+class LargeCanvasCell: EditableLabelCell, CanvasCell {
     static var identifier = NSUserInterfaceItemIdentifier(rawValue: "LargeCanvasCell")
 
     @IBOutlet weak var nameLabel: NSTextField!

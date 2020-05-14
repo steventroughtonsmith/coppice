@@ -830,6 +830,12 @@
                                     <action selector="showKeyLoop:" target="-1" id="ePg-ey-DUo"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Show Preview Generation" id="fX0-cf-YEG">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showPreviewGenerationWindow:" target="-1" id="87Y-Pd-StN"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="g7c-Ur-z7n"/>
                             <menuItem title="Log Responder Chain" id="lti-qw-8HG">
                                 <modifierMask key="keyEquivalentModifierMask"/>

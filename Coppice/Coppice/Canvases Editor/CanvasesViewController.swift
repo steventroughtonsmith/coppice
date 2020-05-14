@@ -82,7 +82,10 @@ class CanvasesViewController: NSSplitViewController {
 
     var isSidebarCompact: Bool {
         get { UserDefaults.standard.bool(forKey: .canvasListIsCompact) }
-        set { UserDefaults.standard.set(newValue, forKey: .canvasListIsCompact) }
+        set {
+            UserDefaults.standard.set(newValue, forKey: .canvasListIsCompact)
+            self.thumbnailsNeedUpdate()
+        }
     }
 
 
@@ -106,6 +109,16 @@ class CanvasesViewController: NSSplitViewController {
             return self.canvasListViewController.splitViewItem.minimumThickness
         }
         return proposedPosition
+    }
+
+    override func splitViewDidResizeSubviews(_ notification: Notification) {
+        super.splitViewDidResizeSubviews(notification)
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(thumbnailsNeedUpdate), object: nil)
+        self.perform(#selector(thumbnailsNeedUpdate), with: nil, afterDelay: 0)
+    }
+
+    @objc dynamic func thumbnailsNeedUpdate() {
+        self.viewModel.documentWindowViewModel.thumbnailController.currentThumbnailSize = self.canvasListViewController.currentThumbnailSize
     }
 }
 

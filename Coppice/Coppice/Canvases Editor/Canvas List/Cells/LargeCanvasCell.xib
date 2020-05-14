@@ -31,17 +31,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="251" verticalCompressionResistancePriority="251" placeholderIntrinsicWidth="100" placeholderIntrinsicHeight="100" translatesAutoresizingMaskIntoConstraints="NO" id="Kvd-t8-Ctn">
-                                <rect key="frame" x="29" y="9" width="100" height="100"/>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="sUB-Zf-6ok"/>
+                                <rect key="frame" x="0.0" y="0.0" width="158" height="118"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" id="sUB-Zf-6ok"/>
                             </imageView>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Kvd-t8-Ctn" secondAttribute="bottom" id="41z-j1-vob"/>
-                            <constraint firstItem="Kvd-t8-Ctn" firstAttribute="centerX" secondItem="p4H-ZJ-er0" secondAttribute="centerX" id="4Us-Hu-gYh"/>
-                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Kvd-t8-Ctn" secondAttribute="trailing" id="UTs-Mh-uXa"/>
-                            <constraint firstItem="Kvd-t8-Ctn" firstAttribute="top" relation="greaterThanOrEqual" secondItem="p4H-ZJ-er0" secondAttribute="top" id="Xzl-M1-Vly"/>
-                            <constraint firstItem="Kvd-t8-Ctn" firstAttribute="centerY" secondItem="p4H-ZJ-er0" secondAttribute="centerY" id="Z0I-qH-Fhd"/>
-                            <constraint firstItem="Kvd-t8-Ctn" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="p4H-ZJ-er0" secondAttribute="leading" id="sAl-FU-Wsg"/>
+                            <constraint firstItem="Kvd-t8-Ctn" firstAttribute="leading" secondItem="p4H-ZJ-er0" secondAttribute="leading" id="5k0-je-5Jk"/>
+                            <constraint firstAttribute="bottom" secondItem="Kvd-t8-Ctn" secondAttribute="bottom" id="EzP-4Q-uHl"/>
+                            <constraint firstItem="Kvd-t8-Ctn" firstAttribute="top" secondItem="p4H-ZJ-er0" secondAttribute="top" id="KK8-Wc-NlS"/>
+                            <constraint firstAttribute="trailing" secondItem="Kvd-t8-Ctn" secondAttribute="trailing" id="p8i-QD-8yl"/>
                         </constraints>
                     </view>
                     <constraints>

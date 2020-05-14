@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class SmallCanvasCell: EditableLabelCell {
+class SmallCanvasCell: EditableLabelCell, CanvasCell {
     static var identifier = NSUserInterfaceItemIdentifier(rawValue: "SmallCanvasCell")
 
     @IBOutlet weak var thumbnailImageView: NSImageView!
