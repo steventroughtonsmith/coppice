@@ -45,12 +45,48 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
     }
 
 
+    //MARK: - Observation
+
     var defaultsObserver: NSObjectProtocol?
+
     private func setupObservers() {
         self.defaultsObserver = NotificationCenter.default.addObserver(forName: UserDefaults.didChangeNotification, object: nil, queue: nil) { [weak self] _ in
             self?.updatePageSpaceOrigin()
         }
     }
+
+    var firstResponderObserver: AnyCancellable?
+    var windowBecomeKeyObserver: NSObjectProtocol?
+    var windowResignKeyObserver: NSObjectProtocol?
+    private func setupActiveStateObservers() {
+        self.firstResponderObserver = self.view.window?.publisher(for: \.firstResponder).sink(receiveValue: { [weak self] (responder) in
+            self?.updateActivateState(with: responder)
+            self?.updateSelection(with: responder)
+        })
+
+        self.windowBecomeKeyObserver = NotificationCenter.default.addObserver(forName: NSWindow.didBecomeKeyNotification, object: self.view.window, queue: .main, using: { [weak self ](_) in
+            self?.updateActivateState(with: self?.view.window?.firstResponder)
+        })
+        self.windowResignKeyObserver = NotificationCenter.default.addObserver(forName: NSWindow.didResignKeyNotification, object: self.view.window, queue: .main, using: { [weak self ](_) in
+            self?.updateActivateState(with: self?.view.window?.firstResponder)
+        })
+    }
+
+    private func cleanUpActiveStateObservers() {
+        if let observer = self.windowBecomeKeyObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
+        if let observer = self.windowResignKeyObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
+
+        self.firstResponderObserver?.cancel()
+        self.firstResponderObserver = nil
+    }
+
+
+
+    //MARK: - View Setup
 
     var layoutEngine: CanvasLayoutEngine {
         return self.viewModel.layoutEngine
@@ -93,13 +129,18 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
     override func viewDidAppear() {
         super.viewDidAppear()
         self.perform(#selector(forceFullLayout), with: nil, afterDelay: 4)
+        self.setupActiveStateObservers()
+    }
+
+    override func viewDidDisappear() {
+        super.viewDidDisappear()
+
+        self.cleanUpActiveStateObservers()
     }
 
     private var performedInitialLayout = false
     override func viewDidLayout() {
         super.viewDidLayout()
-//        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(viewDidResize), object: nil)
-//        self.perform(#selector(viewDidResize), with: nil, afterDelay: 0)
         self.notifyOfViewPortChangeIfNeeded()
         guard self.performedInitialLayout == false else {
             return
@@ -114,6 +155,24 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
 
     @IBAction func addTestPage(_ sender: Any?) {
         self.viewModel.createTestPage()
+    }
+
+
+    //MARK: - Activate state
+    private(set) var active: Bool = false {
+        didSet {
+            self.pageViewControllers.forEach { $0.active = self.active }
+        }
+    }
+
+    func updateActivateState(with firstResponder: NSResponder?) {
+        guard let view = firstResponder as? NSView,
+            let window = view.window else {
+            self.active = false
+            return
+        }
+
+        self.active = view.isDescendant(of: self.view) && window.isKeyWindow
     }
 
 
@@ -289,6 +348,7 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
         self.canvasView.pageLayer.subviews = pageViews
     }
 
+
     //MARK: - Page Selections
     var selectedPages: [CanvasPageViewController] {
         return self.pageViewControllers.filter { $0.selected }
@@ -300,6 +360,16 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
 
     @IBAction func deselectAll(_ sender: Any?) {
         self.layoutEngine.deselectAll()
+    }
+
+    private func updateSelection(with firstResponder: NSResponder?) {
+        guard
+            let view = firstResponder as? NSView,
+            let canvasPageVC = self.pageViewController(containing: view) else {
+                return
+        }
+
+        self.viewModel.select(canvasPageVC.viewModel.canvasPage)
     }
 
 
@@ -338,6 +408,10 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
 
     private func pageViewController(for canvasPage: CanvasPage) -> CanvasPageViewController? {
         return self.pageViewControllers.first { $0.viewModel.canvasPage.id == canvasPage.id }
+    }
+
+    private func pageViewController(containing view: NSView) -> CanvasPageViewController? {
+        return self.pageViewControllers.first { view.isDescendant(of: $0.view) }
     }
 
 

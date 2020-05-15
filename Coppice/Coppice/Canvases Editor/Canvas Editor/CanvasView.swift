@@ -117,10 +117,19 @@ class CanvasView: NSView {
     }
 
     override func keyDown(with event: NSEvent) {
+        //We want the standard behavoiur for tab events as we want keyboard navigation to work
+        if (event.specialKey == .tab) || (event.specialKey == .backTab) {
+            super.keyDown(with: event)
+            return
+        }
         self.layoutEngine?.keyDownEvent(keyCode: event.keyCode, modifiers: event.layoutEventModifiers, isARepeat: event.isARepeat)
     }
 
     override func keyUp(with event: NSEvent) {
+        if (event.specialKey == .tab) || (event.specialKey == .backTab) {
+            super.keyUp(with: event)
+            return
+        }
         self.layoutEngine?.keyUpEvent(keyCode: event.keyCode, modifiers: event.layoutEventModifiers)
     }
 
@@ -423,15 +432,6 @@ class CanvasView: NSView {
 
         let largeImage = NSImage(size: thumbnailRect.size)
         largeImage.addRepresentation(bitmapRep)
-
-//        let newSize = thumbnailRect.size.scaleDownToFit(width: GlobalConstants.maxCanvasThumbnailSize.width, height: GlobalConstants.maxCanvasThumbnailSize.height)
-//        let smallImage = NSImage(size: newSize, flipped: false) { (rect) -> Bool in
-//            largeImage.size = newSize
-//            NSGraphicsContext.current?.imageInterpolation = .high
-//            largeImage.draw(in: rect, from: CGRect(origin: .zero, size: newSize), operation: .copy, fraction: 1)
-//            return true
-//        }
-
         return largeImage
     }
 }

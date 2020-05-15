@@ -41,6 +41,7 @@ class EditorContainerViewController: NSViewController, SplitViewContainable {
                 self.view.addSubview(newEditor.view, withInsets: NSEdgeInsetsZero)
             }
             self.inspectorsDidChange()
+            self.view.window?.recalculateKeyViewLoop()
         }
     }
 

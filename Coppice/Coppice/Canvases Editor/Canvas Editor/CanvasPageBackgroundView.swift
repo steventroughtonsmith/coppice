@@ -29,11 +29,21 @@ class CanvasPageBackgroundView: NSView {
         }
     }
 
+    var active: Bool = false {
+        didSet {
+            self.setNeedsDisplay(self.bounds)
+        }
+    }
+
+    override var acceptsFirstResponder: Bool {
+        return true
+    }
+
 
     //MARK: - Drawing
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
-
+        print("draw page")
         self.drawOuterStroke()
         self.drawBackground()
         self.drawInnerStroke()
@@ -61,7 +71,8 @@ class CanvasPageBackgroundView: NSView {
     }
 
     private func drawSelectionHighlight() {
-        NSColor.controlAccentColor.set()
+        let color = (self.active ? NSColor.controlAccentColor : NSColor(white: 0.5, alpha: 1))
+        color.set()
         let path = NSBezierPath(roundedRect: self.bounds.insetBy(dx: 1, dy: 1), xRadius: 5, yRadius: 5)
         path.lineWidth = 2
         path.stroke()

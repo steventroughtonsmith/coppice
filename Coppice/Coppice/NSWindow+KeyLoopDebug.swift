@@ -13,6 +13,7 @@ extension NSWindow {
         var viewRects = [CGRect]()
 
         let initialFirstResponder = self.initialFirstResponder
+        var handledViews = [NSView]()
         var currentKeyView: NSView? = initialFirstResponder
         var currentIndex = 0
         repeat {
@@ -20,9 +21,10 @@ extension NSWindow {
                 break
             }
             viewRects.append(view.convert(view.bounds, to: nil))
-            currentKeyView = currentKeyView?.nextValidKeyView
+            handledViews.append(view)
+            currentKeyView = view.nextValidKeyView
             currentIndex += 1
-        } while (currentKeyView != nil) && (currentKeyView != initialFirstResponder)
+        } while (currentKeyView != nil) && (handledViews.contains(currentKeyView!) == false)
 
         let newKeyLoopView = KeyLoopView(viewRects: viewRects)
         self.showKeyLoopView(newKeyLoopView)

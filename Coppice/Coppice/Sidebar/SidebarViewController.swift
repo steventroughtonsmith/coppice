@@ -62,6 +62,7 @@ class SidebarViewController: NSViewController, SplitViewContainable {
                 self.addChild(newValue)
                 self.view.addSubview(newValue.view, withInsets: NSEdgeInsetsZero)
             }
+            self.view.window?.recalculateKeyViewLoop()
         }
     }
 

@@ -20,4 +20,37 @@ class CanvasTextView: NSTextView {
             super.mouseMoved(with: event)
         }
     }
+
+    override func becomeFirstResponder() -> Bool {
+        self.isEditable = true
+        self.flashIfTabFocus()
+        return super.becomeFirstResponder()
+    }
+
+    override func resignFirstResponder() -> Bool {
+        self.isEditable = false
+        return super.resignFirstResponder()
+    }
+
+    private func flashIfTabFocus() {
+        guard let event = NSApp.currentEvent else {
+            return
+        }
+
+        guard (event.specialKey == .tab) || (event.specialKey == .backTab) else {
+            return
+        }
+
+        let view = NSView(frame: self.bounds)
+        view.wantsLayer = true
+        view.layer?.backgroundColor = NSColor.controlAccentColor.cgColor
+        view.alphaValue = 0.6
+        self.addSubview(view)
+
+        NSView.animate(withDuration: 1.0, timingFunction: CAMediaTimingFunction.init(name: .easeOut), animations: {
+            view.alphaValue = 0
+        }, completion: {
+            view.removeFromSuperview()
+        })
+    }
 }

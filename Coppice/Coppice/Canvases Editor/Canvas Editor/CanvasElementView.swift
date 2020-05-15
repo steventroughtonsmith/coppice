@@ -50,6 +50,11 @@ class CanvasElementView: NSView  {
 
     var selected: Bool = false
 
+    var active: Bool {
+        get { return self.backgroundView.active }
+        set { self.backgroundView.active = newValue }
+    }
+
     var showBackground: Bool = false {
         didSet {
             self.updateBackgroundVisibility(animated: true)
@@ -67,6 +72,7 @@ class CanvasElementView: NSView  {
         self.updateSubviews(with: layoutPage)
         self.updateResizeRects(with: layoutPage)
         self.showBackground = layoutPage.showBackground
+        self.titleView.enabled = layoutPage.showBackground
         self.backgroundView.selected = layoutPage.selected
     }
 

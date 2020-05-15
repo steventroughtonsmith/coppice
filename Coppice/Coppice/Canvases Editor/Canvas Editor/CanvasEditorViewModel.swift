@@ -94,6 +94,13 @@ class CanvasEditorViewModel: ViewModel {
         self.modelController.close(canvasPage)
     }
 
+    func select(_ canvasPage: CanvasPage, extendingSelection: Bool = false) {
+        guard let page = self.layoutEngine.page(withID: canvasPage.id.uuid) else {
+            return
+        }
+        self.layoutEngine.select(page, extendingSelection: extendingSelection)
+    }
+
     func canvasPage(with uuid: UUID) -> CanvasPage? {
         return self.canvasPages.first(where: { $0.id.uuid == uuid })
     }

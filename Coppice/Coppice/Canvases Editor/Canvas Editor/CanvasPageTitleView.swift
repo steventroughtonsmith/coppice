@@ -23,6 +23,13 @@ class CanvasPageTitleView: NSView {
 
     weak var delegate: CanvasPageTitleViewDelegate?
 
+    var enabled: Bool = true {
+        didSet {
+            self.titleLabel.isEnabled = self.enabled
+            self.button.isEnabled = self.enabled
+        }
+    }
+
     //MARK: - Setup
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)

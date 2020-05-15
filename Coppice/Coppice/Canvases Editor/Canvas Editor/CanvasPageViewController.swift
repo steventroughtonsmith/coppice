@@ -39,6 +39,11 @@ class CanvasPageViewController: NSViewController, CanvasPageView {
         }
     }
 
+    var active: Bool {
+        get { return self.typedView.active }
+        set { self.typedView.active = newValue }
+    }
+
     @objc dynamic let viewModel: CanvasPageViewModel
     init(viewModel: CanvasPageViewModel) {
         self.viewModel = viewModel
