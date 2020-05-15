@@ -94,6 +94,10 @@ class CanvasListViewController: NSViewController, SplitViewContainable, NSMenuIt
     }
 
     var currentThumbnailSize: CGSize {
+        //May get called before when not displayed so we want to check the optional
+        guard (self.tableView?.numberOfRows ?? 0) > 0 else {
+            return .zero
+        }
         let canvasCell = self.tableView.view(atColumn: 0, row: 0, makeIfNecessary: true) as? CanvasCell
         return canvasCell?.thumbnailImageView.frame.size ?? .zero
     }

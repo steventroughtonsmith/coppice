@@ -37,6 +37,11 @@ class CanvasTextView: NSTextView {
             return
         }
 
+        //Apparently calling .specialKey on non key events throws an exception
+        guard (event.type == .keyUp) || (event.type == .keyDown) else {
+            return
+        }
+
         guard (event.specialKey == .tab) || (event.specialKey == .backTab) else {
             return
         }

@@ -86,6 +86,9 @@ class ThumbnailController: NSObject {
 
     @objc dynamic func updateThumbnails() {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(updateThumbnails), object: nil)
+        guard self.currentThumbnailSize != .zero else {
+            return
+        }
         self.modelController.disableUndo {
             for object in self.canvasChangeQueue {
                 if let canvas = object as? Canvas {
