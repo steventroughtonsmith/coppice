@@ -25,6 +25,7 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
+                        <accessibilityConnection property="title" destination="VTj-SJ-Zad" id="AYT-lN-q2t"/>
                         <binding destination="-2" name="value" keyPath="self.viewModel.canvasTitle" id="XdU-H6-0jB"/>
                         <outlet property="nextKeyView" destination="Kri-qI-nSO" id="7Zm-6h-2Rk"/>
                     </connections>
@@ -51,6 +52,7 @@
                         </menu>
                     </popUpButtonCell>
                     <connections>
+                        <accessibilityConnection property="title" destination="IBt-e7-HOq" id="egy-fw-Z6g"/>
                         <binding destination="-2" name="selectedIndex" keyPath="self.viewModel.selectedThemeIndex" previousBinding="Jy9-Vy-kwx" id="g3a-sG-ZMn"/>
                         <binding destination="-2" name="contentValues" keyPath="self.viewModel.themes" id="Jy9-Vy-kwx"/>
                     </connections>
