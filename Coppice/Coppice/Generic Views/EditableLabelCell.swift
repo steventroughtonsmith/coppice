@@ -15,6 +15,23 @@ class EditableLabelCell: NSTableCellView {
         }
     }
 
+    @IBOutlet weak var iconView: NSView?
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.updateAccessibility()
+    }
+
+
+    private func updateAccessibility() {
+        self.setAccessibilityTitleUIElement(nil)
+        self.setAccessibilityChildren(nil)
+    }
+
+    override func accessibilityPerformPress() -> Bool {
+        self.startEditing()
+        return true
+    }
 
     func startEditing() {
         guard let textField = self.textField else {
@@ -47,6 +64,11 @@ class EditableLabelCell: NSTableCellView {
         self.textField?.abortEditing()
         self.endEditing(nil)
     }
+}
+
+//MARK: - Accessibility
+extension EditableLabelCell {
+
 }
 
 extension EditableLabelCell: NSTextFieldDelegate {

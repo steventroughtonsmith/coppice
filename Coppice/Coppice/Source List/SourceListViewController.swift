@@ -504,6 +504,7 @@ extension SourceListViewController: NSOutlineViewDelegate {
         case .groupCell:
             view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("GroupCell"), owner: self) as? NSTableCellView
         }
+        view?.setAccessibilityLabel(sourceListItem.accessibilityDescription)
         view?.objectValue = item
         return view
     }

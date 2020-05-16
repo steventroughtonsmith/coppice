@@ -57,6 +57,10 @@ class SourceListNode: NSObject {
         return .textColor
     }
 
+    var accessibilityDescription: String? {
+        return self.title
+    }
+
     let item: DocumentWindowViewModel.SidebarItem
     let cellType: CellType
 
@@ -174,6 +178,11 @@ class FolderSourceListNode: SourceListNode {
     override var pasteboardWriter: NSPasteboardWriting? {
         return self.folder.pasteboardWriter
     }
+
+    override var accessibilityDescription: String? {
+        let type = NSLocalizedString("Folder", comment: "Folder table row accessibility description")
+        return "\(self.title), \(type)"
+    }
 }
 
 
@@ -216,6 +225,13 @@ class PageSourceListNode: SourceListNode {
 
     override var folderContainable: FolderContainable? {
         return self.page
+    }
+
+    override var accessibilityDescription: String? {
+        guard self.title.count > 0 else {
+            return "\(Page.localizedDefaultTitle), \(self.page.content.contentType.localizedName)"
+        }
+        return "\(self.title), \(self.page.content.contentType.localizedName)"
     }
 }
 
