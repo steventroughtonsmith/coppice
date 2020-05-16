@@ -5,7 +5,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="CanvasPageInspectorViewController" customModule="Bubbles" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="CanvasPageInspectorViewController" customModule="Coppice" customModuleProvider="target">
             <connections>
                 <outlet property="firstKeyView" destination="RXF-GF-zPJ" id="0Ak-a3-LsE"/>
                 <outlet property="lastKeyView" destination="bnF-CY-U58" id="w8x-ch-hXj"/>
@@ -39,6 +39,7 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
+                        <accessibilityConnection property="title" destination="jYf-O7-Kpz" id="MRE-kV-vgR"/>
                         <binding destination="-2" name="value" keyPath="self.viewModel.width" id="0Kg-6G-BKV"/>
                         <outlet property="nextKeyView" destination="uzx-B1-fPf" id="iVl-D4-fwQ"/>
                     </connections>
@@ -55,6 +56,7 @@
                     <rect key="frame" x="124" y="57" width="19" height="28"/>
                     <stepperCell key="cell" continuous="YES" alignment="left" maxValue="10000" id="a0k-Bt-C5t"/>
                     <connections>
+                        <accessibilityConnection property="title" destination="jYf-O7-Kpz" id="go2-Lf-9W4"/>
                         <binding destination="-2" name="minValue" keyPath="self.viewModel.minimumWidth" id="HLI-0l-NpJ"/>
                         <binding destination="-2" name="value" keyPath="self.viewModel.width" previousBinding="HLI-0l-NpJ" id="UdX-5f-nqA"/>
                     </connections>
@@ -63,6 +65,7 @@
                     <rect key="frame" x="272" y="57" width="19" height="28"/>
                     <stepperCell key="cell" continuous="YES" alignment="left" maxValue="10000" id="sqQ-jW-Awg"/>
                     <connections>
+                        <accessibilityConnection property="title" destination="TER-vx-UUH" id="ZSI-NU-iXh"/>
                         <binding destination="-2" name="value" keyPath="self.viewModel.height" previousBinding="arb-GE-7V6" id="rB8-J0-M7Z"/>
                         <binding destination="-2" name="minValue" keyPath="self.viewModel.minimumHeight" id="arb-GE-7V6"/>
                     </connections>
@@ -76,6 +79,7 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
+                        <accessibilityConnection property="title" destination="TER-vx-UUH" id="FlE-BT-CBZ"/>
                         <binding destination="-2" name="value" keyPath="self.viewModel.height" id="qPa-T8-f8d"/>
                         <outlet property="nextKeyView" destination="bnF-CY-U58" id="Od4-s1-Bet"/>
                     </connections>
