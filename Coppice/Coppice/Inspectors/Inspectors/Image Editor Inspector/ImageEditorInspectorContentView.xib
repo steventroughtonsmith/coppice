@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16085" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="ImageEditorInspectorViewController" customModule="Bubbles" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="ImageEditorInspectorViewController" customModule="Coppice" customModuleProvider="target">
             <connections>
                 <outlet property="firstKeyView" destination="Nfg-9H-1PC" id="ZhN-HL-yLu"/>
                 <outlet property="lastKeyView" destination="Nfg-9H-1PC" id="1tL-WH-BQk"/>
@@ -33,6 +33,7 @@
                                 <size key="maxSize" width="402" height="10000000"/>
                                 <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                 <connections>
+                                    <accessibilityConnection property="title" destination="G8q-mk-dZR" id="86I-A1-yEK"/>
                                     <binding destination="-2" name="value" keyPath="self.viewModel.imageDescription" id="RP3-c2-ZQH"/>
                                 </connections>
                             </textView>
