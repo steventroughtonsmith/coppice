@@ -15,10 +15,10 @@ class TextEditorInspectorViewController: BaseInspectorViewController {
     }
 
     override var ranking: InspectorRanking { return .content }
-    
+
     @IBOutlet weak var colourPicker: TextColourPicker!
-    @IBOutlet weak var styleControl: NSSegmentedControl!
     @IBOutlet weak var alignmentControl: NSSegmentedControl!
+    @IBOutlet weak var styleControl: NSSegmentedControl!
 
     var typedViewModel: TextEditorInspectorViewModel {
         return self.viewModel as! TextEditorInspectorViewModel
@@ -32,6 +32,9 @@ class TextEditorInspectorViewController: BaseInspectorViewController {
         self.setupAlignmentControl()
         self.setupStyleControl()
         self.setupColourPicker()
+
+        let children = self.view.accessibilityChildren()?.compactMap { $0 as? NSAccessibilityElementProtocol }
+        self.view.setAccessibilityChildrenInNavigationOrder(children)
     }
 
 

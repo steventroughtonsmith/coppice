@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16085" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="InspectorContainerViewController" customModule="Bubbles" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="InspectorContainerViewController" customModule="Coppice" customModuleProvider="target">
             <connections>
                 <outlet property="stackView" destination="o7a-ej-oXw" id="fet-UQ-tZ6"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
@@ -19,7 +19,7 @@
             <subviews>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zkb-NC-iT9">
                     <rect key="frame" x="0.0" y="0.0" width="210" height="300"/>
-                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="jmX-5L-ayH" customClass="FlippedClipView" customModule="Bubbles" customModuleProvider="target">
+                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="jmX-5L-ayH" customClass="FlippedClipView" customModule="Coppice" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="210" height="300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -45,6 +45,7 @@
                         <rect key="frame" x="194" y="0.0" width="16" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
+                    <accessibility description="Inspectors"/>
                 </scrollView>
             </subviews>
             <constraints>

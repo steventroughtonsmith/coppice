@@ -22,15 +22,10 @@ class CanvasTextView: NSTextView {
     }
 
     override func becomeFirstResponder() -> Bool {
-        self.isEditable = true
         self.flashIfTabFocus()
         return super.becomeFirstResponder()
     }
 
-    override func resignFirstResponder() -> Bool {
-        self.isEditable = false
-        return super.resignFirstResponder()
-    }
 
     private func flashIfTabFocus() {
         guard let event = NSApp.currentEvent else {

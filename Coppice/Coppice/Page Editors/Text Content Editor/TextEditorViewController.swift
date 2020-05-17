@@ -347,4 +347,17 @@ extension TextEditorViewController: NSTextViewDelegate {
         }
         self.updateSelectionAttributes()
     }
+
+    func textView(_ textView: NSTextView, shouldChangeTextInRanges affectedRanges: [NSValue], replacementStrings: [String]?) -> Bool {
+        return true
+    }
+
+
+    func textShouldBeginEditing(_ textObject: NSText) -> Bool {
+        return true
+    }
+
+    func textShouldEndEditing(_ textObject: NSText) -> Bool {
+        return true
+    }
 }

@@ -31,6 +31,7 @@ class BaseInspectorViewController: NSViewController, Inspector {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.loadContentView()
+        self.setupAccessibility()
     }
 
     var ranking: InspectorRanking { return InspectorRanking(rawValue: 0)! }
@@ -97,5 +98,16 @@ class BaseInspectorViewController: NSViewController, Inspector {
         }
         return keyPaths
     }
-    
+
+
+    //MARK: - Accessibility
+    func setupAccessibility() {
+        guard let contentContainer = self.contentContainer else {
+            return
+        }
+        self.view.setAccessibilityElement(true)
+        self.view.setAccessibilityRole(.group)
+        self.view.setAccessibilityLabel(self.viewModel.title)
+        self.view.setAccessibilityChildren(contentContainer.accessibilityChildren())
+    }
 }

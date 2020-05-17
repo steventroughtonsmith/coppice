@@ -43,7 +43,6 @@ class CanvasPageBackgroundView: NSView {
     //MARK: - Drawing
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
-        print("draw page")
         self.drawOuterStroke()
         self.drawBackground()
         self.drawInnerStroke()

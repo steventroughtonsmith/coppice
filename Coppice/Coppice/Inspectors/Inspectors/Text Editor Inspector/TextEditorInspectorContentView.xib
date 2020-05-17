@@ -33,6 +33,7 @@
                             </items>
                         </menu>
                     </popUpButtonCell>
+                    <accessibility description="Font Family"/>
                     <connections>
                         <binding destination="-2" name="contentValues" keyPath="self.viewModel.fontFamilies" id="VLq-Ak-tLh">
                             <dictionary key="options">
@@ -56,6 +57,7 @@
                             </items>
                         </menu>
                     </popUpButtonCell>
+                    <accessibility description="Typeface"/>
                     <connections>
                         <binding destination="-2" name="enabled" keyPath="self.viewModel.selectedFontFamily" id="xXs-vm-ev7">
                             <dictionary key="options">
@@ -89,6 +91,7 @@
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <accessibility description="Text Size"/>
                     <connections>
                         <binding destination="-2" name="value" keyPath="self.viewModel.fontSize" id="EV2-y3-Vgm">
                             <dictionary key="options">
@@ -98,7 +101,7 @@
                         <outlet property="nextKeyView" destination="gJM-Vb-Oux" id="KIJ-MN-Tal"/>
                     </connections>
                 </textField>
-                <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gJM-Vb-Oux">
+                <stepper toolTip="Text Size" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gJM-Vb-Oux">
                     <rect key="frame" x="174" y="62" width="19" height="28"/>
                     <stepperCell key="cell" continuous="YES" alignment="left" maxValue="999" id="iIB-a3-m2I"/>
                     <connections>
@@ -116,6 +119,7 @@
                             <segment image="TextAlignRight"/>
                         </segments>
                     </segmentedCell>
+                    <accessibility description="Alignment"/>
                     <connections>
                         <action selector="alignmentClicked:" target="-2" id="WmK-KG-Cnd"/>
                         <outlet property="nextKeyView" destination="1fJ-zV-rDa" id="QBu-F4-aZw"/>
@@ -132,6 +136,7 @@
                             <segment image="TextStrikethrough"/>
                         </segments>
                     </segmentedCell>
+                    <accessibility description="Style"/>
                     <connections>
                         <action selector="styleControlClicked:" target="-2" id="sia-pJ-wff"/>
                         <outlet property="nextKeyView" destination="b02-Xt-Yqt" id="19l-7V-MEN"/>
@@ -146,12 +151,14 @@
                         <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                         <font key="font" size="13" name="SFCompactDisplay-Regular"/>
                     </buttonCell>
+                    <accessibility description="Open Font Panel"/>
                     <connections>
                         <action selector="showFontPanel:" target="-2" id="PNR-DQ-pxG"/>
                     </connections>
                 </button>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="332-eu-rTh" customClass="TextColourPicker" customModule="Coppice" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="31" width="75" height="24"/>
+                    <accessibility description="Text Colour"/>
                     <connections>
                         <action selector="colourChanged:" target="-2" id="Zez-hq-PYB"/>
                         <outlet property="nextKeyView" destination="lJO-MO-Qab" id="lvv-2g-0XQ"/>
