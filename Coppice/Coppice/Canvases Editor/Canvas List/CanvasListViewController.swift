@@ -11,6 +11,8 @@ import Combine
 
 class CanvasListViewController: NSViewController, SplitViewContainable, NSMenuItemValidation {
     @IBOutlet weak var tableView: NSTableView!
+    @IBOutlet weak var tableScrollView: NSScrollView!
+    @IBOutlet weak var addButton: NSButton!
 
     let viewModel: CanvasListViewModel
     init(viewModel: CanvasListViewModel) {
@@ -38,6 +40,8 @@ class CanvasListViewController: NSViewController, SplitViewContainable, NSMenuIt
         self.setupActionButton()
 
         self.bottomBarConstraint.constant = GlobalConstants.bottomBarHeight
+
+        self.setupAccessibility()
     }
 
     var viewAppeared = false
@@ -165,6 +169,22 @@ class CanvasListViewController: NSViewController, SplitViewContainable, NSMenuIt
         }
 
         self.viewModel.deleteCanvas(atIndex: self.rowForAction)
+    }
+
+
+    //MARK: - Accessibility
+    private func setupAccessibility() {
+        guard
+            let scrollView = self.tableScrollView,
+            let addButton = self.addButton,
+            let actionButton = self.actionButton else {
+                return
+        }
+
+        self.view.setAccessibilityElement(true)
+        self.view.setAccessibilityRole(.group)
+        self.view.setAccessibilityLabel(NSLocalizedString("Canvas List", comment: "Canvas List accessibility label"))
+        self.view.setAccessibilityChildren([scrollView, addButton, actionButton])
     }
 }
 

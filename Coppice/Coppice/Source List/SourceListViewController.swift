@@ -23,6 +23,7 @@ class SourceListViewController: NSViewController, NSMenuItemValidation {
     }
 
     @IBOutlet weak var outlineView: NSOutlineView!
+    @IBOutlet weak var outlineScrollView: NSScrollView!
     @IBOutlet weak var bottomBarConstraint: NSLayoutConstraint!
 
     override func viewDidLoad() {
@@ -35,6 +36,7 @@ class SourceListViewController: NSViewController, NSMenuItemValidation {
         self.setupContextMenu()
 
         self.bottomBarConstraint.constant = GlobalConstants.bottomBarHeight
+        self.setupAccessibility()
     }
 
     override func viewWillAppear() {
@@ -335,6 +337,21 @@ class SourceListViewController: NSViewController, NSMenuItemValidation {
         }
     }
 
+
+    //MARK: - Accessibility
+    private func setupAccessibility() {
+        guard
+            let scrollView = self.outlineScrollView,
+            let addButton = self.addPullDownButton,
+            let actionButton = self.actionPullDownButton else {
+            return
+        }
+
+        self.view.setAccessibilityElement(true)
+        self.view.setAccessibilityRole(.group)
+        self.view.setAccessibilityLabel(NSLocalizedString("Sidebar", comment: "Sidebar accessibility label"))
+        self.view.setAccessibilityChildren([scrollView, addButton, actionButton])
+    }
 }
 
 

@@ -13,6 +13,7 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
 
     @IBOutlet weak var scrollView: NSScrollView!
     @IBOutlet weak var canvasView: CanvasView!
+    @IBOutlet weak var toggleCanvasListButton: NSButton!
     @IBOutlet weak var bottomBarConstraint: NSLayoutConstraint!
     @objc dynamic let viewModel: CanvasEditorViewModel
     init(viewModel: CanvasEditorViewModel) {
@@ -107,6 +108,8 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
         self.updateZoomControl()
 
         self.bottomBarConstraint.constant = GlobalConstants.bottomBarHeight
+
+        self.setupAccessibility()
     }
 
     var enabled: Bool = true
@@ -576,6 +579,22 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
         splitViewItem.holdingPriority = NSLayoutConstraint.Priority(rawValue: 249)
         return splitViewItem
     }()
+
+
+    //MARK: - Accessibility
+    private func setupAccessibility() {
+        guard
+            let scrollView = self.scrollView,
+            let toggleButton = self.toggleCanvasListButton,
+            let zoomControl = self.zoomControl else {
+                return
+        }
+
+        self.view.setAccessibilityElement(true)
+        self.view.setAccessibilityRole(.group)
+        self.view.setAccessibilityLabel(NSLocalizedString("Canvas Editor", comment: "Canvas List accessibility label"))
+        self.view.setAccessibilityChildren([scrollView, toggleButton, zoomControl])
+    }
 }
 
 

@@ -12,6 +12,7 @@
                 <outlet property="canvasView" destination="PUw-B3-8ie" id="pZV-PX-WgV"/>
                 <outlet property="emptyStateView" destination="dCb-kT-jJL" id="gC8-g4-rny"/>
                 <outlet property="scrollView" destination="WXD-co-iCD" id="Unx-zF-neD"/>
+                <outlet property="toggleCanvasListButton" destination="g2M-Yk-OJX" id="Xs1-6d-0gg"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
                 <outlet property="zoomControl" destination="7ch-X7-loO" id="eBK-wO-l4u"/>
             </connections>

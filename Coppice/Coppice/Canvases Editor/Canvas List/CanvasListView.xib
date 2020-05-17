@@ -5,11 +5,13 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="CanvasListViewController" customModule="Bubbles" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="CanvasListViewController" customModule="Coppice" customModuleProvider="target">
             <connections>
                 <outlet property="actionButton" destination="x9y-AL-d7u" id="sRT-Pv-aVS"/>
+                <outlet property="addButton" destination="4jD-Iv-NuW" id="VM3-sa-xpy"/>
                 <outlet property="bottomBarConstraint" destination="F5N-od-H9t" id="TJk-Dy-h6M"/>
                 <outlet property="contextMenu" destination="BeW-gw-tnK" id="XbT-XT-QAv"/>
+                <outlet property="tableScrollView" destination="RGX-Qn-bQj" id="M1E-ev-Jx8"/>
                 <outlet property="tableView" destination="ZY4-2Z-8n6" id="fk3-dE-fEz"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
@@ -26,7 +28,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="172" height="489"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" usesAutomaticRowHeights="YES" viewBased="YES" id="ZY4-2Z-8n6" customClass="PixelPerfectTableView" customModule="Bubbles" customModuleProvider="target">
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" usesAutomaticRowHeights="YES" viewBased="YES" id="ZY4-2Z-8n6" customClass="PixelPerfectTableView" customModule="Coppice" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="172" height="489"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
