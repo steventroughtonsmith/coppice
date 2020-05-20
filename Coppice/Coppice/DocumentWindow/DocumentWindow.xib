@@ -5,7 +5,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="DocumentWindowController" customModule="Bubbles" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="DocumentWindowController" customModule="Coppice" customModuleProvider="target">
             <connections>
                 <outlet property="searchField" destination="4ma-yw-p7D" id="EfM-8g-d3k"/>
                 <outlet property="splitViewControl" destination="aCJ-vR-5Ss" id="EzN-eO-CcN"/>
@@ -31,7 +31,7 @@
                         <popUpButton key="view" verticalHuggingPriority="750" id="6Ai-AI-X1H">
                             <rect key="frame" x="7" y="14" width="47" height="24"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="AddPage" imagePosition="only" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="0CS-GJ-ZH2" id="Twi-4V-TzH">
+                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" imagePosition="only" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="0CS-GJ-ZH2" id="Twi-4V-TzH">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                                 <menu key="menu" id="Br5-bc-W3s">
@@ -71,8 +71,8 @@
                             <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="selectAny" id="hOH-HD-2M4">
                                 <font key="font" metaFont="system"/>
                                 <segments>
-                                    <segment image="ToggleSidebar" width="44" selected="YES"/>
-                                    <segment image="ToggleInspector" width="44" selected="YES" tag="1"/>
+                                    <segment toolTip="Toggle Sidebar" image="ToggleSidebar" width="44" selected="YES"/>
+                                    <segment toolTip="Toggle Inspectors" image="ToggleInspector" width="44" selected="YES" tag="1"/>
                                 </segments>
                             </segmentedCell>
                         </segmentedControl>
@@ -99,7 +99,7 @@
                         </searchField>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="71e-1F-lXX"/>
-                    <toolbarItem implicitItemIdentifier="804F72E1-4F1E-4895-A73F-ECC98356CA90" label="Link To Page" paletteLabel="Link To Page" image="LinkPage" sizingBehavior="auto" id="ONd-MB-hst" customClass="ResponderChainValidatingToolbarItem" customModule="Bubbles" customModuleProvider="target">
+                    <toolbarItem implicitItemIdentifier="804F72E1-4F1E-4895-A73F-ECC98356CA90" label="Link To Page" paletteLabel="Link To Page" image="LinkPage" sizingBehavior="auto" id="ONd-MB-hst" customClass="ResponderChainValidatingToolbarItem" customModule="Coppice" customModuleProvider="target">
                         <nil key="toolTip"/>
                         <button key="view" verticalHuggingPriority="750" id="HHh-4W-dVn">
                             <rect key="frame" x="15" y="14" width="44" height="25"/>
@@ -129,7 +129,7 @@
             </connections>
             <point key="canvasLocation" x="309" y="-658"/>
         </window>
-        <customObject id="vF9-dA-dmp" customClass="NewPageMenuDelegate" customModule="Bubbles" customModuleProvider="target"/>
+        <customObject id="vF9-dA-dmp" customClass="NewPageMenuDelegate" customModule="Coppice" customModuleProvider="target"/>
     </objects>
     <resources>
         <image name="AddBoard" width="19" height="19"/>
