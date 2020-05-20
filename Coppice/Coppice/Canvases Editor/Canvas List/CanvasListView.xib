@@ -68,6 +68,7 @@
                                         </prototypeCellViews>
                                     </tableColumn>
                                 </tableColumns>
+                                <accessibility description="Canvas List"/>
                                 <connections>
                                     <action trigger="doubleAction" selector="editCanvasTitle:" target="-2" id="DAD-Hi-LbI"/>
                                     <outlet property="dataSource" destination="-2" id="B6Z-QC-7S5"/>
