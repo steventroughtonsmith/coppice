@@ -24,6 +24,18 @@ class TextColourPicker: NSControl {
 
     private func setup() {
         self.registerForDraggedTypes([.color])
+        self.focusRingType = .exterior
+        self.setupAccessibility()
+    }
+
+
+    //MARK: - Responder
+    override var acceptsFirstResponder: Bool {
+        return true
+    }
+
+    override var focusRingMaskBounds: NSRect {
+        return self.bounds
     }
 
 
@@ -261,6 +273,17 @@ class TextColourPicker: NSControl {
     }
 
 
+    //MARK: - Key Events
+
+    override func keyUp(with event: NSEvent) {
+        guard event.specialKey == .enter || event.keyCode == 49 /* space bar */ else {
+            super.keyUp(with: event)
+            return
+        }
+        self.showPopoverPanel()
+    }
+
+
     //MARK: - Popover
     private lazy var colourGridView: ColourGridView = {
         let view = ColourGridView()
@@ -277,6 +300,14 @@ class TextColourPicker: NSControl {
         popover.behavior = .transient
         popover.contentViewController = vc
         popover.show(relativeTo: self.bounds, of: self, preferredEdge: .minY)
+    }
+
+
+    //MARK: - Accessibility
+    func setupAccessibility() {
+        self.setAccessibilityElement(true)
+        self.setAccessibilityRole(.colorWell)
+        self.setAccessibilityTitle(NSLocalizedString("Text Colour", comment: "Text Colour picker accessibility title"))
     }
 }
 

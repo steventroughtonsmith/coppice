@@ -16,11 +16,41 @@ class ColourGridView: NSView {
     weak var delegate: ColourGridViewDelegate?
     let numberOfColumns = 5
 
+    struct ColourOption {
+        let hex: String
+        let localizedName: String
+
+        var colour: NSColor {
+            return NSColor(hexString: self.hex)!
+        }
+    }
+
     private let colours = [
-        NSColor(hexString: "#000000")!, NSColor(hexString: "#545454")!, NSColor(hexString: "#7f7f7f")!, NSColor(hexString: "#a8a8a8")!, NSColor(hexString: "#ffffff")!,
-        NSColor(hexString: "#a24432")!, NSColor(hexString: "#a7a72a")!, NSColor(hexString: "#00a000")!, NSColor(hexString: "#005ea5")!, NSColor(hexString: "#b127b0")!,
-        NSColor(hexString: "#ff2600")!, NSColor(hexString: "#e8e81d")!, NSColor(hexString: "#37ee37")!, NSColor(hexString: "#0096ff")!, NSColor(hexString: "#ff40ff")!,
-        NSColor(hexString: "#ff7e79")!, NSColor(hexString: "#fffc79")!, NSColor(hexString: "#73fa79")!, NSColor(hexString: "#76d6ff")!, NSColor(hexString: "#ff85ff")!,
+        //First Row (Greys)
+        ColourOption(hex: "#000000", localizedName: NSLocalizedString("Black", comment: "Black colour name")),
+        ColourOption(hex: "#545454", localizedName: NSLocalizedString("Dark Grey", comment: "Dark Grey colour name")),
+        ColourOption(hex: "#7f7f7f", localizedName: NSLocalizedString("Grey", comment: "Grey colour name")),
+        ColourOption(hex: "#a8a8a8", localizedName: NSLocalizedString("Pale Grey", comment: "Pale Grey colour name")),
+        ColourOption(hex: "#ffffff", localizedName: NSLocalizedString("White", comment: "White colour name")),
+		//Second row (Dark)
+        ColourOption(hex: "#a24432", localizedName: NSLocalizedString("Dark Red", comment: "Dark Red colour name")),
+        ColourOption(hex: "#a7a72a", localizedName: NSLocalizedString("Dark Yellow", comment: "Dark Yellow colour name")),
+        ColourOption(hex: "#00a000", localizedName: NSLocalizedString("Dark Green", comment: "Dark Green colour name")),
+        ColourOption(hex: "#005ea5", localizedName: NSLocalizedString("Dark Blue", comment: "Dark Blue colour name")),
+        ColourOption(hex: "#b127b0", localizedName: NSLocalizedString("Dark Purple", comment: "Dark Purple colour name")),
+		//Second row (Standard)
+        ColourOption(hex: "#ff2600", localizedName: NSLocalizedString("Red", comment: "Red colour name")),
+        ColourOption(hex: "#e8e81d", localizedName: NSLocalizedString("Yellow", comment: "Yellow colour name")),
+        ColourOption(hex: "#37ee37", localizedName: NSLocalizedString("Green", comment: "Green colour name")),
+        ColourOption(hex: "#0096ff", localizedName: NSLocalizedString("Blue", comment: "Blue colour name")),
+        ColourOption(hex: "#ff40ff", localizedName: NSLocalizedString("Purple", comment: "Purple colour name")),
+		//Second row (Pale)
+        ColourOption(hex: "#ff7e79", localizedName: NSLocalizedString("Pale Red", comment: "Pale Red colour name")),
+        ColourOption(hex: "#fffc79", localizedName: NSLocalizedString("Pale Yellow", comment: "Pale Yellow colour name")),
+        ColourOption(hex: "#73fa79", localizedName: NSLocalizedString("Pale Green", comment: "Pale Green colour name")),
+        ColourOption(hex: "#76d6ff", localizedName: NSLocalizedString("Pale Blue", comment: "Pale Blue colour name")),
+        ColourOption(hex: "#ff85ff", localizedName: NSLocalizedString("Pale Purple", comment: "Pale Purple colour name")),
+
     ]
 
     override init(frame frameRect: NSRect) {
@@ -59,7 +89,7 @@ class ColourGridView: NSView {
     func setupGrid() {
         let stackView = self.stackView
 
-        var currentRowColours = [NSColor]()
+        var currentRowColours = [ColourOption]()
         (0..<self.colours.count).forEach {
             currentRowColours.append(self.colours[$0])
             if (currentRowColours.count % self.numberOfColumns) == 0 {
@@ -86,15 +116,17 @@ class ColourGridView: NSView {
         self.updateSelection()
     }
 
-    private func createRow(for colours: [NSColor]) -> NSStackView {
+    private func createRow(for colours: [ColourOption]) -> NSStackView {
         let stackView = NSStackView()
         stackView.orientation = .horizontal
         stackView.alignment = .top
         stackView.distribution = .equalSpacing
         stackView.spacing = 2
 
-        for colour in colours {
-            let colourView = ColourGridButton(colour: colour, target: self, action: #selector(selectColour(_:)))
+        for colourOption in colours {
+            let colourView = ColourGridButton(colour: colourOption.colour, target: self, action: #selector(selectColour(_:)))
+            colourView.setAccessibilityLabel(colourOption.localizedName)
+            colourView.toolTip = colourOption.localizedName
             self.buttons.append(colourView)
             stackView.addArrangedSubview(colourView)
         }

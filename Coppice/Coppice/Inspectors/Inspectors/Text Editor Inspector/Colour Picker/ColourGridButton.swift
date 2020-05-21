@@ -32,6 +32,7 @@ class ColourGridButton: NSButton {
         self.target = target
         self.action = action
         (self.cell as? ColourGridButtonCell)?.colour = colour
+        self.focusRingType = .exterior
     }
 
     required init?(coder: NSCoder) {
