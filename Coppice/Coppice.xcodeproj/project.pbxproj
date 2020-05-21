@@ -176,6 +176,7 @@
 		99A0B85E238D730E005FCF25 /* TextEditorInspectorTypesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B85D238D730E005FCF25 /* TextEditorInspectorTypesTests.swift */; };
 		99A0B860238D732F005FCF25 /* TextEditorInspectorViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B85F238D732F005FCF25 /* TextEditorInspectorViewModelTests.swift */; };
 		99A97FD9246DBD4C00CDD95C /* CanvasCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A97FD8246DBD4C00CDD95C /* CanvasCell.swift */; };
+		99A97FF72476ABD500CDD95C /* SearchResultTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A97FF62476ABD500CDD95C /* SearchResultTableCellView.swift */; };
 		99AD8874237464C4000453E1 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AD8873237464C4000453E1 /* Alert.swift */; };
 		99AD88762374665D000453E1 /* Alert+AppKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AD88752374665D000453E1 /* Alert+AppKit.swift */; };
 		99AD88782376FCF0000453E1 /* PageContentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AD88772376FCF0000453E1 /* PageContentTests.swift */; };
@@ -445,6 +446,7 @@
 		99A0B85D238D730E005FCF25 /* TextEditorInspectorTypesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorInspectorTypesTests.swift; sourceTree = "<group>"; };
 		99A0B85F238D732F005FCF25 /* TextEditorInspectorViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorInspectorViewModelTests.swift; sourceTree = "<group>"; };
 		99A97FD8246DBD4C00CDD95C /* CanvasCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasCell.swift; sourceTree = "<group>"; };
+		99A97FF62476ABD500CDD95C /* SearchResultTableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultTableCellView.swift; sourceTree = "<group>"; };
 		99AD8873237464C4000453E1 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		99AD88752374665D000453E1 /* Alert+AppKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alert+AppKit.swift"; sourceTree = "<group>"; };
 		99AD88772376FCF0000453E1 /* PageContentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageContentTests.swift; sourceTree = "<group>"; };
@@ -954,6 +956,7 @@
 				999EA6B8243619E700BF254E /* SearchResultsViewController.swift */,
 				999EA6C62436384F00BF254E /* SearchResultOutlineView.swift */,
 				999EA6B9243619E700BF254E /* SearchResultsView.xib */,
+				99A97FF62476ABD500CDD95C /* SearchResultTableCellView.swift */,
 				999EA6BD243628A700BF254E /* Cells */,
 			);
 			path = "Search Results";
@@ -1645,6 +1648,7 @@
 				99C9AF1D23671FD8009F909A /* ModelReader.swift in Sources */,
 				99FDF12C241FD53D00AF1E51 /* CanvasesViewController.swift in Sources */,
 				993D2BFE2412FB1C002E5BAC /* SplitViewContainable.swift in Sources */,
+				99A97FF72476ABD500CDD95C /* SearchResultTableCellView.swift in Sources */,
 				992A5CAE22DDF50F0012CCB6 /* DebugPageEditor.swift in Sources */,
 				99C03EFD23293D8A00EB7516 /* ResizePageEventContext.swift in Sources */,
 				99D8E37D237EDB890098CF3B /* CanvasInspectorViewController.swift in Sources */,

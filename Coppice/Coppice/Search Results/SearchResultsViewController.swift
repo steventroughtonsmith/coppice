@@ -10,6 +10,9 @@ import Cocoa
 
 class SearchResultsViewController: NSViewController {
     @IBOutlet weak var outlineView: NSOutlineView!
+    @IBOutlet weak var matchesLabel: NSTextField!
+    @IBOutlet weak var clearSearchButton: NSButton!
+    @IBOutlet weak var outlineScrollView: NSScrollView!
 
     @objc dynamic let viewModel: SearchResultsViewModel
     init(viewModel: SearchResultsViewModel) {
@@ -29,10 +32,27 @@ class SearchResultsViewController: NSViewController {
         self.outlineView.register(NSNib(nibNamed: "SearchResultTableCellView", bundle: nil), forIdentifier: NSUserInterfaceItemIdentifier(rawValue: "SearchResultCell"))
         self.outlineView.setDraggingSourceOperationMask(.copy, forLocal: false)
         self.outlineView.registerForDraggedTypes([ModelID.PasteboardType])
+
+        self.setupAccessibility()
     }
 
     @IBAction func clearSearch(_ sender: Any) {
         self.viewModel.clearSearch()
+    }
+
+    //MARK: - Accessibility
+    private func setupAccessibility() {
+        guard
+            let scrollView = self.outlineScrollView,
+            let matchesLabel = self.matchesLabel.cell,
+            let clearSearchButton = self.clearSearchButton else {
+                return
+        }
+
+        self.view.setAccessibilityElement(true)
+        self.view.setAccessibilityRole(.group)
+        self.view.setAccessibilityLabel(NSLocalizedString("Search Results", comment: "Search Results accessibility label"))
+        self.view.setAccessibilityChildren([scrollView, matchesLabel, clearSearchButton])
     }
 }
 
