@@ -11,6 +11,7 @@ import AppKit
 protocol CanvasEditorView: class {
     func updateZoomFactor()
     func flash(_ canvasPage: CanvasPage)
+    func notifyAccessibilityOfMove(_ canvasPages: [CanvasPage])
 }
 
 class CanvasEditorViewModel: ViewModel {
@@ -99,6 +100,13 @@ class CanvasEditorViewModel: ViewModel {
             return
         }
         self.layoutEngine.select(page, extendingSelection: extendingSelection)
+    }
+
+    func deselect(_ canvasPage: CanvasPage) {
+        guard let page = self.layoutEngine.page(withID: canvasPage.id.uuid) else {
+            return
+        }
+        self.layoutEngine.deselect(page)
     }
 
     func canvasPage(with uuid: UUID) -> CanvasPage? {
@@ -278,6 +286,7 @@ extension CanvasEditorViewModel: CanvasLayoutEngineDelegate {
 
     func moved(pages: [LayoutEnginePage], in layout: CanvasLayoutEngine) {
         self.updatesDisable = true
+        var canvasPages = [CanvasPage]()
         for page in pages {
             guard let canvasPage = self.canvasPage(with: page.id) else {
                 continue
@@ -285,7 +294,9 @@ extension CanvasEditorViewModel: CanvasLayoutEngineDelegate {
             if canvasPage.frame != page.contentFrame {
                 canvasPage.frame = page.contentFrame
             }
+            canvasPages.append(canvasPage)
         }
+        self.view?.notifyAccessibilityOfMove(canvasPages)
         self.updatesDisable = false
     }
 }

@@ -98,6 +98,7 @@ class CanvasElementView: NSView  {
         view.wantsLayer = true
         view.layer?.cornerRadius = 5
         view.layer?.masksToBounds = true
+        view.setAccessibilityLabel(NSLocalizedString("Page Content", comment: "Canvas page content view accessibility label"))
         return view
     }()
 
@@ -133,6 +134,7 @@ class CanvasElementView: NSView  {
         
 
         self.updateBackgroundVisibility(animated: false)
+        self.setupAccessibility()
     }
 
     private let shadowInsets = NSEdgeInsets(top: 5, left: 10, bottom: 10, right: 10)
@@ -169,16 +171,16 @@ class CanvasElementView: NSView  {
 
 
     //MARK: - Background Visibility
-
-
     private func updateBackgroundVisibility(animated: Bool) {
         let backgroundVisible = self.showBackground
 
-        NSView.animate(withDuration: animated ? 0.3 : 0) {
+        NSView.animate(withDuration: animated ? 0.3 : 0, animations: {
             self.titleView.alphaValue = (backgroundVisible ? 1 : 0)
             self.backgroundView.alphaValue = (backgroundVisible ? 1 : 0)
             self.contentContainerShadow.alphaValue = (backgroundVisible ? 0 : 1)
-        }
+        }, completion: {
+            self.updateAccessibility()
+        })
     }
 
 
@@ -255,6 +257,21 @@ class CanvasElementView: NSView  {
             return NSCursor.arrow
         }
         return nil
+    }
+
+
+    private func setupAccessibility() {
+        self.setAccessibilityElement(true)
+        self.setAccessibilityRole(.group)
+        self.updateAccessibility()
+    }
+
+    private func updateAccessibility() {
+        if self.showBackground {
+            self.setAccessibilityChildren([self.titleView.closeButton, self.titleView.titleLabel, self.contentContainer])
+        } else {
+            self.setAccessibilityChildren([self.contentContainer])
+        }
     }
 }
 

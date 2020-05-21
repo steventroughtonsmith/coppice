@@ -641,6 +641,15 @@ extension CanvasEditorViewController: CanvasEditorView {
     func flash(_ canvasPage: CanvasPage) {
         self.pageViewController(for: canvasPage)?.flash()
     }
+
+    func notifyAccessibilityOfMove(_ canvasPages: [CanvasPage]) {
+        guard let canvasView = self.canvasView else {
+            return
+        }
+        let views = canvasPages.compactMap { self.pageViewController(for: $0)?.view }
+
+        NSAccessibility.post(element: canvasView, notification: .layoutChanged, userInfo: [NSAccessibility.NotificationUserInfoKey.uiElements: views])
+    }
 }
 
 
@@ -664,5 +673,13 @@ extension CanvasEditorViewController: CanvasLayoutView {
 extension CanvasEditorViewController: CanvasPageViewControllerDelegate {
     func close(_ page: CanvasPageViewController) {
         self.viewModel.close(page.viewModel.canvasPage)
+    }
+
+    func toggleSelection(of page: CanvasPageViewController) {
+        if page.selected {
+            self.viewModel.deselect(page.viewModel.canvasPage)
+        } else {
+            self.viewModel.select(page.viewModel.canvasPage, extendingSelection: true)
+        }
     }
 }

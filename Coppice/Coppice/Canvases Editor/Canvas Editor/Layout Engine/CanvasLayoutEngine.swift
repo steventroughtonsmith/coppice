@@ -201,6 +201,12 @@ class CanvasLayoutEngine: NSObject {
         self.informOfLayoutChange(with: LayoutContext(selectionChanged: true))
     }
 
+    func deselect(_ page: LayoutEnginePage) {
+        page.selected = false
+        self.updateEnabledPage()
+        self.informOfLayoutChange(with: LayoutContext(selectionChanged: true))
+    }
+
     private var previousSelectionIDs = Set<UUID>()
     private func hasSelectionChanged() -> Bool {
         let newSelectionIDs = Set(self.selectedPages.map { $0.id })

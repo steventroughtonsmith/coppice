@@ -11,6 +11,7 @@ import Combine
 
 protocol CanvasPageViewControllerDelegate: class {
     func close(_ page: CanvasPageViewController)
+    func toggleSelection(of page: CanvasPageViewController)
 }
 
 class CanvasPageViewController: NSViewController, CanvasPageView {
@@ -55,7 +56,8 @@ class CanvasPageViewController: NSViewController, CanvasPageView {
         preconditionFailure("init(coder:) has not been implemented")
     }
 
-    private var labelBinding: AnyCancellable!
+    private var titleObserver: AnyCancellable!
+    private var accessibilityDescriptionObserver: AnyCancellable!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -69,13 +71,20 @@ class CanvasPageViewController: NSViewController, CanvasPageView {
             self.addChild(pageEditor)
         }
 
-        self.labelBinding = self.viewModel.publisher(for: \.title).assign(to: \.title, on: self.typedView.titleView)
+        self.titleObserver = self.viewModel.publisher(for: \.title).sink { [weak self] (title) in
+            self?.typedView.titleView.title = title
+            self?.updateAccessibility()
+        }
+        self.accessibilityDescriptionObserver = self.viewModel.publisher(for: \.accessibilityDescription).sink { [weak self] _ in
+            self?.updateAccessibility()
+        }
 
         self.typedView.titleView.delegate = self
+        self.setupAccessibility()
     }
 
     deinit {
-        self.labelBinding?.cancel()
+        self.titleObserver?.cancel()
     }
 
     func apply(_ layoutPage: LayoutEnginePage) {
@@ -102,6 +111,31 @@ class CanvasPageViewController: NSViewController, CanvasPageView {
         animation.timingFunctions = [CAMediaTimingFunction(name: .linear), CAMediaTimingFunction(name: .easeOut)]
 
         self.view.layer?.add(animation, forKey: "flashAnimation")
+    }
+
+
+    //MARK: - Accessibility
+    func setupAccessibility() {
+        self.updateAccessibility()
+
+        let action = NSAccessibilityCustomAction(name: NSLocalizedString("Select Page", comment: "Select canvas page accessibility action name")) { [weak self] in
+            guard let strongSelf = self else {
+                return false
+            }
+            strongSelf.delegate?.toggleSelection(of: strongSelf)
+            return true
+        }
+        self.typedView.setAccessibilityCustomActions([action])
+
+        self.typedView.setAccessibilityHelp(NSLocalizedString("Perform this page's action to toggle selection. Use arrow keys on a selected page to move it. Interact with the page to edit and resize it.", comment: "Canvas page accessibility help"))
+    }
+
+    func updateAccessibility() {
+        var title = "\(self.viewModel.title). "
+        if let description = self.viewModel.accessibilityDescription {
+            title.append(description)
+        }
+        self.typedView.setAccessibilityTitle(title)
     }
 }
 

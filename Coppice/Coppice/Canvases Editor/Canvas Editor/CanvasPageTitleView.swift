@@ -26,7 +26,14 @@ class CanvasPageTitleView: NSView {
     var enabled: Bool = true {
         didSet {
             self.titleLabel.isEnabled = self.enabled
-            self.button.isEnabled = self.enabled
+            self.closeButton.isEnabled = self.enabled
+        }
+    }
+
+    override var isHidden: Bool {
+        didSet {
+            self.titleLabel.isHidden = self.isHidden
+            self.closeButton.isHidden = self.isHidden
         }
     }
 
@@ -43,18 +50,18 @@ class CanvasPageTitleView: NSView {
 
     private func setupSubviews() {
         self.addSubview(self.titleLabel)
-        self.addSubview(self.button)
+        self.addSubview(self.closeButton)
 
         let labelCenterX = self.titleLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor)
         labelCenterX.priority = .init(749)
         NSLayoutConstraint.activate([
-            self.button.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 1),
-            self.button.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5),
-            self.button.widthAnchor.constraint(equalToConstant: 16),
-            self.button.heightAnchor.constraint(equalToConstant: 16),
+            self.closeButton.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 1),
+            self.closeButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5),
+            self.closeButton.widthAnchor.constraint(equalToConstant: 16),
+            self.closeButton.heightAnchor.constraint(equalToConstant: 16),
             labelCenterX,
             self.titleLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 1),
-            self.titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: self.button.trailingAnchor, constant: 5),
+            self.titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: self.closeButton.trailingAnchor, constant: 5),
             self.trailingAnchor.constraint(greaterThanOrEqualTo: self.titleLabel.trailingAnchor, constant: 5),
         ])
         self.updateTitleState()
@@ -72,15 +79,24 @@ class CanvasPageTitleView: NSView {
         label.alignment = .center
         label.focusRingType = .none
         label.delegate = self
+
+        label.setAccessibilityHelp(NSLocalizedString("Interact with this element to edit the title", comment: "Page title field accessibility help"))
+
+        let customAction = NSAccessibilityCustomAction(name: NSLocalizedString("Edit Title", comment: "Edit Title of canvas page accessibility action name")) {[weak self] in
+            self?.makeTitleEditable()
+            return true
+        }
+        label.setAccessibilityCustomActions([customAction])
         return label
     }()
 
-    private lazy var button: NSButton = {
+    lazy var closeButton: NSButton = {
         let button = NSButton(image: NSImage(named: "NSStopProgressFreestandingTemplate")!,
                               target: self,
                               action: #selector(closeClicked(_:)))
         button.isBordered = false
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.setAccessibilityLabel(NSLocalizedString("Close Page", comment: "Close Page button accessibility label"))
         return button
     }()
 
@@ -96,9 +112,11 @@ class CanvasPageTitleView: NSView {
         if self.title.count > 0 {
             self.titleLabel.textColor = .textColor
             self.titleLabel.stringValue = self.title
+            self.titleLabel.setAccessibilityLabel(self.title)
         } else {
             self.titleLabel.textColor = .placeholderTextColor
             self.titleLabel.stringValue = Page.localizedDefaultTitle
+            self.titleLabel.setAccessibilityLabel(Page.localizedDefaultTitle)
         }
     }
 
