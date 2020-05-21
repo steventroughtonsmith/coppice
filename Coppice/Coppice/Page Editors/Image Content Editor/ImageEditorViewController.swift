@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import Combine
 
 class ImageEditorViewController: NSViewController {
     @IBOutlet weak var imageView: NSImageView!
@@ -32,6 +33,15 @@ class ImageEditorViewController: NSViewController {
         super.viewWillAppear()
 
         self.imageView.imageScaling = self.isInCanvas ? .scaleProportionallyUpOrDown : .scaleProportionallyDown
+    }
+
+    var imageDescriptionObserver: AnyCancellable!
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        self.imageDescriptionObserver = self.viewModel.publisher(for: \.accessibilityDescription).sink { [weak self] description in
+            self?.imageView.setAccessibilityValueDescription(description)
+        }
     }
 
     var isInCanvas: Bool {

@@ -27,6 +27,9 @@ class ImageEditorViewModel: ViewModel {
         if (key == "image") {
             keyPaths.insert("imageContent.image")
         }
+        if key == #keyPath(accessibilityDescription) {
+            keyPaths.insert("imageContent.imageDescription")
+        }
         return keyPaths
     }
 
@@ -36,5 +39,9 @@ class ImageEditorViewModel: ViewModel {
             self.documentWindowViewModel.registerStartOfEditing()
             self.imageContent.image = newValue
         }
+    }
+
+    @objc dynamic var accessibilityDescription: String? {
+        return self.imageContent.imageDescription
     }
 }
