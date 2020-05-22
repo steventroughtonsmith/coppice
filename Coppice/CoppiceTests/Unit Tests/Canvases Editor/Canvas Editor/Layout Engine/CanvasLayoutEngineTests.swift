@@ -2264,6 +2264,9 @@ class CanvasLayoutEngineTests: XCTestCase {
 
 
 private class TestLayoutDelegate: CanvasLayoutEngineDelegate {
+    func reordered(pages: [LayoutEnginePage], in layout: CanvasLayoutEngine) {
+    }
+
     var movedPages: [LayoutEnginePage]?
     func moved(pages: [LayoutEnginePage], in layout: CanvasLayoutEngine) {
         self.movedPages = pages

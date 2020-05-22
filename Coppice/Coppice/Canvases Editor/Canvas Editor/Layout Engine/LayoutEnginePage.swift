@@ -32,6 +32,8 @@ class LayoutEnginePage: Equatable {
         return (self.layoutEngine?.enabledPage == self)
     }
 
+    var zIndex = -1
+
     weak var layoutEngine: CanvasLayoutEngine? {
         didSet {
             self.recalculateEdgeFromParent()
@@ -40,11 +42,13 @@ class LayoutEnginePage: Equatable {
     init(id: UUID,
          contentFrame: CGRect,
          maintainAspectRatio: Bool = false,
-         minimumContentSize: CGSize = GlobalConstants.minimumPageSize) {
+         minimumContentSize: CGSize = GlobalConstants.minimumPageSize,
+         zIndex: Int = -1) {
         self.id = id
         self.contentFrame = contentFrame
         self.maintainAspectRatio = maintainAspectRatio
         self.minimumContentSize = minimumContentSize
+        self.zIndex = zIndex
 
         self.aspectRatio = contentFrame.width / contentFrame.height
         self.validateSize()

@@ -57,6 +57,13 @@ class CanvasPageTests: XCTestCase {
         XCTAssertEqual(parentID, parent.id.stringRepresentation)
     }
 
+    func test_plistRepresentation_containsZIndex() throws {
+        let canvasPage = CanvasPage.create(in: self.modelController)
+        canvasPage.zIndex = 42
+        let zIndex = try XCTUnwrap(canvasPage.plistRepresentation["zIndex"] as? Int)
+        XCTAssertEqual(zIndex, canvasPage.zIndex)
+    }
+
 
     //MARK: - update(fromPlistRepresentation:)
     func test_updateFromPlistRepresentation_throwsErrorIfModelControllerNotSet() {
@@ -99,6 +106,21 @@ class CanvasPageTests: XCTestCase {
         XCTAssertNoThrow(try canvasPage.update(fromPlistRepresentation: plist))
 
         XCTAssertEqual(canvasPage.frame, CGRect(x: 1, y: 2, width: 3, height: 4))
+    }
+
+    func test_updateFromPlistRepresentation_updatesZIndex() {
+        let modelController = CoppiceModelController(undoManager: UndoManager())
+        let canvasPage = modelController.collection(for: CanvasPage.self).newObject()
+
+        let plist: [String: Any] = [
+            "id": canvasPage.id.stringRepresentation,
+            "frame": NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
+            "zIndex": 31,
+        ]
+
+        XCTAssertNoThrow(try canvasPage.update(fromPlistRepresentation: plist))
+
+        XCTAssertEqual(canvasPage.zIndex, 31)
     }
 
     func test_updateFromPlistRepresentation_updatesPage() {

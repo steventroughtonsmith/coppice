@@ -27,6 +27,7 @@ protocol CanvasLayoutView: class {
 protocol CanvasLayoutEngineDelegate: class {
     func moved(pages: [LayoutEnginePage], in layout: CanvasLayoutEngine)
     func remove(pages: [LayoutEnginePage], from layout: CanvasLayoutEngine)
+    func reordered(pages: [LayoutEnginePage], in layout: CanvasLayoutEngine)
 }
 
 
@@ -101,6 +102,8 @@ class CanvasLayoutEngine: NSObject {
             self.pagesByUUID[page.id] = page
         }
 
+        self.updateZIndexes()
+
         self.informOfLayoutChange(with: self.recalculateCanvasSize())
     }
 
@@ -110,6 +113,7 @@ class CanvasLayoutEngine: NSObject {
             page.parent?.removeChild(page)
             self.pagesByUUID.removeValue(forKey: page.id)
         }
+        self.updateZIndexes()
         self.informOfLayoutChange(with: self.recalculateCanvasSize())
     }
 
@@ -162,6 +166,9 @@ class CanvasLayoutEngine: NSObject {
         self.delegate?.remove(pages: pages, from: self)
     }
 
+
+    //MARK: - Page Ordering
+
     private func movePageToFront(_ page: LayoutEnginePage) {
         guard let index = self.pages.firstIndex(of: page) else {
             return // Page doesn't exist
@@ -169,6 +176,19 @@ class CanvasLayoutEngine: NSObject {
 
         self.pages.remove(at: index)
         self.pages.append(page)
+        self.updateZIndexes()
+    }
+
+    private func updateZIndexes() {
+        var modifiedPages = [LayoutEnginePage]()
+        for (index, page) in self.pages.enumerated() {
+            guard page.zIndex != index else {
+                continue
+            }
+            page.zIndex = index
+            modifiedPages.append(page)
+        }
+        self.delegate?.reordered(pages: modifiedPages, in: self)
     }
 
 

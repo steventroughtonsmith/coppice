@@ -63,6 +63,10 @@ final class Canvas: NSObject, CollectableModelObject {
         return self.relationship(for: \.canvas)
     }
 
+    var sortedPages: [CanvasPage] {
+        return self.pages.sorted { $0.zIndex < $1.zIndex }
+    }
+
 
     //MARK: - Plists
     static var modelFileProperties: [String] {

@@ -35,6 +35,8 @@ final class CanvasPage: NSObject, CollectableModelObject {
         return self.page?.content.maintainAspectRatio ?? false
     }
 
+    var zIndex: Int = -1
+
     
     //MARK: - Relationships
     @ModelObjectReference @objc dynamic var page: Page? {
@@ -90,7 +92,8 @@ final class CanvasPage: NSObject, CollectableModelObject {
     var plistRepresentation: [String : Any] {
         var plist: [String: Any] = [
             "id": self.id.stringRepresentation,
-            "frame": NSStringFromRect(self.frame)
+            "frame": NSStringFromRect(self.frame),
+            "zIndex": self.zIndex,
         ]
 
         if let page = self.page {
@@ -127,6 +130,10 @@ final class CanvasPage: NSObject, CollectableModelObject {
 
         if let canvasString = plist["canvas"] as? String, let canvasID = ModelID(string: canvasString) {
             self.canvas = modelController.collection(for: Canvas.self).objectWithID(canvasID)
+        }
+
+        if let zIndex = plist["zIndex"] as? Int {
+            self.zIndex = zIndex
         }
     }
 

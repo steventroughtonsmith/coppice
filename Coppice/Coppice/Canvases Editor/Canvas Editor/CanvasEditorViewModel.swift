@@ -114,8 +114,13 @@ class CanvasEditorViewModel: ViewModel {
     }
 
     private func addPages(_ canvasPages: Set<CanvasPage>) {
-        let newPages = canvasPages.map { LayoutEnginePage(id: $0.id.uuid, contentFrame: $0.frame, maintainAspectRatio: $0.maintainAspectRatio) }
+        guard canvasPages.count > 0 else {
+            return
+        }
 
+        let newPages = canvasPages
+            .map { LayoutEnginePage(id: $0.id.uuid, contentFrame: $0.frame, maintainAspectRatio: $0.maintainAspectRatio, zIndex: $0.zIndex) }
+            .sorted { $0.zIndex < $1.zIndex }
         let newPagesByID = newPages.indexed(by: \.id)
 
         for canvasPage in canvasPages {
@@ -153,6 +158,7 @@ class CanvasEditorViewModel: ViewModel {
         guard !self.updatesDisable else {
             return
         }
+
         //We need to temporarily disable updates in case our changes cause updates themselves
         self.updatesDisable = true
 
@@ -294,9 +300,25 @@ extension CanvasEditorViewModel: CanvasLayoutEngineDelegate {
             if canvasPage.frame != page.contentFrame {
                 canvasPage.frame = page.contentFrame
             }
+            if canvasPage.zIndex != page.zIndex {
+                canvasPage.zIndex = page.zIndex
+            }
             canvasPages.append(canvasPage)
         }
         self.view?.notifyAccessibilityOfMove(canvasPages)
+        self.updatesDisable = false
+    }
+
+    func reordered(pages: [LayoutEnginePage], in layout: CanvasLayoutEngine) {
+        self.updatesDisable = true
+        for page in pages {
+            guard let canvasPage = self.canvasPage(with: page.id) else {
+                continue
+            }
+            if canvasPage.zIndex != page.zIndex {
+                canvasPage.zIndex = page.zIndex
+            }
+        }
         self.updatesDisable = false
     }
 }

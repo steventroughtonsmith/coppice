@@ -72,7 +72,7 @@ class CanvasThumbnailGenerator: NSObject {
     }
 
     private func pageFramesInCanvasSpace() -> [(CanvasPage, CGRect)] {
-        let framesInPageSpace = self.canvas.pages.compactMap { ($0, $0.frame) }
+        let framesInPageSpace = self.canvas.sortedPages.compactMap { ($0, $0.frame) }
         guard let canvasFrame = self.canvasFrame(fromPageFrames: framesInPageSpace) else {
             return []
         }
