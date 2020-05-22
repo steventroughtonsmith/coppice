@@ -1508,6 +1508,171 @@ class CanvasLayoutEngineTests: XCTestCase {
     }
 
 
+    //MARK: - Accessibility Resize
+    func test_accessibilityResize_topLeft_regularUnboundedResize() throws {
+        let minusXPoint = self.performAccessibilityResize(withDelta: CGPoint(x: -5, y: 0), on: .resizeTopLeft, expectingFrameChange: (-5, 0, 5, 0))
+        XCTAssertEqual(minusXPoint, CGPoint(x: -5, y: 0))
+        let plusXPoint = self.performAccessibilityResize(withDelta: CGPoint(x: 5, y: 0), on: .resizeTopLeft, expectingFrameChange: (5, 0, -5, 0))
+        XCTAssertEqual(plusXPoint, CGPoint(x: 5, y: 0))
+        let minusYPoint = self.performAccessibilityResize(withDelta: CGPoint(x: 0, y: -5), on: .resizeTopLeft, expectingFrameChange: (0, -5, 0, 5))
+        XCTAssertEqual(minusYPoint, CGPoint(x: 0, y: -5))
+        let plusYPoint = self.performAccessibilityResize(withDelta: CGPoint(x: 0, y: 5), on: .resizeTopLeft, expectingFrameChange: (0, 5, 0, -5))
+        XCTAssertEqual(plusYPoint, CGPoint(x: 0, y: 5))
+    }
+
+    func test_accessibilityResize_topLeft_regularMinResize() throws {
+        let plusXPoint = self.performAccessibilityResize(withDelta: CGPoint(x: 20, y: 0), on: .resizeTopLeft, expectingFrameChange: (10, 0, -10, 0))
+        XCTAssertEqual(plusXPoint, CGPoint(x: 10, y: 0))
+        let plusYPoint = self.performAccessibilityResize(withDelta: CGPoint(x: 0, y: 40), on: .resizeTopLeft, expectingFrameChange: (0, 30, 0, -30))
+        XCTAssertEqual(plusYPoint, CGPoint(x: 0, y: 30))
+    }
+
+    func test_accessibilityResize_topRight_regularUnboundedResize() throws {
+        let minusXPoint = self.performAccessibilityResize(withDelta: CGPoint(x: -5, y: 0), on: .resizeTopRight, expectingFrameChange: (0, 0, -5, 0))
+        XCTAssertEqual(minusXPoint, CGPoint(x: -5, y: 0))
+        let plusXPoint = self.performAccessibilityResize(withDelta: CGPoint(x: 5, y: 0), on: .resizeTopRight, expectingFrameChange: (0, 0, 5, 0))
+        XCTAssertEqual(plusXPoint, CGPoint(x: 5, y: 0))
+        let minusYPoint = self.performAccessibilityResize(withDelta: CGPoint(x: 0, y: -5), on: .resizeTopRight, expectingFrameChange: (0, -5, 0, 5))
+        XCTAssertEqual(minusYPoint, CGPoint(x: 0, y: -5))
+        let plusYPoint = self.performAccessibilityResize(withDelta: CGPoint(x: 0, y: 5), on: .resizeTopRight, expectingFrameChange: (0, 5, 0, -5))
+        XCTAssertEqual(plusYPoint, CGPoint(x: 0, y: 5))
+    }
+
+    func test_accessibilityResize_topRight_regularMinResize() throws {
+        let minusXPoint = self.performAccessibilityResize(withDelta: CGPoint(x: -20, y: 0), on: .resizeTopRight, expectingFrameChange: (0, 0, -10, 0))
+        XCTAssertEqual(minusXPoint, CGPoint(x: -10, y: 0))
+
+        let plusYPoint = self.performAccessibilityResize(withDelta: CGPoint(x: 0, y: 40), on: .resizeTopRight, expectingFrameChange: (0, 30, 0, -30))
+        XCTAssertEqual(plusYPoint, CGPoint(x: 0, y: 30))
+    }
+
+    func test_accessibilityResize_bottomRight_regularUnboundedResize() throws {
+        let minusXPoint = self.performAccessibilityResize(withDelta: CGPoint(x: -5, y: 0), on: .resizeBottomRight, expectingFrameChange: (0, 0, -5, 0))
+        XCTAssertEqual(minusXPoint, CGPoint(x: -5, y: 0))
+        let plusXPoint = self.performAccessibilityResize(withDelta: CGPoint(x: 5, y: 0), on: .resizeBottomRight, expectingFrameChange: (0, 0, 5, 0))
+        XCTAssertEqual(plusXPoint, CGPoint(x: 5, y: 0))
+        let minusYPoint = self.performAccessibilityResize(withDelta: CGPoint(x: 0, y: -5), on: .resizeBottomRight, expectingFrameChange: (0, 0, 0, -5))
+        XCTAssertEqual(minusYPoint, CGPoint(x: 0, y: -5))
+        let plusYPoint = self.performAccessibilityResize(withDelta: CGPoint(x: 0, y: 5), on: .resizeBottomRight, expectingFrameChange: (0, 0, 0, 5))
+        XCTAssertEqual(plusYPoint, CGPoint(x: 0, y: 5))
+    }
+
+    func test_accessibilityResize_bottomRight_regularMinResize() throws {
+        let minusXPoint = self.performAccessibilityResize(withDelta: CGPoint(x: -20, y: 0), on: .resizeBottomRight, expectingFrameChange: (0, 0, -10, 0))
+        XCTAssertEqual(minusXPoint, CGPoint(x: -10, y: 0))
+        let minusYPoint = self.performAccessibilityResize(withDelta: CGPoint(x: 0, y: -40), on: .resizeBottomRight, expectingFrameChange: (0, 0, 0, -30))
+        XCTAssertEqual(minusYPoint, CGPoint(x: 0, y: -30))
+    }
+
+    func test_accessibilityResize_bottomLeft_regularUnboundedResize() throws {
+        let minusXPoint = self.performAccessibilityResize(withDelta: CGPoint(x: -5, y: 0), on: .resizeBottomLeft, expectingFrameChange: (-5, 0, 5, 0))
+        XCTAssertEqual(minusXPoint, CGPoint(x: -5, y: 0))
+        let plusXPoint = self.performAccessibilityResize(withDelta: CGPoint(x: 5, y: 0), on: .resizeBottomLeft, expectingFrameChange: (5, 0, -5, 0))
+        XCTAssertEqual(plusXPoint, CGPoint(x: 5, y: 0))
+        let minusYPoint = self.performAccessibilityResize(withDelta: CGPoint(x: 0, y: -5), on: .resizeBottomLeft, expectingFrameChange: (0, 0, 0, -5))
+        XCTAssertEqual(minusYPoint, CGPoint(x: 0, y: -5))
+        let plusYPoint = self.performAccessibilityResize(withDelta: CGPoint(x: 0, y: 5), on: .resizeBottomLeft, expectingFrameChange: (0, 0, 0, 5))
+        XCTAssertEqual(plusYPoint, CGPoint(x: 0, y: 5))
+    }
+
+    func test_accessibilityResize_bottomLeft_regularMinResize() throws {
+        let plusXPoint = self.performAccessibilityResize(withDelta: CGPoint(x: 20, y: 0), on: .resizeBottomLeft, expectingFrameChange: (10, 0, -10, 0))
+        XCTAssertEqual(plusXPoint, CGPoint(x: 10, y: 0))
+        let minusYPoint = self.performAccessibilityResize(withDelta: CGPoint(x: 0, y: -40), on: .resizeBottomLeft, expectingFrameChange: (0, 0, 0, -30))
+        XCTAssertEqual(minusYPoint, CGPoint(x: 0, y: -30))
+    }
+
+    func test_accessibilityResize_topLeft_aspectUnboundedResize() throws {
+        //Aspect doesn't resize horizontally
+        let minusXPoint = self.performAccessibilityResize(withDelta: CGPoint(x: -4, y: 0), on: .resizeTopLeft, maintainAspectRatio: true, expectingFrameChange: (0, 0, 0, 0))
+        XCTAssertEqual(minusXPoint, .zero)
+        let plusXPoint = self.performAccessibilityResize(withDelta: CGPoint(x: 4, y: 0), on: .resizeTopLeft, maintainAspectRatio: true, expectingFrameChange: (0, 0, 0, 0))
+        XCTAssertEqual(plusXPoint, .zero)
+        let minusYPoint = self.performAccessibilityResize(withDelta: CGPoint(x: 0, y: -4), on: .resizeTopLeft, maintainAspectRatio: true, expectingFrameChange: (-2, -4, 2, 4))
+        XCTAssertEqual(minusYPoint, CGPoint(x: -2, y: -4))
+        let plusYPoint = self.performAccessibilityResize(withDelta: CGPoint(x: 0, y: 4), on: .resizeTopLeft, maintainAspectRatio: true, expectingFrameChange: (2, 4, -2, -4))
+        XCTAssertEqual(plusYPoint, CGPoint(x: 2, y: 4))
+    }
+
+    func test_accessibilityResize_topLeft_aspectMinResize() throws {
+        let plusYPoint = self.performAccessibilityResize(withDelta: CGPoint(x: 0, y: 40), on: .resizeTopLeft, maintainAspectRatio: true, expectingFrameChange: (10, 20, -10, -20))
+        XCTAssertEqual(plusYPoint, CGPoint(x: 10, y: 20))
+    }
+
+    func test_accessibilityResize_topRight_aspectUnboundedResize() throws {
+        //Aspect doesn't resize horizontally
+        let minusXPoint = self.performAccessibilityResize(withDelta: CGPoint(x: -4, y: 0), on: .resizeTopRight, maintainAspectRatio: true, expectingFrameChange: (0, 0, 0, 0))
+        XCTAssertEqual(minusXPoint, .zero)
+        let plusXPoint = self.performAccessibilityResize(withDelta: CGPoint(x: 4, y: 0), on: .resizeTopRight, maintainAspectRatio: true, expectingFrameChange: (0, 0, 0, 0))
+        XCTAssertEqual(plusXPoint, .zero)
+        let minusYPoint = self.performAccessibilityResize(withDelta: CGPoint(x: 0, y: -4), on: .resizeTopRight, maintainAspectRatio: true, expectingFrameChange: (0, -4, 2, 4))
+        XCTAssertEqual(minusYPoint, CGPoint(x: 2, y: -4))
+        let plusYPoint = self.performAccessibilityResize(withDelta: CGPoint(x: 0, y: 4), on: .resizeTopRight, maintainAspectRatio: true, expectingFrameChange: (0, 4, -2, -4))
+        XCTAssertEqual(plusYPoint, CGPoint(x: -2, y: 4))
+    }
+
+    func test_accessibilityResize_topRight_aspectMinResize() throws {
+        let plusYPoint = self.performAccessibilityResize(withDelta: CGPoint(x: 0, y: 40), on: .resizeTopRight, maintainAspectRatio: true, expectingFrameChange: (0, 20, -10, -20))
+        XCTAssertEqual(plusYPoint, CGPoint(x: -10, y: 20))
+    }
+
+    func test_accessibilityResize_bottomRight_aspectUnboundedResize() throws {
+        //Aspect doesn't resize horizontally
+        let minusXPoint = self.performAccessibilityResize(withDelta: CGPoint(x: -4, y: 0), on: .resizeBottomRight, maintainAspectRatio: true, expectingFrameChange: (0, 0, 0, 0))
+        XCTAssertEqual(minusXPoint, .zero)
+        let plusXPoint = self.performAccessibilityResize(withDelta: CGPoint(x: 4, y: 0), on: .resizeBottomRight, maintainAspectRatio: true, expectingFrameChange: (0, 0, 0, 0))
+        XCTAssertEqual(plusXPoint, .zero)
+        let minusYPoint = self.performAccessibilityResize(withDelta: CGPoint(x: 0, y: -4), on: .resizeBottomRight, maintainAspectRatio: true, expectingFrameChange: (0, 0, -2, -4))
+        XCTAssertEqual(minusYPoint, CGPoint(x: -2, y: -4))
+        let plusYPoint = self.performAccessibilityResize(withDelta: CGPoint(x: 0, y: 4), on: .resizeBottomRight, maintainAspectRatio: true, expectingFrameChange: (0, 0, 2, 4))
+        XCTAssertEqual(plusYPoint, CGPoint(x: 2, y: 4))
+    }
+
+    func test_accessibilityResize_bottomRight_aspectMinResize() throws {
+        let minusYPoint = self.performAccessibilityResize(withDelta: CGPoint(x: 0, y: -40), on: .resizeBottomRight, maintainAspectRatio: true, expectingFrameChange: (0, 0, -10, -20))
+        XCTAssertEqual(minusYPoint, CGPoint(x: -10, y: -20))
+    }
+
+    func test_accessibilityResize_bottomLeft_aspectUnboundedResize() throws {
+        //Aspect doesn't resize horizontally
+        let minusXPoint = self.performAccessibilityResize(withDelta: CGPoint(x: -4, y: 0), on: .resizeBottomLeft, maintainAspectRatio: true, expectingFrameChange: (0, 0, 0, 0))
+        XCTAssertEqual(minusXPoint, .zero)
+        let plusXPoint = self.performAccessibilityResize(withDelta: CGPoint(x: 4, y: 0), on: .resizeBottomLeft, maintainAspectRatio: true, expectingFrameChange: (0, 0, 0, 0))
+        XCTAssertEqual(plusXPoint, .zero)
+        let minusYPoint = self.performAccessibilityResize(withDelta: CGPoint(x: 0, y: -4), on: .resizeBottomLeft, maintainAspectRatio: true, expectingFrameChange: (2, 0, -2, -4))
+        XCTAssertEqual(minusYPoint, CGPoint(x: 2, y: -4))
+        let plusYPoint = self.performAccessibilityResize(withDelta: CGPoint(x: 0, y: 4), on: .resizeBottomLeft, maintainAspectRatio: true, expectingFrameChange: (-2, 0, 2, 4))
+        XCTAssertEqual(plusYPoint, CGPoint(x: -2, y: 4))
+    }
+
+    func test_accessibilityResize_bottomLeft_aspectMinResize() throws {
+        let minusYPoint = self.performAccessibilityResize(withDelta: CGPoint(x: 0, y: -40), on: .resizeBottomLeft, maintainAspectRatio: true, expectingFrameChange: (10, 0, -10, -20))
+        XCTAssertEqual(minusYPoint, CGPoint(x: 10, y: -20))
+    }
+
+
+    private func performAccessibilityResize(withDelta delta: CGPoint, on component: LayoutEnginePageComponent, maintainAspectRatio: Bool = false, expectingFrameChange change: (x: CGFloat, y: CGFloat, width: CGFloat, height: CGFloat)) -> CGPoint? {
+        let page = LayoutEnginePage(id: UUID(),
+                                    contentFrame: CGRect(x: 0, y: 0, width: 20, height: 40),
+                                    maintainAspectRatio: maintainAspectRatio,
+                                    minimumContentSize: CGSize(width: 10, height: 10))
+        self.layoutEngine.add([page])
+
+        var expectedFrame = page.layoutFrame
+        expectedFrame.size = expectedFrame.size.plus(width: change.width, height: change.height)
+        expectedFrame.origin = expectedFrame.origin.plus(x: change.x, y: change.y)
+
+        let returnedDelta = self.layoutEngine.accessibilityResize(component, of: page, by: delta)
+
+        guard page.layoutFrame == expectedFrame else {
+            XCTFail("\(page.layoutFrame) not equal to \(expectedFrame)")
+            return nil
+        }
+
+        return returnedDelta
+    }
+
+
 
     //MARK: - Background
     func test_pageBackground_noPageShowsBackgroundIfMouseMovedOverCanvasAndNothingSelected() {

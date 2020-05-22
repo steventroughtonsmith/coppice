@@ -435,6 +435,10 @@ class CanvasEditorViewModelTests: XCTestCase {
 
     //MARK: - Helpers
     class TestCanvasEditorView: CanvasEditorView {
+        func notifyAccessibilityOfMove(_ canvasPages: [CanvasPage]) {
+            
+        }
+
         var flashedPages = [CanvasPage]()
         func flash(_ canvasPage: CanvasPage) {
             self.flashedPages.append(canvasPage)

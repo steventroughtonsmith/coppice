@@ -79,6 +79,7 @@
 		99581092230D92C600D996C4 /* CanvasPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99581090230D92C600D996C4 /* CanvasPageViewController.swift */; };
 		99581093230D92C600D996C4 /* CanvasPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99581091230D92C600D996C4 /* CanvasPageViewController.xib */; };
 		99581095230D93F700D996C4 /* CanvasPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99581094230D93F700D996C4 /* CanvasPageViewModel.swift */; };
+		99582817247702B300080593 /* ResizeHandleAccessibilityElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99582816247702B300080593 /* ResizeHandleAccessibilityElement.swift */; };
 		9959178724606A1900E8874C /* ResponderChainValidatingToolbarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9959178624606A1900E8874C /* ResponderChainValidatingToolbarItem.swift */; };
 		9962AB8923732D9400337834 /* CoppiceDocumentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9962AB8823732D9400337834 /* CoppiceDocumentController.swift */; };
 		9965FC3D23843143002FE10D /* CanvasPageInspectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9965FC3B23843143002FE10D /* CanvasPageInspectorViewController.swift */; };
@@ -346,6 +347,7 @@
 		99581090230D92C600D996C4 /* CanvasPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageViewController.swift; sourceTree = "<group>"; };
 		99581091230D92C600D996C4 /* CanvasPageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CanvasPageViewController.xib; sourceTree = "<group>"; };
 		99581094230D93F700D996C4 /* CanvasPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageViewModel.swift; sourceTree = "<group>"; };
+		99582816247702B300080593 /* ResizeHandleAccessibilityElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizeHandleAccessibilityElement.swift; sourceTree = "<group>"; };
 		9959178624606A1900E8874C /* ResponderChainValidatingToolbarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponderChainValidatingToolbarItem.swift; sourceTree = "<group>"; };
 		9962AB8823732D9400337834 /* CoppiceDocumentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoppiceDocumentController.swift; sourceTree = "<group>"; };
 		9965FC3B23843143002FE10D /* CanvasPageInspectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageInspectorViewController.swift; sourceTree = "<group>"; };
@@ -732,6 +734,7 @@
 				9985F4D823F2E13600B96DC7 /* CanvasPageTitleView.swift */,
 				9985F4DA23F44AAD00B96DC7 /* CanvasPageBackgroundView.swift */,
 				99C03F06232A8ED200EB7516 /* CanvasElementView.swift */,
+				99582816247702B300080593 /* ResizeHandleAccessibilityElement.swift */,
 				990D2440235DEFE2001B1FD9 /* PageArrowView.swift */,
 				9958108B230D908200D996C4 /* Test CanvasPage View */,
 			);
@@ -1696,6 +1699,7 @@
 				99488ACE23C78087009954AF /* EditableLabelCell.swift in Sources */,
 				998D0779241137A3004ADFF8 /* RectDrawingView.swift in Sources */,
 				99D8E39323800FB90098CF3B /* BaseInspectorViewModel.swift in Sources */,
+				99582817247702B300080593 /* ResizeHandleAccessibilityElement.swift in Sources */,
 				9958107F230D7EEB00D996C4 /* CanvasEditorViewModel.swift in Sources */,
 				99C41B7322DCA98600C82DDE /* Page.swift in Sources */,
 				99C41B7522DCA9A100C82DDE /* Canvas.swift in Sources */,

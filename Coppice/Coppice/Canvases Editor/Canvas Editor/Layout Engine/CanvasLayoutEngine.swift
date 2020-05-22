@@ -346,6 +346,17 @@ class CanvasLayoutEngine: NSObject {
         self.informOfLayoutChange(with: LayoutContext())
     }
 
+
+    //MARK: - Accessibility Event
+    func accessibilityResize(_ component: LayoutEnginePageComponent, of page: LayoutEnginePage, by delta: CGPoint) -> CGPoint {
+        let event = ResizePageEventContext(page: page, component: component)
+        let finalDelta = event.resize(withDelta: delta, in: self)
+        self.finishedModifying([page])
+        self.informOfLayoutChange(with: LayoutContext())
+        return finalDelta
+    }
+
+
     //MARK: - Manage View
     func viewPortChanged() {
         //We don't care about view port changes while another event is happening

@@ -71,6 +71,7 @@ class CanvasElementView: NSView  {
     func apply(_ layoutPage: LayoutEnginePage) {
         self.updateSubviews(with: layoutPage)
         self.updateResizeRects(with: layoutPage)
+        self.updateAccessibilityResizeElements(with: layoutPage)
         self.showBackground = layoutPage.showBackground
         self.titleView.enabled = layoutPage.showBackground
         self.backgroundView.selected = layoutPage.selected
@@ -267,11 +268,74 @@ class CanvasElementView: NSView  {
     }
 
     private func updateAccessibility() {
+        var accessibilityChildren = [Any?]()
+        accessibilityChildren.append(self.topLeftResizeHandleElement)
         if self.showBackground {
-            self.setAccessibilityChildren([self.titleView.closeButton, self.titleView.titleLabel, self.contentContainer])
-        } else {
-            self.setAccessibilityChildren([self.contentContainer])
+            accessibilityChildren = [self.titleView.closeButton, self.titleView.titleLabel]
         }
+        accessibilityChildren.append(self.topRightResizeHandleElement)
+        accessibilityChildren.append(self.contentContainer)
+
+        accessibilityChildren.append(self.bottomLeftResizeHandleElement)
+        accessibilityChildren.append(self.bottomRightResizeHandleElement)
+        self.setAccessibilityChildren(accessibilityChildren.compactMap { $0 })
+    }
+
+    var topLeftResizeHandleElement: ResizeHandleAccessibilityElement?
+    var topRightResizeHandleElement: ResizeHandleAccessibilityElement?
+    var bottomLeftResizeHandleElement: ResizeHandleAccessibilityElement?
+    var bottomRightResizeHandleElement: ResizeHandleAccessibilityElement?
+
+    private func updateAccessibilityResizeElements(with layoutPage: LayoutEnginePage) {
+        guard self.window != nil else {
+            return
+        }
+        self.updateElement(at: \.topLeftResizeHandleElement, with: layoutPage, component: .resizeTopLeft, label: NSLocalizedString("Top Left", comment: "Top Left accessibility resize handle label"))
+        self.updateElement(at: \.topRightResizeHandleElement, with: layoutPage, component: .resizeTopRight, label: NSLocalizedString("Top Right", comment: "Top Right accessibility resize handle label"))
+        self.updateElement(at: \.bottomRightResizeHandleElement, with: layoutPage, component: .resizeBottomRight, label: NSLocalizedString("Bottom Right", comment: "Bottom Right accessibility resize handle label"))
+        self.updateElement(at: \.bottomLeftResizeHandleElement, with: layoutPage, component: .resizeBottomLeft, label: NSLocalizedString("Bottom Left", comment: "Bottom Left accessibility resize handle label"))
+        self.updateAccessibility()
+    }
+
+    private func updateElement(at keyPath: ReferenceWritableKeyPath<CanvasElementView, ResizeHandleAccessibilityElement?>,
+                               with layoutPage: LayoutEnginePage,
+                               component: LayoutEnginePageComponent,
+                               label: String) {
+        let handleElement: ResizeHandleAccessibilityElement
+        if let element = self[keyPath: keyPath] {
+            handleElement = element
+        } else {
+            handleElement = self.createElement(with: layoutPage, component: component, label: label)
+            self[keyPath: keyPath] = handleElement
+        }
+
+        //We need to set the frame in both aprent space and in view space.
+        let layoutFrame = layoutPage.rectInLayoutFrame(for: component)
+        handleElement.setAccessibilityFrameInParentSpace(layoutFrame)
+        handleElement.setAccessibilityFrame(NSAccessibility.screenRect(fromView: self, rect: layoutFrame), callingDelegate: false)
+    }
+
+    private func createElement(with layoutPage: LayoutEnginePage, component: LayoutEnginePageComponent, label: String) -> ResizeHandleAccessibilityElement {
+        let layoutFrame = layoutPage.rectInLayoutFrame(for: component)
+        let frame = NSAccessibility.screenRect(fromView: self, rect: layoutFrame)
+
+        let element = ResizeHandleAccessibilityElement.element(withRole: .handle,
+                                                               frame: frame,
+                                                               label: label,
+                                                               parent: self) as! ResizeHandleAccessibilityElement
+        element.pageID = layoutPage.id
+        element.component = component
+        element.delegate = self
+        return element
+    }
+}
+
+extension CanvasElementView: ResizeHandleAccessibilityElementDelegate {
+    func didMove(_ handle: ResizeHandleAccessibilityElement, byDelta delta: CGPoint) -> CGPoint {
+        guard let canvasView = self.canvasView else {
+            return .zero
+        }
+        return canvasView.accessibilityResize(handle.component, ofPageWithID: handle.pageID, by: delta)
     }
 }
 
@@ -286,3 +350,4 @@ class ShadowView: NSView {
         path.fill()
     }
 }
+
