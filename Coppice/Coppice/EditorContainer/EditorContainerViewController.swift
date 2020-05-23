@@ -58,12 +58,12 @@ class EditorContainerViewController: NSViewController, SplitViewContainable {
 
 
     //MARK: - RootViewController
-    lazy var splitViewItem: NSSplitViewItem = {
+    func createSplitViewItem() -> NSSplitViewItem {
         let item = NSSplitViewItem(viewController: self)
         item.holdingPriority = NSLayoutConstraint.Priority(249)
         item.preferredThicknessFraction = 0.8
         return item
-    }()
+    }
 }
 
 extension EditorContainerViewController: Editor {

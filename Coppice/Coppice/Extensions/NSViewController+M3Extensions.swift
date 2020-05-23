@@ -12,4 +12,19 @@ extension NSViewController {
     var windowController: NSWindowController? {
         return self.view.window?.windowController
     }
+
+    var splitViewController: NSSplitViewController? {
+        var currentParent = self.parent
+        while currentParent != nil {
+            if let splitVC = currentParent as? NSSplitViewController {
+                return splitVC
+            }
+            currentParent = currentParent?.parent
+        }
+        return nil
+    }
+
+    var splitViewItem: NSSplitViewItem? {
+        return self.splitViewController?.splitViewItem(for: self)
+    }
 }

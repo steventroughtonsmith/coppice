@@ -9,9 +9,9 @@
 import Cocoa
 
 class NoCanvasViewController: NSViewController, SplitViewContainable {
-    lazy var splitViewItem: NSSplitViewItem = {
+    func createSplitViewItem() -> NSSplitViewItem {
         let splitViewItem = NSSplitViewItem(viewController: self)
         splitViewItem.holdingPriority = NSLayoutConstraint.Priority(rawValue: 249)
         return splitViewItem
-    }()
+    }
 }

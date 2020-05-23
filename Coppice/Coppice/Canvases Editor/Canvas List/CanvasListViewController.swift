@@ -71,12 +71,12 @@ class CanvasListViewController: NSViewController, SplitViewContainable, NSMenuIt
         self.updateCanvasListState()
     }
 
-    lazy var splitViewItem: NSSplitViewItem = {
+    func createSplitViewItem() -> NSSplitViewItem {
         let item = NSSplitViewItem(viewController: self)
         item.maximumThickness = 250
         item.minimumThickness = 130
         return item
-    }()
+    }
 
 
     var isChangingSelection: Bool = false
@@ -92,8 +92,9 @@ class CanvasListViewController: NSViewController, SplitViewContainable, NSMenuIt
     static let regularMaximumSize: CGFloat = 250
 
     private func updateCanvasListState() {
-        self.splitViewItem.minimumThickness = (self.isCompact ? CanvasListViewController.compactSize : CanvasListViewController.regularMinimumSize)
-        self.splitViewItem.maximumThickness = (self.isCompact ? CanvasListViewController.compactSize : CanvasListViewController.regularMaximumSize)
+
+        self.splitViewItem?.minimumThickness = (self.isCompact ? CanvasListViewController.compactSize : CanvasListViewController.regularMinimumSize)
+        self.splitViewItem?.maximumThickness = (self.isCompact ? CanvasListViewController.compactSize : CanvasListViewController.regularMaximumSize)
         self.reload()
     }
 

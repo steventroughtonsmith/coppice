@@ -49,17 +49,21 @@ class CanvasesViewController: NSSplitViewController {
     private func updateSplitViewItems() {
         var splitViewItems = [NSSplitViewItem]()
         if self.viewModel.showCanvasList {
-            splitViewItems.append(self.canvasListViewController.splitViewItem)
+            splitViewItems.append(self.item(for: self.canvasListViewController))
         }
 
         if let canvasEditor = self.currentCanvasEditor {
-            splitViewItems.append(canvasEditor.splitViewItem)
+            splitViewItems.append(self.item(for: canvasEditor))
         } else {
-            splitViewItems.append(self.noCanvasViewController.splitViewItem)
+            splitViewItems.append(self.item(for: self.noCanvasViewController))
         }
 
         self.splitViewItems = splitViewItems
         self.inspectorsDidChange()
+    }
+
+    private func item(for viewController: SplitViewContainable & NSViewController) -> NSSplitViewItem {
+        return self.splitViewItem(for: viewController) ?? viewController.createSplitViewItem()
     }
 
     var currentCanvasEditor: CanvasEditorViewController? {
@@ -107,7 +111,7 @@ class CanvasesViewController: NSSplitViewController {
             //We switch to compact if we're over half way towards compact sized
             let crossOverPoint = (CanvasListViewController.regularMinimumSize + CanvasListViewController.compactSize) / 2
             self.isSidebarCompact = (proposedPosition < crossOverPoint)
-            return self.canvasListViewController.splitViewItem.minimumThickness
+            return self.splitViewItem(for: self.canvasListViewController)?.minimumThickness ?? CanvasListViewController.regularMinimumSize
         }
         return proposedPosition
     }

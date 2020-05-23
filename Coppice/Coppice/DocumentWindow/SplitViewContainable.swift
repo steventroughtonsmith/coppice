@@ -9,5 +9,5 @@
 import Cocoa
 
 protocol SplitViewContainable {
-    var splitViewItem: NSSplitViewItem { get }
+    func createSplitViewItem() -> NSSplitViewItem
 }

@@ -60,12 +60,12 @@ class InspectorContainerViewController: NSViewController, SplitViewContainable {
 
 
     //MARK: - RootViewController
-    lazy var splitViewItem: NSSplitViewItem = {
+    func createSplitViewItem() -> NSSplitViewItem {
         let item = NSSplitViewItem(viewController: self)
         item.holdingPriority = NSLayoutConstraint.Priority(260)
         item.canCollapse = true
         return item
-    }()
+    }
 }
 
 extension InspectorContainerViewController: InspectorContainerView {

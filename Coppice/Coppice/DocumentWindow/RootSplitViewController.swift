@@ -43,9 +43,9 @@ class RootSplitViewController: NSSplitViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.splitViewItems = [
-            self.sidebarViewController.splitViewItem,
-            self.editorContainerViewController.splitViewItem,
-            self.inspectorContainerViewController.splitViewItem,
+            self.sidebarViewController.createSplitViewItem(),
+            self.editorContainerViewController.createSplitViewItem(),
+            self.inspectorContainerViewController.createSplitViewItem(),
         ]
 
         NotificationCenter.default.addObserver(self, selector: #selector(willStartDrag(_:)), name: .nestableSplitViewWillStartDrag, object: nil)
@@ -56,16 +56,16 @@ class RootSplitViewController: NSSplitViewController {
         guard let splitView = notification.object as? NSSplitView, splitView != self.splitView else {
             return
         }
-        self.sidebarViewController.splitViewItem.holdingPriority = .init(490)
-        self.inspectorContainerViewController.splitViewItem.holdingPriority = .init(490)
+        self.splitViewItem(for: self.sidebarViewController)?.holdingPriority = .init(490)
+        self.splitViewItem(for: self.inspectorContainerViewController)?.holdingPriority = .init(490)
     }
 
     @objc func didEndDrag(_ notification: Notification) {
         guard let splitView = notification.object as? NSSplitView, splitView != self.splitView else {
             return
         }
-        self.sidebarViewController.splitViewItem.holdingPriority = .init(260)
-        self.inspectorContainerViewController.splitViewItem.holdingPriority = .init(260)
+        self.splitViewItem(for: self.sidebarViewController)?.holdingPriority = .init(260)
+        self.splitViewItem(for: self.inspectorContainerViewController)?.holdingPriority = .init(260)
     }
 
 
@@ -74,13 +74,13 @@ class RootSplitViewController: NSSplitViewController {
         guard let toolbarControl = self.toolbarControl else {
             return
         }
-        self.sidebarViewController.splitViewItem.isCollapsed = !toolbarControl.isSelected(forSegment: 0)
-        self.inspectorContainerViewController.splitViewItem.isCollapsed = !toolbarControl.isSelected(forSegment: 1)
+        self.splitViewItem(for: self.sidebarViewController)?.isCollapsed = !toolbarControl.isSelected(forSegment: 0)
+        self.splitViewItem(for: self.inspectorContainerViewController)?.isCollapsed = !toolbarControl.isSelected(forSegment: 1)
     }
 
     private func updateSplitViewControl() {
-        self.toolbarControl?.setSelected(!self.sidebarViewController.splitViewItem.isCollapsed, forSegment: 0)
-        self.toolbarControl?.setSelected(!self.inspectorContainerViewController.splitViewItem.isCollapsed, forSegment: 1)
+        self.toolbarControl?.setSelected(!(self.splitViewItem(for: self.sidebarViewController)?.isCollapsed ?? false), forSegment: 0)
+        self.toolbarControl?.setSelected(!(self.splitViewItem(for: self.inspectorContainerViewController)?.isCollapsed ?? false), forSegment: 1)
     }
 
     override func splitViewDidResizeSubviews(_ notification: Notification) {
@@ -92,7 +92,7 @@ class RootSplitViewController: NSSplitViewController {
     //MARK: - Menu Actions
     @IBAction func toggleInspectors(_ sender: Any?) {
         NSView.animate(withDuration: 0.3) {
-            self.inspectorContainerViewController.splitViewItem.isCollapsed.toggle()
+            self.splitViewItem(for: self.inspectorContainerViewController)?.isCollapsed.toggle()
         }
     }
 }
