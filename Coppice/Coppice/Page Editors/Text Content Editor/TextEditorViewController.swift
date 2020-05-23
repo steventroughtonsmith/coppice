@@ -62,12 +62,17 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
             return
         }
 
+        var updatingSelection = true
+        if let event = NSApp.currentEvent, event.modifierFlags.contains(.option) {
+            updatingSelection = false
+        }
+
         guard let rawType = item.representedObject as? String,
             let type = PageContentType(rawValue: rawType) else {
             return
         }
         let selectedRange = self.editingTextView.selectedRange()
-        self.viewModel.createNewLinkedPage(ofType: type, from: selectedRange)
+        self.viewModel.createNewLinkedPage(ofType: type, from: selectedRange, updatingSelection: updatingSelection)
     }
 
     @IBAction func linkToPage(_ sender: Any?) {

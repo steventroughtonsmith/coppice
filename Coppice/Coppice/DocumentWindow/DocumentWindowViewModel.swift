@@ -105,6 +105,9 @@ class DocumentWindowViewModel: NSObject {
     }
 
     private func handleCanvasChange(_ change: ModelCollection<Canvas>.Change) {
+        guard self.updateSelection else {
+            return
+        }
         switch change.changeType {
         case .insert:
             self.selectedCanvasID = change.object.id
@@ -119,6 +122,9 @@ class DocumentWindowViewModel: NSObject {
     }
 
     private func handleFolderChange(_ change: ModelCollection<Folder>.Change) {
+        guard self.updateSelection else {
+            return
+        }
         guard self.currentEditor != .canvas else {
             return
         }
@@ -135,6 +141,9 @@ class DocumentWindowViewModel: NSObject {
     }
 
     private func handlePageChange(_ change: ModelCollection<Page>.Change) {
+        guard self.updateSelection else {
+            return
+        }
         guard self.currentEditor != .canvas else {
             return
         }
@@ -148,6 +157,14 @@ class DocumentWindowViewModel: NSObject {
         default:
             break
         }
+    }
+
+    private var updateSelection = true
+    func performWithoutUpdatingSelection<T>(_ block: () -> T) -> T {
+        self.updateSelection = false
+        let result = block()
+        self.updateSelection = true
+        return result
     }
 
 
