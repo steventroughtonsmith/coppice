@@ -56,6 +56,10 @@ class DocumentWindowController: NSWindowController {
 //        self.editorContainerViewController.view.nextKeyView = self.inspectorContainerViewController.view
     }
 
+    func performNewDocumentSetup() {
+        self.splitViewController.sidebarViewController.performNewDocumentSetup()
+    }
+
     @IBAction func jumpToPage(_ sender: Any?) {
         self.showPageSelector(title: "Jump to page…") { [weak self] page in
             self?.viewModel.openPage(at: page.linkToPage())

@@ -29,6 +29,10 @@ class SidebarViewController: NSViewController, SplitViewContainable {
         self.viewModel.updateSidebar()
     }
 
+    func performNewDocumentSetup() {
+        self.sourceListViewController.performNewDocumentSetup()
+    }
+
 
     //MARK: - RootViewController
 

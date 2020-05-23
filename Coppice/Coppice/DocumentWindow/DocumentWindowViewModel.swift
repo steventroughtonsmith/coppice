@@ -47,6 +47,18 @@ class DocumentWindowViewModel: NSObject {
         self.cleanUpObserveration()
     }
 
+    func performNewDocumentSetup() {
+        self.modelController.disableUndo {
+            let page = self.modelController.createPage(in: self.modelController.rootFolder) {
+                $0.title = NSLocalizedString("First Page", comment: "New document first page title")
+            }
+            let canvas = self.modelController.createCanvas()
+            canvas.addPages([page])
+
+            self.updateSelection([.canvas(canvas.id)])
+        }
+    }
+
 
     //MARK: - Search
     @objc dynamic var searchString: String?

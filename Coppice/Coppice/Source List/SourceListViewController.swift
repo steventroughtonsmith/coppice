@@ -50,6 +50,22 @@ class SourceListViewController: NSViewController, NSMenuItemValidation {
     }
 
 
+    //MARK: - New Document
+    private var needsNewDocumentSetup = false
+    func performNewDocumentSetup() {
+        self.needsNewDocumentSetup = true
+    }
+
+    private func newDocumentSetup() {
+        guard self.needsNewDocumentSetup else {
+            return
+        }
+
+        self.outlineView.expandItem(self.viewModel.pagesGroupNode)
+        self.needsNewDocumentSetup = false
+    }
+
+
     //MARK: - Keyboard shortcuts
     override func keyDown(with event: NSEvent) {
         guard let specialKey = event.specialKey else {
@@ -266,6 +282,7 @@ class SourceListViewController: NSViewController, NSMenuItemValidation {
 
         self.reloadSelection()
         self.handleNewItem()
+        self.newDocumentSetup()
     }
 
     private func handleNewItem() {

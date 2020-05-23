@@ -13,9 +13,6 @@ class Document: NSDocument {
         CoppiceModelController(undoManager: self.undoManager!)
     }()
 
-    override init() {
-        super.init()
-    }
 
     override class var autosavesInPlace: Bool {
         return true
@@ -26,6 +23,7 @@ class Document: NSDocument {
     override func makeWindowControllers() {
         let documentViewModel = DocumentWindowViewModel(modelController: self.modelController)
         documentViewModel.document = self
+
         let newWindowController = DocumentWindowController(viewModel: documentViewModel)
         //Need to temporarily disable window cascading for anything but a brand new document (i.e. opened via File -> New Document)
         newWindowController.shouldCascadeWindows = self.isBrandNewDocument
@@ -34,9 +32,15 @@ class Document: NSDocument {
         //We need to force the window to open before we re-enable cascading
         newWindowController.window?.makeKeyAndOrderFront(self)
         newWindowController.shouldCascadeWindows = true
+
+        if (self.isBrandNewDocument) {
+            documentViewModel.performNewDocumentSetup()
+            newWindowController.performNewDocumentSetup()
+        }
     }
 
     override func read(from fileWrapper: FileWrapper, ofType typeName: String) throws {
+        Swift.print("read")
         let modelReader = ModelReader(modelController: self.modelController)
         do {
             try modelReader.read(fileWrapper)
