@@ -52,7 +52,9 @@ class TextEditorViewModel: ViewModel {
     @discardableResult func createNewLinkedPage(ofType type: PageContentType, from range: NSRange) -> Page {
         let selectedText = self.attributedText.attributedSubstring(from: range)
         self.modelController.undoManager.beginUndoGrouping()
-        let page = self.modelController.createPage(ofType: type, in: self.documentWindowViewModel.folderForNewPages) {
+        let page = self.modelController.createPage(ofType: type,
+                                                   in: self.textContent.page?.containingFolder ?? self.documentWindowViewModel.folderForNewPages,
+                                                   below: self.textContent.page) {
             $0.title = selectedText.string
         }
         self.link(to: page, for: range)
