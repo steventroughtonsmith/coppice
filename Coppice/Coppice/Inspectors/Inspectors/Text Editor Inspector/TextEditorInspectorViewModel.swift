@@ -12,7 +12,7 @@ import Combine
 
 
 class TextEditorInspectorViewModel: BaseInspectorViewModel {
-    let editor: InspectableTextEditor
+    weak var editor: InspectableTextEditor?
     let modelController: ModelController
     init(editor: InspectableTextEditor, modelController: ModelController) {
         self.editor = editor
@@ -42,7 +42,7 @@ class TextEditorInspectorViewModel: BaseInspectorViewModel {
     //MARK: - Observation
     private var editorAttributesObserver: AnyCancellable?
     private func startObservingEditor() {
-        self.editorAttributesObserver = self.editor.selectionAttributesDidChange.assign(to: \.cachedAttributes, on: self)
+        self.editorAttributesObserver = self.editor?.selectionAttributesDidChange.sink { [weak self] in self?.cachedAttributes = $0 }
     }
 
 
@@ -87,11 +87,11 @@ class TextEditorInspectorViewModel: BaseInspectorViewModel {
     //MARK: - Selection
     @objc dynamic var selectedFontFamily: String? {
         get { self.cachedAttributes?.fontFamily }
-        set { self.editor.updateSelection(with: TextEditorAttributes(fontFamily: newValue)) }
+        set { self.editor?.updateSelection(with: TextEditorAttributes(fontFamily: newValue)) }
     }
     @objc dynamic var selectedTypeface: Typeface? {
         get { self.typefaces.first { $0.fontName == self.cachedAttributes?.fontPostscriptName } }
-        set { self.editor.updateSelection(with: TextEditorAttributes(fontPostscriptName: newValue?.fontName)) }
+        set { self.editor?.updateSelection(with: TextEditorAttributes(fontPostscriptName: newValue?.fontName)) }
     }
 
     @objc dynamic var fontSize: NSNumber? {
@@ -103,38 +103,38 @@ class TextEditorInspectorViewModel: BaseInspectorViewModel {
         }
         set {
             if let fontSize = newValue?.floatValue {
-                self.editor.updateSelection(with: TextEditorAttributes(fontSize: CGFloat(fontSize)))
+                self.editor?.updateSelection(with: TextEditorAttributes(fontSize: CGFloat(fontSize)))
             }
         }
     }
 
     @objc dynamic var rawAlignment: Int {
         get { self.cachedAttributes?.alignment?.rawValue ?? -1 }
-        set { self.editor.updateSelection(with: TextEditorAttributes(alignment: NSTextAlignment(rawValue: newValue))) }
+        set { self.editor?.updateSelection(with: TextEditorAttributes(alignment: NSTextAlignment(rawValue: newValue))) }
     }
 
     @objc dynamic var textColour: NSColor? {
         get { self.cachedAttributes?.textColour}
-        set { self.editor.updateSelection(with: TextEditorAttributes(textColour: newValue)) }
+        set { self.editor?.updateSelection(with: TextEditorAttributes(textColour: newValue)) }
     }
 
     @objc dynamic var isBold: Bool {
         get { self.cachedAttributes?.isBold ?? false }
-        set {self.editor.updateSelection(with: TextEditorAttributes(isBold: newValue)) }
+        set {self.editor?.updateSelection(with: TextEditorAttributes(isBold: newValue)) }
     }
 
     @objc dynamic var isItalic: Bool {
         get { self.cachedAttributes?.isItalic ?? false }
-        set { self.editor.updateSelection(with: TextEditorAttributes(isItalic: newValue)) }
+        set { self.editor?.updateSelection(with: TextEditorAttributes(isItalic: newValue)) }
     }
 
     @objc dynamic var isUnderlined: Bool {
         get { self.cachedAttributes?.isUnderlined ?? false }
-        set { self.editor.updateSelection(with: TextEditorAttributes(isUnderlined: newValue)) }
+        set { self.editor?.updateSelection(with: TextEditorAttributes(isUnderlined: newValue)) }
     }
 
     @objc dynamic var isStruckthrough: Bool {
         get { self.cachedAttributes?.isStruckthrough ?? false }
-        set { self.editor.updateSelection(with: TextEditorAttributes(isStruckthrough: newValue)) }
+        set { self.editor?.updateSelection(with: TextEditorAttributes(isStruckthrough: newValue)) }
     }
 }

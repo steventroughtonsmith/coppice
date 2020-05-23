@@ -39,7 +39,7 @@ class Typeface: NSObject {
 }
 
 
-protocol InspectableTextEditor {
+protocol InspectableTextEditor: class {
     var selectionAttributes: TextEditorAttributes? { get }
     var selectionAttributesDidChange: AnyPublisher<TextEditorAttributes?, Never> { get }
 

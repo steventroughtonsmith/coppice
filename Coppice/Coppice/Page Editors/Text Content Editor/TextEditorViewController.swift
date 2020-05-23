@@ -55,6 +55,13 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
         self.highlight(self.viewModel.highlightedRange)
     }
 
+    override func viewDidDisappear() {
+        super.viewDidDisappear()
+        //Observing self requires us to explicitly cancel and clear out the observer, as it seems to hold an unretained reference to us
+        self.attributedTextObserver.cancel()
+        self.attributedTextObserver = nil
+    }
+
     @objc dynamic var enabled: Bool = true
 
     @IBAction func createNewLinkedPage(_ sender: Any?) {
