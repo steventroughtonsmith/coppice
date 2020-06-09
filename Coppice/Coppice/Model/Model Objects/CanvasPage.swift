@@ -49,6 +49,7 @@ final class CanvasPage: NSObject, CollectableModelObject {
             self.didChangeValue(for: \.title)
         }
     }
+    
     @ModelObjectReference var canvas: Canvas? {
         didSet { self.didChangeRelationship(\.canvas, inverseKeyPath: \.pages, oldValue: oldValue) }
     }

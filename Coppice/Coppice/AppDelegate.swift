@@ -21,8 +21,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         #endif
 
-        //Expires 1st June 2020
-        if Date.timeIntervalSinceReferenceDate >= 612705600.0 {
+        let expiryDate = ISO8601DateFormatter().date(from: "2020-08-01T00:00:00Z")?.timeIntervalSinceReferenceDate ?? 0;
+        if Date.timeIntervalSinceReferenceDate >= expiryDate {
             let alert = NSAlert()
             alert.messageText = "This version has expired"
             alert.informativeText = "Please contact M Cubed Software or download the latest version"

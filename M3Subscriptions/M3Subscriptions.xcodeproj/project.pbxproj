@@ -1,0 +1,601 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		99848160248E639C00BC0A8A /* libM3Subscriptions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99848149248E635600BC0A8A /* libM3Subscriptions.a */; };
+		9984816F248E648300BC0A8A /* ResultExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99848166248E648300BC0A8A /* ResultExtension.swift */; };
+		99848170248E648300BC0A8A /* NetworkAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99848167248E648300BC0A8A /* NetworkAdapter.swift */; };
+		99848171248E648300BC0A8A /* SubscriptionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99848168248E648300BC0A8A /* SubscriptionController.swift */; };
+		99848172248E648300BC0A8A /* SubscriptionInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984816A248E648300BC0A8A /* SubscriptionInterface.swift */; };
+		99848173248E648300BC0A8A /* DeactivateAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984816B248E648300BC0A8A /* DeactivateAPI.swift */; };
+		99848174248E648300BC0A8A /* CheckAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984816C248E648300BC0A8A /* CheckAPI.swift */; };
+		99848175248E648300BC0A8A /* ActivateAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984816D248E648300BC0A8A /* ActivateAPI.swift */; };
+		99848178248E651A00BC0A8A /* ActivationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99848177248E651A00BC0A8A /* ActivationRequest.swift */; };
+		9984817D248E68A600BC0A8A /* DeactivateAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984817C248E68A600BC0A8A /* DeactivateAPITests.swift */; };
+		9984817F248E68B600BC0A8A /* ActivateAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984817E248E68B600BC0A8A /* ActivateAPITests.swift */; };
+		99848181248E68C500BC0A8A /* CheckAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99848180248E68C500BC0A8A /* CheckAPITests.swift */; };
+		99848183248E68DF00BC0A8A /* MockNetworkAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99848182248E68DF00BC0A8A /* MockNetworkAdapter.swift */; };
+		99848186248E68FA00BC0A8A /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99848185248E68FA00BC0A8A /* Device.swift */; };
+		9984818A248E697900BC0A8A /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99848189248E697900BC0A8A /* Subscription.swift */; };
+		9984818C248E698500BC0A8A /* SubscriptionPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984818B248E698500BC0A8A /* SubscriptionPlan.swift */; };
+		9984818E248E698D00BC0A8A /* SubscriptionDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984818D248E698D00BC0A8A /* SubscriptionDevice.swift */; };
+		99848190248E699800BC0A8A /* SubscriptionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984818F248E699800BC0A8A /* SubscriptionInfo.swift */; };
+		99848192248E69E000BC0A8A /* APIData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99848191248E69E000BC0A8A /* APIData.swift */; };
+		99848197248E6FC500BC0A8A /* APIDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99848196248E6FC500BC0A8A /* APIDataTests.swift */; };
+		9984819D248E94E200BC0A8A /* Mac-DeviceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984819C248E94E200BC0A8A /* Mac-DeviceTests.swift */; };
+		9984819F248E96D700BC0A8A /* SubscriptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984819E248E96D700BC0A8A /* SubscriptionTests.swift */; };
+		998481A1248E99CE00BC0A8A /* SubscriptionPlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481A0248E99CE00BC0A8A /* SubscriptionPlanTests.swift */; };
+		998481A3248FA3BD00BC0A8A /* SubscriptionDeviceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481A2248FA3BD00BC0A8A /* SubscriptionDeviceTests.swift */; };
+		998481A5248FB37F00BC0A8A /* SubscriptionInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481A4248FB37F00BC0A8A /* SubscriptionInfoTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		99848161248E639C00BC0A8A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 99848141248E635600BC0A8A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 99848148248E635600BC0A8A;
+			remoteInfo = M3Subscriptions;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		99848149248E635600BC0A8A /* libM3Subscriptions.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libM3Subscriptions.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		9984815B248E639C00BC0A8A /* M3SubscriptionsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = M3SubscriptionsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9984815F248E639C00BC0A8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		99848166248E648300BC0A8A /* ResultExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultExtension.swift; sourceTree = "<group>"; };
+		99848167248E648300BC0A8A /* NetworkAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkAdapter.swift; sourceTree = "<group>"; };
+		99848168248E648300BC0A8A /* SubscriptionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionController.swift; sourceTree = "<group>"; };
+		9984816A248E648300BC0A8A /* SubscriptionInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionInterface.swift; sourceTree = "<group>"; };
+		9984816B248E648300BC0A8A /* DeactivateAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeactivateAPI.swift; sourceTree = "<group>"; };
+		9984816C248E648300BC0A8A /* CheckAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckAPI.swift; sourceTree = "<group>"; };
+		9984816D248E648300BC0A8A /* ActivateAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivateAPI.swift; sourceTree = "<group>"; };
+		99848177248E651A00BC0A8A /* ActivationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivationRequest.swift; sourceTree = "<group>"; };
+		9984817C248E68A600BC0A8A /* DeactivateAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeactivateAPITests.swift; sourceTree = "<group>"; };
+		9984817E248E68B600BC0A8A /* ActivateAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivateAPITests.swift; sourceTree = "<group>"; };
+		99848180248E68C500BC0A8A /* CheckAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckAPITests.swift; sourceTree = "<group>"; };
+		99848182248E68DF00BC0A8A /* MockNetworkAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkAdapter.swift; sourceTree = "<group>"; };
+		99848185248E68FA00BC0A8A /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
+		99848189248E697900BC0A8A /* Subscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subscription.swift; sourceTree = "<group>"; };
+		9984818B248E698500BC0A8A /* SubscriptionPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPlan.swift; sourceTree = "<group>"; };
+		9984818D248E698D00BC0A8A /* SubscriptionDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionDevice.swift; sourceTree = "<group>"; };
+		9984818F248E699800BC0A8A /* SubscriptionInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionInfo.swift; sourceTree = "<group>"; };
+		99848191248E69E000BC0A8A /* APIData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIData.swift; sourceTree = "<group>"; };
+		99848196248E6FC500BC0A8A /* APIDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIDataTests.swift; sourceTree = "<group>"; };
+		9984819C248E94E200BC0A8A /* Mac-DeviceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Mac-DeviceTests.swift"; sourceTree = "<group>"; };
+		9984819E248E96D700BC0A8A /* SubscriptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionTests.swift; sourceTree = "<group>"; };
+		998481A0248E99CE00BC0A8A /* SubscriptionPlanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPlanTests.swift; sourceTree = "<group>"; };
+		998481A2248FA3BD00BC0A8A /* SubscriptionDeviceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionDeviceTests.swift; sourceTree = "<group>"; };
+		998481A4248FB37F00BC0A8A /* SubscriptionInfoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionInfoTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		99848147248E635600BC0A8A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		99848158248E639C00BC0A8A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				99848160248E639C00BC0A8A /* libM3Subscriptions.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		99848140248E635600BC0A8A = {
+			isa = PBXGroup;
+			children = (
+				9984814B248E635600BC0A8A /* M3Subscriptions */,
+				9984815C248E639C00BC0A8A /* M3SubscriptionsTests */,
+				9984814A248E635600BC0A8A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		9984814A248E635600BC0A8A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				99848149248E635600BC0A8A /* libM3Subscriptions.a */,
+				9984815B248E639C00BC0A8A /* M3SubscriptionsTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9984814B248E635600BC0A8A /* M3Subscriptions */ = {
+			isa = PBXGroup;
+			children = (
+				99848167248E648300BC0A8A /* NetworkAdapter.swift */,
+				99848166248E648300BC0A8A /* ResultExtension.swift */,
+				99848168248E648300BC0A8A /* SubscriptionController.swift */,
+				99848184248E68EC00BC0A8A /* Types */,
+				99848169248E648300BC0A8A /* API */,
+			);
+			path = M3Subscriptions;
+			sourceTree = "<group>";
+		};
+		9984815C248E639C00BC0A8A /* M3SubscriptionsTests */ = {
+			isa = PBXGroup;
+			children = (
+				9984817A248E687800BC0A8A /* Unit Tests */,
+				99848179248E685900BC0A8A /* Mocks & Helpers */,
+				9984815F248E639C00BC0A8A /* Info.plist */,
+			);
+			path = M3SubscriptionsTests;
+			sourceTree = "<group>";
+		};
+		99848169248E648300BC0A8A /* API */ = {
+			isa = PBXGroup;
+			children = (
+				9984816A248E648300BC0A8A /* SubscriptionInterface.swift */,
+				9984816B248E648300BC0A8A /* DeactivateAPI.swift */,
+				9984816C248E648300BC0A8A /* CheckAPI.swift */,
+				9984816D248E648300BC0A8A /* ActivateAPI.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		99848179248E685900BC0A8A /* Mocks & Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				99848182248E68DF00BC0A8A /* MockNetworkAdapter.swift */,
+			);
+			path = "Mocks & Helpers";
+			sourceTree = "<group>";
+		};
+		9984817A248E687800BC0A8A /* Unit Tests */ = {
+			isa = PBXGroup;
+			children = (
+				99848193248E6A2700BC0A8A /* Types */,
+				9984817B248E688400BC0A8A /* API */,
+			);
+			path = "Unit Tests";
+			sourceTree = "<group>";
+		};
+		9984817B248E688400BC0A8A /* API */ = {
+			isa = PBXGroup;
+			children = (
+				9984817C248E68A600BC0A8A /* DeactivateAPITests.swift */,
+				99848180248E68C500BC0A8A /* CheckAPITests.swift */,
+				9984817E248E68B600BC0A8A /* ActivateAPITests.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		99848184248E68EC00BC0A8A /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				99848188248E696700BC0A8A /* Public Types */,
+				99848187248E691300BC0A8A /* Internal Types */,
+			);
+			path = Types;
+			sourceTree = "<group>";
+		};
+		99848187248E691300BC0A8A /* Internal Types */ = {
+			isa = PBXGroup;
+			children = (
+				99848185248E68FA00BC0A8A /* Device.swift */,
+				99848177248E651A00BC0A8A /* ActivationRequest.swift */,
+				99848191248E69E000BC0A8A /* APIData.swift */,
+			);
+			path = "Internal Types";
+			sourceTree = "<group>";
+		};
+		99848188248E696700BC0A8A /* Public Types */ = {
+			isa = PBXGroup;
+			children = (
+				99848189248E697900BC0A8A /* Subscription.swift */,
+				9984818B248E698500BC0A8A /* SubscriptionPlan.swift */,
+				9984818D248E698D00BC0A8A /* SubscriptionDevice.swift */,
+				9984818F248E699800BC0A8A /* SubscriptionInfo.swift */,
+			);
+			path = "Public Types";
+			sourceTree = "<group>";
+		};
+		99848193248E6A2700BC0A8A /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				99848194248E6A2D00BC0A8A /* Public Types */,
+				99848195248E6A3700BC0A8A /* Internal Types */,
+			);
+			path = Types;
+			sourceTree = "<group>";
+		};
+		99848194248E6A2D00BC0A8A /* Public Types */ = {
+			isa = PBXGroup;
+			children = (
+				9984819E248E96D700BC0A8A /* SubscriptionTests.swift */,
+				998481A0248E99CE00BC0A8A /* SubscriptionPlanTests.swift */,
+				998481A2248FA3BD00BC0A8A /* SubscriptionDeviceTests.swift */,
+				998481A4248FB37F00BC0A8A /* SubscriptionInfoTests.swift */,
+			);
+			path = "Public Types";
+			sourceTree = "<group>";
+		};
+		99848195248E6A3700BC0A8A /* Internal Types */ = {
+			isa = PBXGroup;
+			children = (
+				99848196248E6FC500BC0A8A /* APIDataTests.swift */,
+				9984819C248E94E200BC0A8A /* Mac-DeviceTests.swift */,
+			);
+			path = "Internal Types";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		99848145248E635600BC0A8A /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		99848148248E635600BC0A8A /* M3Subscriptions */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 99848152248E635600BC0A8A /* Build configuration list for PBXNativeTarget "M3Subscriptions" */;
+			buildPhases = (
+				99848145248E635600BC0A8A /* Headers */,
+				99848146248E635600BC0A8A /* Sources */,
+				99848147248E635600BC0A8A /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = M3Subscriptions;
+			productName = M3Subscriptions;
+			productReference = 99848149248E635600BC0A8A /* libM3Subscriptions.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		9984815A248E639C00BC0A8A /* M3SubscriptionsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 99848163248E639C00BC0A8A /* Build configuration list for PBXNativeTarget "M3SubscriptionsTests" */;
+			buildPhases = (
+				99848157248E639C00BC0A8A /* Sources */,
+				99848158248E639C00BC0A8A /* Frameworks */,
+				99848159248E639C00BC0A8A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				99848162248E639C00BC0A8A /* PBXTargetDependency */,
+			);
+			name = M3SubscriptionsTests;
+			productName = M3SubscriptionsTests;
+			productReference = 9984815B248E639C00BC0A8A /* M3SubscriptionsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		99848141248E635600BC0A8A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1150;
+				LastUpgradeCheck = 1150;
+				ORGANIZATIONNAME = "M Cubed Software";
+				TargetAttributes = {
+					99848148248E635600BC0A8A = {
+						CreatedOnToolsVersion = 11.5;
+						LastSwiftMigration = 1150;
+					};
+					9984815A248E639C00BC0A8A = {
+						CreatedOnToolsVersion = 11.5;
+						LastSwiftMigration = 1150;
+					};
+				};
+			};
+			buildConfigurationList = 99848144248E635600BC0A8A /* Build configuration list for PBXProject "M3Subscriptions" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 99848140248E635600BC0A8A;
+			productRefGroup = 9984814A248E635600BC0A8A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				99848148248E635600BC0A8A /* M3Subscriptions */,
+				9984815A248E639C00BC0A8A /* M3SubscriptionsTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		99848159248E639C00BC0A8A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		99848146248E635600BC0A8A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				99848171248E648300BC0A8A /* SubscriptionController.swift in Sources */,
+				99848172248E648300BC0A8A /* SubscriptionInterface.swift in Sources */,
+				9984818E248E698D00BC0A8A /* SubscriptionDevice.swift in Sources */,
+				99848174248E648300BC0A8A /* CheckAPI.swift in Sources */,
+				99848190248E699800BC0A8A /* SubscriptionInfo.swift in Sources */,
+				9984818A248E697900BC0A8A /* Subscription.swift in Sources */,
+				9984818C248E698500BC0A8A /* SubscriptionPlan.swift in Sources */,
+				99848173248E648300BC0A8A /* DeactivateAPI.swift in Sources */,
+				99848192248E69E000BC0A8A /* APIData.swift in Sources */,
+				99848170248E648300BC0A8A /* NetworkAdapter.swift in Sources */,
+				9984816F248E648300BC0A8A /* ResultExtension.swift in Sources */,
+				99848175248E648300BC0A8A /* ActivateAPI.swift in Sources */,
+				99848178248E651A00BC0A8A /* ActivationRequest.swift in Sources */,
+				99848186248E68FA00BC0A8A /* Device.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		99848157248E639C00BC0A8A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				99848197248E6FC500BC0A8A /* APIDataTests.swift in Sources */,
+				998481A1248E99CE00BC0A8A /* SubscriptionPlanTests.swift in Sources */,
+				998481A5248FB37F00BC0A8A /* SubscriptionInfoTests.swift in Sources */,
+				99848183248E68DF00BC0A8A /* MockNetworkAdapter.swift in Sources */,
+				99848181248E68C500BC0A8A /* CheckAPITests.swift in Sources */,
+				9984817D248E68A600BC0A8A /* DeactivateAPITests.swift in Sources */,
+				9984817F248E68B600BC0A8A /* ActivateAPITests.swift in Sources */,
+				9984819D248E94E200BC0A8A /* Mac-DeviceTests.swift in Sources */,
+				9984819F248E96D700BC0A8A /* SubscriptionTests.swift in Sources */,
+				998481A3248FA3BD00BC0A8A /* SubscriptionDeviceTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		99848162248E639C00BC0A8A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 99848148248E635600BC0A8A /* M3Subscriptions */;
+			targetProxy = 99848161248E639C00BC0A8A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		99848150248E635600BC0A8A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		99848151248E635600BC0A8A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		99848153248E635600BC0A8A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Z699XFM6P2;
+				EXECUTABLE_PREFIX = lib;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		99848154248E635600BC0A8A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Z699XFM6P2;
+				EXECUTABLE_PREFIX = lib;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		99848164248E639C00BC0A8A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = Z699XFM6P2;
+				INFOPLIST_FILE = M3SubscriptionsTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.M3SubscriptionsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		99848165248E639C00BC0A8A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = Z699XFM6P2;
+				INFOPLIST_FILE = M3SubscriptionsTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.M3SubscriptionsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		99848144248E635600BC0A8A /* Build configuration list for PBXProject "M3Subscriptions" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				99848150248E635600BC0A8A /* Debug */,
+				99848151248E635600BC0A8A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		99848152248E635600BC0A8A /* Build configuration list for PBXNativeTarget "M3Subscriptions" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				99848153248E635600BC0A8A /* Debug */,
+				99848154248E635600BC0A8A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		99848163248E639C00BC0A8A /* Build configuration list for PBXNativeTarget "M3SubscriptionsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				99848164248E639C00BC0A8A /* Debug */,
+				99848165248E639C00BC0A8A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 99848141248E635600BC0A8A /* Project object */;
+}
