@@ -10,11 +10,58 @@ import Foundation
 import CommonCrypto
 
 struct APIData {
+    enum Response: Equatable {
+        case active
+        case billingFailed
+        case deactivated
+        case loginFailed
+        case multipleSubscriptions
+        case noSubscriptionFound
+        case noDeviceFound
+        case tooManyDevices
+        case expired
+        case other(String)
+
+        static func response(from string: String) -> Response {
+            if (string == "active") {
+                return .active
+            }
+            if (string == "billing_failed") {
+                return .billingFailed
+            }
+            if (string == "deactivated") {
+                return .deactivated
+            }
+            if (string == "login_failed") {
+                return .loginFailed
+            }
+            if (string == "multiple_subscriptions") {
+                return .multipleSubscriptions
+            }
+            if (string == "no_subscription_found") {
+                return .noSubscriptionFound
+            }
+            if (string == "no_device_found") {
+                return .noDeviceFound
+            }
+            if (string == "too_many_devices") {
+                return .tooManyDevices
+            }
+            if (string == "subscription_expired") {
+                return .expired
+            }
+            return .other(string)
+        }
+    }
+
+    //TODO: Need to expose reponse at the top level and return nil if no response found in payload
     var payload: [String: Any]
     var signature: String
+    var response: Response
 
     init?(json: [String: Any]) {
         guard let payload = json["payload"] as? [String: Any],
+            let response = payload["response"] as? String,
             let signature = json["signature"] as? String else {
                 return nil
         }
@@ -25,6 +72,7 @@ struct APIData {
 
         self.payload = payload
         self.signature = signature
+        self.response = Response.response(from: response)
     }
 
     static func verify(payload: [String: Any], signature: String) -> String? {

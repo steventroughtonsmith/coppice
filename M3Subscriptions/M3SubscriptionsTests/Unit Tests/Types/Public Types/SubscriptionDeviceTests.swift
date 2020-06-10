@@ -81,14 +81,6 @@ class SubscriptionDeviceTests: XCTestCase {
         XCTAssertEqual(device.deactivationToken, "token-to-deactivate")
         XCTAssertEqual(device.name, "My Favourite Mac")
 
-        let calendar = NSCalendar(calendarIdentifier: .ISO8601)
-        calendar?.timeZone = TimeZone(identifier: "UTC")!
-        let components = calendar?.components([.year, .month, .day, .hour, .minute, .second], from: device.activationDate)
-        XCTAssertEqual(components?.year, 1999)
-        XCTAssertEqual(components?.month, 8)
-        XCTAssertEqual(components?.day, 7)
-        XCTAssertEqual(components?.hour, 6)
-        XCTAssertEqual(components?.minute, 5)
-        XCTAssertEqual(components?.second, 4)
+        XCTAssertDateEquals(device.activationDate, 1999, 8, 7, 6, 5, 4)
     }
 }

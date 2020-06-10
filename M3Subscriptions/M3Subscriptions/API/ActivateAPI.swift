@@ -21,7 +21,7 @@ struct ActivateAPI {
         case tooManyDevices([SubscriptionDevice])
     }
 
-    func run(_ completion: (Result<SubscriptionInfo, Failure>) -> Void) {
+    func run(_ completion: (Result<ActivationResponse, Failure>) -> Void) {
 
     }
 }

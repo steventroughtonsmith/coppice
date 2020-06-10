@@ -9,7 +9,7 @@
 import Foundation
 
 public protocol SubscriptionControllerDelegate: class {
-    func didChangeSubscription(_ info: SubscriptionInfo, in controller: SubscriptionController)
+    func didChangeSubscription(_ info: ActivationResponse, in controller: SubscriptionController)
     func didEncounterError(_ error: Error, in controller: SubscriptionController)
 }
 

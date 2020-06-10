@@ -9,7 +9,9 @@
 import Foundation
 
 protocol NetworkAdapter {
-    func callAPI(with request: URLRequest, completion: @escaping (Result<APIData, Error>) -> Void)
+    var baseURL: URL { get }
+    var version: String { get }
+    func callAPI(endpoint: String, method: String, body: Data, completion: @escaping (Result<APIData, Error>) -> Void)
 }
 
 class URLSessionNetworkAdapter: NetworkAdapter {
@@ -20,12 +22,25 @@ class URLSessionNetworkAdapter: NetworkAdapter {
         case invalidData
     }
 
+    var baseURL: URL {
+        return URL(string: "http://localhost:8080")!
+    }
+
+    var version: String {
+        return "v1"
+    }
+
     let session: URLSession
     init() {
         self.session = URLSession(configuration: .ephemeral)
     }
 
-    func callAPI(with request: URLRequest, completion: @escaping (Result<APIData, Error>) -> Void) {
+    func callAPI(endpoint: String, method: String = "POST", body: Data, completion: @escaping (Result<APIData, Error>) -> Void) {
+        let request = self.request(forEndpoint: endpoint, method: method, body: body)
+        self.callAPI(with: request, completion: completion)
+    }
+
+    private func callAPI(with request: URLRequest, completion: @escaping (Result<APIData, Error>) -> Void) {
         let task = self.session.dataTask(with: request) { (data, response, error) in
             guard let jsonData = data else {
                 completion(.failure(error ?? Errors.genericError))
@@ -61,5 +76,14 @@ class URLSessionNetworkAdapter: NetworkAdapter {
             }
         }
         task.resume()
+    }
+
+    private func request(forEndpoint endpoint: String, method: String, body: Data) -> URLRequest {
+        let url = self.baseURL.appendingPathComponent(self.version).appendingPathComponent(endpoint)
+
+        var request = URLRequest(url: url)
+        request.httpMethod = method
+        request.httpBody = body
+        return request
     }
 }

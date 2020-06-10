@@ -24,14 +24,15 @@
 		9984818A248E697900BC0A8A /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99848189248E697900BC0A8A /* Subscription.swift */; };
 		9984818C248E698500BC0A8A /* SubscriptionPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984818B248E698500BC0A8A /* SubscriptionPlan.swift */; };
 		9984818E248E698D00BC0A8A /* SubscriptionDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984818D248E698D00BC0A8A /* SubscriptionDevice.swift */; };
-		99848190248E699800BC0A8A /* SubscriptionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984818F248E699800BC0A8A /* SubscriptionInfo.swift */; };
+		99848190248E699800BC0A8A /* ActivationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984818F248E699800BC0A8A /* ActivationResponse.swift */; };
 		99848192248E69E000BC0A8A /* APIData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99848191248E69E000BC0A8A /* APIData.swift */; };
 		99848197248E6FC500BC0A8A /* APIDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99848196248E6FC500BC0A8A /* APIDataTests.swift */; };
 		9984819D248E94E200BC0A8A /* Mac-DeviceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984819C248E94E200BC0A8A /* Mac-DeviceTests.swift */; };
 		9984819F248E96D700BC0A8A /* SubscriptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984819E248E96D700BC0A8A /* SubscriptionTests.swift */; };
 		998481A1248E99CE00BC0A8A /* SubscriptionPlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481A0248E99CE00BC0A8A /* SubscriptionPlanTests.swift */; };
 		998481A3248FA3BD00BC0A8A /* SubscriptionDeviceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481A2248FA3BD00BC0A8A /* SubscriptionDeviceTests.swift */; };
-		998481A5248FB37F00BC0A8A /* SubscriptionInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481A4248FB37F00BC0A8A /* SubscriptionInfoTests.swift */; };
+		998481A5248FB37F00BC0A8A /* ActivationResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481A4248FB37F00BC0A8A /* ActivationResponseTests.swift */; };
+		998481A7248FDE5E00BC0A8A /* XCTestExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481A6248FDE5E00BC0A8A /* XCTestExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,14 +65,15 @@
 		99848189248E697900BC0A8A /* Subscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subscription.swift; sourceTree = "<group>"; };
 		9984818B248E698500BC0A8A /* SubscriptionPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPlan.swift; sourceTree = "<group>"; };
 		9984818D248E698D00BC0A8A /* SubscriptionDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionDevice.swift; sourceTree = "<group>"; };
-		9984818F248E699800BC0A8A /* SubscriptionInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionInfo.swift; sourceTree = "<group>"; };
+		9984818F248E699800BC0A8A /* ActivationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivationResponse.swift; sourceTree = "<group>"; };
 		99848191248E69E000BC0A8A /* APIData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIData.swift; sourceTree = "<group>"; };
 		99848196248E6FC500BC0A8A /* APIDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIDataTests.swift; sourceTree = "<group>"; };
 		9984819C248E94E200BC0A8A /* Mac-DeviceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Mac-DeviceTests.swift"; sourceTree = "<group>"; };
 		9984819E248E96D700BC0A8A /* SubscriptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionTests.swift; sourceTree = "<group>"; };
 		998481A0248E99CE00BC0A8A /* SubscriptionPlanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPlanTests.swift; sourceTree = "<group>"; };
 		998481A2248FA3BD00BC0A8A /* SubscriptionDeviceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionDeviceTests.swift; sourceTree = "<group>"; };
-		998481A4248FB37F00BC0A8A /* SubscriptionInfoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionInfoTests.swift; sourceTree = "<group>"; };
+		998481A4248FB37F00BC0A8A /* ActivationResponseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivationResponseTests.swift; sourceTree = "<group>"; };
+		998481A6248FDE5E00BC0A8A /* XCTestExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XCTestExtensions.swift; path = ../../Coppice/CoppiceTests/XCTestExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +128,7 @@
 		9984815C248E639C00BC0A8A /* M3SubscriptionsTests */ = {
 			isa = PBXGroup;
 			children = (
+				998481A6248FDE5E00BC0A8A /* XCTestExtensions.swift */,
 				9984817A248E687800BC0A8A /* Unit Tests */,
 				99848179248E685900BC0A8A /* Mocks & Helpers */,
 				9984815F248E639C00BC0A8A /* Info.plist */,
@@ -196,7 +199,7 @@
 				99848189248E697900BC0A8A /* Subscription.swift */,
 				9984818B248E698500BC0A8A /* SubscriptionPlan.swift */,
 				9984818D248E698D00BC0A8A /* SubscriptionDevice.swift */,
-				9984818F248E699800BC0A8A /* SubscriptionInfo.swift */,
+				9984818F248E699800BC0A8A /* ActivationResponse.swift */,
 			);
 			path = "Public Types";
 			sourceTree = "<group>";
@@ -216,7 +219,7 @@
 				9984819E248E96D700BC0A8A /* SubscriptionTests.swift */,
 				998481A0248E99CE00BC0A8A /* SubscriptionPlanTests.swift */,
 				998481A2248FA3BD00BC0A8A /* SubscriptionDeviceTests.swift */,
-				998481A4248FB37F00BC0A8A /* SubscriptionInfoTests.swift */,
+				998481A4248FB37F00BC0A8A /* ActivationResponseTests.swift */,
 			);
 			path = "Public Types";
 			sourceTree = "<group>";
@@ -336,7 +339,7 @@
 				99848172248E648300BC0A8A /* SubscriptionInterface.swift in Sources */,
 				9984818E248E698D00BC0A8A /* SubscriptionDevice.swift in Sources */,
 				99848174248E648300BC0A8A /* CheckAPI.swift in Sources */,
-				99848190248E699800BC0A8A /* SubscriptionInfo.swift in Sources */,
+				99848190248E699800BC0A8A /* ActivationResponse.swift in Sources */,
 				9984818A248E697900BC0A8A /* Subscription.swift in Sources */,
 				9984818C248E698500BC0A8A /* SubscriptionPlan.swift in Sources */,
 				99848173248E648300BC0A8A /* DeactivateAPI.swift in Sources */,
@@ -355,11 +358,12 @@
 			files = (
 				99848197248E6FC500BC0A8A /* APIDataTests.swift in Sources */,
 				998481A1248E99CE00BC0A8A /* SubscriptionPlanTests.swift in Sources */,
-				998481A5248FB37F00BC0A8A /* SubscriptionInfoTests.swift in Sources */,
+				998481A5248FB37F00BC0A8A /* ActivationResponseTests.swift in Sources */,
 				99848183248E68DF00BC0A8A /* MockNetworkAdapter.swift in Sources */,
 				99848181248E68C500BC0A8A /* CheckAPITests.swift in Sources */,
 				9984817D248E68A600BC0A8A /* DeactivateAPITests.swift in Sources */,
 				9984817F248E68B600BC0A8A /* ActivateAPITests.swift in Sources */,
+				998481A7248FDE5E00BC0A8A /* XCTestExtensions.swift in Sources */,
 				9984819D248E94E200BC0A8A /* Mac-DeviceTests.swift in Sources */,
 				9984819F248E96D700BC0A8A /* SubscriptionTests.swift in Sources */,
 				998481A3248FA3BD00BC0A8A /* SubscriptionDeviceTests.swift in Sources */,

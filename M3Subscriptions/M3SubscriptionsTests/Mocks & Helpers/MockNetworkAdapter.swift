@@ -7,3 +7,26 @@
 //
 
 import Foundation
+@testable import M3Subscriptions
+
+class MockNetworkAdapter: NetworkAdapter {
+    var calledEndpoint: String?
+    var calledMethod: String?
+    var calledBody: Data?
+
+    var baseURL: URL {
+        return URL(string: "http://localhost:8080")!
+    }
+
+    var version: String {
+        return "v1"
+    }
+
+    var resultToReturn: Result<APIData, Error>?
+    func callAPI(endpoint: String, method: String = "POST", body: Data, completion: @escaping (Result<APIData, Error>) -> Void) {
+        self.calledEndpoint = endpoint
+        self.calledMethod = method
+        self.calledBody = body
+        completion(self.resultToReturn ?? .failure(NSError()))
+    }
+}

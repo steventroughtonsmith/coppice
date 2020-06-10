@@ -1,5 +1,5 @@
 //
-//  SubscriptionInfoTests.swift
+//  ActivationResponseTests.swift
 //  M3SubscriptionsTests
 //
 //  Created by Martin Pilkington on 09/06/2020.
@@ -9,14 +9,14 @@
 import XCTest
 @testable import M3Subscriptions
 
-class SubscriptionInfoTests: XCTestCase {
+class ActivationResponseTests: XCTestCase {
 
     func test_init_returnsNilIfResponseIsMissing() throws {
         let payload: [String: Any] = [
             "subscriptionName": "My Subscription Plan",
             "expirationDate": "2005-10-15T20:15:10Z"
         ]
-        XCTAssertNil(SubscriptionInfo(payload: payload))
+        XCTAssertNil(ActivationResponse(payload: payload))
     }
 
     func test_init_returnsNilIfResponseIsNotString() throws {
@@ -25,62 +25,62 @@ class SubscriptionInfoTests: XCTestCase {
             "subscriptionName": "My Subscription Plan",
             "expirationDate": "2005-10-15T20:15:10Z"
         ]
-        XCTAssertNil(SubscriptionInfo(payload: payload))
+        XCTAssertNil(ActivationResponse(payload: payload))
     }
 
-    func test_init_returnsNilIfSubscriptionNameIsMissing() throws {
+    func test_init_returnsNilIfSubscriptionNameIsMissingAndStateRequiresSubscription() throws {
         let payload: [String: Any] = [
-            "response": "foo",
+            "response": "active",
             "expirationDate": "2005-10-15T20:15:10Z"
         ]
-        XCTAssertNil(SubscriptionInfo(payload: payload))
+        XCTAssertNil(ActivationResponse(payload: payload))
     }
 
-    func test_init_returnsNilIfSubscriptionNameIsNotString() throws {
+    func test_init_returnsNilIfSubscriptionNameIsNotStringAndStateRequiresSubscription() throws {
         let payload: [String: Any] = [
-            "response": "foo",
+            "response": "active",
             "subscriptionName": 19251212512,
             "expirationDate": "2005-10-15T20:15:10Z"
         ]
-        XCTAssertNil(SubscriptionInfo(payload: payload))
+        XCTAssertNil(ActivationResponse(payload: payload))
     }
 
-    func test_init_returnsNilIfExpirationDateIsMissing() throws {
+    func test_init_returnsNilIfExpirationDateIsMissingAndStateRequiresSubscription() throws {
         let payload: [String: Any] = [
-            "response": "foo",
+            "response": "active",
             "subscriptionName": "My Subscription Plan",
         ]
-        XCTAssertNil(SubscriptionInfo(payload: payload))
+        XCTAssertNil(ActivationResponse(payload: payload))
     }
 
-    func test_init_returnsNilIfExpirationDateIsNotString() throws {
+    func test_init_returnsNilIfExpirationDateIsNotStringAndStateRequiresSubscription() throws {
         let payload: [String: Any] = [
-            "response": "foo",
+            "response": "active",
             "subscriptionName": "My Subscription Plan",
             "expirationDate": 2000
         ]
-        XCTAssertNil(SubscriptionInfo(payload: payload))
+        XCTAssertNil(ActivationResponse(payload: payload))
     }
 
-    func test_init_returnsNilIfExpirationDateIsNotISO8601Date() throws {
+    func test_init_returnsNilIfExpirationDateIsNotISO8601DateAndStateRequiresSubscription() throws {
         let payload: [String: Any] = [
-            "response": "foo",
+            "response": "active",
             "subscriptionName": "My Subscription Plan",
             "expirationDate": "Not a date!"
         ]
-        XCTAssertNil(SubscriptionInfo(payload: payload))
+        XCTAssertNil(ActivationResponse(payload: payload))
     }
 
-    func test_init_returnsSubscriptionInfoWithCorrectProperties() throws {
+    func test_init_returnsActivationResponseWithCorrectProperties() throws {
         let payload: [String: Any] = [
             "response": "foo",
             "subscriptionName": "My Subscription Plan",
             "expirationDate": "2005-10-15T20:15:10Z"
         ]
-        let info = try XCTUnwrap(SubscriptionInfo(payload: payload))
-        XCTAssertEqual(info.state, .unknown)
+        let response = try XCTUnwrap(ActivationResponse(payload: payload))
+        XCTAssertEqual(response.state, .unknown)
 
-        let subscription = try XCTUnwrap(info.subscription)
+        let subscription = try XCTUnwrap(response.subscription)
         XCTAssertEqual(subscription.name, "My Subscription Plan")
 
         let calendar = NSCalendar(calendarIdentifier: .ISO8601)
@@ -102,8 +102,8 @@ class SubscriptionInfoTests: XCTestCase {
             "subscriptionName": "My Subscription Plan",
             "expirationDate": "2005-10-15T20:15:10Z"
         ]
-        let info = try XCTUnwrap(SubscriptionInfo(payload: payload))
-        XCTAssertEqual(info.state, .active)
+        let response = try XCTUnwrap(ActivationResponse(payload: payload))
+        XCTAssertEqual(response.state, .active)
     }
 
     func test_state_setsStateTo_billingFailed_ifResponseIs_billing_failed() throws {
@@ -112,8 +112,8 @@ class SubscriptionInfoTests: XCTestCase {
             "subscriptionName": "My Subscription Plan",
             "expirationDate": "2005-10-15T20:15:10Z"
         ]
-        let info = try XCTUnwrap(SubscriptionInfo(payload: payload))
-        XCTAssertEqual(info.state, .billingFailed)
+        let response = try XCTUnwrap(ActivationResponse(payload: payload))
+        XCTAssertEqual(response.state, .billingFailed)
     }
 
     func test_state_setsStateTo_deactivated_ifResponseIs_deactivated() throws {
@@ -122,8 +122,8 @@ class SubscriptionInfoTests: XCTestCase {
             "subscriptionName": "My Subscription Plan",
             "expirationDate": "2005-10-15T20:15:10Z"
         ]
-        let info = try XCTUnwrap(SubscriptionInfo(payload: payload))
-        XCTAssertEqual(info.state, .deactivated)
+        let response = try XCTUnwrap(ActivationResponse(payload: payload))
+        XCTAssertEqual(response.state, .deactivated)
     }
 
     func test_state_setsStateTo_unknown_ifResponseIs_no_device_found() throws {
@@ -132,8 +132,8 @@ class SubscriptionInfoTests: XCTestCase {
             "subscriptionName": "My Subscription Plan",
             "expirationDate": "2005-10-15T20:15:10Z"
         ]
-        let info = try XCTUnwrap(SubscriptionInfo(payload: payload))
-        XCTAssertEqual(info.state, .unknown)
+        let response = try XCTUnwrap(ActivationResponse(payload: payload))
+        XCTAssertEqual(response.state, .unknown)
     }
 
     func test_state_setsStateTo_unknown_ifResponseIs_subscription_expired() throws {
@@ -142,8 +142,8 @@ class SubscriptionInfoTests: XCTestCase {
             "subscriptionName": "My Subscription Plan",
             "expirationDate": "2005-10-15T20:15:10Z"
         ]
-        let info = try XCTUnwrap(SubscriptionInfo(payload: payload))
-        XCTAssertEqual(info.state, .unknown)
+        let response = try XCTUnwrap(ActivationResponse(payload: payload))
+        XCTAssertEqual(response.state, .unknown)
     }
 
     func test_state_setsStateTo_unknown_ifResponseIs_no_subscription_found() throws {
@@ -152,8 +152,8 @@ class SubscriptionInfoTests: XCTestCase {
             "subscriptionName": "My Subscription Plan",
             "expirationDate": "2005-10-15T20:15:10Z"
         ]
-        let info = try XCTUnwrap(SubscriptionInfo(payload: payload))
-        XCTAssertEqual(info.state, .unknown)
+        let response = try XCTUnwrap(ActivationResponse(payload: payload))
+        XCTAssertEqual(response.state, .unknown)
     }
 
     func test_state_setsStateTo_unknown_ifResponseIs_multiple_subscriptions() throws {
@@ -162,8 +162,8 @@ class SubscriptionInfoTests: XCTestCase {
             "subscriptionName": "My Subscription Plan",
             "expirationDate": "2005-10-15T20:15:10Z"
         ]
-        let info = try XCTUnwrap(SubscriptionInfo(payload: payload))
-        XCTAssertEqual(info.state, .unknown)
+        let response = try XCTUnwrap(ActivationResponse(payload: payload))
+        XCTAssertEqual(response.state, .unknown)
     }
 
     func test_state_setsStateTo_unknown_ifResponseIs_login_failed() throws {
@@ -172,8 +172,8 @@ class SubscriptionInfoTests: XCTestCase {
             "subscriptionName": "My Subscription Plan",
             "expirationDate": "2005-10-15T20:15:10Z"
         ]
-        let info = try XCTUnwrap(SubscriptionInfo(payload: payload))
-        XCTAssertEqual(info.state, .unknown)
+        let response = try XCTUnwrap(ActivationResponse(payload: payload))
+        XCTAssertEqual(response.state, .unknown)
     }
 
     func test_state_setsStateTo_unknown_ifResponseIsSomeRandomText() throws {
@@ -182,7 +182,7 @@ class SubscriptionInfoTests: XCTestCase {
             "subscriptionName": "My Subscription Plan",
             "expirationDate": "2005-10-15T20:15:10Z"
         ]
-        let info = try XCTUnwrap(SubscriptionInfo(payload: payload))
-        XCTAssertEqual(info.state, .unknown)
+        let response = try XCTUnwrap(ActivationResponse(payload: payload))
+        XCTAssertEqual(response.state, .unknown)
     }
 }
