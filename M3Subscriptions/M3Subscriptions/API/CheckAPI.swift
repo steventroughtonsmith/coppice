@@ -9,6 +9,8 @@
 import Foundation
 
 struct CheckAPI {
+    typealias APIResult = Result<ActivationResponse, Failure>
+
     let networkAdapter: NetworkAdapter
     let device: Device
     let token: String
@@ -20,7 +22,7 @@ struct CheckAPI {
         case generic(Error?)
     }
 
-    func run(_ completion: @escaping (Result<ActivationResponse, Failure>) -> Void) {
+    func run(_ completion: @escaping (APIResult) -> Void) {
         var json = [
             "token": self.token,
             "deviceType": self.device.type.rawValue,
@@ -45,10 +47,10 @@ struct CheckAPI {
         }
     }
 
-    private func parse(_ data: APIData) -> Result<ActivationResponse, Failure> {
+    private func parse(_ data: APIData) -> APIResult {
         switch data.response {
         case .active, .billingFailed:
-            guard let response = ActivationResponse(payload: data.payload) else {
+            guard let response = ActivationResponse(data: data) else {
                 return .failure(.generic(nil))
             }
             return .success(response)

@@ -33,6 +33,9 @@
 		998481A3248FA3BD00BC0A8A /* SubscriptionDeviceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481A2248FA3BD00BC0A8A /* SubscriptionDeviceTests.swift */; };
 		998481A5248FB37F00BC0A8A /* ActivationResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481A4248FB37F00BC0A8A /* ActivationResponseTests.swift */; };
 		998481A7248FDE5E00BC0A8A /* XCTestExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481A6248FDE5E00BC0A8A /* XCTestExtensions.swift */; };
+		998481AA24924A3600BC0A8A /* SubscriptionControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481A924924A3600BC0A8A /* SubscriptionControllerTests.swift */; };
+		998481AC2492789400BC0A8A /* SubscriptionErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481AB2492789400BC0A8A /* SubscriptionErrors.swift */; };
+		998481AE24927EA600BC0A8A /* MockSubscriptionAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481AD24927EA600BC0A8A /* MockSubscriptionAPI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +77,9 @@
 		998481A2248FA3BD00BC0A8A /* SubscriptionDeviceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionDeviceTests.swift; sourceTree = "<group>"; };
 		998481A4248FB37F00BC0A8A /* ActivationResponseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivationResponseTests.swift; sourceTree = "<group>"; };
 		998481A6248FDE5E00BC0A8A /* XCTestExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XCTestExtensions.swift; path = ../../Coppice/CoppiceTests/XCTestExtensions.swift; sourceTree = "<group>"; };
+		998481A924924A3600BC0A8A /* SubscriptionControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionControllerTests.swift; sourceTree = "<group>"; };
+		998481AB2492789400BC0A8A /* SubscriptionErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionErrors.swift; sourceTree = "<group>"; };
+		998481AD24927EA600BC0A8A /* MockSubscriptionAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSubscriptionAPI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +125,7 @@
 				99848167248E648300BC0A8A /* NetworkAdapter.swift */,
 				99848166248E648300BC0A8A /* ResultExtension.swift */,
 				99848168248E648300BC0A8A /* SubscriptionController.swift */,
+				998481AB2492789400BC0A8A /* SubscriptionErrors.swift */,
 				99848184248E68EC00BC0A8A /* Types */,
 				99848169248E648300BC0A8A /* API */,
 			);
@@ -151,6 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				99848182248E68DF00BC0A8A /* MockNetworkAdapter.swift */,
+				998481AD24927EA600BC0A8A /* MockSubscriptionAPI.swift */,
 			);
 			path = "Mocks & Helpers";
 			sourceTree = "<group>";
@@ -160,6 +168,7 @@
 			children = (
 				99848193248E6A2700BC0A8A /* Types */,
 				9984817B248E688400BC0A8A /* API */,
+				998481A924924A3600BC0A8A /* SubscriptionControllerTests.swift */,
 			);
 			path = "Unit Tests";
 			sourceTree = "<group>";
@@ -344,6 +353,7 @@
 				9984818C248E698500BC0A8A /* SubscriptionPlan.swift in Sources */,
 				99848173248E648300BC0A8A /* DeactivateAPI.swift in Sources */,
 				99848192248E69E000BC0A8A /* APIData.swift in Sources */,
+				998481AC2492789400BC0A8A /* SubscriptionErrors.swift in Sources */,
 				99848170248E648300BC0A8A /* NetworkAdapter.swift in Sources */,
 				9984816F248E648300BC0A8A /* ResultExtension.swift in Sources */,
 				99848175248E648300BC0A8A /* ActivateAPI.swift in Sources */,
@@ -356,12 +366,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				998481AA24924A3600BC0A8A /* SubscriptionControllerTests.swift in Sources */,
 				99848197248E6FC500BC0A8A /* APIDataTests.swift in Sources */,
 				998481A1248E99CE00BC0A8A /* SubscriptionPlanTests.swift in Sources */,
 				998481A5248FB37F00BC0A8A /* ActivationResponseTests.swift in Sources */,
 				99848183248E68DF00BC0A8A /* MockNetworkAdapter.swift in Sources */,
 				99848181248E68C500BC0A8A /* CheckAPITests.swift in Sources */,
 				9984817D248E68A600BC0A8A /* DeactivateAPITests.swift in Sources */,
+				998481AE24927EA600BC0A8A /* MockSubscriptionAPI.swift in Sources */,
 				9984817F248E68B600BC0A8A /* ActivateAPITests.swift in Sources */,
 				998481A7248FDE5E00BC0A8A /* XCTestExtensions.swift in Sources */,
 				9984819D248E94E200BC0A8A /* Mac-DeviceTests.swift in Sources */,
