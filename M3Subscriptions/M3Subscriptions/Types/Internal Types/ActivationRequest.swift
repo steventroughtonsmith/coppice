@@ -12,7 +12,7 @@ struct ActivationRequest {
     var email: String
     var password: String
     var bundleID: String
-    var subscriptionID: String?
-    let deviceDeactivationToken: String?
+    var subscriptionID: String? = nil
+    var deviceDeactivationToken: String? = nil
 }
 

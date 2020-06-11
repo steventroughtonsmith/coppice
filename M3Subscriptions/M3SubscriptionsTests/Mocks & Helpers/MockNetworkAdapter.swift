@@ -27,6 +27,6 @@ class MockNetworkAdapter: NetworkAdapter {
         self.calledEndpoint = endpoint
         self.calledMethod = method
         self.calledBody = body
-        completion(self.resultToReturn ?? .failure(NSError()))
+        completion(self.resultToReturn ?? .failure(NSError(domain: "com.mcubedsw.testing", code: -1234, userInfo: nil)))
     }
 }

@@ -22,12 +22,14 @@ public class SubscriptionController {
     public weak var delegate: SubscriptionControllerDelegate?
     public weak var uiDelegate: SubscriptionControllerUIDelegate?
 
-    public convenience init() {
-        self.init(subscriptionAPI: OnlineSubscriptionAPI(networkAdapter: URLSessionNetworkAdapter()))
+    public convenience init(licenceURL: URL) {
+        self.init(licenceURL: licenceURL, subscriptionAPI: OnlineSubscriptionAPI(networkAdapter: URLSessionNetworkAdapter()))
     }
 
+    let licenceURL: URL
     let subscriptionAPI: SubscriptionAPI
-    init(subscriptionAPI: SubscriptionAPI) {
+    init(licenceURL: URL, subscriptionAPI: SubscriptionAPI) {
+        self.licenceURL = licenceURL
         self.subscriptionAPI = subscriptionAPI
     }
 
