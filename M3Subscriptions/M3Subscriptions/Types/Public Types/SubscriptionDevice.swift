@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct SubscriptionDevice {
+public struct SubscriptionDevice: Equatable {
     public var deactivationToken: String
     public var name: String
     public var activationDate: Date

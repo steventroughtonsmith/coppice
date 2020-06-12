@@ -12,42 +12,82 @@ enum SubscriptionErrorCodes: Int {
     case unknown = -1
     case other = 0
     case loginFailed = 1
-    case multipleSubscriptions
     case noSubscriptionFound
     case subscriptionExpired
-    case tooManyDevices
     case noDeviceFound
+    case notActivated
+    case couldNotConnectToServer
 }
+
+
 
 class SubscriptionErrorFactory {
     static let domain = "com.mcubedsw.Subscriptions"
 
-    static func error(for: ActivateAPI.Failure) -> NSError {
-        return self.createError(code: .unknown, localizedDescription: "", localizedRecoverySuggestion: "")
+    struct InfoKeys {
+        static let subscription = "M3SubscriptionErrorSubscriptionKey"
     }
 
-    static func error(for: CheckAPI.Failure) -> NSError {
-        return self.createError(code: .unknown, localizedDescription: "", localizedRecoverySuggestion: "")
+    fileprivate enum ErrorContext {
+        case activate
+        case check
+        case deactivate
+    }
+
+    static func error(for failure: ActivateAPI.Failure) -> NSError {
+        switch failure {
+        case .generic(let error as NSError) where error.domain == NSURLErrorDomain:
+            return self.createError(code: .couldNotConnectToServer, context: .activate, additionalOptions: [NSUnderlyingErrorKey: error])
+        case .generic(let error):
+            return self.createError(code: .other, context: .activate, additionalOptions: (error != nil) ? [NSUnderlyingErrorKey: error!] : nil)
+        case .invalidRequest:
+            return self.createError(code: .other, context: .activate)
+        case .loginFailed:
+            return self.createError(code: .loginFailed, context: .activate)
+        case .noSubscriptionFound:
+            return self.createError(code: .noSubscriptionFound, context: .activate)
+        case .subscriptionExpired(let subscription):
+            return self.createError(code: .subscriptionExpired, context: .activate, additionalOptions: (subscription != nil) ? [InfoKeys.subscription: subscription!]: nil)
+        default:
+            break
+        }
+        return self.createError(code: .unknown, context: .activate)
+    }
+
+    static func error(for failure: CheckAPI.Failure) -> NSError {
+        switch failure {
+        case .generic(let error as NSError) where error.domain == NSURLErrorDomain:
+            return self.createError(code: .couldNotConnectToServer, context: .check, additionalOptions: [NSUnderlyingErrorKey: error])
+        case .generic(let error):
+            return self.createError(code: .other, context: .check, additionalOptions: (error != nil) ? [NSUnderlyingErrorKey: error!] : nil)
+        case .noDeviceFound:
+            return self.createError(code: .noDeviceFound, context: .check)
+        case .noSubscriptionFound:
+            return self.createError(code: .noSubscriptionFound, context: .check)
+        case .subscriptionExpired(let subscription):
+            return self.createError(code: .subscriptionExpired, context: .check, additionalOptions: (subscription != nil) ? [InfoKeys.subscription: subscription!]: nil)
+        }
     }
 
     static func error(for failure: DeactivateAPI.Failure) -> NSError {
         switch failure {
         case .noDeviceFound:
-            return self.createError(code: .noDeviceFound,
-                                    localizedDescription: SubscriptionStrings.Deactivation.noDeviceFoundDescription,
-                                    localizedRecoverySuggestion: SubscriptionStrings.Deactivation.noDeviceFoundRecovery)
+            return self.createError(code: .noDeviceFound, context: .deactivate)
+        case .generic(let error as NSError) where error.domain == NSURLErrorDomain:
+            return self.createError(code: .couldNotConnectToServer, context: .deactivate, additionalOptions: [NSUnderlyingErrorKey: error])
         case .generic(let error):
-            return self.createError(code: .other,
-                                    localizedDescription: SubscriptionStrings.Deactivation.genericDescription,
-                                    localizedRecoverySuggestion: SubscriptionStrings.Deactivation.genericRecovery,
-                                    additionalOptions: (error != nil) ? [NSUnderlyingErrorKey: error!] : nil)
+            return self.createError(code: .other, context: .deactivate, additionalOptions: (error != nil) ? [NSUnderlyingErrorKey: error!] : nil)
         }
     }
 
-    static func createError(code: SubscriptionErrorCodes, localizedDescription: String, localizedRecoverySuggestion: String, additionalOptions: [String: Any]? = nil) -> NSError {
+    static func notActivatedError() -> NSError {
+        return self.createError(code: .notActivated, context: .activate)
+    }
+
+    private static func createError(code: SubscriptionErrorCodes, context: ErrorContext, additionalOptions: [String: Any]? = nil) -> NSError {
         var userInfo: [String: Any] = [
-            NSLocalizedDescriptionKey: localizedDescription,
-            NSLocalizedRecoverySuggestionErrorKey: localizedRecoverySuggestion
+            NSLocalizedDescriptionKey: code.localizedDescription(for: context),
+            NSLocalizedRecoverySuggestionErrorKey: code.localizedRecoverySuggestion(for: context)
         ]
         if let options = additionalOptions {
             userInfo.merge(options, uniquingKeysWith: { arg1, arg2 in arg1 })
@@ -66,5 +106,65 @@ struct SubscriptionStrings {
 
         static let noDeviceFoundDescription = NSLocalizedString("Your Device Was Already Deactivated", comment: "No Device Found Deactivation Error Description")
         static let noDeviceFoundRecovery = NSLocalizedString("If you think this is a mistake, please log into your M Cubed Account and try deactivating from there", comment: "No Device Found Deactivation Error Description")
+    }
+}
+
+extension SubscriptionErrorCodes {
+    fileprivate func localizedDescription(for context: SubscriptionErrorFactory.ErrorContext) -> String {
+        switch self {
+        case .unknown:
+            return NSLocalizedString("Oops. Something went wrong.", comment: "Unknown Error Description")
+        case .other:
+            if case .deactivate = context {
+                return NSLocalizedString("Deactivation Failed", comment: "Generic Deactivation Error Description")
+            }
+        case .loginFailed:
+            return NSLocalizedString("Your Login Details Were Incorrect", comment: "Login Failed Error Description")
+        case .noSubscriptionFound:
+            guard let appName = Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String else {
+                return NSLocalizedString("No Subscription Found", comment: "No Subscription Found Error Description Format")
+            }
+            let format = NSLocalizedString("No Subscription Found For %@", comment: "No Subscription Found for <app> Error Description Format")
+            return String(format: format,  appName)
+        case .subscriptionExpired:
+            return NSLocalizedString("Your Subscription Has Expired", comment: "Subscription Expired Error Description")
+        case .noDeviceFound:
+            if case .deactivate = context {
+                return NSLocalizedString("Your Device Was Already Deactivated", comment: "No Device Found Deactivation Error Description")
+            } else if case .check = context {
+
+            }
+        case .notActivated:
+            return NSLocalizedString("Your Device Is Not Activated", comment: "Device Not Activated Error Description")
+        case .couldNotConnectToServer:
+            return NSLocalizedString("Could Not Contact M Cubed's Servers", comment: "Could Not Connect To Server Error Description")
+        }
+        return NSLocalizedString("Oops. Something went wrong.", comment: "Unknown Error Description")
+    }
+
+    fileprivate func localizedRecoverySuggestion(for context: SubscriptionErrorFactory.ErrorContext) -> String {
+        switch self {
+        case .unknown:
+            return NSLocalizedString("Please try again. If the problem persists please contact M Cubed Support.", comment: "Unknown Error Recovery")
+        case .other:
+            if case .deactivate = context {
+                return NSLocalizedString("Please check your internet connection and try again. If the problem persists please contact M Cubed Support.", comment: "Generic Deactivation Error Description")
+            }
+        case .loginFailed:
+            return NSLocalizedString("Please make sure they are correct and try again.", comment: "Login Failed Error Recovery")
+        case .noSubscriptionFound:
+            return NSLocalizedString("You can purchase a subscription below.", comment: "No Subscription Found Error Recovery")
+        case .subscriptionExpired:
+            return NSLocalizedString("You can renew your subscription below.", comment: "Subscription Expired Error Recovery")
+        case .noDeviceFound:
+            if case .deactivate = context {
+                return NSLocalizedString("If you think this is a mistake, please log into your M Cubed Account and try deactivating from there", comment: "No Device Found Deactivation Error Description")
+            }
+        case .notActivated:
+            return NSLocalizedString("Please try activating again. If the problem persists please contact M Cubed Support", comment: "Not Activated Error Recovery")
+        case .couldNotConnectToServer:
+            return NSLocalizedString("Please check your internet connection and try again.", comment: "Could Not Connect To Server Error Recovery")
+        }
+        return NSLocalizedString("Please try again. If the problem persists please contact M Cubed Support.", comment: "Unknown Error Recovery")
     }
 }
