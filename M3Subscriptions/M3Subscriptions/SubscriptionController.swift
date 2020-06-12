@@ -33,7 +33,14 @@ public class SubscriptionController {
         self.subscriptionAPI = subscriptionAPI
     }
 
-    private(set) var recheckTimer: Timer? 
+    private(set) var recheckTimer: Timer?
+    private(set) var lastCheck: Date?
+
+    #if TEST
+    func setLastCheck(_ date: Date) {
+        self.lastCheck = date
+    }
+    #endif
 
     public func activate(withEmail email: String, password: String, subscription: SubscriptionPlan? = nil, deactivatingDevice: SubscriptionDevice? = nil) {
         let bundleID = Bundle.main.bundleIdentifier ?? "com.mcubedsw.unknown"
@@ -46,8 +53,7 @@ public class SubscriptionController {
         self.subscriptionAPI.activate(request, device: device) { (result) in
             switch result {
             case .success(let response):
-                response.write(to: self.licenceURL)
-                self.delegate?.didChangeSubscription(response, in: self)
+                self.complete(with: response)
             case .failure(let failure):
                 switch failure {
                 case .multipleSubscriptions(let plans):
@@ -75,8 +81,7 @@ public class SubscriptionController {
         self.subscriptionAPI.check(Device(name: deviceName), token: token) { (result) in
             switch result {
             case .success(let response):
-                response.write(to: self.licenceURL)
-                self.delegate?.didChangeSubscription(response, in: self)
+                self.complete(with: response)
             case .failure(let failure):
                 switch failure {
                 case .generic(let error as NSError) where error.domain == NSURLErrorDomain:
@@ -88,22 +93,6 @@ public class SubscriptionController {
             }
         }
         //Set next timer
-    }
-
-    private func attemptLocalValidation(with response: ActivationResponse, dueTo failure: CheckAPI.Failure) {
-        guard let subscription =  response.subscription else {
-            let error = SubscriptionErrorFactory.error(for: failure)
-            self.delegate?.didEncounterError(error, in: self)
-            return
-        }
-
-        guard subscription.expirationDate >= Date() else {
-            let error = SubscriptionErrorFactory.error(for: CheckAPI.Failure.subscriptionExpired(subscription))
-            self.delegate?.didEncounterError(error, in: self)
-            return
-        }
-
-        self.delegate?.didChangeSubscription(response, in: self)
     }
 
     public func deactivate() {
@@ -125,6 +114,8 @@ public class SubscriptionController {
             case .success(let response):
                 self.deleteLicence()
                 self.delegate?.didChangeSubscription(response, in: self)
+                self.recheckTimer?.invalidate()
+                self.recheckTimer = nil
             case .failure(let failure):
                 let error = SubscriptionErrorFactory.error(for: failure)
                 self.delegate?.didEncounterError(error, in: self)
@@ -134,6 +125,37 @@ public class SubscriptionController {
 
     private func deleteLicence() {
         try? FileManager.default.removeItem(at: self.licenceURL)
+    }
+
+    private func attemptLocalValidation(with response: ActivationResponse, dueTo failure: CheckAPI.Failure) {
+        guard let subscription =  response.subscription else {
+            let error = SubscriptionErrorFactory.error(for: failure)
+            self.delegate?.didEncounterError(error, in: self)
+            return
+        }
+
+        guard subscription.expirationDate >= Date() else {
+            let error = SubscriptionErrorFactory.error(for: CheckAPI.Failure.subscriptionExpired(subscription))
+            self.delegate?.didEncounterError(error, in: self)
+            return
+        }
+
+        self.complete(with: response, writeToFile: false)
+    }
+
+    private func complete(with response: ActivationResponse, writeToFile: Bool = true) {
+        response.write(to: self.licenceURL)
+        self.delegate?.didChangeSubscription(response, in: self)
+        self.lastCheck = Date()
+        self.recheckTimer = Timer.scheduledTimer(withTimeInterval: 3600, repeats: false) { [weak self] _ in self?.recheckIfNeeded() }
+    }
+
+    private func recheckIfNeeded() {
+        if let lastCheck = self.lastCheck, (Date().timeIntervalSince(lastCheck) > 86400) {
+            self.checkSubscription()
+        } else {
+            self.recheckTimer = Timer.scheduledTimer(withTimeInterval: 3600, repeats: false) { [weak self] _ in self?.recheckIfNeeded() }
+        }
     }
 
 

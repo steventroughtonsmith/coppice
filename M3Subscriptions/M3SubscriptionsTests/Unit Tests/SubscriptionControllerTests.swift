@@ -230,8 +230,50 @@ class SubscriptionControllerTests: XCTestCase {
         XCTAssertEqual(json["signature"] as? String, "dUZqFj+bII2zPftVNZjp3reO53+Uc0+Z5hDYcvLkg/lbVssoHLpJYCWeWV/r48zC4tbV2Yb1xMlTBFmN8PImwD7Noh+C/jamCbgl21HCZoTZ7CQe/ndIGaVul9fgIaCDH36Prfu2sVIHyv8he3sZWUMuBOU383zTCcG/TU9XxvLBnL1OjQ5fVSx7G83KoSo50PxTPfYsesVq2R4Y6/t6qLVQA3itqFxyJpgvdwFTGWYvVvyDNCDZIJ5HcMCweVmMgU+L/e7CBAKysHdvtXCfxLqlIxxJEs2Z8/tv2Wz0KOqpmzDGJLtZe/XyEcFmFhDzgGGuehtV0A71SXwuw3dWNw==")
     }
 
-    func test_activate_callsCheckSubscriptionAfterTimerFires() throws {
-        XCTFail()
+    func test_activate_setsTimerToFireInAnHour() throws {
+        let expectedJSON: [String: Any] = ["payload": ["response": "active", "token": "updated-token", "subscriptionName": "Plan B", "expirationDate": "2036-01-01T01:01:01Z"], "signature": "sLD+XmujPGuq7LrEA1r7vTlwdRIhIUUIbozw10KWo1OAobiuiAJSei2Fuuk/jxMvaI9aAh4565s6L05kLyfBCiyC043ohdVDsqip4OlORqKBC+V0bF0p7PR7QLlVH7gkWJzzte7S3XgFRLGEsmzNeqv2waZaRfDWAXXowaSxTGYe8YQxXuNWfTUI1IUz3xVrjvu7SS8sXN8kcgmjCCAIwG3IqS0kdyWnqlcFUqr6pFsFbQFTQvASpa4GRz+DZc2QbZQHdCxUHA4oSf49BQb2s81b7BEOZagODtkaEmku6i9w09PqGKyw6+Fh5UukQJmKVO26rJKFScRORalJsY91MA=="]
+        let apiData = try XCTUnwrap(APIData(json: expectedJSON))
+        let expectedResponse = try XCTUnwrap(ActivationResponse(data: apiData))
+        self.mockAPI.activateResponse = .success(expectedResponse)
+
+        self.controller.activate(withEmail: "baz@possum.com", password: "abcdef")
+
+        let timer = try XCTUnwrap(self.controller.recheckTimer)
+        let difference = timer.fireDate.timeIntervalSince(Date())
+        XCTAssertGreaterThan(difference, 3600 - 1)
+        XCTAssertLessThan(difference, 3600 + 1)
+    }
+
+    func test_activate_setsLastCheckDate() throws {
+        let expectedJSON: [String: Any] = ["payload": ["response": "active", "token": "updated-token", "subscriptionName": "Plan B", "expirationDate": "2036-01-01T01:01:01Z"], "signature": "sLD+XmujPGuq7LrEA1r7vTlwdRIhIUUIbozw10KWo1OAobiuiAJSei2Fuuk/jxMvaI9aAh4565s6L05kLyfBCiyC043ohdVDsqip4OlORqKBC+V0bF0p7PR7QLlVH7gkWJzzte7S3XgFRLGEsmzNeqv2waZaRfDWAXXowaSxTGYe8YQxXuNWfTUI1IUz3xVrjvu7SS8sXN8kcgmjCCAIwG3IqS0kdyWnqlcFUqr6pFsFbQFTQvASpa4GRz+DZc2QbZQHdCxUHA4oSf49BQb2s81b7BEOZagODtkaEmku6i9w09PqGKyw6+Fh5UukQJmKVO26rJKFScRORalJsY91MA=="]
+        let apiData = try XCTUnwrap(APIData(json: expectedJSON))
+        let expectedResponse = try XCTUnwrap(ActivationResponse(data: apiData))
+        self.mockAPI.activateResponse = .success(expectedResponse)
+
+        self.controller.activate(withEmail: "baz@possum.com", password: "abcdef")
+
+        let lastCheck = try XCTUnwrap(self.controller.lastCheck)
+        let difference = lastCheck.timeIntervalSince(Date())
+        XCTAssertGreaterThan(difference, -1)
+        XCTAssertLessThan(difference, 1)
+    }
+
+    func test_activate_callsCheckSubscriptionAgainIfTimerFiresAfterLastCheckDatePlus24Hours() throws {
+        let expectedJSON: [String: Any] = ["payload": ["response": "active", "token": "updated-token", "subscriptionName": "Plan B", "expirationDate": "2036-01-01T01:01:01Z"], "signature": "sLD+XmujPGuq7LrEA1r7vTlwdRIhIUUIbozw10KWo1OAobiuiAJSei2Fuuk/jxMvaI9aAh4565s6L05kLyfBCiyC043ohdVDsqip4OlORqKBC+V0bF0p7PR7QLlVH7gkWJzzte7S3XgFRLGEsmzNeqv2waZaRfDWAXXowaSxTGYe8YQxXuNWfTUI1IUz3xVrjvu7SS8sXN8kcgmjCCAIwG3IqS0kdyWnqlcFUqr6pFsFbQFTQvASpa4GRz+DZc2QbZQHdCxUHA4oSf49BQb2s81b7BEOZagODtkaEmku6i9w09PqGKyw6+Fh5UukQJmKVO26rJKFScRORalJsY91MA=="]
+        let apiData = try XCTUnwrap(APIData(json: expectedJSON))
+        let expectedResponse = try XCTUnwrap(ActivationResponse(data: apiData))
+        self.mockAPI.activateResponse = .success(expectedResponse)
+
+        self.controller.activate(withEmail: "baz@possum.com", password: "abcdef")
+
+        self.mockAPI.reset()
+        let timer = try XCTUnwrap(self.controller.recheckTimer)
+
+        XCTAssertNil(self.mockAPI.calledMethod)
+        self.controller.setLastCheck(Date(timeIntervalSinceNow: -86401))
+        timer.fire()
+
+        XCTAssertEqual(self.mockAPI.calledMethod, "check")
     }
 
 
@@ -420,15 +462,55 @@ class SubscriptionControllerTests: XCTestCase {
     }
 
     func test_checkSubscription_setsTimerToFireInAnHour() throws {
-        XCTFail()
+        try self.writeLicence(["payload": ["response": "active", "token": "abctoken123", "subscriptionName": "Plan B", "expirationDate": "2035-01-01T00:00:00Z"], "signature": "p95hpnUCr/DdzKmCbNHPdb+oZoNnRVdC05aj9uxlpMhBSStSnpYn0GqRv3zGYKoCEmLrTNtCV87kT4tmHsknfOgrDE7/6+BQwYwP2+iLU9fbbQhmMuTBYTChw205VjwHu1wQKGy8QYC96sZ7TjlkQ/73kLfeTUKH8TGmvv3XEm10PY6NryuAbfnzd2zpKoL/bUMOcSCdZJb7NJ1FHLf/DmZVvlCYBfKahyE9+2xiQYbhqAfuDzAs+1PWvCkDdOSM8CFy0UlScdLLhvj6/JSr6DUWt4Ivgr6ATRiKOQIaeo8BwH1dtMgwXgw50V3fSl70b2j7DGx5sXBf5WUBIxMwdw=="])
+
+        let expectedJSON: [String: Any] = ["payload": ["response": "active", "token": "updated-token", "subscriptionName": "Plan B", "expirationDate": "2036-01-01T01:01:01Z"], "signature": "sLD+XmujPGuq7LrEA1r7vTlwdRIhIUUIbozw10KWo1OAobiuiAJSei2Fuuk/jxMvaI9aAh4565s6L05kLyfBCiyC043ohdVDsqip4OlORqKBC+V0bF0p7PR7QLlVH7gkWJzzte7S3XgFRLGEsmzNeqv2waZaRfDWAXXowaSxTGYe8YQxXuNWfTUI1IUz3xVrjvu7SS8sXN8kcgmjCCAIwG3IqS0kdyWnqlcFUqr6pFsFbQFTQvASpa4GRz+DZc2QbZQHdCxUHA4oSf49BQb2s81b7BEOZagODtkaEmku6i9w09PqGKyw6+Fh5UukQJmKVO26rJKFScRORalJsY91MA=="]
+
+        let apiData = try XCTUnwrap(APIData(json: expectedJSON))
+        let expectedResponse = try XCTUnwrap(ActivationResponse(data: apiData))
+        self.mockAPI.checkResponse = .success(expectedResponse)
+        self.controller.checkSubscription()
+
+        let timer = try XCTUnwrap(self.controller.recheckTimer)
+        let difference = timer.fireDate.timeIntervalSince(Date())
+        XCTAssertGreaterThan(difference, 3600 - 1)
+        XCTAssertLessThan(difference, 3600 + 1)
     }
 
     func test_checkSubscription_setsLastCheckDate() throws {
-        XCTFail()
+        try self.writeLicence(["payload": ["response": "active", "token": "abctoken123", "subscriptionName": "Plan B", "expirationDate": "2035-01-01T00:00:00Z"], "signature": "p95hpnUCr/DdzKmCbNHPdb+oZoNnRVdC05aj9uxlpMhBSStSnpYn0GqRv3zGYKoCEmLrTNtCV87kT4tmHsknfOgrDE7/6+BQwYwP2+iLU9fbbQhmMuTBYTChw205VjwHu1wQKGy8QYC96sZ7TjlkQ/73kLfeTUKH8TGmvv3XEm10PY6NryuAbfnzd2zpKoL/bUMOcSCdZJb7NJ1FHLf/DmZVvlCYBfKahyE9+2xiQYbhqAfuDzAs+1PWvCkDdOSM8CFy0UlScdLLhvj6/JSr6DUWt4Ivgr6ATRiKOQIaeo8BwH1dtMgwXgw50V3fSl70b2j7DGx5sXBf5WUBIxMwdw=="])
+
+        let expectedJSON: [String: Any] = ["payload": ["response": "active", "token": "updated-token", "subscriptionName": "Plan B", "expirationDate": "2036-01-01T01:01:01Z"], "signature": "sLD+XmujPGuq7LrEA1r7vTlwdRIhIUUIbozw10KWo1OAobiuiAJSei2Fuuk/jxMvaI9aAh4565s6L05kLyfBCiyC043ohdVDsqip4OlORqKBC+V0bF0p7PR7QLlVH7gkWJzzte7S3XgFRLGEsmzNeqv2waZaRfDWAXXowaSxTGYe8YQxXuNWfTUI1IUz3xVrjvu7SS8sXN8kcgmjCCAIwG3IqS0kdyWnqlcFUqr6pFsFbQFTQvASpa4GRz+DZc2QbZQHdCxUHA4oSf49BQb2s81b7BEOZagODtkaEmku6i9w09PqGKyw6+Fh5UukQJmKVO26rJKFScRORalJsY91MA=="]
+
+        let apiData = try XCTUnwrap(APIData(json: expectedJSON))
+        let expectedResponse = try XCTUnwrap(ActivationResponse(data: apiData))
+        self.mockAPI.checkResponse = .success(expectedResponse)
+        self.controller.checkSubscription()
+
+        let lastCheck = try XCTUnwrap(self.controller.lastCheck)
+        let difference = lastCheck.timeIntervalSince(Date())
+        XCTAssertGreaterThan(difference, -1)
+        XCTAssertLessThan(difference, 1)
     }
 
     func test_checkSubscription_callsCheckSubscriptionAgainIfTimerFiresAfterLastCheckDatePlus24Hours() throws {
-        XCTFail()
+        try self.writeLicence(["payload": ["response": "active", "token": "abctoken123", "subscriptionName": "Plan B", "expirationDate": "2035-01-01T00:00:00Z"], "signature": "p95hpnUCr/DdzKmCbNHPdb+oZoNnRVdC05aj9uxlpMhBSStSnpYn0GqRv3zGYKoCEmLrTNtCV87kT4tmHsknfOgrDE7/6+BQwYwP2+iLU9fbbQhmMuTBYTChw205VjwHu1wQKGy8QYC96sZ7TjlkQ/73kLfeTUKH8TGmvv3XEm10PY6NryuAbfnzd2zpKoL/bUMOcSCdZJb7NJ1FHLf/DmZVvlCYBfKahyE9+2xiQYbhqAfuDzAs+1PWvCkDdOSM8CFy0UlScdLLhvj6/JSr6DUWt4Ivgr6ATRiKOQIaeo8BwH1dtMgwXgw50V3fSl70b2j7DGx5sXBf5WUBIxMwdw=="])
+
+        let expectedJSON: [String: Any] = ["payload": ["response": "active", "token": "updated-token", "subscriptionName": "Plan B", "expirationDate": "2036-01-01T01:01:01Z"], "signature": "sLD+XmujPGuq7LrEA1r7vTlwdRIhIUUIbozw10KWo1OAobiuiAJSei2Fuuk/jxMvaI9aAh4565s6L05kLyfBCiyC043ohdVDsqip4OlORqKBC+V0bF0p7PR7QLlVH7gkWJzzte7S3XgFRLGEsmzNeqv2waZaRfDWAXXowaSxTGYe8YQxXuNWfTUI1IUz3xVrjvu7SS8sXN8kcgmjCCAIwG3IqS0kdyWnqlcFUqr6pFsFbQFTQvASpa4GRz+DZc2QbZQHdCxUHA4oSf49BQb2s81b7BEOZagODtkaEmku6i9w09PqGKyw6+Fh5UukQJmKVO26rJKFScRORalJsY91MA=="]
+
+        let apiData = try XCTUnwrap(APIData(json: expectedJSON))
+        let expectedResponse = try XCTUnwrap(ActivationResponse(data: apiData))
+        self.mockAPI.checkResponse = .success(expectedResponse)
+        self.controller.checkSubscription()
+
+        self.mockAPI.reset()
+        let timer = try XCTUnwrap(self.controller.recheckTimer)
+
+        XCTAssertNil(self.mockAPI.calledMethod)
+        self.controller.setLastCheck(Date(timeIntervalSinceNow: -86401))
+        timer.fire()
+
+        XCTAssertEqual(self.mockAPI.calledMethod, "check")
     }
 
 
@@ -526,7 +608,22 @@ class SubscriptionControllerTests: XCTestCase {
     }
 
     func test_deactivate_clearsTimer() throws {
-        XCTFail()
+        try self.writeLicence(["payload": ["response": "active", "token": "abctoken123", "subscriptionName": "Plan B", "expirationDate": "2035-01-01T00:00:00Z"], "signature": "p95hpnUCr/DdzKmCbNHPdb+oZoNnRVdC05aj9uxlpMhBSStSnpYn0GqRv3zGYKoCEmLrTNtCV87kT4tmHsknfOgrDE7/6+BQwYwP2+iLU9fbbQhmMuTBYTChw205VjwHu1wQKGy8QYC96sZ7TjlkQ/73kLfeTUKH8TGmvv3XEm10PY6NryuAbfnzd2zpKoL/bUMOcSCdZJb7NJ1FHLf/DmZVvlCYBfKahyE9+2xiQYbhqAfuDzAs+1PWvCkDdOSM8CFy0UlScdLLhvj6/JSr6DUWt4Ivgr6ATRiKOQIaeo8BwH1dtMgwXgw50V3fSl70b2j7DGx5sXBf5WUBIxMwdw=="])
+
+        let expectedJSON: [String: Any] = ["payload": ["response": "active", "token": "updated-token", "subscriptionName": "Plan B", "expirationDate": "2036-01-01T01:01:01Z"], "signature": "sLD+XmujPGuq7LrEA1r7vTlwdRIhIUUIbozw10KWo1OAobiuiAJSei2Fuuk/jxMvaI9aAh4565s6L05kLyfBCiyC043ohdVDsqip4OlORqKBC+V0bF0p7PR7QLlVH7gkWJzzte7S3XgFRLGEsmzNeqv2waZaRfDWAXXowaSxTGYe8YQxXuNWfTUI1IUz3xVrjvu7SS8sXN8kcgmjCCAIwG3IqS0kdyWnqlcFUqr6pFsFbQFTQvASpa4GRz+DZc2QbZQHdCxUHA4oSf49BQb2s81b7BEOZagODtkaEmku6i9w09PqGKyw6+Fh5UukQJmKVO26rJKFScRORalJsY91MA=="]
+
+        let apiData = try XCTUnwrap(APIData(json: expectedJSON))
+        let expectedResponse = try XCTUnwrap(ActivationResponse(data: apiData))
+        self.mockAPI.checkResponse = .success(expectedResponse)
+        self.controller.checkSubscription()
+
+        XCTAssertNotNil(self.controller.recheckTimer)
+
+        self.mockAPI.deactivateResponse = .success(ActivationResponse.deactivated()!)
+
+        self.controller.deactivate()
+
+        XCTAssertNil(self.controller.recheckTimer)
     }
 
 }
