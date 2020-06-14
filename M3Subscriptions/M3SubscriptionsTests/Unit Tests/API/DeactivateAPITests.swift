@@ -45,10 +45,9 @@ class DeactivateAPITests: XCTestCase {
             }
         }
 
-        let bodyData = try XCTUnwrap(mockAdapter.calledBody)
-        let json = try JSONSerialization.jsonObject(with: bodyData, options: []) as? [String: Any]
-        XCTAssertEqual(json?["deviceID"] as? String, device.id)
-        XCTAssertEqual(json?["token"] as? String, "token3")
+        let calledBody = try XCTUnwrap(mockAdapter.calledBody)
+        XCTAssertEqual(calledBody["deviceID"], device.id)
+        XCTAssertEqual(calledBody["token"], "token3")
     }
 
 

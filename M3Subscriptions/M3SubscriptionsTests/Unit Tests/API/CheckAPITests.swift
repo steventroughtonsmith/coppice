@@ -44,11 +44,10 @@ class CheckAPITests: XCTestCase {
             }
         }
 
-        let bodyData = try XCTUnwrap(mockAdapter.calledBody)
-        let json = try JSONSerialization.jsonObject(with: bodyData, options: []) as? [String: Any]
-        XCTAssertEqual(json?["deviceID"] as? String, device.id)
-        XCTAssertEqual(json?["deviceType"] as? String, device.type.rawValue)
-        XCTAssertEqual(json?["token"] as? String, "tucan42")
+        let calledBody = try XCTUnwrap(mockAdapter.calledBody)
+        XCTAssertEqual(calledBody["deviceID"], device.id)
+        XCTAssertEqual(calledBody["deviceType"], device.type.rawValue)
+        XCTAssertEqual(calledBody["token"], "tucan42")
     }
 
     func test_run_calling_setsDeviceNameInBodyJSONIfSetOnDevice() throws {
@@ -61,9 +60,8 @@ class CheckAPITests: XCTestCase {
             }
         }
 
-        let bodyData = try XCTUnwrap(mockAdapter.calledBody)
-        let json = try JSONSerialization.jsonObject(with: bodyData, options: []) as? [String: Any]
-        XCTAssertEqual(json?["deviceName"] as? String, "POSSUMZ!!1!")
+        let calledBody = try XCTUnwrap(mockAdapter.calledBody)
+        XCTAssertEqual(calledBody["deviceName"], "POSSUMZ!!1!")
     }
 
     func test_run_calling_doesntSetDeviceNameInBodyJSONIfNotSetOnDevice() throws {
@@ -76,9 +74,8 @@ class CheckAPITests: XCTestCase {
             }
         }
 
-        let bodyData = try XCTUnwrap(mockAdapter.calledBody)
-        let json = try JSONSerialization.jsonObject(with: bodyData, options: []) as? [String: Any]
-        XCTAssertNil(json?["deviceName"] as? String)
+        let calledBody = try XCTUnwrap(mockAdapter.calledBody)
+        XCTAssertNil(calledBody["deviceName"])
     }
 
 

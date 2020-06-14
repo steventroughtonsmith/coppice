@@ -11,7 +11,7 @@ import Foundation
 protocol NetworkAdapter {
     var baseURL: URL { get }
     var version: String { get }
-    func callAPI(endpoint: String, method: String, body: Data, completion: @escaping (Result<APIData, Error>) -> Void)
+    func callAPI(endpoint: String, method: String, body: [String: String], completion: @escaping (Result<APIData, Error>) -> Void)
 }
 
 class URLSessionNetworkAdapter: NetworkAdapter {
@@ -23,7 +23,7 @@ class URLSessionNetworkAdapter: NetworkAdapter {
     }
 
     var baseURL: URL {
-        return URL(string: "http://localhost:8080")!
+        return URL(string: "http://localhost:8080/api")!
     }
 
     var version: String {
@@ -31,11 +31,11 @@ class URLSessionNetworkAdapter: NetworkAdapter {
     }
 
     let session: URLSession
-    init() {
-        self.session = URLSession(configuration: .ephemeral)
+    init(session: URLSession = URLSession(configuration: .ephemeral)) {
+        self.session = session
     }
 
-    func callAPI(endpoint: String, method: String = "POST", body: Data, completion: @escaping (Result<APIData, Error>) -> Void) {
+    func callAPI(endpoint: String, method: String = "POST", body: [String: String], completion: @escaping (Result<APIData, Error>) -> Void) {
         let request = self.request(forEndpoint: endpoint, method: method, body: body)
         self.callAPI(with: request, completion: completion)
     }
@@ -78,12 +78,19 @@ class URLSessionNetworkAdapter: NetworkAdapter {
         task.resume()
     }
 
-    private func request(forEndpoint endpoint: String, method: String, body: Data) -> URLRequest {
+    private func request(forEndpoint endpoint: String, method: String, body: [String: String]) -> URLRequest {
         let url = self.baseURL.appendingPathComponent(self.version).appendingPathComponent(endpoint)
 
         var request = URLRequest(url: url)
         request.httpMethod = method
-        request.httpBody = body
+        request.httpBody = self.queryString(for: body).data(using: .utf8)
         return request
+    }
+
+    private func queryString(for body: [String: String]) -> String {
+        var characterSet = CharacterSet.urlPathAllowed
+        characterSet.remove(charactersIn: "&")
+        let queryComponents = body.compactMap { "\($0)=\($1)".addingPercentEncoding(withAllowedCharacters: characterSet) }
+        return queryComponents.joined(separator: "&")
     }
 }

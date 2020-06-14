@@ -652,6 +652,4 @@ class MockSubscriptionUIDelegate: SubscriptionControllerUIDelegate {
     func showDevicesToDeactivate(_ devices: [SubscriptionDevice], for controller: SubscriptionController) {
         self.devicesArgument = devices
     }
-
-
 }

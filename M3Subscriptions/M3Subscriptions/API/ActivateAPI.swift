@@ -26,7 +26,7 @@ struct ActivateAPI {
     }
 
     func run(_ completion: @escaping (APIResult) -> Void) {
-        var json: [String: Any] = [
+        var body: [String: String] = [
             "email": self.request.email,
             "password": self.request.password,
             "bundleID": self.request.bundleID,
@@ -40,28 +40,23 @@ struct ActivateAPI {
             return
         }
 
-        json["deviceName"] = deviceName
+        body["deviceName"] = deviceName
 
         if let subscriptionID = self.request.subscriptionID {
-            json["subscriptionID"] = subscriptionID
+            body["subscriptionID"] = subscriptionID
         }
 
         if let deviceDeactivationToken = self.request.deviceDeactivationToken {
-            json["deactivatingDeviceToken"] = deviceDeactivationToken
+            body["deactivatingDeviceToken"] = deviceDeactivationToken
         }
 
-        do {
-            let data = try JSONSerialization.data(withJSONObject: json, options: .sortedKeys)
-            networkAdapter.callAPI(endpoint: "activate", method: "POST", body: data) { result in
-                switch result {
-                case .success(let apiData):
-                    completion(self.parse(apiData))
-                case .failure(let error):
-                    completion(.failure(.generic(error)))
-                }
+        self.networkAdapter.callAPI(endpoint: "activate", method: "POST", body: body) { result in
+            switch result {
+            case .success(let apiData):
+                completion(self.parse(apiData))
+            case .failure(let error):
+                completion(.failure(.generic(error)))
             }
-        } catch let e {
-            completion(.failure(.generic(e)))
         }
     }
 

@@ -12,7 +12,7 @@ import Foundation
 class MockNetworkAdapter: NetworkAdapter {
     var calledEndpoint: String?
     var calledMethod: String?
-    var calledBody: Data?
+    var calledBody: [String: String]?
 
     var baseURL: URL {
         return URL(string: "http://localhost:8080")!
@@ -23,7 +23,7 @@ class MockNetworkAdapter: NetworkAdapter {
     }
 
     var resultToReturn: Result<APIData, Error>?
-    func callAPI(endpoint: String, method: String = "POST", body: Data, completion: @escaping (Result<APIData, Error>) -> Void) {
+    func callAPI(endpoint: String, method: String = "POST", body: [String: String], completion: @escaping (Result<APIData, Error>) -> Void) {
         self.calledEndpoint = endpoint
         self.calledMethod = method
         self.calledBody = body

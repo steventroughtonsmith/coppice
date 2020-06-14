@@ -46,11 +46,10 @@ class ActivateAPITests: XCTestCase {
             }
         }
 
-        let bodyData = try XCTUnwrap(mockAdapter.calledBody)
-        let json = try JSONSerialization.jsonObject(with: bodyData, options: []) as? [String: Any]
-        XCTAssertEqual(json?["email"] as? String, "foo@bar.com")
-        XCTAssertEqual(json?["password"] as? String, "123456")
-        XCTAssertEqual(json?["bundleID"] as? String, "com.mcubedsw.Coppice")
+        let calledBody = try XCTUnwrap(mockAdapter.calledBody)
+        XCTAssertEqual(calledBody["email"], "foo@bar.com")
+        XCTAssertEqual(calledBody["password"], "123456")
+        XCTAssertEqual(calledBody["bundleID"], "com.mcubedsw.Coppice")
     }
 
     func test_run_calling_setsDeviceID_DeviceName_DeviceTypeAndAppVersionJSONOnBody() throws {
@@ -64,12 +63,11 @@ class ActivateAPITests: XCTestCase {
             }
         }
 
-        let bodyData = try XCTUnwrap(mockAdapter.calledBody)
-        let json = try JSONSerialization.jsonObject(with: bodyData, options: []) as? [String: Any]
-        XCTAssertEqual(json?["deviceID"] as? String, device.id)
-        XCTAssertEqual(json?["deviceType"] as? String, device.type.rawValue)
-        XCTAssertEqual(json?["deviceName"] as? String, "Foo Bar Baz")
-        XCTAssertEqual(json?["version"] as? String, device.appVersion)
+        let calledBody = try XCTUnwrap(mockAdapter.calledBody)
+        XCTAssertEqual(calledBody["deviceID"], device.id)
+        XCTAssertEqual(calledBody["deviceType"], device.type.rawValue)
+        XCTAssertEqual(calledBody["deviceName"], "Foo Bar Baz")
+        XCTAssertEqual(calledBody["version"], device.appVersion)
     }
 
     func test_run_calling_setsSubscriptionIDJSONOnBodyIfSetInActivationRequest() throws {
@@ -82,9 +80,8 @@ class ActivateAPITests: XCTestCase {
             }
         }
 
-        let bodyData = try XCTUnwrap(mockAdapter.calledBody)
-        let json = try JSONSerialization.jsonObject(with: bodyData, options: []) as? [String: Any]
-        XCTAssertEqual(json?["subscriptionID"] as? String, "Sub123")
+        let calledBody = try XCTUnwrap(mockAdapter.calledBody)
+        XCTAssertEqual(calledBody["subscriptionID"], "Sub123")
     }
 
     func test_run_calling_doesntSetSubscriptionIDJSONOnBodyIfNotSetOnActivationRequest() throws {
@@ -97,9 +94,8 @@ class ActivateAPITests: XCTestCase {
             }
         }
 
-        let bodyData = try XCTUnwrap(mockAdapter.calledBody)
-        let json = try JSONSerialization.jsonObject(with: bodyData, options: []) as? [String: Any]
-        XCTAssertNil(json?["subscriptionID"])
+        let calledBody = try XCTUnwrap(mockAdapter.calledBody)
+        XCTAssertNil(calledBody["subscriptionID"])
     }
 
     func test_run_calling_setsDeviceDeactivationTokenJSONOnBodyIfSetInActivationRequest() throws {
@@ -112,9 +108,8 @@ class ActivateAPITests: XCTestCase {
             }
         }
 
-        let bodyData = try XCTUnwrap(mockAdapter.calledBody)
-        let json = try JSONSerialization.jsonObject(with: bodyData, options: []) as? [String: Any]
-        XCTAssertEqual(json?["deactivatingDeviceToken"] as? String, "Deactivate987")
+        let calledBody = try XCTUnwrap(mockAdapter.calledBody)
+        XCTAssertEqual(calledBody["deactivatingDeviceToken"], "Deactivate987")
     }
 
     func test_run_calling_doesntSetDeviceDeactivationTokenJSONOnBodyIfNotSetOnActivationRequest() throws {
@@ -127,9 +122,8 @@ class ActivateAPITests: XCTestCase {
             }
         }
 
-        let bodyData = try XCTUnwrap(mockAdapter.calledBody)
-        let json = try JSONSerialization.jsonObject(with: bodyData, options: []) as? [String: Any]
-        XCTAssertNil(json?["deviceDeactivationToken"])
+        let calledBody = try XCTUnwrap(mockAdapter.calledBody)
+        XCTAssertNil(calledBody["deviceDeactivationToken"])
     }
 
 

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -36,6 +36,9 @@
 		998481AA24924A3600BC0A8A /* SubscriptionControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481A924924A3600BC0A8A /* SubscriptionControllerTests.swift */; };
 		998481AC2492789400BC0A8A /* SubscriptionErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481AB2492789400BC0A8A /* SubscriptionErrors.swift */; };
 		998481AE24927EA600BC0A8A /* MockSubscriptionAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481AD24927EA600BC0A8A /* MockSubscriptionAPI.swift */; };
+		998481B72494EA4300BC0A8A /* DVR in Frameworks */ = {isa = PBXBuildFile; productRef = 998481B62494EA4300BC0A8A /* DVR */; };
+		998481BA2494EA8800BC0A8A /* SubscriptionFunctionalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481B92494EA8800BC0A8A /* SubscriptionFunctionalTests.swift */; };
+		998481BD24955E6200BC0A8A /* Activation-LoginFailed.json in Resources */ = {isa = PBXBuildFile; fileRef = 998481BC24955E6200BC0A8A /* Activation-LoginFailed.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +83,21 @@
 		998481A924924A3600BC0A8A /* SubscriptionControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionControllerTests.swift; sourceTree = "<group>"; };
 		998481AB2492789400BC0A8A /* SubscriptionErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionErrors.swift; sourceTree = "<group>"; };
 		998481AD24927EA600BC0A8A /* MockSubscriptionAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSubscriptionAPI.swift; sourceTree = "<group>"; };
+		998481B92494EA8800BC0A8A /* SubscriptionFunctionalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionFunctionalTests.swift; sourceTree = "<group>"; };
+		998481BC24955E6200BC0A8A /* Activation-LoginFailed.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Activation-LoginFailed.json"; sourceTree = "<group>"; };
+		998481BE24955E6C00BC0A8A /* Activation-Success.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Activation-Success.json"; sourceTree = "<group>"; };
+		998481BF24955E9E00BC0A8A /* Activation-NoSubscriptionFound.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Activation-NoSubscriptionFound.json"; sourceTree = "<group>"; };
+		998481C024955E9F00BC0A8A /* Activation-SubscriptionExpired.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Activation-SubscriptionExpired.json"; sourceTree = "<group>"; };
+		998481C124955EBD00BC0A8A /* Activation-MultipleSubscriptions.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Activation-MultipleSubscriptions.json"; sourceTree = "<group>"; };
+		998481C224955ECE00BC0A8A /* Activation-BillingFailed.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Activation-BillingFailed.json"; sourceTree = "<group>"; };
+		998481C324955ED100BC0A8A /* Activation-TooManyDevices.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Activation-TooManyDevices.json"; sourceTree = "<group>"; };
+		998481C524955F0400BC0A8A /* Check-BillingFailed.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Check-BillingFailed.json"; sourceTree = "<group>"; };
+		998481C624955F0400BC0A8A /* Check-NoSubscriptionFound.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Check-NoSubscriptionFound.json"; sourceTree = "<group>"; };
+		998481C724955F0400BC0A8A /* Check-Success.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Check-Success.json"; sourceTree = "<group>"; };
+		998481C824955F0400BC0A8A /* Check-SubscriptionExpired.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Check-SubscriptionExpired.json"; sourceTree = "<group>"; };
+		998481C924955F0400BC0A8A /* Check-NoDeviceFound.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Check-NoDeviceFound.json"; sourceTree = "<group>"; };
+		998481CA24955F5200BC0A8A /* Deactivate-Success.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Deactivate-Success.json"; sourceTree = "<group>"; };
+		998481CB24955F5200BC0A8A /* Deactivate-NoDeviceFound.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Deactivate-NoDeviceFound.json"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +113,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				99848160248E639C00BC0A8A /* libM3Subscriptions.a in Frameworks */,
+				998481B72494EA4300BC0A8A /* DVR in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,6 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				998481A6248FDE5E00BC0A8A /* XCTestExtensions.swift */,
+				998481B82494EA6700BC0A8A /* Functional Tests */,
 				9984817A248E687800BC0A8A /* Unit Tests */,
 				99848179248E685900BC0A8A /* Mocks & Helpers */,
 				9984815F248E639C00BC0A8A /* Info.plist */,
@@ -242,6 +262,36 @@
 			path = "Internal Types";
 			sourceTree = "<group>";
 		};
+		998481B82494EA6700BC0A8A /* Functional Tests */ = {
+			isa = PBXGroup;
+			children = (
+				998481B92494EA8800BC0A8A /* SubscriptionFunctionalTests.swift */,
+				998481BB24955E4C00BC0A8A /* Cassettes */,
+			);
+			path = "Functional Tests";
+			sourceTree = "<group>";
+		};
+		998481BB24955E4C00BC0A8A /* Cassettes */ = {
+			isa = PBXGroup;
+			children = (
+				998481BE24955E6C00BC0A8A /* Activation-Success.json */,
+				998481C224955ECE00BC0A8A /* Activation-BillingFailed.json */,
+				998481BC24955E6200BC0A8A /* Activation-LoginFailed.json */,
+				998481BF24955E9E00BC0A8A /* Activation-NoSubscriptionFound.json */,
+				998481C024955E9F00BC0A8A /* Activation-SubscriptionExpired.json */,
+				998481C124955EBD00BC0A8A /* Activation-MultipleSubscriptions.json */,
+				998481C324955ED100BC0A8A /* Activation-TooManyDevices.json */,
+				998481C724955F0400BC0A8A /* Check-Success.json */,
+				998481C524955F0400BC0A8A /* Check-BillingFailed.json */,
+				998481C624955F0400BC0A8A /* Check-NoSubscriptionFound.json */,
+				998481C924955F0400BC0A8A /* Check-NoDeviceFound.json */,
+				998481C824955F0400BC0A8A /* Check-SubscriptionExpired.json */,
+				998481CA24955F5200BC0A8A /* Deactivate-Success.json */,
+				998481CB24955F5200BC0A8A /* Deactivate-NoDeviceFound.json */,
+			);
+			path = Cassettes;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -268,6 +318,8 @@
 			dependencies = (
 			);
 			name = M3Subscriptions;
+			packageProductDependencies = (
+			);
 			productName = M3Subscriptions;
 			productReference = 99848149248E635600BC0A8A /* libM3Subscriptions.a */;
 			productType = "com.apple.product-type.library.static";
@@ -286,6 +338,9 @@
 				99848162248E639C00BC0A8A /* PBXTargetDependency */,
 			);
 			name = M3SubscriptionsTests;
+			packageProductDependencies = (
+				998481B62494EA4300BC0A8A /* DVR */,
+			);
 			productName = M3SubscriptionsTests;
 			productReference = 9984815B248E639C00BC0A8A /* M3SubscriptionsTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -319,6 +374,9 @@
 				Base,
 			);
 			mainGroup = 99848140248E635600BC0A8A;
+			packageReferences = (
+				998481B52494EA4300BC0A8A /* XCRemoteSwiftPackageReference "DVR" */,
+			);
 			productRefGroup = 9984814A248E635600BC0A8A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -334,6 +392,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				998481BD24955E6200BC0A8A /* Activation-LoginFailed.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -367,6 +426,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				998481AA24924A3600BC0A8A /* SubscriptionControllerTests.swift in Sources */,
+				998481BA2494EA8800BC0A8A /* SubscriptionFunctionalTests.swift in Sources */,
 				99848197248E6FC500BC0A8A /* APIDataTests.swift in Sources */,
 				998481A1248E99CE00BC0A8A /* SubscriptionPlanTests.swift in Sources */,
 				998481A5248FB37F00BC0A8A /* ActivationResponseTests.swift in Sources */,
@@ -717,6 +777,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		998481B52494EA4300BC0A8A /* XCRemoteSwiftPackageReference "DVR" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/venmo/DVR";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		998481B62494EA4300BC0A8A /* DVR */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 998481B52494EA4300BC0A8A /* XCRemoteSwiftPackageReference "DVR" */;
+			productName = DVR;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 99848141248E635600BC0A8A /* Project object */;
 }

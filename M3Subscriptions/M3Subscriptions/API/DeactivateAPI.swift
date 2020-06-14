@@ -20,24 +20,19 @@ struct DeactivateAPI {
     }
 
     func run(_ completion: @escaping (APIResult) -> Void) {
-        let json = [
+        let body = [
             "deviceID": self.device.id,
             "token": self.token
         ]
-        do {
-        	let data = try JSONSerialization.data(withJSONObject: json, options: .sortedKeys)
-            networkAdapter.callAPI(endpoint: "deactivate", method: "POST", body: data) { result in
-                switch result {
-                case .success(let apiData):
-                    completion(self.parse(apiData))
-                case .failure(let error):
-                    completion(.failure(.generic(error)))
-                }
+        self.networkAdapter.callAPI(endpoint: "deactivate", method: "POST", body: body) { result in
+            switch result {
+            case .success(let apiData):
+                completion(self.parse(apiData))
+            case .failure(let error):
+                completion(.failure(.generic(error)))
             }
-        } catch let e {
-            completion(.failure(.generic(e)))
         }
-    }
+}
 
     private func parse(_ data: APIData) -> APIResult {
         switch data.response {
