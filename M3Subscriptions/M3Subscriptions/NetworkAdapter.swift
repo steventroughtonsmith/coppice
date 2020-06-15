@@ -23,10 +23,20 @@ class URLSessionNetworkAdapter: NetworkAdapter {
     }
 
     var baseURL: URL {
+        #if TEST
+        if let baseURL = TEST_OVERRIDES.baseURL {
+            return baseURL
+        }
+        #endif
         return URL(string: "http://localhost:8080/api")!
     }
 
     var version: String {
+        #if TEST
+        if let version = TEST_OVERRIDES.apiVersion {
+            return version
+        }
+        #endif
         return "v1"
     }
 
@@ -53,7 +63,7 @@ class URLSessionNetworkAdapter: NetworkAdapter {
             }
 
             guard httpResponse.statusCode == 200 || httpResponse.statusCode == 422 else {
-                completion(.failure(Errors.invalidResponse(httpResponse )))
+                completion(.failure(Errors.invalidResponse(httpResponse)))
                 return
             }
 

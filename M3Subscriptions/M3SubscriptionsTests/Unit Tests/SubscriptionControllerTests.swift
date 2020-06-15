@@ -18,7 +18,7 @@ class SubscriptionControllerTests: XCTestCase {
 
     override func setUpWithError() throws {
         try super.setUpWithError()
-        self.licenceURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("com.mcubed.subscriptions").appendingPathComponent("licence.txt")
+        self.licenceURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("com.mcubedsw.subscriptions").appendingPathComponent("licence.txt")
         try FileManager.default.createDirectory(at: self.licenceURL.deletingLastPathComponent(), withIntermediateDirectories: true, attributes: nil)
         self.mockAPI = MockSubscriptionAPI()
         self.controller = SubscriptionController(licenceURL: self.licenceURL, subscriptionAPI: self.mockAPI)

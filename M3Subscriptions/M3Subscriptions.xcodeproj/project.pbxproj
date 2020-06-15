@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -36,13 +36,21 @@
 		998481AA24924A3600BC0A8A /* SubscriptionControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481A924924A3600BC0A8A /* SubscriptionControllerTests.swift */; };
 		998481AC2492789400BC0A8A /* SubscriptionErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481AB2492789400BC0A8A /* SubscriptionErrors.swift */; };
 		998481AE24927EA600BC0A8A /* MockSubscriptionAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481AD24927EA600BC0A8A /* MockSubscriptionAPI.swift */; };
-		998481B72494EA4300BC0A8A /* DVR in Frameworks */ = {isa = PBXBuildFile; productRef = 998481B62494EA4300BC0A8A /* DVR */; };
-		998481BA2494EA8800BC0A8A /* SubscriptionFunctionalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481B92494EA8800BC0A8A /* SubscriptionFunctionalTests.swift */; };
-		998481BD24955E6200BC0A8A /* Activation-LoginFailed.json in Resources */ = {isa = PBXBuildFile; fileRef = 998481BC24955E6200BC0A8A /* Activation-LoginFailed.json */; };
+		998481CD2496640A00BC0A8A /* TestOverrides.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481CC2496640A00BC0A8A /* TestOverrides.swift */; };
+		998481D52496768100BC0A8A /* M3SubscriptionsStageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481D42496768100BC0A8A /* M3SubscriptionsStageTests.swift */; };
+		998481D72496768100BC0A8A /* libM3Subscriptions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99848149248E635600BC0A8A /* libM3Subscriptions.a */; };
+		998481DF24967A1700BC0A8A /* XCTestExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481DE24967A1700BC0A8A /* XCTestExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		99848161248E639C00BC0A8A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 99848141248E635600BC0A8A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 99848148248E635600BC0A8A;
+			remoteInfo = M3Subscriptions;
+		};
+		998481D82496768100BC0A8A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 99848141248E635600BC0A8A /* Project object */;
 			proxyType = 1;
@@ -83,21 +91,11 @@
 		998481A924924A3600BC0A8A /* SubscriptionControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionControllerTests.swift; sourceTree = "<group>"; };
 		998481AB2492789400BC0A8A /* SubscriptionErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionErrors.swift; sourceTree = "<group>"; };
 		998481AD24927EA600BC0A8A /* MockSubscriptionAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSubscriptionAPI.swift; sourceTree = "<group>"; };
-		998481B92494EA8800BC0A8A /* SubscriptionFunctionalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionFunctionalTests.swift; sourceTree = "<group>"; };
-		998481BC24955E6200BC0A8A /* Activation-LoginFailed.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Activation-LoginFailed.json"; sourceTree = "<group>"; };
-		998481BE24955E6C00BC0A8A /* Activation-Success.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Activation-Success.json"; sourceTree = "<group>"; };
-		998481BF24955E9E00BC0A8A /* Activation-NoSubscriptionFound.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Activation-NoSubscriptionFound.json"; sourceTree = "<group>"; };
-		998481C024955E9F00BC0A8A /* Activation-SubscriptionExpired.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Activation-SubscriptionExpired.json"; sourceTree = "<group>"; };
-		998481C124955EBD00BC0A8A /* Activation-MultipleSubscriptions.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Activation-MultipleSubscriptions.json"; sourceTree = "<group>"; };
-		998481C224955ECE00BC0A8A /* Activation-BillingFailed.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Activation-BillingFailed.json"; sourceTree = "<group>"; };
-		998481C324955ED100BC0A8A /* Activation-TooManyDevices.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Activation-TooManyDevices.json"; sourceTree = "<group>"; };
-		998481C524955F0400BC0A8A /* Check-BillingFailed.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Check-BillingFailed.json"; sourceTree = "<group>"; };
-		998481C624955F0400BC0A8A /* Check-NoSubscriptionFound.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Check-NoSubscriptionFound.json"; sourceTree = "<group>"; };
-		998481C724955F0400BC0A8A /* Check-Success.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Check-Success.json"; sourceTree = "<group>"; };
-		998481C824955F0400BC0A8A /* Check-SubscriptionExpired.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Check-SubscriptionExpired.json"; sourceTree = "<group>"; };
-		998481C924955F0400BC0A8A /* Check-NoDeviceFound.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Check-NoDeviceFound.json"; sourceTree = "<group>"; };
-		998481CA24955F5200BC0A8A /* Deactivate-Success.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Deactivate-Success.json"; sourceTree = "<group>"; };
-		998481CB24955F5200BC0A8A /* Deactivate-NoDeviceFound.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Deactivate-NoDeviceFound.json"; sourceTree = "<group>"; };
+		998481CC2496640A00BC0A8A /* TestOverrides.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestOverrides.swift; sourceTree = "<group>"; };
+		998481D22496768100BC0A8A /* M3SubscriptionsStageTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = M3SubscriptionsStageTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		998481D42496768100BC0A8A /* M3SubscriptionsStageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M3SubscriptionsStageTests.swift; sourceTree = "<group>"; };
+		998481D62496768100BC0A8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		998481DE24967A1700BC0A8A /* XCTestExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,7 +111,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				99848160248E639C00BC0A8A /* libM3Subscriptions.a in Frameworks */,
-				998481B72494EA4300BC0A8A /* DVR in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		998481CF2496768100BC0A8A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				998481D72496768100BC0A8A /* libM3Subscriptions.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +130,7 @@
 			children = (
 				9984814B248E635600BC0A8A /* M3Subscriptions */,
 				9984815C248E639C00BC0A8A /* M3SubscriptionsTests */,
+				998481D32496768100BC0A8A /* M3SubscriptionsStageTests */,
 				9984814A248E635600BC0A8A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -134,6 +140,7 @@
 			children = (
 				99848149248E635600BC0A8A /* libM3Subscriptions.a */,
 				9984815B248E639C00BC0A8A /* M3SubscriptionsTests.xctest */,
+				998481D22496768100BC0A8A /* M3SubscriptionsStageTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -145,6 +152,7 @@
 				99848166248E648300BC0A8A /* ResultExtension.swift */,
 				99848168248E648300BC0A8A /* SubscriptionController.swift */,
 				998481AB2492789400BC0A8A /* SubscriptionErrors.swift */,
+				998481CC2496640A00BC0A8A /* TestOverrides.swift */,
 				99848184248E68EC00BC0A8A /* Types */,
 				99848169248E648300BC0A8A /* API */,
 			);
@@ -155,7 +163,6 @@
 			isa = PBXGroup;
 			children = (
 				998481A6248FDE5E00BC0A8A /* XCTestExtensions.swift */,
-				998481B82494EA6700BC0A8A /* Functional Tests */,
 				9984817A248E687800BC0A8A /* Unit Tests */,
 				99848179248E685900BC0A8A /* Mocks & Helpers */,
 				9984815F248E639C00BC0A8A /* Info.plist */,
@@ -262,34 +269,14 @@
 			path = "Internal Types";
 			sourceTree = "<group>";
 		};
-		998481B82494EA6700BC0A8A /* Functional Tests */ = {
+		998481D32496768100BC0A8A /* M3SubscriptionsStageTests */ = {
 			isa = PBXGroup;
 			children = (
-				998481B92494EA8800BC0A8A /* SubscriptionFunctionalTests.swift */,
-				998481BB24955E4C00BC0A8A /* Cassettes */,
+				998481DE24967A1700BC0A8A /* XCTestExtensions.swift */,
+				998481D42496768100BC0A8A /* M3SubscriptionsStageTests.swift */,
+				998481D62496768100BC0A8A /* Info.plist */,
 			);
-			path = "Functional Tests";
-			sourceTree = "<group>";
-		};
-		998481BB24955E4C00BC0A8A /* Cassettes */ = {
-			isa = PBXGroup;
-			children = (
-				998481BE24955E6C00BC0A8A /* Activation-Success.json */,
-				998481C224955ECE00BC0A8A /* Activation-BillingFailed.json */,
-				998481BC24955E6200BC0A8A /* Activation-LoginFailed.json */,
-				998481BF24955E9E00BC0A8A /* Activation-NoSubscriptionFound.json */,
-				998481C024955E9F00BC0A8A /* Activation-SubscriptionExpired.json */,
-				998481C124955EBD00BC0A8A /* Activation-MultipleSubscriptions.json */,
-				998481C324955ED100BC0A8A /* Activation-TooManyDevices.json */,
-				998481C724955F0400BC0A8A /* Check-Success.json */,
-				998481C524955F0400BC0A8A /* Check-BillingFailed.json */,
-				998481C624955F0400BC0A8A /* Check-NoSubscriptionFound.json */,
-				998481C924955F0400BC0A8A /* Check-NoDeviceFound.json */,
-				998481C824955F0400BC0A8A /* Check-SubscriptionExpired.json */,
-				998481CA24955F5200BC0A8A /* Deactivate-Success.json */,
-				998481CB24955F5200BC0A8A /* Deactivate-NoDeviceFound.json */,
-			);
-			path = Cassettes;
+			path = M3SubscriptionsStageTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -339,10 +326,27 @@
 			);
 			name = M3SubscriptionsTests;
 			packageProductDependencies = (
-				998481B62494EA4300BC0A8A /* DVR */,
 			);
 			productName = M3SubscriptionsTests;
 			productReference = 9984815B248E639C00BC0A8A /* M3SubscriptionsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		998481D12496768100BC0A8A /* M3SubscriptionsStageTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 998481DA2496768100BC0A8A /* Build configuration list for PBXNativeTarget "M3SubscriptionsStageTests" */;
+			buildPhases = (
+				998481CE2496768100BC0A8A /* Sources */,
+				998481CF2496768100BC0A8A /* Frameworks */,
+				998481D02496768100BC0A8A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				998481D92496768100BC0A8A /* PBXTargetDependency */,
+			);
+			name = M3SubscriptionsStageTests;
+			productName = M3SubscriptionsStageTests;
+			productReference = 998481D22496768100BC0A8A /* M3SubscriptionsStageTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -363,6 +367,9 @@
 						CreatedOnToolsVersion = 11.5;
 						LastSwiftMigration = 1150;
 					};
+					998481D12496768100BC0A8A = {
+						CreatedOnToolsVersion = 11.5;
+					};
 				};
 			};
 			buildConfigurationList = 99848144248E635600BC0A8A /* Build configuration list for PBXProject "M3Subscriptions" */;
@@ -375,7 +382,6 @@
 			);
 			mainGroup = 99848140248E635600BC0A8A;
 			packageReferences = (
-				998481B52494EA4300BC0A8A /* XCRemoteSwiftPackageReference "DVR" */,
 			);
 			productRefGroup = 9984814A248E635600BC0A8A /* Products */;
 			projectDirPath = "";
@@ -383,6 +389,7 @@
 			targets = (
 				99848148248E635600BC0A8A /* M3Subscriptions */,
 				9984815A248E639C00BC0A8A /* M3SubscriptionsTests */,
+				998481D12496768100BC0A8A /* M3SubscriptionsStageTests */,
 			);
 		};
 /* End PBXProject section */
@@ -392,7 +399,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				998481BD24955E6200BC0A8A /* Activation-LoginFailed.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		998481D02496768100BC0A8A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -404,6 +417,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				99848171248E648300BC0A8A /* SubscriptionController.swift in Sources */,
+				998481CD2496640A00BC0A8A /* TestOverrides.swift in Sources */,
 				99848172248E648300BC0A8A /* SubscriptionInterface.swift in Sources */,
 				9984818E248E698D00BC0A8A /* SubscriptionDevice.swift in Sources */,
 				99848174248E648300BC0A8A /* CheckAPI.swift in Sources */,
@@ -426,7 +440,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				998481AA24924A3600BC0A8A /* SubscriptionControllerTests.swift in Sources */,
-				998481BA2494EA8800BC0A8A /* SubscriptionFunctionalTests.swift in Sources */,
 				99848197248E6FC500BC0A8A /* APIDataTests.swift in Sources */,
 				998481A1248E99CE00BC0A8A /* SubscriptionPlanTests.swift in Sources */,
 				998481A5248FB37F00BC0A8A /* ActivationResponseTests.swift in Sources */,
@@ -442,6 +455,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		998481CE2496768100BC0A8A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				998481DF24967A1700BC0A8A /* XCTestExtensions.swift in Sources */,
+				998481D52496768100BC0A8A /* M3SubscriptionsStageTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -449,6 +471,11 @@
 			isa = PBXTargetDependency;
 			target = 99848148248E635600BC0A8A /* M3Subscriptions */;
 			targetProxy = 99848161248E639C00BC0A8A /* PBXContainerItemProxy */;
+		};
+		998481D92496768100BC0A8A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 99848148248E635600BC0A8A /* M3Subscriptions */;
+			targetProxy = 998481D82496768100BC0A8A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -743,6 +770,66 @@
 			};
 			name = Test;
 		};
+		998481DB2496768100BC0A8A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = Z699XFM6P2;
+				INFOPLIST_FILE = M3SubscriptionsStageTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.M3SubscriptionsStageTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		998481DC2496768100BC0A8A /* Test */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = Z699XFM6P2;
+				INFOPLIST_FILE = M3SubscriptionsStageTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.M3SubscriptionsStageTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Test;
+		};
+		998481DD2496768100BC0A8A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = Z699XFM6P2;
+				INFOPLIST_FILE = M3SubscriptionsStageTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.M3SubscriptionsStageTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -776,26 +863,17 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		998481DA2496768100BC0A8A /* Build configuration list for PBXNativeTarget "M3SubscriptionsStageTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				998481DB2496768100BC0A8A /* Debug */,
+				998481DC2496768100BC0A8A /* Test */,
+				998481DD2496768100BC0A8A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		998481B52494EA4300BC0A8A /* XCRemoteSwiftPackageReference "DVR" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/venmo/DVR";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.1.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		998481B62494EA4300BC0A8A /* DVR */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 998481B52494EA4300BC0A8A /* XCRemoteSwiftPackageReference "DVR" */;
-			productName = DVR;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 99848141248E635600BC0A8A /* Project object */;
 }

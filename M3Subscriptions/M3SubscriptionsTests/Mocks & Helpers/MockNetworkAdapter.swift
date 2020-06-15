@@ -15,7 +15,7 @@ class MockNetworkAdapter: NetworkAdapter {
     var calledBody: [String: String]?
 
     var baseURL: URL {
-        return URL(string: "http://localhost:8080")!
+        return URL(string: "http://localhost:8080/api")!
     }
 
     var version: String {

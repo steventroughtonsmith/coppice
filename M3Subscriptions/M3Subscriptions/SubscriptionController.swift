@@ -43,7 +43,11 @@ public class SubscriptionController {
     #endif
 
     public func activate(withEmail email: String, password: String, subscription: SubscriptionPlan? = nil, deactivatingDevice: SubscriptionDevice? = nil) {
+        #if TEST
+        let bundleID = TEST_OVERRIDES.bundleID ?? Bundle.main.bundleIdentifier ?? "com.mcubedsw.unknown"
+        #else
         let bundleID = Bundle.main.bundleIdentifier ?? "com.mcubedsw.unknown"
+        #endif
         let request = ActivationRequest(email: email,
                                         password: password,
                                         bundleID: bundleID,
