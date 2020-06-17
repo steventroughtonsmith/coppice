@@ -81,6 +81,12 @@
 		99581095230D93F700D996C4 /* CanvasPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99581094230D93F700D996C4 /* CanvasPageViewModel.swift */; };
 		99582817247702B300080593 /* ResizeHandleAccessibilityElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99582816247702B300080593 /* ResizeHandleAccessibilityElement.swift */; };
 		9959178724606A1900E8874C /* ResponderChainValidatingToolbarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9959178624606A1900E8874C /* ResponderChainValidatingToolbarItem.swift */; };
+		996187F0249A5166007313BD /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996187EE249A5166007313BD /* PreferencesWindowController.swift */; };
+		996187F1249A5166007313BD /* PreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 996187EF249A5166007313BD /* PreferencesWindow.xib */; };
+		996187F4249A523D007313BD /* GeneralPreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996187F2249A523D007313BD /* GeneralPreferencesViewController.swift */; };
+		996187F5249A523D007313BD /* GeneralPreferencesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 996187F3249A523D007313BD /* GeneralPreferencesViewController.xib */; };
+		996187F8249A6E72007313BD /* UpdatePreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996187F6249A6E72007313BD /* UpdatePreferencesViewController.swift */; };
+		996187F9249A6E72007313BD /* UpdatePreferencesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 996187F7249A6E72007313BD /* UpdatePreferencesViewController.xib */; };
 		9962AB8923732D9400337834 /* CoppiceDocumentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9962AB8823732D9400337834 /* CoppiceDocumentController.swift */; };
 		9965FC3D23843143002FE10D /* CanvasPageInspectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9965FC3B23843143002FE10D /* CanvasPageInspectorViewController.swift */; };
 		9965FC3E23843143002FE10D /* CanvasPageInspectorContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9965FC3C23843143002FE10D /* CanvasPageInspectorContentView.xib */; };
@@ -349,6 +355,12 @@
 		99581094230D93F700D996C4 /* CanvasPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageViewModel.swift; sourceTree = "<group>"; };
 		99582816247702B300080593 /* ResizeHandleAccessibilityElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizeHandleAccessibilityElement.swift; sourceTree = "<group>"; };
 		9959178624606A1900E8874C /* ResponderChainValidatingToolbarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponderChainValidatingToolbarItem.swift; sourceTree = "<group>"; };
+		996187EE249A5166007313BD /* PreferencesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
+		996187EF249A5166007313BD /* PreferencesWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreferencesWindow.xib; sourceTree = "<group>"; };
+		996187F2249A523D007313BD /* GeneralPreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPreferencesViewController.swift; sourceTree = "<group>"; };
+		996187F3249A523D007313BD /* GeneralPreferencesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GeneralPreferencesViewController.xib; sourceTree = "<group>"; };
+		996187F6249A6E72007313BD /* UpdatePreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePreferencesViewController.swift; sourceTree = "<group>"; };
+		996187F7249A6E72007313BD /* UpdatePreferencesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UpdatePreferencesViewController.xib; sourceTree = "<group>"; };
 		9962AB8823732D9400337834 /* CoppiceDocumentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoppiceDocumentController.swift; sourceTree = "<group>"; };
 		9965FC3B23843143002FE10D /* CanvasPageInspectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageInspectorViewController.swift; sourceTree = "<group>"; };
 		9965FC3C23843143002FE10D /* CanvasPageInspectorContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CanvasPageInspectorContentView.xib; sourceTree = "<group>"; };
@@ -759,6 +771,19 @@
 				9958108D230D909900D996C4 /* TestCanvasPageViewController.xib */,
 			);
 			path = "Test CanvasPage View";
+			sourceTree = "<group>";
+		};
+		996187ED249A511C007313BD /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				996187EE249A5166007313BD /* PreferencesWindowController.swift */,
+				996187EF249A5166007313BD /* PreferencesWindow.xib */,
+				996187F2249A523D007313BD /* GeneralPreferencesViewController.swift */,
+				996187F3249A523D007313BD /* GeneralPreferencesViewController.xib */,
+				996187F6249A6E72007313BD /* UpdatePreferencesViewController.swift */,
+				996187F7249A6E72007313BD /* UpdatePreferencesViewController.xib */,
+			);
+			path = Preferences;
 			sourceTree = "<group>";
 		};
 		9965FC3A23843131002FE10D /* Canvas Page Inspector */ = {
@@ -1317,6 +1342,7 @@
 				99488AAA23C36756009954AF /* CoppiceUserDefaults.swift */,
 				9977119B239E91FD00FCC8C7 /* ViewModel.swift */,
 				99C88EE9240C2F3F00339880 /* NSWindow+KeyLoopDebug.swift */,
+				996187ED249A511C007313BD /* Preferences */,
 				99488AAC23C37B77009954AF /* Thumbnail Generation */,
 				99AD8872237464B5000453E1 /* Generic Types */,
 				998D077E24115D04004ADFF8 /* Generic Views */,
@@ -1507,12 +1533,14 @@
 				992A5CA622DDF4C50012CCB6 /* EditorContainerViewController.xib in Resources */,
 				99FDF12D241FD53D00AF1E51 /* CanvasesView.xib in Resources */,
 				992A5CAF22DDF50F0012CCB6 /* DebugPageEditor.xib in Resources */,
+				996187F9249A6E72007313BD /* UpdatePreferencesViewController.xib in Resources */,
 				9958108F230D909900D996C4 /* TestCanvasPageViewController.xib in Resources */,
 				99868F362396AD73009AC0F7 /* ImageEditorInspectorContentView.xib in Resources */,
 				999EA6B52436097500BF254E /* SidebarView.xib in Resources */,
 				992A5CAB22DDF5000012CCB6 /* DebugCanvasEditor.xib in Resources */,
 				992A5C9622DCB7790012CCB6 /* SourceListView.xib in Resources */,
 				99D8E37C237EDB890098CF3B /* CanvasInspectorContentView.xib in Resources */,
+				996187F1249A5166007313BD /* PreferencesWindow.xib in Resources */,
 				99C8652A2306D141004C7B89 /* PageSelectorViewController.xib in Resources */,
 				99488AA323BA3983009954AF /* SmallCanvasCell.xib in Resources */,
 				9965FC4723844910002FE10D /* TextEditorInspectorContentView.xib in Resources */,
@@ -1535,6 +1563,7 @@
 				99488AF123C8D5B0009954AF /* Colours.xcassets in Resources */,
 				99D8E379237EDB890098CF3B /* PageInspectorContentView.xib in Resources */,
 				9973737D2423BAD1000D5F21 /* RootSplitViewController.xib in Resources */,
+				996187F5249A523D007313BD /* GeneralPreferencesViewController.xib in Resources */,
 				999EA69A24339A8400BF254E /* .build_number in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1609,12 +1638,14 @@
 				99D8E37A237EDB890098CF3B /* PageInspectorViewModel.swift in Sources */,
 				99F084F123A280A5008D2ACA /* ModelRelationship.swift in Sources */,
 				99C865202302E256004C7B89 /* ImageEditorViewController.swift in Sources */,
+				996187F8249A6E72007313BD /* UpdatePreferencesViewController.swift in Sources */,
 				99C8650923016EB2004C7B89 /* TextEditorViewModel.swift in Sources */,
 				999EA6BB243619E700BF254E /* SearchResultsViewController.swift in Sources */,
 				993D2C0224157735002E5BAC /* Folder.swift in Sources */,
 				99B3474E24658BA200B96B71 /* RoundSelectionTableRowView.swift in Sources */,
 				9925B2622386A0DF001A8ADC /* TextEditorInspectorTypes.swift in Sources */,
 				99E944FB2368683F00DFAB95 /* NSImage+M3Extensions.swift in Sources */,
+				996187F0249A5166007313BD /* PreferencesWindowController.swift in Sources */,
 				999EA6C72436384F00BF254E /* SearchResultOutlineView.swift in Sources */,
 				9970976723AA8B5A00CD189B /* RemovePageEventContext.swift in Sources */,
 				99FFF9CC234E2F2F00EF02A0 /* FlippedView.swift in Sources */,
@@ -1677,6 +1708,7 @@
 				99C03EF923293D8A00EB7516 /* LayoutEnginePage.swift in Sources */,
 				99D8E383237EDB890098CF3B /* InspectorContainerViewController.swift in Sources */,
 				99DEF28F22F33A790020A7CE /* ModelID.swift in Sources */,
+				996187F4249A523D007313BD /* GeneralPreferencesViewController.swift in Sources */,
 				998F178B23E46B4900B3437A /* ColourGridImageGenerator.swift in Sources */,
 				99C865232302E267004C7B89 /* ImageEditorViewModel.swift in Sources */,
 				999EA6CB243B413E00BF254E /* ModelObjects+Searching.swift in Sources */,

@@ -58,5 +58,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
     }
+
+    lazy var preferencesWindow = PreferencesWindowController()
+    @IBAction func showPreferences(_ sender: Any?) {
+        self.preferencesWindow.showWindow(sender)
+    }
 }
 
