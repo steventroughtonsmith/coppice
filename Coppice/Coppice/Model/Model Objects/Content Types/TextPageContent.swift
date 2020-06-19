@@ -10,7 +10,7 @@ import AppKit
 
 class TextPageContent: NSObject, PageContent {
     let contentType = PageContentType.text
-    @objc dynamic var text: NSAttributedString = NSAttributedString() {
+    @objc dynamic var text: NSAttributedString = NSAttributedString(string: "", attributes: [.font: Page.defaultFont]) {
         didSet {
             guard self.text != oldValue else {
                 return
@@ -66,4 +66,3 @@ class TextPageContent: NSObject, PageContent {
         return contentSize
     }
 }
-

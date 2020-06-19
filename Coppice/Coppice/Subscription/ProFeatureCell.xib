@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16097" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner"/>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe" customClass="ProFeatureCell" customModule="Coppice" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="172" height="40"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tzv-Xr-x2X">
+                    <rect key="frame" x="22" y="24" width="152" height="16"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="Oc5-Dl-yuH">
+                        <font key="font" metaFont="systemSemibold" size="13"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pkk-JG-3zE">
+                    <rect key="frame" x="0.0" y="24" width="16" height="16"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="16" id="43w-JY-KW4"/>
+                        <constraint firstAttribute="width" constant="16" id="Mpr-po-28K"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="bWn-bf-HQ8"/>
+                </imageView>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Hmb-tS-otC">
+                    <rect key="frame" x="22" y="0.0" width="152" height="16"/>
+                    <textFieldCell key="cell" selectable="YES" title="Multiline Label" id="1Ts-b8-sLb">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="Hmb-tS-otC" firstAttribute="leading" secondItem="tzv-Xr-x2X" secondAttribute="leading" id="K7s-uf-E9y"/>
+                <constraint firstItem="tzv-Xr-x2X" firstAttribute="leading" secondItem="pkk-JG-3zE" secondAttribute="trailing" constant="8" id="NbU-KL-sO8"/>
+                <constraint firstAttribute="trailing" secondItem="tzv-Xr-x2X" secondAttribute="trailing" id="RAF-kP-RvN"/>
+                <constraint firstItem="Hmb-tS-otC" firstAttribute="top" secondItem="tzv-Xr-x2X" secondAttribute="bottom" constant="8" id="W0P-Zs-sMr"/>
+                <constraint firstAttribute="bottom" secondItem="Hmb-tS-otC" secondAttribute="bottom" id="ZNC-pX-Ns1"/>
+                <constraint firstItem="tzv-Xr-x2X" firstAttribute="centerY" secondItem="pkk-JG-3zE" secondAttribute="centerY" id="a4x-xM-9Zl"/>
+                <constraint firstAttribute="trailing" secondItem="Hmb-tS-otC" secondAttribute="trailing" id="cIG-X3-Ldq"/>
+                <constraint firstItem="pkk-JG-3zE" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="cZ7-AP-6Rm"/>
+                <constraint firstItem="pkk-JG-3zE" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="vVU-2a-Lr0"/>
+            </constraints>
+            <connections>
+                <outlet property="bodyField" destination="Hmb-tS-otC" id="Yd8-t5-ICj"/>
+                <outlet property="iconView" destination="pkk-JG-3zE" id="kqv-ws-zIf"/>
+                <outlet property="titleField" destination="tzv-Xr-x2X" id="rqG-Nr-dAZ"/>
+            </connections>
+            <point key="canvasLocation" x="-15" y="65"/>
+        </customView>
+    </objects>
+</document>

@@ -65,6 +65,9 @@ class PageLinkManager: NSObject {
 
     //Update on all of them
     private func setNeedsReparse() {
+        guard UserDefaults.standard.bool(forKey: .autoLinkingTextPagesEnabled) else {
+            return
+        }
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(reparseLinks), object: nil)
         guard self.isReparsing == false else {
             return

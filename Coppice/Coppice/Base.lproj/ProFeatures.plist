@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>title</key>
+		<string>Unlimited Canvases</string>
+		<key>icon</key>
+		<string>Canvas</string>
+		<key>body</key>
+		<string>Remove all limits and create as many Canvases as your heart desires</string>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>Auto-linking</string>
+		<key>icon</key>
+		<string>LinkPage</string>
+		<key>body</key>
+		<string>Have Coppice help connect your thoughts by automatically linking pages for you</string>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>Folders</string>
+		<key>icon</key>
+		<string>Folder</string>
+		<key>body</key>
+		<string>Keep your pages organised in the sidebar with folders</string>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>Canvas Themes</string>
+		<key>icon</key>
+		<string>Canvas</string>
+		<key>body</key>
+		<string>Want to change things up? Choose which theme each Canvas uses.</string>
+	</dict>
+</array>
+</plist>

@@ -31,10 +31,14 @@ class PreferencesWindowController: NSWindowController {
         let updatePrefs = UpdatePreferencesViewController()
         self.tabController.addTabViewItem(updatePrefs.createTabItem())
 
+        let subscribe = SubscribeViewController()
+        self.tabController.addTabViewItem(subscribe.createTabItem())
+
         self.window?.contentViewController = self.tabController
 
         if let window = self.window {
             self.tabController.updateFrame(of: window, for: generalItem, animated: false)
+            window.title = generalItem.label
         }
     }
     
@@ -43,7 +47,7 @@ class PreferencesWindowController: NSWindowController {
 
 class PreferencesTabView: NSTabViewController {
     var tabHeights: [NSTabViewItem: CGFloat] = [:]
-    var width: CGFloat = 500
+    var width: CGFloat = 480
 
     override func addTabViewItem(_ tabViewItem: NSTabViewItem) {
         self.tabHeights[tabViewItem] = self.height(for: tabViewItem)
@@ -52,6 +56,12 @@ class PreferencesTabView: NSTabViewController {
 
     override func tabView(_ tabView: NSTabView, willSelect tabViewItem: NSTabViewItem?) {
         super.tabView(tabView, willSelect: tabViewItem)
+
+        self.view.window?.title = tabViewItem?.label ?? "Preferences"
+    }
+
+    override func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
+        super.tabView(tabView, didSelect: tabViewItem)
 
         guard let item = tabViewItem, let window = self.view.window else {
             return
@@ -81,7 +91,8 @@ class PreferencesTabView: NSTabViewController {
         let widthConstraint = view.widthAnchor.constraint(equalToConstant: self.width)
         widthConstraint.isActive = true
         view.layoutSubtreeIfNeeded()
+        let height = view.fittingSize.height
         widthConstraint.isActive = false
-        return view.frame.height
+        return height
     }
 }

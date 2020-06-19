@@ -45,7 +45,7 @@ final class Canvas: NSObject, CollectableModelObject {
         didSet { self.didChange(\.sortIndex, oldValue: oldValue) }
     }
 
-    var theme: Theme = .auto {
+    var theme: Theme = Canvas.defaultTheme {
         didSet { self.didChange(\.theme, oldValue: oldValue)}
     }
 

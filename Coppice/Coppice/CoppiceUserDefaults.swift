@@ -12,9 +12,16 @@ import Foundation
 enum UserDefaultsKeys: String {
     case debugShowCanvasOrigin
 
-    case useSmallCanvasCells
+    case useSmallCanvasCells = "M3UseSmallCanvasCells"
 
-    case canvasListIsCompact
+    case canvasListIsCompact = "M3CanvasListIsCompact"
+
+    case defaultFontName = "M3DefaultFontName"
+    case defaultFontSize = "M3DefaultFontSize"
+
+    case defaultCanvasTheme = "M3DefaultCanvasTheme"
+
+    case autoLinkingTextPagesEnabled = "M3AutoLinkingTextPagesEnabled"
 }
 
 extension UserDefaults {
@@ -28,6 +35,10 @@ extension UserDefaults {
 
     func integer(forKey key: UserDefaultsKeys) -> Int {
         return self.integer(forKey: key.rawValue)
+    }
+
+    func float(forKey key: UserDefaultsKeys) -> Float {
+        return self.float(forKey: key.rawValue)
     }
 
     func set(_ value: Int, forKey key: UserDefaultsKeys) {

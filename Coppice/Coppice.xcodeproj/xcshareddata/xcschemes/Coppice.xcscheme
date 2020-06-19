@@ -108,7 +108,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-_NS_4445425547 YES"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-NSTextViewAvoidLayoutWhileDrawing YES"

@@ -87,6 +87,10 @@
 		996187F5249A523D007313BD /* GeneralPreferencesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 996187F3249A523D007313BD /* GeneralPreferencesViewController.xib */; };
 		996187F8249A6E72007313BD /* UpdatePreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996187F6249A6E72007313BD /* UpdatePreferencesViewController.swift */; };
 		996187F9249A6E72007313BD /* UpdatePreferencesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 996187F7249A6E72007313BD /* UpdatePreferencesViewController.xib */; };
+		996187FC249BB615007313BD /* SubscribeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996187FA249BB615007313BD /* SubscribeViewController.swift */; };
+		996187FD249BB615007313BD /* SubscribeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 996187FB249BB615007313BD /* SubscribeViewController.xib */; };
+		99618800249BC0D7007313BD /* ProFeatureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996187FF249BC0D7007313BD /* ProFeatureCell.swift */; };
+		99618802249BC0EF007313BD /* ProFeatureCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99618801249BC0EF007313BD /* ProFeatureCell.xib */; };
 		9962AB8923732D9400337834 /* CoppiceDocumentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9962AB8823732D9400337834 /* CoppiceDocumentController.swift */; };
 		9965FC3D23843143002FE10D /* CanvasPageInspectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9965FC3B23843143002FE10D /* CanvasPageInspectorViewController.swift */; };
 		9965FC3E23843143002FE10D /* CanvasPageInspectorContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9965FC3C23843143002FE10D /* CanvasPageInspectorContentView.xib */; };
@@ -144,6 +148,8 @@
 		998F178F23EB229200B3437A /* ModelObjects+Pasteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998F178E23EB229200B3437A /* ModelObjects+Pasteboard.swift */; };
 		99902260241FDD52009A8446 /* NoCanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9990225E241FDD52009A8446 /* NoCanvasViewController.swift */; };
 		99902261241FDD52009A8446 /* NoCanvasViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9990225F241FDD52009A8446 /* NoCanvasViewController.xib */; };
+		99906375249BC5780008C747 /* ProFeatures.plist in Resources */ = {isa = PBXBuildFile; fileRef = 99906377249BC5780008C747 /* ProFeatures.plist */; };
+		999617E6249CEBE800A1AE24 /* ModelObjects+Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999617E5249CEBE800A1AE24 /* ModelObjects+Defaults.swift */; };
 		999BB0B323FEB73E00FAF3D2 /* LayoutEngineArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999BB0B223FEB73E00FAF3D2 /* LayoutEngineArrow.swift */; };
 		999DAACA23CCC5D80013EC36 /* SidebarHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999DAAC923CCC5D80013EC36 /* SidebarHeaderView.swift */; };
 		999DAACE23CF484A0013EC36 /* ModelSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999DAACD23CF484A0013EC36 /* ModelSettings.swift */; };
@@ -361,6 +367,10 @@
 		996187F3249A523D007313BD /* GeneralPreferencesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GeneralPreferencesViewController.xib; sourceTree = "<group>"; };
 		996187F6249A6E72007313BD /* UpdatePreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePreferencesViewController.swift; sourceTree = "<group>"; };
 		996187F7249A6E72007313BD /* UpdatePreferencesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UpdatePreferencesViewController.xib; sourceTree = "<group>"; };
+		996187FA249BB615007313BD /* SubscribeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeViewController.swift; sourceTree = "<group>"; };
+		996187FB249BB615007313BD /* SubscribeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubscribeViewController.xib; sourceTree = "<group>"; };
+		996187FF249BC0D7007313BD /* ProFeatureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProFeatureCell.swift; sourceTree = "<group>"; };
+		99618801249BC0EF007313BD /* ProFeatureCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProFeatureCell.xib; sourceTree = "<group>"; };
 		9962AB8823732D9400337834 /* CoppiceDocumentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoppiceDocumentController.swift; sourceTree = "<group>"; };
 		9965FC3B23843143002FE10D /* CanvasPageInspectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageInspectorViewController.swift; sourceTree = "<group>"; };
 		9965FC3C23843143002FE10D /* CanvasPageInspectorContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CanvasPageInspectorContentView.xib; sourceTree = "<group>"; };
@@ -419,6 +429,8 @@
 		998F178E23EB229200B3437A /* ModelObjects+Pasteboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelObjects+Pasteboard.swift"; sourceTree = "<group>"; };
 		9990225E241FDD52009A8446 /* NoCanvasViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoCanvasViewController.swift; sourceTree = "<group>"; };
 		9990225F241FDD52009A8446 /* NoCanvasViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoCanvasViewController.xib; sourceTree = "<group>"; };
+		99906376249BC5780008C747 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Base; path = Base.lproj/ProFeatures.plist; sourceTree = "<group>"; };
+		999617E5249CEBE800A1AE24 /* ModelObjects+Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelObjects+Defaults.swift"; sourceTree = "<group>"; };
 		999BB0B223FEB73E00FAF3D2 /* LayoutEngineArrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutEngineArrow.swift; sourceTree = "<group>"; };
 		999DAAC923CCC5D80013EC36 /* SidebarHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarHeaderView.swift; sourceTree = "<group>"; };
 		999DAACD23CF484A0013EC36 /* ModelSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelSettings.swift; sourceTree = "<group>"; };
@@ -784,6 +796,17 @@
 				996187F7249A6E72007313BD /* UpdatePreferencesViewController.xib */,
 			);
 			path = Preferences;
+			sourceTree = "<group>";
+		};
+		996187FE249BB61D007313BD /* Subscription */ = {
+			isa = PBXGroup;
+			children = (
+				996187FA249BB615007313BD /* SubscribeViewController.swift */,
+				996187FB249BB615007313BD /* SubscribeViewController.xib */,
+				996187FF249BC0D7007313BD /* ProFeatureCell.swift */,
+				99618801249BC0EF007313BD /* ProFeatureCell.xib */,
+			);
+			path = Subscription;
 			sourceTree = "<group>";
 		};
 		9965FC3A23843131002FE10D /* Canvas Page Inspector */ = {
@@ -1190,6 +1213,7 @@
 				9970977323B0180F00CD189B /* Canvas+Pages.swift */,
 				998F178E23EB229200B3437A /* ModelObjects+Pasteboard.swift */,
 				999EA6CA243B413E00BF254E /* ModelObjects+Searching.swift */,
+				999617E5249CEBE800A1AE24 /* ModelObjects+Defaults.swift */,
 				993D2C0D241674F2002E5BAC /* FolderContainable.swift */,
 			);
 			path = "Model Objects";
@@ -1343,6 +1367,7 @@
 				9977119B239E91FD00FCC8C7 /* ViewModel.swift */,
 				99C88EE9240C2F3F00339880 /* NSWindow+KeyLoopDebug.swift */,
 				996187ED249A511C007313BD /* Preferences */,
+				996187FE249BB61D007313BD /* Subscription */,
 				99488AAC23C37B77009954AF /* Thumbnail Generation */,
 				99AD8872237464B5000453E1 /* Generic Types */,
 				998D077E24115D04004ADFF8 /* Generic Views */,
@@ -1363,6 +1388,7 @@
 				99FE019722CD1038004D380D /* Colours.xcassets */,
 				99C03F08232A99F400EB7516 /* Cursors.xcassets */,
 				9970977523B93A5800CD189B /* Icons.xcassets */,
+				99906377249BC5780008C747 /* ProFeatures.plist */,
 				99FE019922CD1038004D380D /* MainMenu.xib */,
 				99FE019C22CD1038004D380D /* Info.plist */,
 				999EA68C2433913A00BF254E /* Info.plist.prefix */,
@@ -1535,6 +1561,7 @@
 				992A5CAF22DDF50F0012CCB6 /* DebugPageEditor.xib in Resources */,
 				996187F9249A6E72007313BD /* UpdatePreferencesViewController.xib in Resources */,
 				9958108F230D909900D996C4 /* TestCanvasPageViewController.xib in Resources */,
+				99618802249BC0EF007313BD /* ProFeatureCell.xib in Resources */,
 				99868F362396AD73009AC0F7 /* ImageEditorInspectorContentView.xib in Resources */,
 				999EA6B52436097500BF254E /* SidebarView.xib in Resources */,
 				992A5CAB22DDF5000012CCB6 /* DebugCanvasEditor.xib in Resources */,
@@ -1548,6 +1575,7 @@
 				993D2BD924127E29002E5BAC /* CanvasListView.xib in Resources */,
 				99581093230D92C600D996C4 /* CanvasPageViewController.xib in Resources */,
 				9965FC3E23843143002FE10D /* CanvasPageInspectorContentView.xib in Resources */,
+				996187FD249BB615007313BD /* SubscribeViewController.xib in Resources */,
 				999EA68D2433913A00BF254E /* Info.plist.prefix in Resources */,
 				999EA6C1243628E500BF254E /* SearchResultTableCellView.xib in Resources */,
 				99C03F09232A99F400EB7516 /* Cursors.xcassets in Resources */,
@@ -1562,6 +1590,7 @@
 				9970977623B93A5800CD189B /* Icons.xcassets in Resources */,
 				99488AF123C8D5B0009954AF /* Colours.xcassets in Resources */,
 				99D8E379237EDB890098CF3B /* PageInspectorContentView.xib in Resources */,
+				99906375249BC5780008C747 /* ProFeatures.plist in Resources */,
 				9973737D2423BAD1000D5F21 /* RootSplitViewController.xib in Resources */,
 				996187F5249A523D007313BD /* GeneralPreferencesViewController.xib in Resources */,
 				999EA69A24339A8400BF254E /* .build_number in Resources */,
@@ -1653,6 +1682,7 @@
 				999BB0B323FEB73E00FAF3D2 /* LayoutEngineArrow.swift in Sources */,
 				999EA6C524362BFF00BF254E /* SearchResultsViewModelTypes.swift in Sources */,
 				9965FC43238448FF002FE10D /* TextEditorInspectorViewModel.swift in Sources */,
+				996187FC249BB615007313BD /* SubscribeViewController.swift in Sources */,
 				99488AF023C8C327009954AF /* CanvasPreviewView.swift in Sources */,
 				9977119A239E89B200FCC8C7 /* DocumentWindowController.swift in Sources */,
 				99488AB023C37BB7009954AF /* ThumbnailController.swift in Sources */,
@@ -1721,6 +1751,7 @@
 				99F0CD76246AF1C4006DE18E /* PreviewGenerationDebugWindow.swift in Sources */,
 				99868F382397F005009AC0F7 /* FileDropView.swift in Sources */,
 				99C9AF1B23671FD0009F909A /* ModelWriter.swift in Sources */,
+				99618800249BC0D7007313BD /* ProFeatureCell.swift in Sources */,
 				992A5CA522DDF4C50012CCB6 /* EditorContainerViewController.swift in Sources */,
 				99581078230D71E100D996C4 /* NSViewController+M3Extensions.swift in Sources */,
 				993D2C0E241674F2002E5BAC /* FolderContainable.swift in Sources */,
@@ -1752,6 +1783,7 @@
 				9970977423B0180F00CD189B /* Canvas+Pages.swift in Sources */,
 				992A5CA222DDF4B60012CCB6 /* EditorContainerViewModel.swift in Sources */,
 				99AD88A7237C35C7000453E1 /* EditableModelObject.swift in Sources */,
+				999617E6249CEBE800A1AE24 /* ModelObjects+Defaults.swift in Sources */,
 				992A5C9222DCB7530012CCB6 /* SourceListViewController.swift in Sources */,
 				99C9AF1623632349009F909A /* NSView+CanvasLookup.swift in Sources */,
 				9965FC4023843155002FE10D /* CanvasPageInspectorViewModel.swift in Sources */,
@@ -1860,6 +1892,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		99906377249BC5780008C747 /* ProFeatures.plist */ = {
+			isa = PBXVariantGroup;
+			children = (
+				99906376249BC5780008C747 /* Base */,
+			);
+			name = ProFeatures.plist;
+			sourceTree = "<group>";
+		};
 		99FE019922CD1038004D380D /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (

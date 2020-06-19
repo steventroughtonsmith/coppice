@@ -34,6 +34,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.newLinkedPageMenuDelegate.includeKeyEquivalents = false
 
         UserDefaults.standard.set(true, forKey: "NSTextViewAvoidLayoutWhileDrawing")
+
+        UserDefaults.standard.register(defaults: [
+            .defaultFontName: Page.fallbackFontName,
+            .defaultFontSize: Page.fallbackFontSize,
+            .defaultCanvasTheme: Canvas.Theme.auto.rawValue,
+            .autoLinkingTextPagesEnabled: true
+        ])
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {

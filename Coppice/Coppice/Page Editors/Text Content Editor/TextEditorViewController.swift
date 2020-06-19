@@ -203,13 +203,7 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
             return
         }
 
-        let fontCandidates = [
-            NSFont(name: "Helvetica Neue", size: 12),
-            NSFont(name: "Helvetica", size: 12),
-            NSFont(name: "Arial", size: 12),
-        ].compactMap { $0 }
-
-        self.editingTextView.font = fontCandidates.first ?? NSFont.systemFont(ofSize: 12)
+        self.editingTextView.font = Page.defaultFont
         self.editingTextView.textColor = NSColor.black
         self.editingTextView.alignment = .natural
     }
