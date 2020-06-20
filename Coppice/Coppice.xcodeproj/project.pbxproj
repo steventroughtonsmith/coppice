@@ -150,11 +150,15 @@
 		99902261241FDD52009A8446 /* NoCanvasViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9990225F241FDD52009A8446 /* NoCanvasViewController.xib */; };
 		99906375249BC5780008C747 /* ProFeatures.plist in Resources */ = {isa = PBXBuildFile; fileRef = 99906377249BC5780008C747 /* ProFeatures.plist */; };
 		999617E6249CEBE800A1AE24 /* ModelObjects+Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999617E5249CEBE800A1AE24 /* ModelObjects+Defaults.swift */; };
+		999617FE249D0CBA00A1AE24 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 999617FD249D0CBA00A1AE24 /* Sparkle.framework */; };
+		999617FF249D0CC300A1AE24 /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 999617FD249D0CBA00A1AE24 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		99961800249D0CF300A1AE24 /* org.sparkle-project.InstallerConnection.xpc in Copy XPC */ = {isa = PBXBuildFile; fileRef = 999617FA249D0CB100A1AE24 /* org.sparkle-project.InstallerConnection.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		99961801249D0CF300A1AE24 /* org.sparkle-project.InstallerLauncher.xpc in Copy XPC */ = {isa = PBXBuildFile; fileRef = 999617FB249D0CB200A1AE24 /* org.sparkle-project.InstallerLauncher.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		99961802249D0CF300A1AE24 /* org.sparkle-project.InstallerStatus.xpc in Copy XPC */ = {isa = PBXBuildFile; fileRef = 999617FC249D0CB200A1AE24 /* org.sparkle-project.InstallerStatus.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		999BB0B323FEB73E00FAF3D2 /* LayoutEngineArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999BB0B223FEB73E00FAF3D2 /* LayoutEngineArrow.swift */; };
 		999DAACA23CCC5D80013EC36 /* SidebarHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999DAAC923CCC5D80013EC36 /* SidebarHeaderView.swift */; };
 		999DAACE23CF484A0013EC36 /* ModelSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999DAACD23CF484A0013EC36 /* ModelSettings.swift */; };
 		999EA68D2433913A00BF254E /* Info.plist.prefix in Resources */ = {isa = PBXBuildFile; fileRef = 999EA68C2433913A00BF254E /* Info.plist.prefix */; };
-		999EA69A24339A8400BF254E /* .build_number in Resources */ = {isa = PBXBuildFile; fileRef = 999EA69924339A8400BF254E /* .build_number */; };
 		999EA6B32436097500BF254E /* SidebarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999EA6B02436097500BF254E /* SidebarViewModel.swift */; };
 		999EA6B42436097500BF254E /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999EA6B12436097500BF254E /* SidebarViewController.swift */; };
 		999EA6B52436097500BF254E /* SidebarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 999EA6B22436097500BF254E /* SidebarView.xib */; };
@@ -302,6 +306,33 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		999617EA249D06D400A1AE24 /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				999617FF249D0CC300A1AE24 /* Sparkle.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		999617F4249D0B0800A1AE24 /* Copy XPC */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
+			dstSubfolderSpec = 16;
+			files = (
+				99961800249D0CF300A1AE24 /* org.sparkle-project.InstallerConnection.xpc in Copy XPC */,
+				99961801249D0CF300A1AE24 /* org.sparkle-project.InstallerLauncher.xpc in Copy XPC */,
+				99961802249D0CF300A1AE24 /* org.sparkle-project.InstallerStatus.xpc in Copy XPC */,
+			);
+			name = "Copy XPC";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		9902F4A823882ADA00AF646F /* NSSegmentedControl+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSSegmentedControl+M3Extensions.swift"; sourceTree = "<group>"; };
 		990825D822EDF2FE00273A1D /* ModelCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelCollection.swift; sourceTree = "<group>"; };
@@ -431,6 +462,10 @@
 		9990225F241FDD52009A8446 /* NoCanvasViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoCanvasViewController.xib; sourceTree = "<group>"; };
 		99906376249BC5780008C747 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Base; path = Base.lproj/ProFeatures.plist; sourceTree = "<group>"; };
 		999617E5249CEBE800A1AE24 /* ModelObjects+Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelObjects+Defaults.swift"; sourceTree = "<group>"; };
+		999617FA249D0CB100A1AE24 /* org.sparkle-project.InstallerConnection.xpc */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.xpc-service"; path = "org.sparkle-project.InstallerConnection.xpc"; sourceTree = "<group>"; };
+		999617FB249D0CB200A1AE24 /* org.sparkle-project.InstallerLauncher.xpc */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.xpc-service"; path = "org.sparkle-project.InstallerLauncher.xpc"; sourceTree = "<group>"; };
+		999617FC249D0CB200A1AE24 /* org.sparkle-project.InstallerStatus.xpc */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.xpc-service"; path = "org.sparkle-project.InstallerStatus.xpc"; sourceTree = "<group>"; };
+		999617FD249D0CBA00A1AE24 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		999BB0B223FEB73E00FAF3D2 /* LayoutEngineArrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutEngineArrow.swift; sourceTree = "<group>"; };
 		999DAAC923CCC5D80013EC36 /* SidebarHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarHeaderView.swift; sourceTree = "<group>"; };
 		999DAACD23CF484A0013EC36 /* ModelSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelSettings.swift; sourceTree = "<group>"; };
@@ -576,6 +611,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				999617FE249D0CBA00A1AE24 /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -980,6 +1016,25 @@
 			path = "No Canvas Editor";
 			sourceTree = "<group>";
 		};
+		999617E7249D069900A1AE24 /* 3rd Party */ = {
+			isa = PBXGroup;
+			children = (
+				999617FD249D0CBA00A1AE24 /* Sparkle.framework */,
+				999617EC249D0A6000A1AE24 /* Sparkle XPC */,
+			);
+			path = "3rd Party";
+			sourceTree = "<group>";
+		};
+		999617EC249D0A6000A1AE24 /* Sparkle XPC */ = {
+			isa = PBXGroup;
+			children = (
+				999617FA249D0CB100A1AE24 /* org.sparkle-project.InstallerConnection.xpc */,
+				999617FB249D0CB200A1AE24 /* org.sparkle-project.InstallerLauncher.xpc */,
+				999617FC249D0CB200A1AE24 /* org.sparkle-project.InstallerStatus.xpc */,
+			);
+			path = "Sparkle XPC";
+			sourceTree = "<group>";
+		};
 		999EA68E2433929E00BF254E /* Build Scripts */ = {
 			isa = PBXGroup;
 			children = (
@@ -1339,6 +1394,7 @@
 				99FE01A522CD1038004D380D /* CoppiceTests */,
 				99FE01B022CD1038004D380D /* CoppiceUITests */,
 				999EA68E2433929E00BF254E /* Build Scripts */,
+				999617E7249D069900A1AE24 /* 3rd Party */,
 				99FE018E22CD1037004D380D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -1446,6 +1502,8 @@
 				99FE018922CD1037004D380D /* Sources */,
 				99FE018A22CD1037004D380D /* Frameworks */,
 				99FE018B22CD1037004D380D /* Resources */,
+				999617EA249D06D400A1AE24 /* Copy Frameworks */,
+				999617F4249D0B0800A1AE24 /* Copy XPC */,
 			);
 			buildRules = (
 			);
@@ -1593,7 +1651,6 @@
 				99906375249BC5780008C747 /* ProFeatures.plist in Resources */,
 				9973737D2423BAD1000D5F21 /* RootSplitViewController.xib in Resources */,
 				996187F5249A523D007313BD /* GeneralPreferencesViewController.xib in Resources */,
-				999EA69A24339A8400BF254E /* .build_number in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1915,6 +1972,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APPCASTURL = "https://www.mcubedsw.com/SampleAppcast.xml";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1952,10 +2010,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1983,6 +2038,11 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = Z699XFM6P2;
 				ENABLE_HARDENED_RUNTIME = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/3rd\\ Party",
+					"$(PROJECT_DIR)/3rd\\ Party",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"TEST=1",
@@ -2076,6 +2136,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APPCASTURL = "https://www.mcubedsw.com/SampleAppcast.xml";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -2111,6 +2172,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -2137,6 +2199,11 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = Z699XFM6P2;
 				ENABLE_HARDENED_RUNTIME = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/3rd\\ Party",
+					"$(PROJECT_DIR)/3rd\\ Party",
+				);
 				INFOPLIST_FILE = Coppice/Info.plist;
 				INFOPLIST_PREFIX_HEADER = "$(CONFIGURATION_TEMP_DIR)/Info.plist.prefix";
 				INFOPLIST_PREPROCESS = YES;
@@ -2206,6 +2273,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APPCASTURL = "https://www.mcubedsw.com/SampleAppcast.xml";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -2243,10 +2311,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -2268,6 +2333,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APPCASTURL = "https://www.mcubedsw.com/SampleAppcast.xml";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -2303,6 +2369,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -2329,6 +2396,15 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = Z699XFM6P2;
 				ENABLE_HARDENED_RUNTIME = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/3rd\\ Party",
+					"$(PROJECT_DIR)/3rd\\ Party",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = Coppice/Info.plist;
 				INFOPLIST_PREFIX_HEADER = "$(CONFIGURATION_TEMP_DIR)/Info.plist.prefix";
 				INFOPLIST_PREPROCESS = YES;
@@ -2353,6 +2429,11 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = Z699XFM6P2;
 				ENABLE_HARDENED_RUNTIME = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/3rd\\ Party",
+					"$(PROJECT_DIR)/3rd\\ Party",
+				);
 				INFOPLIST_FILE = Coppice/Info.plist;
 				INFOPLIST_PREFIX_HEADER = "$(CONFIGURATION_TEMP_DIR)/Info.plist.prefix";
 				INFOPLIST_PREPROCESS = YES;

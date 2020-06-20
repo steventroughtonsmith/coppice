@@ -7,6 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="UpdatePreferencesViewController" customModule="Coppice" customModuleProvider="target">
             <connections>
+                <outlet property="updaterController" destination="iGd-y1-08g" id="S6d-5y-AzY"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
         </customObject>
@@ -33,27 +34,34 @@
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
+                            <connections>
+                                <binding destination="iGd-y1-08g" name="value" keyPath="self.updater.automaticallyDownloadsUpdates" id="pZF-3D-beC"/>
+                            </connections>
                         </button>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Rwl-en-iku">
                             <rect key="frame" x="94" y="0.0" width="226" height="14"/>
                             <buttonCell key="cell" type="bevel" title="Learn more about what information is sent" bezelStyle="rounded" alignment="left" controlSize="small" imageScaling="proportionallyDown" inset="2" id="rpj-mO-lvs">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="message" size="11"/>
+                                <font key="font" metaFont="controlContent" size="11"/>
                             </buttonCell>
                             <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                         </button>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3j8-mD-5vm">
                             <rect key="frame" x="93" y="148" width="106" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="Today at x:xx am" id="Lnb-jy-Ceg">
+                                <dateFormatter key="formatter" dateStyle="medium" timeStyle="short" doesRelativeDateFormatting="YES" id="2KC-nS-zdI"/>
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
+                            <connections>
+                                <binding destination="qXU-MD-I8b" name="value" keyPath="values.SULastCheckTime" id="1qU-Oi-2Kz"/>
+                            </connections>
                         </textField>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WFJ-qC-Sau">
                             <rect key="frame" x="93" y="24" width="297" height="56"/>
                             <textFieldCell key="cell" controlSize="small" selectable="YES" id="7Xh-mG-ImD">
-                                <font key="font" metaFont="message" size="11"/>
+                                <font key="font" metaFont="controlContent" size="11"/>
                                 <string key="title">This information helps us know which hardware and OS versions we should support
 
 This information is kept anonymously</string>
@@ -75,6 +83,9 @@ This information is kept anonymously</string>
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
+                            <connections>
+                                <binding destination="iGd-y1-08g" name="value" keyPath="self.updater.automaticallyChecksForUpdates" id="uqJ-RM-rhY"/>
+                            </connections>
                         </button>
                         <textField horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cIJ-ss-Sgw">
                             <rect key="frame" x="-2" y="226" width="91" height="16"/>
@@ -90,6 +101,9 @@ This information is kept anonymously</string>
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
+                            <connections>
+                                <binding destination="iGd-y1-08g" name="value" keyPath="self.updater.sendsSystemProfile" id="ufg-M7-vME"/>
+                            </connections>
                         </button>
                         <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="Cej-M5-Hwj">
                             <rect key="frame" x="0.0" y="182" width="388" height="5"/>
@@ -103,6 +117,9 @@ This information is kept anonymously</string>
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
+                            <connections>
+                                <action selector="checkForUpdates:" target="iGd-y1-08g" id="XLD-k3-1i6"/>
+                            </connections>
                         </button>
                     </subviews>
                     <constraints>
@@ -149,5 +166,7 @@ This information is kept anonymously</string>
             </constraints>
             <point key="canvasLocation" x="135" y="133"/>
         </customView>
+        <customObject id="iGd-y1-08g" customClass="SPUStandardUpdaterController"/>
+        <userDefaultsController representsSharedInstance="YES" id="qXU-MD-I8b"/>
     </objects>
 </document>

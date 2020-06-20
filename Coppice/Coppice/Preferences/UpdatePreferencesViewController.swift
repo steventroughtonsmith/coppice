@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import Sparkle
 
 class UpdatePreferencesViewController: NSViewController {
 
@@ -17,9 +18,11 @@ class UpdatePreferencesViewController: NSViewController {
         return item
     }
 
+    @IBOutlet var updaterController: SPUStandardUpdaterController!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
+
     }
-    
 }
+

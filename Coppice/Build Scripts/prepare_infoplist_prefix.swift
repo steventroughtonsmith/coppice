@@ -14,7 +14,7 @@ func main() -> Int {
 
         try writeToOutputFile(string)
     } catch let e {
-        print("Error: \(e)")
+        print("Prepare Error: \(e)")
         return -1
     }
 
