@@ -45,6 +45,9 @@
                                 <font key="font" metaFont="controlContent" size="11"/>
                             </buttonCell>
                             <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
+                            <connections>
+                                <action selector="showSystemProfileInfo:" target="-2" id="KvZ-Lh-Eqv"/>
+                            </connections>
                         </button>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3j8-mD-5vm">
                             <rect key="frame" x="93" y="148" width="106" height="16"/>

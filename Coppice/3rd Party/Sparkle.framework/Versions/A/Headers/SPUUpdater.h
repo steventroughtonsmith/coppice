@@ -200,6 +200,14 @@ SU_EXPORT @interface SPUUpdater : NSObject
  */
 - (void)resetUpdateCycle;
 
+
+/*!
+ The default system profile information that is sent when checking for updates
+
+ This does not contain any additional fields added in the delegate
+ */
+@property (nonatomic, readonly, copy) NSArray<NSDictionary<NSString *, id> *> *systemProfileArray;
+
 @end
 
 NS_ASSUME_NONNULL_END

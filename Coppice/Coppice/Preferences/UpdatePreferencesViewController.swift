@@ -22,7 +22,14 @@ class UpdatePreferencesViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
+    }
 
+    @IBAction func showSystemProfileInfo(_ sender: Any) {
+        guard let systemInfo = updaterController.updater?.systemProfileArray else {
+            return
+        }
+        let systemProfileInfo = SystemProfileInfoViewController(systemInfo: systemInfo)
+        self.presentAsSheet(systemProfileInfo)
     }
 }
 
