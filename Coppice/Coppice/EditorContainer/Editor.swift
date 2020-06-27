@@ -22,6 +22,12 @@ protocol Editor: class {
     func open(_ link: PageLink)
 
     var enabled: Bool { get set }
+    
+    
+    /// We don't get safe areas until we've been added to the window, but this can be too late to do some setup without drawing artefacts.
+    ///
+    /// - Parameter safeAreaInsets: The safe area insets to apply
+    func prepareForDisplay(withSafeAreaInsets safeAreaInsets: NSEdgeInsets)
 }
 
 
@@ -48,5 +54,9 @@ extension Editor where Self: NSViewController {
 
     func open(_ link: PageLink) {
         self.parentEditor?.open(link)
+    }
+    
+    func prepareForDisplay(withSafeAreaInsets safeAreaInsets: NSEdgeInsets) {
+        self.childEditors.forEach { $0.prepareForDisplay(withSafeAreaInsets: safeAreaInsets) }
     }
 }

@@ -39,6 +39,9 @@ class EditorContainerViewController: NSViewController, SplitViewContainable {
             if let newEditor = self.mainEditor {
                 self.addChild(newEditor)
                 self.view.addSubview(newEditor.view, withInsets: NSEdgeInsetsZero)
+                if #available(OSX 10.16, *) {
+                    newEditor.prepareForDisplay(withSafeAreaInsets: self.view.safeAreaInsets)
+                }
             }
             self.inspectorsDidChange()
             self.view.window?.recalculateKeyViewLoop()

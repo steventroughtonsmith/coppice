@@ -45,8 +45,16 @@ class DocumentWindowController: NSWindowController {
 
     override func windowDidLoad(){
         super.windowDidLoad()
+        
+        guard let window = self.window else {
+            return
+        }
+        
+        if #available(OSX 10.16, *) {
+            window.styleMask.insert(.fullSizeContentView)
+        }
 
-        if let contentView = self.window?.contentView {
+        if let contentView = window.contentView {
             self.splitViewController.view.frame = contentView.bounds
         }
         self.splitViewController.toolbarControl = self.splitViewControl

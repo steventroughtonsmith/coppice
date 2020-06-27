@@ -51,8 +51,10 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
     }
 
     override func viewDidAppear() {
-        super.viewDidAppear()
+        
         self.highlight(self.viewModel.highlightedRange)
+        super.viewDidAppear()
+
     }
 
     override func viewDidDisappear() {
@@ -268,12 +270,29 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
         }
         self.editingTextView.showFindIndicator(for: highlightRange)
     }
+    
+    var isInCanvas: Bool {
+        return (self.parentEditor as? PageEditorViewController)?.isInCanvas ?? false
+    }
 }
 
 
 extension TextEditorViewController: Editor {
     var inspectors: [Inspector] {
         return [self.textEditorInspectorViewController]
+    }
+    
+    func prepareForDisplay(withSafeAreaInsets safeAreaInsets: NSEdgeInsets) {
+        if #available(OSX 10.16, *) {
+            var insets = NSEdgeInsets(top: 10, left: 5, bottom: 5, right: 5)
+            if !self.isInCanvas {
+                insets.top += safeAreaInsets.top
+            }
+            self.scrollView.contentInsets = insets
+            NSView.animate(withDuration: 0) {
+                self.view.layoutSubtreeIfNeeded()
+            }
+        }
     }
 }
 
