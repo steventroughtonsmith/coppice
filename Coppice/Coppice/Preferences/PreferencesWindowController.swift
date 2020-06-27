@@ -7,8 +7,19 @@
 //
 
 import Cocoa
+import Sparkle
 
 class PreferencesWindowController: NSWindowController {
+
+    let updaterController: SPUStandardUpdaterController
+    init(updaterController: SPUStandardUpdaterController) {
+        self.updaterController = updaterController
+        super.init(window: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     let tabController: PreferencesTabView = {
         let controller = PreferencesTabView()
@@ -28,7 +39,7 @@ class PreferencesWindowController: NSWindowController {
         let generalItem = generalPrefs.createTabItem()
         self.tabController.addTabViewItem(generalItem)
 
-        let updatePrefs = UpdatePreferencesViewController()
+        let updatePrefs = UpdatePreferencesViewController(updaterController: self.updaterController)
         self.tabController.addTabViewItem(updatePrefs.createTabItem())
 
         let subscribe = SubscribeViewController()

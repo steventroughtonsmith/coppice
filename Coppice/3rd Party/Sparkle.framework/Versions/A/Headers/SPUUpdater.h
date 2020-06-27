@@ -202,9 +202,7 @@ SU_EXPORT @interface SPUUpdater : NSObject
 
 
 /*!
- The default system profile information that is sent when checking for updates
-
- This does not contain any additional fields added in the delegate
+ The system profile information that is sent when checking for updates
  */
 @property (nonatomic, readonly, copy) NSArray<NSDictionary<NSString *, id> *> *systemProfileArray;
 

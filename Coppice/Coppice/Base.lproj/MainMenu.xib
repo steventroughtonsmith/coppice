@@ -14,12 +14,18 @@
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Coppice" customModuleProvider="target">
             <connections>
                 <outlet property="newLinkedPageMenuDelegate" destination="3XH-A1-YuW" id="E0p-Z2-5s3"/>
+                <outlet property="updaterController" destination="9pK-30-Hbb" id="hWm-qw-CZl"/>
             </connections>
         </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
         <customObject id="S7z-Mc-1OZ" customClass="NewPageMenuDelegate" customModule="Coppice" customModuleProvider="target"/>
         <customObject id="3XH-A1-YuW" userLabel="New Linked Page Menu Delegate" customClass="NewPageMenuDelegate" customModule="Coppice" customModuleProvider="target"/>
-        <customObject id="9pK-30-Hbb" customClass="SUUpdater"/>
+        <customObject id="9pK-30-Hbb" customClass="SPUStandardUpdaterController">
+            <connections>
+                <outlet property="delegate" destination="w3a-kK-ZEf" id="Oyp-DP-Z77"/>
+                <outlet property="updaterDelegate" destination="w3a-kK-ZEf" id="15z-Xl-eZN"/>
+            </connections>
+        </customObject>
         <menu title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
             <items>
                 <menuItem title="Coppice" id="1Xt-HY-uBw">
@@ -873,5 +879,6 @@
             <point key="canvasLocation" x="71" y="100"/>
         </menu>
         <userDefaultsController representsSharedInstance="YES" id="dmx-ad-XFr"/>
+        <customObject id="w3a-kK-ZEf" customClass="SparkleDelegate" customModule="Coppice" customModuleProvider="target"/>
     </objects>
 </document>

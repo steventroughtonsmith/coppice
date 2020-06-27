@@ -7,12 +7,14 @@
 //
 
 import Cocoa
+import Sparkle
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     let documentController = CoppiceDocumentController()
     @IBOutlet weak var newLinkedPageMenuDelegate: NewPageMenuDelegate!
+    @IBOutlet weak var updaterController: SPUStandardUpdaterController!
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         #if !DEBUG
@@ -66,7 +68,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    lazy var preferencesWindow = PreferencesWindowController()
+    lazy var preferencesWindow: PreferencesWindowController = {
+        return PreferencesWindowController(updaterController: self.updaterController)
+    }()
     @IBAction func showPreferences(_ sender: Any?) {
         self.preferencesWindow.showWindow(sender)
     }
