@@ -544,14 +544,18 @@ extension SourceListViewController: NSOutlineViewDelegate {
     }
 
     func outlineView(_ outlineView: NSOutlineView, heightOfRowByItem item: Any) -> CGFloat {
+        var baseSize: CGFloat = 22
+        if #available(OSX 10.16, *) {
+            baseSize = 24
+        }
         guard let sourceListItem = item as? SourceListNode else {
-            return 22
+            return baseSize
         }
         switch sourceListItem.cellType {
         case .bigCell:
             return 34
         case .smallCell, .groupCell:
-            return 22
+            return baseSize
         }
     }
 
