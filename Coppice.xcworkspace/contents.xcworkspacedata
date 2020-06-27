@@ -5,6 +5,6 @@
       location = "group:Coppice/Coppice.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:/Users/martinpilkington/Work/M3/Apps/M Cubed Apps/BubbleNotes/Code/Coppice.xctestplan">
+      location = "group:Coppice.xctestplan">
    </FileRef>
 </Workspace>
