@@ -3,12 +3,13 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17132"/>
+        <capability name="Search Toolbar Item" minToolsVersion="12.0" minSystemVersion="10.16"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="DocumentWindowController" customModule="Coppice" customModuleProvider="target">
             <connections>
-                <outlet property="searchField" destination="4ma-yw-p7D" id="EfM-8g-d3k"/>
+                <outlet property="searchField" destination="ded-M8-EC0" id="eHF-Ch-61S"/>
                 <outlet property="splitViewControl" destination="aCJ-vR-5Ss" id="EzN-eO-CcN"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
@@ -17,18 +18,16 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" frameAutosaveName="" animationBehavior="default" id="F0z-JX-Cv5">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
-            <rect key="contentRect" x="705" y="446" width="1059" height="675"/>
+            <rect key="contentRect" x="705" y="446" width="1175" height="682"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
             <view key="contentView" id="se5-gp-TjO">
-                <rect key="frame" x="0.0" y="0.0" width="1059" height="675"/>
+                <rect key="frame" x="0.0" y="0.0" width="1175" height="682"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             </view>
-            <toolbar key="toolbar" implicitIdentifier="70B77CBD-7734-4DB0-B1CC-5CF88AD75C15" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="wrD-DS-DMi">
+            <toolbar key="toolbar" implicitIdentifier="70B77CBD-7734-4DB0-B1CC-5CF88AD75C15" autosavesConfiguration="NO" displayMode="iconOnly" sizeMode="regular" id="wrD-DS-DMi">
                 <allowedToolbarItems>
-                    <toolbarItem implicitItemIdentifier="D2BBD00B-8BA1-4721-91C3-16331792FD39" label="New Page" paletteLabel="New Page" image="AddPage" id="yJV-fh-W1y">
+                    <toolbarItem implicitItemIdentifier="D2BBD00B-8BA1-4721-91C3-16331792FD39" label="New Page" paletteLabel="New Page" image="AddPage" sizingBehavior="auto" id="yJV-fh-W1y">
                         <nil key="toolTip"/>
-                        <size key="minSize" width="47" height="24"/>
-                        <size key="maxSize" width="47" height="24"/>
                         <popUpButton key="view" verticalHuggingPriority="750" id="6Ai-AI-X1H">
                             <rect key="frame" x="7" y="14" width="47" height="24"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -51,7 +50,7 @@
                     <toolbarItem implicitItemIdentifier="91E22082-FF2E-4572-9DF1-26C3D1FC9959" label="New Canvas" paletteLabel="New Canvas" image="AddBoard" sizingBehavior="auto" id="TPX-ea-tFb">
                         <nil key="toolTip"/>
                         <button key="view" verticalHuggingPriority="750" id="whH-7M-104">
-                            <rect key="frame" x="14" y="14" width="44" height="25"/>
+                            <rect key="frame" x="24" y="14" width="25" height="23"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="AddBoard" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ztx-XQ-TYz">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -62,10 +61,8 @@
                             <action selector="newCanvas:" target="-1" id="8tL-zR-xxk"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="2B6058DC-C8C5-45BC-BF49-974943E8FBE8" label="Views" paletteLabel="Views" id="UjW-Vu-9qp">
+                    <toolbarItem implicitItemIdentifier="2B6058DC-C8C5-45BC-BF49-974943E8FBE8" label="Views" paletteLabel="Views" sizingBehavior="auto" id="UjW-Vu-9qp">
                         <nil key="toolTip"/>
-                        <size key="minSize" width="71" height="23"/>
-                        <size key="maxSize" width="96" height="24"/>
                         <segmentedControl key="view" verticalHuggingPriority="750" id="aCJ-vR-5Ss">
                             <rect key="frame" x="0.0" y="14" width="95" height="23"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -82,28 +79,11 @@
                         </connections>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="Yn2-Qc-qMJ"/>
-                    <toolbarItem implicitItemIdentifier="033B4A53-EBE9-40A3-B3B3-DE6E54751B72" label="Search" paletteLabel="Search" id="Ld8-cL-wK4">
-                        <nil key="toolTip"/>
-                        <size key="minSize" width="220" height="22"/>
-                        <size key="maxSize" width="220" height="22"/>
-                        <searchField key="view" wantsLayer="YES" verticalHuggingPriority="750" textCompletion="NO" id="4ma-yw-p7D">
-                            <rect key="frame" x="0.0" y="14" width="220" height="22"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" usesSingleLineMode="YES" bezelStyle="round" id="V5a-ay-KW4">
-                                <font key="font" metaFont="system"/>
-                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            </searchFieldCell>
-                            <connections>
-                                <binding destination="-2" name="value" keyPath="self.viewModel.searchString" id="XmJ-c1-iM1"/>
-                            </connections>
-                        </searchField>
-                    </toolbarItem>
                     <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="71e-1F-lXX"/>
                     <toolbarItem implicitItemIdentifier="804F72E1-4F1E-4895-A73F-ECC98356CA90" label="Link To Page" paletteLabel="Link To Page" image="LinkPage" sizingBehavior="auto" id="ONd-MB-hst" customClass="ResponderChainValidatingToolbarItem" customModule="Coppice" customModuleProvider="target">
                         <nil key="toolTip"/>
                         <button key="view" verticalHuggingPriority="750" id="HHh-4W-dVn">
-                            <rect key="frame" x="15" y="14" width="44" height="25"/>
+                            <rect key="frame" x="26" y="14" width="23" height="23"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="LinkPage" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="UFk-oD-NGa">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -114,6 +94,21 @@
                             <action selector="linkToPage:" target="-1" id="gnn-ch-koW"/>
                         </connections>
                     </toolbarItem>
+                    <searchToolbarItem implicitItemIdentifier="A31CD34F-377D-4D66-934C-C2CBDF991B96" label="Search" paletteLabel="Search" id="A1L-Dv-N2d">
+                        <nil key="toolTip"/>
+                        <searchField key="view" verticalHuggingPriority="750" textCompletion="NO" id="ded-M8-EC0">
+                            <rect key="frame" x="0.0" y="0.0" width="100" height="21"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" usesSingleLineMode="YES" bezelStyle="round" sendsSearchStringImmediately="YES" id="THw-rO-Wyh">
+                                <font key="font" usesAppearanceFont="YES"/>
+                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </searchFieldCell>
+                            <connections>
+                                <binding destination="-2" name="value" keyPath="self.viewModel.searchString" id="HIt-Iz-F3H"/>
+                            </connections>
+                        </searchField>
+                    </searchToolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
                     <toolbarItem reference="yJV-fh-W1y"/>
@@ -122,13 +117,13 @@
                     <toolbarItem reference="ONd-MB-hst"/>
                     <toolbarItem reference="Yn2-Qc-qMJ"/>
                     <toolbarItem reference="UjW-Vu-9qp"/>
-                    <toolbarItem reference="Ld8-cL-wK4"/>
+                    <searchToolbarItem reference="A1L-Dv-N2d"/>
                 </defaultToolbarItems>
             </toolbar>
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
-            <point key="canvasLocation" x="309" y="-658"/>
+            <point key="canvasLocation" x="366.5" y="-655"/>
         </window>
         <customObject id="vF9-dA-dmp" customClass="NewPageMenuDelegate" customModule="Coppice" customModuleProvider="target"/>
     </objects>
