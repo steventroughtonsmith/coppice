@@ -13,8 +13,12 @@ class SourceListOutlineView: NSOutlineView {
     override func frameOfCell(atColumn column: Int, row: Int) -> NSRect {
         var rect = super.frameOfCell(atColumn: column, row: row)
         if row == 0 {
-            rect.size.width += (rect.origin.x - 2)
-            rect.origin.x = 2
+            var adjustment: CGFloat = 2
+            if #available(OSX 10.16, *) {
+                adjustment = self.indentationPerLevel
+            }
+            rect.size.width += (rect.origin.x - adjustment)
+            rect.origin.x = adjustment
         }
         return rect
     }
