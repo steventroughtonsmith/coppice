@@ -88,6 +88,14 @@ class BaseInspectorViewController: NSViewController, Inspector {
         self.mouseIsOverTitle = false
     }
 
+    @IBAction func updateHidden(_ sender: NSButton) {
+        //Collapsed state set via bindings
+        NSView.animate(withDuration: 0.3) {
+            self.view.superview?.layoutSubtreeIfNeeded()
+            self.contentContainer.alphaValue = (self.viewModel.collapsed ? 0 : 1)
+        }
+    }
+
 
     //MARK: - Key Paths
     override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {

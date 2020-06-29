@@ -14,13 +14,6 @@ class RootSplitViewController: NSSplitViewController {
     let editorContainerViewController: EditorContainerViewController
     let inspectorContainerViewController: InspectorContainerViewController
 
-    var toolbarControl: NSSegmentedControl? {
-        didSet {
-            self.toolbarControl?.target = self
-            self.toolbarControl?.action = #selector(toolbarControlChanged(_:))
-        }
-    }
-
 
     //MARK: - Initialisation
     init(sidebarViewController: SidebarViewController,
@@ -70,22 +63,9 @@ class RootSplitViewController: NSSplitViewController {
 
 
     //MARK: - ToolbarControl
-    @IBAction func toolbarControlChanged(_ sender: Any) {
-        guard let toolbarControl = self.toolbarControl else {
-            return
-        }
-        self.splitViewItem(for: self.sidebarViewController)?.isCollapsed = !toolbarControl.isSelected(forSegment: 0)
-        self.splitViewItem(for: self.inspectorContainerViewController)?.isCollapsed = !toolbarControl.isSelected(forSegment: 1)
-    }
-
-    private func updateSplitViewControl() {
-        self.toolbarControl?.setSelected(!(self.splitViewItem(for: self.sidebarViewController)?.isCollapsed ?? false), forSegment: 0)
-        self.toolbarControl?.setSelected(!(self.splitViewItem(for: self.inspectorContainerViewController)?.isCollapsed ?? false), forSegment: 1)
-    }
 
     override func splitViewDidResizeSubviews(_ notification: Notification) {
         super.splitViewDidResizeSubviews(notification)
-        self.updateSplitViewControl()
     }
 
 

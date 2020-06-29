@@ -40,6 +40,10 @@ enum PageContentType: String, Equatable, CaseIterable {
         }
     }
 
+    var addIcon: NSImage {
+        return self.icon
+    }
+
     var localizedName: String {
         switch self {
         case .text:

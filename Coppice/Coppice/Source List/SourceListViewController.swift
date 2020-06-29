@@ -110,11 +110,10 @@ class SourceListViewController: NSViewController, NSMenuItemValidation {
 
     //MARK: - Create Menu Actions
     @IBAction func newPage(_ sender: Any?) {
-        guard let menuItem = sender as? NSMenuItem,
-            let rawType = menuItem.representedObject as? String,
-            let type = PageContentType(rawValue: rawType) else {
-                self.createdItem = self.viewModel.createPage(ofType: .text, underNodes: self.nodesForAction)
-                return
+        var type: PageContentType? = nil
+        //If the sender is a menu item then get the represented object. Otherwise we'll use nil and use the last created type
+        if let rawType = (sender as? NSMenuItem)?.representedObject as? String {
+            type = PageContentType(rawValue: rawType)
         }
         self.createdItem = self.viewModel.createPage(ofType: type, underNodes: self.nodesForAction)
     }

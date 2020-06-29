@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17132" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17132"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="BaseInspectorViewController" customModule="Bubbles" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="BaseInspectorViewController" customModule="Coppice" customModuleProvider="target">
             <connections>
                 <outlet property="contentContainer" destination="mCW-3X-mCc" id="OL3-hO-IrK"/>
                 <outlet property="titleContainer" destination="rzJ-KR-AUT" id="yvT-4y-BpT"/>
@@ -48,6 +49,7 @@
                                         <font key="font" metaFont="smallSystemBold"/>
                                     </buttonCell>
                                     <connections>
+                                        <action selector="updateHidden:" target="-2" id="tVA-rM-bhG"/>
                                         <binding destination="-2" name="hidden" keyPath="self.showCollapseButton" id="mFc-Qx-mFC">
                                             <dictionary key="options">
                                                 <string key="NSValueTransformerName">NSNegateBoolean</string>

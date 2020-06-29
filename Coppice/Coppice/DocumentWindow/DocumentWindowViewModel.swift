@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 protocol DocumentWindow: class {
     func showAlert(_ alert: Alert, callback: @escaping (Int) -> Void)
@@ -236,6 +237,8 @@ class DocumentWindowViewModel: NSObject {
 
 
     //MARK: - New Page Helpers
+    @Published var lastCreatePageType: PageContentType = .text
+    
     var canvasForNewPages: Canvas? {
         guard self.sidebarSelection.firstIndex(of: .canvases) != nil else {
             return nil
