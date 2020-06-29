@@ -37,6 +37,10 @@ class SourceListViewController: NSViewController, NSMenuItemValidation {
 
         self.bottomBarConstraint.constant = GlobalConstants.bottomBarHeight
         self.setupAccessibility()
+
+        if #available(OSX 10.16, *) {
+            self.outlineScrollView.automaticallyAdjustsContentInsets = true
+        }
     }
 
     override func viewWillAppear() {
