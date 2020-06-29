@@ -11,7 +11,7 @@ import Sparkle
 
 class SparkleDelegate: NSObject, SPUUpdaterDelegate {
     func allowedSystemProfileKeys(for updater: SPUUpdater) -> [String] {
-        return ["osVersion", "cputype", "cpusubtype", "model", "lang", "appVersion"]
+        return ["osVersion", "cputype", "model", "lang", "appVersion"]
     }
 
     func feedParameters(for updater: SPUUpdater, sendingSystemProfile sendingProfile: Bool) -> [[String : String]] {

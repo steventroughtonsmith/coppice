@@ -21,10 +21,10 @@
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="nWA-DE-6OJ">
                     <rect key="frame" x="18" y="330" width="444" height="154"/>
                     <textFieldCell key="cell" selectable="YES" id="Zxo-5o-FY2">
-                        <font key="font" metaFont="message" size="11"/>
+                        <font key="font" metaFont="menu" size="11"/>
                         <mutableString key="title">In order to develop the best software possible, it is useful to know some information about the hardware and OS our users run.
 
-If you opt to send us your anonymous system info, Coppice will send us details about your system once a week. These are stored anonymously on our servers and are not linked to your M Cubed Account.
+If you opt-in to send us your anonymous system info, Coppice will send us details about your system once a week. These are stored anonymously on our servers and are not linked to your M Cubed Account.
 
 We like to be transparent about what data we collect, so the table below shows what will be sent to our server. You can switch between the raw data that is sent to our server, and a more human readable version using the tabs below
 </mutableString>
@@ -35,7 +35,7 @@ We like to be transparent about what data we collect, so the table below shows w
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eok-xh-MaR">
                     <rect key="frame" x="18" y="66" width="444" height="42"/>
                     <textFieldCell key="cell" controlSize="small" selectable="YES" id="DHS-2H-lwm">
-                        <font key="font" metaFont="message" size="11"/>
+                        <font key="font" metaFont="menu" size="11"/>
                         <string key="title">Note: This data reflects the current state of your system. If this changes (e.g. upgrading your OS) between now and when we next collect your system info, that updated data will be sent</string>
                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
