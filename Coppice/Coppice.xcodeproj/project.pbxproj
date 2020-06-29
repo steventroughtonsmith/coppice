@@ -34,6 +34,7 @@
 		9923B07122F47AE30035D8C6 /* ModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9923B07022F47AE30035D8C6 /* ModelController.swift */; };
 		9923B07422F485480035D8C6 /* ModelCollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9923B07322F485480035D8C6 /* ModelCollectionTests.swift */; };
 		9925B2622386A0DF001A8ADC /* TextEditorInspectorTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9925B2612386A0DF001A8ADC /* TextEditorInspectorTypes.swift */; };
+		9926951A24AA34940050DFED /* ImmediateMenuSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9926951924AA34940050DFED /* ImmediateMenuSegmentedControl.swift */; };
 		992A5C9222DCB7530012CCB6 /* SourceListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992A5C9122DCB7530012CCB6 /* SourceListViewController.swift */; };
 		992A5C9622DCB7790012CCB6 /* SourceListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 992A5C9522DCB7790012CCB6 /* SourceListView.xib */; };
 		992A5C9C22DCC6090012CCB6 /* SourceListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992A5C9B22DCC6090012CCB6 /* SourceListViewModel.swift */; };
@@ -349,6 +350,7 @@
 		9923B07022F47AE30035D8C6 /* ModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelController.swift; sourceTree = "<group>"; };
 		9923B07322F485480035D8C6 /* ModelCollectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelCollectionTests.swift; sourceTree = "<group>"; };
 		9925B2612386A0DF001A8ADC /* TextEditorInspectorTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorInspectorTypes.swift; sourceTree = "<group>"; };
+		9926951924AA34940050DFED /* ImmediateMenuSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImmediateMenuSegmentedControl.swift; sourceTree = "<group>"; };
 		992A5C9122DCB7530012CCB6 /* SourceListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceListViewController.swift; sourceTree = "<group>"; };
 		992A5C9522DCB7790012CCB6 /* SourceListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SourceListView.xib; sourceTree = "<group>"; };
 		992A5C9B22DCC6090012CCB6 /* SourceListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceListViewModel.swift; sourceTree = "<group>"; };
@@ -1011,6 +1013,7 @@
 				99868F372397F005009AC0F7 /* FileDropView.swift */,
 				99488ACD23C78087009954AF /* EditableLabelCell.swift */,
 				9959178624606A1900E8874C /* ResponderChainValidatingToolbarItem.swift */,
+				9926951924AA34940050DFED /* ImmediateMenuSegmentedControl.swift */,
 			);
 			path = "Generic Views";
 			sourceTree = "<group>";
@@ -1735,6 +1738,7 @@
 				99F084F123A280A5008D2ACA /* ModelRelationship.swift in Sources */,
 				99C865202302E256004C7B89 /* ImageEditorViewController.swift in Sources */,
 				996187F8249A6E72007313BD /* UpdatePreferencesViewController.swift in Sources */,
+				9926951A24AA34940050DFED /* ImmediateMenuSegmentedControl.swift in Sources */,
 				99C8650923016EB2004C7B89 /* TextEditorViewModel.swift in Sources */,
 				999EA6BB243619E700BF254E /* SearchResultsViewController.swift in Sources */,
 				993D2C0224157735002E5BAC /* Folder.swift in Sources */,

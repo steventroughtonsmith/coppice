@@ -11,29 +11,14 @@ import Cocoa
 class NewPageMenuDelegate: NSObject, NSMenuDelegate {
     var action: Selector = #selector(newPage(_:))
     var includeKeyEquivalents: Bool?
+    var includeIcons = false
 
     func numberOfItems(in menu: NSMenu) -> Int {
-        let caseCount = PageContentType.allCases.count
-        guard menu.supermenu == nil else {
-            return caseCount
-        }
-        return caseCount + 1
+        return PageContentType.allCases.count
     }
 
     func menu(_ menu: NSMenu, update item: NSMenuItem, at index: Int, shouldCancel: Bool) -> Bool {
-        //We're in a menu hierarchy
-        guard menu.supermenu == nil else {
-            self.update(item, with: PageContentType.allCases[index], includeKeyEquivalents: self.includeKeyEquivalents ?? menu.isInMainMenu)
-            return true
-        }
-
-        //We're the root menu in a control
-        if index == 0 {
-            item.image = NSImage(named: "AddPage")
-            item.title = ""
-        } else {
-            self.update(item, with: PageContentType.allCases[index - 1])
-        }
+        self.update(item, with: PageContentType.allCases[index], includeKeyEquivalents: self.includeKeyEquivalents ?? menu.isInMainMenu)
         return true
     }
 
@@ -42,6 +27,9 @@ class NewPageMenuDelegate: NSObject, NSMenuDelegate {
         item.representedObject = contentType.rawValue
         item.target = nil
         item.action = self.action
+        if (self.includeIcons) {
+            item.image = contentType.icon
+        }
         if includeKeyEquivalents {
             item.keyEquivalent = contentType.keyEquivalent
             item.keyEquivalentModifierMask = contentType.keyEquivalentModifierMask

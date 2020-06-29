@@ -54,6 +54,7 @@ class DocumentWindowController: NSWindowController {
 
 //        self.sidebarViewController.pagesTable.nextKeyView = self.editorContainerViewController.view
 //        self.editorContainerViewController.view.nextKeyView = self.inspectorContainerViewController.view
+        self.setupNewPageSegmentedControl()
     }
 
     func performNewDocumentSetup() {
@@ -81,9 +82,42 @@ class DocumentWindowController: NSWindowController {
 
 
     //MARK: - Toolbar
-    func setupNewPageToolbarItem() {
-        
+    @IBOutlet weak var newPageSegmentedControl: NSSegmentedControl!
+
+    lazy var newPageMenuDelegate: NewPageMenuDelegate = {
+        let delegate = NewPageMenuDelegate()
+        delegate.includeKeyEquivalents = false
+        delegate.includeIcons = true
+        return delegate
+    }()
+
+    lazy var newPageMenu: NSMenu = {
+        let menu = NSMenu()
+        menu.delegate = self.newPageMenuDelegate
+        return menu
+    }()
+
+    var lastCreatedPageTypeObserver: AnyCancellable?
+    private func setupNewPageSegmentedControl() {
+        self.newPageSegmentedControl.setMenu(self.newPageMenu, forSegment: 1)
+        self.lastCreatedPageTypeObserver = self.viewModel.$lastCreatePageType
+            .map(\.addIcon)
+            .sink { [weak self] (icon) in
+                self?.newPageSegmentedControl.setImage(icon, forSegment: 0)
+            }
     }
+
+    @IBAction func toolbarNewPage(_ sender: Any) {
+        guard
+            let control = sender as? NSSegmentedControl,
+            control.selectedSegment == 0
+        else {
+            return
+        }
+
+        NSApp.sendAction(#selector(NewPageMenuDelegate.newPage(_:)), to: nil, from: sender)
+    }
+
 
 
     //MARK: - Responder Chain

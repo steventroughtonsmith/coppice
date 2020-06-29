@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17132" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17132"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="DocumentWindowController" customModule="Coppice" customModuleProvider="target">
             <connections>
+                <outlet property="newPageSegmentedControl" destination="gHP-9M-F71" id="63f-bk-iI2"/>
                 <outlet property="searchField" destination="4ma-yw-p7D" id="EfM-8g-d3k"/>
                 <outlet property="splitViewControl" destination="aCJ-vR-5Ss" id="EzN-eO-CcN"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
@@ -22,30 +24,24 @@
                 <rect key="frame" x="0.0" y="0.0" width="1059" height="675"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             </view>
-            <toolbar key="toolbar" implicitIdentifier="70B77CBD-7734-4DB0-B1CC-5CF88AD75C15" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="wrD-DS-DMi">
+            <toolbar key="toolbar" implicitIdentifier="70B77CBD-7734-4DB0-B1CC-5CF88AD75C15" explicitIdentifier="mainToolbar" displayMode="iconAndLabel" sizeMode="regular" id="wrD-DS-DMi">
                 <allowedToolbarItems>
-                    <toolbarItem implicitItemIdentifier="D2BBD00B-8BA1-4721-91C3-16331792FD39" label="New Page" paletteLabel="New Page" image="AddPage" id="yJV-fh-W1y">
+                    <toolbarItem implicitItemIdentifier="75A5EE6A-1E2A-4BCE-99AD-9BF568F62A6A" label="New Page" paletteLabel="New Page" sizingBehavior="auto" id="pEk-X9-LD8">
                         <nil key="toolTip"/>
-                        <size key="minSize" width="47" height="24"/>
-                        <size key="maxSize" width="47" height="24"/>
-                        <popUpButton key="view" verticalHuggingPriority="750" id="6Ai-AI-X1H">
-                            <rect key="frame" x="7" y="14" width="47" height="24"/>
+                        <segmentedControl key="view" verticalHuggingPriority="750" id="gHP-9M-F71" customClass="ImmediateMenuSegmentedControl" customModule="Coppice" customModuleProvider="target">
+                            <rect key="frame" x="6" y="14" width="48" height="24"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" imagePosition="only" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="0CS-GJ-ZH2" id="Twi-4V-TzH">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="momentary" id="r7K-io-V57" customClass="ImmediateMenuSegmentedCell" customModule="Coppice" customModuleProvider="target">
                                 <font key="font" metaFont="system"/>
-                                <menu key="menu" id="Br5-bc-W3s">
-                                    <items>
-                                        <menuItem state="on" image="AddPage" hidden="YES" id="0CS-GJ-ZH2"/>
-                                        <menuItem title="Item 2" id="AwL-OC-vtC"/>
-                                        <menuItem title="Item 3" id="eFG-l7-ncm"/>
-                                    </items>
-                                    <connections>
-                                        <outlet property="delegate" destination="vF9-dA-dmp" id="Hre-Wy-7k5"/>
-                                    </connections>
-                                </menu>
-                            </popUpButtonCell>
-                        </popUpButton>
+                                <segments>
+                                    <segment image="AddPage" width="25"/>
+                                    <segment image="DownChevron" width="16" tag="1"/>
+                                </segments>
+                                <connections>
+                                    <action selector="toolbarNewPage:" target="-2" id="4cf-Od-eSb"/>
+                                </connections>
+                            </segmentedCell>
+                        </segmentedControl>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="91E22082-FF2E-4572-9DF1-26C3D1FC9959" label="New Canvas" paletteLabel="New Canvas" image="AddBoard" sizingBehavior="auto" id="TPX-ea-tFb">
                         <nil key="toolTip"/>
@@ -115,13 +111,13 @@
                     </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
-                    <toolbarItem reference="yJV-fh-W1y"/>
                     <toolbarItem reference="TPX-ea-tFb"/>
                     <toolbarItem reference="71e-1F-lXX"/>
                     <toolbarItem reference="ONd-MB-hst"/>
                     <toolbarItem reference="Yn2-Qc-qMJ"/>
                     <toolbarItem reference="UjW-Vu-9qp"/>
                     <toolbarItem reference="Ld8-cL-wK4"/>
+                    <toolbarItem reference="pEk-X9-LD8"/>
                 </defaultToolbarItems>
             </toolbar>
             <connections>
@@ -134,6 +130,7 @@
     <resources>
         <image name="AddBoard" width="19" height="19"/>
         <image name="AddPage" width="19" height="19"/>
+        <image name="DownChevron" width="8" height="8"/>
         <image name="LinkPage" width="17" height="17"/>
         <image name="ToggleInspector" width="19" height="19"/>
         <image name="ToggleSidebar" width="19" height="19"/>
