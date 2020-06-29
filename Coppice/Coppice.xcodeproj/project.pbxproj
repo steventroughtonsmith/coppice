@@ -29,6 +29,7 @@
 		990D2441235DEFE2001B1FD9 /* PageArrowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990D2440235DEFE2001B1FD9 /* PageArrowView.swift */; };
 		99115DC5249E304D008942DF /* SystemProfileInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99115DC3249E304D008942DF /* SystemProfileInfoViewController.swift */; };
 		99115DC6249E304D008942DF /* SystemProfileInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99115DC4249E304D008942DF /* SystemProfileInfoViewController.xib */; };
+		99171EDC24AA48B200E96DE6 /* MainToolbarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99171EDB24AA48B200E96DE6 /* MainToolbarDelegate.swift */; };
 		9919B93123D09FBB00C7A44D /* TextColourPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9919B93023D09FBB00C7A44D /* TextColourPicker.swift */; };
 		9923B06B22F45F7E0035D8C6 /* TestObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9923B06A22F45F7E0035D8C6 /* TestObjects.swift */; };
 		9923B07122F47AE30035D8C6 /* ModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9923B07022F47AE30035D8C6 /* ModelController.swift */; };
@@ -345,6 +346,7 @@
 		990D2440235DEFE2001B1FD9 /* PageArrowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageArrowView.swift; sourceTree = "<group>"; };
 		99115DC3249E304D008942DF /* SystemProfileInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemProfileInfoViewController.swift; sourceTree = "<group>"; };
 		99115DC4249E304D008942DF /* SystemProfileInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SystemProfileInfoViewController.xib; sourceTree = "<group>"; };
+		99171EDB24AA48B200E96DE6 /* MainToolbarDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainToolbarDelegate.swift; sourceTree = "<group>"; };
 		9919B93023D09FBB00C7A44D /* TextColourPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextColourPicker.swift; sourceTree = "<group>"; };
 		9923B06A22F45F7E0035D8C6 /* TestObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestObjects.swift; sourceTree = "<group>"; };
 		9923B07022F47AE30035D8C6 /* ModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelController.swift; sourceTree = "<group>"; };
@@ -1500,6 +1502,7 @@
 				9973737C2423BAD1000D5F21 /* RootSplitViewController.xib */,
 				993D2BF82412B053002E5BAC /* NestableSplitView.swift */,
 				993D2BFD2412FB1C002E5BAC /* SplitViewContainable.swift */,
+				99171EDB24AA48B200E96DE6 /* MainToolbarDelegate.swift */,
 			);
 			path = DocumentWindow;
 			sourceTree = "<group>";
@@ -1782,6 +1785,7 @@
 				998F178F23EB229200B3437A /* ModelObjects+Pasteboard.swift in Sources */,
 				990D2441235DEFE2001B1FD9 /* PageArrowView.swift in Sources */,
 				99C9AF1D23671FD8009F909A /* ModelReader.swift in Sources */,
+				99171EDC24AA48B200E96DE6 /* MainToolbarDelegate.swift in Sources */,
 				99FDF12C241FD53D00AF1E51 /* CanvasesViewController.swift in Sources */,
 				993D2BFE2412FB1C002E5BAC /* SplitViewContainable.swift in Sources */,
 				99A97FF72476ABD500CDD95C /* SearchResultTableCellView.swift in Sources */,
