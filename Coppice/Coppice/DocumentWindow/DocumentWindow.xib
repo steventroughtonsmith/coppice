@@ -8,9 +8,8 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="DocumentWindowController" customModule="Coppice" customModuleProvider="target">
             <connections>
-                <outlet property="newPageSegmentedControl" destination="gHP-9M-F71" id="63f-bk-iI2"/>
-                <outlet property="searchField" destination="4ma-yw-p7D" id="EfM-8g-d3k"/>
-                <outlet property="splitViewControl" destination="aCJ-vR-5Ss" id="EzN-eO-CcN"/>
+                <outlet property="newPageSegmentedControl" destination="Zn5-vz-ySP" id="rWw-IB-Yvc"/>
+                <outlet property="searchField" destination="Hfv-IE-esp" id="ebj-eM-UfC"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -25,100 +24,11 @@
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             </view>
             <toolbar key="toolbar" implicitIdentifier="70B77CBD-7734-4DB0-B1CC-5CF88AD75C15" explicitIdentifier="mainToolbar" displayMode="iconAndLabel" sizeMode="regular" id="wrD-DS-DMi">
-                <allowedToolbarItems>
-                    <toolbarItem implicitItemIdentifier="75A5EE6A-1E2A-4BCE-99AD-9BF568F62A6A" label="New Page" paletteLabel="New Page" sizingBehavior="auto" id="pEk-X9-LD8">
-                        <nil key="toolTip"/>
-                        <segmentedControl key="view" verticalHuggingPriority="750" id="gHP-9M-F71" customClass="ImmediateMenuSegmentedControl" customModule="Coppice" customModuleProvider="target">
-                            <rect key="frame" x="6" y="14" width="48" height="24"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="momentary" id="r7K-io-V57" customClass="ImmediateMenuSegmentedCell" customModule="Coppice" customModuleProvider="target">
-                                <font key="font" metaFont="system"/>
-                                <segments>
-                                    <segment image="AddPage" width="25"/>
-                                    <segment image="DownChevron" width="16" tag="1"/>
-                                </segments>
-                                <connections>
-                                    <action selector="toolbarNewPage:" target="-2" id="4cf-Od-eSb"/>
-                                </connections>
-                            </segmentedCell>
-                        </segmentedControl>
-                    </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="91E22082-FF2E-4572-9DF1-26C3D1FC9959" label="New Canvas" paletteLabel="New Canvas" image="AddBoard" sizingBehavior="auto" id="TPX-ea-tFb">
-                        <nil key="toolTip"/>
-                        <button key="view" verticalHuggingPriority="750" id="whH-7M-104">
-                            <rect key="frame" x="14" y="14" width="44" height="25"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="AddBoard" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ztx-XQ-TYz">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                        </button>
-                        <connections>
-                            <action selector="newCanvas:" target="-1" id="8tL-zR-xxk"/>
-                        </connections>
-                    </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="2B6058DC-C8C5-45BC-BF49-974943E8FBE8" label="Views" paletteLabel="Views" id="UjW-Vu-9qp">
-                        <nil key="toolTip"/>
-                        <size key="minSize" width="71" height="23"/>
-                        <size key="maxSize" width="96" height="24"/>
-                        <segmentedControl key="view" verticalHuggingPriority="750" id="aCJ-vR-5Ss">
-                            <rect key="frame" x="0.0" y="14" width="95" height="23"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="selectAny" id="hOH-HD-2M4">
-                                <font key="font" metaFont="system"/>
-                                <segments>
-                                    <segment toolTip="Toggle Sidebar" image="ToggleSidebar" width="44" selected="YES"/>
-                                    <segment toolTip="Toggle Inspectors" image="ToggleInspector" width="44" selected="YES" tag="1"/>
-                                </segments>
-                            </segmentedCell>
-                        </segmentedControl>
-                        <connections>
-                            <action selector="splitViewControlChanged:" target="-2" id="g2q-lZ-3iz"/>
-                        </connections>
-                    </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="Yn2-Qc-qMJ"/>
-                    <toolbarItem implicitItemIdentifier="033B4A53-EBE9-40A3-B3B3-DE6E54751B72" label="Search" paletteLabel="Search" id="Ld8-cL-wK4">
-                        <nil key="toolTip"/>
-                        <size key="minSize" width="220" height="22"/>
-                        <size key="maxSize" width="220" height="22"/>
-                        <searchField key="view" wantsLayer="YES" verticalHuggingPriority="750" textCompletion="NO" id="4ma-yw-p7D">
-                            <rect key="frame" x="0.0" y="14" width="220" height="22"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" usesSingleLineMode="YES" bezelStyle="round" id="V5a-ay-KW4">
-                                <font key="font" metaFont="system"/>
-                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            </searchFieldCell>
-                            <connections>
-                                <binding destination="-2" name="value" keyPath="self.viewModel.searchString" id="XmJ-c1-iM1"/>
-                            </connections>
-                        </searchField>
-                    </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="71e-1F-lXX"/>
-                    <toolbarItem implicitItemIdentifier="804F72E1-4F1E-4895-A73F-ECC98356CA90" label="Link To Page" paletteLabel="Link To Page" image="LinkPage" sizingBehavior="auto" id="ONd-MB-hst" customClass="ResponderChainValidatingToolbarItem" customModule="Coppice" customModuleProvider="target">
-                        <nil key="toolTip"/>
-                        <button key="view" verticalHuggingPriority="750" id="HHh-4W-dVn">
-                            <rect key="frame" x="15" y="14" width="44" height="25"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="LinkPage" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="UFk-oD-NGa">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                        </button>
-                        <connections>
-                            <action selector="linkToPage:" target="-1" id="gnn-ch-koW"/>
-                        </connections>
-                    </toolbarItem>
-                </allowedToolbarItems>
-                <defaultToolbarItems>
-                    <toolbarItem reference="TPX-ea-tFb"/>
-                    <toolbarItem reference="71e-1F-lXX"/>
-                    <toolbarItem reference="ONd-MB-hst"/>
-                    <toolbarItem reference="Yn2-Qc-qMJ"/>
-                    <toolbarItem reference="UjW-Vu-9qp"/>
-                    <toolbarItem reference="Ld8-cL-wK4"/>
-                    <toolbarItem reference="pEk-X9-LD8"/>
-                </defaultToolbarItems>
+                <allowedToolbarItems/>
+                <defaultToolbarItems/>
+                <connections>
+                    <outlet property="delegate" destination="7XR-JJ-EUu" id="dw8-DZ-fpg"/>
+                </connections>
             </toolbar>
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
@@ -126,13 +36,43 @@
             <point key="canvasLocation" x="309" y="-658"/>
         </window>
         <customObject id="vF9-dA-dmp" customClass="NewPageMenuDelegate" customModule="Coppice" customModuleProvider="target"/>
+        <segmentedControl verticalHuggingPriority="750" id="Zn5-vz-ySP" customClass="ImmediateMenuSegmentedControl" customModule="Coppice" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="48" height="24"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="momentary" id="l0W-bL-DxD" customClass="ImmediateMenuSegmentedCell" customModule="Coppice" customModuleProvider="target">
+                <font key="font" metaFont="system"/>
+                <segments>
+                    <segment image="AddPage" width="25"/>
+                    <segment image="DownChevron" width="16" tag="1"/>
+                </segments>
+                <connections>
+                    <action selector="toolbarNewPage:" target="-2" id="YGb-C7-F2p"/>
+                </connections>
+            </segmentedCell>
+            <point key="canvasLocation" x="-302" y="-1044"/>
+        </segmentedControl>
+        <searchField wantsLayer="YES" verticalHuggingPriority="750" textCompletion="NO" id="Hfv-IE-esp">
+            <rect key="frame" x="0.0" y="0.0" width="220" height="22"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" usesSingleLineMode="YES" bezelStyle="round" id="lxc-pc-Vx6">
+                <font key="font" metaFont="system"/>
+                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+            </searchFieldCell>
+            <connections>
+                <binding destination="-2" name="value" keyPath="self.viewModel.searchString" id="j84-PN-vWt"/>
+            </connections>
+            <point key="canvasLocation" x="318" y="-1143"/>
+        </searchField>
+        <customObject id="7XR-JJ-EUu" customClass="MainToolbarDelegate" customModule="Coppice" customModuleProvider="target">
+            <connections>
+                <outlet property="newPageSegmentedControl" destination="Zn5-vz-ySP" id="V3o-ZY-qrC"/>
+                <outlet property="searchField" destination="Hfv-IE-esp" id="jI2-dT-oli"/>
+            </connections>
+        </customObject>
     </objects>
     <resources>
-        <image name="AddBoard" width="19" height="19"/>
         <image name="AddPage" width="19" height="19"/>
         <image name="DownChevron" width="8" height="8"/>
-        <image name="LinkPage" width="17" height="17"/>
-        <image name="ToggleInspector" width="19" height="19"/>
-        <image name="ToggleSidebar" width="19" height="19"/>
     </resources>
 </document>

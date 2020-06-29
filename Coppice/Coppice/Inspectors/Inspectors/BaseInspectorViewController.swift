@@ -89,7 +89,7 @@ class BaseInspectorViewController: NSViewController, Inspector {
     }
 
     @IBAction func updateHidden(_ sender: NSButton) {
-        //collapsed state set via bindings
+        //Collapsed state set via bindings
         NSView.animate(withDuration: 0.3) {
             self.view.superview?.layoutSubtreeIfNeeded()
             self.contentContainer.alphaValue = (self.viewModel.collapsed ? 0 : 1)

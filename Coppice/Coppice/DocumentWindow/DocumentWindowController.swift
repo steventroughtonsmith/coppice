@@ -11,9 +11,6 @@ import Combine
 
 
 class DocumentWindowController: NSWindowController {
-    @IBOutlet weak var splitView: NSSplitView!
-    @IBOutlet weak var splitViewControl: NSSegmentedControl!
-
     let splitViewController: RootSplitViewController
 
     @IBOutlet weak var searchField: NSSearchField!
@@ -49,7 +46,6 @@ class DocumentWindowController: NSWindowController {
         if let contentView = self.window?.contentView {
             self.splitViewController.view.frame = contentView.bounds
         }
-        self.splitViewController.toolbarControl = self.splitViewControl
         self.contentViewController = self.splitViewController
 
 //        self.sidebarViewController.pagesTable.nextKeyView = self.editorContainerViewController.view

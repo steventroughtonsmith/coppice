@@ -25,6 +25,7 @@ class MainToolbarDelegate: NSObject {
                 }
             } else {
                 self.searchItem.view = self.searchField
+                self.searchField?.widthAnchor.constraint(lessThanOrEqualToConstant: 250).isActive = true
             }
         }
     }
@@ -36,24 +37,39 @@ class MainToolbarDelegate: NSObject {
     }
 
     var newPageItem: NSToolbarItem = {
-        return NSToolbarItem(itemIdentifier: .newPage)
+        let item = NSToolbarItem(itemIdentifier: .newPage)
+        item.label = NSLocalizedString("New Page", comment: "New Page toolbar item label")
+        item.paletteLabel = item.label
+        return item
     }()
 
     var newCanvasItem: NSToolbarItem = {
         let item = NSToolbarItem(itemIdentifier: .newCanvas)
         item.image = NSImage.symbol(withName: "AddBoard")
+        item.label = NSLocalizedString("New Canvas", comment: "New Canvas toolbar item label")
+        item.paletteLabel = item.label
+        item.isBordered = true
+        item.action = #selector(DocumentWindowController.newCanvas(_:))
         return item
     }()
 
     var linkToPageItem: NSToolbarItem = {
-        let item = NSToolbarItem(itemIdentifier: .linkToPage)
+        let item = ResponderChainValidatingToolbarItem(itemIdentifier: .linkToPage)
         item.image = NSImage.symbol(withName: "LinkPage")
+        item.label = NSLocalizedString("Link to Page", comment: "Link to Page toolbar item label")
+        item.paletteLabel = item.label
+        item.isBordered = true
+        item.action = #selector(TextEditorViewController.linkToPage(_:))
         return item
     }()
 
     var toggleInspectorsItem: NSToolbarItem = {
         let item = NSToolbarItem(itemIdentifier: .toggleInspectors)
         item.image = NSImage.symbol(withName: "ToggleInspector")
+        item.label = NSLocalizedString("Inspectors", comment: "Toggle Inspectors toolbar item label")
+        item.isBordered = true
+        item.paletteLabel = item.label
+        item.action = #selector(RootSplitViewController.toggleInspectors(_:))
         return item
     }()
 
@@ -61,7 +77,10 @@ class MainToolbarDelegate: NSObject {
         if #available(OSX 10.16, *) {
             return NSSearchToolbarItem(itemIdentifier: .search)
         }
-        return NSToolbarItem(itemIdentifier: .search)
+        let item = NSToolbarItem(itemIdentifier: .search)
+        item.label = NSLocalizedString("Search", comment: "Search toolbar item label")
+        item.paletteLabel = item.label
+        return item
     }()
 }
 
@@ -90,7 +109,6 @@ extension MainToolbarDelegate: NSToolbarDelegate {
             .linkToPage,
             .flexibleSpace,
             .search,
-            .space,
             .toggleInspectors
         ]
     }
