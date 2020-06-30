@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17132" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17132"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -35,7 +36,7 @@
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
-                                    <tableColumn width="169" minWidth="40" maxWidth="1000" id="RdG-pq-Ssr">
+                                    <tableColumn width="140" minWidth="40" maxWidth="1000" id="RdG-pq-Ssr">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -48,11 +49,11 @@
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         <prototypeCellViews>
                                             <tableCellView id="Nje-Ue-kDq">
-                                                <rect key="frame" x="1" y="1" width="169" height="17"/>
+                                                <rect key="frame" x="11" y="1" width="149" height="17"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FXB-ZB-7kb">
-                                                        <rect key="frame" x="0.0" y="0.0" width="169" height="17"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="149" height="17"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="zk3-QS-sC2">
                                                             <font key="font" metaFont="system"/>
@@ -79,7 +80,7 @@
                         </subviews>
                     </clipView>
                     <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="GHW-sw-EJI">
-                        <rect key="frame" x="1" y="406" width="135" height="16"/>
+                        <rect key="frame" x="0.0" y="473" width="172" height="16"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="5Wa-Sq-PXo">
@@ -94,13 +95,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <popUpButton translatesAutoresizingMaskIntoConstraints="NO" id="x9y-AL-d7u">
-                                <rect key="frame" x="27" y="0.0" width="35" height="23"/>
+                                <rect key="frame" x="27" y="-3" width="34" height="29"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="35" id="LQf-m7-cqx"/>
+                                    <constraint firstAttribute="width" constant="34" id="LQf-m7-cqx"/>
                                 </constraints>
-                                <popUpButtonCell key="cell" type="bevel" bezelStyle="rounded" imagePosition="only" alignment="left" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" pullsDown="YES" id="jOC-L1-fCK">
+                                <popUpButtonCell key="cell" type="bevel" bezelStyle="rounded" imagePosition="trailing" alignment="left" lineBreakMode="truncatingTail" state="on" inset="2" pullsDown="YES" id="jOC-L1-fCK">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
+                                    <font key="font" metaFont="menu"/>
                                     <menu key="menu" id="bqd-2s-yoR">
                                         <items>
                                             <menuItem state="on" image="NSActionTemplate" hidden="YES" id="KzI-d9-PWK"/>
@@ -109,7 +110,7 @@
                                 </popUpButtonCell>
                             </popUpButton>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4jD-Iv-NuW">
-                                <rect key="frame" x="0.0" y="0.0" width="27" height="23"/>
+                                <rect key="frame" x="0.0" y="-1" width="27" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="27" id="Zy8-xa-teq"/>
                                 </constraints>
@@ -174,7 +175,7 @@
         </menu>
     </objects>
     <resources>
-        <image name="NSActionTemplate" width="14" height="14"/>
-        <image name="NSAddTemplate" width="11" height="11"/>
+        <image name="NSActionTemplate" width="17" height="15"/>
+        <image name="NSAddTemplate" width="15" height="11"/>
     </resources>
 </document>

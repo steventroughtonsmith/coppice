@@ -46,6 +46,9 @@ class MainToolbarDelegate: NSObject {
     var newCanvasItem: NSToolbarItem = {
         let item = NSToolbarItem(itemIdentifier: .newCanvas)
         item.image = NSImage.symbol(withName: Symbols.Toolbars.newCanvas)
+        if #available(OSX 10.16, *) {
+            
+        }
         item.label = NSLocalizedString("New Canvas", comment: "New Canvas toolbar item label")
         item.paletteLabel = item.label
         item.isBordered = true

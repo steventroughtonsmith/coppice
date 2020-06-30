@@ -8,6 +8,7 @@
 
 import Cocoa
 import Combine
+import ObjectiveC
 
 class TextEditorInspectorViewController: BaseInspectorViewController {
     override var contentViewNibName: NSNib.Name? {
@@ -19,7 +20,8 @@ class TextEditorInspectorViewController: BaseInspectorViewController {
     @IBOutlet weak var colourPicker: TextColourPicker!
     @IBOutlet weak var alignmentControl: NSSegmentedControl!
     @IBOutlet weak var styleControl: NSSegmentedControl!
-
+    @IBOutlet weak var showFontPanelButton: NSButton!
+    
     var typedViewModel: TextEditorInspectorViewModel {
         return self.viewModel as! TextEditorInspectorViewModel
     }
@@ -35,6 +37,8 @@ class TextEditorInspectorViewController: BaseInspectorViewController {
 
         let children = self.view.accessibilityChildren()?.compactMap { $0 as? NSAccessibilityElementProtocol }
         self.view.setAccessibilityChildrenInNavigationOrder(children)
+        
+        self.showFontPanelButton.image = NSImage.symbol(withName: Symbols.Text.textFormat)
     }
 
 
@@ -63,6 +67,10 @@ class TextEditorInspectorViewController: BaseInspectorViewController {
         alignmentControl.setTag(NSTextAlignment.left.rawValue, forSegment: 0)
         alignmentControl.setTag(NSTextAlignment.center.rawValue, forSegment: 1)
         alignmentControl.setTag(NSTextAlignment.right.rawValue, forSegment: 2)
+        
+        alignmentControl.setImage(NSImage.symbol(withName: Symbols.Text.alignLeft), forSegment: 0)
+        alignmentControl.setImage(NSImage.symbol(withName: Symbols.Text.alignCenter), forSegment: 1)
+        alignmentControl.setImage(NSImage.symbol(withName: Symbols.Text.alignRight), forSegment: 2)
 
         self.alignmentObserver = self.typedViewModel.publisher(for: \.rawAlignment)
                                                     .map {alignmentControl.segment(forTag: $0) }
@@ -89,6 +97,11 @@ class TextEditorInspectorViewController: BaseInspectorViewController {
                                                     .sink { styleControl?.setSelected($0, forSegment: 2) }
         self.strikethroughObserver = self.typedViewModel.publisher(for: \.isStruckthrough)
                                                         .sink { styleControl?.setSelected($0, forSegment: 3) }
+        
+        styleControl?.setImage(NSImage.symbol(withName: Symbols.Text.bold), forSegment: 0)
+        styleControl?.setImage(NSImage.symbol(withName: Symbols.Text.italic), forSegment: 1)
+        styleControl?.setImage(NSImage.symbol(withName: Symbols.Text.underline), forSegment: 2)
+        styleControl?.setImage(NSImage.symbol(withName: Symbols.Text.strikethrough), forSegment: 3)
     }
 
     @IBAction func styleControlClicked(_ sender: Any) {
