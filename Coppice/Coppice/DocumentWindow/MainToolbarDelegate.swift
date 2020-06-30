@@ -45,7 +45,7 @@ class MainToolbarDelegate: NSObject {
 
     var newCanvasItem: NSToolbarItem = {
         let item = NSToolbarItem(itemIdentifier: .newCanvas)
-        item.image = NSImage.symbol(withName: "AddBoard")
+        item.image = NSImage.symbol(withName: Symbols.Toolbars.newCanvas)
         item.label = NSLocalizedString("New Canvas", comment: "New Canvas toolbar item label")
         item.paletteLabel = item.label
         item.isBordered = true
@@ -55,7 +55,7 @@ class MainToolbarDelegate: NSObject {
 
     var linkToPageItem: NSToolbarItem = {
         let item = ResponderChainValidatingToolbarItem(itemIdentifier: .linkToPage)
-        item.image = NSImage.symbol(withName: "LinkPage")
+        item.image = NSImage.symbol(withName: Symbols.Toolbars.link)
         item.label = NSLocalizedString("Link to Page", comment: "Link to Page toolbar item label")
         item.paletteLabel = item.label
         item.isBordered = true
@@ -63,9 +63,15 @@ class MainToolbarDelegate: NSObject {
         return item
     }()
 
+    var toggleSidebarItem: NSToolbarItem = {
+        let item = NSToolbarItem(itemIdentifier: .toggleSidebar)
+        item.image = NSImage.symbol(withName: Symbols.Toolbars.leftSidebar)
+        return item
+    }()
+
     var toggleInspectorsItem: NSToolbarItem = {
         let item = NSToolbarItem(itemIdentifier: .toggleInspectors)
-        item.image = NSImage.symbol(withName: "ToggleInspector")
+        item.image = NSImage.symbol(withName: Symbols.Toolbars.rightSidebar)
         item.label = NSLocalizedString("Inspectors", comment: "Toggle Inspectors toolbar item label")
         item.isBordered = true
         item.paletteLabel = item.label
@@ -120,6 +126,7 @@ extension MainToolbarDelegate: NSToolbarDelegate {
         case .linkToPage:           return self.linkToPageItem
         case .toggleInspectors:     return self.toggleInspectorsItem
         case .search:               return self.searchItem
+        case .toggleSidebar:        return self.toggleSidebarItem
         default:                    return NSToolbarItem(itemIdentifier: itemIdentifier)
         }
     }

@@ -30,6 +30,7 @@
 		99115DC5249E304D008942DF /* SystemProfileInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99115DC3249E304D008942DF /* SystemProfileInfoViewController.swift */; };
 		99115DC6249E304D008942DF /* SystemProfileInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99115DC4249E304D008942DF /* SystemProfileInfoViewController.xib */; };
 		99171EDC24AA48B200E96DE6 /* MainToolbarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99171EDB24AA48B200E96DE6 /* MainToolbarDelegate.swift */; };
+		99171EDE24AB4FCC00E96DE6 /* Symbols.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99171EDD24AB4FCC00E96DE6 /* Symbols.xcassets */; };
 		9919B93123D09FBB00C7A44D /* TextColourPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9919B93023D09FBB00C7A44D /* TextColourPicker.swift */; };
 		9923B06B22F45F7E0035D8C6 /* TestObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9923B06A22F45F7E0035D8C6 /* TestObjects.swift */; };
 		9923B07122F47AE30035D8C6 /* ModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9923B07022F47AE30035D8C6 /* ModelController.swift */; };
@@ -347,6 +348,7 @@
 		99115DC3249E304D008942DF /* SystemProfileInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemProfileInfoViewController.swift; sourceTree = "<group>"; };
 		99115DC4249E304D008942DF /* SystemProfileInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SystemProfileInfoViewController.xib; sourceTree = "<group>"; };
 		99171EDB24AA48B200E96DE6 /* MainToolbarDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainToolbarDelegate.swift; sourceTree = "<group>"; };
+		99171EDD24AB4FCC00E96DE6 /* Symbols.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Symbols.xcassets; sourceTree = "<group>"; };
 		9919B93023D09FBB00C7A44D /* TextColourPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextColourPicker.swift; sourceTree = "<group>"; };
 		9923B06A22F45F7E0035D8C6 /* TestObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestObjects.swift; sourceTree = "<group>"; };
 		9923B07022F47AE30035D8C6 /* ModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelController.swift; sourceTree = "<group>"; };
@@ -1458,6 +1460,7 @@
 				99FE019722CD1038004D380D /* Colours.xcassets */,
 				99C03F08232A99F400EB7516 /* Cursors.xcassets */,
 				9970977523B93A5800CD189B /* Icons.xcassets */,
+				99171EDD24AB4FCC00E96DE6 /* Symbols.xcassets */,
 				99906377249BC5780008C747 /* ProFeatures.plist */,
 				99FE019922CD1038004D380D /* MainMenu.xib */,
 				99FE019C22CD1038004D380D /* Info.plist */,
@@ -1633,6 +1636,7 @@
 				99FDF12D241FD53D00AF1E51 /* CanvasesView.xib in Resources */,
 				992A5CAF22DDF50F0012CCB6 /* DebugPageEditor.xib in Resources */,
 				996187F9249A6E72007313BD /* UpdatePreferencesViewController.xib in Resources */,
+				99171EDE24AB4FCC00E96DE6 /* Symbols.xcassets in Resources */,
 				9958108F230D909900D996C4 /* TestCanvasPageViewController.xib in Resources */,
 				99618802249BC0EF007313BD /* ProFeatureCell.xib in Resources */,
 				99868F362396AD73009AC0F7 /* ImageEditorInspectorContentView.xib in Resources */,

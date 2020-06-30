@@ -91,7 +91,7 @@ class CanvasPageTitleView: NSView {
     }()
 
     lazy var closeButton: NSButton = {
-        let button = NSButton(image: NSImage(named: "NSStopProgressFreestandingTemplate")!,
+        let button = NSButton(image: NSImage.symbol(withName: Symbols.closePage)!,
                               target: self,
                               action: #selector(closeClicked(_:)))
         button.isBordered = false

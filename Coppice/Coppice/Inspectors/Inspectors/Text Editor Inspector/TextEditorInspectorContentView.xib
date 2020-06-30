@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17132" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17132"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -24,7 +25,7 @@
                     <rect key="frame" x="-2" y="93" width="195" height="25"/>
                     <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="XWt-ie-f1O" id="xrz-Pa-l2m">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
+                        <font key="font" metaFont="menu"/>
                         <menu key="menu" id="GPv-BZ-IJq">
                             <items>
                                 <menuItem title="Item 1" state="on" id="XWt-ie-f1O"/>
@@ -48,7 +49,7 @@
                     <rect key="frame" x="-2" y="62" width="118" height="25"/>
                     <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="DcM-Aj-qkw" id="sWc-mi-lkM">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
+                        <font key="font" metaFont="menu"/>
                         <menu key="menu" id="81i-rp-4Dd">
                             <items>
                                 <menuItem title="Item 1" state="on" id="DcM-Aj-qkw"/>
@@ -110,13 +111,13 @@
                     </connections>
                 </stepper>
                 <segmentedControl toolTip="Choose the text alignment" horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lJO-MO-Qab">
-                    <rect key="frame" x="81" y="31" width="111" height="24"/>
+                    <rect key="frame" x="93" y="31" width="99" height="24"/>
                     <segmentedCell key="cell" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="rounded" trackingMode="selectOne" id="JpO-VM-NgB">
                         <font key="font" metaFont="system"/>
                         <segments>
-                            <segment image="TextAlignLeft"/>
-                            <segment image="TextAlignCenter" tag="1"/>
-                            <segment image="TextAlignRight"/>
+                            <segment image="text.alignleft"/>
+                            <segment image="text.aligncenter" tag="1"/>
+                            <segment image="text.alignright"/>
                         </segments>
                     </segmentedCell>
                     <accessibility description="Alignment"/>
@@ -130,10 +131,10 @@
                     <segmentedCell key="cell" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="rounded" trackingMode="selectAny" id="bxG-Y2-CcR">
                         <font key="font" metaFont="system"/>
                         <segments>
-                            <segment image="TextBold"/>
-                            <segment image="TextItalic" selected="YES" tag="1"/>
-                            <segment image="TextUnderline"/>
-                            <segment image="TextStrikethrough"/>
+                            <segment image="bold"/>
+                            <segment image="italic" selected="YES" tag="1"/>
+                            <segment image="underline"/>
+                            <segment image="strikethrough"/>
                         </segments>
                     </segmentedCell>
                     <accessibility description="Style"/>
@@ -147,7 +148,7 @@
                     <constraints>
                         <constraint firstAttribute="width" constant="32" id="RYF-EP-vks"/>
                     </constraints>
-                    <buttonCell key="cell" type="push" bezelStyle="rounded" image="TextFontPanel" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="eg9-Zg-fO5">
+                    <buttonCell key="cell" type="push" bezelStyle="rounded" image="textformat" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="eg9-Zg-fO5">
                         <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                         <font key="font" size="13" name="SFCompactDisplay-Regular"/>
                     </buttonCell>
@@ -157,7 +158,7 @@
                     </connections>
                 </button>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="332-eu-rTh" customClass="TextColourPicker" customModule="Coppice" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="31" width="75" height="24"/>
+                    <rect key="frame" x="0.0" y="31" width="87" height="24"/>
                     <accessibility description="Text Colour"/>
                     <connections>
                         <action selector="colourChanged:" target="-2" id="Zez-hq-PYB"/>
@@ -192,13 +193,13 @@
         </customView>
     </objects>
     <resources>
-        <image name="TextAlignCenter" width="17" height="17"/>
-        <image name="TextAlignLeft" width="17" height="17"/>
-        <image name="TextAlignRight" width="17" height="17"/>
-        <image name="TextBold" width="17" height="17"/>
-        <image name="TextFontPanel" width="17" height="17"/>
-        <image name="TextItalic" width="17" height="17"/>
-        <image name="TextStrikethrough" width="17" height="17"/>
-        <image name="TextUnderline" width="11" height="12.5"/>
+        <image name="bold" width="8" height="9"/>
+        <image name="italic" width="7" height="9"/>
+        <image name="strikethrough" width="11" height="10"/>
+        <image name="text.aligncenter" width="13" height="11"/>
+        <image name="text.alignleft" width="13" height="11"/>
+        <image name="text.alignright" width="13" height="11"/>
+        <image name="textformat" width="15" height="10"/>
+        <image name="underline" width="8" height="12"/>
     </resources>
 </document>

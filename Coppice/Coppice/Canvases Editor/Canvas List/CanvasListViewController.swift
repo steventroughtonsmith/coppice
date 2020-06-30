@@ -117,6 +117,7 @@ class CanvasListViewController: NSViewController, SplitViewContainable, NSMenuIt
             let menuItemCopy = menuItem.copy() as! NSMenuItem
             self.actionButton.menu?.addItem(menuItemCopy)
         }
+        self.actionButton.menu?.items.first?.image = NSImage.symbol(withName: Symbols.Toolbars.action)
     }
 
 

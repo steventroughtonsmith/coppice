@@ -109,6 +109,8 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
 
         self.bottomBarConstraint.constant = GlobalConstants.bottomBarHeight
 
+        self.toggleCanvasListButton.image = NSImage.symbol(withName: Symbols.Toolbars.canvasListToggle)
+
         self.setupAccessibility()
     }
 

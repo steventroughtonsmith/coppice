@@ -34,9 +34,9 @@ enum PageContentType: String, Equatable, CaseIterable {
     var icon: NSImage {
         switch self {
         case .text:
-            return NSImage(named: .textPage)!
+            return NSImage.symbol(withName: Symbols.Page.text)!
         case .image:
-            return NSImage(named: .imagePage)!
+            return NSImage.symbol(withName: Symbols.Page.image)!
         }
     }
 

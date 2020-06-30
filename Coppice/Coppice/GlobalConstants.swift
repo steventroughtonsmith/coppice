@@ -46,3 +46,45 @@ extension NSImage.Name {
     static let imagePage = "ImagePage"
 }
 
+struct Symbols {
+    struct Text {
+        static let bold = "bold"
+        static let italic = "italic"
+        static let strikethrough = "strikethrough"
+        static let alignCenter = "text.aligncenter"
+        static let alignLeft = "text.alignleft"
+        static let alignRight = "text.alignright"
+        static let textFormat = "textformat"
+        static let underline = "underline"
+    }
+
+    struct Page {
+        static let text = "doc.text"
+        static let folder = "folder"
+        static let image = "photo"
+    }
+
+    struct Toolbars {
+        static let chevron = "chevron.down"
+        static var action: String {
+            if #available(OSX 10.16, *) {
+                return "ellipsis.circle"
+            }
+            return "NSActionTemplate"
+        }
+        static let link = "link"
+        static let plus = "plus"
+        static let newCanvas = "rectangle.badge.plus"
+        static let leftSidebar = "sidebar.left"
+        static let rightSidebar = "sidebar.right"
+        static let canvasListToggle = "rectangle.leftthird.inset.fill"
+    }
+
+    static var closePage: String {
+        if #available(OSX 10.16, *) {
+            return "xmark.circle.fill"
+        }
+        return "NSStopProgressFreestandingTemplate";
+    }
+}
+

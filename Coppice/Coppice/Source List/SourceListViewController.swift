@@ -108,6 +108,8 @@ class SourceListViewController: NSViewController, NSMenuItemValidation {
             }
         }
 
+        self.actionPullDownButton.menu?.items.first?.image = NSImage.symbol(withName: Symbols.Toolbars.action)
+
         self.outlineView.menu = contextMenu
     }
 

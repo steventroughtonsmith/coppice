@@ -160,7 +160,7 @@ class FolderSourceListNode: SourceListNode {
     }
 
     override var image: NSImage? {
-        return NSImage(named: .sidebarFolder)
+        return NSImage.symbol(withName: Symbols.Page.folder)
     }
 
     override var folderForCreation: Folder? {
