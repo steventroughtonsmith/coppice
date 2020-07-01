@@ -66,9 +66,6 @@ class TextColourPicker: NSControl {
     override func draw(_ dirtyRect: NSRect) {
         self.drawBorder()
         self.drawBackground()
-        if (NSApp.effectiveAppearance.name == .darkAqua) {
-            self.drawHighlight()
-        }
 
         if (self.isMouseInside) {
             self.drawChevron()
@@ -126,25 +123,11 @@ class TextColourPicker: NSControl {
         shadow.set()
     }
 
-    private func drawHighlight() {
-        NSGraphicsContext.saveGraphicsState()
-        NSColor.white.withAlphaComponent(0.2).set()
-
-        var clipRect = self.controlRect.insetBy(dx: 1, dy: 1)
-        clipRect.origin.y = clipRect.maxY - 2
-        clipRect.size.height = 2
-        NSBezierPath(rect: clipRect).setClip()
-
-        let path = NSBezierPath(roundedRect: self.controlRect.insetBy(dx: 1, dy: 1), xRadius: 4, yRadius: 4)
-        path.stroke()
-        NSGraphicsContext.restoreGraphicsState()
-    }
-
     private func drawChevron() {
         let rect = self.controlRect.insetBy(dx: 1, dy: 1)
         var circleRect = CGRect(x: 0, y: 0, width: 13, height: 13)
         circleRect.origin.x = rect.maxX - 3 - circleRect.width
-        circleRect.origin.y = rect.minY + 3
+        circleRect.origin.y = rect.minY + 4
 
         NSColor.black.withAlphaComponent(self.isHighlighted ? 0.5 : 0.3).set()
         NSBezierPath(ovalIn: circleRect).fill()
@@ -177,7 +160,7 @@ class TextColourPicker: NSControl {
     }
 
     override var intrinsicContentSize: NSSize {
-        return NSSize(width: NSView.noIntrinsicMetric, height: 21)
+        return NSSize(width: NSView.noIntrinsicMetric, height: 23)
     }
 
 

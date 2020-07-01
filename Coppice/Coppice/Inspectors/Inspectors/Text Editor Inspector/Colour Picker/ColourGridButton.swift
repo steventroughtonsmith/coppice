@@ -23,6 +23,11 @@ class ColourGridButton: NSButton {
             self.setNeedsDisplay(self.bounds)
         }
     }
+    
+    var roundedCorner: ColourGridButtonCell.Corner? {
+        get { (self.cell as? ColourGridButtonCell)?.roundedCorner }
+        set { (self.cell as? ColourGridButtonCell)?.roundedCorner = newValue }
+    }
 
     let colour: NSColor
     init(colour: NSColor, target: AnyObject?, action: Selector?) {
@@ -32,7 +37,7 @@ class ColourGridButton: NSButton {
         self.target = target
         self.action = action
         (self.cell as? ColourGridButtonCell)?.colour = colour
-        self.focusRingType = .exterior
+        self.focusRingType = .default
     }
 
     required init?(coder: NSCoder) {
@@ -47,9 +52,20 @@ class ColourGridButton: NSButton {
 class ColourGridButtonCell: NSButtonCell {
     var colour: NSColor = .black
     var selected: Bool = false
-    override func draw(withFrame cellFrame: NSRect, in controlView: NSView) {
+    var roundedCorner: Corner?
+    
+    enum Corner: Equatable {
+        case topLeft
+        case topRight
+        case bottomLeft
+        case bottomRight
+    }
+
+    //Don't override the plain draw method as otherwise we get a weird focus ring
+    override func drawBezel(withFrame cellFrame: NSRect, in controlView: NSView) {
+        let path = self.roundedPath(in: cellFrame)
         colour.set()
-        cellFrame.fill()
+        path.fill()
 
         self.drawBorder(in: cellFrame)
         if self.isHighlighted {
@@ -59,6 +75,22 @@ class ColourGridButtonCell: NSButtonCell {
             self.drawSelection(in: cellFrame)
         }
     }
+    
+    private func roundedPath(in rect: CGRect) -> NSBezierPath {
+        guard let corner = self.roundedCorner else {
+            return NSBezierPath(rect: rect)
+        }
+        
+        return NSBezierPath(roundedRect: rect,
+                            topLeftRadius: (corner == .topLeft) ? 8 : nil,
+                            topRightRadius: (corner == .topRight) ? 8 : nil,
+                            bottomLeftRadius: (corner == .bottomLeft) ? 8 : nil,
+                            bottomRightRadius: (corner == .bottomRight) ? 8 : nil)
+    }
+    
+    override func drawInterior(withFrame cellFrame: NSRect, in controlView: NSView) {
+        //We don't need an interior
+    }
 
     private func drawBorder(in rect: CGRect) {
         //Draw Border
@@ -67,7 +99,7 @@ class ColourGridButtonCell: NSButtonCell {
         } else {
             NSColor.black.withAlphaComponent(0.3).set()
         }
-        NSBezierPath(rect: rect).stroke()
+        self.roundedPath(in: rect).stroke()
     }
 
     private func drawHighlight(in rect: CGRect) {
@@ -76,13 +108,13 @@ class ColourGridButtonCell: NSButtonCell {
         } else {
             NSColor(white: 1, alpha: 0.7).set()
         }
-        let path = NSBezierPath(rect: rect.insetBy(dx: 2, dy: 2))
+        let path = self.roundedPath(in: rect.insetBy(dx: 2, dy: 2))
         path.lineWidth = 2
         path.stroke()
     }
 
     private func drawSelection(in rect: CGRect) {
-        NSBezierPath(rect: rect.insetBy(dx: 0.5, dy: 0.5)).setClip()
+        self.roundedPath(in: rect.insetBy(dx: 0.5, dy: 0.5)).setClip()
         let size: CGFloat = 17
         let origin = rect.point(atX: .max, y: .min).minus(x: size)
         let selectionFrame = CGRect(origin: origin, size: CGSize(width: size, height: size))
@@ -111,5 +143,9 @@ class ColourGridButtonCell: NSButtonCell {
         tickRect.origin = selectionFrame.midPoint.minus(tickRect.size.multiplied(by: 0.5).toPoint())
 
         string.draw(in: tickRect, withAttributes: attributes)
+    }
+    
+    override func focusRingMaskBounds(forFrame cellFrame: NSRect, in controlView: NSView) -> NSRect {
+        return cellFrame
     }
 }

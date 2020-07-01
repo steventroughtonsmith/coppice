@@ -93,7 +93,7 @@ class ColourGridView: NSView {
         (0..<self.colours.count).forEach {
             currentRowColours.append(self.colours[$0])
             if (currentRowColours.count % self.numberOfColumns) == 0 {
-                let rowStackView = self.createRow(for: currentRowColours)
+                let rowStackView = self.createRow(for: currentRowColours, roundEnds: stackView.arrangedSubviews.count == 0)
                 stackView.addArrangedSubview(rowStackView)
                 currentRowColours = []
             }
@@ -116,20 +116,26 @@ class ColourGridView: NSView {
         self.updateSelection()
     }
 
-    private func createRow(for colours: [ColourOption]) -> NSStackView {
+    private func createRow(for colours: [ColourOption], roundEnds: Bool = false) -> NSStackView {
         let stackView = NSStackView()
         stackView.orientation = .horizontal
         stackView.alignment = .top
         stackView.distribution = .equalSpacing
         stackView.spacing = 2
 
+        var rowButtons = [ColourGridButton]()
         for colourOption in colours {
             let colourView = ColourGridButton(colour: colourOption.colour, target: self, action: #selector(selectColour(_:)))
             colourView.setAccessibilityLabel(colourOption.localizedName)
             colourView.toolTip = colourOption.localizedName
-            self.buttons.append(colourView)
+            rowButtons.append(colourView)
             stackView.addArrangedSubview(colourView)
         }
+        if #available(OSX 10.16, *), roundEnds == true {
+            rowButtons.first?.roundedCorner = .topLeft
+            rowButtons.last?.roundedCorner = .topRight
+        }
+        self.buttons.append(contentsOf: rowButtons)
 
         return stackView
     }
