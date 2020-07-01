@@ -23,13 +23,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="1175" height="682"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             </view>
-            <toolbar key="toolbar" implicitIdentifier="70B77CBD-7734-4DB0-B1CC-5CF88AD75C15" explicitIdentifier="mainToolbar" displayMode="iconAndLabel" sizeMode="regular" id="wrD-DS-DMi">
-                <allowedToolbarItems/>
-                <defaultToolbarItems/>
-                <connections>
-                    <outlet property="delegate" destination="7XR-JJ-EUu" id="dw8-DZ-fpg"/>
-                </connections>
-            </toolbar>
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
@@ -51,7 +44,7 @@
             </segmentedCell>
             <point key="canvasLocation" x="-302" y="-1044"/>
         </segmentedControl>
-        <searchField wantsLayer="YES" verticalHuggingPriority="750" textCompletion="NO" id="Hfv-IE-esp">
+        <searchField wantsLayer="YES" verticalHuggingPriority="750" textCompletion="NO" id="Hfv-IE-esp" customClass="ToolbarSearchField" customModule="Coppice" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="220" height="22"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" usesSingleLineMode="YES" bezelStyle="round" id="lxc-pc-Vx6">
@@ -64,12 +57,6 @@
             </connections>
             <point key="canvasLocation" x="318" y="-1143"/>
         </searchField>
-        <customObject id="7XR-JJ-EUu" customClass="MainToolbarDelegate" customModule="Coppice" customModuleProvider="target">
-            <connections>
-                <outlet property="newPageSegmentedControl" destination="Zn5-vz-ySP" id="V3o-ZY-qrC"/>
-                <outlet property="searchField" destination="Hfv-IE-esp" id="jI2-dT-oli"/>
-            </connections>
-        </customObject>
     </objects>
     <resources>
         <image name="AddPage" width="19" height="19"/>

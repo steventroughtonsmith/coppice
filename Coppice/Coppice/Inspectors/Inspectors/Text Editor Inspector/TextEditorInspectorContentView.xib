@@ -78,7 +78,7 @@
                     </connections>
                 </popUpButton>
                 <textField toolTip="Choose the text size" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tVJ-Wa-8Xo">
-                    <rect key="frame" x="123" y="64" width="50" height="21"/>
+                    <rect key="frame" x="123" y="65" width="50" height="21"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="50" id="pbu-RP-YEn"/>
                     </constraints>
@@ -172,10 +172,10 @@
                 <constraint firstAttribute="trailing" secondItem="b02-Xt-Yqt" secondAttribute="trailing" id="C99-O7-A0d"/>
                 <constraint firstItem="gJM-Vb-Oux" firstAttribute="centerY" secondItem="U7t-eh-okS" secondAttribute="centerY" id="FQc-nX-ref"/>
                 <constraint firstItem="U7t-eh-okS" firstAttribute="top" secondItem="pqU-O1-BJI" secondAttribute="bottom" constant="10" id="Hsn-oI-lnE"/>
-                <constraint firstItem="tVJ-Wa-8Xo" firstAttribute="firstBaseline" secondItem="U7t-eh-okS" secondAttribute="firstBaseline" id="O5u-fz-y0N"/>
                 <constraint firstItem="b02-Xt-Yqt" firstAttribute="leading" secondItem="1fJ-zV-rDa" secondAttribute="trailing" constant="10" id="QPj-qd-nXX"/>
                 <constraint firstItem="U7t-eh-okS" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="UxW-kX-J1g"/>
                 <constraint firstItem="1fJ-zV-rDa" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="We2-Vo-nXE"/>
+                <constraint firstItem="tVJ-Wa-8Xo" firstAttribute="centerY" secondItem="U7t-eh-okS" secondAttribute="centerY" id="Xfq-0j-Vy4"/>
                 <constraint firstAttribute="trailing" secondItem="lJO-MO-Qab" secondAttribute="trailing" id="aPg-5F-4MY"/>
                 <constraint firstItem="332-eu-rTh" firstAttribute="top" secondItem="U7t-eh-okS" secondAttribute="bottom" constant="10" id="b64-QC-mlD"/>
                 <constraint firstItem="b02-Xt-Yqt" firstAttribute="centerY" secondItem="1fJ-zV-rDa" secondAttribute="centerY" id="bym-Hv-3No"/>

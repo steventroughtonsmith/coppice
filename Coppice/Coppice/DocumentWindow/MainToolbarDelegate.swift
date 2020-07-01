@@ -14,32 +14,27 @@ extension NSToolbarItem.Identifier {
     static let linkToPage = NSToolbarItem.Identifier(rawValue: "com.mcubedsw.coppice.LinkToPage")
     static let toggleInspectors = NSToolbarItem.Identifier(rawValue: "com.mcubedsw.coppice.ToggleInspectors")
     static let search = NSToolbarItem.Identifier(rawValue: "com.mcubedsw.coppice.searchItem")
+    static let sidebarTrackingSeparator = NSToolbarItem.Identifier(rawValue: "com.mcubedsw.coppice.sidebarTrackingSeparator")
 }
 
 class MainToolbarDelegate: NSObject {
-    @IBOutlet var searchField: NSSearchField? {
-        didSet {
-            if #available(OSX 10.16, *) {
-                if let field = self.searchField {
-                    (self.searchItem as? NSSearchToolbarItem)?.searchField = field
-                }
-            } else {
-                self.searchItem.view = self.searchField
-                self.searchField?.widthAnchor.constraint(lessThanOrEqualToConstant: 250).isActive = true
-            }
-        }
+    let searchField: NSSearchField
+    let newPageControl: NSView
+    let splitView: NSSplitView
+    
+    init(searchField: NSSearchField, newPageControl: NSView, splitView: NSSplitView) {
+        self.searchField = searchField
+        self.newPageControl = newPageControl
+        self.splitView = splitView
+        super.init()
     }
+    
 
-    @IBOutlet var newPageSegmentedControl: NSSegmentedControl? {
-        didSet {
-            self.newPageItem.view = self.newPageSegmentedControl
-        }
-    }
-
-    var newPageItem: NSToolbarItem = {
+    lazy var newPageItem: NSToolbarItem = {
         let item = NSToolbarItem(itemIdentifier: .newPage)
         item.label = NSLocalizedString("New Page", comment: "New Page toolbar item label")
         item.paletteLabel = item.label
+        item.view = self.newPageControl
         return item
     }()
 
@@ -82,13 +77,16 @@ class MainToolbarDelegate: NSObject {
         return item
     }()
 
-    var searchItem: NSToolbarItem = {
+    lazy var searchItem: NSToolbarItem = {
         if #available(OSX 10.16, *) {
-            return NSSearchToolbarItem(itemIdentifier: .search)
+            let item = NSSearchToolbarItem(itemIdentifier: .search)
+            item.searchField = self.searchField
+            return item
         }
         let item = NSToolbarItem(itemIdentifier: .search)
         item.label = NSLocalizedString("Search", comment: "Search toolbar item label")
         item.paletteLabel = item.label
+        item.view = self.searchField
         return item
     }()
 }
@@ -96,7 +94,7 @@ class MainToolbarDelegate: NSObject {
 
 extension MainToolbarDelegate: NSToolbarDelegate {
     func toolbarAllowedItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
-        return [
+        var identifiers: [NSToolbarItem.Identifier] = [
             .newPage,
             .newCanvas,
             .linkToPage,
@@ -106,10 +104,14 @@ extension MainToolbarDelegate: NSToolbarDelegate {
             .space,
             .flexibleSpace
         ]
+        if #available(OSX 10.16, *) {
+            identifiers.append(.sidebarTrackingSeparatorItemIdentifier)
+        }
+        return identifiers
     }
 
     func toolbarDefaultItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
-        return [
+        var identifiers: [NSToolbarItem.Identifier] = [
             .toggleSidebar,
             .space,
             .newPage,
@@ -120,19 +122,47 @@ extension MainToolbarDelegate: NSToolbarDelegate {
             .search,
             .toggleInspectors
         ]
+        
+        if #available(OSX 10.16, *) {
+            identifiers[1] = .flexibleSpace
+            identifiers.insert(.sidebarTrackingSeparatorItemIdentifier, at: 3)
+        }
+        
+        return identifiers
     }
 
     func toolbar(_ toolbar: NSToolbar, itemForItemIdentifier itemIdentifier: NSToolbarItem.Identifier, willBeInsertedIntoToolbar flag: Bool) -> NSToolbarItem? {
         switch itemIdentifier {
-        case .newPage:              return self.newPageItem
-        case .newCanvas:            return self.newCanvasItem
-        case .linkToPage:           return self.linkToPageItem
-        case .toggleInspectors:     return self.toggleInspectorsItem
-        case .search:               return self.searchItem
-        case .toggleSidebar:        return self.toggleSidebarItem
-        default:                    return NSToolbarItem(itemIdentifier: itemIdentifier)
+        case .newPage:
+            return self.newPageItem
+        case .newCanvas:
+            return self.newCanvasItem
+        case .linkToPage:
+            return self.linkToPageItem
+        case .toggleInspectors:
+            return self.toggleInspectorsItem
+        case .search:
+            return self.searchItem
+        case .toggleSidebar:
+            return self.toggleSidebarItem
+        case .sidebarTrackingSeparator:
+            if #available(OSX 10.16, *) {
+                return NSTrackingSeparatorToolbarItem(identifier: .sidebarTrackingSeparator, splitView: self.splitView, dividerIndex: 1)
+            }
+            return nil
+        default:
+            let item = NSToolbarItem(itemIdentifier: itemIdentifier)
+            print("item: \(item)")
+            return item
         }
     }
 }
 
 
+class ToolbarSearchField: NSSearchField {
+    override var intrinsicContentSize: NSSize {
+        var size = super.intrinsicContentSize
+        size.width = 200
+        return size
+    }
+}

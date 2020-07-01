@@ -16,8 +16,7 @@ class DocumentWindowController: NSWindowController {
     @IBOutlet weak var searchField: NSSearchField!
 
     private var pageSelectorWindowController: PageSelectorWindowController?
-
-
+    
 
     @objc dynamic let viewModel: DocumentWindowViewModel
     init(viewModel: DocumentWindowViewModel) {
@@ -59,6 +58,27 @@ class DocumentWindowController: NSWindowController {
 //        self.sidebarViewController.pagesTable.nextKeyView = self.editorContainerViewController.view
 //        self.editorContainerViewController.view.nextKeyView = self.inspectorContainerViewController.view
         self.setupNewPageSegmentedControl()
+        
+        self.setupToolbar()
+    }
+    
+    var mainToolbarDelegate: MainToolbarDelegate?
+    private func setupToolbar() {
+        let toolbar = NSToolbar(identifier: "mainToolbar")
+        toolbar.autosavesConfiguration = true
+        toolbar.allowsUserCustomization = true
+        if #available(OSX 10.16, *) {
+            toolbar.displayMode = .iconOnly
+        } else {
+            toolbar.displayMode = .iconAndLabel
+        }
+        
+        let toolbarDelegate = MainToolbarDelegate(searchField: self.searchField,
+                                                  newPageControl: self.newPageSegmentedControl,
+                                                  splitView: self.splitViewController.splitView)
+        toolbar.delegate = toolbarDelegate
+        self.mainToolbarDelegate = toolbarDelegate
+        self.window?.toolbar = toolbar
     }
 
     func performNewDocumentSetup() {

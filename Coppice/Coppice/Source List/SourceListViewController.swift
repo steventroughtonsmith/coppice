@@ -40,6 +40,7 @@ class SourceListViewController: NSViewController, NSMenuItemValidation {
 
         if #available(OSX 10.16, *) {
             self.outlineScrollView.automaticallyAdjustsContentInsets = true
+            self.outlineScrollView.additionalSafeAreaInsets = NSEdgeInsets(top: 5, left: 0, bottom: 0, right: 0)
         }
     }
 
