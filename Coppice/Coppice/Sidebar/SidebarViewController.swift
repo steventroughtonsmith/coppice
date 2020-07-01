@@ -39,6 +39,7 @@ class SidebarViewController: NSViewController, SplitViewContainable {
     func createSplitViewItem() -> NSSplitViewItem {
         let item = NSSplitViewItem(sidebarWithViewController: self)
         item.maximumThickness = 650 //Just what seems reasonable, as the default is "as big as you want"
+        item.minimumThickness = 155
         return item
     }
 

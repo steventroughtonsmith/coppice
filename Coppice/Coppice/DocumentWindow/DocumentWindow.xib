@@ -8,7 +8,6 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="DocumentWindowController" customModule="Coppice" customModuleProvider="target">
             <connections>
-                <outlet property="newPageSegmentedControl" destination="Zn5-vz-ySP" id="rWw-IB-Yvc"/>
                 <outlet property="searchField" destination="Hfv-IE-esp" id="ebj-eM-UfC"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
@@ -29,21 +28,6 @@
             <point key="canvasLocation" x="366.5" y="-655"/>
         </window>
         <customObject id="vF9-dA-dmp" customClass="NewPageMenuDelegate" customModule="Coppice" customModuleProvider="target"/>
-        <segmentedControl verticalHuggingPriority="750" id="Zn5-vz-ySP" customClass="ImmediateMenuSegmentedControl" customModule="Coppice" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="48" height="24"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="momentary" id="l0W-bL-DxD" customClass="ImmediateMenuSegmentedCell" customModule="Coppice" customModuleProvider="target">
-                <font key="font" metaFont="system"/>
-                <segments>
-                    <segment image="AddPage" width="25"/>
-                    <segment image="DownChevron" width="16" tag="1"/>
-                </segments>
-                <connections>
-                    <action selector="toolbarNewPage:" target="-2" id="YGb-C7-F2p"/>
-                </connections>
-            </segmentedCell>
-            <point key="canvasLocation" x="-302" y="-1044"/>
-        </segmentedControl>
         <searchField wantsLayer="YES" verticalHuggingPriority="750" textCompletion="NO" id="Hfv-IE-esp" customClass="ToolbarSearchField" customModule="Coppice" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="220" height="22"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -58,8 +42,4 @@
             <point key="canvasLocation" x="318" y="-1143"/>
         </searchField>
     </objects>
-    <resources>
-        <image name="AddPage" width="19" height="19"/>
-        <image name="DownChevron" width="8" height="8"/>
-    </resources>
 </document>

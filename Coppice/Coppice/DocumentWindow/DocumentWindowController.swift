@@ -106,7 +106,15 @@ class DocumentWindowController: NSWindowController {
 
 
     //MARK: - Toolbar
-    @IBOutlet weak var newPageSegmentedControl: NSSegmentedControl!
+    var newPageSegmentedControl: NSSegmentedControl = {
+        let image = NSImage.symbol(withName: Symbols.Page.text)!
+        let control = HoverSegmentedControl(images: [image],
+                                            trackingMode: .momentary,
+                                            target: nil,
+                                            action: #selector(NewPageMenuDelegate.newPage(_:)))
+        control.setWidth(30, forSegment: 0)
+        return control
+    }()
 
     lazy var newPageMenuDelegate: NewPageMenuDelegate = {
         let delegate = NewPageMenuDelegate()
@@ -123,25 +131,13 @@ class DocumentWindowController: NSWindowController {
 
     var lastCreatedPageTypeObserver: AnyCancellable?
     private func setupNewPageSegmentedControl() {
-        self.newPageSegmentedControl.setMenu(self.newPageMenu, forSegment: 1)
+        self.newPageSegmentedControl.setMenu(self.newPageMenu, forSegment: 0)
         self.lastCreatedPageTypeObserver = self.viewModel.$lastCreatePageType
             .map(\.addIcon)
             .sink { [weak self] (icon) in
                 self?.newPageSegmentedControl.setImage(icon, forSegment: 0)
             }
     }
-
-    @IBAction func toolbarNewPage(_ sender: Any) {
-        guard
-            let control = sender as? NSSegmentedControl,
-            control.selectedSegment == 0
-        else {
-            return
-        }
-
-        NSApp.sendAction(#selector(NewPageMenuDelegate.newPage(_:)), to: nil, from: sender)
-    }
-
 
 
     //MARK: - Responder Chain

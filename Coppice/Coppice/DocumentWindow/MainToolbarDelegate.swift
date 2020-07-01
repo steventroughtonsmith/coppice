@@ -22,6 +22,8 @@ class MainToolbarDelegate: NSObject {
     let newPageControl: NSView
     let splitView: NSSplitView
     
+    let menuDelegate = NewPageMenuDelegate()
+    
     init(searchField: NSSearchField, newPageControl: NSView, splitView: NSSplitView) {
         self.searchField = searchField
         self.newPageControl = newPageControl
@@ -35,11 +37,13 @@ class MainToolbarDelegate: NSObject {
         item.label = NSLocalizedString("New Page", comment: "New Page toolbar item label")
         item.paletteLabel = item.label
         item.view = self.newPageControl
+        
         return item
     }()
 
     lazy var newCanvasItem: NSToolbarItem = {
         let item = NSToolbarItem(itemIdentifier: .newCanvas)
+        
         item.image = NSImage.symbol(withName: Symbols.Toolbars.newCanvas)
         item.label = NSLocalizedString("New Canvas", comment: "New Canvas toolbar item label")
         item.paletteLabel = item.label
@@ -122,6 +126,7 @@ extension MainToolbarDelegate: NSToolbarDelegate {
         
         if #available(OSX 10.16, *) {
             identifiers[1] = .flexibleSpace
+            identifiers.remove(at: 4)
             identifiers.insert(.sidebarTrackingSeparatorItemIdentifier, at: 3)
         }
         

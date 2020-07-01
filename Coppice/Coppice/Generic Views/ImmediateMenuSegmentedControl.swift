@@ -34,10 +34,7 @@ class ImmediateMenuSegmentedCell: NSSegmentedCell {
     }
 }
 
-class HoverSegmentedControl: NSSegmentedControl {
-    var hoverImage: NSImage?
-    private var mainImage: NSImage?
-    
+class HoverSegmentedControl: NSSegmentedControl {    
     private var hoverTrackingArea: NSTrackingArea?
     override func updateTrackingAreas() {
         super.updateTrackingAreas()
@@ -52,22 +49,18 @@ class HoverSegmentedControl: NSSegmentedControl {
     
     override func mouseEntered(with event: NSEvent) {
         super.mouseEntered(with: event)
-        if let hoverImage = self.hoverImage, self.mainImage == nil {
-            let oldImage = self.image(forSegment: 0)
-            self.mainImage = oldImage
-            self.setImage(hoverImage, forSegment: 0)
-        }
+        self.addSubview(self.chevronImage)
+        self.chevronImage.frame = CGRect(x: self.bounds.maxX - 16, y: self.bounds.maxY - 15, width: 6, height: 5)
     }
     
     override func mouseExited(with event: NSEvent) {
         super.mouseExited(with: event)
-        self.resetImage()
+        self.chevronImage.removeFromSuperview()
+        
     }
     
-    func resetImage() {
-        if let mainImage = self.mainImage {
-            self.setImage(mainImage, forSegment: 0)
-            self.mainImage = nil
-        }
-    }
+    private var chevronImage: NSImageView = {
+        let imageView = NSImageView(image: NSImage(named: "DownChevron")!)
+        return imageView
+    }()
 }
