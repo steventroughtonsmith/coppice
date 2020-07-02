@@ -122,6 +122,9 @@ class TextEditorViewModelTests: XCTestCase {
 }
 
 private class MockEditorView: TextEditorView {
+    func prepareForDisplay(withSafeAreaInsets safeAreaInsets: NSEdgeInsets) {   
+    }
+
     var addedLink: (URL, NSRange)?
     func addLink(with url: URL, to range: NSRange) {
         self.addedLink = (url, range)

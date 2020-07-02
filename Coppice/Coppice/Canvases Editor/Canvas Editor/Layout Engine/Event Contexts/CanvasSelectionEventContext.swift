@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class CanvasSelectionEventContext: CanvasEventContext {
+class CanvasSelectionEventContext: CanvasMouseEventContext {
     var startPoint: CGPoint = .zero
     let originalSelection: [LayoutEnginePage]
 
@@ -16,11 +16,11 @@ class CanvasSelectionEventContext: CanvasEventContext {
         self.originalSelection = originalSelection
     }
 
-    func downEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: CanvasLayoutEngine) {
+    func downEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: LayoutEngine) {
         self.startPoint = location
     }
 
-    func draggedEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: CanvasLayoutEngine) {
+    func draggedEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: LayoutEngine) {
         guard location != self.startPoint else {
             layout.selectionRect = nil
             return
@@ -55,7 +55,7 @@ class CanvasSelectionEventContext: CanvasEventContext {
         }
     }
 
-    func upEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: CanvasLayoutEngine) {
+    func upEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: LayoutEngine) {
         if (location == self.startPoint) {
             layout.deselectAll()
         }

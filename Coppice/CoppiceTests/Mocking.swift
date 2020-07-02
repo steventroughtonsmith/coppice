@@ -24,3 +24,10 @@ class MockDetails<Arguments, Return> {
         return self.returnValue
     }
 }
+
+extension MockDetails where Arguments == Void {
+    @discardableResult func called() -> Return? {
+        self.expectation?.fulfill()
+        return self.returnValue
+    }
+}

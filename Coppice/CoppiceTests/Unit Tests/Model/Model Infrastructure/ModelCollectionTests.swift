@@ -435,7 +435,8 @@ class ModelCollectionTests: XCTestCase {
         _ = self.relationshipCollection.addObserver { change in
             XCTAssertEqual(change.object, parent)
             XCTAssertEqual(change.changeType, .update)
-            XCTAssertTrue(change.updatedKeyPaths.contains(\RelationshipModelObject.relationship as PartialKeyPath<RelationshipModelObject>))
+            let keyPath = \RelationshipModelObject.relationship
+            XCTAssertTrue(change.updatedKeyPaths.contains(keyPath))
             observerExpectation.fulfill()
         }
 
@@ -451,7 +452,8 @@ class ModelCollectionTests: XCTestCase {
         _ = self.relationshipCollection.addObserver { change in
             XCTAssertEqual(change.object, parent)
             XCTAssertEqual(change.changeType, .update)
-            XCTAssertTrue(change.updatedKeyPaths.contains(\RelationshipModelObject.relationship as PartialKeyPath<RelationshipModelObject>))
+            let keyPath = \RelationshipModelObject.relationship
+            XCTAssertTrue(change.updatedKeyPaths.contains(keyPath))
             observerExpectation.fulfill()
         }
 

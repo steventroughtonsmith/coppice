@@ -9,28 +9,33 @@
 import Foundation
 import Carbon.HIToolbox
 
-class KeyboardMovePageEventContext: CanvasEventContext {
+class KeyboardMovePageEventContext: CanvasKeyEventContext {
     static var acceptedKeyCodes = [UInt16(kVK_LeftArrow), UInt16(kVK_RightArrow), UInt16(kVK_UpArrow), UInt16(kVK_DownArrow)]
 
-    func keyDown(withCode keyCode: UInt16, modifiers: LayoutEventModifiers, isARepeat: Bool, in layout: CanvasLayoutEngine) {
+    let pages: [LayoutEnginePage]
+    init(pages: [LayoutEnginePage]) {
+        self.pages = pages
+    }
+
+    func keyDown(withCode keyCode: UInt16, modifiers: LayoutEventModifiers, isARepeat: Bool, in layout: LayoutEngine) {
         guard KeyboardMovePageEventContext.acceptedKeyCodes.contains(keyCode) else {
             return
         }
 
         let delta = self.delta(forKeyCode: keyCode, modifiers: modifiers)
-        for page in layout.selectedPages {
+        for page in self.pages {
             page.layoutFrame.origin = page.layoutFrame.origin.plus(delta)
         }
 
-        layout.modified(layout.selectedPages)
+        layout.modified(self.pages)
     }
 
-    func keyUp(withCode keyCode: UInt16, modifiers: LayoutEventModifiers, in layout: CanvasLayoutEngine) {
+    func keyUp(withCode keyCode: UInt16, modifiers: LayoutEventModifiers, in layout: LayoutEngine) {
         guard KeyboardMovePageEventContext.acceptedKeyCodes.contains(keyCode) else {
             return
         }
 
-        layout.finishedModifying(layout.selectedPages)
+        layout.finishedModifying(self.pages)
     }
 
     private func delta(forKeyCode keyCode: UInt16, modifiers: LayoutEventModifiers) -> CGPoint {

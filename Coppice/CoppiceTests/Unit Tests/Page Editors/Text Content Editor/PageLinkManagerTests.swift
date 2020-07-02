@@ -14,6 +14,7 @@ class PageLinkManagerTests: XCTestCase {
     var linkedPage: Page!
     var editingPage: Page!
     var pageLinkManager: PageLinkManager!
+    var previousDefaultsValue: Bool = false
 
     override func setUp() {
         super.setUp()
@@ -23,6 +24,13 @@ class PageLinkManagerTests: XCTestCase {
         self.pageLinkManager = PageLinkManager(pageID: self.editingPage.id,
                                                modelController: self.modelController,
                                                parsingDelay: 0.1)
+        self.previousDefaultsValue = UserDefaults.standard.bool(forKey: .autoLinkingTextPagesEnabled)
+        UserDefaults.standard.set(true, forKey: .autoLinkingTextPagesEnabled)
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        UserDefaults.standard.set(self.previousDefaultsValue, forKey: .autoLinkingTextPagesEnabled)
     }
 
 

@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class SelectAndMoveEventContext: CanvasEventContext {
+class SelectAndMoveEventContext: CanvasMouseEventContext {
     private var lastLocation: CGPoint?
     private var initialLocation: CGPoint?
     private var didShiftSelect = false
@@ -19,7 +19,7 @@ class SelectAndMoveEventContext: CanvasEventContext {
         self.page = page
     }
 
-    func downEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: CanvasLayoutEngine) {
+    func downEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: LayoutEngine) {
         //Toggle selection if the user is shift clicking
         if (modifiers.contains(.shift)) {
             self.page.selected = !self.page.selected
@@ -40,7 +40,7 @@ class SelectAndMoveEventContext: CanvasEventContext {
         self.lastLocation = location
     }
 
-    func draggedEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: CanvasLayoutEngine) {
+    func draggedEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: LayoutEngine) {
         guard let lastLocation = self.lastLocation else {
             return
         }
@@ -52,7 +52,7 @@ class SelectAndMoveEventContext: CanvasEventContext {
         layout.modified(layout.selectedPages)
     }
 
-    func upEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: CanvasLayoutEngine) {
+    func upEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: LayoutEngine) {
         let movedPages = layout.selectedPages
         //If the user clicks on a page in a multiple selection we want to reduce selection to just that page
         if (movedPages.count > 1) && (self.lastLocation == self.initialLocation) && !self.didShiftSelect && !self.didDoubleClick {

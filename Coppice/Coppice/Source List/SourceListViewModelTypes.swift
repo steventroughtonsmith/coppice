@@ -160,7 +160,7 @@ class FolderSourceListNode: SourceListNode {
     }
 
     override var image: NSImage? {
-        return NSImage.symbol(withName: Symbols.Page.folder)
+        return Folder.icon
     }
 
     override var folderForCreation: Folder? {

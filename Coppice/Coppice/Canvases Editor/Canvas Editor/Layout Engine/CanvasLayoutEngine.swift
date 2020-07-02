@@ -32,13 +32,15 @@ protocol CanvasLayoutEngineDelegate: class {
 
 
 
-class CanvasLayoutEngine: NSObject {
+class CanvasLayoutEngine: NSObject, LayoutEngine {
     weak var view: CanvasLayoutView?
     weak var delegate: CanvasLayoutEngineDelegate?
 
     let configuration: Configuration
-    init(configuration: Configuration) {
+    let eventContextFactory: CanvasEventContextFactory
+    init(configuration: Configuration, eventContextFactory: CanvasEventContextFactory = CanvasLayoutEngineEventContextFactory()) {
         self.configuration = configuration
+        self.eventContextFactory = eventContextFactory
     }
 
     //MARK: - Manage Canvas
@@ -169,7 +171,7 @@ class CanvasLayoutEngine: NSObject {
 
     //MARK: - Page Ordering
 
-    private func movePageToFront(_ page: LayoutEnginePage) {
+    func movePageToFront(_ page: LayoutEnginePage) {
         guard let index = self.pages.firstIndex(of: page) else {
             return // Page doesn't exist
         }
@@ -255,31 +257,10 @@ class CanvasLayoutEngine: NSObject {
 
 
     //MARK: - Manage Mouse Events
-    private var currentMouseEventContext: CanvasEventContext?
-
-    private func createMouseEventContext(for location: CGPoint) -> CanvasEventContext? {
-        //Canvas click
-        guard let page = self.page(atCanvasPoint: location) else {
-            return CanvasSelectionEventContext(originalSelection: self.selectedPages)
-        }
-
-        self.movePageToFront(page)
-
-        //Page content click
-        guard let pageComponent = page.component(at: location.minus(page.layoutFrame.origin)) else {
-            return nil
-        }
-
-        switch pageComponent {
-        case .titleBar, .content:
-            return SelectAndMoveEventContext(page: page)
-        default:
-            return ResizePageEventContext(page: page, component: pageComponent)
-        }
-    }
+    private var currentMouseEventContext: CanvasMouseEventContext?
 
     func downEvent(at location: CGPoint, modifiers: LayoutEventModifiers = [], eventCount: Int = 1) {
-        self.currentMouseEventContext = self.createMouseEventContext(for: location)
+        self.currentMouseEventContext = self.eventContextFactory.createMouseEventContext(for: location, in: self)
         self.currentMouseEventContext?.downEvent(at: location, modifiers: modifiers, eventCount: eventCount, in: self)
         self.informOfLayoutChange(with: LayoutContext())
     }
@@ -322,35 +303,15 @@ class CanvasLayoutEngine: NSObject {
 
 
     //MARK: - Manage Key Events
-    private var keyEvents = [UInt16: CanvasEventContext]()
-
-    private func keyEventContext(for keyCode: UInt16, createIfNeeded: Bool) -> CanvasEventContext? {
-        if let event = self.keyEvents[keyCode] {
-            return event
-        }
-
-        guard createIfNeeded else {
-            return nil
-        }
-
-        let newEvent: CanvasEventContext
-        if KeyboardMovePageEventContext.acceptedKeyCodes.contains(keyCode) {
-            newEvent = KeyboardMovePageEventContext()
-        } else if RemovePageEventContext.acceptedKeyCodes.contains(keyCode) {
-            newEvent = RemovePageEventContext()
-        } else {
-            return nil
-        }
-
-        self.keyEvents[keyCode] = newEvent
-        return newEvent
-    }
+    private var keyEvents = [UInt16: CanvasKeyEventContext]()
 
     func keyDownEvent(keyCode: UInt16, modifiers: LayoutEventModifiers = [], isARepeat: Bool = false) {
-        guard let event = self.keyEventContext(for: keyCode, createIfNeeded: true) else {
+        //We store per code as we may get repeats and we only want to create the event on the first key down
+        guard let event = self.keyEvents[keyCode] ?? self.eventContextFactory.createKeyEventContext(for: keyCode, in: self) else {
             return
         }
 
+        self.keyEvents[keyCode] = event
         event.keyDown(withCode: keyCode, modifiers: modifiers, isARepeat: isARepeat, in: self)
         self.informOfLayoutChange(with: LayoutContext())
     }
@@ -358,7 +319,7 @@ class CanvasLayoutEngine: NSObject {
     func keyUpEvent(keyCode: UInt16, modifiers: LayoutEventModifiers = []) {
         //So if something else has first responder (like a text view), we'll still receive keyup even though we don't get key down
         //So we only want to fetch an existing event, not create a new one here. That way we only act if we also got the associated key down
-        guard let event = self.keyEventContext(for: keyCode, createIfNeeded: false) else {
+        guard let event = self.keyEvents[keyCode] else {
             return
         }
         event.keyUp(withCode: keyCode, modifiers: modifiers, in: self)

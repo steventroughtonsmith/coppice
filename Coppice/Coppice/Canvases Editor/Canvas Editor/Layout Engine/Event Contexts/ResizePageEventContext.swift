@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class ResizePageEventContext: CanvasEventContext {
+class ResizePageEventContext: CanvasMouseEventContext {
     var lastLocation: CGPoint?
 
     let page: LayoutEnginePage
@@ -19,11 +19,11 @@ class ResizePageEventContext: CanvasEventContext {
     }
 
     //MARK: - Events
-    func downEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: CanvasLayoutEngine) {
+    func downEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: LayoutEngine) {
         self.lastLocation = location
     }
 
-    func draggedEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: CanvasLayoutEngine) {
+    func draggedEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: LayoutEngine) {
         guard let lastLocation = self.lastLocation else {
             return
         }
@@ -35,13 +35,13 @@ class ResizePageEventContext: CanvasEventContext {
         self.lastLocation = boundedLocation
     }
 
-    func upEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: CanvasLayoutEngine) {
+    func upEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: LayoutEngine) {
         layout.finishedModifying([self.page])
     }
 
 
     //MARK: - Convenience
-    @discardableResult func resize(withDelta delta: CGPoint, in layout: CanvasLayoutEngine) -> CGPoint {
+    @discardableResult func resize(withDelta delta: CGPoint, in layout: LayoutEngine) -> CGPoint {
         let finalDelta: CGPoint
         if (self.page.maintainAspectRatio) {
             finalDelta = self.performAspectResize(with: delta, in: layout)
@@ -92,7 +92,7 @@ class ResizePageEventContext: CanvasEventContext {
         return CGPoint(x: deltaX, y: deltaY)
     }
 
-    private func performAspectResize(with delta: CGPoint, in layout: CanvasLayoutEngine) -> CGPoint {
+    private func performAspectResize(with delta: CGPoint, in layout: LayoutEngine) -> CGPoint {
         if (self.component.isTop) {
             return self.performTopAspectResize(with: delta, in: layout)
         }
@@ -102,7 +102,7 @@ class ResizePageEventContext: CanvasEventContext {
         return .zero
     }
 
-    private func performTopAspectResize(with delta: CGPoint, in layout: CanvasLayoutEngine) -> CGPoint {
+    private func performTopAspectResize(with delta: CGPoint, in layout: LayoutEngine) -> CGPoint {
         var layoutFrame = self.page.layoutFrame
 
         var deltaY = delta.y //deltaY is negative if increasing size, positive if decreasing size
@@ -149,7 +149,7 @@ class ResizePageEventContext: CanvasEventContext {
         return CGPoint(x: modifiedDeltaX, y: deltaY)
     }
 
-    private func performBottomAspectResize(with delta: CGPoint, in layout: CanvasLayoutEngine) -> CGPoint {
+    private func performBottomAspectResize(with delta: CGPoint, in layout: LayoutEngine) -> CGPoint {
         var layoutFrame = self.page.layoutFrame
 
         var deltaY = delta.y //DeltaY is positive if increasing size, negative if decreasing size

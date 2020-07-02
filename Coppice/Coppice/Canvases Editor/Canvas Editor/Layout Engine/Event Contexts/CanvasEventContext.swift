@@ -8,20 +8,42 @@
 
 import Foundation
 
-protocol CanvasEventContext {
-    func downEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: CanvasLayoutEngine)
-    func draggedEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: CanvasLayoutEngine)
-    func upEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: CanvasLayoutEngine)
+protocol CanvasMouseEventContext {
+    func downEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: LayoutEngine)
+    func draggedEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: LayoutEngine)
+    func upEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: LayoutEngine)
 
-    func keyDown(withCode: UInt16, modifiers: LayoutEventModifiers, isARepeat: Bool, in layout: CanvasLayoutEngine)
-    func keyUp(withCode: UInt16, modifiers: LayoutEventModifiers, in layout: CanvasLayoutEngine)
+
 }
 
-extension CanvasEventContext {
-    func downEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: CanvasLayoutEngine) {}
-    func draggedEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: CanvasLayoutEngine) {}
-    func upEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: CanvasLayoutEngine) {}
+extension CanvasMouseEventContext {
+    func downEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: LayoutEngine) {}
+    func draggedEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: LayoutEngine) {}
+    func upEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: LayoutEngine) {}
+}
 
-    func keyDown(withCode: UInt16, modifiers: LayoutEventModifiers, isARepeat: Bool, in layout: CanvasLayoutEngine) {}
-    func keyUp(withCode: UInt16, modifiers: LayoutEventModifiers, in layout: CanvasLayoutEngine) {}
+
+protocol CanvasKeyEventContext {
+    func keyDown(withCode: UInt16, modifiers: LayoutEventModifiers, isARepeat: Bool, in layout: LayoutEngine)
+    func keyUp(withCode: UInt16, modifiers: LayoutEventModifiers, in layout: LayoutEngine)
+}
+
+extension CanvasKeyEventContext {
+    func keyDown(withCode: UInt16, modifiers: LayoutEventModifiers, isARepeat: Bool, in layout: LayoutEngine) {}
+    func keyUp(withCode: UInt16, modifiers: LayoutEventModifiers, in layout: LayoutEngine) {}
+}
+
+
+protocol LayoutEngine: class {
+    var selectedPages: [LayoutEnginePage] { get }
+    var canvasSize: CGSize { get }
+    var selectionRect: CGRect? { get set }
+
+    func deselectAll()
+
+    func pages(inCanvasRect: CGRect) -> [LayoutEnginePage]
+
+    func modified(_ pages: [LayoutEnginePage])
+    func finishedModifying(_ pages: [LayoutEnginePage])
+    func tellDelegateToRemove(_ pages: [LayoutEnginePage])
 }
