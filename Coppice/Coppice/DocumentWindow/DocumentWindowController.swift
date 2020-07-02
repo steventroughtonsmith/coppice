@@ -112,7 +112,11 @@ class DocumentWindowController: NSWindowController {
                                             trackingMode: .momentary,
                                             target: nil,
                                             action: #selector(NewPageMenuDelegate.newPage(_:)))
-        control.setWidth(30, forSegment: 0)
+        var controlWidth: CGFloat = 35
+        if #available(OSX 10.16, *) {
+            controlWidth = 30
+        }
+        control.setWidth(controlWidth, forSegment: 0)
         return control
     }()
 
