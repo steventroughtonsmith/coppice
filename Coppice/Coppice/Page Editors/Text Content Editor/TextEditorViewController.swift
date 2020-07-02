@@ -42,7 +42,7 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
             return
         }
 //        self.selectableBinding = self.publisher(for: \.enabled).assign(to: \.isSelectable, on: self.editingTextView)
-        self.attributedTextObserver = self.publisher(for: \.viewModel.attributedText).sink { [weak self] in self?.updateTextView(with: $0) }
+//        self.attributedTextObserver = self.publisher(for: \.viewModel.attributedText).sink { [weak self] in self?.updateTextView(with: $0) }
 //        self.highlightedRangeObserver = self.viewModel.$highlightedRange.sink { self.highlight($0) }
 
         self.scrollView.contentInsets = GlobalConstants.textEditorInsets
@@ -51,10 +51,10 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
     }
 
     override func viewDidAppear() {
-        
         self.highlight(self.viewModel.highlightedRange)
         super.viewDidAppear()
 
+        self.attributedTextObserver = self.publisher(for: \.viewModel.attributedText).sink { [weak self] in self?.updateTextView(with: $0) }
     }
 
     override func viewDidDisappear() {

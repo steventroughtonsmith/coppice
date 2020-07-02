@@ -71,6 +71,16 @@ class CanvasPageViewController: NSViewController, CanvasPageView {
             self.addChild(pageEditor)
         }
 
+        self.typedView.titleView.delegate = self
+        self.setupAccessibility()
+    }
+
+    deinit {
+
+    }
+
+    override func viewWillAppear() {
+        super.viewWillAppear()
         self.titleObserver = self.viewModel.publisher(for: \.title).sink { [weak self] (title) in
             self?.typedView.titleView.title = title
             self?.updateAccessibility()
@@ -78,13 +88,14 @@ class CanvasPageViewController: NSViewController, CanvasPageView {
         self.accessibilityDescriptionObserver = self.viewModel.publisher(for: \.accessibilityDescription).sink { [weak self] _ in
             self?.updateAccessibility()
         }
-
-        self.typedView.titleView.delegate = self
-        self.setupAccessibility()
     }
 
-    deinit {
+    override func viewDidDisappear() {
+        super.viewDidDisappear()
         self.titleObserver?.cancel()
+        self.titleObserver = nil
+        self.accessibilityDescriptionObserver?.cancel()
+        self.accessibilityDescriptionObserver = nil
     }
 
     func apply(_ layoutPage: LayoutEnginePage) {
