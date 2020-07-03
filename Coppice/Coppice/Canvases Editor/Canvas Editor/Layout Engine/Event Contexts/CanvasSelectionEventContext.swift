@@ -10,14 +10,15 @@ import Cocoa
 
 class CanvasSelectionEventContext: CanvasMouseEventContext {
     var startPoint: CGPoint = .zero
-    let originalSelection: [LayoutEnginePage]
 
-    init(originalSelection: [LayoutEnginePage]) {
-        self.originalSelection = originalSelection
-    }
+    private var originalSelection = [LayoutEnginePage]()
 
     func downEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: LayoutEngine) {
         self.startPoint = location
+        if !modifiers.contains(.shift) {
+            layout.deselectAll()
+        }
+        self.originalSelection = layout.selectedPages
     }
 
     func draggedEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: LayoutEngine) {
@@ -33,26 +34,18 @@ class CanvasSelectionEventContext: CanvasMouseEventContext {
 
         layout.selectionRect = selectionRect
 
-        let pagesInRect = layout.pages(inCanvasRect: selectionRect)
+        var pagesToSelect = layout.pages(inCanvasRect: selectionRect)
         if (modifiers.contains(.shift)) {
-            var pagesToReselect = self.originalSelection
-            for page in pagesInRect {
-                let wasOriginallySelected = self.originalSelection.contains(page)
-                page.selected = !wasOriginallySelected
-                if let index = pagesToReselect.firstIndex(of: page) {
-                    pagesToReselect.remove(at: index)
+            for page in self.originalSelection {
+                guard let index = pagesToSelect.firstIndex(of: page) else {
+                    pagesToSelect.append(page)
+                    continue
                 }
+                pagesToSelect.remove(at: index)
             }
-            pagesToReselect.forEach { $0.selected = true }
         }
-        else {
-            for page in layout.selectedPages {
-                if !pagesInRect.contains(page) {
-                    page.selected = false
-                }
-            }
-            pagesInRect.forEach { $0.selected = true }
-        }
+
+        layout.select(pagesToSelect, extendingSelection: false)
     }
 
     func upEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: LayoutEngine) {

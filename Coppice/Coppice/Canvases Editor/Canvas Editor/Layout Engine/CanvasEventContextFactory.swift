@@ -18,7 +18,7 @@ class CanvasLayoutEngineEventContextFactory: CanvasEventContextFactory {
     func createMouseEventContext(for location: CGPoint, in layoutEngine: CanvasLayoutEngine) -> CanvasMouseEventContext? {
         //Canvas click
         guard let page = layoutEngine.page(atCanvasPoint: location) else {
-            return CanvasSelectionEventContext(originalSelection: layoutEngine.selectedPages)
+            return CanvasSelectionEventContext()
         }
 
         layoutEngine.movePageToFront(page)

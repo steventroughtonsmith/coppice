@@ -59,7 +59,7 @@
 		993600ED24AF3C95002C86E4 /* KeyboardMovePageEventContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993600EC24AF3C95002C86E4 /* KeyboardMovePageEventContextTests.swift */; };
 		993600EF24AF3CC0002C86E4 /* CanvasSelectionEventContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993600EE24AF3CC0002C86E4 /* CanvasSelectionEventContextTests.swift */; };
 		993600F124AF3CD0002C86E4 /* SelectAndMoveEventContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993600F024AF3CD0002C86E4 /* SelectAndMoveEventContextTests.swift */; };
-		993600F324AF3CDD002C86E4 /* ResizePageEventContextTEsts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993600F224AF3CDD002C86E4 /* ResizePageEventContextTEsts.swift */; };
+		993600F324AF3CDD002C86E4 /* ResizePageEventContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993600F224AF3CDD002C86E4 /* ResizePageEventContextTests.swift */; };
 		993600F524AF3D2A002C86E4 /* EventContextTestBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993600F424AF3D2A002C86E4 /* EventContextTestBase.swift */; };
 		993D2BD824127E29002E5BAC /* CanvasListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993D2BD624127E29002E5BAC /* CanvasListViewController.swift */; };
 		993D2BD924127E29002E5BAC /* CanvasListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 993D2BD724127E29002E5BAC /* CanvasListView.xib */; };
@@ -389,7 +389,7 @@
 		993600EC24AF3C95002C86E4 /* KeyboardMovePageEventContextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardMovePageEventContextTests.swift; sourceTree = "<group>"; };
 		993600EE24AF3CC0002C86E4 /* CanvasSelectionEventContextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasSelectionEventContextTests.swift; sourceTree = "<group>"; };
 		993600F024AF3CD0002C86E4 /* SelectAndMoveEventContextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAndMoveEventContextTests.swift; sourceTree = "<group>"; };
-		993600F224AF3CDD002C86E4 /* ResizePageEventContextTEsts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizePageEventContextTEsts.swift; sourceTree = "<group>"; };
+		993600F224AF3CDD002C86E4 /* ResizePageEventContextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizePageEventContextTests.swift; sourceTree = "<group>"; };
 		993600F424AF3D2A002C86E4 /* EventContextTestBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventContextTestBase.swift; sourceTree = "<group>"; };
 		993D2BD624127E29002E5BAC /* CanvasListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasListViewController.swift; sourceTree = "<group>"; };
 		993D2BD724127E29002E5BAC /* CanvasListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CanvasListView.xib; sourceTree = "<group>"; };
@@ -753,7 +753,7 @@
 				993600F424AF3D2A002C86E4 /* EventContextTestBase.swift */,
 				993600EE24AF3CC0002C86E4 /* CanvasSelectionEventContextTests.swift */,
 				993600F024AF3CD0002C86E4 /* SelectAndMoveEventContextTests.swift */,
-				993600F224AF3CDD002C86E4 /* ResizePageEventContextTEsts.swift */,
+				993600F224AF3CDD002C86E4 /* ResizePageEventContextTests.swift */,
 				993600EC24AF3C95002C86E4 /* KeyboardMovePageEventContextTests.swift */,
 				993600E624AE5ECA002C86E4 /* RemovePageEventContextTests.swift */,
 			);
@@ -1992,7 +1992,7 @@
 				999EA6EF244E054400BF254E /* SearchResultsViewModelTypesTests.swift in Sources */,
 				999EA6E32446003100BF254E /* ModelObjects+PasteboardTests.swift in Sources */,
 				999EA6F2244F272E00BF254E /* CanvasPageInspectorViewModelTests.swift in Sources */,
-				993600F324AF3CDD002C86E4 /* ResizePageEventContextTEsts.swift in Sources */,
+				993600F324AF3CDD002C86E4 /* ResizePageEventContextTests.swift in Sources */,
 				9923B06B22F45F7E0035D8C6 /* TestObjects.swift in Sources */,
 				994253EF244F49A7008272E6 /* CanvasListViewModelTests.swift in Sources */,
 				99DA84EE2457203700F19917 /* Mocking.swift in Sources */,

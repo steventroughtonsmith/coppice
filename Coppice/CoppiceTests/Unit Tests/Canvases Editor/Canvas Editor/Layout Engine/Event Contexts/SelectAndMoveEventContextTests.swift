@@ -15,7 +15,7 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
     func test_singleSelection_clickingOnUnselectedPagesTitleTellsLayoutToSelectJustThatPageOnDownEvent() throws {
         let eventContext = SelectAndMoveEventContext(page: self.page3)
 
-        let clickPoint = self.page3.layoutFrame.origin.plus(.identity)
+        let clickPoint = self.page3.titlePoint
         eventContext.downEvent(at: clickPoint, modifiers: [], eventCount: 0, in: self.mockLayoutEngine)
 
         XCTAssertTrue(self.mockLayoutEngine.selectPagesMock.wasCalled)
@@ -27,7 +27,7 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
     func test_singleSelection_clickingOnUnselectedPagesContentTellsLayoutToSelectJustThatPageOnDownEvent() throws {
         let eventContext = SelectAndMoveEventContext(page: self.page3)
 
-        let clickPoint = self.page3.layoutFrame.midPoint
+        let clickPoint = self.page3.contentPoint
         eventContext.downEvent(at: clickPoint, modifiers: [], eventCount: 0, in: self.mockLayoutEngine)
 
         XCTAssertTrue(self.mockLayoutEngine.selectPagesMock.wasCalled)
@@ -40,7 +40,7 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
         self.mockLayoutEngine.selectedPages = [self.page1, self.page3]
         let eventContext = SelectAndMoveEventContext(page: self.page3)
 
-        let clickPoint = self.page3.layoutFrame.origin.plus(.identity)
+        let clickPoint = self.page3.titlePoint
         eventContext.downEvent(at: clickPoint, modifiers: [], eventCount: 0, in: self.mockLayoutEngine)
         XCTAssertFalse(self.mockLayoutEngine.selectPagesMock.wasCalled)
 
@@ -54,7 +54,7 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
         self.mockLayoutEngine.selectedPages = [self.page1, self.page3]
         let eventContext = SelectAndMoveEventContext(page: self.page3)
 
-        let clickPoint = self.page3.layoutFrame.midPoint
+        let clickPoint = self.page3.contentPoint
         eventContext.downEvent(at: clickPoint, modifiers: [], eventCount: 0, in: self.mockLayoutEngine)
         XCTAssertFalse(self.mockLayoutEngine.selectPagesMock.wasCalled)
 
@@ -69,7 +69,7 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
         self.page3.selected = true
         let eventContext = SelectAndMoveEventContext(page: self.page3)
 
-        let clickPoint = self.page3.layoutFrame.origin.plus(.identity)
+        let clickPoint = self.page3.titlePoint
         eventContext.downEvent(at: clickPoint, modifiers: [], eventCount: 0, in: self.mockLayoutEngine)
         XCTAssertFalse(self.mockLayoutEngine.selectPagesMock.wasCalled)
 
@@ -82,7 +82,7 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
         self.page3.selected = true
         let eventContext = SelectAndMoveEventContext(page: self.page3)
 
-        let clickPoint = self.page3.layoutFrame.midPoint
+        let clickPoint = self.page3.contentPoint
         eventContext.downEvent(at: clickPoint, modifiers: [], eventCount: 0, in: self.mockLayoutEngine)
         XCTAssertFalse(self.mockLayoutEngine.selectPagesMock.wasCalled)
 
@@ -93,7 +93,7 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
 
     //MARK: - Shift Selection
     func test_shiftSelection_clickingOnUnselectedPagesTitleTellsLayoutToAddPageToSelectionOnDownEvent() throws {
-        let clickPoint = self.page1.layoutFrame.origin.plus(.identity)
+        let clickPoint = self.page1.titlePoint
         let eventContext = SelectAndMoveEventContext(page: self.page1)
         eventContext.downEvent(at: clickPoint, modifiers: .shift, eventCount: 0, in: self.mockLayoutEngine)
 
@@ -104,7 +104,7 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
     }
 
     func test_shiftSelection_clickingOnUnselectedPagesContentTellsLayoutToAddPageToSelectionOnDownEvent() throws {
-        let clickPoint = self.page1.layoutFrame.midPoint
+        let clickPoint = self.page1.contentPoint
         let eventContext = SelectAndMoveEventContext(page: self.page1)
         eventContext.downEvent(at: clickPoint, modifiers: .shift, eventCount: 0, in: self.mockLayoutEngine)
 
@@ -116,7 +116,7 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
 
     func test_shiftSelection_clickingOnSelectedPagesTitleTellsLayoutToDeselectPageOnDownEvent() throws {
         self.page1.selected = true
-        let clickPoint = self.page1.layoutFrame.origin.plus(.identity)
+        let clickPoint = self.page1.titlePoint
         let eventContext = SelectAndMoveEventContext(page: self.page1)
         eventContext.downEvent(at: clickPoint, modifiers: .shift, eventCount: 0, in: self.mockLayoutEngine)
 
@@ -127,7 +127,7 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
 
     func test_shiftSelection_clickingOnSelectedPagesContentTellsLayoutToDeselectPageOnDownEvent() throws {
         self.page1.selected = true
-        let clickPoint = self.page1.layoutFrame.midPoint
+        let clickPoint = self.page1.contentPoint
         let eventContext = SelectAndMoveEventContext(page: self.page1)
         eventContext.downEvent(at: clickPoint, modifiers: .shift, eventCount: 0, in: self.mockLayoutEngine)
 
@@ -137,7 +137,7 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
     }
 
     func test_shiftSelection_clickingOnPagesTitleTellsDoesntTellLayoutToSelectOnUpEvent() throws {
-        let clickPoint = self.page1.layoutFrame.origin.plus(.identity)
+        let clickPoint = self.page1.titlePoint
         let eventContext = SelectAndMoveEventContext(page: self.page1)
 
         eventContext.downEvent(at: clickPoint, modifiers: .shift, eventCount: 0, in: self.mockLayoutEngine)
@@ -149,7 +149,7 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
     }
 
     func test_shiftSelection_clickingOnPagesContentTellsDoesntTellLayoutToSelectOnUpEvent() throws {
-        let clickPoint = self.page1.layoutFrame.midPoint
+        let clickPoint = self.page1.contentPoint
         let eventContext = SelectAndMoveEventContext(page: self.page1)
 
         eventContext.downEvent(at: clickPoint, modifiers: .shift, eventCount: 0, in: self.mockLayoutEngine)
@@ -186,7 +186,7 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
 
         let eventContext = SelectAndMoveEventContext(page: self.page1)
 
-        let startPoint = self.page1.layoutFrame.midPoint
+        let startPoint = self.page1.contentPoint
         eventContext.downEvent(at: startPoint, modifiers: [], eventCount: 0, in: self.mockLayoutEngine)
         eventContext.draggedEvent(at: startPoint.plus(offset.multiplied(by: 0.5)), modifiers: [], eventCount: 0, in: self.mockLayoutEngine)
         eventContext.draggedEvent(at: startPoint.plus(offset), modifiers: [], eventCount: 0, in: self.mockLayoutEngine)
@@ -224,7 +224,7 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
 
         let eventContext = SelectAndMoveEventContext(page: self.page1)
 
-        let startPoint = self.page3.layoutFrame.midPoint
+        let startPoint = self.page3.contentPoint
         eventContext.downEvent(at: startPoint, modifiers: [], eventCount: 0, in: self.mockLayoutEngine)
         eventContext.draggedEvent(at: startPoint.plus(offset.multiplied(by: 0.5)), modifiers: [], eventCount: 0, in: self.mockLayoutEngine)
         eventContext.draggedEvent(at: startPoint.plus(offset), modifiers: [], eventCount: 0, in: self.mockLayoutEngine)
@@ -244,7 +244,7 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
 
         let eventContext = SelectAndMoveEventContext(page: self.page1)
 
-        let startPoint = self.page3.layoutFrame.midPoint
+        let startPoint = self.page3.contentPoint
         eventContext.downEvent(at: startPoint, modifiers: [], eventCount: 0, in: self.mockLayoutEngine)
         eventContext.draggedEvent(at: startPoint.plus(offset.multiplied(by: 0.5)), modifiers: [], eventCount: 0, in: self.mockLayoutEngine)
         eventContext.draggedEvent(at: startPoint.plus(offset), modifiers: [], eventCount: 0, in: self.mockLayoutEngine)
@@ -260,7 +260,7 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
 
         let eventContext = SelectAndMoveEventContext(page: self.page1)
 
-        let startPoint = self.page3.layoutFrame.midPoint
+        let startPoint = self.page3.contentPoint
         eventContext.downEvent(at: startPoint, modifiers: [], eventCount: 0, in: self.mockLayoutEngine)
         eventContext.draggedEvent(at: startPoint.plus(offset.multiplied(by: 0.5)), modifiers: [], eventCount: 0, in: self.mockLayoutEngine)
         eventContext.draggedEvent(at: startPoint.plus(offset), modifiers: [], eventCount: 0, in: self.mockLayoutEngine)
@@ -283,7 +283,7 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
         self.page1.addChild(child2)
 
         let eventContext = SelectAndMoveEventContext(page: self.page1)
-        eventContext.downEvent(at: self.page1.layoutFrame.origin.plus(.identity), modifiers: [], eventCount: 2, in: self.mockLayoutEngine)
+        eventContext.downEvent(at: self.page1.titlePoint, modifiers: [], eventCount: 2, in: self.mockLayoutEngine)
 
         let (pages, extend) = try XCTUnwrap(self.mockLayoutEngine.selectPagesMock.arguments.first)
         XCTAssertEqual(pages, [self.page1, child1, child2])

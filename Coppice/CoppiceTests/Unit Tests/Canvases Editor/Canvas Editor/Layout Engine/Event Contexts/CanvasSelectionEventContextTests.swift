@@ -11,7 +11,179 @@ import XCTest
 
 class CanvasSelectionEventContextTests: EventContextTestBase {
 
-    func test_selection_mouseUpOnCanvasDeselectsAllPagesIfMouseNotMoved() {
+    //MARK: - Draw selection rect
+    func test_drawSelectionRect_setsLayoutsSelectionRectOnDraggedEvent() throws {
+        let eventContext = CanvasSelectionEventContext()
+
+        eventContext.downEvent(at: CGPoint(x: 100, y: 100), modifiers: [], eventCount: 1, in: self.mockLayoutEngine)
+        eventContext.draggedEvent(at: CGPoint(x: 110, y: 120), modifiers: [], eventCount: 1, in: self.mockLayoutEngine)
+
+        XCTAssertEqual(self.mockLayoutEngine.selectionRect, CGRect(x: 100, y: 100, width: 10, height: 20))
+    }
+
+    func test_drawSelectionRect_setsLayoutsSelectionRectToNilOnUpEvent() throws {
+        let eventContext = CanvasSelectionEventContext()
+
+        eventContext.downEvent(at: CGPoint(x: 100, y: 100), modifiers: [], eventCount: 1, in: self.mockLayoutEngine)
+        eventContext.draggedEvent(at: CGPoint(x: 110, y: 120), modifiers: [], eventCount: 1, in: self.mockLayoutEngine)
+        XCTAssertNotNil(self.mockLayoutEngine.selectionRect)
+        eventContext.upEvent(at: CGPoint(x: 110, y: 120), modifiers: [], eventCount: 1, in: self.mockLayoutEngine)
+        XCTAssertNil(self.mockLayoutEngine.selectionRect)
+    }
+
+
+    //MARK: - Simple Select
+    func test_simpleSelect_deselectsAllOnDownEvent() throws {
+        self.mockLayoutEngine.selectedPages = [self.page1, self.page3]
+        let eventContext = CanvasSelectionEventContext()
+
+        eventContext.downEvent(at: CGPoint(x: 100, y: 100), modifiers: [], eventCount: 1, in: self.mockLayoutEngine)
+
+        XCTAssertTrue(self.mockLayoutEngine.deselectAllMock.wasCalled)
+    }
+
+    func test_simpleSelect_draggingSelectionRectOverPagesTellsLayoutToSelectPagesInRect() throws {
+        self.mockLayoutEngine.selectedPages = [self.page2]
+
+        let eventContext = CanvasSelectionEventContext()
+        eventContext.downEvent(at: self.page1.titlePoint.minus(x: 10, y: 10), modifiers: [], eventCount: 1, in: self.mockLayoutEngine)
+        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = []
+        eventContext.draggedEvent(at: self.page1.titlePoint.minus(x: 5, y: 5), modifiers: [], eventCount: 1, in: self.mockLayoutEngine)
+        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = [self.page1, self.page2]
+        eventContext.draggedEvent(at: self.page2.contentPoint, modifiers: [], eventCount: 1, in: self.mockLayoutEngine)
+
+        let (pages, expand) = try XCTUnwrap(self.mockLayoutEngine.selectPagesMock.arguments.last)
+        XCTAssertEqual(pages, [self.page1, self.page2])
+        XCTAssertFalse(expand)
+    }
+
+    func test_simpleSelect_draggingSelectionRectOffPageTellsLayoutToSelectJustPagesUnderRect() throws {
+        self.mockLayoutEngine.selectedPages = [self.page2]
+
+        let eventContext = CanvasSelectionEventContext()
+        eventContext.downEvent(at: self.page1.titlePoint.minus(x: 10, y: 10), modifiers: [], eventCount: 1, in: self.mockLayoutEngine)
+        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = []
+        eventContext.draggedEvent(at: self.page1.titlePoint.minus(x: 5, y: 5), modifiers: [], eventCount: 1, in: self.mockLayoutEngine)
+        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = [self.page1, self.page2]
+        eventContext.draggedEvent(at: self.page2.contentPoint, modifiers: [], eventCount: 1, in: self.mockLayoutEngine)
+        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = [self.page1]
+        eventContext.draggedEvent(at: self.page1.contentPoint, modifiers: [], eventCount: 1, in: self.mockLayoutEngine)
+
+        let (pages, expand) = try XCTUnwrap(self.mockLayoutEngine.selectPagesMock.arguments.last)
+        XCTAssertEqual(pages, [self.page1])
+        XCTAssertFalse(expand)
+    }
+
+
+    //MARK: - Shift Select
+    func test_shiftSelect_doesntDeselectAllOnDownEvent() throws {
+        self.mockLayoutEngine.selectedPages = [self.page1, self.page3]
+        let eventContext = CanvasSelectionEventContext()
+
+        eventContext.downEvent(at: CGPoint(x: 100, y: 100), modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
+
+        XCTAssertFalse(self.mockLayoutEngine.deselectAllMock.wasCalled)
+    }
+
+    func test_shiftSelect_draggingSelectionRectOverUnselectedPagesTellsLayoutToSelectPagesInRectPlusAnyExistingSelectedPagesOutside() throws {
+        self.mockLayoutEngine.selectedPages = [self.page3]
+
+        let eventContext = CanvasSelectionEventContext()
+        eventContext.downEvent(at: self.page1.titlePoint.minus(x: 10, y: 10), modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
+        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = []
+        eventContext.draggedEvent(at: self.page1.titlePoint.minus(x: 5, y: 5), modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
+        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = [self.page1, self.page2]
+        eventContext.draggedEvent(at: self.page2.contentPoint, modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
+
+        let (pages, expand) = try XCTUnwrap(self.mockLayoutEngine.selectPagesMock.arguments.last)
+        XCTAssertEqual(pages, [self.page1, self.page2, self.page3])
+        XCTAssertFalse(expand)
+    }
+
+    func test_shiftSelect_draggingSelectionRectOffPreviouslyUnselectedPageTellsLayoutToSelectOnlyPagesInRectPlusAnyExistingSelectedPagesOutside() throws {
+        self.mockLayoutEngine.selectedPages = [self.page3]
+
+        let eventContext = CanvasSelectionEventContext()
+        eventContext.downEvent(at: self.page1.titlePoint.minus(x: 10, y: 10), modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
+        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = []
+        eventContext.draggedEvent(at: self.page1.titlePoint.minus(x: 5, y: 5), modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
+        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = [self.page1, self.page2]
+        eventContext.draggedEvent(at: self.page2.contentPoint, modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
+        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = [self.page1]
+        eventContext.draggedEvent(at: self.page1.contentPoint, modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
+
+        let (pages, expand) = try XCTUnwrap(self.mockLayoutEngine.selectPagesMock.arguments.last)
+        XCTAssertEqual(pages, [self.page1, self.page3])
+        XCTAssertFalse(expand)
+    }
+
+    func test_shiftSelect_draggingSelectionRectOverAlreadySelectedPageDoesntIncludePageInSelection() throws {
+        self.mockLayoutEngine.selectedPages = [self.page2, self.page3]
+
+        let eventContext = CanvasSelectionEventContext()
+        eventContext.downEvent(at: self.page1.titlePoint.minus(x: 10, y: 10), modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
+        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = []
+        eventContext.draggedEvent(at: self.page1.titlePoint.minus(x: 5, y: 5), modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
+        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = [self.page1, self.page2]
+        eventContext.draggedEvent(at: self.page2.contentPoint, modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
+
+        let (pages, expand) = try XCTUnwrap(self.mockLayoutEngine.selectPagesMock.arguments.last)
+        XCTAssertEqual(pages, [self.page1, self.page3])
+        XCTAssertFalse(expand)
+    }
+
+    func test_shiftSelect_draggingSelectionRectOffPreviouslySelectedPageIncludesPageInSelection() throws {
+        self.mockLayoutEngine.selectedPages = [self.page2, self.page3]
+
+        let eventContext = CanvasSelectionEventContext()
+        eventContext.downEvent(at: self.page1.titlePoint.minus(x: 10, y: 10), modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
+        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = []
+        eventContext.draggedEvent(at: self.page1.titlePoint.minus(x: 5, y: 5), modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
+        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = [self.page1, self.page2]
+        eventContext.draggedEvent(at: self.page2.contentPoint, modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
+        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = [self.page1]
+        eventContext.draggedEvent(at: self.page1.contentPoint, modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
+
+        let (pages, expand) = try XCTUnwrap(self.mockLayoutEngine.selectPagesMock.arguments.last)
+        XCTAssertEqual(pages, [self.page1, self.page2, self.page3])
+        XCTAssertFalse(expand)
+    }
+
+    func test_shiftSelect_dragOverMultiplePagesAtOnceInvertsSelection() throws {
+        self.mockLayoutEngine.selectedPages = [self.page2]
+
+        let eventContext = CanvasSelectionEventContext()
+        eventContext.downEvent(at: self.page1.titlePoint.minus(x: 0, y: 10), modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
+        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = []
+        eventContext.draggedEvent(at: self.page3.titlePoint.minus(x: 0, y: 10), modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
+        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = [self.page1, self.page2, self.page3]
+        eventContext.draggedEvent(at: self.page3.contentPoint, modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
+
+        let (pages, expand) = try XCTUnwrap(self.mockLayoutEngine.selectPagesMock.arguments.last)
+        XCTAssertEqual(pages, [self.page1, self.page3])
+        XCTAssertFalse(expand)
+    }
+
+    func test_shiftSelect_dragOffMultiplePagesAtOnceRestoresInitialSelection() throws {
+        self.mockLayoutEngine.selectedPages = [self.page2]
+
+        let eventContext = CanvasSelectionEventContext()
+        eventContext.downEvent(at: self.page1.titlePoint.minus(x: 0, y: 10), modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
+        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = []
+        eventContext.draggedEvent(at: self.page3.titlePoint.minus(x: 0, y: 10), modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
+        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = [self.page1, self.page2, self.page3]
+        eventContext.draggedEvent(at: self.page3.contentPoint, modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
+        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = []
+        eventContext.draggedEvent(at: self.page3.titlePoint.minus(x: 0, y: 10), modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
+
+        let (pages, expand) = try XCTUnwrap(self.mockLayoutEngine.selectPagesMock.arguments.last)
+        XCTAssertEqual(pages, [self.page2])
+        XCTAssertFalse(expand)
+    }
+
+
+
+//    func test_selection_mouseUpOnCanvasDeselectsAllPagesIfMouseNotMoved() {
 //        self.page1.selected = true
 //        self.page2.selected = true
 //        self.page3.selected = false
@@ -21,7 +193,7 @@ class CanvasSelectionEventContextTests: EventContextTestBase {
 //        eventContext.downEvent(at: CGPoint(x: 50, y: 50), modifiers: [], eventCount: 0, in: self.mockLayoutEngine)
 //        eventContext.upEvent(at: CGPoint(x: 50, y: 50), modifiers: [], eventCount: 0, in: self.mockLayoutEngine)
 //        XCTAssertTrue(self.mockLayoutEngine.deselectAllMock.wasCalled)
-    }
+//    }
 
 //    func test_selectionRect_clickingAndDraggingOnCanvasCreatesASelectionRect() throws {
 //        XCTAssertNil(self.layoutEngine.selectionRect)

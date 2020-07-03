@@ -9,6 +9,21 @@
 import XCTest
 @testable import Coppice
 
+let testEventContextLayoutASCII = """
+          |
+          |
+          |
+    ____  |   ___   __
+   |  1 | |  | 2|  | 3|
+---|----|-|--|--|--|--|
+   |____| |  |__|  |__|
+          |
+          |
+          |
+          |
+          |
+"""
+
 class EventContextTestBase: XCTestCase {
 
     var page1: LayoutEnginePage!
@@ -21,16 +36,28 @@ class EventContextTestBase: XCTestCase {
         try super.setUpWithError()
 
         self.page1 = LayoutEnginePage(id: UUID(),
-                                      contentFrame: CGRect(x: 40, y: 40, width: 10, height: 10),
+                                      contentFrame: CGRect(x: -25, y: -10, width: 20, height: 30),
                                       minimumContentSize: CGSize(width: 0, height: 0))
         self.page2 = LayoutEnginePage(id: UUID(),
-                                      contentFrame: CGRect(x: -30, y: -20, width: 20, height: 40),
+                                      contentFrame: CGRect(x: 10, y: -10, width: 10, height: 30),
                                       minimumContentSize: CGSize(width: 0, height: 0))
         self.page3 = LayoutEnginePage(id: UUID(),
-                                      contentFrame: CGRect(x: 30, y: -30, width: 30, height: 20),
+                                      contentFrame: CGRect(x: 30, y: -10, width: 30, height: 30),
                                       minimumContentSize: CGSize(width: 0, height: 0))
 
         self.mockLayoutEngine = MockLayoutEngine()
     }
 
+}
+
+
+//Helpers
+extension LayoutEnginePage {
+    var titlePoint: CGPoint {
+        return self.contentFrame.origin.plus(.identity)
+    }
+
+    var contentPoint: CGPoint {
+        return self.contentFrame.midPoint
+    }
 }
