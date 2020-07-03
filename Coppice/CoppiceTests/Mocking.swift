@@ -14,12 +14,11 @@ class MockDetails<Arguments, Return> {
     var arguments = [Arguments]()
     var returnValue: Return?
 
-    var wasCalled: Bool {
-        self.arguments.count > 0
-    }
+    private(set) var wasCalled: Bool = false
 
     @discardableResult func called(withArguments argument: Arguments) -> Return? {
         self.arguments.append(argument)
+        self.wasCalled = true
         self.expectation?.fulfill()
         return self.returnValue
     }
@@ -28,6 +27,7 @@ class MockDetails<Arguments, Return> {
 extension MockDetails where Arguments == Void {
     @discardableResult func called() -> Return? {
         self.expectation?.fulfill()
+        self.wasCalled = true
         return self.returnValue
     }
 }

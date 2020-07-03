@@ -202,29 +202,41 @@ class CanvasLayoutEngine: NSObject, LayoutEngine {
     var selectionRect: CGRect?
 
     func selectAll() {
-        self.pages.forEach { $0.selected = true }
-        self.updateEnabledPage()
-        self.informOfLayoutChange(with: LayoutContext(selectionChanged: true))
+        self.select(self.pages, extendingSelection: true)
     }
 
     func deselectAll() {
-        self.selectedPages.forEach { $0.selected = false }
-        self.updateEnabledPage()
-        self.informOfLayoutChange(with: LayoutContext(selectionChanged: true))
+        self.deselect(self.selectedPages)
     }
 
-    func select(_ page: LayoutEnginePage, extendingSelection: Bool = false) {
+    func select(_ pages: [LayoutEnginePage], extendingSelection: Bool = false) {
         if extendingSelection {
-            page.selected = true
+            pages.forEach { $0.selected = true }
         } else {
-            self.pages.forEach { $0.selected = ($0 == page) }
+            self.selectedPages.forEach { $0.selected = false }
+            pages.forEach { $0.selected = true }
         }
+        self.notifyOfSelectionUpdatedIfNeeded()
+    }
+
+    func deselect(_ pages: [LayoutEnginePage]) {
+        pages.forEach { $0.selected = false }
+        self.notifyOfSelectionUpdatedIfNeeded()
+    }
+
+    private var notifyOfSelectionUpdate = true
+    func groupSelectionChange(_ block: () -> Void) {
+        self.notifyOfSelectionUpdate = false
+        block()
+        self.notifyOfSelectionUpdate = true
         self.updateEnabledPage()
         self.informOfLayoutChange(with: LayoutContext(selectionChanged: true))
     }
 
-    func deselect(_ page: LayoutEnginePage) {
-        page.selected = false
+    private func notifyOfSelectionUpdatedIfNeeded() {
+        guard self.notifyOfSelectionUpdate else {
+            return
+        }
         self.updateEnabledPage()
         self.informOfLayoutChange(with: LayoutContext(selectionChanged: true))
     }

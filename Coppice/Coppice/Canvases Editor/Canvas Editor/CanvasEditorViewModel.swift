@@ -99,14 +99,14 @@ class CanvasEditorViewModel: ViewModel {
         guard let page = self.layoutEngine.page(withID: canvasPage.id.uuid) else {
             return
         }
-        self.layoutEngine.select(page, extendingSelection: extendingSelection)
+        self.layoutEngine.select([page], extendingSelection: extendingSelection)
     }
 
     func deselect(_ canvasPage: CanvasPage) {
         guard let page = self.layoutEngine.page(withID: canvasPage.id.uuid) else {
             return
         }
-        self.layoutEngine.deselect(page)
+        self.layoutEngine.deselect([page])
     }
 
     func canvasPage(with uuid: UUID) -> CanvasPage? {

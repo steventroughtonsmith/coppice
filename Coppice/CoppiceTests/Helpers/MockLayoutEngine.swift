@@ -10,9 +10,24 @@ import Foundation
 @testable import Coppice
 
 class MockLayoutEngine: LayoutEngine {
-    var selectedPages: [LayoutEnginePage] = []
+
+    var selectedPages: [LayoutEnginePage] = [] {
+        didSet {
+            self.selectedPages.forEach { $0.selected = true }
+        }
+    }
     var canvasSize: CGSize = .zero
     var selectionRect: CGRect?
+
+    let selectPagesMock = MockDetails<([LayoutEnginePage], Bool), Void>()
+    func select(_ pages: [LayoutEnginePage], extendingSelection: Bool) {
+        self.selectPagesMock.called(withArguments: (pages, extendingSelection))
+    }
+
+    let deselectPagesMock = MockDetails<[LayoutEnginePage], Void>()
+    func deselect(_ pages: [LayoutEnginePage]) {
+        self.deselectPagesMock.called(withArguments: pages)
+    }
 
     let deselectAllMock = MockDetails<Void, Void>()
     func deselectAll() {

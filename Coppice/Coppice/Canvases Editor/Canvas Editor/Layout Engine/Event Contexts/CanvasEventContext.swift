@@ -39,6 +39,8 @@ protocol LayoutEngine: class {
     var canvasSize: CGSize { get }
     var selectionRect: CGRect? { get set }
 
+    func select(_ pages: [LayoutEnginePage], extendingSelection: Bool)
+    func deselect(_ pages: [LayoutEnginePage])
     func deselectAll()
 
     func pages(inCanvasRect: CGRect) -> [LayoutEnginePage]
