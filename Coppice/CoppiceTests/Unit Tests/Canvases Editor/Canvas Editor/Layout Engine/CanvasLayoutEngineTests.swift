@@ -80,7 +80,7 @@ class CanvasLayoutEngineTests: XCTestCase {
     }
 
     //MARK: - Adding/Removing Pages
-    func test_addPage_addsPageWithSuppliedValuesToPagesArray() {
+    func test_addPage_addsPageWithSuppliedValuesToPagesArray() throws {
         let page = LayoutEnginePage(id: UUID(),
                                     contentFrame: CGRect(x: 0, y: 1, width: 2, height: 3),
                                     minimumContentSize: CGSize(width: 4, height: 5))
@@ -88,7 +88,7 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertTrue(self.layoutEngine.pages.contains(page))
     }
 
-    func test_addPage_setsLayoutEngineOfSuppliedPages() {
+    func test_addPage_setsLayoutEngineOfSuppliedPages() throws {
         let page = LayoutEnginePage(id: UUID(),
                                     contentFrame: CGRect(x: 0, y: 1, width: 2, height: 3),
                                     minimumContentSize: CGSize(width: 4, height: 5))
@@ -96,7 +96,7 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertTrue(page.layoutEngine === self.layoutEngine)
     }
 
-    func test_removePages_removesSuppliedPagesFromPagesArray() {
+    func test_removePages_removesSuppliedPagesFromPagesArray() throws {
         XCTAssertTrue(self.layoutEngine.pages.contains(self.page1))
         XCTAssertTrue(self.layoutEngine.pages.contains(self.page3))
 
@@ -109,19 +109,19 @@ class CanvasLayoutEngineTests: XCTestCase {
 
 
     //MARK: - Updating Pages
-    func test_updateFrame_updatesTheFrameOfPageWithSuppliedUUID() {
+    func test_updateFrame_updatesTheFrameOfPageWithSuppliedUUID() throws {
         let expectedContentFrame = CGRect(x: 35, y: 35, width: 20, height: 20)
         self.layoutEngine.updateContentFrame(expectedContentFrame, ofPageWithID: self.page1.id)
         XCTAssertEqual(self.page1.contentFrame, expectedContentFrame)
     }
 
-    func test_updateFrame_updatesCanvasSizeIfNewFrameChangesSize() {
+    func test_updateFrame_updatesCanvasSizeIfNewFrameChangesSize() throws {
         let expectedCanvasSize = self.layoutEngine.canvasSize.plus(CGSize(width: 10, height: 10))
         self.layoutEngine.updateContentFrame(CGRect(x: 30, y: -40, width: 40, height: 20), ofPageWithID: self.page3.id)
         XCTAssertEqual(self.layoutEngine.canvasSize, expectedCanvasSize)
     }
 
-    func test_updateFrame_notifiesViewOfLayoutChange() {
+    func test_updateFrame_notifiesViewOfLayoutChange() throws {
         let view = TestCanvasView()
         view.viewPortFrame = CGRect(x: 50, y: 50, width: 10, height: 10)
         self.layoutEngine.view = view
@@ -131,7 +131,7 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertEqual(view.context, expectedContext)
     }
 
-    func test_updateFrame_doesntUpdateLayoutIfFrameHasNotChanged() {
+    func test_updateFrame_doesntUpdateLayoutIfFrameHasNotChanged() throws {
         let view = TestCanvasView()
         view.viewPortFrame = CGRect(x: 50, y: 50, width: 10, height: 10)
         self.layoutEngine.view = view
@@ -142,7 +142,7 @@ class CanvasLayoutEngineTests: XCTestCase {
 
 
     //MARK: - Point Conversion
-    func test_pointConversion_convertsPointFromPageSpaceToCanvasSpaceForEmptyEngine() {
+    func test_pointConversion_convertsPointFromPageSpaceToCanvasSpaceForEmptyEngine() throws {
         let basePoint = CGPoint(x: 10, y: 42)
 
         let emptyEngine = CanvasLayoutEngine(configuration: .init(page: .init(titleHeight: 5,
@@ -157,14 +157,14 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertEqual(emptyEngine.convertPointToCanvasSpace(basePoint), expectedPoint)
     }
 
-    func test_pointConversion_convertsPointFromPageSpaceToCanvasSpace() {
+    func test_pointConversion_convertsPointFromPageSpaceToCanvasSpace() throws {
         let basePoint = CGPoint(x: 10, y: 42)
 
         let expectedPoint = basePoint.plus(self.expectedOffset)
         XCTAssertEqual(self.layoutEngine.convertPointToCanvasSpace(basePoint), expectedPoint)
     }
 
-    func test_pointConversion_convertsPointFromCanvasSpaceToPageSpaceForEmptyEngine() {
+    func test_pointConversion_convertsPointFromCanvasSpaceToPageSpaceForEmptyEngine() throws {
         let basePoint = CGPoint(x: 15, y: 31)
 
         let emptyEngine = CanvasLayoutEngine(configuration: .init(page: .init(titleHeight: 5,
@@ -178,7 +178,7 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertEqual(emptyEngine.convertPointToPageSpace(basePoint), expectedPoint)
     }
 
-    func test_pointConversion_convertsPointFromCanvasSpaceToPageSpace() {
+    func test_pointConversion_convertsPointFromCanvasSpaceToPageSpace() throws {
         let basePoint = CGPoint(x: 65, y: 81)
 
         let expectedPoint = basePoint.minus(self.expectedOffset)
@@ -187,14 +187,14 @@ class CanvasLayoutEngineTests: XCTestCase {
 
 
     //MARK: - selectAll()
-    func test_selectAll_selectsAllPagesIfNoneWereSelected() {
+    func test_selectAll_selectsAllPagesIfNoneWereSelected() throws {
         self.layoutEngine.selectAll()
         XCTAssertTrue(self.page1.selected)
         XCTAssertTrue(self.page2.selected)
         XCTAssertTrue(self.page3.selected)
     }
 
-    func test_selectAll_selectsAllPagesEvenIfSomeWereAlreadySelected() {
+    func test_selectAll_selectsAllPagesEvenIfSomeWereAlreadySelected() throws {
         self.page2.selected = true
         self.layoutEngine.selectAll()
         XCTAssertTrue(self.page1.selected)
@@ -202,7 +202,7 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertTrue(self.page3.selected)
     }
 
-    func test_selectAll_doesntChangeSelectionIfAllWereAlreadySelected() {
+    func test_selectAll_doesntChangeSelectionIfAllWereAlreadySelected() throws {
         self.page1.selected = true
         self.page2.selected = true
         self.page3.selected = true
@@ -212,7 +212,7 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertTrue(self.page3.selected)
     }
 
-    func test_selectAll_updatesTheEnabledPage() {
+    func test_selectAll_updatesTheEnabledPage() throws {
         XCTAssertEqual(self.layoutEngine.selectedPages.count, 0)
 
         let clickPoint = self.page3.layoutFrame.midPoint
@@ -238,7 +238,7 @@ class CanvasLayoutEngineTests: XCTestCase {
 
 
     //MARK: - deselectAll()
-    func test_deselectAll_deselectsAllPagesIfAllWereSelected() {
+    func test_deselectAll_deselectsAllPagesIfAllWereSelected() throws {
         self.page1.selected = true
         self.page2.selected = true
         self.page3.selected = true
@@ -248,7 +248,7 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertFalse(self.page3.selected)
     }
 
-    func test_deselectAll_deselectsAllPagesIfSomeWereSelected() {
+    func test_deselectAll_deselectsAllPagesIfSomeWereSelected() throws {
         self.page1.selected = true
         self.page3.selected = true
         self.layoutEngine.deselectAll()
@@ -257,14 +257,14 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertFalse(self.page3.selected)
     }
 
-    func test_deselectAll_doesntChangeSelectionIfNoneWereAlreadySelected() {
+    func test_deselectAll_doesntChangeSelectionIfNoneWereAlreadySelected() throws {
         self.layoutEngine.deselectAll()
         XCTAssertFalse(self.page1.selected)
         XCTAssertFalse(self.page2.selected)
         XCTAssertFalse(self.page3.selected)
     }
 
-    func test_deselectAll_updatesTheEnabledPage() {
+    func test_deselectAll_updatesTheEnabledPage() throws {
         XCTAssertEqual(self.layoutEngine.selectedPages.count, 0)
 
         let clickPoint = self.page3.layoutFrame.midPoint
@@ -334,20 +334,20 @@ class CanvasLayoutEngineTests: XCTestCase {
 
 
     //MARK: - Enabled Page
-    func test_enabledPage_isNilWhenNoPageSelected() {
+    func test_enabledPage_isNilWhenNoPageSelected() throws {
         self.layoutEngine.finishedModifying([])
 
         XCTAssertNil(self.layoutEngine.enabledPage)
     }
 
-    func test_enabledPage_isSetToSelectedPageIfSinglePageSelected() {
+    func test_enabledPage_isSetToSelectedPageIfSinglePageSelected() throws {
         self.page2.selected = true
         self.layoutEngine.finishedModifying([])
 
         XCTAssertEqual(self.layoutEngine.enabledPage, self.page2)
     }
 
-    func test_enabledPage_isNilIfMultiplePagesSelected() {
+    func test_enabledPage_isNilIfMultiplePagesSelected() throws {
         self.page2.selected = true
         self.page3.selected = true
         self.layoutEngine.finishedModifying([])
@@ -355,7 +355,7 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertNil(self.layoutEngine.enabledPage)
     }
 
-    func test_enabledPage_isSetToSelectedPageIfAllOtherPagesAreDeselected() {
+    func test_enabledPage_isSetToSelectedPageIfAllOtherPagesAreDeselected() throws {
         self.page2.selected = true
         self.page3.selected = true
         self.layoutEngine.finishedModifying([])
@@ -550,7 +550,7 @@ class CanvasLayoutEngineTests: XCTestCase {
 
 
     //MARK: - Background
-    func test_pageBackground_noPageShowsBackgroundIfMouseMovedOverCanvasAndNothingSelected() {
+    func test_pageBackground_noPageShowsBackgroundIfMouseMovedOverCanvasAndNothingSelected() throws {
         XCTAssertEqual(self.layoutEngine.pages.filter(\.showBackground).count, 0)
 
         self.layoutEngine.moveEvent(at: CGPoint(x: 40, y: 100))
@@ -558,7 +558,7 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertEqual(self.layoutEngine.pages.filter(\.showBackground).count, 0)
     }
 
-    func test_pageBackground_pageShowsBackgroundIfMouseMovesOverPage() {
+    func test_pageBackground_pageShowsBackgroundIfMouseMovesOverPage() throws {
         XCTAssertEqual(self.layoutEngine.pages.filter(\.showBackground).count, 0)
 
         self.layoutEngine.moveEvent(at: self.page2.layoutFrame.origin.plus(CGPoint(x: 3, y: 3)))
@@ -568,7 +568,7 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertFalse(self.page3.showBackground)
     }
 
-    func test_pageBackground_pageStillShowsBackgroundIfMouseMovesFurtherOverPage() {
+    func test_pageBackground_pageStillShowsBackgroundIfMouseMovesFurtherOverPage() throws {
         XCTAssertEqual(self.layoutEngine.pages.filter(\.showBackground).count, 0)
 
         self.layoutEngine.moveEvent(at: self.page2.layoutFrame.origin.plus(CGPoint(x: 3, y: 3)))
@@ -584,7 +584,7 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertFalse(self.page3.showBackground)
     }
 
-    func test_pageBackground_pageDoesntShowBackgroundIfMouseMovesOffPage() {
+    func test_pageBackground_pageDoesntShowBackgroundIfMouseMovesOffPage() throws {
         XCTAssertEqual(self.layoutEngine.pages.filter(\.showBackground).count, 0)
 
         self.layoutEngine.moveEvent(at: self.page2.layoutFrame.origin.plus(CGPoint(x: 3, y: 3)))
@@ -600,7 +600,7 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertFalse(self.page3.showBackground)
     }
 
-    func test_pageBackground_pagesShowBackgroundIfSelected() {
+    func test_pageBackground_pagesShowBackgroundIfSelected() throws {
         XCTAssertEqual(self.layoutEngine.selectedPages.count, 0)
 
         let clickPoint1 = self.page1.layoutFrame.midPoint
@@ -616,7 +616,7 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertTrue(self.page3.showBackground)
     }
 
-    func test_pageBackground_pageStillShowsBackgroundIfSelectedAndMouseMovesOver() {
+    func test_pageBackground_pageStillShowsBackgroundIfSelectedAndMouseMovesOver() throws {
         let clickPoint1 = self.page1.layoutFrame.midPoint
         self.layoutEngine.downEvent(at: clickPoint1)
 
@@ -627,7 +627,7 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertFalse(self.page3.showBackground)
     }
 
-    func test_pageBackground_pageStillShowsBackgroundIfSelectedAndMouseMovesOff() {
+    func test_pageBackground_pageStillShowsBackgroundIfSelectedAndMouseMovesOff() throws {
         XCTAssertEqual(self.layoutEngine.selectedPages.count, 0)
 
         let clickPoint = self.page3.layoutFrame.midPoint
@@ -640,7 +640,7 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertTrue(self.page3.showBackground)
     }
 
-    func test_pageBackground_allSelectedPagesAndTheHoveredPageShowBackground() {
+    func test_pageBackground_allSelectedPagesAndTheHoveredPageShowBackground() throws {
         XCTAssertEqual(self.layoutEngine.selectedPages.count, 0)
 
         let clickPoint1 = self.page1.layoutFrame.midPoint
@@ -658,7 +658,7 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertTrue(self.page3.showBackground)
     }
 
-    func test_pageBackground_onlySelectedPagesShowBackgroundAfterMouseMovesOffHoveredPage() {
+    func test_pageBackground_onlySelectedPagesShowBackgroundAfterMouseMovesOffHoveredPage() throws {
         XCTAssertEqual(self.layoutEngine.selectedPages.count, 0)
 
         let clickPoint1 = self.page1.layoutFrame.midPoint
@@ -686,7 +686,7 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertTrue(try XCTUnwrap(view.context?.backgroundVisibilityChanged))
     }
 
-    func test_pageBackground_notifiesViewWhenMovedAwayFromHoveredPage() {
+    func test_pageBackground_notifiesViewWhenMovedAwayFromHoveredPage() throws {
         let view = TestCanvasView()
         self.layoutEngine.view = view
 
@@ -698,7 +698,7 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertTrue(try XCTUnwrap(view.context?.backgroundVisibilityChanged))
     }
 
-    func test_pageBackground_doesntNotifyViewWhenMovingOverHoveredPage() {
+    func test_pageBackground_doesntNotifyViewWhenMovingOverHoveredPage() throws {
         let view = TestCanvasView()
         self.layoutEngine.view = view
 
@@ -710,7 +710,7 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertNil(view.context)
     }
 
-    func test_pageBackground_doesntNotifyViewWhenMovingOntoSelectedPage() {
+    func test_pageBackground_doesntNotifyViewWhenMovingOntoSelectedPage() throws {
         self.page2.selected = true
         let view = TestCanvasView()
         self.layoutEngine.view = view
@@ -719,7 +719,7 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertNil(view.context)
     }
 
-    func test_pageBackground_doesntNotifyViewWhenMovingOffSelectedPageToCanvas() {
+    func test_pageBackground_doesntNotifyViewWhenMovingOffSelectedPageToCanvas() throws {
         self.page2.selected = true
         let view = TestCanvasView()
         self.layoutEngine.view = view
@@ -731,7 +731,7 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertNil(view.context)
     }
 
-    func test_pageBackground_notifiesViewWhenMovingOffSelectedPageToOtherUnselectedPage() {
+    func test_pageBackground_notifiesViewWhenMovingOffSelectedPageToOtherUnselectedPage() throws {
         self.page2.selected = true
         let view = TestCanvasView()
         self.layoutEngine.view = view
@@ -743,7 +743,7 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertNil(view.context)
     }
 
-    func test_pageBackground_doesntNotifyViewWhenMovingOffSelectedPageToOtherSelectedPage() {
+    func test_pageBackground_doesntNotifyViewWhenMovingOffSelectedPageToOtherSelectedPage() throws {
         self.page2.selected = true
         self.page3.selected = true
         let view = TestCanvasView()
@@ -759,23 +759,23 @@ class CanvasLayoutEngineTests: XCTestCase {
 
 
     //MARK: - Canvas Size and Offset
-    func test_canvasSize_canvasSizeShouldEqualContentBoundsPlusCanvasBorderOnEachSize() {
+    func test_canvasSize_canvasSizeShouldEqualContentBoundsPlusCanvasBorderOnEachSize() throws {
         XCTAssertEqual(self.layoutEngine.canvasSize, self.contentFrame.insetBy(dx: -20, dy: -20).size)
     }
 
-    func test_canvasSize_canvasSizeShouldBeBiggerThanContentBoundsPlusCanvasBorderIfViewPortFrameIsOutside() {
+    func test_canvasSize_canvasSizeShouldBeBiggerThanContentBoundsPlusCanvasBorderIfViewPortFrameIsOutside() throws {
         let testCanvas = TestCanvasView()
         testCanvas.viewPortFrame = CGRect(x: 60, y: 60, width: 80, height: 80)
         self.layoutEngine.view = testCanvas
 
-        self.drag(self.page1, byXEdge: .min, yEdge: .min, deltaX: 0, deltaY: 0)
+        try self.drag(self.page1, byXEdge: .min, yEdge: .min, deltaX: 0, deltaY: 0)
 
         let borderedContentFrame = self.contentFrame.insetBy(dx: -20, dy: -20)
         let fullFrame = borderedContentFrame.union(testCanvas.viewPortFrame)
         XCTAssertEqual(self.layoutEngine.canvasSize, fullFrame.size)
     }
 
-    func test_canvasSize_pageSpaceOffsetShouldChangeIfCanvasGrowsUpwards() {
+    func test_canvasSize_pageSpaceOffsetShouldChangeIfCanvasGrowsUpwards() throws {
         let initialOffset = self.layoutEngine.convertPointToPageSpace(.zero)
 
         let pageOrigin = self.page2.layoutFrame
@@ -791,7 +791,7 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertEqual(initialOffset.minus(newOffset), CGPoint(x: 0, y: 10))
     }
 
-    func test_canvasSize_pageSpaceOffsetShouldChangeIfCanvasGrowsToLeft() {
+    func test_canvasSize_pageSpaceOffsetShouldChangeIfCanvasGrowsToLeft() throws {
         let initialOffset = self.layoutEngine.convertPointToPageSpace(.zero)
 
         let pageOrigin = self.page2.layoutFrame
@@ -807,7 +807,7 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertEqual(initialOffset.minus(newOffset), CGPoint(x: 20, y: 0))
     }
 
-    func test_canvasSize_canvasSizeShouldUpdateWhenMovingPagesEnds() {
+    func test_canvasSize_canvasSizeShouldUpdateWhenMovingPagesEnds() throws {
         let initialSize = self.layoutEngine.canvasSize
         let pageOrigin = self.page2.layoutFrame
         let startPoint = CGPoint(x: pageOrigin.midX, y: pageOrigin.minY + 3)
@@ -821,7 +821,7 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertNotEqual(self.layoutEngine.canvasSize, initialSize)
     }
 
-    func test_canvasSize_canvasSizeShouldUpdateWhenResizingPageEnds() {
+    func test_canvasSize_canvasSizeShouldUpdateWhenResizingPageEnds() throws {
         let initialSize = self.layoutEngine.canvasSize
         let pageOrigin = self.page2.layoutFrame
         let startPoint = CGPoint(x: pageOrigin.minX, y: pageOrigin.midY)
@@ -835,7 +835,7 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertNotEqual(self.layoutEngine.canvasSize, initialSize)
     }
 
-    func test_canvasSize_updatesAllPagesCanvasFrameIfCanvasResizesUpAndToTheLeft() {
+    func test_canvasSize_updatesAllPagesCanvasFrameIfCanvasResizesUpAndToTheLeft() throws {
         let page1Origin = self.page1.layoutFrame.origin
         let page3Origin = self.page3.layoutFrame.origin
 
@@ -852,7 +852,7 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertEqual(self.page3.layoutFrame.origin, page3Origin.plus(CGPoint(x: 10, y: 20)))
     }
 
-    func test_canvasSize_doesNOTUpdatePagesCanvasFrameIfCanvasResizesDownToTheLeft() {
+    func test_canvasSize_doesNOTUpdatePagesCanvasFrameIfCanvasResizesDownToTheLeft() throws {
         let page1Origin = self.page1.layoutFrame.origin
         let page2Origin = self.page2.layoutFrame.origin
         let page3Origin = self.page3.layoutFrame.origin
@@ -874,7 +874,7 @@ class CanvasLayoutEngineTests: XCTestCase {
     //MARK: - Keyboard Moving
 
 
-    func test_keyboardMoving_callsDelegateAfterMovingPages() {
+    func test_keyboardMoving_callsDelegateAfterMovingPages() throws {
         let delegate = TestLayoutDelegate()
         self.layoutEngine.delegate = delegate
 
@@ -902,93 +902,10 @@ private class TestCanvasView: CanvasLayoutView {
 }
 
 
-//Canvas Selection Event
-extension CanvasLayoutEngineTests {
-    func test_selection_mouseUpOnCanvasDeselectsAllPagesIfMouseNotMoved() {
-        self.page1.selected = true
-        self.page2.selected = true
-
-        XCTAssertEqual(self.layoutEngine.selectedPages.count, 2)
-        self.layoutEngine.downEvent(at: CGPoint(x: 50, y: 50))
-        self.layoutEngine.upEvent(at: CGPoint(x: 50, y: 50))
-        XCTAssertEqual(self.layoutEngine.selectedPages.count, 0)
-    }
-
-    func test_selectionRect_clickingAndDraggingOnCanvasCreatesASelectionRect() throws {
-        XCTAssertNil(self.layoutEngine.selectionRect)
-
-        self.layoutEngine.downEvent(at: CGPoint(x: 50, y: 50))
-        self.layoutEngine.draggedEvent(at: CGPoint(x: 53, y: 53))
-        let rect = try XCTUnwrap(self.layoutEngine.selectionRect)
-        XCTAssertEqual(rect, CGRect(x: 50, y: 50, width: 3, height: 3))
-    }
-
-    func test_selectionRect_drawingSelectionRectOverPagesSelectsThosePages() throws {
-        XCTAssertNil(self.layoutEngine.selectionRect)
-
-        self.layoutEngine.downEvent(at: CGPoint(x: 10, y: 10))
-        self.layoutEngine.draggedEvent(at: CGPoint(x: 85, y: 35))
-
-        let selectedPages = self.layoutEngine.selectedPages
-        XCTAssertTrue(try XCTUnwrap(selectedPages[safe: 0]) === self.page2)
-        XCTAssertTrue(try XCTUnwrap(selectedPages[safe: 1]) === self.page3)
-    }
-
-    func test_selectionRect_draggingSelectionRectBackOffPageDeselectsThatPage() {
-        XCTAssertNil(self.layoutEngine.selectionRect)
-
-        self.layoutEngine.downEvent(at: CGPoint(x: 10, y: 10))
-        self.layoutEngine.draggedEvent(at: CGPoint(x: 85, y: 35))
-
-        let initialSelectedPages = self.layoutEngine.selectedPages
-        XCTAssertTrue(try XCTUnwrap(initialSelectedPages[safe: 0]) === self.page2)
-        XCTAssertTrue(try XCTUnwrap(initialSelectedPages[safe: 1]) === self.page3)
-
-        self.layoutEngine.draggedEvent(at: CGPoint(x: 45, y: 35))
-        let finalSelectedPages = self.layoutEngine.selectedPages
-        XCTAssertTrue(try XCTUnwrap(finalSelectedPages[safe: 0]) === self.page2)
-    }
-
-    func test_selectionRect_drawingSelectionRectOverPagesWithShiftModifierTogglesSelectionOnThosePages() throws {
-        XCTAssertNil(self.layoutEngine.selectionRect)
-
-        self.layoutEngine.downEvent(at: CGPoint(x: 10, y: 10), modifiers: .shift)
-        self.layoutEngine.draggedEvent(at: CGPoint(x: 85, y: 35), modifiers: .shift)
-
-        let initialSelectedPages = self.layoutEngine.selectedPages
-        XCTAssertTrue(try XCTUnwrap(initialSelectedPages[safe: 0]) === self.page2)
-        XCTAssertTrue(try XCTUnwrap(initialSelectedPages[safe: 1]) === self.page3)
-
-        self.layoutEngine.draggedEvent(at: CGPoint(x: 45, y: 35))
-        let finalSelectedPages = self.layoutEngine.selectedPages
-        XCTAssertTrue(try XCTUnwrap(finalSelectedPages[safe: 0]) === self.page2)
-    }
-
-    func test_selectionRect_drawingSelectionRectOverSelectedPageWithShiftModifierTogglesDeselectsPageAndDraggingOffReselectsPage() throws {
-        XCTAssertNil(self.layoutEngine.selectionRect)
-
-        self.page2.selected = true
-
-        self.layoutEngine.downEvent(at: CGPoint(x: 10, y: 10), modifiers: .shift)
-        self.layoutEngine.draggedEvent(at: CGPoint(x: 85, y: 35), modifiers: .shift)
-
-        let initialSelectedPages = self.layoutEngine.selectedPages
-        XCTAssertTrue(try XCTUnwrap(initialSelectedPages[safe: 0]) === self.page3)
-
-        self.layoutEngine.draggedEvent(at: CGPoint(x: 15, y: 15), modifiers: .shift)
-        let finalSelectedPages = self.layoutEngine.selectedPages
-        XCTAssertTrue(try XCTUnwrap(finalSelectedPages[safe: 0]) === self.page2)
-    }
-}
-
-//Select & move event
-extension CanvasLayoutEngineTests {
-    
-}
 
 //Resize
 extension CanvasLayoutEngineTests {
-    func drag(_ page: LayoutEnginePage, byXEdge xEdge: TestDragEdge, yEdge: TestDragEdge, deltaX: CGFloat, deltaY: CGFloat) {
+    func drag(_ page: LayoutEnginePage, byXEdge xEdge: TestDragEdge, yEdge: TestDragEdge, deltaX: CGFloat, deltaY: CGFloat) throws {
         let startX: CGFloat
         switch (xEdge) {
         case .min:
@@ -1016,328 +933,169 @@ extension CanvasLayoutEngineTests {
         self.layoutEngine.upEvent(at: endPoint)
     }
 
-    //Left
-    func test_resizing_draggingLeftEdgeToLeftIncreasesWidthAndDecreasesOriginX() {
-        var expectedFrame = self.page1.layoutFrame
-        expectedFrame.origin.x -= 2
-        expectedFrame.size.width += 2
-
-        self.drag(self.page1, byXEdge: .min, yEdge: .mid, deltaX: -2, deltaY: -2)
-
-        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
-    }
-
-    func test_resizing_draggingLeftEdgeToRightDecreasesWidthAndIncreasesOriginX() {
-        var expectedFrame = self.page1.layoutFrame
-        expectedFrame.origin.x += 2
-        expectedFrame.size.width -= 2
-
-        self.drag(self.page1, byXEdge: .min, yEdge: .mid, deltaX: 2, deltaY: 2)
-
-        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
-    }
-
-    func test_resizing_draggingLeftEdgeToLeftStopsAtCanvasEdge() {
-        var expectedFrame = self.page1.layoutFrame
-        expectedFrame.size.width += expectedFrame.origin.x
-        expectedFrame.origin.x = self.contentBorder
-
-        self.drag(self.page1, byXEdge: .min, yEdge: .mid, deltaX: -100, deltaY: -100)
-
-        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
-    }
-
-    func test_resizing_draggingLeftEdgeToRightStopsAtMinimumWidth() {
-        self.page1.minimumContentSize = CGSize(width: 5, height: 5)
-        var expectedFrame = self.page1.layoutFrame
-        expectedFrame.origin.x += expectedFrame.width - self.page1.minimumContentSize.width
-        expectedFrame.size.width = self.page1.minimumContentSize.width
-
-        self.drag(self.page1, byXEdge: .min, yEdge: .mid, deltaX: 100, deltaY: 100)
-
-        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
-    }
-
-    //Top
-    func test_resizing_draggingTopEdgeUpIncreasesHeightAndDecreasesOriginY() {
-        var expectedFrame = self.page1.layoutFrame
-        expectedFrame.origin.y -= 2
-        expectedFrame.size.height += 2
-
-        self.drag(self.page1, byXEdge: .mid, yEdge: .min, deltaX: -2, deltaY: -2)
-
-        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
-    }
-
-    func test_resizing_draggingTopEdgeDownDecreasesHeightAndIncreasesOriginY() {
-        var expectedFrame = self.page1.layoutFrame
-        expectedFrame.origin.y += 2
-        expectedFrame.size.height -= 2
-
-        self.drag(self.page1, byXEdge: .mid, yEdge: .min, deltaX: 2, deltaY: 2)
-
-        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
-    }
-
-    func test_resizing_draggingTopEdgeUpStopsAtCanvasEdge() {
-        var expectedFrame = self.page1.layoutFrame
-        expectedFrame.size.height += expectedFrame.origin.y
-        expectedFrame.origin.y = self.contentBorder
-
-        self.drag(self.page1, byXEdge: .mid, yEdge: .min, deltaX: -100, deltaY: -100)
-
-        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
-    }
-
-    func test_resizing_draggingTopEdgeDownStopsAtMinimumHeight() {
-        self.page1.minimumContentSize = CGSize(width: 5, height: 5)
-        var expectedFrame = self.page1.layoutFrame
-        expectedFrame.origin.y += expectedFrame.height - self.page1.minimumLayoutSize.height
-        expectedFrame.size.height = self.page1.minimumLayoutSize.height
-
-        self.drag(self.page1, byXEdge: .mid, yEdge: .min, deltaX: 100, deltaY: 100)
-
-        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
-    }
-
-    //Right
-    func test_resizing_draggingRightEdgeToRightIncreasesWidth() {
-        var expectedFrame = self.page1.layoutFrame
-        expectedFrame.size.width += 2
-
-        self.drag(self.page1, byXEdge: .max, yEdge: .mid, deltaX: 2, deltaY: 2)
-
-        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
-    }
-
-    func test_resizing_draggingRightEdgeToLeftDecreasesWidth() {
-        var expectedFrame = self.page1.layoutFrame
-        expectedFrame.size.width -= 2
-
-        self.drag(self.page1, byXEdge: .max, yEdge: .mid, deltaX: -2, deltaY: -2)
-
-        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
-    }
-
-    func test_resizing_draggingRightEdgeToRightStopsAtCanvasEdge() {
-        var expectedFrame = self.page1.layoutFrame
-        expectedFrame.size.width += self.contentFrame.maxX - expectedFrame.maxX + self.contentBorder
-
-        self.drag(self.page1, byXEdge: .max, yEdge: .mid, deltaX: 100, deltaY: 100)
-
-        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
-    }
-
-    func test_resizing_draggingRightEdgeToLeftStopsAtMinimumWidth() {
-        self.page1.minimumContentSize = CGSize(width: 5, height: 5)
-        var expectedFrame = self.page1.layoutFrame
-        expectedFrame.size.width = self.page1.minimumContentSize.width
-
-        self.drag(self.page1, byXEdge: .max, yEdge: .mid, deltaX: -100, deltaY: -100)
-
-        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
-    }
-
-    //Bottom
-    func test_resizing_draggingBottomEdgeDownIncreasesHeight() {
-        var expectedFrame = self.page1.layoutFrame
-        expectedFrame.size.height += 2
-
-        self.drag(self.page1, byXEdge: .mid, yEdge: .max, deltaX: 2, deltaY: 2)
-
-        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
-    }
-
-    func test_resizing_draggingBottomEdgeUpDecreasesHeight() {
-        var expectedFrame = self.page1.layoutFrame
-        expectedFrame.size.height -= 2
-
-        self.drag(self.page1, byXEdge: .mid, yEdge: .max, deltaX: -2, deltaY: -2)
-
-        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
-    }
-
-    func test_resizing_draggingBottomEdgeDownStopsAtCanvasEdge() {
-        var expectedFrame = self.page1.layoutFrame
-        expectedFrame.size.height += self.contentFrame.maxY - expectedFrame.maxY + self.contentBorder
-
-        self.drag(self.page1, byXEdge: .mid, yEdge: .max, deltaX: 100, deltaY: 100)
-
-        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
-    }
-
-    func test_resizing_draggingBottomEdgeUpStopsAtMinimumHeight() {
-        self.page1.minimumContentSize = CGSize(width: 5, height: 5)
-        var expectedFrame = self.page1.layoutFrame
-        expectedFrame.size.height = self.page1.minimumLayoutSize.height
-
-        self.drag(self.page1, byXEdge: .mid, yEdge: .max, deltaX: -100, deltaY: -100)
-
-        XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
-    }
 
     //Top Left - Regular
-    func test_resizing_draggingTopLeftEdgeToTopLeftIncreasesSizeAndDecreasesOrigin() {
+    func test_resizing_draggingTopLeftEdgeToTopLeftIncreasesSizeAndDecreasesOrigin() throws {
         var expectedFrame = self.page1.layoutFrame
         expectedFrame.origin = expectedFrame.origin.plus(CGPoint(x: -3, y: -4))
         expectedFrame.size = expectedFrame.size.plus(CGSize(width: 3, height: 4))
 
-        self.drag(self.page1, byXEdge: .min, yEdge: .min, deltaX: -3, deltaY: -4)
+        try self.drag(self.page1, byXEdge: .min, yEdge: .min, deltaX: -3, deltaY: -4)
 
         XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_draggingTopLeftEdgeToBottomRightDecreasesSizeAndIncreasesOrigin() {
+    func test_resizing_draggingTopLeftEdgeToBottomRightDecreasesSizeAndIncreasesOrigin() throws {
         var expectedFrame = self.page1.layoutFrame
         expectedFrame.origin = expectedFrame.origin.plus(CGPoint(x: 3, y: 4))
         expectedFrame.size = expectedFrame.size.plus(CGSize(width: -3, height: -4))
 
-        self.drag(self.page1, byXEdge: .min, yEdge: .min, deltaX: 3, deltaY: 4)
+        try self.drag(self.page1, byXEdge: .min, yEdge: .min, deltaX: 3, deltaY: 4)
 
         XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_draggingTopLeftEdgeToTopLeftStopsAtCanvasEdge() {
+    func test_resizing_draggingTopLeftEdgeToTopLeftStopsAtCanvasEdge() throws {
         var expectedFrame = self.page1.layoutFrame
         expectedFrame.size = CGSize(width: expectedFrame.maxX, height: expectedFrame.maxY)
         expectedFrame.origin = CGPoint(x: self.contentBorder, y: self.contentBorder)
 
-        self.drag(self.page1, byXEdge: .min, yEdge: .min, deltaX: -100, deltaY: -100)
+        try self.drag(self.page1, byXEdge: .min, yEdge: .min, deltaX: -100, deltaY: -100)
 
         XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_draggingTopLeftEdgeToBottomRightStopsAtMinimumSize() {
+    func test_resizing_draggingTopLeftEdgeToBottomRightStopsAtMinimumSize() throws {
         self.page1.minimumContentSize = CGSize(width: 5, height: 5)
         var expectedFrame = self.page1.layoutFrame
         expectedFrame.origin = expectedFrame.origin.plus(CGPoint(x: expectedFrame.width - self.page1.minimumLayoutSize.width, y: expectedFrame.height - self.page1.minimumLayoutSize.height))
         expectedFrame.size = self.page1.minimumLayoutSize
-        self.drag(self.page1, byXEdge: .min, yEdge: .min, deltaX: 100, deltaY: 100)
+        try self.drag(self.page1, byXEdge: .min, yEdge: .min, deltaX: 100, deltaY: 100)
 
         XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
     //Top Right - Regular
-    func test_resizing_draggingTopRightEdgeToTopRightIncreasesSizeAndDecreasesOrigin() {
+    func test_resizing_draggingTopRightEdgeToTopRightIncreasesSizeAndDecreasesOrigin() throws {
         var expectedFrame = self.page1.layoutFrame
         expectedFrame.origin = expectedFrame.origin.plus(CGPoint(x: 0, y: -4))
         expectedFrame.size = expectedFrame.size.plus(CGSize(width: 3, height: 4))
 
-        self.drag(self.page1, byXEdge: .max, yEdge: .min, deltaX: 3, deltaY: -4)
+        try self.drag(self.page1, byXEdge: .max, yEdge: .min, deltaX: 3, deltaY: -4)
 
         XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_draggingTopRightEdgeToBottomLeftDecreasesSizeAndIncreasesOrigin() {
+    func test_resizing_draggingTopRightEdgeToBottomLeftDecreasesSizeAndIncreasesOrigin() throws {
         var expectedFrame = self.page1.layoutFrame
         expectedFrame.origin = expectedFrame.origin.plus(CGPoint(x: 0, y: 4))
         expectedFrame.size = expectedFrame.size.plus(CGSize(width: -3, height: -4))
 
-        self.drag(self.page1, byXEdge: .max, yEdge: .min, deltaX: -3, deltaY: 4)
+        try self.drag(self.page1, byXEdge: .max, yEdge: .min, deltaX: -3, deltaY: 4)
 
         XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_draggingTopRightEdgeToTopRightStopsAtCanvasEdge() {
+    func test_resizing_draggingTopRightEdgeToTopRightStopsAtCanvasEdge() throws {
         var expectedFrame = self.page1.layoutFrame
         expectedFrame.size = CGSize(width: self.contentFrame.maxX - expectedFrame.minX + self.layoutEngine.configuration.contentBorder, height: expectedFrame.maxY)
         expectedFrame.origin.y = self.contentBorder
 
-        self.drag(self.page1, byXEdge: .max, yEdge: .min, deltaX: 100, deltaY: -100)
+        try self.drag(self.page1, byXEdge: .max, yEdge: .min, deltaX: 100, deltaY: -100)
 
         XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_draggingTopRightEdgeToBottomLeftStopsAtMinimumSize() {
+    func test_resizing_draggingTopRightEdgeToBottomLeftStopsAtMinimumSize() throws {
         self.page1.minimumContentSize = CGSize(width: 5, height: 5)
         var expectedFrame = self.page1.layoutFrame
         expectedFrame.origin = expectedFrame.origin.plus(CGPoint(x: 0, y: expectedFrame.height - self.page1.minimumLayoutSize.height))
         expectedFrame.size = self.page1.minimumLayoutSize
-        self.drag(self.page1, byXEdge: .max, yEdge: .min, deltaX: -100, deltaY: 100)
+        try self.drag(self.page1, byXEdge: .max, yEdge: .min, deltaX: -100, deltaY: 100)
 
         XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
     //Bottom Right - Regular
-    func test_resizing_draggingBottomRightEdgeToBottomRightIncreasesSize() {
+    func test_resizing_draggingBottomRightEdgeToBottomRightIncreasesSize() throws {
         var expectedFrame = self.page1.layoutFrame
         expectedFrame.size = expectedFrame.size.plus(CGSize(width: 3, height: 4))
 
-        self.drag(self.page1, byXEdge: .max, yEdge: .max, deltaX: 3, deltaY: 4)
+        try self.drag(self.page1, byXEdge: .max, yEdge: .max, deltaX: 3, deltaY: 4)
 
         XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_draggingBottomRightEdgeToTopLeftDecreasesSize() {
+    func test_resizing_draggingBottomRightEdgeToTopLeftDecreasesSize() throws {
         var expectedFrame = self.page1.layoutFrame
         expectedFrame.size = expectedFrame.size.plus(CGSize(width: -3, height: -4))
 
-        self.drag(self.page1, byXEdge: .max, yEdge: .max, deltaX: -3, deltaY: -4)
+        try self.drag(self.page1, byXEdge: .max, yEdge: .max, deltaX: -3, deltaY: -4)
 
         XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_draggingBottomRightEdgeToBottomRightStopsAtCanvasEdge() {
+    func test_resizing_draggingBottomRightEdgeToBottomRightStopsAtCanvasEdge() throws {
         var expectedFrame = self.page1.layoutFrame
         expectedFrame.size = CGSize(width: self.contentFrame.maxX - expectedFrame.minX + self.layoutEngine.configuration.contentBorder, height: self.contentFrame.maxY - expectedFrame.minY + self.layoutEngine.configuration.contentBorder)
 
-        self.drag(self.page1, byXEdge: .max, yEdge: .max, deltaX: 100, deltaY: 100)
+        try self.drag(self.page1, byXEdge: .max, yEdge: .max, deltaX: 100, deltaY: 100)
 
         XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_draggingBottomRightEdgeToTopLeftStopsAtMinimumSize() {
+    func test_resizing_draggingBottomRightEdgeToTopLeftStopsAtMinimumSize() throws {
         self.page1.minimumContentSize = CGSize(width: 5, height: 5)
         var expectedFrame = self.page1.layoutFrame
         expectedFrame.size = self.page1.minimumLayoutSize
-        self.drag(self.page1, byXEdge: .max, yEdge: .max, deltaX: -100, deltaY: -100)
+        try self.drag(self.page1, byXEdge: .max, yEdge: .max, deltaX: -100, deltaY: -100)
 
         XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
     //Top Right - Regular
-    func test_resizing_draggingBottomLeftEdgeToBottomLeftIncreasesSizeAndDecreasesOrigin() {
+    func test_resizing_draggingBottomLeftEdgeToBottomLeftIncreasesSizeAndDecreasesOrigin() throws {
         var expectedFrame = self.page1.layoutFrame
         expectedFrame.origin = expectedFrame.origin.plus(CGPoint(x: -3, y: 0))
         expectedFrame.size = expectedFrame.size.plus(CGSize(width: 3, height: 4))
 
-        self.drag(self.page1, byXEdge: .min, yEdge: .max, deltaX: -3, deltaY: 4)
+        try self.drag(self.page1, byXEdge: .min, yEdge: .max, deltaX: -3, deltaY: 4)
 
         XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_draggingBottomLeftEdgeToTopRightDecreasesSizeAndIncreasesOrigin() {
+    func test_resizing_draggingBottomLeftEdgeToTopRightDecreasesSizeAndIncreasesOrigin() throws {
         var expectedFrame = self.page1.layoutFrame
         expectedFrame.origin = expectedFrame.origin.plus(CGPoint(x: 3, y: 0))
         expectedFrame.size = expectedFrame.size.plus(CGSize(width: -3, height: -4))
 
-        self.drag(self.page1, byXEdge: .min, yEdge: .max, deltaX: 3, deltaY: -4)
+        try self.drag(self.page1, byXEdge: .min, yEdge: .max, deltaX: 3, deltaY: -4)
 
         XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_draggingBottomLeftEdgeToBottomLeftStopsAtCanvasEdge() {
+    func test_resizing_draggingBottomLeftEdgeToBottomLeftStopsAtCanvasEdge() throws {
         var expectedFrame = self.page1.layoutFrame
         expectedFrame.size = CGSize(width: expectedFrame.maxX, height: self.contentFrame.maxY - expectedFrame.minY  + self.layoutEngine.configuration.contentBorder)
         expectedFrame.origin.x = self.contentBorder
 
-        self.drag(self.page1, byXEdge: .min, yEdge: .max, deltaX: -100, deltaY: 100)
+        try self.drag(self.page1, byXEdge: .min, yEdge: .max, deltaX: -100, deltaY: 100)
 
         XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_draggingBottomLeftEdgeToTopRightStopsAtMinimumSize() {
+    func test_resizing_draggingBottomLeftEdgeToTopRightStopsAtMinimumSize() throws {
         self.page1.minimumContentSize = CGSize(width: 5, height: 5)
         var expectedFrame = self.page1.layoutFrame
         expectedFrame.origin = expectedFrame.origin.plus(CGPoint(x: expectedFrame.width - self.page1.minimumLayoutSize.width, y: 0))
         expectedFrame.size = self.page1.minimumLayoutSize
-        self.drag(self.page1, byXEdge: .min, yEdge: .max, deltaX: 100, deltaY: -100)
+        try self.drag(self.page1, byXEdge: .min, yEdge: .max, deltaX: 100, deltaY: -100)
 
         XCTAssertEqual(self.page1.layoutFrame, expectedFrame)
     }
 
     //Top Left - Aspect
-    func test_resizing_aspect_draggingTopLeftEdgeToTopIncreasesSizeAndDecreasesOrigin() {
+    func test_resizing_aspect_draggingTopLeftEdgeToTopIncreasesSizeAndDecreasesOrigin() throws {
         let page = LayoutEnginePage(id: UUID(),
                                     contentFrame: CGRect(x: 0, y: 0, width: 20, height: 40),
                                     maintainAspectRatio: true,
@@ -1347,12 +1105,12 @@ extension CanvasLayoutEngineTests {
         expectedFrame.origin = expectedFrame.origin.plus(CGPoint(x: -2, y: -4))
         expectedFrame.size = expectedFrame.size.plus(CGSize(width: 2, height: 4))
 
-        self.drag(page, byXEdge: .min, yEdge: .min, deltaX: 0, deltaY: -4)
+        try self.drag(page, byXEdge: .min, yEdge: .min, deltaX: 0, deltaY: -4)
 
         XCTAssertEqual(page.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_aspect_draggingTopLeftEdgeToBottomDecreasesSizeAndIncreasesOrigin() {
+    func test_resizing_aspect_draggingTopLeftEdgeToBottomDecreasesSizeAndIncreasesOrigin() throws {
         let page = LayoutEnginePage(id: UUID(),
                                     contentFrame: CGRect(x: 0, y: 0, width: 20, height: 40),
                                     maintainAspectRatio: true,
@@ -1362,36 +1120,36 @@ extension CanvasLayoutEngineTests {
         expectedFrame.origin = expectedFrame.origin.plus(CGPoint(x: 2, y: 4))
         expectedFrame.size = expectedFrame.size.plus(CGSize(width: -2, height: -4))
 
-        self.drag(page, byXEdge: .min, yEdge: .min, deltaX: 0, deltaY: 4)
+        try self.drag(page, byXEdge: .min, yEdge: .min, deltaX: 0, deltaY: 4)
 
         XCTAssertEqual(page.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_aspect_draggingTopLeftEdgeToLeftDoesntChangeSizeOrOrigin() {
+    func test_resizing_aspect_draggingTopLeftEdgeToLeftDoesntChangeSizeOrOrigin() throws {
         let page = LayoutEnginePage(id: UUID(),
                                     contentFrame: CGRect(x: 0, y: 0, width: 20, height: 40),
                                     maintainAspectRatio: true,
                                     minimumContentSize: .zero)
         self.layoutEngine.add([page])
         let expectedFrame = page.layoutFrame
-        self.drag(page, byXEdge: .min, yEdge: .min, deltaX: -4, deltaY: 0)
+        try self.drag(page, byXEdge: .min, yEdge: .min, deltaX: -4, deltaY: 0)
 
         XCTAssertEqual(page.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_aspect_draggingTopLeftEdgeToRightDoesntChangeSizeOrOrigin() {
+    func test_resizing_aspect_draggingTopLeftEdgeToRightDoesntChangeSizeOrOrigin() throws {
         let page = LayoutEnginePage(id: UUID(),
                                     contentFrame: CGRect(x: 0, y: 0, width: 20, height: 40),
                                     maintainAspectRatio: true,
                                     minimumContentSize: .zero)
         self.layoutEngine.add([page])
         let expectedFrame = page.layoutFrame
-        self.drag(page, byXEdge: .min, yEdge: .min, deltaX: 4, deltaY: 0)
+        try self.drag(page, byXEdge: .min, yEdge: .min, deltaX: 4, deltaY: 0)
 
         XCTAssertEqual(page.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_aspect_draggingTopLeftEdgeToTopStopsAtCanvasEdgeIfWiderThanTaller() {
+    func test_resizing_aspect_draggingTopLeftEdgeToTopStopsAtCanvasEdgeIfWiderThanTaller() throws {
         let contentMidPoint = self.layoutEngine.convertPointToPageSpace(self.contentFrame.midPoint)
         let page = LayoutEnginePage(id: UUID(),
                                     contentFrame: CGRect(x: contentMidPoint.x - 20, y: contentMidPoint.y - 10, width: 40, height: 20),
@@ -1405,12 +1163,12 @@ extension CanvasLayoutEngineTests {
         expectedFrame.size = expectedFrame.size.plus(width: widthChange, height: heightChange)
         expectedFrame.origin = expectedFrame.origin.plus(x: -widthChange, y: -heightChange).plus(x: self.contentBorder, y: 0)
 
-        self.drag(page, byXEdge: .min, yEdge: .min, deltaX: 0, deltaY: -100)
+        try self.drag(page, byXEdge: .min, yEdge: .min, deltaX: 0, deltaY: -100)
 
         XCTAssertEqual(page.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_aspect_draggingTopLeftEdgeToTopStopsAtCanvasEdgeIfTallerThanWider() {
+    func test_resizing_aspect_draggingTopLeftEdgeToTopStopsAtCanvasEdgeIfTallerThanWider() throws {
         let contentMidPoint = self.layoutEngine.convertPointToPageSpace(self.contentFrame.midPoint)
         let page = LayoutEnginePage(id: UUID(),
                                     contentFrame: CGRect(x: contentMidPoint.x - 10, y: contentMidPoint.y - 20, width: 20, height: 40),
@@ -1424,12 +1182,12 @@ extension CanvasLayoutEngineTests {
         expectedFrame.size = expectedFrame.size.plus(width: widthChange, height: heightChange)
         expectedFrame.origin = expectedFrame.origin.plus(x: -widthChange, y: -heightChange).plus(x: 0, y: self.contentBorder)
 
-        self.drag(page, byXEdge: .min, yEdge: .min, deltaX: 0, deltaY: -100)
+        try self.drag(page, byXEdge: .min, yEdge: .min, deltaX: 0, deltaY: -100)
 
         XCTAssertEqual(page.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_aspect_draggingTopLeftEdgeToBottomStopsAtMinHeightIfWiderThanTaller() {
+    func test_resizing_aspect_draggingTopLeftEdgeToBottomStopsAtMinHeightIfWiderThanTaller() throws {
         let page = LayoutEnginePage(id: UUID(),
                                     contentFrame: CGRect(x: 0, y: 0, width: 40, height: 20),
                                     maintainAspectRatio: true,
@@ -1442,12 +1200,12 @@ extension CanvasLayoutEngineTests {
         expectedFrame.size = expectedFrame.size.plus(width: -widthChange, height: -heightChange)
         expectedFrame.origin = expectedFrame.origin.plus(x: widthChange, y: heightChange)
 
-        self.drag(page, byXEdge: .min, yEdge: .min, deltaX: 0, deltaY: 100)
+        try self.drag(page, byXEdge: .min, yEdge: .min, deltaX: 0, deltaY: 100)
 
         XCTAssertEqual(page.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_aspect_draggingTopLeftEdgeToBottomStopsAtMinWidthIfTallerThanWider() {
+    func test_resizing_aspect_draggingTopLeftEdgeToBottomStopsAtMinWidthIfTallerThanWider() throws {
         let page = LayoutEnginePage(id: UUID(),
                                     contentFrame: CGRect(x: 0, y: 0, width: 20, height: 40),
                                     maintainAspectRatio: true,
@@ -1460,14 +1218,14 @@ extension CanvasLayoutEngineTests {
         expectedFrame.size = expectedFrame.size.plus(width: -widthChange, height: -heightChange)
         expectedFrame.origin = expectedFrame.origin.plus(x: widthChange, y: heightChange)
 
-        self.drag(page, byXEdge: .min, yEdge: .min, deltaX: 0, deltaY: 100)
+        try self.drag(page, byXEdge: .min, yEdge: .min, deltaX: 0, deltaY: 100)
 
         XCTAssertEqual(page.layoutFrame, expectedFrame)
     }
 
 
     //Top Right - Aspect
-    func test_resizing_aspect_draggingTopRightEdgeToTopIncreasesSizeAndDecreasesY() {
+    func test_resizing_aspect_draggingTopRightEdgeToTopIncreasesSizeAndDecreasesY() throws {
         let page = LayoutEnginePage(id: UUID(),
                                     contentFrame: CGRect(x: 0, y: 0, width: 20, height: 40),
                                     maintainAspectRatio: true,
@@ -1477,12 +1235,12 @@ extension CanvasLayoutEngineTests {
         expectedFrame.origin = expectedFrame.origin.plus(CGPoint(x: 0, y: -4))
         expectedFrame.size = expectedFrame.size.plus(CGSize(width: 2, height: 4))
 
-        self.drag(page, byXEdge: .max, yEdge: .min, deltaX: 0, deltaY: -4)
+        try self.drag(page, byXEdge: .max, yEdge: .min, deltaX: 0, deltaY: -4)
 
         XCTAssertEqual(page.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_aspect_draggingTopRightEdgeToBottomDecreasesSizeAndIncreasesY() {
+    func test_resizing_aspect_draggingTopRightEdgeToBottomDecreasesSizeAndIncreasesY() throws {
         let page = LayoutEnginePage(id: UUID(),
                                     contentFrame: CGRect(x: 0, y: 0, width: 20, height: 40),
                                     maintainAspectRatio: true,
@@ -1492,36 +1250,36 @@ extension CanvasLayoutEngineTests {
         expectedFrame.origin = expectedFrame.origin.plus(CGPoint(x: 0, y: 4))
         expectedFrame.size = expectedFrame.size.plus(CGSize(width: -2, height: -4))
 
-        self.drag(page, byXEdge: .max, yEdge: .min, deltaX: 0, deltaY: 4)
+        try self.drag(page, byXEdge: .max, yEdge: .min, deltaX: 0, deltaY: 4)
 
         XCTAssertEqual(page.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_aspect_draggingTopRightEdgeToLeftDoesntChangeSizeOrOrigin() {
+    func test_resizing_aspect_draggingTopRightEdgeToLeftDoesntChangeSizeOrOrigin() throws {
         let page = LayoutEnginePage(id: UUID(),
                                     contentFrame: CGRect(x: 0, y: 0, width: 20, height: 40),
                                     maintainAspectRatio: true,
                                     minimumContentSize: .zero)
         self.layoutEngine.add([page])
         let expectedFrame = page.layoutFrame
-        self.drag(page, byXEdge: .max, yEdge: .min, deltaX: -4, deltaY: 0)
+        try self.drag(page, byXEdge: .max, yEdge: .min, deltaX: -4, deltaY: 0)
 
         XCTAssertEqual(page.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_aspect_draggingTopRightEdgeToRightDoesntChangeSizeOrOrigin() {
+    func test_resizing_aspect_draggingTopRightEdgeToRightDoesntChangeSizeOrOrigin() throws {
         let page = LayoutEnginePage(id: UUID(),
                                     contentFrame: CGRect(x: 0, y: 0, width: 20, height: 40),
                                     maintainAspectRatio: true,
                                     minimumContentSize: .zero)
         self.layoutEngine.add([page])
         let expectedFrame = page.layoutFrame
-        self.drag(page, byXEdge: .max, yEdge: .min, deltaX: 4, deltaY: 0)
+        try self.drag(page, byXEdge: .max, yEdge: .min, deltaX: 4, deltaY: 0)
 
         XCTAssertEqual(page.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_aspect_draggingTopRightEdgeToTopStopsAtCanvasEdgeIfWiderThanTaller() {
+    func test_resizing_aspect_draggingTopRightEdgeToTopStopsAtCanvasEdgeIfWiderThanTaller() throws {
         let page = LayoutEnginePage(id: UUID(),
                                     contentFrame: CGRect(x: 0, y: 0, width: 40, height: 20),
                                     maintainAspectRatio: true,
@@ -1535,12 +1293,12 @@ extension CanvasLayoutEngineTests {
         expectedFrame.size = expectedFrame.size.plus(width: widthChange, height: heightChange)
         expectedFrame.origin.y -= heightChange
 
-        self.drag(page, byXEdge: .max, yEdge: .min, deltaX: 0, deltaY: -100)
+        try self.drag(page, byXEdge: .max, yEdge: .min, deltaX: 0, deltaY: -100)
 
         XCTAssertEqual(page.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_aspect_draggingTopRightEdgeToTopStopsAtCanvasEdgeIfTallerThanWider() {
+    func test_resizing_aspect_draggingTopRightEdgeToTopStopsAtCanvasEdgeIfTallerThanWider() throws {
         let page = LayoutEnginePage(id: UUID(),
                                     contentFrame: CGRect(x: 0, y: 0, width: 20, height: 40),
                                     maintainAspectRatio: true,
@@ -1554,12 +1312,12 @@ extension CanvasLayoutEngineTests {
         expectedFrame.size = expectedFrame.size.plus(width: widthChange, height: heightChange)
         expectedFrame.origin.y = self.contentBorder
 
-        self.drag(page, byXEdge: .max, yEdge: .min, deltaX: 0, deltaY: -100)
+        try self.drag(page, byXEdge: .max, yEdge: .min, deltaX: 0, deltaY: -100)
 
         XCTAssertEqual(page.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_aspect_draggingTopRightEdgeToBottomStopsAtMinHeightIfWiderThanTaller() {
+    func test_resizing_aspect_draggingTopRightEdgeToBottomStopsAtMinHeightIfWiderThanTaller() throws {
         let page = LayoutEnginePage(id: UUID(),
                                     contentFrame: CGRect(x: 0, y: 0, width: 40, height: 20),
                                     maintainAspectRatio: true,
@@ -1572,12 +1330,12 @@ extension CanvasLayoutEngineTests {
         expectedFrame.size = expectedFrame.size.plus(width: -widthChange, height: -heightChange)
         expectedFrame.origin.y += heightChange
 
-        self.drag(page, byXEdge: .max, yEdge: .min, deltaX: 0, deltaY: 100)
+        try self.drag(page, byXEdge: .max, yEdge: .min, deltaX: 0, deltaY: 100)
 
         XCTAssertEqual(page.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_aspect_draggingTopRightEdgeToBottomStopsAtMinWidthIfTallThanWider() {
+    func test_resizing_aspect_draggingTopRightEdgeToBottomStopsAtMinWidthIfTallThanWider() throws {
         let page = LayoutEnginePage(id: UUID(),
                                     contentFrame: CGRect(x: 0, y: 0, width: 20, height: 40),
                                     maintainAspectRatio: true,
@@ -1590,13 +1348,13 @@ extension CanvasLayoutEngineTests {
         expectedFrame.size = expectedFrame.size.plus(width: -widthChange, height: -heightChange)
         expectedFrame.origin.y += heightChange
 
-        self.drag(page, byXEdge: .max, yEdge: .min, deltaX: 0, deltaY: 100)
+        try self.drag(page, byXEdge: .max, yEdge: .min, deltaX: 0, deltaY: 100)
 
         XCTAssertEqual(page.layoutFrame, expectedFrame)
     }
 
     //Bottom Right - Aspect
-    func test_resizing_aspect_draggingBottomRightEdgeToBottomIncreasesSize() {
+    func test_resizing_aspect_draggingBottomRightEdgeToBottomIncreasesSize() throws {
         let page = LayoutEnginePage(id: UUID(),
                                     contentFrame: CGRect(x: 0, y: 0, width: 20, height: 40),
                                     maintainAspectRatio: true,
@@ -1605,12 +1363,12 @@ extension CanvasLayoutEngineTests {
         var expectedFrame = page.layoutFrame
         expectedFrame.size = expectedFrame.size.plus(CGSize(width: 2, height: 4))
 
-        self.drag(page, byXEdge: .max, yEdge: .max, deltaX: 0, deltaY: 4)
+        try self.drag(page, byXEdge: .max, yEdge: .max, deltaX: 0, deltaY: 4)
 
         XCTAssertEqual(page.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_aspect_draggingBottomRightEdgeToTopDecreasesSize() {
+    func test_resizing_aspect_draggingBottomRightEdgeToTopDecreasesSize() throws {
         let page = LayoutEnginePage(id: UUID(),
                                     contentFrame: CGRect(x: 0, y: 0, width: 20, height: 40),
                                     maintainAspectRatio: true,
@@ -1619,36 +1377,36 @@ extension CanvasLayoutEngineTests {
         var expectedFrame = page.layoutFrame
         expectedFrame.size = expectedFrame.size.plus(CGSize(width: -2, height: -4))
 
-        self.drag(page, byXEdge: .max, yEdge: .max, deltaX: 0, deltaY: -4)
+        try self.drag(page, byXEdge: .max, yEdge: .max, deltaX: 0, deltaY: -4)
 
         XCTAssertEqual(page.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_aspect_draggingBottomRightEdgeToLeftDoesntChangeSizeOrOrigin() {
+    func test_resizing_aspect_draggingBottomRightEdgeToLeftDoesntChangeSizeOrOrigin() throws {
         let page = LayoutEnginePage(id: UUID(),
                                     contentFrame: CGRect(x: 0, y: 0, width: 20, height: 40),
                                     maintainAspectRatio: true,
                                     minimumContentSize: .zero)
         self.layoutEngine.add([page])
         let expectedFrame = page.layoutFrame
-        self.drag(page, byXEdge: .max, yEdge: .max, deltaX: -4, deltaY: 0)
+        try self.drag(page, byXEdge: .max, yEdge: .max, deltaX: -4, deltaY: 0)
 
         XCTAssertEqual(page.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_aspect_draggingBottomRightEdgeToRightDoesntChangeSizeOrOrigin() {
+    func test_resizing_aspect_draggingBottomRightEdgeToRightDoesntChangeSizeOrOrigin() throws {
         let page = LayoutEnginePage(id: UUID(),
                                     contentFrame: CGRect(x: 0, y: 0, width: 20, height: 40),
                                     maintainAspectRatio: true,
                                     minimumContentSize: .zero)
         self.layoutEngine.add([page])
         let expectedFrame = page.layoutFrame
-        self.drag(page, byXEdge: .max, yEdge: .max, deltaX: 4, deltaY: 0)
+        try self.drag(page, byXEdge: .max, yEdge: .max, deltaX: 4, deltaY: 0)
 
         XCTAssertEqual(page.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_aspect_draggingBottomRightEdgeToBottomStopsAtCanvasEdgeIfWiderThanTaller() {
+    func test_resizing_aspect_draggingBottomRightEdgeToBottomStopsAtCanvasEdgeIfWiderThanTaller() throws {
         let page = LayoutEnginePage(id: UUID(),
                                     contentFrame: CGRect(x: 0, y: 0, width: 40, height: 20),
                                     maintainAspectRatio: true,
@@ -1661,12 +1419,12 @@ extension CanvasLayoutEngineTests {
 
         expectedFrame.size = expectedFrame.size.plus(width: widthChange, height: heightChange)
 
-        self.drag(page, byXEdge: .max, yEdge: .max, deltaX: 0, deltaY: 100)
+        try self.drag(page, byXEdge: .max, yEdge: .max, deltaX: 0, deltaY: 100)
 
         XCTAssertEqual(page.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_aspect_draggingBottomRightEdgeToBottomStopsAtCanvasEdgeIfTallerThanWider() {
+    func test_resizing_aspect_draggingBottomRightEdgeToBottomStopsAtCanvasEdgeIfTallerThanWider() throws {
         let page = LayoutEnginePage(id: UUID(),
                                     contentFrame: CGRect(x: 0, y: 0, width: 20, height: 40),
                                     maintainAspectRatio: true,
@@ -1679,12 +1437,12 @@ extension CanvasLayoutEngineTests {
 
         expectedFrame.size = expectedFrame.size.plus(width: widthChange, height: heightChange)
 
-        self.drag(page, byXEdge: .max, yEdge: .max, deltaX: 0, deltaY: 100)
+        try self.drag(page, byXEdge: .max, yEdge: .max, deltaX: 0, deltaY: 100)
 
         XCTAssertEqual(page.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_aspect_draggingBottomRightEdgeToTopStopsAtMinHeightIfWiderThanTaller() {
+    func test_resizing_aspect_draggingBottomRightEdgeToTopStopsAtMinHeightIfWiderThanTaller() throws {
         let page = LayoutEnginePage(id: UUID(),
                                     contentFrame: CGRect(x: 0, y: 0, width: 40, height: 20),
                                     maintainAspectRatio: true,
@@ -1696,12 +1454,12 @@ extension CanvasLayoutEngineTests {
         let heightChange = page.contentFrame.height / 2
         expectedFrame.size = expectedFrame.size.plus(width: -widthChange, height: -heightChange)
 
-        self.drag(page, byXEdge: .max, yEdge: .max, deltaX: 0, deltaY: -100)
+        try self.drag(page, byXEdge: .max, yEdge: .max, deltaX: 0, deltaY: -100)
 
         XCTAssertEqual(page.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_aspect_draggingBottomRightEdgeToTopStopsAtMinWidthIfTallThanWider() {
+    func test_resizing_aspect_draggingBottomRightEdgeToTopStopsAtMinWidthIfTallThanWider() throws {
         let page = LayoutEnginePage(id: UUID(),
                                     contentFrame: CGRect(x: 0, y: 0, width: 20, height: 40),
                                     maintainAspectRatio: true,
@@ -1713,13 +1471,13 @@ extension CanvasLayoutEngineTests {
         let heightChange = page.contentFrame.height / 2
         expectedFrame.size = expectedFrame.size.plus(width: -widthChange, height: -heightChange)
 
-        self.drag(page, byXEdge: .max, yEdge: .max, deltaX: 0, deltaY: -100)
+        try self.drag(page, byXEdge: .max, yEdge: .max, deltaX: 0, deltaY: -100)
 
         XCTAssertEqual(page.layoutFrame, expectedFrame)
     }
 
     //Bottom Left - Aspect
-    func test_resizing_aspect_draggingBottomLeftEdgeToBottomIncreasesSizeAndDecreasesX() {
+    func test_resizing_aspect_draggingBottomLeftEdgeToBottomIncreasesSizeAndDecreasesX() throws {
         let page = LayoutEnginePage(id: UUID(),
                                     contentFrame: CGRect(x: 0, y: 0, width: 20, height: 40),
                                     maintainAspectRatio: true,
@@ -1729,12 +1487,12 @@ extension CanvasLayoutEngineTests {
         expectedFrame.origin = expectedFrame.origin.plus(CGPoint(x: -2, y: 0))
         expectedFrame.size = expectedFrame.size.plus(CGSize(width: 2, height: 4))
 
-        self.drag(page, byXEdge: .min, yEdge: .max, deltaX: 0, deltaY: 4)
+        try self.drag(page, byXEdge: .min, yEdge: .max, deltaX: 0, deltaY: 4)
 
         XCTAssertEqual(page.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_aspect_draggingBottomLeftEdgeToTopDecreasesSizeAndIncreasesX() {
+    func test_resizing_aspect_draggingBottomLeftEdgeToTopDecreasesSizeAndIncreasesX() throws {
         let page = LayoutEnginePage(id: UUID(),
                                     contentFrame: CGRect(x: 0, y: 0, width: 20, height: 40),
                                     maintainAspectRatio: true,
@@ -1744,36 +1502,36 @@ extension CanvasLayoutEngineTests {
         expectedFrame.origin = expectedFrame.origin.plus(CGPoint(x: 2, y: 0))
         expectedFrame.size = expectedFrame.size.plus(CGSize(width: -2, height: -4))
 
-        self.drag(page, byXEdge: .min, yEdge: .max, deltaX: 0, deltaY: -4)
+        try self.drag(page, byXEdge: .min, yEdge: .max, deltaX: 0, deltaY: -4)
 
         XCTAssertEqual(page.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_aspect_draggingBottomLeftEdgeToLeftDoesntChangeSizeOrOrigin() {
+    func test_resizing_aspect_draggingBottomLeftEdgeToLeftDoesntChangeSizeOrOrigin() throws {
         let page = LayoutEnginePage(id: UUID(),
                                     contentFrame: CGRect(x: 0, y: 0, width: 20, height: 40),
                                     maintainAspectRatio: true,
                                     minimumContentSize: .zero)
         self.layoutEngine.add([page])
         let expectedFrame = page.layoutFrame
-        self.drag(page, byXEdge: .min, yEdge: .max, deltaX: -4, deltaY: 0)
+        try self.drag(page, byXEdge: .min, yEdge: .max, deltaX: -4, deltaY: 0)
 
         XCTAssertEqual(page.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_aspect_draggingBottomLeftEdgeToRightDoesntChangeSizeOrOrigin() {
+    func test_resizing_aspect_draggingBottomLeftEdgeToRightDoesntChangeSizeOrOrigin() throws {
         let page = LayoutEnginePage(id: UUID(),
                                     contentFrame: CGRect(x: 0, y: 0, width: 20, height: 40),
                                     maintainAspectRatio: true,
                                     minimumContentSize: .zero)
         self.layoutEngine.add([page])
         let expectedFrame = page.layoutFrame
-        self.drag(page, byXEdge: .min, yEdge: .max, deltaX: 4, deltaY: 0)
+        try self.drag(page, byXEdge: .min, yEdge: .max, deltaX: 4, deltaY: 0)
 
         XCTAssertEqual(page.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_aspect_draggingBottomLeftEdgeToBottomStopsAtCanvasEdgeIfWiderThanTaller() {
+    func test_resizing_aspect_draggingBottomLeftEdgeToBottomStopsAtCanvasEdgeIfWiderThanTaller() throws {
         let page = LayoutEnginePage(id: UUID(),
                                     contentFrame: CGRect(x: 0, y: 0, width: 40, height: 20),
                                     maintainAspectRatio: true,
@@ -1787,12 +1545,12 @@ extension CanvasLayoutEngineTests {
         expectedFrame.size = expectedFrame.size.plus(width: widthChange, height: heightChange)
         expectedFrame.origin.x = self.contentBorder
 
-        self.drag(page, byXEdge: .min, yEdge: .max, deltaX: 0, deltaY: 100)
+        try self.drag(page, byXEdge: .min, yEdge: .max, deltaX: 0, deltaY: 100)
 
         XCTAssertEqual(page.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_aspect_draggingBottomLeftEdgeToTopStopsAtCanvasEdgeIfTallerThanWider() {
+    func test_resizing_aspect_draggingBottomLeftEdgeToTopStopsAtCanvasEdgeIfTallerThanWider() throws {
         let page = LayoutEnginePage(id: UUID(),
                                     contentFrame: CGRect(x: 0, y: 0, width: 20, height: 40),
                                     maintainAspectRatio: true,
@@ -1806,12 +1564,12 @@ extension CanvasLayoutEngineTests {
         expectedFrame.size = expectedFrame.size.plus(width: widthChange, height: heightChange)
         expectedFrame.origin.x -= widthChange
 
-        self.drag(page, byXEdge: .min, yEdge: .max, deltaX: 0, deltaY: 100)
+        try self.drag(page, byXEdge: .min, yEdge: .max, deltaX: 0, deltaY: 100)
 
         XCTAssertEqual(page.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_aspect_draggingBottomLeftEdgeToTopStopsAtMinHeightIfWiderThanTaller() {
+    func test_resizing_aspect_draggingBottomLeftEdgeToTopStopsAtMinHeightIfWiderThanTaller() throws {
         let page = LayoutEnginePage(id: UUID(),
                                     contentFrame: CGRect(x: 0, y: 0, width: 40, height: 20),
                                     maintainAspectRatio: true,
@@ -1824,12 +1582,12 @@ extension CanvasLayoutEngineTests {
         expectedFrame.size = expectedFrame.size.plus(width: -widthChange, height: -heightChange)
         expectedFrame.origin.x += widthChange
 
-        self.drag(page, byXEdge: .min, yEdge: .max, deltaX: 0, deltaY: -100)
+        try self.drag(page, byXEdge: .min, yEdge: .max, deltaX: 0, deltaY: -100)
 
         XCTAssertEqual(page.layoutFrame, expectedFrame)
     }
 
-    func test_resizing_aspect_draggingBottomLeftEdgeToTopStopsAtMinWidthIfTallThanWider() {
+    func test_resizing_aspect_draggingBottomLeftEdgeToTopStopsAtMinWidthIfTallThanWider() throws {
         let page = LayoutEnginePage(id: UUID(),
                                     contentFrame: CGRect(x: 0, y: 0, width: 20, height: 40),
                                     maintainAspectRatio: true,
@@ -1842,7 +1600,7 @@ extension CanvasLayoutEngineTests {
         expectedFrame.size = expectedFrame.size.plus(width: -widthChange, height: -heightChange)
         expectedFrame.origin.x += widthChange
 
-        self.drag(page, byXEdge: .min, yEdge: .max, deltaX: 0, deltaY: -100)
+        try self.drag(page, byXEdge: .min, yEdge: .max, deltaX: 0, deltaY: -100)
 
         XCTAssertEqual(page.layoutFrame, expectedFrame)
     }

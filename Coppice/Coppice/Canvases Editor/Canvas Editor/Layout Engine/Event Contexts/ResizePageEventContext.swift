@@ -69,6 +69,12 @@ class ResizePageEventContext: CanvasMouseEventContext {
             if (layoutFrame.width - deltaX < self.page.minimumLayoutSize.width) {
                 deltaX = -(self.page.minimumLayoutSize.width - layoutFrame.width)
             }
+
+            //If the page is outside the canvas left edge then reduce the delta by the overshoot and fit inside
+            if ((layoutFrame.origin.x + deltaX) < 0) {
+                deltaX = -(layoutFrame.origin.x)
+            }
+
             layoutFrame.size.width -= deltaX
             layoutFrame.origin.x += deltaX
         }
@@ -83,6 +89,10 @@ class ResizePageEventContext: CanvasMouseEventContext {
         else if (self.component.isTop) {
             if (layoutFrame.height - deltaY < self.page.minimumLayoutSize.height) {
                 deltaY = -(self.page.minimumLayoutSize.height - layoutFrame.height)
+            }
+            //If the page is outside the canvas left edge then reduce the delta by the overshoot and fit inside
+            if ((layoutFrame.origin.y + deltaY) < 0) {
+                deltaY = -(layoutFrame.origin.y)
             }
             layoutFrame.size.height -= deltaY
             layoutFrame.origin.y += deltaY

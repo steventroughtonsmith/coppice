@@ -39,6 +39,11 @@ class LayoutEnginePage: Equatable {
             self.recalculateEdgeFromParent()
         }
     }
+
+    var configuration: CanvasLayoutEngine.Configuration? {
+        return self.layoutEngine?.configuration
+    }
+
     init(id: UUID,
          contentFrame: CGRect,
          maintainAspectRatio: Bool = false,
@@ -170,7 +175,7 @@ class LayoutEnginePage: Equatable {
     }
 
     var minimumLayoutSize: CGSize {
-        guard let config = self.layoutEngine?.configuration else {
+        guard let config = self.configuration else {
             return self.minimumContentSize
         }
 
@@ -182,7 +187,7 @@ class LayoutEnginePage: Equatable {
         get {
             let canvasOrigin = self.layoutEngine?.convertPointToCanvasSpace(self.contentFrame.origin) ?? self.contentFrame.origin
             let canvasFrame = CGRect(origin: canvasOrigin, size: self.contentFrame.size)
-            guard let config = self.layoutEngine?.configuration else {
+            guard let config = self.configuration else {
                 return canvasFrame
             }
             let margins = self.layoutFrameMargins(for: config)
@@ -192,7 +197,7 @@ class LayoutEnginePage: Equatable {
 
             let pageOrigin = self.layoutEngine?.convertPointToPageSpace(newValue.origin) ?? newValue.origin
             let contentFrame = CGRect(origin: pageOrigin, size: newValue.size)
-            guard let config = self.layoutEngine?.configuration else {
+            guard let config = self.configuration else {
                 self.contentFrame = contentFrame
                 return
             }
@@ -214,7 +219,7 @@ class LayoutEnginePage: Equatable {
 
     var visualPageFrame: CGRect {
         let visualFrame = CGRect(origin: .zero, size: self.layoutFrame.size)
-        guard let config = self.layoutEngine?.configuration else {
+        guard let config = self.configuration else {
             return visualFrame
         }
         return visualFrame.shrink(by: config.page.shadowOffset)
@@ -222,14 +227,14 @@ class LayoutEnginePage: Equatable {
 
     var titleBarFrame: CGRect {
         var visualPageFrame = self.visualPageFrame
-        let titleHeight = self.layoutEngine?.configuration.page.titleHeight ?? 0
+        let titleHeight = self.configuration?.page.titleHeight ?? 0
         visualPageFrame.size.height = titleHeight
 
         return visualPageFrame
     }
 
     var contentContainerFrame: CGRect {
-        guard let config = self.layoutEngine?.configuration else {
+        guard let config = self.configuration else {
             return .zero
         }
 
@@ -261,7 +266,7 @@ class LayoutEnginePage: Equatable {
 
     //MARK: - Components
     func rectInLayoutFrame(for component: LayoutEnginePageComponent) -> CGRect {
-        guard let configuration = self.layoutEngine?.configuration else {
+        guard let configuration = self.configuration else {
             return .zero
         }
         if (component == .titleBar) {
