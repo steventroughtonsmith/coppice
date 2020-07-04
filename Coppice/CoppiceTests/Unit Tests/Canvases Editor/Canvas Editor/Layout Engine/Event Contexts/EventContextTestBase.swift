@@ -29,17 +29,19 @@ class EventContextTestBase: XCTestCase {
     var page1: TestLayoutEnginePage!
     var page2: TestLayoutEnginePage!
     var page3: TestLayoutEnginePage!
+    var page3Wide: TestLayoutEnginePage!
 
     var mockLayoutEngine: MockLayoutEngine!
 
     var contentBorder: CGFloat = 20
+    var contentOffset: CGPoint = .zero
 
     var testConfiguration: CanvasLayoutEngine.Configuration?
 
     override func setUpWithError() throws {
         try super.setUpWithError()
 
-        self.testConfiguration = .init(page: .init(titleHeight: 4, borderSize: 0, shadowOffset: .zero, edgeResizeHandleSize: 2, cornerResizeHandleSize: 4),
+        self.testConfiguration = .init(page: .init(titleHeight: 0, borderSize: 0, shadowOffset: .zero, edgeResizeHandleSize: 2, cornerResizeHandleSize: 4),
                                        contentBorder: 0,
                                        arrow: .init(endLength: 5, cornerSize: 5, arrowHeadSize: 5, lineWidth: 2))
 
@@ -54,15 +56,22 @@ class EventContextTestBase: XCTestCase {
         self.page2.testConfiguration = self.testConfiguration
 
         self.page3 = TestLayoutEnginePage(id: UUID(),
-                                          contentFrame: CGRect(x: 30, y: -10, width: 30, height: 30),
+                                          contentFrame: CGRect(x: 30, y: -10, width: 20, height: 40),
+                                          maintainAspectRatio: true,
                                           minimumContentSize: CGSize(width: 0, height: 0))
         self.page3.testConfiguration = self.testConfiguration
+
+        self.page3Wide = TestLayoutEnginePage(id: UUID(),
+                                          contentFrame: CGRect(x: 10, y: -10, width: 40, height: 20),
+                                          maintainAspectRatio: true,
+                                          minimumContentSize: CGSize(width: 0, height: 0))
+        self.page3Wide.testConfiguration = self.testConfiguration
 
         self.mockLayoutEngine = MockLayoutEngine()
     }
 
     func setupLayoutFrames() {
-        let pages = [self.page1, self.page2, self.page3] as [TestLayoutEnginePage]
+        let pages = [self.page1, self.page2, self.page3, self.page3Wide] as [TestLayoutEnginePage]
         let frame = pages.reduce(.zero) { (frame, page) in
             return page.contentFrame.union(frame)
         }
@@ -70,6 +79,7 @@ class EventContextTestBase: XCTestCase {
         let expandedFrame = frame.insetBy(dx: -self.contentBorder, dy: -self.contentBorder)
 
         self.mockLayoutEngine.canvasSize = expandedFrame.size
+        self.contentOffset = expandedFrame.origin
 
         for page in pages {
             var pageFrame = page.contentFrame

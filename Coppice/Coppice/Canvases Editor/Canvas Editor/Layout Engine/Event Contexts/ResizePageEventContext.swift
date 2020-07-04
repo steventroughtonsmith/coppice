@@ -46,7 +46,7 @@ class ResizePageEventContext: CanvasMouseEventContext {
         if (self.page.maintainAspectRatio) {
             finalDelta = self.performAspectResize(with: delta, in: layout)
         } else {
-            finalDelta = self.performRegularResize(with: delta)
+            finalDelta = self.performRegularResize(with: delta, in: layout)
         }
 
         layout.modified([self.page])
@@ -55,13 +55,17 @@ class ResizePageEventContext: CanvasMouseEventContext {
 
 
     //MARK: - Resizing
-    private func performRegularResize(with delta: CGPoint) -> CGPoint {
+    private func performRegularResize(with delta: CGPoint, in layout: LayoutEngine) -> CGPoint {
         var layoutFrame = self.page.layoutFrame
 
         var deltaX = delta.x
         if (self.component.isRight) {
             if (layoutFrame.width + deltaX < self.page.minimumLayoutSize.width) {
                 deltaX = self.page.minimumLayoutSize.width - layoutFrame.width
+            }
+            //If the page is outside the canvas right edge then reduce the delta by the overshoot and fit inside
+            if ((layoutFrame.maxX + deltaX) > layout.canvasSize.width) {
+                deltaX = layout.canvasSize.width - layoutFrame.maxX
             }
             layoutFrame.size.width += deltaX
         }
@@ -84,13 +88,17 @@ class ResizePageEventContext: CanvasMouseEventContext {
             if (layoutFrame.height + deltaY < self.page.minimumLayoutSize.height) {
                 deltaY = self.page.minimumLayoutSize.height - layoutFrame.height
             }
+            //If the page is outside the canvas bottom edge then reduce the delta by the overshoot and fit inside
+            if ((layoutFrame.maxY + deltaY) > layout.canvasSize.height) {
+                deltaY = layout.canvasSize.height - layoutFrame.maxY
+            }
             layoutFrame.size.height += deltaY
         }
         else if (self.component.isTop) {
             if (layoutFrame.height - deltaY < self.page.minimumLayoutSize.height) {
                 deltaY = -(self.page.minimumLayoutSize.height - layoutFrame.height)
             }
-            //If the page is outside the canvas left edge then reduce the delta by the overshoot and fit inside
+            //If the page is outside the canvas top edge then reduce the delta by the overshoot and fit inside
             if ((layoutFrame.origin.y + deltaY) < 0) {
                 deltaY = -(layoutFrame.origin.y)
             }
