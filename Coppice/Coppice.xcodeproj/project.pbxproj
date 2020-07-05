@@ -97,6 +97,7 @@
 		99581095230D93F700D996C4 /* CanvasPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99581094230D93F700D996C4 /* CanvasPageViewModel.swift */; };
 		99582817247702B300080593 /* ResizeHandleAccessibilityElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99582816247702B300080593 /* ResizeHandleAccessibilityElement.swift */; };
 		9959178724606A1900E8874C /* ResponderChainValidatingToolbarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9959178624606A1900E8874C /* ResponderChainValidatingToolbarItem.swift */; };
+		9960CCE924B1EC1C001F092E /* MockEventContextFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9960CCE824B1EC1C001F092E /* MockEventContextFactory.swift */; };
 		996187F0249A5166007313BD /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996187EE249A5166007313BD /* PreferencesWindowController.swift */; };
 		996187F1249A5166007313BD /* PreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 996187EF249A5166007313BD /* PreferencesWindow.xib */; };
 		996187F4249A523D007313BD /* GeneralPreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996187F2249A523D007313BD /* GeneralPreferencesViewController.swift */; };
@@ -426,6 +427,7 @@
 		99581094230D93F700D996C4 /* CanvasPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageViewModel.swift; sourceTree = "<group>"; };
 		99582816247702B300080593 /* ResizeHandleAccessibilityElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizeHandleAccessibilityElement.swift; sourceTree = "<group>"; };
 		9959178624606A1900E8874C /* ResponderChainValidatingToolbarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponderChainValidatingToolbarItem.swift; sourceTree = "<group>"; };
+		9960CCE824B1EC1C001F092E /* MockEventContextFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEventContextFactory.swift; sourceTree = "<group>"; };
 		996187EE249A5166007313BD /* PreferencesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
 		996187EF249A5166007313BD /* PreferencesWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreferencesWindow.xib; sourceTree = "<group>"; };
 		996187F2249A523D007313BD /* GeneralPreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPreferencesViewController.swift; sourceTree = "<group>"; };
@@ -1017,6 +1019,7 @@
 				9970976C23AD1A7A00CD189B /* MockPageContent.swift */,
 				993600EA24AE832F002C86E4 /* MockLayoutEngine.swift */,
 				993600E824AE5F1F002C86E4 /* TestLayoutDelegate.swift */,
+				9960CCE824B1EC1C001F092E /* MockEventContextFactory.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1955,6 +1958,7 @@
 				9958107C230D75AA00D996C4 /* TextEditorViewModelTests.swift in Sources */,
 				990D243F23560688001B1FD9 /* CanvasLayoutEngineTests.swift in Sources */,
 				999EA6D624409D6C00BF254E /* CoreGraphics+M3ExtensionsTests.swift in Sources */,
+				9960CCE924B1EC1C001F092E /* MockEventContextFactory.swift in Sources */,
 				9923B07422F485480035D8C6 /* ModelCollectionTests.swift in Sources */,
 				993600E924AE5F1F002C86E4 /* TestLayoutDelegate.swift in Sources */,
 				993600F524AF3D2A002C86E4 /* EventContextTestBase.swift in Sources */,

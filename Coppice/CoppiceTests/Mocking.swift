@@ -13,13 +13,17 @@ class MockDetails<Arguments, Return> {
     var expectation: XCTestExpectation?
     var arguments = [Arguments]()
     var returnValue: Return?
+    var method: ((Arguments) -> Return)?
 
     private(set) var wasCalled: Bool = false
 
-    @discardableResult func called(withArguments argument: Arguments) -> Return? {
-        self.arguments.append(argument)
+    @discardableResult func called(withArguments arguments: Arguments) -> Return? {
+        self.arguments.append(arguments)
         self.wasCalled = true
         self.expectation?.fulfill()
+        if let method = self.method {
+            return method(arguments)
+        }
         return self.returnValue
     }
 }

@@ -49,9 +49,6 @@ class CanvasSelectionEventContext: CanvasMouseEventContext {
     }
 
     func upEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: LayoutEngine) {
-        if (location == self.startPoint) {
-            layout.deselectAll()
-        }
         layout.selectionRect = nil
     }
 }

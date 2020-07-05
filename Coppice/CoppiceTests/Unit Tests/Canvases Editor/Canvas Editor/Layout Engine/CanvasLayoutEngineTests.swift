@@ -34,6 +34,7 @@ let testLayoutASCII = """
 
 class CanvasLayoutEngineTests: XCTestCase {
 
+    var mockContextFactory = MockEventContextFactory()
     var layoutEngine: CanvasLayoutEngine!
     var page1: LayoutEnginePage!
     var page2: LayoutEnginePage!
@@ -46,13 +47,15 @@ class CanvasLayoutEngineTests: XCTestCase {
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
 
-        self.layoutEngine = CanvasLayoutEngine(configuration: .init(page: .init(titleHeight: 5,
-                                                                                borderSize: 0,
-                                                                                shadowOffset: .zero,
-                                                                                edgeResizeHandleSize: 1,
-                                                                                cornerResizeHandleSize: 1),
-                                                                    contentBorder: self.contentBorder,
-                                                                    arrow: .standard))
+        let config = CanvasLayoutEngine.Configuration(page: .init(titleHeight: 5,
+                                                                  borderSize: 0,
+                                                                  shadowOffset: .zero,
+                                                                  edgeResizeHandleSize: 1,
+                                                                  cornerResizeHandleSize: 1),
+                                                      contentBorder: self.contentBorder,
+                                                      arrow: .standard)
+
+        self.layoutEngine = CanvasLayoutEngine(configuration: config, eventContextFactory: self.mockContextFactory)
 
         self.page1 = LayoutEnginePage(id: UUID(),
                                       contentFrame: CGRect(x: 40, y: 40, width: 10, height: 10),
@@ -215,9 +218,7 @@ class CanvasLayoutEngineTests: XCTestCase {
     func test_selectAll_updatesTheEnabledPage() throws {
         XCTAssertEqual(self.layoutEngine.selectedPages.count, 0)
 
-        let clickPoint = self.page3.layoutFrame.midPoint
-        self.layoutEngine.downEvent(at: clickPoint)
-        self.layoutEngine.upEvent(at: clickPoint)
+        self.layoutEngine.select([self.page3])
         XCTAssertTrue(self.layoutEngine.enabledPage === self.page3)
 
         self.layoutEngine.selectAll()
@@ -267,9 +268,7 @@ class CanvasLayoutEngineTests: XCTestCase {
     func test_deselectAll_updatesTheEnabledPage() throws {
         XCTAssertEqual(self.layoutEngine.selectedPages.count, 0)
 
-        let clickPoint = self.page3.layoutFrame.midPoint
-        self.layoutEngine.downEvent(at: clickPoint)
-        self.layoutEngine.upEvent(at: clickPoint)
+        self.layoutEngine.select([self.page3])
         XCTAssertTrue(self.layoutEngine.enabledPage === self.page3)
 
         self.layoutEngine.deselectAll()
@@ -285,51 +284,6 @@ class CanvasLayoutEngineTests: XCTestCase {
 
         let context = try XCTUnwrap(view.context)
         XCTAssertTrue(context.selectionChanged)
-    }
-
-
-    //MARK: - Click Selection
-    func test_selection_selectedPagesReturnsAllPagesWithSelectedTrue() throws {
-        self.page1.selected = true
-        self.page2.selected = true
-
-        let selectedPages = self.layoutEngine.selectedPages
-        XCTAssertTrue(try XCTUnwrap(selectedPages[safe: 0]) === self.page1)
-        XCTAssertTrue(try XCTUnwrap(selectedPages[safe: 1]) === self.page2)
-    }
-
-
-
-
-
-    func test_selection_informsViewOfSelectionChangeAfterUpEvent() throws {
-
-        let testCanvas = TestCanvasView()
-        self.layoutEngine.view = testCanvas
-
-        XCTAssertEqual(self.layoutEngine.selectedPages.count, 0)
-        self.layoutEngine.downEvent(at: self.page1.layoutFrame.origin.plus(.identity))
-        XCTAssertFalse(try XCTUnwrap(testCanvas.context?.selectionChanged))
-        self.layoutEngine.draggedEvent(at: self.page1.layoutFrame.origin.plus(.identity))
-        XCTAssertFalse(try XCTUnwrap(testCanvas.context?.selectionChanged))
-        self.layoutEngine.upEvent(at: self.page1.layoutFrame.origin.plus(.identity))
-        XCTAssertTrue(try XCTUnwrap(testCanvas.context?.selectionChanged))
-    }
-
-
-    //MARK: - Selection Rect
-
-
-    func test_selectionRect_informsViewOfSelectionChangeAfterUpEvent() throws {
-        let testCanvas = TestCanvasView()
-        self.layoutEngine.view = testCanvas
-
-        self.layoutEngine.downEvent(at: CGPoint(x: 10, y: 10))
-        XCTAssertFalse(try XCTUnwrap(testCanvas.context?.selectionChanged))
-        self.layoutEngine.draggedEvent(at: CGPoint(x: 85, y: 35))
-        XCTAssertFalse(try XCTUnwrap(testCanvas.context?.selectionChanged))
-        self.layoutEngine.upEvent(at: CGPoint(x: 85, y: 35))
-        XCTAssertTrue(try XCTUnwrap(testCanvas.context?.selectionChanged))
     }
 
 
@@ -367,20 +321,178 @@ class CanvasLayoutEngineTests: XCTestCase {
     }
 
 
-    //MARK: - Move Pages
+    //MARK: - .selectedPages
+    func test_selectedPages_returnsAllPagesWithSelectedTrue() throws {
+        self.page1.selected = true
+        self.page2.selected = true
 
-
-
-
-    //MARK: - Resize Page
-
-    enum TestDragEdge {
-        case min
-        case mid
-        case max
+        let selectedPages = self.layoutEngine.selectedPages
+        XCTAssertTrue(try XCTUnwrap(selectedPages[safe: 0]) === self.page1)
+        XCTAssertTrue(try XCTUnwrap(selectedPages[safe: 1]) === self.page2)
     }
 
 
+    //MARK: - Mouse Events
+    func test_downEvent_createsMouseEventFromContextEventFactoryWithLocation() throws {
+        self.layoutEngine.downEvent(at: CGPoint(x: 123, y: 456))
+        XCTAssertTrue(self.mockContextFactory.createMouseEventContextMock.wasCalled)
+        let (location, engine) = try XCTUnwrap(self.mockContextFactory.createMouseEventContextMock.arguments.first)
+        XCTAssertEqual(location, CGPoint(x: 123, y: 456))
+        XCTAssertTrue(engine === self.layoutEngine)
+    }
+
+    func test_downEvent_callsDownEventOnContextReturnedFromEventContextFactory() throws {
+        let eventContext = MockCanvasMouseEventContext()
+        self.mockContextFactory.createMouseEventContextMock.returnValue = eventContext
+        self.layoutEngine.downEvent(at: CGPoint(x: 123, y: 456), modifiers: [.shift, .option], eventCount: 3)
+        XCTAssertTrue(eventContext.downEventMock.wasCalled)
+        let (location, modifiers, eventCount, engine) = try XCTUnwrap(eventContext.downEventMock.arguments.first)
+        XCTAssertEqual(location, CGPoint(x: 123, y: 456))
+        XCTAssertEqual(modifiers, [.shift, .option])
+        XCTAssertEqual(eventCount, 3)
+        XCTAssertTrue(engine === self.layoutEngine)
+    }
+
+    func test_downEvent_informsViewOfLayoutChange() throws {
+        let view = TestCanvasView()
+        self.layoutEngine.view = view
+        self.mockContextFactory.createMouseEventContextMock.returnValue = MockCanvasMouseEventContext()
+        self.layoutEngine.downEvent(at: CGPoint(x: 123, y: 456))
+        XCTAssertEqual(view.context, CanvasLayoutEngine.LayoutContext())
+    }
+
+    func test_draggedEvent_callsDraggedEventOnContextReturnedFromEventContextFactory() throws {
+        let eventContext = MockCanvasMouseEventContext()
+        self.mockContextFactory.createMouseEventContextMock.returnValue = eventContext
+        self.layoutEngine.downEvent(at: CGPoint(x: 123, y: 456), modifiers: [.shift, .option], eventCount: 3)
+        self.layoutEngine.draggedEvent(at: CGPoint(x: 123, y: 456), modifiers: [.shift, .option], eventCount: 3)
+        XCTAssertTrue(eventContext.draggedEventMock.wasCalled)
+        let (location, modifiers, eventCount, engine) = try XCTUnwrap(eventContext.draggedEventMock.arguments.first)
+        XCTAssertEqual(location, CGPoint(x: 123, y: 456))
+        XCTAssertEqual(modifiers, [.shift, .option])
+        XCTAssertEqual(eventCount, 3)
+        XCTAssertTrue(engine === self.layoutEngine)
+    }
+
+    func test_draggedEvent_informsViewOfLayoutChange() throws {
+        let view = TestCanvasView()
+        self.layoutEngine.view = view
+        self.mockContextFactory.createMouseEventContextMock.returnValue = MockCanvasMouseEventContext()
+        self.layoutEngine.draggedEvent(at: CGPoint(x: 123, y: 456))
+        XCTAssertEqual(view.context, CanvasLayoutEngine.LayoutContext())
+    }
+
+    func test_upEvent_callsUpEventOnContextReturnedFromEventContextFactory() throws {
+        let eventContext = MockCanvasMouseEventContext()
+        self.mockContextFactory.createMouseEventContextMock.returnValue = eventContext
+        self.layoutEngine.downEvent(at: CGPoint(x: 123, y: 456), modifiers: [.shift, .option], eventCount: 3)
+        self.layoutEngine.draggedEvent(at: CGPoint(x: 123, y: 456), modifiers: [.shift, .option], eventCount: 3)
+        self.layoutEngine.upEvent(at: CGPoint(x: 123, y: 456), modifiers: [.shift, .option], eventCount: 3)
+        XCTAssertTrue(eventContext.upEventMock.wasCalled)
+        let (location, modifiers, eventCount, engine) = try XCTUnwrap(eventContext.upEventMock.arguments.first)
+        XCTAssertEqual(location, CGPoint(x: 123, y: 456))
+        XCTAssertEqual(modifiers, [.shift, .option])
+        XCTAssertEqual(eventCount, 3)
+        XCTAssertTrue(engine === self.layoutEngine)
+    }
+
+    func test_upEvent_informsViewOfLayoutChange() throws {
+        let view = TestCanvasView()
+        self.layoutEngine.view = view
+        self.mockContextFactory.createMouseEventContextMock.returnValue = MockCanvasMouseEventContext()
+        self.layoutEngine.downEvent(at: CGPoint(x: 123, y: 456))
+        self.layoutEngine.draggedEvent(at: CGPoint(x: 123, y: 456))
+        self.layoutEngine.upEvent(at: CGPoint(x: 123, y: 456))
+        XCTAssertEqual(view.context, CanvasLayoutEngine.LayoutContext(pageOffsetChange: .zero))
+    }
+
+    func test_upEvent_informsViewThatSelectionAndBackgroundVisibilityChangedIfSelectionChangedDuringEvent() throws {
+        let view = TestCanvasView()
+        self.layoutEngine.view = view
+        self.mockContextFactory.createMouseEventContextMock.returnValue = MockCanvasMouseEventContext()
+        self.layoutEngine.downEvent(at: CGPoint(x: 123, y: 456))
+        self.layoutEngine.draggedEvent(at: CGPoint(x: 123, y: 456))
+        self.page3.selected = true
+        self.layoutEngine.upEvent(at: CGPoint(x: 123, y: 456))
+        XCTAssertEqual(view.context, CanvasLayoutEngine.LayoutContext(pageOffsetChange: .zero, selectionChanged: true, backgroundVisibilityChanged: true))
+    }
+
+    func test_upEvent_informsViewThatSelectionAndBackgroundVisibilityDidNOTChangeIfSelectionDidntChangeDuringEvent() throws {
+        let view = TestCanvasView()
+        self.layoutEngine.view = view
+        self.mockContextFactory.createMouseEventContextMock.returnValue = MockCanvasMouseEventContext()
+        self.layoutEngine.downEvent(at: CGPoint(x: 123, y: 456))
+        self.layoutEngine.draggedEvent(at: CGPoint(x: 123, y: 456))
+        self.layoutEngine.upEvent(at: CGPoint(x: 123, y: 456))
+        XCTAssertEqual(view.context, CanvasLayoutEngine.LayoutContext(pageOffsetChange: .zero, selectionChanged: false, backgroundVisibilityChanged: false))
+    }
+
+
+    //MARK: - Keyboard Events
+    func test_keyDownEvent_createsKeyEventFromContextEventFactoryWithKeyCode() throws {
+        self.layoutEngine.keyDownEvent(keyCode: 31)
+        XCTAssertTrue(self.mockContextFactory.createKeyEventContextMock.wasCalled)
+        let (keyCode, engine) = try XCTUnwrap(self.mockContextFactory.createKeyEventContextMock.arguments.first)
+        XCTAssertEqual(keyCode, 31)
+        XCTAssertTrue(engine === self.layoutEngine)
+    }
+
+    func test_keyDownEvent_doesntCreateKeyEventFromContextEventFactoryIfKeyDownCalledAgainBeforeKeyUp() throws {
+        self.mockContextFactory.createKeyEventContextMock.returnValue = MockCanvasKeyEventContext()
+        self.layoutEngine.keyDownEvent(keyCode: 31)
+        self.layoutEngine.keyDownEvent(keyCode: 31, isARepeat: true)
+        XCTAssertEqual(self.mockContextFactory.createKeyEventContextMock.arguments.count, 1)
+    }
+
+    func test_keyDownEvent_callsKeyDownOnContextReturnedFromEventContextFactory() throws {
+        let eventContext = MockCanvasKeyEventContext()
+        self.mockContextFactory.createKeyEventContextMock.returnValue = eventContext
+        self.layoutEngine.keyDownEvent(keyCode: 42, modifiers: [.shift, .command], isARepeat: true)
+        XCTAssertTrue(eventContext.keyDownMock.wasCalled)
+        let (keyCode, modifiers, isARepeat, engine) = try XCTUnwrap(eventContext.keyDownMock.arguments.first)
+        XCTAssertEqual(keyCode, 42)
+        XCTAssertEqual(modifiers, [.shift, .command])
+        XCTAssertTrue(isARepeat)
+        XCTAssertTrue(engine === self.layoutEngine)
+    }
+
+    func test_keyDownEvent_informsViewofLayoutChange() throws {
+        let view = TestCanvasView()
+        self.layoutEngine.view = view
+        self.mockContextFactory.createKeyEventContextMock.returnValue = MockCanvasKeyEventContext()
+        self.layoutEngine.keyDownEvent(keyCode: 42)
+        XCTAssertEqual(view.context, CanvasLayoutEngine.LayoutContext())
+    }
+
+    func test_keyUpEvent_callsKeyUpOnContextReturnedFromEventContextFactory() throws {
+        let eventContext = MockCanvasKeyEventContext()
+        self.mockContextFactory.createKeyEventContextMock.returnValue = eventContext
+        self.layoutEngine.keyDownEvent(keyCode: 42, modifiers: [.shift, .command], isARepeat: true)
+        self.layoutEngine.keyUpEvent(keyCode: 42, modifiers: [.shift, .command])
+        XCTAssertTrue(eventContext.keyUpMock.wasCalled)
+        let (keyCode, modifiers, engine) = try XCTUnwrap(eventContext.keyUpMock.arguments.first)
+        XCTAssertEqual(keyCode, 42)
+        XCTAssertEqual(modifiers, [.shift, .command])
+        XCTAssertTrue(engine === self.layoutEngine)
+    }
+
+    func test_keyUpEvent_informsViewOfLayoutChange() throws {
+        let view = TestCanvasView()
+        self.layoutEngine.view = view
+        self.mockContextFactory.createKeyEventContextMock.returnValue = MockCanvasKeyEventContext()
+        self.layoutEngine.keyDownEvent(keyCode: 42, modifiers: [.shift, .command], isARepeat: true)
+        view.context = nil
+        self.layoutEngine.keyDownEvent(keyCode: 42)
+        XCTAssertEqual(view.context, CanvasLayoutEngine.LayoutContext())
+    }
+
+    func test_keyUpEvent_doesntInformViewOfLayoutChangeIfKeyUpCalledWithoutKeyDown() throws {
+        let view = TestCanvasView()
+        self.layoutEngine.view = view
+        self.mockContextFactory.createKeyEventContextMock.returnValue = MockCanvasKeyEventContext()
+        self.layoutEngine.keyUpEvent(keyCode: 42)
+        XCTAssertNil(view.context)
+    }
 
 
     //MARK: - Accessibility Resize
@@ -603,11 +715,7 @@ class CanvasLayoutEngineTests: XCTestCase {
     func test_pageBackground_pagesShowBackgroundIfSelected() throws {
         XCTAssertEqual(self.layoutEngine.selectedPages.count, 0)
 
-        let clickPoint1 = self.page1.layoutFrame.midPoint
-        self.layoutEngine.downEvent(at: clickPoint1)
-
-        let clickPoint3 = self.page3.layoutFrame.midPoint
-        self.layoutEngine.downEvent(at: clickPoint3, modifiers: .shift)
+        self.layoutEngine.select([self.page1, self.page3])
 
         XCTAssertEqual(self.layoutEngine.selectedPages.count, 2)
 
@@ -630,8 +738,7 @@ class CanvasLayoutEngineTests: XCTestCase {
     func test_pageBackground_pageStillShowsBackgroundIfSelectedAndMouseMovesOff() throws {
         XCTAssertEqual(self.layoutEngine.selectedPages.count, 0)
 
-        let clickPoint = self.page3.layoutFrame.midPoint
-        self.layoutEngine.downEvent(at: clickPoint)
+        self.layoutEngine.select([self.page3])
 
         self.layoutEngine.moveEvent(at: self.page3.layoutFrame.origin.minus(CGPoint(x: 10, y: 10)))
 
@@ -643,11 +750,7 @@ class CanvasLayoutEngineTests: XCTestCase {
     func test_pageBackground_allSelectedPagesAndTheHoveredPageShowBackground() throws {
         XCTAssertEqual(self.layoutEngine.selectedPages.count, 0)
 
-        let clickPoint1 = self.page1.layoutFrame.midPoint
-        self.layoutEngine.downEvent(at: clickPoint1)
-
-        let clickPoint3 = self.page3.layoutFrame.midPoint
-        self.layoutEngine.downEvent(at: clickPoint3, modifiers: .shift)
+        self.layoutEngine.select([self.page1, self.page3])
 
         XCTAssertEqual(self.layoutEngine.selectedPages.count, 2)
 
@@ -661,11 +764,7 @@ class CanvasLayoutEngineTests: XCTestCase {
     func test_pageBackground_onlySelectedPagesShowBackgroundAfterMouseMovesOffHoveredPage() throws {
         XCTAssertEqual(self.layoutEngine.selectedPages.count, 0)
 
-        let clickPoint1 = self.page1.layoutFrame.midPoint
-        self.layoutEngine.downEvent(at: clickPoint1)
-
-        let clickPoint3 = self.page3.layoutFrame.midPoint
-        self.layoutEngine.downEvent(at: clickPoint3, modifiers: .shift)
+        self.layoutEngine.select([self.page1, self.page3])
 
         XCTAssertEqual(self.layoutEngine.selectedPages.count, 2)
 
@@ -768,7 +867,10 @@ class CanvasLayoutEngineTests: XCTestCase {
         testCanvas.viewPortFrame = CGRect(x: 60, y: 60, width: 80, height: 80)
         self.layoutEngine.view = testCanvas
 
-        try self.drag(self.page1, byXEdge: .min, yEdge: .min, deltaX: 0, deltaY: 0)
+        let point = self.page1.layoutFrame.origin
+        self.layoutEngine.downEvent(at: point)
+        self.layoutEngine.draggedEvent(at: point)
+        self.layoutEngine.upEvent(at: point)
 
         let borderedContentFrame = self.contentFrame.insetBy(dx: -20, dy: -20)
         let fullFrame = borderedContentFrame.union(testCanvas.viewPortFrame)
@@ -778,13 +880,9 @@ class CanvasLayoutEngineTests: XCTestCase {
     func test_canvasSize_pageSpaceOffsetShouldChangeIfCanvasGrowsUpwards() throws {
         let initialOffset = self.layoutEngine.convertPointToPageSpace(.zero)
 
-        let pageOrigin = self.page2.layoutFrame
-        let startPoint = CGPoint(x: pageOrigin.midX, y: pageOrigin.minY + 3)
-        let endPoint = startPoint.plus(CGPoint(x: 0, y: -20))
-
-        self.layoutEngine.downEvent(at: startPoint)
-        self.layoutEngine.draggedEvent(at: endPoint)
-        self.layoutEngine.upEvent(at: endPoint)
+        var frame = self.page2.contentFrame
+        frame.origin.y -= 20
+        self.layoutEngine.updateContentFrame(frame, ofPageWithID: self.page2.id)
 
         let newOffset = self.layoutEngine.convertPointToPageSpace(.zero)
 
@@ -794,38 +892,29 @@ class CanvasLayoutEngineTests: XCTestCase {
     func test_canvasSize_pageSpaceOffsetShouldChangeIfCanvasGrowsToLeft() throws {
         let initialOffset = self.layoutEngine.convertPointToPageSpace(.zero)
 
-        let pageOrigin = self.page2.layoutFrame
-        let startPoint = CGPoint(x: pageOrigin.midX, y: pageOrigin.minY + 3)
-        let endPoint = startPoint.plus(CGPoint(x: -20, y: 0))
-
-        self.layoutEngine.downEvent(at: startPoint)
-        self.layoutEngine.draggedEvent(at: endPoint)
-        self.layoutEngine.upEvent(at: endPoint)
+        var frame = self.page2.contentFrame
+        frame.origin.x -= 20
+        self.layoutEngine.updateContentFrame(frame, ofPageWithID: self.page2.id)
 
         let newOffset = self.layoutEngine.convertPointToPageSpace(.zero)
 
         XCTAssertEqual(initialOffset.minus(newOffset), CGPoint(x: 20, y: 0))
     }
 
-    func test_canvasSize_canvasSizeShouldUpdateWhenMovingPagesEnds() throws {
+    func test_canvasSize_canvasSizeShouldUpdateWhenMouseEventEnds() throws {
         let initialSize = self.layoutEngine.canvasSize
         let pageOrigin = self.page2.layoutFrame
         let startPoint = CGPoint(x: pageOrigin.midX, y: pageOrigin.minY + 3)
         let endPoint = startPoint.plus(CGPoint(x: -20, y: 0))
 
-        self.layoutEngine.downEvent(at: startPoint)
-        XCTAssertEqual(self.layoutEngine.canvasSize, initialSize)
-        self.layoutEngine.draggedEvent(at: endPoint)
-        XCTAssertEqual(self.layoutEngine.canvasSize, initialSize)
-        self.layoutEngine.upEvent(at: endPoint)
-        XCTAssertNotEqual(self.layoutEngine.canvasSize, initialSize)
-    }
-
-    func test_canvasSize_canvasSizeShouldUpdateWhenResizingPageEnds() throws {
-        let initialSize = self.layoutEngine.canvasSize
-        let pageOrigin = self.page2.layoutFrame
-        let startPoint = CGPoint(x: pageOrigin.minX, y: pageOrigin.midY)
-        let endPoint = startPoint.plus(CGPoint(x: -20, y: 0))
+        let page = self.page2!
+        let mockMouseEvent = MockCanvasMouseEventContext()
+        mockMouseEvent.upEventMock.method = { _ in
+            var frame = page.contentFrame
+            frame.origin.x -= 20
+            page.contentFrame = frame
+        }
+        self.mockContextFactory.createMouseEventContextMock.returnValue = mockMouseEvent
 
         self.layoutEngine.downEvent(at: startPoint)
         XCTAssertEqual(self.layoutEngine.canvasSize, initialSize)
@@ -839,13 +928,10 @@ class CanvasLayoutEngineTests: XCTestCase {
         let page1Origin = self.page1.layoutFrame.origin
         let page3Origin = self.page3.layoutFrame.origin
 
-        let pageOrigin = self.page2.layoutFrame
-        let startPoint = CGPoint(x: pageOrigin.midX, y: pageOrigin.minY + 3)
-        let endPoint = startPoint.plus(CGPoint(x: -10, y: -30))
-
-        self.layoutEngine.downEvent(at: startPoint)
-        self.layoutEngine.draggedEvent(at: endPoint)
-        self.layoutEngine.upEvent(at: endPoint)
+        var frame = self.page2.contentFrame
+        frame.origin.x -= 10
+        frame.origin.y -= 30
+        self.layoutEngine.updateContentFrame(frame, ofPageWithID: self.page2.id)
 
         XCTAssertEqual(self.page1.layoutFrame.origin, page1Origin.plus(CGPoint(x: 10, y: 20)))
         XCTAssertEqual(self.page2.layoutFrame.origin, CGPoint(x: self.layoutEngine.configuration.contentBorder, y: self.layoutEngine.configuration.contentBorder))
@@ -857,38 +943,15 @@ class CanvasLayoutEngineTests: XCTestCase {
         let page2Origin = self.page2.layoutFrame.origin
         let page3Origin = self.page3.layoutFrame.origin
 
-        let pageOrigin = self.page1.layoutFrame
-        let startPoint = CGPoint(x: pageOrigin.midX, y: pageOrigin.minY + 3)
-        let endPoint = startPoint.plus(CGPoint(x: 10, y: 20))
-
-        self.layoutEngine.downEvent(at: startPoint)
-        self.layoutEngine.draggedEvent(at: endPoint)
-        self.layoutEngine.upEvent(at: endPoint)
+        var frame = self.page1.contentFrame
+        frame.origin.x += 10
+        frame.origin.y += 20
+        self.layoutEngine.updateContentFrame(frame, ofPageWithID: self.page1.id)
 
         XCTAssertEqual(self.page1.layoutFrame.origin, page1Origin.plus(CGPoint(x: 10, y: 20)))
         XCTAssertEqual(self.page2.layoutFrame.origin, page2Origin)
         XCTAssertEqual(self.page3.layoutFrame.origin, page3Origin)
     }
-
-
-    //MARK: - Keyboard Moving
-
-
-    func test_keyboardMoving_callsDelegateAfterMovingPages() throws {
-        let delegate = TestLayoutDelegate()
-        self.layoutEngine.delegate = delegate
-
-        self.page1.selected = true
-        self.page2.selected = false
-        self.page3.selected = true
-//        _ = self.performKeyboardMoveTest(keyCode: kVK_LeftArrow, expectedShift: CGPoint(x: -1, y: 0))
-        XCTFail()
-
-        XCTAssertEqual(delegate.movedPages, [self.page1, self.page3])
-    }
-
-
-    //MARK: - Keyboard Deleting
 
 }
 
@@ -899,37 +962,4 @@ private class TestCanvasView: CanvasLayoutView {
         self.context = context
     }
     var viewPortFrame: CGRect = .zero
-}
-
-
-
-//Resize
-extension CanvasLayoutEngineTests {
-    func drag(_ page: LayoutEnginePage, byXEdge xEdge: TestDragEdge, yEdge: TestDragEdge, deltaX: CGFloat, deltaY: CGFloat) throws {
-        let startX: CGFloat
-        switch (xEdge) {
-        case .min:
-            startX = page.layoutFrame.minX
-        case .mid:
-            startX = page.layoutFrame.midX
-        case .max:
-            startX = page.layoutFrame.maxX - 1
-        }
-
-        let startY: CGFloat
-        switch (yEdge) {
-        case .min:
-            startY = page.layoutFrame.minY
-        case .mid:
-            startY = page.layoutFrame.midY
-        case .max:
-            startY = page.layoutFrame.maxY - 1
-        }
-
-        let startPoint = CGPoint(x: startX, y: startY)
-        let endPoint = startPoint.plus(CGPoint(x: deltaX, y: deltaY))
-        self.layoutEngine.downEvent(at: startPoint)
-        self.layoutEngine.draggedEvent(at: endPoint)
-        self.layoutEngine.upEvent(at: endPoint)
-    }
 }
