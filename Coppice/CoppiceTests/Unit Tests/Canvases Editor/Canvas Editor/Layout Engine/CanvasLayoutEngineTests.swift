@@ -332,6 +332,141 @@ class CanvasLayoutEngineTests: XCTestCase {
     }
 
 
+    //MARK: - select(_:extendingSelection:)
+    func test_selectPages_addsPagesToSelectionIfExtendingSelectionIsTrue() throws {
+        self.page1.selected = true
+        XCTAssertEqual(self.layoutEngine.selectedPages.count, 1)
+
+        self.layoutEngine.select([self.page2, self.page3], extendingSelection: true)
+
+        XCTAssertEqual(self.layoutEngine.selectedPages, [self.page1, self.page2, self.page3])
+    }
+
+    func test_selectPages_deselectsAllOtherPagesIfExtendingSelectionIsNotTrue() throws {
+        self.page2.selected = true
+        XCTAssertEqual(self.layoutEngine.selectedPages.count, 1)
+
+        self.layoutEngine.select([self.page1, self.page3], extendingSelection: false)
+
+        XCTAssertEqual(self.layoutEngine.selectedPages, [self.page1, self.page3])
+    }
+
+    func test_selectPages_updatesEnabledPage() throws {
+        self.layoutEngine.select([self.page2])
+        XCTAssertEqual(self.layoutEngine.enabledPage, self.page2)
+
+        self.layoutEngine.select([self.page3], extendingSelection: true)
+        XCTAssertNil(self.layoutEngine.enabledPage)
+
+        self.layoutEngine.select([self.page1], extendingSelection: false)
+        XCTAssertEqual(self.layoutEngine.enabledPage, self.page1)
+    }
+
+    func test_selectPages_informsViewOfLayoutSelectionChange() throws {
+        let testView = TestCanvasView()
+        self.layoutEngine.view = testView
+        self.layoutEngine.select([self.page2, self.page1])
+
+        XCTAssertEqual(testView.context, CanvasLayoutEngine.LayoutContext(selectionChanged: true))
+    }
+
+
+    //MARK: - deselect(_:)
+    func test_deselectPages_deselectsAllSuppliedPages() throws {
+        self.page1.selected = true
+        self.page2.selected = true
+        self.page3.selected = true
+        self.layoutEngine.deselect([self.page1, self.page3])
+        XCTAssertEqual(self.layoutEngine.selectedPages, [self.page2])
+    }
+
+    func test_deselectPages_updatesEnabledPage() throws {
+        self.layoutEngine.select([self.page1, self.page2])
+        XCTAssertNil(self.layoutEngine.enabledPage)
+        self.layoutEngine.deselect([self.page2])
+        XCTAssertEqual(self.layoutEngine.enabledPage, self.page1)
+    }
+
+    func test_deselectPages_informsViewOfLayoutSelectionChange() throws {
+        let testView = TestCanvasView()
+        self.layoutEngine.view = testView
+        self.page1.selected = true
+        self.page2.selected = true
+        self.page3.selected = true
+        self.layoutEngine.deselect([self.page1, self.page3])
+
+        XCTAssertEqual(testView.context, CanvasLayoutEngine.LayoutContext(selectionChanged: true))
+    }
+
+
+    //MARK: - groupSelectionChange(_:)
+    func test_groupSelectionChange_doesntUpdateEnabledPageIfSelectingInsideBlock() throws {
+        var enabledPage: LayoutEnginePage? = nil
+        self.layoutEngine.groupSelectionChange {
+            self.layoutEngine.select([self.page1])
+            enabledPage = self.layoutEngine.enabledPage
+        }
+        XCTAssertNil(enabledPage)
+    }
+
+    func test_groupSelectionChange_doesntUpdateEnabledPageIfDeselectingInsideBlock() throws {
+        self.layoutEngine.select([self.page3])
+        var enabledPage: LayoutEnginePage? = self.layoutEngine.enabledPage
+        self.layoutEngine.groupSelectionChange {
+            self.layoutEngine.deselect([self.page3])
+            enabledPage = self.layoutEngine.enabledPage
+        }
+        XCTAssertEqual(enabledPage, self.page3)
+    }
+
+    func test_groupSelectionChange_doesntInformViewOfLayoutChangeIfSelectingInsideBlock() throws {
+        let testView = TestCanvasView()
+        self.layoutEngine.view = testView
+        var context: CanvasLayoutEngine.LayoutContext?
+        self.layoutEngine.groupSelectionChange {
+            self.layoutEngine.select([self.page1])
+            context = testView.context
+        }
+
+        XCTAssertNil(context)
+    }
+
+    func test_groupSelectionChange_doesntInformViewOfLayoutChangeIfDeselectingInsideBlock() throws {
+        let testView = TestCanvasView()
+        self.layoutEngine.view = testView
+
+        self.page2.selected = true
+
+        var context: CanvasLayoutEngine.LayoutContext?
+        self.layoutEngine.groupSelectionChange {
+            self.layoutEngine.deselect([self.page2])
+            context = testView.context
+        }
+
+        XCTAssertNil(context)
+    }
+
+    func test_groupSelectionChange_updatesEnabledPageAfterBlockInvoked() throws {
+        self.layoutEngine.groupSelectionChange {
+            self.layoutEngine.select([self.page1])
+            self.layoutEngine.select([self.page3])
+        }
+        XCTAssertEqual(self.layoutEngine.enabledPage, self.page3)
+    }
+
+    func test_groupSelectionChange_informsViewOfLayoutSelectionChangeAfterBlockInvoked() throws {
+        self.page2.selected = true
+        let testView = TestCanvasView()
+        self.layoutEngine.view = testView
+
+        self.layoutEngine.groupSelectionChange {
+            self.layoutEngine.deselect([self.page2])
+        }
+
+        XCTAssertEqual(testView.context, CanvasLayoutEngine.LayoutContext(selectionChanged: true))
+    }
+
+
     //MARK: - Mouse Events
     func test_downEvent_createsMouseEventFromContextEventFactoryWithLocation() throws {
         self.layoutEngine.downEvent(at: CGPoint(x: 123, y: 456))
@@ -953,6 +1088,52 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertEqual(self.page3.layoutFrame.origin, page3Origin)
     }
 
+
+    //MARK: - pages(inCanvasRect:)
+    func test_pagesInCanvasRect_returnsAllPagesIfRectCoversWholeCanvas() throws {
+        let rect = CGRect(origin: .zero, size: self.layoutEngine.canvasSize)
+        let pages = self.layoutEngine.pages(inCanvasRect: rect)
+
+        XCTAssertEqual(pages, [self.page1, self.page2, self.page3])
+    }
+
+    func test_pagesInCanvasRect_returnsNoPagesIfRectCoversNoPages() throws {
+        let rect = CGRect(origin: .zero, size: CGSize(width: 5, height: 5))
+        let pages = self.layoutEngine.pages(inCanvasRect: rect)
+
+        XCTAssertEqual(pages, [])
+    }
+
+    func test_pagesInCanvasRect_returnsOnlyPagesCoveredByRect() throws {
+        let rect = try XCTUnwrap(CGRect(points: [self.page3.layoutFrame.midPoint, self.page2.layoutFrame.midPoint]))
+        let pages = self.layoutEngine.pages(inCanvasRect: rect)
+
+        XCTAssertEqual(pages, [self.page2, self.page3])
+    }
+
+
+    //MARK: - movePageToFront(_:)
+    func test_movePageToFront_doesntChangeIndexesIfPageDoesntExistInCanvas() throws {
+        let expectedPageOrder = self.layoutEngine.pages
+
+        let page = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 30, height: 30))
+        self.layoutEngine.movePageToFront(page)
+
+        XCTAssertEqual(self.layoutEngine.pages, expectedPageOrder)
+    }
+
+    func test_movePageToFront_movesPageToEndOfPageArray() throws {
+        self.layoutEngine.movePageToFront(self.page2)
+
+        XCTAssertEqual(self.layoutEngine.pages, [self.page1, self.page3, self.page2])
+    }
+
+    func test_movePageToFront_updatesZIndexOfAllPages() throws {
+        self.layoutEngine.movePageToFront(self.page2)
+        self.page1.zIndex = 0
+        self.page2.zIndex = 2
+        self.page3.zIndex = 1
+    }
 }
 
 

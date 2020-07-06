@@ -229,8 +229,7 @@ class CanvasLayoutEngine: NSObject, LayoutEngine {
         self.notifyOfSelectionUpdate = false
         block()
         self.notifyOfSelectionUpdate = true
-        self.updateEnabledPage()
-        self.informOfLayoutChange(with: LayoutContext(selectionChanged: true))
+        self.notifyOfSelectionUpdatedIfNeeded()
     }
 
     private func notifyOfSelectionUpdatedIfNeeded() {

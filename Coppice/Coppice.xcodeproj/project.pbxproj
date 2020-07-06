@@ -98,6 +98,7 @@
 		99582817247702B300080593 /* ResizeHandleAccessibilityElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99582816247702B300080593 /* ResizeHandleAccessibilityElement.swift */; };
 		9959178724606A1900E8874C /* ResponderChainValidatingToolbarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9959178624606A1900E8874C /* ResponderChainValidatingToolbarItem.swift */; };
 		9960CCE924B1EC1C001F092E /* MockEventContextFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9960CCE824B1EC1C001F092E /* MockEventContextFactory.swift */; };
+		9960CCEB24B237AA001F092E /* CanvasLayoutEngineEventContextFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9960CCEA24B237AA001F092E /* CanvasLayoutEngineEventContextFactory.swift */; };
 		996187F0249A5166007313BD /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996187EE249A5166007313BD /* PreferencesWindowController.swift */; };
 		996187F1249A5166007313BD /* PreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 996187EF249A5166007313BD /* PreferencesWindow.xib */; };
 		996187F4249A523D007313BD /* GeneralPreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996187F2249A523D007313BD /* GeneralPreferencesViewController.swift */; };
@@ -428,6 +429,7 @@
 		99582816247702B300080593 /* ResizeHandleAccessibilityElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizeHandleAccessibilityElement.swift; sourceTree = "<group>"; };
 		9959178624606A1900E8874C /* ResponderChainValidatingToolbarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponderChainValidatingToolbarItem.swift; sourceTree = "<group>"; };
 		9960CCE824B1EC1C001F092E /* MockEventContextFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEventContextFactory.swift; sourceTree = "<group>"; };
+		9960CCEA24B237AA001F092E /* CanvasLayoutEngineEventContextFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasLayoutEngineEventContextFactory.swift; sourceTree = "<group>"; };
 		996187EE249A5166007313BD /* PreferencesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
 		996187EF249A5166007313BD /* PreferencesWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreferencesWindow.xib; sourceTree = "<group>"; };
 		996187F2249A523D007313BD /* GeneralPreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPreferencesViewController.swift; sourceTree = "<group>"; };
@@ -1261,6 +1263,7 @@
 			isa = PBXGroup;
 			children = (
 				99C03F0023293DAD00EB7516 /* CanvasLayoutEngineTests.swift */,
+				9960CCEA24B237AA001F092E /* CanvasLayoutEngineEventContextFactory.swift */,
 				99C4AD8A23F707DF003B9A38 /* ArrowLayoutEngineTests.swift */,
 				99FFF9C923463DFD00EF02A0 /* LayoutEnginePageTests.swift */,
 				99C88EE12406BDEE00339880 /* LayoutEngineArrowTests.swift */,
@@ -1951,6 +1954,7 @@
 				9957B088239FD3D800BA3C0B /* DocumentWindowViewModelTests.swift in Sources */,
 				99C4AD8B23F707DF003B9A38 /* ArrowLayoutEngineTests.swift in Sources */,
 				999EA6D4244096DF00BF254E /* Array+M3ExtensionsTests.swift in Sources */,
+				9960CCEB24B237AA001F092E /* CanvasLayoutEngineEventContextFactory.swift in Sources */,
 				99863DD82451D8BB003D49D0 /* BubblesModelControllerPageTests.swift in Sources */,
 				9970976D23AD1A7A00CD189B /* MockPageContent.swift in Sources */,
 				999EA6ED244E053300BF254E /* SearchResultsViewModelTests.swift in Sources */,
