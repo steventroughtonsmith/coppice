@@ -10,26 +10,30 @@ import Cocoa
 
 class ResizePageEventContext: CanvasMouseEventContext {
     var lastLocation: CGPoint?
+    var startPoint: CGPoint?
 
     let page: LayoutEnginePage
     let component: LayoutEnginePageComponent
+    let startLayoutFrame: CGRect
     init(page: LayoutEnginePage, component: LayoutEnginePageComponent) {
         self.page = page
         self.component = component
+        self.startLayoutFrame = page.layoutFrame
     }
 
     //MARK: - Events
     func downEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: LayoutEngine) {
-        self.lastLocation = location
+        self.startPoint = location
     }
 
     func draggedEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: LayoutEngine) {
-        guard let lastLocation = self.lastLocation else {
+        guard let startPoint = self.startPoint else {
             return
         }
         let boundedLocation = location.bounded(within: CGRect(origin: .zero, size: layout.canvasSize))
 
-        let delta = boundedLocation.minus(lastLocation).rounded()
+        let delta = boundedLocation.minus(startPoint).rounded()
+
         self.resize(withDelta: delta, in: layout)
 
         self.lastLocation = boundedLocation
@@ -56,7 +60,7 @@ class ResizePageEventContext: CanvasMouseEventContext {
 
     //MARK: - Resizing
     private func performRegularResize(with delta: CGPoint, in layout: LayoutEngine) -> CGPoint {
-        var layoutFrame = self.page.layoutFrame
+        var layoutFrame = self.startLayoutFrame
 
         var deltaX = delta.x
         if (self.component.isRight) {
@@ -121,7 +125,7 @@ class ResizePageEventContext: CanvasMouseEventContext {
     }
 
     private func performTopAspectResize(with delta: CGPoint, in layout: LayoutEngine) -> CGPoint {
-        var layoutFrame = self.page.layoutFrame
+        var layoutFrame = self.startLayoutFrame
 
         var deltaY = delta.y //deltaY is negative if increasing size, positive if decreasing size
         var deltaX = deltaY * self.page.aspectRatio
@@ -168,7 +172,7 @@ class ResizePageEventContext: CanvasMouseEventContext {
     }
 
     private func performBottomAspectResize(with delta: CGPoint, in layout: LayoutEngine) -> CGPoint {
-        var layoutFrame = self.page.layoutFrame
+        var layoutFrame = self.startLayoutFrame
 
         var deltaY = delta.y //DeltaY is positive if increasing size, negative if decreasing size
         var deltaX = deltaY * self.page.aspectRatio

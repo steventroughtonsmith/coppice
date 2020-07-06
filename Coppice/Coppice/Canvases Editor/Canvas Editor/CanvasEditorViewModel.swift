@@ -44,7 +44,7 @@ class CanvasEditorViewModel: ViewModel {
             return
         }
         self.canvasObserver = self.modelController.collection(for: Canvas.self).addObserver(filterBy: [self.canvas.id]) { [weak self] change in
-            if change.changeType == .update {
+            if change.changeType == .update, !change.didUpdate(\.thumbnail) {
                 self?.updatePages()
             }
         }
