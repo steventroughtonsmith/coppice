@@ -115,4 +115,9 @@ class TestLayoutEnginePage: LayoutEnginePage {
     var contentPoint: CGPoint {
         return self.contentFrame.midPoint
     }
+
+    var testComponent: LayoutEnginePageComponent?
+    override func component(at point: CGPoint) -> LayoutEnginePageComponent? {
+        return self.testComponent ?? super.component(at: point)
+    }
 }

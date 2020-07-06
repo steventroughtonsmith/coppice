@@ -9,14 +9,14 @@
 import Foundation
 @testable import Coppice
 
-class MockEventContextFactory: CanvasEventContextFactory {
-    let createMouseEventContextMock = MockDetails<(CGPoint, CanvasLayoutEngine), CanvasMouseEventContext?>()
-    func createMouseEventContext(for location: CGPoint, in layoutEngine: CanvasLayoutEngine) -> CanvasMouseEventContext? {
+class MockEventContextFactory: LayoutEngineEventContextFactory {
+    let createMouseEventContextMock = MockDetails<(CGPoint, LayoutEngine), CanvasMouseEventContext?>()
+    func createMouseEventContext(for location: CGPoint, in layoutEngine: LayoutEngine) -> CanvasMouseEventContext? {
         return self.createMouseEventContextMock.called(withArguments: (location, layoutEngine)) ?? nil
     }
 
-    let createKeyEventContextMock = MockDetails<(UInt16, CanvasLayoutEngine), CanvasKeyEventContext?>()
-    func createKeyEventContext(for keyCode: UInt16, in layoutEngine: CanvasLayoutEngine) -> CanvasKeyEventContext? {
+    let createKeyEventContextMock = MockDetails<(UInt16, LayoutEngine), CanvasKeyEventContext?>()
+    func createKeyEventContext(for keyCode: UInt16, in layoutEngine: LayoutEngine) -> CanvasKeyEventContext? {
         return self.createKeyEventContextMock.called(withArguments: (keyCode, layoutEngine)) ?? nil
     }
 }

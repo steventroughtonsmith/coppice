@@ -8,14 +8,14 @@
 
 import Foundation
 
-protocol CanvasEventContextFactory {
-    func createMouseEventContext(for location: CGPoint, in layoutEngine: CanvasLayoutEngine) -> CanvasMouseEventContext?
-    func createKeyEventContext(for keyCode: UInt16, in layoutEngine: CanvasLayoutEngine) -> CanvasKeyEventContext?
+protocol LayoutEngineEventContextFactory {
+    func createMouseEventContext(for location: CGPoint, in layoutEngine: LayoutEngine) -> CanvasMouseEventContext?
+    func createKeyEventContext(for keyCode: UInt16, in layoutEngine: LayoutEngine) -> CanvasKeyEventContext?
 }
 
 
-class CanvasLayoutEngineEventContextFactory: CanvasEventContextFactory {
-    func createMouseEventContext(for location: CGPoint, in layoutEngine: CanvasLayoutEngine) -> CanvasMouseEventContext? {
+class CanvasLayoutEngineEventContextFactory: LayoutEngineEventContextFactory {
+    func createMouseEventContext(for location: CGPoint, in layoutEngine: LayoutEngine) -> CanvasMouseEventContext? {
         //Canvas click
         guard let page = layoutEngine.page(atCanvasPoint: location) else {
             return CanvasSelectionEventContext()
@@ -36,7 +36,7 @@ class CanvasLayoutEngineEventContextFactory: CanvasEventContextFactory {
         }
     }
 
-    func createKeyEventContext(for keyCode: UInt16, in layoutEngine: CanvasLayoutEngine) -> CanvasKeyEventContext? {
+    func createKeyEventContext(for keyCode: UInt16, in layoutEngine: LayoutEngine) -> CanvasKeyEventContext? {
         let selectedPages = layoutEngine.selectedPages
         guard selectedPages.count > 0 else {
             return nil

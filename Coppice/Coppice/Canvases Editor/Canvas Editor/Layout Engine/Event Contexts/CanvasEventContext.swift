@@ -43,7 +43,9 @@ protocol LayoutEngine: class {
     func deselect(_ pages: [LayoutEnginePage])
     func deselectAll()
 
-    func pages(inCanvasRect: CGRect) -> [LayoutEnginePage]
+    func pages(inCanvasRect rect: CGRect) -> [LayoutEnginePage]
+    func page(atCanvasPoint point: CGPoint) -> LayoutEnginePage?
+    func movePageToFront(_ page: LayoutEnginePage)
 
     func modified(_ pages: [LayoutEnginePage])
     func finishedModifying(_ pages: [LayoutEnginePage])

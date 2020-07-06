@@ -10,7 +10,6 @@ import Foundation
 @testable import Coppice
 
 class MockLayoutEngine: LayoutEngine {
-
     var selectedPages: [LayoutEnginePage] = [] {
         didSet {
             self.selectedPages.forEach { $0.selected = true }
@@ -37,6 +36,16 @@ class MockLayoutEngine: LayoutEngine {
     let pagesInCanvasRectMock = MockDetails<CGRect, [LayoutEnginePage]>()
     func pages(inCanvasRect rect: CGRect) -> [LayoutEnginePage] {
         return self.pagesInCanvasRectMock.called(withArguments: rect) ?? []
+    }
+
+    let pageAtCanvasPointMock = MockDetails<CGPoint, LayoutEnginePage?>()
+    func page(atCanvasPoint point: CGPoint) -> LayoutEnginePage? {
+        return self.pageAtCanvasPointMock.called(withArguments: point) ?? nil
+    }
+
+    let movePageToFrontMock = MockDetails<LayoutEnginePage, Void>()
+    func movePageToFront(_ page: LayoutEnginePage) {
+        self.movePageToFrontMock.called(withArguments: page)
     }
 
     let modifiedPagesMock = MockDetails<[LayoutEnginePage], Void>()

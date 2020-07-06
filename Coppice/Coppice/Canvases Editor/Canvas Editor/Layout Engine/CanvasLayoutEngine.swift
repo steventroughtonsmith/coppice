@@ -37,8 +37,8 @@ class CanvasLayoutEngine: NSObject, LayoutEngine {
     weak var delegate: CanvasLayoutEngineDelegate?
 
     let configuration: Configuration
-    let eventContextFactory: CanvasEventContextFactory
-    init(configuration: Configuration, eventContextFactory: CanvasEventContextFactory = CanvasLayoutEngineEventContextFactory()) {
+    let eventContextFactory: LayoutEngineEventContextFactory
+    init(configuration: Configuration, eventContextFactory: LayoutEngineEventContextFactory = CanvasLayoutEngineEventContextFactory()) {
         self.configuration = configuration
         self.eventContextFactory = eventContextFactory
     }
