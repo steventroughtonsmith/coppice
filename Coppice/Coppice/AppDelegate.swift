@@ -68,6 +68,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
+    //MARK: - Preferences
     lazy var preferencesWindow: PreferencesWindowController = {
         return PreferencesWindowController(updaterController: self.updaterController)
     }()
@@ -75,13 +76,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.preferencesWindow.showWindow(sender)
     }
 
-
+    //MARK: - About
     lazy var aboutWindow: AboutWindowController = {
         return AboutWindowController()
     }()
 
     @IBAction func showAboutWindow(_ sender: Any?) {
         self.aboutWindow.showWindow(sender)
+    }
+
+
+    //MARK: - Welcome
+    lazy var welcomeWindow: WelcomeWindowController = {
+        return WelcomeWindowController()
+    }()
+    @IBAction func showWelcomeWindow(_ sender: Any?) {
+        self.welcomeWindow.showWindow(sender)
     }
 }
 
