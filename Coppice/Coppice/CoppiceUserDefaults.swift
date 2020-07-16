@@ -22,6 +22,8 @@ enum UserDefaultsKeys: String {
     case defaultCanvasTheme = "M3DefaultCanvasTheme"
 
     case autoLinkingTextPagesEnabled = "M3AutoLinkingTextPagesEnabled"
+
+    case showWelcomeScreenOnLaunch = "M3ShowWelcomeScreenOnLaunch"
 }
 
 extension UserDefaults {

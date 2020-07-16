@@ -150,6 +150,7 @@
 		9981E6D224C067A2005AF0EE /* Acknowledgements.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 9981E6D124C067A2005AF0EE /* Acknowledgements.rtf */; };
 		9981E6D624C08F12005AF0EE /* WelcomeWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9981E6D424C08F12005AF0EE /* WelcomeWindowController.swift */; };
 		9981E6D724C08F12005AF0EE /* WelcomeWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9981E6D524C08F12005AF0EE /* WelcomeWindow.xib */; };
+		9981E6D924C0AE1F005AF0EE /* RecentDocumentTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9981E6D824C0AE1F005AF0EE /* RecentDocumentTableCellView.swift */; };
 		9985F4D923F2E13600B96DC7 /* CanvasPageTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9985F4D823F2E13600B96DC7 /* CanvasPageTitleView.swift */; };
 		9985F4DB23F44AAD00B96DC7 /* CanvasPageBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9985F4DA23F44AAD00B96DC7 /* CanvasPageBackgroundView.swift */; };
 		9985F4DD23F44EE300B96DC7 /* CanvasLayoutEngine+Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9985F4DC23F44EE300B96DC7 /* CanvasLayoutEngine+Configuration.swift */; };
@@ -489,6 +490,7 @@
 		9981E6D124C067A2005AF0EE /* Acknowledgements.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Acknowledgements.rtf; sourceTree = "<group>"; };
 		9981E6D424C08F12005AF0EE /* WelcomeWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeWindowController.swift; sourceTree = "<group>"; };
 		9981E6D524C08F12005AF0EE /* WelcomeWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WelcomeWindow.xib; sourceTree = "<group>"; };
+		9981E6D824C0AE1F005AF0EE /* RecentDocumentTableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentDocumentTableCellView.swift; sourceTree = "<group>"; };
 		9985F4D823F2E13600B96DC7 /* CanvasPageTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageTitleView.swift; sourceTree = "<group>"; };
 		9985F4DA23F44AAD00B96DC7 /* CanvasPageBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageBackgroundView.swift; sourceTree = "<group>"; };
 		9985F4DC23F44EE300B96DC7 /* CanvasLayoutEngine+Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CanvasLayoutEngine+Configuration.swift"; sourceTree = "<group>"; };
@@ -1056,6 +1058,7 @@
 			children = (
 				9981E6D424C08F12005AF0EE /* WelcomeWindowController.swift */,
 				9981E6D524C08F12005AF0EE /* WelcomeWindow.xib */,
+				9981E6D824C0AE1F005AF0EE /* RecentDocumentTableCellView.swift */,
 			);
 			path = Welcome;
 			sourceTree = "<group>";
@@ -1831,6 +1834,7 @@
 				9981E6D624C08F12005AF0EE /* WelcomeWindowController.swift in Sources */,
 				99DEF28A22F32D350020A7CE /* DebugCanvasViewModelTypes.swift in Sources */,
 				99868F352396AD73009AC0F7 /* ImageEditorInspectorViewController.swift in Sources */,
+				9981E6D924C0AE1F005AF0EE /* RecentDocumentTableCellView.swift in Sources */,
 				993D2C0024157196002E5BAC /* SourceListOutlineView.swift in Sources */,
 				998D077B2411513F004ADFF8 /* NewPageMenuDelegate.swift in Sources */,
 				99D8E37A237EDB890098CF3B /* PageInspectorViewModel.swift in Sources */,
