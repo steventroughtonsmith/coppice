@@ -18,6 +18,26 @@ class AboutWindowController: NSWindowController {
         NSWorkspace.shared.open(URL(string: "https://coppiceapp.com/privacy")!)
     }
 
+    @IBOutlet weak var versionLabel: NSTextField!
+    @IBOutlet weak var copyrightLabel: NSTextField!
+
+    override func windowDidLoad() {
+        super.windowDidLoad()
+        guard
+            let copyright = Bundle.main.object(forInfoDictionaryKey: "NSHumanReadableCopyright") as? String,
+            let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String,
+            let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String
+        else {
+            return
+        }
+
+        self.copyrightLabel.stringValue = copyright
+
+        let localizedVersion = NSLocalizedString("Version %@ (%@)", comment: "Version string");
+        let versionString = String(format: localizedVersion, version, build)
+        self.versionLabel.stringValue = versionString
+    }
+
 
     //MARK: - Acknowledgements
     @IBOutlet var acknowledgementsWindow: NSWindow!
