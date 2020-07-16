@@ -35,6 +35,8 @@ class PreferencesWindowController: NSWindowController {
     override func windowDidLoad() {
         super.windowDidLoad()
 
+        self.tabController.delegate = self
+
         let generalPrefs = GeneralPreferencesViewController()
         let generalItem = generalPrefs.createTabItem()
         self.tabController.addTabViewItem(generalItem)
@@ -52,58 +54,13 @@ class PreferencesWindowController: NSWindowController {
             window.title = generalItem.label
         }
     }
-    
 }
 
 
-class PreferencesTabView: NSTabViewController {
-    var tabHeights: [NSTabViewItem: CGFloat] = [:]
-    var width: CGFloat = 480
-
-    override func addTabViewItem(_ tabViewItem: NSTabViewItem) {
-        self.tabHeights[tabViewItem] = self.height(for: tabViewItem)
-        super.addTabViewItem(tabViewItem)
-    }
-
-    override func tabView(_ tabView: NSTabView, willSelect tabViewItem: NSTabViewItem?) {
-        super.tabView(tabView, willSelect: tabViewItem)
-
-        self.view.window?.title = tabViewItem?.label ?? "Preferences"
-    }
-
-    override func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
-        super.tabView(tabView, didSelect: tabViewItem)
-
-        guard let item = tabViewItem, let window = self.view.window else {
-            return
-        }
-
-        self.updateFrame(of: window, for: item, animated: true)
-    }
-
-    func updateFrame(of window: NSWindow, for tabViewItem: NSTabViewItem, animated: Bool) {
-        let newHeight = self.tabHeights[tabViewItem] ?? 0
-        let currentHeight = window.contentView?.frame.height ?? self.tabView.frame.height
-
-        let difference = newHeight - currentHeight
-
-        var windowFrame = window.frame
-        windowFrame.origin.y -= difference
-        windowFrame.size.height += difference
-
-        window.setFrame(windowFrame, display: false, animate: animated)
-    }
-
-    private func height(for tabViewItem: NSTabViewItem) -> CGFloat {
-        guard let view = tabViewItem.viewController?.view ?? tabViewItem.view else {
-            return 0
-        }
-
-        let widthConstraint = view.widthAnchor.constraint(equalToConstant: self.width)
-        widthConstraint.isActive = true
-        view.layoutSubtreeIfNeeded()
-        let height = view.fittingSize.height
-        widthConstraint.isActive = false
-        return height
+extension PreferencesWindowController: PreferencesTabViewDelegate {
+    func escapeWasPressed(in tabView: PreferencesTabView) {
+        self.window?.close()
     }
 }
+
+

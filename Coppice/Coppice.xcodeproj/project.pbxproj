@@ -144,6 +144,7 @@
 		9977119A239E89B200FCC8C7 /* DocumentWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FE01E222D4CC8A004D380D /* DocumentWindowController.swift */; };
 		9977119C239E91FD00FCC8C7 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9977119B239E91FD00FCC8C7 /* ViewModel.swift */; };
 		997711CA239E9AF400FCC8C7 /* MockDocumentWindowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997711C9239E9AF400FCC8C7 /* MockDocumentWindowViewModel.swift */; };
+		9981E6CB24C055CE005AF0EE /* PreferencesTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9981E6CA24C055CE005AF0EE /* PreferencesTabView.swift */; };
 		9985F4D923F2E13600B96DC7 /* CanvasPageTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9985F4D823F2E13600B96DC7 /* CanvasPageTitleView.swift */; };
 		9985F4DB23F44AAD00B96DC7 /* CanvasPageBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9985F4DA23F44AAD00B96DC7 /* CanvasPageBackgroundView.swift */; };
 		9985F4DD23F44EE300B96DC7 /* CanvasLayoutEngine+Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9985F4DC23F44EE300B96DC7 /* CanvasLayoutEngine+Configuration.swift */; };
@@ -477,6 +478,7 @@
 		99771195239C530700FCC8C7 /* PageLinkManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageLinkManagerTests.swift; sourceTree = "<group>"; };
 		9977119B239E91FD00FCC8C7 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		997711C9239E9AF400FCC8C7 /* MockDocumentWindowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDocumentWindowViewModel.swift; sourceTree = "<group>"; };
+		9981E6CA24C055CE005AF0EE /* PreferencesTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesTabView.swift; sourceTree = "<group>"; };
 		9985F4D823F2E13600B96DC7 /* CanvasPageTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageTitleView.swift; sourceTree = "<group>"; };
 		9985F4DA23F44AAD00B96DC7 /* CanvasPageBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageBackgroundView.swift; sourceTree = "<group>"; };
 		9985F4DC23F44EE300B96DC7 /* CanvasLayoutEngine+Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CanvasLayoutEngine+Configuration.swift"; sourceTree = "<group>"; };
@@ -883,6 +885,7 @@
 			isa = PBXGroup;
 			children = (
 				996187EE249A5166007313BD /* PreferencesWindowController.swift */,
+				9981E6CA24C055CE005AF0EE /* PreferencesTabView.swift */,
 				996187EF249A5166007313BD /* PreferencesWindow.xib */,
 				996187F2249A523D007313BD /* GeneralPreferencesViewController.swift */,
 				996187F3249A523D007313BD /* GeneralPreferencesViewController.xib */,
@@ -1843,6 +1846,7 @@
 				998F178F23EB229200B3437A /* ModelObjects+Pasteboard.swift in Sources */,
 				990D2441235DEFE2001B1FD9 /* PageArrowView.swift in Sources */,
 				99C9AF1D23671FD8009F909A /* ModelReader.swift in Sources */,
+				9981E6CB24C055CE005AF0EE /* PreferencesTabView.swift in Sources */,
 				99171EDC24AA48B200E96DE6 /* MainToolbarDelegate.swift in Sources */,
 				99FDF12C241FD53D00AF1E51 /* CanvasesViewController.swift in Sources */,
 				993D2BFE2412FB1C002E5BAC /* SplitViewContainable.swift in Sources */,
