@@ -74,5 +74,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBAction func showPreferences(_ sender: Any?) {
         self.preferencesWindow.showWindow(sender)
     }
+
+
+    lazy var aboutWindow: AboutWindowController = {
+        return AboutWindowController()
+    }()
+
+    @IBAction func showAboutWindow(_ sender: Any?) {
+        self.aboutWindow.showWindow(sender)
+    }
 }
 

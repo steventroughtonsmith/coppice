@@ -145,6 +145,9 @@
 		9977119C239E91FD00FCC8C7 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9977119B239E91FD00FCC8C7 /* ViewModel.swift */; };
 		997711CA239E9AF400FCC8C7 /* MockDocumentWindowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997711C9239E9AF400FCC8C7 /* MockDocumentWindowViewModel.swift */; };
 		9981E6CB24C055CE005AF0EE /* PreferencesTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9981E6CA24C055CE005AF0EE /* PreferencesTabView.swift */; };
+		9981E6CF24C05811005AF0EE /* AboutWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9981E6CD24C05811005AF0EE /* AboutWindowController.swift */; };
+		9981E6D024C05811005AF0EE /* AboutWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9981E6CE24C05811005AF0EE /* AboutWindow.xib */; };
+		9981E6D224C067A2005AF0EE /* Acknowledgements.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 9981E6D124C067A2005AF0EE /* Acknowledgements.rtf */; };
 		9985F4D923F2E13600B96DC7 /* CanvasPageTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9985F4D823F2E13600B96DC7 /* CanvasPageTitleView.swift */; };
 		9985F4DB23F44AAD00B96DC7 /* CanvasPageBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9985F4DA23F44AAD00B96DC7 /* CanvasPageBackgroundView.swift */; };
 		9985F4DD23F44EE300B96DC7 /* CanvasLayoutEngine+Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9985F4DC23F44EE300B96DC7 /* CanvasLayoutEngine+Configuration.swift */; };
@@ -479,6 +482,9 @@
 		9977119B239E91FD00FCC8C7 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		997711C9239E9AF400FCC8C7 /* MockDocumentWindowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDocumentWindowViewModel.swift; sourceTree = "<group>"; };
 		9981E6CA24C055CE005AF0EE /* PreferencesTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesTabView.swift; sourceTree = "<group>"; };
+		9981E6CD24C05811005AF0EE /* AboutWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutWindowController.swift; sourceTree = "<group>"; };
+		9981E6CE24C05811005AF0EE /* AboutWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutWindow.xib; sourceTree = "<group>"; };
+		9981E6D124C067A2005AF0EE /* Acknowledgements.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Acknowledgements.rtf; sourceTree = "<group>"; };
 		9985F4D823F2E13600B96DC7 /* CanvasPageTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageTitleView.swift; sourceTree = "<group>"; };
 		9985F4DA23F44AAD00B96DC7 /* CanvasPageBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageBackgroundView.swift; sourceTree = "<group>"; };
 		9985F4DC23F44EE300B96DC7 /* CanvasLayoutEngine+Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CanvasLayoutEngine+Configuration.swift"; sourceTree = "<group>"; };
@@ -1032,6 +1038,15 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		9981E6CC24C057F8005AF0EE /* About */ = {
+			isa = PBXGroup;
+			children = (
+				9981E6CD24C05811005AF0EE /* AboutWindowController.swift */,
+				9981E6CE24C05811005AF0EE /* AboutWindow.xib */,
+			);
+			path = About;
+			sourceTree = "<group>";
+		};
 		99868F302396AD24009AC0F7 /* Image Editor Inspector */ = {
 			isa = PBXGroup;
 			children = (
@@ -1494,6 +1509,7 @@
 				99488AAA23C36756009954AF /* CoppiceUserDefaults.swift */,
 				9977119B239E91FD00FCC8C7 /* ViewModel.swift */,
 				99C88EE9240C2F3F00339880 /* NSWindow+KeyLoopDebug.swift */,
+				9981E6CC24C057F8005AF0EE /* About */,
 				996187ED249A511C007313BD /* Preferences */,
 				996187FE249BB61D007313BD /* Subscription */,
 				99488AAC23C37B77009954AF /* Thumbnail Generation */,
@@ -1521,6 +1537,7 @@
 				99FE019922CD1038004D380D /* MainMenu.xib */,
 				99FE019C22CD1038004D380D /* Info.plist */,
 				999EA68C2433913A00BF254E /* Info.plist.prefix */,
+				9981E6D124C067A2005AF0EE /* Acknowledgements.rtf */,
 				999EA69924339A8400BF254E /* .build_number */,
 			);
 			path = Coppice;
@@ -1704,6 +1721,7 @@
 				99C8652A2306D141004C7B89 /* PageSelectorViewController.xib in Resources */,
 				99488AA323BA3983009954AF /* SmallCanvasCell.xib in Resources */,
 				9965FC4723844910002FE10D /* TextEditorInspectorContentView.xib in Resources */,
+				9981E6D224C067A2005AF0EE /* Acknowledgements.rtf in Resources */,
 				99581083230D7EFB00D996C4 /* CanvasEditorViewController.xib in Resources */,
 				993D2BD924127E29002E5BAC /* CanvasListView.xib in Resources */,
 				99581093230D92C600D996C4 /* CanvasPageViewController.xib in Resources */,
@@ -1720,6 +1738,7 @@
 				99488AA723BA3993009954AF /* LargeCanvasCell.xib in Resources */,
 				99F0CD77246AF1C4006DE18E /* PreviewGenerationDebugWindow.xib in Resources */,
 				99FE019B22CD1038004D380D /* MainMenu.xib in Resources */,
+				9981E6D024C05811005AF0EE /* AboutWindow.xib in Resources */,
 				9970977623B93A5800CD189B /* Icons.xcassets in Resources */,
 				99488AF123C8D5B0009954AF /* Colours.xcassets in Resources */,
 				99D8E379237EDB890098CF3B /* PageInspectorContentView.xib in Resources */,
@@ -1777,6 +1796,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				999DAACE23CF484A0013EC36 /* ModelSettings.swift in Sources */,
+				9981E6CF24C05811005AF0EE /* AboutWindowController.swift in Sources */,
 				992A5CAA22DDF5000012CCB6 /* DebugCanvasEditor.swift in Sources */,
 				99C03EF123293D6C00EB7516 /* Array+M3Extensions.swift in Sources */,
 				99C865292306D141004C7B89 /* PageSelectorViewController.swift in Sources */,
