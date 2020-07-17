@@ -23,7 +23,7 @@ class UpdatePreferencesViewController: NSViewController {
     func createTabItem() -> NSTabViewItem {
         let item = NSTabViewItem(viewController: self)
         item.label = NSLocalizedString("Updates", comment: "Updates Preferences Title")
-        item.image = NSImage(named: "NSBonjour")
+        item.image = NSImage(named: "PrefsUpdates")
         return item
     }
 

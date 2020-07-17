@@ -13,7 +13,7 @@ class SubscribeViewController: NSViewController {
     func createTabItem() -> NSTabViewItem {
         let item = NSTabViewItem(viewController: self)
         item.label = NSLocalizedString("Coppice Pro", comment: "Pro Preferences Title")
-        item.image = NSImage(named: "NSNetwork")
+        item.image = NSImage(named: "PrefsPro")
         return item
     }
 

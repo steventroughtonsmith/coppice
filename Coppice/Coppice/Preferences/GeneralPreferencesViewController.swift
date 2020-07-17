@@ -14,7 +14,7 @@ class GeneralPreferencesViewController: NSViewController {
     func createTabItem() -> NSTabViewItem {
         let item = NSTabViewItem(viewController: self)
         item.label = NSLocalizedString("General", comment: "General Preferences Title")
-        item.image = NSImage(named: "NSPreferencesGeneral")
+        item.image = NSImage(named: "PrefsGeneral")
         return item
     }
 
