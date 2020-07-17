@@ -13,6 +13,8 @@ class Document: NSDocument {
         CoppiceModelController(undoManager: self.undoManager!)
     }()
 
+    static let documentVersion = 1
+
 
     override class var autosavesInPlace: Bool {
         return true
@@ -40,11 +42,17 @@ class Document: NSDocument {
     }
 
     override func read(from fileWrapper: FileWrapper, ofType typeName: String) throws {
-        Swift.print("read")
-        let modelReader = ModelReader(modelController: self.modelController)
+        let modelReader = ModelReader(modelController: self.modelController, documentVersion: Document.documentVersion)
         do {
             try modelReader.read(fileWrapper)
             self.isBrandNewDocument = false
+        } catch ModelReader.Errors.versionTooNew {
+            throw NSError(domain: GlobalConstants.appErrorDomain,
+                          code: GlobalConstants.ErrorCodes.readingDocumentFailed.rawValue,
+                          userInfo: [
+                            NSLocalizedFailureReasonErrorKey: NSLocalizedString("This document was saved by a newer version of Coppice", comment: "Document version too new error reason"),
+                            NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString("Please download the latest version of Coppice to open this Document", comment: "Document version too new error recovery suggestion")
+                          ])
         } catch {
             throw NSError(domain: GlobalConstants.appErrorDomain,
                           code: GlobalConstants.ErrorCodes.readingDocumentFailed.rawValue,
@@ -53,7 +61,7 @@ class Document: NSDocument {
     }
 
     override func fileWrapper(ofType typeName: String) throws -> FileWrapper {
-        let modelWriter = ModelWriter(modelController: self.modelController)
+        let modelWriter = ModelWriter(modelController: self.modelController, documentVersion: Document.documentVersion)
         return try modelWriter.generateFileWrapper()
     }
 

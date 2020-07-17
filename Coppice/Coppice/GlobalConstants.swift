@@ -15,6 +15,7 @@ struct GlobalConstants {
 
     enum ErrorCodes: Int {
         case readingDocumentFailed = 1
+        case documentTooNew = 2
     }
 
     static let minimumPageSize = CGSize(width: 150, height: 100)

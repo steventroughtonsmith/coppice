@@ -85,14 +85,14 @@ class ModelWriterTests: XCTestCase {
     }
 
     func test_plist_fileWrapperContainsDataPlistAtRoot() throws {
-        let writer = ModelWriter(modelController: self.testModel)
+        let writer = ModelWriter(modelController: self.testModel, documentVersion: 1)
         let fileWrapper = try writer.generateFileWrapper()
         XCTAssertNotNil(fileWrapper.fileWrappers?["data.plist"])
         XCTAssertTrue(fileWrapper.fileWrappers?["data.plist"]?.isRegularFile ?? false)
     }
 
     func test_plist_containsAllPages() throws {
-        let writer = ModelWriter(modelController: self.testModel)
+        let writer = ModelWriter(modelController: self.testModel, documentVersion: 1)
         let fileWrapper = try writer.generateFileWrapper()
         let data = try XCTUnwrap(fileWrapper.fileWrappers?["data.plist"]?.regularFileContents)
         let plist = try XCTUnwrap(try PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: Any])
@@ -101,7 +101,7 @@ class ModelWriterTests: XCTestCase {
     }
 
     func test_plist_pagesContainTypeAndFilenameOfContent() throws {
-        let writer = ModelWriter(modelController: self.testModel)
+        let writer = ModelWriter(modelController: self.testModel, documentVersion: 1)
         let fileWrapper = try writer.generateFileWrapper()
         let data = try XCTUnwrap(fileWrapper.fileWrappers?["data.plist"]?.regularFileContents)
         let plist = try XCTUnwrap(try PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: Any])
@@ -116,7 +116,7 @@ class ModelWriterTests: XCTestCase {
     }
 
     func test_plist_containsAllCanvasPages() throws {
-        let writer = ModelWriter(modelController: self.testModel)
+        let writer = ModelWriter(modelController: self.testModel, documentVersion: 1)
         let fileWrapper = try writer.generateFileWrapper()
         let data = try XCTUnwrap(fileWrapper.fileWrappers?["data.plist"]?.regularFileContents)
         let plist = try XCTUnwrap(try PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: Any])
@@ -125,7 +125,7 @@ class ModelWriterTests: XCTestCase {
     }
 
     func test_plist_containsAllCanvases() throws {
-        let writer = ModelWriter(modelController: self.testModel)
+        let writer = ModelWriter(modelController: self.testModel, documentVersion: 1)
         let fileWrapper = try writer.generateFileWrapper()
         let data = try XCTUnwrap(fileWrapper.fileWrappers?["data.plist"]?.regularFileContents)
         let plist = try XCTUnwrap(try PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: Any])
@@ -134,7 +134,7 @@ class ModelWriterTests: XCTestCase {
     }
 
     func test_plist_containsAllFolders() throws {
-        let writer = ModelWriter(modelController: self.testModel)
+        let writer = ModelWriter(modelController: self.testModel, documentVersion: 1)
         let fileWrapper = try writer.generateFileWrapper()
         let data = try XCTUnwrap(fileWrapper.fileWrappers?["data.plist"]?.regularFileContents)
         let plist = try XCTUnwrap(try PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: Any])
@@ -142,15 +142,24 @@ class ModelWriterTests: XCTestCase {
         XCTAssertEqual(folders.count, 2)
     }
 
+    func test_plist_containsSuppliedDocumentVersion() throws {
+        let writer = ModelWriter(modelController: self.testModel, documentVersion: 41)
+        let fileWrapper = try writer.generateFileWrapper()
+        let data = try XCTUnwrap(fileWrapper.fileWrappers?["data.plist"]?.regularFileContents)
+        let plist = try XCTUnwrap(try PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: Any])
+        let version = try XCTUnwrap(plist["version"] as? Int)
+        XCTAssertEqual(version, 41)
+    }
+
     func test_content_fileWrapperContainsContentDirectoryAtRoot() throws {
-        let writer = ModelWriter(modelController: self.testModel)
+        let writer = ModelWriter(modelController: self.testModel, documentVersion: 1)
         let fileWrapper = try writer.generateFileWrapper()
         XCTAssertNotNil(fileWrapper.fileWrappers?["content"])
         XCTAssertTrue(fileWrapper.fileWrappers?["content"]?.isDirectory ?? false)
     }
 
     func test_content_containsDataFilesForEachContentType() throws {
-        let writer = ModelWriter(modelController: self.testModel)
+        let writer = ModelWriter(modelController: self.testModel, documentVersion: 1)
         let fileWrapper = try writer.generateFileWrapper()
         let contentDirectory = try XCTUnwrap(fileWrapper.fileWrappers?["content"])
 

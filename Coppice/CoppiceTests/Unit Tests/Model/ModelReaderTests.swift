@@ -127,11 +127,12 @@ class ModelReaderTests: XCTestCase {
         ]
 
 
-        let plist = [
+        let plist: [String: Any?] = [
             "canvases": self.plistCanvases,
             "pages": self.plistPages,
             "canvasPages": self.plistCanvasPages,
-            "folders": self.plistFolders
+            "folders": self.plistFolders,
+            "version": 3,
         ]
 
         let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
@@ -142,7 +143,7 @@ class ModelReaderTests: XCTestCase {
         ])
 
         self.modelController = CoppiceModelController(undoManager: UndoManager())
-        self.modelReader = ModelReader(modelController: modelController)
+        self.modelReader = ModelReader(modelController: modelController, documentVersion: 4)
     }
 
     func test_read_createsAllCanvasesFromPlist() {
@@ -419,6 +420,17 @@ class ModelReaderTests: XCTestCase {
             try self.modelReader.read(fileWrapper)
             XCTFail("Error not thrown")
         } catch ModelReader.Errors.corruptData {
+            //Correct
+        } catch let e {
+            XCTFail("Threw incorrect error: \(e)")
+        }
+    }
+
+    func test_errors_throwsVersionTooNewErrorIfPlistVersionIsGreaterThanDocumentVersion() throws {
+        let modelReader = ModelReader(modelController: modelController, documentVersion: 2)
+        do {
+            try modelReader.read(self.testFileWrapper)
+        } catch ModelReader.Errors.versionTooNew {
             //Correct
         } catch let e {
             XCTFail("Threw incorrect error: \(e)")

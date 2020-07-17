@@ -14,11 +14,14 @@ class ModelReader: NSObject {
         case corruptData
         case missingCollection(String)
         case missingID([String: Any])
+        case versionTooNew
     }
 
     let modelController: ModelController
-    init(modelController: ModelController) {
+    let documentVersion: Int
+    init(modelController: ModelController, documentVersion: Int) {
         self.modelController = modelController
+        self.documentVersion = documentVersion
         super.init()
     }
 
@@ -36,6 +39,10 @@ class ModelReader: NSObject {
             throw Errors.corruptData
         }
         let plist = try ModelPlist(plist: plistDict)
+
+        guard self.documentVersion >= plist.version else {
+            throw Errors.versionTooNew
+        }
 
         self.modelController.settings.update(withPlist: plist.settings)
 
@@ -111,6 +118,7 @@ private struct ModelPlist {
     let canvasPages: [ModelID: [String: Any]]
     let folders: [ModelID: [String: Any]]
     let settings: [String: Any]
+    let version: Int
 
     init(plist: [String: Any]) throws {
         guard let canvasPlist = plist["canvases"] as? [[String: Any]] else {
@@ -132,6 +140,8 @@ private struct ModelPlist {
         self.folders = try ModelPlist.mapToModelIDKeys(foldersPlist)
 
         self.settings = (plist["settings"] as? [String: Any]) ?? [:]
+
+        self.version = (plist["version"] as? Int) ?? 1
     }
 
     private static func mapToModelIDKeys(_ collection: [[String: Any]]) throws -> [ModelID: [String: Any]] {

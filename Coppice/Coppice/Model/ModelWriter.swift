@@ -10,8 +10,11 @@ import Cocoa
 
 class ModelWriter: NSObject {
     let modelController: ModelController
-    init(modelController: ModelController) {
+    let documentVersion: Int
+    init(modelController: ModelController, documentVersion: Int) {
         self.modelController = modelController
+        self.documentVersion = documentVersion
+        super.init()
     }
 
     func generateFileWrapper() throws -> FileWrapper {
@@ -35,6 +38,8 @@ class ModelWriter: NSObject {
         content.append(contentsOf: folderContent)
 
         plist["settings"] = self.modelController.settings.plistRepresentation
+
+        plist["version"] = self.documentVersion
 
         let plistData = try PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
         let dataPlistWrapper = FileWrapper(regularFileWithContents: plistData)
