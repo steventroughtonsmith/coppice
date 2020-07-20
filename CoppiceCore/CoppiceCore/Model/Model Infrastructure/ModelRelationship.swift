@@ -9,11 +9,13 @@
 import Foundation
 
 @propertyWrapper
-struct ModelObjectReference<T: CollectableModelObject> {
+public struct ModelObjectReference<T: CollectableModelObject> {
     var modelID: ModelID?
     var modelController: ModelController?
 
-    var wrappedValue: T? {
+    public init() {}
+
+    public var wrappedValue: T? {
         get {
             guard let id = self.modelID else {
                 return nil
@@ -25,7 +27,7 @@ struct ModelObjectReference<T: CollectableModelObject> {
         }
     }
 
-    var projectedValue: Self {
+    public var projectedValue: Self {
         get { self }
         set { self = newValue}
     }
@@ -34,7 +36,7 @@ struct ModelObjectReference<T: CollectableModelObject> {
         return self.modelController?.collection(for: T.self)
     }
 
-    mutating func performCleanUp() {
+    public mutating func performCleanUp() {
         self.modelController = nil
     }
 }

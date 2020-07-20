@@ -9,29 +9,29 @@
 import AppKit
 
 /// Used for determining model type
-struct ModelType: RawRepresentable, Equatable, Hashable {
-    typealias RawValue = String
+public struct ModelType: RawRepresentable, Equatable, Hashable {
+    public typealias RawValue = String
 
-    let rawValue: String
-    init?(_ rawValue: String) {
+    public let rawValue: String
+    public init?(_ rawValue: String) {
         self.init(rawValue: rawValue)
     }
-    init?(rawValue: String) {
+    public init?(rawValue: String) {
         self.rawValue = rawValue
     }
 }
 
 
-struct ModelID: Equatable, Hashable {
-    let modelType: ModelType
-    let uuid: UUID
+public struct ModelID: Equatable, Hashable {
+    public let modelType: ModelType
+    public let uuid: UUID
 
-    init(modelType: ModelType, uuid: UUID = UUID()) {
+    public init(modelType: ModelType, uuid: UUID = UUID()) {
         self.modelType = modelType
         self.uuid = uuid
     }
 
-    init?(modelType: ModelType, uuidString: String) {
+    public init?(modelType: ModelType, uuidString: String) {
         guard let uuid = UUID(uuidString: uuidString) else {
             return nil
         }
@@ -45,18 +45,18 @@ extension ModelID {
     private static let UUIDKey = "uuid"
     private static let modelTypeKey = "modelType"
 
-    static let PasteboardType = NSPasteboard.PasteboardType("com.mcubedsw.Coppice.modelID")
-    var pasteboardItem: NSPasteboardItem {
+    public static let PasteboardType = NSPasteboard.PasteboardType("com.mcubedsw.Coppice.modelID")
+    public var pasteboardItem: NSPasteboardItem {
         let pasteboardItem = NSPasteboardItem()
         pasteboardItem.setPropertyList(self.plistRepresentation, forType: ModelID.PasteboardType)
         return pasteboardItem
     }
 
-    var plistRepresentation: Any {
+    public var plistRepresentation: Any {
         return [ModelID.UUIDKey: self.uuid.uuidString, ModelID.modelTypeKey: self.modelType.rawValue]
     }
 
-    init?(pasteboardItem: NSPasteboardItem) {
+    public init?(pasteboardItem: NSPasteboardItem) {
         guard pasteboardItem.types.contains(ModelID.PasteboardType),
             let propertyList = pasteboardItem.propertyList(forType: ModelID.PasteboardType) as? [String: String],
             let uuidString = propertyList[ModelID.UUIDKey],
@@ -71,11 +71,11 @@ extension ModelID {
 
 //MARK: - PlistConversion
 extension ModelID {
-    var stringRepresentation: String {
+    public var stringRepresentation: String {
         return "\(self.modelType.rawValue)_\(self.uuid.uuidString)"
     }
 
-    init?(string: String) {
+    public init?(string: String) {
         let components = string.split(separator: "_")
         guard components.count == 2,
             let modelType = ModelType(rawValue: String(components[0])) else {

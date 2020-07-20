@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ModelChangeGroupHandler {
+public protocol ModelChangeGroupHandler {
     func pushChangeGroup()
     func popChangeGroup()
 }

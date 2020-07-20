@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ModelController: class, ModelChangeGroupHandler {
+public protocol ModelController: class, ModelChangeGroupHandler {
     var undoManager: UndoManager { get }
     var allCollections: [ModelType: Any] {get set}
     var settings: ModelSettings { get }
@@ -21,7 +21,7 @@ protocol ModelController: class, ModelChangeGroupHandler {
     func disableUndo(_ caller: () throws -> Void) rethrows
 }
 
-extension ModelController {
+public extension ModelController {
     @discardableResult func addModelCollection<T: CollectableModelObject>(for type: T.Type) -> ModelCollection<T> {
         let modelCollection = ModelCollection<T>()
         modelCollection.modelController = self

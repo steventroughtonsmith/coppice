@@ -8,59 +8,61 @@
 
 import Foundation
 
-class ModelSettings {
-    struct Setting: Hashable, Equatable, RawRepresentable {
-        typealias RawValue = String
-        let rawValue: String
-        init(rawValue: String) {
+public class ModelSettings {
+    public struct Setting: Hashable, Equatable, RawRepresentable {
+        public typealias RawValue = String
+        public let rawValue: String
+        public init(rawValue: String) {
             self.rawValue = rawValue
         }
     }
 
+    public init() {}
+
     private var settings = [Setting : Any]()
 
-    func value(for setting: Setting) -> Any? {
+    public func value(for setting: Setting) -> Any? {
         return self.settings[setting]
     }
 
-    func set(_ value: Any?, for setting: Setting) {
+    public func set(_ value: Any?, for setting: Setting) {
         self.settings[setting] = value
     }
 
 
     //MARK: - Typed Setting Accessors
-    func string(for setting: Setting) -> String? {
+    public func string(for setting: Setting) -> String? {
         return self.value(for: setting) as? String
     }
 
-    func integer(for setting: Setting) -> Int? {
+    public func integer(for setting: Setting) -> Int? {
         return self.value(for: setting) as? Int
     }
 
-    func bool(for setting: Setting) -> Bool? {
+    public func bool(for setting: Setting) -> Bool? {
         return self.value(for: setting) as? Bool
     }
 
-    func modelID(for setting: Setting) -> ModelID? {
+    public func modelID(for setting: Setting) -> ModelID? {
         guard let value = self.value(for: setting) as? String else {
             return nil
         }
         return ModelID(string: value)
     }
 
-    func set(_ modelID: ModelID?, for setting: Setting) {
+    public func set(_ modelID: ModelID?, for setting: Setting) {
         self.settings[setting] = modelID?.stringRepresentation
     }
 
 
     //MARK: - Plist Conversion
-    var plistRepresentation: [String: Any] {
+    public var plistRepresentation: [String: Any] {
         var plist = [String: Any]()
         self.settings.forEach { plist[$0.rawValue] = $1 }
         return plist
     }
 
-    func update(withPlist plist: [String: Any]) {
+    public func update(withPlist plist: [String: Any]) {
         var newSettings = [Setting: Any]()
         plist.forEach { newSettings[Setting(rawValue: $0)] = $1 }
         self.settings = newSettings

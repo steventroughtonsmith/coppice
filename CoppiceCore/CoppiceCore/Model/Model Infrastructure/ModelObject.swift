@@ -16,7 +16,7 @@ enum ModelObjectUpdateErrors: Error, Equatable {
 
 //MARK: -
 /// The protocol root for model objects, used where generics can't be
-protocol ModelObject: class {
+public protocol ModelObject: class {
     var id: ModelID { get set }
     static var modelType: ModelType { get }
     var modelController: ModelController? { get }
@@ -57,7 +57,7 @@ extension ModelObject {
 
 //MARK: -
 /// A more extensive ModelObject protocol supporting undo, relationships, etc
-protocol CollectableModelObject: ModelObject, Hashable {
+public protocol CollectableModelObject: ModelObject, Hashable {
     var collection: ModelCollection<Self>? { get set }
 
     /// Called after the object was inserted into the collection. The `collection` property is guaranteed to get set when this is called
@@ -146,13 +146,20 @@ extension CollectableModelObject {
 }
 
 
-struct ModelFile {
-    let type: String
-    let filename: String?
-    let data: Data?
-    let metadata: [String: Any]?
+public struct ModelFile {
+    public let type: String
+    public let filename: String?
+    public let data: Data?
+    public let metadata: [String: Any]?
 
-    var plistRepresentation: [String: Any] {
+    public init(type: String, filename: String?, data: Data?, metadata: [String : Any]?) {
+        self.type = type
+        self.filename = filename
+        self.data = data
+        self.metadata = metadata
+    }
+
+    public var plistRepresentation: [String: Any] {
         var plist: [String: Any] = ["type": self.type]
         if let filename = self.filename {
             plist["filename"] = filename
