@@ -7,7 +7,6 @@
 //
 
 import XCTest
-@testable import Coppice
 @testable import CoppiceCore
 import Carbon.HIToolbox
 

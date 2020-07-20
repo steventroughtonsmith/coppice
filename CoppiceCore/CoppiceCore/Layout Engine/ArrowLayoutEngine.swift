@@ -7,17 +7,16 @@
 //
 
 import Foundation
-import CoppiceCore
 
-class ArrowLayoutEngine {
-    let pages: [LayoutEnginePage]
-    weak var layoutEngine: CanvasLayoutEngine?
-    init(pages: [LayoutEnginePage], layoutEngine: CanvasLayoutEngine? = nil) {
+public class ArrowLayoutEngine {
+    public let pages: [LayoutEnginePage]
+    public weak var layoutEngine: CanvasLayoutEngine?
+    public init(pages: [LayoutEnginePage], layoutEngine: CanvasLayoutEngine? = nil) {
         self.pages = pages
         self.layoutEngine = layoutEngine
     }
 
-    func calculateArrows() -> [LayoutEngineArrow] {
+    public func calculateArrows() -> [LayoutEngineArrow] {
         var arrows = [LayoutEngineArrow]()
         for page in pages {
             guard page.parent == nil else {

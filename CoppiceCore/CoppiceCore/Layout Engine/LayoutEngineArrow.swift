@@ -7,21 +7,26 @@
 //
 
 import Foundation
-import CoppiceCore
 
-struct ArrowPoint: Equatable {
-    var point: CGPoint
-    var edge: LayoutEnginePage.Edge
-    var pageID: UUID
+public struct ArrowPoint: Equatable {
+    public var point: CGPoint
+    public var edge: LayoutEnginePage.Edge
+    public var pageID: UUID
+
+    public init(point: CGPoint, edge: LayoutEnginePage.Edge, pageID: UUID) {
+        self.point = point
+        self.edge = edge
+        self.pageID = pageID
+    }
 }
 
-class LayoutEngineArrow: Equatable {
-    let startPoint: ArrowPoint
-    let endPoint: ArrowPoint
+public class LayoutEngineArrow: Equatable {
+    public let startPoint: ArrowPoint
+    public let endPoint: ArrowPoint
 
-    weak var layoutEngine: CanvasLayoutEngine?
+    public weak var layoutEngine: CanvasLayoutEngine?
 
-    init(startPoint: ArrowPoint, endPoint: ArrowPoint, layoutEngine: CanvasLayoutEngine? = nil) {
+    public init(startPoint: ArrowPoint, endPoint: ArrowPoint, layoutEngine: CanvasLayoutEngine? = nil) {
         self.startPoint = startPoint
         self.endPoint = endPoint
         self.layoutEngine = layoutEngine
@@ -29,28 +34,28 @@ class LayoutEngineArrow: Equatable {
 
 
     //MARK: - Comparison
-    static func == (lhs: LayoutEngineArrow, rhs: LayoutEngineArrow) -> Bool {
+    public static func == (lhs: LayoutEngineArrow, rhs: LayoutEngineArrow) -> Bool {
         return (lhs.startPoint == rhs.startPoint) && (lhs.endPoint == rhs.endPoint)
     }
 
-    func betweenSamePages(as otherArrow: LayoutEngineArrow) -> Bool {
+    public func betweenSamePages(as otherArrow: LayoutEngineArrow) -> Bool {
         return (otherArrow.startPoint.pageID == self.startPoint.pageID) && (otherArrow.endPoint.pageID == self.endPoint.pageID)
     }
 
 
     //MARK: - Pages
-    var startPage: LayoutEnginePage? {
+    public var startPage: LayoutEnginePage? {
         return self.layoutEngine?.page(withID: self.startPoint.pageID)
     }
 
-    var endPage: LayoutEnginePage? {
+    public var endPage: LayoutEnginePage? {
         return self.layoutEngine?.page(withID: self.endPoint.pageID)
     }
 
 
     //MARK: - Frames
 
-    var layoutFrame: CGRect {
+    public var layoutFrame: CGRect {
         guard let basicFrame = CGRect(points: [self.startPoint.point, self.endPoint.point]) else {
             return .zero
         }
@@ -77,13 +82,13 @@ class LayoutEngineArrow: Equatable {
         return basicFrame.insetBy(dx: xInset, dy: yInset)
     }
 
-    var startPointInLayoutFrame: ArrowPoint {
+    public var startPointInLayoutFrame: ArrowPoint {
         var startPoint = self.startPoint
         startPoint.point = startPoint.point.minus(self.layoutFrame.origin)
         return startPoint
     }
 
-    var endPointInLayoutFrame: ArrowPoint {
+    public var endPointInLayoutFrame: ArrowPoint {
         var endPoint = self.endPoint
         endPoint.point = endPoint.point.minus(self.layoutFrame.origin)
 

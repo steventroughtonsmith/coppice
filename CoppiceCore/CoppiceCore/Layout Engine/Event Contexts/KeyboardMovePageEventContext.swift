@@ -8,7 +8,6 @@
 
 import Foundation
 import Carbon.HIToolbox
-import CoppiceCore
 
 class KeyboardMovePageEventContext: CanvasKeyEventContext {
     static var acceptedKeyCodes = [UInt16(kVK_LeftArrow), UInt16(kVK_RightArrow), UInt16(kVK_UpArrow), UInt16(kVK_DownArrow)]

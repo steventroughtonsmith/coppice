@@ -7,6 +7,7 @@
 //
 
 import AppKit
+import CoppiceCore
 
 class PageArrowView: NSView {
     var arrow: LayoutEngineArrow? {

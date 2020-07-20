@@ -7,16 +7,17 @@
 //
 
 import Foundation
-import CoppiceCore
 
-protocol LayoutEngineEventContextFactory {
+public protocol LayoutEngineEventContextFactory {
     func createMouseEventContext(for location: CGPoint, in layoutEngine: LayoutEngine) -> CanvasMouseEventContext?
     func createKeyEventContext(for keyCode: UInt16, in layoutEngine: LayoutEngine) -> CanvasKeyEventContext?
 }
 
 
-class CanvasLayoutEngineEventContextFactory: LayoutEngineEventContextFactory {
-    func createMouseEventContext(for location: CGPoint, in layoutEngine: LayoutEngine) -> CanvasMouseEventContext? {
+public class CanvasLayoutEngineEventContextFactory: LayoutEngineEventContextFactory {
+    public init() {}
+    
+    public func createMouseEventContext(for location: CGPoint, in layoutEngine: LayoutEngine) -> CanvasMouseEventContext? {
         //Canvas click
         guard let page = layoutEngine.page(atCanvasPoint: location) else {
             return CanvasSelectionEventContext()
@@ -37,7 +38,7 @@ class CanvasLayoutEngineEventContextFactory: LayoutEngineEventContextFactory {
         }
     }
 
-    func createKeyEventContext(for keyCode: UInt16, in layoutEngine: LayoutEngine) -> CanvasKeyEventContext? {
+    public func createKeyEventContext(for keyCode: UInt16, in layoutEngine: LayoutEngine) -> CanvasKeyEventContext? {
         let selectedPages = layoutEngine.selectedPages
         guard selectedPages.count > 0 else {
             return nil

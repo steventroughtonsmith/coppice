@@ -22,7 +22,6 @@
 
 /* Begin PBXBuildFile section */
 		9902F4A923882ADA00AF646F /* NSSegmentedControl+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9902F4A823882ADA00AF646F /* NSSegmentedControl+M3Extensions.swift */; };
-		990D243F23560688001B1FD9 /* CanvasLayoutEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03F0023293DAD00EB7516 /* CanvasLayoutEngineTests.swift */; };
 		990D2441235DEFE2001B1FD9 /* PageArrowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990D2440235DEFE2001B1FD9 /* PageArrowView.swift */; };
 		99115DC5249E304D008942DF /* SystemProfileInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99115DC3249E304D008942DF /* SystemProfileInfoViewController.swift */; };
 		99115DC6249E304D008942DF /* SystemProfileInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99115DC4249E304D008942DF /* SystemProfileInfoViewController.xib */; };
@@ -47,15 +46,8 @@
 		992A5CB122DDF5210012CCB6 /* DebugCanvasEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992A5CB022DDF5210012CCB6 /* DebugCanvasEditorViewModel.swift */; };
 		992A5CB322DDF53C0012CCB6 /* DebugPageEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992A5CB222DDF53C0012CCB6 /* DebugPageEditorViewModel.swift */; };
 		993600E224AE2A81002C86E4 /* ModelObjects+AppKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993600E124AE2A81002C86E4 /* ModelObjects+AppKit.swift */; };
-		993600E424AE4A3C002C86E4 /* LayoutEngineEventContextFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993600E324AE4A3C002C86E4 /* LayoutEngineEventContextFactory.swift */; };
-		993600E724AE5ECA002C86E4 /* RemovePageEventContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993600E624AE5ECA002C86E4 /* RemovePageEventContextTests.swift */; };
 		993600E924AE5F1F002C86E4 /* TestLayoutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993600E824AE5F1F002C86E4 /* TestLayoutDelegate.swift */; };
 		993600EB24AE832F002C86E4 /* MockLayoutEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993600EA24AE832F002C86E4 /* MockLayoutEngine.swift */; };
-		993600ED24AF3C95002C86E4 /* KeyboardMovePageEventContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993600EC24AF3C95002C86E4 /* KeyboardMovePageEventContextTests.swift */; };
-		993600EF24AF3CC0002C86E4 /* CanvasSelectionEventContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993600EE24AF3CC0002C86E4 /* CanvasSelectionEventContextTests.swift */; };
-		993600F124AF3CD0002C86E4 /* SelectAndMoveEventContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993600F024AF3CD0002C86E4 /* SelectAndMoveEventContextTests.swift */; };
-		993600F324AF3CDD002C86E4 /* ResizePageEventContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993600F224AF3CDD002C86E4 /* ResizePageEventContextTests.swift */; };
-		993600F524AF3D2A002C86E4 /* EventContextTestBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993600F424AF3D2A002C86E4 /* EventContextTestBase.swift */; };
 		993C0EE924B3A5C5009993D4 /* SourceListTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993C0EE824B3A5C5009993D4 /* SourceListTableCellView.swift */; };
 		993D2BD824127E29002E5BAC /* CanvasListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993D2BD624127E29002E5BAC /* CanvasListViewController.swift */; };
 		993D2BD924127E29002E5BAC /* CanvasListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 993D2BD724127E29002E5BAC /* CanvasListView.xib */; };
@@ -90,7 +82,6 @@
 		99582817247702B300080593 /* ResizeHandleAccessibilityElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99582816247702B300080593 /* ResizeHandleAccessibilityElement.swift */; };
 		9959178724606A1900E8874C /* ResponderChainValidatingToolbarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9959178624606A1900E8874C /* ResponderChainValidatingToolbarItem.swift */; };
 		9960CCE924B1EC1C001F092E /* MockEventContextFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9960CCE824B1EC1C001F092E /* MockEventContextFactory.swift */; };
-		9960CCEB24B237AA001F092E /* CanvasLayoutEngineEventContextFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9960CCEA24B237AA001F092E /* CanvasLayoutEngineEventContextFactoryTests.swift */; };
 		996187F0249A5166007313BD /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996187EE249A5166007313BD /* PreferencesWindowController.swift */; };
 		996187F1249A5166007313BD /* PreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 996187EF249A5166007313BD /* PreferencesWindow.xib */; };
 		996187F4249A523D007313BD /* GeneralPreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996187F2249A523D007313BD /* GeneralPreferencesViewController.swift */; };
@@ -108,9 +99,6 @@
 		9965FC43238448FF002FE10D /* TextEditorInspectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9965FC42238448FF002FE10D /* TextEditorInspectorViewModel.swift */; };
 		9965FC4623844910002FE10D /* TextEditorInspectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9965FC4423844910002FE10D /* TextEditorInspectorViewController.swift */; };
 		9965FC4723844910002FE10D /* TextEditorInspectorContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9965FC4523844910002FE10D /* TextEditorInspectorContentView.xib */; };
-		9970976523AA896C00CD189B /* CanvasEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970976423AA896C00CD189B /* CanvasEventContext.swift */; };
-		9970976723AA8B5A00CD189B /* RemovePageEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970976623AA8B5A00CD189B /* RemovePageEventContext.swift */; };
-		9970976923AA8B6C00CD189B /* KeyboardMovePageEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970976823AA8B6C00CD189B /* KeyboardMovePageEventContext.swift */; };
 		9970976B23ACFD2900CD189B /* RootSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970976A23ACFD2900CD189B /* RootSplitViewController.swift */; };
 		9970976D23AD1A7A00CD189B /* MockPageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970976C23AD1A7A00CD189B /* MockPageContent.swift */; };
 		9970977223AF9BE600CD189B /* PageExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9970977123AF9BE600CD189B /* PageExporter.swift */; };
@@ -134,7 +122,6 @@
 		9981E6D924C0AE1F005AF0EE /* RecentDocumentTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9981E6D824C0AE1F005AF0EE /* RecentDocumentTableCellView.swift */; };
 		9985F4D923F2E13600B96DC7 /* CanvasPageTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9985F4D823F2E13600B96DC7 /* CanvasPageTitleView.swift */; };
 		9985F4DB23F44AAD00B96DC7 /* CanvasPageBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9985F4DA23F44AAD00B96DC7 /* CanvasPageBackgroundView.swift */; };
-		9985F4DD23F44EE300B96DC7 /* CanvasLayoutEngine+Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9985F4DC23F44EE300B96DC7 /* CanvasLayoutEngine+Configuration.swift */; };
 		99868F322396AD55009AC0F7 /* ImageEditorInspectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99868F312396AD55009AC0F7 /* ImageEditorInspectorViewModel.swift */; };
 		99868F352396AD73009AC0F7 /* ImageEditorInspectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99868F332396AD73009AC0F7 /* ImageEditorInspectorViewController.swift */; };
 		99868F362396AD73009AC0F7 /* ImageEditorInspectorContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99868F342396AD73009AC0F7 /* ImageEditorInspectorContentView.xib */; };
@@ -154,7 +141,6 @@
 		99961800249D0CF300A1AE24 /* org.sparkle-project.InstallerConnection.xpc in Copy XPC */ = {isa = PBXBuildFile; fileRef = 999617FA249D0CB100A1AE24 /* org.sparkle-project.InstallerConnection.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		99961801249D0CF300A1AE24 /* org.sparkle-project.InstallerLauncher.xpc in Copy XPC */ = {isa = PBXBuildFile; fileRef = 999617FB249D0CB200A1AE24 /* org.sparkle-project.InstallerLauncher.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		99961802249D0CF300A1AE24 /* org.sparkle-project.InstallerStatus.xpc in Copy XPC */ = {isa = PBXBuildFile; fileRef = 999617FC249D0CB200A1AE24 /* org.sparkle-project.InstallerStatus.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		999BB0B323FEB73E00FAF3D2 /* LayoutEngineArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999BB0B223FEB73E00FAF3D2 /* LayoutEngineArrow.swift */; };
 		999DAACA23CCC5D80013EC36 /* SidebarHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999DAAC923CCC5D80013EC36 /* SidebarHeaderView.swift */; };
 		999EA68D2433913A00BF254E /* Info.plist.prefix in Resources */ = {isa = PBXBuildFile; fileRef = 999EA68C2433913A00BF254E /* Info.plist.prefix */; };
 		999EA6B32436097500BF254E /* SidebarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999EA6B02436097500BF254E /* SidebarViewModel.swift */; };
@@ -189,17 +175,10 @@
 		99AD88A9237C36D0000453E1 /* Editor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AD88A8237C36D0000453E1 /* Editor.swift */; };
 		99B3474C2465846900B96B71 /* PixelPerfectTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B3474B2465846900B96B71 /* PixelPerfectTableView.swift */; };
 		99B3474E24658BA200B96B71 /* RoundSelectionTableRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B3474D24658BA200B96B71 /* RoundSelectionTableRowView.swift */; };
-		99C03EF923293D8A00EB7516 /* LayoutEnginePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03EF323293D8A00EB7516 /* LayoutEnginePage.swift */; };
-		99C03EFA23293D8A00EB7516 /* CanvasLayoutEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03EF423293D8A00EB7516 /* CanvasLayoutEngine.swift */; };
-		99C03EFB23293D8A00EB7516 /* CanvasSelectionEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03EF623293D8A00EB7516 /* CanvasSelectionEventContext.swift */; };
-		99C03EFC23293D8A00EB7516 /* SelectAndMoveEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03EF723293D8A00EB7516 /* SelectAndMoveEventContext.swift */; };
-		99C03EFD23293D8A00EB7516 /* ResizePageEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03EF823293D8A00EB7516 /* ResizePageEventContext.swift */; };
 		99C03F07232A8ED200EB7516 /* CanvasElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03F06232A8ED200EB7516 /* CanvasElementView.swift */; };
 		99C03F09232A99F400EB7516 /* Cursors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99C03F08232A99F400EB7516 /* Cursors.xcassets */; };
 		99C03F0B232A9A5E00EB7516 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03F0A232A9A5E00EB7516 /* CanvasView.swift */; };
 		99C03F0D2334D04200EB7516 /* NSScrollView+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03F0C2334D04200EB7516 /* NSScrollView+M3Extensions.swift */; };
-		99C4AD8923F6F13B003B9A38 /* ArrowLayoutEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C4AD8823F6F13B003B9A38 /* ArrowLayoutEngine.swift */; };
-		99C4AD8B23F707DF003B9A38 /* ArrowLayoutEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C4AD8A23F707DF003B9A38 /* ArrowLayoutEngineTests.swift */; };
 		99C8650923016EB2004C7B89 /* TextEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C8650823016EB2004C7B89 /* TextEditorViewModel.swift */; };
 		99C8650D23016EE5004C7B89 /* TextEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99C8650C23016EE5004C7B89 /* TextEditorViewController.xib */; };
 		99C8650F23017222004C7B89 /* TextEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C8650E23017222004C7B89 /* TextEditorViewController.swift */; };
@@ -209,7 +188,6 @@
 		99C865262306D12B004C7B89 /* PageSelectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C865252306D12B004C7B89 /* PageSelectorViewModel.swift */; };
 		99C865292306D141004C7B89 /* PageSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C865272306D141004C7B89 /* PageSelectorViewController.swift */; };
 		99C8652A2306D141004C7B89 /* PageSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99C865282306D141004C7B89 /* PageSelectorViewController.xib */; };
-		99C88EE22406BDEE00339880 /* LayoutEngineArrowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C88EE12406BDEE00339880 /* LayoutEngineArrowTests.swift */; };
 		99C88EE42409631800339880 /* PageImageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C88EE32409631800339880 /* PageImageController.swift */; };
 		99C88EE6240BC79A00339880 /* EditorBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C88EE5240BC79A00339880 /* EditorBackgroundView.swift */; };
 		99C88EEA240C2F3F00339880 /* NSWindow+KeyLoopDebug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C88EE9240C2F3F00339880 /* NSWindow+KeyLoopDebug.swift */; };
@@ -263,7 +241,6 @@
 		99FE019B22CD1038004D380D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99FE019922CD1038004D380D /* MainMenu.xib */; };
 		99FE01B222CD1038004D380D /* BubblesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FE01B122CD1038004D380D /* BubblesUITests.swift */; };
 		99FE01E522D4CC8A004D380D /* DocumentWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99FE01E322D4CC8A004D380D /* DocumentWindow.xib */; };
-		99FFF9CA23463DFD00EF02A0 /* LayoutEnginePageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FFF9C923463DFD00EF02A0 /* LayoutEnginePageTests.swift */; };
 		99FFF9CC234E2F2F00EF02A0 /* FlippedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FFF9CB234E2F2F00EF02A0 /* FlippedView.swift */; };
 		99FFF9CE2350BAE400EF02A0 /* PageEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FFF9CD2350BAE400EF02A0 /* PageEditorViewController.swift */; };
 		99FFF9D02350BAF500EF02A0 /* PageEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FFF9CF2350BAF500EF02A0 /* PageEditorViewModel.swift */; };
@@ -384,15 +361,8 @@
 		992A5CB022DDF5210012CCB6 /* DebugCanvasEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugCanvasEditorViewModel.swift; sourceTree = "<group>"; };
 		992A5CB222DDF53C0012CCB6 /* DebugPageEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugPageEditorViewModel.swift; sourceTree = "<group>"; };
 		993600E124AE2A81002C86E4 /* ModelObjects+AppKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelObjects+AppKit.swift"; sourceTree = "<group>"; };
-		993600E324AE4A3C002C86E4 /* LayoutEngineEventContextFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutEngineEventContextFactory.swift; sourceTree = "<group>"; };
-		993600E624AE5ECA002C86E4 /* RemovePageEventContextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemovePageEventContextTests.swift; sourceTree = "<group>"; };
 		993600E824AE5F1F002C86E4 /* TestLayoutDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestLayoutDelegate.swift; sourceTree = "<group>"; };
 		993600EA24AE832F002C86E4 /* MockLayoutEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLayoutEngine.swift; sourceTree = "<group>"; };
-		993600EC24AF3C95002C86E4 /* KeyboardMovePageEventContextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardMovePageEventContextTests.swift; sourceTree = "<group>"; };
-		993600EE24AF3CC0002C86E4 /* CanvasSelectionEventContextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasSelectionEventContextTests.swift; sourceTree = "<group>"; };
-		993600F024AF3CD0002C86E4 /* SelectAndMoveEventContextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAndMoveEventContextTests.swift; sourceTree = "<group>"; };
-		993600F224AF3CDD002C86E4 /* ResizePageEventContextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizePageEventContextTests.swift; sourceTree = "<group>"; };
-		993600F424AF3D2A002C86E4 /* EventContextTestBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventContextTestBase.swift; sourceTree = "<group>"; };
 		993C0EE824B3A5C5009993D4 /* SourceListTableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceListTableCellView.swift; sourceTree = "<group>"; };
 		993D2BD624127E29002E5BAC /* CanvasListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasListViewController.swift; sourceTree = "<group>"; };
 		993D2BD724127E29002E5BAC /* CanvasListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CanvasListView.xib; sourceTree = "<group>"; };
@@ -426,7 +396,6 @@
 		99582816247702B300080593 /* ResizeHandleAccessibilityElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizeHandleAccessibilityElement.swift; sourceTree = "<group>"; };
 		9959178624606A1900E8874C /* ResponderChainValidatingToolbarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponderChainValidatingToolbarItem.swift; sourceTree = "<group>"; };
 		9960CCE824B1EC1C001F092E /* MockEventContextFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEventContextFactory.swift; sourceTree = "<group>"; };
-		9960CCEA24B237AA001F092E /* CanvasLayoutEngineEventContextFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasLayoutEngineEventContextFactoryTests.swift; sourceTree = "<group>"; };
 		996187EE249A5166007313BD /* PreferencesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
 		996187EF249A5166007313BD /* PreferencesWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreferencesWindow.xib; sourceTree = "<group>"; };
 		996187F2249A523D007313BD /* GeneralPreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPreferencesViewController.swift; sourceTree = "<group>"; };
@@ -444,9 +413,6 @@
 		9965FC42238448FF002FE10D /* TextEditorInspectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorInspectorViewModel.swift; sourceTree = "<group>"; };
 		9965FC4423844910002FE10D /* TextEditorInspectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorInspectorViewController.swift; sourceTree = "<group>"; };
 		9965FC4523844910002FE10D /* TextEditorInspectorContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextEditorInspectorContentView.xib; sourceTree = "<group>"; };
-		9970976423AA896C00CD189B /* CanvasEventContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasEventContext.swift; sourceTree = "<group>"; };
-		9970976623AA8B5A00CD189B /* RemovePageEventContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemovePageEventContext.swift; sourceTree = "<group>"; };
-		9970976823AA8B6C00CD189B /* KeyboardMovePageEventContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardMovePageEventContext.swift; sourceTree = "<group>"; };
 		9970976A23ACFD2900CD189B /* RootSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootSplitViewController.swift; sourceTree = "<group>"; };
 		9970976C23AD1A7A00CD189B /* MockPageContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPageContent.swift; sourceTree = "<group>"; };
 		9970977123AF9BE600CD189B /* PageExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageExporter.swift; sourceTree = "<group>"; };
@@ -471,7 +437,6 @@
 		9981E6D824C0AE1F005AF0EE /* RecentDocumentTableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentDocumentTableCellView.swift; sourceTree = "<group>"; };
 		9985F4D823F2E13600B96DC7 /* CanvasPageTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageTitleView.swift; sourceTree = "<group>"; };
 		9985F4DA23F44AAD00B96DC7 /* CanvasPageBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageBackgroundView.swift; sourceTree = "<group>"; };
-		9985F4DC23F44EE300B96DC7 /* CanvasLayoutEngine+Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CanvasLayoutEngine+Configuration.swift"; sourceTree = "<group>"; };
 		99868F312396AD55009AC0F7 /* ImageEditorInspectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorInspectorViewModel.swift; sourceTree = "<group>"; };
 		99868F332396AD73009AC0F7 /* ImageEditorInspectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorInspectorViewController.swift; sourceTree = "<group>"; };
 		99868F342396AD73009AC0F7 /* ImageEditorInspectorContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageEditorInspectorContentView.xib; sourceTree = "<group>"; };
@@ -490,7 +455,6 @@
 		999617FB249D0CB200A1AE24 /* org.sparkle-project.InstallerLauncher.xpc */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.xpc-service"; path = "org.sparkle-project.InstallerLauncher.xpc"; sourceTree = "<group>"; };
 		999617FC249D0CB200A1AE24 /* org.sparkle-project.InstallerStatus.xpc */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.xpc-service"; path = "org.sparkle-project.InstallerStatus.xpc"; sourceTree = "<group>"; };
 		999617FD249D0CBA00A1AE24 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
-		999BB0B223FEB73E00FAF3D2 /* LayoutEngineArrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutEngineArrow.swift; sourceTree = "<group>"; };
 		999DAAC923CCC5D80013EC36 /* SidebarHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarHeaderView.swift; sourceTree = "<group>"; };
 		999EA68C2433913A00BF254E /* Info.plist.prefix */ = {isa = PBXFileReference; lastKnownFileType = text; path = Info.plist.prefix; sourceTree = "<group>"; };
 		999EA68F243392B600BF254E /* prepare_infoplist_prefix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = prepare_infoplist_prefix.swift; sourceTree = "<group>"; };
@@ -528,18 +492,10 @@
 		99AD88A8237C36D0000453E1 /* Editor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Editor.swift; sourceTree = "<group>"; };
 		99B3474B2465846900B96B71 /* PixelPerfectTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelPerfectTableView.swift; sourceTree = "<group>"; };
 		99B3474D24658BA200B96B71 /* RoundSelectionTableRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundSelectionTableRowView.swift; sourceTree = "<group>"; };
-		99C03EF323293D8A00EB7516 /* LayoutEnginePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutEnginePage.swift; sourceTree = "<group>"; };
-		99C03EF423293D8A00EB7516 /* CanvasLayoutEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasLayoutEngine.swift; sourceTree = "<group>"; };
-		99C03EF623293D8A00EB7516 /* CanvasSelectionEventContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasSelectionEventContext.swift; sourceTree = "<group>"; };
-		99C03EF723293D8A00EB7516 /* SelectAndMoveEventContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectAndMoveEventContext.swift; sourceTree = "<group>"; };
-		99C03EF823293D8A00EB7516 /* ResizePageEventContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResizePageEventContext.swift; sourceTree = "<group>"; };
-		99C03F0023293DAD00EB7516 /* CanvasLayoutEngineTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasLayoutEngineTests.swift; sourceTree = "<group>"; };
 		99C03F06232A8ED200EB7516 /* CanvasElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasElementView.swift; sourceTree = "<group>"; };
 		99C03F08232A99F400EB7516 /* Cursors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Cursors.xcassets; sourceTree = "<group>"; };
 		99C03F0A232A9A5E00EB7516 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
 		99C03F0C2334D04200EB7516 /* NSScrollView+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSScrollView+M3Extensions.swift"; sourceTree = "<group>"; };
-		99C4AD8823F6F13B003B9A38 /* ArrowLayoutEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrowLayoutEngine.swift; sourceTree = "<group>"; };
-		99C4AD8A23F707DF003B9A38 /* ArrowLayoutEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrowLayoutEngineTests.swift; sourceTree = "<group>"; };
 		99C8650823016EB2004C7B89 /* TextEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorViewModel.swift; sourceTree = "<group>"; };
 		99C8650C23016EE5004C7B89 /* TextEditorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextEditorViewController.xib; sourceTree = "<group>"; };
 		99C8650E23017222004C7B89 /* TextEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorViewController.swift; sourceTree = "<group>"; };
@@ -549,7 +505,6 @@
 		99C865252306D12B004C7B89 /* PageSelectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageSelectorViewModel.swift; sourceTree = "<group>"; };
 		99C865272306D141004C7B89 /* PageSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageSelectorViewController.swift; sourceTree = "<group>"; };
 		99C865282306D141004C7B89 /* PageSelectorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PageSelectorViewController.xib; sourceTree = "<group>"; };
-		99C88EE12406BDEE00339880 /* LayoutEngineArrowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutEngineArrowTests.swift; sourceTree = "<group>"; };
 		99C88EE32409631800339880 /* PageImageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageImageController.swift; sourceTree = "<group>"; };
 		99C88EE5240BC79A00339880 /* EditorBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorBackgroundView.swift; sourceTree = "<group>"; };
 		99C88EE9240C2F3F00339880 /* NSWindow+KeyLoopDebug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSWindow+KeyLoopDebug.swift"; sourceTree = "<group>"; };
@@ -616,7 +571,6 @@
 		99FE01B322CD1038004D380D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		99FE01E222D4CC8A004D380D /* DocumentWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentWindowController.swift; sourceTree = "<group>"; };
 		99FE01E322D4CC8A004D380D /* DocumentWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DocumentWindow.xib; sourceTree = "<group>"; };
-		99FFF9C923463DFD00EF02A0 /* LayoutEnginePageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutEnginePageTests.swift; sourceTree = "<group>"; };
 		99FFF9CB234E2F2F00EF02A0 /* FlippedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlippedView.swift; sourceTree = "<group>"; };
 		99FFF9CD2350BAE400EF02A0 /* PageEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageEditorViewController.swift; sourceTree = "<group>"; };
 		99FFF9CF2350BAF500EF02A0 /* PageEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageEditorViewModel.swift; sourceTree = "<group>"; };
@@ -727,19 +681,6 @@
 			path = "Debug Editors";
 			sourceTree = "<group>";
 		};
-		993600E524AE5E68002C86E4 /* Event Contexts */ = {
-			isa = PBXGroup;
-			children = (
-				993600F424AF3D2A002C86E4 /* EventContextTestBase.swift */,
-				993600EE24AF3CC0002C86E4 /* CanvasSelectionEventContextTests.swift */,
-				993600F024AF3CD0002C86E4 /* SelectAndMoveEventContextTests.swift */,
-				993600F224AF3CDD002C86E4 /* ResizePageEventContextTests.swift */,
-				993600EC24AF3C95002C86E4 /* KeyboardMovePageEventContextTests.swift */,
-				993600E624AE5ECA002C86E4 /* RemovePageEventContextTests.swift */,
-			);
-			path = "Event Contexts";
-			sourceTree = "<group>";
-		};
 		993D2BD52411B421002E5BAC /* Canvas List */ = {
 			isa = PBXGroup;
 			children = (
@@ -769,7 +710,6 @@
 			isa = PBXGroup;
 			children = (
 				99D170E5233D0542004EBD70 /* CanvasEditorViewModelTests.swift */,
-				99C03EFF23293DA400EB7516 /* Layout Engine */,
 				99868F3923981001009AC0F7 /* Page Editors */,
 			);
 			path = "Canvas Editor";
@@ -818,7 +758,6 @@
 				99581080230D7EFB00D996C4 /* CanvasEditorViewController.swift */,
 				99C03F0A232A9A5E00EB7516 /* CanvasView.swift */,
 				99581081230D7EFB00D996C4 /* CanvasEditorViewController.xib */,
-				99C03EF223293D8A00EB7516 /* Layout Engine */,
 				99581094230D93F700D996C4 /* CanvasPageViewModel.swift */,
 				99581090230D92C600D996C4 /* CanvasPageViewController.swift */,
 				99581091230D92C600D996C4 /* CanvasPageViewController.xib */,
@@ -1161,33 +1100,6 @@
 			path = "Generic Types";
 			sourceTree = "<group>";
 		};
-		99C03EF223293D8A00EB7516 /* Layout Engine */ = {
-			isa = PBXGroup;
-			children = (
-				99C03EF423293D8A00EB7516 /* CanvasLayoutEngine.swift */,
-				993600E324AE4A3C002C86E4 /* LayoutEngineEventContextFactory.swift */,
-				9985F4DC23F44EE300B96DC7 /* CanvasLayoutEngine+Configuration.swift */,
-				99C4AD8823F6F13B003B9A38 /* ArrowLayoutEngine.swift */,
-				99C03EF323293D8A00EB7516 /* LayoutEnginePage.swift */,
-				999BB0B223FEB73E00FAF3D2 /* LayoutEngineArrow.swift */,
-				99C03EF523293D8A00EB7516 /* Event Contexts */,
-			);
-			path = "Layout Engine";
-			sourceTree = "<group>";
-		};
-		99C03EF523293D8A00EB7516 /* Event Contexts */ = {
-			isa = PBXGroup;
-			children = (
-				9970976423AA896C00CD189B /* CanvasEventContext.swift */,
-				99C03EF623293D8A00EB7516 /* CanvasSelectionEventContext.swift */,
-				99C03EF723293D8A00EB7516 /* SelectAndMoveEventContext.swift */,
-				99C03EF823293D8A00EB7516 /* ResizePageEventContext.swift */,
-				9970976823AA8B6C00CD189B /* KeyboardMovePageEventContext.swift */,
-				9970976623AA8B5A00CD189B /* RemovePageEventContext.swift */,
-			);
-			path = "Event Contexts";
-			sourceTree = "<group>";
-		};
 		99C03EFE23293D9F00EB7516 /* Canvases Editor */ = {
 			isa = PBXGroup;
 			children = (
@@ -1195,19 +1107,6 @@
 				994253EC244F498E008272E6 /* Canvas Editor */,
 			);
 			path = "Canvases Editor";
-			sourceTree = "<group>";
-		};
-		99C03EFF23293DA400EB7516 /* Layout Engine */ = {
-			isa = PBXGroup;
-			children = (
-				99C03F0023293DAD00EB7516 /* CanvasLayoutEngineTests.swift */,
-				9960CCEA24B237AA001F092E /* CanvasLayoutEngineEventContextFactoryTests.swift */,
-				99C4AD8A23F707DF003B9A38 /* ArrowLayoutEngineTests.swift */,
-				99FFF9C923463DFD00EF02A0 /* LayoutEnginePageTests.swift */,
-				99C88EE12406BDEE00339880 /* LayoutEngineArrowTests.swift */,
-				993600E524AE5E68002C86E4 /* Event Contexts */,
-			);
-			path = "Layout Engine";
 			sourceTree = "<group>";
 		};
 		99C41B6F22DCA94000C82DDE /* Model */ = {
@@ -1808,12 +1707,10 @@
 				992A5CAA22DDF5000012CCB6 /* DebugCanvasEditor.swift in Sources */,
 				99C865292306D141004C7B89 /* PageSelectorViewController.swift in Sources */,
 				99C03F07232A8ED200EB7516 /* CanvasElementView.swift in Sources */,
-				9970976523AA896C00CD189B /* CanvasEventContext.swift in Sources */,
 				99581082230D7EFB00D996C4 /* CanvasEditorViewController.swift in Sources */,
 				998D077D2411578B004ADFF8 /* NSMenu+M3Extensions.swift in Sources */,
 				99581092230D92C600D996C4 /* CanvasPageViewController.swift in Sources */,
 				9965FC4623844910002FE10D /* TextEditorInspectorViewController.swift in Sources */,
-				99C03EFC23293D8A00EB7516 /* SelectAndMoveEventContext.swift in Sources */,
 				9977119C239E91FD00FCC8C7 /* ViewModel.swift in Sources */,
 				9959178724606A1900E8874C /* ResponderChainValidatingToolbarItem.swift in Sources */,
 				992A5CB322DDF53C0012CCB6 /* DebugPageEditorViewModel.swift in Sources */,
@@ -1835,10 +1732,7 @@
 				996187F0249A5166007313BD /* PreferencesWindowController.swift in Sources */,
 				999EA6C72436384F00BF254E /* SearchResultOutlineView.swift in Sources */,
 				99115DC5249E304D008942DF /* SystemProfileInfoViewController.swift in Sources */,
-				9970976723AA8B5A00CD189B /* RemovePageEventContext.swift in Sources */,
 				99FFF9CC234E2F2F00EF02A0 /* FlippedView.swift in Sources */,
-				9985F4DD23F44EE300B96DC7 /* CanvasLayoutEngine+Configuration.swift in Sources */,
-				999BB0B323FEB73E00FAF3D2 /* LayoutEngineArrow.swift in Sources */,
 				999EA6C524362BFF00BF254E /* SearchResultsViewModelTypes.swift in Sources */,
 				9965FC43238448FF002FE10D /* TextEditorInspectorViewModel.swift in Sources */,
 				996187FC249BB615007313BD /* SubscribeViewController.swift in Sources */,
@@ -1848,7 +1742,6 @@
 				99D8E38B237F58FA0098CF3B /* NIBInstantiable.swift in Sources */,
 				99AD88A5237B1700000453E1 /* DocumentWindowViewModel.swift in Sources */,
 				99488AAE23C37B98009954AF /* CanvasThumbnailGenerator.swift in Sources */,
-				9970976923AA8B6C00CD189B /* KeyboardMovePageEventContext.swift in Sources */,
 				993D2BF92412B053002E5BAC /* NestableSplitView.swift in Sources */,
 				99E93E2923D32F15004CF4BB /* ColourGridView.swift in Sources */,
 				99581095230D93F700D996C4 /* CanvasPageViewModel.swift in Sources */,
@@ -1869,10 +1762,8 @@
 				993D2BFE2412FB1C002E5BAC /* SplitViewContainable.swift in Sources */,
 				99A97FF72476ABD500CDD95C /* SearchResultTableCellView.swift in Sources */,
 				992A5CAE22DDF50F0012CCB6 /* DebugPageEditor.swift in Sources */,
-				99C03EFD23293D8A00EB7516 /* ResizePageEventContext.swift in Sources */,
 				99D8E37D237EDB890098CF3B /* CanvasInspectorViewController.swift in Sources */,
 				99C03F0D2334D04200EB7516 /* NSScrollView+M3Extensions.swift in Sources */,
-				99C4AD8923F6F13B003B9A38 /* ArrowLayoutEngine.swift in Sources */,
 				9970976B23ACFD2900CD189B /* RootSplitViewController.swift in Sources */,
 				99E93E2B23D32F61004CF4BB /* ColourGridButton.swift in Sources */,
 				9962AB8923732D9400337834 /* CoppiceDocumentController.swift in Sources */,
@@ -1890,7 +1781,6 @@
 				999DAACA23CCC5D80013EC36 /* SidebarHeaderView.swift in Sources */,
 				99C03F0B232A9A5E00EB7516 /* CanvasView.swift in Sources */,
 				99488A9B23BA392E009954AF /* SmallCanvasCell.swift in Sources */,
-				99C03EF923293D8A00EB7516 /* LayoutEnginePage.swift in Sources */,
 				99D8E383237EDB890098CF3B /* InspectorContainerViewController.swift in Sources */,
 				99FCD7F324A7819400B44593 /* SparkleDelegate.swift in Sources */,
 				996187F4249A523D007313BD /* GeneralPreferencesViewController.swift in Sources */,
@@ -1909,7 +1799,6 @@
 				9965FC3D23843143002FE10D /* CanvasPageInspectorViewController.swift in Sources */,
 				9951C26C230AEFAB006CAD4D /* PageSelectorWindowController.swift in Sources */,
 				99A97FD9246DBD4C00CDD95C /* CanvasCell.swift in Sources */,
-				993600E424AE4A3C002C86E4 /* LayoutEngineEventContextFactory.swift in Sources */,
 				99868F322396AD55009AC0F7 /* ImageEditorInspectorViewModel.swift in Sources */,
 				99488ACE23C78087009954AF /* EditableLabelCell.swift in Sources */,
 				998D0779241137A3004ADFF8 /* RectDrawingView.swift in Sources */,
@@ -1939,12 +1828,10 @@
 				999EA6B42436097500BF254E /* SidebarViewController.swift in Sources */,
 				993D2BD824127E29002E5BAC /* CanvasListViewController.swift in Sources */,
 				999EA6BA243619E700BF254E /* SearchResultsViewModel.swift in Sources */,
-				99C03EFA23293D8A00EB7516 /* CanvasLayoutEngine.swift in Sources */,
 				99C8650F23017222004C7B89 /* TextEditorViewController.swift in Sources */,
 				992A5CB122DDF5210012CCB6 /* DebugCanvasEditorViewModel.swift in Sources */,
 				992A5C9C22DCC6090012CCB6 /* SourceListViewModel.swift in Sources */,
 				99C88EEA240C2F3F00339880 /* NSWindow+KeyLoopDebug.swift in Sources */,
-				99C03EFB23293D8A00EB7516 /* CanvasSelectionEventContext.swift in Sources */,
 				99D8E381237EDB890098CF3B /* InspectorContainerViewModel.swift in Sources */,
 				99C9AF1423631348009F909A /* CanvasTextView.swift in Sources */,
 			);
@@ -1955,40 +1842,29 @@
 			buildActionMask = 2147483647;
 			files = (
 				999EA6EA244E032A00BF254E /* SidebarViewModelTests.swift in Sources */,
-				99FFF9CA23463DFD00EF02A0 /* LayoutEnginePageTests.swift in Sources */,
 				99771196239C530700FCC8C7 /* PageLinkManagerTests.swift in Sources */,
-				993600ED24AF3C95002C86E4 /* KeyboardMovePageEventContextTests.swift in Sources */,
 				9957B088239FD3D800BA3C0B /* DocumentWindowViewModelTests.swift in Sources */,
-				99C4AD8B23F707DF003B9A38 /* ArrowLayoutEngineTests.swift in Sources */,
 				999EA6D4244096DF00BF254E /* Array+M3ExtensionsTests.swift in Sources */,
-				9960CCEB24B237AA001F092E /* CanvasLayoutEngineEventContextFactoryTests.swift in Sources */,
 				9970976D23AD1A7A00CD189B /* MockPageContent.swift in Sources */,
 				999EA6ED244E053300BF254E /* SearchResultsViewModelTests.swift in Sources */,
 				9958107C230D75AA00D996C4 /* TextEditorViewModelTests.swift in Sources */,
-				990D243F23560688001B1FD9 /* CanvasLayoutEngineTests.swift in Sources */,
 				999EA6D624409D6C00BF254E /* CoreGraphics+M3ExtensionsTests.swift in Sources */,
 				9960CCE924B1EC1C001F092E /* MockEventContextFactory.swift in Sources */,
 				993600E924AE5F1F002C86E4 /* TestLayoutDelegate.swift in Sources */,
-				993600F524AF3D2A002C86E4 /* EventContextTestBase.swift in Sources */,
-				99C88EE22406BDEE00339880 /* LayoutEngineArrowTests.swift in Sources */,
 				999EA6E7244CA88600BF254E /* SourceListViewModelTypesTests.swift in Sources */,
 				99A0B85E238D730E005FCF25 /* TextEditorInspectorTypesTests.swift in Sources */,
 				993600EB24AE832F002C86E4 /* MockLayoutEngine.swift in Sources */,
 				99A0B85C238D72F0005FCF25 /* TextEditorAttributesTests.swift in Sources */,
 				999EA6CD243CCCE200BF254E /* XCTestExtensions.swift in Sources */,
-				993600EF24AF3CC0002C86E4 /* CanvasSelectionEventContextTests.swift in Sources */,
 				99868F4723995B4F009AC0F7 /* TextLinkFinderTests.swift in Sources */,
 				997711CA239E9AF400FCC8C7 /* MockDocumentWindowViewModel.swift in Sources */,
 				99A0B860238D732F005FCF25 /* TextEditorInspectorViewModelTests.swift in Sources */,
 				99D4D59822F8650300F69C1F /* SourceListViewModelTests.swift in Sources */,
 				99581076230C40FD00D996C4 /* PageSelectorViewModelTests.swift in Sources */,
 				99DA84EC245718D900F19917 /* MockBubblesModelController.swift in Sources */,
-				993600F124AF3CD0002C86E4 /* SelectAndMoveEventContextTests.swift in Sources */,
-				993600E724AE5ECA002C86E4 /* RemovePageEventContextTests.swift in Sources */,
 				99D170E6233D0542004EBD70 /* CanvasEditorViewModelTests.swift in Sources */,
 				999EA6EF244E054400BF254E /* SearchResultsViewModelTypesTests.swift in Sources */,
 				999EA6F2244F272E00BF254E /* CanvasPageInspectorViewModelTests.swift in Sources */,
-				993600F324AF3CDD002C86E4 /* ResizePageEventContextTests.swift in Sources */,
 				9923B06B22F45F7E0035D8C6 /* TestObjects.swift in Sources */,
 				994253EF244F49A7008272E6 /* CanvasListViewModelTests.swift in Sources */,
 				99DA84EE2457203700F19917 /* Mocking.swift in Sources */,

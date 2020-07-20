@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import CoppiceCore
 
 /// A class representing the layout information for a page inside the LayoutEngine
 ///
@@ -18,10 +17,10 @@ import CoppiceCore
 ///     - Visual Page (`visualPageFrame`): the page as drawn on screen
 ///     - Title Bar (`titleBarFrame`): The title bar for moving
 ///     - Content (`contentContainerFrame`): The actual page content
-class LayoutEnginePage: Equatable {
-    let id: UUID
-    var selected: Bool = false
-    var showBackground: Bool {
+public class LayoutEnginePage: Equatable {
+    public let id: UUID
+    public var selected: Bool = false
+    public var showBackground: Bool {
         if self.layoutEngine?.currentlyHoveredPage == self {
             return true
         }
@@ -29,23 +28,23 @@ class LayoutEnginePage: Equatable {
     }
 
     /// Enabled pages can be edited
-    var enabled: Bool {
+    public var enabled: Bool {
         return (self.layoutEngine?.enabledPage == self)
     }
 
-    var zIndex = -1
+    public var zIndex = -1
 
-    weak var layoutEngine: CanvasLayoutEngine? {
+    public weak var layoutEngine: CanvasLayoutEngine? {
         didSet {
             self.recalculateEdgeFromParent()
         }
     }
 
-    var configuration: CanvasLayoutEngine.Configuration? {
+    public var configuration: CanvasLayoutEngine.Configuration? {
         return self.layoutEngine?.configuration
     }
 
-    init(id: UUID,
+    public init(id: UUID,
          contentFrame: CGRect,
          maintainAspectRatio: Bool = false,
          minimumContentSize: CGSize = GlobalConstants.minimumPageSize,
@@ -61,10 +60,10 @@ class LayoutEnginePage: Equatable {
     }
 
     //MARK: - Content
-    var minimumContentSize: CGSize
+    public var minimumContentSize: CGSize
 
     /// The frame of the page's content in pageSpace
-    var contentFrame: CGRect {
+    public var contentFrame: CGRect {
         didSet {
             self.validateSize()
             self.recalculateEdgeFromParent()
@@ -72,21 +71,21 @@ class LayoutEnginePage: Equatable {
         }
     }
 
-    let maintainAspectRatio: Bool
-    let aspectRatio: CGFloat
+    public let maintainAspectRatio: Bool
+    public let aspectRatio: CGFloat
 
 
     //MARK: - Relationships
-    private(set) weak var parent: LayoutEnginePage? {
+    public private(set) weak var parent: LayoutEnginePage? {
         didSet {
             self.recalculateEdgeFromParent()
         }
     }
-    private(set) var edgeFromParent: Edge?
+    public private(set) var edgeFromParent: Edge?
 
-    private(set) var children = [LayoutEnginePage]()
+    public private(set) var children = [LayoutEnginePage]()
 
-    var allDescendants: [LayoutEnginePage] {
+    public var allDescendants: [LayoutEnginePage] {
         var pages = [LayoutEnginePage]()
         for child in self.children {
             pages.append(child)
@@ -95,11 +94,11 @@ class LayoutEnginePage: Equatable {
         return pages
     }
 
-    func children(for edge: Edge) -> [LayoutEnginePage] {
+    public func children(for edge: Edge) -> [LayoutEnginePage] {
         return self.children.filter { $0.edgeFromParent == edge }
     }
 
-    func addChild(_ child: LayoutEnginePage) {
+    public func addChild(_ child: LayoutEnginePage) {
         self.children.append(child)
         child.parent = self
     }
@@ -162,7 +161,7 @@ class LayoutEnginePage: Equatable {
         }
     }
 
-    func removeChild(_ child: LayoutEnginePage) {
+    public func removeChild(_ child: LayoutEnginePage) {
         child.parent = nil
         if let index = self.children.firstIndex(of: child) {
             self.children.remove(at: index)
@@ -175,7 +174,7 @@ class LayoutEnginePage: Equatable {
         return config.page.shadowOffset.adding(self.borderMargins(for: config))
     }
 
-    var minimumLayoutSize: CGSize {
+    public var minimumLayoutSize: CGSize {
         guard let config = self.configuration else {
             return self.minimumContentSize
         }
@@ -184,7 +183,7 @@ class LayoutEnginePage: Equatable {
         return CGRect(origin: .zero, size: self.minimumContentSize).grow(by: margins).size
     }
 
-    var layoutFrame: CGRect {
+    public var layoutFrame: CGRect {
         get {
             let canvasOrigin = self.layoutEngine?.convertPointToCanvasSpace(self.contentFrame.origin) ?? self.contentFrame.origin
             let canvasFrame = CGRect(origin: canvasOrigin, size: self.contentFrame.size)
@@ -207,7 +206,7 @@ class LayoutEnginePage: Equatable {
         }
     }
 
-    var layoutFrameInPageSpace: CGRect {
+    public var layoutFrameInPageSpace: CGRect {
         let pageOrigin = self.layoutEngine?.convertPointToPageSpace(self.layoutFrame.origin) ?? self.layoutFrame.origin
         return CGRect(origin: pageOrigin, size: self.layoutFrame.size)
     }
@@ -218,7 +217,7 @@ class LayoutEnginePage: Equatable {
         return CanvasLayoutMargins(default: config.page.borderSize, top: config.page.titleHeight)
     }
 
-    var visualPageFrame: CGRect {
+    public var visualPageFrame: CGRect {
         let visualFrame = CGRect(origin: .zero, size: self.layoutFrame.size)
         guard let config = self.configuration else {
             return visualFrame
@@ -226,7 +225,7 @@ class LayoutEnginePage: Equatable {
         return visualFrame.shrink(by: config.page.shadowOffset)
     }
 
-    var titleBarFrame: CGRect {
+    public var titleBarFrame: CGRect {
         var visualPageFrame = self.visualPageFrame
         let titleHeight = self.configuration?.page.titleHeight ?? 0
         visualPageFrame.size.height = titleHeight
@@ -234,7 +233,7 @@ class LayoutEnginePage: Equatable {
         return visualPageFrame
     }
 
-    var contentContainerFrame: CGRect {
+    public var contentContainerFrame: CGRect {
         guard let config = self.configuration else {
             return .zero
         }
@@ -244,13 +243,13 @@ class LayoutEnginePage: Equatable {
         return visualFrame.shrink(by: margins)
     }
 
-    var frameForArrows: CGRect {
+    public var frameForArrows: CGRect {
         var frame = self.contentContainerFrame
         frame.origin = frame.origin.plus(self.layoutFrame.origin)
         return frame
     }
 
-    static func == (lhs: LayoutEnginePage, rhs: LayoutEnginePage) -> Bool {
+    public static func == (lhs: LayoutEnginePage, rhs: LayoutEnginePage) -> Bool {
         return lhs.id == rhs.id
     }
 
@@ -266,7 +265,7 @@ class LayoutEnginePage: Equatable {
 
 
     //MARK: - Components
-    func rectInLayoutFrame(for component: LayoutEnginePageComponent) -> CGRect {
+    public func rectInLayoutFrame(for component: LayoutEnginePageComponent) -> CGRect {
         guard let configuration = self.configuration else {
             return .zero
         }
@@ -317,7 +316,7 @@ class LayoutEnginePage: Equatable {
         return CGRect(x: x + self.visualPageFrame.minX, y: y + self.visualPageFrame.minY, width: width, height: height)
     }
 
-    func component(at point: CGPoint) -> LayoutEnginePageComponent? {
+    public func component(at point: CGPoint) -> LayoutEnginePageComponent? {
         for component in LayoutEnginePageComponent.orderedCases {
             if self.rectInLayoutFrame(for: component).contains(point) {
                 return component
@@ -327,13 +326,13 @@ class LayoutEnginePage: Equatable {
     }
 
 
-    enum Edge: CaseIterable, Equatable {
+    public enum Edge: CaseIterable, Equatable {
         case left
         case top
         case right
         case bottom
 
-        var opposite: Edge {
+        public var opposite: Edge {
             switch self {
             case .left:
                 return .right
@@ -348,7 +347,7 @@ class LayoutEnginePage: Equatable {
     }
 }
 
-enum LayoutEnginePageComponent: CaseIterable, Equatable {
+public enum LayoutEnginePageComponent: CaseIterable, Equatable {
     case resizeLeft
     case resizeTopLeft
     case resizeTop
@@ -360,31 +359,31 @@ enum LayoutEnginePageComponent: CaseIterable, Equatable {
     case titleBar
     case content
 
-    var isRight: Bool {
+    public var isRight: Bool {
         return [.resizeRight, .resizeTopRight, .resizeBottomRight].contains(self)
     }
 
-    var isBottom: Bool {
+    public var isBottom: Bool {
         return [.resizeBottom, .resizeBottomLeft, .resizeBottomRight].contains(self)
     }
 
-    var isLeft: Bool {
+    public var isLeft: Bool {
         return [.resizeLeft, .resizeTopLeft, .resizeBottomLeft].contains(self)
     }
 
-    var isTop: Bool {
+    public var isTop: Bool {
         return [.resizeTop, .resizeTopLeft, .resizeTopRight].contains(self)
     }
 
-    var isCorner: Bool {
+    public var isCorner: Bool {
         return [.resizeTopLeft, .resizeTopRight, .resizeBottomLeft, .resizeBottomRight].contains(self)
     }
 
-    var isEdge: Bool {
+    public var isEdge: Bool {
         return [.resizeLeft, .resizeTop, .resizeRight, .resizeBottom].contains(self)
     }
 
-    static var orderedCases: [LayoutEnginePageComponent] {
+    public static var orderedCases: [LayoutEnginePageComponent] {
         var cases = self.allCases
         if let index = cases.firstIndex(of: .titleBar) {
             cases.remove(at: index)

@@ -8,18 +8,18 @@
 
 import Foundation
 @testable import CoppiceCore
-//
-//class TestLayoutDelegate: CanvasLayoutEngineDelegate {
-//    func reordered(pages: [LayoutEnginePage], in layout: CanvasLayoutEngine) {
-//    }
-//
-//    var movedPages: [LayoutEnginePage]?
-//    func moved(pages: [LayoutEnginePage], in layout: CanvasLayoutEngine) {
-//        self.movedPages = pages
-//    }
-//
-//    var removePages: [LayoutEnginePage]?
-//    func remove(pages: [LayoutEnginePage], from layout: CanvasLayoutEngine) {
-//        self.removePages = pages
-//    }
-//}
+
+class TestLayoutDelegate: CanvasLayoutEngineDelegate {
+    func reordered(pages: [LayoutEnginePage], in layout: CanvasLayoutEngine) {
+    }
+
+    var movedPages: [LayoutEnginePage]?
+    func moved(pages: [LayoutEnginePage], in layout: CanvasLayoutEngine) {
+        self.movedPages = pages
+    }
+
+    var removePages: [LayoutEnginePage]?
+    func remove(pages: [LayoutEnginePage], from layout: CanvasLayoutEngine) {
+        self.removePages = pages
+    }
+}

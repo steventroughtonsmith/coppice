@@ -8,12 +8,10 @@
 
 import Foundation
 
-protocol CanvasMouseEventContext {
+public protocol CanvasMouseEventContext {
     func downEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: LayoutEngine)
     func draggedEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: LayoutEngine)
     func upEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: LayoutEngine)
-
-
 }
 
 extension CanvasMouseEventContext {
@@ -23,7 +21,7 @@ extension CanvasMouseEventContext {
 }
 
 
-protocol CanvasKeyEventContext {
+public protocol CanvasKeyEventContext {
     func keyDown(withCode: UInt16, modifiers: LayoutEventModifiers, isARepeat: Bool, in layout: LayoutEngine)
     func keyUp(withCode: UInt16, modifiers: LayoutEventModifiers, in layout: LayoutEngine)
 }
@@ -34,7 +32,7 @@ extension CanvasKeyEventContext {
 }
 
 
-protocol LayoutEngine: class {
+public protocol LayoutEngine: class {
     var selectedPages: [LayoutEnginePage] { get }
     var canvasSize: CGSize { get }
     var selectionRect: CGRect? { get set }

@@ -7,25 +7,28 @@
 //
 
 import Cocoa
-import CoppiceCore
 
-struct LayoutEventModifiers: OptionSet {
-    let rawValue: UInt
+public struct LayoutEventModifiers: OptionSet {
+    public let rawValue: UInt
 
-    static let shift = LayoutEventModifiers(rawValue: 1 << 0)
-    static let control = LayoutEventModifiers(rawValue: 1 << 1)
-    static let option = LayoutEventModifiers(rawValue: 1 << 2)
-    static let command = LayoutEventModifiers(rawValue: 1 << 3)
+    public static let shift = LayoutEventModifiers(rawValue: 1 << 0)
+    public static let control = LayoutEventModifiers(rawValue: 1 << 1)
+    public static let option = LayoutEventModifiers(rawValue: 1 << 2)
+    public static let command = LayoutEventModifiers(rawValue: 1 << 3)
+
+    public init(rawValue: UInt) {
+        self.rawValue = rawValue
+    }
 }
 
 
-protocol CanvasLayoutView: class {
+public protocol CanvasLayoutView: class {
     func layoutChanged(with context: CanvasLayoutEngine.LayoutContext)
     var viewPortFrame: CGRect { get }
 }
 
 
-protocol CanvasLayoutEngineDelegate: class {
+public protocol CanvasLayoutEngineDelegate: class {
     func moved(pages: [LayoutEnginePage], in layout: CanvasLayoutEngine)
     func remove(pages: [LayoutEnginePage], from layout: CanvasLayoutEngine)
     func reordered(pages: [LayoutEnginePage], in layout: CanvasLayoutEngine)
@@ -33,26 +36,26 @@ protocol CanvasLayoutEngineDelegate: class {
 
 
 
-class CanvasLayoutEngine: NSObject, LayoutEngine {
-    weak var view: CanvasLayoutView?
-    weak var delegate: CanvasLayoutEngineDelegate?
+public class CanvasLayoutEngine: NSObject, LayoutEngine {
+    public weak var view: CanvasLayoutView?
+    public weak var delegate: CanvasLayoutEngineDelegate?
 
-    let configuration: Configuration
-    let eventContextFactory: LayoutEngineEventContextFactory
-    init(configuration: Configuration, eventContextFactory: LayoutEngineEventContextFactory = CanvasLayoutEngineEventContextFactory()) {
+    public let configuration: Configuration
+    public let eventContextFactory: LayoutEngineEventContextFactory
+    public init(configuration: Configuration, eventContextFactory: LayoutEngineEventContextFactory = CanvasLayoutEngineEventContextFactory()) {
         self.configuration = configuration
         self.eventContextFactory = eventContextFactory
     }
 
     //MARK: - Manage Canvas
-    private(set) var canvasSize: CGSize = .zero
+    public private(set) var canvasSize: CGSize = .zero
     private var pageSpaceOffset: CGPoint = .zero
 
-    func convertPointToPageSpace(_ point: CGPoint) -> CGPoint {
+    public func convertPointToPageSpace(_ point: CGPoint) -> CGPoint {
         return point.minus(self.pageSpaceOffset)
     }
 
-    func convertPointToCanvasSpace(_ point: CGPoint) -> CGPoint {
+    public func convertPointToCanvasSpace(_ point: CGPoint) -> CGPoint {
         return point.plus(self.pageSpaceOffset)
     }
 
@@ -91,10 +94,10 @@ class CanvasLayoutEngine: NSObject, LayoutEngine {
 
 
     //MARK: - Manage Pages
-    private(set) var pages = [LayoutEnginePage]()
+    public private(set) var pages = [LayoutEnginePage]()
     private var pagesByUUID = [UUID: LayoutEnginePage]()
 
-    func add(_ pages: [LayoutEnginePage]) {
+    public func add(_ pages: [LayoutEnginePage]) {
         for page in pages {
             guard self.pagesByUUID[page.id] == nil else {
                 assertionFailure("Adding a page to the layout engine twice: \(page.id)")
@@ -110,7 +113,7 @@ class CanvasLayoutEngine: NSObject, LayoutEngine {
         self.informOfLayoutChange(with: self.recalculateCanvasSize())
     }
 
-    func remove(_ pages: [LayoutEnginePage]) {
+    public func remove(_ pages: [LayoutEnginePage]) {
         self.pages = self.pages.filter { !pages.contains($0) }
         for page in pages {
             page.parent?.removeChild(page)
@@ -120,7 +123,7 @@ class CanvasLayoutEngine: NSObject, LayoutEngine {
         self.informOfLayoutChange(with: self.recalculateCanvasSize())
     }
 
-    func updateContentFrame(_ frame: CGRect, ofPageWithID uuid: UUID) {
+    public func updateContentFrame(_ frame: CGRect, ofPageWithID uuid: UUID) {
         guard let page = self.pagesByUUID[uuid] else {
             return
         }
@@ -133,11 +136,11 @@ class CanvasLayoutEngine: NSObject, LayoutEngine {
 
 
     //MARK: - Retrieving Pages
-    func page(withID uuid: UUID) -> LayoutEnginePage? {
+    public func page(withID uuid: UUID) -> LayoutEnginePage? {
         return self.pagesByUUID[uuid]
     }
 
-    func page(atCanvasPoint canvasPoint: CGPoint) -> LayoutEnginePage? {
+    public func page(atCanvasPoint canvasPoint: CGPoint) -> LayoutEnginePage? {
         for page in self.pages.reversed() {
             if page.layoutFrame.contains(canvasPoint) {
                 return page
@@ -146,7 +149,7 @@ class CanvasLayoutEngine: NSObject, LayoutEngine {
         return nil
     }
 
-    func pages(inCanvasRect canvasRect: CGRect) -> [LayoutEnginePage] {
+    public func pages(inCanvasRect canvasRect: CGRect) -> [LayoutEnginePage] {
         var pagesInRect = [LayoutEnginePage]()
         for page in self.pages {
             if page.layoutFrame.intersects(canvasRect) {
@@ -156,23 +159,23 @@ class CanvasLayoutEngine: NSObject, LayoutEngine {
         return pagesInRect
     }
 
-    func modified(_ pages: [LayoutEnginePage]) {
+    public func modified(_ pages: [LayoutEnginePage]) {
         self.updateArrows()
     }
 
-    func finishedModifying(_ pages: [LayoutEnginePage]) {
+    public func finishedModifying(_ pages: [LayoutEnginePage]) {
         self.updateEnabledPage()
         self.delegate?.moved(pages: pages, in: self)
     }
 
-    func tellDelegateToRemove(_ pages: [LayoutEnginePage]) {
+    public func tellDelegateToRemove(_ pages: [LayoutEnginePage]) {
         self.delegate?.remove(pages: pages, from: self)
     }
 
 
     //MARK: - Page Ordering
 
-    func movePageToFront(_ page: LayoutEnginePage) {
+    public func movePageToFront(_ page: LayoutEnginePage) {
         guard let index = self.pages.firstIndex(of: page) else {
             return // Page doesn't exist
         }
@@ -196,21 +199,21 @@ class CanvasLayoutEngine: NSObject, LayoutEngine {
 
 
     //MARK: - Selection
-    var selectedPages: [LayoutEnginePage] {
+    public var selectedPages: [LayoutEnginePage] {
         return self.pages.filter { $0.selected }
     }
 
-    var selectionRect: CGRect?
+    public var selectionRect: CGRect?
 
-    func selectAll() {
+    public func selectAll() {
         self.select(self.pages, extendingSelection: true)
     }
 
-    func deselectAll() {
+    public func deselectAll() {
         self.deselect(self.selectedPages)
     }
 
-    func select(_ pages: [LayoutEnginePage], extendingSelection: Bool = false) {
+    public func select(_ pages: [LayoutEnginePage], extendingSelection: Bool = false) {
         if extendingSelection {
             pages.forEach { $0.selected = true }
         } else {
@@ -220,13 +223,13 @@ class CanvasLayoutEngine: NSObject, LayoutEngine {
         self.notifyOfSelectionUpdatedIfNeeded()
     }
 
-    func deselect(_ pages: [LayoutEnginePage]) {
+    public func deselect(_ pages: [LayoutEnginePage]) {
         pages.forEach { $0.selected = false }
         self.notifyOfSelectionUpdatedIfNeeded()
     }
 
     private var notifyOfSelectionUpdate = true
-    func groupSelectionChange(_ block: () -> Void) {
+    public func groupSelectionChange(_ block: () -> Void) {
         self.notifyOfSelectionUpdate = false
         block()
         self.notifyOfSelectionUpdate = true
@@ -249,7 +252,7 @@ class CanvasLayoutEngine: NSObject, LayoutEngine {
         return selectionChanged
     }
 
-    weak var enabledPage: LayoutEnginePage?
+    public weak var enabledPage: LayoutEnginePage?
     private func updateEnabledPage() {
         guard self.selectedPages.count == 1, let page = self.selectedPages.first else {
             self.enabledPage = nil
@@ -260,9 +263,9 @@ class CanvasLayoutEngine: NSObject, LayoutEngine {
 
 
     //MARK: - Manage Arrows
-    private(set) var arrows = [LayoutEngineArrow]()
+    public private(set) var arrows = [LayoutEngineArrow]()
 
-    func updateArrows() {
+    public func updateArrows() {
         let engine = ArrowLayoutEngine(pages: self.pages, layoutEngine: self)
         self.arrows = engine.calculateArrows()
     }
@@ -271,18 +274,18 @@ class CanvasLayoutEngine: NSObject, LayoutEngine {
     //MARK: - Manage Mouse Events
     private var currentMouseEventContext: CanvasMouseEventContext?
 
-    func downEvent(at location: CGPoint, modifiers: LayoutEventModifiers = [], eventCount: Int = 1) {
+    public func downEvent(at location: CGPoint, modifiers: LayoutEventModifiers = [], eventCount: Int = 1) {
         self.currentMouseEventContext = self.eventContextFactory.createMouseEventContext(for: location, in: self)
         self.currentMouseEventContext?.downEvent(at: location, modifiers: modifiers, eventCount: eventCount, in: self)
         self.informOfLayoutChange(with: LayoutContext())
     }
 
-    func draggedEvent(at location: CGPoint, modifiers: LayoutEventModifiers = [], eventCount: Int = 1) {
+    public func draggedEvent(at location: CGPoint, modifiers: LayoutEventModifiers = [], eventCount: Int = 1) {
         self.currentMouseEventContext?.draggedEvent(at: location, modifiers: modifiers, eventCount: eventCount, in: self)
         self.informOfLayoutChange(with: LayoutContext())
     }
 
-    func upEvent(at location: CGPoint, modifiers: LayoutEventModifiers = [], eventCount: Int = 1) {
+    public func upEvent(at location: CGPoint, modifiers: LayoutEventModifiers = [], eventCount: Int = 1) {
         self.currentMouseEventContext?.upEvent(at: location, modifiers: modifiers, eventCount: eventCount, in: self)
         let canvasSizeContext = self.recalculateCanvasSize()
         let selectionChanged = self.hasSelectionChanged()
@@ -291,13 +294,13 @@ class CanvasLayoutEngine: NSObject, LayoutEngine {
         self.currentMouseEventContext = nil
     }
 
-    func moveEvent(at location: CGPoint, modifiers: LayoutEventModifiers = []) {
+    public func moveEvent(at location: CGPoint, modifiers: LayoutEventModifiers = []) {
         self.currentlyHoveredPage = self.page(atCanvasPoint: location)
     }
 
 
     //MARK: - Hovering
-    var currentlyHoveredPage: LayoutEnginePage? {
+    public var currentlyHoveredPage: LayoutEnginePage? {
         didSet {
             guard oldValue != self.currentlyHoveredPage else {
                 return
@@ -317,7 +320,7 @@ class CanvasLayoutEngine: NSObject, LayoutEngine {
     //MARK: - Manage Key Events
     private var keyEvents = [UInt16: CanvasKeyEventContext]()
 
-    func keyDownEvent(keyCode: UInt16, modifiers: LayoutEventModifiers = [], isARepeat: Bool = false) {
+    public func keyDownEvent(keyCode: UInt16, modifiers: LayoutEventModifiers = [], isARepeat: Bool = false) {
         //We store per code as we may get repeats and we only want to create the event on the first key down
         guard let event = self.keyEvents[keyCode] ?? self.eventContextFactory.createKeyEventContext(for: keyCode, in: self) else {
             return
@@ -328,7 +331,7 @@ class CanvasLayoutEngine: NSObject, LayoutEngine {
         self.informOfLayoutChange(with: LayoutContext())
     }
 
-    func keyUpEvent(keyCode: UInt16, modifiers: LayoutEventModifiers = []) {
+    public func keyUpEvent(keyCode: UInt16, modifiers: LayoutEventModifiers = []) {
         //So if something else has first responder (like a text view), we'll still receive keyup even though we don't get key down
         //So we only want to fetch an existing event, not create a new one here. That way we only act if we also got the associated key down
         guard let event = self.keyEvents[keyCode] else {
@@ -341,7 +344,7 @@ class CanvasLayoutEngine: NSObject, LayoutEngine {
 
 
     //MARK: - Accessibility Event
-    func accessibilityResize(_ component: LayoutEnginePageComponent, of page: LayoutEnginePage, by delta: CGPoint) -> CGPoint {
+    public func accessibilityResize(_ component: LayoutEnginePageComponent, of page: LayoutEnginePage, by delta: CGPoint) -> CGPoint {
         let event = ResizePageEventContext(page: page, component: component)
         let finalDelta = event.resize(withDelta: delta, in: self)
         self.finishedModifying([page])
@@ -351,7 +354,7 @@ class CanvasLayoutEngine: NSObject, LayoutEngine {
 
 
     //MARK: - Manage View
-    func viewPortChanged() {
+    public func viewPortChanged() {
         //We don't care about view port changes while another event is happening
         guard self.currentMouseEventContext == nil else {
             return
@@ -365,18 +368,26 @@ class CanvasLayoutEngine: NSObject, LayoutEngine {
 }
 
 
-extension CanvasLayoutEngine {
+public extension CanvasLayoutEngine {
     struct LayoutContext: Equatable {
-        var sizeChanged = false
-        var pageOffsetChange: CGPoint?
-        var selectionChanged = false
-        var backgroundVisibilityChanged = false
+        public var sizeChanged = false
+        public var pageOffsetChange: CGPoint?
+        public var selectionChanged = false
+        public var backgroundVisibilityChanged = false
 
-        func merged(with context: LayoutContext) -> LayoutContext {
+        public func merged(with context: LayoutContext) -> LayoutContext {
             return LayoutContext(sizeChanged: self.sizeChanged || context.sizeChanged,
                                  pageOffsetChange: self.pageOffsetChange ?? context.pageOffsetChange,
                                  selectionChanged: self.selectionChanged || context.selectionChanged,
                                  backgroundVisibilityChanged: self.backgroundVisibilityChanged || context.backgroundVisibilityChanged)
         }
+
+        public init(sizeChanged: Bool = false, pageOffsetChange: CGPoint? = nil, selectionChanged: Bool = false, backgroundVisibilityChanged: Bool = false) {
+            self.sizeChanged = sizeChanged
+            self.pageOffsetChange = pageOffsetChange
+            self.selectionChanged = selectionChanged
+            self.backgroundVisibilityChanged = backgroundVisibilityChanged
+        }
+
     }
 }

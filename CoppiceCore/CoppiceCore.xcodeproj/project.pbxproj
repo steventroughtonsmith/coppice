@@ -75,6 +75,29 @@
 		99D0C87A24C5E183002EEBFA /* test-image.png in Resources */ = {isa = PBXBuildFile; fileRef = 99D0C87724C5E183002EEBFA /* test-image.png */; };
 		99D0C87B24C5E183002EEBFA /* test-rtf.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 99D0C87824C5E183002EEBFA /* test-rtf.rtf */; };
 		99D0C87C24C5E183002EEBFA /* test-zip.zip in Resources */ = {isa = PBXBuildFile; fileRef = 99D0C87924C5E183002EEBFA /* test-zip.zip */; };
+		99D0C89C24C5FB95002EEBFA /* LayoutEnginePageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C89024C5FB95002EEBFA /* LayoutEnginePageTests.swift */; };
+		99D0C89D24C5FB95002EEBFA /* CanvasLayoutEngineEventContextFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C89124C5FB95002EEBFA /* CanvasLayoutEngineEventContextFactoryTests.swift */; };
+		99D0C89E24C5FB95002EEBFA /* CanvasLayoutEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C89224C5FB95002EEBFA /* CanvasLayoutEngineTests.swift */; };
+		99D0C89F24C5FB95002EEBFA /* ArrowLayoutEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C89324C5FB95002EEBFA /* ArrowLayoutEngineTests.swift */; };
+		99D0C8A024C5FB95002EEBFA /* LayoutEngineArrowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C89424C5FB95002EEBFA /* LayoutEngineArrowTests.swift */; };
+		99D0C8A124C5FB95002EEBFA /* CanvasSelectionEventContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C89624C5FB95002EEBFA /* CanvasSelectionEventContextTests.swift */; };
+		99D0C8A224C5FB95002EEBFA /* EventContextTestBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C89724C5FB95002EEBFA /* EventContextTestBase.swift */; };
+		99D0C8A324C5FB95002EEBFA /* KeyboardMovePageEventContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C89824C5FB95002EEBFA /* KeyboardMovePageEventContextTests.swift */; };
+		99D0C8A424C5FB95002EEBFA /* ResizePageEventContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C89924C5FB95002EEBFA /* ResizePageEventContextTests.swift */; };
+		99D0C8A524C5FB95002EEBFA /* SelectAndMoveEventContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C89A24C5FB95002EEBFA /* SelectAndMoveEventContextTests.swift */; };
+		99D0C8A624C5FB95002EEBFA /* RemovePageEventContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C89B24C5FB95002EEBFA /* RemovePageEventContextTests.swift */; };
+		99D0C8DA24C5FBEA002EEBFA /* CanvasLayoutEngine+Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C8CD24C5FBEA002EEBFA /* CanvasLayoutEngine+Configuration.swift */; };
+		99D0C8DB24C5FBEA002EEBFA /* LayoutEngineEventContextFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C8CE24C5FBEA002EEBFA /* LayoutEngineEventContextFactory.swift */; };
+		99D0C8DC24C5FBEA002EEBFA /* LayoutEnginePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C8CF24C5FBEA002EEBFA /* LayoutEnginePage.swift */; };
+		99D0C8DD24C5FBEA002EEBFA /* LayoutEngineArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C8D024C5FBEA002EEBFA /* LayoutEngineArrow.swift */; };
+		99D0C8DE24C5FBEA002EEBFA /* CanvasLayoutEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C8D124C5FBEA002EEBFA /* CanvasLayoutEngine.swift */; };
+		99D0C8DF24C5FBEA002EEBFA /* ArrowLayoutEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C8D224C5FBEA002EEBFA /* ArrowLayoutEngine.swift */; };
+		99D0C8E024C5FBEA002EEBFA /* CanvasSelectionEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C8D424C5FBEA002EEBFA /* CanvasSelectionEventContext.swift */; };
+		99D0C8E124C5FBEA002EEBFA /* KeyboardMovePageEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C8D524C5FBEA002EEBFA /* KeyboardMovePageEventContext.swift */; };
+		99D0C8E224C5FBEA002EEBFA /* CanvasEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C8D624C5FBEA002EEBFA /* CanvasEventContext.swift */; };
+		99D0C8E324C5FBEA002EEBFA /* SelectAndMoveEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C8D724C5FBEA002EEBFA /* SelectAndMoveEventContext.swift */; };
+		99D0C8E424C5FBEA002EEBFA /* RemovePageEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C8D824C5FBEA002EEBFA /* RemovePageEventContext.swift */; };
+		99D0C8E524C5FBEA002EEBFA /* ResizePageEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C8D924C5FBEA002EEBFA /* ResizePageEventContext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -160,6 +183,29 @@
 		99D0C87724C5E183002EEBFA /* test-image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "test-image.png"; sourceTree = "<group>"; };
 		99D0C87824C5E183002EEBFA /* test-rtf.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = "test-rtf.rtf"; sourceTree = "<group>"; };
 		99D0C87924C5E183002EEBFA /* test-zip.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "test-zip.zip"; sourceTree = "<group>"; };
+		99D0C89024C5FB95002EEBFA /* LayoutEnginePageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutEnginePageTests.swift; sourceTree = "<group>"; };
+		99D0C89124C5FB95002EEBFA /* CanvasLayoutEngineEventContextFactoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasLayoutEngineEventContextFactoryTests.swift; sourceTree = "<group>"; };
+		99D0C89224C5FB95002EEBFA /* CanvasLayoutEngineTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasLayoutEngineTests.swift; sourceTree = "<group>"; };
+		99D0C89324C5FB95002EEBFA /* ArrowLayoutEngineTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrowLayoutEngineTests.swift; sourceTree = "<group>"; };
+		99D0C89424C5FB95002EEBFA /* LayoutEngineArrowTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutEngineArrowTests.swift; sourceTree = "<group>"; };
+		99D0C89624C5FB95002EEBFA /* CanvasSelectionEventContextTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasSelectionEventContextTests.swift; sourceTree = "<group>"; };
+		99D0C89724C5FB95002EEBFA /* EventContextTestBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventContextTestBase.swift; sourceTree = "<group>"; };
+		99D0C89824C5FB95002EEBFA /* KeyboardMovePageEventContextTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardMovePageEventContextTests.swift; sourceTree = "<group>"; };
+		99D0C89924C5FB95002EEBFA /* ResizePageEventContextTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResizePageEventContextTests.swift; sourceTree = "<group>"; };
+		99D0C89A24C5FB95002EEBFA /* SelectAndMoveEventContextTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectAndMoveEventContextTests.swift; sourceTree = "<group>"; };
+		99D0C89B24C5FB95002EEBFA /* RemovePageEventContextTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemovePageEventContextTests.swift; sourceTree = "<group>"; };
+		99D0C8CD24C5FBEA002EEBFA /* CanvasLayoutEngine+Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CanvasLayoutEngine+Configuration.swift"; sourceTree = "<group>"; };
+		99D0C8CE24C5FBEA002EEBFA /* LayoutEngineEventContextFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutEngineEventContextFactory.swift; sourceTree = "<group>"; };
+		99D0C8CF24C5FBEA002EEBFA /* LayoutEnginePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutEnginePage.swift; sourceTree = "<group>"; };
+		99D0C8D024C5FBEA002EEBFA /* LayoutEngineArrow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutEngineArrow.swift; sourceTree = "<group>"; };
+		99D0C8D124C5FBEA002EEBFA /* CanvasLayoutEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasLayoutEngine.swift; sourceTree = "<group>"; };
+		99D0C8D224C5FBEA002EEBFA /* ArrowLayoutEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrowLayoutEngine.swift; sourceTree = "<group>"; };
+		99D0C8D424C5FBEA002EEBFA /* CanvasSelectionEventContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasSelectionEventContext.swift; sourceTree = "<group>"; };
+		99D0C8D524C5FBEA002EEBFA /* KeyboardMovePageEventContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardMovePageEventContext.swift; sourceTree = "<group>"; };
+		99D0C8D624C5FBEA002EEBFA /* CanvasEventContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasEventContext.swift; sourceTree = "<group>"; };
+		99D0C8D724C5FBEA002EEBFA /* SelectAndMoveEventContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectAndMoveEventContext.swift; sourceTree = "<group>"; };
+		99D0C8D824C5FBEA002EEBFA /* RemovePageEventContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemovePageEventContext.swift; sourceTree = "<group>"; };
+		99D0C8D924C5FBEA002EEBFA /* ResizePageEventContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResizePageEventContext.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,6 +254,7 @@
 				99D0C86B24C5E080002EEBFA /* CoppiceUserDefaults.swift */,
 				99D0C86C24C5E080002EEBFA /* Extensions */,
 				99D0C77024C5DDEE002EEBFA /* Model */,
+				99D0C8CC24C5FBEA002EEBFA /* Layout Engine */,
 				99D0C75A24C5DD1E002EEBFA /* Info.plist */,
 			);
 			path = CoppiceCore;
@@ -221,6 +268,7 @@
 				99D0C81624C5DEC8002EEBFA /* XCTestExtensions.swift */,
 				99D0C81724C5DEC8002EEBFA /* Helpers */,
 				99D0C82024C5DEC8002EEBFA /* Model */,
+				99D0C88E24C5FB2F002EEBFA /* Layout Engine */,
 				99D0C76624C5DD1E002EEBFA /* Info.plist */,
 				99D0C87624C5E183002EEBFA /* Resources */,
 			);
@@ -371,6 +419,59 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		99D0C88E24C5FB2F002EEBFA /* Layout Engine */ = {
+			isa = PBXGroup;
+			children = (
+				99D0C89324C5FB95002EEBFA /* ArrowLayoutEngineTests.swift */,
+				99D0C89124C5FB95002EEBFA /* CanvasLayoutEngineEventContextFactoryTests.swift */,
+				99D0C89224C5FB95002EEBFA /* CanvasLayoutEngineTests.swift */,
+				99D0C89524C5FB95002EEBFA /* Event Contexts */,
+				99D0C89424C5FB95002EEBFA /* LayoutEngineArrowTests.swift */,
+				99D0C89024C5FB95002EEBFA /* LayoutEnginePageTests.swift */,
+			);
+			path = "Layout Engine";
+			sourceTree = "<group>";
+		};
+		99D0C89524C5FB95002EEBFA /* Event Contexts */ = {
+			isa = PBXGroup;
+			children = (
+				99D0C89624C5FB95002EEBFA /* CanvasSelectionEventContextTests.swift */,
+				99D0C89724C5FB95002EEBFA /* EventContextTestBase.swift */,
+				99D0C89824C5FB95002EEBFA /* KeyboardMovePageEventContextTests.swift */,
+				99D0C89924C5FB95002EEBFA /* ResizePageEventContextTests.swift */,
+				99D0C89A24C5FB95002EEBFA /* SelectAndMoveEventContextTests.swift */,
+				99D0C89B24C5FB95002EEBFA /* RemovePageEventContextTests.swift */,
+			);
+			path = "Event Contexts";
+			sourceTree = "<group>";
+		};
+		99D0C8CC24C5FBEA002EEBFA /* Layout Engine */ = {
+			isa = PBXGroup;
+			children = (
+				99D0C8CD24C5FBEA002EEBFA /* CanvasLayoutEngine+Configuration.swift */,
+				99D0C8CE24C5FBEA002EEBFA /* LayoutEngineEventContextFactory.swift */,
+				99D0C8CF24C5FBEA002EEBFA /* LayoutEnginePage.swift */,
+				99D0C8D024C5FBEA002EEBFA /* LayoutEngineArrow.swift */,
+				99D0C8D124C5FBEA002EEBFA /* CanvasLayoutEngine.swift */,
+				99D0C8D224C5FBEA002EEBFA /* ArrowLayoutEngine.swift */,
+				99D0C8D324C5FBEA002EEBFA /* Event Contexts */,
+			);
+			path = "Layout Engine";
+			sourceTree = "<group>";
+		};
+		99D0C8D324C5FBEA002EEBFA /* Event Contexts */ = {
+			isa = PBXGroup;
+			children = (
+				99D0C8D424C5FBEA002EEBFA /* CanvasSelectionEventContext.swift */,
+				99D0C8D524C5FBEA002EEBFA /* KeyboardMovePageEventContext.swift */,
+				99D0C8D624C5FBEA002EEBFA /* CanvasEventContext.swift */,
+				99D0C8D724C5FBEA002EEBFA /* SelectAndMoveEventContext.swift */,
+				99D0C8D824C5FBEA002EEBFA /* RemovePageEventContext.swift */,
+				99D0C8D924C5FBEA002EEBFA /* ResizePageEventContext.swift */,
+			);
+			path = "Event Contexts";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -484,9 +585,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				99D0C80D24C5DE79002EEBFA /* PageLink.swift in Sources */,
+				99D0C8E524C5FBEA002EEBFA /* ResizePageEventContext.swift in Sources */,
 				99D0C81024C5DE79002EEBFA /* PageContent.swift in Sources */,
 				99D0C80524C5DE79002EEBFA /* ModelReader.swift in Sources */,
+				99D0C8DB24C5FBEA002EEBFA /* LayoutEngineEventContextFactory.swift in Sources */,
 				99D0C80324C5DE79002EEBFA /* ModelSettings.swift in Sources */,
+				99D0C8E424C5FBEA002EEBFA /* RemovePageEventContext.swift in Sources */,
 				99D0C81124C5DE79002EEBFA /* CanvasPage.swift in Sources */,
 				99D0C87324C5E0B2002EEBFA /* NSEdgeInsets+M3Extensions.swift in Sources */,
 				99D0C86F24C5E080002EEBFA /* CoppiceUserDefaults.swift in Sources */,
@@ -496,6 +600,10 @@
 				99D0C80824C5DE79002EEBFA /* PageHierarchy.swift in Sources */,
 				99D0C80F24C5DE79002EEBFA /* ModelObjects+Pasteboard.swift in Sources */,
 				99D0C87524C5E0E1002EEBFA /* Array+M3Extensions.swift in Sources */,
+				99D0C8E224C5FBEA002EEBFA /* CanvasEventContext.swift in Sources */,
+				99D0C8E324C5FBEA002EEBFA /* SelectAndMoveEventContext.swift in Sources */,
+				99D0C8DC24C5FBEA002EEBFA /* LayoutEnginePage.swift in Sources */,
+				99D0C8DF24C5FBEA002EEBFA /* ArrowLayoutEngine.swift in Sources */,
 				99D0C80224C5DE79002EEBFA /* ModelRelationship.swift in Sources */,
 				99D0C87024C5E080002EEBFA /* NSImage+M3Extensions.swift in Sources */,
 				99D0C80724C5DE79002EEBFA /* ModelObjects+Searching.swift in Sources */,
@@ -503,13 +611,18 @@
 				99D0C7FF24C5DE79002EEBFA /* ModelObservation.swift in Sources */,
 				99D0C80024C5DE79002EEBFA /* ModelObject.swift in Sources */,
 				99D0C81424C5DE79002EEBFA /* ImagePageContent.swift in Sources */,
+				99D0C8DA24C5FBEA002EEBFA /* CanvasLayoutEngine+Configuration.swift in Sources */,
+				99D0C8DD24C5FBEA002EEBFA /* LayoutEngineArrow.swift in Sources */,
 				99D0C80E24C5DE79002EEBFA /* Canvas+Pages.swift in Sources */,
 				99D0C80424C5DE79002EEBFA /* ModelID.swift in Sources */,
 				99D0C86724C5DFBA002EEBFA /* GlobalConstants.swift in Sources */,
 				99D0C7FC24C5DE79002EEBFA /* CoppiceModelController.swift in Sources */,
+				99D0C8E124C5FBEA002EEBFA /* KeyboardMovePageEventContext.swift in Sources */,
+				99D0C8E024C5FBEA002EEBFA /* CanvasSelectionEventContext.swift in Sources */,
 				99D0C81524C5DE79002EEBFA /* ModelObjects+Defaults.swift in Sources */,
 				99D0C81224C5DE79002EEBFA /* Page.swift in Sources */,
 				99D0C80124C5DE79002EEBFA /* ModelCollection.swift in Sources */,
+				99D0C8DE24C5FBEA002EEBFA /* CanvasLayoutEngine.swift in Sources */,
 				99D0C81324C5DE79002EEBFA /* TextPageContent.swift in Sources */,
 				99D0C80A24C5DE79002EEBFA /* FolderContainable.swift in Sources */,
 				99D0C87124C5E080002EEBFA /* CoreGraphics+M3Extensions.swift in Sources */,
@@ -524,14 +637,20 @@
 				99D0C86224C5DF0F002EEBFA /* CoppiceModelControllerFolderTests.swift in Sources */,
 				99D0C85424C5DEC9002EEBFA /* CanvasPageTests.swift in Sources */,
 				99D0C85224C5DEC9002EEBFA /* ModelObjects+PasteboardTests.swift in Sources */,
+				99D0C89E24C5FB95002EEBFA /* CanvasLayoutEngineTests.swift in Sources */,
 				99D0C86024C5DF0F002EEBFA /* CoppiceModelControllerPageTests.swift in Sources */,
 				99D0C84324C5DEC9002EEBFA /* TestObjects.swift in Sources */,
+				99D0C8A224C5FB95002EEBFA /* EventContextTestBase.swift in Sources */,
 				99D0C83D24C5DEC9002EEBFA /* TestLayoutDelegate.swift in Sources */,
+				99D0C8A024C5FB95002EEBFA /* LayoutEngineArrowTests.swift in Sources */,
+				99D0C8A424C5FB95002EEBFA /* ResizePageEventContextTests.swift in Sources */,
+				99D0C89C24C5FB95002EEBFA /* LayoutEnginePageTests.swift in Sources */,
 				99D0C84724C5DEC9002EEBFA /* ModelSettingsTests.swift in Sources */,
 				99D0C84824C5DEC9002EEBFA /* ModelIDTests.swift in Sources */,
 				99D0C85624C5DEC9002EEBFA /* TextPageContentsTests.swift in Sources */,
 				99D0C86324C5DF0F002EEBFA /* CoppiceModelControllerCanvasTests.swift in Sources */,
 				99D0C85924C5DEC9002EEBFA /* ModelReaderTests.swift in Sources */,
+				99D0C89F24C5FB95002EEBFA /* ArrowLayoutEngineTests.swift in Sources */,
 				99D0C84124C5DEC9002EEBFA /* MockEventContextFactory.swift in Sources */,
 				99D0C85024C5DEC9002EEBFA /* PageLinkTests.swift in Sources */,
 				99D0C84924C5DEC9002EEBFA /* ModelCollectionTests.swift in Sources */,
@@ -540,11 +659,16 @@
 				99D0C83B24C5DEC9002EEBFA /* XCTestExtensions.swift in Sources */,
 				99D0C84024C5DEC9002EEBFA /* MockBubblesModelController.swift in Sources */,
 				99D0C84C24C5DEC9002EEBFA /* ModelWriterTests.swift in Sources */,
+				99D0C8A624C5FB95002EEBFA /* RemovePageEventContextTests.swift in Sources */,
+				99D0C8A524C5FB95002EEBFA /* SelectAndMoveEventContextTests.swift in Sources */,
 				99D0C84A24C5DEC9002EEBFA /* ModelObjectTests.swift in Sources */,
+				99D0C8A324C5FB95002EEBFA /* KeyboardMovePageEventContextTests.swift in Sources */,
 				99D0C84E24C5DEC9002EEBFA /* PageHierarchyTests.swift in Sources */,
 				99D0C86124C5DF0F002EEBFA /* CoppiceModelControllerTests.swift in Sources */,
 				99D0C84224C5DEC9002EEBFA /* Mocking.swift in Sources */,
 				99D0C86424C5DF0F002EEBFA /* CoppiceModelControllerCanvasPageTests.swift in Sources */,
+				99D0C89D24C5FB95002EEBFA /* CanvasLayoutEngineEventContextFactoryTests.swift in Sources */,
+				99D0C8A124C5FB95002EEBFA /* CanvasSelectionEventContextTests.swift in Sources */,
 				99D0C85824C5DEC9002EEBFA /* ModelObjects+SearchingTests.swift in Sources */,
 				99D0C84624C5DEC9002EEBFA /* ModelControllerTests.swift in Sources */,
 				99D0C85724C5DEC9002EEBFA /* ImagePageContentsTests.swift in Sources */,

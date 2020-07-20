@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import CoppiceCore
 
 extension LayoutEnginePageComponent {
     static let horizontalResizeCursor = NSCursor(image: NSImage(named: "left-rightcursor")!, hotSpot: CGPoint(x: 11, y: 11))
