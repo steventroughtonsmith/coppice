@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoppiceCore
 
 class CanvasPageInspectorViewModel: BaseInspectorViewModel {
     @objc dynamic let canvasPage: CanvasPage

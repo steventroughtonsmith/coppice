@@ -8,6 +8,7 @@
 
 import Cocoa
 import Combine
+import CoppiceCore
 
 class CanvasListViewController: NSViewController, SplitViewContainable, NSMenuItemValidation {
     @IBOutlet weak var tableView: NSTableView!

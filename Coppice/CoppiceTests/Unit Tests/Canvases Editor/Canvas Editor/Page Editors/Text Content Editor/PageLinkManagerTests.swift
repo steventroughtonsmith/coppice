@@ -8,6 +8,7 @@
 
 import XCTest
 @testable import Coppice
+@testable import CoppiceCore
 
 class PageLinkManagerTests: XCTestCase {
     var modelController: CoppiceModelController!

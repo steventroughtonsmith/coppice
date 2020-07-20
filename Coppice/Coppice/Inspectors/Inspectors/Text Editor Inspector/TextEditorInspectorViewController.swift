@@ -9,6 +9,7 @@
 import Cocoa
 import Combine
 import ObjectiveC
+import CoppiceCore
 
 class TextEditorInspectorViewController: BaseInspectorViewController {
     override var contentViewNibName: NSNib.Name? {

@@ -8,6 +8,7 @@
 
 import Cocoa
 import Sparkle
+import CoppiceCore
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {

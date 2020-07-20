@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoppiceCore
 
 class ArrowLayoutEngine {
     let pages: [LayoutEnginePage]

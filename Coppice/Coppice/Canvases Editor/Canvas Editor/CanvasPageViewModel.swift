@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoppiceCore
 
 protocol CanvasPageView: class {
 }

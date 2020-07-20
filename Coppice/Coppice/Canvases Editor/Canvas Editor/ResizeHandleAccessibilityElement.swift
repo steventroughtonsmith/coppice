@@ -7,6 +7,7 @@
 //
 
 import AppKit
+import CoppiceCore
 
 protocol ResizeHandleAccessibilityElementDelegate: class {
     func didMove(_ handle: ResizeHandleAccessibilityElement, byDelta delta: CGPoint) -> CGPoint

@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import CoppiceCore
 
 class ResizePageEventContext: CanvasMouseEventContext {
     var lastLocation: CGPoint?

@@ -9,6 +9,7 @@
 import XCTest
 import Combine
 @testable import Coppice
+@testable import CoppiceCore
 
 class TestTextEditor: InspectableTextEditor {
     @Published var selectionAttributes: TextEditorAttributes?

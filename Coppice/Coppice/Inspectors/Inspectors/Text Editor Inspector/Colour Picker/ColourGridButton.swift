@@ -7,6 +7,7 @@
 //
 
 import AppKit
+import CoppiceCore
 
 class ColourGridButton: NSButton {
     override class var cellClass: AnyClass? {

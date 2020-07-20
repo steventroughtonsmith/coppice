@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import CoppiceCore
 
 class ViewModel: NSObject {
     let documentWindowViewModel: DocumentWindowViewModel

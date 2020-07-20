@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import CoppiceCore
 
 protocol DocumentWindow: class {
     func showAlert(_ alert: Alert, callback: @escaping (Int) -> Void)

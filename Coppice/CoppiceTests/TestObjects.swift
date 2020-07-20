@@ -8,6 +8,7 @@
 
 import Foundation
 @testable import Coppice
+@testable import CoppiceCore
 
 class TestModelObject: ModelObject {
     var plistRepresentation = [String : Any]()

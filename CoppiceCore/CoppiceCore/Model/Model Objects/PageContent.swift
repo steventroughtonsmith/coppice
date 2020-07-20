@@ -12,7 +12,7 @@ public enum PageContentType: String, Equatable, CaseIterable {
     case text
     case image
 
-    func createContent(data: Data? = nil, metadata: [String: Any]? = nil) -> PageContent {
+    public func createContent(data: Data? = nil, metadata: [String: Any]? = nil) -> PageContent {
         switch self {
         case .text:
             return TextPageContent(data: data)
@@ -21,7 +21,7 @@ public enum PageContentType: String, Equatable, CaseIterable {
         }
     }
 
-    static func contentType(forUTI uti: String) -> PageContentType? {
+    public static func contentType(forUTI uti: String) -> PageContentType? {
         if UTTypeConformsTo(uti as CFString, kUTTypeText) {
             return .text
         }
@@ -31,7 +31,7 @@ public enum PageContentType: String, Equatable, CaseIterable {
         return nil
     }
 
-    var icon: NSImage {
+    public var icon: NSImage {
         switch self {
         case .text:
             return NSImage.symbol(withName: Symbols.Page.text)!
@@ -40,11 +40,11 @@ public enum PageContentType: String, Equatable, CaseIterable {
         }
     }
 
-    var addIcon: NSImage {
+    public var addIcon: NSImage {
         return self.icon
     }
 
-    var localizedName: String {
+    public var localizedName: String {
         switch self {
         case .text:
             return NSLocalizedString("Text Page", comment: "Text content name")
@@ -53,7 +53,7 @@ public enum PageContentType: String, Equatable, CaseIterable {
         }
     }
 
-    var keyEquivalent: String {
+    public var keyEquivalent: String {
         switch self {
         case .text, .image:
             return "N"
@@ -61,7 +61,7 @@ public enum PageContentType: String, Equatable, CaseIterable {
         }
     }
 
-    var keyEquivalentModifierMask: NSEvent.ModifierFlags {
+    public var keyEquivalentModifierMask: NSEvent.ModifierFlags {
         switch self {
         case .text:
             return [.command, .shift]

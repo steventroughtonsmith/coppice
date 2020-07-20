@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import CoppiceCore
 
 protocol CanvasPageTitleViewDelegate: class {
     func closeClicked(in titleView: CanvasPageTitleView)

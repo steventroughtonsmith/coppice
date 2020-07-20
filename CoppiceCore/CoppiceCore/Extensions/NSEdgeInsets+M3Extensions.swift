@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension NSEdgeInsets {
+public extension NSEdgeInsets {
     var horizontalInsets: CGFloat {
         return self.left + self.right
     }

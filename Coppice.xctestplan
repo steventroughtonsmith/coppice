@@ -18,6 +18,13 @@
         "identifier" : "99FE01A122CD1038004D380D",
         "name" : "CoppiceTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/CoppiceCore\/CoppiceCore.xcodeproj",
+        "identifier" : "99D0C75E24C5DD1E002EEBFA",
+        "name" : "CoppiceCoreTests"
+      }
     }
   ],
   "version" : 1

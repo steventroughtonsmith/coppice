@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import CoppiceCore
 
 enum Columns: String {
     case id

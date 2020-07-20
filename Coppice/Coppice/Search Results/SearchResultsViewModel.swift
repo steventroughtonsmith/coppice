@@ -8,6 +8,7 @@
 
 import Cocoa
 import Combine
+import CoppiceCore
 
 protocol SearchResultsView: class {
     func reload()

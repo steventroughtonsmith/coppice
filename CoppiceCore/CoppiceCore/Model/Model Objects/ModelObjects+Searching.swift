@@ -34,8 +34,8 @@ public extension Page {
             }
         }
 
-        let page: Page
-        let matchType: MatchType
+        public let page: Page
+        public let matchType: MatchType
     }
 
     func match(forSearchTerm searchTerm: String) -> Match? {

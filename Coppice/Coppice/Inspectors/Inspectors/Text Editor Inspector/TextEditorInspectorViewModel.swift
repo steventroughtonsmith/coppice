@@ -9,7 +9,7 @@
 import Foundation
 import AppKit
 import Combine
-
+import CoppiceCore
 
 class TextEditorInspectorViewModel: BaseInspectorViewModel {
     weak var editor: InspectableTextEditor?

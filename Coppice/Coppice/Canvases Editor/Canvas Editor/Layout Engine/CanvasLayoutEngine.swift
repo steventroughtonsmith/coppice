@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import CoppiceCore
 
 struct LayoutEventModifiers: OptionSet {
     let rawValue: UInt

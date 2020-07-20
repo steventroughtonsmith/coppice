@@ -8,6 +8,7 @@
 
 import Foundation
 @testable import Coppice
+@testable import CoppiceCore
 
 class TestLayoutDelegate: CanvasLayoutEngineDelegate {
     func reordered(pages: [LayoutEnginePage], in layout: CanvasLayoutEngine) {

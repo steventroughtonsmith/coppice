@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import CoppiceCore
+import CoppiceCore
 
 class ModelWriterTests: XCTestCase {
     var testModel: ModelController!

@@ -7,6 +7,7 @@
 //
 
 import AppKit
+import CoppiceCore
 
 protocol EditableModelObject: ModelObject {
     func createEditor(with documentWindowState: DocumentWindowViewModel) -> (Editor & NSViewController)?

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoppiceCore
 
 /// A class representing the layout information for a page inside the LayoutEngine
 ///

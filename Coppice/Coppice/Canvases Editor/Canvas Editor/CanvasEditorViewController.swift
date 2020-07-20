@@ -8,7 +8,7 @@
 
 import Cocoa
 import Combine
-
+import CoppiceCore
 
 class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitViewContainable {
 

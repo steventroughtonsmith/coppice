@@ -8,6 +8,7 @@
 
 import AppKit
 @testable import Coppice
+@testable import CoppiceCore
 
 class MockPageContent: NSObject, PageContent, NSFilePromiseProviderDelegate {
 

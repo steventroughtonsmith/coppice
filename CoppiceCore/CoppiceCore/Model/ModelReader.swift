@@ -8,24 +8,24 @@
 
 import Cocoa
 
-class ModelReader: NSObject {
+public class ModelReader: NSObject {
 
-    enum Errors: Error {
+    public enum Errors: Error {
         case corruptData
         case missingCollection(String)
         case missingID([String: Any])
         case versionTooNew
     }
 
-    let modelController: ModelController
-    let documentVersion: Int
-    init(modelController: ModelController, documentVersion: Int) {
+    public let modelController: ModelController
+    public let documentVersion: Int
+    public init(modelController: ModelController, documentVersion: Int) {
         self.modelController = modelController
         self.documentVersion = documentVersion
         super.init()
     }
 
-    func read(_ fileWrapper: FileWrapper) throws {
+    public func read(_ fileWrapper: FileWrapper) throws {
         guard let plistWrapper = fileWrapper.fileWrappers?["data.plist"],
             let contentWrappers = fileWrapper.fileWrappers?["content"]?.fileWrappers else {
             return

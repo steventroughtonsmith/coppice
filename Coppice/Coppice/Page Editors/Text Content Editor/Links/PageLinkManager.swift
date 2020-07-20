@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import CoppiceCore
 
 protocol PageLinkManagerDelegate: class {
     func willStartParsing(in manager: PageLinkManager)

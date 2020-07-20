@@ -9,7 +9,7 @@
 import Foundation
 import CoreGraphics
 
-extension CGPoint {
+public extension CGPoint {
     static var identity: CGPoint {
         return CGPoint(x: 1, y: 1)
     }
@@ -62,7 +62,7 @@ extension CGPoint {
 }
 
 
-extension CGSize {
+public extension CGSize {
     static var identity: CGSize {
         return CGSize(width: 1, height: 1)
     }
@@ -122,7 +122,7 @@ extension CGSize {
 }
 
 
-extension CGRect {
+public extension CGRect {
     func rounded(_ rule: FloatingPointRoundingRule = .toNearestOrAwayFromZero) -> CGRect {
         let origin = self.origin.rounded(rule)
         let size = self.size.rounded(rule)

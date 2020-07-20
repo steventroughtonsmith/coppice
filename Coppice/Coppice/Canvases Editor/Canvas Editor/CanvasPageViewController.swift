@@ -8,6 +8,7 @@
 
 import Cocoa
 import Combine
+import CoppiceCore
 
 protocol CanvasPageViewControllerDelegate: class {
     func close(_ page: CanvasPageViewController)

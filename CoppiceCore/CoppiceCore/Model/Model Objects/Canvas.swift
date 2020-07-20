@@ -14,7 +14,7 @@ public final class Canvas: NSObject, CollectableModelObject {
         case dark
         case light
 
-        var localizedName: String {
+        public var localizedName: String {
             switch self {
             case .auto: return NSLocalizedString("Automatic", comment: "Automatic theme name")
             case .dark: return NSLocalizedString("Dark", comment: "Dark theme name")

@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import CoppiceCore
 
 protocol DebugCanvasEditorView: class {
     func reloadPage(_ page: CanvasPage)

@@ -7,7 +7,7 @@
 //
 
 import Cocoa
-
+import CoppiceCore
 
 class EditorContainerViewController: NSViewController, SplitViewContainable {
 

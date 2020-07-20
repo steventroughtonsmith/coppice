@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import CoppiceCore
 
 protocol CanvasesView: class {
     func currentCanvasChanged()

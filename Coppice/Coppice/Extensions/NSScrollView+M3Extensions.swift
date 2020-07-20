@@ -7,6 +7,7 @@
 //
 
 import AppKit
+import CoppiceCore
 
 extension NSClipView {
     var visualCentre: CGPoint {

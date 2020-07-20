@@ -22,8 +22,6 @@ public struct GlobalConstants {
 
     public static let bottomBarHeight: CGFloat = 27.0
 
-    public static let newWindowSize = CGSize(width: 900, height: 600)
-
     public static let textEditorInsets = NSEdgeInsets(top: 10, left: 5, bottom: 5, right: 5)
 
     public static var maxAutomaticTextSize: CGSize {

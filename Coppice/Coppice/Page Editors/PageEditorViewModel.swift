@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import CoppiceCore
 
 protocol PageEditorView: class {
     func contentChanged()

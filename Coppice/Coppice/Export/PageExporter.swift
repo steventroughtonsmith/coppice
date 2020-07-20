@@ -7,6 +7,7 @@
 //
 
 import AppKit
+import CoppiceCore
 
 class PageExporter {
     //MARK: - Validation

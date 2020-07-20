@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Array {
+public extension Array {
     subscript(safe index: Self.Index) -> Element? {
         guard (index < self.count) else {
             return nil

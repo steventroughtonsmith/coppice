@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import CoppiceCore
 
 class TextLinkFinder: NSObject {
     func findLinkChanges(in attributedString: NSAttributedString, using pages: [Page]) -> LinkChanges {

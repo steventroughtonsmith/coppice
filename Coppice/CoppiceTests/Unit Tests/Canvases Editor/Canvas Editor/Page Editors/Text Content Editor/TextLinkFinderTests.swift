@@ -8,6 +8,7 @@
 
 import XCTest
 @testable import Coppice
+@testable import CoppiceCore
 
 class TextLinkFinderTests: XCTestCase {
     //MARK: - Empty Inputs

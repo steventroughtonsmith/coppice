@@ -7,6 +7,7 @@
 //
 
 import AppKit
+import CoppiceCore
 
 protocol CanvasEditorView: class {
     func updateZoomFactor()

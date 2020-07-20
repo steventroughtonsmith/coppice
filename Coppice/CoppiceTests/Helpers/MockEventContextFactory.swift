@@ -8,6 +8,7 @@
 
 import Foundation
 @testable import Coppice
+@testable import CoppiceCore
 
 class MockEventContextFactory: LayoutEngineEventContextFactory {
     let createMouseEventContextMock = MockDetails<(CGPoint, LayoutEngine), CanvasMouseEventContext?>()

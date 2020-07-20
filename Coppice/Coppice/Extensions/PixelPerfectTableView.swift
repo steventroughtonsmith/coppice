@@ -7,6 +7,7 @@
 //
 
 import AppKit
+import CoppiceCore
 
 class PixelPerfectTableView: NSTableView {
     override func rect(ofRow row: Int) -> NSRect {

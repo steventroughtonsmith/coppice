@@ -8,6 +8,7 @@
 
 import Cocoa
 import Combine
+import CoppiceCore
 
 class SourceListViewController: NSViewController, NSMenuItemValidation {
     @objc dynamic let viewModel: SourceListViewModel

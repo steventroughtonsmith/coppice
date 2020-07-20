@@ -8,6 +8,7 @@
 
 import Cocoa
 import Combine
+import CoppiceCore
 
 class LargeCanvasCell: EditableLabelCell, CanvasCell {
     static var identifier = NSUserInterfaceItemIdentifier(rawValue: "LargeCanvasCell")

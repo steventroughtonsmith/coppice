@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ModelObjectUpdateErrors: Error, Equatable {
+public enum ModelObjectUpdateErrors: Error, Equatable {
     case idsDontMatch
     case attributeNotFound(String)
     case modelControllerNotSet

@@ -7,6 +7,7 @@
 //
 
 import AppKit
+import CoppiceCore
 
 extension Folder {
     static var icon: NSImage? {

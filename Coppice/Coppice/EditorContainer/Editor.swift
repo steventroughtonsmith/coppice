@@ -7,6 +7,7 @@
 //
 
 import AppKit
+import CoppiceCore
 
 enum EditorMode: Equatable {
     case editing

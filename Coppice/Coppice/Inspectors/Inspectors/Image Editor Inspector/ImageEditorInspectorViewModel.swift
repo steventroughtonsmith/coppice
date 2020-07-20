@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import CoppiceCore
 
 class ImageEditorInspectorViewModel: BaseInspectorViewModel {
     @objc dynamic let imageContent: ImagePageContent

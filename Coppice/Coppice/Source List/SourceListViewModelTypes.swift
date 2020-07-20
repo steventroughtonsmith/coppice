@@ -7,6 +7,7 @@
 //
 
 import AppKit
+import CoppiceCore
 
 class SourceListNodeCollection: NSObject {
     private(set) var containsPages: Bool = false

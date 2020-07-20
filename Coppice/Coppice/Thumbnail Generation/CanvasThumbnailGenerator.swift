@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import CoppiceCore
 
 class CanvasThumbnailGenerator: NSObject {
     let canvas: Canvas

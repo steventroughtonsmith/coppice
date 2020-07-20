@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import CoppiceCore
 
 class CanvasesViewController: NSSplitViewController {
     let viewModel: CanvasesViewModel

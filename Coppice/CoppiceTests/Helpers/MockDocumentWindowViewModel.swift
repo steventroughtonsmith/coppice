@@ -8,6 +8,7 @@
 
 import Cocoa
 @testable import Coppice
+@testable import CoppiceCore
 
 class MockWindow: DocumentWindow {
     func invalidateRestorableState() {

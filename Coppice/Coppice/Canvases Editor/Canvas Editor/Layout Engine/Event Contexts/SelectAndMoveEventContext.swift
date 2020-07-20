@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import CoppiceCore
 
 class SelectAndMoveEventContext: CanvasMouseEventContext {
     private var lastLocation: CGPoint?

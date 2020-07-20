@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import CoppiceCore
 
 class SearchResultsViewController: NSViewController {
     @IBOutlet weak var outlineView: NSOutlineView!

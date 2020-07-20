@@ -8,6 +8,7 @@
 
 import Foundation
 @testable import Coppice
+@testable import CoppiceCore
 
 class MockLayoutEngine: LayoutEngine {
     var selectedPages: [LayoutEnginePage] = [] {

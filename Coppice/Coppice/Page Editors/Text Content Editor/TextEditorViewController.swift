@@ -8,6 +8,7 @@
 
 import Cocoa
 import Combine
+import CoppiceCore
 
 class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuItemValidation {
     @IBOutlet var editingTextView: NSTextView!

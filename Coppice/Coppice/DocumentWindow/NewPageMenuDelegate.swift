@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import CoppiceCore
 
 class NewPageMenuDelegate: NSObject, NSMenuDelegate {
     var action: Selector = #selector(newPage(_:))

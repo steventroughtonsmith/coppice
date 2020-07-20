@@ -8,7 +8,7 @@
 
 import Cocoa
 import Combine
-
+import CoppiceCore
 
 class DocumentWindowController: NSWindowController {
     let splitViewController: RootSplitViewController

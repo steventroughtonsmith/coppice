@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import CoppiceCore
 
 class DebugPageEditorViewModel: NSObject {
     let page: Page

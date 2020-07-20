@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import CoppiceCore
 
 class PageImageController: NSObject {
     let modelController: ModelController

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoppiceCore
 
 protocol LayoutEngineEventContextFactory {
     func createMouseEventContext(for location: CGPoint, in layoutEngine: LayoutEngine) -> CanvasMouseEventContext?

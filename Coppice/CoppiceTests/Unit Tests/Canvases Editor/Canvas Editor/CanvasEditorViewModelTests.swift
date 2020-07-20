@@ -8,6 +8,7 @@
 
 import XCTest
 @testable import Coppice
+@testable import CoppiceCore
 
 class CanvasEditorViewModelTests: XCTestCase {
     var modelController: MockCoppiceModelController!

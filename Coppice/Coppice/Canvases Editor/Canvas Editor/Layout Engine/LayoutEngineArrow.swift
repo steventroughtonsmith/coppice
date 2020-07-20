@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoppiceCore
 
 struct ArrowPoint: Equatable {
     var point: CGPoint

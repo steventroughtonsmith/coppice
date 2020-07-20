@@ -87,7 +87,7 @@ public final class Folder: NSObject, CollectableModelObject, FolderContainable {
         case dateCreated
         case lastModified
 
-        var localizedString: String {
+        public var localizedString: String {
             switch self {
             case .title: return NSLocalizedString("Title", comment: "Title folder sorting method")
             case .type: return NSLocalizedString("Type", comment: "Type folder sorting method")
@@ -96,7 +96,7 @@ public final class Folder: NSObject, CollectableModelObject, FolderContainable {
             }
         }
 
-        func compare(_ first: FolderContainable, _ second: FolderContainable) -> Bool {
+        public func compare(_ first: FolderContainable, _ second: FolderContainable) -> Bool {
             switch self {
             case .title: return first.title < second.title
             case .type: return first.sortType < second.sortType

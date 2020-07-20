@@ -8,16 +8,16 @@
 
 import Cocoa
 
-class ModelWriter: NSObject {
-    let modelController: ModelController
-    let documentVersion: Int
-    init(modelController: ModelController, documentVersion: Int) {
+public class ModelWriter: NSObject {
+    public let modelController: ModelController
+    public let documentVersion: Int
+    public init(modelController: ModelController, documentVersion: Int) {
         self.modelController = modelController
         self.documentVersion = documentVersion
         super.init()
     }
 
-    func generateFileWrapper() throws -> FileWrapper {
+    public func generateFileWrapper() throws -> FileWrapper {
         var content = [ModelFile]()
         var plist = [String: Any]()
 
@@ -72,7 +72,7 @@ class ModelWriter: NSObject {
         return (plistItems, files)
     }
 
-    func fileWrapper(forContent content: [ModelFile]) -> FileWrapper {
+    public func fileWrapper(forContent content: [ModelFile]) -> FileWrapper {
         var contentWrappers = [String: FileWrapper]()
         content.forEach {
             if let data = $0.data, let filename = $0.filename {

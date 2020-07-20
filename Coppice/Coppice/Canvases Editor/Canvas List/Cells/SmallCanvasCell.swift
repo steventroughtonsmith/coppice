@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import CoppiceCore
 
 class SmallCanvasCell: EditableLabelCell, CanvasCell {
     static var identifier = NSUserInterfaceItemIdentifier(rawValue: "SmallCanvasCell")

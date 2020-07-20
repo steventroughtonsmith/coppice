@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import CoppiceCore
 
 protocol TextEditorView: Editor {
     func addLink(with url: URL, to range: NSRange)

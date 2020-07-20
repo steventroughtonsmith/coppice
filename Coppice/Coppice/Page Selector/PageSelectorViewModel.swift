@@ -7,6 +7,7 @@
 //
 
 import AppKit
+import CoppiceCore
 
 protocol PageSelectorView: class {}
 

@@ -7,4 +7,7 @@
    <FileRef
       location = "group:Coppice.xctestplan">
    </FileRef>
+   <FileRef
+      location = "group:CoppiceCore/CoppiceCore.xcodeproj">
+   </FileRef>
 </Workspace>

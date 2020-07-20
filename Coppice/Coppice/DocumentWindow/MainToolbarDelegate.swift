@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import CoppiceCore
 
 extension NSToolbarItem.Identifier {
     static let newPage = NSToolbarItem.Identifier(rawValue: "com.mcubedsw.coppice.NewPage")
