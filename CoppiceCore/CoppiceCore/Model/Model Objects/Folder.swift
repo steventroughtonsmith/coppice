@@ -9,20 +9,20 @@
 import Foundation
 
 
-final class Folder: NSObject, CollectableModelObject, FolderContainable {
-    static var modelType: ModelType = ModelType(rawValue: "Folder")!
-    static let rootFolderTitle = "__ROOT__FOLDER__"
+public final class Folder: NSObject, CollectableModelObject, FolderContainable {
+    public static var modelType: ModelType = ModelType(rawValue: "Folder")!
+    public static let rootFolderTitle = "__ROOT__FOLDER__"
 
-    var id: ModelID = ModelID(modelType: Folder.modelType)
-    weak var collection: ModelCollection<Folder>?
+    public var id: ModelID = ModelID(modelType: Folder.modelType)
+    public weak var collection: ModelCollection<Folder>?
 
-    @objc dynamic var title: String = "New Folder" {
+    @objc dynamic public var title: String = "New Folder" {
         didSet { self.didChange(\.title, oldValue: oldValue) }
     }
 
-    var dateCreated: Date = Date()
+    public var dateCreated: Date = Date()
 
-    var dateModified: Date {
+    public var dateModified: Date {
         guard self.contents.count > 0 else {
             return self.dateCreated
         }
@@ -31,16 +31,16 @@ final class Folder: NSObject, CollectableModelObject, FolderContainable {
         return sorted[0].dateModified
     }
 
-    weak var containingFolder: Folder?
-    var contents: [FolderContainable] = [] {
+    public weak var containingFolder: Folder?
+    public var contents: [FolderContainable] = [] {
         didSet { self.didChange(\.contents, oldValue: oldValue) }
     }
 
-    var sortType: String {
+    public var sortType: String {
         return "0Folder"
     }
 
-    func insert(_ objects: [FolderContainable], below item: FolderContainable? = nil) {
+    public func insert(_ objects: [FolderContainable], below item: FolderContainable? = nil) {
         self.modelController?.pushChangeGroup()
         var contents: [FolderContainable?] = self.contents
 
@@ -71,7 +71,7 @@ final class Folder: NSObject, CollectableModelObject, FolderContainable {
         self.modelController?.popChangeGroup()
     }
 
-    func remove(_ objects: [FolderContainable]) {
+    public func remove(_ objects: [FolderContainable]) {
         for object in objects {
             if let index = self.contents.firstIndex(where: {$0.id == object.id}) {
                 self.contents.remove(at: index)
@@ -81,7 +81,7 @@ final class Folder: NSObject, CollectableModelObject, FolderContainable {
 
 
     //MARK: - Sorting
-    enum SortingMethod: CaseIterable {
+    public enum SortingMethod: CaseIterable {
         case title
         case type
         case dateCreated
@@ -106,13 +106,13 @@ final class Folder: NSObject, CollectableModelObject, FolderContainable {
         }
     }
 
-    func sort(using method: SortingMethod) {
+    public func sort(using method: SortingMethod) {
         self.contents = self.contents.sorted(by: method.compare)
     }
 
 
     //MARK: - Plist
-    var plistRepresentation: [String : Any] {
+    public var plistRepresentation: [String : Any] {
         return [
             "id": self.id.stringRepresentation,
             "title": self.title,
@@ -121,7 +121,7 @@ final class Folder: NSObject, CollectableModelObject, FolderContainable {
         ]
     }
 
-    func update(fromPlistRepresentation plist: [String : Any]) throws {
+    public func update(fromPlistRepresentation plist: [String : Any]) throws {
         guard self.id.stringRepresentation == (plist["id"] as? String) else {
             throw ModelObjectUpdateErrors.idsDontMatch
         }

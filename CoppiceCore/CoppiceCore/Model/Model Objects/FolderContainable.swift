@@ -9,7 +9,7 @@
 import Foundation
 
 /// An object that can be contained in a folder
-protocol FolderContainable: ModelObject {
+public protocol FolderContainable: ModelObject {
     var containingFolder: Folder? { get set }
     var dateCreated: Date { get }
     var dateModified: Date { get }
@@ -19,7 +19,7 @@ protocol FolderContainable: ModelObject {
     func removeFromContainingFolder()
 }
 
-extension FolderContainable {
+public extension FolderContainable {
     func removeFromContainingFolder() {
         self.containingFolder?.remove([self])
     }

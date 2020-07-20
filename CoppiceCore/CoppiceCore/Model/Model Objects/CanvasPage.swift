@@ -8,18 +8,18 @@
 
 import Cocoa
 
-final class CanvasPage: NSObject, CollectableModelObject {
-    static let modelType: ModelType = ModelType(rawValue: "CanvasPage")!
+public final class CanvasPage: NSObject, CollectableModelObject {
+    public static let modelType: ModelType = ModelType(rawValue: "CanvasPage")!
 
-    var id = ModelID(modelType: CanvasPage.modelType)
-    weak var collection: ModelCollection<CanvasPage>?
+    public var id = ModelID(modelType: CanvasPage.modelType)
+    public weak var collection: ModelCollection<CanvasPage>?
 
     //MARK: - Attributes
-    @objc dynamic var frame: CGRect = .zero {
+    @objc dynamic public var frame: CGRect = .zero {
         didSet { self.didChange(\.frame, oldValue: oldValue) }
     }
 
-    override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
+    public override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
         var keyPaths = super.keyPathsForValuesAffectingValue(forKey: key)
         if key == "title" {
             keyPaths.insert("self.page.title")
@@ -27,19 +27,19 @@ final class CanvasPage: NSObject, CollectableModelObject {
         return keyPaths
     }
 
-    @objc dynamic var title : String {
+    @objc dynamic public var title : String {
         return self.page?.title ?? ""
     }
 
-    var maintainAspectRatio: Bool {
+    public var maintainAspectRatio: Bool {
         return self.page?.content.maintainAspectRatio ?? false
     }
 
-    var zIndex: Int = -1
+    public var zIndex: Int = -1
 
     
     //MARK: - Relationships
-    @ModelObjectReference @objc dynamic var page: Page? {
+    @ModelObjectReference @objc dynamic public var page: Page? {
         didSet {
             if let page = self.page, self.frame.size == .zero {
                 self.frame.size = page.contentSize
@@ -50,11 +50,11 @@ final class CanvasPage: NSObject, CollectableModelObject {
         }
     }
     
-    @ModelObjectReference var canvas: Canvas? {
+    @ModelObjectReference public var canvas: Canvas? {
         didSet { self.didChangeRelationship(\.canvas, inverseKeyPath: \.pages, oldValue: oldValue) }
     }
 
-    @ModelObjectReference @objc dynamic var parent: CanvasPage? {
+    @ModelObjectReference @objc dynamic public var parent: CanvasPage? {
         didSet {
             self.willChangeValue(for: \.title)
             self.didChangeRelationship(\.parent, inverseKeyPath: \.children, oldValue: oldValue)
@@ -62,11 +62,11 @@ final class CanvasPage: NSObject, CollectableModelObject {
         }
     }
     
-    var children: Set<CanvasPage> {
+    public var children: Set<CanvasPage> {
         self.relationship(for: \.parent)
     }
 
-    func existingCanvasPage(for page: Page) -> CanvasPage? {
+    public func existingCanvasPage(for page: Page) -> CanvasPage? {
         if self.page?.id == page.id {
             return self
         }
@@ -76,13 +76,13 @@ final class CanvasPage: NSObject, CollectableModelObject {
         return nil
     }
 
-    func objectWasInserted() {
+    public func objectWasInserted() {
         self.$page.modelController = self.modelController
         self.$canvas.modelController = self.modelController
         self.$parent.modelController = self.modelController
     }
 
-    func objectWasDeleted() {
+    public func objectWasDeleted() {
         self.$page.performCleanUp()
         self.$canvas.performCleanUp()
         self.$parent.performCleanUp()
@@ -90,7 +90,7 @@ final class CanvasPage: NSObject, CollectableModelObject {
 
 
     //MARK: - Plists
-    var plistRepresentation: [String : Any] {
+    public var plistRepresentation: [String : Any] {
         var plist: [String: Any] = [
             "id": self.id.stringRepresentation,
             "frame": NSStringFromRect(self.frame),
@@ -109,7 +109,7 @@ final class CanvasPage: NSObject, CollectableModelObject {
         return plist
     }
 
-    func update(fromPlistRepresentation plist: [String : Any]) throws {
+    public func update(fromPlistRepresentation plist: [String : Any]) throws {
         guard let modelController = self.modelController else {
             throw ModelObjectUpdateErrors.modelControllerNotSet
         }

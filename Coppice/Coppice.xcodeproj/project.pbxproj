@@ -162,9 +162,6 @@
 		99868F352396AD73009AC0F7 /* ImageEditorInspectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99868F332396AD73009AC0F7 /* ImageEditorInspectorViewController.swift */; };
 		99868F362396AD73009AC0F7 /* ImageEditorInspectorContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99868F342396AD73009AC0F7 /* ImageEditorInspectorContentView.xib */; };
 		99868F382397F005009AC0F7 /* FileDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99868F372397F005009AC0F7 /* FileDropView.swift */; };
-		99868F3F23981172009AC0F7 /* test-rtf.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 99868F3E23981172009AC0F7 /* test-rtf.rtf */; };
-		99868F4123981176009AC0F7 /* test-image.png in Resources */ = {isa = PBXBuildFile; fileRef = 99868F4023981176009AC0F7 /* test-image.png */; };
-		99868F4323981193009AC0F7 /* test-zip.zip in Resources */ = {isa = PBXBuildFile; fileRef = 99868F4223981193009AC0F7 /* test-zip.zip */; };
 		99868F4523995739009AC0F7 /* PageLinkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99868F4423995739009AC0F7 /* PageLinkManager.swift */; };
 		99868F4723995B4F009AC0F7 /* TextLinkFinderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99868F4623995B4F009AC0F7 /* TextLinkFinderTests.swift */; };
 		998CF0FC24ACF6A800EA26A6 /* NSBezierPath+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998CF0FB24ACF6A800EA26A6 /* NSBezierPath+M3Extensions.swift */; };
@@ -549,9 +546,6 @@
 		99868F332396AD73009AC0F7 /* ImageEditorInspectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorInspectorViewController.swift; sourceTree = "<group>"; };
 		99868F342396AD73009AC0F7 /* ImageEditorInspectorContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageEditorInspectorContentView.xib; sourceTree = "<group>"; };
 		99868F372397F005009AC0F7 /* FileDropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileDropView.swift; sourceTree = "<group>"; };
-		99868F3E23981172009AC0F7 /* test-rtf.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = "test-rtf.rtf"; sourceTree = "<group>"; };
-		99868F4023981176009AC0F7 /* test-image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "test-image.png"; sourceTree = "<group>"; };
-		99868F4223981193009AC0F7 /* test-zip.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "test-zip.zip"; sourceTree = "<group>"; };
 		99868F4423995739009AC0F7 /* PageLinkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageLinkManager.swift; sourceTree = "<group>"; };
 		99868F4623995B4F009AC0F7 /* TextLinkFinderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLinkFinderTests.swift; sourceTree = "<group>"; };
 		998CF0FB24ACF6A800EA26A6 /* NSBezierPath+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSBezierPath+M3Extensions.swift"; sourceTree = "<group>"; };
@@ -1159,16 +1153,6 @@
 			path = "Page Editors";
 			sourceTree = "<group>";
 		};
-		99868F3D23981142009AC0F7 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				99868F4023981176009AC0F7 /* test-image.png */,
-				99868F3E23981172009AC0F7 /* test-rtf.rtf */,
-				99868F4223981193009AC0F7 /* test-zip.zip */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
 		998D077E24115D04004ADFF8 /* Generic Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -1687,7 +1671,6 @@
 				9976611B23A3EB61000D1741 /* Functional Tests */,
 				9976611A23A3EB2C000D1741 /* Unit Tests */,
 				997711C8239E9AD900FCC8C7 /* Helpers */,
-				99868F3D23981142009AC0F7 /* Resources */,
 				99FE01A822CD1038004D380D /* Info.plist */,
 			);
 			path = CoppiceTests;
@@ -1953,9 +1936,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				99868F3F23981172009AC0F7 /* test-rtf.rtf in Resources */,
-				99868F4323981193009AC0F7 /* test-zip.zip in Resources */,
-				99868F4123981176009AC0F7 /* test-image.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

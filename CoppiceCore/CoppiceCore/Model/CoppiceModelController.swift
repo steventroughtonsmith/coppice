@@ -8,11 +8,11 @@
 
 import Cocoa
 
-class CoppiceModelController: NSObject, ModelController {
-    var allCollections = [ModelType: Any]()
-    let settings = ModelSettings()
+public class CoppiceModelController: NSObject, ModelController {
+    public var allCollections = [ModelType: Any]()
+    public let settings = ModelSettings()
 
-    lazy var identifier: UUID = {
+    public lazy var identifier: UUID = {
         if let identifierString = self.settings.string(for: .documentIdentifier),
             let identifier = UUID(uuidString: identifierString) {
             return identifier
@@ -23,8 +23,8 @@ class CoppiceModelController: NSObject, ModelController {
         return identifier
     }()
 
-    let undoManager: UndoManager
-    init(undoManager: UndoManager) {
+    public let undoManager: UndoManager
+    public init(undoManager: UndoManager) {
         self.undoManager = undoManager
         super.init()
 
@@ -34,7 +34,7 @@ class CoppiceModelController: NSObject, ModelController {
         self.addModelCollection(for: Folder.self)
     }
 
-    func object(with id: ModelID) -> ModelObject? {
+    public func object(with id: ModelID) -> ModelObject? {
         switch id.modelType {
         case Canvas.modelType:
             return self.collection(for: Canvas.self).objectWithID(id)
@@ -52,11 +52,11 @@ class CoppiceModelController: NSObject, ModelController {
 
 
     //MARK: - Page
-    var pageCollection: ModelCollection<Page> {
+    public var pageCollection: ModelCollection<Page> {
         return self.collection(for: Page.self)
     }
 
-    @discardableResult func createPage(ofType contentType: PageContentType = .text, in parentFolder: Folder, below item: FolderContainable? = nil, setup: ((Page) -> Void)? = nil) -> Page {
+    @discardableResult public func createPage(ofType contentType: PageContentType = .text, in parentFolder: Folder, below item: FolderContainable? = nil, setup: ((Page) -> Void)? = nil) -> Page {
         self.undoManager.beginUndoGrouping()
 
         let page = Page.create(in: self) {
@@ -77,7 +77,7 @@ class CoppiceModelController: NSObject, ModelController {
         return page
     }
 
-    @discardableResult func createPages(fromFilesAt urls: [URL], in parentFolder: Folder, below item: FolderContainable? = nil, setup: (([Page]) -> Void)? = nil) -> [Page] {
+    @discardableResult public func createPages(fromFilesAt urls: [URL], in parentFolder: Folder, below item: FolderContainable? = nil, setup: (([Page]) -> Void)? = nil) -> [Page] {
         self.pushChangeGroup()
         self.undoManager.beginUndoGrouping()
 
@@ -92,7 +92,7 @@ class CoppiceModelController: NSObject, ModelController {
         return newPages
     }
 
-    func delete(_ page: Page) {
+    public func delete(_ page: Page) {
         self.pushChangeGroup()
         self.undoManager.beginUndoGrouping()
         page.canvases.forEach {
@@ -109,7 +109,7 @@ class CoppiceModelController: NSObject, ModelController {
 
 
     //MARK: - Folder
-    lazy var rootFolder: Folder = {
+    public lazy var rootFolder: Folder = {
         if let id = self.settings.modelID(for: .rootFolder),
             let rootFolder = self.folderCollection.objectWithID(id) {
             return rootFolder
@@ -125,11 +125,11 @@ class CoppiceModelController: NSObject, ModelController {
         return folder
     }()
 
-    var folderCollection: ModelCollection<Folder> {
+    public var folderCollection: ModelCollection<Folder> {
         return self.collection(for: Folder.self)
     }
 
-    @discardableResult func createFolder(in parentFolder: Folder, below item: FolderContainable? = nil, setup: ((Folder) -> Void)? = nil) -> Folder {
+    @discardableResult public func createFolder(in parentFolder: Folder, below item: FolderContainable? = nil, setup: ((Folder) -> Void)? = nil) -> Folder {
         self.undoManager.beginUndoGrouping()
         let folder = Folder.create(in: self)
 
@@ -141,7 +141,7 @@ class CoppiceModelController: NSObject, ModelController {
         return folder
     }
 
-    func delete(_ folder: Folder) {
+    public func delete(_ folder: Folder) {
         folder.contents.forEach { item in
             if let folder = item as? Folder {
                 self.delete(folder)
@@ -156,7 +156,7 @@ class CoppiceModelController: NSObject, ModelController {
 
 
     //MARK: - Folder Items
-    func delete(_ folderItems: [FolderContainable]) {
+    public func delete(_ folderItems: [FolderContainable]) {
         self.pushChangeGroup()
         for item in folderItems {
             if let page = item as? Page {
@@ -199,18 +199,18 @@ class CoppiceModelController: NSObject, ModelController {
 
 
     //MARK: - Canvas
-    var canvasCollection: ModelCollection<Canvas> {
+    public var canvasCollection: ModelCollection<Canvas> {
         return self.collection(for: Canvas.self)
     }
 
-    @discardableResult func createCanvas(setup: ((Canvas) -> Void)? = nil) -> Canvas {
+    @discardableResult public func createCanvas(setup: ((Canvas) -> Void)? = nil) -> Canvas {
         let canvas = Canvas.create(in: self)
         setup?(canvas)
         self.undoManager.setActionName(NSLocalizedString("Create Canvas", comment: "Create Canvas Undo Action Name"))
         return canvas
     }
 
-    func delete(_ canvas: Canvas) {
+    public func delete(_ canvas: Canvas) {
         self.pushChangeGroup()
         canvas.pages.forEach {
             self.canvasPageCollection.delete($0)
@@ -222,15 +222,15 @@ class CoppiceModelController: NSObject, ModelController {
 
 
     //MARK: - CanvasPages
-    var canvasPageCollection: ModelCollection<CanvasPage> {
+    public var canvasPageCollection: ModelCollection<CanvasPage> {
         return self.collection(for: CanvasPage.self)
     }
 
-    @discardableResult func addPages(_ pages: [Page], to canvas: Canvas, centredOn point: CGPoint? = nil) -> [CanvasPage] {
+    @discardableResult public func addPages(_ pages: [Page], to canvas: Canvas, centredOn point: CGPoint? = nil) -> [CanvasPage] {
         return []
     }
 
-    @discardableResult func openPage(at link: PageLink, on canvas: Canvas) -> [CanvasPage] {
+    @discardableResult public func openPage(at link: PageLink, on canvas: Canvas) -> [CanvasPage] {
         guard let page = self.pageCollection.objectWithID(link.destination) else {
             return []
         }
@@ -251,7 +251,7 @@ class CoppiceModelController: NSObject, ModelController {
         return canvas.open(page, linkedFrom: sourcePage)
     }
 
-    func close(_ canvasPage: CanvasPage) {
+    public func close(_ canvasPage: CanvasPage) {
         guard let canvas = canvasPage.canvas else {
             return
         }
@@ -264,7 +264,7 @@ class CoppiceModelController: NSObject, ModelController {
 
 
 //MARK: - ModelSettingsKeys
-extension ModelSettings.Setting {
+public extension ModelSettings.Setting {
     static let pageSortKeySetting = ModelSettings.Setting(rawValue: "pageSortKey")
     static let rootFolder = ModelSettings.Setting(rawValue: "rootFolder")
     static let documentIdentifier = ModelSettings.Setting(rawValue: "identifier")

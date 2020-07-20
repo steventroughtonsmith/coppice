@@ -8,14 +8,14 @@
 
 import Foundation
 
-extension Page {
+public extension Page {
     struct Match: Comparable {
-        enum MatchType: Equatable {
+        public enum MatchType: Equatable {
             case title(NSRange)
             case content(NSRange)
         }
 
-        static func < (lhs: Page.Match, rhs: Page.Match) -> Bool {
+        public static func < (lhs: Page.Match, rhs: Page.Match) -> Bool {
             switch lhs.matchType {
             case .title(_):
                 switch rhs.matchType {
@@ -53,7 +53,7 @@ extension Page {
     }
 }
 
-extension ModelCollection where ModelType == Page {
+public extension ModelCollection where ModelType == Page {
     func matches(forSearchTerm searchTerm: String) -> [Page.Match] {
         return self.all.compactMap { $0.match(forSearchTerm: searchTerm) }.sorted { $0 < $1 }
     }
@@ -61,16 +61,16 @@ extension ModelCollection where ModelType == Page {
 
 
 
-extension Canvas {
+public extension Canvas {
     struct Match: Comparable {
-        enum MatchType: Equatable {
+        public enum MatchType: Equatable {
             case title(NSRange)
             case pages(Int)
         }
-        let canvas: Canvas
-        let matchType: MatchType
+        public let canvas: Canvas
+        public let matchType: MatchType
 
-        static func < (lhs: Canvas.Match, rhs: Canvas.Match) -> Bool {
+        public static func < (lhs: Canvas.Match, rhs: Canvas.Match) -> Bool {
             switch lhs.matchType {
             case .title(_):
                 switch rhs.matchType {
@@ -106,7 +106,7 @@ extension Canvas {
 }
 
 
-extension ModelCollection where ModelType == Canvas {
+public extension ModelCollection where ModelType == Canvas {
     func matches(forSearchTerm searchTerm: String) -> [Canvas.Match] {
         return self.all.compactMap { $0.match(forSearchTerm: searchTerm) }.sorted { $0 < $1 }
     }

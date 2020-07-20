@@ -8,9 +8,9 @@
 
 import AppKit
 
-class TextPageContent: NSObject, PageContent {
-    let contentType = PageContentType.text
-    @objc dynamic var text: NSAttributedString = NSAttributedString(string: "", attributes: [.font: Page.defaultFont]) {
+public class TextPageContent: NSObject, PageContent {
+    public let contentType = PageContentType.text
+    @objc dynamic public  var text: NSAttributedString = NSAttributedString(string: "", attributes: [.font: Page.defaultFont]) {
         didSet {
             guard self.text != oldValue else {
                 return
@@ -19,36 +19,36 @@ class TextPageContent: NSObject, PageContent {
         }
     }
 
-    var maintainAspectRatio: Bool {
+    public var maintainAspectRatio: Bool {
         return false
     }
-    weak var page: Page?
+    public weak var page: Page?
 
-    init(data: Data? = nil) {
+    public init(data: Data? = nil) {
         if let textData = data,
             let text = try? NSAttributedString(data: textData, options: [:], documentAttributes: nil) {
             self.text = text
         }
     }
 
-    var modelFile: ModelFile {
+    public var modelFile: ModelFile {
         let textData = try? self.text.data(from: NSMakeRange(0, self.text.length),
                                            documentAttributes: [.documentType: NSAttributedString.DocumentType.rtf])
         let filename = (self.page != nil) ? "\(self.page!.id.uuid.uuidString).rtf" : nil
         return ModelFile(type: self.contentType.rawValue, filename: filename, data: textData, metadata: nil)
     }
 
-    func firstRangeOf(_ searchTerm: String) -> NSRange {
+    public func firstRangeOf(_ searchTerm: String) -> NSRange {
         return (self.text.string as NSString).range(of: searchTerm, options: [.caseInsensitive, .diacriticInsensitive])
     }
 
 
     //MARK: - Sizing
-    var initialContentSize: CGSize? {
+    public var initialContentSize: CGSize? {
         return self.contentSize(insideBounds: GlobalConstants.maxAutomaticTextSize)
     }
 
-    func sizeToFitContent(currentSize: CGSize) -> CGSize {
+    public func sizeToFitContent(currentSize: CGSize) -> CGSize {
         var newContentSize = self.contentSize(insideBounds: CGSize(width: currentSize.width, height: 20000))
         newContentSize.width = currentSize.width
         return newContentSize

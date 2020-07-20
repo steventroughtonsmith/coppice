@@ -8,13 +8,13 @@
 
 import Cocoa
 
-class PageHierarchy {
-    let id: ModelID
-    let pageID: ModelID
-    let frame: CGRect
-    let children: [PageHierarchy]
+public class PageHierarchy {
+    public let id: ModelID
+    public let pageID: ModelID
+    public let frame: CGRect
+    public let children: [PageHierarchy]
 
-    convenience init?(canvasPage: CanvasPage) {
+    public convenience init?(canvasPage: CanvasPage) {
         guard let page = canvasPage.page else {
             return nil
         }
@@ -22,14 +22,14 @@ class PageHierarchy {
         self.init(id: canvasPage.id, pageID: page.id, frame: canvasPage.frame, children: children)
     }
 
-    init(id: ModelID, pageID: ModelID, frame: CGRect, children: [PageHierarchy]) {
+    public init(id: ModelID, pageID: ModelID, frame: CGRect, children: [PageHierarchy]) {
         self.id = id
         self.pageID = pageID
         self.frame = frame
         self.children = children
     }
 
-    convenience init?(plistRepresentation: [String: Any]) {
+    public convenience init?(plistRepresentation: [String: Any]) {
         guard let idString = plistRepresentation["id"] as? String, let id = ModelID(string: idString) else {
             return nil
         }
@@ -50,7 +50,7 @@ class PageHierarchy {
         self.init(id: id, pageID: pageID, frame: frame, children: children)
     }
 
-    var plistRepresentation: [String: Any] {
+    public var plistRepresentation: [String: Any] {
         let childPlists = self.children.map(\.plistRepresentation)
 
         return [

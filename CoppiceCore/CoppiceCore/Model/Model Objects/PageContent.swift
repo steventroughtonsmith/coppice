@@ -8,7 +8,7 @@
 
 import AppKit
 
-enum PageContentType: String, Equatable, CaseIterable {
+public enum PageContentType: String, Equatable, CaseIterable {
     case text
     case image
 
@@ -71,7 +71,7 @@ enum PageContentType: String, Equatable, CaseIterable {
     }
 }
 
-protocol PageContent: class {
+public protocol PageContent: class {
     var contentType: PageContentType { get }
     var page: Page? { get set }
     var modelFile: ModelFile { get }
@@ -86,7 +86,7 @@ protocol PageContent: class {
     var filePromiseProvider: ExtendableFilePromiseProvider { get }
 }
 
-extension PageContent {
+public extension PageContent {
     func didChange<T>(_ keyPath: ReferenceWritableKeyPath<Self,T>, oldValue: T) {
         guard let page = self.page else {
             return

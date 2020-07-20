@@ -7,38 +7,38 @@
 
 import AppKit
 
-struct GlobalConstants {
-    static let urlScheme = "coppice"
+public struct GlobalConstants {
+    public static let urlScheme = "coppice"
 
-    static let appErrorDomain = "com.mcubedsw.Coppices"
+    public static let appErrorDomain = "com.mcubedsw.Coppices"
 
-    enum ErrorCodes: Int {
+    public enum ErrorCodes: Int {
         case readingDocumentFailed = 1
         case documentTooNew = 2
     }
 
-    static let minimumPageSize = CGSize(width: 150, height: 100)
-    static let linkedPageOffset: CGFloat = 50.0
+    public static let minimumPageSize = CGSize(width: 150, height: 100)
+    public static let linkedPageOffset: CGFloat = 50.0
 
-    static let bottomBarHeight: CGFloat = 27.0
+    public static let bottomBarHeight: CGFloat = 27.0
 
-    static let newWindowSize = CGSize(width: 900, height: 600)
+    public static let newWindowSize = CGSize(width: 900, height: 600)
 
-    static let textEditorInsets = NSEdgeInsets(top: 10, left: 5, bottom: 5, right: 5)
+    public static let textEditorInsets = NSEdgeInsets(top: 10, left: 5, bottom: 5, right: 5)
 
-    static var maxAutomaticTextSize: CGSize {
+    public static var maxAutomaticTextSize: CGSize {
         return CGSize(width: Page.standardSize.width * 1.5, height: Page.standardSize.height * 3)
     }
 
-    static var maxAutomaticTextSizeIncludingInsets: CGSize {
+    public static var maxAutomaticTextSizeIncludingInsets: CGSize {
         return self.maxAutomaticTextSize.plus(width: self.textEditorInsets.left + self.textEditorInsets.right + 10,
                                               height: self.textEditorInsets.top + self.textEditorInsets.bottom + 10)
     }
 
-    static var maxCanvasThumbnailSize = CGSize(width: 240, height: 120)
+    public static var maxCanvasThumbnailSize = CGSize(width: 240, height: 120)
 }
 
-extension NSImage.Name {
+public extension NSImage.Name {
     //Sidebar
     static let sidebarCanvas = "Canvas"
     static let sidebarFolder = "Folder"
@@ -46,41 +46,41 @@ extension NSImage.Name {
     static let imagePage = "ImagePage"
 }
 
-struct Symbols {
-    struct Text {
-        static let bold = "bold"
-        static let italic = "italic"
-        static let strikethrough = "strikethrough"
-        static let alignCenter = "text.aligncenter"
-        static let alignLeft = "text.alignleft"
-        static let alignRight = "text.alignright"
-        static let textFormat = "textformat"
-        static let underline = "underline"
+public struct Symbols {
+    public struct Text {
+        public static let bold = "bold"
+        public static let italic = "italic"
+        public static let strikethrough = "strikethrough"
+        public static let alignCenter = "text.aligncenter"
+        public static let alignLeft = "text.alignleft"
+        public static let alignRight = "text.alignright"
+        public static let textFormat = "textformat"
+        public static let underline = "underline"
     }
 
-    struct Page {
-        static let text = "doc.text"
-        static let folder = "folder"
-        static let image = "photo"
+    public struct Page {
+        public static let text = "doc.text"
+        public static let folder = "folder"
+        public static let image = "photo"
     }
 
-    struct Toolbars {
-        static let chevron = "chevron.down"
-        static var action: String {
+    public struct Toolbars {
+        public static let chevron = "chevron.down"
+        public static var action: String {
             if #available(OSX 10.16, *) {
                 return "ellipsis.circle"
             }
             return "NSActionTemplate"
         }
-        static let link = "link"
-        static let plus = "plus"
-        static let newCanvas = "rectangle.badge.plus"
-        static let leftSidebar = "sidebar.left"
-        static let rightSidebar = "sidebar.right"
-        static let canvasListToggle = "rectangle.leftthird.inset.fill"
+        public static let link = "link"
+        public static let plus = "plus"
+        public static let newCanvas = "rectangle.badge.plus"
+        public static let leftSidebar = "sidebar.left"
+        public static let rightSidebar = "sidebar.right"
+        public static let canvasListToggle = "rectangle.leftthird.inset.fill"
     }
 
-    static var closePage: String {
+    public static var closePage: String {
         if #available(OSX 10.16, *) {
             return "xmark.circle.fill"
         }

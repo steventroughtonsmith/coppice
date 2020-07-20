@@ -9,7 +9,7 @@
 import Foundation
 
 
-enum UserDefaultsKeys: String {
+public enum UserDefaultsKeys: String {
     case debugShowCanvasOrigin
 
     case useSmallCanvasCells = "M3UseSmallCanvasCells"
@@ -26,7 +26,7 @@ enum UserDefaultsKeys: String {
     case showWelcomeScreenOnLaunch = "M3ShowWelcomeScreenOnLaunch"
 }
 
-extension UserDefaults {
+public extension UserDefaults {
     func bool(forKey key: UserDefaultsKeys) -> Bool {
         return self.bool(forKey: key.rawValue)
     }

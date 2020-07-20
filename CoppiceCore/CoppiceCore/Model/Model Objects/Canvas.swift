@@ -8,8 +8,8 @@
 
 import Cocoa
 
-final class Canvas: NSObject, CollectableModelObject {
-    enum Theme: String, CaseIterable {
+public final class Canvas: NSObject, CollectableModelObject {
+    public enum Theme: String, CaseIterable {
         case auto
         case dark
         case light
@@ -25,55 +25,55 @@ final class Canvas: NSObject, CollectableModelObject {
 
 
 
-    static let modelType: ModelType = ModelType(rawValue: "Canvas")!
+    public static let modelType: ModelType = ModelType(rawValue: "Canvas")!
 
-    var id = ModelID(modelType: Canvas.modelType)
-    weak var collection: ModelCollection<Canvas>?
+    public var id = ModelID(modelType: Canvas.modelType)
+    public weak var collection: ModelCollection<Canvas>?
 
-    func objectWasInserted() {
+    public func objectWasInserted() {
         self.sortIndex = self.collection?.all.count ?? 0
     }
 
     
     //MARK: - Attributes
-    @objc dynamic var title: String = "New Canvas" {
+    @objc dynamic public var title: String = "New Canvas" {
         didSet { self.didChange(\.title, oldValue: oldValue) }
     }
-    var dateCreated = Date()
-    var dateModified = Date()
-    @objc dynamic var sortIndex = 0 {
+    public var dateCreated = Date()
+    public var dateModified = Date()
+    @objc dynamic public var sortIndex = 0 {
         didSet { self.didChange(\.sortIndex, oldValue: oldValue) }
     }
 
-    var theme: Theme = Canvas.defaultTheme {
+    public var theme: Theme = Canvas.defaultTheme {
         didSet { self.didChange(\.theme, oldValue: oldValue)}
     }
 
-    var viewPort: CGRect?
+    public var viewPort: CGRect?
 
-    @objc dynamic var thumbnail: NSImage? {
+    @objc dynamic public var thumbnail: NSImage? {
         didSet { self.didChange(\.thumbnail, oldValue: oldValue) }
     }
 
-    var closedPageHierarchies: [ModelID: [ModelID: PageHierarchy]] = [:]
+    public var closedPageHierarchies: [ModelID: [ModelID: PageHierarchy]] = [:]
 
 
     //MARK: - Relationships
-    var pages: Set<CanvasPage> {
+    public var pages: Set<CanvasPage> {
         return self.relationship(for: \.canvas)
     }
 
-    var sortedPages: [CanvasPage] {
+    public var sortedPages: [CanvasPage] {
         return self.pages.sorted { $0.zIndex < $1.zIndex }
     }
 
 
     //MARK: - Plists
-    static var modelFileProperties: [String] {
+    public static var modelFileProperties: [String] {
         return ["thumbnail"]
     }
 
-    var plistRepresentation: [String : Any] {
+    public var plistRepresentation: [String : Any] {
         var plist: [String: Any] = [
             "id": self.id.stringRepresentation,
             "title": self.title,
@@ -100,7 +100,7 @@ final class Canvas: NSObject, CollectableModelObject {
         return plist
     }
 
-    func update(fromPlistRepresentation plist: [String : Any]) throws {
+    public func update(fromPlistRepresentation plist: [String : Any]) throws {
         guard self.id.stringRepresentation == (plist["id"] as? String) else {
             throw ModelObjectUpdateErrors.idsDontMatch
         }

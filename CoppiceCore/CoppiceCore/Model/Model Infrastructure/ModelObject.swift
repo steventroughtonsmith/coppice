@@ -40,7 +40,7 @@ public protocol ModelObject: class {
 }
 
 
-extension ModelObject {
+public extension ModelObject {
     static func modelID(with uuid: UUID) -> ModelID {
         return ModelID(modelType: self.modelType, uuid: uuid)
     }
@@ -88,7 +88,7 @@ public protocol CollectableModelObject: ModelObject, Hashable {
 
 
 //MARK: -
-extension CollectableModelObject {
+public extension CollectableModelObject {
     var modelController: ModelController? {
         return self.collection?.modelController
     }

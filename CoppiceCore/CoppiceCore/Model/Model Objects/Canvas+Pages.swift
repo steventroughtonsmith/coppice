@@ -10,7 +10,7 @@ import Foundation
 
 extension Canvas {
     //MARK: - Add New Pages
-    @discardableResult func addPages(_ pages: [Page], centredOn point: CGPoint? = nil) -> [CanvasPage] {
+    @discardableResult public func addPages(_ pages: [Page], centredOn point: CGPoint? = nil) -> [CanvasPage] {
         guard let collection = self.modelController?.collection(for: CanvasPage.self) else {
             preconditionFailure("Could not find canvas page collection")
         }
@@ -46,7 +46,7 @@ extension Canvas {
 
 
     //MARK: - Open & Close Pages
-    @discardableResult func open(_ page: Page, linkedFrom sourcePage: CanvasPage) -> [CanvasPage] {
+    @discardableResult public func open(_ page: Page, linkedFrom sourcePage: CanvasPage) -> [CanvasPage] {
         guard let collection = self.modelController?.collection(for: CanvasPage.self) else {
             preconditionFailure("Could not find canvas page collection")
         }
@@ -89,7 +89,7 @@ extension Canvas {
         return canvasPages
     }
 
-    func close(_ canvasPage: CanvasPage) {
+    public func close(_ canvasPage: CanvasPage) {
         if let parent = canvasPage.parent, let page = canvasPage.page, let hierarchy = PageHierarchy(canvasPage: canvasPage) {
             var hierarchies = self.closedPageHierarchies[parent.id] ?? [ModelID: PageHierarchy]()
             hierarchies[page.id] = hierarchy
