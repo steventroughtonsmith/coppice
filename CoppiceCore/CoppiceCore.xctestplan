@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "D80FA25C-F172-4DEA-8230-1ECB5FB5C68A",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:CoppiceCore.xcodeproj",
+        "identifier" : "99D0C75E24C5DD1E002EEBFA",
+        "name" : "CoppiceCoreTests"
+      }
+    }
+  ],
+  "version" : 1
+}
