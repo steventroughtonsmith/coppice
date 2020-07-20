@@ -240,7 +240,7 @@
 		99C03F09232A99F400EB7516 /* Cursors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99C03F08232A99F400EB7516 /* Cursors.xcassets */; };
 		99C03F0B232A9A5E00EB7516 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03F0A232A9A5E00EB7516 /* CanvasView.swift */; };
 		99C03F0D2334D04200EB7516 /* NSScrollView+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03F0C2334D04200EB7516 /* NSScrollView+M3Extensions.swift */; };
-		99C41B7122DCA96700C82DDE /* BubblesModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C41B7022DCA96700C82DDE /* BubblesModelController.swift */; };
+		99C41B7122DCA96700C82DDE /* CoppiceModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C41B7022DCA96700C82DDE /* CoppiceModelController.swift */; };
 		99C41B7322DCA98600C82DDE /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C41B7222DCA98600C82DDE /* Page.swift */; };
 		99C41B7522DCA9A100C82DDE /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C41B7422DCA9A100C82DDE /* Canvas.swift */; };
 		99C4AD8923F6F13B003B9A38 /* ArrowLayoutEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C4AD8823F6F13B003B9A38 /* ArrowLayoutEngine.swift */; };
@@ -271,6 +271,10 @@
 		99D0C70124C5BBF9002EEBFA /* schema.strings in Resources */ = {isa = PBXBuildFile; fileRef = 99D0C70024C5BBF9002EEBFA /* schema.strings */; };
 		99D0C70424C5BC8E002EEBFA /* FileImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C70324C5BC8E002EEBFA /* FileImporter.swift */; };
 		99D0C70624C5BD0A002EEBFA /* ModelPlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C70524C5BD0A002EEBFA /* ModelPlist.swift */; };
+		99D0C71024C5CED0002EEBFA /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99D0C70F24C5CED0002EEBFA /* Quartz.framework */; };
+		99D0C71324C5CED0002EEBFA /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C71224C5CED0002EEBFA /* PreviewViewController.swift */; };
+		99D0C71624C5CED0002EEBFA /* PreviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99D0C71424C5CED0002EEBFA /* PreviewViewController.xib */; };
+		99D0C71C24C5CED0002EEBFA /* CoppiceQuickLook.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 99D0C70D24C5CED0002EEBFA /* CoppiceQuickLook.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		99D170E6233D0542004EBD70 /* CanvasEditorViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D170E5233D0542004EBD70 /* CanvasEditorViewModelTests.swift */; };
 		99D4D59822F8650300F69C1F /* SourceListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D4D59722F8650300F69C1F /* SourceListViewModelTests.swift */; };
 		99D8E378237EDB890098CF3B /* PageInspectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D8E368237EDB890098CF3B /* PageInspectorViewController.swift */; };
@@ -332,6 +336,13 @@
 			remoteGlobalIDString = 99D0C6E824C5A606002EEBFA;
 			remoteInfo = CoppiceSpotlight;
 		};
+		99D0C71924C5CED0002EEBFA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 99FE018522CD1037004D380D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 99D0C70C24C5CED0002EEBFA;
+			remoteInfo = CoppiceQuickLook;
+		};
 		99FE01A322CD1038004D380D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 99FE018522CD1037004D380D /* Project object */;
@@ -382,6 +393,17 @@
 				99D0C6F724C5A606002EEBFA /* CoppiceSpotlight.mdimporter in Copy Spotlight */,
 			);
 			name = "Copy Spotlight";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		99D0C71B24C5CED0002EEBFA /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				99D0C71C24C5CED0002EEBFA /* CoppiceQuickLook.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -608,7 +630,7 @@
 		99C03F08232A99F400EB7516 /* Cursors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Cursors.xcassets; sourceTree = "<group>"; };
 		99C03F0A232A9A5E00EB7516 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
 		99C03F0C2334D04200EB7516 /* NSScrollView+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSScrollView+M3Extensions.swift"; sourceTree = "<group>"; };
-		99C41B7022DCA96700C82DDE /* BubblesModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubblesModelController.swift; sourceTree = "<group>"; };
+		99C41B7022DCA96700C82DDE /* CoppiceModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoppiceModelController.swift; sourceTree = "<group>"; };
 		99C41B7222DCA98600C82DDE /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		99C41B7422DCA9A100C82DDE /* Canvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
 		99C4AD8823F6F13B003B9A38 /* ArrowLayoutEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrowLayoutEngine.swift; sourceTree = "<group>"; };
@@ -642,6 +664,12 @@
 		99D0C70224C5BC8E002EEBFA /* CoppiceSpotlight-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CoppiceSpotlight-Bridging-Header.h"; sourceTree = "<group>"; };
 		99D0C70324C5BC8E002EEBFA /* FileImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileImporter.swift; sourceTree = "<group>"; };
 		99D0C70524C5BD0A002EEBFA /* ModelPlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPlist.swift; sourceTree = "<group>"; };
+		99D0C70D24C5CED0002EEBFA /* CoppiceQuickLook.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CoppiceQuickLook.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		99D0C70F24C5CED0002EEBFA /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
+		99D0C71224C5CED0002EEBFA /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
+		99D0C71524C5CED0002EEBFA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PreviewViewController.xib; sourceTree = "<group>"; };
+		99D0C71724C5CED0002EEBFA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		99D0C71824C5CED0002EEBFA /* CoppiceQuickLook.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CoppiceQuickLook.entitlements; sourceTree = "<group>"; };
 		99D170E5233D0542004EBD70 /* CanvasEditorViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasEditorViewModelTests.swift; sourceTree = "<group>"; };
 		99D4D59722F8650300F69C1F /* SourceListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceListViewModelTests.swift; sourceTree = "<group>"; };
 		99D8E368237EDB890098CF3B /* PageInspectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageInspectorViewController.swift; sourceTree = "<group>"; };
@@ -702,6 +730,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		99D0C70A24C5CED0002EEBFA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				99D0C71024C5CED0002EEBFA /* Quartz.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1354,7 +1390,7 @@
 		99C41B6F22DCA94000C82DDE /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				99C41B7022DCA96700C82DDE /* BubblesModelController.swift */,
+				99C41B7022DCA96700C82DDE /* CoppiceModelController.swift */,
 				99C9AF1A23671FD0009F909A /* ModelWriter.swift */,
 				99C9AF1C23671FD8009F909A /* ModelReader.swift */,
 				99D0C70524C5BD0A002EEBFA /* ModelPlist.swift */,
@@ -1432,6 +1468,25 @@
 				99D0C70224C5BC8E002EEBFA /* CoppiceSpotlight-Bridging-Header.h */,
 			);
 			path = CoppiceSpotlight;
+			sourceTree = "<group>";
+		};
+		99D0C70E24C5CED0002EEBFA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				99D0C70F24C5CED0002EEBFA /* Quartz.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		99D0C71124C5CED0002EEBFA /* CoppiceQuickLook */ = {
+			isa = PBXGroup;
+			children = (
+				99D0C71224C5CED0002EEBFA /* PreviewViewController.swift */,
+				99D0C71424C5CED0002EEBFA /* PreviewViewController.xib */,
+				99D0C71724C5CED0002EEBFA /* Info.plist */,
+				99D0C71824C5CED0002EEBFA /* CoppiceQuickLook.entitlements */,
+			);
+			path = CoppiceQuickLook;
 			sourceTree = "<group>";
 		};
 		99D4D59622F864E200F69C1F /* Source List */ = {
@@ -1556,6 +1611,8 @@
 				999EA68E2433929E00BF254E /* Build Scripts */,
 				999617E7249D069900A1AE24 /* 3rd Party */,
 				99D0C6EA24C5A606002EEBFA /* CoppiceSpotlight */,
+				99D0C71124C5CED0002EEBFA /* CoppiceQuickLook */,
+				99D0C70E24C5CED0002EEBFA /* Frameworks */,
 				99FE018E22CD1037004D380D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -1567,6 +1624,7 @@
 				99FE01A222CD1038004D380D /* CoppiceTests.xctest */,
 				99FE01AD22CD1038004D380D /* CoppiceUITests.xctest */,
 				99D0C6E924C5A606002EEBFA /* CoppiceSpotlight.mdimporter */,
+				99D0C70D24C5CED0002EEBFA /* CoppiceQuickLook.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1680,6 +1738,23 @@
 			productReference = 99D0C6E924C5A606002EEBFA /* CoppiceSpotlight.mdimporter */;
 			productType = "com.apple.product-type.spotlight-importer";
 		};
+		99D0C70C24C5CED0002EEBFA /* CoppiceQuickLook */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 99D0C71D24C5CED0002EEBFA /* Build configuration list for PBXNativeTarget "CoppiceQuickLook" */;
+			buildPhases = (
+				99D0C70924C5CED0002EEBFA /* Sources */,
+				99D0C70A24C5CED0002EEBFA /* Frameworks */,
+				99D0C70B24C5CED0002EEBFA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CoppiceQuickLook;
+			productName = CoppiceQuickLook;
+			productReference = 99D0C70D24C5CED0002EEBFA /* CoppiceQuickLook.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		99FE018C22CD1037004D380D /* Coppice */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 99FE01B622CD1038004D380D /* Build configuration list for PBXNativeTarget "Coppice" */;
@@ -1690,12 +1765,14 @@
 				999617EA249D06D400A1AE24 /* Copy Frameworks */,
 				999617F4249D0B0800A1AE24 /* Copy XPC */,
 				99D0C6FF24C5B6C1002EEBFA /* Copy Spotlight */,
+				99D0C71B24C5CED0002EEBFA /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				999EA6982433976000BF254E /* PBXTargetDependency */,
 				99D0C6F624C5A606002EEBFA /* PBXTargetDependency */,
+				99D0C71A24C5CED0002EEBFA /* PBXTargetDependency */,
 			);
 			name = Coppice;
 			productName = Bubbles;
@@ -1744,7 +1821,7 @@
 		99FE018522CD1037004D380D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1020;
+				LastSwiftUpdateCheck = 1200;
 				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "M Cubed Software";
 				TargetAttributes = {
@@ -1754,6 +1831,9 @@
 					99D0C6E824C5A606002EEBFA = {
 						CreatedOnToolsVersion = 12.0;
 						LastSwiftMigration = 1200;
+					};
+					99D0C70C24C5CED0002EEBFA = {
+						CreatedOnToolsVersion = 12.0;
 					};
 					99FE018C22CD1037004D380D = {
 						CreatedOnToolsVersion = 10.2.1;
@@ -1794,6 +1874,7 @@
 				99FE01AC22CD1038004D380D /* CoppiceUITests */,
 				999EA6912433973A00BF254E /* Prepare Info.Plist Prefix */,
 				99D0C6E824C5A606002EEBFA /* CoppiceSpotlight */,
+				99D0C70C24C5CED0002EEBFA /* CoppiceQuickLook */,
 			);
 		};
 /* End PBXProject section */
@@ -1805,6 +1886,14 @@
 			files = (
 				99D0C6FE24C5B5E6002EEBFA /* schema.xml in Resources */,
 				99D0C70124C5BBF9002EEBFA /* schema.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		99D0C70B24C5CED0002EEBFA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				99D0C71624C5CED0002EEBFA /* PreviewViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1912,6 +2001,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		99D0C70924C5CED0002EEBFA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				99D0C71324C5CED0002EEBFA /* PreviewViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		99FE018922CD1037004D380D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1979,7 +2076,7 @@
 				99AD8874237464C4000453E1 /* Alert.swift in Sources */,
 				9919B93123D09FBB00C7A44D /* TextColourPicker.swift in Sources */,
 				99FE019322CD1037004D380D /* Document.swift in Sources */,
-				99C41B7122DCA96700C82DDE /* BubblesModelController.swift in Sources */,
+				99C41B7122DCA96700C82DDE /* CoppiceModelController.swift in Sources */,
 				99488AAB23C36756009954AF /* CoppiceUserDefaults.swift in Sources */,
 				990B6A3722E5F84400523C06 /* CanvasPage.swift in Sources */,
 				9958108E230D909900D996C4 /* TestCanvasPageViewController.swift in Sources */,
@@ -2181,6 +2278,11 @@
 			target = 99D0C6E824C5A606002EEBFA /* CoppiceSpotlight */;
 			targetProxy = 99D0C6F524C5A606002EEBFA /* PBXContainerItemProxy */;
 		};
+		99D0C71A24C5CED0002EEBFA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 99D0C70C24C5CED0002EEBFA /* CoppiceQuickLook */;
+			targetProxy = 99D0C71924C5CED0002EEBFA /* PBXContainerItemProxy */;
+		};
 		99FE01A422CD1038004D380D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 99FE018C22CD1037004D380D /* Coppice */;
@@ -2200,6 +2302,14 @@
 				99906376249BC5780008C747 /* Base */,
 			);
 			name = ProFeatures.plist;
+			sourceTree = "<group>";
+		};
+		99D0C71424C5CED0002EEBFA /* PreviewViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				99D0C71524C5CED0002EEBFA /* Base */,
+			);
+			name = PreviewViewController.xib;
 			sourceTree = "<group>";
 		};
 		99FE019922CD1038004D380D /* MainMenu.xib */ = {
@@ -2628,6 +2738,94 @@
 			};
 			name = Archive;
 		};
+		99D0C71E24C5CED0002EEBFA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = CoppiceQuickLook/CoppiceQuickLook.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Z699XFM6P2;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = CoppiceQuickLook/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice.CoppiceQuickLook;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		99D0C71F24C5CED0002EEBFA /* Test */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = CoppiceQuickLook/CoppiceQuickLook.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Z699XFM6P2;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = CoppiceQuickLook/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice.CoppiceQuickLook;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Test;
+		};
+		99D0C72024C5CED0002EEBFA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = CoppiceQuickLook/CoppiceQuickLook.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Z699XFM6P2;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = CoppiceQuickLook/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice.CoppiceQuickLook;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		99D0C72124C5CED0002EEBFA /* Archive */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = CoppiceQuickLook/CoppiceQuickLook.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Z699XFM6P2;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = CoppiceQuickLook/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice.CoppiceQuickLook;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Archive;
+		};
 		99FE01B422CD1038004D380D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2916,6 +3114,17 @@
 				99D0C6F924C5A606002EEBFA /* Test */,
 				99D0C6FA24C5A606002EEBFA /* Release */,
 				99D0C6FB24C5A606002EEBFA /* Archive */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		99D0C71D24C5CED0002EEBFA /* Build configuration list for PBXNativeTarget "CoppiceQuickLook" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				99D0C71E24C5CED0002EEBFA /* Debug */,
+				99D0C71F24C5CED0002EEBFA /* Test */,
+				99D0C72024C5CED0002EEBFA /* Release */,
+				99D0C72124C5CED0002EEBFA /* Archive */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

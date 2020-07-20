@@ -53,7 +53,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <popUpButton toolTip="Change the zoom level of the canvas" translatesAutoresizingMaskIntoConstraints="NO" id="7ch-X7-loO">
-                                <rect key="frame" x="420" y="3" width="52" height="18"/>
+                                <rect key="frame" x="419" y="3" width="53" height="18"/>
                                 <popUpButtonCell key="cell" type="roundTextured" title="100%" bezelStyle="texturedRounded" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" selectedItem="sLc-r6-goS" id="1Fw-Vb-jEB">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="message" size="11"/>

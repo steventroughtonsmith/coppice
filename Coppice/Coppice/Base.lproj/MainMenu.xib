@@ -861,6 +861,12 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="g7c-Ur-z7n"/>
+                            <menuItem title="Save Canvas as Image…" id="dpl-ZJ-d6z">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="saveCanvasImageToDisk:" target="-1" id="Z2C-00-fXa"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="Log Responder Chain" id="lti-qw-8HG">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>

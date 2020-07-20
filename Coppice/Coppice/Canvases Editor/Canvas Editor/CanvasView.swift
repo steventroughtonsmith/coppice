@@ -422,7 +422,16 @@ class CanvasView: NSView {
         return finalRect.insetBy(dx: -inset, dy: -inset)
     }
 
-    func generateThumbnail() -> NSImage? {
+
+    //MARK: - Accessibility
+    func accessibilityResize(_ component: LayoutEnginePageComponent, ofPageWithID id: UUID, by delta: CGPoint) -> CGPoint {
+        guard let page = self.layoutEngine?.page(withID: id) else {
+            return .zero
+        }
+        return self.layoutEngine?.accessibilityResize(component, of: page, by: delta) ?? .zero
+    }
+
+    func generateImage() -> NSImage? {
         let thumbnailRect = self.thumbnailRect
         guard let bitmapRep = self.bitmapImageRepForCachingDisplay(in: thumbnailRect) else {
             return nil
@@ -432,16 +441,8 @@ class CanvasView: NSView {
 
         let largeImage = NSImage(size: thumbnailRect.size)
         largeImage.addRepresentation(bitmapRep)
+
         return largeImage
-    }
-
-
-    //MARK: - Accessibility
-    func accessibilityResize(_ component: LayoutEnginePageComponent, ofPageWithID id: UUID, by delta: CGPoint) -> CGPoint {
-        guard let page = self.layoutEngine?.page(withID: id) else {
-            return .zero
-        }
-        return self.layoutEngine?.accessibilityResize(component, of: page, by: delta) ?? .zero
     }
 }
 

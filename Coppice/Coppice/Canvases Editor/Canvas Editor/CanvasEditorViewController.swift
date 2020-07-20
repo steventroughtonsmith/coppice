@@ -9,6 +9,7 @@
 import Cocoa
 import Combine
 
+
 class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitViewContainable {
 
     @IBOutlet weak var scrollView: NSScrollView!
@@ -571,8 +572,32 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
             menuItem.action == #selector(deselectAll(_:)) {
             return true
         }
+        #if DEBUG
+        if menuItem.action == #selector(saveCanvasImageToDisk(_:)) {
+            return true
+        }
+        #endif
         return false
     }
+
+    #if DEBUG
+    @IBAction func saveCanvasImageToDisk(_ sender: Any?) {
+        guard let window = self.view.window else {
+            return
+        }
+        let savePanel = NSSavePanel()
+        savePanel.nameFieldStringValue = "\(self.viewModel.canvas.title).jpeg"
+        let view = self.canvasView
+
+        savePanel.beginSheetModal(for: window) { (modalResponse) in
+            if modalResponse == .OK, let url = savePanel.url {
+                try? view?.generateImage()?.jpegData()?.write(to: url)
+            }
+            window.endSheet(savePanel)
+            savePanel.orderOut(nil)
+        }
+    }
+    #endif
 
 
     //MARK: - SplitViewContainable

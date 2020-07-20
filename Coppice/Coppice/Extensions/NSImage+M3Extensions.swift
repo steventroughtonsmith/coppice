@@ -17,6 +17,17 @@ extension NSImage {
         return rep?.representation(using: .png, properties: [.compressionMethod: NSBitmapImageRep.TIFFCompression.none])
     }
 
+    func jpegData() -> Data? {
+        guard let data = self.tiffRepresentation else {
+            return nil
+        }
+        let rep = NSBitmapImageRep(data: data)
+        return rep?.representation(using: .jpeg, properties: [
+            .compressionMethod: NSBitmapImageRep.TIFFCompression.jpeg,
+            .compressionFactor: 0.8,
+        ])
+    }
+
     static func symbol(withName symbolName: String, accessibilityDescription: String? = nil) -> NSImage? {
         if #available(OSX 10.16, *) {
             if let symbol = NSImage(systemSymbolName: symbolName, accessibilityDescription: accessibilityDescription) {
