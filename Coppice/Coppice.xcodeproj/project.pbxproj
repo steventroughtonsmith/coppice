@@ -264,6 +264,13 @@
 		99C9AF1923671DB0009F909A /* PageLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9AF1823671DB0009F909A /* PageLink.swift */; };
 		99C9AF1B23671FD0009F909A /* ModelWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9AF1A23671FD0009F909A /* ModelWriter.swift */; };
 		99C9AF1D23671FD8009F909A /* ModelReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9AF1C23671FD8009F909A /* ModelReader.swift */; };
+		99D0C6ED24C5A606002EEBFA /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C6EC24C5A606002EEBFA /* main.c */; };
+		99D0C6EF24C5A606002EEBFA /* GetMetadataForFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C6EE24C5A606002EEBFA /* GetMetadataForFile.m */; };
+		99D0C6F724C5A606002EEBFA /* CoppiceSpotlight.mdimporter in Copy Spotlight */ = {isa = PBXBuildFile; fileRef = 99D0C6E924C5A606002EEBFA /* CoppiceSpotlight.mdimporter */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		99D0C6FE24C5B5E6002EEBFA /* schema.xml in Resources */ = {isa = PBXBuildFile; fileRef = 99D0C6FD24C5B5E6002EEBFA /* schema.xml */; };
+		99D0C70124C5BBF9002EEBFA /* schema.strings in Resources */ = {isa = PBXBuildFile; fileRef = 99D0C70024C5BBF9002EEBFA /* schema.strings */; };
+		99D0C70424C5BC8E002EEBFA /* FileImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C70324C5BC8E002EEBFA /* FileImporter.swift */; };
+		99D0C70624C5BD0A002EEBFA /* ModelPlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C70524C5BD0A002EEBFA /* ModelPlist.swift */; };
 		99D170E6233D0542004EBD70 /* CanvasEditorViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D170E5233D0542004EBD70 /* CanvasEditorViewModelTests.swift */; };
 		99D4D59822F8650300F69C1F /* SourceListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D4D59722F8650300F69C1F /* SourceListViewModelTests.swift */; };
 		99D8E378237EDB890098CF3B /* PageInspectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D8E368237EDB890098CF3B /* PageInspectorViewController.swift */; };
@@ -318,6 +325,13 @@
 			remoteGlobalIDString = 999EA6912433973A00BF254E;
 			remoteInfo = "Update Build Numbers";
 		};
+		99D0C6F524C5A606002EEBFA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 99FE018522CD1037004D380D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 99D0C6E824C5A606002EEBFA;
+			remoteInfo = CoppiceSpotlight;
+		};
 		99FE01A322CD1038004D380D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 99FE018522CD1037004D380D /* Project object */;
@@ -357,6 +371,17 @@
 				99961802249D0CF300A1AE24 /* org.sparkle-project.InstallerStatus.xpc in Copy XPC */,
 			);
 			name = "Copy XPC";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		99D0C6FF24C5B6C1002EEBFA /* Copy Spotlight */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/Library/Spotlight;
+			dstSubfolderSpec = 1;
+			files = (
+				99D0C6F724C5A606002EEBFA /* CoppiceSpotlight.mdimporter in Copy Spotlight */,
+			);
+			name = "Copy Spotlight";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -607,6 +632,16 @@
 		99C9AF1823671DB0009F909A /* PageLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageLink.swift; sourceTree = "<group>"; };
 		99C9AF1A23671FD0009F909A /* ModelWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelWriter.swift; sourceTree = "<group>"; };
 		99C9AF1C23671FD8009F909A /* ModelReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelReader.swift; sourceTree = "<group>"; };
+		99D0C6E924C5A606002EEBFA /* CoppiceSpotlight.mdimporter */ = {isa = PBXFileReference; explicitFileType = "wrapper.spotlight-importer"; includeInIndex = 0; path = CoppiceSpotlight.mdimporter; sourceTree = BUILT_PRODUCTS_DIR; };
+		99D0C6EC24C5A606002EEBFA /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = main.c; path = CoppiceSpotlight/main.c; sourceTree = SOURCE_ROOT; };
+		99D0C6EE24C5A606002EEBFA /* GetMetadataForFile.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GetMetadataForFile.m; sourceTree = "<group>"; };
+		99D0C6F324C5A606002EEBFA /* Importer Read Me.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Importer Read Me.txt"; sourceTree = "<group>"; };
+		99D0C6F424C5A606002EEBFA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		99D0C6FD24C5B5E6002EEBFA /* schema.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = schema.xml; sourceTree = "<group>"; };
+		99D0C70024C5BBF9002EEBFA /* schema.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = schema.strings; sourceTree = "<group>"; };
+		99D0C70224C5BC8E002EEBFA /* CoppiceSpotlight-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CoppiceSpotlight-Bridging-Header.h"; sourceTree = "<group>"; };
+		99D0C70324C5BC8E002EEBFA /* FileImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileImporter.swift; sourceTree = "<group>"; };
+		99D0C70524C5BD0A002EEBFA /* ModelPlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPlist.swift; sourceTree = "<group>"; };
 		99D170E5233D0542004EBD70 /* CanvasEditorViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasEditorViewModelTests.swift; sourceTree = "<group>"; };
 		99D4D59722F8650300F69C1F /* SourceListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceListViewModelTests.swift; sourceTree = "<group>"; };
 		99D8E368237EDB890098CF3B /* PageInspectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageInspectorViewController.swift; sourceTree = "<group>"; };
@@ -663,6 +698,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		99D0C6E624C5A606002EEBFA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		99FE018A22CD1037004D380D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1315,6 +1357,7 @@
 				99C41B7022DCA96700C82DDE /* BubblesModelController.swift */,
 				99C9AF1A23671FD0009F909A /* ModelWriter.swift */,
 				99C9AF1C23671FD8009F909A /* ModelReader.swift */,
+				99D0C70524C5BD0A002EEBFA /* ModelPlist.swift */,
 				9923B07222F47F2E0035D8C6 /* Model Infrastructure */,
 				99C9AF1723671D98009F909A /* Model Objects */,
 			);
@@ -1374,6 +1417,21 @@
 				993D2C0D241674F2002E5BAC /* FolderContainable.swift */,
 			);
 			path = "Model Objects";
+			sourceTree = "<group>";
+		};
+		99D0C6EA24C5A606002EEBFA /* CoppiceSpotlight */ = {
+			isa = PBXGroup;
+			children = (
+				99D0C6EE24C5A606002EEBFA /* GetMetadataForFile.m */,
+				99D0C70324C5BC8E002EEBFA /* FileImporter.swift */,
+				99D0C6FD24C5B5E6002EEBFA /* schema.xml */,
+				99D0C70024C5BBF9002EEBFA /* schema.strings */,
+				99D0C6F324C5A606002EEBFA /* Importer Read Me.txt */,
+				99D0C6F424C5A606002EEBFA /* Info.plist */,
+				99D0C6EC24C5A606002EEBFA /* main.c */,
+				99D0C70224C5BC8E002EEBFA /* CoppiceSpotlight-Bridging-Header.h */,
+			);
+			path = CoppiceSpotlight;
 			sourceTree = "<group>";
 		};
 		99D4D59622F864E200F69C1F /* Source List */ = {
@@ -1497,6 +1555,7 @@
 				99FE01B022CD1038004D380D /* CoppiceUITests */,
 				999EA68E2433929E00BF254E /* Build Scripts */,
 				999617E7249D069900A1AE24 /* 3rd Party */,
+				99D0C6EA24C5A606002EEBFA /* CoppiceSpotlight */,
 				99FE018E22CD1037004D380D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -1507,6 +1566,7 @@
 				99FE018D22CD1037004D380D /* Coppice.app */,
 				99FE01A222CD1038004D380D /* CoppiceTests.xctest */,
 				99FE01AD22CD1038004D380D /* CoppiceUITests.xctest */,
+				99D0C6E924C5A606002EEBFA /* CoppiceSpotlight.mdimporter */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1603,6 +1663,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		99D0C6E824C5A606002EEBFA /* CoppiceSpotlight */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 99D0C6FC24C5A606002EEBFA /* Build configuration list for PBXNativeTarget "CoppiceSpotlight" */;
+			buildPhases = (
+				99D0C6E524C5A606002EEBFA /* Sources */,
+				99D0C6E624C5A606002EEBFA /* Frameworks */,
+				99D0C6E724C5A606002EEBFA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CoppiceSpotlight;
+			productName = CoppiceSpotlight;
+			productReference = 99D0C6E924C5A606002EEBFA /* CoppiceSpotlight.mdimporter */;
+			productType = "com.apple.product-type.spotlight-importer";
+		};
 		99FE018C22CD1037004D380D /* Coppice */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 99FE01B622CD1038004D380D /* Build configuration list for PBXNativeTarget "Coppice" */;
@@ -1612,11 +1689,13 @@
 				99FE018B22CD1037004D380D /* Resources */,
 				999617EA249D06D400A1AE24 /* Copy Frameworks */,
 				999617F4249D0B0800A1AE24 /* Copy XPC */,
+				99D0C6FF24C5B6C1002EEBFA /* Copy Spotlight */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				999EA6982433976000BF254E /* PBXTargetDependency */,
+				99D0C6F624C5A606002EEBFA /* PBXTargetDependency */,
 			);
 			name = Coppice;
 			productName = Bubbles;
@@ -1672,6 +1751,10 @@
 					999EA6912433973A00BF254E = {
 						CreatedOnToolsVersion = 11.4;
 					};
+					99D0C6E824C5A606002EEBFA = {
+						CreatedOnToolsVersion = 12.0;
+						LastSwiftMigration = 1200;
+					};
 					99FE018C22CD1037004D380D = {
 						CreatedOnToolsVersion = 10.2.1;
 						SystemCapabilities = {
@@ -1710,11 +1793,21 @@
 				99FE01A122CD1038004D380D /* CoppiceTests */,
 				99FE01AC22CD1038004D380D /* CoppiceUITests */,
 				999EA6912433973A00BF254E /* Prepare Info.Plist Prefix */,
+				99D0C6E824C5A606002EEBFA /* CoppiceSpotlight */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		99D0C6E724C5A606002EEBFA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				99D0C6FE24C5B5E6002EEBFA /* schema.xml in Resources */,
+				99D0C70124C5BBF9002EEBFA /* schema.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		99FE018B22CD1037004D380D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1809,6 +1902,16 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		99D0C6E524C5A606002EEBFA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				99D0C6ED24C5A606002EEBFA /* main.c in Sources */,
+				99D0C6EF24C5A606002EEBFA /* GetMetadataForFile.m in Sources */,
+				99D0C70424C5BC8E002EEBFA /* FileImporter.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		99FE018922CD1037004D380D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1884,6 +1987,7 @@
 				99A0B853238961BF005FCF25 /* NSColor+M3Extensions.swift in Sources */,
 				9902F4A923882ADA00AF646F /* NSSegmentedControl+M3Extensions.swift in Sources */,
 				998F178F23EB229200B3437A /* ModelObjects+Pasteboard.swift in Sources */,
+				99D0C70624C5BD0A002EEBFA /* ModelPlist.swift in Sources */,
 				990D2441235DEFE2001B1FD9 /* PageArrowView.swift in Sources */,
 				99C9AF1D23671FD8009F909A /* ModelReader.swift in Sources */,
 				9981E6CB24C055CE005AF0EE /* PreferencesTabView.swift in Sources */,
@@ -2072,6 +2176,11 @@
 			target = 999EA6912433973A00BF254E /* Prepare Info.Plist Prefix */;
 			targetProxy = 999EA6972433976000BF254E /* PBXContainerItemProxy */;
 		};
+		99D0C6F624C5A606002EEBFA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 99D0C6E824C5A606002EEBFA /* CoppiceSpotlight */;
+			targetProxy = 99D0C6F524C5A606002EEBFA /* PBXContainerItemProxy */;
+		};
 		99FE01A422CD1038004D380D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 99FE018C22CD1037004D380D /* Coppice */;
@@ -2168,6 +2277,7 @@
 		9923B06D22F466080035D8C6 /* Test */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Coppice/Coppice.entitlements;
 				CODE_SIGN_IDENTITY = "-";
@@ -2330,6 +2440,7 @@
 		999EA69D2433A7BB00BF254E /* Archive */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Coppice/Coppice.entitlements;
 				CODE_SIGN_IDENTITY = "-";
@@ -2404,6 +2515,116 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Z699XFM6P2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Archive;
+		};
+		99D0C6F824C5A606002EEBFA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = Z699XFM6P2;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = CoppiceSpotlight/Info.plist;
+				INSTALL_PATH = "@executable_path/../Contents/Library/Spotlight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				LIBRARY_STYLE = BUNDLE;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.CoppiceSpotlight;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "CoppiceSpotlight/CoppiceSpotlight-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				WRAPPER_EXTENSION = mdimporter;
+			};
+			name = Debug;
+		};
+		99D0C6F924C5A606002EEBFA /* Test */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = Z699XFM6P2;
+				INFOPLIST_FILE = CoppiceSpotlight/Info.plist;
+				INSTALL_PATH = "@executable_path/../Contents/Library/Spotlight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				LIBRARY_STYLE = BUNDLE;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.CoppiceSpotlight;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "CoppiceSpotlight/CoppiceSpotlight-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				WRAPPER_EXTENSION = mdimporter;
+			};
+			name = Test;
+		};
+		99D0C6FA24C5A606002EEBFA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = Z699XFM6P2;
+				INFOPLIST_FILE = CoppiceSpotlight/Info.plist;
+				INSTALL_PATH = "@executable_path/../Contents/Library/Spotlight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				LIBRARY_STYLE = BUNDLE;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.CoppiceSpotlight;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "CoppiceSpotlight/CoppiceSpotlight-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				WRAPPER_EXTENSION = mdimporter;
+			};
+			name = Release;
+		};
+		99D0C6FB24C5A606002EEBFA /* Archive */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = Z699XFM6P2;
+				INFOPLIST_FILE = CoppiceSpotlight/Info.plist;
+				INSTALL_PATH = "@executable_path/../Contents/Library/Spotlight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				LIBRARY_STYLE = BUNDLE;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.CoppiceSpotlight;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "CoppiceSpotlight/CoppiceSpotlight-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				WRAPPER_EXTENSION = mdimporter;
 			};
 			name = Archive;
 		};
@@ -2529,6 +2750,7 @@
 		99FE01B722CD1038004D380D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Coppice/CoppiceDebug.entitlements;
 				CODE_SIGN_IDENTITY = "-";
@@ -2562,6 +2784,7 @@
 		99FE01B822CD1038004D380D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Coppice/Coppice.entitlements;
 				CODE_SIGN_IDENTITY = "-";
@@ -2682,6 +2905,17 @@
 				999EA6942433973A00BF254E /* Test */,
 				999EA6952433973A00BF254E /* Release */,
 				999EA6A02433A7BB00BF254E /* Archive */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		99D0C6FC24C5A606002EEBFA /* Build configuration list for PBXNativeTarget "CoppiceSpotlight" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				99D0C6F824C5A606002EEBFA /* Debug */,
+				99D0C6F924C5A606002EEBFA /* Test */,
+				99D0C6FA24C5A606002EEBFA /* Release */,
+				99D0C6FB24C5A606002EEBFA /* Archive */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

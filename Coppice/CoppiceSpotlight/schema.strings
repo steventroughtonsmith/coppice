@@ -1,0 +1,16 @@
+/* 
+  schema.strings
+  Coppice
+
+  Created by Martin Pilkington on 20/07/2020.
+  Copyright © 2020 M Cubed Software. All rights reserved.
+*/
+
+com_mcubedsw_Coppice_pageTitles = "Page Titles";
+com_mcubedsw_Coppice_pageTitles.Description = "The titles of all pages in the Coppice document";
+
+com_mcubedsw_Coppice_numberOfCanvases = "Number of Canvases";
+com_mcubedsw_Coppice_numberOfCanvases.Description = "The number of canvases in the Coppice document";
+
+com_mcubedsw_Coppice_canvasTitles = "Canvas Titles";
+com_mcubedsw_Coppice_canvasTitles.Description = "The titles of all canvases in the Coppice document";

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema version="1.0" xmlns="http://www.apple.com/metadata"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.apple.com/metadata
+    file:///System/Library/Frameworks/CoreServices.framework/Frameworks/Metadata.framework/
+    Resources/MetadataSchema.xsd">
+    <attributes>
+        <attribute name="com_mcubedsw_Coppice_pageTitles" multivalued="true" type="CFString"/>
+        <attribute name="com_mcubedsw_Coppice_canvasTitles" multivalued="true" type="CFString"/>
+        <attribute name="com_mcubedsw_Coppice_numberOfCanvases" multivalued="true" type="CFNumber"/>
+    </attributes>
+    <types>
+        <type name="com.mcubedsw.Coppice.document">
+            <allattrs>
+                kMDItemNumberOfPages
+                com_mcubedsw_Coppice_pageTitles
+                com_mcubedsw_Coppice_numberOfCanvases
+                com_mcubedsw_Coppice_canvasTitles
+            </allattrs>
+            <displayattrs>
+                kMDItemNumberOfPages
+                com_mcubedsw_Coppice_pageTitles
+                com_mcubedsw_Coppice_numberOfCanvases
+                com_mcubedsw_Coppice_canvasTitles
+            </displayattrs>
+        </type>
+    </types>
+</schema>
+
