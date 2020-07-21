@@ -34,6 +34,10 @@ class CanvasView: NSView {
         self.setupLayers()
     }
 
+    var theme: Canvas.Theme = .auto {
+        didSet { self.setNeedsDisplay(self.bounds) }
+    }
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         self.setupLayers()
@@ -206,7 +210,7 @@ class CanvasView: NSView {
 
     override func draw(_ dirtyRect: NSRect) {
         if self.drawsBackground {
-            NSColor(named: "CanvasBackground")?.set()
+            self.theme.canvasBackgroundColor.set()
             self.bounds.fill()
         }
 

@@ -14,7 +14,7 @@ class Document: NSDocument {
         CoppiceModelController(undoManager: self.undoManager!)
     }()
 
-    static let documentVersion = 1
+    static let documentVersion = GlobalConstants.documentVersion
 
 
     override class var autosavesInPlace: Bool {

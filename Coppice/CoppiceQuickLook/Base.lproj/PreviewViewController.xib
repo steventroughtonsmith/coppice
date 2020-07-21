@@ -8,25 +8,27 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="PreviewViewController" customModule="CoppiceQuickLook" customModuleProvider="target">
             <connections>
+                <outlet property="canvasImageView" destination="68j-xi-BXa" id="h2Y-H9-MAa"/>
                 <outlet property="view" destination="c22-O7-iKe" id="NRM-P4-wb6"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="c22-O7-iKe" userLabel="Preview View">
-            <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
+            <rect key="frame" x="0.0" y="0.0" width="481" height="272"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fKF-01-va8">
-                    <rect key="frame" x="199" y="128" width="82" height="16"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" lineBreakMode="clipping" title="Coppice Doc" id="V6V-r5-0uM">
-                        <font key="font" usesAppearanceFont="YES"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="400" verticalCompressionResistancePriority="400" translatesAutoresizingMaskIntoConstraints="NO" id="68j-xi-BXa">
+                    <rect key="frame" x="0.0" y="0.0" width="481" height="272"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="OtF-WK-0II"/>
+                </imageView>
             </subviews>
+            <constraints>
+                <constraint firstItem="68j-xi-BXa" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="6o6-pL-XCK"/>
+                <constraint firstAttribute="bottom" secondItem="68j-xi-BXa" secondAttribute="bottom" id="MCa-6D-Lf9"/>
+                <constraint firstItem="68j-xi-BXa" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="QXb-DC-Sz8"/>
+                <constraint firstAttribute="trailing" secondItem="68j-xi-BXa" secondAttribute="trailing" id="htW-g5-g67"/>
+            </constraints>
             <point key="canvasLocation" x="88" y="154"/>
         </customView>
     </objects>

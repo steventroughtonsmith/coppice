@@ -15,12 +15,14 @@ class LargeCanvasCell: EditableLabelCell, CanvasCell {
 
     @IBOutlet weak var nameLabel: NSTextField!
     @IBOutlet weak var thumbnailImageView: NSImageView!
+    @IBOutlet weak var thumbnailBackground: NSBox!
     private var thumbnailObserver: AnyCancellable?
     override var objectValue: Any? {
         didSet {
             guard let canvas = self.objectValue as? Canvas else {
                 return
             }
+            self.thumbnailBackground.fillColor = canvas.theme.canvasBackgroundColor
             self.thumbnailImageView.image = canvas.thumbnail
         }
     }

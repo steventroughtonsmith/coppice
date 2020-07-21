@@ -98,6 +98,8 @@
 		99D0C8E324C5FBEA002EEBFA /* SelectAndMoveEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C8D724C5FBEA002EEBFA /* SelectAndMoveEventContext.swift */; };
 		99D0C8E424C5FBEA002EEBFA /* RemovePageEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C8D824C5FBEA002EEBFA /* RemovePageEventContext.swift */; };
 		99D0C8E524C5FBEA002EEBFA /* ResizePageEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C8D924C5FBEA002EEBFA /* ResizePageEventContext.swift */; };
+		99D0C8EF24C72494002EEBFA /* LayoutEnginePage+CanvasPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C8EE24C72494002EEBFA /* LayoutEnginePage+CanvasPage.swift */; };
+		99D0C8F124C728C7002EEBFA /* ArrowDrawHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C8F024C728C7002EEBFA /* ArrowDrawHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -206,6 +208,8 @@
 		99D0C8D724C5FBEA002EEBFA /* SelectAndMoveEventContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectAndMoveEventContext.swift; sourceTree = "<group>"; };
 		99D0C8D824C5FBEA002EEBFA /* RemovePageEventContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemovePageEventContext.swift; sourceTree = "<group>"; };
 		99D0C8D924C5FBEA002EEBFA /* ResizePageEventContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResizePageEventContext.swift; sourceTree = "<group>"; };
+		99D0C8EE24C72494002EEBFA /* LayoutEnginePage+CanvasPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LayoutEnginePage+CanvasPage.swift"; sourceTree = "<group>"; };
+		99D0C8F024C728C7002EEBFA /* ArrowDrawHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrowDrawHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -252,6 +256,7 @@
 				99D0C75924C5DD1E002EEBFA /* CoppiceCore.h */,
 				99D0C86624C5DFBA002EEBFA /* GlobalConstants.swift */,
 				99D0C86B24C5E080002EEBFA /* CoppiceUserDefaults.swift */,
+				99D0C8F024C728C7002EEBFA /* ArrowDrawHelper.swift */,
 				99D0C86C24C5E080002EEBFA /* Extensions */,
 				99D0C77024C5DDEE002EEBFA /* Model */,
 				99D0C8CC24C5FBEA002EEBFA /* Layout Engine */,
@@ -451,6 +456,7 @@
 				99D0C8CD24C5FBEA002EEBFA /* CanvasLayoutEngine+Configuration.swift */,
 				99D0C8CE24C5FBEA002EEBFA /* LayoutEngineEventContextFactory.swift */,
 				99D0C8CF24C5FBEA002EEBFA /* LayoutEnginePage.swift */,
+				99D0C8EE24C72494002EEBFA /* LayoutEnginePage+CanvasPage.swift */,
 				99D0C8D024C5FBEA002EEBFA /* LayoutEngineArrow.swift */,
 				99D0C8D124C5FBEA002EEBFA /* CanvasLayoutEngine.swift */,
 				99D0C8D224C5FBEA002EEBFA /* ArrowLayoutEngine.swift */,
@@ -603,6 +609,7 @@
 				99D0C8E224C5FBEA002EEBFA /* CanvasEventContext.swift in Sources */,
 				99D0C8E324C5FBEA002EEBFA /* SelectAndMoveEventContext.swift in Sources */,
 				99D0C8DC24C5FBEA002EEBFA /* LayoutEnginePage.swift in Sources */,
+				99D0C8EF24C72494002EEBFA /* LayoutEnginePage+CanvasPage.swift in Sources */,
 				99D0C8DF24C5FBEA002EEBFA /* ArrowLayoutEngine.swift in Sources */,
 				99D0C80224C5DE79002EEBFA /* ModelRelationship.swift in Sources */,
 				99D0C87024C5E080002EEBFA /* NSImage+M3Extensions.swift in Sources */,
@@ -611,6 +618,7 @@
 				99D0C7FF24C5DE79002EEBFA /* ModelObservation.swift in Sources */,
 				99D0C80024C5DE79002EEBFA /* ModelObject.swift in Sources */,
 				99D0C81424C5DE79002EEBFA /* ImagePageContent.swift in Sources */,
+				99D0C8F124C728C7002EEBFA /* ArrowDrawHelper.swift in Sources */,
 				99D0C8DA24C5FBEA002EEBFA /* CanvasLayoutEngine+Configuration.swift in Sources */,
 				99D0C8DD24C5FBEA002EEBFA /* LayoutEngineArrow.swift in Sources */,
 				99D0C80E24C5DE79002EEBFA /* Canvas+Pages.swift in Sources */,
@@ -816,6 +824,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
@@ -842,6 +851,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
@@ -970,6 +980,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
@@ -1072,6 +1083,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;

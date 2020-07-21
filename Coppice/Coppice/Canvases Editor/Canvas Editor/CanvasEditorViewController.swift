@@ -267,6 +267,7 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
             appearance = nil
         }
         self.view.appearance = appearance
+        self.canvasView.theme = self.viewModel.canvas.theme
     }
 
     private func updateCanvas() {
@@ -452,7 +453,7 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
         }
 
         let newArrowView = PageArrowView(config: self.layoutEngine.configuration.arrow)
-        newArrowView.lineColour = NSColor(named: "ArrowColour") ?? .black
+        newArrowView.lineColour = self.viewModel.canvas.theme.arrowColour
         self.canvasView.arrowLayer.addSubview(newArrowView)
         return newArrowView
     }

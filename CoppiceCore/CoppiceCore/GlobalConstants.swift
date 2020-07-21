@@ -34,6 +34,8 @@ public struct GlobalConstants {
     }
 
     public static var maxCanvasThumbnailSize = CGSize(width: 240, height: 120)
+
+    public static let documentVersion = 1
 }
 
 public extension NSImage.Name {

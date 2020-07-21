@@ -183,4 +183,14 @@ public extension CGRect {
     var midPoint: CGPoint {
         return self.point(atX: .mid, y: .mid)
     }
+
+    func insetBy(_ edgeInsets: NSEdgeInsets, flipped: Bool = true) -> CGRect {
+        var rect = self
+        rect.origin.x += edgeInsets.left
+        rect.origin.y += (flipped ? edgeInsets.top : edgeInsets.bottom)
+
+        rect.size.width -= (edgeInsets.left + edgeInsets.right)
+        rect.size.height -= (edgeInsets.top + edgeInsets.bottom)
+        return rect
+    }
 }
