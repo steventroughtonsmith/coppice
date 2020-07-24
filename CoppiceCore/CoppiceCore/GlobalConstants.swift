@@ -40,7 +40,7 @@ public struct GlobalConstants {
 
 public extension NSImage.Name {
     //Sidebar
-    static let sidebarCanvas = "Canvas"
+    static let sidebarCanvas = "Canvases-Small"
     static let sidebarFolder = "Folder"
     static let textPage = "TextPage"
     static let imagePage = "ImagePage"
@@ -59,9 +59,9 @@ public struct Symbols {
     }
 
     public struct Page {
-        public static let text = "doc.text"
-        public static let folder = "folder"
-        public static let image = "photo"
+        public static let text = "Page-Small"
+        public static let folder = "Folder-Small"
+        public static let image = "Photo-Small"
     }
 
     public struct Toolbars {
@@ -72,12 +72,12 @@ public struct Symbols {
             }
             return "NSActionTemplate"
         }
-        public static let link = "link"
+        public static let link = "LinkNew"
         public static let plus = "plus"
-        public static let newCanvas = "rectangle.badge.plus"
+        public static let newCanvas = "NewCanvas10"
         public static let leftSidebar = "sidebar.left"
         public static let rightSidebar = "sidebar.right"
-        public static let canvasListToggle = "rectangle.leftthird.inset.fill"
+        public static let canvasListToggle = "ToggleCanvasList"
     }
 
     public static var closePage: String {

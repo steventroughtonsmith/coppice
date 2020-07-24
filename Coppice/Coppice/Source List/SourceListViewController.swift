@@ -50,6 +50,17 @@ class SourceListViewController: NSViewController, NSMenuItemValidation {
         self.viewModel.startObserving()
     }
 
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        guard let visualEffectView = self.view.superview?.superview as? NSVisualEffectView else {
+            return
+        }
+
+        //We need this to ensure that the text and icons draw the correct colour on Catalina, otherwise they are a bit washed out
+        visualEffectView.state = .active
+        visualEffectView.state = .followsWindowActiveState
+    }
+
     override func viewDidDisappear() {
         super.viewDidDisappear()
         self.viewModel.stopObserving()

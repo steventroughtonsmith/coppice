@@ -13,7 +13,7 @@ class SourceListOutlineView: NSOutlineView {
     override func frameOfCell(atColumn column: Int, row: Int) -> NSRect {
         var rect = super.frameOfCell(atColumn: column, row: row)
         if row == 0 {
-            var adjustment: CGFloat = 2
+            var adjustment: CGFloat = 5
             if #available(OSX 10.16, *) {
                 adjustment = self.indentationPerLevel
             }

@@ -72,8 +72,8 @@
                                 </connections>
                             </popUpButton>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="g2M-Yk-OJX">
-                                <rect key="frame" x="8" y="4" width="16" height="16"/>
-                                <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="CanvasSidebar" imagePosition="only" alignment="center" controlSize="small" imageScaling="proportionallyDown" inset="2" id="lmW-gL-D2E">
+                                <rect key="frame" x="8" y="5" width="16" height="14"/>
+                                <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="ToggleCanvasList" imagePosition="only" alignment="center" controlSize="small" imageScaling="proportionallyDown" inset="2" id="lmW-gL-D2E">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                     <font key="font" metaFont="message" size="11"/>
                                 </buttonCell>
@@ -142,7 +142,7 @@
         </customView>
     </objects>
     <resources>
-        <image name="CanvasSidebar" width="16" height="16"/>
+        <image name="ToggleCanvasList" width="16" height="14"/>
         <namedColor name="CanvasBackground">
             <color red="0.88235294117647056" green="0.8901960784313725" blue="0.90588235294117647" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
