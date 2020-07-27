@@ -17,6 +17,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var newLinkedPageMenuDelegate: NewPageMenuDelegate!
     @IBOutlet weak var updaterController: SPUStandardUpdaterController!
 
+    override init() {
+        super.init()
+        self.setupDefaults()
+    }
+
+    private func setupDefaults() {
+        UserDefaults.standard.register(defaults: [
+            .defaultFontName: Page.fallbackFontName,
+            .defaultFontSize: Page.fallbackFontSize,
+            .defaultCanvasTheme: Canvas.Theme.auto.rawValue,
+            .autoLinkingTextPagesEnabled: true,
+            .showWelcomeScreenOnLaunch: true
+        ])
+    }
+
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         #if !DEBUG
         if let debugMenu = NSApplication.shared.mainMenu?.item(withTag: -31) {
@@ -37,24 +52,36 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.newLinkedPageMenuDelegate.includeKeyEquivalents = false
 
         UserDefaults.standard.set(true, forKey: "NSTextViewAvoidLayoutWhileDrawing")
-
-        UserDefaults.standard.register(defaults: [
-            .defaultFontName: Page.fallbackFontName,
-            .defaultFontSize: Page.fallbackFontSize,
-            .defaultCanvasTheme: Canvas.Theme.auto.rawValue,
-            .autoLinkingTextPagesEnabled: true
-        ])
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }
 
-    #if TEST
     func applicationShouldOpenUntitledFile(_ sender: NSApplication) -> Bool {
+        #if TEST
+        return false
+        #else
+        //We need to do this here as applicationDidFinishLaunching is called before any documents are restored, but applicationShouldHandleReopen is not called on launch
+        if (UserDefaults.standard.bool(forKey: .showWelcomeScreenOnLaunch)) {
+            self.welcomeWindow.showWindow(nil)
+            return false
+        }
+        return true
+        #endif
+    }
+
+    func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        guard
+            UserDefaults.standard.bool(forKey: .showWelcomeScreenOnLaunch),
+            (flag == false)
+        else {
+            return true
+        }
+
+        self.welcomeWindow.showWindow(nil)
         return false
     }
-    #endif
 
     func application(_ application: NSApplication, open urls: [URL]) {
         let pageURLs = urls.filter { $0.scheme == GlobalConstants.urlScheme }
