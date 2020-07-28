@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17132" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17132"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="TourWindow" customModule="Coppice" customModuleProvider="target">
+            <connections>
+                <outlet property="pageController" destination="Krk-Q6-nn6" id="aV4-DC-ShJ"/>
+                <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="F0z-JX-Cv5">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" fullSizeContentView="YES"/>
+            <rect key="contentRect" x="196" y="240" width="755" height="566"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <view key="contentView" id="se5-gp-TjO">
+                <rect key="frame" x="0.0" y="0.0" width="755" height="566"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <box boxType="custom" borderType="none" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="ofJ-Al-ioR">
+                        <rect key="frame" x="318" y="20" width="119" height="30"/>
+                        <view key="contentView" id="3U4-7C-uno">
+                            <rect key="frame" x="0.0" y="0.0" width="119" height="30"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AoG-S8-AGC">
+                                    <rect key="frame" x="0.0" y="0.0" width="119" height="30"/>
+                                    <buttonCell key="cell" type="bevel" title="Continue" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="58d-tL-bYz">
+                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                    <color key="contentTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <connections>
+                                        <action selector="continueClicked:" target="-2" id="4Hd-bR-Gtx"/>
+                                        <binding destination="-2" name="title" keyPath="self.continueButtonTitle" id="kg1-bU-ncd"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="AoG-S8-AGC" firstAttribute="leading" secondItem="3U4-7C-uno" secondAttribute="leading" id="00w-qd-7jS"/>
+                                <constraint firstAttribute="bottom" secondItem="AoG-S8-AGC" secondAttribute="bottom" id="8uF-D7-dNz"/>
+                                <constraint firstAttribute="trailing" secondItem="AoG-S8-AGC" secondAttribute="trailing" id="99n-EV-0ud"/>
+                                <constraint firstItem="AoG-S8-AGC" firstAttribute="top" secondItem="3U4-7C-uno" secondAttribute="top" id="YCI-3Y-Dz3"/>
+                            </constraints>
+                        </view>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="119" id="Q2W-5R-O5B"/>
+                            <constraint firstAttribute="height" constant="30" id="qAA-rU-PTw"/>
+                        </constraints>
+                        <color key="fillColor" name="linkColor" catalog="System" colorSpace="catalog"/>
+                    </box>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="8Th-lp-2xU">
+                        <rect key="frame" x="0.0" y="50" width="755" height="516"/>
+                    </customView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="8Th-lp-2xU" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" id="0bC-Ej-n4e"/>
+                    <constraint firstItem="ofJ-Al-ioR" firstAttribute="centerX" secondItem="se5-gp-TjO" secondAttribute="centerX" id="Wbu-rY-102"/>
+                    <constraint firstItem="ofJ-Al-ioR" firstAttribute="top" secondItem="8Th-lp-2xU" secondAttribute="bottom" id="YmS-d9-ESa"/>
+                    <constraint firstAttribute="trailing" secondItem="8Th-lp-2xU" secondAttribute="trailing" id="bpM-Kj-hNA"/>
+                    <constraint firstAttribute="bottom" secondItem="ofJ-Al-ioR" secondAttribute="bottom" constant="20" id="eh0-BM-MPh"/>
+                    <constraint firstItem="8Th-lp-2xU" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" id="lsY-la-xt6"/>
+                </constraints>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
+            </connections>
+            <point key="canvasLocation" x="-77" y="164"/>
+        </window>
+        <pagecontroller transitionStyle="horizontalStrip" id="Krk-Q6-nn6">
+            <connections>
+                <outlet property="delegate" destination="-2" id="hmS-mh-PM6"/>
+                <outlet property="view" destination="8Th-lp-2xU" id="l2X-aL-ZbM"/>
+            </connections>
+        </pagecontroller>
+    </objects>
+</document>

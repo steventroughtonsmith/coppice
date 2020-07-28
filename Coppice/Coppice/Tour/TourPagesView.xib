@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17132" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.AVKitIBPlugin" version="17132"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17132"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="TourMovieViewController" customModule="Coppice" customModuleProvider="target">
+            <connections>
+                <outlet property="playerView" destination="Ysy-Kc-mtb" id="759-L8-Vx9"/>
+                <outlet property="previewImageView" destination="sDH-wU-mQ6" id="11y-N5-Bx7"/>
+                <outlet property="view" destination="CXH-hx-ICQ" id="eJw-Zd-GQz"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="CXH-hx-ICQ">
+            <rect key="frame" x="0.0" y="0.0" width="640" height="516"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="s5X-Jb-beb">
+                    <rect key="frame" x="275" y="461" width="90" height="35"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="Pages" id="ul5-et-MFv">
+                        <font key="font" metaFont="systemBold" size="30"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Fxt-81-2wK">
+                    <rect key="frame" x="118" y="404" width="404" height="32"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="400" id="4uU-zm-nIR"/>
+                    </constraints>
+                    <textFieldCell key="cell" selectable="YES" alignment="center" title="Pages represent individual thoughts or ideas. Pages can contain text or images, and can be as big or as small as you like." id="Wcl-IH-syW">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="RCs-VX-L9o">
+                    <rect key="frame" x="138" y="20" width="364" height="32"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="360" id="XCW-N8-Ooq"/>
+                    </constraints>
+                    <textFieldCell key="cell" selectable="YES" alignment="center" title="You can create a Page from the Toolbar or the Menu Bar, or by dragging text or image files to the Sidebar" id="0ta-YB-FZi">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="Se3-Xa-ryf">
+                    <rect key="frame" x="105" y="72" width="431" height="312"/>
+                    <subviews>
+                        <box boxType="custom" borderType="line" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="MGz-qB-rla">
+                            <rect key="frame" x="0.0" y="0.0" width="431" height="312"/>
+                            <view key="contentView" id="paY-xi-66p">
+                                <rect key="frame" x="1" y="1" width="429" height="310"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <avPlayerView controlsStyle="none" translatesAutoresizingMaskIntoConstraints="NO" id="Ysy-Kc-mtb">
+                                        <rect key="frame" x="5" y="5" width="419" height="300"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="300" id="9wB-To-nTu"/>
+                                            <constraint firstAttribute="width" constant="419" id="zvn-0T-J7R"/>
+                                        </constraints>
+                                    </avPlayerView>
+                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sDH-wU-mQ6">
+                                        <rect key="frame" x="5" y="5" width="419" height="300"/>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="TourPagesPreview" id="yCl-ak-ox8"/>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="sDH-wU-mQ6" firstAttribute="leading" secondItem="Ysy-Kc-mtb" secondAttribute="leading" id="2L8-1g-k5Y"/>
+                                    <constraint firstAttribute="bottom" secondItem="Ysy-Kc-mtb" secondAttribute="bottom" constant="5" id="2uZ-f9-agx"/>
+                                    <constraint firstItem="sDH-wU-mQ6" firstAttribute="bottom" secondItem="Ysy-Kc-mtb" secondAttribute="bottom" id="9H4-WW-Ajn"/>
+                                    <constraint firstItem="sDH-wU-mQ6" firstAttribute="top" secondItem="Ysy-Kc-mtb" secondAttribute="top" id="JIV-u1-QWg"/>
+                                    <constraint firstAttribute="trailing" secondItem="Ysy-Kc-mtb" secondAttribute="trailing" constant="5" id="Kul-9Q-4ka"/>
+                                    <constraint firstItem="sDH-wU-mQ6" firstAttribute="trailing" secondItem="Ysy-Kc-mtb" secondAttribute="trailing" id="Tx1-RS-rfd"/>
+                                    <constraint firstItem="Ysy-Kc-mtb" firstAttribute="top" secondItem="paY-xi-66p" secondAttribute="top" constant="5" id="Xcc-Q2-hrC"/>
+                                    <constraint firstItem="Ysy-Kc-mtb" firstAttribute="leading" secondItem="paY-xi-66p" secondAttribute="leading" constant="5" id="a9U-VF-cI4"/>
+                                </constraints>
+                            </view>
+                            <color key="borderColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            <color key="fillColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        </box>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="MGz-qB-rla" secondAttribute="trailing" id="34E-JH-JQX"/>
+                        <constraint firstItem="MGz-qB-rla" firstAttribute="centerY" secondItem="Se3-Xa-ryf" secondAttribute="centerY" id="3Q3-BM-h9N"/>
+                        <constraint firstItem="MGz-qB-rla" firstAttribute="leading" secondItem="Se3-Xa-ryf" secondAttribute="leading" id="igY-Fr-KOj"/>
+                    </constraints>
+                </customView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="Se3-Xa-ryf" firstAttribute="centerX" secondItem="CXH-hx-ICQ" secondAttribute="centerX" id="0Ji-0o-Ywc"/>
+                <constraint firstItem="Fxt-81-2wK" firstAttribute="top" secondItem="s5X-Jb-beb" secondAttribute="bottom" constant="25" id="BIH-Tv-Xi6"/>
+                <constraint firstAttribute="bottom" secondItem="RCs-VX-L9o" secondAttribute="bottom" constant="20" id="Ddp-YJ-eRh"/>
+                <constraint firstItem="Se3-Xa-ryf" firstAttribute="top" secondItem="Fxt-81-2wK" secondAttribute="bottom" constant="20" id="Fuy-jd-S2C"/>
+                <constraint firstItem="RCs-VX-L9o" firstAttribute="top" secondItem="Se3-Xa-ryf" secondAttribute="bottom" constant="20" id="I7k-ty-hhc"/>
+                <constraint firstItem="s5X-Jb-beb" firstAttribute="top" secondItem="CXH-hx-ICQ" secondAttribute="top" constant="20" id="eEH-cN-oHh"/>
+                <constraint firstItem="RCs-VX-L9o" firstAttribute="centerX" secondItem="CXH-hx-ICQ" secondAttribute="centerX" id="gEg-Ce-bxD"/>
+                <constraint firstItem="Fxt-81-2wK" firstAttribute="centerX" secondItem="CXH-hx-ICQ" secondAttribute="centerX" id="sLM-vw-Ucp"/>
+                <constraint firstItem="s5X-Jb-beb" firstAttribute="centerX" secondItem="CXH-hx-ICQ" secondAttribute="centerX" id="zTB-f8-7Cz"/>
+            </constraints>
+            <point key="canvasLocation" x="74" y="384"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="TourPagesPreview" width="838" height="600"/>
+    </resources>
+</document>

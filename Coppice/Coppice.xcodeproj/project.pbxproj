@@ -133,6 +133,22 @@
 		998D077B2411513F004ADFF8 /* NewPageMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998D077A2411513F004ADFF8 /* NewPageMenuDelegate.swift */; };
 		998D077D2411578B004ADFF8 /* NSMenu+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998D077C2411578B004ADFF8 /* NSMenu+M3Extensions.swift */; };
 		998F178B23E46B4900B3437A /* ColourGridImageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998F178A23E46B4900B3437A /* ColourGridImageGenerator.swift */; };
+		999007D424CF458900DB5C13 /* TourWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999007D224CF458900DB5C13 /* TourWindowController.swift */; };
+		999007D524CF458900DB5C13 /* TourWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 999007D324CF458900DB5C13 /* TourWindow.xib */; };
+		999007D824CF472100DB5C13 /* TourWelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999007D624CF472100DB5C13 /* TourWelcomeViewController.swift */; };
+		999007D924CF472100DB5C13 /* TourWelcomeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 999007D724CF472100DB5C13 /* TourWelcomeView.xib */; };
+		999007DD24CF472E00DB5C13 /* TourPagesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 999007DB24CF472E00DB5C13 /* TourPagesView.xib */; };
+		999007E124CF473A00DB5C13 /* TourCanvasesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 999007DF24CF473A00DB5C13 /* TourCanvasesView.xib */; };
+		999007E424CF474300DB5C13 /* TourMovieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999007E224CF474300DB5C13 /* TourMovieViewController.swift */; };
+		999007E524CF474300DB5C13 /* TourLinksView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 999007E324CF474300DB5C13 /* TourLinksView.xib */; };
+		999007E924CF474E00DB5C13 /* TourBranchesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 999007E724CF474E00DB5C13 /* TourBranchesView.xib */; };
+		999007EC24CF475900DB5C13 /* TourGetStartedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999007EA24CF475900DB5C13 /* TourGetStartedViewController.swift */; };
+		999007ED24CF475900DB5C13 /* TourGetStartedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 999007EB24CF475900DB5C13 /* TourGetStartedView.xib */; };
+		999007EF24D05C1100DB5C13 /* TourLinks.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 999007EE24D05C1100DB5C13 /* TourLinks.mp4 */; };
+		999007F124D0607C00DB5C13 /* Tour.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 999007F024D0607C00DB5C13 /* Tour.xcassets */; };
+		999007F324D06C7000DB5C13 /* TourBranches.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 999007F224D06C7000DB5C13 /* TourBranches.mp4 */; };
+		999007F524D079E200DB5C13 /* TourCanvases.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 999007F424D079E100DB5C13 /* TourCanvases.mp4 */; };
+		999007F724D07F1500DB5C13 /* TourPages.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 999007F624D07F1500DB5C13 /* TourPages.mp4 */; };
 		99902260241FDD52009A8446 /* NoCanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9990225E241FDD52009A8446 /* NoCanvasViewController.swift */; };
 		99902261241FDD52009A8446 /* NoCanvasViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9990225F241FDD52009A8446 /* NoCanvasViewController.xib */; };
 		99906375249BC5780008C747 /* ProFeatures.plist in Resources */ = {isa = PBXBuildFile; fileRef = 99906377249BC5780008C747 /* ProFeatures.plist */; };
@@ -451,6 +467,22 @@
 		998D077A2411513F004ADFF8 /* NewPageMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPageMenuDelegate.swift; sourceTree = "<group>"; };
 		998D077C2411578B004ADFF8 /* NSMenu+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMenu+M3Extensions.swift"; sourceTree = "<group>"; };
 		998F178A23E46B4900B3437A /* ColourGridImageGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColourGridImageGenerator.swift; sourceTree = "<group>"; };
+		999007D224CF458900DB5C13 /* TourWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourWindowController.swift; sourceTree = "<group>"; };
+		999007D324CF458900DB5C13 /* TourWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TourWindow.xib; sourceTree = "<group>"; };
+		999007D624CF472100DB5C13 /* TourWelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourWelcomeViewController.swift; sourceTree = "<group>"; };
+		999007D724CF472100DB5C13 /* TourWelcomeView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TourWelcomeView.xib; sourceTree = "<group>"; };
+		999007DB24CF472E00DB5C13 /* TourPagesView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TourPagesView.xib; sourceTree = "<group>"; };
+		999007DF24CF473A00DB5C13 /* TourCanvasesView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TourCanvasesView.xib; sourceTree = "<group>"; };
+		999007E224CF474300DB5C13 /* TourMovieViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourMovieViewController.swift; sourceTree = "<group>"; };
+		999007E324CF474300DB5C13 /* TourLinksView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TourLinksView.xib; sourceTree = "<group>"; };
+		999007E724CF474E00DB5C13 /* TourBranchesView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TourBranchesView.xib; sourceTree = "<group>"; };
+		999007EA24CF475900DB5C13 /* TourGetStartedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourGetStartedViewController.swift; sourceTree = "<group>"; };
+		999007EB24CF475900DB5C13 /* TourGetStartedView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TourGetStartedView.xib; sourceTree = "<group>"; };
+		999007EE24D05C1100DB5C13 /* TourLinks.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = TourLinks.mp4; sourceTree = "<group>"; };
+		999007F024D0607C00DB5C13 /* Tour.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Tour.xcassets; sourceTree = "<group>"; };
+		999007F224D06C7000DB5C13 /* TourBranches.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = TourBranches.mp4; sourceTree = "<group>"; };
+		999007F424D079E100DB5C13 /* TourCanvases.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = TourCanvases.mp4; sourceTree = "<group>"; };
+		999007F624D07F1500DB5C13 /* TourPages.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = TourPages.mp4; sourceTree = "<group>"; };
 		9990225E241FDD52009A8446 /* NoCanvasViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoCanvasViewController.swift; sourceTree = "<group>"; };
 		9990225F241FDD52009A8446 /* NoCanvasViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoCanvasViewController.xib; sourceTree = "<group>"; };
 		99906376249BC5780008C747 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Base; path = Base.lproj/ProFeatures.plist; sourceTree = "<group>"; };
@@ -959,6 +991,29 @@
 			path = "Generic Views";
 			sourceTree = "<group>";
 		};
+		999007D124CF456600DB5C13 /* Tour */ = {
+			isa = PBXGroup;
+			children = (
+				999007D224CF458900DB5C13 /* TourWindowController.swift */,
+				999007D324CF458900DB5C13 /* TourWindow.xib */,
+				999007D624CF472100DB5C13 /* TourWelcomeViewController.swift */,
+				999007D724CF472100DB5C13 /* TourWelcomeView.xib */,
+				999007E224CF474300DB5C13 /* TourMovieViewController.swift */,
+				999007DB24CF472E00DB5C13 /* TourPagesView.xib */,
+				999007DF24CF473A00DB5C13 /* TourCanvasesView.xib */,
+				999007E324CF474300DB5C13 /* TourLinksView.xib */,
+				999007E724CF474E00DB5C13 /* TourBranchesView.xib */,
+				999007EA24CF475900DB5C13 /* TourGetStartedViewController.swift */,
+				999007EB24CF475900DB5C13 /* TourGetStartedView.xib */,
+				999007F624D07F1500DB5C13 /* TourPages.mp4 */,
+				999007EE24D05C1100DB5C13 /* TourLinks.mp4 */,
+				999007F224D06C7000DB5C13 /* TourBranches.mp4 */,
+				999007F424D079E100DB5C13 /* TourCanvases.mp4 */,
+				999007F024D0607C00DB5C13 /* Tour.xcassets */,
+			);
+			path = Tour;
+			sourceTree = "<group>";
+		};
 		9990225D241FDD39009A8446 /* No Canvas Editor */ = {
 			isa = PBXGroup;
 			children = (
@@ -1339,6 +1394,7 @@
 				99FFF9D12354C4F600EF02A0 /* GlobalConstants.swift */,
 				9977119B239E91FD00FCC8C7 /* ViewModel.swift */,
 				99C88EE9240C2F3F00339880 /* NSWindow+KeyLoopDebug.swift */,
+				999007D124CF456600DB5C13 /* Tour */,
 				9981E6D324C08D0F005AF0EE /* Welcome */,
 				9981E6CC24C057F8005AF0EE /* About */,
 				996187ED249A511C007313BD /* Preferences */,
@@ -1602,9 +1658,12 @@
 				99D8E382237EDB890098CF3B /* InspectorContainerViewController.xib in Resources */,
 				99C865212302E256004C7B89 /* ImageEditorViewController.xib in Resources */,
 				992A5CA622DDF4C50012CCB6 /* EditorContainerViewController.xib in Resources */,
+				999007E524CF474300DB5C13 /* TourLinksView.xib in Resources */,
 				99FDF12D241FD53D00AF1E51 /* CanvasesView.xib in Resources */,
 				992A5CAF22DDF50F0012CCB6 /* DebugPageEditor.xib in Resources */,
 				996187F9249A6E72007313BD /* UpdatePreferencesViewController.xib in Resources */,
+				999007F324D06C7000DB5C13 /* TourBranches.mp4 in Resources */,
+				999007D524CF458900DB5C13 /* TourWindow.xib in Resources */,
 				99171EDE24AB4FCC00E96DE6 /* Symbols.xcassets in Resources */,
 				9958108F230D909900D996C4 /* TestCanvasPageViewController.xib in Resources */,
 				99618802249BC0EF007313BD /* ProFeatureCell.xib in Resources */,
@@ -1612,27 +1671,36 @@
 				999EA6B52436097500BF254E /* SidebarView.xib in Resources */,
 				992A5CAB22DDF5000012CCB6 /* DebugCanvasEditor.xib in Resources */,
 				992A5C9622DCB7790012CCB6 /* SourceListView.xib in Resources */,
+				999007D924CF472100DB5C13 /* TourWelcomeView.xib in Resources */,
 				99D8E37C237EDB890098CF3B /* CanvasInspectorContentView.xib in Resources */,
+				999007E124CF473A00DB5C13 /* TourCanvasesView.xib in Resources */,
 				996187F1249A5166007313BD /* PreferencesWindow.xib in Resources */,
 				99C8652A2306D141004C7B89 /* PageSelectorViewController.xib in Resources */,
+				999007EF24D05C1100DB5C13 /* TourLinks.mp4 in Resources */,
 				99488AA323BA3983009954AF /* SmallCanvasCell.xib in Resources */,
 				9965FC4723844910002FE10D /* TextEditorInspectorContentView.xib in Resources */,
+				999007DD24CF472E00DB5C13 /* TourPagesView.xib in Resources */,
 				9981E6D224C067A2005AF0EE /* Acknowledgements.rtf in Resources */,
 				9981E6D724C08F12005AF0EE /* WelcomeWindow.xib in Resources */,
+				999007ED24CF475900DB5C13 /* TourGetStartedView.xib in Resources */,
 				99581083230D7EFB00D996C4 /* CanvasEditorViewController.xib in Resources */,
 				993D2BD924127E29002E5BAC /* CanvasListView.xib in Resources */,
 				99581093230D92C600D996C4 /* CanvasPageViewController.xib in Resources */,
+				999007F724D07F1500DB5C13 /* TourPages.mp4 in Resources */,
 				9965FC3E23843143002FE10D /* CanvasPageInspectorContentView.xib in Resources */,
 				996187FD249BB615007313BD /* SubscribeViewController.xib in Resources */,
+				999007F124D0607C00DB5C13 /* Tour.xcassets in Resources */,
 				999EA68D2433913A00BF254E /* Info.plist.prefix in Resources */,
 				999EA6C1243628E500BF254E /* SearchResultTableCellView.xib in Resources */,
 				99C03F09232A99F400EB7516 /* Cursors.xcassets in Resources */,
 				99D8E39123800F9A0098CF3B /* BaseInspectorViewController.xib in Resources */,
+				999007E924CF474E00DB5C13 /* TourBranchesView.xib in Resources */,
 				99FE01E522D4CC8A004D380D /* DocumentWindow.xib in Resources */,
 				99902261241FDD52009A8446 /* NoCanvasViewController.xib in Resources */,
 				999EA6BC243619E700BF254E /* SearchResultsView.xib in Resources */,
 				9973737B2423AD6C000D5F21 /* NoEditorViewController.xib in Resources */,
 				99488AA723BA3993009954AF /* LargeCanvasCell.xib in Resources */,
+				999007F524D079E200DB5C13 /* TourCanvases.mp4 in Resources */,
 				99F0CD77246AF1C4006DE18E /* PreviewGenerationDebugWindow.xib in Resources */,
 				99FE019B22CD1038004D380D /* MainMenu.xib in Resources */,
 				9981E6D024C05811005AF0EE /* AboutWindow.xib in Resources */,
@@ -1767,11 +1835,14 @@
 				9981E6CB24C055CE005AF0EE /* PreferencesTabView.swift in Sources */,
 				99171EDC24AA48B200E96DE6 /* MainToolbarDelegate.swift in Sources */,
 				99FDF12C241FD53D00AF1E51 /* CanvasesViewController.swift in Sources */,
+				999007D824CF472100DB5C13 /* TourWelcomeViewController.swift in Sources */,
+				999007E424CF474300DB5C13 /* TourMovieViewController.swift in Sources */,
 				993D2BFE2412FB1C002E5BAC /* SplitViewContainable.swift in Sources */,
 				99A97FF72476ABD500CDD95C /* SearchResultTableCellView.swift in Sources */,
 				992A5CAE22DDF50F0012CCB6 /* DebugPageEditor.swift in Sources */,
 				99D8E37D237EDB890098CF3B /* CanvasInspectorViewController.swift in Sources */,
 				99C03F0D2334D04200EB7516 /* NSScrollView+M3Extensions.swift in Sources */,
+				999007D424CF458900DB5C13 /* TourWindowController.swift in Sources */,
 				9970976B23ACFD2900CD189B /* RootSplitViewController.swift in Sources */,
 				99E93E2B23D32F61004CF4BB /* ColourGridButton.swift in Sources */,
 				9962AB8923732D9400337834 /* CoppiceDocumentController.swift in Sources */,
@@ -1809,6 +1880,7 @@
 				99A97FD9246DBD4C00CDD95C /* CanvasCell.swift in Sources */,
 				99868F322396AD55009AC0F7 /* ImageEditorInspectorViewModel.swift in Sources */,
 				99488ACE23C78087009954AF /* EditableLabelCell.swift in Sources */,
+				999007EC24CF475900DB5C13 /* TourGetStartedViewController.swift in Sources */,
 				998D0779241137A3004ADFF8 /* RectDrawingView.swift in Sources */,
 				99D8E39323800FB90098CF3B /* BaseInspectorViewModel.swift in Sources */,
 				99582817247702B300080593 /* ResizeHandleAccessibilityElement.swift in Sources */,

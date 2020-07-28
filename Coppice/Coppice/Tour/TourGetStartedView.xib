@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17132" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17132"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="TourGetStartedViewController" customModule="Coppice" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="Odm-Ds-XH5" id="hSh-eo-hNx"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Odm-Ds-XH5">
+            <rect key="frame" x="0.0" y="0.0" width="640" height="430"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vr0-15-9aM">
+                    <rect key="frame" x="237" y="375" width="166" height="35"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="Get Started" id="RdR-wj-sBT">
+                        <font key="font" metaFont="systemBold" size="30"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="KwP-jq-q0B">
+                    <rect key="frame" x="53" y="270" width="534" height="80"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="530" id="WXA-d2-vyE"/>
+                    </constraints>
+                    <textFieldCell key="cell" selectable="YES" alignment="center" id="j5m-fJ-w0U">
+                        <font key="font" metaFont="system"/>
+                        <string key="title">Now you know the basics it's time to start using Coppice. If you ever need more help, you can find it in the Help menu in your Menu Bar.
+
+
+Thanks for following this tour, and we hope you enjoy using Coppice.</string>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="vr0-15-9aM" firstAttribute="centerX" secondItem="Odm-Ds-XH5" secondAttribute="centerX" id="6VD-E8-4Mg"/>
+                <constraint firstItem="KwP-jq-q0B" firstAttribute="centerX" secondItem="Odm-Ds-XH5" secondAttribute="centerX" id="O78-TE-4bl"/>
+                <constraint firstItem="KwP-jq-q0B" firstAttribute="top" secondItem="vr0-15-9aM" secondAttribute="bottom" constant="25" id="Rss-WM-0dT"/>
+                <constraint firstItem="vr0-15-9aM" firstAttribute="top" secondItem="Odm-Ds-XH5" secondAttribute="top" constant="20" id="ob0-Dg-0Kd"/>
+            </constraints>
+            <point key="canvasLocation" x="107" y="173"/>
+        </customView>
+    </objects>
+</document>

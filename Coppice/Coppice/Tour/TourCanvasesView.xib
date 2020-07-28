@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17132" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.AVKitIBPlugin" version="17132"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17132"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="TourMovieViewController" customModule="Coppice" customModuleProvider="target">
+            <connections>
+                <outlet property="playerView" destination="WWy-HT-Xl7" id="kxR-Zu-W8U"/>
+                <outlet property="previewImageView" destination="cqA-Nj-41D" id="vAK-R8-o62"/>
+                <outlet property="view" destination="ws2-zD-fh0" id="BLO-0f-8va"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="ws2-zD-fh0">
+            <rect key="frame" x="0.0" y="0.0" width="640" height="516"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AmR-td-qgP">
+                    <rect key="frame" x="249" y="461" width="142" height="35"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="Canvases" id="FbX-Pi-Ot6">
+                        <font key="font" metaFont="systemBold" size="30"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="7eb-4t-njt">
+                    <rect key="frame" x="68" y="404" width="504" height="32"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="500" id="ZbJ-hY-3DA"/>
+                    </constraints>
+                    <textFieldCell key="cell" selectable="YES" alignment="center" id="Cg9-nN-t67">
+                        <font key="font" metaFont="system"/>
+                        <string key="title">Canvases allow you to collect multiple Pages on one screen, arranging and sizing them however you want. Simply drag Pages from the Sidebar onto a Canvas</string>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <box boxType="custom" borderType="line" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="F3d-A9-yWy">
+                    <rect key="frame" x="105" y="83" width="431" height="296"/>
+                    <view key="contentView" id="zBO-7v-dgF">
+                        <rect key="frame" x="1" y="1" width="429" height="294"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <avPlayerView controlsStyle="none" translatesAutoresizingMaskIntoConstraints="NO" id="WWy-HT-Xl7">
+                                <rect key="frame" x="5" y="5" width="419" height="284"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="419" id="V2H-Ei-gW6"/>
+                                    <constraint firstAttribute="height" constant="284" id="kwy-0c-ycK"/>
+                                </constraints>
+                            </avPlayerView>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cqA-Nj-41D">
+                                <rect key="frame" x="5" y="5" width="419" height="284"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="TourCanvasesPreview" id="aIs-gP-Qi8"/>
+                            </imageView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="WWy-HT-Xl7" firstAttribute="leading" secondItem="zBO-7v-dgF" secondAttribute="leading" constant="5" id="0JB-ax-nVw"/>
+                            <constraint firstItem="cqA-Nj-41D" firstAttribute="top" secondItem="WWy-HT-Xl7" secondAttribute="top" id="6Ky-P1-Nrb"/>
+                            <constraint firstItem="cqA-Nj-41D" firstAttribute="trailing" secondItem="WWy-HT-Xl7" secondAttribute="trailing" id="AjM-u1-QVL"/>
+                            <constraint firstItem="cqA-Nj-41D" firstAttribute="bottom" secondItem="WWy-HT-Xl7" secondAttribute="bottom" id="DPd-8t-N4S"/>
+                            <constraint firstAttribute="bottom" secondItem="WWy-HT-Xl7" secondAttribute="bottom" constant="5" id="J51-oT-DUo"/>
+                            <constraint firstItem="cqA-Nj-41D" firstAttribute="leading" secondItem="WWy-HT-Xl7" secondAttribute="leading" id="ljk-hK-1Gh"/>
+                            <constraint firstItem="WWy-HT-Xl7" firstAttribute="top" secondItem="zBO-7v-dgF" secondAttribute="top" constant="5" id="qNt-Vr-Rig"/>
+                            <constraint firstAttribute="trailing" secondItem="WWy-HT-Xl7" secondAttribute="trailing" constant="5" id="vTu-ot-M16"/>
+                        </constraints>
+                    </view>
+                    <color key="borderColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    <color key="fillColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                </box>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="VN2-RM-VSd">
+                    <rect key="frame" x="48" y="34" width="544" height="16"/>
+                    <textFieldCell key="cell" selectable="YES" alignment="center" title="Canvases will grow in all directions as you add Pages so you never run out of space." id="LvL-Z9-9ik">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="7eb-4t-njt" firstAttribute="centerX" secondItem="ws2-zD-fh0" secondAttribute="centerX" id="1Iy-Pl-SR4"/>
+                <constraint firstItem="F3d-A9-yWy" firstAttribute="centerX" secondItem="ws2-zD-fh0" secondAttribute="centerX" id="8VA-3u-cVK"/>
+                <constraint firstItem="7eb-4t-njt" firstAttribute="top" secondItem="AmR-td-qgP" secondAttribute="bottom" constant="25" id="FO9-Gk-fss"/>
+                <constraint firstItem="AmR-td-qgP" firstAttribute="centerX" secondItem="ws2-zD-fh0" secondAttribute="centerX" id="GIf-13-aCJ"/>
+                <constraint firstAttribute="trailing" secondItem="VN2-RM-VSd" secondAttribute="trailing" constant="50" id="NpO-49-wMW"/>
+                <constraint firstItem="VN2-RM-VSd" firstAttribute="top" secondItem="F3d-A9-yWy" secondAttribute="bottom" constant="33" id="dgr-P8-LJu"/>
+                <constraint firstItem="VN2-RM-VSd" firstAttribute="leading" secondItem="ws2-zD-fh0" secondAttribute="leading" constant="50" id="dmr-h9-2yv"/>
+                <constraint firstItem="F3d-A9-yWy" firstAttribute="top" secondItem="7eb-4t-njt" secondAttribute="bottom" constant="25" id="i4k-Wi-wGU"/>
+                <constraint firstItem="AmR-td-qgP" firstAttribute="top" secondItem="ws2-zD-fh0" secondAttribute="top" constant="20" id="uIV-5S-CHD"/>
+                <constraint firstAttribute="bottom" secondItem="VN2-RM-VSd" secondAttribute="bottom" constant="34" id="xZB-Ae-D4i"/>
+            </constraints>
+            <point key="canvasLocation" x="107" y="204"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="TourCanvasesPreview" width="838" height="568"/>
+    </resources>
+</document>

@@ -94,7 +94,7 @@
                                         </buttonCell>
                                         <color key="contentTintColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <connections>
-                                            <action selector="takeTour:" target="-2" id="SMs-jb-aGu"/>
+                                            <action selector="takeTour:" target="-1" id="0mv-hf-nmc"/>
                                         </connections>
                                     </button>
                                 </subviews>

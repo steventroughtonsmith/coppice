@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "TourPagesPreview.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17132" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.AVKitIBPlugin" version="17132"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17132"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="TourMovieViewController" customModule="Coppice" customModuleProvider="target">
+            <connections>
+                <outlet property="playerView" destination="ok8-Hx-WN2" id="zKs-Ea-W4I"/>
+                <outlet property="previewImageView" destination="lq6-am-FP5" id="Fg7-4q-rj1"/>
+                <outlet property="view" destination="fhb-PG-pqo" id="caY-1I-Hfd"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="fhb-PG-pqo">
+            <rect key="frame" x="0.0" y="0.0" width="640" height="516"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="irG-kc-mGR">
+                    <rect key="frame" x="281" y="461" width="78" height="35"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="Links" id="KFD-y4-ig0">
+                        <font key="font" metaFont="systemBold" size="30"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="mrc-XK-oRI">
+                    <rect key="frame" x="68" y="425" width="504" height="16"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="500" id="sPt-b3-CcX"/>
+                    </constraints>
+                    <textFieldCell key="cell" selectable="YES" alignment="center" title="Thoughts and ideas rarely live alone, so Coppice lets you link Pages together." id="zLe-wH-mQp">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="45N-66-eCF">
+                    <rect key="frame" x="48" y="34" width="544" height="16"/>
+                    <textFieldCell key="cell" selectable="YES" alignment="center" title="Simply select some text and choose Link to Page from the Toolbar or Menu Bar." id="dLQ-ai-fMG">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="tCC-4I-FZ0">
+                    <rect key="frame" x="105" y="84" width="431" height="321"/>
+                    <subviews>
+                        <box boxType="custom" borderType="line" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="SiR-F7-G1l">
+                            <rect key="frame" x="0.0" y="13" width="431" height="296"/>
+                            <view key="contentView" id="yzC-ke-0bF">
+                                <rect key="frame" x="1" y="1" width="429" height="294"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <avPlayerView controlsStyle="none" translatesAutoresizingMaskIntoConstraints="NO" id="ok8-Hx-WN2">
+                                        <rect key="frame" x="5" y="5" width="419" height="284"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="284" id="9Ux-Fk-Z20"/>
+                                            <constraint firstAttribute="width" constant="419" id="LqN-aj-Dpc"/>
+                                        </constraints>
+                                    </avPlayerView>
+                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lq6-am-FP5">
+                                        <rect key="frame" x="5" y="5" width="419" height="284"/>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="TourLinksPreview" id="WlW-FY-WoB"/>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="ok8-Hx-WN2" secondAttribute="trailing" constant="5" id="1eh-03-ry3"/>
+                                    <constraint firstAttribute="bottom" secondItem="ok8-Hx-WN2" secondAttribute="bottom" constant="5" id="9AQ-Yj-RwI"/>
+                                    <constraint firstItem="ok8-Hx-WN2" firstAttribute="leading" secondItem="yzC-ke-0bF" secondAttribute="leading" constant="5" id="9g9-fb-I5A"/>
+                                    <constraint firstItem="lq6-am-FP5" firstAttribute="trailing" secondItem="ok8-Hx-WN2" secondAttribute="trailing" id="DBt-5H-zpa"/>
+                                    <constraint firstItem="ok8-Hx-WN2" firstAttribute="top" secondItem="yzC-ke-0bF" secondAttribute="top" constant="5" id="WPP-Zj-TCJ"/>
+                                    <constraint firstItem="lq6-am-FP5" firstAttribute="bottom" secondItem="ok8-Hx-WN2" secondAttribute="bottom" id="uB9-ba-U0z"/>
+                                    <constraint firstItem="lq6-am-FP5" firstAttribute="leading" secondItem="ok8-Hx-WN2" secondAttribute="leading" id="v21-Nj-Tev"/>
+                                    <constraint firstItem="lq6-am-FP5" firstAttribute="top" secondItem="ok8-Hx-WN2" secondAttribute="top" id="wO3-tQ-bxH"/>
+                                </constraints>
+                            </view>
+                            <color key="borderColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            <color key="fillColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        </box>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="SiR-F7-G1l" firstAttribute="centerY" secondItem="tCC-4I-FZ0" secondAttribute="centerY" id="ONk-Ma-c0U"/>
+                        <constraint firstAttribute="trailing" secondItem="SiR-F7-G1l" secondAttribute="trailing" id="UiG-98-a1r"/>
+                        <constraint firstItem="SiR-F7-G1l" firstAttribute="leading" secondItem="tCC-4I-FZ0" secondAttribute="leading" id="glb-kK-AnQ"/>
+                    </constraints>
+                </customView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="tCC-4I-FZ0" firstAttribute="centerX" secondItem="fhb-PG-pqo" secondAttribute="centerX" id="0tm-LS-Lcv"/>
+                <constraint firstAttribute="bottom" secondItem="45N-66-eCF" secondAttribute="bottom" constant="34" id="8Pm-nZ-YbE"/>
+                <constraint firstItem="mrc-XK-oRI" firstAttribute="top" secondItem="irG-kc-mGR" secondAttribute="bottom" constant="20" id="Cbw-LG-1Hy"/>
+                <constraint firstItem="45N-66-eCF" firstAttribute="top" secondItem="tCC-4I-FZ0" secondAttribute="bottom" constant="34" id="GH5-VM-e5h"/>
+                <constraint firstItem="irG-kc-mGR" firstAttribute="centerX" secondItem="fhb-PG-pqo" secondAttribute="centerX" id="HET-qf-iIE"/>
+                <constraint firstItem="irG-kc-mGR" firstAttribute="top" secondItem="fhb-PG-pqo" secondAttribute="top" constant="20" id="MM0-vD-Jnw"/>
+                <constraint firstItem="tCC-4I-FZ0" firstAttribute="top" secondItem="mrc-XK-oRI" secondAttribute="bottom" constant="20" id="MrY-a9-evk"/>
+                <constraint firstAttribute="trailing" secondItem="45N-66-eCF" secondAttribute="trailing" constant="50" id="Y88-eS-G9Y"/>
+                <constraint firstItem="45N-66-eCF" firstAttribute="leading" secondItem="fhb-PG-pqo" secondAttribute="leading" constant="50" id="iKg-Oh-tCy"/>
+                <constraint firstItem="mrc-XK-oRI" firstAttribute="centerX" secondItem="fhb-PG-pqo" secondAttribute="centerX" id="trc-SY-enc"/>
+            </constraints>
+            <point key="canvasLocation" x="112" y="178"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="TourLinksPreview" width="838" height="568"/>
+    </resources>
+</document>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17132" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17132"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="TourWelcomeViewController" customModule="Coppice" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="640" height="430"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P8M-WI-EpX">
+                    <rect key="frame" x="174" y="375" width="292" height="35"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="Welcome to Coppice" id="8Zp-9T-nbF">
+                        <font key="font" metaFont="systemBold" size="30"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="m0N-i7-yeq">
+                    <rect key="frame" x="118" y="318" width="404" height="32"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="400" id="I6b-e4-bOq"/>
+                    </constraints>
+                    <textFieldCell key="cell" selectable="YES" alignment="center" title="Coppice lets you cultivate your thoughts, helping you to make sense of them and visualise the links between them." id="DYh-0a-FKq">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="FBU-cO-ECu">
+                    <rect key="frame" x="48" y="20" width="544" height="16"/>
+                    <textFieldCell key="cell" selectable="YES" alignment="center" title="Hover over the image above to learn about Coppice’s UI" id="UZM-Nw-3h5">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="P8M-WI-EpX" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="20" id="EiX-e4-YCf"/>
+                <constraint firstItem="m0N-i7-yeq" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="Kvd-xL-2Oz"/>
+                <constraint firstAttribute="trailing" secondItem="FBU-cO-ECu" secondAttribute="trailing" constant="50" id="TqL-Rv-Fgx"/>
+                <constraint firstItem="FBU-cO-ECu" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="50" id="WP7-5d-7cN"/>
+                <constraint firstAttribute="bottom" secondItem="FBU-cO-ECu" secondAttribute="bottom" constant="20" id="hXu-Wd-Hvg"/>
+                <constraint firstItem="P8M-WI-EpX" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="tSE-h4-E4s"/>
+                <constraint firstItem="m0N-i7-yeq" firstAttribute="top" secondItem="P8M-WI-EpX" secondAttribute="bottom" constant="25" id="tmr-aY-gy8"/>
+            </constraints>
+            <point key="canvasLocation" x="107" y="173"/>
+        </customView>
+    </objects>
+</document>

@@ -121,5 +121,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBAction func showWelcomeWindow(_ sender: Any?) {
         self.welcomeWindow.showWindow(sender)
     }
+
+
+    //MARK: - Tour
+    lazy var tourWindow: TourWindowController = {
+        return TourWindowController()
+    }()
+    @IBAction func showTour(_ sender: Any?) {
+        self.tourWindow.showWindow(sender)
+    }
 }
 
