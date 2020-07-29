@@ -52,7 +52,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.newLinkedPageMenuDelegate.includeKeyEquivalents = false
 
         UserDefaults.standard.set(true, forKey: "NSTextViewAvoidLayoutWhileDrawing")
-        self.tourWindow.showWindow(nil)
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {

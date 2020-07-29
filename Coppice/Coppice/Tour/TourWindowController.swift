@@ -29,7 +29,7 @@ class TourWindowController: NSWindowController {
         welcome.view.frame = self.panelContainer.bounds
         self.contentViewController?.addChild(welcome)
         self.panelContainer.addSubview(welcome.view)
-        NSApp.setAccessibilityApplicationFocusedUIElement(self.tourPanels.first!.titleLabel)
+        NSApp.setAccessibilityApplicationFocusedUIElement(self.tourPanels.first!.titleLabel.cell)
     }
 
     override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
@@ -56,6 +56,7 @@ class TourWindowController: NSWindowController {
     
     @IBOutlet weak var continueButton: NSButton!
     @IBOutlet weak var panelContainer: NSView!
+    private var isAnimatingPanel = false
     @IBAction func continueClicked(_ sender: Any) {
         guard self.isLastPanel == false else {
             self.close()
@@ -65,11 +66,12 @@ class TourWindowController: NSWindowController {
     }
 
     private func animateToNextPanel() {
+        guard self.isAnimatingPanel == false else {
+            return
+        }
+        self.isAnimatingPanel = true
         let currentPanel = self.tourPanels[self.currentPanelIndex]
-        guard
-            let nextPanel = self.tourPanels[safe: self.currentPanelIndex + 1],
-            let window = self.window
-        else {
+        guard let nextPanel = self.tourPanels[safe: self.currentPanelIndex + 1] else {
             return
         }
 
@@ -90,44 +92,18 @@ class TourWindowController: NSWindowController {
             currentPanel.removeFromParent()
             currentPanel.view.removeFromSuperview()
             self.currentPanelIndex += 1
-            NSAccessibility.post(element: window,
-                                 notification: .layoutChanged,
-                                 userInfo: [NSAccessibility.NotificationUserInfoKey.uiElements: nextPanel.view.accessibilityChildren() ?? []])
+            self.continueButton.isEnabled = true
+            
+            self.perform(#selector(self.updateItem(to:)), with: nextPanel.titleLabel.cell, afterDelay: 0)
+            
+            self.isAnimatingPanel = false
         }
     }
-}
-
-extension TourWindowController: NSPageControllerDelegate {
-    func pageController(_ pageController: NSPageController, identifierFor object: Any) -> NSPageController.ObjectIdentifier {
-        guard let identifier = object as? String else {
-            preconditionFailure()
-        }
-        return identifier
+    
+    @objc dynamic func updateItem(to item: Any) {
+        NSApp.setAccessibilityApplicationFocusedUIElement(item)
+        NSAccessibility.post(element: item, notification: .focusedUIElementChanged)
     }
-
-//    func pageController(_ pageController: NSPageController, viewControllerForIdentifier identifier: NSPageController.ObjectIdentifier) -> NSViewController {
-//        return self.tourPanels[identifier] ?? NSViewController()
-//    }
-////
-////    func pageController(_ pageController: NSPageController, didTransitionTo object: Any) {
-////        guard
-////            let identifer = object as? String,
-////            let viewController = self.tourPanels[identifer]
-////        else {
-////            return
-////        }
-////
-////        NSAccessibility.post(element: viewController.view, notification: .layoutChanged, userInfo: [NSAccessibility.NotificationUserInfoKey.uiElements: viewController.view.accessibilityChildren() ?? []])
-////    }
-//
-//    func pageControllerDidEndLiveTransition(_ pageController: NSPageController) {
-//        guard let viewController = pageController.selectedViewController as? TourPanelViewController else {
-//            return
-//        }
-////        NSAccessibility.post(element: viewController.view, notification: .layoutChanged, userInfo: [NSAccessibility.NotificationUserInfoKey.uiElements: viewController.view.accessibilityChildren() ?? []])
-//        NSApp.setAccessibilityApplicationFocusedUIElement(viewController.titleLabel)
-//        NSAccessibility.post(element: viewController.titleLabel, notification: .focusedUIElementChanged)
-//    }
 }
 
 
