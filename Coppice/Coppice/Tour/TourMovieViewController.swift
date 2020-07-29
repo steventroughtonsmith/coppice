@@ -10,7 +10,7 @@ import Cocoa
 import AVKit
 import CoppiceCore
 
-class TourMovieViewController: NSViewController {
+class TourMovieViewController: TourPanelViewController {
 
     let tourIdentifier: String
     init(tourIdentifier: String) {
@@ -37,7 +37,7 @@ class TourMovieViewController: NSViewController {
 
     override func viewDidAppear() {
         super.viewDidAppear()
-        self.perform(#selector(play), with: nil, afterDelay: 0.5)
+        self.perform(#selector(play), with: nil, afterDelay: 1)
     }
 
     @objc dynamic private func play() {

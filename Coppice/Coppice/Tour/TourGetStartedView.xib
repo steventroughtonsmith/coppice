@@ -8,6 +8,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TourGetStartedViewController" customModule="Coppice" customModuleProvider="target">
             <connections>
+                <outlet property="titleLabel" destination="vr0-15-9aM" id="o5v-KF-Yrq"/>
                 <outlet property="view" destination="Odm-Ds-XH5" id="hSh-eo-hNx"/>
             </connections>
         </customObject>

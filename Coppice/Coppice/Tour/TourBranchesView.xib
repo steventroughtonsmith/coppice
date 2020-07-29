@@ -11,6 +11,7 @@
             <connections>
                 <outlet property="playerView" destination="3g7-fX-V0I" id="QJM-lV-q1y"/>
                 <outlet property="previewImageView" destination="Pjz-sp-0ok" id="5WU-0b-5HK"/>
+                <outlet property="titleLabel" destination="enx-DH-Cx5" id="BHG-Yh-cmz"/>
                 <outlet property="view" destination="mrt-1A-BWJ" id="k1E-fb-urL"/>
             </connections>
         </customObject>

@@ -19,4 +19,9 @@ extension NSColor {
 
     static let arrowDark = NSColor(named: "ArrowColourDark") ?? .white
     static let arrowLight = NSColor(named: "ArrowColourLight") ?? .black
+
+    static let illustrationBackground = NSColor(named: "IllustrationBackground") ?? .white
+    static let illustrationBorder = NSColor(named: "IllustrationBorder") ?? .gray
+    static let illustrationSelectedBackground = NSColor(named: "IllustrationSelectedBackground") ?? .gray
+    static let illustrationSelectedBorder = NSColor(named: "IllustrationSelectedBorder") ?? .black
 }

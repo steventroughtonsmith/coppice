@@ -10,36 +10,42 @@ import Cocoa
 
 class TourWindowController: NSWindowController {
 
-    @IBOutlet var pageController: NSPageController!
     override var windowNibName: NSNib.Name? {
         return "TourWindow"
     }
 
-    private var tourPanels: [String: NSViewController] = [
-        "Welcome": TourWelcomeViewController(),
-        "Pages": TourMovieViewController(tourIdentifier: "TourPages"),
-        "Canvases": TourMovieViewController(tourIdentifier: "TourCanvases"),
-        "Links": TourMovieViewController(tourIdentifier: "TourLinks"),
-        "Branches": TourMovieViewController(tourIdentifier: "TourBranches"),
-        "GetStarted": TourGetStartedViewController()
+    private var tourPanels: [TourPanelViewController] = [
+        TourWelcomeViewController(),
+        TourMovieViewController(tourIdentifier: "TourPages"),
+        TourMovieViewController(tourIdentifier: "TourCanvases"),
+        TourMovieViewController(tourIdentifier: "TourLinks"),
+        TourMovieViewController(tourIdentifier: "TourBranches"),
+        TourGetStartedViewController()
     ]
 
     override func windowDidLoad() {
         super.windowDidLoad()
-        self.pageController.arrangedObjects = ["Welcome", "Pages", "Canvases", "Links", "Branches", "GetStarted"]
+        let welcome = self.tourPanels.first!
+        welcome.view.frame = self.panelContainer.bounds
+        self.contentViewController?.addChild(welcome)
+        self.panelContainer.addSubview(welcome.view)
+        NSApp.setAccessibilityApplicationFocusedUIElement(self.tourPanels.first!.titleLabel)
     }
 
     override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
         var keyPaths = super.keyPathsForValuesAffectingValue(forKey: key)
         if (key == #keyPath(continueButtonTitle)) {
-            keyPaths.insert("pageController.selectedIndex")
+            keyPaths.insert("currentPanelIndex")
         }
         return keyPaths
     }
 
+    @objc dynamic private var currentPanelIndex: Int = 0
+
     private var isLastPanel: Bool {
-        return (self.pageController.selectedIndex == (self.tourPanels.count - 1))
+        return (self.currentPanelIndex == (self.tourPanels.count - 1))
     }
+
 
     @objc dynamic var continueButtonTitle: String {
         if self.isLastPanel {
@@ -48,12 +54,46 @@ class TourWindowController: NSWindowController {
         return NSLocalizedString("Continue", comment: "Tour Continue Button Title")
     }
     
+    @IBOutlet weak var continueButton: NSButton!
+    @IBOutlet weak var panelContainer: NSView!
     @IBAction func continueClicked(_ sender: Any) {
         guard self.isLastPanel == false else {
             self.close()
             return
         }
-        self.pageController.navigateForward(sender)
+        self.animateToNextPanel()
+    }
+
+    private func animateToNextPanel() {
+        let currentPanel = self.tourPanels[self.currentPanelIndex]
+        guard
+            let nextPanel = self.tourPanels[safe: self.currentPanelIndex + 1],
+            let window = self.window
+        else {
+            return
+        }
+
+        nextPanel.view.frame = self.panelContainer.bounds
+        nextPanel.view.frame.origin.x = nextPanel.view.frame.width
+
+        self.contentViewController?.addChild(nextPanel)
+        self.panelContainer.addSubview(nextPanel.view)
+        self.panelContainer.layoutSubtreeIfNeeded()
+
+        NSView.animate(withDuration: 0.75, timingFunction: CAMediaTimingFunction(name: .easeInEaseOut)) {
+            var currentPanelFrame = currentPanel.view.frame
+            currentPanelFrame.origin.x = -currentPanelFrame.width
+            currentPanel.view.frame = currentPanelFrame
+
+            nextPanel.view.animator().frame = self.panelContainer.bounds
+        } completion: {
+            currentPanel.removeFromParent()
+            currentPanel.view.removeFromSuperview()
+            self.currentPanelIndex += 1
+            NSAccessibility.post(element: window,
+                                 notification: .layoutChanged,
+                                 userInfo: [NSAccessibility.NotificationUserInfoKey.uiElements: nextPanel.view.accessibilityChildren() ?? []])
+        }
     }
 }
 
@@ -65,7 +105,32 @@ extension TourWindowController: NSPageControllerDelegate {
         return identifier
     }
 
-    func pageController(_ pageController: NSPageController, viewControllerForIdentifier identifier: NSPageController.ObjectIdentifier) -> NSViewController {
-        return self.tourPanels[identifier] ?? NSViewController()
-    }
+//    func pageController(_ pageController: NSPageController, viewControllerForIdentifier identifier: NSPageController.ObjectIdentifier) -> NSViewController {
+//        return self.tourPanels[identifier] ?? NSViewController()
+//    }
+////
+////    func pageController(_ pageController: NSPageController, didTransitionTo object: Any) {
+////        guard
+////            let identifer = object as? String,
+////            let viewController = self.tourPanels[identifer]
+////        else {
+////            return
+////        }
+////
+////        NSAccessibility.post(element: viewController.view, notification: .layoutChanged, userInfo: [NSAccessibility.NotificationUserInfoKey.uiElements: viewController.view.accessibilityChildren() ?? []])
+////    }
+//
+//    func pageControllerDidEndLiveTransition(_ pageController: NSPageController) {
+//        guard let viewController = pageController.selectedViewController as? TourPanelViewController else {
+//            return
+//        }
+////        NSAccessibility.post(element: viewController.view, notification: .layoutChanged, userInfo: [NSAccessibility.NotificationUserInfoKey.uiElements: viewController.view.accessibilityChildren() ?? []])
+//        NSApp.setAccessibilityApplicationFocusedUIElement(viewController.titleLabel)
+//        NSAccessibility.post(element: viewController.titleLabel, notification: .focusedUIElementChanged)
+//    }
+}
+
+
+class TourPanelViewController: NSViewController {
+    @IBOutlet var titleLabel: NSTextField!
 }

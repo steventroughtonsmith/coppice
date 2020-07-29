@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class TourGetStartedViewController: NSViewController {
+class TourGetStartedViewController: TourPanelViewController {
 
     override init(nibName nibNameOrNil: NSNib.Name?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: "TourGetStartedView", bundle: nil)

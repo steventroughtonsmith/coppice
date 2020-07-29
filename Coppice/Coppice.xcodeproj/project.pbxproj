@@ -32,6 +32,7 @@
 		9923B06B22F45F7E0035D8C6 /* TestObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9923B06A22F45F7E0035D8C6 /* TestObjects.swift */; };
 		9925B2622386A0DF001A8ADC /* TextEditorInspectorTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9925B2612386A0DF001A8ADC /* TextEditorInspectorTypes.swift */; };
 		9926951A24AA34940050DFED /* ImmediateMenuSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9926951924AA34940050DFED /* ImmediateMenuSegmentedControl.swift */; };
+		992710C424D1A29200C7C61A /* TourInterfaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992710C324D1A29200C7C61A /* TourInterfaceView.swift */; };
 		992A5C9222DCB7530012CCB6 /* SourceListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992A5C9122DCB7530012CCB6 /* SourceListViewController.swift */; };
 		992A5C9622DCB7790012CCB6 /* SourceListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 992A5C9522DCB7790012CCB6 /* SourceListView.xib */; };
 		992A5C9C22DCC6090012CCB6 /* SourceListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992A5C9B22DCC6090012CCB6 /* SourceListViewModel.swift */; };
@@ -366,6 +367,7 @@
 		9923B06A22F45F7E0035D8C6 /* TestObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestObjects.swift; sourceTree = "<group>"; };
 		9925B2612386A0DF001A8ADC /* TextEditorInspectorTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorInspectorTypes.swift; sourceTree = "<group>"; };
 		9926951924AA34940050DFED /* ImmediateMenuSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImmediateMenuSegmentedControl.swift; sourceTree = "<group>"; };
+		992710C324D1A29200C7C61A /* TourInterfaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourInterfaceView.swift; sourceTree = "<group>"; };
 		992A5C9122DCB7530012CCB6 /* SourceListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceListViewController.swift; sourceTree = "<group>"; };
 		992A5C9522DCB7790012CCB6 /* SourceListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SourceListView.xib; sourceTree = "<group>"; };
 		992A5C9B22DCC6090012CCB6 /* SourceListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceListViewModel.swift; sourceTree = "<group>"; };
@@ -997,6 +999,7 @@
 				999007D224CF458900DB5C13 /* TourWindowController.swift */,
 				999007D324CF458900DB5C13 /* TourWindow.xib */,
 				999007D624CF472100DB5C13 /* TourWelcomeViewController.swift */,
+				992710C324D1A29200C7C61A /* TourInterfaceView.swift */,
 				999007D724CF472100DB5C13 /* TourWelcomeView.xib */,
 				999007E224CF474300DB5C13 /* TourMovieViewController.swift */,
 				999007DB24CF472E00DB5C13 /* TourPagesView.xib */,
@@ -1867,6 +1870,7 @@
 				99C865232302E267004C7B89 /* ImageEditorViewModel.swift in Sources */,
 				9985F4D923F2E13600B96DC7 /* CanvasPageTitleView.swift in Sources */,
 				99FE019122CD1037004D380D /* AppDelegate.swift in Sources */,
+				992710C424D1A29200C7C61A /* TourInterfaceView.swift in Sources */,
 				99A0B857238D6F74005FCF25 /* NSTextView+M3Extensions.swift in Sources */,
 				99B3474C2465846900B96B71 /* PixelPerfectTableView.swift in Sources */,
 				99D8E378237EDB890098CF3B /* PageInspectorViewController.swift in Sources */,

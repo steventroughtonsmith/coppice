@@ -8,17 +8,20 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TourWelcomeViewController" customModule="Coppice" customModuleProvider="target">
             <connections>
+                <outlet property="secondaryLabel" destination="PTg-J2-xTZ" id="Xte-OK-gMj"/>
+                <outlet property="titleLabel" destination="P8M-WI-EpX" id="g3q-XC-lfq"/>
+                <outlet property="tourInterfaceView" destination="Rgi-v0-rG4" id="Ehb-eD-O14"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="Hz6-mo-xeY">
-            <rect key="frame" x="0.0" y="0.0" width="640" height="430"/>
+            <rect key="frame" x="0.0" y="0.0" width="640" height="516"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P8M-WI-EpX">
-                    <rect key="frame" x="174" y="375" width="292" height="35"/>
+                    <rect key="frame" x="174" y="461" width="292" height="35"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="Welcome to Coppice" id="8Zp-9T-nbF">
                         <font key="font" metaFont="systemBold" size="30"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -26,7 +29,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="m0N-i7-yeq">
-                    <rect key="frame" x="118" y="318" width="404" height="32"/>
+                    <rect key="frame" x="118" y="404" width="404" height="32"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="400" id="I6b-e4-bOq"/>
                     </constraints>
@@ -36,21 +39,40 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="FBU-cO-ECu">
-                    <rect key="frame" x="48" y="20" width="544" height="16"/>
-                    <textFieldCell key="cell" selectable="YES" alignment="center" title="Hover over the image above to learn about Coppice’s UI" id="UZM-Nw-3h5">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="Rgi-v0-rG4" customClass="TourInterfaceView" customModule="Coppice" customModuleProvider="target">
+                    <rect key="frame" x="95" y="84" width="450" height="300"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="450" id="Uuj-A4-A0B"/>
+                        <constraint firstAttribute="height" constant="300" id="VK1-9v-VTp"/>
+                    </constraints>
+                </customView>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="ORo-F1-JgP">
+                    <rect key="frame" x="150" y="0.0" width="341" height="84"/>
+                    <subviews>
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="PTg-J2-xTZ">
+                            <rect key="frame" x="-2" y="34" width="345" height="16"/>
+                            <textFieldCell key="cell" selectable="YES" alignment="center" title="Hover over the image above to learn about Coppice’s UI" id="HIQ-nV-I9Q">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="PTg-J2-xTZ" secondAttribute="trailing" id="06f-Sq-GCa"/>
+                        <constraint firstItem="PTg-J2-xTZ" firstAttribute="centerY" secondItem="ORo-F1-JgP" secondAttribute="centerY" id="8ES-t5-na5"/>
+                        <constraint firstItem="PTg-J2-xTZ" firstAttribute="leading" secondItem="ORo-F1-JgP" secondAttribute="leading" id="W3f-fs-25x"/>
+                    </constraints>
+                </customView>
             </subviews>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="ORo-F1-JgP" secondAttribute="bottom" id="2QU-vz-e92"/>
+                <constraint firstItem="ORo-F1-JgP" firstAttribute="top" secondItem="Rgi-v0-rG4" secondAttribute="bottom" id="DOa-3Y-i5F"/>
                 <constraint firstItem="P8M-WI-EpX" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="20" id="EiX-e4-YCf"/>
                 <constraint firstItem="m0N-i7-yeq" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="Kvd-xL-2Oz"/>
-                <constraint firstAttribute="trailing" secondItem="FBU-cO-ECu" secondAttribute="trailing" constant="50" id="TqL-Rv-Fgx"/>
-                <constraint firstItem="FBU-cO-ECu" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="50" id="WP7-5d-7cN"/>
-                <constraint firstAttribute="bottom" secondItem="FBU-cO-ECu" secondAttribute="bottom" constant="20" id="hXu-Wd-Hvg"/>
+                <constraint firstItem="Rgi-v0-rG4" firstAttribute="top" secondItem="m0N-i7-yeq" secondAttribute="bottom" constant="20" id="ehM-Nx-jgM"/>
+                <constraint firstItem="Rgi-v0-rG4" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="mBc-ax-iJ6"/>
+                <constraint firstItem="ORo-F1-JgP" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="o4h-Zm-eoZ"/>
                 <constraint firstItem="P8M-WI-EpX" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="tSE-h4-E4s"/>
                 <constraint firstItem="m0N-i7-yeq" firstAttribute="top" secondItem="P8M-WI-EpX" secondAttribute="bottom" constant="25" id="tmr-aY-gy8"/>
             </constraints>
