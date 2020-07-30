@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17140" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17140"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -18,7 +19,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bnF-CY-U58">
-                    <rect key="frame" x="68" y="-7" width="152" height="32"/>
+                    <rect key="frame" x="65" y="-6" width="158" height="32"/>
                     <buttonCell key="cell" type="push" title="Size to Fit Content" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="NVF-nE-0W3">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -62,7 +63,7 @@
                     </connections>
                 </stepper>
                 <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6ku-81-mRQ">
-                    <rect key="frame" x="272" y="57" width="19" height="28"/>
+                    <rect key="frame" x="271" y="57" width="19" height="28"/>
                     <stepperCell key="cell" continuous="YES" alignment="left" maxValue="10000" id="sqQ-jW-Awg"/>
                     <connections>
                         <accessibilityConnection property="title" destination="TER-vx-UUH" id="ZSI-NU-iXh"/>
@@ -71,7 +72,7 @@
                     </connections>
                 </stepper>
                 <textField verticalHuggingPriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="uzx-B1-fPf">
-                    <rect key="frame" x="148" y="60" width="123" height="21"/>
+                    <rect key="frame" x="148" y="60" width="122" height="21"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="RF7-dM-YNe">
                         <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" id="fy6-2f-Z7J"/>
                         <font key="font" usesAppearanceFont="YES"/>
@@ -85,7 +86,7 @@
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TER-vx-UUH">
-                    <rect key="frame" x="146" y="42" width="127" height="14"/>
+                    <rect key="frame" x="146" y="42" width="126" height="14"/>
                     <textFieldCell key="cell" controlSize="small" alignment="center" title="Height" id="xte-Ym-2QC">
                         <font key="font" metaFont="menu" size="11"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -99,12 +100,12 @@
                 <constraint firstItem="bnF-CY-U58" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="Lbj-d3-WJj"/>
                 <constraint firstItem="FIP-vg-SUe" firstAttribute="centerY" secondItem="RXF-GF-zPJ" secondAttribute="centerY" id="NQe-mS-D4V"/>
                 <constraint firstItem="6ku-81-mRQ" firstAttribute="leading" secondItem="uzx-B1-fPf" secondAttribute="trailing" constant="4" id="OKW-hQ-d02"/>
-                <constraint firstAttribute="trailing" secondItem="6ku-81-mRQ" secondAttribute="trailing" id="P89-wt-Af0"/>
+                <constraint firstAttribute="trailing" secondItem="6ku-81-mRQ" secondAttribute="trailing" constant="1" id="P89-wt-Af0"/>
                 <constraint firstItem="uzx-B1-fPf" firstAttribute="width" secondItem="RXF-GF-zPJ" secondAttribute="width" id="QIJ-xh-f6n"/>
                 <constraint firstItem="FIP-vg-SUe" firstAttribute="leading" secondItem="RXF-GF-zPJ" secondAttribute="trailing" constant="4" id="RhJ-je-J1P"/>
                 <constraint firstItem="bnF-CY-U58" firstAttribute="top" secondItem="jYf-O7-Kpz" secondAttribute="bottom" constant="15" id="WTb-P2-gpf"/>
                 <constraint firstItem="uzx-B1-fPf" firstAttribute="leading" secondItem="FIP-vg-SUe" secondAttribute="trailing" constant="8" id="Zmr-h9-rqH"/>
-                <constraint firstAttribute="bottom" secondItem="bnF-CY-U58" secondAttribute="bottom" id="aqN-H2-oZE"/>
+                <constraint firstAttribute="bottom" secondItem="bnF-CY-U58" secondAttribute="bottom" constant="1" id="aqN-H2-oZE"/>
                 <constraint firstItem="TER-vx-UUH" firstAttribute="trailing" secondItem="uzx-B1-fPf" secondAttribute="trailing" id="gsY-pE-zRe"/>
                 <constraint firstItem="RXF-GF-zPJ" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="jxw-ag-hZP"/>
                 <constraint firstItem="TER-vx-UUH" firstAttribute="firstBaseline" secondItem="jYf-O7-Kpz" secondAttribute="firstBaseline" id="kde-HO-IPc"/>
