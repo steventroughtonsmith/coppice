@@ -71,6 +71,8 @@ class MainToolbarDelegate: NSObject {
         if #available(macOS 10.16, *) {
             item.isNavigational = true
         }
+        item.label = NSLocalizedString("Sidebar", comment: "Toggle Sidebar toolbar item label")
+        item.paletteLabel = item.label
         item.isBordered = true
         item.action = #selector(RootSplitViewController.toggleSidebar(_:))
         return item

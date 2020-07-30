@@ -32,16 +32,23 @@ public enum PageContentType: String, Equatable, CaseIterable {
     }
 
     public var icon: NSImage {
+        return icon(.small)
+    }
+
+    func icon(_ size: Symbols.Page.Size) -> NSImage {
         switch self {
         case .text:
-            return NSImage.symbol(withName: Symbols.Page.text)!
+            return NSImage.symbol(withName: Symbols.Page.text(size))!
         case .image:
-            return NSImage.symbol(withName: Symbols.Page.image)!
+            return NSImage.symbol(withName: Symbols.Page.image(size))!
         }
     }
 
     public var addIcon: NSImage {
-        return self.icon
+        if ProcessInfo.processInfo.operatingSystemVersion.majorVersion == 10 {
+            return self.icon(.small)
+        }
+        return self.icon(.regular)
     }
 
     public var localizedName: String {

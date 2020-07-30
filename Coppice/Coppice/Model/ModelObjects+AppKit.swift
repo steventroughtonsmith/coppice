@@ -11,7 +11,7 @@ import CoppiceCore
 
 extension Folder {
     static var icon: NSImage? {
-        return NSImage.symbol(withName: Symbols.Page.folder)
+        return NSImage.symbol(withName: Symbols.Page.folder(.small))
     }
 }
 

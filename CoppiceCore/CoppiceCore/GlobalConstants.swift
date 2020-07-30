@@ -59,9 +59,34 @@ public struct Symbols {
     }
 
     public struct Page {
-        public static let text = "Page-Small"
-        public static let folder = "Folder-Small"
-        public static let image = "Photo-Small"
+        public enum Size {
+            case small
+            case regular
+            case large
+
+            var suffix: String {
+                switch self {
+                case .small:
+                    return "-Small"
+                case .large:
+                    return "-Large"
+                default:
+                    return ""
+                }
+            }
+        }
+
+        public static func text(_ size: Size) -> String {
+            return "Page\(size.suffix)"
+        }
+
+        public static func image(_ size: Size) -> String {
+            return "Photo\(size.suffix)"
+        }
+
+        public static func folder(_ size: Size) -> String {
+            return "Folder\(size.suffix)"
+        }
     }
 
     public struct Toolbars {
@@ -80,8 +105,18 @@ public struct Symbols {
             }
             return "NewCanvas"
         }
-        public static let leftSidebar = "ToggleSidebar"
-        public static let rightSidebar = "ToggleInspectors"
+        public static var leftSidebar: String {
+            if ProcessInfo.processInfo.operatingSystemVersion.majorVersion == 10 {
+                return "ToggleSidebar10"
+            }
+            return "ToggleSidebar"
+        }
+        public static var rightSidebar: String {
+            if ProcessInfo.processInfo.operatingSystemVersion.majorVersion == 10 {
+                return "ToggleInspectors10"
+            }
+            return "ToggleInspectors"
+        }
         public static let canvasListToggle = "ToggleCanvasList"
     }
 

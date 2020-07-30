@@ -107,7 +107,7 @@ class DocumentWindowController: NSWindowController {
 
     //MARK: - Toolbar
     var newPageSegmentedControl: NSSegmentedControl = {
-        let image = NSImage.symbol(withName: Symbols.Page.text)!
+        let image = NSImage.symbol(withName: Symbols.Page.text(.small))!
         let control = HoverSegmentedControl(images: [image],
                                             trackingMode: .momentary,
                                             target: nil,
