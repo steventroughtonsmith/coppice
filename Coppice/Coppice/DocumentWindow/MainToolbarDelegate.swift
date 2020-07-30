@@ -40,7 +40,7 @@ class MainToolbarDelegate: NSObject {
         item.label = NSLocalizedString("New Page", comment: "New Page toolbar item label")
         item.paletteLabel = item.label
         item.view = self.newPageControl
-        
+        item.toolTip = NSLocalizedString("Create new Page. Click and hold to select Page type.", comment: "New Page toolbar item tooltip")
         return item
     }()
 
@@ -50,6 +50,7 @@ class MainToolbarDelegate: NSObject {
         item.image = NSImage.symbol(withName: Symbols.Toolbars.newCanvas)
         item.label = NSLocalizedString("New Canvas", comment: "New Canvas toolbar item label")
         item.paletteLabel = item.label
+        item.toolTip = item.label
         item.isBordered = true
         item.action = #selector(DocumentWindowController.newCanvas(_:))
         return item
@@ -60,6 +61,7 @@ class MainToolbarDelegate: NSObject {
         item.image = NSImage.symbol(withName: Symbols.Toolbars.link)
         item.label = NSLocalizedString("Link to Page", comment: "Link to Page toolbar item label")
         item.paletteLabel = item.label
+        item.toolTip = item.label
         item.isBordered = true
         item.action = #selector(TextEditorViewController.linkToPage(_:))
         return item
@@ -82,8 +84,9 @@ class MainToolbarDelegate: NSObject {
         let item = NSToolbarItem(itemIdentifier: .toggleInspectors)
         item.image = NSImage.symbol(withName: Symbols.Toolbars.rightSidebar)
         item.label = NSLocalizedString("Inspectors", comment: "Toggle Inspectors toolbar item label")
-        item.isBordered = true
         item.paletteLabel = item.label
+        item.toolTip = NSLocalizedString("Toggle Inspectors", comment: "Toggle Inspectors toolbar item tooltip")
+        item.isBordered = true
         item.action = #selector(RootSplitViewController.toggleInspectors(_:))
         return item
     }()

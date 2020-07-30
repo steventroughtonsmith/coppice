@@ -30,6 +30,10 @@ class CanvasListViewController: NSViewController, SplitViewContainable, NSMenuIt
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if #available(macOS 11, *) {
+            self.tableView.style = .fullWidth
+        }
 
         self.tableView.setDraggingSourceOperationMask(.copy, forLocal: true)
         self.tableView.registerForDraggedTypes([ModelID.PasteboardType, .fileURL])
