@@ -1,12 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "rectangle.badge.plus@1x.png",
+      "filename" : "NewCanvas11.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "rectangle.badge.plus@2x.png",
+      "filename" : "NewCanvas11@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

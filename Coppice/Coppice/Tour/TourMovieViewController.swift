@@ -6,8 +6,9 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
+#warning("Disabled AVKit due to bug in Xcode 12.0b3")
 import Cocoa
-import AVKit
+//import AVKit
 import CoppiceCore
 
 class TourMovieViewController: TourPanelViewController {
@@ -27,12 +28,12 @@ class TourMovieViewController: TourPanelViewController {
         super.viewDidLoad()
         // Do view setup here.
 
-        guard let url = Bundle.main.url(forResource: self.tourIdentifier, withExtension: "mp4") else {
-            return
-        }
-
-        let player = AVPlayer(url: url)
-        self.playerView.player = player
+//        guard let url = Bundle.main.url(forResource: self.tourIdentifier, withExtension: "mp4") else {
+//            return
+//        }
+//
+//        let player = AVPlayer(url: url)
+//        self.playerView.player = player
     }
 
     override func viewDidAppear() {
@@ -42,13 +43,13 @@ class TourMovieViewController: TourPanelViewController {
 
     @objc dynamic private func play() {
         self.previewImageView.isHidden = true
-        self.playerView.player?.play()
+//        self.playerView.player?.play()
 
 
     }
 
 
     @IBOutlet weak var previewImageView: NSImageView!
-    @IBOutlet weak var playerView: AVPlayerView!
+//    @IBOutlet weak var playerView: AVPlayerView!
 
 }

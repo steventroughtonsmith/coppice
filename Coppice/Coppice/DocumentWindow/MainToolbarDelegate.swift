@@ -16,6 +16,8 @@ extension NSToolbarItem.Identifier {
     static let toggleInspectors = NSToolbarItem.Identifier(rawValue: "com.mcubedsw.coppice.ToggleInspectors")
     static let search = NSToolbarItem.Identifier(rawValue: "com.mcubedsw.coppice.searchItem")
     static let sidebarTrackingSeparator = NSToolbarItem.Identifier(rawValue: "com.mcubedsw.coppice.sidebarTrackingSeparator")
+    //Because Big Sur doesn't let us supply our own
+    static let customToggleSidebar = NSToolbarItem.Identifier(rawValue: "com.mcubedsw.coppice.ToggleSidebar")
 }
 
 class MainToolbarDelegate: NSObject {
@@ -64,8 +66,13 @@ class MainToolbarDelegate: NSObject {
     }()
 
     var toggleSidebarItem: NSToolbarItem = {
-        let item = NSToolbarItem(itemIdentifier: .toggleSidebar)
+        let item = NSToolbarItem(itemIdentifier: .customToggleSidebar)
         item.image = NSImage.symbol(withName: Symbols.Toolbars.leftSidebar)
+        if #available(macOS 10.16, *) {
+            item.isNavigational = true
+        }
+        item.isBordered = true
+        item.action = #selector(RootSplitViewController.toggleSidebar(_:))
         return item
     }()
 
@@ -100,7 +107,7 @@ extension MainToolbarDelegate: NSToolbarDelegate {
             .newPage,
             .newCanvas,
             .linkToPage,
-            .toggleSidebar,
+            .customToggleSidebar,
             .toggleInspectors,
             .search,
             .space,
@@ -114,7 +121,7 @@ extension MainToolbarDelegate: NSToolbarDelegate {
 
     func toolbarDefaultItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
         var identifiers: [NSToolbarItem.Identifier] = [
-            .toggleSidebar,
+            .customToggleSidebar,
             .space,
             .newPage,
             .newCanvas,
@@ -146,7 +153,7 @@ extension MainToolbarDelegate: NSToolbarDelegate {
             return self.toggleInspectorsItem
         case .search:
             return self.searchItem
-        case .toggleSidebar:
+        case .customToggleSidebar:
             return self.toggleSidebarItem
         case .sidebarTrackingSeparator:
             if #available(OSX 10.16, *) {

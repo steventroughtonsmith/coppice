@@ -74,9 +74,14 @@ public struct Symbols {
         }
         public static let link = "LinkNew"
         public static let plus = "plus"
-        public static let newCanvas = "NewCanvas10"
-        public static let leftSidebar = "sidebar.left"
-        public static let rightSidebar = "sidebar.right"
+        public static var newCanvas: String {
+            if ProcessInfo.processInfo.operatingSystemVersion.majorVersion == 10 {
+                return "NewCanvas10"
+            }
+            return "NewCanvas"
+        }
+        public static let leftSidebar = "ToggleSidebar"
+        public static let rightSidebar = "ToggleInspectors"
         public static let canvasListToggle = "ToggleCanvasList"
     }
 
