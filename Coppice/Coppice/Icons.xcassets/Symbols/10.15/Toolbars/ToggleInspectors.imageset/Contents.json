@@ -1,12 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "sidebar.right@1x.png",
+      "filename" : "ToggleInspector.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "sidebar.right@2x.png",
+      "filename" : "ToggleInspector@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
