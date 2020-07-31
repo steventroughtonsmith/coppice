@@ -59,11 +59,13 @@ class CanvasThumbnailGenerator: NSObject {
             }
         }
 
+        let drawContext = Context(xScale: xScale, yScale: yScale, dryRun: false, scaledOffset: scaledOffset)
         for canvasPage in rootCanvasPages {
-            self.drawArrows(from: canvasPage, pageRects: pageRectsByID)
+            self.drawArrows(from: canvasPage, pageRects: pageRectsByID, context: drawContext)
         }
 
-        let drawContext = Context(xScale: xScale, yScale: yScale, dryRun: false, scaledOffset: scaledOffset)
+        print("canvas: \(self.canvas.title) = \(drawContext.xScale)")
+
         for (canvasPage, frame) in pageFrames {
             guard let page = canvasPage.page else {
                 continue
@@ -144,7 +146,15 @@ class CanvasThumbnailGenerator: NSObject {
                                         height: min(boundingRect.height, rect.height) * context.yScale).rounded()
 
         //We'll scale down from the base height, so we can have an appropriate line height
-        let baseHeight: CGFloat = 30
+        let baseHeight: CGFloat = {
+            if (context.yScale > 0.1) {
+                return 10
+            }
+            if context.yScale > 0.07 {
+                return 20
+            }
+            return 30
+        }()
         let textHeight = max((baseHeight * context.yScale).rounded(.up), 1)
 
         //We'll inset by the text height, so again it adjusts by page size
@@ -157,7 +167,7 @@ class CanvasThumbnailGenerator: NSObject {
         let lineRects = self.calculateLinesRects(in: insetRect, seed: seed, textHeight: textHeight)
         NSColor(white: 0.6, alpha: 1).set()
         for lineRect in lineRects {
-            let path = NSBezierPath(rect: lineRect)
+            let path = NSBezierPath(roundedRect: lineRect, xRadius: textHeight / 2, yRadius: textHeight / 2)
             path.fill()
         }
     }
@@ -215,6 +225,7 @@ class CanvasThumbnailGenerator: NSObject {
                 return self.drawPlainPage(withBackgroundColour: NSColor(white: 0.4, alpha: 1), with: rect, context: context)
         }
 
+
         let scaledRect = CGRect(x: rect.origin.x * context.xScale + context.scaledOffset.x,
                                 y: rect.origin.y * context.yScale + context.scaledOffset.y,
                                 width: max(rect.size.width * context.xScale, 2),
@@ -223,7 +234,13 @@ class CanvasThumbnailGenerator: NSObject {
             return scaledRect
         }
 
+        NSGraphicsContext.saveGraphicsState()
+        let radius: CGFloat = (context.xScale < 0.1) ? 1 : 2
+        let page = NSBezierPath(roundedRect: scaledRect.insetBy(dx: 1, dy: 1), xRadius: radius, yRadius: radius)
+        page.setClip()
+
         image.draw(in: scaledRect)
+        NSGraphicsContext.restoreGraphicsState()
         return scaledRect
     }
 
@@ -238,12 +255,12 @@ class CanvasThumbnailGenerator: NSObject {
             return scaledRect
         }
 
-
-        let page = NSBezierPath(roundedRect: scaledRect.insetBy(dx: 1, dy: 1), xRadius: 1, yRadius: 1)
+        let radius: CGFloat = (context.xScale < 0.1) ? 1 : 2
+        let page = NSBezierPath(roundedRect: scaledRect.insetBy(dx: 1, dy: 1), xRadius: radius, yRadius: radius)
         colour.set()
         page.fill()
 
-        let pageStroke = NSBezierPath(roundedRect: scaledRect.insetBy(dx: 0.5, dy: 0.5), xRadius: 1, yRadius: 1)
+        let pageStroke = NSBezierPath(roundedRect: scaledRect.insetBy(dx: 0.5, dy: 0.5), xRadius: radius, yRadius: radius)
         NSColor(white: 0, alpha: 0.3).set()
         pageStroke.lineWidth = 1
         pageStroke.stroke()
@@ -252,7 +269,7 @@ class CanvasThumbnailGenerator: NSObject {
 
 
     //MARK: - Arrows
-    private func drawArrows(from rootPage: CanvasPage, pageRects: [ModelID: CGRect]) {
+    private func drawArrows(from rootPage: CanvasPage, pageRects: [ModelID: CGRect], context: Context) {
         NSColor.white.set()
         guard let rootRect = pageRects[rootPage.id] else {
             return
@@ -262,16 +279,58 @@ class CanvasThumbnailGenerator: NSObject {
             guard let childRect = pageRects[childPage.id] else {
                 continue
             }
+
+            var startPoint: CGPoint = rootRect.midPoint.rounded()
+            var endPoint: CGPoint = childRect.midPoint.rounded()
+
+            let deltaY = startPoint.y - endPoint.y
+            let deltaX = startPoint.x - endPoint.x
+
+            let control1: CGPoint
+            let control2: CGPoint
+
+            //Horizontal
+            if (abs(deltaY) < abs(deltaX)) {
+                //Start to right
+                if (deltaX) > 0 {
+                    startPoint.x = rootRect.minX
+                    endPoint.x = childRect.maxX
+                }
+                //Start to left
+                else {
+                    startPoint.x = rootRect.maxX
+                    endPoint.x = childRect.minX
+                }
+                control1 = CGPoint(x: (startPoint.x + endPoint.x) / 2, y: startPoint.y)
+                control2 = CGPoint(x: (startPoint.x + endPoint.x) / 2, y: endPoint.y)
+            }
+            //Vertical
+            else {
+                //Start above
+                if (deltaY) > 0 {
+                    startPoint.y = rootRect.minY
+                    endPoint.y = childRect.maxY
+                }
+                //Start below
+                else {
+                    startPoint.y = rootRect.maxY
+                    endPoint.y = childRect.minY
+                }
+                control1 = CGPoint(x: startPoint.x, y: (startPoint.y + endPoint.y) / 2)
+                control2 = CGPoint(x: endPoint.x, y: (startPoint.y + endPoint.y) / 2)
+            }
             
             let bezierPath = NSBezierPath()
-            bezierPath.move(to: rootRect.midPoint.rounded())
-            bezierPath.line(to: childRect.midPoint.rounded())
-            bezierPath.lineWidth = 2
+            bezierPath.move(to: startPoint)
+            bezierPath.curve(to: endPoint, controlPoint1: control1, controlPoint2: control2)
+            bezierPath.lineWidth = (context.xScale < 0.1) ? 1 : 2
             bezierPath.stroke()
 
             if childPage.children.count > 0 {
-                self.drawArrows(from: childPage, pageRects: pageRects)
+                self.drawArrows(from: childPage, pageRects: pageRects, context: context)
             }
         }
     }
+
+
 }
