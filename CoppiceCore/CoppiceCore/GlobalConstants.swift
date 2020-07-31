@@ -17,7 +17,6 @@ public struct GlobalConstants {
         case documentTooNew = 2
     }
 
-    public static let minimumPageSize = CGSize(width: 150, height: 100)
     public static let linkedPageOffset: CGFloat = 50.0
 
     public static let bottomBarHeight: CGFloat = 27.0

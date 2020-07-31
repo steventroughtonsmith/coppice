@@ -61,8 +61,8 @@ public class TextPageContent: NSObject, PageContent {
         let adjustedContentSize = contentSize.rounded().plus(width: insets.horizontalInsets, height: insets.verticalInsets)
 
         //Not sure why but we need to add an additional space to get the size correct
-        contentSize.width = max(adjustedContentSize.width + 10, Page.standardSize.width)
-        contentSize.height = max(adjustedContentSize.height + 20, Page.standardSize.height)
+        contentSize.width = max(adjustedContentSize.width + 10, Page.minimumSize.width)
+        contentSize.height = max(adjustedContentSize.height + 20, Page.minimumSize.height)
         return contentSize
     }
 }

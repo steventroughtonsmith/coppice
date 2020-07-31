@@ -87,11 +87,11 @@ class CanvasPageInspectorViewModel: BaseInspectorViewModel {
     }
 
     @objc dynamic var minimumWidth: Int {
-        return Int(GlobalConstants.minimumPageSize.width)
+        return Int(Page.minimumSize.width)
     }
 
     @objc dynamic var minimumHeight: Int {
-        return Int(GlobalConstants.minimumPageSize.height)
+        return Int(Page.minimumSize.height)
     }
 
     func sizeToFitContent() {
