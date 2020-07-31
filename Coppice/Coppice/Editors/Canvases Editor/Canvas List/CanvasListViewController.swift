@@ -47,6 +47,7 @@ class CanvasListViewController: NSViewController, SplitViewContainable, NSMenuIt
         self.bottomBarConstraint.constant = GlobalConstants.bottomBarHeight
 
         self.setupAccessibility()
+        self.tableView.sizeToFit() //For some reason the table doesn't correctly size the cells when first loaded
     }
 
     var viewAppeared = false
@@ -55,6 +56,7 @@ class CanvasListViewController: NSViewController, SplitViewContainable, NSMenuIt
         self.viewAppeared = true
         UserDefaults.standard.addObserver(self, forKeyPath: UserDefaultsKeys.canvasListIsCompact.rawValue, options: [], context: nil)
         self.viewModel.startObserving()
+        self.reload()
     }
 
     override func viewDidDisappear() {

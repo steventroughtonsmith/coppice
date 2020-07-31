@@ -51,13 +51,18 @@ class EditorContainerViewController: NSViewController, SplitViewContainable {
     func createEditor() -> (Editor & NSViewController)? {
         switch self.viewModel.currentEditor {
         case .canvas:
-            return CanvasesViewController(viewModel: .init(documentWindowViewModel: self.viewModel.documentWindowViewModel))
+            return self.canvasesEditor
         case .page(let page):
             return page.createEditor(with: self.viewModel.documentWindowViewModel)
         case .none:
             return NoEditorViewController()
         }
     }
+
+    lazy var canvasesEditor: CanvasesViewController = {
+        //We want to keep this around so it maintains the split view position
+        return CanvasesViewController(viewModel: .init(documentWindowViewModel: self.viewModel.documentWindowViewModel))
+    }()
 
 
     //MARK: - RootViewController

@@ -658,6 +658,60 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		99045FC124D43E8A00FD3D33 /* Editors */ = {
+			isa = PBXGroup;
+			children = (
+				992A5CA022DDF4820012CCB6 /* EditorContainer */,
+				99FDF127241FD50C00AF1E51 /* Canvases Editor */,
+				99581084230D871C00D996C4 /* Page Editors */,
+				997373772423AD50000D5F21 /* No Editor */,
+			);
+			path = Editors;
+			sourceTree = "<group>";
+		};
+		99045FC224D43EB600FD3D33 /* Extra Windows */ = {
+			isa = PBXGroup;
+			children = (
+				999007D124CF456600DB5C13 /* Tour */,
+				9981E6D324C08D0F005AF0EE /* Welcome */,
+				9981E6CC24C057F8005AF0EE /* About */,
+				996187ED249A511C007313BD /* Preferences */,
+			);
+			path = "Extra Windows";
+			sourceTree = "<group>";
+		};
+		99045FC324D43EC500FD3D33 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				99FE019722CD1038004D380D /* Colours.xcassets */,
+				99C03F08232A99F400EB7516 /* Cursors.xcassets */,
+				9970977523B93A5800CD189B /* Icons.xcassets */,
+				99171EDD24AB4FCC00E96DE6 /* Symbols.xcassets */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		99045FC424D43EF400FD3D33 /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				99FFF9D12354C4F600EF02A0 /* GlobalConstants.swift */,
+				9977119B239E91FD00FCC8C7 /* ViewModel.swift */,
+				99AD8872237464B5000453E1 /* Generic Types */,
+				998D077E24115D04004ADFF8 /* Generic Views */,
+				992A5C9D22DCCDA20012CCB6 /* Extensions */,
+			);
+			path = Misc;
+			sourceTree = "<group>";
+		};
+		99045FC524D43F0A00FD3D33 /* Document */ = {
+			isa = PBXGroup;
+			children = (
+				99FE019222CD1037004D380D /* Document.swift */,
+				9962AB8823732D9400337834 /* CoppiceDocumentController.swift */,
+			);
+			path = Document;
+			sourceTree = "<group>";
+		};
 		992A5C9022DCB2EE0012CCB6 /* Source List */ = {
 			isa = PBXGroup;
 			children = (
@@ -947,6 +1001,7 @@
 			children = (
 				9981E6CD24C05811005AF0EE /* AboutWindowController.swift */,
 				9981E6CE24C05811005AF0EE /* AboutWindow.xib */,
+				9981E6D124C067A2005AF0EE /* Acknowledgements.rtf */,
 			);
 			path = About;
 			sourceTree = "<group>";
@@ -1060,6 +1115,8 @@
 				999EA6B02436097500BF254E /* SidebarViewModel.swift */,
 				999EA6B12436097500BF254E /* SidebarViewController.swift */,
 				999EA6B22436097500BF254E /* SidebarView.xib */,
+				992A5C9022DCB2EE0012CCB6 /* Source List */,
+				999EA6B6243619D600BF254E /* Search Results */,
 			);
 			path = Sidebar;
 			sourceTree = "<group>";
@@ -1392,42 +1449,25 @@
 				997344D32432073400DF4EDB /* CoppiceDebug.entitlements */,
 				99FE019022CD1037004D380D /* AppDelegate.swift */,
 				99FCD7F224A7819400B44593 /* SparkleDelegate.swift */,
-				99FE019222CD1037004D380D /* Document.swift */,
-				9962AB8823732D9400337834 /* CoppiceDocumentController.swift */,
-				99FFF9D12354C4F600EF02A0 /* GlobalConstants.swift */,
-				9977119B239E91FD00FCC8C7 /* ViewModel.swift */,
 				99C88EE9240C2F3F00339880 /* NSWindow+KeyLoopDebug.swift */,
-				999007D124CF456600DB5C13 /* Tour */,
-				9981E6D324C08D0F005AF0EE /* Welcome */,
-				9981E6CC24C057F8005AF0EE /* About */,
-				996187ED249A511C007313BD /* Preferences */,
-				996187FE249BB61D007313BD /* Subscription */,
-				99488AAC23C37B77009954AF /* Thumbnail Generation */,
-				99AD8872237464B5000453E1 /* Generic Types */,
-				998D077E24115D04004ADFF8 /* Generic Views */,
-				992A5C9D22DCCDA20012CCB6 /* Extensions */,
 				99C41B6F22DCA94000C82DDE /* Model */,
+				99045FC524D43F0A00FD3D33 /* Document */,
 				99FE01E122D4C22B004D380D /* DocumentWindow */,
-				9970976E23AEEE5700CD189B /* Export */,
 				999EA6A12436037E00BF254E /* Sidebar */,
-				992A5C9022DCB2EE0012CCB6 /* Source List */,
-				999EA6B6243619D600BF254E /* Search Results */,
-				992A5CA022DDF4820012CCB6 /* EditorContainer */,
-				99FDF127241FD50C00AF1E51 /* Canvases Editor */,
-				99581084230D871C00D996C4 /* Page Editors */,
-				997373772423AD50000D5F21 /* No Editor */,
+				99045FC124D43E8A00FD3D33 /* Editors */,
 				99D8E361237EDB890098CF3B /* Inspectors */,
 				99C865242306D0CC004C7B89 /* Page Selector */,
+				9970976E23AEEE5700CD189B /* Export */,
 				99F0CD72246AF18C006DE18E /* Debug Tools */,
-				99FE019722CD1038004D380D /* Colours.xcassets */,
-				99C03F08232A99F400EB7516 /* Cursors.xcassets */,
-				9970977523B93A5800CD189B /* Icons.xcassets */,
-				99171EDD24AB4FCC00E96DE6 /* Symbols.xcassets */,
+				996187FE249BB61D007313BD /* Subscription */,
+				99488AAC23C37B77009954AF /* Thumbnail Generation */,
+				99045FC224D43EB600FD3D33 /* Extra Windows */,
+				99045FC424D43EF400FD3D33 /* Misc */,
+				99045FC324D43EC500FD3D33 /* Assets */,
 				99906377249BC5780008C747 /* ProFeatures.plist */,
 				99FE019922CD1038004D380D /* MainMenu.xib */,
 				99FE019C22CD1038004D380D /* Info.plist */,
 				999EA68C2433913A00BF254E /* Info.plist.prefix */,
-				9981E6D124C067A2005AF0EE /* Acknowledgements.rtf */,
 				999EA69924339A8400BF254E /* .build_number */,
 			);
 			path = Coppice;

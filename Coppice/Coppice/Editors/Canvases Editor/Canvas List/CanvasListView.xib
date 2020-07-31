@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17132" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17140" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17132"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17140"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -23,13 +23,13 @@
             <rect key="frame" x="0.0" y="0.0" width="172" height="513"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RGX-Qn-bQj">
+                <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="24" horizontalPageScroll="10" verticalLineScroll="24" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RGX-Qn-bQj">
                     <rect key="frame" x="0.0" y="24" width="172" height="489"/>
                     <clipView key="contentView" id="fSl-7C-hQ2">
                         <rect key="frame" x="0.0" y="0.0" width="172" height="489"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" usesAutomaticRowHeights="YES" viewBased="YES" id="ZY4-2Z-8n6" customClass="PixelPerfectTableView" customModule="Coppice" customModuleProvider="target">
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="22" usesAutomaticRowHeights="YES" viewBased="YES" id="ZY4-2Z-8n6" customClass="PixelPerfectTableView" customModule="Coppice" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="172" height="489"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
@@ -49,11 +49,11 @@
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         <prototypeCellViews>
                                             <tableCellView id="Nje-Ue-kDq">
-                                                <rect key="frame" x="11" y="1" width="149" height="17"/>
+                                                <rect key="frame" x="1" y="1" width="140" height="17"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FXB-ZB-7kb">
-                                                        <rect key="frame" x="0.0" y="0.0" width="149" height="17"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="140" height="17"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="zk3-QS-sC2">
                                                             <font key="font" metaFont="system"/>
@@ -95,7 +95,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <popUpButton translatesAutoresizingMaskIntoConstraints="NO" id="x9y-AL-d7u">
-                                <rect key="frame" x="27" y="-3" width="34" height="29"/>
+                                <rect key="frame" x="27" y="0.0" width="34" height="23"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="34" id="LQf-m7-cqx"/>
                                 </constraints>
@@ -110,7 +110,7 @@
                                 </popUpButtonCell>
                             </popUpButton>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4jD-Iv-NuW">
-                                <rect key="frame" x="0.0" y="-1" width="27" height="25"/>
+                                <rect key="frame" x="0.0" y="0.0" width="27" height="23"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="27" id="Zy8-xa-teq"/>
                                 </constraints>
@@ -175,7 +175,7 @@
         </menu>
     </objects>
     <resources>
-        <image name="NSActionTemplate" width="17" height="15"/>
-        <image name="NSAddTemplate" width="15" height="11"/>
+        <image name="NSActionTemplate" width="14" height="14"/>
+        <image name="NSAddTemplate" width="11" height="11"/>
     </resources>
 </document>
