@@ -126,6 +126,10 @@ class CanvasesViewController: NSSplitViewController {
     @objc dynamic func thumbnailsNeedUpdate() {
         self.viewModel.documentWindowViewModel.thumbnailController.currentThumbnailSize = self.canvasListViewController.currentThumbnailSize
     }
+
+    @IBAction func toggleCanvasList(_ sender: Any?) {
+        self.isSidebarCompact.toggle()
+    }
 }
 
 
