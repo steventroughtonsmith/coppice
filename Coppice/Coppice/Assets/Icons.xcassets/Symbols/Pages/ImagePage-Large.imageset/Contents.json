@@ -1,12 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "SFPage.png",
+      "filename" : "Photo-Large.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "SFPage@2x.png",
+      "filename" : "Photo-Large@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

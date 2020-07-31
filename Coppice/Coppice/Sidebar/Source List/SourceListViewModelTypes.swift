@@ -120,7 +120,7 @@ class CanvasesSourceListNode: SourceListNode {
     }
 
     @objc dynamic override var image: NSImage? {
-        return NSImage(named: .sidebarCanvas)
+        return NSImage(named: Symbols.canvases)
     }
 }
 

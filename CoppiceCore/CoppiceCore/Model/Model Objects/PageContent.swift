@@ -35,7 +35,7 @@ public enum PageContentType: String, Equatable, CaseIterable {
         return icon(.small)
     }
 
-    func icon(_ size: Symbols.Page.Size) -> NSImage {
+    public func icon(_ size: Symbols.Page.Size) -> NSImage {
         switch self {
         case .text:
             return NSImage.symbol(withName: Symbols.Page.text(size))!

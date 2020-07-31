@@ -37,14 +37,6 @@ public struct GlobalConstants {
     public static let documentVersion = 1
 }
 
-public extension NSImage.Name {
-    //Sidebar
-    static let sidebarCanvas = "Canvases-Small"
-    static let sidebarFolder = "Folder"
-    static let textPage = "TextPage"
-    static let imagePage = "ImagePage"
-}
-
 public struct Symbols {
     public struct Text {
         public static let bold = "bold"
@@ -76,11 +68,11 @@ public struct Symbols {
         }
 
         public static func text(_ size: Size) -> String {
-            return "Page\(size.suffix)"
+            return "TextPage\(size.suffix)"
         }
 
         public static func image(_ size: Size) -> String {
-            return "Photo\(size.suffix)"
+            return "ImagePage\(size.suffix)"
         }
 
         public static func folder(_ size: Size) -> String {
@@ -125,4 +117,6 @@ public struct Symbols {
         }
         return "NSStopProgressFreestandingTemplate";
     }
+
+    public static let canvases = "Canvases-Small"
 }
