@@ -51,6 +51,17 @@ public final class Canvas: NSObject, CollectableModelObject {
 
     public var viewPort: CGRect?
 
+    public var zoomFactor: CGFloat = 1 {
+        didSet {
+            if self.zoomFactor > 1 {
+                self.zoomFactor = 1
+            }
+            else if self.zoomFactor < 0.25 {
+                self.zoomFactor = 0.25
+            }
+        }
+    }
+
     @objc dynamic public var thumbnail: NSImage? {
         didSet { self.didChange(\.thumbnail, oldValue: oldValue) }
     }
@@ -81,6 +92,7 @@ public final class Canvas: NSObject, CollectableModelObject {
             "dateModified": self.dateModified,
             "sortIndex": self.sortIndex,
             "theme": self.theme.rawValue,
+            "zoomFactor": self.zoomFactor
         ]
         if let thumbnailData = self.thumbnail?.pngData() {
             plist["thumbnail"] = ModelFile(type: "thumbnail", filename: "\(self.id.uuid.uuidString)-thumbnail.png", data: thumbnailData, metadata: [:])
@@ -128,6 +140,12 @@ public final class Canvas: NSObject, CollectableModelObject {
             }
         } else {
             self.thumbnail = nil
+        }
+
+        if let zoomFactor = plist["zoomFactor"] as? CGFloat {
+            self.zoomFactor = zoomFactor
+        } else {
+            self.zoomFactor = 1
         }
 
         if let plistableHierarchy = plist["closedPageHierarchies"] as? [String: [String: [String: Any]]] {

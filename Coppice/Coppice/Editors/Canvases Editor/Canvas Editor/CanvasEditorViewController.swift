@@ -277,10 +277,9 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
 
         let canvasSize = self.layoutEngine.canvasSize
         if (self.currentLayoutContext?.sizeChanged == true) {
-            let magnification = self.scrollView.magnification
             self.scrollView.magnification = 1
             self.canvasView.frame.size = canvasSize
-            self.scrollView.magnification = magnification
+            self.scrollView.magnification = self.viewModel.zoomFactor
         }
 
         if let lastPoint = self.originOffsetFromScrollPoint {

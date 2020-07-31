@@ -45,24 +45,24 @@ public class TextPageContent: NSObject, PageContent {
 
     //MARK: - Sizing
     public var initialContentSize: CGSize? {
-        return self.contentSize(insideBounds: GlobalConstants.maxAutomaticTextSize)
+        return self.contentSize(insideBounds: GlobalConstants.maxAutomaticTextSize, minimumSize: Page.standardSize)
     }
 
     public func sizeToFitContent(currentSize: CGSize) -> CGSize {
-        var newContentSize = self.contentSize(insideBounds: CGSize(width: currentSize.width, height: 20000))
+        var newContentSize = self.contentSize(insideBounds: CGSize(width: currentSize.width, height: 20000), minimumSize: Page.minimumSize)
         newContentSize.width = currentSize.width
         return newContentSize
     }
 
-    private func contentSize(insideBounds bounds: CGSize) -> CGSize {
+    private func contentSize(insideBounds bounds: CGSize, minimumSize: CGSize) -> CGSize {
         var contentSize = self.text.boundingRect(with: bounds, options: [.usesLineFragmentOrigin]).size
         let insets = GlobalConstants.textEditorInsets
 
         let adjustedContentSize = contentSize.rounded().plus(width: insets.horizontalInsets, height: insets.verticalInsets)
 
         //Not sure why but we need to add an additional space to get the size correct
-        contentSize.width = max(adjustedContentSize.width + 10, Page.minimumSize.width)
-        contentSize.height = max(adjustedContentSize.height + 20, Page.minimumSize.height)
+        contentSize.width = max(adjustedContentSize.width + 10, minimumSize.width)
+        contentSize.height = max(adjustedContentSize.height + 20, minimumSize.height)
         return contentSize
     }
 }

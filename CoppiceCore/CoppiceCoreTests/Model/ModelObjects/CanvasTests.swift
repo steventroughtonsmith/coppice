@@ -126,6 +126,14 @@ class CanvasTests: XCTestCase {
         XCTAssertNotNil(secondHierarchy[pageID3.stringRepresentation])
     }
 
+    func test_plistRepresentation_containsZoomFactor() throws {
+        let canvas = Canvas()
+        canvas.zoomFactor = 0.25
+        let plist = canvas.plistRepresentation
+        let sortIndex = try XCTUnwrap(plist["zoomFactor"] as? CGFloat)
+        XCTAssertEqual(sortIndex, 0.25)
+    }
+
 
     //MARK: - update(fromPlistRepresentation:)
     func test_updateFromPlistRepresentation_doesntUpdateIfIDsDontMatch() {
@@ -431,6 +439,47 @@ class CanvasTests: XCTestCase {
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: plist))
         XCTAssertEqual(canvas.closedPageHierarchies.count, 0)
+    }
+
+    func test_updateFromPlistRepresentation_updatesZoomFactor() throws {
+        let canvas = Canvas()
+        canvas.thumbnail = NSImage(named: "NSRemoveTemplate")!
+
+        let expectedImageData = NSImage(named: "NSAddTemplate")!.pngData()!
+        let plist: [String: Any] = [
+            "id": canvas.id.stringRepresentation,
+            "title": "Hello Bar",
+            "dateCreated": Date(timeIntervalSinceReferenceDate: 32),
+            "dateModified": Date(timeIntervalSinceReferenceDate: 1455),
+            "sortIndex": 1,
+            "theme": "auto",
+            "thumbnail": ModelFile(type: "thumbnail", filename: nil, data: expectedImageData, metadata: [:]),
+            "zoomFactor": CGFloat(0.75)
+        ]
+
+        XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: plist))
+
+        XCTAssertEqual(canvas.zoomFactor, 0.75)
+    }
+
+    func test_updateFromPlistRepresentation_setsZoomFactorTo1IfNoneExistsInPlist() throws {
+        let canvas = Canvas()
+        canvas.thumbnail = NSImage(named: "NSRemoveTemplate")!
+
+        let expectedImageData = NSImage(named: "NSAddTemplate")!.pngData()!
+        let plist: [String: Any] = [
+            "id": canvas.id.stringRepresentation,
+            "title": "Hello Bar",
+            "dateCreated": Date(timeIntervalSinceReferenceDate: 32),
+            "dateModified": Date(timeIntervalSinceReferenceDate: 1455),
+            "sortIndex": 1,
+            "theme": "auto",
+            "thumbnail": ModelFile(type: "thumbnail", filename: nil, data: expectedImageData, metadata: [:]),
+        ]
+
+        XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: plist))
+
+        XCTAssertEqual(canvas.zoomFactor, 1)
     }
 
 

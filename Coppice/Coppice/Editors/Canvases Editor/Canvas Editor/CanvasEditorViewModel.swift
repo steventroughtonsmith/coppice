@@ -216,14 +216,10 @@ class CanvasEditorViewModel: ViewModel {
 
 
     //MARK: - Zooming
-    @objc dynamic var zoomFactor: CGFloat = 1 {
-        didSet {
-            if self.zoomFactor > 1 {
-                self.zoomFactor = 1
-            }
-            else if self.zoomFactor < 0.25 {
-                self.zoomFactor = 0.25
-            }
+    @objc dynamic var zoomFactor: CGFloat {
+        get { return self.canvas.zoomFactor }
+        set {
+            self.canvas.zoomFactor = newValue
             self.view?.updateZoomFactor()
         }
     }
