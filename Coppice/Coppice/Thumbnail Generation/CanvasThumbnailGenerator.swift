@@ -64,8 +64,6 @@ class CanvasThumbnailGenerator: NSObject {
             self.drawArrows(from: canvasPage, pageRects: pageRectsByID, context: drawContext)
         }
 
-        print("canvas: \(self.canvas.title) = \(drawContext.xScale)")
-
         for (canvasPage, frame) in pageFrames {
             guard let page = canvasPage.page else {
                 continue

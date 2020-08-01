@@ -32,7 +32,6 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
     }()
 
     private var selectableBinding: AnyCancellable!
-    private var attributedTextObserver: AnyCancellable!
     private var highlightedRangeObserver: AnyCancellable!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,15 +53,6 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
     override func viewDidAppear() {
         self.highlight(self.viewModel.highlightedRange)
         super.viewDidAppear()
-
-        self.attributedTextObserver = self.publisher(for: \.viewModel.attributedText).sink { [weak self] in self?.updateTextView(with: $0) }
-    }
-
-    override func viewDidDisappear() {
-        super.viewDidDisappear()
-        //Observing self requires us to explicitly cancel and clear out the observer, as it seems to hold an unretained reference to us
-        self.attributedTextObserver?.cancel()
-        self.attributedTextObserver = nil
     }
 
     @objc dynamic var enabled: Bool = true
@@ -211,7 +201,7 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
         self.editingTextView.alignment = .natural
     }
 
-    private func updateTextView(with text: NSAttributedString) {
+    func updateTextView(with text: NSAttributedString) {
         guard (self.updatingText == false) else {
             return
         }

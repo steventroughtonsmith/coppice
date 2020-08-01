@@ -39,7 +39,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         #endif
 
-        let expiryDate = ISO8601DateFormatter().date(from: "2020-08-01T00:00:00Z")?.timeIntervalSinceReferenceDate ?? 0;
+        let expiryDate = ISO8601DateFormatter().date(from: "2020-10-31T00:00:00Z")?.timeIntervalSinceReferenceDate ?? 0;
         if Date.timeIntervalSinceReferenceDate >= expiryDate {
             let alert = NSAlert()
             alert.messageText = "This version has expired"

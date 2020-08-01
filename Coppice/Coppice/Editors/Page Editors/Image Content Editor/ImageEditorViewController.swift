@@ -33,15 +33,18 @@ class ImageEditorViewController: NSViewController {
         super.viewWillAppear()
 
         self.imageView.imageScaling = self.isInCanvas ? .scaleProportionallyUpOrDown : .scaleProportionallyDown
-    }
-
-    var imageDescriptionObserver: AnyCancellable!
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
         self.imageDescriptionObserver = self.viewModel.publisher(for: \.accessibilityDescription).sink { [weak self] description in
             self?.imageView.setAccessibilityValueDescription(description)
         }
+    }
+
+
+    var imageDescriptionObserver: AnyCancellable!
+    override func viewDidDisappear() {
+        super.viewDidDisappear()
+
+        self.imageDescriptionObserver?.cancel()
+        self.imageDescriptionObserver = nil
     }
 
     var isInCanvas: Bool {

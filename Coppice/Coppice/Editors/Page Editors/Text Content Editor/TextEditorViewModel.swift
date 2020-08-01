@@ -12,6 +12,7 @@ import CoppiceCore
 
 protocol TextEditorView: Editor {
     func addLink(with url: URL, to range: NSRange)
+    func updateTextView(with text: NSAttributedString)
 }
 
 class TextEditorViewModel: ViewModel {
@@ -28,6 +29,7 @@ class TextEditorViewModel: ViewModel {
     }
 
     var searchStringObserver: AnyCancellable?
+    var textObserver: AnyCancellable?
     override func setup() {
         guard self.mode == .editing else {
             return
@@ -35,6 +37,9 @@ class TextEditorViewModel: ViewModel {
         self.searchStringObserver = self.documentWindowViewModel.publisher(for: \.searchString).sink { [weak self] searchTerm in
             self?.updateHighlightedRange(with: searchTerm)
         }
+        self.textObserver = self.textContent.publisher(for: \.text).sink(receiveValue: { [weak self] (text) in
+            self?.view?.updateTextView(with: text)
+        })
     }
 
     override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
