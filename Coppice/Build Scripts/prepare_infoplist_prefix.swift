@@ -4,21 +4,44 @@ import Foundation
 
 func main() -> Int {
     do {
-        var string = try getInputFile()
+        try enumerateInput() { (inputString) -> String in
+            var string = inputString
+            let buildNumber = try getBuildNumber()
+            string = string.replacingOccurrences(of: "__BUNDLE_VERSION__", with: buildNumber)
 
-        let buildNumber = try getBuildNumber()
-        string = string.replacingOccurrences(of: "__BUNDLE_VERSION__", with: buildNumber)
+            let gitHash = try getGitHash()
+            string = string.replacingOccurrences(of: "__BUNDLE_HASH__", with: gitHash)
 
-        let gitHash = try getGitHash()
-        string = string.replacingOccurrences(of: "__BUNDLE_HASH__", with: gitHash)
-
-        try writeToOutputFile(string)
+            return string
+        }
     } catch let e {
         print("Prepare Error: \(e)")
         return -1
     }
 
     return 0
+}
+
+func enumerateInput(_ block: (String) throws -> String) throws {
+    let environment = ProcessInfo.processInfo.environment
+    guard
+        let inputCountString = environment["SCRIPT_INPUT_FILE_COUNT"],
+        let inputCount = Int(inputCountString)
+    else {
+        throw NSError(domain: "com.mcubedsw.script", code: -1, userInfo: [NSLocalizedDescriptionKey: "Input File Count is not an integer"])
+    }
+
+    for index in 0..<inputCount {
+        guard
+            let inputPath = environment["SCRIPT_INPUT_FILE_\(index)"],
+            let outputPath = environment["SCRIPT_OUTPUT_FILE_\(index)"]
+        else {
+            throw NSError(domain: "com.mcubedsw.script", code: -1, userInfo: [NSLocalizedDescriptionKey: "No path for index \(index)"])
+        }
+        let contents = try String(contentsOfFile: inputPath)
+        let outputContents = try block(contents)
+        try outputContents.write(toFile: outputPath, atomically: true, encoding: .utf8)
+    }
 }
 
 func getBuildNumber() throws -> String {
@@ -37,24 +60,6 @@ func getGitHash() throws -> String {
         throw NSError(domain: "com.mcubedsw.script", code: -1, userInfo: [NSLocalizedDescriptionKey: "--git-hash argument not provided"])
     }
     return arguments[gitHashIndex + 1]
-}
-
-func getInputFile() throws -> String {
-    let environment = ProcessInfo.processInfo.environment
-    guard environment["SCRIPT_INPUT_FILE_COUNT"] == "1", let inputPath = environment["SCRIPT_INPUT_FILE_0"] else {
-        throw NSError(domain: "com.mcubedsw.script", code: -1, userInfo: [NSLocalizedDescriptionKey: "We require a single input file"])
-    }
-
-    return try String(contentsOfFile: inputPath)
-}
-
-func writeToOutputFile(_ string: String) throws {
-    let environment = ProcessInfo.processInfo.environment
-    guard environment["SCRIPT_OUTPUT_FILE_COUNT"] == "1", let outputPath = environment["SCRIPT_OUTPUT_FILE_0"] else {
-        throw NSError(domain: "com.mcubedsw.script", code: -1, userInfo: [NSLocalizedDescriptionKey: "We require a single output file"])
-    }
-
-    try string.write(toFile: outputPath, atomically: true, encoding: .utf8)
 }
 
 print("\(main())")

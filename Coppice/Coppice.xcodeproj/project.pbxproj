@@ -529,6 +529,7 @@
 		99AD88A8237C36D0000453E1 /* Editor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Editor.swift; sourceTree = "<group>"; };
 		99B3474B2465846900B96B71 /* PixelPerfectTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelPerfectTableView.swift; sourceTree = "<group>"; };
 		99B3474D24658BA200B96B71 /* RoundSelectionTableRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundSelectionTableRowView.swift; sourceTree = "<group>"; };
+		99B7D28724D9973A004CF71A /* Info.plist.prefix */ = {isa = PBXFileReference; lastKnownFileType = text; path = Info.plist.prefix; sourceTree = "<group>"; };
 		99C03F06232A8ED200EB7516 /* CanvasElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasElementView.swift; sourceTree = "<group>"; };
 		99C03F08232A99F400EB7516 /* Cursors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Cursors.xcassets; sourceTree = "<group>"; };
 		99C03F0A232A9A5E00EB7516 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
@@ -1302,6 +1303,7 @@
 				99D0C8E924C7022D002EEBFA /* CanvasImageGenerator.swift */,
 				99D0C71424C5CED0002EEBFA /* PreviewViewController.xib */,
 				99D0C71724C5CED0002EEBFA /* Info.plist */,
+				99B7D28724D9973A004CF71A /* Info.plist.prefix */,
 				99D0C71824C5CED0002EEBFA /* CoppiceQuickLook.entitlements */,
 			);
 			path = CoppiceQuickLook;
@@ -2489,6 +2491,8 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = CoppiceQuickLook/Info.plist;
+				INFOPLIST_PREFIX_HEADER = "$(CONFIGURATION_TEMP_DIR)/Info.plist.prefix";
+				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -2510,6 +2514,8 @@
 				DEVELOPMENT_TEAM = Z699XFM6P2;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = CoppiceQuickLook/Info.plist;
+				INFOPLIST_PREFIX_HEADER = "$(CONFIGURATION_TEMP_DIR)/Info.plist.prefix";
+				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -2531,6 +2537,8 @@
 				DEVELOPMENT_TEAM = Z699XFM6P2;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = CoppiceQuickLook/Info.plist;
+				INFOPLIST_PREFIX_HEADER = "$(CONFIGURATION_TEMP_DIR)/Info.plist.prefix";
+				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -2552,6 +2560,8 @@
 				DEVELOPMENT_TEAM = Z699XFM6P2;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = CoppiceQuickLook/Info.plist;
+				INFOPLIST_PREFIX_HEADER = "$(CONFIGURATION_TEMP_DIR)/Info.plist.prefix";
+				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
