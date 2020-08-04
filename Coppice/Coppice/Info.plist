@@ -66,10 +66,6 @@
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
 	<key>M3BundleHash</key>
 	<string>BUNDLEHASH</string>
-	<key>SUFeedURL</key>
-	<string>$(APPCASTURL)</string>
-	<key>SUEnableSystemProfiling</key>
-	<true/>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2020 M Cubed Software. 
 All rights reserved.</string>
@@ -77,6 +73,10 @@ All rights reserved.</string>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>SUEnableSystemProfiling</key>
+	<true/>
+	<key>SUFeedURL</key>
+	<string>$(APPCASTURL)</string>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>
