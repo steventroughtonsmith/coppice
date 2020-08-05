@@ -15,7 +15,6 @@ extension NSToolbarItem.Identifier {
     static let linkToPage = NSToolbarItem.Identifier(rawValue: "com.mcubedsw.coppice.LinkToPage")
     static let toggleInspectors = NSToolbarItem.Identifier(rawValue: "com.mcubedsw.coppice.ToggleInspectors")
     static let search = NSToolbarItem.Identifier(rawValue: "com.mcubedsw.coppice.searchItem")
-    static let sidebarTrackingSeparator = NSToolbarItem.Identifier(rawValue: "com.mcubedsw.coppice.sidebarTrackingSeparator")
     //Because Big Sur doesn't let us supply our own
     static let customToggleSidebar = NSToolbarItem.Identifier(rawValue: "com.mcubedsw.coppice.ToggleSidebar")
 }
@@ -119,7 +118,7 @@ extension MainToolbarDelegate: NSToolbarDelegate {
             .flexibleSpace
         ]
         if #available(OSX 10.16, *) {
-            identifiers.append(.sidebarTrackingSeparatorItemIdentifier)
+            identifiers.append(.sidebarTrackingSeparator)
         }
         return identifiers
     }
@@ -140,7 +139,7 @@ extension MainToolbarDelegate: NSToolbarDelegate {
         if #available(OSX 10.16, *) {
             identifiers[1] = .flexibleSpace
             identifiers.remove(at: 4)
-            identifiers.insert(.sidebarTrackingSeparatorItemIdentifier, at: 3)
+            identifiers.insert(.sidebarTrackingSeparator, at: 3)
         }
         
         return identifiers
@@ -160,14 +159,11 @@ extension MainToolbarDelegate: NSToolbarDelegate {
             return self.searchItem
         case .customToggleSidebar:
             return self.toggleSidebarItem
-        case .sidebarTrackingSeparator:
-            if #available(OSX 10.16, *) {
+        default:
+            if #available(OSX 10.16, *), itemIdentifier == .sidebarTrackingSeparator {
                 return NSTrackingSeparatorToolbarItem(identifier: .sidebarTrackingSeparator, splitView: self.splitView, dividerIndex: 1)
             }
-            return nil
-        default:
             let item = NSToolbarItem(itemIdentifier: itemIdentifier)
-            print("item: \(item)")
             return item
         }
     }
