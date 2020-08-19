@@ -34,14 +34,11 @@ class UpdatePreferencesViewController: NSViewController {
     }
 
     @IBAction func showSystemProfileInfo(_ sender: Any) {
-        guard let updater = updaterController?.updater else {
+        guard let updateController = updaterController else {
             return
         }
-        guard let additionalInfo = updaterController?.updaterDelegate?.feedParameters?(for: updater, sendingSystemProfile: true) else {
-            return
-        }
-        let combined = updater.systemProfileArray + additionalInfo
-        let systemProfileInfo = SystemProfileInfoViewController(systemInfo: combined)
+        let infoItems = SystemProfileInfoItemCreator.infoItems(from: updateController)
+        let systemProfileInfo = SystemProfileInfoViewController(systemInfo: infoItems)
         self.presentAsSheet(systemProfileInfo)
     }
 

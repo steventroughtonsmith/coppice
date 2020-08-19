@@ -11,8 +11,8 @@ import CoppiceCore
 
 class SystemProfileInfoViewController: NSViewController {
 
-    let systemInfo: [[String: Any]]
-    init(systemInfo: [[String: Any]]) {
+    let systemInfo: [SystemProfileInfoItem]
+    init(systemInfo: [SystemProfileInfoItem]) {
         self.systemInfo = systemInfo
         super.init(nibName: "SystemProfileInfoViewController", bundle: nil)
     }
@@ -47,18 +47,26 @@ extension SystemProfileInfoViewController: NSTableViewDataSource {
     func numberOfRows(in tableView: NSTableView) -> Int {
         return self.systemInfo.count
     }
+}
 
-    func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
+
+extension SystemProfileInfoViewController: NSTableViewDelegate {
+    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         guard let infoItem = self.systemInfo[safe: row] else {
             return nil
         }
 
+        let identifier = (tableColumn?.identifier == NSUserInterfaceItemIdentifier(rawValue: "name")) ? "KeyCell" : "ValueCell"
+
+        let infoCell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: identifier), owner: nil) as? SystemProfileInfoTableCell
+        infoCell?.infoItem = infoItem
+        infoCell?.showRawData = self.showRawData
         if tableColumn?.identifier == NSUserInterfaceItemIdentifier(rawValue: "name") {
-            return infoItem[(self.showRawData ? "key" : "displayKey")]
+            infoCell?.cellType = .key
         }
         if tableColumn?.identifier == NSUserInterfaceItemIdentifier(rawValue: "value") {
-            return infoItem[(self.showRawData ? "value" : "displayValue")]
+            infoCell?.cellType = .value
         }
-        return nil
+        return infoCell
     }
 }

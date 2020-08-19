@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17132" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17147" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.AVKitIBPlugin" version="17132"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17132"/>
+        <plugIn identifier="com.apple.AVKitIBPlugin" version="17147"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17147"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -103,7 +103,7 @@
                 <constraint firstItem="45N-66-eCF" firstAttribute="leading" secondItem="fhb-PG-pqo" secondAttribute="leading" constant="50" id="iKg-Oh-tCy"/>
                 <constraint firstItem="mrc-XK-oRI" firstAttribute="centerX" secondItem="fhb-PG-pqo" secondAttribute="centerX" id="trc-SY-enc"/>
             </constraints>
-            <point key="canvasLocation" x="112" y="178"/>
+            <point key="canvasLocation" x="86" y="309"/>
         </customView>
     </objects>
     <resources>

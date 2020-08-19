@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17147" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17147"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="SimpleLabelPopoverViewController" customModule="Coppice" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="300" height="56"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" preferredMaxLayoutWidth="260" translatesAutoresizingMaskIntoConstraints="NO" id="ZTC-4C-WPf">
+                    <rect key="frame" x="18" y="20" width="264" height="16"/>
+                    <textFieldCell key="cell" selectable="YES" title="Multiline Label" id="1fn-iK-JSX">
+                        <font key="font" usesAppearanceFont="YES"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <binding destination="-2" name="value" keyPath="self.label" id="BFz-K5-YAZ"/>
+                    </connections>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="ZTC-4C-WPf" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="Cid-e6-M63"/>
+                <constraint firstItem="ZTC-4C-WPf" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="20" symbolic="YES" id="HS9-0R-Zlt"/>
+                <constraint firstAttribute="bottom" secondItem="ZTC-4C-WPf" secondAttribute="bottom" constant="20" symbolic="YES" id="gOZ-xd-Scs"/>
+                <constraint firstAttribute="trailing" secondItem="ZTC-4C-WPf" secondAttribute="trailing" constant="20" symbolic="YES" id="wOy-gw-nIg"/>
+            </constraints>
+            <point key="canvasLocation" x="40" y="74"/>
+        </customView>
+    </objects>
+</document>

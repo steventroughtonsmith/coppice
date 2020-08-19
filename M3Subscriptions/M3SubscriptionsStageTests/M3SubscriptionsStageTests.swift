@@ -66,13 +66,17 @@ class M3SubscriptionsStageTests: XCTestCase {
     override func setUpWithError() throws {
         try super.setUpWithError()
 
-        let serverURL = "http://localhost:8080"
+        let serverURL = "https://integration-test-mcubedsw-com:8890"
         self.prepareURL = URL(string: "\(serverURL)/test/prepare")!
         TEST_OVERRIDES.baseURL = URL(string: "\(serverURL)/api")!
         TEST_OVERRIDES.apiVersion = "v1"
 
-        self.licenceURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("com.mcubedsw.subscriptions").appendingPathComponent("stage-licence.txt")
-
+        let licenceDirectory = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("com.mcubedsw.subscriptions")
+        if !FileManager.default.fileExists(atPath: licenceDirectory.path) {
+            try FileManager.default.createDirectory(at: licenceDirectory, withIntermediateDirectories: true, attributes: nil)
+        }
+        self.licenceURL = licenceDirectory.appendingPathComponent("stage-licence.txt")
+        print("licenceURL: \(self.licenceURL)")
         self.controller = SubscriptionController(licenceURL: self.licenceURL)
 
         self.mockDelegate = MockSubscriptionDelegate()
