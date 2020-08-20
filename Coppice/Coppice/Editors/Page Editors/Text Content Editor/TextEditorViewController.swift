@@ -210,7 +210,6 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
     }
 
     func updateTextView(with text: NSAttributedString) {
-        print("updatingText")
         guard (self.updatingText == false) else {
             return
         }

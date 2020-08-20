@@ -25,6 +25,7 @@
 		990D2441235DEFE2001B1FD9 /* PageArrowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990D2440235DEFE2001B1FD9 /* PageArrowView.swift */; };
 		99115DC5249E304D008942DF /* SystemProfileInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99115DC3249E304D008942DF /* SystemProfileInfoViewController.swift */; };
 		99115DC6249E304D008942DF /* SystemProfileInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99115DC4249E304D008942DF /* SystemProfileInfoViewController.xib */; };
+		99146A2A24EEAB6200A2AE48 /* ImageEditorPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99146A2924EEAB6200A2AE48 /* ImageEditorPlaceholderView.swift */; };
 		99171EDC24AA48B200E96DE6 /* MainToolbarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99171EDB24AA48B200E96DE6 /* MainToolbarDelegate.swift */; };
 		99171EDE24AB4FCC00E96DE6 /* Symbols.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99171EDD24AB4FCC00E96DE6 /* Symbols.xcassets */; };
 		9919B93123D09FBB00C7A44D /* TextColourPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9919B93023D09FBB00C7A44D /* TextColourPicker.swift */; };
@@ -364,6 +365,7 @@
 		990D2440235DEFE2001B1FD9 /* PageArrowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageArrowView.swift; sourceTree = "<group>"; };
 		99115DC3249E304D008942DF /* SystemProfileInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemProfileInfoViewController.swift; sourceTree = "<group>"; };
 		99115DC4249E304D008942DF /* SystemProfileInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SystemProfileInfoViewController.xib; sourceTree = "<group>"; };
+		99146A2924EEAB6200A2AE48 /* ImageEditorPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorPlaceholderView.swift; sourceTree = "<group>"; };
 		99171EDB24AA48B200E96DE6 /* MainToolbarDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainToolbarDelegate.swift; sourceTree = "<group>"; };
 		99171EDD24AB4FCC00E96DE6 /* Symbols.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Symbols.xcassets; sourceTree = "<group>"; };
 		9919B93023D09FBB00C7A44D /* TextColourPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextColourPicker.swift; sourceTree = "<group>"; };
@@ -1268,6 +1270,7 @@
 				99C865222302E267004C7B89 /* ImageEditorViewModel.swift */,
 				99C8651E2302E256004C7B89 /* ImageEditorViewController.swift */,
 				99C8651F2302E256004C7B89 /* ImageEditorViewController.xib */,
+				99146A2924EEAB6200A2AE48 /* ImageEditorPlaceholderView.swift */,
 			);
 			path = "Image Content Editor";
 			sourceTree = "<group>";
@@ -1943,6 +1946,7 @@
 				99868F322396AD55009AC0F7 /* ImageEditorInspectorViewModel.swift in Sources */,
 				99488ACE23C78087009954AF /* EditableLabelCell.swift in Sources */,
 				999007EC24CF475900DB5C13 /* TourGetStartedViewController.swift in Sources */,
+				99146A2A24EEAB6200A2AE48 /* ImageEditorPlaceholderView.swift in Sources */,
 				998D0779241137A3004ADFF8 /* RectDrawingView.swift in Sources */,
 				99D8E39323800FB90098CF3B /* BaseInspectorViewModel.swift in Sources */,
 				99582817247702B300080593 /* ResizeHandleAccessibilityElement.swift in Sources */,

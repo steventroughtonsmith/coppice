@@ -59,6 +59,13 @@ public extension CGPoint {
     func toSize() -> CGSize {
         return CGSize(width: self.x, height: self.y)
     }
+
+    func distance(to otherPoint: CGPoint) -> CGFloat {
+        let x = self.x - otherPoint.x
+        let y = self.y - otherPoint.y
+
+        return sqrt((x * x) + (y * y))
+    }
 }
 
 
@@ -152,7 +159,7 @@ public extension CGRect {
         self.init(origin: rect.origin, size: rect.size)
     }
 
-    enum RectPoint {
+    enum RectPoint: Equatable {
         case min
         case mid
         case max
