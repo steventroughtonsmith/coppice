@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17132" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17147" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17132"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17147"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TextEditorViewController" customModule="Coppice" customModuleProvider="target">
             <connections>
                 <outlet property="editingTextView" destination="7Lj-ak-caX" id="chh-rV-jdO"/>
+                <outlet property="placeHolderLabel" destination="vqL-7l-juX" id="R00-mT-Ijb"/>
                 <outlet property="scrollView" destination="kjQ-m1-j9L" id="bI2-A3-M7N"/>
                 <outlet property="view" destination="c22-O7-iKe" id="j9z-KC-SpR"/>
             </connections>
@@ -50,14 +51,32 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vqL-7l-juX">
+                    <rect key="frame" x="8" y="512" width="137" height="16"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="Click to start writing…" id="g2J-Sg-cKc">
+                        <font key="font" usesAppearanceFont="YES"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <binding destination="-2" name="hidden" keyPath="self.showPlaceholder" id="g4W-03-QRf">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </textField>
             </subviews>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="kjQ-m1-j9L" secondAttribute="trailing" id="Bi5-rk-KYJ"/>
                 <constraint firstItem="kjQ-m1-j9L" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="bh3-eb-n4p"/>
+                <constraint firstItem="vqL-7l-juX" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="10" id="k3P-vy-7wT"/>
+                <constraint firstItem="vqL-7l-juX" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="10" id="l26-r7-4no"/>
                 <constraint firstItem="kjQ-m1-j9L" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="lcE-Yn-hiU"/>
                 <constraint firstAttribute="bottom" secondItem="kjQ-m1-j9L" secondAttribute="bottom" id="o2w-H1-UDL"/>
             </constraints>
             <point key="canvasLocation" x="139" y="287"/>
         </customView>
+        <userDefaultsController representsSharedInstance="YES" id="zLC-sP-eAX"/>
     </objects>
 </document>

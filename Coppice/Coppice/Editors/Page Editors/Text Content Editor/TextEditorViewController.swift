@@ -13,6 +13,7 @@ import CoppiceCore
 class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuItemValidation {
     @IBOutlet var editingTextView: NSTextView!
     @IBOutlet weak var scrollView: NSScrollView!
+    @IBOutlet weak var placeHolderLabel: NSTextField!
 
     @objc dynamic let viewModel: TextEditorViewModel
     init(viewModel: TextEditorViewModel) {
@@ -95,6 +96,13 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
     private lazy var textEditorInspectorViewController: TextEditorInspectorViewController = {
         return TextEditorInspectorViewController(viewModel: TextEditorInspectorViewModel(editor: self, modelController: self.viewModel.modelController))
     }()
+
+
+
+    //MARK: - Placeholder
+    @objc dynamic var showPlaceholder: Bool {
+        return self.editingTextView.string.count == 0
+    }
 
 
     //MARK: - InspectableTextEditor
@@ -202,6 +210,7 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
     }
 
     func updateTextView(with text: NSAttributedString) {
+        print("updatingText")
         guard (self.updatingText == false) else {
             return
         }
@@ -209,8 +218,10 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
             return
         }
         self.updatingText = true
+        self.willChangeValue(for: \.showPlaceholder)
         self.editingTextView.textStorage?.setAttributedString(text)
         self.setupInitialTextViewAttributesIfNeeded()
+        self.didChangeValue(for: \.showPlaceholder)
         self.updatingText = false
     }
 
@@ -368,6 +379,10 @@ extension TextEditorViewController: NSTextViewDelegate {
         return true
     }
 
+    func textDidChange(_ notification: Notification) {
+        self.willChangeValue(for: \.showPlaceholder)
+        self.didChangeValue(for: \.showPlaceholder)
+    }
 
     func textShouldBeginEditing(_ textObject: NSText) -> Bool {
         return true
