@@ -51,8 +51,6 @@ class ImageEditorPlaceholderView: NSView {
         path.line(to: secondPoint)
         path.lineWidth = 4
 
-        let distance = firstPoint.distance(to: secondPoint)
-
         let steps: [CGFloat] = [10.0, 10.0]
         path.setLineDash(steps, count: 2, phase: 10.0)
         path.stroke()
