@@ -266,6 +266,7 @@ public class CoppiceModelController: NSObject, ModelController {
 //MARK: - ModelSettingsKeys
 public extension ModelSettings.Setting {
     static let pageSortKeySetting = ModelSettings.Setting(rawValue: "pageSortKey")
+    static let pageGroupExpanded = ModelSettings.Setting(rawValue: "pageGroupExpanded")
     static let rootFolder = ModelSettings.Setting(rawValue: "rootFolder")
     static let documentIdentifier = ModelSettings.Setting(rawValue: "identifier")
 }

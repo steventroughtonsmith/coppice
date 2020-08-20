@@ -72,6 +72,11 @@ class SourceListViewModel: ViewModel {
         return node
     }()
 
+    var isPageGroupNodeExpanded: Bool {
+        get { self.modelController.settings.bool(for: .pageGroupExpanded) ?? true }
+        set { self.modelController.settings.set(newValue, for: .pageGroupExpanded) }
+    }
+
 
     var allNodes: [SourceListNode] {
         return Array(nodesByItem.values)

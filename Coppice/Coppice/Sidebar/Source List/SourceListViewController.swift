@@ -43,6 +43,7 @@ class SourceListViewController: NSViewController, NSMenuItemValidation {
             self.outlineScrollView.automaticallyAdjustsContentInsets = true
             self.outlineScrollView.additionalSafeAreaInsets = NSEdgeInsets(top: 5, left: 0, bottom: 0, right: 0)
         }
+        self.restorePageGroup()
     }
 
     override func viewWillAppear() {
@@ -297,10 +298,19 @@ class SourceListViewController: NSViewController, NSMenuItemValidation {
     private var createdItem: DocumentWindowViewModel.SidebarItem?
     private func reloadSourceListNodes() {
         self.outlineView.reloadItem(nil, reloadChildren: true)
+        self.restorePageGroup()
 
         self.reloadSelection()
         self.handleNewItem()
         self.newDocumentSetup()
+    }
+
+    private func restorePageGroup() {
+        if (self.viewModel.isPageGroupNodeExpanded) {
+            self.outlineView.expandItem(self.viewModel.pagesGroupNode)
+        } else {
+            self.outlineView.collapseItem(self.viewModel.pagesGroupNode)
+        }
     }
 
     private func handleNewItem() {
@@ -579,6 +589,20 @@ extension SourceListViewController: NSOutlineViewDelegate {
 
     func outlineViewSelectionDidChange(_ notification: Notification) {
         self.viewModel.selectedNodes = self.selectedNodes.nodes
+    }
+
+    func outlineViewItemDidExpand(_ notification: Notification) {
+        guard let node = notification.userInfo?["NSObject"] as? PagesGroupSourceListNode else {
+            return
+        }
+        self.viewModel.isPageGroupNodeExpanded = true
+    }
+
+    func outlineViewItemDidCollapse(_ notification: Notification) {
+        guard let node = notification.userInfo?["NSObject"] as? PagesGroupSourceListNode else {
+            return
+        }
+        self.viewModel.isPageGroupNodeExpanded = false
     }
 }
 
