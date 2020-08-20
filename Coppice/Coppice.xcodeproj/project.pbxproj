@@ -82,7 +82,6 @@
 		99581093230D92C600D996C4 /* CanvasPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99581091230D92C600D996C4 /* CanvasPageViewController.xib */; };
 		99581095230D93F700D996C4 /* CanvasPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99581094230D93F700D996C4 /* CanvasPageViewModel.swift */; };
 		99582817247702B300080593 /* ResizeHandleAccessibilityElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99582816247702B300080593 /* ResizeHandleAccessibilityElement.swift */; };
-		9959178724606A1900E8874C /* ResponderChainValidatingToolbarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9959178624606A1900E8874C /* ResponderChainValidatingToolbarItem.swift */; };
 		9960CCE924B1EC1C001F092E /* MockEventContextFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9960CCE824B1EC1C001F092E /* MockEventContextFactory.swift */; };
 		996187F0249A5166007313BD /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996187EE249A5166007313BD /* PreferencesWindowController.swift */; };
 		996187F1249A5166007313BD /* PreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 996187EF249A5166007313BD /* PreferencesWindow.xib */; };
@@ -421,7 +420,6 @@
 		99581091230D92C600D996C4 /* CanvasPageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CanvasPageViewController.xib; sourceTree = "<group>"; };
 		99581094230D93F700D996C4 /* CanvasPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageViewModel.swift; sourceTree = "<group>"; };
 		99582816247702B300080593 /* ResizeHandleAccessibilityElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizeHandleAccessibilityElement.swift; sourceTree = "<group>"; };
-		9959178624606A1900E8874C /* ResponderChainValidatingToolbarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponderChainValidatingToolbarItem.swift; sourceTree = "<group>"; };
 		9960CCE824B1EC1C001F092E /* MockEventContextFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEventContextFactory.swift; sourceTree = "<group>"; };
 		996187EE249A5166007313BD /* PreferencesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
 		996187EF249A5166007313BD /* PreferencesWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreferencesWindow.xib; sourceTree = "<group>"; };
@@ -1054,7 +1052,6 @@
 				99C88EE5240BC79A00339880 /* EditorBackgroundView.swift */,
 				99868F372397F005009AC0F7 /* FileDropView.swift */,
 				99488ACD23C78087009954AF /* EditableLabelCell.swift */,
-				9959178624606A1900E8874C /* ResponderChainValidatingToolbarItem.swift */,
 				9926951924AA34940050DFED /* ImmediateMenuSegmentedControl.swift */,
 				991F935B24ADF64A006A0A09 /* HoverSegmentedControl.swift */,
 				999453EE24ED698D0043C542 /* SimpleLabelPopoverViewController.swift */,
@@ -1850,7 +1847,6 @@
 				9965FC4623844910002FE10D /* TextEditorInspectorViewController.swift in Sources */,
 				999453F024ED698D0043C542 /* SimpleLabelPopoverViewController.swift in Sources */,
 				9977119C239E91FD00FCC8C7 /* ViewModel.swift in Sources */,
-				9959178724606A1900E8874C /* ResponderChainValidatingToolbarItem.swift in Sources */,
 				992A5CB322DDF53C0012CCB6 /* DebugPageEditorViewModel.swift in Sources */,
 				9981E6D624C08F12005AF0EE /* WelcomeWindowController.swift in Sources */,
 				99DEF28A22F32D350020A7CE /* DebugCanvasViewModelTypes.swift in Sources */,

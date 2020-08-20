@@ -56,11 +56,12 @@ class MainToolbarDelegate: NSObject {
     }()
 
     var linkToPageItem: NSToolbarItem = {
-        let item = ResponderChainValidatingToolbarItem(itemIdentifier: .linkToPage)
+        let item = NSToolbarItem(itemIdentifier: .linkToPage)
         item.image = NSImage.symbol(withName: Symbols.Toolbars.link)
         item.label = NSLocalizedString("Link to Page", comment: "Link to Page toolbar item label")
         item.paletteLabel = item.label
         item.toolTip = item.label
+        item.autovalidates = true
         item.isBordered = true
         item.action = #selector(TextEditorViewController.linkToPage(_:))
         return item

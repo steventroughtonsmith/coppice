@@ -10,7 +10,7 @@ import Cocoa
 import Combine
 import CoppiceCore
 
-class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitViewContainable {
+class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSToolbarItemValidation, SplitViewContainable {
 
     @IBOutlet weak var scrollView: NSScrollView!
     @IBOutlet weak var canvasView: CanvasView!
@@ -540,6 +540,18 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
         self.viewModel.documentWindowViewModel.deleteItems([page])
     }
 
+    @IBAction func linkToPage(_ sender: Any?) {
+        //We need an empty implementation just so validation occurs
+    }
+
+    func validateToolbarItem(_ item: NSToolbarItem) -> Bool {
+        if item.action == #selector(linkToPage(_:)) {
+            item.toolTip = NSLocalizedString("Start editing a Page to create a link", comment: "Canvas Link to Page disabled tooltip")
+            return false
+        }
+        return true
+    }
+
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         if menuItem.action == #selector(zoomControlChanged(_:)) {
             return true
@@ -571,6 +583,10 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
         if menuItem.action == #selector(selectAll(_:)) ||
             menuItem.action == #selector(deselectAll(_:)) {
             return true
+        }
+        if menuItem.action == #selector(linkToPage(_:)) {
+            menuItem.toolTip = NSLocalizedString("Start editing a Page to create a link", comment: "Canvas Link to Page disabled tooltip")
+            return false
         }
         #if DEBUG
         if menuItem.action == #selector(saveCanvasImageToDisk(_:)) {

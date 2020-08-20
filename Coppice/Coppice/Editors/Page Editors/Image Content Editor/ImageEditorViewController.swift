@@ -9,7 +9,7 @@
 import Cocoa
 import Combine
 
-class ImageEditorViewController: NSViewController {
+class ImageEditorViewController: NSViewController, NSMenuItemValidation, NSToolbarItemValidation {
     @IBOutlet weak var imageView: NSImageView!
     
     @objc dynamic let viewModel: ImageEditorViewModel
@@ -49,6 +49,27 @@ class ImageEditorViewController: NSViewController {
 
     var isInCanvas: Bool {
         return (self.parentEditor as? PageEditorViewController)?.isInCanvas ?? false
+    }
+
+
+    @IBAction func linkToPage(_ sender: Any?) {
+        //We need an empty implementation just so validation occurs
+    }
+
+    func validateToolbarItem(_ item: NSToolbarItem) -> Bool {
+        if item.action == #selector(linkToPage(_:)) {
+            item.toolTip = NSLocalizedString("Image Pages don't current support links", comment: "Image Page link to page disabled tooltip")
+            return false
+        }
+        return true
+    }
+
+    func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+        if menuItem.action == #selector(linkToPage(_:)) {
+            menuItem.toolTip = NSLocalizedString("Image Pages don't current support links", comment: "Image Pages link to page disabled tooltip")
+            return false
+        }
+        return true
     }
 }
 

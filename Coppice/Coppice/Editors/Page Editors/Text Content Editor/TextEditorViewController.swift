@@ -10,7 +10,7 @@ import Cocoa
 import Combine
 import CoppiceCore
 
-class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuItemValidation {
+class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuItemValidation, NSToolbarItemValidation {
     @IBOutlet var editingTextView: NSTextView!
     @IBOutlet weak var scrollView: NSScrollView!
     @IBOutlet weak var placeHolderLabel: NSTextField!
@@ -86,13 +86,6 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
         }
     }
 
-    override func responds(to aSelector: Selector!) -> Bool {
-        if aSelector == #selector(linkToPage(_:)) {
-            return (self.editingTextView.selectedRange().length > 0)
-        }
-        return super.responds(to: aSelector)
-    }
-
     private lazy var textEditorInspectorViewController: TextEditorInspectorViewController = {
         return TextEditorInspectorViewController(viewModel: TextEditorInspectorViewModel(editor: self, modelController: self.viewModel.modelController))
     }()
@@ -160,12 +153,27 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
         self.updateSelection(with: TextEditorAttributes(isItalic: !(attributes.isItalic ?? false)))
     }
 
+    func validateToolbarItem(_ item: NSToolbarItem) -> Bool {
+        if item.action == #selector(linkToPage(_:)) {
+            let enabled = (self.editingTextView.selectedRange().length > 0)
+            item.toolTip = enabled ? NSLocalizedString("Link to Page", comment: "Link to Page enabled tooltip")
+                                   : NSLocalizedString("Select some text to link it to another Page", comment: "Link to Page disabled tooltip")
+            return enabled
+        }
+        return true
+    }
+
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         if menuItem.action == #selector(toggleBold(_:)) {
             return self.validateItem(menuItem, keyPath: \.isBold, trait: .boldFontMask)
         }
         if menuItem.action == #selector(toggleItalic(_:)) {
             return self.validateItem(menuItem, keyPath: \.isItalic, trait: .italicFontMask)
+        }
+        if menuItem.action == #selector(linkToPage(_:)) {
+            let enabled = (self.editingTextView.selectedRange().length > 0)
+            menuItem.toolTip = enabled ? nil : NSLocalizedString("Select some text to link it to another Page", comment: "Link to Page disabled tooltip")
+            return enabled
         }
         return true
     }
