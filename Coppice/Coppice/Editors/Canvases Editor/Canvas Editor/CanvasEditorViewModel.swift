@@ -200,6 +200,7 @@ class CanvasEditorViewModel: ViewModel {
         let pages = ids.compactMap { self.modelController.pageCollection.objectWithID($0) }
 
         self.canvas.addPages(pages, centredOn: point)
+        self.documentWindowViewModel.clearSavedNavigation()
     }
 
     func addPages(forFilesAtURLs urls: [URL], centredOn point: CGPoint? = nil) {
@@ -208,6 +209,7 @@ class CanvasEditorViewModel: ViewModel {
         self.modelController.createPages(fromFilesAt: urls, in: self.documentWindowViewModel.folderForNewPages) { (pages) in
             self.canvas.addPages(pages, centredOn: pagePosition)
         }
+        self.documentWindowViewModel.clearSavedNavigation()
     }
 
     func dragImageForPage(with id: ModelID) -> NSImage? {

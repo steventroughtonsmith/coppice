@@ -133,7 +133,7 @@ class CanvasSourceListNodeTests: XCTestCase {
     }
 
     func test_setsTypeToBigCell() {
-        XCTAssertEqual(CanvasesSourceListNode().cellType, .bigCell)
+        XCTAssertEqual(CanvasesSourceListNode().cellType, .navCell)
     }
 }
 

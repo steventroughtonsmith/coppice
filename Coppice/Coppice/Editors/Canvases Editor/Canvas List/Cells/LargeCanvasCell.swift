@@ -32,4 +32,6 @@ class LargeCanvasCell: EditableLabelCell, CanvasCell {
         //We need to prevent the thumbnail from capturing drag events
         self.thumbnailImageView.unregisterDraggedTypes()
     }
+
+    var springLoadEnabled = false
 }

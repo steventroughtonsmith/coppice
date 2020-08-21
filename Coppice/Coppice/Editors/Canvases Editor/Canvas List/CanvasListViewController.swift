@@ -259,6 +259,7 @@ extension CanvasListViewController: NSTableViewDataSource {
 
         if (id.modelType == Page.modelType), case .on = dropOperation {
             self.tableView.setDropRow(row, dropOperation: .on)
+            self.viewModel.selectedCanvasIndex = row
             return .copy
         }
 
@@ -268,6 +269,7 @@ extension CanvasListViewController: NSTableViewDataSource {
     private func validateFileDrop(on table: NSTableView, with info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableView.DropOperation) -> NSDragOperation {
         if (row < table.numberOfRows) {
             self.tableView.setDropRow(row, dropOperation: .on)
+            self.viewModel.selectedCanvasIndex = row
             return .copy
         }
         return []

@@ -85,6 +85,79 @@ class DocumentWindowViewModel: NSObject {
         self.updateEditor(basedOnNewSelection: selection)
     }
 
+    private var updateSelection = true
+    func performWithoutUpdatingSelection<T>(_ block: () -> T) -> T {
+        self.updateSelection = false
+        let result = block()
+        self.updateSelection = true
+        return result
+    }
+
+
+    //MARK: - Editor Logic
+    @Published var currentEditor: Editor = .none
+
+    private func updateEditor(basedOnNewSelection selection: [SidebarItem]) {
+        //We won't update the editor if we have multiple items selected
+        guard selection.count <= 1 else {
+            return
+        }
+
+        //If nothing is selected then display nothing
+        guard let selectedItem = selection.first else {
+            self.currentEditor = .none
+            return
+        }
+
+        switch selectedItem {
+        case .canvases:
+            self.currentEditor = .canvas
+        case .canvas(let modelID):
+            self.currentEditor = .canvas
+            self.selectedCanvasID = modelID
+        case .page(let modelID):
+            guard let page = self.modelController.pageCollection.objectWithID(modelID) else {
+                self.currentEditor = .none
+                return
+            }
+            self.currentEditor = .page(page)
+        //Don't bother changing for a folder
+        case .folder(_):
+            return
+        }
+    }
+
+    //MARK: - Navigation Stack
+    struct NavStack {
+        let editor: Editor
+        let sidebarSelection: [SidebarItem]
+        let selectedCanvasID: ModelID?
+    }
+
+    private var currentNavStack: NavStack?
+
+    func saveNavigation() {
+        guard self.currentNavStack == nil else {
+            return
+        }
+        self.currentNavStack = NavStack(editor: self.currentEditor, sidebarSelection: self.sidebarSelection, selectedCanvasID: self.selectedCanvasID)
+    }
+
+    func restoreNavigation() {
+        guard let stack = self.currentNavStack else {
+            return
+        }
+        self.selectedCanvasID = stack.selectedCanvasID
+        self.sidebarSelection = stack.sidebarSelection
+        self.currentEditor = stack.editor
+
+        self.currentNavStack = nil
+    }
+
+    func clearSavedNavigation() {
+        self.currentNavStack = nil
+    }
+
 
     //MARK: - Observation
     var canvasObserver: ModelCollection<Canvas>.Observation?
@@ -170,48 +243,6 @@ class DocumentWindowViewModel: NSObject {
             self.updateSelection(newSelection)
         default:
             break
-        }
-    }
-
-    private var updateSelection = true
-    func performWithoutUpdatingSelection<T>(_ block: () -> T) -> T {
-        self.updateSelection = false
-        let result = block()
-        self.updateSelection = true
-        return result
-    }
-
-
-    //MARK: - Editor Logic
-    @Published var currentEditor: Editor = .none
-
-    private func updateEditor(basedOnNewSelection selection: [SidebarItem]) {
-        //We won't update the editor if we have multiple items selected
-        guard selection.count <= 1 else {
-            return
-        }
-
-        //If nothing is selected then display nothing
-        guard let selectedItem = selection.first else {
-            self.currentEditor = .none
-            return
-        }
-
-        switch selectedItem {
-        case .canvases:
-            self.currentEditor = .canvas
-        case .canvas(let modelID):
-            self.currentEditor = .canvas
-            self.selectedCanvasID = modelID
-        case .page(let modelID):
-            guard let page = self.modelController.pageCollection.objectWithID(modelID) else {
-                self.currentEditor = .none
-                return
-            }
-            self.currentEditor = .page(page)
-        //Don't bother changing for a folder
-        case .folder(_):
-            return
         }
     }
 

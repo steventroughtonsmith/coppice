@@ -41,7 +41,7 @@ class SourceListNodeCollection: NSObject {
 
 class SourceListNode: NSObject {
     enum CellType: Equatable {
-        case bigCell
+        case navCell
         case smallCell
         case groupCell
     }
@@ -111,7 +111,7 @@ class SourceListNode: NSObject {
 
 class CanvasesSourceListNode: SourceListNode {
     init() {
-        super.init(item: .canvases, cellType: .bigCell)
+        super.init(item: .canvases, cellType: .navCell)
     }
 
     @objc dynamic override var title: String {

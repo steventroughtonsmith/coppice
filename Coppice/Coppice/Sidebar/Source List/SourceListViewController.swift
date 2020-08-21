@@ -451,7 +451,7 @@ extension SourceListViewController: NSOutlineViewDataSource {
             return true
         }
         switch sourceListItem.cellType {
-        case .bigCell, .smallCell:
+        case .navCell, .smallCell:
             return true
         case .groupCell:
             return false
@@ -546,7 +546,7 @@ extension SourceListViewController: NSOutlineViewDelegate {
             return false
         }
         switch sourceListItem.cellType {
-        case .bigCell, .smallCell:
+        case .navCell, .smallCell:
             return false
         case .groupCell:
             return true
@@ -559,8 +559,10 @@ extension SourceListViewController: NSOutlineViewDelegate {
         }
         let view: NSTableCellView?
         switch sourceListItem.cellType {
-        case .bigCell:
-            view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("BigCell"), owner: self) as? NSTableCellView
+        case .navCell:
+            let navCell = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("BigCell"), owner: self) as? SourceListNavigationTableCellView
+            navCell?.delegate = self
+            view = navCell
         case .smallCell:
             view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("SmallCell"), owner: self) as? NSTableCellView
         case .groupCell:
@@ -580,7 +582,7 @@ extension SourceListViewController: NSOutlineViewDelegate {
             return baseSize
         }
         switch sourceListItem.cellType {
-        case .bigCell:
+        case .navCell:
             return 34
         case .smallCell, .groupCell:
             return baseSize
@@ -592,18 +594,35 @@ extension SourceListViewController: NSOutlineViewDelegate {
     }
 
     func outlineViewItemDidExpand(_ notification: Notification) {
-        guard let node = notification.userInfo?["NSObject"] as? PagesGroupSourceListNode else {
+        guard (notification.userInfo?["NSObject"] as? PagesGroupSourceListNode) != nil else {
             return
         }
         self.viewModel.isPageGroupNodeExpanded = true
     }
 
     func outlineViewItemDidCollapse(_ notification: Notification) {
-        guard let node = notification.userInfo?["NSObject"] as? PagesGroupSourceListNode else {
+        guard (notification.userInfo?["NSObject"] as? PagesGroupSourceListNode) != nil else {
             return
         }
         self.viewModel.isPageGroupNodeExpanded = false
     }
+}
+
+extension SourceListViewController: SourceListNavigationTableCellViewDelegate {
+    func userDidSpringLoad(on navigationCell: SourceListNavigationTableCellView) {
+        guard let node = navigationCell.objectValue as? SourceListNode else {
+            return
+        }
+        self.viewModel.springLoadedNode = node
+        self.reloadSelection()
+    }
+
+    func springLoadedDragEnded(_ navigationCell: SourceListNavigationTableCellView) {
+        self.viewModel.springLoadedNode = nil
+        self.reloadSelection()
+    }
+
+
 }
 
 

@@ -90,6 +90,7 @@ class CanvasListViewModel: ViewModel {
             centrePoint = CGPoint(x: viewPort.midX, y: viewPort.midY)
         }
         canvas.addPages([page], centredOn: centrePoint)
+        self.documentWindowViewModel.clearSavedNavigation()
     }
 
     func addPages(fromFilesAtURLs fileURLs: [URL], toCanvasAtIndex canvasIndex: Int?) -> [Page] {
@@ -97,7 +98,7 @@ class CanvasListViewModel: ViewModel {
         if let index = canvasIndex {
             canvas = self.canvases[index]
         }
-
+        self.documentWindowViewModel.clearSavedNavigation()
         return self.modelController.createPages(fromFilesAt: fileURLs, in: self.documentWindowViewModel.folderForNewPages) { (pages) in
             canvas?.addPages(pages)
         }

@@ -26,6 +26,8 @@
 		99115DC5249E304D008942DF /* SystemProfileInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99115DC3249E304D008942DF /* SystemProfileInfoViewController.swift */; };
 		99115DC6249E304D008942DF /* SystemProfileInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99115DC4249E304D008942DF /* SystemProfileInfoViewController.xib */; };
 		99146A2A24EEAB6200A2AE48 /* ImageEditorPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99146A2924EEAB6200A2AE48 /* ImageEditorPlaceholderView.swift */; };
+		99146A2C24EFFA0C00A2AE48 /* SourceListNavigationTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99146A2B24EFFA0C00A2AE48 /* SourceListNavigationTableCellView.swift */; };
+		99146A2E24F016DC00A2AE48 /* SpringLoadedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99146A2D24F016DC00A2AE48 /* SpringLoadedTableView.swift */; };
 		99171EDC24AA48B200E96DE6 /* MainToolbarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99171EDB24AA48B200E96DE6 /* MainToolbarDelegate.swift */; };
 		99171EDE24AB4FCC00E96DE6 /* Symbols.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99171EDD24AB4FCC00E96DE6 /* Symbols.xcassets */; };
 		9919B93123D09FBB00C7A44D /* TextColourPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9919B93023D09FBB00C7A44D /* TextColourPicker.swift */; };
@@ -365,6 +367,8 @@
 		99115DC3249E304D008942DF /* SystemProfileInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemProfileInfoViewController.swift; sourceTree = "<group>"; };
 		99115DC4249E304D008942DF /* SystemProfileInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SystemProfileInfoViewController.xib; sourceTree = "<group>"; };
 		99146A2924EEAB6200A2AE48 /* ImageEditorPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorPlaceholderView.swift; sourceTree = "<group>"; };
+		99146A2B24EFFA0C00A2AE48 /* SourceListNavigationTableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceListNavigationTableCellView.swift; sourceTree = "<group>"; };
+		99146A2D24F016DC00A2AE48 /* SpringLoadedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpringLoadedTableView.swift; sourceTree = "<group>"; };
 		99171EDB24AA48B200E96DE6 /* MainToolbarDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainToolbarDelegate.swift; sourceTree = "<group>"; };
 		99171EDD24AB4FCC00E96DE6 /* Symbols.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Symbols.xcassets; sourceTree = "<group>"; };
 		9919B93023D09FBB00C7A44D /* TextColourPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextColourPicker.swift; sourceTree = "<group>"; };
@@ -729,6 +733,7 @@
 				992A5C9122DCB7530012CCB6 /* SourceListViewController.swift */,
 				993D2BFF24157196002E5BAC /* SourceListOutlineView.swift */,
 				993C0EE824B3A5C5009993D4 /* SourceListTableCellView.swift */,
+				99146A2B24EFFA0C00A2AE48 /* SourceListNavigationTableCellView.swift */,
 				992A5C9522DCB7790012CCB6 /* SourceListView.xib */,
 				999DAAC923CCC5D80013EC36 /* SidebarHeaderView.swift */,
 			);
@@ -788,6 +793,7 @@
 			children = (
 				993D2BDA24127E3B002E5BAC /* CanvasListViewModel.swift */,
 				993D2BD624127E29002E5BAC /* CanvasListViewController.swift */,
+				99146A2D24F016DC00A2AE48 /* SpringLoadedTableView.swift */,
 				993D2BD724127E29002E5BAC /* CanvasListView.xib */,
 				993D2BFC2412F978002E5BAC /* Cells */,
 			);
@@ -1851,6 +1857,7 @@
 				9981E6D624C08F12005AF0EE /* WelcomeWindowController.swift in Sources */,
 				99DEF28A22F32D350020A7CE /* DebugCanvasViewModelTypes.swift in Sources */,
 				99868F352396AD73009AC0F7 /* ImageEditorInspectorViewController.swift in Sources */,
+				99146A2C24EFFA0C00A2AE48 /* SourceListNavigationTableCellView.swift in Sources */,
 				9981E6D924C0AE1F005AF0EE /* RecentDocumentTableCellView.swift in Sources */,
 				993D2C0024157196002E5BAC /* SourceListOutlineView.swift in Sources */,
 				998D077B2411513F004ADFF8 /* NewPageMenuDelegate.swift in Sources */,
@@ -1950,6 +1957,7 @@
 				99C88EE42409631800339880 /* PageImageController.swift in Sources */,
 				99C865262306D12B004C7B89 /* PageSelectorViewModel.swift in Sources */,
 				99A0B855238C2F46005FCF25 /* TextEditorAttributes.swift in Sources */,
+				99146A2E24F016DC00A2AE48 /* SpringLoadedTableView.swift in Sources */,
 				992A5C9F22DCCDB30012CCB6 /* NSView+M3Extensions.swift in Sources */,
 				99868F4523995739009AC0F7 /* PageLinkManager.swift in Sources */,
 				99771194239BF97600FCC8C7 /* NSAttributedString+M3Extensions.swift in Sources */,

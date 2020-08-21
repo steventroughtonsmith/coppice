@@ -182,6 +182,18 @@ class SourceListViewModel: ViewModel {
 
 
     //MARK: - Selection
+    var springLoadedNode: SourceListNode? {
+        didSet {
+            if let node = self.springLoadedNode {
+                self.documentWindowViewModel.saveNavigation()
+                self.selectedNodes = [node]
+            } else {
+                self.documentWindowViewModel.restoreNavigation()
+            }
+        }
+    }
+
+
     var selectedNodes: [SourceListNode] = [] {
         didSet {
             self.isUpdatingSelection = true
