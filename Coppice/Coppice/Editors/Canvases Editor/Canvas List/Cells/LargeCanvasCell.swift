@@ -27,10 +27,9 @@ class LargeCanvasCell: EditableLabelCell, CanvasCell {
         }
     }
 
-    override func layout() {
-        super.layout()
-//        self.thumbnailImageView.frame = self.thumbnailImageView.frame.rounded()
-//        self.nameLabel.frame = self.nameLabel.frame.rounded()
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        //We need to prevent the thumbnail from capturing drag events
+        self.thumbnailImageView.unregisterDraggedTypes()
     }
-
 }
