@@ -560,9 +560,7 @@ extension SourceListViewController: NSOutlineViewDelegate {
         let view: NSTableCellView?
         switch sourceListItem.cellType {
         case .navCell:
-            let navCell = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("BigCell"), owner: self) as? SourceListNavigationTableCellView
-            navCell?.delegate = self
-            view = navCell
+            view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("BigCell"), owner: self) as? NSTableCellView
         case .smallCell:
             view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("SmallCell"), owner: self) as? NSTableCellView
         case .groupCell:
@@ -571,6 +569,21 @@ extension SourceListViewController: NSOutlineViewDelegate {
         view?.setAccessibilityLabel(sourceListItem.accessibilityDescription)
         view?.objectValue = item
         return view
+    }
+
+    func outlineView(_ outlineView: NSOutlineView, rowViewForItem item: Any) -> NSTableRowView? {
+        guard let sourceListItem = item as? SourceListNode else {
+            return nil
+        }
+
+        switch sourceListItem.cellType {
+        case .navCell:
+            let rowView = SpringLoadedTableRowView()
+            rowView.delegate = self
+            return rowView
+        default:
+            return nil
+        }
     }
 
     func outlineView(_ outlineView: NSOutlineView, heightOfRowByItem item: Any) -> CGFloat {
@@ -608,16 +621,19 @@ extension SourceListViewController: NSOutlineViewDelegate {
     }
 }
 
-extension SourceListViewController: SourceListNavigationTableCellViewDelegate {
-    func userDidSpringLoad(on navigationCell: SourceListNavigationTableCellView) {
-        guard let node = navigationCell.objectValue as? SourceListNode else {
+extension SourceListViewController: SpringLoadedTableRowViewDelegate {
+    func userDidSpringLoad(on rowView: SpringLoadedTableRowView) {
+        guard
+            let navigationCell = rowView.view(atColumn: 0) as? NSTableCellView,
+            let node = navigationCell.objectValue as? SourceListNode
+        else {
             return
         }
         self.viewModel.springLoadedNode = node
         self.reloadSelection()
     }
 
-    func springLoadedDragEnded(_ navigationCell: SourceListNavigationTableCellView) {
+    func springLoadedDragEnded(_ rowView: SpringLoadedTableRowView) {
         self.viewModel.springLoadedNode = nil
         self.reloadSelection()
     }

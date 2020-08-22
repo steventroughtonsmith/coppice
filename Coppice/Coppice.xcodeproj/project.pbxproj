@@ -26,7 +26,6 @@
 		99115DC5249E304D008942DF /* SystemProfileInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99115DC3249E304D008942DF /* SystemProfileInfoViewController.swift */; };
 		99115DC6249E304D008942DF /* SystemProfileInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99115DC4249E304D008942DF /* SystemProfileInfoViewController.xib */; };
 		99146A2A24EEAB6200A2AE48 /* ImageEditorPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99146A2924EEAB6200A2AE48 /* ImageEditorPlaceholderView.swift */; };
-		99146A2C24EFFA0C00A2AE48 /* SourceListNavigationTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99146A2B24EFFA0C00A2AE48 /* SourceListNavigationTableCellView.swift */; };
 		99146A2E24F016DC00A2AE48 /* SpringLoadedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99146A2D24F016DC00A2AE48 /* SpringLoadedTableView.swift */; };
 		99171EDC24AA48B200E96DE6 /* MainToolbarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99171EDB24AA48B200E96DE6 /* MainToolbarDelegate.swift */; };
 		99171EDE24AB4FCC00E96DE6 /* Symbols.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99171EDD24AB4FCC00E96DE6 /* Symbols.xcassets */; };
@@ -84,6 +83,7 @@
 		99581093230D92C600D996C4 /* CanvasPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99581091230D92C600D996C4 /* CanvasPageViewController.xib */; };
 		99581095230D93F700D996C4 /* CanvasPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99581094230D93F700D996C4 /* CanvasPageViewModel.swift */; };
 		99582817247702B300080593 /* ResizeHandleAccessibilityElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99582816247702B300080593 /* ResizeHandleAccessibilityElement.swift */; };
+		996010F724F14FFA008B8F98 /* SpringLoadedTableRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996010F624F14FFA008B8F98 /* SpringLoadedTableRowView.swift */; };
 		9960CCE924B1EC1C001F092E /* MockEventContextFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9960CCE824B1EC1C001F092E /* MockEventContextFactory.swift */; };
 		996187F0249A5166007313BD /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996187EE249A5166007313BD /* PreferencesWindowController.swift */; };
 		996187F1249A5166007313BD /* PreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 996187EF249A5166007313BD /* PreferencesWindow.xib */; };
@@ -367,7 +367,6 @@
 		99115DC3249E304D008942DF /* SystemProfileInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemProfileInfoViewController.swift; sourceTree = "<group>"; };
 		99115DC4249E304D008942DF /* SystemProfileInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SystemProfileInfoViewController.xib; sourceTree = "<group>"; };
 		99146A2924EEAB6200A2AE48 /* ImageEditorPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorPlaceholderView.swift; sourceTree = "<group>"; };
-		99146A2B24EFFA0C00A2AE48 /* SourceListNavigationTableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceListNavigationTableCellView.swift; sourceTree = "<group>"; };
 		99146A2D24F016DC00A2AE48 /* SpringLoadedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpringLoadedTableView.swift; sourceTree = "<group>"; };
 		99171EDB24AA48B200E96DE6 /* MainToolbarDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainToolbarDelegate.swift; sourceTree = "<group>"; };
 		99171EDD24AB4FCC00E96DE6 /* Symbols.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Symbols.xcassets; sourceTree = "<group>"; };
@@ -424,6 +423,7 @@
 		99581091230D92C600D996C4 /* CanvasPageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CanvasPageViewController.xib; sourceTree = "<group>"; };
 		99581094230D93F700D996C4 /* CanvasPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageViewModel.swift; sourceTree = "<group>"; };
 		99582816247702B300080593 /* ResizeHandleAccessibilityElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizeHandleAccessibilityElement.swift; sourceTree = "<group>"; };
+		996010F624F14FFA008B8F98 /* SpringLoadedTableRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpringLoadedTableRowView.swift; sourceTree = "<group>"; };
 		9960CCE824B1EC1C001F092E /* MockEventContextFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEventContextFactory.swift; sourceTree = "<group>"; };
 		996187EE249A5166007313BD /* PreferencesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
 		996187EF249A5166007313BD /* PreferencesWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreferencesWindow.xib; sourceTree = "<group>"; };
@@ -733,7 +733,7 @@
 				992A5C9122DCB7530012CCB6 /* SourceListViewController.swift */,
 				993D2BFF24157196002E5BAC /* SourceListOutlineView.swift */,
 				993C0EE824B3A5C5009993D4 /* SourceListTableCellView.swift */,
-				99146A2B24EFFA0C00A2AE48 /* SourceListNavigationTableCellView.swift */,
+				996010F624F14FFA008B8F98 /* SpringLoadedTableRowView.swift */,
 				992A5C9522DCB7790012CCB6 /* SourceListView.xib */,
 				999DAAC923CCC5D80013EC36 /* SidebarHeaderView.swift */,
 			);
@@ -1857,7 +1857,7 @@
 				9981E6D624C08F12005AF0EE /* WelcomeWindowController.swift in Sources */,
 				99DEF28A22F32D350020A7CE /* DebugCanvasViewModelTypes.swift in Sources */,
 				99868F352396AD73009AC0F7 /* ImageEditorInspectorViewController.swift in Sources */,
-				99146A2C24EFFA0C00A2AE48 /* SourceListNavigationTableCellView.swift in Sources */,
+				996010F724F14FFA008B8F98 /* SpringLoadedTableRowView.swift in Sources */,
 				9981E6D924C0AE1F005AF0EE /* RecentDocumentTableCellView.swift in Sources */,
 				993D2C0024157196002E5BAC /* SourceListOutlineView.swift in Sources */,
 				998D077B2411513F004ADFF8 /* NewPageMenuDelegate.swift in Sources */,

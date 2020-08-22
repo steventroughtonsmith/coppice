@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17147" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17154" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17147"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17154"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -25,13 +25,13 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="17" horizontalPageScroll="10" verticalLineScroll="17" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F1p-BR-GwN">
-                    <rect key="frame" x="0.0" y="23" width="228" height="279"/>
+                    <rect key="frame" x="0.0" y="23" width="228" height="267"/>
                     <clipView key="contentView" drawsBackground="NO" id="dYU-0E-een">
-                        <rect key="frame" x="0.0" y="0.0" width="228" height="279"/>
+                        <rect key="frame" x="0.0" y="0.0" width="228" height="267"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <outlineView identifier="SidebarTable" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" columnReordering="NO" columnResizing="NO" autosaveColumns="NO" autosaveName="MainSidebar" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="14" autosaveExpandedItems="YES" outlineTableColumn="Z8W-Zh-S4f" id="lUZ-o0-8kA" customClass="SourceListOutlineView" customModule="Coppice" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="228" height="274"/>
+                                <rect key="frame" x="0.0" y="0.0" width="228" height="262"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <size key="intercellSpacing" width="3" height="0.0"/>
                                 <color key="backgroundColor" name="_sourceListBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -87,7 +87,7 @@
                                                     <outlet property="textField" destination="Dog-G9-UoS" id="yxv-xk-Ty2"/>
                                                 </connections>
                                             </tableCellView>
-                                            <tableCellView identifier="BigCell" id="c0H-2g-hDf" customClass="SourceListNavigationTableCellView" customModule="Coppice" customModuleProvider="target">
+                                            <tableCellView identifier="BigCell" id="c0H-2g-hDf">
                                                 <rect key="frame" x="1" y="17" width="187" height="40"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
