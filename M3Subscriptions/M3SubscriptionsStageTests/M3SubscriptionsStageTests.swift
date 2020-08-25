@@ -76,7 +76,6 @@ class M3SubscriptionsStageTests: XCTestCase {
             try FileManager.default.createDirectory(at: licenceDirectory, withIntermediateDirectories: true, attributes: nil)
         }
         self.licenceURL = licenceDirectory.appendingPathComponent("stage-licence.txt")
-        print("licenceURL: \(self.licenceURL)")
         self.controller = SubscriptionController(licenceURL: self.licenceURL)
 
         self.mockDelegate = MockSubscriptionDelegate()
@@ -122,7 +121,7 @@ class M3SubscriptionsStageTests: XCTestCase {
 
     //MARK: - Activate
     func test_activate_loginFailed() throws {
-        self.performAndWaitFor("Wait for error") { (expectation) in
+        self.performAndWaitFor("Wait for error", timeout: 2) { (expectation) in
             self.mockDelegate.errorExpectation = expectation
             self.controller.activate(withEmail: "pilky@mcubedsw.com", password: "password1!")
         }
@@ -132,7 +131,7 @@ class M3SubscriptionsStageTests: XCTestCase {
     }
 
     func test_activate_emptyAccount() throws {
-        self.performAndWaitFor("Wait for error") { (expectation) in
+        self.performAndWaitFor("Wait for error", timeout: 2) { (expectation) in
             self.mockDelegate.errorExpectation = expectation
             self.controller.activate(withEmail: TestData.Emails.empty, password: TestData.password)
         }
@@ -144,7 +143,7 @@ class M3SubscriptionsStageTests: XCTestCase {
     func test_activate_accountHasSubscriptionsButNotForApp() throws {
         TEST_OVERRIDES.bundleID = TestData.BundleIDs.appA
 
-        self.performAndWaitFor("Wait for error") { (expectation) in
+        self.performAndWaitFor("Wait for error", timeout: 2) { (expectation) in
             self.mockDelegate.errorExpectation = expectation
             self.controller.activate(withEmail: TestData.Emails.basic, password: TestData.password)
         }
@@ -156,7 +155,7 @@ class M3SubscriptionsStageTests: XCTestCase {
     func test_activate_accountHasSubscriptionForAppButItsExpired() throws {
         TEST_OVERRIDES.bundleID = TestData.BundleIDs.appB
 
-        self.performAndWaitFor("Wait for error") { (expectation) in
+        self.performAndWaitFor("Wait for error", timeout: 2) { (expectation) in
             self.mockDelegate.errorExpectation = expectation
             self.controller.activate(withEmail: TestData.Emails.basicExpired, password: TestData.password)
         }
@@ -338,7 +337,7 @@ class M3SubscriptionsStageTests: XCTestCase {
     //MARK: - Check
     func test_check_noMatchingTokenInAccount() throws {
         try self.writeLicence(["payload": ["response": "active", "token": "foobarbaz", "subscriptionName": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z"], "signature": "JXTHYF1DoiTDlFFCWEGJe6dXJX5pcTtUdPK4ziq+o22dibxbunYDYkYUMFrEMte8Jr/dqs9eVKIhMKqx65iEth0Y1f61y4V+dukLr1K9cEGciITwsbqKWAPk861FeShpWwdxAYqCuYQ0UeMCPbo3SrW2mQ5Nn3nzH0dmqFhrMAJONS9IiMbqgPkvwMDy/Gn38GafiWZmMUW+0P1ndgSFvLTJMnWsXEe+hLpJA9dKwWBgeXQ8VF4mN7dZwTLkWYSVOJkb4s3WndRrACi7tTgVcSWDhan/lVTM3JovHSKfCx8jzZlG1CZnpmes6GizpGW8TRff+evfZaGulNzhQiuykQ=="])
-        self.performAndWaitFor("Wait for error") { (expectation) in
+        self.performAndWaitFor("Wait for error", timeout: 2) { (expectation) in
             self.mockDelegate.errorExpectation = expectation
             self.controller.checkSubscription()
         }
@@ -350,7 +349,7 @@ class M3SubscriptionsStageTests: XCTestCase {
     func test_check_accountHasMatchingTokenButDeviceIDsDontMatch() throws {
         TEST_OVERRIDES.deviceID = TestData.DeviceIDs.tooManyDevices2
         try self.writeLicence(["payload": ["response": "active", "token": TestData.Tokens.basic, "subscriptionName": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z"], "signature": "WasVsa3NufBMRwOoEJLYFozKPkDAlhAnnIsNpR3vkRiUcKzHkxAMhdzOwKl2yrrLp0alfaojtXUkDs1Z5xsUCaEyQ5dy+PbGGXe30ZBy9VCC7AuPNntku+40ng3VJU1TpwaIOdKUzaWx6i4G6Y5JFOTqC1FyY4AbMKH7Pemg11VZMWdt+602cTNmJfzbkSPbLxcfLFYUojdoUG9K6b8k11KXGk0ph/oRD0dGz7syUSIXGeHGIQQPKkefR/PCBGz5Q4n2cTb8seOhmf7x4jAdnToFk3l2iwYkdfKwK6QFFyL+mZeD5sCjiuF79ll3x1P1w2vrRg/Yj4KIhoCLo5eWdA=="])
-        self.performAndWaitFor("Wait for error") { (expectation) in
+        self.performAndWaitFor("Wait for error", timeout: 2) { (expectation) in
             self.mockDelegate.errorExpectation = expectation
             self.controller.checkSubscription()
         }
@@ -362,7 +361,7 @@ class M3SubscriptionsStageTests: XCTestCase {
     func test_check_accountHasActivationButSubscriptionExpired() throws {
         TEST_OVERRIDES.deviceID = TestData.DeviceIDs.basicExpired
         try self.writeLicence(["payload": ["response": "active", "token": TestData.Tokens.basicExpired, "subscriptionName": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z"], "signature":"hdp0NG0XxEv0iJI09HnJiEoPzSPrvguLNs3/xhW/bYS1iaOuqEvOBj6EfKW3QVqnuOugoojT6SdGAz+d0NZ6hrLq5VqoVHCQg+pDjueHEASSJUnnBWma3emCFpNUB7bHb9gV5rmxjEaomx4a0I2oXKC/jtcLcXgguoDa6AqTogW1fdvr1dd/j+yHopMkQNXohVHOWJI9f1OlCxEKd86T5xgk9C2szCmpHSOwnGek6zcQfcSySQ+ouUBXvIjkdOdOT6L0mgMYkAi1+VN1IUpWNxOFaTjSWGopXI8YTtigI/pV6ATUgW9LSaMijr8g06+CQ3n40Ona4/zMLSYbkXkSkw=="])
-        self.performAndWaitFor("Wait for error") { (expectation) in
+        self.performAndWaitFor("Wait for error", timeout: 2) { (expectation) in
             self.mockDelegate.errorExpectation = expectation
             self.controller.checkSubscription()
         }
@@ -396,7 +395,7 @@ class M3SubscriptionsStageTests: XCTestCase {
     //MARK: - Deactivate
     func test_deactivate_noMatchingTokenInAccount() throws {
         try self.writeLicence(["payload": ["response": "active", "token": "foobarbaz", "subscriptionName": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z"], "signature": "JXTHYF1DoiTDlFFCWEGJe6dXJX5pcTtUdPK4ziq+o22dibxbunYDYkYUMFrEMte8Jr/dqs9eVKIhMKqx65iEth0Y1f61y4V+dukLr1K9cEGciITwsbqKWAPk861FeShpWwdxAYqCuYQ0UeMCPbo3SrW2mQ5Nn3nzH0dmqFhrMAJONS9IiMbqgPkvwMDy/Gn38GafiWZmMUW+0P1ndgSFvLTJMnWsXEe+hLpJA9dKwWBgeXQ8VF4mN7dZwTLkWYSVOJkb4s3WndRrACi7tTgVcSWDhan/lVTM3JovHSKfCx8jzZlG1CZnpmes6GizpGW8TRff+evfZaGulNzhQiuykQ=="])
-        self.performAndWaitFor("Wait for error") { (expectation) in
+        self.performAndWaitFor("Wait for error", timeout: 2) { (expectation) in
             self.mockDelegate.errorExpectation = expectation
             self.controller.deactivate()
         }
@@ -408,7 +407,7 @@ class M3SubscriptionsStageTests: XCTestCase {
     func test_deactivate_accountHasMatchingTokenButDeviceIDsDontMatch() throws {
         TEST_OVERRIDES.deviceID = TestData.DeviceIDs.tooManyDevices2
         try self.writeLicence(["payload": ["response": "active", "token": TestData.Tokens.basic, "subscriptionName": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z"], "signature": "WasVsa3NufBMRwOoEJLYFozKPkDAlhAnnIsNpR3vkRiUcKzHkxAMhdzOwKl2yrrLp0alfaojtXUkDs1Z5xsUCaEyQ5dy+PbGGXe30ZBy9VCC7AuPNntku+40ng3VJU1TpwaIOdKUzaWx6i4G6Y5JFOTqC1FyY4AbMKH7Pemg11VZMWdt+602cTNmJfzbkSPbLxcfLFYUojdoUG9K6b8k11KXGk0ph/oRD0dGz7syUSIXGeHGIQQPKkefR/PCBGz5Q4n2cTb8seOhmf7x4jAdnToFk3l2iwYkdfKwK6QFFyL+mZeD5sCjiuF79ll3x1P1w2vrRg/Yj4KIhoCLo5eWdA=="])
-        self.performAndWaitFor("Wait for error") { (expectation) in
+        self.performAndWaitFor("Wait for error", timeout: 2) { (expectation) in
             self.mockDelegate.errorExpectation = expectation
             self.controller.deactivate()
         }
