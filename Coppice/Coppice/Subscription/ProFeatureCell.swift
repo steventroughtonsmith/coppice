@@ -11,7 +11,6 @@ import Cocoa
 class ProFeatureCell: NSView, NIBInstantiable {
     static var nibName: String = "ProFeatureCell"
 
-    @IBOutlet weak var iconView: NSImageView!
     @IBOutlet weak var titleField: NSTextField!
     @IBOutlet weak var bodyField: NSTextField!
 

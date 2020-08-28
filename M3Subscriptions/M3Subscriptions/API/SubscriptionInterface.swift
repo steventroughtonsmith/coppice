@@ -9,6 +9,7 @@
 import Foundation
 
 protocol SubscriptionAPI {
+    var networkAdapter: NetworkAdapter { get }
     func activate(_ request: ActivationRequest, device: Device, completion: @escaping (ActivateAPI.APIResult) -> Void)
     func check(_ device: Device, token: String, completion: @escaping (CheckAPI.APIResult) -> Void)
     func deactivate(_ device: Device, token: String, completion: @escaping (DeactivateAPI.APIResult) -> Void)

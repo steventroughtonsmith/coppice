@@ -9,6 +9,7 @@
 import Cocoa
 import Sparkle
 import CoppiceCore
+import M3Subscriptions
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -16,6 +17,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let documentController = CoppiceDocumentController()
     @IBOutlet weak var newLinkedPageMenuDelegate: NewPageMenuDelegate!
     @IBOutlet weak var updaterController: SPUStandardUpdaterController!
+
+    let subscriptionManager = CoppiceSubscriptionManager()
 
     override init() {
         super.init()

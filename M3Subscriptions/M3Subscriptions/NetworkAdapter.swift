@@ -28,7 +28,11 @@ class URLSessionNetworkAdapter: NetworkAdapter {
             return baseURL
         }
         #endif
-        return URL(string: "http://localhost:8080/api")!
+        #if DEBUG
+        return URL(string: "https://dev-mcubedsw-com:8890/api")!
+        #else
+        return URL(string: "https://mcubedsw.com/api")!
+        #endif
     }
 
     var version: String {

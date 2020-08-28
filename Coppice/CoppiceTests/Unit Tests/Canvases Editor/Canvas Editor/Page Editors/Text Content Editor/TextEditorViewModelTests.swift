@@ -123,6 +123,10 @@ class TextEditorViewModelTests: XCTestCase {
 }
 
 private class MockEditorView: TextEditorView {
+    func updateTextView(with text: NSAttributedString) {
+        
+    }
+
     func prepareForDisplay(withSafeAreaInsets safeAreaInsets: NSEdgeInsets) {   
     }
 

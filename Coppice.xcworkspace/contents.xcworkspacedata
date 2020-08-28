@@ -10,4 +10,7 @@
    <FileRef
       location = "group:CoppiceCore/CoppiceCore.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:Coppice/Coppice/../../M3Subscriptions/M3Subscriptions.xcodeproj">
+   </FileRef>
 </Workspace>

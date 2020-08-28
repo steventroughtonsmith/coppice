@@ -78,7 +78,11 @@ public class SubscriptionController {
             let response = ActivationResponse(url: self.licenceURL),
             let token = response.token
         else {
-            self.delegate?.didEncounterError(SubscriptionErrorFactory.notActivatedError(), in: self)
+            if let deactivated = ActivationResponse.deactivated() {
+                self.complete(with: deactivated)
+            } else {
+                self.delegate?.didEncounterError(SubscriptionErrorFactory.notActivatedError(), in: self)
+            }
             return
         }
 

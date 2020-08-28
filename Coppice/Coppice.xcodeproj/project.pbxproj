@@ -164,6 +164,16 @@
 		99961800249D0CF300A1AE24 /* org.sparkle-project.InstallerConnection.xpc in Copy XPC */ = {isa = PBXBuildFile; fileRef = 999617FA249D0CB100A1AE24 /* org.sparkle-project.InstallerConnection.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		99961801249D0CF300A1AE24 /* org.sparkle-project.InstallerLauncher.xpc in Copy XPC */ = {isa = PBXBuildFile; fileRef = 999617FB249D0CB200A1AE24 /* org.sparkle-project.InstallerLauncher.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		99961802249D0CF300A1AE24 /* org.sparkle-project.InstallerStatus.xpc in Copy XPC */ = {isa = PBXBuildFile; fileRef = 999617FC249D0CB200A1AE24 /* org.sparkle-project.InstallerStatus.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		9999A23424F80CAB001F8161 /* libM3Subscriptions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9999A23324F80CAB001F8161 /* libM3Subscriptions.a */; };
+		9999A23624F93052001F8161 /* CoppiceSubscriptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9999A23524F93052001F8161 /* CoppiceSubscriptionManager.swift */; };
+		9999A23924F93796001F8161 /* CoppiceProViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9999A23724F93796001F8161 /* CoppiceProViewController.swift */; };
+		9999A23A24F93796001F8161 /* CoppiceProViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9999A23824F93796001F8161 /* CoppiceProViewController.xib */; };
+		9999A23D24F937B6001F8161 /* ActivatedSubscriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9999A23B24F937B6001F8161 /* ActivatedSubscriptionViewController.swift */; };
+		9999A23E24F937B6001F8161 /* ActivatedSubscriptionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9999A23C24F937B6001F8161 /* ActivatedSubscriptionViewController.xib */; };
+		9999A24124F950E7001F8161 /* DeactivatedSubscriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9999A23F24F950E7001F8161 /* DeactivatedSubscriptionViewController.swift */; };
+		9999A24224F950E7001F8161 /* DeactivatedSubscriptionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9999A24024F950E7001F8161 /* DeactivatedSubscriptionViewController.xib */; };
+		9999A24524F95235001F8161 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9999A24324F95235001F8161 /* SignInViewController.swift */; };
+		9999A24624F95235001F8161 /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9999A24424F95235001F8161 /* SignInViewController.xib */; };
 		999DAACA23CCC5D80013EC36 /* SidebarHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999DAAC923CCC5D80013EC36 /* SidebarHeaderView.swift */; };
 		999EA68D2433913A00BF254E /* Info.plist.prefix in Resources */ = {isa = PBXBuildFile; fileRef = 999EA68C2433913A00BF254E /* Info.plist.prefix */; };
 		999EA6B32436097500BF254E /* SidebarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999EA6B02436097500BF254E /* SidebarViewModel.swift */; };
@@ -504,6 +514,17 @@
 		999617FB249D0CB200A1AE24 /* org.sparkle-project.InstallerLauncher.xpc */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.xpc-service"; path = "org.sparkle-project.InstallerLauncher.xpc"; sourceTree = "<group>"; };
 		999617FC249D0CB200A1AE24 /* org.sparkle-project.InstallerStatus.xpc */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.xpc-service"; path = "org.sparkle-project.InstallerStatus.xpc"; sourceTree = "<group>"; };
 		999617FD249D0CBA00A1AE24 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
+		9999A23124F80C8D001F8161 /* libM3Subscriptions.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libM3Subscriptions.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		9999A23324F80CAB001F8161 /* libM3Subscriptions.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libM3Subscriptions.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		9999A23524F93052001F8161 /* CoppiceSubscriptionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoppiceSubscriptionManager.swift; sourceTree = "<group>"; };
+		9999A23724F93796001F8161 /* CoppiceProViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoppiceProViewController.swift; sourceTree = "<group>"; };
+		9999A23824F93796001F8161 /* CoppiceProViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CoppiceProViewController.xib; sourceTree = "<group>"; };
+		9999A23B24F937B6001F8161 /* ActivatedSubscriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivatedSubscriptionViewController.swift; sourceTree = "<group>"; };
+		9999A23C24F937B6001F8161 /* ActivatedSubscriptionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActivatedSubscriptionViewController.xib; sourceTree = "<group>"; };
+		9999A23F24F950E7001F8161 /* DeactivatedSubscriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeactivatedSubscriptionViewController.swift; sourceTree = "<group>"; };
+		9999A24024F950E7001F8161 /* DeactivatedSubscriptionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeactivatedSubscriptionViewController.xib; sourceTree = "<group>"; };
+		9999A24324F95235001F8161 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		9999A24424F95235001F8161 /* SignInViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SignInViewController.xib; sourceTree = "<group>"; };
 		999DAAC923CCC5D80013EC36 /* SidebarHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarHeaderView.swift; sourceTree = "<group>"; };
 		999EA68C2433913A00BF254E /* Info.plist.prefix */ = {isa = PBXFileReference; lastKnownFileType = text; path = Info.plist.prefix; sourceTree = "<group>"; };
 		999EA68F243392B600BF254E /* prepare_infoplist_prefix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = prepare_infoplist_prefix.swift; sourceTree = "<group>"; };
@@ -649,6 +670,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9999A23424F80CAB001F8161 /* libM3Subscriptions.a in Frameworks */,
 				999617FE249D0CBA00A1AE24 /* Sparkle.framework in Frameworks */,
 				99D0C87E24C5EDB4002EEBFA /* CoppiceCore.framework in Frameworks */,
 			);
@@ -920,10 +942,19 @@
 		996187FE249BB61D007313BD /* Subscription */ = {
 			isa = PBXGroup;
 			children = (
+				9999A23724F93796001F8161 /* CoppiceProViewController.swift */,
+				9999A23824F93796001F8161 /* CoppiceProViewController.xib */,
 				996187FA249BB615007313BD /* SubscribeViewController.swift */,
 				996187FB249BB615007313BD /* SubscribeViewController.xib */,
+				9999A24324F95235001F8161 /* SignInViewController.swift */,
+				9999A24424F95235001F8161 /* SignInViewController.xib */,
+				9999A23F24F950E7001F8161 /* DeactivatedSubscriptionViewController.swift */,
+				9999A24024F950E7001F8161 /* DeactivatedSubscriptionViewController.xib */,
+				9999A23B24F937B6001F8161 /* ActivatedSubscriptionViewController.swift */,
+				9999A23C24F937B6001F8161 /* ActivatedSubscriptionViewController.xib */,
 				996187FF249BC0D7007313BD /* ProFeatureCell.swift */,
 				99618801249BC0EF007313BD /* ProFeatureCell.xib */,
+				9999A23524F93052001F8161 /* CoppiceSubscriptionManager.swift */,
 			);
 			path = Subscription;
 			sourceTree = "<group>";
@@ -1308,6 +1339,8 @@
 		99D0C70E24C5CED0002EEBFA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9999A23324F80CAB001F8161 /* libM3Subscriptions.a */,
+				9999A23124F80C8D001F8161 /* libM3Subscriptions.a */,
 				99D0C87D24C5EDB4002EEBFA /* CoppiceCore.framework */,
 				99D0C70F24C5CED0002EEBFA /* Quartz.framework */,
 			);
@@ -1719,15 +1752,19 @@
 			files = (
 				99C8650D23016EE5004C7B89 /* TextEditorViewController.xib in Resources */,
 				99D8E382237EDB890098CF3B /* InspectorContainerViewController.xib in Resources */,
+				9999A23A24F93796001F8161 /* CoppiceProViewController.xib in Resources */,
 				99C865212302E256004C7B89 /* ImageEditorViewController.xib in Resources */,
 				992A5CA622DDF4C50012CCB6 /* EditorContainerViewController.xib in Resources */,
 				999007E524CF474300DB5C13 /* TourLinksView.xib in Resources */,
 				99FDF12D241FD53D00AF1E51 /* CanvasesView.xib in Resources */,
 				992A5CAF22DDF50F0012CCB6 /* DebugPageEditor.xib in Resources */,
+				9999A24624F95235001F8161 /* SignInViewController.xib in Resources */,
+				9999A24224F950E7001F8161 /* DeactivatedSubscriptionViewController.xib in Resources */,
 				996187F9249A6E72007313BD /* UpdatePreferencesViewController.xib in Resources */,
 				999007F324D06C7000DB5C13 /* TourBranches.mp4 in Resources */,
 				999007D524CF458900DB5C13 /* TourWindow.xib in Resources */,
 				99171EDE24AB4FCC00E96DE6 /* Symbols.xcassets in Resources */,
+				9999A23E24F937B6001F8161 /* ActivatedSubscriptionViewController.xib in Resources */,
 				9958108F230D909900D996C4 /* TestCanvasPageViewController.xib in Resources */,
 				99618802249BC0EF007313BD /* ProFeatureCell.xib in Resources */,
 				999453F124ED698D0043C542 /* SimpleLabelPopoverViewController.xib in Resources */,
@@ -1859,6 +1896,7 @@
 				99868F352396AD73009AC0F7 /* ImageEditorInspectorViewController.swift in Sources */,
 				996010F724F14FFA008B8F98 /* SpringLoadedTableRowView.swift in Sources */,
 				9981E6D924C0AE1F005AF0EE /* RecentDocumentTableCellView.swift in Sources */,
+				9999A23D24F937B6001F8161 /* ActivatedSubscriptionViewController.swift in Sources */,
 				993D2C0024157196002E5BAC /* SourceListOutlineView.swift in Sources */,
 				998D077B2411513F004ADFF8 /* NewPageMenuDelegate.swift in Sources */,
 				99D8E37A237EDB890098CF3B /* PageInspectorViewModel.swift in Sources */,
@@ -1872,6 +1910,7 @@
 				999453ED24ED63640043C542 /* SystemProfileInfoItem.swift in Sources */,
 				993C0EE924B3A5C5009993D4 /* SourceListTableCellView.swift in Sources */,
 				996187F0249A5166007313BD /* PreferencesWindowController.swift in Sources */,
+				9999A24524F95235001F8161 /* SignInViewController.swift in Sources */,
 				999EA6C72436384F00BF254E /* SearchResultOutlineView.swift in Sources */,
 				99115DC5249E304D008942DF /* SystemProfileInfoViewController.swift in Sources */,
 				99FFF9CC234E2F2F00EF02A0 /* FlippedView.swift in Sources */,
@@ -1905,6 +1944,7 @@
 				999007E424CF474300DB5C13 /* TourMovieViewController.swift in Sources */,
 				993D2BFE2412FB1C002E5BAC /* SplitViewContainable.swift in Sources */,
 				99A97FF72476ABD500CDD95C /* SearchResultTableCellView.swift in Sources */,
+				9999A24124F950E7001F8161 /* DeactivatedSubscriptionViewController.swift in Sources */,
 				992A5CAE22DDF50F0012CCB6 /* DebugPageEditor.swift in Sources */,
 				99D8E37D237EDB890098CF3B /* CanvasInspectorViewController.swift in Sources */,
 				99C03F0D2334D04200EB7516 /* NSScrollView+M3Extensions.swift in Sources */,
@@ -1931,11 +1971,13 @@
 				996187F4249A523D007313BD /* GeneralPreferencesViewController.swift in Sources */,
 				998F178B23E46B4900B3437A /* ColourGridImageGenerator.swift in Sources */,
 				999453EB24ED5BF10043C542 /* SystemProfileInfoTableCell.swift in Sources */,
+				9999A23624F93052001F8161 /* CoppiceSubscriptionManager.swift in Sources */,
 				99C865232302E267004C7B89 /* ImageEditorViewModel.swift in Sources */,
 				9985F4D923F2E13600B96DC7 /* CanvasPageTitleView.swift in Sources */,
 				99FE019122CD1037004D380D /* AppDelegate.swift in Sources */,
 				992710C424D1A29200C7C61A /* TourInterfaceView.swift in Sources */,
 				99A0B857238D6F74005FCF25 /* NSTextView+M3Extensions.swift in Sources */,
+				9999A23924F93796001F8161 /* CoppiceProViewController.swift in Sources */,
 				99B3474C2465846900B96B71 /* PixelPerfectTableView.swift in Sources */,
 				99D8E378237EDB890098CF3B /* PageInspectorViewController.swift in Sources */,
 				99F0CD76246AF1C4006DE18E /* PreviewGenerationDebugWindow.swift in Sources */,

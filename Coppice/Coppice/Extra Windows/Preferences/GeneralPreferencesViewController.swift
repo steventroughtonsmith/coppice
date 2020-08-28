@@ -10,13 +10,14 @@ import Cocoa
 import Combine
 import CoppiceCore
 
-class GeneralPreferencesViewController: NSViewController {
+class GeneralPreferencesViewController: PreferencesViewController {
 
-    func createTabItem() -> NSTabViewItem {
-        let item = NSTabViewItem(viewController: self)
-        item.label = NSLocalizedString("General", comment: "General Preferences Title")
-        item.image = NSImage(named: "PrefsGeneral")
-        return item
+    override var tabLabel: String {
+        return NSLocalizedString("General", comment: "General Preferences Title")
+    }
+
+    override var tabImage: NSImage? {
+        return NSImage(named: "PrefsGeneral")
     }
 
     var selectedFont: AnyCancellable?

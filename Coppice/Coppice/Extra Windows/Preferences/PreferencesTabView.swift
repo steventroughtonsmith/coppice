@@ -41,7 +41,11 @@ class PreferencesTabView: NSTabViewController {
         self.updateFrame(of: window, for: item, animated: true)
     }
 
-    func updateFrame(of window: NSWindow, for tabViewItem: NSTabViewItem, animated: Bool) {
+
+    func updateFrame(of window: NSWindow, for tabViewItem: NSTabViewItem, animated: Bool, recalculateHeight: Bool = false) {
+        if (recalculateHeight) {
+            self.tabHeights[tabViewItem] = self.height(for: tabViewItem)
+        }
         let newHeight = self.tabHeights[tabViewItem] ?? 0
         let currentHeight = window.contentView?.frame.height ?? self.tabView.frame.height
 
@@ -71,6 +75,52 @@ class PreferencesTabView: NSTabViewController {
         if (event.keyCode == UInt16(kVK_Escape)) {
             self.delegate?.escapeWasPressed(in: self)
         }
+    }
+}
+
+class PreferencesViewController: NSViewController {
+    var preferenceTabView: PreferencesTabView? {
+        var currentViewController: NSViewController? = self
+        while (currentViewController != nil) {
+            if let preferencesTabView = (currentViewController as? PreferencesTabView) {
+                return preferencesTabView
+            }
+            currentViewController = currentViewController?.parent
+        }
+        return nil
+    }
+
+    var tabLabel: String {
+        return "Unknown"
+    }
+
+    var tabImage: NSImage? {
+        return nil
+    }
+
+    private(set) weak var tabViewItem: NSTabViewItem?
+
+    override init(nibName nibNameOrNil: NSNib.Name?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+
+        let item = NSTabViewItem(viewController: self)
+        item.label = self.tabLabel
+        item.image = self.tabImage
+        self.tabViewItem = item
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    func updateSize(animated: Bool = true) {
+        guard
+            let window = self.view.window,
+            let tabViewItem = self.tabViewItem
+        else {
+            return
+        }
+        self.preferenceTabView?.updateFrame(of: window, for: tabViewItem, animated: animated, recalculateHeight: true)
     }
 }
 

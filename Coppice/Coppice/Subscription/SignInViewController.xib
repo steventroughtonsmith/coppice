@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17154" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17154"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="SignInViewController" customModule="Coppice" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="480" height="148"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="mhH-9L-j8g">
+                    <rect key="frame" x="105" y="30" width="270" height="98"/>
+                    <subviews>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9T5-jv-0lN">
+                            <rect key="frame" x="-2" y="29" width="63" height="16"/>
+                            <textFieldCell key="cell" lineBreakMode="clipping" title="Password" id="BqQ-SA-stv">
+                                <font key="font" usesAppearanceFont="YES"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="n8D-W9-h9H">
+                            <rect key="frame" x="0.0" y="53" width="270" height="21"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="zAS-bK-fmH">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dSe-N9-Trz">
+                            <rect key="frame" x="-2" y="82" width="37" height="16"/>
+                            <textFieldCell key="cell" lineBreakMode="clipping" title="Email" id="kEJ-dc-gtE">
+                                <font key="font" usesAppearanceFont="YES"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <secureTextField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Iha-qt-Dxg">
+                            <rect key="frame" x="0.0" y="0.0" width="270" height="21"/>
+                            <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="U9z-PW-kx8">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                <allowedInputSourceLocales>
+                                    <string>NSAllRomanInputSourcesLocaleIdentifier</string>
+                                </allowedInputSourceLocales>
+                            </secureTextFieldCell>
+                        </secureTextField>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="n8D-W9-h9H" secondAttribute="trailing" id="B4b-HS-dxu"/>
+                        <constraint firstItem="Iha-qt-Dxg" firstAttribute="top" secondItem="9T5-jv-0lN" secondAttribute="bottom" constant="8" symbolic="YES" id="Eo2-ss-jOe"/>
+                        <constraint firstItem="9T5-jv-0lN" firstAttribute="leading" secondItem="mhH-9L-j8g" secondAttribute="leading" id="FgV-RS-xTZ"/>
+                        <constraint firstItem="dSe-N9-Trz" firstAttribute="top" secondItem="mhH-9L-j8g" secondAttribute="top" id="NQA-EE-rbe"/>
+                        <constraint firstAttribute="trailing" secondItem="Iha-qt-Dxg" secondAttribute="trailing" id="QQ0-2N-Bwo"/>
+                        <constraint firstAttribute="width" constant="270" id="S7K-Ft-sCW"/>
+                        <constraint firstItem="n8D-W9-h9H" firstAttribute="leading" secondItem="mhH-9L-j8g" secondAttribute="leading" id="SFj-48-QzJ"/>
+                        <constraint firstItem="n8D-W9-h9H" firstAttribute="top" secondItem="dSe-N9-Trz" secondAttribute="bottom" constant="8" symbolic="YES" id="Yu8-DK-cBe"/>
+                        <constraint firstItem="dSe-N9-Trz" firstAttribute="leading" secondItem="mhH-9L-j8g" secondAttribute="leading" id="c4t-Jt-PG7"/>
+                        <constraint firstItem="9T5-jv-0lN" firstAttribute="top" secondItem="n8D-W9-h9H" secondAttribute="bottom" constant="8" symbolic="YES" id="nL3-Hq-hGA"/>
+                        <constraint firstAttribute="bottom" secondItem="Iha-qt-Dxg" secondAttribute="bottom" id="xrU-CE-JDh"/>
+                        <constraint firstItem="Iha-qt-Dxg" firstAttribute="leading" secondItem="mhH-9L-j8g" secondAttribute="leading" id="ztb-jr-GMK"/>
+                    </constraints>
+                </customView>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="mhH-9L-j8g" secondAttribute="bottom" constant="30" id="CJl-14-05M"/>
+                <constraint firstItem="mhH-9L-j8g" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="20" id="vXO-y3-FXj"/>
+                <constraint firstItem="mhH-9L-j8g" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="yWQ-zd-8ma"/>
+            </constraints>
+            <point key="canvasLocation" x="84" y="150.5"/>
+        </customView>
+    </objects>
+</document>

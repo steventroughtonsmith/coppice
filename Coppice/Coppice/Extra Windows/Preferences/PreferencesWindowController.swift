@@ -38,18 +38,21 @@ class PreferencesWindowController: NSWindowController {
         self.tabController.delegate = self
 
         let generalPrefs = GeneralPreferencesViewController()
-        let generalItem = generalPrefs.createTabItem()
-        self.tabController.addTabViewItem(generalItem)
+        if let generalItem = generalPrefs.tabViewItem {
+            self.tabController.addTabViewItem(generalItem)
+        }
 
-        let updatePrefs = UpdatePreferencesViewController(updaterController: self.updaterController)
-        self.tabController.addTabViewItem(updatePrefs.createTabItem())
+        if let updatePrefs = UpdatePreferencesViewController(updaterController: self.updaterController).tabViewItem {
+            self.tabController.addTabViewItem(updatePrefs)
+        }
 
-        let subscribe = SubscribeViewController()
-        self.tabController.addTabViewItem(subscribe.createTabItem())
+        if let coppicePro = CoppiceProViewController().tabViewItem {
+            self.tabController.addTabViewItem(coppicePro)
+        }
 
         self.window?.contentViewController = self.tabController
 
-        if let window = self.window {
+        if let window = self.window, let generalItem = generalPrefs.tabViewItem {
             self.tabController.updateFrame(of: window, for: generalItem, animated: false)
             window.title = generalItem.label
         }

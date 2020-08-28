@@ -8,23 +8,20 @@
 
 import Cocoa
 
-class SubscribeViewController: NSViewController {
+class SubscribeViewController: NSViewController, DeactivatedSubscriptionMode {
+    let header = NSLocalizedString("Upgrade to Pro", comment: "")
+    let subheader = NSLocalizedString("Unlock all of Coppice's features for just $14.99 a year", comment: "")
+    let actionName = NSLocalizedString("Subscribe now for $14.99/year", comment: "")
+    let toggleName = NSLocalizedString("Already subscribed? Sign In", comment: "")
 
-    func createTabItem() -> NSTabViewItem {
-        let item = NSTabViewItem(viewController: self)
-        item.label = NSLocalizedString("Coppice Pro", comment: "Pro Preferences Title")
-        item.image = NSImage(named: "PrefsPro")
-        return item
+    func performAction() {
+        print("subscribe")
     }
 
-    @IBOutlet weak var featureContainer: NSView!
     @IBOutlet weak var featureStackView: NSStackView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.featureContainer.wantsLayer = true
-        self.featureContainer.layer?.backgroundColor = NSColor(white: 0.32, alpha: 1).cgColor
 
         self.setupFeatureGrid()
     }
@@ -60,14 +57,12 @@ class SubscribeViewController: NSViewController {
     private func cell(forFeature feature: [String: String]) -> ProFeatureCell? {
         guard
             let title = feature["title"],
-            let iconName = feature["icon"],
             let body = feature["body"]
         else {
             return nil
         }
         let cell = ProFeatureCell.createFromNIB()
         cell.titleField.stringValue = title
-        cell.iconView.image = NSImage(named: iconName)
         cell.bodyField.stringValue = body
         return cell
     }

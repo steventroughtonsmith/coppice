@@ -9,7 +9,7 @@
 import Cocoa
 import Sparkle
 
-class UpdatePreferencesViewController: NSViewController {
+class UpdatePreferencesViewController: PreferencesViewController {
     @objc dynamic let updaterController: SPUStandardUpdaterController?
     init(updaterController: SPUStandardUpdaterController) {
         self.updaterController = updaterController
@@ -19,14 +19,14 @@ class UpdatePreferencesViewController: NSViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    func createTabItem() -> NSTabViewItem {
-        let item = NSTabViewItem(viewController: self)
-        item.label = NSLocalizedString("Updates", comment: "Updates Preferences Title")
-        item.image = NSImage(named: "PrefsUpdates")
-        return item
+
+    override var tabLabel: String {
+        return NSLocalizedString("Updates", comment: "Updates Preferences Title")
     }
 
+    override var tabImage: NSImage? {
+        return NSImage(named: "PrefsUpdates")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
