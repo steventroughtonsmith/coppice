@@ -8,20 +8,7 @@
 
 import Foundation
 
-public protocol SubscriptionControllerDelegate: class {
-    func didChangeSubscription(_ info: ActivationResponse, in controller: SubscriptionController)
-    func didEncounterError(_ error: NSError, in controller: SubscriptionController)
-}
-
-public protocol SubscriptionControllerUIDelegate: class {
-    func showSubscriptionPlans(_ plans: [SubscriptionPlan], for controller: SubscriptionController)
-    func showDevicesToDeactivate(_ devices: [SubscriptionDevice], for controller: SubscriptionController)
-}
-
 public class SubscriptionController {
-    public weak var delegate: SubscriptionControllerDelegate?
-    public weak var uiDelegate: SubscriptionControllerUIDelegate?
-
     public convenience init(licenceURL: URL) {
         self.init(licenceURL: licenceURL, subscriptionAPI: OnlineSubscriptionAPI(networkAdapter: URLSessionNetworkAdapter()))
     }
@@ -42,7 +29,8 @@ public class SubscriptionController {
     }
     #endif
 
-    public func activate(withEmail email: String, password: String, subscription: SubscriptionPlan? = nil, deactivatingDevice: SubscriptionDevice? = nil) {
+    public typealias SubscriptionCompletion = (Result<ActivationResponse, NSError>) -> Void
+    public func activate(withEmail email: String, password: String, subscription: SubscriptionPlan? = nil, deactivatingDevice: SubscriptionDevice? = nil, completion: @escaping SubscriptionCompletion) {
         #if TEST
         let bundleID = TEST_OVERRIDES.bundleID ?? Bundle.main.bundleIdentifier ?? "com.mcubedsw.unknown"
         #else
@@ -57,63 +45,53 @@ public class SubscriptionController {
         self.subscriptionAPI.activate(request, device: device) { (result) in
             switch result {
             case .success(let response):
-                self.complete(with: response)
+                self.complete(with: response, completion: completion)
             case .failure(let failure):
-                switch failure {
-                case .multipleSubscriptions(let plans):
-                    self.uiDelegate?.showSubscriptionPlans(plans, for: self)
-                case .tooManyDevices(let devices):
-                    self.uiDelegate?.showDevicesToDeactivate(devices, for: self)
-                default:
-                    let error = SubscriptionErrorFactory.error(for: failure)
-                    self.delegate?.didEncounterError(error, in: self)
-                }
+                let error = SubscriptionErrorFactory.error(for: failure)
+//                    self.delegate?.didEncounterError(error, in: self)
+                completion(.failure(error))
             }
         }
         //Set next timer
     }
 
-    public func checkSubscription(updatingDeviceName deviceName: String? = nil) {
+    public func checkSubscription(updatingDeviceName deviceName: String? = nil, completion:  @escaping SubscriptionCompletion) {
         guard
             let response = ActivationResponse(url: self.licenceURL),
             let token = response.token
         else {
-            if let deactivated = ActivationResponse.deactivated() {
-                self.complete(with: deactivated)
-            } else {
-                self.delegate?.didEncounterError(SubscriptionErrorFactory.notActivatedError(), in: self)
-            }
+            completion(.failure(SubscriptionErrorFactory.notActivatedError()))
             return
         }
 
         self.subscriptionAPI.check(Device(name: deviceName), token: token) { (result) in
             switch result {
             case .success(let response):
-                self.complete(with: response)
+                self.complete(with: response, completion: completion)
             case .failure(let failure):
                 switch failure {
                 case .generic(let error as NSError) where error.domain == NSURLErrorDomain:
-                    self.attemptLocalValidation(with: response, dueTo: failure)
+                    self.attemptLocalValidation(with: response, dueTo: failure, completion: completion)
                 default:
                     let error = SubscriptionErrorFactory.error(for: failure)
-                    self.delegate?.didEncounterError(error, in: self)
+                    completion(.failure(error))
                 }
             }
         }
         //Set next timer
     }
 
-    public func deactivate() {
+    public func deactivate(completion: @escaping SubscriptionCompletion) {
         guard
             let response = ActivationResponse(url: self.licenceURL),
             let token = response.token
         else {
             guard let deactivated = ActivationResponse.deactivated() else {
                 let error = SubscriptionErrorFactory.error(for: DeactivateAPI.Failure.generic(nil))
-                self.delegate?.didEncounterError(error, in: self)
+                completion(.failure(error))
                 return
             }
-            self.delegate?.didChangeSubscription(deactivated, in: self)
+            completion(.success(deactivated))
             return
         }
 
@@ -121,12 +99,12 @@ public class SubscriptionController {
             switch result {
             case .success(let response):
                 self.deleteLicence()
-                self.delegate?.didChangeSubscription(response, in: self)
+                completion(.success(response))
                 self.recheckTimer?.invalidate()
                 self.recheckTimer = nil
             case .failure(let failure):
                 let error = SubscriptionErrorFactory.error(for: failure)
-                self.delegate?.didEncounterError(error, in: self)
+                completion(.failure(error))
             }
         }
     }
@@ -135,35 +113,35 @@ public class SubscriptionController {
         try? FileManager.default.removeItem(at: self.licenceURL)
     }
 
-    private func attemptLocalValidation(with response: ActivationResponse, dueTo failure: CheckAPI.Failure) {
-        guard let subscription =  response.subscription else {
+    private func attemptLocalValidation(with response: ActivationResponse, dueTo failure: CheckAPI.Failure, completion: SubscriptionCompletion) {
+        guard let subscription = response.subscription else {
             let error = SubscriptionErrorFactory.error(for: failure)
-            self.delegate?.didEncounterError(error, in: self)
+            completion(.failure(error))
             return
         }
 
         guard subscription.expirationDate >= Date() else {
             let error = SubscriptionErrorFactory.error(for: CheckAPI.Failure.subscriptionExpired(subscription))
-            self.delegate?.didEncounterError(error, in: self)
+            completion(.failure(error))
             return
         }
 
-        self.complete(with: response, writeToFile: false)
+        self.complete(with: response, writeToFile: false, completion: completion)
     }
 
-    private func complete(with response: ActivationResponse, writeToFile: Bool = true) {
+    private func complete(with response: ActivationResponse, writeToFile: Bool = true, completion: SubscriptionCompletion) {
         response.write(to: self.licenceURL)
-        self.delegate?.didChangeSubscription(response, in: self)
+        completion(.success(response))
         self.lastCheck = Date()
         self.recheckTimer = Timer.scheduledTimer(withTimeInterval: 3600, repeats: false) { [weak self] _ in self?.recheckIfNeeded() }
     }
 
     private func recheckIfNeeded() {
-        if let lastCheck = self.lastCheck, (Date().timeIntervalSince(lastCheck) > 86400) {
-            self.checkSubscription()
-        } else {
-            self.recheckTimer = Timer.scheduledTimer(withTimeInterval: 3600, repeats: false) { [weak self] _ in self?.recheckIfNeeded() }
-        }
+//        if let lastCheck = self.lastCheck, (Date().timeIntervalSince(lastCheck) > 86400) {
+//            self.checkSubscription()
+//        } else {
+//            self.recheckTimer = Timer.scheduledTimer(withTimeInterval: 3600, repeats: false) { [weak self] _ in self?.recheckIfNeeded() }
+//        }
     }
 
 

@@ -13,8 +13,10 @@ enum SubscriptionErrorCodes: Int {
     case other = 0
     case loginFailed = 1
     case noSubscriptionFound
+    case multipleSubscriptionsFound
     case subscriptionExpired
     case noDeviceFound
+    case tooManyDevices
     case notActivated
     case couldNotConnectToServer
 }
@@ -26,6 +28,8 @@ class SubscriptionErrorFactory {
 
     struct InfoKeys {
         static let subscription = "M3SubscriptionErrorSubscriptionKey"
+        static let subscriptionPlans = "M3SubscriptionErrorSubscriptionPlansKey"
+        static let devices = "M3SubscriptionErrorDevicesKey"
     }
 
     fileprivate enum ErrorContext {
@@ -48,10 +52,11 @@ class SubscriptionErrorFactory {
             return self.createError(code: .noSubscriptionFound, context: .activate)
         case .subscriptionExpired(let subscription):
             return self.createError(code: .subscriptionExpired, context: .activate, additionalOptions: (subscription != nil) ? [InfoKeys.subscription: subscription!]: nil)
-        default:
-            break
+        case .tooManyDevices(let devices):
+            return self.createError(code: .tooManyDevices, context: .activate, additionalOptions: [InfoKeys.devices: devices])
+        case .multipleSubscriptions(let plans):
+            return self.createError(code: .multipleSubscriptionsFound, context: .activate, additionalOptions: [InfoKeys.subscriptionPlans: plans])
         }
-        return self.createError(code: .unknown, context: .activate)
     }
 
     static func error(for failure: CheckAPI.Failure) -> NSError {
@@ -126,14 +131,22 @@ extension SubscriptionErrorCodes {
             }
             let format = NSLocalizedString("No Subscription Found For %@", comment: "No Subscription Found for <app> Error Description Format")
             return String(format: format,  appName)
+        case .multipleSubscriptionsFound:
+            guard let appName = Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String else {
+                return NSLocalizedString("Multiple Subscriptions Found", comment: "Multiple Subscriptions Found Error Description Format")
+            }
+            let format = NSLocalizedString("Multiple Subscriptions Found For %@", comment: "Multiple Subscriptions Found for <app> Error Description Format")
+            return String(format: format,  appName)
         case .subscriptionExpired:
             return NSLocalizedString("Your Subscription Has Expired", comment: "Subscription Expired Error Description")
         case .noDeviceFound:
             if case .deactivate = context {
                 return NSLocalizedString("Your Device Was Already Deactivated", comment: "No Device Found Deactivation Error Description")
             } else if case .check = context {
-
+                return NSLocalizedString("This Device Is Not Activated", comment: "No Device Found Check Subscription Error Description")
             }
+        case .tooManyDevices:
+            return NSLocalizedString("You Have Reached Your Device Limit", comment: "Device Limit Reached Error Description")
         case .notActivated:
             return NSLocalizedString("Your Device Is Not Activated", comment: "Device Not Activated Error Description")
         case .couldNotConnectToServer:
@@ -154,12 +167,16 @@ extension SubscriptionErrorCodes {
             return NSLocalizedString("Please make sure they are correct and try again.", comment: "Login Failed Error Recovery")
         case .noSubscriptionFound:
             return NSLocalizedString("You can purchase a subscription below.", comment: "No Subscription Found Error Recovery")
+        case .multipleSubscriptionsFound:
+            return NSLocalizedString("Please choose which subscription to activate this device on", comment: "Multiple Subscriptions Found Error Recovery")
         case .subscriptionExpired:
             return NSLocalizedString("You can renew your subscription below.", comment: "Subscription Expired Error Recovery")
         case .noDeviceFound:
             if case .deactivate = context {
-                return NSLocalizedString("If you think this is a mistake, please log into your M Cubed Account and try deactivating from there", comment: "No Device Found Deactivation Error Description")
+                return NSLocalizedString("If you think this is a mistake, please log into your M Cubed Account and try deactivating from there", comment: "No Device Found Deactivation Error Recovery")
             }
+        case .tooManyDevices:
+            return NSLocalizedString("If you wish to activate this device, please select another device to deactivate", comment: "Device Limit Reached Limit Reached Error Recovery")
         case .notActivated:
             return NSLocalizedString("Please try activating again. If the problem persists please contact M Cubed Support", comment: "Not Activated Error Recovery")
         case .couldNotConnectToServer:
