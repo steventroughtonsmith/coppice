@@ -14,8 +14,21 @@ class SignInViewController: NSViewController, DeactivatedSubscriptionMode {
     let actionName = NSLocalizedString("Activate Device", comment: "")
     let toggleName = NSLocalizedString("Not subscribed? Find out more", comment: "")
 
+    let subscriptionManager: CoppiceSubscriptionManager
+    init(subscriptionManager: CoppiceSubscriptionManager) {
+        self.subscriptionManager = subscriptionManager
+        super.init(nibName: "SignInViewController", bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    @IBOutlet weak var emailField: NSTextField!
+    @IBOutlet weak var passwordField: NSTextField!
+
     func performAction() {
-        print("sign in")
+        self.subscriptionManager.subscriptionController?.activate(withEmail: self.emailField.stringValue, password: self.passwordField.stringValue)
     }
 
 

@@ -111,6 +111,9 @@ for just $14.99 a year</string>
                                                 <buttonCell key="cell" type="bevel" title="Subscribe now for $14.99/year" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="6Sj-bs-50P">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="systemBold" size="16"/>
+                                                    <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
                                                 </buttonCell>
                                                 <color key="contentTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <connections>
@@ -137,9 +140,9 @@ for just $14.99 a year</string>
                                         <rect key="frame" x="1" y="1" width="268" height="42"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
-                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cDD-Pn-P2P">
+                                            <button toolTip="Disabled in Beta" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cDD-Pn-P2P">
                                                 <rect key="frame" x="0.0" y="0.0" width="268" height="42"/>
-                                                <buttonCell key="cell" type="bevel" title="Already subscribed? Sign In" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="0ZE-nD-B97">
+                                                <buttonCell key="cell" type="bevel" title="Already subscribed? Sign In" bezelStyle="rounded" alignment="center" enabled="NO" imageScaling="proportionallyDown" inset="2" id="0ZE-nD-B97">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="menu" size="14"/>
                                                 </buttonCell>

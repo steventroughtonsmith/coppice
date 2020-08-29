@@ -8,6 +8,8 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SignInViewController" customModule="Coppice" customModuleProvider="target">
             <connections>
+                <outlet property="emailField" destination="n8D-W9-h9H" id="zs1-aC-NJN"/>
+                <outlet property="passwordField" destination="Iha-qt-Dxg" id="gmm-fM-GPU"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
         </customObject>

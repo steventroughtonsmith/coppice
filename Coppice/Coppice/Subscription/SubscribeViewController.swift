@@ -10,12 +10,22 @@ import Cocoa
 
 class SubscribeViewController: NSViewController, DeactivatedSubscriptionMode {
     let header = NSLocalizedString("Upgrade to Pro", comment: "")
-    let subheader = NSLocalizedString("Unlock all of Coppice's features for just $14.99 a year", comment: "")
-    let actionName = NSLocalizedString("Subscribe now for $14.99/year", comment: "")
+    let subheader = NSLocalizedString("Unlock all of Coppice's features for just $xx.xx a year", comment: "")
+    let actionName = NSLocalizedString("Subscribe now for $xx.xx/year", comment: "")
     let toggleName = NSLocalizedString("Already subscribed? Sign In", comment: "")
 
     func performAction() {
         print("subscribe")
+    }
+
+    let subscriptionManager: CoppiceSubscriptionManager
+    init(subscriptionManager: CoppiceSubscriptionManager) {
+        self.subscriptionManager = subscriptionManager
+        super.init(nibName: "SubscribeViewController", bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     @IBOutlet weak var featureStackView: NSStackView!

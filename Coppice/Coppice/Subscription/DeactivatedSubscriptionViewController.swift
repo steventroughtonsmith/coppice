@@ -29,6 +29,16 @@ class DeactivatedSubscriptionViewController: NSViewController {
     @IBOutlet weak var primaryButton: NSButton!
     @IBOutlet weak var toggleButton: NSButton!
 
+    let subscriptionManager: CoppiceSubscriptionManager
+    init(subscriptionManager: CoppiceSubscriptionManager) {
+        self.subscriptionManager = subscriptionManager
+        super.init(nibName: "DeactivatedSubscriptionViewController", bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
@@ -36,12 +46,16 @@ class DeactivatedSubscriptionViewController: NSViewController {
         self.contentViewContainer.wantsLayer = true
         self.contentViewContainer.layer?.backgroundColor = NSColor(named: "CoppiceProContentBackground")?.cgColor
 
-        self.apply(self.subscribeVC)
+        self.apply(self.signInVC)
     }
 
     //MARK: - Modes
-    private let subscribeVC = SubscribeViewController()
-    private let signInVC = SignInViewController()
+    private lazy var subscribeVC: SubscribeViewController = {
+        return SubscribeViewController(subscriptionManager: self.subscriptionManager)
+    }()
+    private lazy var signInVC: SignInViewController = {
+        return SignInViewController(subscriptionManager: self.subscriptionManager)
+    }()
 
     var currentMode: (NSViewController & DeactivatedSubscriptionMode)?
 
@@ -70,19 +84,19 @@ class DeactivatedSubscriptionViewController: NSViewController {
 
 
     @IBAction func toggleMode(_ sender: Any?) {
-        if (self.currentMode as NSViewController?) == self.signInVC {
-            self.apply(self.subscribeVC)
-        }
-        else {
-            self.apply(self.signInVC)
-        }
+//        if (self.currentMode as NSViewController?) == self.signInVC {
+//            self.apply(self.subscribeVC)
+//        }
+//        else {
+//            self.apply(self.signInVC)
+//        }
     }
 
     @IBAction func showTerms(_ sender: Any?) {
-
+        NSWorkspace.shared.open(URL(string: "https://www.mcubedsw.com/terms")!)
     }
 
     @IBAction func showPrivacyPolicy(_ sender: Any?) {
-
+        NSWorkspace.shared.open(URL(string: "https://www.mcubedsw.com/privacy")!)
     }
 }

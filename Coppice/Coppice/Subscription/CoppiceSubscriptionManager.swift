@@ -10,6 +10,8 @@ import Cocoa
 import M3Subscriptions
 import Combine
 
+
+
 class CoppiceSubscriptionManager: NSObject {
     let subscriptionController: SubscriptionController?
 

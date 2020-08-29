@@ -123,7 +123,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     //MARK: - Preferences
     lazy var preferencesWindow: PreferencesWindowController = {
-        return PreferencesWindowController(updaterController: self.updaterController)
+        return PreferencesWindowController(updaterController: self.updaterController, subscriptionManager: self.subscriptionManager)
     }()
     @IBAction func showPreferences(_ sender: Any?) {
         self.preferencesWindow.showWindow(sender)
