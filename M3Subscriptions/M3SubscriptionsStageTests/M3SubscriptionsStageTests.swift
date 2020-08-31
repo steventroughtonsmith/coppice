@@ -177,7 +177,7 @@ class M3SubscriptionsStageTests: XCTestCase {
         }
 
         let response = try XCTUnwrap(self.mockDelegate.activationResponse)
-        XCTAssertEqual(response.state, .active)
+        XCTAssertEqual(response.activationState, .active)
         XCTAssertNotNil(response.token)
 
         let subscription = try XCTUnwrap(response.subscription)
@@ -194,7 +194,7 @@ class M3SubscriptionsStageTests: XCTestCase {
         }
 
         let response = try XCTUnwrap(self.mockDelegate.activationResponse)
-        XCTAssertEqual(response.state, .active)
+        XCTAssertEqual(response.activationState, .active)
         XCTAssertNotNil(response.token)
 
         let subscription = try XCTUnwrap(response.subscription)
@@ -211,7 +211,7 @@ class M3SubscriptionsStageTests: XCTestCase {
         }
 
         let response = try XCTUnwrap(self.mockDelegate.activationResponse)
-        XCTAssertEqual(response.state, .active)
+        XCTAssertEqual(response.activationState, .active)
         XCTAssertNotNil(response.token)
 
         let subscription = try XCTUnwrap(response.subscription)
@@ -250,7 +250,7 @@ class M3SubscriptionsStageTests: XCTestCase {
         }
 
         let response = try XCTUnwrap(self.mockDelegate.activationResponse)
-        XCTAssertEqual(response.state, .active)
+        XCTAssertEqual(response.activationState, .active)
         XCTAssertNotNil(response.token)
 
         let subscription = try XCTUnwrap(response.subscription)
@@ -289,7 +289,7 @@ class M3SubscriptionsStageTests: XCTestCase {
         }
 
         let response = try XCTUnwrap(self.mockDelegate.activationResponse)
-        XCTAssertEqual(response.state, .active)
+        XCTAssertEqual(response.activationState, .active)
         XCTAssertNotNil(response.token)
 
         let subscription = try XCTUnwrap(response.subscription)
@@ -307,7 +307,7 @@ class M3SubscriptionsStageTests: XCTestCase {
         }
 
         let response = try XCTUnwrap(self.mockDelegate.activationResponse)
-        XCTAssertEqual(response.state, .active)
+        XCTAssertEqual(response.activationState, .active)
         XCTAssertNotNil(response.token)
 
         let subscription = try XCTUnwrap(response.subscription)
@@ -325,7 +325,7 @@ class M3SubscriptionsStageTests: XCTestCase {
         }
 
         let response = try XCTUnwrap(self.mockDelegate.activationResponse)
-        XCTAssertEqual(response.state, .active)
+        XCTAssertEqual(response.activationState, .active)
         XCTAssertNotNil(response.token)
 
         let subscription = try XCTUnwrap(response.subscription)
@@ -383,7 +383,7 @@ class M3SubscriptionsStageTests: XCTestCase {
         }
 
         let activationResponse = try XCTUnwrap(self.mockDelegate.activationResponse)
-        XCTAssertEqual(activationResponse.state, .active)
+        XCTAssertEqual(activationResponse.activationState, .active)
         XCTAssertNotNil(activationResponse.token)
 
         let subscription = try XCTUnwrap(activationResponse.subscription)
@@ -425,7 +425,7 @@ class M3SubscriptionsStageTests: XCTestCase {
         }
 
         let activationResponse = try XCTUnwrap(self.mockDelegate.activationResponse)
-        XCTAssertEqual(activationResponse.state, .deactivated)
+        XCTAssertEqual(activationResponse.activationState, .deactivated)
     }
 }
 
@@ -448,9 +448,9 @@ class MockSubscriptionDelegate: SubscriptionControllerDelegate {
 
 
 class MockSubscriptionUIDelegate: SubscriptionControllerUIDelegate {
-    var plansArgument: [SubscriptionPlan]?
+    var plansArgument: [Subscription]?
     var showSubscriptionPlansExpectation: XCTestExpectation?
-    func showSubscriptionPlans(_ plans: [SubscriptionPlan], for controller: SubscriptionController) {
+    func showSubscriptionPlans(_ plans: [Subscription], for controller: SubscriptionController) {
         self.plansArgument = plans
         self.showSubscriptionPlansExpectation?.fulfill()
     }

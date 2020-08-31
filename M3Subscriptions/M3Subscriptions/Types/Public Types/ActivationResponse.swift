@@ -8,58 +8,33 @@
 
 import Foundation
 
-/*Subscription state:
-- Active
-- Billing Failed
-- Cancelled
-- Expired
-*/
-
-/*Device state:
-- activated
-- deactivated
- */
 public struct ActivationResponse {
-    public enum State: Equatable {
-        case unknown
-        case active
-        case billingFailed
-        case deactivated
-
-        static func state(forResponse response: APIData.Response) -> State {
-            switch response {
-            case .active:
-                return .active
-            case .billingFailed:
-                return .billingFailed
-            case .deactivated:
-                return .deactivated
-            default:
-                return .unknown
-            }
-        }
-
-        var requiresSubscription: Bool {
-            switch self {
-            case .active, .billingFailed:
-                return true
-            default:
-                return false
-            }
-        }
-    }
-
-    public var state: State
     public var token: String?
     public var subscription: Subscription?
+    public var deviceName: String?
     public var payload: [String: Any]
     public var signature: String
+    private var response: APIData.Response
 
-    public static func deactivated() -> ActivationResponse? {
-        guard let data = APIData(json: ["payload": ["response": "deactivated"], "signature": "2FK5GJmiT6C4aLZTWq8R0d+sEXWLORh0iQnHKritAfySu+W/wvhlblSXy2hUqKiRjHuOWIcz+f4wjMBTuoki7SAV78LElaPxor2hIEB8eqtaX3P+foAY0s/XpnlXWXg7YrUD53YsCRaZR47rLfLBsS9iCcKPRIWz8xXgyev4sbwt2Td3EvFukIasGRsTMe9Jvt0Qi1euyN8yKB7kYPqH43Oaua0rdxUN8BjoiTmUHwq7Z3gBn2+3K7DzhfRoYY7AAqZDO9FwDrcrwI5b5M5eXG9ZLSCdYJadeW6VfFLc/6Mtnt59EHzazbmzkfUwYw0y0+Cbvj8eb/+eiN8a/ALgBg=="]) else {
-            return nil
-        }
-        return ActivationResponse(data: data)
+
+    /// Has the device being activated on a subscription
+    public var deviceIsActivated: Bool {
+        return (self.token != nil)
+    }
+
+    /// Is the user's subscription active and therefore should all functionality be unlocked
+    public var isActive: Bool {
+        return (self.response == .active) && self.deviceIsActivated && (self.subscription?.hasExpired == false)
+    }
+
+    public static func deactivated() -> Self {
+        return ActivationResponse()
+    }
+
+    private init() {
+        self.response = .deactivated
+        self.payload = ["response": "deactivated"]
+        self.signature = ""
     }
 
     init?(url: URL) {
@@ -74,18 +49,25 @@ public struct ActivationResponse {
     }
 
     init?(data: APIData) {
-        let state = State.state(forResponse: data.response)
-        let subscription = Subscription(payload: data.payload)
-        if state.requiresSubscription && (subscription == nil) {
+        self.response = data.response
+
+        var subscription: Subscription? = nil
+        if let subscriptionPayload = data.payload["subscription"] as? [String: Any] {
+            subscription = Subscription(payload: subscriptionPayload, hasExpired: (data.response == .expired))
+        }
+        //We need a subscription if we're active or have expired
+        if (data.response == .active || data.response == .expired) && (subscription == nil) {
             return nil
         }
 
-        self.state = state
         self.token = data.payload["token"] as? String
         self.subscription = subscription
+        self.deviceName = (data.payload["device"] as? [String: Any])?["name"] as? String
         self.payload = data.payload
         self.signature = data.signature
     }
+
+
 
     func write(to url: URL) {
         let json: [String: Any] = ["payload": self.payload, "signature": self.signature]
@@ -93,5 +75,13 @@ public struct ActivationResponse {
             return
         }
         try? data.write(to: url)
+    }
+
+    mutating func reevaluateSubscription() {
+        guard var subscription = self.subscription else {
+            return
+        }
+        subscription.hasExpired = subscription.expirationDate < Date()
+        self.subscription = subscription
     }
 }

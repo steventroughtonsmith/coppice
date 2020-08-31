@@ -12,7 +12,6 @@ import CommonCrypto
 struct APIData {
     enum Response: Equatable {
         case active
-        case billingFailed
         case deactivated
         case loginFailed
         case multipleSubscriptions
@@ -25,9 +24,6 @@ struct APIData {
         static func response(from string: String) -> Response {
             if (string == "active") {
                 return .active
-            }
-            if (string == "billing_failed") {
-                return .billingFailed
             }
             if (string == "deactivated") {
                 return .deactivated
@@ -87,15 +83,8 @@ struct APIData {
 
         let hashedPayload = Data(hash)
 
-        let publicKey = """
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA3Ya6Fwp1ZawfJEs+iPL5
-UUthay1URdcIEw0Kah0sO7lIYFKqcE5/XbWfoIWqEQanWzBpQhhv84nguWLv8DMs
-2Rv+6OqH4qXElSxmGvZQFIT15sjifdI2dGblm6GADVJXh0AMcpWeB01FGtNKbaRV
-EgtQpS5ukDyFBJ+OBA/39fXRzb2pH0JD3dIveNwyXyjc1jVvAJGku+lVKpIS1GeP
-79ULXqfOfFPcmRzforPi2NUTzAwIR+BFLEcXNuF5N5MqQ6Fkv8Uct7jFSyYZvNn3
-ngBORNS9QFDuvvBfxv1KOPly7FjcM7lR+trpiNfq2Gok3kIcXMHs+loVLaabEEtU
-owIDAQAB
-"""
+
+        let publicKey = self.publicKey()
         guard let data = Data(base64Encoded: publicKey as String, options: .ignoreUnknownCharacters) else {
             return nil
         }
@@ -124,5 +113,22 @@ owIDAQAB
                                         return nil
         }
         return signature
+    }
+
+    static func publicKey() -> String {
+        #if TEST
+        if let key = TEST_OVERRIDES.publicKey {
+            return key
+        }
+        #endif
+        return """
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA3Ya6Fwp1ZawfJEs+iPL5
+UUthay1URdcIEw0Kah0sO7lIYFKqcE5/XbWfoIWqEQanWzBpQhhv84nguWLv8DMs
+2Rv+6OqH4qXElSxmGvZQFIT15sjifdI2dGblm6GADVJXh0AMcpWeB01FGtNKbaRV
+EgtQpS5ukDyFBJ+OBA/39fXRzb2pH0JD3dIveNwyXyjc1jVvAJGku+lVKpIS1GeP
+79ULXqfOfFPcmRzforPi2NUTzAwIR+BFLEcXNuF5N5MqQ6Fkv8Uct7jFSyYZvNn3
+ngBORNS9QFDuvvBfxv1KOPly7FjcM7lR+trpiNfq2Gok3kIcXMHs+loVLaabEEtU
+owIDAQAB
+"""
     }
 }

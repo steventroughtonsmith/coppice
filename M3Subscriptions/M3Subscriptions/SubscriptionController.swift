@@ -30,7 +30,7 @@ public class SubscriptionController {
     #endif
 
     public typealias SubscriptionCompletion = (Result<ActivationResponse, NSError>) -> Void
-    public func activate(withEmail email: String, password: String, subscription: SubscriptionPlan? = nil, deactivatingDevice: SubscriptionDevice? = nil, completion: @escaping SubscriptionCompletion) {
+    public func activate(withEmail email: String, password: String, subscription: Subscription? = nil, deactivatingDevice: SubscriptionDevice? = nil, completion: @escaping SubscriptionCompletion) {
         #if TEST
         let bundleID = TEST_OVERRIDES.bundleID ?? Bundle.main.bundleIdentifier ?? "com.mcubedsw.unknown"
         #else
@@ -86,12 +86,7 @@ public class SubscriptionController {
             let response = ActivationResponse(url: self.licenceURL),
             let token = response.token
         else {
-            guard let deactivated = ActivationResponse.deactivated() else {
-                let error = SubscriptionErrorFactory.error(for: DeactivateAPI.Failure.generic(nil))
-                completion(.failure(error))
-                return
-            }
-            completion(.success(deactivated))
+            completion(.success(ActivationResponse.deactivated()))
             return
         }
 
@@ -114,19 +109,15 @@ public class SubscriptionController {
     }
 
     private func attemptLocalValidation(with response: ActivationResponse, dueTo failure: CheckAPI.Failure, completion: SubscriptionCompletion) {
-        guard let subscription = response.subscription else {
+        guard response.subscription != nil else {
             let error = SubscriptionErrorFactory.error(for: failure)
             completion(.failure(error))
             return
         }
 
-        guard subscription.expirationDate >= Date() else {
-            let error = SubscriptionErrorFactory.error(for: CheckAPI.Failure.subscriptionExpired(subscription))
-            completion(.failure(error))
-            return
-        }
-
-        self.complete(with: response, writeToFile: false, completion: completion)
+        var modifiedResponse = response
+        modifiedResponse.reevaluateSubscription()
+        self.complete(with: modifiedResponse, writeToFile: false, completion: completion)
     }
 
     private func complete(with response: ActivationResponse, writeToFile: Bool = true, completion: SubscriptionCompletion) {

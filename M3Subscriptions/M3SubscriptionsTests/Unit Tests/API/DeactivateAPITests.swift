@@ -134,7 +134,8 @@ class DeactivateAPITests: XCTestCase {
             return
         }
 
-        XCTAssertEqual(info.state, .deactivated)
+        XCTAssertFalse(info.isActive)
+        XCTAssertFalse(info.deviceIsActivated)
     }
 
 }

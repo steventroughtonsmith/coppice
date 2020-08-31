@@ -21,15 +21,13 @@
 		99848181248E68C500BC0A8A /* CheckAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99848180248E68C500BC0A8A /* CheckAPITests.swift */; };
 		99848183248E68DF00BC0A8A /* MockNetworkAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99848182248E68DF00BC0A8A /* MockNetworkAdapter.swift */; };
 		99848186248E68FA00BC0A8A /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99848185248E68FA00BC0A8A /* Device.swift */; };
-		9984818A248E697900BC0A8A /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99848189248E697900BC0A8A /* Subscription.swift */; };
-		9984818C248E698500BC0A8A /* SubscriptionPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984818B248E698500BC0A8A /* SubscriptionPlan.swift */; };
+		9984818C248E698500BC0A8A /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984818B248E698500BC0A8A /* Subscription.swift */; };
 		9984818E248E698D00BC0A8A /* SubscriptionDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984818D248E698D00BC0A8A /* SubscriptionDevice.swift */; };
 		99848190248E699800BC0A8A /* ActivationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984818F248E699800BC0A8A /* ActivationResponse.swift */; };
 		99848192248E69E000BC0A8A /* APIData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99848191248E69E000BC0A8A /* APIData.swift */; };
 		99848197248E6FC500BC0A8A /* APIDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99848196248E6FC500BC0A8A /* APIDataTests.swift */; };
 		9984819D248E94E200BC0A8A /* Mac-DeviceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984819C248E94E200BC0A8A /* Mac-DeviceTests.swift */; };
-		9984819F248E96D700BC0A8A /* SubscriptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984819E248E96D700BC0A8A /* SubscriptionTests.swift */; };
-		998481A1248E99CE00BC0A8A /* SubscriptionPlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481A0248E99CE00BC0A8A /* SubscriptionPlanTests.swift */; };
+		998481A1248E99CE00BC0A8A /* SubscriptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481A0248E99CE00BC0A8A /* SubscriptionTests.swift */; };
 		998481A3248FA3BD00BC0A8A /* SubscriptionDeviceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481A2248FA3BD00BC0A8A /* SubscriptionDeviceTests.swift */; };
 		998481A5248FB37F00BC0A8A /* ActivationResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481A4248FB37F00BC0A8A /* ActivationResponseTests.swift */; };
 		998481A7248FDE5E00BC0A8A /* XCTestExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481A6248FDE5E00BC0A8A /* XCTestExtensions.swift */; };
@@ -40,6 +38,10 @@
 		998481D52496768100BC0A8A /* M3SubscriptionsStageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481D42496768100BC0A8A /* M3SubscriptionsStageTests.swift */; };
 		998481D72496768100BC0A8A /* libM3Subscriptions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99848149248E635600BC0A8A /* libM3Subscriptions.a */; };
 		998481DF24967A1700BC0A8A /* XCTestExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481DE24967A1700BC0A8A /* XCTestExtensions.swift */; };
+		9999A24D24FD454B001F8161 /* APITestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9999A24C24FD454B001F8161 /* APITestCase.swift */; };
+		9999A25424FD4EA4001F8161 /* test_private_key.pem in Resources */ = {isa = PBXBuildFile; fileRef = 9999A25224FD4EA4001F8161 /* test_private_key.pem */; };
+		9999A25524FD4EA4001F8161 /* test_public_key.pem in Resources */ = {isa = PBXBuildFile; fileRef = 9999A25324FD4EA4001F8161 /* test_public_key.pem */; };
+		9999A25724FD5A29001F8161 /* test_private_key.p12 in Resources */ = {isa = PBXBuildFile; fileRef = 9999A25624FD5783001F8161 /* test_private_key.p12 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,15 +78,13 @@
 		99848180248E68C500BC0A8A /* CheckAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckAPITests.swift; sourceTree = "<group>"; };
 		99848182248E68DF00BC0A8A /* MockNetworkAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkAdapter.swift; sourceTree = "<group>"; };
 		99848185248E68FA00BC0A8A /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
-		99848189248E697900BC0A8A /* Subscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subscription.swift; sourceTree = "<group>"; };
-		9984818B248E698500BC0A8A /* SubscriptionPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPlan.swift; sourceTree = "<group>"; };
+		9984818B248E698500BC0A8A /* Subscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subscription.swift; sourceTree = "<group>"; };
 		9984818D248E698D00BC0A8A /* SubscriptionDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionDevice.swift; sourceTree = "<group>"; };
 		9984818F248E699800BC0A8A /* ActivationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivationResponse.swift; sourceTree = "<group>"; };
 		99848191248E69E000BC0A8A /* APIData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIData.swift; sourceTree = "<group>"; };
 		99848196248E6FC500BC0A8A /* APIDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIDataTests.swift; sourceTree = "<group>"; };
 		9984819C248E94E200BC0A8A /* Mac-DeviceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Mac-DeviceTests.swift"; sourceTree = "<group>"; };
-		9984819E248E96D700BC0A8A /* SubscriptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionTests.swift; sourceTree = "<group>"; };
-		998481A0248E99CE00BC0A8A /* SubscriptionPlanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPlanTests.swift; sourceTree = "<group>"; };
+		998481A0248E99CE00BC0A8A /* SubscriptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionTests.swift; sourceTree = "<group>"; };
 		998481A2248FA3BD00BC0A8A /* SubscriptionDeviceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionDeviceTests.swift; sourceTree = "<group>"; };
 		998481A4248FB37F00BC0A8A /* ActivationResponseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivationResponseTests.swift; sourceTree = "<group>"; };
 		998481A6248FDE5E00BC0A8A /* XCTestExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XCTestExtensions.swift; path = ../../Coppice/CoppiceTests/XCTestExtensions.swift; sourceTree = "<group>"; };
@@ -96,6 +96,10 @@
 		998481D42496768100BC0A8A /* M3SubscriptionsStageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M3SubscriptionsStageTests.swift; sourceTree = "<group>"; };
 		998481D62496768100BC0A8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		998481DE24967A1700BC0A8A /* XCTestExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestExtensions.swift; sourceTree = "<group>"; };
+		9999A24C24FD454B001F8161 /* APITestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITestCase.swift; sourceTree = "<group>"; };
+		9999A25224FD4EA4001F8161 /* test_private_key.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test_private_key.pem; sourceTree = "<group>"; };
+		9999A25324FD4EA4001F8161 /* test_public_key.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test_public_key.pem; sourceTree = "<group>"; };
+		9999A25624FD5783001F8161 /* test_private_key.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_private_key.p12; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +169,7 @@
 				998481A6248FDE5E00BC0A8A /* XCTestExtensions.swift */,
 				9984817A248E687800BC0A8A /* Unit Tests */,
 				99848179248E685900BC0A8A /* Mocks & Helpers */,
+				9999A24724FD39AB001F8161 /* Resources */,
 				9984815F248E639C00BC0A8A /* Info.plist */,
 			);
 			path = M3SubscriptionsTests;
@@ -186,6 +191,7 @@
 			children = (
 				99848182248E68DF00BC0A8A /* MockNetworkAdapter.swift */,
 				998481AD24927EA600BC0A8A /* MockSubscriptionAPI.swift */,
+				9999A24C24FD454B001F8161 /* APITestCase.swift */,
 			);
 			path = "Mocks & Helpers";
 			sourceTree = "<group>";
@@ -232,8 +238,7 @@
 		99848188248E696700BC0A8A /* Public Types */ = {
 			isa = PBXGroup;
 			children = (
-				99848189248E697900BC0A8A /* Subscription.swift */,
-				9984818B248E698500BC0A8A /* SubscriptionPlan.swift */,
+				9984818B248E698500BC0A8A /* Subscription.swift */,
 				9984818D248E698D00BC0A8A /* SubscriptionDevice.swift */,
 				9984818F248E699800BC0A8A /* ActivationResponse.swift */,
 			);
@@ -252,8 +257,7 @@
 		99848194248E6A2D00BC0A8A /* Public Types */ = {
 			isa = PBXGroup;
 			children = (
-				9984819E248E96D700BC0A8A /* SubscriptionTests.swift */,
-				998481A0248E99CE00BC0A8A /* SubscriptionPlanTests.swift */,
+				998481A0248E99CE00BC0A8A /* SubscriptionTests.swift */,
 				998481A2248FA3BD00BC0A8A /* SubscriptionDeviceTests.swift */,
 				998481A4248FB37F00BC0A8A /* ActivationResponseTests.swift */,
 			);
@@ -278,6 +282,17 @@
 			);
 			path = M3SubscriptionsStageTests;
 			sourceTree = "<group>";
+		};
+		9999A24724FD39AB001F8161 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				9999A25224FD4EA4001F8161 /* test_private_key.pem */,
+				9999A25624FD5783001F8161 /* test_private_key.p12 */,
+				9999A25324FD4EA4001F8161 /* test_public_key.pem */,
+			);
+			name = Resources;
+			path = M3SubscriptionsTests/Resources;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -399,6 +414,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9999A25424FD4EA4001F8161 /* test_private_key.pem in Resources */,
+				9999A25724FD5A29001F8161 /* test_private_key.p12 in Resources */,
+				9999A25524FD4EA4001F8161 /* test_public_key.pem in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -422,8 +440,7 @@
 				9984818E248E698D00BC0A8A /* SubscriptionDevice.swift in Sources */,
 				99848174248E648300BC0A8A /* CheckAPI.swift in Sources */,
 				99848190248E699800BC0A8A /* ActivationResponse.swift in Sources */,
-				9984818A248E697900BC0A8A /* Subscription.swift in Sources */,
-				9984818C248E698500BC0A8A /* SubscriptionPlan.swift in Sources */,
+				9984818C248E698500BC0A8A /* Subscription.swift in Sources */,
 				99848173248E648300BC0A8A /* DeactivateAPI.swift in Sources */,
 				99848192248E69E000BC0A8A /* APIData.swift in Sources */,
 				998481AC2492789400BC0A8A /* SubscriptionErrors.swift in Sources */,
@@ -441,8 +458,9 @@
 			files = (
 				998481AA24924A3600BC0A8A /* SubscriptionControllerTests.swift in Sources */,
 				99848197248E6FC500BC0A8A /* APIDataTests.swift in Sources */,
-				998481A1248E99CE00BC0A8A /* SubscriptionPlanTests.swift in Sources */,
+				998481A1248E99CE00BC0A8A /* SubscriptionTests.swift in Sources */,
 				998481A5248FB37F00BC0A8A /* ActivationResponseTests.swift in Sources */,
+				9999A24D24FD454B001F8161 /* APITestCase.swift in Sources */,
 				99848183248E68DF00BC0A8A /* MockNetworkAdapter.swift in Sources */,
 				99848181248E68C500BC0A8A /* CheckAPITests.swift in Sources */,
 				9984817D248E68A600BC0A8A /* DeactivateAPITests.swift in Sources */,
@@ -450,7 +468,6 @@
 				9984817F248E68B600BC0A8A /* ActivateAPITests.swift in Sources */,
 				998481A7248FDE5E00BC0A8A /* XCTestExtensions.swift in Sources */,
 				9984819D248E94E200BC0A8A /* Mac-DeviceTests.swift in Sources */,
-				9984819F248E96D700BC0A8A /* SubscriptionTests.swift in Sources */,
 				998481A3248FA3BD00BC0A8A /* SubscriptionDeviceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

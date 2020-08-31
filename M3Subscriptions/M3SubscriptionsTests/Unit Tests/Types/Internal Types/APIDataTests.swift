@@ -9,7 +9,7 @@
 import XCTest
 @testable import M3Subscriptions
 
-class APIDataTests: XCTestCase {
+class APIDataTests: APITestCase {
     func test_init_returnsNilIfJSONContainsNoPayloadKey() throws {
         let json = [
             "signature": ""
@@ -83,7 +83,7 @@ class APIDataTests: XCTestCase {
 
     func test_init_returnsInitialisedDataWithPayloadResponseAndSignatureIfSignatureIsValid() throws {
         let payload: [String: Any] = ["response": "possum", "foo": "bar", "baz": 42, "test": ["c": 3, "p": 0, "bb": 8, "r": 2, "d": 2]]
-        let signature = "GTIwWd04ozcxn2RUP8XD/GTZSe9MWQq8I5hNfODmhk9m+j0k7Vpp5SNn4xqoonajk+jGwElOG3nIGcggImB/24O3yEcNULPaw31fXIpMr0Hjlb/pCAwRpWgcCvo6YDEAGa2Wl14/pp7JqFsB9FaUOYy/hbpq3hczsoCDweFcQJW/unw4iV5V0irVNRXQmAWZKmgrviSt+VbJLdyD4lnE+KHAEFnSe10vZDZRw3lBIsG6fxoERWd0f7tqoXi4lQWDzTRUG48fuHT3Kbk4e7Ri7SHe8NGMKmMKHcibAPlIavLVCxPVs/3RpsiyTYbw1Y1t2JW7rBv18hOhT/d3sTFYWg=="
+        let signature = try self.signature(forPayload: payload)
         let json: [String: Any] = [
             "payload": payload,
             "signature": signature
@@ -104,10 +104,6 @@ class APIDataTests: XCTestCase {
 
     func test_responseFromString_parsesDeactivated() throws {
         XCTAssertEqual(APIData.Response.response(from: "deactivated"), .deactivated)
-    }
-
-    func test_responseFromString_parsesBillingFailed() throws {
-        XCTAssertEqual(APIData.Response.response(from: "billing_failed"), .billingFailed)
     }
 
     func test_responseFromString_parsesLoginFailed() throws {

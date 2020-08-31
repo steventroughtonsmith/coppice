@@ -18,7 +18,7 @@ struct ActivateAPI {
     enum Failure: Error {
         case invalidRequest
         case loginFailed
-        case multipleSubscriptions([SubscriptionPlan])
+        case multipleSubscriptions([Subscription])
         case noSubscriptionFound
         case subscriptionExpired(Subscription?)
         case tooManyDevices([SubscriptionDevice])
@@ -62,7 +62,7 @@ struct ActivateAPI {
 
     private func parse(_ data: APIData) -> APIResult {
         switch data.response {
-        case .active, .billingFailed:
+        case .active, .expired:
             guard let response = ActivationResponse(data: data) else {
                 return .failure(.generic(nil))
             }
@@ -75,10 +75,8 @@ struct ActivateAPI {
             guard let jsonSubscriptions = data.payload["subscriptions"] as? [[String: Any]] else {
                 return .failure(.generic(nil))
             }
-            let subscriptions = jsonSubscriptions.compactMap { SubscriptionPlan(payload: $0) }
+            let subscriptions = jsonSubscriptions.compactMap { Subscription(payload: $0, hasExpired: false) }
             return .failure(.multipleSubscriptions(subscriptions))
-        case .expired:
-            return .failure(.subscriptionExpired(Subscription(payload: data.payload)))
         case .tooManyDevices:
             guard let jsonDevices = data.payload["devices"] as? [[String: Any]] else {
                 return .failure(.generic(nil))

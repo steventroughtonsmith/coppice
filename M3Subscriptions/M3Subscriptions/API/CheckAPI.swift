@@ -44,13 +44,11 @@ struct CheckAPI {
 
     private func parse(_ data: APIData) -> APIResult {
         switch data.response {
-        case .active, .billingFailed:
+        case .active, .expired:
             guard let response = ActivationResponse(data: data) else {
                 return .failure(.generic(nil))
             }
             return .success(response)
-        case .expired:
-            return .failure(.subscriptionExpired(Subscription(payload: data.payload)))
         case .noDeviceFound:
             return .failure(.noDeviceFound)
         case .noSubscriptionFound:

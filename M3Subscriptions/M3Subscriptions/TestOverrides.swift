@@ -16,6 +16,7 @@ class TEST_OVERRIDES {
     static var deviceID: String?
     static var appVersion: String?
     static var bundleID: String?
+    static var publicKey: String?
 }
 
 #endif
