@@ -41,11 +41,11 @@ class PreferencesTabView: NSTabViewController {
         self.updateFrame(of: window, for: item, animated: true)
     }
 
+    func recalculateHeight(for tabViewItem: NSTabViewItem) {
+        self.tabHeights[tabViewItem] = self.height(for: tabViewItem)
+    }
 
-    func updateFrame(of window: NSWindow, for tabViewItem: NSTabViewItem, animated: Bool, recalculateHeight: Bool = false) {
-        if (recalculateHeight) {
-            self.tabHeights[tabViewItem] = self.height(for: tabViewItem)
-        }
+    func updateFrame(of window: NSWindow, for tabViewItem: NSTabViewItem, animated: Bool) {
         let newHeight = self.tabHeights[tabViewItem] ?? 0
         let currentHeight = window.contentView?.frame.height ?? self.tabView.frame.height
 
@@ -114,13 +114,15 @@ class PreferencesViewController: NSViewController {
     }
 
     func updateSize(animated: Bool = true) {
-        guard
-            let window = self.view.window,
-            let tabViewItem = self.tabViewItem
-        else {
+        guard let tabViewItem = self.tabViewItem else {
             return
         }
-        self.preferenceTabView?.updateFrame(of: window, for: tabViewItem, animated: animated, recalculateHeight: true)
+        self.preferenceTabView?.recalculateHeight(for: tabViewItem)
+
+        guard let window = self.view.window else {
+            return
+        }
+        self.preferenceTabView?.updateFrame(of: window, for: tabViewItem, animated: animated)
     }
 }
 

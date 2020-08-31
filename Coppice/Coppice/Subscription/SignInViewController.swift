@@ -28,7 +28,10 @@ class SignInViewController: NSViewController, DeactivatedSubscriptionMode {
     @IBOutlet weak var passwordField: NSTextField!
 
     func performAction() {
-        self.subscriptionManager.subscriptionController?.activate(withEmail: self.emailField.stringValue, password: self.passwordField.stringValue)
+        guard let window = self.view.window else {
+            return
+        }
+        self.subscriptionManager.activate(withEmail: self.emailField.stringValue, password: self.passwordField.stringValue, on: window)
     }
 
 

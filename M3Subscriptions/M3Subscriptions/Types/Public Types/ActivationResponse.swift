@@ -8,6 +8,17 @@
 
 import Foundation
 
+/*Subscription state:
+- Active
+- Billing Failed
+- Cancelled
+- Expired
+*/
+
+/*Device state:
+- activated
+- deactivated
+ */
 public struct ActivationResponse {
     public enum State: Equatable {
         case unknown

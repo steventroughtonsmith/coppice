@@ -10,8 +10,6 @@ import Cocoa
 import M3Subscriptions
 import Combine
 
-
-
 class CoppiceSubscriptionManager: NSObject {
     let subscriptionController: SubscriptionController?
 
@@ -26,19 +24,42 @@ class CoppiceSubscriptionManager: NSObject {
         }
 
         super.init()
-        self.subscriptionController?.delegate = self
 
-        self.subscriptionController?.checkSubscription()
+        self.subscriptionController?.checkSubscription(completion: { (result) in
+            switch result {
+            case .success(let response):
+                self.activationResponse = response
+            case .failure(let error):
+                print("error: \(error)")
+            }
+        })
     }
-}
 
-extension CoppiceSubscriptionManager: SubscriptionControllerDelegate {
-    func didChangeSubscription(_ info: ActivationResponse, in controller: SubscriptionController) {
-        self.activationResponse = info
-        print("info: \(info)")
+    func activate(withEmail email: String, password: String, on window: NSWindow) {
+        guard let controller = self.subscriptionController else {
+            return
+        }
+        controller.activate(withEmail: email, password: password) { (result) in
+            switch result {
+            case .success(let response):
+                self.activationResponse = response
+            case .failure(let error):
+                window.presentError(error)
+            }
+        }
     }
 
-    func didEncounterError(_ error: NSError, in controller: SubscriptionController) {
-        print("error: \(error)")
+    func deactivate(on window: NSWindow) {
+        guard let controller = self.subscriptionController else {
+            return
+        }
+        controller.deactivate { (result) in
+            switch result {
+            case .success(let response):
+                self.activationResponse = response
+            case .failure(let error):
+                window.presentError(error)
+            }
+        }
     }
 }

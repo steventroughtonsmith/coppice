@@ -72,6 +72,7 @@ class CoppiceProViewController: PreferencesViewController {
                 self.addChild(newValue)
                 self.view.addSubview(newValue.view, withInsets: NSEdgeInsetsZero)
             }
+            self.updateSize()
         }
     }
 
