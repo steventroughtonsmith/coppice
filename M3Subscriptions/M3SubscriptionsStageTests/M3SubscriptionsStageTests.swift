@@ -60,8 +60,6 @@ class M3SubscriptionsStageTests: XCTestCase {
     var prepareURL:URL!
     var licenceURL: URL!
     var controller: SubscriptionController!
-    var mockDelegate: MockSubscriptionDelegate!
-    var mockUIDelegate: MockSubscriptionUIDelegate!
 
     override func setUpWithError() throws {
         try super.setUpWithError()
@@ -77,12 +75,6 @@ class M3SubscriptionsStageTests: XCTestCase {
         }
         self.licenceURL = licenceDirectory.appendingPathComponent("stage-licence.txt")
         self.controller = SubscriptionController(licenceURL: self.licenceURL)
-
-        self.mockDelegate = MockSubscriptionDelegate()
-        self.controller.delegate = self.mockDelegate
-
-        self.mockUIDelegate = MockSubscriptionUIDelegate()
-        self.controller.uiDelegate = self.mockUIDelegate
 
         self.prepare()
     }
@@ -121,152 +113,224 @@ class M3SubscriptionsStageTests: XCTestCase {
 
     //MARK: - Activate
     func test_activate_loginFailed() throws {
+        var actualError: NSError?
         self.performAndWaitFor("Wait for error", timeout: 2) { (expectation) in
-            self.mockDelegate.errorExpectation = expectation
-            self.controller.activate(withEmail: "pilky@mcubedsw.com", password: "password1!")
+            self.controller.activate(withEmail: "pilky@mcubedsw.com", password: "password1!") { result in
+                if case .failure(let error) = result {
+                    actualError = error
+                }
+                expectation.fulfill()
+            }
         }
 
-        let error = try XCTUnwrap(self.mockDelegate.error)
+        let error = try XCTUnwrap(actualError)
         XCTAssertEqual(error.code, SubscriptionErrorCodes.loginFailed.rawValue)
     }
 
     func test_activate_emptyAccount() throws {
+        var actualError: NSError?
         self.performAndWaitFor("Wait for error", timeout: 2) { (expectation) in
-            self.mockDelegate.errorExpectation = expectation
-            self.controller.activate(withEmail: TestData.Emails.empty, password: TestData.password)
+            self.controller.activate(withEmail: TestData.Emails.empty, password: TestData.password) { result in
+                if case .failure(let error) = result {
+                    actualError = error
+                }
+                expectation.fulfill()
+            }
         }
 
-        let error = try XCTUnwrap(self.mockDelegate.error)
+        let error = try XCTUnwrap(actualError)
         XCTAssertEqual(error.code, SubscriptionErrorCodes.noSubscriptionFound.rawValue)
     }
 
     func test_activate_accountHasSubscriptionsButNotForApp() throws {
         TEST_OVERRIDES.bundleID = TestData.BundleIDs.appA
 
+        var actualError: NSError?
         self.performAndWaitFor("Wait for error", timeout: 2) { (expectation) in
-            self.mockDelegate.errorExpectation = expectation
-            self.controller.activate(withEmail: TestData.Emails.basic, password: TestData.password)
+            self.controller.activate(withEmail: TestData.Emails.basic, password: TestData.password) { result in
+                if case .failure(let error) = result {
+                    actualError = error
+                }
+                expectation.fulfill()
+            }
         }
 
-        let error = try XCTUnwrap(self.mockDelegate.error)
+        let error = try XCTUnwrap(actualError)
         XCTAssertEqual(error.code, SubscriptionErrorCodes.noSubscriptionFound.rawValue)
     }
 
     func test_activate_accountHasSubscriptionForAppButItsExpired() throws {
         TEST_OVERRIDES.bundleID = TestData.BundleIDs.appB
 
-        self.performAndWaitFor("Wait for error", timeout: 2) { (expectation) in
-            self.mockDelegate.errorExpectation = expectation
-            self.controller.activate(withEmail: TestData.Emails.basicExpired, password: TestData.password)
+        var actualActivationResponse: ActivationResponse?
+        self.performAndWaitFor("Wait for activation") { (expectation) in
+            self.controller.activate(withEmail: TestData.Emails.basicExpired, password: TestData.password) { result in
+                if case .success(let response) = result {
+                    actualActivationResponse = response
+                }
+                expectation.fulfill()
+            }
         }
 
-        let error = try XCTUnwrap(self.mockDelegate.error)
-        XCTAssertEqual(error.code, SubscriptionErrorCodes.subscriptionExpired.rawValue)
+        let response = try XCTUnwrap(actualActivationResponse)
+        XCTAssertFalse(response.isActive)
+        XCTAssertFalse(response.deviceIsActivated)
+        XCTAssertNil(response.token)
 
-        let subscription = try XCTUnwrap(error.userInfo[SubscriptionErrorFactory.InfoKeys.subscription] as? Subscription)
+        let subscription = try XCTUnwrap(response.subscription)
         XCTAssertEqual(subscription.name, TestData.SubscriptionName.appBAnnual)
+        XCTAssertEqual(subscription.renewalStatus, .renew)
         XCTAssertLessThan(subscription.expirationDate.timeIntervalSinceReferenceDate, Date().timeIntervalSinceReferenceDate)
     }
 
     func test_activate_accountHasActiveSubscriptionForApp() throws {
         TEST_OVERRIDES.bundleID = TestData.BundleIDs.appB
 
+        var actualActivationResponse: ActivationResponse?
         self.performAndWaitFor("Wait for activation") { (expectation) in
-            self.mockDelegate.activationExpectation = expectation
-            self.controller.activate(withEmail: TestData.Emails.basic, password: TestData.password)
+            self.controller.activate(withEmail: TestData.Emails.basic, password: TestData.password) { result in
+                if case .success(let response) = result {
+                    actualActivationResponse = response
+                }
+                expectation.fulfill()
+            }
         }
 
-        let response = try XCTUnwrap(self.mockDelegate.activationResponse)
-        XCTAssertEqual(response.activationState, .active)
+        let response = try XCTUnwrap(actualActivationResponse)
+        XCTAssertTrue(response.isActive)
+        XCTAssertTrue(response.deviceIsActivated)
         XCTAssertNotNil(response.token)
 
         let subscription = try XCTUnwrap(response.subscription)
         XCTAssertEqual(subscription.name, TestData.SubscriptionName.appBAnnual)
+        XCTAssertEqual(subscription.renewalStatus, .renew)
         XCTAssertGreaterThan(subscription.expirationDate.timeIntervalSinceReferenceDate, Date().timeIntervalSinceReferenceDate)
     }
 
     func test_activate_accountHasTwoSubscriptionsButForDifferentApps() throws {
         TEST_OVERRIDES.bundleID = TestData.BundleIDs.appA
 
+        var actualActivationResponse: ActivationResponse?
         self.performAndWaitFor("Wait for activation") { (expectation) in
-            self.mockDelegate.activationExpectation = expectation
-            self.controller.activate(withEmail: TestData.Emails.multipleApps, password: TestData.password)
+            self.controller.activate(withEmail: TestData.Emails.multipleApps, password: TestData.password) { result in
+                if case .success(let response) = result {
+                    actualActivationResponse = response
+                }
+                expectation.fulfill()
+            }
         }
 
-        let response = try XCTUnwrap(self.mockDelegate.activationResponse)
-        XCTAssertEqual(response.activationState, .active)
+        let response = try XCTUnwrap(actualActivationResponse)
+        XCTAssertTrue(response.isActive)
+        XCTAssertTrue(response.deviceIsActivated)
         XCTAssertNotNil(response.token)
 
         let subscription = try XCTUnwrap(response.subscription)
         XCTAssertEqual(subscription.name, TestData.SubscriptionName.appAAnnual)
+        XCTAssertEqual(subscription.renewalStatus, .renew)
         XCTAssertGreaterThan(subscription.expirationDate.timeIntervalSinceReferenceDate, Date().timeIntervalSinceReferenceDate)
     }
 
     func test_activate_accountHasTwoSubscriptionsForTheSameAppButOneHasExpired() throws {
         TEST_OVERRIDES.bundleID = TestData.BundleIDs.appA
 
+        var actualActivationResponse: ActivationResponse?
         self.performAndWaitFor("Wait for activation") { (expectation) in
-            self.mockDelegate.activationExpectation = expectation
-            self.controller.activate(withEmail: TestData.Emails.multipleSubscriptionsExpired, password: TestData.password)
+            self.controller.activate(withEmail: TestData.Emails.multipleSubscriptionsExpired, password: TestData.password) { result in
+                if case .success(let response) = result {
+                    actualActivationResponse = response
+                }
+                expectation.fulfill()
+            }
         }
 
-        let response = try XCTUnwrap(self.mockDelegate.activationResponse)
-        XCTAssertEqual(response.activationState, .active)
+        let response = try XCTUnwrap(actualActivationResponse)
+        XCTAssertTrue(response.isActive)
+        XCTAssertTrue(response.deviceIsActivated)
         XCTAssertNotNil(response.token)
 
         let subscription = try XCTUnwrap(response.subscription)
         XCTAssertEqual(subscription.name, TestData.SubscriptionName.appAAnnual)
+        XCTAssertEqual(subscription.renewalStatus, .failed)
         XCTAssertGreaterThan(subscription.expirationDate.timeIntervalSinceReferenceDate, Date().timeIntervalSinceReferenceDate)
     }
 
     func test_activate_accountHasTwoActiveSubscriptionsForTheSameApp() throws {
         TEST_OVERRIDES.bundleID = TestData.BundleIDs.appA
 
+        var actualError: NSError?
         self.performAndWaitFor("Wait for subscription plans") { (expectation) in
-            self.mockUIDelegate.showSubscriptionPlansExpectation = expectation
-            self.controller.activate(withEmail: TestData.Emails.multipleSubscriptions, password: TestData.password)
+            self.controller.activate(withEmail: TestData.Emails.multipleSubscriptions, password: TestData.password){ result in
+                if case .failure(let error) = result {
+                    actualError = error
+                }
+                expectation.fulfill()
+            }
         }
 
-        let plans = try XCTUnwrap(self.mockUIDelegate.plansArgument)
+        let error = try XCTUnwrap(actualError)
+        XCTAssertEqual(error.code, SubscriptionErrorCodes.multipleSubscriptionsFound.rawValue)
+
+        let plans = try XCTUnwrap(error.userInfo[SubscriptionErrorFactory.InfoKeys.subscriptionPlans] as? [Subscription])
         XCTAssertEqual(plans.count, 2)
-        XCTAssertTrue(plans.contains(where: { $0.name == TestData.SubscriptionName.appAAnnual}))
-        XCTAssertTrue(plans.contains(where: { $0.name == TestData.SubscriptionName.appAMonthly}))
+        XCTAssertTrue(plans.contains(where: { $0.name == TestData.SubscriptionName.appAAnnual && $0.renewalStatus == .failed}))
+        XCTAssertTrue(plans.contains(where: { $0.name == TestData.SubscriptionName.appAMonthly && $0.renewalStatus == .renew}))
     }
 
     func test_activate_accountHasTwoActiveSubscriptionsForTheSameAppAndSubscriptionIDProvided() throws {
         TEST_OVERRIDES.bundleID = TestData.BundleIDs.appA
 
+        var actualError: NSError?
         self.performAndWaitFor("Wait for subscription plans") { (expectation) in
-            self.mockUIDelegate.showSubscriptionPlansExpectation = expectation
-            self.controller.activate(withEmail: TestData.Emails.multipleSubscriptions, password: TestData.password)
+            self.controller.activate(withEmail: TestData.Emails.multipleSubscriptions, password: TestData.password) { result in
+                if case .failure(let error) = result {
+                    actualError = error
+                }
+                expectation.fulfill()
+            }
         }
 
-        let plans = try XCTUnwrap(self.mockUIDelegate.plansArgument)
+        let plans = try XCTUnwrap(actualError?.userInfo[SubscriptionErrorFactory.InfoKeys.subscriptionPlans] as? [Subscription])
         let subscriptionPlan = try XCTUnwrap(plans.first(where: { $0.name == TestData.SubscriptionName.appAMonthly }))
 
+        var actualActivationResponse: ActivationResponse?
         self.performAndWaitFor("Wait for activation") { (expectation) in
-            self.mockDelegate.activationExpectation = expectation
-            self.controller.activate(withEmail: TestData.Emails.multipleSubscriptions, password: TestData.password, subscription: subscriptionPlan)
+            self.controller.activate(withEmail: TestData.Emails.multipleSubscriptions, password: TestData.password, subscription: subscriptionPlan) { result in
+                if case .success(let response) = result {
+                    actualActivationResponse = response
+                }
+                expectation.fulfill()
+            }
         }
 
-        let response = try XCTUnwrap(self.mockDelegate.activationResponse)
-        XCTAssertEqual(response.activationState, .active)
+        let response = try XCTUnwrap(actualActivationResponse)
+        XCTAssertTrue(response.isActive)
+        XCTAssertTrue(response.deviceIsActivated)
         XCTAssertNotNil(response.token)
 
         let subscription = try XCTUnwrap(response.subscription)
         XCTAssertEqual(subscription.name, TestData.SubscriptionName.appAMonthly)
+        XCTAssertEqual(subscription.renewalStatus, .renew)
         XCTAssertGreaterThan(subscription.expirationDate.timeIntervalSinceReferenceDate, Date().timeIntervalSinceReferenceDate)
     }
 
     func test_activate_accountHasSubscriptionButIsMaxedOutOnDeviceType() throws {
         TEST_OVERRIDES.bundleID = TestData.BundleIDs.appB
 
+        var actualError: NSError?
         self.performAndWaitFor("Wait for devices") { (expectation) in
-            self.mockUIDelegate.showDevicesExpectation = expectation
-            self.controller.activate(withEmail: TestData.Emails.tooManyDevices, password: TestData.password)
+            self.controller.activate(withEmail: TestData.Emails.tooManyDevices, password: TestData.password) { result in
+                if case .failure(let error) = result {
+                    actualError = error
+                }
+                expectation.fulfill()
+            }
         }
 
-        let devices = try XCTUnwrap(self.mockUIDelegate.devicesArgument)
+        let error = try XCTUnwrap(actualError)
+        XCTAssertEqual(error.code, SubscriptionErrorCodes.tooManyDevices.rawValue)
+
+        let devices = try XCTUnwrap(error.userInfo[SubscriptionErrorFactory.InfoKeys.devices] as? [SubscriptionDevice])
         XCTAssertEqual(devices.count, 2)
         XCTAssertTrue(devices.contains(where: { $0.name == TestData.DeviceNames.tooManyDevices1}))
         XCTAssertTrue(devices.contains(where: { $0.name == TestData.DeviceNames.tooManyDevices2}))
@@ -275,25 +339,37 @@ class M3SubscriptionsStageTests: XCTestCase {
     func test_activate_accountHasSubscriptionButIsMaxedOutOnDeviceTypeAndDeactivatingDeviceTokenProvided() throws {
         TEST_OVERRIDES.bundleID = TestData.BundleIDs.appB
 
+        var actualError: NSError?
         self.performAndWaitFor("Wait for devices") { (expectation) in
-            self.mockUIDelegate.showDevicesExpectation = expectation
-            self.controller.activate(withEmail: TestData.Emails.tooManyDevices, password: TestData.password)
+            self.controller.activate(withEmail: TestData.Emails.tooManyDevices, password: TestData.password) { result in
+                if case .failure(let error) = result {
+                    actualError = error
+                }
+                expectation.fulfill()
+            }
         }
 
-        let devices = try XCTUnwrap(self.mockUIDelegate.devicesArgument)
+        let devices = try XCTUnwrap(actualError?.userInfo[SubscriptionErrorFactory.InfoKeys.devices] as? [SubscriptionDevice])
         let device = try XCTUnwrap(devices.first(where: { $0.name == TestData.DeviceNames.tooManyDevices2 }))
 
+        var actualActivationResponse: ActivationResponse?
         self.performAndWaitFor("Wait for activate") { (expectation) in
-            self.mockDelegate.activationExpectation = expectation
-            self.controller.activate(withEmail: TestData.Emails.tooManyDevices, password: TestData.password, deactivatingDevice: device)
+            self.controller.activate(withEmail: TestData.Emails.tooManyDevices, password: TestData.password, deactivatingDevice: device) { result in
+                if case .success(let response) = result {
+                    actualActivationResponse = response
+                }
+                expectation.fulfill()
+            }
         }
 
-        let response = try XCTUnwrap(self.mockDelegate.activationResponse)
-        XCTAssertEqual(response.activationState, .active)
+        let response = try XCTUnwrap(actualActivationResponse)
+        XCTAssertTrue(response.isActive)
+        XCTAssertTrue(response.deviceIsActivated)
         XCTAssertNotNil(response.token)
 
         let subscription = try XCTUnwrap(response.subscription)
         XCTAssertEqual(subscription.name, TestData.SubscriptionName.appBAnnual)
+        XCTAssertEqual(subscription.renewalStatus, .renew)
         XCTAssertGreaterThan(subscription.expirationDate.timeIntervalSinceReferenceDate, Date().timeIntervalSinceReferenceDate)
     }
 
@@ -301,17 +377,24 @@ class M3SubscriptionsStageTests: XCTestCase {
         TEST_OVERRIDES.bundleID = TestData.BundleIDs.appB
         TEST_OVERRIDES.deviceType = .ipad
 
+        var actualActivationResponse: ActivationResponse?
         self.performAndWaitFor("Wait for activate") { (expectation) in
-            self.mockDelegate.activationExpectation = expectation
-            self.controller.activate(withEmail: TestData.Emails.tooManyDevices, password: TestData.password)
+            self.controller.activate(withEmail: TestData.Emails.tooManyDevices, password: TestData.password) { result in
+                if case .success(let response) = result {
+                    actualActivationResponse = response
+                }
+                expectation.fulfill()
+            }
         }
 
-        let response = try XCTUnwrap(self.mockDelegate.activationResponse)
-        XCTAssertEqual(response.activationState, .active)
+        let response = try XCTUnwrap(actualActivationResponse)
+        XCTAssertTrue(response.isActive)
+        XCTAssertTrue(response.deviceIsActivated)
         XCTAssertNotNil(response.token)
 
         let subscription = try XCTUnwrap(response.subscription)
         XCTAssertEqual(subscription.name, TestData.SubscriptionName.appBAnnual)
+        XCTAssertEqual(subscription.renewalStatus, .renew)
         XCTAssertGreaterThan(subscription.expirationDate.timeIntervalSinceReferenceDate, Date().timeIntervalSinceReferenceDate)
     }
 
@@ -319,146 +402,213 @@ class M3SubscriptionsStageTests: XCTestCase {
         TEST_OVERRIDES.bundleID = TestData.BundleIDs.appB
         TEST_OVERRIDES.deviceID = TestData.DeviceIDs.tooManyDevices2
 
+        var actualActivationResponse: ActivationResponse?
         self.performAndWaitFor("Wait for activate") { (expectation) in
-            self.mockDelegate.activationExpectation = expectation
-            self.controller.activate(withEmail: TestData.Emails.tooManyDevices, password: TestData.password)
+            self.controller.activate(withEmail: TestData.Emails.tooManyDevices, password: TestData.password) { result in
+                if case .success(let response) = result {
+                    actualActivationResponse = response
+                }
+                expectation.fulfill()
+            }
         }
 
-        let response = try XCTUnwrap(self.mockDelegate.activationResponse)
-        XCTAssertEqual(response.activationState, .active)
+        let response = try XCTUnwrap(actualActivationResponse)
+        XCTAssertTrue(response.isActive)
+        XCTAssertTrue(response.deviceIsActivated)
         XCTAssertNotNil(response.token)
 
         let subscription = try XCTUnwrap(response.subscription)
         XCTAssertEqual(subscription.name, TestData.SubscriptionName.appBAnnual)
+        XCTAssertEqual(subscription.renewalStatus, .renew)
         XCTAssertGreaterThan(subscription.expirationDate.timeIntervalSinceReferenceDate, Date().timeIntervalSinceReferenceDate)
     }
 
 
     //MARK: - Check
     func test_check_noMatchingTokenInAccount() throws {
-        try self.writeLicence(["payload": ["response": "active", "token": "foobarbaz", "subscriptionName": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z"], "signature": "JXTHYF1DoiTDlFFCWEGJe6dXJX5pcTtUdPK4ziq+o22dibxbunYDYkYUMFrEMte8Jr/dqs9eVKIhMKqx65iEth0Y1f61y4V+dukLr1K9cEGciITwsbqKWAPk861FeShpWwdxAYqCuYQ0UeMCPbo3SrW2mQ5Nn3nzH0dmqFhrMAJONS9IiMbqgPkvwMDy/Gn38GafiWZmMUW+0P1ndgSFvLTJMnWsXEe+hLpJA9dKwWBgeXQ8VF4mN7dZwTLkWYSVOJkb4s3WndRrACi7tTgVcSWDhan/lVTM3JovHSKfCx8jzZlG1CZnpmes6GizpGW8TRff+evfZaGulNzhQiuykQ=="])
+        let storedPayload: [String: Any] = [
+            "response": "active",
+            "token": "foobarbaz",
+            "subscription": ["name": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"]
+        ]
+        let storedSignature = "MQVWTcssklEphlG2Pizak+0B4ehbDqqWo0qm4c47x7mQP6Sp5hVfazEfI2PWE4C0RBieR5Vk2gTR5yjAtj1zz+ytGCKIMSsC/M+By6fViilgJpFC4xaiAJsrtSAV+mKxx0wI0NOJxvvOz5NVxuZqF9kut0wwr1N9rRKP7eu3vOpp5OU6JlBIhTAteRYzVV9/R/aZ8G6qxkaPk5clRGSMQTa/L+brkYzHTt7Lk5W2+amR69H/Yo9ibrUmwHTbFauGcftBqkP38J6kLCuk2Pnu6Q/n/cFcN/IZx+Y75dTQjaWBUjY33xoEi3MKSs6RlJsvUM+3FzP/BMCtPtK2sNGUUQ=="
+        try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
+
+        var actualError: NSError?
         self.performAndWaitFor("Wait for error", timeout: 2) { (expectation) in
-            self.mockDelegate.errorExpectation = expectation
-            self.controller.checkSubscription()
+            self.controller.checkSubscription() { result in
+                if case .failure(let error) = result {
+                    actualError = error
+                }
+                expectation.fulfill()
+            }
         }
 
-        let error = try XCTUnwrap(self.mockDelegate.error)
+        let error = try XCTUnwrap(actualError)
         XCTAssertEqual(error.code, SubscriptionErrorCodes.noDeviceFound.rawValue)
     }
 
     func test_check_accountHasMatchingTokenButDeviceIDsDontMatch() throws {
         TEST_OVERRIDES.deviceID = TestData.DeviceIDs.tooManyDevices2
-        try self.writeLicence(["payload": ["response": "active", "token": TestData.Tokens.basic, "subscriptionName": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z"], "signature": "WasVsa3NufBMRwOoEJLYFozKPkDAlhAnnIsNpR3vkRiUcKzHkxAMhdzOwKl2yrrLp0alfaojtXUkDs1Z5xsUCaEyQ5dy+PbGGXe30ZBy9VCC7AuPNntku+40ng3VJU1TpwaIOdKUzaWx6i4G6Y5JFOTqC1FyY4AbMKH7Pemg11VZMWdt+602cTNmJfzbkSPbLxcfLFYUojdoUG9K6b8k11KXGk0ph/oRD0dGz7syUSIXGeHGIQQPKkefR/PCBGz5Q4n2cTb8seOhmf7x4jAdnToFk3l2iwYkdfKwK6QFFyL+mZeD5sCjiuF79ll3x1P1w2vrRg/Yj4KIhoCLo5eWdA=="])
+        let storedPayload: [String: Any] = [
+            "response": "active",
+            "token": TestData.Tokens.basic,
+            "subscription": ["name": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"]
+        ]
+        let storedSignature = "EKX2xO5nbmSWIsuSH3PfXSyd/Z5OV4OBhfUuh15R2PniIZAsoiAqdE4uLcbEyI6FO1D9Lgf5/AAHMAunXoVZ/BMWi78DCYJbmxXG+eD35E3TigtBAc2hRKV8zewRWM42GqR5IDN79eSveAtvDLr70t5VaH8Lf7om7Irk1j1JCgBEyTvTS2Urql0e7Djdeu6ppTqw91rVBCz+GE6BJ6oAJCPVNjABUDdADr8d2xULbyQMiOFYK9yksabf+rPLDLNXx1rEHXCQudCy7jxJ152caYdC0y+RZ5FlQxuJ7Z53omIPYwuLSqwuWi0KfY6oQDzjZ2/CscVVGeBXPxmcoKG/cQ=="
+        try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
+
+        var actualError: NSError?
         self.performAndWaitFor("Wait for error", timeout: 2) { (expectation) in
-            self.mockDelegate.errorExpectation = expectation
-            self.controller.checkSubscription()
+            self.controller.checkSubscription(){ result in
+                if case .failure(let error) = result {
+                    actualError = error
+                }
+                expectation.fulfill()
+            }
         }
 
-        let error = try XCTUnwrap(self.mockDelegate.error)
+        let error = try XCTUnwrap(actualError)
         XCTAssertEqual(error.code, SubscriptionErrorCodes.noDeviceFound.rawValue)
     }
 
     func test_check_accountHasActivationButSubscriptionExpired() throws {
         TEST_OVERRIDES.deviceID = TestData.DeviceIDs.basicExpired
-        try self.writeLicence(["payload": ["response": "active", "token": TestData.Tokens.basicExpired, "subscriptionName": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z"], "signature":"hdp0NG0XxEv0iJI09HnJiEoPzSPrvguLNs3/xhW/bYS1iaOuqEvOBj6EfKW3QVqnuOugoojT6SdGAz+d0NZ6hrLq5VqoVHCQg+pDjueHEASSJUnnBWma3emCFpNUB7bHb9gV5rmxjEaomx4a0I2oXKC/jtcLcXgguoDa6AqTogW1fdvr1dd/j+yHopMkQNXohVHOWJI9f1OlCxEKd86T5xgk9C2szCmpHSOwnGek6zcQfcSySQ+ouUBXvIjkdOdOT6L0mgMYkAi1+VN1IUpWNxOFaTjSWGopXI8YTtigI/pV6ATUgW9LSaMijr8g06+CQ3n40Ona4/zMLSYbkXkSkw=="])
-        self.performAndWaitFor("Wait for error", timeout: 2) { (expectation) in
-            self.mockDelegate.errorExpectation = expectation
-            self.controller.checkSubscription()
+
+        let storedPayload: [String: Any] = [
+            "response": "active",
+            "token": TestData.Tokens.basicExpired,
+            "subscription": ["name": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"]
+        ]
+        let storedSignature = "qHHftTX9NpI4urBXueVDHClZ0cyT8a8xPJFgV0x3QYZXAghbm8+Kh8mt6J3kHesJhpgSpK5oguNgiCsw2wtPGXg8zPCmu7z+BdlXKd+2e0ZNeQ6FSHjmzINkiHBH7I/FO6WFUGaWAvWxpJfQlwOS+0XlcHqVCVUfvZxyIUqR8+zjS/FIyid68y5U/LgRoPJi1vHUjER2pmSeNzt2dn6SeUbQaFO/bEks5+QfmUWg+Mg7OaM598nDYWvCzK+f9SM6q1vGQjXwv1Gxe53ytPhe7GK/vX+qBrGEQeXVNC6Cfu4+JpkJNe48Awgfbb9YaJB7NGPC1SnIO90VJoZ4KC0j0g=="
+        try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
+
+        var actualActivationResponse: ActivationResponse?
+        self.performAndWaitFor("Wait for activation", timeout: 2) { (expectation) in
+            self.controller.checkSubscription() { result in
+                if case .success(let response) = result {
+                    actualActivationResponse = response
+                }
+                expectation.fulfill()
+            }
         }
 
-        let error = try XCTUnwrap(self.mockDelegate.error)
-        XCTAssertEqual(error.code, SubscriptionErrorCodes.subscriptionExpired.rawValue)
+        let response = try XCTUnwrap(actualActivationResponse)
+        XCTAssertFalse(response.isActive)
+        XCTAssertTrue(response.deviceIsActivated)
+        XCTAssertNotNil(response.token)
 
-        let subscription = try XCTUnwrap(error.userInfo[SubscriptionErrorFactory.InfoKeys.subscription] as? Subscription)
+        let subscription = try XCTUnwrap(response.subscription)
         XCTAssertEqual(subscription.name, TestData.SubscriptionName.appBAnnual)
+        XCTAssertEqual(subscription.renewalStatus, .renew)
+        XCTAssertTrue(subscription.hasExpired)
         XCTAssertLessThan(subscription.expirationDate.timeIntervalSinceReferenceDate, Date().timeIntervalSinceReferenceDate)
     }
 
     func test_activate_accountHasActivationForActiveSubscription() throws {
         TEST_OVERRIDES.deviceID = TestData.DeviceIDs.basic
-        try self.writeLicence(["payload": ["response": "active", "token": TestData.Tokens.basic, "subscriptionName": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z"], "signature": "WasVsa3NufBMRwOoEJLYFozKPkDAlhAnnIsNpR3vkRiUcKzHkxAMhdzOwKl2yrrLp0alfaojtXUkDs1Z5xsUCaEyQ5dy+PbGGXe30ZBy9VCC7AuPNntku+40ng3VJU1TpwaIOdKUzaWx6i4G6Y5JFOTqC1FyY4AbMKH7Pemg11VZMWdt+602cTNmJfzbkSPbLxcfLFYUojdoUG9K6b8k11KXGk0ph/oRD0dGz7syUSIXGeHGIQQPKkefR/PCBGz5Q4n2cTb8seOhmf7x4jAdnToFk3l2iwYkdfKwK6QFFyL+mZeD5sCjiuF79ll3x1P1w2vrRg/Yj4KIhoCLo5eWdA=="])
+        let storedPayload: [String: Any] = [
+            "response": "active",
+            "token": TestData.Tokens.basic,
+            "subscription": ["name": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"]
+        ]
+
+        let storedSignature = "EKX2xO5nbmSWIsuSH3PfXSyd/Z5OV4OBhfUuh15R2PniIZAsoiAqdE4uLcbEyI6FO1D9Lgf5/AAHMAunXoVZ/BMWi78DCYJbmxXG+eD35E3TigtBAc2hRKV8zewRWM42GqR5IDN79eSveAtvDLr70t5VaH8Lf7om7Irk1j1JCgBEyTvTS2Urql0e7Djdeu6ppTqw91rVBCz+GE6BJ6oAJCPVNjABUDdADr8d2xULbyQMiOFYK9yksabf+rPLDLNXx1rEHXCQudCy7jxJ152caYdC0y+RZ5FlQxuJ7Z53omIPYwuLSqwuWi0KfY6oQDzjZ2/CscVVGeBXPxmcoKG/cQ=="
+        try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
+
+        var actualActivationResponse: ActivationResponse?
         self.performAndWaitFor("Wait for activation") { (expectation) in
-            self.mockDelegate.activationExpectation = expectation
-            self.controller.checkSubscription()
+            self.controller.checkSubscription() { result in
+                if case .success(let response) = result {
+                    actualActivationResponse = response
+                }
+                expectation.fulfill()
+            }
         }
 
-        let activationResponse = try XCTUnwrap(self.mockDelegate.activationResponse)
-        XCTAssertEqual(activationResponse.activationState, .active)
-        XCTAssertNotNil(activationResponse.token)
+        let response = try XCTUnwrap(actualActivationResponse)
+        XCTAssertTrue(response.isActive)
+        XCTAssertTrue(response.deviceIsActivated)
+        XCTAssertNotNil(response.token)
 
-        let subscription = try XCTUnwrap(activationResponse.subscription)
+        let subscription = try XCTUnwrap(response.subscription)
         XCTAssertEqual(subscription.name, TestData.SubscriptionName.appBAnnual)
+        XCTAssertEqual(subscription.renewalStatus, .renew)
+        XCTAssertFalse(subscription.hasExpired)
         XCTAssertGreaterThan(subscription.expirationDate.timeIntervalSinceReferenceDate, Date().timeIntervalSinceReferenceDate)
     }
 
 
     //MARK: - Deactivate
     func test_deactivate_noMatchingTokenInAccount() throws {
-        try self.writeLicence(["payload": ["response": "active", "token": "foobarbaz", "subscriptionName": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z"], "signature": "JXTHYF1DoiTDlFFCWEGJe6dXJX5pcTtUdPK4ziq+o22dibxbunYDYkYUMFrEMte8Jr/dqs9eVKIhMKqx65iEth0Y1f61y4V+dukLr1K9cEGciITwsbqKWAPk861FeShpWwdxAYqCuYQ0UeMCPbo3SrW2mQ5Nn3nzH0dmqFhrMAJONS9IiMbqgPkvwMDy/Gn38GafiWZmMUW+0P1ndgSFvLTJMnWsXEe+hLpJA9dKwWBgeXQ8VF4mN7dZwTLkWYSVOJkb4s3WndRrACi7tTgVcSWDhan/lVTM3JovHSKfCx8jzZlG1CZnpmes6GizpGW8TRff+evfZaGulNzhQiuykQ=="])
+        let storedPayload: [String: Any] = [
+            "response": "active",
+            "token": "foobarbaz",
+            "subscription": ["name": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"]
+        ]
+        let storedSignature = "MQVWTcssklEphlG2Pizak+0B4ehbDqqWo0qm4c47x7mQP6Sp5hVfazEfI2PWE4C0RBieR5Vk2gTR5yjAtj1zz+ytGCKIMSsC/M+By6fViilgJpFC4xaiAJsrtSAV+mKxx0wI0NOJxvvOz5NVxuZqF9kut0wwr1N9rRKP7eu3vOpp5OU6JlBIhTAteRYzVV9/R/aZ8G6qxkaPk5clRGSMQTa/L+brkYzHTt7Lk5W2+amR69H/Yo9ibrUmwHTbFauGcftBqkP38J6kLCuk2Pnu6Q/n/cFcN/IZx+Y75dTQjaWBUjY33xoEi3MKSs6RlJsvUM+3FzP/BMCtPtK2sNGUUQ=="
+        try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
+
+        var actualError: NSError?
         self.performAndWaitFor("Wait for error", timeout: 2) { (expectation) in
-            self.mockDelegate.errorExpectation = expectation
-            self.controller.deactivate()
+            self.controller.deactivate() { result in
+                if case .failure(let error) = result {
+                    actualError = error
+                }
+                expectation.fulfill()
+            }
         }
 
-        let error = try XCTUnwrap(self.mockDelegate.error)
+        let error = try XCTUnwrap(actualError)
         XCTAssertEqual(error.code, SubscriptionErrorCodes.noDeviceFound.rawValue)
     }
 
     func test_deactivate_accountHasMatchingTokenButDeviceIDsDontMatch() throws {
         TEST_OVERRIDES.deviceID = TestData.DeviceIDs.tooManyDevices2
-        try self.writeLicence(["payload": ["response": "active", "token": TestData.Tokens.basic, "subscriptionName": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z"], "signature": "WasVsa3NufBMRwOoEJLYFozKPkDAlhAnnIsNpR3vkRiUcKzHkxAMhdzOwKl2yrrLp0alfaojtXUkDs1Z5xsUCaEyQ5dy+PbGGXe30ZBy9VCC7AuPNntku+40ng3VJU1TpwaIOdKUzaWx6i4G6Y5JFOTqC1FyY4AbMKH7Pemg11VZMWdt+602cTNmJfzbkSPbLxcfLFYUojdoUG9K6b8k11KXGk0ph/oRD0dGz7syUSIXGeHGIQQPKkefR/PCBGz5Q4n2cTb8seOhmf7x4jAdnToFk3l2iwYkdfKwK6QFFyL+mZeD5sCjiuF79ll3x1P1w2vrRg/Yj4KIhoCLo5eWdA=="])
+        let storedPayload: [String: Any] = [
+            "response": "active",
+            "token": TestData.Tokens.basic,
+            "subscription": ["name": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"]
+        ]
+        let storedSignature = "EKX2xO5nbmSWIsuSH3PfXSyd/Z5OV4OBhfUuh15R2PniIZAsoiAqdE4uLcbEyI6FO1D9Lgf5/AAHMAunXoVZ/BMWi78DCYJbmxXG+eD35E3TigtBAc2hRKV8zewRWM42GqR5IDN79eSveAtvDLr70t5VaH8Lf7om7Irk1j1JCgBEyTvTS2Urql0e7Djdeu6ppTqw91rVBCz+GE6BJ6oAJCPVNjABUDdADr8d2xULbyQMiOFYK9yksabf+rPLDLNXx1rEHXCQudCy7jxJ152caYdC0y+RZ5FlQxuJ7Z53omIPYwuLSqwuWi0KfY6oQDzjZ2/CscVVGeBXPxmcoKG/cQ=="
+        try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
+        var actualError: NSError?
         self.performAndWaitFor("Wait for error", timeout: 2) { (expectation) in
-            self.mockDelegate.errorExpectation = expectation
-            self.controller.deactivate()
+            self.controller.deactivate() { result in
+                if case .failure(let error) = result {
+                    actualError = error
+                }
+                expectation.fulfill()
+            }
         }
 
-        let error = try XCTUnwrap(self.mockDelegate.error)
+        let error = try XCTUnwrap(actualError)
         XCTAssertEqual(error.code, SubscriptionErrorCodes.noDeviceFound.rawValue)
     }
 
     func test_deactivate_successfullyDeactives() throws {
         TEST_OVERRIDES.deviceID = TestData.DeviceIDs.basic
-        try self.writeLicence(["payload": ["response": "active", "token": TestData.Tokens.basic, "subscriptionName": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z"], "signature": "WasVsa3NufBMRwOoEJLYFozKPkDAlhAnnIsNpR3vkRiUcKzHkxAMhdzOwKl2yrrLp0alfaojtXUkDs1Z5xsUCaEyQ5dy+PbGGXe30ZBy9VCC7AuPNntku+40ng3VJU1TpwaIOdKUzaWx6i4G6Y5JFOTqC1FyY4AbMKH7Pemg11VZMWdt+602cTNmJfzbkSPbLxcfLFYUojdoUG9K6b8k11KXGk0ph/oRD0dGz7syUSIXGeHGIQQPKkefR/PCBGz5Q4n2cTb8seOhmf7x4jAdnToFk3l2iwYkdfKwK6QFFyL+mZeD5sCjiuF79ll3x1P1w2vrRg/Yj4KIhoCLo5eWdA=="])
+        let storedPayload: [String: Any] = [
+            "response": "active",
+            "token": TestData.Tokens.basic,
+            "subscription": ["name": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"]
+        ]
+
+        let storedSignature = "EKX2xO5nbmSWIsuSH3PfXSyd/Z5OV4OBhfUuh15R2PniIZAsoiAqdE4uLcbEyI6FO1D9Lgf5/AAHMAunXoVZ/BMWi78DCYJbmxXG+eD35E3TigtBAc2hRKV8zewRWM42GqR5IDN79eSveAtvDLr70t5VaH8Lf7om7Irk1j1JCgBEyTvTS2Urql0e7Djdeu6ppTqw91rVBCz+GE6BJ6oAJCPVNjABUDdADr8d2xULbyQMiOFYK9yksabf+rPLDLNXx1rEHXCQudCy7jxJ152caYdC0y+RZ5FlQxuJ7Z53omIPYwuLSqwuWi0KfY6oQDzjZ2/CscVVGeBXPxmcoKG/cQ=="
+        try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
+
+        var actualActivationResponse: ActivationResponse?
         self.performAndWaitFor("Wait for activation") { (expectation) in
-            self.mockDelegate.activationExpectation = expectation
-            self.controller.deactivate()
+            self.controller.deactivate() { result in
+                if case .success(let response) = result {
+                    actualActivationResponse = response
+                }
+                expectation.fulfill()
+            }
         }
 
-        let activationResponse = try XCTUnwrap(self.mockDelegate.activationResponse)
-        XCTAssertEqual(activationResponse.activationState, .deactivated)
-    }
-}
-
-
-class MockSubscriptionDelegate: SubscriptionControllerDelegate {
-    var activationResponse: ActivationResponse?
-    var activationExpectation: XCTestExpectation?
-    func didChangeSubscription(_ info: ActivationResponse, in controller: SubscriptionController) {
-        self.activationResponse = info
-        self.activationExpectation?.fulfill()
-    }
-
-    var error: NSError?
-    var errorExpectation: XCTestExpectation?
-    func didEncounterError(_ error: NSError, in controller: SubscriptionController) {
-        self.error = error
-        self.errorExpectation?.fulfill()
-    }
-}
-
-
-class MockSubscriptionUIDelegate: SubscriptionControllerUIDelegate {
-    var plansArgument: [Subscription]?
-    var showSubscriptionPlansExpectation: XCTestExpectation?
-    func showSubscriptionPlans(_ plans: [Subscription], for controller: SubscriptionController) {
-        self.plansArgument = plans
-        self.showSubscriptionPlansExpectation?.fulfill()
-    }
-
-    var devicesArgument: [SubscriptionDevice]?
-    var showDevicesExpectation: XCTestExpectation?
-    func showDevicesToDeactivate(_ devices: [SubscriptionDevice], for controller: SubscriptionController) {
-        self.devicesArgument = devices
-        self.showDevicesExpectation?.fulfill()
+        let activationResponse = try XCTUnwrap(actualActivationResponse)
+        XCTAssertFalse(activationResponse.isActive)
+        XCTAssertFalse(activationResponse.deviceIsActivated)
     }
 }

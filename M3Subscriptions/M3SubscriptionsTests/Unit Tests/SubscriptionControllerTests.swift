@@ -219,7 +219,7 @@ class SubscriptionControllerTests: APITestCase {
 
         let expectation = self.expectation(description: "Activate Completed")
         var actualResponse: ActivationResponse? = nil
-        self.controller.activate(withEmail: "baz@possum.com", password: "abcdef")  { result in
+        self.controller.activate(withEmail: "baz@possum.com", password: "abcdef") { result in
             if case .success(let response) = result {
                 actualResponse = response
             }
