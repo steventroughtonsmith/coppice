@@ -53,7 +53,7 @@ class CoppiceProViewController: PreferencesViewController {
     private func updateView(with response: ActivationResponse?) {
         guard
             let activationResponse = response,
-            (activationResponse.state == .active) || (activationResponse.state == .billingFailed)
+            activationResponse.deviceIsActivated
         else {
             self.currentContentView = self.deactivatedViewController
             return

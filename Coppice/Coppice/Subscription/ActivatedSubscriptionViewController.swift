@@ -15,6 +15,7 @@ class ActivatedSubscriptionViewController: NSViewController {
     @IBOutlet weak var subscriptionStateLabel: NSTextField!
     @IBOutlet weak var subscriptionDeviceLabel: NSTextField!
     @IBOutlet weak var subscriptionInfoLabel: NSTextField!
+    @IBOutlet weak var billingFailedHelpButton: NSButton!
 
     let subscriptionManager: CoppiceSubscriptionManager
     init(subscriptionManager: CoppiceSubscriptionManager) {
@@ -44,31 +45,52 @@ class ActivatedSubscriptionViewController: NSViewController {
         }
 
         self.subscriptionNameLabel.stringValue = response.subscription?.name ?? NSLocalizedString("No Subscription Found", comment: "'No subscription' subscription name")
-//        self.subscriptionDeviceLabel.stringValue = response.subscription
+        self.subscriptionStateLabel.stringValue = self.localizedState(for: response.subscription)
+        self.subscriptionInfoLabel.stringValue = self.localizedInfo(for: response.subscription)
+
+        self.subscriptionDeviceLabel.stringValue = response.deviceName ?? "Unknown"
+
+        self.billingFailedHelpButton.isHidden = !(response.subscription?.renewalStatus == .failed)
+    }
+
+    private func localizedState(for subscription: M3Subscriptions.Subscription?) -> String {
+        guard let subscription = subscription else {
+            return NSLocalizedString("Deactivated", comment: "Deactivated subscription state")
+        }
+        if subscription.hasExpired {
+            return NSLocalizedString("Expired", comment: "Expired subscription state")
+        }
+        if subscription.renewalStatus == .failed {
+            return NSLocalizedString("Billing Failed", comment: "Billing Failed subscription state")
+        }
+
+        return NSLocalizedString("Active", comment: "Active subscription state")
+    }
+
+    private func localizedInfo(for subscription: M3Subscriptions.Subscription?) -> String {
+        guard let subscription = subscription else {
+            return ""
+        }
+
+        let format: String
+        if subscription.hasExpired {
+            format = NSLocalizedString("(expired on %@)", comment: "'expired on <date>' expired subscription info label")
+        } else {
+            switch subscription.renewalStatus {
+            case .renew:
+                format = NSLocalizedString("(will renew on %@)", comment: "'will renew on <date>' active subscription info label")
+            case .cancelled, .failed:
+                format = NSLocalizedString("(will expire on %@)", comment: "'will expire on <date>' active subscription that will expire (due to billing failure or the user cancelling) info label")
+            default:
+                return ""
+            }
+        }
+
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .long
         dateFormatter.timeStyle = .none
-        switch response.state {
-        case .active:
-            self.subscriptionStateLabel.stringValue = NSLocalizedString("Active", comment: "Active subscription state")
-            if let expirationDate = response.subscription?.expirationDate {
-                let renewsFormatString = NSLocalizedString("(Renews %@)", comment: "Active subscription info")
-                self.subscriptionInfoLabel.stringValue = String(format: renewsFormatString, dateFormatter.string(from: expirationDate))
-            } else {
-                self.subscriptionInfoLabel.stringValue = ""
-            }
-        case .billingFailed:
-            self.subscriptionStateLabel.stringValue = NSLocalizedString("Billing Failed", comment: "Billing Failed subscription state")
-            if let expirationDate = response.subscription?.expirationDate {
-                let expiresFormatString = NSLocalizedString("(Expires %@)", comment: "Expiring subscription info")
-                self.subscriptionInfoLabel.stringValue = String(format: expiresFormatString, dateFormatter.string(from: expirationDate))
-            } else {
-                self.subscriptionInfoLabel.stringValue = ""
-            }
-        default:
-            self.subscriptionStateLabel.stringValue = NSLocalizedString("Deactivated", comment: "Deactivated subscription state")
-            self.subscriptionInfoLabel.stringValue = ""
-        }
+
+        return String(format: format, dateFormatter.string(from: subscription.expirationDate))
     }
 
     //MARK: - Actions
@@ -80,5 +102,42 @@ class ActivatedSubscriptionViewController: NSViewController {
     }
 
     @IBAction func editDeviceName(_ sender: Any) {
+    }
+
+    private enum BillingFailedAlert: Int {
+        case cancel = 0
+        case goToAccount = 1
+        case contactSupport = 2
+    }
+
+    @IBAction func billingFailedHelp(_ sender: Any) {
+        let alert = NSAlert()
+        alert.messageText = NSLocalizedString("A Billing Problem Has Occured", comment: "Billing failure alert title")
+        alert.informativeText = NSLocalizedString("An issue has occured while attempting to renew your subscription. Please log into your M Cubed account and check your billing details are up-to-date. \n\nIf the problem persists, please contact M Cubed Software for support", comment: "Billing failure alert body")
+        alert.addButton(withTitle: NSLocalizedString("Go to Account", comment: "Go to Account billing failure alert button title")).tag = BillingFailedAlert.goToAccount.rawValue
+        alert.addButton(withTitle: NSLocalizedString("Cancel", comment: "Cancel")).tag = BillingFailedAlert.cancel.rawValue
+        alert.addButton(withTitle: NSLocalizedString("Contact Support", comment: "Contact support billing failure alert button title")).tag = BillingFailedAlert.contactSupport.rawValue
+
+        if let window = self.view.window {
+            alert.beginSheetModal(for: window) { (response) in
+                self.performBillingFailedAction(for: response)
+            }
+        } else {
+            self.performBillingFailedAction(for: alert.runModal())
+        }
+    }
+
+    private func performBillingFailedAction(for response: NSApplication.ModalResponse) {
+        guard let alert = BillingFailedAlert(rawValue: response.rawValue) else {
+            return
+        }
+        switch alert {
+        case .goToAccount:
+            NSWorkspace.shared.open(URL(string: "https://www.mcubedsw.com/account")!)
+        case .contactSupport:
+            NSWorkspace.shared.open(URL(string: "mailto:support@mcubedsw.com")!)
+        case .cancel:
+            break
+        }
     }
 }

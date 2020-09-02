@@ -8,6 +8,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ActivatedSubscriptionViewController" customModule="Coppice" customModuleProvider="target">
             <connections>
+                <outlet property="billingFailedHelpButton" destination="xEh-rb-7Mp" id="xWz-1O-1Bg"/>
                 <outlet property="subscriptionDeviceLabel" destination="xc4-ls-XLj" id="U4N-Ty-jpE"/>
                 <outlet property="subscriptionInfoLabel" destination="VH0-hr-FQW" id="Rd4-HE-xUs"/>
                 <outlet property="subscriptionNameLabel" destination="oda-2f-V5j" id="fo2-SX-tmZ"/>
@@ -17,7 +18,7 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customView misplaced="YES" id="Hz6-mo-xeY">
+        <customView id="Hz6-mo-xeY">
             <rect key="frame" x="0.0" y="0.0" width="480" height="173"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
@@ -89,15 +90,27 @@
                         <action selector="deactivate:" target="-2" id="Uok-qv-Ygf"/>
                     </connections>
                 </button>
+                <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xEh-rb-7Mp">
+                    <rect key="frame" x="341" y="98" width="18" height="19"/>
+                    <buttonCell key="cell" type="help" bezelStyle="helpButton" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="XRU-kB-dPu">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="smallSystem"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="billingFailedHelp:" target="-2" id="Mqq-kT-A4t"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="ONe-Ls-Dc6" secondAttribute="bottom" constant="20" id="5JW-8L-hnq"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xEh-rb-7Mp" secondAttribute="trailing" constant="20" id="5dC-x7-QQ9"/>
                 <constraint firstAttribute="trailing" secondItem="oda-2f-V5j" secondAttribute="trailing" constant="20" id="8pq-ed-PQq"/>
                 <constraint firstItem="oda-2f-V5j" firstAttribute="bottom" secondItem="3Ru-pb-h8r" secondAttribute="centerY" constant="-3" id="BDF-cA-Are"/>
                 <constraint firstItem="xc4-ls-XLj" firstAttribute="firstBaseline" secondItem="gEQ-Zm-PsX" secondAttribute="firstBaseline" id="Er9-lb-Cb4"/>
                 <constraint firstItem="QP0-f1-V8g" firstAttribute="leading" secondItem="xc4-ls-XLj" secondAttribute="trailing" constant="8" symbolic="YES" id="NUi-kt-CRK"/>
                 <constraint firstItem="QP0-f1-V8g" firstAttribute="firstBaseline" secondItem="gEQ-Zm-PsX" secondAttribute="firstBaseline" id="OfP-IR-qyt"/>
                 <constraint firstItem="oda-2f-V5j" firstAttribute="leading" secondItem="3Ru-pb-h8r" secondAttribute="trailing" constant="30" id="RAs-xx-faa"/>
+                <constraint firstItem="xEh-rb-7Mp" firstAttribute="leading" secondItem="VH0-hr-FQW" secondAttribute="trailing" constant="8" symbolic="YES" id="RQC-f5-heW"/>
                 <constraint firstAttribute="trailing" secondItem="ONe-Ls-Dc6" secondAttribute="trailing" constant="20" id="W6H-Ke-Psb"/>
                 <constraint firstItem="ONe-Ls-Dc6" firstAttribute="firstBaseline" secondItem="gEQ-Zm-PsX" secondAttribute="firstBaseline" id="arD-tH-OPX"/>
                 <constraint firstItem="gEQ-Zm-PsX" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="bZJ-Wd-f0V"/>
@@ -108,6 +121,7 @@
                 <constraint firstItem="7Et-yW-6vL" firstAttribute="firstBaseline" secondItem="VH0-hr-FQW" secondAttribute="firstBaseline" id="uWJ-Sy-JnC"/>
                 <constraint firstItem="gEQ-Zm-PsX" firstAttribute="top" secondItem="3Ru-pb-h8r" secondAttribute="bottom" constant="50" id="vP1-Cf-PMV"/>
                 <constraint firstItem="3Ru-pb-h8r" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="wWE-B2-F45"/>
+                <constraint firstItem="VH0-hr-FQW" firstAttribute="centerY" secondItem="xEh-rb-7Mp" secondAttribute="centerY" id="yF3-OR-4R0"/>
                 <constraint firstItem="7Et-yW-6vL" firstAttribute="top" secondItem="oda-2f-V5j" secondAttribute="bottom" constant="8" symbolic="YES" id="zsg-2m-uuI"/>
             </constraints>
             <point key="canvasLocation" x="68" y="113"/>
