@@ -45,7 +45,7 @@ class URLSessionNetworkAdapter: NetworkAdapter {
     }
 
     let session: URLSession
-    init(session: URLSession = URLSession(configuration: .ephemeral)) {
+    init(session: URLSession = URLSession(configuration: .ephemeral, delegate: nil, delegateQueue: .main)) {
         self.session = session
     }
 

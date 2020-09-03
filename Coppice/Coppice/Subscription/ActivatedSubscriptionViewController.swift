@@ -16,6 +16,7 @@ class ActivatedSubscriptionViewController: NSViewController {
     @IBOutlet weak var subscriptionDeviceLabel: NSTextField!
     @IBOutlet weak var subscriptionInfoLabel: NSTextField!
     @IBOutlet weak var billingFailedHelpButton: NSButton!
+    @IBOutlet weak var editDeviceNameButton: NSButton!
 
     let subscriptionManager: CoppiceSubscriptionManager
     init(subscriptionManager: CoppiceSubscriptionManager) {
@@ -51,6 +52,7 @@ class ActivatedSubscriptionViewController: NSViewController {
         self.subscriptionDeviceLabel.stringValue = response.deviceName ?? "Unknown"
 
         self.billingFailedHelpButton.isHidden = !(response.subscription?.renewalStatus == .failed)
+        self.updateEditDeviceButton()
     }
 
     private func localizedState(for subscription: M3Subscriptions.Subscription?) -> String {
@@ -101,9 +103,6 @@ class ActivatedSubscriptionViewController: NSViewController {
         self.subscriptionManager.deactivate(on: window)
     }
 
-    @IBAction func editDeviceName(_ sender: Any) {
-    }
-
     private enum BillingFailedAlert: Int {
         case cancel = 0
         case goToAccount = 1
@@ -139,5 +138,76 @@ class ActivatedSubscriptionViewController: NSViewController {
         case .cancel:
             break
         }
+    }
+
+    //MARK: - Device Name
+    @IBOutlet weak var deviceNameLabelWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var editDeviceNameField: NSTextField!
+    var isHoveredOverDeviceName: Bool = false {
+        didSet {
+            guard oldValue != self.isHoveredOverDeviceName else {
+                return
+            }
+            self.updateEditDeviceButton()
+        }
+    }
+    var isEditingDeviceName: Bool = false {
+        didSet {
+            guard oldValue != self.isEditingDeviceName else {
+                return
+            }
+            self.updateEditDeviceButton()
+            self.updateDeviceNameLabelEditability()
+        }
+    }
+
+
+    @IBAction func editDeviceName(_ sender: Any) {
+        self.isEditingDeviceName = true
+    }
+
+    private func updateEditDeviceButton() {
+        let showEditButton = self.isHoveredOverDeviceName && !self.isEditingDeviceName
+        self.editDeviceNameButton.isHidden = !showEditButton
+    }
+
+    private func updateDeviceNameLabelEditability() {
+        if (self.isEditingDeviceName) {
+            self.editDeviceNameField.stringValue = self.subscriptionDeviceLabel.stringValue
+            self.subscriptionDeviceLabel.isHidden = true
+            self.editDeviceNameField.isHidden = false
+        } else {
+            self.subscriptionDeviceLabel.isHidden = false
+            self.editDeviceNameField.isHidden = true
+        }
+    }
+}
+
+extension ActivatedSubscriptionViewController: HoverViewDelegate {
+    func mouseDidEnter(_ hoverView: HoverView) {
+        self.isHoveredOverDeviceName = true
+    }
+
+    func mouseDidExit(_ hoverView: HoverView) {
+        self.isHoveredOverDeviceName = false
+    }
+}
+
+
+extension ActivatedSubscriptionViewController: NSTextFieldDelegate {
+    func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
+        if (commandSelector == #selector(cancelOperation(_:))) {
+            self.isEditingDeviceName = false
+            self.update(with: self.subscriptionManager.activationResponse)
+            return true
+        } else if (commandSelector == #selector(insertNewline(_:))) {
+            if let window = self.view.window {
+                self.subscriptionManager.updateDeviceName(deviceName: self.editDeviceNameField.stringValue, on: window)
+                self.subscriptionDeviceLabel.stringValue = self.editDeviceNameField.stringValue
+                self.isEditingDeviceName = false
+            }
+            return true
+        }
+        return false
     }
 }

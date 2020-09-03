@@ -48,6 +48,8 @@ class CoppiceProViewController: PreferencesViewController {
         self.view.appearance = NSAppearance(named: .aqua)
         self.view.wantsLayer = true
         self.view.layer?.backgroundColor = NSColor(named: "CoppiceGreenPale")?.cgColor
+
+        self.subscriptionManager.checkSubscriptionIfNeeded()
     }
 
     private func updateView(with response: ActivationResponse?) {

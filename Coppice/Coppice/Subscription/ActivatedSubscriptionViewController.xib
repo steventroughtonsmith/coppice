@@ -9,7 +9,9 @@
         <customObject id="-2" userLabel="File's Owner" customClass="ActivatedSubscriptionViewController" customModule="Coppice" customModuleProvider="target">
             <connections>
                 <outlet property="billingFailedHelpButton" destination="xEh-rb-7Mp" id="xWz-1O-1Bg"/>
-                <outlet property="subscriptionDeviceLabel" destination="xc4-ls-XLj" id="U4N-Ty-jpE"/>
+                <outlet property="editDeviceNameButton" destination="RnU-Ye-FeB" id="ee7-es-crs"/>
+                <outlet property="editDeviceNameField" destination="Tiz-a1-QSm" id="R6K-db-R7g"/>
+                <outlet property="subscriptionDeviceLabel" destination="tjC-Tn-had" id="6Il-uA-qq3"/>
                 <outlet property="subscriptionInfoLabel" destination="VH0-hr-FQW" id="Rd4-HE-xUs"/>
                 <outlet property="subscriptionNameLabel" destination="oda-2f-V5j" id="fo2-SX-tmZ"/>
                 <outlet property="subscriptionStateLabel" destination="7Et-yW-6vL" id="Ea3-tI-7si"/>
@@ -62,24 +64,6 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xc4-ls-XLj">
-                    <rect key="frame" x="74" y="23" width="86" height="16"/>
-                    <textFieldCell key="cell" lineBreakMode="clipping" title="Martin's iMac" id="NXb-Ah-pDB">
-                        <font key="font" usesAppearanceFont="YES"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QP0-f1-V8g">
-                    <rect key="frame" x="166" y="21" width="34" height="17"/>
-                    <buttonCell key="cell" type="inline" title="Edit" bezelStyle="inline" alignment="center" borderStyle="border" inset="2" id="ZA3-LP-pPb">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="smallSystemBold"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="editDeviceName:" target="-2" id="80h-97-NYn"/>
-                    </connections>
-                </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ONe-Ls-Dc6">
                     <rect key="frame" x="361" y="13" width="105" height="32"/>
                     <buttonCell key="cell" type="push" title="Deactivate" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="o2h-R3-v74">
@@ -100,21 +84,72 @@
                         <action selector="billingFailedHelp:" target="-2" id="Mqq-kT-A4t"/>
                     </connections>
                 </button>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="bjS-Pp-fE0" customClass="HoverView" customModule="Coppice" customModuleProvider="target">
+                    <rect key="frame" x="66" y="19" width="154" height="24"/>
+                    <subviews>
+                        <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tjC-Tn-had">
+                            <rect key="frame" x="6" y="4" width="86" height="16"/>
+                            <string key="toolTip">The device name will appear on your subscription in your M Cubed Account to let you know what devices you have activated. You can always change this to something more memorable if you wish.</string>
+                            <textFieldCell key="cell" lineBreakMode="clipping" selectable="YES" title="Martin's iMac" id="Rr7-nq-8rd">
+                                <font key="font" usesAppearanceFont="YES"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RnU-Ye-FeB">
+                            <rect key="frame" x="98" y="3" width="34" height="17"/>
+                            <buttonCell key="cell" type="inline" title="Edit" bezelStyle="inline" alignment="center" borderStyle="border" inset="2" id="v4N-pW-h49">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="smallSystemBold"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="editDeviceName:" target="-2" id="CW2-zd-Au8"/>
+                            </connections>
+                        </button>
+                        <textField hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Tiz-a1-QSm">
+                            <rect key="frame" x="4" y="2" width="150" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="cdy-qk-XEB"/>
+                            </constraints>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" title="Martin's iMac" drawsBackground="YES" id="sR2-Cw-h8d">
+                                <font key="font" usesAppearanceFont="YES"/>
+                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                            <connections>
+                                <outlet property="delegate" destination="-2" id="JLC-iz-ljE"/>
+                            </connections>
+                        </textField>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="RnU-Ye-FeB" firstAttribute="leading" secondItem="tjC-Tn-had" secondAttribute="trailing" constant="8" symbolic="YES" id="6BP-hg-1iL"/>
+                        <constraint firstAttribute="bottom" secondItem="tjC-Tn-had" secondAttribute="bottom" constant="4" id="6kd-ER-HTo"/>
+                        <constraint firstAttribute="bottom" secondItem="RnU-Ye-FeB" secondAttribute="bottom" constant="4" id="DRf-5q-LD7"/>
+                        <constraint firstItem="Tiz-a1-QSm" firstAttribute="leading" secondItem="bjS-Pp-fE0" secondAttribute="leading" constant="4" id="Eqs-vE-myk"/>
+                        <constraint firstItem="RnU-Ye-FeB" firstAttribute="top" secondItem="bjS-Pp-fE0" secondAttribute="top" constant="4" id="V4M-0P-09G"/>
+                        <constraint firstItem="Tiz-a1-QSm" firstAttribute="top" secondItem="bjS-Pp-fE0" secondAttribute="top" constant="1" id="oXU-3r-S6F"/>
+                        <constraint firstItem="tjC-Tn-had" firstAttribute="top" secondItem="bjS-Pp-fE0" secondAttribute="top" constant="4" id="ogC-4r-Aut"/>
+                        <constraint firstAttribute="trailing" secondItem="Tiz-a1-QSm" secondAttribute="trailing" id="pGv-G3-iCd"/>
+                        <constraint firstItem="tjC-Tn-had" firstAttribute="leading" secondItem="bjS-Pp-fE0" secondAttribute="leading" constant="8" id="u0f-6g-aTq"/>
+                        <constraint firstAttribute="trailing" secondItem="RnU-Ye-FeB" secondAttribute="trailing" priority="749" constant="5" id="wBa-TC-5Fa"/>
+                    </constraints>
+                    <connections>
+                        <outlet property="delegate" destination="-2" id="ie7-VX-V9h"/>
+                    </connections>
+                </customView>
             </subviews>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="ONe-Ls-Dc6" secondAttribute="bottom" constant="20" id="5JW-8L-hnq"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xEh-rb-7Mp" secondAttribute="trailing" constant="20" id="5dC-x7-QQ9"/>
                 <constraint firstAttribute="trailing" secondItem="oda-2f-V5j" secondAttribute="trailing" constant="20" id="8pq-ed-PQq"/>
                 <constraint firstItem="oda-2f-V5j" firstAttribute="bottom" secondItem="3Ru-pb-h8r" secondAttribute="centerY" constant="-3" id="BDF-cA-Are"/>
-                <constraint firstItem="xc4-ls-XLj" firstAttribute="firstBaseline" secondItem="gEQ-Zm-PsX" secondAttribute="firstBaseline" id="Er9-lb-Cb4"/>
-                <constraint firstItem="QP0-f1-V8g" firstAttribute="leading" secondItem="xc4-ls-XLj" secondAttribute="trailing" constant="8" symbolic="YES" id="NUi-kt-CRK"/>
-                <constraint firstItem="QP0-f1-V8g" firstAttribute="firstBaseline" secondItem="gEQ-Zm-PsX" secondAttribute="firstBaseline" id="OfP-IR-qyt"/>
+                <constraint firstItem="bjS-Pp-fE0" firstAttribute="centerY" secondItem="gEQ-Zm-PsX" secondAttribute="centerY" id="PNa-3m-uwu"/>
                 <constraint firstItem="oda-2f-V5j" firstAttribute="leading" secondItem="3Ru-pb-h8r" secondAttribute="trailing" constant="30" id="RAs-xx-faa"/>
                 <constraint firstItem="xEh-rb-7Mp" firstAttribute="leading" secondItem="VH0-hr-FQW" secondAttribute="trailing" constant="8" symbolic="YES" id="RQC-f5-heW"/>
                 <constraint firstAttribute="trailing" secondItem="ONe-Ls-Dc6" secondAttribute="trailing" constant="20" id="W6H-Ke-Psb"/>
                 <constraint firstItem="ONe-Ls-Dc6" firstAttribute="firstBaseline" secondItem="gEQ-Zm-PsX" secondAttribute="firstBaseline" id="arD-tH-OPX"/>
                 <constraint firstItem="gEQ-Zm-PsX" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="bZJ-Wd-f0V"/>
-                <constraint firstItem="xc4-ls-XLj" firstAttribute="leading" secondItem="gEQ-Zm-PsX" secondAttribute="trailing" constant="10" id="hsC-mn-eJa"/>
+                <constraint firstItem="bjS-Pp-fE0" firstAttribute="leading" secondItem="gEQ-Zm-PsX" secondAttribute="trailing" id="dnM-2C-sbV"/>
                 <constraint firstItem="VH0-hr-FQW" firstAttribute="leading" secondItem="7Et-yW-6vL" secondAttribute="trailing" constant="3" id="nXD-Z0-dZf"/>
                 <constraint firstItem="3Ru-pb-h8r" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="20" symbolic="YES" id="orT-kD-yQX"/>
                 <constraint firstItem="7Et-yW-6vL" firstAttribute="leading" secondItem="oda-2f-V5j" secondAttribute="leading" id="uIY-fn-v4e"/>
@@ -124,7 +159,7 @@
                 <constraint firstItem="VH0-hr-FQW" firstAttribute="centerY" secondItem="xEh-rb-7Mp" secondAttribute="centerY" id="yF3-OR-4R0"/>
                 <constraint firstItem="7Et-yW-6vL" firstAttribute="top" secondItem="oda-2f-V5j" secondAttribute="bottom" constant="8" symbolic="YES" id="zsg-2m-uuI"/>
             </constraints>
-            <point key="canvasLocation" x="68" y="113"/>
+            <point key="canvasLocation" x="68" y="112.5"/>
         </customView>
     </objects>
     <resources>

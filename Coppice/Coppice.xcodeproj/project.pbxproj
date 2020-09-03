@@ -174,6 +174,7 @@
 		9999A24224F950E7001F8161 /* DeactivatedSubscriptionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9999A24024F950E7001F8161 /* DeactivatedSubscriptionViewController.xib */; };
 		9999A24524F95235001F8161 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9999A24324F95235001F8161 /* SignInViewController.swift */; };
 		9999A24624F95235001F8161 /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9999A24424F95235001F8161 /* SignInViewController.xib */; };
+		9999A25925010F08001F8161 /* HoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9999A25825010F08001F8161 /* HoverView.swift */; };
 		999DAACA23CCC5D80013EC36 /* SidebarHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999DAAC923CCC5D80013EC36 /* SidebarHeaderView.swift */; };
 		999EA68D2433913A00BF254E /* Info.plist.prefix in Resources */ = {isa = PBXBuildFile; fileRef = 999EA68C2433913A00BF254E /* Info.plist.prefix */; };
 		999EA6B32436097500BF254E /* SidebarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999EA6B02436097500BF254E /* SidebarViewModel.swift */; };
@@ -525,6 +526,7 @@
 		9999A24024F950E7001F8161 /* DeactivatedSubscriptionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeactivatedSubscriptionViewController.xib; sourceTree = "<group>"; };
 		9999A24324F95235001F8161 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		9999A24424F95235001F8161 /* SignInViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SignInViewController.xib; sourceTree = "<group>"; };
+		9999A25825010F08001F8161 /* HoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoverView.swift; sourceTree = "<group>"; };
 		999DAAC923CCC5D80013EC36 /* SidebarHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarHeaderView.swift; sourceTree = "<group>"; };
 		999EA68C2433913A00BF254E /* Info.plist.prefix */ = {isa = PBXFileReference; lastKnownFileType = text; path = Info.plist.prefix; sourceTree = "<group>"; };
 		999EA68F243392B600BF254E /* prepare_infoplist_prefix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = prepare_infoplist_prefix.swift; sourceTree = "<group>"; };
@@ -1091,6 +1093,7 @@
 				99488ACD23C78087009954AF /* EditableLabelCell.swift */,
 				9926951924AA34940050DFED /* ImmediateMenuSegmentedControl.swift */,
 				991F935B24ADF64A006A0A09 /* HoverSegmentedControl.swift */,
+				9999A25825010F08001F8161 /* HoverView.swift */,
 				999453EE24ED698D0043C542 /* SimpleLabelPopoverViewController.swift */,
 				999453EF24ED698D0043C542 /* SimpleLabelPopoverViewController.xib */,
 			);
@@ -1988,6 +1991,7 @@
 				9965FC3D23843143002FE10D /* CanvasPageInspectorViewController.swift in Sources */,
 				9951C26C230AEFAB006CAD4D /* PageSelectorWindowController.swift in Sources */,
 				99A97FD9246DBD4C00CDD95C /* CanvasCell.swift in Sources */,
+				9999A25925010F08001F8161 /* HoverView.swift in Sources */,
 				99868F322396AD55009AC0F7 /* ImageEditorInspectorViewModel.swift in Sources */,
 				99488ACE23C78087009954AF /* EditableLabelCell.swift in Sources */,
 				999007EC24CF475900DB5C13 /* TourGetStartedViewController.swift in Sources */,
