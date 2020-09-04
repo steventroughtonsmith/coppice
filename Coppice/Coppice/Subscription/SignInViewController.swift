@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import M3Subscriptions
 
 class SignInViewController: NSViewController, DeactivatedSubscriptionMode {
     let header = NSLocalizedString("Activate Pro", comment: "")
@@ -27,11 +28,34 @@ class SignInViewController: NSViewController, DeactivatedSubscriptionMode {
     @IBOutlet weak var emailField: NSTextField!
     @IBOutlet weak var passwordField: NSTextField!
 
-    func performAction() {
+    func performAction(_ sender: NSButton) {
         guard let window = self.view.window else {
             return
         }
-        self.subscriptionManager.activate(withEmail: self.emailField.stringValue, password: self.passwordField.stringValue, on: window)
+        self.subscriptionManager.activate(withEmail: self.emailField.stringValue, password: self.passwordField.stringValue, on: window) { error in
+            return self.handleActivateError(error, on: sender)
+        }
+    }
+
+
+    private func handleActivateError(_ error: NSError, on button: NSButton) -> Bool {
+        guard let errorCode = SubscriptionErrorCodes(rawValue: error.code) else {
+            return false
+        }
+        switch errorCode {
+        case .noSubscriptionFound:
+            ErrorPopoverViewController.show(error,
+                                            relativeTo: button.bounds,
+                                            of: button,
+                                            preferredEdge: .maxX) //Show to the right so the user knows to select the button below
+        default:
+            ErrorPopoverViewController.show(error,
+                                            relativeTo: button.bounds,
+                                            of: button,
+                                            preferredEdge: .maxY)
+        }
+
+        return true
     }
 
 

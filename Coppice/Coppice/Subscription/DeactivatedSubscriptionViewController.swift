@@ -13,7 +13,7 @@ protocol DeactivatedSubscriptionMode: class {
     var subheader: String { get }
     var actionName: String { get }
     var toggleName: String { get }
-    func performAction()
+    func performAction(_ sender: NSButton)
 }
 
 protocol DeactivatedSubscriptionViewControllerDelegate: class {
@@ -78,7 +78,7 @@ class DeactivatedSubscriptionViewController: NSViewController {
 
     //MARK: - Actions
     @IBAction func performPrimaryAction(_ sender: Any?) {
-        self.currentMode?.performAction()
+        self.currentMode?.performAction(self.primaryButton)
     }
 
 

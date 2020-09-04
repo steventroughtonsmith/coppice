@@ -95,14 +95,7 @@ class ActivatedSubscriptionViewController: NSViewController {
         return String(format: format, dateFormatter.string(from: subscription.expirationDate))
     }
 
-    //MARK: - Actions
-    @IBAction func deactivate(_ sender: Any) {
-        guard let window = self.view.window else {
-            return
-        }
-        self.subscriptionManager.deactivate(on: window)
-    }
-
+    //MARK: - Billing Failed
     private enum BillingFailedAlert: Int {
         case cancel = 0
         case goToAccount = 1
@@ -139,6 +132,35 @@ class ActivatedSubscriptionViewController: NSViewController {
             break
         }
     }
+
+    //MARK: - Deactivation
+    @IBOutlet weak var deactivateButton: NSButton!
+    @IBAction func deactivate(_ sender: Any) {
+        guard let window = self.view.window else {
+            return
+        }
+        self.subscriptionManager.deactivate(on: window) { error in
+            return self.handleDeactivationError(error)
+        }
+    }
+
+    private func handleDeactivationError(_ error: NSError) -> Bool {
+        guard let errorCode = SubscriptionErrorCodes(rawValue: error.code) else {
+            return false
+        }
+        switch errorCode {
+        case .noDeviceFound:
+            break
+        default:
+            ErrorPopoverViewController.show(error,
+                                            relativeTo: self.deactivateButton.bounds,
+                                            of: self.deactivateButton,
+                                            preferredEdge: .maxY)
+        }
+
+        return true
+    }
+
 
     //MARK: - Device Name
     @IBOutlet weak var deviceNameLabelWidthConstraint: NSLayoutConstraint!
@@ -181,6 +203,25 @@ class ActivatedSubscriptionViewController: NSViewController {
             self.editDeviceNameField.isHidden = true
         }
     }
+
+    private func handleUpdateNameError(_ error: NSError) -> Bool {
+        guard let errorCode = SubscriptionErrorCodes(rawValue: error.code) else {
+            return false
+        }
+        switch errorCode {
+        case .noDeviceFound:
+            break
+        case .noSubscriptionFound:
+            break
+        default:
+            ErrorPopoverViewController.show(error,
+                                            relativeTo: self.subscriptionDeviceLabel.bounds,
+                                            of: self.subscriptionDeviceLabel,
+                                            preferredEdge: .maxY)
+        }
+
+        return true
+    }
 }
 
 extension ActivatedSubscriptionViewController: HoverViewDelegate {
@@ -202,8 +243,9 @@ extension ActivatedSubscriptionViewController: NSTextFieldDelegate {
             return true
         } else if (commandSelector == #selector(insertNewline(_:))) {
             if let window = self.view.window {
-                self.subscriptionManager.updateDeviceName(deviceName: self.editDeviceNameField.stringValue, on: window)
-                self.subscriptionDeviceLabel.stringValue = self.editDeviceNameField.stringValue
+                self.subscriptionManager.updateDeviceName(deviceName: self.editDeviceNameField.stringValue, on: window) { error in
+                    return self.handleUpdateNameError(error)
+                }
                 self.isEditingDeviceName = false
             }
             return true

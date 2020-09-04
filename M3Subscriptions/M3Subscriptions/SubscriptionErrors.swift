@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum SubscriptionErrorCodes: Int {
+public enum SubscriptionErrorCodes: Int {
     case unknown = -1
     case other = 0
     case loginFailed = 1
@@ -23,13 +23,13 @@ enum SubscriptionErrorCodes: Int {
 
 
 
-class SubscriptionErrorFactory {
+public class SubscriptionErrorFactory {
     static let domain = "com.mcubedsw.Subscriptions"
 
-    struct InfoKeys {
-        static let subscription = "M3SubscriptionErrorSubscriptionKey"
-        static let subscriptionPlans = "M3SubscriptionErrorSubscriptionPlansKey"
-        static let devices = "M3SubscriptionErrorDevicesKey"
+    public struct InfoKeys {
+        public static let subscription = "M3SubscriptionErrorSubscriptionKey"
+        public static let subscriptionPlans = "M3SubscriptionErrorSubscriptionPlansKey"
+        public static let devices = "M3SubscriptionErrorDevicesKey"
     }
 
     fileprivate enum ErrorContext {
@@ -164,7 +164,7 @@ extension SubscriptionErrorCodes {
                 return NSLocalizedString("Please check your internet connection and try again. If the problem persists please contact M Cubed Support.", comment: "Generic Deactivation Error Description")
             }
         case .loginFailed:
-            return NSLocalizedString("Please make sure they are correct and try again.", comment: "Login Failed Error Recovery")
+            return NSLocalizedString("Please check your details and try again.", comment: "Login Failed Error Recovery")
         case .noSubscriptionFound:
             return NSLocalizedString("You can purchase a subscription below.", comment: "No Subscription Found Error Recovery")
         case .multipleSubscriptionsFound:
@@ -180,7 +180,7 @@ extension SubscriptionErrorCodes {
         case .notActivated:
             return NSLocalizedString("Please try activating again. If the problem persists please contact M Cubed Support", comment: "Not Activated Error Recovery")
         case .couldNotConnectToServer:
-            return NSLocalizedString("Please check your internet connection and try again.", comment: "Could Not Connect To Server Error Recovery")
+            return NSLocalizedString("Please check your internet connection and try again. If the problem persists please contact M Cubed Support", comment: "Could Not Connect To Server Error Recovery")
         }
         return NSLocalizedString("Please try again. If the problem persists please contact M Cubed Support.", comment: "Unknown Error Recovery")
     }

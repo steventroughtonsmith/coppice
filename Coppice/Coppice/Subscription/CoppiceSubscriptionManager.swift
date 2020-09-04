@@ -34,7 +34,8 @@ class CoppiceSubscriptionManager: NSObject {
     }
 
     //MARK: - User Initiated actions
-    func activate(withEmail email: String, password: String, on window: NSWindow) {
+    typealias ErrorHandler = (NSError) -> Bool
+    func activate(withEmail email: String, password: String, on window: NSWindow, errorHandler: @escaping ErrorHandler) {
         guard let controller = self.subscriptionController else {
             return
         }
@@ -44,13 +45,13 @@ class CoppiceSubscriptionManager: NSObject {
                 self.activationResponse = response
                 self.currentCheckError = nil
             case .failure(let error):
-                window.presentError(error)
+                self.handle(error, on: window, with: errorHandler)
             }
             self.completeCheck()
         }
     }
 
-    func deactivate(on window: NSWindow) {
+    func deactivate(on window: NSWindow, errorHandler: @escaping ErrorHandler) {
         guard let controller = self.subscriptionController else {
             return
         }
@@ -60,13 +61,13 @@ class CoppiceSubscriptionManager: NSObject {
                 self.activationResponse = response
                 self.currentCheckError = nil
             case .failure(let error):
-                window.presentError(error)
+                self.handle(error, on: window, with: errorHandler)
             }
             self.completeCheck()
         }
     }
 
-    func updateDeviceName(deviceName: String, on window: NSWindow) {
+    func updateDeviceName(deviceName: String, on window: NSWindow, errorHandler: @escaping ErrorHandler) {
         guard let controller = self.subscriptionController else {
             return
         }
@@ -76,11 +77,49 @@ class CoppiceSubscriptionManager: NSObject {
                 self.activationResponse = response
                 self.currentCheckError = nil
             case .failure(let error):
-                window.presentError(error)
+                self.handle(error, on: window, with: errorHandler)
             }
             self.completeCheck()
         }
     }
+
+
+    //MARK: - Error Handling
+    private func handle(_ error: NSError, on window: NSWindow, with errorHandler: ErrorHandler) {
+        guard let errorCode = SubscriptionErrorCodes(rawValue: error.code) else {
+            if errorHandler(error) == false {
+                self.show(basicError: error, on: window)
+            }
+            return
+        }
+
+        switch errorCode {
+        case .multipleSubscriptionsFound:
+            self.showMultipleSubscriptionsSheet(for: error, on: window)
+        case .tooManyDevices:
+            self.showTooManyDevicesSubscriptionSheet(for: error, on: window)
+        default:
+            if errorHandler(error) == false {
+                self.show(basicError: error, on: window)
+            }
+        }
+    }
+
+    private func showMultipleSubscriptionsSheet(for error: NSError, on window: NSWindow) {
+        print("multiple subscriptions: \(error)")
+    }
+
+    private func showTooManyDevicesSubscriptionSheet(for error: NSError, on window: NSWindow) {
+        print("too many devices: \(error)")
+    }
+
+    private func show(basicError error: NSError, on window: NSWindow) {
+        let alert = NSAlert(error: error)
+        alert.beginSheetModal(for: window) { (response) in
+            print("response: \(response)")
+        }
+    }
+
 
     //MARK: - Automatic actions
     private(set) var recheckTimer: Timer?
@@ -123,11 +162,6 @@ class CoppiceSubscriptionManager: NSObject {
     }
 
     private func completeCheck() {
-        if !Thread.current.isMainThread {
-            OperationQueue.main.addOperation {
-                self.completeCheck()
-            }
-        }
         guard
             let response = self.activationResponse,
             response.deviceIsActivated
@@ -140,7 +174,7 @@ class CoppiceSubscriptionManager: NSObject {
     }
 
     private func recheckInAnHour() {
-        self.recheckTimer = Timer.scheduledTimer(withTimeInterval: 10 , repeats: false) { [weak self] _ in
+        self.recheckTimer = Timer.scheduledTimer(withTimeInterval: 10, repeats: false) { [weak self] _ in
             self?.checkSubscriptionIfNeeded()
         }
     }

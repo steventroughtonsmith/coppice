@@ -70,7 +70,7 @@ public class SubscriptionController {
                 self.complete(with: response, completion: completion)
             case .failure(let failure):
                 switch failure {
-                case .generic(let error as NSError) where error.domain == NSURLErrorDomain:
+                case .generic(let error as NSError) where (error.domain == NSURLErrorDomain) && (deviceName == nil):
                     self.attemptLocalValidation(with: response, dueTo: failure, completion: completion)
                 default:
                     let error = SubscriptionErrorFactory.error(for: failure)

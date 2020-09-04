@@ -14,7 +14,7 @@ class SubscribeViewController: NSViewController, DeactivatedSubscriptionMode {
     let actionName = NSLocalizedString("Subscribe now for $xx.xx/year", comment: "")
     let toggleName = NSLocalizedString("Already subscribed? Sign In", comment: "")
 
-    func performAction() {
+    func performAction(_ sender: NSButton) {
         print("subscribe")
     }
 

@@ -9,6 +9,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="ActivatedSubscriptionViewController" customModule="Coppice" customModuleProvider="target">
             <connections>
                 <outlet property="billingFailedHelpButton" destination="xEh-rb-7Mp" id="xWz-1O-1Bg"/>
+                <outlet property="deactivateButton" destination="ONe-Ls-Dc6" id="Z6b-p1-8n5"/>
                 <outlet property="editDeviceNameButton" destination="RnU-Ye-FeB" id="ee7-es-crs"/>
                 <outlet property="editDeviceNameField" destination="Tiz-a1-QSm" id="R6K-db-R7g"/>
                 <outlet property="subscriptionDeviceLabel" destination="tjC-Tn-had" id="6Il-uA-qq3"/>
