@@ -204,7 +204,7 @@ class CoppiceSubscriptionManager: NSObject {
         let horizontalPadding: CGFloat = 8
         let imageSize = bounds.rounded().size.plus(width: horizontalPadding * 2, height: verticalPadding * 2)
 
-        return NSImage(size: imageSize, flipped: false) { (rect) -> Bool in
+        let image = NSImage(size: imageSize, flipped: false) { (rect) -> Bool in
             let path = NSBezierPath(roundedRect: rect, xRadius: 4, yRadius: 4)
             NSColor(named: "CoppiceGreen")?.setFill()
             path.fill()
@@ -214,6 +214,8 @@ class CoppiceSubscriptionManager: NSObject {
 
             return true
         }
+        image.accessibilityDescription = localizedPro
+        return image
     }()
 
     var proTooltip: String {
