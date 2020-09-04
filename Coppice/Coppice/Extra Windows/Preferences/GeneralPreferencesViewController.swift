@@ -9,8 +9,26 @@
 import Cocoa
 import Combine
 import CoppiceCore
+import M3Subscriptions
 
 class GeneralPreferencesViewController: PreferencesViewController {
+    let subscriptionManager: CoppiceSubscriptionManager
+    init(subscriptionManager: CoppiceSubscriptionManager) {
+        self.subscriptionManager = subscriptionManager
+        super.init(nibName: "GeneralPreferencesViewController", bundle: nil)
+        self.startObservation()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    var activationObservation: AnyCancellable?
+    private func startObservation() {
+        self.activationObservation = self.subscriptionManager.$activationResponse
+            .map { $0?.isActive ?? false }
+            .assign(to: \.isProEnabled, on: self)
+    }
 
     override var tabLabel: String {
         return NSLocalizedString("General", comment: "General Preferences Title")
@@ -42,18 +60,56 @@ class GeneralPreferencesViewController: PreferencesViewController {
         NSFontManager.shared.orderFrontFontPanel(self)
     }
 
+    @objc dynamic var isProEnabled: Bool = false
+
+    override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
+        var keyPaths = super.keyPathsForValuesAffectingValue(forKey: key)
+        if (key == #keyPath(autoLinkingTextPagesEnabled) || key == #keyPath(selectedThemeIndex)) {
+            keyPaths.insert(#keyPath(isProEnabled))
+        }
+        return keyPaths
+    }
+
+    @objc dynamic var autoLinkingTextPagesEnabled: Bool {
+        get {
+            guard self.isProEnabled else {
+                return false
+            }
+            return UserDefaults.standard.bool(forKey: .autoLinkingTextPagesEnabled)
+        }
+        set {
+            guard self.isProEnabled else {
+                return
+            }
+            UserDefaults.standard.set(newValue, forKey: .autoLinkingTextPagesEnabled)
+        }
+    }
+
     @objc dynamic var canvasThemes: [String] {
         return Canvas.Theme.allCases.map(\.localizedName)
     }
 
     @objc dynamic var selectedThemeIndex: Int {
         get {
+            guard self.isProEnabled else {
+                return 0
+            }
             return Canvas.Theme.allCases.firstIndex(of: Canvas.defaultTheme) ?? 0
         }
         set {
+            guard self.isProEnabled else {
+                return
+            }
             let selectedTheme = Canvas.Theme.allCases[safe: newValue] ?? .auto
             UserDefaults.standard.set(selectedTheme.rawValue, forKey: .defaultCanvasTheme)
         }
+    }
+
+    @IBAction func showProUpsell(_ sender: Any) {
+        guard let control = sender as? NSView else {
+            return
+        }
+        self.subscriptionManager.showProPopover(from: control, preferredEdge: .maxX)
     }
 }
 

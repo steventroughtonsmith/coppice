@@ -249,6 +249,8 @@
 		99D4D59822F8650300F69C1F /* SourceListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D4D59722F8650300F69C1F /* SourceListViewModelTests.swift */; };
 		99D507342501538E00670139 /* ErrorPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D507322501538E00670139 /* ErrorPopoverViewController.swift */; };
 		99D507352501538E00670139 /* ErrorPopoverViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99D507332501538E00670139 /* ErrorPopoverViewController.xib */; };
+		99D5073A250254BF00670139 /* ProUpsellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D50738250254BF00670139 /* ProUpsellViewController.swift */; };
+		99D5073B250254BF00670139 /* ProUpsellViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99D50739250254BF00670139 /* ProUpsellViewController.xib */; };
 		99D8E378237EDB890098CF3B /* PageInspectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D8E368237EDB890098CF3B /* PageInspectorViewController.swift */; };
 		99D8E379237EDB890098CF3B /* PageInspectorContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99D8E369237EDB890098CF3B /* PageInspectorContentView.xib */; };
 		99D8E37A237EDB890098CF3B /* PageInspectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D8E36A237EDB890098CF3B /* PageInspectorViewModel.swift */; };
@@ -609,6 +611,8 @@
 		99D4D59722F8650300F69C1F /* SourceListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceListViewModelTests.swift; sourceTree = "<group>"; };
 		99D507322501538E00670139 /* ErrorPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorPopoverViewController.swift; sourceTree = "<group>"; };
 		99D507332501538E00670139 /* ErrorPopoverViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ErrorPopoverViewController.xib; sourceTree = "<group>"; };
+		99D50738250254BF00670139 /* ProUpsellViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProUpsellViewController.swift; sourceTree = "<group>"; };
+		99D50739250254BF00670139 /* ProUpsellViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProUpsellViewController.xib; sourceTree = "<group>"; };
 		99D8E368237EDB890098CF3B /* PageInspectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageInspectorViewController.swift; sourceTree = "<group>"; };
 		99D8E369237EDB890098CF3B /* PageInspectorContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PageInspectorContentView.xib; sourceTree = "<group>"; };
 		99D8E36A237EDB890098CF3B /* PageInspectorViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageInspectorViewModel.swift; sourceTree = "<group>"; };
@@ -961,6 +965,8 @@
 				996187FF249BC0D7007313BD /* ProFeatureCell.swift */,
 				99618801249BC0EF007313BD /* ProFeatureCell.xib */,
 				9999A23524F93052001F8161 /* CoppiceSubscriptionManager.swift */,
+				99D50738250254BF00670139 /* ProUpsellViewController.swift */,
+				99D50739250254BF00670139 /* ProUpsellViewController.xib */,
 			);
 			path = Subscription;
 			sourceTree = "<group>";
@@ -1808,6 +1814,7 @@
 				999007E924CF474E00DB5C13 /* TourBranchesView.xib in Resources */,
 				99FE01E522D4CC8A004D380D /* DocumentWindow.xib in Resources */,
 				99902261241FDD52009A8446 /* NoCanvasViewController.xib in Resources */,
+				99D5073B250254BF00670139 /* ProUpsellViewController.xib in Resources */,
 				999EA6BC243619E700BF254E /* SearchResultsView.xib in Resources */,
 				9973737B2423AD6C000D5F21 /* NoEditorViewController.xib in Resources */,
 				99488AA723BA3993009954AF /* LargeCanvasCell.xib in Resources */,
@@ -1902,6 +1909,7 @@
 				9977119C239E91FD00FCC8C7 /* ViewModel.swift in Sources */,
 				992A5CB322DDF53C0012CCB6 /* DebugPageEditorViewModel.swift in Sources */,
 				9981E6D624C08F12005AF0EE /* WelcomeWindowController.swift in Sources */,
+				99D5073A250254BF00670139 /* ProUpsellViewController.swift in Sources */,
 				99DEF28A22F32D350020A7CE /* DebugCanvasViewModelTypes.swift in Sources */,
 				99868F352396AD73009AC0F7 /* ImageEditorInspectorViewController.swift in Sources */,
 				996010F724F14FFA008B8F98 /* SpringLoadedTableRowView.swift in Sources */,

@@ -39,7 +39,7 @@ class PreferencesWindowController: NSWindowController {
 
         self.tabController.delegate = self
 
-        let generalPrefs = GeneralPreferencesViewController()
+        let generalPrefs = GeneralPreferencesViewController(subscriptionManager: self.subscriptionManager)
         if let generalItem = generalPrefs.tabViewItem {
             self.tabController.addTabViewItem(generalItem)
         }

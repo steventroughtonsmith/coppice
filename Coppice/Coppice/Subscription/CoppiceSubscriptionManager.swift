@@ -16,6 +16,8 @@ class CoppiceSubscriptionManager: NSObject {
     @Published var activationResponse: ActivationResponse?
     @Published var currentCheckError: NSError?
 
+    static var shared = CoppiceSubscriptionManager()
+
     override init() {
         if let appSupportURL = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first {
             let licenceURL = appSupportURL.appendingPathComponent("licence")
@@ -177,5 +179,15 @@ class CoppiceSubscriptionManager: NSObject {
         self.recheckTimer = Timer.scheduledTimer(withTimeInterval: 10, repeats: false) { [weak self] _ in
             self?.checkSubscriptionIfNeeded()
         }
+    }
+
+
+    //MARK: - Pro Upsell
+    func showProPopover(from view: NSView, preferredEdge: NSRectEdge) {
+        let upsellVC = ProUpsellViewController()
+        let popover = NSPopover()
+        popover.contentViewController = upsellVC
+        popover.behavior = .transient
+        popover.show(relativeTo: view.bounds, of: view, preferredEdge: preferredEdge)
     }
 }

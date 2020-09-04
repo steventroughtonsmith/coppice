@@ -64,9 +64,14 @@ class PageLinkManager: NSObject {
     }
     weak var delegate: PageLinkManagerDelegate?
 
+    var isProEnabled = false
+
     //Update on all of them
     private func setNeedsReparse() {
-        guard UserDefaults.standard.bool(forKey: .autoLinkingTextPagesEnabled) else {
+        guard
+            UserDefaults.standard.bool(forKey: .autoLinkingTextPagesEnabled),
+            self.isProEnabled
+        else {
             return
         }
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(reparseLinks), object: nil)

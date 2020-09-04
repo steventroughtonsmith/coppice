@@ -16,7 +16,6 @@ class Document: NSDocument {
 
     static let documentVersion = GlobalConstants.documentVersion
 
-
     override class var autosavesInPlace: Bool {
         return true
     }

@@ -14,11 +14,12 @@ import M3Subscriptions
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-    let documentController = CoppiceDocumentController()
     @IBOutlet weak var newLinkedPageMenuDelegate: NewPageMenuDelegate!
     @IBOutlet weak var updaterController: SPUStandardUpdaterController!
 
-    let subscriptionManager = CoppiceSubscriptionManager()
+    let subscriptionManager = CoppiceSubscriptionManager.shared
+
+    lazy var documentController = CoppiceDocumentController()
 
     override init() {
         super.init()
