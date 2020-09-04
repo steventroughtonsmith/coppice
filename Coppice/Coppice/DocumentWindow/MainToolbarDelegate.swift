@@ -50,8 +50,11 @@ class MainToolbarDelegate: NSObject {
         item.label = NSLocalizedString("New Canvas", comment: "New Canvas toolbar item label")
         item.paletteLabel = item.label
         item.toolTip = item.label
-        item.isBordered = true
-        item.action = #selector(DocumentWindowController.newCanvas(_:))
+        let button = NSButton(image: NSImage.symbol(withName: Symbols.Toolbars.newCanvas)!,
+                              target: nil,
+                              action: #selector(DocumentWindowController.newCanvas(_:)))
+        button.bezelStyle = .texturedRounded
+        item.view = button
         return item
     }()
 

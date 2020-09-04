@@ -10,7 +10,7 @@ import Cocoa
 import Combine
 import CoppiceCore
 
-class DocumentWindowController: NSWindowController {
+class DocumentWindowController: NSWindowController, NSMenuItemValidation {
     let splitViewController: RootSplitViewController
 
     @IBOutlet weak var searchField: NSSearchField!
@@ -163,12 +163,39 @@ class DocumentWindowController: NSWindowController {
 
     //MARK: - Actions
 
+    private var canCreateCanvases: Bool {
+        let proEnabled = CoppiceSubscriptionManager.shared.activationResponse?.isActive == true
+        let hasCanvases = self.viewModel.modelController.canvasCollection.all.count > 0
+        return proEnabled || !hasCanvases
+    }
+
     @IBAction func newCanvas(_ sender: Any?) {
+        guard self.canCreateCanvases else {
+            self.showProPopover(from: sender)
+            return
+        }
         self.viewModel.modelController.createCanvas()
     }
 
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+        if (menuItem.action == #selector(newCanvas(_:))) {
+            let subManager = CoppiceSubscriptionManager.shared
+            let proEnabled = (subManager.activationResponse?.isActive == true)
+
+            menuItem.image = proEnabled ? nil : subManager.proImage
+            menuItem.toolTip = self.canCreateCanvases ? nil : NSLocalizedString("Creating more than 1 canvas requires a Coppice Pro subscription", comment: "Canvas creation Coppice Pro subscription")
+
+            return self.canCreateCanvases
+        }
         return true
+    }
+
+    private func showProPopover(from sender: Any?) {
+        guard let view = sender as? NSView else {
+            return
+        }
+
+        CoppiceSubscriptionManager.shared.showProPopover(from: view, preferredEdge: .maxY)
     }
 
 

@@ -16,10 +16,8 @@ class ImageEditorViewModel: ViewModel {
     weak var view: ImageEditorView?
 
     @objc dynamic let imageContent: ImagePageContent
-    let mode: EditorMode
-    init(imageContent: ImagePageContent, documentWindowViewModel: DocumentWindowViewModel, mode: EditorMode = .editing) {
+    init(imageContent: ImagePageContent, documentWindowViewModel: DocumentWindowViewModel) {
         self.imageContent = imageContent
-        self.mode = mode
         super.init(documentWindowViewModel: documentWindowViewModel)
     }
 

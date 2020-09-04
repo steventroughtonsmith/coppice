@@ -96,7 +96,6 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupBackgroundColour()
         self.setupCanvasView()
 
         self.forceFullLayout()
@@ -113,14 +112,10 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
         self.toggleCanvasListButton.image = NSImage.symbol(withName: Symbols.Toolbars.canvasListToggle)
 
         self.setupAccessibility()
+        self.setupPro()
     }
 
     var enabled: Bool = true
-
-    private func setupBackgroundColour() {
-        self.scrollView.drawsBackground = (self.viewModel.mode == .editing)
-        self.canvasView.drawsBackground = (self.viewModel.mode == .editing)
-    }
 
     private func setupCanvasView() {
         self.canvasView.layoutEngine = self.layoutEngine
@@ -129,7 +124,6 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
         self.canvasView.layer?.masksToBounds = false
 
         self.canvasView.delegate = self
-        self.canvasView.registerForDraggedTypes([ModelID.PasteboardType, .fileURL])
     }
 
     override func viewDidAppear() {
@@ -242,6 +236,7 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
 
     @objc func layout() {
         self.isLayingOut = true
+        self.updateEditability()
         self.updateAppearance()
         self.updateCanvas()
         self.updateSelectionRect()
@@ -254,6 +249,14 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
         self.isLayingOut = false
         self.hasLaidOut = true
         self.currentLayoutContext = nil
+    }
+
+    private func updateEditability() {
+        if self.layoutEngine.editable {
+            self.canvasView.registerForDraggedTypes([ModelID.PasteboardType, .fileURL])
+        } else {
+            self.canvasView.unregisterDraggedTypes()
+        }
     }
 
     private func updateAppearance() {
@@ -394,8 +397,7 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
         }
 
         let viewModel = CanvasPageViewModel(canvasPage: canvasPage,
-                                            documentWindowViewModel: self.viewModel.documentWindowViewModel,
-                                            mode: self.viewModel.mode)
+                                            documentWindowViewModel: self.viewModel.documentWindowViewModel)
         let viewController = CanvasPageViewController(viewModel: viewModel)
         viewController.delegate = self
 
@@ -556,10 +558,16 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
         if menuItem.action == #selector(zoomControlChanged(_:)) {
             return true
         }
+        let notEditableTooltip = NSLocalizedString("The current Canvas is not editable", comment: "Non-editable canvas action tooltip")
         if menuItem.action == #selector(addPageToCanvas(_:)) {
-            return true
+            menuItem.toolTip = (self.layoutEngine.editable ? nil : notEditableTooltip)
+            return self.layoutEngine.editable
         }
         if menuItem.action == #selector(removeSelectedPages(_:)) {
+            menuItem.toolTip = (self.layoutEngine.editable ? nil : notEditableTooltip)
+            guard self.layoutEngine.editable else {
+                return false
+            }
             let selectedPagesCount = self.viewModel.selectedCanvasPages.count
             if selectedPagesCount == 1 {
                 menuItem.title = NSLocalizedString("Close Selected Page", comment: "Close selected page singular menu item")
@@ -569,7 +577,8 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
             return (selectedPagesCount > 0)
         }
         if menuItem.action == #selector(deleteItems(_:)) {
-            return (self.viewModel.selectedCanvasPages.count == 1)
+            menuItem.toolTip = (self.layoutEngine.editable ? nil : notEditableTooltip)
+            return (self.viewModel.selectedCanvasPages.count == 1) && self.layoutEngine.editable
         }
         if menuItem.action == #selector(zoomIn(_:)) {
             return self.viewModel.canZoomIn
@@ -638,12 +647,23 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
         self.view.setAccessibilityLabel(NSLocalizedString("Canvas Editor", comment: "Canvas List accessibility label"))
         self.view.setAccessibilityChildren([scrollView, toggleButton, zoomControl])
     }
+
+
+    //MARK: - Pro
+    @IBOutlet weak var proImageView: NSImageView!
+    @IBAction func proUpSell(_ sender: Any) {
+    }
+
+    private func setupPro() {
+        self.proImageView.image = CoppiceSubscriptionManager.shared.proImage
+    }
+
 }
 
 
 extension CanvasEditorViewController: Editor {
     var inspectors: [Inspector] {
-        guard self.selectedPages.count == 1 else {
+        guard self.layoutEngine.editable, self.selectedPages.count == 1 else {
             return [self.canvasInspector]
         }
         return self.selectedPages[0].inspectors + [self.canvasInspector]
@@ -715,6 +735,9 @@ extension CanvasEditorViewController: CanvasLayoutView {
 
 extension CanvasEditorViewController: CanvasPageViewControllerDelegate {
     func close(_ page: CanvasPageViewController) {
+        guard self.layoutEngine.editable else {
+            return
+        }
         self.viewModel.close(page.viewModel.canvasPage)
     }
 

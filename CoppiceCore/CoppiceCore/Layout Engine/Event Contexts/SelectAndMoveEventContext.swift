@@ -15,8 +15,10 @@ class SelectAndMoveEventContext: CanvasMouseEventContext {
     private var didDoubleClick = false
 
     let page: LayoutEnginePage
-    init(page: LayoutEnginePage) {
+    let editable: Bool
+    init(page: LayoutEnginePage, editable: Bool) {
         self.page = page
+        self.editable = editable
     }
 
     func downEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: LayoutEngine) {
@@ -46,7 +48,7 @@ class SelectAndMoveEventContext: CanvasMouseEventContext {
     }
 
     func draggedEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: LayoutEngine) {
-        guard let lastLocation = self.lastLocation else {
+        guard let lastLocation = self.lastLocation, self.editable else {
             return
         }
         let delta = location.minus(lastLocation)

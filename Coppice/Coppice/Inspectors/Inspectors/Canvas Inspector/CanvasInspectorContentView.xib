@@ -40,7 +40,7 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IBt-e7-HOq">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IBt-e7-HOq">
                     <rect key="frame" x="-2" y="3" width="46" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Theme" id="s1P-mu-Ye4">
                         <font key="font" metaFont="system"/>
@@ -51,7 +51,7 @@
                 <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Frv-F3-WrV">
                     <rect key="frame" x="50" y="0.0" width="257" height="21"/>
                     <subviews>
-                        <popUpButton verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kri-qI-nSO">
+                        <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Kri-qI-nSO">
                             <rect key="frame" x="-2" y="-3" width="214" height="25"/>
                             <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="zAD-di-hl3" id="eNE-Ou-a6G">
                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -71,9 +71,9 @@
                                 <binding destination="-2" name="contentValues" keyPath="self.viewModel.themes" id="Jy9-Vy-kwx"/>
                             </connections>
                         </popUpButton>
-                        <button verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5hH-lc-yqQ">
+                        <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5hH-lc-yqQ">
                             <rect key="frame" x="212" y="-4" width="50" height="27"/>
-                            <buttonCell key="cell" type="push" title="PRO" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="DUN-8v-xh0">
+                            <buttonCell key="cell" type="push" title="PRO" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="DUN-8v-xh0" customClass="ProButtonCell" customModule="Coppice" customModuleProvider="target">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="systemBold" size="11"/>
                             </buttonCell>
@@ -83,7 +83,7 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                             <connections>
-                                <action selector="showProUpsell:" target="-2" id="beZ-ca-jIC"/>
+                                <action selector="showProUpsell:" target="-2" id="TgU-Qz-ZWk"/>
                                 <binding destination="-2" name="hidden" keyPath="self.viewModel.isProEnabled" id="FGT-jg-eMy"/>
                             </connections>
                         </button>
@@ -106,6 +106,7 @@
                 <constraint firstAttribute="trailing" secondItem="b0f-QP-nLp" secondAttribute="trailing" id="Act-sR-nMp"/>
                 <constraint firstItem="Frv-F3-WrV" firstAttribute="leading" secondItem="IBt-e7-HOq" secondAttribute="trailing" constant="8" symbolic="YES" id="GJO-ri-JAH"/>
                 <constraint firstAttribute="trailing" secondItem="Frv-F3-WrV" secondAttribute="trailing" id="Iis-7N-0IE"/>
+                <constraint firstItem="IBt-e7-HOq" firstAttribute="firstBaseline" secondItem="Kri-qI-nSO" secondAttribute="firstBaseline" id="OaV-kd-uXy"/>
                 <constraint firstItem="b0f-QP-nLp" firstAttribute="top" secondItem="ehY-F7-MGj" secondAttribute="top" id="Pf1-p6-b1a"/>
                 <constraint firstAttribute="bottom" secondItem="Frv-F3-WrV" secondAttribute="bottom" id="Zrf-8N-2Mt"/>
                 <constraint firstItem="VTj-SJ-Zad" firstAttribute="firstBaseline" secondItem="b0f-QP-nLp" secondAttribute="firstBaseline" id="cwp-qL-Ozp"/>

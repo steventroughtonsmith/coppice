@@ -8,6 +8,8 @@
 
 import AppKit
 import CoppiceCore
+import Combine
+import M3Subscriptions
 
 protocol CanvasEditorView: class {
     func updateZoomFactor()
@@ -21,18 +23,41 @@ class CanvasEditorViewModel: ViewModel {
     let layoutEngine = CanvasLayoutEngine(configuration: .init(page: .mac, contentBorder: 1000, arrow: .standard))
 
     let canvas: Canvas
-    let mode: EditorMode
-    init(canvas: Canvas, documentWindowViewModel: DocumentWindowViewModel, mode: EditorMode = .editing) {
+    init(canvas: Canvas, documentWindowViewModel: DocumentWindowViewModel) {
         self.canvas = canvas
-        self.mode = mode
         super.init(documentWindowViewModel: documentWindowViewModel)
     }
 
     override func setup() {
         self.setupObservation()
+        self.setupProObservation()
         self.updatePages()
 
         self.layoutEngine.delegate = self
+    }
+
+    //MARK: - Pro
+    @objc dynamic var isLocked: Bool = false {
+        didSet {
+            self.updatePages()
+            self.layoutEngine.editable = !self.isLocked
+        }
+    }
+    var activationObserver: AnyCancellable?
+    private func setupProObservation() {
+        self.activationObserver = CoppiceSubscriptionManager.shared.$activationResponse.sink { [weak self] response in
+            self?.updateLockedStatus(for: response)
+        }
+    }
+
+    private func updateLockedStatus(for activationResponse: ActivationResponse?) {
+        if activationResponse?.isActive == true {
+            self.isLocked = false
+            return
+        }
+
+        let firstCanvas = self.modelController.canvasCollection.sortedCanvases.first
+        self.isLocked = (self.canvas != firstCanvas)
     }
 
 
@@ -41,9 +66,6 @@ class CanvasEditorViewModel: ViewModel {
     var canvasPageObserver: ModelCollection<CanvasPage>.Observation?
 
     private func setupObservation() {
-        guard self.mode == .editing else {
-            return
-        }
         self.canvasObserver = self.modelController.collection(for: Canvas.self).addObserver(filterBy: [self.canvas.id]) { [weak self] change in
             if change.changeType == .update, !change.didUpdate(\.thumbnail) {
                 self?.updatePages()

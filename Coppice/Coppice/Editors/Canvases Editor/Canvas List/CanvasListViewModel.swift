@@ -53,8 +53,7 @@ class CanvasListViewModel: ViewModel {
             return cachedCanvases
         }
 
-        let items = self.canvasCollection.all
-            .sorted { $0.sortIndex < $1.sortIndex }
+        let items = self.canvasCollection.sortedCanvases
         self.cachedCanvases = items
         return items
     }

@@ -39,9 +39,6 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
 
         self.updateTextView(with: self.viewModel.attributedText)
 
-        guard self.viewModel.mode == .editing else {
-            return
-        }
 //        self.selectableBinding = self.publisher(for: \.enabled).assign(to: \.isSelectable, on: self.editingTextView)
 //        self.attributedTextObserver = self.publisher(for: \.viewModel.attributedText).sink { [weak self] in self?.updateTextView(with: $0) }
 //        self.highlightedRangeObserver = self.viewModel.$highlightedRange.sink { self.highlight($0) }

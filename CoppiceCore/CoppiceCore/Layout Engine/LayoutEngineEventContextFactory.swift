@@ -23,7 +23,9 @@ public class CanvasLayoutEngineEventContextFactory: LayoutEngineEventContextFact
             return CanvasSelectionEventContext()
         }
 
-        layoutEngine.movePageToFront(page)
+        if layoutEngine.editable {
+            layoutEngine.movePageToFront(page)
+        }
 
         //Page content click
         guard let pageComponent = page.component(at: location.minus(page.layoutFrame.origin)) else {
@@ -32,13 +34,17 @@ public class CanvasLayoutEngineEventContextFactory: LayoutEngineEventContextFact
 
         switch pageComponent {
         case .titleBar, .content:
-            return SelectAndMoveEventContext(page: page)
+            return SelectAndMoveEventContext(page: page, editable: layoutEngine.editable)
         default:
-            return ResizePageEventContext(page: page, component: pageComponent)
+            //Can only resize when editable
+            return (layoutEngine.editable) ? ResizePageEventContext(page: page, component: pageComponent) : nil
         }
     }
 
     public func createKeyEventContext(for keyCode: UInt16, in layoutEngine: LayoutEngine) -> CanvasKeyEventContext? {
+        guard layoutEngine.editable else {
+            return nil
+        }
         let selectedPages = layoutEngine.selectedPages
         guard selectedPages.count > 0 else {
             return nil

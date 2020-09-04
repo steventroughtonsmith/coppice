@@ -228,6 +228,10 @@ extension CanvasListViewController: NSTableViewDataSource {
     }
 
     func tableView(_ tableView: NSTableView, pasteboardWriterForRow row: Int) -> NSPasteboardWriting? {
+        //Don't allow re-arranging canvases without pro
+        guard (CoppiceSubscriptionManager.shared.activationResponse?.isActive == true) else {
+            return nil
+        }
         return self.viewModel.canvases[row].pasteboardWriter
     }
 
@@ -252,12 +256,17 @@ extension CanvasListViewController: NSTableViewDataSource {
                 return []
         }
 
+        let proEnabled = (CoppiceSubscriptionManager.shared.activationResponse?.isActive == true)
+
         if (id.modelType == Canvas.modelType) {
             self.tableView.setDropRow(row, dropOperation: .above)
-            return .move
+            return proEnabled ? .move : []
         }
 
         if (id.modelType == Page.modelType), case .on = dropOperation {
+            guard proEnabled || row == 0 else {
+                return []
+            }
             self.tableView.setDropRow(row, dropOperation: .on)
             self.viewModel.selectedCanvasIndex = row
             return .copy

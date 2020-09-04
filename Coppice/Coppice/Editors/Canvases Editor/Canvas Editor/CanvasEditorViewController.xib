@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17140" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17154" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17140"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17154"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -12,6 +12,7 @@
                 <outlet property="bottomBarConstraint" destination="cIE-Y9-6bZ" id="Aip-DH-S2N"/>
                 <outlet property="canvasView" destination="PUw-B3-8ie" id="pZV-PX-WgV"/>
                 <outlet property="emptyStateView" destination="dCb-kT-jJL" id="gC8-g4-rny"/>
+                <outlet property="proImageView" destination="ISC-P6-UI7" id="GC8-ow-0OZ"/>
                 <outlet property="scrollView" destination="WXD-co-iCD" id="Unx-zF-neD"/>
                 <outlet property="toggleCanvasListButton" destination="g2M-Yk-OJX" id="Xs1-6d-0gg"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
@@ -21,39 +22,119 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView wantsLayer="YES" id="Hz6-mo-xeY">
-            <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
+            <rect key="frame" x="0.0" y="0.0" width="761" height="495"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <scrollView identifier="CanavsEditorScrollView" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" allowsMagnification="YES" maxMagnification="1" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WXD-co-iCD">
-                    <rect key="frame" x="0.0" y="24" width="480" height="248"/>
-                    <clipView key="contentView" id="0wh-ER-x58">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="248"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view id="PUw-B3-8ie" customClass="CanvasView" customModule="Coppice" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="465" height="233"/>
+                <stackView distribution="fill" orientation="vertical" alignment="centerX" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MCR-Mu-Ara">
+                    <rect key="frame" x="-1" y="24" width="763" height="472"/>
+                    <subviews>
+                        <box boxType="custom" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="2ax-QI-7bX">
+                            <rect key="frame" x="0.0" y="440" width="763" height="32"/>
+                            <view key="contentView" id="1kd-xZ-5hV">
+                                <rect key="frame" x="1" y="1" width="761" height="30"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="35" placeholderIntrinsicHeight="15" translatesAutoresizingMaskIntoConstraints="NO" id="ISC-P6-UI7">
+                                        <rect key="frame" x="8" y="8" width="35" height="15"/>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="WF0-40-btA"/>
+                                    </imageView>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YMC-da-Ye5">
+                                        <rect key="frame" x="51" y="8" width="128" height="14"/>
+                                        <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="This Canvas is locked." id="rjb-ax-N12">
+                                            <font key="font" metaFont="systemBold" size="11"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="PPX-UL-u3d">
+                                        <rect key="frame" x="183" y="8" width="350" height="14"/>
+                                        <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="Upgrade to Coppice Pro to create and edit more than one Canvas." id="FaU-b7-0P0">
+                                            <font key="font" metaFont="system" size="11"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Psl-Eo-tCJ">
+                                        <rect key="frame" x="647" y="0.0" width="111" height="27"/>
+                                        <buttonCell key="cell" type="push" title="Find out more …" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="JwI-7q-YHE">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="smallSystem"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="proUpSell:" target="-2" id="EkZ-Qo-jML"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="PPX-UL-u3d" firstAttribute="firstBaseline" secondItem="YMC-da-Ye5" secondAttribute="firstBaseline" id="5V6-yz-ODD"/>
+                                    <constraint firstItem="ISC-P6-UI7" firstAttribute="centerY" secondItem="1kd-xZ-5hV" secondAttribute="centerY" id="71C-lf-v7K"/>
+                                    <constraint firstItem="YMC-da-Ye5" firstAttribute="centerY" secondItem="ISC-P6-UI7" secondAttribute="centerY" id="IZf-aY-q9w"/>
+                                    <constraint firstItem="Psl-Eo-tCJ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="PPX-UL-u3d" secondAttribute="trailing" constant="20" id="KHo-IS-gwk"/>
+                                    <constraint firstItem="ISC-P6-UI7" firstAttribute="leading" secondItem="1kd-xZ-5hV" secondAttribute="leading" constant="8" id="QhA-ca-9cC"/>
+                                    <constraint firstItem="PPX-UL-u3d" firstAttribute="leading" secondItem="YMC-da-Ye5" secondAttribute="trailing" constant="8" symbolic="YES" id="aal-ql-Heh"/>
+                                    <constraint firstItem="YMC-da-Ye5" firstAttribute="leading" secondItem="ISC-P6-UI7" secondAttribute="trailing" constant="10" id="c6n-VF-dPX"/>
+                                    <constraint firstAttribute="trailing" secondItem="Psl-Eo-tCJ" secondAttribute="trailing" constant="8" id="eZE-yE-wtC"/>
+                                    <constraint firstItem="Psl-Eo-tCJ" firstAttribute="firstBaseline" secondItem="PPX-UL-u3d" secondAttribute="firstBaseline" id="ogH-mF-PEt"/>
+                                </constraints>
                             </view>
-                        </subviews>
-                        <color key="backgroundColor" name="CanvasBackground"/>
-                    </clipView>
-                    <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="qrD-Pn-Wt2">
-                        <rect key="frame" x="0.0" y="232" width="480" height="16"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                    <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="AfH-uV-J0m">
-                        <rect key="frame" x="464" y="0.0" width="16" height="248"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                </scrollView>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="32" id="hUK-f8-ZEh"/>
+                            </constraints>
+                            <color key="borderColor" name="CanvasToolbarStroke"/>
+                            <color key="fillColor" name="CanvasToolbarBackground"/>
+                            <connections>
+                                <binding destination="-2" name="hidden" keyPath="self.viewModel.isLocked" id="RA8-Fp-CeY">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                    </dictionary>
+                                </binding>
+                            </connections>
+                        </box>
+                        <scrollView identifier="CanavsEditorScrollView" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" allowsMagnification="YES" maxMagnification="1" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WXD-co-iCD">
+                            <rect key="frame" x="1" y="0.0" width="761" height="440"/>
+                            <clipView key="contentView" id="0wh-ER-x58">
+                                <rect key="frame" x="0.0" y="0.0" width="761" height="440"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <view id="PUw-B3-8ie" customClass="CanvasView" customModule="Coppice" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="746" height="425"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" name="CanvasBackground"/>
+                            </clipView>
+                            <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="qrD-Pn-Wt2">
+                                <rect key="frame" x="0.0" y="424" width="761" height="16"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </scroller>
+                            <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="AfH-uV-J0m">
+                                <rect key="frame" x="745" y="0.0" width="16" height="440"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </scroller>
+                        </scrollView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="WXD-co-iCD" secondAttribute="trailing" constant="1" id="8AV-ZN-fbb"/>
+                        <constraint firstAttribute="trailing" secondItem="2ax-QI-7bX" secondAttribute="trailing" id="h5K-nm-LqK"/>
+                        <constraint firstItem="2ax-QI-7bX" firstAttribute="leading" secondItem="MCR-Mu-Ara" secondAttribute="leading" id="l9U-w3-Il6"/>
+                    </constraints>
+                    <visibilityPriorities>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                    </visibilityPriorities>
+                    <customSpacing>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                    </customSpacing>
+                </stackView>
                 <box boxType="custom" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="BXc-dz-8BW">
-                    <rect key="frame" x="-1" y="-1" width="482" height="25"/>
+                    <rect key="frame" x="-1" y="-1" width="763" height="25"/>
                     <view key="contentView" id="tvb-iS-VfP">
-                        <rect key="frame" x="1" y="1" width="480" height="23"/>
+                        <rect key="frame" x="1" y="1" width="761" height="23"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <popUpButton toolTip="Change the zoom level of the canvas" translatesAutoresizingMaskIntoConstraints="NO" id="7ch-X7-loO">
-                                <rect key="frame" x="419" y="3" width="53" height="18"/>
+                                <rect key="frame" x="700" y="3" width="53" height="18"/>
                                 <popUpButtonCell key="cell" type="roundTextured" title="100%" bezelStyle="texturedRounded" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" selectedItem="sLc-r6-goS" id="1Fw-Vb-jEB">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="message" size="11"/>
@@ -98,15 +179,15 @@
                 </box>
             </subviews>
             <constraints>
+                <constraint firstItem="MCR-Mu-Ara" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="-1" id="2ID-mR-zzH"/>
                 <constraint firstAttribute="bottom" secondItem="BXc-dz-8BW" secondAttribute="bottom" constant="-1" id="8P1-O2-8n3"/>
-                <constraint firstItem="WXD-co-iCD" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="GRU-Ml-fDU"/>
-                <constraint firstItem="WXD-co-iCD" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="PqC-vB-bI8"/>
                 <constraint firstItem="BXc-dz-8BW" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="-1" id="Ugr-wH-1Km"/>
-                <constraint firstAttribute="trailing" secondItem="WXD-co-iCD" secondAttribute="trailing" id="evb-4M-iqi"/>
-                <constraint firstItem="BXc-dz-8BW" firstAttribute="top" secondItem="WXD-co-iCD" secondAttribute="bottom" id="gKa-SR-rcp"/>
+                <constraint firstItem="BXc-dz-8BW" firstAttribute="top" secondItem="MCR-Mu-Ara" secondAttribute="bottom" id="ZV2-Xb-5vI"/>
+                <constraint firstItem="MCR-Mu-Ara" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="-1" id="fyQ-aa-sKv"/>
                 <constraint firstAttribute="trailing" secondItem="BXc-dz-8BW" secondAttribute="trailing" constant="-1" id="hrd-Rk-hOT"/>
+                <constraint firstAttribute="trailing" secondItem="MCR-Mu-Ara" secondAttribute="trailing" constant="-1" id="teq-Qp-y2i"/>
             </constraints>
-            <point key="canvasLocation" x="128" y="102"/>
+            <point key="canvasLocation" x="104.5" y="-71"/>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="QYY-Jy-Z2h"/>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="dCb-kT-jJL">

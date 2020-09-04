@@ -21,4 +21,6 @@ class CanvasInspectorViewController: BaseInspectorViewController {
         }
         CoppiceSubscriptionManager.shared.showProPopover(from: control, preferredEdge: .maxY)
     }
+
+    
 }

@@ -20,20 +20,15 @@ class TextEditorViewModel: ViewModel {
     
     @objc dynamic let textContent: TextPageContent
     let pageLinkManager: PageLinkManager
-    let mode: EditorMode
-    init(textContent: TextPageContent, documentWindowViewModel: DocumentWindowViewModel, pageLinkManager: PageLinkManager, mode: EditorMode = .editing) {
+    init(textContent: TextPageContent, documentWindowViewModel: DocumentWindowViewModel, pageLinkManager: PageLinkManager) {
         self.textContent = textContent
         self.pageLinkManager = pageLinkManager
-        self.mode = mode
         super.init(documentWindowViewModel: documentWindowViewModel)
     }
 
     var searchStringObserver: AnyCancellable?
     var textObserver: AnyCancellable?
     override func setup() {
-        guard self.mode == .editing else {
-            return
-        }
         self.searchStringObserver = self.documentWindowViewModel.publisher(for: \.searchString).sink { [weak self] searchTerm in
             self?.updateHighlightedRange(with: searchTerm)
         }

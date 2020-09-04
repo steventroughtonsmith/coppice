@@ -18,17 +18,12 @@ class PageEditorViewModel: ViewModel {
     
     let page: Page
     private var contentObserver: NSObjectProtocol?
-    let mode: EditorMode
-    init(page: Page, documentWindowViewModel: DocumentWindowViewModel, mode: EditorMode = .editing) {
+    init(page: Page, documentWindowViewModel: DocumentWindowViewModel) {
         self.page = page
-        self.mode = mode
         super.init(documentWindowViewModel: documentWindowViewModel)
     }
 
     override func setup() {
-        guard self.mode == .editing else {
-            return
-        }
         self.contentObserver = NotificationCenter.default.addObserver(forName: Page.contentChangedNotification, object: self.page, queue: .main) { [weak self] (_) in
             self?.view?.contentChanged()
         }
@@ -45,13 +40,11 @@ class PageEditorViewModel: ViewModel {
         case .text:
             let viewModel = TextEditorViewModel(textContent: (self.page.content as! TextPageContent),
                                                 documentWindowViewModel: self.documentWindowViewModel,
-                                                pageLinkManager: self.documentWindowViewModel.pageLinkController.pageLinkManager(for: self.page),
-                                                mode: self.mode)
+                                                pageLinkManager: self.documentWindowViewModel.pageLinkController.pageLinkManager(for: self.page))
             return TextEditorViewController(viewModel: viewModel)
         case .image:
             let viewModel = ImageEditorViewModel(imageContent: (self.page.content as! ImagePageContent),
-                                                 documentWindowViewModel: self.documentWindowViewModel,
-                                                 mode: self.mode)
+                                                 documentWindowViewModel: self.documentWindowViewModel )
             return ImageEditorViewController(viewModel: viewModel)
         }
     }

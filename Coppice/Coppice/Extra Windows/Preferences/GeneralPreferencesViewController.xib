@@ -103,18 +103,18 @@
                         </button>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xs4-tP-7bg">
                             <rect key="frame" x="260" y="53" width="50" height="27"/>
-                            <buttonCell key="cell" type="push" title="PRO" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="W3E-ar-ypD">
+                            <buttonCell key="cell" type="push" title="PRO" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="W3E-ar-ypD" customClass="ProButtonCell" customModule="Coppice" customModuleProvider="target">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="systemBold" size="11"/>
                             </buttonCell>
                             <connections>
-                                <action selector="showProUpsell:" target="-2" id="8jc-Oa-ujn"/>
+                                <action selector="showProUpsell:" target="-2" id="ljU-K6-nlT"/>
                                 <binding destination="-2" name="hidden" keyPath="self.isProEnabled" id="7ww-7e-5f6"/>
                             </connections>
                         </button>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jYn-dC-guV">
                             <rect key="frame" x="173" y="-5" width="50" height="27"/>
-                            <buttonCell key="cell" type="push" title="PRO" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="cCu-Er-1Br">
+                            <buttonCell key="cell" type="push" title="PRO" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="cCu-Er-1Br" customClass="ProButtonCell" customModule="Coppice" customModuleProvider="target">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="systemBold" size="11"/>
                             </buttonCell>

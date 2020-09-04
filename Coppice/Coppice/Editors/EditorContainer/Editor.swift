@@ -11,7 +11,7 @@ import CoppiceCore
 
 enum EditorMode: Equatable {
     case editing
-    case preview
+    case readOnly
 }
 
 protocol Editor: class {

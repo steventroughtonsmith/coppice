@@ -16,10 +16,8 @@ class CanvasPageViewModel: ViewModel {
     weak var view: CanvasPageView?
 
     @objc dynamic let canvasPage: CanvasPage
-    let mode: EditorMode
-    init(canvasPage: CanvasPage, documentWindowViewModel: DocumentWindowViewModel, mode: EditorMode = .editing) {
+    init(canvasPage: CanvasPage, documentWindowViewModel: DocumentWindowViewModel) {
         self.canvasPage = canvasPage
-        self.mode = mode
         super.init(documentWindowViewModel: documentWindowViewModel)
     }
 
@@ -45,7 +43,7 @@ class CanvasPageViewModel: ViewModel {
             return nil
         }
 
-        let viewModel = PageEditorViewModel(page: page, documentWindowViewModel: self.documentWindowViewModel, mode: self.mode)
+        let viewModel = PageEditorViewModel(page: page, documentWindowViewModel: self.documentWindowViewModel)
         return PageEditorViewController(viewModel: viewModel)
     }()
 

@@ -33,6 +33,7 @@ extension CanvasKeyEventContext {
 
 
 public protocol LayoutEngine: class {
+    var editable: Bool { get }
     var selectedPages: [LayoutEnginePage] { get }
     var canvasSize: CGSize { get }
     var selectionRect: CGRect? { get set }

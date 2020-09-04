@@ -40,6 +40,8 @@ public class CanvasLayoutEngine: NSObject, LayoutEngine {
     public weak var view: CanvasLayoutView?
     public weak var delegate: CanvasLayoutEngineDelegate?
 
+    public var editable = true
+
     public let configuration: Configuration
     public let eventContextFactory: LayoutEngineEventContextFactory
     public init(configuration: Configuration, eventContextFactory: LayoutEngineEventContextFactory = CanvasLayoutEngineEventContextFactory()) {
@@ -254,7 +256,7 @@ public class CanvasLayoutEngine: NSObject, LayoutEngine {
 
     public weak var enabledPage: LayoutEnginePage?
     private func updateEnabledPage() {
-        guard self.selectedPages.count == 1, let page = self.selectedPages.first else {
+        guard self.editable, self.selectedPages.count == 1, let page = self.selectedPages.first else {
             self.enabledPage = nil
             return
         }
