@@ -258,7 +258,7 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
 
     private func updateAppearance() {
         let appearance: NSAppearance?
-        switch self.viewModel.canvas.theme {
+        switch self.viewModel.theme {
         case .dark:
             appearance = NSAppearance(named: .darkAqua)
         case .light:
@@ -267,7 +267,7 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
             appearance = nil
         }
         self.view.appearance = appearance
-        self.canvasView.theme = self.viewModel.canvas.theme
+        self.canvasView.theme = self.viewModel.theme
     }
 
     private func updateCanvas() {

@@ -8,6 +8,8 @@
 
 import Foundation
 import CoppiceCore
+import Combine
+import M3Subscriptions
 
 protocol CanvasInspectorView: class {
 
@@ -23,6 +25,7 @@ class CanvasInspectorViewModel: BaseInspectorViewModel {
         self.canvas = canvas
         self.modelController = modelController
         super.init()
+        self.setupProObservation()
     }
 
     override var title: String? {
@@ -52,10 +55,27 @@ class CanvasInspectorViewModel: BaseInspectorViewModel {
 
     @objc dynamic var selectedThemeIndex: Int {
         get {
+            guard self.isProEnabled else {
+                return 0
+            }
             return Canvas.Theme.allCases.firstIndex(of: self.canvas.theme) ?? 0
         }
         set {
+            guard self.isProEnabled else {
+                return
+            }
             self.canvas.theme = Canvas.Theme.allCases[newValue]
         }
+    }
+
+
+    //MARK: - Pro
+    @objc dynamic var isProEnabled = false
+    
+    var activationObserver: AnyCancellable?
+    private func setupProObservation() {
+        self.activationObserver = CoppiceSubscriptionManager.shared.$activationResponse
+            .map { $0?.isActive ?? false }
+            .assign(to: \.isProEnabled, on: self)
     }
 }

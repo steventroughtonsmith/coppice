@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17154" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17154"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -38,26 +40,7 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Kri-qI-nSO">
-                    <rect key="frame" x="48" y="-3" width="262" height="25"/>
-                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="zAD-di-hl3" id="eNE-Ou-a6G">
-                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                        <menu key="menu" id="LfI-KY-Dbj">
-                            <items>
-                                <menuItem title="Item 1" state="on" id="zAD-di-hl3"/>
-                                <menuItem title="Item 2" id="bfM-5z-W0I"/>
-                                <menuItem title="Item 3" id="DfD-4q-J1P"/>
-                            </items>
-                        </menu>
-                    </popUpButtonCell>
-                    <connections>
-                        <accessibilityConnection property="title" destination="IBt-e7-HOq" id="egy-fw-Z6g"/>
-                        <binding destination="-2" name="selectedIndex" keyPath="self.viewModel.selectedThemeIndex" previousBinding="Jy9-Vy-kwx" id="g3a-sG-ZMn"/>
-                        <binding destination="-2" name="contentValues" keyPath="self.viewModel.themes" id="Jy9-Vy-kwx"/>
-                    </connections>
-                </popUpButton>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IBt-e7-HOq">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IBt-e7-HOq">
                     <rect key="frame" x="-2" y="3" width="46" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Theme" id="s1P-mu-Ye4">
                         <font key="font" metaFont="system"/>
@@ -65,22 +48,80 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Frv-F3-WrV">
+                    <rect key="frame" x="50" y="0.0" width="257" height="21"/>
+                    <subviews>
+                        <popUpButton verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kri-qI-nSO">
+                            <rect key="frame" x="-2" y="-3" width="214" height="25"/>
+                            <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="zAD-di-hl3" id="eNE-Ou-a6G">
+                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="menu"/>
+                                <menu key="menu" id="LfI-KY-Dbj">
+                                    <items>
+                                        <menuItem title="Item 1" state="on" id="zAD-di-hl3"/>
+                                        <menuItem title="Item 2" id="bfM-5z-W0I"/>
+                                        <menuItem title="Item 3" id="DfD-4q-J1P"/>
+                                    </items>
+                                </menu>
+                            </popUpButtonCell>
+                            <connections>
+                                <accessibilityConnection property="title" destination="IBt-e7-HOq" id="egy-fw-Z6g"/>
+                                <binding destination="-2" name="enabled" keyPath="self.viewModel.isProEnabled" id="AYi-Jb-dZh"/>
+                                <binding destination="-2" name="selectedIndex" keyPath="self.viewModel.selectedThemeIndex" previousBinding="Jy9-Vy-kwx" id="g3a-sG-ZMn"/>
+                                <binding destination="-2" name="contentValues" keyPath="self.viewModel.themes" id="Jy9-Vy-kwx"/>
+                            </connections>
+                        </popUpButton>
+                        <button verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5hH-lc-yqQ">
+                            <rect key="frame" x="212" y="-4" width="50" height="27"/>
+                            <buttonCell key="cell" type="push" title="PRO" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="DUN-8v-xh0">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="systemBold" size="11"/>
+                            </buttonCell>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="color" keyPath="bezelColor">
+                                    <color key="value" name="CoppiceGreen"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="showProUpsell:" target="-2" id="beZ-ca-jIC"/>
+                                <binding destination="-2" name="hidden" keyPath="self.viewModel.isProEnabled" id="FGT-jg-eMy"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="Kri-qI-nSO" secondAttribute="bottom" id="Nkl-QD-4JE"/>
+                        <constraint firstItem="Kri-qI-nSO" firstAttribute="top" secondItem="Frv-F3-WrV" secondAttribute="top" id="ywP-jK-uoO"/>
+                    </constraints>
+                    <visibilityPriorities>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                    </visibilityPriorities>
+                    <customSpacing>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                    </customSpacing>
+                </stackView>
             </subviews>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="Kri-qI-nSO" secondAttribute="trailing" id="3wh-0j-aUc"/>
-                <constraint firstItem="Kri-qI-nSO" firstAttribute="top" secondItem="b0f-QP-nLp" secondAttribute="bottom" constant="8" id="8ch-ud-kD0"/>
                 <constraint firstAttribute="trailing" secondItem="b0f-QP-nLp" secondAttribute="trailing" id="Act-sR-nMp"/>
+                <constraint firstItem="Frv-F3-WrV" firstAttribute="leading" secondItem="IBt-e7-HOq" secondAttribute="trailing" constant="8" symbolic="YES" id="GJO-ri-JAH"/>
+                <constraint firstAttribute="trailing" secondItem="Frv-F3-WrV" secondAttribute="trailing" id="Iis-7N-0IE"/>
                 <constraint firstItem="b0f-QP-nLp" firstAttribute="top" secondItem="ehY-F7-MGj" secondAttribute="top" id="Pf1-p6-b1a"/>
-                <constraint firstItem="IBt-e7-HOq" firstAttribute="firstBaseline" secondItem="Kri-qI-nSO" secondAttribute="firstBaseline" id="cim-aC-YJh"/>
+                <constraint firstAttribute="bottom" secondItem="Frv-F3-WrV" secondAttribute="bottom" id="Zrf-8N-2Mt"/>
                 <constraint firstItem="VTj-SJ-Zad" firstAttribute="firstBaseline" secondItem="b0f-QP-nLp" secondAttribute="firstBaseline" id="cwp-qL-Ozp"/>
-                <constraint firstItem="Kri-qI-nSO" firstAttribute="leading" secondItem="IBt-e7-HOq" secondAttribute="trailing" constant="8" id="drv-Dj-aMb"/>
-                <constraint firstAttribute="bottom" secondItem="Kri-qI-nSO" secondAttribute="bottom" id="hcR-Tl-icP"/>
                 <constraint firstItem="IBt-e7-HOq" firstAttribute="leading" secondItem="VTj-SJ-Zad" secondAttribute="leading" id="ibD-OF-j1z"/>
+                <constraint firstItem="Frv-F3-WrV" firstAttribute="top" secondItem="b0f-QP-nLp" secondAttribute="bottom" constant="8" symbolic="YES" id="nhC-i5-2fd"/>
                 <constraint firstItem="b0f-QP-nLp" firstAttribute="leading" secondItem="VTj-SJ-Zad" secondAttribute="trailing" constant="8" id="o6b-TB-L9J"/>
                 <constraint firstItem="VTj-SJ-Zad" firstAttribute="leading" secondItem="ehY-F7-MGj" secondAttribute="leading" id="sWc-Oj-OkF"/>
                 <constraint firstItem="IBt-e7-HOq" firstAttribute="trailing" secondItem="VTj-SJ-Zad" secondAttribute="trailing" id="z7X-tq-RJA"/>
             </constraints>
-            <point key="canvasLocation" x="13.5" y="39.5"/>
+            <point key="canvasLocation" x="13.5" y="39"/>
         </customView>
+        <userDefaultsController representsSharedInstance="YES" id="eo6-R9-T9q"/>
     </objects>
+    <resources>
+        <namedColor name="CoppiceGreen">
+            <color red="0.13300000131130219" green="0.56499999761581421" blue="0.086000002920627594" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
 </document>

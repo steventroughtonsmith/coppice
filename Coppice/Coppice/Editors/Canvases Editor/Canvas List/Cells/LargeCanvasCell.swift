@@ -22,7 +22,11 @@ class LargeCanvasCell: EditableLabelCell, CanvasCell {
             guard let canvas = self.objectValue as? Canvas else {
                 return
             }
-            self.thumbnailBackground.fillColor = canvas.theme.canvasBackgroundColor
+            var theme = canvas.theme
+            if CoppiceSubscriptionManager.shared.activationResponse?.isActive != true {
+                theme = .auto
+            }
+            self.thumbnailBackground.fillColor = theme.canvasBackgroundColor
             self.thumbnailImageView.image = canvas.thumbnail
         }
     }

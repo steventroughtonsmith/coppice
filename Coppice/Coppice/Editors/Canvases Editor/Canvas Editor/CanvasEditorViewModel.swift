@@ -273,6 +273,15 @@ class CanvasEditorViewModel: ViewModel {
     }
 
 
+    //MARK: - Theming
+    var theme: Canvas.Theme {
+        guard CoppiceSubscriptionManager.shared.activationResponse?.isActive == true else {
+            return .auto
+        }
+        return self.canvas.theme
+    }
+
+
     //MARK: - Inspectors
     var canvasInspectorViewModel: CanvasInspectorViewModel {
         return CanvasInspectorViewModel(canvas: self.canvas, modelController: self.modelController)

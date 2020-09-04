@@ -14,4 +14,11 @@ class CanvasInspectorViewController: BaseInspectorViewController {
     }
 
     override var ranking: InspectorRanking { return .canvas }
+
+    @IBAction func showProUpsell(_ sender: Any) {
+        guard let control = sender as? NSView else {
+            return
+        }
+        CoppiceSubscriptionManager.shared.showProPopover(from: control, preferredEdge: .maxY)
+    }
 }
