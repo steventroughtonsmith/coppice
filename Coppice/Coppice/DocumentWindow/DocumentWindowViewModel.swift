@@ -284,7 +284,10 @@ class DocumentWindowViewModel: NSObject {
     }
 
     var folderForNewPages: Folder {
-        guard let selection = self.sidebarSelection.last(where: { $0 != .canvases }) else {
+        guard
+            CoppiceSubscriptionManager.shared.activationResponse?.isActive == true,
+            let selection = self.sidebarSelection.last(where: { $0 != .canvases })
+        else {
             return self.modelController.rootFolder
         }
 

@@ -67,8 +67,16 @@ class TextEditorViewModel: ViewModel {
     private func actuallyCreateNewLinkedPage(ofType type: PageContentType, from range: NSRange) -> Page {
         let selectedText = self.attributedText.attributedSubstring(from: range)
         self.modelController.undoManager.beginUndoGrouping()
+
+        let folder: Folder
+        if CoppiceSubscriptionManager.shared.activationResponse?.isActive == true {
+            folder = self.textContent.page?.containingFolder ?? self.documentWindowViewModel.folderForNewPages
+        } else {
+            folder = self.documentWindowViewModel.folderForNewPages
+        }
+
         let page = self.modelController.createPage(ofType: type,
-                                                   in: self.textContent.page?.containingFolder ?? self.documentWindowViewModel.folderForNewPages,
+                                                   in: folder,
                                                    below: self.textContent.page) {
                                                     $0.title = selectedText.string
         }

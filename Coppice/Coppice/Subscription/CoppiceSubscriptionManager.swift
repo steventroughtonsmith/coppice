@@ -190,4 +190,33 @@ class CoppiceSubscriptionManager: NSObject {
         popover.behavior = .transient
         popover.show(relativeTo: view.bounds, of: view, preferredEdge: preferredEdge)
     }
+
+    lazy var proImage: NSImage = {
+        let localizedPro = NSLocalizedString("PRO", comment: "Coppice Pro short name")
+        let attributedPro = NSAttributedString(string: localizedPro, attributes: [
+            .foregroundColor: NSColor.white,
+            .font: NSFont.boldSystemFont(ofSize: 11)
+        ])
+
+        let bounds = attributedPro.boundingRect(with: CGSize(width: 100, height: 100), options: .usesLineFragmentOrigin)
+
+        let verticalPadding: CGFloat = 1
+        let horizontalPadding: CGFloat = 8
+        let imageSize = bounds.rounded().size.plus(width: horizontalPadding * 2, height: verticalPadding * 2)
+
+        return NSImage(size: imageSize, flipped: false) { (rect) -> Bool in
+            let path = NSBezierPath(roundedRect: rect, xRadius: 4, yRadius: 4)
+            NSColor(named: "CoppiceGreen")?.setFill()
+            path.fill()
+
+
+            attributedPro.draw(at: CGPoint(x: horizontalPadding, y: verticalPadding))
+
+            return true
+        }
+    }()
+
+    var proTooltip: String {
+        return NSLocalizedString("This feature requires a Coppice Pro subscription", comment: "")
+    }
 }

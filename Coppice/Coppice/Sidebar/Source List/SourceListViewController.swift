@@ -202,17 +202,28 @@ class SourceListViewController: NSViewController, NSMenuItemValidation {
 
     //MARK: - Menu Validation
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
-        if menuItem.action == #selector(newPage(_:)) ||
-           menuItem.action == #selector(newFolder(_:)) {
+        if menuItem.action == #selector(newPage(_:)) {
             return true
         }
 
+        let subManager = CoppiceSubscriptionManager.shared
+        let proEnabled = (subManager.activationResponse?.isActive ?? false)
+
+        if menuItem.action == #selector(newFolder(_:)) {
+            menuItem.image = proEnabled ? nil : subManager.proImage
+            menuItem.toolTip = proEnabled ? nil  : subManager.proTooltip
+            return proEnabled
+        }
+
         if menuItem.action == #selector(newFolderFromSelection(_:)) {
+            menuItem.image = proEnabled ? nil : subManager.proImage
+            menuItem.toolTip = proEnabled ? nil  : subManager.proTooltip
+
             let selection = self.nodesForAction
             guard selection.count > 0 else {
                 return false
             }
-            return selection.nodesShareParent
+            return selection.nodesShareParent && proEnabled
         }
 
         if menuItem.action == #selector(editItemTitle(_:)) {

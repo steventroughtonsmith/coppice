@@ -262,6 +262,10 @@ class SourceListViewModel: ViewModel {
     }
 
     private func validate(ids: [ModelID], and folder: Folder) -> Bool {
+        guard (CoppiceSubscriptionManager.shared.activationResponse?.isActive == true) || folder == self.modelController.rootFolder else {
+            return false
+        }
+
         var currentFolder: Folder? = folder
         while currentFolder != nil {
             guard ids.contains(currentFolder!.id) == false else {
@@ -337,7 +341,12 @@ class SourceListViewModel: ViewModel {
     func createPage(ofType type: PageContentType?, underNodes collection: SourceListNodeCollection) -> DocumentWindowViewModel.SidebarItem {
         let actualType = type ?? self.documentWindowViewModel.lastCreatePageType
         let lastNode = collection.nodes.last
-        let folder = lastNode?.folderForCreation ?? self.documentWindowViewModel.folderForNewPages
+        let folder: Folder
+        if CoppiceSubscriptionManager.shared.activationResponse?.isActive == true {
+            folder = lastNode?.folderForCreation ?? self.documentWindowViewModel.folderForNewPages
+        } else {
+            folder = self.documentWindowViewModel.folderForNewPages
+        }
         let page = self.modelController.createPage(ofType: actualType, in: folder, below: lastNode?.folderItemForCreation) {
             self.documentWindowViewModel.canvasForNewPages?.addPages([$0])
         }
