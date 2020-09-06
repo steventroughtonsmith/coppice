@@ -43,7 +43,7 @@ class SignInViewController: NSViewController, DeactivatedSubscriptionMode {
             return false
         }
         switch errorCode {
-        case .noSubscriptionFound:
+        case .noSubscriptionFound, .subscriptionExpired:
             ErrorPopoverViewController.show(error,
                                             relativeTo: button.bounds,
                                             of: button,

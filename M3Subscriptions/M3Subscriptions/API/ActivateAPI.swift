@@ -62,11 +62,16 @@ struct ActivateAPI {
 
     private func parse(_ data: APIData) -> APIResult {
         switch data.response {
-        case .active, .expired:
+        case .active:
             guard let response = ActivationResponse(data: data) else {
                 return .failure(.generic(nil))
             }
             return .success(response)
+        case .expired:
+            guard let jsonSubscription = data.payload["subscription"] as? [String: Any] else {
+                return .failure(.generic(nil))
+            }
+            return .failure(.subscriptionExpired(Subscription(payload: jsonSubscription, hasExpired: true)))
         case .loginFailed:
             return .failure(.loginFailed)
         case .noSubscriptionFound:

@@ -9,7 +9,7 @@
 import XCTest
 @testable import M3Subscriptions
 
-class DeactivateAPITests: XCTestCase {
+class DeactivateAPITests: APITestCase {
     //MARK: - Sending request
     func test_run_calling_requestsDeactivateAPIEndpoint() throws {
         let mockAdapter = MockNetworkAdapter()
@@ -81,7 +81,7 @@ class DeactivateAPITests: XCTestCase {
 
     func test_run_errorHandling_returnsFailureIfReceived_no_device_found_Response() throws {
         let payload = ["response": "no_device_found"]
-        let signature = "3BLTKt7ToQUlKSDFFPctzZz4fwsChOSWqMBKrPuD1BnJ5hl7/iJAcirzJds0f6afSJrNCiy0MVIbaazoyYrv3hF6EOBhipHe5mwtIjkZrf74aMgYcDb9v9P7JfGUfzax9HBGtplfAaZaGlO94auGkiRxe/1LOFCUIu/l+zeYU+TkrSRnqUyvXl7RnS3MhK7j8BWjlTaOx5WdU+scEweETdN9V31YhQZX7LmEebpSvZObfvgm2LAntLArXpIChgAb0js7gCneDooHWyaICvgHJJuUlVRijOANAi9+21dNdl3tlwidGUDo91Uq906GIBdBWfhz+9S2VBYpgxlWH4u7Nw=="
+        let signature = try self.signature(forPayload: payload)
         let json: [String: Any] = ["payload": payload, "signature": signature]
         let apiData = try XCTUnwrap(APIData(json: json))
 
@@ -111,7 +111,7 @@ class DeactivateAPITests: XCTestCase {
     //MARK: - Success
     func test_run_returnsSubscriptionInfoWithDeactivateStateIfRequestWasSuccessful() throws {
         let payload = ["response": "deactivated"]
-        let signature = "2FK5GJmiT6C4aLZTWq8R0d+sEXWLORh0iQnHKritAfySu+W/wvhlblSXy2hUqKiRjHuOWIcz+f4wjMBTuoki7SAV78LElaPxor2hIEB8eqtaX3P+foAY0s/XpnlXWXg7YrUD53YsCRaZR47rLfLBsS9iCcKPRIWz8xXgyev4sbwt2Td3EvFukIasGRsTMe9Jvt0Qi1euyN8yKB7kYPqH43Oaua0rdxUN8BjoiTmUHwq7Z3gBn2+3K7DzhfRoYY7AAqZDO9FwDrcrwI5b5M5eXG9ZLSCdYJadeW6VfFLc/6Mtnt59EHzazbmzkfUwYw0y0+Cbvj8eb/+eiN8a/ALgBg=="
+        let signature = try self.signature(forPayload: payload)
         let json: [String: Any] = ["payload": payload, "signature": signature]
         let apiData = try XCTUnwrap(APIData(json: json))
 

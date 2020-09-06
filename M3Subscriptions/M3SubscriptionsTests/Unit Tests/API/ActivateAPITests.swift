@@ -285,39 +285,43 @@ class ActivateAPITests: APITestCase {
         }
     }
 
-//    func test_run_errorHandling_returnsFailureAndSubscriptionIfReceived_subscription_expired_Response() throws {
-//        let payload = ["response": "subscription_expired", "subscriptionName": "Plan C", "expirationDate": "2020-01-02T03:04:05Z"]
-//        let signature = "Syj/uI3VvxI+cJj9MvfSeyUdU3xZiUmEbUO3clzcM2znhQRJMQNrayF+nTkOunj+S59x2TIFIS6n2AdWAn9bfPDpsTuibWlRWZFELiidlJDL4+mn+yZG8jLJGJoNcLV4zXuZrD4mbnSI2/rH8p4QybW59NanmC8t6mt89W9JCAUICfCLfZBnYMBx/3RR6TBY4b79p4PV84KG2i77Z2ga1wgkO852jGVwS9eG+8ekgALnMw6X/YLgZpqkQHuD39eCSURvglVMMC84+vrtdROghhjD4htuSwYgDmkx93+J6aOUGTjDT7iUTS3+AkYFOSd6FbdI/qpR5xKcMN1+I+CrvQ=="
-//        let json: [String: Any] = ["payload": payload, "signature": signature]
-//        let apiData = try XCTUnwrap(APIData(json: json))
-//
-//        let mockAdapter = MockNetworkAdapter()
-//        mockAdapter.resultToReturn = .success(apiData)
-//
-//        let request = ActivationRequest(email: "foo@bar.com", password: "123456", bundleID: "com.mcubedsw.Coppice")
-//        let device = Device(name: "Foobar")
-//        let api = ActivateAPI(networkAdapter: mockAdapter, request: request, device: device)
-//
-//        var actualResult: Result<ActivationResponse, ActivateAPI.Failure>?
-//        self.performAndWaitFor("Call API") { (expectation) in
-//            api.run { result in
-//                actualResult = result
-//                expectation.fulfill()
-//            }
-//        }
-//
-//        guard
-//            case .failure(let failure) = try XCTUnwrap(actualResult),
-//            case .subscriptionExpired(let subscription) = failure else {
-//                XCTFail("Result is not a subscriptionExpired failure")
-//                return
-//        }
-//
-//        let actualSubscription = try XCTUnwrap(subscription)
-//
-//        XCTAssertEqual(actualSubscription.name, "Plan C")
-//        XCTAssertDateEquals(actualSubscription.expirationDate, 2020, 1, 2, 3, 4, 5)
-//    }
+    func test_run_errorHandling_returnsFailureAndSubscriptionIfReceived_subscription_expired_Response() throws {
+        let payload: [String: Any] = [
+            "response": "subscription_expired",
+            "subscription": ["name": "Plan C", "expirationDate": "2020-01-02T03:04:05Z", "renewalStatus": "cancelled"]
+        ]
+        let signature = try self.signature(forPayload: payload)
+        let json: [String: Any] = ["payload": payload, "signature": signature]
+        let apiData = try XCTUnwrap(APIData(json: json))
+
+        let mockAdapter = MockNetworkAdapter()
+        mockAdapter.resultToReturn = .success(apiData)
+
+        let request = ActivationRequest(email: "foo@bar.com", password: "123456", bundleID: "com.mcubedsw.Coppice")
+        let device = Device(name: "Foobar")
+        let api = ActivateAPI(networkAdapter: mockAdapter, request: request, device: device)
+
+        var actualResult: Result<ActivationResponse, ActivateAPI.Failure>?
+        self.performAndWaitFor("Call API") { (expectation) in
+            api.run { result in
+                actualResult = result
+                expectation.fulfill()
+            }
+        }
+
+        guard
+            case .failure(let failure) = try XCTUnwrap(actualResult),
+            case .subscriptionExpired(let subscription) = failure else {
+                XCTFail("Result is not a subscriptionExpired failure")
+                return
+        }
+
+        let actualSubscription = try XCTUnwrap(subscription)
+
+        XCTAssertEqual(actualSubscription.name, "Plan C")
+        XCTAssertDateEquals(actualSubscription.expirationDate, 2020, 1, 2, 3, 4, 5)
+        XCTAssertEqual(actualSubscription.renewalStatus, .cancelled)
+    }
 
     func test_run_errorHandling_returnsFailureAndDevicesIfReceived_too_many_devices_Response() throws {
         let device1: [String: Any] = ["name": "My iMac", "deactivationToken": "tokeniMac", "activationDate": "2022-10-10T10:10:10Z"]
@@ -429,9 +433,5 @@ class ActivateAPITests: APITestCase {
 
     func test_run_returnsActivationResponseWithSubscriptionAndDeviceNameIfReceived_active_ResponseAndRenewStatusIsCancelled() throws {
         try self.runSuccessfulActivationResponseTest(renewalStatus: .cancelled)
-    }
-
-    func test_run_returnsActivationResponseWithExpiredSubscriptionIfReceived_expired_Response() throws {
-        try self.runSuccessfulActivationResponseTest(isExpired: true, renewalStatus: .renew)
     }
 }

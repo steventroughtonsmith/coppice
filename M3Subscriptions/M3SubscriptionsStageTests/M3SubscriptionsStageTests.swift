@@ -162,22 +162,20 @@ class M3SubscriptionsStageTests: XCTestCase {
     func test_activate_accountHasSubscriptionForAppButItsExpired() throws {
         TEST_OVERRIDES.bundleID = TestData.BundleIDs.appB
 
-        var actualActivationResponse: ActivationResponse?
+        var actualError: NSError?
         self.performAndWaitFor("Wait for activation") { (expectation) in
             self.controller.activate(withEmail: TestData.Emails.basicExpired, password: TestData.password) { result in
-                if case .success(let response) = result {
-                    actualActivationResponse = response
+                if case .failure(let error) = result {
+                    actualError = error
                 }
                 expectation.fulfill()
             }
         }
 
-        let response = try XCTUnwrap(actualActivationResponse)
-        XCTAssertFalse(response.isActive)
-        XCTAssertFalse(response.deviceIsActivated)
-        XCTAssertNil(response.token)
+        let error = try XCTUnwrap(actualError)
+        XCTAssertEqual(error.code, SubscriptionErrorCodes.subscriptionExpired.rawValue)
 
-        let subscription = try XCTUnwrap(response.subscription)
+        let subscription = try XCTUnwrap(error.userInfo[SubscriptionErrorFactory.InfoKeys.subscription] as? Subscription)
         XCTAssertEqual(subscription.name, TestData.SubscriptionName.appBAnnual)
         XCTAssertEqual(subscription.renewalStatus, .renew)
         XCTAssertLessThan(subscription.expirationDate.timeIntervalSinceReferenceDate, Date().timeIntervalSinceReferenceDate)
