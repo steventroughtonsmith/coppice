@@ -41,7 +41,7 @@
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YMC-da-Ye5">
                                         <rect key="frame" x="51" y="8" width="128" height="14"/>
                                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="This Canvas is locked." id="rjb-ax-N12">
-                                            <font key="font" metaFont="systemBold" size="11"/>
+                                            <font key="font" metaFont="smallSystemBold"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
@@ -49,7 +49,7 @@
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PPX-UL-u3d">
                                         <rect key="frame" x="183" y="8" width="350" height="14"/>
                                         <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" truncatesLastVisibleLine="YES" title="Upgrade to Coppice Pro to create and edit more than one Canvas." usesSingleLineMode="YES" id="FaU-b7-0P0">
-                                            <font key="font" metaFont="system" size="11"/>
+                                            <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
@@ -223,7 +223,7 @@
         </customView>
     </objects>
     <resources>
-        <image name="ToggleCanvasList" width="16" height="13"/>
+        <image name="ToggleCanvasList" width="16" height="14"/>
         <namedColor name="CanvasBackground">
             <color red="0.88235294117647056" green="0.8901960784313725" blue="0.90588235294117647" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

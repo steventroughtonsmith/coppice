@@ -422,7 +422,7 @@ class M3SubscriptionsStageTests: XCTestCase {
         XCTAssertEqual(subscription.renewalStatus, .renew)
         XCTAssertGreaterThan(subscription.expirationDate.timeIntervalSinceReferenceDate, Date().timeIntervalSinceReferenceDate)
     }
-
+    
 
     //MARK: - Check
     func test_check_noMatchingTokenInAccount() throws {
@@ -431,7 +431,7 @@ class M3SubscriptionsStageTests: XCTestCase {
             "token": "foobarbaz",
             "subscription": ["name": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"]
         ]
-        let storedSignature = "MQVWTcssklEphlG2Pizak+0B4ehbDqqWo0qm4c47x7mQP6Sp5hVfazEfI2PWE4C0RBieR5Vk2gTR5yjAtj1zz+ytGCKIMSsC/M+By6fViilgJpFC4xaiAJsrtSAV+mKxx0wI0NOJxvvOz5NVxuZqF9kut0wwr1N9rRKP7eu3vOpp5OU6JlBIhTAteRYzVV9/R/aZ8G6qxkaPk5clRGSMQTa/L+brkYzHTt7Lk5W2+amR69H/Yo9ibrUmwHTbFauGcftBqkP38J6kLCuk2Pnu6Q/n/cFcN/IZx+Y75dTQjaWBUjY33xoEi3MKSs6RlJsvUM+3FzP/BMCtPtK2sNGUUQ=="
+        let storedSignature = "Xt5EWbwKITWOegS+Sfqsv1EdgZ//9fkL1+8WXaEWbWjL6LzrpOShF0CBxVr/A0FLNqFXacnHmwFKANR6XiPV8q/t8ZnRvWoEaP4nGmheKFfw+uY6myQUZY4wYg7R2Yc7Zr7q+ushJ8WRhL0pNnie8tq9UXTJp+EwTjRDLU+BsJvI5ccvGp34MJ10BVDKo+/cjRche8gdhBM/jIppaCBT5fOZMyFl20K9bzSQFIpYROsK0SUIacvq3SZB3RHOFyuYoqIzl7C35pb14XpS4L0w+236HAr0DPuH0fca9+wp4cmUj0FdZ+vOnVt3CIW6z3qviI6OGtWrUUJVgeKKNKzfeQ=="
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
 
         var actualError: NSError?
@@ -455,7 +455,7 @@ class M3SubscriptionsStageTests: XCTestCase {
             "token": TestData.Tokens.basic,
             "subscription": ["name": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"]
         ]
-        let storedSignature = "EKX2xO5nbmSWIsuSH3PfXSyd/Z5OV4OBhfUuh15R2PniIZAsoiAqdE4uLcbEyI6FO1D9Lgf5/AAHMAunXoVZ/BMWi78DCYJbmxXG+eD35E3TigtBAc2hRKV8zewRWM42GqR5IDN79eSveAtvDLr70t5VaH8Lf7om7Irk1j1JCgBEyTvTS2Urql0e7Djdeu6ppTqw91rVBCz+GE6BJ6oAJCPVNjABUDdADr8d2xULbyQMiOFYK9yksabf+rPLDLNXx1rEHXCQudCy7jxJ152caYdC0y+RZ5FlQxuJ7Z53omIPYwuLSqwuWi0KfY6oQDzjZ2/CscVVGeBXPxmcoKG/cQ=="
+        let storedSignature = "jmYgnt5w2lDqcWbQsgTtXmE6BXNcfQV+lTBrtvYRVpPanOlZ3/yse6WToa4lx/xO0/f0kpx8rsXcm7ir9RAgY4sZbh8kAhhEsj+JLZ5dB2lx2TvfuMXO0bcbuIIBpSEDVQwD4o8pMCtlCJ2EKGDxZktTEnsCS6uVQxH7Hq2geaSmkdlyz4XYC/s2zY+OFl/tvdOLYazy057PCZ8odL6c4dIUcao1QejbvXEOfILrVGQMrhtm4lSRaY0LWAyMIbpaJlS3MYzmFoV3BViBb8yX1tUsokcDZDfqTCWxsFwxxwm6V18waLrZM2yep3lK+l2bfNyVPxgnPQosvgbAWR6t6g=="
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
 
         var actualError: NSError?
@@ -480,7 +480,7 @@ class M3SubscriptionsStageTests: XCTestCase {
             "token": TestData.Tokens.basicExpired,
             "subscription": ["name": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"]
         ]
-        let storedSignature = "qHHftTX9NpI4urBXueVDHClZ0cyT8a8xPJFgV0x3QYZXAghbm8+Kh8mt6J3kHesJhpgSpK5oguNgiCsw2wtPGXg8zPCmu7z+BdlXKd+2e0ZNeQ6FSHjmzINkiHBH7I/FO6WFUGaWAvWxpJfQlwOS+0XlcHqVCVUfvZxyIUqR8+zjS/FIyid68y5U/LgRoPJi1vHUjER2pmSeNzt2dn6SeUbQaFO/bEks5+QfmUWg+Mg7OaM598nDYWvCzK+f9SM6q1vGQjXwv1Gxe53ytPhe7GK/vX+qBrGEQeXVNC6Cfu4+JpkJNe48Awgfbb9YaJB7NGPC1SnIO90VJoZ4KC0j0g=="
+        let storedSignature = "e8gCPoA00KISi07ByKTa8sze80oZJzEP4RmfF8gMi2OsLon/4dus44dOIaFz6NwCyvvd/JG+aZnrA7pYJmpTIYzKwudcb6Ha3qbe0rFwch64ndcUqR3HleRRdmgF459OHgaeXwvCeOxVX+OcQzpai3z3YI1lrtSIPntakIXan/q+TNDTBeS9sF+zUq1qsZCn77AJJ2qK4g+HX2niH97FlMk8eLfcjuve6RMLlK0fFQf8W5J9a4GlVnsNm+jzmeNEVMr4yXb8cTP/Y974tjFyYqx/NoYQcNSwDh1YkndWSWtNZSXsjhJp9cVZr+UCIDjJrkNQW6TdC2rHUbZX2j3zHQ=="
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
 
         var actualActivationResponse: ActivationResponse?
@@ -512,8 +512,7 @@ class M3SubscriptionsStageTests: XCTestCase {
             "token": TestData.Tokens.basic,
             "subscription": ["name": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"]
         ]
-
-        let storedSignature = "EKX2xO5nbmSWIsuSH3PfXSyd/Z5OV4OBhfUuh15R2PniIZAsoiAqdE4uLcbEyI6FO1D9Lgf5/AAHMAunXoVZ/BMWi78DCYJbmxXG+eD35E3TigtBAc2hRKV8zewRWM42GqR5IDN79eSveAtvDLr70t5VaH8Lf7om7Irk1j1JCgBEyTvTS2Urql0e7Djdeu6ppTqw91rVBCz+GE6BJ6oAJCPVNjABUDdADr8d2xULbyQMiOFYK9yksabf+rPLDLNXx1rEHXCQudCy7jxJ152caYdC0y+RZ5FlQxuJ7Z53omIPYwuLSqwuWi0KfY6oQDzjZ2/CscVVGeBXPxmcoKG/cQ=="
+        let storedSignature = "jmYgnt5w2lDqcWbQsgTtXmE6BXNcfQV+lTBrtvYRVpPanOlZ3/yse6WToa4lx/xO0/f0kpx8rsXcm7ir9RAgY4sZbh8kAhhEsj+JLZ5dB2lx2TvfuMXO0bcbuIIBpSEDVQwD4o8pMCtlCJ2EKGDxZktTEnsCS6uVQxH7Hq2geaSmkdlyz4XYC/s2zY+OFl/tvdOLYazy057PCZ8odL6c4dIUcao1QejbvXEOfILrVGQMrhtm4lSRaY0LWAyMIbpaJlS3MYzmFoV3BViBb8yX1tUsokcDZDfqTCWxsFwxxwm6V18waLrZM2yep3lK+l2bfNyVPxgnPQosvgbAWR6t6g=="
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
 
         var actualActivationResponse: ActivationResponse?
@@ -546,7 +545,7 @@ class M3SubscriptionsStageTests: XCTestCase {
             "token": "foobarbaz",
             "subscription": ["name": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"]
         ]
-        let storedSignature = "MQVWTcssklEphlG2Pizak+0B4ehbDqqWo0qm4c47x7mQP6Sp5hVfazEfI2PWE4C0RBieR5Vk2gTR5yjAtj1zz+ytGCKIMSsC/M+By6fViilgJpFC4xaiAJsrtSAV+mKxx0wI0NOJxvvOz5NVxuZqF9kut0wwr1N9rRKP7eu3vOpp5OU6JlBIhTAteRYzVV9/R/aZ8G6qxkaPk5clRGSMQTa/L+brkYzHTt7Lk5W2+amR69H/Yo9ibrUmwHTbFauGcftBqkP38J6kLCuk2Pnu6Q/n/cFcN/IZx+Y75dTQjaWBUjY33xoEi3MKSs6RlJsvUM+3FzP/BMCtPtK2sNGUUQ=="
+        let storedSignature = "Xt5EWbwKITWOegS+Sfqsv1EdgZ//9fkL1+8WXaEWbWjL6LzrpOShF0CBxVr/A0FLNqFXacnHmwFKANR6XiPV8q/t8ZnRvWoEaP4nGmheKFfw+uY6myQUZY4wYg7R2Yc7Zr7q+ushJ8WRhL0pNnie8tq9UXTJp+EwTjRDLU+BsJvI5ccvGp34MJ10BVDKo+/cjRche8gdhBM/jIppaCBT5fOZMyFl20K9bzSQFIpYROsK0SUIacvq3SZB3RHOFyuYoqIzl7C35pb14XpS4L0w+236HAr0DPuH0fca9+wp4cmUj0FdZ+vOnVt3CIW6z3qviI6OGtWrUUJVgeKKNKzfeQ=="
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
 
         var actualError: NSError?
@@ -570,7 +569,7 @@ class M3SubscriptionsStageTests: XCTestCase {
             "token": TestData.Tokens.basic,
             "subscription": ["name": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"]
         ]
-        let storedSignature = "EKX2xO5nbmSWIsuSH3PfXSyd/Z5OV4OBhfUuh15R2PniIZAsoiAqdE4uLcbEyI6FO1D9Lgf5/AAHMAunXoVZ/BMWi78DCYJbmxXG+eD35E3TigtBAc2hRKV8zewRWM42GqR5IDN79eSveAtvDLr70t5VaH8Lf7om7Irk1j1JCgBEyTvTS2Urql0e7Djdeu6ppTqw91rVBCz+GE6BJ6oAJCPVNjABUDdADr8d2xULbyQMiOFYK9yksabf+rPLDLNXx1rEHXCQudCy7jxJ152caYdC0y+RZ5FlQxuJ7Z53omIPYwuLSqwuWi0KfY6oQDzjZ2/CscVVGeBXPxmcoKG/cQ=="
+        let storedSignature = "jmYgnt5w2lDqcWbQsgTtXmE6BXNcfQV+lTBrtvYRVpPanOlZ3/yse6WToa4lx/xO0/f0kpx8rsXcm7ir9RAgY4sZbh8kAhhEsj+JLZ5dB2lx2TvfuMXO0bcbuIIBpSEDVQwD4o8pMCtlCJ2EKGDxZktTEnsCS6uVQxH7Hq2geaSmkdlyz4XYC/s2zY+OFl/tvdOLYazy057PCZ8odL6c4dIUcao1QejbvXEOfILrVGQMrhtm4lSRaY0LWAyMIbpaJlS3MYzmFoV3BViBb8yX1tUsokcDZDfqTCWxsFwxxwm6V18waLrZM2yep3lK+l2bfNyVPxgnPQosvgbAWR6t6g=="
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
         var actualError: NSError?
         self.performAndWaitFor("Wait for error", timeout: 2) { (expectation) in
@@ -594,7 +593,7 @@ class M3SubscriptionsStageTests: XCTestCase {
             "subscription": ["name": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"]
         ]
 
-        let storedSignature = "EKX2xO5nbmSWIsuSH3PfXSyd/Z5OV4OBhfUuh15R2PniIZAsoiAqdE4uLcbEyI6FO1D9Lgf5/AAHMAunXoVZ/BMWi78DCYJbmxXG+eD35E3TigtBAc2hRKV8zewRWM42GqR5IDN79eSveAtvDLr70t5VaH8Lf7om7Irk1j1JCgBEyTvTS2Urql0e7Djdeu6ppTqw91rVBCz+GE6BJ6oAJCPVNjABUDdADr8d2xULbyQMiOFYK9yksabf+rPLDLNXx1rEHXCQudCy7jxJ152caYdC0y+RZ5FlQxuJ7Z53omIPYwuLSqwuWi0KfY6oQDzjZ2/CscVVGeBXPxmcoKG/cQ=="
+        let storedSignature = "jmYgnt5w2lDqcWbQsgTtXmE6BXNcfQV+lTBrtvYRVpPanOlZ3/yse6WToa4lx/xO0/f0kpx8rsXcm7ir9RAgY4sZbh8kAhhEsj+JLZ5dB2lx2TvfuMXO0bcbuIIBpSEDVQwD4o8pMCtlCJ2EKGDxZktTEnsCS6uVQxH7Hq2geaSmkdlyz4XYC/s2zY+OFl/tvdOLYazy057PCZ8odL6c4dIUcao1QejbvXEOfILrVGQMrhtm4lSRaY0LWAyMIbpaJlS3MYzmFoV3BViBb8yX1tUsokcDZDfqTCWxsFwxxwm6V18waLrZM2yep3lK+l2bfNyVPxgnPQosvgbAWR6t6g=="
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
 
         var actualActivationResponse: ActivationResponse?
