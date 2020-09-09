@@ -77,6 +77,8 @@ All rights reserved.</string>
 	<true/>
 	<key>SUFeedURL</key>
 	<string>$(APPCASTURL)</string>
+	<key>SUPublicDSAKeyFile</key>
+	<string>sparkle_dsa_pub.pem</string>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>

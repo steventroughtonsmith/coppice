@@ -38,14 +38,9 @@ class GeneralPreferencesViewController: PreferencesViewController {
         return NSImage(named: "PrefsGeneral")
     }
 
-    var selectedFont: AnyCancellable?
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
-
-        self.selectedFont = NSFontManager.shared.publisher(for: \.selectedFont).sink { (font) in
-            print("font")
-        }
     }
 
     @objc dynamic var fontString: String {

@@ -93,10 +93,10 @@ class DeactivatedSubscriptionViewController: NSViewController {
     }
 
     @IBAction func showTerms(_ sender: Any?) {
-        NSWorkspace.shared.open(URL(string: "https://www.mcubedsw.com/terms")!)
+        NSWorkspace.shared.open(URL(string: "https://mcubedsw.com/terms")!)
     }
 
     @IBAction func showPrivacyPolicy(_ sender: Any?) {
-        NSWorkspace.shared.open(URL(string: "https://www.mcubedsw.com/privacy")!)
+        NSWorkspace.shared.open(URL(string: "https://mcubedsw.com/privacy")!)
     }
 }
