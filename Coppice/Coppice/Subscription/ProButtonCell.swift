@@ -20,4 +20,11 @@ class ProButtonCell: NSButtonCell {
         }
         bezierPath.fill()
     }
+
+    override func drawTitle(_ title: NSAttributedString, withFrame frame: NSRect, in controlView: NSView) -> NSRect {
+        let mutableTitle = title.mutableCopy() as! NSMutableAttributedString
+        mutableTitle.removeAttribute(.foregroundColor, range: NSRange(location: 0, length: mutableTitle.length))
+        mutableTitle.addAttribute(.foregroundColor, value: NSColor.white, range: NSRange(location: 0, length: mutableTitle.length))
+        return super.drawTitle(mutableTitle, withFrame: frame, in: controlView)
+    }
 }
