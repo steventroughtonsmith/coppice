@@ -156,7 +156,12 @@ class CanvasSearchResult: SearchResult {
         case .title(_):
             return nil
         case .pages(let numberOfPages):
-            let localizedBodyTemplate = NSLocalizedString("%d matching pages", comment: "Canvas search result body text")
+            let localizedBodyTemplate: String
+            if numberOfPages == 1 {
+                localizedBodyTemplate = NSLocalizedString("%d matching page", comment: "Canvas search result singular body text")
+            } else {
+                localizedBodyTemplate = NSLocalizedString("%d matching pages", comment: "Canvas search result plural body text")
+            }
             let localizedBody = String(format: localizedBodyTemplate, numberOfPages)
             return NSAttributedString(string: localizedBody, attributes: SearchResult.standardBodyAttributes)
         }
