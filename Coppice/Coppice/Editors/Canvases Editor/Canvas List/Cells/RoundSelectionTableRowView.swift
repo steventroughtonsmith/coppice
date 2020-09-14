@@ -8,7 +8,7 @@
 
 import AppKit
 
-class RoundSelectionTableRowView: NSTableRowView {
+class RoundSelectionTableRowView: SpringLoadedTableRowView {
     override func drawSelection(in dirtyRect: NSRect) {
         if self.isEmphasized {
             NSColor.selectedContentBackgroundColor.set()

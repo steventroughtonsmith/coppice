@@ -77,6 +77,10 @@ class CanvasListViewModel: ViewModel {
         self.documentWindowViewModel.selectedCanvasID = self.canvases[index].id
     }
 
+    func select(_ canvas: Canvas) {
+        self.documentWindowViewModel.selectedCanvasID = canvas.id
+    }
+
 
     //MARK: Modifying Canvases
     func addPage(with id: ModelID, toCanvasAtIndex index: Int) {

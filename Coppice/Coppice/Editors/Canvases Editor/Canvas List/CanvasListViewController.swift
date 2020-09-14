@@ -268,7 +268,6 @@ extension CanvasListViewController: NSTableViewDataSource {
                 return []
             }
             self.tableView.setDropRow(row, dropOperation: .on)
-            self.viewModel.selectedCanvasIndex = row
             return .copy
         }
 
@@ -346,6 +345,23 @@ extension CanvasListViewController: NSTableViewDelegate {
     }
 
     func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
-        return RoundSelectionTableRowView()
+        let row = RoundSelectionTableRowView()
+        row.delegate = self
+        return row
     }
+}
+
+
+extension CanvasListViewController: SpringLoadedTableRowViewDelegate {
+    func userDidSpringLoad(on row: SpringLoadedTableRowView) {
+        guard
+            let canvasCell = row.view(atColumn: 0) as? NSTableCellView,
+            let canvas = canvasCell.objectValue as? Canvas
+        else {
+            return
+        }
+        self.viewModel.select(canvas)
+    }
+
+    func springLoadedDragEnded(_ row: SpringLoadedTableRowView) {}
 }
