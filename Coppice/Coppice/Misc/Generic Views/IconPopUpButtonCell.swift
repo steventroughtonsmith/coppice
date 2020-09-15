@@ -10,18 +10,22 @@ import Cocoa
 
 class IconPopUpButtonCell: NSPopUpButtonCell {
     override func imageRect(forBounds rect: NSRect) -> NSRect {
-        guard let image = self.image, self.pullsDown else {
+        guard
+            let image = self.image,
+            let controlView = self.controlView,
+            self.pullsDown
+        else {
             return super.imageRect(forBounds: rect)
         }
 
         let imageSize = image.size
 
         //Set the initial bounds we can draw in
-        var imageRect = rect
+        var imageRect = controlView.alignmentRect(forFrame: rect)
         imageRect.size.width -= 10;
 
         //Centre in view
-        imageRect.origin.x = (imageRect.size.width - imageSize.width) / 2
+        imageRect.origin.x = (imageRect.size.width - imageSize.width) - 4
         imageRect.origin.y = (imageRect.size.height - imageSize.height) / 2
         imageRect.size = imageSize
         return imageRect.rounded()
