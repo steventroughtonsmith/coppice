@@ -32,6 +32,13 @@ struct CheckAPI {
         if let deviceName = self.device.name {
             body["deviceName"] = deviceName
         }
+
+        #if DEBUG
+        if let debugString = APIDebugManager.shared.checkDebugString {
+            body["debug"] = debugString
+        }
+        #endif
+
         self.networkAdapter.callAPI(endpoint: "check", method: "POST", body: body) { result in
             switch result {
             case .success(let apiData):

@@ -37,11 +37,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        #if !DEBUG
         if let debugMenu = NSApplication.shared.mainMenu?.item(withTag: -31) {
+            #if DEBUG
+            debugMenu.submenu?.addItem(NSMenuItem.separator())
+            let apiMenuItem = NSMenuItem(title: "API Debugging", action: nil, keyEquivalent: "")
+            apiMenuItem.submenu = APIDebugManager.shared.buildMenu()
+            debugMenu.submenu?.addItem(apiMenuItem)
+            #else
             NSApplication.shared.mainMenu?.removeItem(debugMenu)
+            #endif
         }
-        #endif
 
         let expiryDate = ISO8601DateFormatter().date(from: "2020-10-31T00:00:00Z")?.timeIntervalSinceReferenceDate ?? 0;
         if Date.timeIntervalSinceReferenceDate >= expiryDate {

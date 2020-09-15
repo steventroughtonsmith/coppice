@@ -38,6 +38,7 @@
 		998481D52496768100BC0A8A /* M3SubscriptionsStageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481D42496768100BC0A8A /* M3SubscriptionsStageTests.swift */; };
 		998481D72496768100BC0A8A /* libM3Subscriptions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99848149248E635600BC0A8A /* libM3Subscriptions.a */; };
 		998481DF24967A1700BC0A8A /* XCTestExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481DE24967A1700BC0A8A /* XCTestExtensions.swift */; };
+		9998B4DD251118F300E2D455 /* APIDebugManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9998B4DC251118F300E2D455 /* APIDebugManager.swift */; };
 		9999A24D24FD454B001F8161 /* APITestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9999A24C24FD454B001F8161 /* APITestCase.swift */; };
 		9999A25424FD4EA4001F8161 /* test_private_key.pem in Resources */ = {isa = PBXBuildFile; fileRef = 9999A25224FD4EA4001F8161 /* test_private_key.pem */; };
 		9999A25524FD4EA4001F8161 /* test_public_key.pem in Resources */ = {isa = PBXBuildFile; fileRef = 9999A25324FD4EA4001F8161 /* test_public_key.pem */; };
@@ -96,6 +97,7 @@
 		998481D42496768100BC0A8A /* M3SubscriptionsStageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M3SubscriptionsStageTests.swift; sourceTree = "<group>"; };
 		998481D62496768100BC0A8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		998481DE24967A1700BC0A8A /* XCTestExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestExtensions.swift; sourceTree = "<group>"; };
+		9998B4DC251118F300E2D455 /* APIDebugManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIDebugManager.swift; sourceTree = "<group>"; };
 		9999A24C24FD454B001F8161 /* APITestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITestCase.swift; sourceTree = "<group>"; };
 		9999A25224FD4EA4001F8161 /* test_private_key.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test_private_key.pem; sourceTree = "<group>"; };
 		9999A25324FD4EA4001F8161 /* test_public_key.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test_public_key.pem; sourceTree = "<group>"; };
@@ -157,6 +159,7 @@
 				99848168248E648300BC0A8A /* SubscriptionController.swift */,
 				998481AB2492789400BC0A8A /* SubscriptionErrors.swift */,
 				998481CC2496640A00BC0A8A /* TestOverrides.swift */,
+				9998B4DC251118F300E2D455 /* APIDebugManager.swift */,
 				99848184248E68EC00BC0A8A /* Types */,
 				99848169248E648300BC0A8A /* API */,
 			);
@@ -446,6 +449,7 @@
 				998481AC2492789400BC0A8A /* SubscriptionErrors.swift in Sources */,
 				99848170248E648300BC0A8A /* NetworkAdapter.swift in Sources */,
 				9984816F248E648300BC0A8A /* ResultExtension.swift in Sources */,
+				9998B4DD251118F300E2D455 /* APIDebugManager.swift in Sources */,
 				99848175248E648300BC0A8A /* ActivateAPI.swift in Sources */,
 				99848178248E651A00BC0A8A /* ActivationRequest.swift in Sources */,
 				99848186248E68FA00BC0A8A /* Device.swift in Sources */,

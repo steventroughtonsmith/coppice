@@ -50,6 +50,12 @@ struct ActivateAPI {
             body["deactivatingDeviceToken"] = deviceDeactivationToken
         }
 
+        #if DEBUG
+        if let debugString = APIDebugManager.shared.activateDebugString {
+            body["debug"] = debugString
+        }
+        #endif
+
         self.networkAdapter.callAPI(endpoint: "activate", method: "POST", body: body) { result in
             switch result {
             case .success(let apiData):

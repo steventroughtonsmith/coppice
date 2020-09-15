@@ -20,10 +20,21 @@ struct DeactivateAPI {
     }
 
     func run(_ completion: @escaping (APIResult) -> Void) {
+        #if DEBUG
+        var body = [
+            "deviceID": self.device.id,
+            "token": self.token
+        ]
+        if let debugString = APIDebugManager.shared.deactivateDebugString {
+            body["debug"] = debugString
+        }
+        #else
         let body = [
             "deviceID": self.device.id,
             "token": self.token
         ]
+        #endif
+
         self.networkAdapter.callAPI(endpoint: "deactivate", method: "POST", body: body) { result in
             switch result {
             case .success(let apiData):
