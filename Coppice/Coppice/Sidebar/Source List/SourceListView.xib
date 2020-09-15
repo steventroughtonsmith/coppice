@@ -24,7 +24,7 @@
             <rect key="frame" x="0.0" y="0.0" width="228" height="319"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <scrollView placeholderIntrinsicWidth="228" placeholderIntrinsicHeight="314" borderType="none" autohidesScrollers="YES" horizontalLineScroll="17" horizontalPageScroll="10" verticalLineScroll="17" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F1p-BR-GwN">
+                <scrollView misplaced="YES" placeholderIntrinsicWidth="228" placeholderIntrinsicHeight="314" borderType="none" autohidesScrollers="YES" horizontalLineScroll="17" horizontalPageScroll="10" verticalLineScroll="17" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F1p-BR-GwN">
                     <rect key="frame" x="0.0" y="23" width="228" height="296"/>
                     <clipView key="contentView" drawsBackground="NO" id="dYU-0E-een">
                         <rect key="frame" x="0.0" y="0.0" width="228" height="296"/>
@@ -180,11 +180,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <popUpButton translatesAutoresizingMaskIntoConstraints="NO" id="KlR-BB-oJZ">
-                                <rect key="frame" x="1" y="1" width="35" height="21"/>
+                                <rect key="frame" x="1" y="0.0" width="35" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="35" id="Acv-Wh-xbF"/>
                                 </constraints>
-                                <popUpButtonCell key="cell" type="bevel" bezelStyle="rounded" imagePosition="trailing" alignment="left" lineBreakMode="truncatingTail" state="on" inset="2" pullsDown="YES" id="mNd-jp-rTb">
+                                <popUpButtonCell key="cell" type="bevel" bezelStyle="rounded" imagePosition="only" alignment="left" lineBreakMode="truncatingTail" state="on" inset="2" pullsDown="YES" id="mNd-jp-rTb" customClass="IconPopUpButtonCell" customModule="Coppice" customModuleProvider="target">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
                                     <menu key="menu" id="E9L-wY-CXE">
@@ -214,7 +214,7 @@
                             </popUpButton>
                             <popUpButton translatesAutoresizingMaskIntoConstraints="NO" id="vAP-07-vCU">
                                 <rect key="frame" x="36" y="0.0" width="35" height="22"/>
-                                <popUpButtonCell key="cell" type="bevel" bezelStyle="rounded" imagePosition="trailing" alignment="left" lineBreakMode="truncatingTail" state="on" inset="2" pullsDown="YES" id="mD9-BB-9Nv">
+                                <popUpButtonCell key="cell" type="bevel" bezelStyle="rounded" imagePosition="only" alignment="left" lineBreakMode="truncatingTail" state="on" inset="2" pullsDown="YES" id="mD9-BB-9Nv" customClass="IconPopUpButtonCell" customModule="Coppice" customModuleProvider="target">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
                                     <menu key="menu" id="3oG-4b-a5y">
@@ -272,7 +272,7 @@
                             <constraint firstItem="vAP-07-vCU" firstAttribute="top" secondItem="wHI-lB-o9q" secondAttribute="top" id="FYc-3n-deh"/>
                             <constraint firstAttribute="bottom" secondItem="vAP-07-vCU" secondAttribute="bottom" id="ZKG-rD-uhz"/>
                             <constraint firstItem="vAP-07-vCU" firstAttribute="width" secondItem="KlR-BB-oJZ" secondAttribute="width" id="boO-Yz-tuN"/>
-                            <constraint firstAttribute="bottom" secondItem="KlR-BB-oJZ" secondAttribute="bottom" constant="1" id="jfm-fN-D2D"/>
+                            <constraint firstAttribute="bottom" secondItem="KlR-BB-oJZ" secondAttribute="bottom" id="jfm-fN-D2D"/>
                             <constraint firstItem="KlR-BB-oJZ" firstAttribute="leading" secondItem="wHI-lB-o9q" secondAttribute="leading" constant="1" id="pvn-AU-vRP"/>
                             <constraint firstItem="KlR-BB-oJZ" firstAttribute="top" secondItem="wHI-lB-o9q" secondAttribute="top" id="qUj-Mp-xxX"/>
                         </constraints>
@@ -292,7 +292,7 @@
                 <constraint firstAttribute="trailing" secondItem="zq2-fk-8fk" secondAttribute="trailing" constant="-1" id="tkH-2R-6C4"/>
                 <constraint firstAttribute="trailing" secondItem="F1p-BR-GwN" secondAttribute="trailing" id="yRO-24-MQQ"/>
             </constraints>
-            <point key="canvasLocation" x="-503.5" y="365.5"/>
+            <point key="canvasLocation" x="-504" y="365.5"/>
         </customView>
         <customObject id="1CQ-Ez-MOk" customClass="NewPageMenuDelegate" customModule="Coppice" customModuleProvider="target"/>
     </objects>

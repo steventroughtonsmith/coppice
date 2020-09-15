@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17140" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17154" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17140"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17154"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -99,7 +99,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="34" id="LQf-m7-cqx"/>
                                 </constraints>
-                                <popUpButtonCell key="cell" type="bevel" bezelStyle="rounded" imagePosition="trailing" alignment="left" lineBreakMode="truncatingTail" state="on" inset="2" pullsDown="YES" id="jOC-L1-fCK">
+                                <popUpButtonCell key="cell" type="bevel" bezelStyle="rounded" imagePosition="only" alignment="left" lineBreakMode="truncatingTail" state="on" inset="2" pullsDown="YES" id="jOC-L1-fCK" customClass="IconPopUpButtonCell" customModule="Coppice" customModuleProvider="target">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
                                     <menu key="menu" id="bqd-2s-yoR">

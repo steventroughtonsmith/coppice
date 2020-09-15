@@ -155,6 +155,7 @@
 		99902260241FDD52009A8446 /* NoCanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9990225E241FDD52009A8446 /* NoCanvasViewController.swift */; };
 		99902261241FDD52009A8446 /* NoCanvasViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9990225F241FDD52009A8446 /* NoCanvasViewController.xib */; };
 		99906375249BC5780008C747 /* ProFeatures.plist in Resources */ = {isa = PBXBuildFile; fileRef = 99906377249BC5780008C747 /* ProFeatures.plist */; };
+		999180402510E2B400C931A7 /* IconPopUpButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9991803F2510E2B400C931A7 /* IconPopUpButtonCell.swift */; };
 		999453EB24ED5BF10043C542 /* SystemProfileInfoTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999453EA24ED5BF10043C542 /* SystemProfileInfoTableCell.swift */; };
 		999453ED24ED63640043C542 /* SystemProfileInfoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999453EC24ED63640043C542 /* SystemProfileInfoItem.swift */; };
 		999453F024ED698D0043C542 /* SimpleLabelPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999453EE24ED698D0043C542 /* SimpleLabelPopoverViewController.swift */; };
@@ -513,6 +514,7 @@
 		9990225E241FDD52009A8446 /* NoCanvasViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoCanvasViewController.swift; sourceTree = "<group>"; };
 		9990225F241FDD52009A8446 /* NoCanvasViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoCanvasViewController.xib; sourceTree = "<group>"; };
 		99906376249BC5780008C747 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Base; path = Base.lproj/ProFeatures.plist; sourceTree = "<group>"; };
+		9991803F2510E2B400C931A7 /* IconPopUpButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconPopUpButtonCell.swift; sourceTree = "<group>"; };
 		999453EA24ED5BF10043C542 /* SystemProfileInfoTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemProfileInfoTableCell.swift; sourceTree = "<group>"; };
 		999453EC24ED63640043C542 /* SystemProfileInfoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemProfileInfoItem.swift; sourceTree = "<group>"; };
 		999453EE24ED698D0043C542 /* SimpleLabelPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleLabelPopoverViewController.swift; sourceTree = "<group>"; };
@@ -1113,6 +1115,7 @@
 				999453EF24ED698D0043C542 /* SimpleLabelPopoverViewController.xib */,
 				99D507322501538E00670139 /* ErrorPopoverViewController.swift */,
 				99D507332501538E00670139 /* ErrorPopoverViewController.xib */,
+				9991803F2510E2B400C931A7 /* IconPopUpButtonCell.swift */,
 			);
 			path = "Generic Views";
 			sourceTree = "<group>";
@@ -1939,6 +1942,7 @@
 				9999A24524F95235001F8161 /* SignInViewController.swift in Sources */,
 				999EA6C72436384F00BF254E /* SearchResultOutlineView.swift in Sources */,
 				99115DC5249E304D008942DF /* SystemProfileInfoViewController.swift in Sources */,
+				999180402510E2B400C931A7 /* IconPopUpButtonCell.swift in Sources */,
 				99FFF9CC234E2F2F00EF02A0 /* FlippedView.swift in Sources */,
 				999EA6C524362BFF00BF254E /* SearchResultsViewModelTypes.swift in Sources */,
 				9965FC43238448FF002FE10D /* TextEditorInspectorViewModel.swift in Sources */,
