@@ -28,11 +28,16 @@ class URLSessionNetworkAdapter: NetworkAdapter {
             return baseURL
         }
         #endif
+
         #if DEBUG
-        return URL(string: "https://dev-mcubedsw-com:8890/api")!
-        #else
-        return URL(string: "https://mcubedsw.com/api")!
+        if
+            let apiURLString = UserDefaults.standard.string(forKey: "M3DebugAPIURL"),
+            let apiURL = URL(string: apiURLString)
+        {
+            return apiURL
+        }
         #endif
+        return URL(string: "https://mcubedsw.com/api")!
     }
 
     var version: String {
