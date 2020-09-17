@@ -10,8 +10,13 @@ import Cocoa
 import M3Subscriptions
 import Combine
 
+protocol CoppiceSubscriptionManagerDelegate: AnyObject {
+    func showCoppicePro(with error: NSError, for subscriptionManager: CoppiceSubscriptionManager)
+}
+
 class CoppiceSubscriptionManager: NSObject {
     let subscriptionController: SubscriptionController?
+    weak var delegate: CoppiceSubscriptionManagerDelegate?
 
     @Published var activationResponse: ActivationResponse?
     @Published var currentCheckError: NSError?
@@ -150,17 +155,34 @@ class CoppiceSubscriptionManager: NSObject {
         
     }
 
-    private func checkSubscription() {
+    func checkSubscription() {
         self.subscriptionController?.checkSubscription(completion: { (result) in
             switch result {
             case .success(let response):
                 self.activationResponse = response
                 self.currentCheckError = nil
             case .failure(let error):
-                self.currentCheckError = error
+                self.handleCheckError(error)
             }
             self.completeCheck()
         })
+    }
+
+    private func handleCheckError(_ error: NSError) {
+        guard let errorCode = SubscriptionErrorCodes(rawValue: error.code) else {
+            self.currentCheckError = error
+            return
+        }
+
+        switch errorCode {
+        case .noDeviceFound:
+            self.currentCheckError = nil
+            self.activationResponse = ActivationResponse.deactivated()
+            self.delegate?.showCoppicePro(with: error, for: self)
+            self.subscriptionController?.deleteLicence()
+        default:
+            self.currentCheckError = error
+        }
     }
 
     private func completeCheck() {
@@ -168,6 +190,8 @@ class CoppiceSubscriptionManager: NSObject {
             let response = self.activationResponse,
             response.deviceIsActivated
         else {
+            self.recheckTimer?.invalidate()
+            self.recheckTimer = nil
             return
         }
 

@@ -48,11 +48,9 @@ public class SubscriptionController {
                 self.complete(with: response, completion: completion)
             case .failure(let failure):
                 let error = SubscriptionErrorFactory.error(for: failure)
-//                    self.delegate?.didEncounterError(error, in: self)
                 completion(.failure(error))
             }
         }
-        //Set next timer
     }
 
     public func checkSubscription(updatingDeviceName deviceName: String? = nil, completion:  @escaping SubscriptionCompletion) {
@@ -104,7 +102,7 @@ public class SubscriptionController {
         }
     }
 
-    private func deleteLicence() {
+    public func deleteLicence() {
         try? FileManager.default.removeItem(at: self.licenceURL)
     }
 
@@ -123,16 +121,6 @@ public class SubscriptionController {
     private func complete(with response: ActivationResponse, writeToFile: Bool = true, completion: SubscriptionCompletion) {
         response.write(to: self.licenceURL)
         completion(.success(response))
-        self.lastCheck = Date()
-        self.recheckTimer = Timer.scheduledTimer(withTimeInterval: 3600, repeats: false) { [weak self] _ in self?.recheckIfNeeded() }
-    }
-
-    private func recheckIfNeeded() {
-//        if let lastCheck = self.lastCheck, (Date().timeIntervalSince(lastCheck) > 86400) {
-//            self.checkSubscription()
-//        } else {
-//            self.recheckTimer = Timer.scheduledTimer(withTimeInterval: 3600, repeats: false) { [weak self] _ in self?.recheckIfNeeded() }
-//        }
     }
 
 

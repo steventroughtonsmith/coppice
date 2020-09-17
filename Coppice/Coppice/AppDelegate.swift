@@ -41,7 +41,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             #if DEBUG
             debugMenu.submenu?.addItem(NSMenuItem.separator())
             let apiMenuItem = NSMenuItem(title: "API Debugging", action: nil, keyEquivalent: "")
-            apiMenuItem.submenu = APIDebugManager.shared.buildMenu()
+            let apiMenu = APIDebugManager.shared.buildMenu()
+            apiMenu.addItem(NSMenuItem.separator())
+            let checkItem = apiMenu.addItem(withTitle: "Check Subscription", action: #selector(checkSubscription(_:)), keyEquivalent: "")
+            checkItem.target = self
+            apiMenuItem.submenu = apiMenu
             debugMenu.submenu?.addItem(apiMenuItem)
             #else
             NSApplication.shared.mainMenu?.removeItem(debugMenu)
@@ -59,6 +63,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         self.newLinkedPageMenuDelegate.action = #selector(TextEditorViewController.createNewLinkedPage(_:))
         self.newLinkedPageMenuDelegate.includeKeyEquivalents = false
+
+        self.subscriptionManager.delegate = self
 
         UserDefaults.standard.set(true, forKey: "NSTextViewAvoidLayoutWhileDrawing")
     }
@@ -160,6 +166,27 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }()
     @IBAction func showTour(_ sender: Any?) {
         self.tourWindow.showWindow(sender)
+    }
+
+    #if DEBUG
+    @IBAction func checkSubscription(_ sender: Any?) {
+        self.subscriptionManager.checkSubscription()
+    }
+    #endif
+}
+
+
+extension AppDelegate: CoppiceSubscriptionManagerDelegate {
+    func showCoppicePro(with error: NSError, for subscriptionManager: CoppiceSubscriptionManager) {
+        self.preferencesWindow.showWindow(nil)
+        self.preferencesWindow.showCoppicePro()
+
+        let alert = NSAlert(error: error)
+        if let window = self.preferencesWindow.window {
+            alert.beginSheetModal(for: window)
+        } else {
+            alert.runModal()
+        }
     }
 }
 

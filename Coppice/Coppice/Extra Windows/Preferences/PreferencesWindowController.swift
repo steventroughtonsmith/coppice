@@ -59,6 +59,10 @@ class PreferencesWindowController: NSWindowController {
             window.title = generalItem.label
         }
     }
+
+    func showCoppicePro() {
+        self.tabController.selectedTabViewItemIndex = (self.tabController.tabViewItems.count - 1)
+    }
 }
 
 

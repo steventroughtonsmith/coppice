@@ -53,7 +53,7 @@ struct DeactivateAPI {
             }
             return .success(info)
         case .noDeviceFound:
-            return .failure(.noDeviceFound)
+            return .success(ActivationResponse.deactivated()) //If no device is found then we don't want to be activated anyway
         default:
             return .failure(.generic(nil))
         }
