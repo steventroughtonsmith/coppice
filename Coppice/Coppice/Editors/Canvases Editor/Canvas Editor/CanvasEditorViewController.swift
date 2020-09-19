@@ -543,11 +543,17 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
     }
 
     @IBAction func linkToPage(_ sender: Any?) {
-        //We need an empty implementation just so validation occurs
+        if (!HelpTipPresenter.shared.showTip(with: .textPageLink, fromToolbarItemWithIdentifier: .linkToPage)) {
+            HelpTipPresenter.shared.showTip(with: .textPageLink, fromView: self.view, preferredEdge: .maxX)
+        }
     }
 
     func validateToolbarItem(_ item: NSToolbarItem) -> Bool {
         if item.action == #selector(linkToPage(_:)) {
+            if self.selectedPages.count == 1 {
+                item.toolTip = nil;
+                return true
+            }
             item.toolTip = NSLocalizedString("Start editing a Page to create a link", comment: "Canvas Link to Page disabled tooltip")
             return false
         }
@@ -594,6 +600,10 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
             return true
         }
         if menuItem.action == #selector(linkToPage(_:)) {
+            if self.selectedPages.count == 1 {
+                menuItem.toolTip = nil;
+                return true
+            }
             menuItem.toolTip = NSLocalizedString("Start editing a Page to create a link", comment: "Canvas Link to Page disabled tooltip")
             return false
         }

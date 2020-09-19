@@ -165,6 +165,11 @@
 		99961800249D0CF300A1AE24 /* org.sparkle-project.InstallerConnection.xpc in Copy XPC */ = {isa = PBXBuildFile; fileRef = 999617FA249D0CB100A1AE24 /* org.sparkle-project.InstallerConnection.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		99961801249D0CF300A1AE24 /* org.sparkle-project.InstallerLauncher.xpc in Copy XPC */ = {isa = PBXBuildFile; fileRef = 999617FB249D0CB200A1AE24 /* org.sparkle-project.InstallerLauncher.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		99961802249D0CF300A1AE24 /* org.sparkle-project.InstallerStatus.xpc in Copy XPC */ = {isa = PBXBuildFile; fileRef = 999617FC249D0CB200A1AE24 /* org.sparkle-project.InstallerStatus.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		9998B4E525163FAB00E2D455 /* HelpTipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9998B4E325163FAB00E2D455 /* HelpTipViewController.swift */; };
+		9998B4E625163FAB00E2D455 /* HelpTipView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9998B4E425163FAB00E2D455 /* HelpTipView.xib */; };
+		9998B4E8251642D900E2D455 /* LinksHelp.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 9998B4E7251642D900E2D455 /* LinksHelp.mp4 */; };
+		9998B4EA251643D700E2D455 /* HelpTipPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9998B4E9251643D700E2D455 /* HelpTipPresenter.swift */; };
+		9998B4EC25164CA600E2D455 /* ButtonToolbarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9998B4EB25164CA600E2D455 /* ButtonToolbarItem.swift */; };
 		9999A23424F80CAB001F8161 /* libM3Subscriptions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9999A23324F80CAB001F8161 /* libM3Subscriptions.a */; };
 		9999A23624F93052001F8161 /* CoppiceSubscriptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9999A23524F93052001F8161 /* CoppiceSubscriptionManager.swift */; };
 		9999A23924F93796001F8161 /* CoppiceProViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9999A23724F93796001F8161 /* CoppiceProViewController.swift */; };
@@ -523,6 +528,11 @@
 		999617FB249D0CB200A1AE24 /* org.sparkle-project.InstallerLauncher.xpc */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.xpc-service"; path = "org.sparkle-project.InstallerLauncher.xpc"; sourceTree = "<group>"; };
 		999617FC249D0CB200A1AE24 /* org.sparkle-project.InstallerStatus.xpc */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.xpc-service"; path = "org.sparkle-project.InstallerStatus.xpc"; sourceTree = "<group>"; };
 		999617FD249D0CBA00A1AE24 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
+		9998B4E325163FAB00E2D455 /* HelpTipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpTipViewController.swift; sourceTree = "<group>"; };
+		9998B4E425163FAB00E2D455 /* HelpTipView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HelpTipView.xib; sourceTree = "<group>"; };
+		9998B4E7251642D900E2D455 /* LinksHelp.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = LinksHelp.mp4; sourceTree = "<group>"; };
+		9998B4E9251643D700E2D455 /* HelpTipPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpTipPresenter.swift; sourceTree = "<group>"; };
+		9998B4EB25164CA600E2D455 /* ButtonToolbarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonToolbarItem.swift; sourceTree = "<group>"; };
 		9999A23124F80C8D001F8161 /* libM3Subscriptions.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libM3Subscriptions.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9999A23324F80CAB001F8161 /* libM3Subscriptions.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libM3Subscriptions.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9999A23524F93052001F8161 /* CoppiceSubscriptionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoppiceSubscriptionManager.swift; sourceTree = "<group>"; };
@@ -1172,6 +1182,17 @@
 			path = "Sparkle XPC";
 			sourceTree = "<group>";
 		};
+		9998B4E225163F0300E2D455 /* Help */ = {
+			isa = PBXGroup;
+			children = (
+				9998B4E9251643D700E2D455 /* HelpTipPresenter.swift */,
+				9998B4E325163FAB00E2D455 /* HelpTipViewController.swift */,
+				9998B4E425163FAB00E2D455 /* HelpTipView.xib */,
+				9998B4E7251642D900E2D455 /* LinksHelp.mp4 */,
+			);
+			path = Help;
+			sourceTree = "<group>";
+		};
 		999EA68E2433929E00BF254E /* Build Scripts */ = {
 			isa = PBXGroup;
 			children = (
@@ -1540,6 +1561,7 @@
 				99045FC224D43EB600FD3D33 /* Extra Windows */,
 				99045FC424D43EF400FD3D33 /* Misc */,
 				99045FC324D43EC500FD3D33 /* Assets */,
+				9998B4E225163F0300E2D455 /* Help */,
 				99906377249BC5780008C747 /* ProFeatures.plist */,
 				99FE019922CD1038004D380D /* MainMenu.xib */,
 				99FE019C22CD1038004D380D /* Info.plist */,
@@ -1586,6 +1608,7 @@
 				993D2BF82412B053002E5BAC /* NestableSplitView.swift */,
 				993D2BFD2412FB1C002E5BAC /* SplitViewContainable.swift */,
 				99171EDB24AA48B200E96DE6 /* MainToolbarDelegate.swift */,
+				9998B4EB25164CA600E2D455 /* ButtonToolbarItem.swift */,
 			);
 			path = DocumentWindow;
 			sourceTree = "<group>";
@@ -1834,9 +1857,11 @@
 				9981E6D024C05811005AF0EE /* AboutWindow.xib in Resources */,
 				9970977623B93A5800CD189B /* Icons.xcassets in Resources */,
 				99488AF123C8D5B0009954AF /* Colours.xcassets in Resources */,
+				9998B4E8251642D900E2D455 /* LinksHelp.mp4 in Resources */,
 				99D8E379237EDB890098CF3B /* PageInspectorContentView.xib in Resources */,
 				99906375249BC5780008C747 /* ProFeatures.plist in Resources */,
 				9973737D2423BAD1000D5F21 /* RootSplitViewController.xib in Resources */,
+				9998B4E625163FAB00E2D455 /* HelpTipView.xib in Resources */,
 				996187F5249A523D007313BD /* GeneralPreferencesViewController.xib in Resources */,
 				99115DC6249E304D008942DF /* SystemProfileInfoViewController.xib in Resources */,
 			);
@@ -2008,6 +2033,7 @@
 				992710C424D1A29200C7C61A /* TourInterfaceView.swift in Sources */,
 				99A0B857238D6F74005FCF25 /* NSTextView+M3Extensions.swift in Sources */,
 				9999A23924F93796001F8161 /* CoppiceProViewController.swift in Sources */,
+				9998B4EA251643D700E2D455 /* HelpTipPresenter.swift in Sources */,
 				99B3474C2465846900B96B71 /* PixelPerfectTableView.swift in Sources */,
 				99D8E378237EDB890098CF3B /* PageInspectorViewController.swift in Sources */,
 				99F0CD76246AF1C4006DE18E /* PreviewGenerationDebugWindow.swift in Sources */,
@@ -2022,11 +2048,13 @@
 				99868F322396AD55009AC0F7 /* ImageEditorInspectorViewModel.swift in Sources */,
 				99488ACE23C78087009954AF /* EditableLabelCell.swift in Sources */,
 				999007EC24CF475900DB5C13 /* TourGetStartedViewController.swift in Sources */,
+				9998B4E525163FAB00E2D455 /* HelpTipViewController.swift in Sources */,
 				99146A2A24EEAB6200A2AE48 /* ImageEditorPlaceholderView.swift in Sources */,
 				998D0779241137A3004ADFF8 /* RectDrawingView.swift in Sources */,
 				99D8E39323800FB90098CF3B /* BaseInspectorViewModel.swift in Sources */,
 				99582817247702B300080593 /* ResizeHandleAccessibilityElement.swift in Sources */,
 				9958107F230D7EEB00D996C4 /* CanvasEditorViewModel.swift in Sources */,
+				9998B4EC25164CA600E2D455 /* ButtonToolbarItem.swift in Sources */,
 				99C88EE42409631800339880 /* PageImageController.swift in Sources */,
 				99C865262306D12B004C7B89 /* PageSelectorViewModel.swift in Sources */,
 				99A0B855238C2F46005FCF25 /* TextEditorAttributes.swift in Sources */,

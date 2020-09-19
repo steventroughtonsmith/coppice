@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17154" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.AVKitIBPlugin" version="17154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17154"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="HelpTipViewController" customModule="Coppice" customModuleProvider="target">
+            <connections>
+                <outlet property="bodyLabel" destination="c8F-m7-GaX" id="mnd-ZC-kig"/>
+                <outlet property="playerView" destination="vXw-cW-eJF" id="tzT-go-4lV"/>
+                <outlet property="titleLabel" destination="5UW-bM-g4R" id="gdD-5L-UR1"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="385" height="110"/>
+            <subviews>
+                <box boxType="custom" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="eSc-6s-Rmc">
+                    <rect key="frame" x="-1" y="-1" width="162" height="112"/>
+                    <view key="contentView" id="fs1-Fu-OTa">
+                        <rect key="frame" x="1" y="1" width="160" height="110"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <avPlayerView controlsStyle="none" translatesAutoresizingMaskIntoConstraints="NO" id="vXw-cW-eJF">
+                                <rect key="frame" x="5" y="5" width="150" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="9nY-8a-oW8"/>
+                                    <constraint firstAttribute="height" constant="100" id="iI9-El-7QA"/>
+                                </constraints>
+                            </avPlayerView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="vXw-cW-eJF" firstAttribute="top" secondItem="fs1-Fu-OTa" secondAttribute="top" constant="5" id="2Zz-RP-qQE"/>
+                            <constraint firstAttribute="bottom" secondItem="vXw-cW-eJF" secondAttribute="bottom" constant="5" id="iMh-63-XHX"/>
+                            <constraint firstAttribute="trailing" secondItem="vXw-cW-eJF" secondAttribute="trailing" constant="5" id="kyT-Ui-oW5"/>
+                            <constraint firstItem="vXw-cW-eJF" firstAttribute="leading" secondItem="fs1-Fu-OTa" secondAttribute="leading" constant="5" id="zM3-hU-HXy"/>
+                        </constraints>
+                    </view>
+                    <color key="borderColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="fillColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                </box>
+                <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vVb-UE-gz9">
+                    <rect key="frame" x="181" y="37" width="184" height="36"/>
+                    <subviews>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5UW-bM-g4R">
+                            <rect key="frame" x="-2" y="20" width="188" height="16"/>
+                            <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="fUz-7K-jqz">
+                                <font key="font" metaFont="systemMedium" size="13"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="c8F-m7-GaX">
+                            <rect key="frame" x="-2" y="0.0" width="188" height="16"/>
+                            <textFieldCell key="cell" selectable="YES" title="Multiline Label" id="U3s-JX-j5o">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="5UW-bM-g4R" secondAttribute="trailing" id="0dN-yl-ClD"/>
+                        <constraint firstAttribute="trailing" secondItem="c8F-m7-GaX" secondAttribute="trailing" id="Ghb-VO-V75"/>
+                    </constraints>
+                    <visibilityPriorities>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                    </visibilityPriorities>
+                    <customSpacing>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                    </customSpacing>
+                </stackView>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="vVb-UE-gz9" secondAttribute="trailing" constant="20" id="1W8-ff-NVg"/>
+                <constraint firstItem="eSc-6s-Rmc" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="-1" id="7Zr-Zo-pqy"/>
+                <constraint firstItem="vVb-UE-gz9" firstAttribute="leading" secondItem="eSc-6s-Rmc" secondAttribute="trailing" constant="20" id="MSl-4d-xhS"/>
+                <constraint firstItem="vVb-UE-gz9" firstAttribute="centerY" secondItem="Hz6-mo-xeY" secondAttribute="centerY" id="Pd8-d0-Rkc"/>
+                <constraint firstAttribute="bottom" secondItem="eSc-6s-Rmc" secondAttribute="bottom" constant="-1" id="anZ-P0-U3U"/>
+                <constraint firstItem="eSc-6s-Rmc" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="-1" id="bXv-2a-r7h"/>
+                <constraint firstItem="vVb-UE-gz9" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="10" id="kA4-rN-Q2Z"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="vVb-UE-gz9" secondAttribute="bottom" constant="10" id="pKM-m1-SJ7"/>
+            </constraints>
+            <point key="canvasLocation" x="28.5" y="154"/>
+        </customView>
+    </objects>
+</document>

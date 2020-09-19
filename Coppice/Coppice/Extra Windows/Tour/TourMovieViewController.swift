@@ -43,8 +43,6 @@ class TourMovieViewController: TourPanelViewController {
     @objc dynamic private func play() {
         self.previewImageView.isHidden = true
         self.playerView.player?.play()
-
-
     }
 
 

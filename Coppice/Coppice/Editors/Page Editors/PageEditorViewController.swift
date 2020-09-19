@@ -56,6 +56,12 @@ class PageEditorViewController: NSViewController {
     var isInCanvas: Bool {
         return (self.parentEditor is CanvasPageViewController)
     }
+
+    @IBAction func linkToPage(_ sender: Any?) {
+        if (!HelpTipPresenter.shared.showTip(with: .textPageLink, fromToolbarItemWithIdentifier: .linkToPage)) {
+            HelpTipPresenter.shared.showTip(with: .textPageLink, fromView: self.view, preferredEdge: .maxX)
+        }
+    }
 }
 
 
