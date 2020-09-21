@@ -11,6 +11,7 @@ import Sparkle
 import CoppiceCore
 import M3Subscriptions
 
+
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
