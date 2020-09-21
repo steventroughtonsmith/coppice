@@ -271,6 +271,7 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
         }
         self.view.appearance = appearance
         self.canvasView.theme = self.viewModel.theme
+        self.scrollView.backgroundColor = self.viewModel.theme.canvasBackgroundColor
     }
 
     private func updateCanvas() {
