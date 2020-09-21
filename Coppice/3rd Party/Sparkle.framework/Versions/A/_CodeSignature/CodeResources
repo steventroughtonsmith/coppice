@@ -6,7 +6,7 @@
 	<dict>
 		<key>Resources/Autoupdate</key>
 		<data>
-		QqMIyRXPGI/dWezUIajjbOD52/8=
+		rKubgcjmT3RKTVmXSxsb0cWp2i8=
 		</data>
 		<key>Resources/DarkAqua.css</key>
 		<data>
@@ -30,7 +30,7 @@
 		</data>
 		<key>Resources/Updater.app/Contents/MacOS/Updater</key>
 		<data>
-		3gBtUu9nZrnfdK+iRtFKWLELrQU=
+		wNlREfiyxBNoDxYGIo7k45eEFbE=
 		</data>
 		<key>Resources/Updater.app/Contents/PkgInfo</key>
 		<data>
@@ -1341,11 +1341,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			QqMIyRXPGI/dWezUIajjbOD52/8=
+			rKubgcjmT3RKTVmXSxsb0cWp2i8=
 			</data>
 			<key>hash2</key>
 			<data>
-			rOblq2U1Ca8px5vVbyaG+RMKb36+6yzVePRmMP6Igc0=
+			3zn/D9tPiE+ibRG0z0GPuzPWdC4e3PQJ44YFFnIpCyw=
 			</data>
 		</dict>
 		<key>Resources/DarkAqua.css</key>
@@ -1407,11 +1407,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			3gBtUu9nZrnfdK+iRtFKWLELrQU=
+			wNlREfiyxBNoDxYGIo7k45eEFbE=
 			</data>
 			<key>hash2</key>
 			<data>
-			U+8w/a1DnsmWakNQPSOhBaPOhWsT8NrX97o3yH1FSyw=
+			tL97VpSed8gnfae9r/LixwqZkukzmSzHlIUXXmACn74=
 			</data>
 		</dict>
 		<key>Resources/Updater.app/Contents/PkgInfo</key>
