@@ -72,10 +72,12 @@ class RootSplitViewController: NSSplitViewController, NSMenuItemValidation {
 
 
     //MARK: - Menu Actions
+    @IBAction override func toggleSidebar(_ sender: Any?) {
+        self.splitViewItem(for: self.sidebarViewController)?.isCollapsed.toggle()
+    }
+
     @IBAction func toggleInspectors(_ sender: Any?) {
-        NSView.animate(withDuration: 0.3) {
-            self.splitViewItem(for: self.inspectorContainerViewController)?.isCollapsed.toggle()
-        }
+        self.splitViewItem(for: self.inspectorContainerViewController)?.isCollapsed.toggle()
     }
 
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {

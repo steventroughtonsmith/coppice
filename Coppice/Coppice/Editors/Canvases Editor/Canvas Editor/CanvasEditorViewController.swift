@@ -248,7 +248,6 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
         guard self.view.superview != nil else {
             return
         }
-        print("layout")
         self.isLayingOut = true
         self.updateEditability()
         self.updateAppearance()
