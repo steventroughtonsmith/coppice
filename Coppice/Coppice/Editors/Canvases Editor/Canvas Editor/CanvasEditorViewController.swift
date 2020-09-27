@@ -141,6 +141,15 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
     private var performedInitialLayout = false
     override func viewDidLayout() {
         super.viewDidLayout()
+        guard self.performedInitialLayout else {
+            self.updateLayoutIfNeeded()
+            return
+        }
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(updateLayoutIfNeeded), object: nil)
+        self.perform(#selector(updateLayoutIfNeeded), with: nil, afterDelay: 0)
+    }
+
+    @objc private func updateLayoutIfNeeded() {
         self.notifyOfViewPortChangeIfNeeded()
         guard self.performedInitialLayout == false else {
             return
@@ -235,6 +244,11 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
     }
 
     @objc func layout() {
+        //Prevent laying out until we know our size
+        guard self.view.superview != nil else {
+            return
+        }
+        print("layout")
         self.isLayingOut = true
         self.updateEditability()
         self.updateAppearance()
