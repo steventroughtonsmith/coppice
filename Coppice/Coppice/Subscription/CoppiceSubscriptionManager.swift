@@ -133,7 +133,7 @@ class CoppiceSubscriptionManager: NSObject {
     private(set) var lastCheck: Date?
 
     func checkSubscriptionIfNeeded() {
-        var checkInterval: TimeInterval = 60
+        var checkInterval: TimeInterval = 86400
         //Increase the times we check if billing has failed to 4 times a day
         if
             let response = self.activationResponse,
@@ -200,7 +200,7 @@ class CoppiceSubscriptionManager: NSObject {
     }
 
     private func recheckInAnHour() {
-        self.recheckTimer = Timer.scheduledTimer(withTimeInterval: 10, repeats: false) { [weak self] _ in
+        self.recheckTimer = Timer.scheduledTimer(withTimeInterval: 3600, repeats: false) { [weak self] _ in
             self?.checkSubscriptionIfNeeded()
         }
     }

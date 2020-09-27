@@ -22,6 +22,7 @@
 
 /* Begin PBXBuildFile section */
 		9902F4A923882ADA00AF646F /* NSSegmentedControl+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9902F4A823882ADA00AF646F /* NSSegmentedControl+M3Extensions.swift */; };
+		99062DE02519117C009D3317 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99062DDF2519117C009D3317 /* AVKit.framework */; };
 		990D2441235DEFE2001B1FD9 /* PageArrowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990D2440235DEFE2001B1FD9 /* PageArrowView.swift */; };
 		99115DC5249E304D008942DF /* SystemProfileInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99115DC3249E304D008942DF /* SystemProfileInfoViewController.swift */; };
 		99115DC6249E304D008942DF /* SystemProfileInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99115DC4249E304D008942DF /* SystemProfileInfoViewController.xib */; };
@@ -386,6 +387,7 @@
 
 /* Begin PBXFileReference section */
 		9902F4A823882ADA00AF646F /* NSSegmentedControl+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSSegmentedControl+M3Extensions.swift"; sourceTree = "<group>"; };
+		99062DDF2519117C009D3317 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		990D2440235DEFE2001B1FD9 /* PageArrowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageArrowView.swift; sourceTree = "<group>"; };
 		99115DC3249E304D008942DF /* SystemProfileInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemProfileInfoViewController.swift; sourceTree = "<group>"; };
 		99115DC4249E304D008942DF /* SystemProfileInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SystemProfileInfoViewController.xib; sourceTree = "<group>"; };
@@ -698,6 +700,7 @@
 			files = (
 				9999A23424F80CAB001F8161 /* libM3Subscriptions.a in Frameworks */,
 				999617FE249D0CBA00A1AE24 /* Sparkle.framework in Frameworks */,
+				99062DE02519117C009D3317 /* AVKit.framework in Frameworks */,
 				99D0C87E24C5EDB4002EEBFA /* CoppiceCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1383,6 +1386,7 @@
 		99D0C70E24C5CED0002EEBFA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				99062DDF2519117C009D3317 /* AVKit.framework */,
 				9999A23324F80CAB001F8161 /* libM3Subscriptions.a */,
 				9999A23124F80C8D001F8161 /* libM3Subscriptions.a */,
 				99D0C87D24C5EDB4002EEBFA /* CoppiceCore.framework */,
