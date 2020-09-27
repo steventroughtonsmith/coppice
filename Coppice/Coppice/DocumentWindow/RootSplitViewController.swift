@@ -25,6 +25,13 @@ class RootSplitViewController: NSSplitViewController {
         self.editorContainerViewController = editorContainerViewController
         self.inspectorContainerViewController = inspectorContainerViewController
         super.init(nibName: "RootSplitViewController", bundle: nil)
+
+        //We'll add the split items before the view loads ensure they get restored correctly
+        self.splitViewItems = [
+            self.sidebarViewController.createSplitViewItem(),
+            self.editorContainerViewController.createSplitViewItem(),
+            self.inspectorContainerViewController.createSplitViewItem(),
+        ]
     }
 
     required init?(coder: NSCoder) {
@@ -35,11 +42,7 @@ class RootSplitViewController: NSSplitViewController {
     //MARK: - SplitView Items
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.splitViewItems = [
-            self.sidebarViewController.createSplitViewItem(),
-            self.editorContainerViewController.createSplitViewItem(),
-            self.inspectorContainerViewController.createSplitViewItem(),
-        ]
+
 
         NotificationCenter.default.addObserver(self, selector: #selector(willStartDrag(_:)), name: .nestableSplitViewWillStartDrag, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didEndDrag(_:)), name: .nestableSplitViewDidEndDrag, object: nil)
