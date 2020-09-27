@@ -8,8 +8,7 @@
 
 import AppKit
 
-
-class RootSplitViewController: NSSplitViewController {
+class RootSplitViewController: NSSplitViewController, NSMenuItemValidation {
     let sidebarViewController: SidebarViewController
     let editorContainerViewController: EditorContainerViewController
     let inspectorContainerViewController: InspectorContainerViewController
@@ -77,5 +76,19 @@ class RootSplitViewController: NSSplitViewController {
         NSView.animate(withDuration: 0.3) {
             self.splitViewItem(for: self.inspectorContainerViewController)?.isCollapsed.toggle()
         }
+    }
+
+    func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+        if (menuItem.action == #selector(toggleInspectors(_:))) {
+            let containerItemIsCollapsed = self.splitViewItem(for: self.inspectorContainerViewController)?.isCollapsed ?? false
+            menuItem.title = containerItemIsCollapsed ? NSLocalizedString("Show Inspector", comment: "Show inspector menu item")
+                                                      : NSLocalizedString("Hide Inspector", comment: "Hide inspector menu item")
+        }
+        if (menuItem.action == #selector(toggleSidebar(_:))) {
+            let containerItemIsCollapsed = self.splitViewItem(for: self.sidebarViewController)?.isCollapsed ?? false
+            menuItem.title = containerItemIsCollapsed ? NSLocalizedString("Show Sidebar", comment: "Show sidebar menu item")
+                                                      : NSLocalizedString("Hide Sidebar", comment: "Hide sidebar menu item")
+        }
+        return true
     }
 }
