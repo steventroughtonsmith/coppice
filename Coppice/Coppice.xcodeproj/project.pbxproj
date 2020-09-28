@@ -24,6 +24,9 @@
 		9902F4A923882ADA00AF646F /* NSSegmentedControl+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9902F4A823882ADA00AF646F /* NSSegmentedControl+M3Extensions.swift */; };
 		99062DE02519117C009D3317 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99062DDF2519117C009D3317 /* AVKit.framework */; };
 		990D2441235DEFE2001B1FD9 /* PageArrowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990D2440235DEFE2001B1FD9 /* PageArrowView.swift */; };
+		990F61A425222A3E00FA5A27 /* MultipleSubscriptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F61A225222A3E00FA5A27 /* MultipleSubscriptionsViewController.swift */; };
+		990F61A525222A3E00FA5A27 /* MultipleSubscriptionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 990F61A325222A3E00FA5A27 /* MultipleSubscriptionsView.xib */; };
+		990F61A725222C2D00FA5A27 /* Subscriptions+LocalizedStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F61A625222C2D00FA5A27 /* Subscriptions+LocalizedStrings.swift */; };
 		99115DC5249E304D008942DF /* SystemProfileInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99115DC3249E304D008942DF /* SystemProfileInfoViewController.swift */; };
 		99115DC6249E304D008942DF /* SystemProfileInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99115DC4249E304D008942DF /* SystemProfileInfoViewController.xib */; };
 		99146A2A24EEAB6200A2AE48 /* ImageEditorPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99146A2924EEAB6200A2AE48 /* ImageEditorPlaceholderView.swift */; };
@@ -254,6 +257,11 @@
 		99D0C8EA24C7022D002EEBFA /* CanvasImageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C8E924C7022D002EEBFA /* CanvasImageGenerator.swift */; };
 		99D0C8ED24C71EBB002EEBFA /* Colours.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99FE019722CD1038004D380D /* Colours.xcassets */; };
 		99D170E6233D0542004EBD70 /* CanvasEditorViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D170E5233D0542004EBD70 /* CanvasEditorViewModelTests.swift */; };
+		99D329AA252237A000E15683 /* SubscriptionTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D329A9252237A000E15683 /* SubscriptionTableCellView.swift */; };
+		99D329B1252241EB00E15683 /* NSTableView+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D329B0252241EB00E15683 /* NSTableView+M3Extensions.swift */; };
+		99D329BA25224B1800E15683 /* TooManyDevicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D329B825224B1800E15683 /* TooManyDevicesViewController.swift */; };
+		99D329BB25224B1800E15683 /* TooManyDevicesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99D329B925224B1800E15683 /* TooManyDevicesView.xib */; };
+		99D329C225224C0F00E15683 /* DeviceTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D329C125224C0F00E15683 /* DeviceTableCellView.swift */; };
 		99D4D59822F8650300F69C1F /* SourceListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D4D59722F8650300F69C1F /* SourceListViewModelTests.swift */; };
 		99D507342501538E00670139 /* ErrorPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D507322501538E00670139 /* ErrorPopoverViewController.swift */; };
 		99D507352501538E00670139 /* ErrorPopoverViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99D507332501538E00670139 /* ErrorPopoverViewController.xib */; };
@@ -389,6 +397,9 @@
 		9902F4A823882ADA00AF646F /* NSSegmentedControl+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSSegmentedControl+M3Extensions.swift"; sourceTree = "<group>"; };
 		99062DDF2519117C009D3317 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		990D2440235DEFE2001B1FD9 /* PageArrowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageArrowView.swift; sourceTree = "<group>"; };
+		990F61A225222A3E00FA5A27 /* MultipleSubscriptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleSubscriptionsViewController.swift; sourceTree = "<group>"; };
+		990F61A325222A3E00FA5A27 /* MultipleSubscriptionsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MultipleSubscriptionsView.xib; sourceTree = "<group>"; };
+		990F61A625222C2D00FA5A27 /* Subscriptions+LocalizedStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Subscriptions+LocalizedStrings.swift"; sourceTree = "<group>"; };
 		99115DC3249E304D008942DF /* SystemProfileInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemProfileInfoViewController.swift; sourceTree = "<group>"; };
 		99115DC4249E304D008942DF /* SystemProfileInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SystemProfileInfoViewController.xib; sourceTree = "<group>"; };
 		99146A2924EEAB6200A2AE48 /* ImageEditorPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorPlaceholderView.swift; sourceTree = "<group>"; };
@@ -625,6 +636,11 @@
 		99D0C88924C5F33D002EEBFA /* test-zip.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "test-zip.zip"; sourceTree = "<group>"; };
 		99D0C8E924C7022D002EEBFA /* CanvasImageGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasImageGenerator.swift; sourceTree = "<group>"; };
 		99D170E5233D0542004EBD70 /* CanvasEditorViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasEditorViewModelTests.swift; sourceTree = "<group>"; };
+		99D329A9252237A000E15683 /* SubscriptionTableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionTableCellView.swift; sourceTree = "<group>"; };
+		99D329B0252241EB00E15683 /* NSTableView+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTableView+M3Extensions.swift"; sourceTree = "<group>"; };
+		99D329B825224B1800E15683 /* TooManyDevicesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TooManyDevicesViewController.swift; sourceTree = "<group>"; };
+		99D329B925224B1800E15683 /* TooManyDevicesView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TooManyDevicesView.xib; sourceTree = "<group>"; };
+		99D329C125224C0F00E15683 /* DeviceTableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTableCellView.swift; sourceTree = "<group>"; };
 		99D4D59722F8650300F69C1F /* SourceListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceListViewModelTests.swift; sourceTree = "<group>"; };
 		99D507322501538E00670139 /* ErrorPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorPopoverViewController.swift; sourceTree = "<group>"; };
 		99D507332501538E00670139 /* ErrorPopoverViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ErrorPopoverViewController.xib; sourceTree = "<group>"; };
@@ -776,6 +792,16 @@
 			path = Document;
 			sourceTree = "<group>";
 		};
+		990F61A82522327000FA5A27 /* Multiple Subscriptions */ = {
+			isa = PBXGroup;
+			children = (
+				990F61A225222A3E00FA5A27 /* MultipleSubscriptionsViewController.swift */,
+				990F61A325222A3E00FA5A27 /* MultipleSubscriptionsView.xib */,
+				99D329A9252237A000E15683 /* SubscriptionTableCellView.swift */,
+			);
+			path = "Multiple Subscriptions";
+			sourceTree = "<group>";
+		};
 		992A5C9022DCB2EE0012CCB6 /* Source List */ = {
 			isa = PBXGroup;
 			children = (
@@ -808,6 +834,7 @@
 				998D077C2411578B004ADFF8 /* NSMenu+M3Extensions.swift */,
 				99B3474B2465846900B96B71 /* PixelPerfectTableView.swift */,
 				998CF0FB24ACF6A800EA26A6 /* NSBezierPath+M3Extensions.swift */,
+				99D329B0252241EB00E15683 /* NSTableView+M3Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -984,6 +1011,9 @@
 				996187FF249BC0D7007313BD /* ProFeatureCell.swift */,
 				99618801249BC0EF007313BD /* ProFeatureCell.xib */,
 				9999A23524F93052001F8161 /* CoppiceSubscriptionManager.swift */,
+				990F61A625222C2D00FA5A27 /* Subscriptions+LocalizedStrings.swift */,
+				99D329B725224B0200E15683 /* Too Many Devices */,
+				990F61A82522327000FA5A27 /* Multiple Subscriptions */,
 				99D50738250254BF00670139 /* ProUpsellViewController.swift */,
 				99D50739250254BF00670139 /* ProUpsellViewController.xib */,
 				99D5073C2502854600670139 /* ProButtonCell.swift */,
@@ -1418,6 +1448,16 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		99D329B725224B0200E15683 /* Too Many Devices */ = {
+			isa = PBXGroup;
+			children = (
+				99D329B825224B1800E15683 /* TooManyDevicesViewController.swift */,
+				99D329B925224B1800E15683 /* TooManyDevicesView.xib */,
+				99D329C125224C0F00E15683 /* DeviceTableCellView.swift */,
+			);
+			path = "Too Many Devices";
+			sourceTree = "<group>";
+		};
 		99D4D59622F864E200F69C1F /* Source List */ = {
 			isa = PBXGroup;
 			children = (
@@ -1813,6 +1853,7 @@
 				9999A24224F950E7001F8161 /* DeactivatedSubscriptionViewController.xib in Resources */,
 				99D507352501538E00670139 /* ErrorPopoverViewController.xib in Resources */,
 				996187F9249A6E72007313BD /* UpdatePreferencesViewController.xib in Resources */,
+				99D329BB25224B1800E15683 /* TooManyDevicesView.xib in Resources */,
 				999007F324D06C7000DB5C13 /* TourBranches.mp4 in Resources */,
 				999007D524CF458900DB5C13 /* TourWindow.xib in Resources */,
 				99171EDE24AB4FCC00E96DE6 /* Symbols.xcassets in Resources */,
@@ -1868,6 +1909,7 @@
 				9998B4E625163FAB00E2D455 /* HelpTipView.xib in Resources */,
 				996187F5249A523D007313BD /* GeneralPreferencesViewController.xib in Resources */,
 				99115DC6249E304D008942DF /* SystemProfileInfoViewController.xib in Resources */,
+				990F61A525222A3E00FA5A27 /* MultipleSubscriptionsView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1943,6 +1985,7 @@
 				99581082230D7EFB00D996C4 /* CanvasEditorViewController.swift in Sources */,
 				998D077D2411578B004ADFF8 /* NSMenu+M3Extensions.swift in Sources */,
 				99581092230D92C600D996C4 /* CanvasPageViewController.swift in Sources */,
+				990F61A725222C2D00FA5A27 /* Subscriptions+LocalizedStrings.swift in Sources */,
 				9965FC4623844910002FE10D /* TextEditorInspectorViewController.swift in Sources */,
 				999453F024ED698D0043C542 /* SimpleLabelPopoverViewController.swift in Sources */,
 				9977119C239E91FD00FCC8C7 /* ViewModel.swift in Sources */,
@@ -1950,6 +1993,7 @@
 				9981E6D624C08F12005AF0EE /* WelcomeWindowController.swift in Sources */,
 				99D5073A250254BF00670139 /* ProUpsellViewController.swift in Sources */,
 				99DEF28A22F32D350020A7CE /* DebugCanvasViewModelTypes.swift in Sources */,
+				99D329AA252237A000E15683 /* SubscriptionTableCellView.swift in Sources */,
 				99868F352396AD73009AC0F7 /* ImageEditorInspectorViewController.swift in Sources */,
 				996010F724F14FFA008B8F98 /* SpringLoadedTableRowView.swift in Sources */,
 				9981E6D924C0AE1F005AF0EE /* RecentDocumentTableCellView.swift in Sources */,
@@ -2006,6 +2050,8 @@
 				9999A24124F950E7001F8161 /* DeactivatedSubscriptionViewController.swift in Sources */,
 				992A5CAE22DDF50F0012CCB6 /* DebugPageEditor.swift in Sources */,
 				99D8E37D237EDB890098CF3B /* CanvasInspectorViewController.swift in Sources */,
+				99D329BA25224B1800E15683 /* TooManyDevicesViewController.swift in Sources */,
+				99D329B1252241EB00E15683 /* NSTableView+M3Extensions.swift in Sources */,
 				99C03F0D2334D04200EB7516 /* NSScrollView+M3Extensions.swift in Sources */,
 				999007D424CF458900DB5C13 /* TourWindowController.swift in Sources */,
 				9970976B23ACFD2900CD189B /* RootSplitViewController.swift in Sources */,
@@ -2017,6 +2063,7 @@
 				997344D62432236300DF4EDB /* PageLinkController.swift in Sources */,
 				99FDF129241FD52800AF1E51 /* CanvasesViewModel.swift in Sources */,
 				9973737A2423AD6C000D5F21 /* NoEditorViewController.swift in Sources */,
+				990F61A425222A3E00FA5A27 /* MultipleSubscriptionsViewController.swift in Sources */,
 				99DEF28822F1D72D0020A7CE /* SourceListViewModelTypes.swift in Sources */,
 				993600E224AE2A81002C86E4 /* ModelObjects+AppKit.swift in Sources */,
 				99488A9F23BA3954009954AF /* LargeCanvasCell.swift in Sources */,
@@ -2029,6 +2076,7 @@
 				99FCD7F324A7819400B44593 /* SparkleDelegate.swift in Sources */,
 				996187F4249A523D007313BD /* GeneralPreferencesViewController.swift in Sources */,
 				998F178B23E46B4900B3437A /* ColourGridImageGenerator.swift in Sources */,
+				99D329C225224C0F00E15683 /* DeviceTableCellView.swift in Sources */,
 				999453EB24ED5BF10043C542 /* SystemProfileInfoTableCell.swift in Sources */,
 				9999A23624F93052001F8161 /* CoppiceSubscriptionManager.swift in Sources */,
 				99C865232302E267004C7B89 /* ImageEditorViewModel.swift in Sources */,

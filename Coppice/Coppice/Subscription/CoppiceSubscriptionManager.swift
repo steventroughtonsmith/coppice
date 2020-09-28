@@ -43,19 +43,42 @@ class CoppiceSubscriptionManager: NSObject {
     //MARK: - User Initiated actions
     typealias ErrorHandler = (NSError) -> Bool
     func activate(withEmail email: String, password: String, on window: NSWindow, errorHandler: @escaping ErrorHandler) {
+        self.activate(with: ActivationContext(email: email, password: password), on: window, errorHandler: errorHandler)
+    }
+
+    private func activate(with activationContext: ActivationContext, on window: NSWindow, errorHandler: @escaping ErrorHandler) {
         guard let controller = self.subscriptionController else {
             return
         }
-        controller.activate(withEmail: email, password: password) { (result) in
+        controller.activate(withEmail: activationContext.email, password: activationContext.password, subscription: activationContext.subscription, deactivatingDevice: activationContext.deviceToDeactivate) { (result) in
             switch result {
             case .success(let response):
                 self.activationResponse = response
                 self.currentCheckError = nil
             case .failure(let error):
-                self.handle(error, on: window, with: errorHandler)
+                guard error.domain == SubscriptionErrorFactory.domain else {
+                    self.handle(error, on: window, with: errorHandler)
+                    return
+                }
+                if (error.code == SubscriptionErrorCodes.multipleSubscriptionsFound.rawValue) {
+                    self.showMultipleSubscriptionsSheet(with: activationContext, for: error, on: window, errorHandler: errorHandler)
+                }
+                else if (error.code == SubscriptionErrorCodes.tooManyDevices.rawValue) {
+                    self.showTooManyDevicesSubscriptionSheet(with: activationContext, for: error, on: window, errorHandler: errorHandler)
+                }
+                else {
+                    self.handle(error, on: window, with: errorHandler)
+                }
             }
             self.completeCheck()
         }
+    }
+
+    struct ActivationContext {
+        var email: String
+        var password: String
+        var subscription: M3Subscriptions.Subscription? = nil
+        var deviceToDeactivate: M3Subscriptions.SubscriptionDevice? = nil
     }
 
     func deactivate(on window: NSWindow, errorHandler: @escaping ErrorHandler) {
@@ -93,31 +116,39 @@ class CoppiceSubscriptionManager: NSObject {
 
     //MARK: - Error Handling
     private func handle(_ error: NSError, on window: NSWindow, with errorHandler: ErrorHandler) {
-        guard let errorCode = SubscriptionErrorCodes(rawValue: error.code) else {
-            if errorHandler(error) == false {
-                self.show(basicError: error, on: window)
-            }
+        if errorHandler(error) == false {
+            self.show(basicError: error, on: window)
+        }
+    }
+
+    private func showMultipleSubscriptionsSheet(with activationContext: ActivationContext, for error: NSError, on window: NSWindow, errorHandler: @escaping ErrorHandler) {
+        guard let subscriptions = error.userInfo[SubscriptionErrorFactory.InfoKeys.subscriptionPlans] as? [M3Subscriptions.Subscription] else {
             return
         }
-
-        switch errorCode {
-        case .multipleSubscriptionsFound:
-            self.showMultipleSubscriptionsSheet(for: error, on: window)
-        case .tooManyDevices:
-            self.showTooManyDevicesSubscriptionSheet(for: error, on: window)
-        default:
-            if errorHandler(error) == false {
-                self.show(basicError: error, on: window)
+        let sheet = MultipleSubscriptionsViewController(subscriptions: subscriptions) { subscription in
+            guard let subscription = subscription else {
+                return
             }
+            var context = activationContext
+            context.subscription = subscription
+            self.activate(with: context, on: window, errorHandler: errorHandler)
         }
+        window.contentViewController?.presentAsSheet(sheet)
     }
 
-    private func showMultipleSubscriptionsSheet(for error: NSError, on window: NSWindow) {
-        print("multiple subscriptions: \(error)")
-    }
-
-    private func showTooManyDevicesSubscriptionSheet(for error: NSError, on window: NSWindow) {
-        print("too many devices: \(error)")
+    private func showTooManyDevicesSubscriptionSheet(with activationContext: ActivationContext, for error: NSError, on window: NSWindow, errorHandler: @escaping ErrorHandler) {
+        guard let devices = error.userInfo[SubscriptionErrorFactory.InfoKeys.devices] as? [M3Subscriptions.SubscriptionDevice] else {
+            return
+        }
+        let sheet = TooManyDevicesViewController(devices: devices) { device in
+            guard let device = device else {
+                return
+            }
+            var context = activationContext
+            context.deviceToDeactivate = device
+            self.activate(with: context, on: window, errorHandler: errorHandler)
+        }
+        window.contentViewController?.presentAsSheet(sheet)
     }
 
     private func show(basicError error: NSError, on window: NSWindow) {

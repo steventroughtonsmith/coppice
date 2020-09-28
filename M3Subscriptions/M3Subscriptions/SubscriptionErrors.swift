@@ -24,7 +24,7 @@ public enum SubscriptionErrorCodes: Int {
 
 
 public class SubscriptionErrorFactory {
-    static let domain = "com.mcubedsw.Subscriptions"
+    public static let domain = "com.mcubedsw.Subscriptions"
 
     public struct InfoKeys {
         public static let subscription = "M3SubscriptionErrorSubscriptionKey"

@@ -46,8 +46,8 @@ class ActivatedSubscriptionViewController: NSViewController {
         }
 
         self.subscriptionNameLabel.stringValue = response.subscription?.name ?? NSLocalizedString("No Subscription Found", comment: "'No subscription' subscription name")
-        self.subscriptionStateLabel.stringValue = self.localizedState(for: response.subscription)
-        self.subscriptionInfoLabel.stringValue = self.localizedInfo(for: response.subscription)
+        self.subscriptionStateLabel.stringValue = response.subscription?.localizedState ?? NSLocalizedString("Deactivated", comment: "Deactivated subscription state")
+        self.subscriptionInfoLabel.stringValue = response.subscription?.localizedInfo ?? ""
 
         self.subscriptionDeviceLabel.stringValue = response.deviceName ?? "Unknown"
 
@@ -55,45 +55,7 @@ class ActivatedSubscriptionViewController: NSViewController {
         self.updateEditDeviceButton()
     }
 
-    private func localizedState(for subscription: M3Subscriptions.Subscription?) -> String {
-        guard let subscription = subscription else {
-            return NSLocalizedString("Deactivated", comment: "Deactivated subscription state")
-        }
-        if subscription.hasExpired {
-            return NSLocalizedString("Expired", comment: "Expired subscription state")
-        }
-        if subscription.renewalStatus == .failed {
-            return NSLocalizedString("Billing Failed", comment: "Billing Failed subscription state")
-        }
 
-        return NSLocalizedString("Active", comment: "Active subscription state")
-    }
-
-    private func localizedInfo(for subscription: M3Subscriptions.Subscription?) -> String {
-        guard let subscription = subscription else {
-            return ""
-        }
-
-        let format: String
-        if subscription.hasExpired {
-            format = NSLocalizedString("(expired on %@)", comment: "'expired on <date>' expired subscription info label")
-        } else {
-            switch subscription.renewalStatus {
-            case .renew:
-                format = NSLocalizedString("(will renew on %@)", comment: "'will renew on <date>' active subscription info label")
-            case .cancelled, .failed:
-                format = NSLocalizedString("(will expire on %@)", comment: "'will expire on <date>' active subscription that will expire (due to billing failure or the user cancelling) info label")
-            default:
-                return ""
-            }
-        }
-
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .long
-        dateFormatter.timeStyle = .none
-
-        return String(format: format, dateFormatter.string(from: subscription.expirationDate))
-    }
 
     //MARK: - Billing Failed
     private enum BillingFailedAlert: Int {
