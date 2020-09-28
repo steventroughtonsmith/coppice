@@ -24,6 +24,14 @@ class NestableSplitView: NSSplitView {
         NotificationCenter.default.post(name: .nestableSplitViewDidEndDrag, object: self)
         self.nestableDelegate?.didFinishDrag(in: self)
     }
+    
+    override func responds(to aSelector: Selector!) -> Bool {
+        //Big Sur for some reason adds support for toggling sidebars to NSSplitView which we don't want
+        if aSelector == #selector(NSSplitViewController.toggleSidebar(_:)) {
+            return false
+        }
+        return super.responds(to: aSelector)
+    }
 }
 
 extension Notification.Name {
