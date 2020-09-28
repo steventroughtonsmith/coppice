@@ -25,3 +25,25 @@ extension NSColor {
     static let illustrationSelectedBackground = NSColor(named: "IllustrationSelectedBackground") ?? .gray
     static let illustrationSelectedBorder = NSColor(named: "IllustrationSelectedBorder") ?? .black
 }
+
+
+
+enum SidebarSize: String, CaseIterable {
+    case system
+    case small
+    case medium
+    case large
+
+    var localizedName: String {
+        switch self {
+        case .system:
+            return NSLocalizedString("System Default", comment: "System Default sidebar size name")
+        case .small:
+            return NSLocalizedString("Small", comment: "Small sidebar size name")
+        case .medium:
+            return NSLocalizedString("Medium", comment: "Medium sidebar size name")
+        case .large:
+            return NSLocalizedString("Large", comment: "Large sidebar size name")
+        }
+    }
+}

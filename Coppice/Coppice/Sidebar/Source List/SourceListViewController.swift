@@ -17,10 +17,18 @@ class SourceListViewController: NSViewController, NSMenuItemValidation {
         self.viewModel = viewModel
         super.init(nibName: "SourceListView", bundle: nil)
         self.viewModel.view = self
+
+        UserDefaults.standard.addObserver(self, forKeyPath: "NSTableViewDefaultSizeMode", options: [], context: nil)
+        UserDefaults.standard.addObserver(self, forKeyPath: "M3SidebarSize", options: [], context: nil)
     }
 
     required init?(coder: NSCoder) {
         preconditionFailure("init(coder:) has not been implemented")
+    }
+
+    deinit {
+        UserDefaults.standard.removeObserver(self, forKeyPath: "NSTableViewDefaultSizeMode")
+        UserDefaults.standard.removeObserver(self, forKeyPath: "M3SidebarSize")
     }
 
     @IBOutlet weak var outlineView: NSOutlineView!
@@ -408,6 +416,24 @@ class SourceListViewController: NSViewController, NSMenuItemValidation {
         self.view.setAccessibilityLabel(NSLocalizedString("Sidebar", comment: "Sidebar accessibility label"))
         self.view.setAccessibilityChildren([scrollView, addButton, actionButton])
     }
+
+
+   
+
+    //MARK: - Row Size
+    var activeSidebarSize: ActiveSidebarSize {
+        guard
+            let sidebarSizeString = UserDefaults.standard.string(forKey: .sidebarSize),
+            let sidebarSize = SidebarSize(rawValue: sidebarSizeString)
+        else {
+            return .medium
+        }
+        return ActiveSidebarSize(sidebarSize: sidebarSize)
+    }
+
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        self.outlineView.reloadData()
+    }
 }
 
 
@@ -573,7 +599,9 @@ extension SourceListViewController: NSOutlineViewDelegate {
         case .navCell:
             view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("BigCell"), owner: self) as? NSTableCellView
         case .smallCell:
-            view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("SmallCell"), owner: self) as? NSTableCellView
+            let cell = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("SmallCell"), owner: self) as? SourceListTableCellView
+            cell?.activeSidebarSize = self.activeSidebarSize
+            view = cell
         case .groupCell:
             view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("GroupCell"), owner: self) as? NSTableCellView
         }
@@ -598,18 +626,14 @@ extension SourceListViewController: NSOutlineViewDelegate {
     }
 
     func outlineView(_ outlineView: NSOutlineView, heightOfRowByItem item: Any) -> CGFloat {
-        var baseSize: CGFloat = 22
-        if #available(OSX 10.16, *) {
-            baseSize = 24
-        }
         guard let sourceListItem = item as? SourceListNode else {
-            return baseSize
+            return self.activeSidebarSize.smallRowHeight
         }
         switch sourceListItem.cellType {
         case .navCell:
-            return 34
+            return self.activeSidebarSize.largeRowHeight
         case .smallCell, .groupCell:
-            return baseSize
+            return self.activeSidebarSize.smallRowHeight
         }
     }
 

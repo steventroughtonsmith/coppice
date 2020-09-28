@@ -33,7 +33,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             .defaultFontSize: Page.fallbackFontSize,
             .defaultCanvasTheme: Canvas.Theme.auto.rawValue,
             .autoLinkingTextPagesEnabled: true,
-            .showWelcomeScreenOnLaunch: true
+            .showWelcomeScreenOnLaunch: true,
+            .sidebarSize: SidebarSize.system.rawValue
         ])
     }
 

@@ -40,7 +40,7 @@ class GeneralPreferencesViewController: PreferencesViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do view setup here.
+        self.setupSidebarSize()
     }
 
     @objc dynamic var fontString: String {
@@ -105,6 +105,28 @@ class GeneralPreferencesViewController: PreferencesViewController {
             return
         }
         self.subscriptionManager.showProPopover(from: control, preferredEdge: .maxX)
+    }
+
+    //MARK: - Sidebar Size
+    @IBOutlet var sidebarSizePopup: NSPopUpButton!
+    private func setupSidebarSize() {
+        self.sidebarSizePopup.removeAllItems()
+
+        SidebarSize.allCases.forEach { (size) in
+            self.sidebarSizePopup.addItem(withTitle: size.localizedName)
+            self.sidebarSizePopup.lastItem?.representedObject = size.rawValue
+        }
+
+        self.sidebarSizePopup.selectItem(at: self.sidebarSizePopup.indexOfItem(withRepresentedObject: self.selectedSidebarSize))
+    }
+
+    @objc dynamic var selectedSidebarSize: String {
+        get {
+            UserDefaults.standard.string(forKey: .sidebarSize) ?? SidebarSize.system.rawValue
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: .sidebarSize)
+        }
     }
 }
 

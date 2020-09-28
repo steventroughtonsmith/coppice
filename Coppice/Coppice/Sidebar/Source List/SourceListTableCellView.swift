@@ -9,6 +9,12 @@
 import AppKit
 
 class SourceListTableCellView: EditableLabelCell {
+    var activeSidebarSize: ActiveSidebarSize = .medium {
+        didSet {
+            self.textField?.font = NSFont.controlContentFont(ofSize: self.activeSidebarSize.smallRowFontSize)
+        }
+    }
+    
     override var draggingImageComponents: [NSDraggingImageComponent] {
         let components = super.draggingImageComponents
         guard

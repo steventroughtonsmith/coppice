@@ -24,6 +24,8 @@ public enum UserDefaultsKeys: String {
     case autoLinkingTextPagesEnabled = "M3AutoLinkingTextPagesEnabled"
 
     case showWelcomeScreenOnLaunch = "M3ShowWelcomeScreenOnLaunch"
+
+    case sidebarSize = "M3SidebarSize"
 }
 
 public extension UserDefaults {
