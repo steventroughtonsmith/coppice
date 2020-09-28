@@ -18,17 +18,23 @@ class IconPopUpButtonCell: NSPopUpButtonCell {
             return super.imageRect(forBounds: rect)
         }
 
-        let imageSize = image.size
+        if #available(macOS 11, *) {
+            var rect = super.imageRect(forBounds: rect)
+            rect.origin.y -= 1
+            return rect
+        } else {
+            let imageSize = image.size
+            //Set the initial bounds we can draw in
+            var imageRect = controlView.alignmentRect(forFrame: rect)
+            imageRect.size.width -= 10;
 
-        //Set the initial bounds we can draw in
-        var imageRect = controlView.alignmentRect(forFrame: rect)
-        imageRect.size.width -= 10;
-
-        //Centre in view
-        imageRect.origin.x = (imageRect.size.width - imageSize.width) - 4
-        imageRect.origin.y = (imageRect.size.height - imageSize.height) / 2
-        imageRect.size = imageSize
-        return imageRect.rounded()
+            //Centre in view
+            imageRect.origin.x = (imageRect.size.width - imageSize.width) - 4
+            imageRect.origin.y = (imageRect.size.height - imageSize.height) / 2
+            imageRect.size = imageSize
+            return imageRect.rounded()
+        }
+        
     }
 
 }
