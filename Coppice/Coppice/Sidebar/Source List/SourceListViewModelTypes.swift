@@ -106,6 +106,13 @@ class SourceListNode: NSObject {
     static func == (lhs: SourceListNode, rhs: SourceListNode) -> Bool {
         return lhs.item == rhs.item
     }
+
+    var activeSidebarSize: ActiveSidebarSize = .medium {
+        didSet {
+            self.willChangeValue(for: \.image)
+            self.didChangeValue(for: \.image)
+        }
+    }
 }
 
 
@@ -120,7 +127,7 @@ class CanvasesSourceListNode: SourceListNode {
     }
 
     @objc dynamic override var image: NSImage? {
-        return NSImage(named: Symbols.canvases)
+        return NSImage(named: Symbols.Sidebar.canvases(self.activeSidebarSize.symbolSize))
     }
 }
 
@@ -161,7 +168,7 @@ class FolderSourceListNode: SourceListNode {
     }
 
     override var image: NSImage? {
-        return Folder.icon
+        return Folder.icon(for: self.activeSidebarSize.symbolSize)
     }
 
     override var folderForCreation: Folder? {
@@ -209,7 +216,7 @@ class PageSourceListNode: SourceListNode {
     }
 
     override var image: NSImage? {
-        return self.page.content.contentType.icon
+        return self.page.content.contentType.icon(self.activeSidebarSize.symbolSize)
     }
 
     override var folderForCreation: Folder? {

@@ -10,8 +10,8 @@ import AppKit
 import CoppiceCore
 
 extension Folder {
-    static var icon: NSImage? {
-        return NSImage.symbol(withName: Symbols.Page.folder(.small))
+    static func icon(for size: Symbols.Size) -> NSImage? {
+        return NSImage.symbol(withName: Symbols.Sidebar.folder(size))
     }
 }
 

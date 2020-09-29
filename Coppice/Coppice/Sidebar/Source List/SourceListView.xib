@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17154" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17503.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17503.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -21,17 +21,17 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView misplaced="YES" id="EkW-XH-sRX">
-            <rect key="frame" x="0.0" y="0.0" width="228" height="319"/>
+            <rect key="frame" x="0.0" y="0.0" width="228" height="313"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <scrollView misplaced="YES" placeholderIntrinsicWidth="228" placeholderIntrinsicHeight="314" borderType="none" autohidesScrollers="YES" horizontalLineScroll="17" horizontalPageScroll="10" verticalLineScroll="17" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F1p-BR-GwN">
-                    <rect key="frame" x="0.0" y="23" width="228" height="296"/>
+                <scrollView placeholderIntrinsicWidth="228" placeholderIntrinsicHeight="314" borderType="none" autohidesScrollers="YES" horizontalLineScroll="17" horizontalPageScroll="10" verticalLineScroll="17" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F1p-BR-GwN">
+                    <rect key="frame" x="0.0" y="23" width="228" height="278"/>
                     <clipView key="contentView" drawsBackground="NO" id="dYU-0E-een">
-                        <rect key="frame" x="0.0" y="0.0" width="228" height="296"/>
+                        <rect key="frame" x="0.0" y="0.0" width="228" height="278"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <outlineView identifier="SidebarTable" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" selectionHighlightStyle="sourceList" columnReordering="NO" columnResizing="NO" autosaveColumns="NO" autosaveName="MainSidebar" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="14" autosaveExpandedItems="YES" autoresizesOutlineColumn="YES" outlineTableColumn="Z8W-Zh-S4f" id="lUZ-o0-8kA" customClass="SourceListOutlineView" customModule="Coppice" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="228" height="291"/>
+                                <rect key="frame" x="0.0" y="0.0" width="228" height="273"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <size key="intercellSpacing" width="3" height="0.0"/>
                                 <color key="backgroundColor" name="_sourceListBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -53,18 +53,19 @@
                                                 <rect key="frame" x="1" y="0.0" width="224" height="17"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
-                                                    <imageView wantsLayer="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="39m-FO-oFz">
-                                                        <rect key="frame" x="3" y="2" width="20" height="14"/>
+                                                    <imageView wantsLayer="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="14" placeholderIntrinsicHeight="14" translatesAutoresizingMaskIntoConstraints="NO" id="39m-FO-oFz">
+                                                        <rect key="frame" x="3" y="1" width="16" height="16"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="width" constant="20" id="HHM-MW-Nv4"/>
+                                                            <constraint firstAttribute="height" constant="16" id="03e-1Z-N6m"/>
+                                                            <constraint firstAttribute="width" constant="16" id="yLl-D1-na4"/>
                                                         </constraints>
-                                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" image="NSActionTemplate" id="5El-Yy-oIy"/>
+                                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" image="TextPage-Small" id="5El-Yy-oIy"/>
                                                         <connections>
                                                             <binding destination="bGF-qo-JyG" name="value" keyPath="objectValue.image" id="8tp-P3-D9s"/>
                                                         </connections>
                                                     </imageView>
                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dog-G9-UoS">
-                                                        <rect key="frame" x="28" y="1" width="196" height="16"/>
+                                                        <rect key="frame" x="24" y="1" width="200" height="16"/>
                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Small Table View Cell" usesSingleLineMode="YES" id="mUy-Fn-EtT">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -83,16 +84,18 @@
                                                     <constraint firstItem="39m-FO-oFz" firstAttribute="centerY" secondItem="Dog-G9-UoS" secondAttribute="centerY" id="kVM-VN-hWH"/>
                                                 </constraints>
                                                 <connections>
+                                                    <outlet property="iconHeightConstraint" destination="03e-1Z-N6m" id="2qi-9K-eJ8"/>
+                                                    <outlet property="iconWidthConstraint" destination="yLl-D1-na4" id="Zdo-H6-bbg"/>
                                                     <outlet property="imageView" destination="39m-FO-oFz" id="nec-IJ-fMn"/>
                                                     <outlet property="textField" destination="Dog-G9-UoS" id="yxv-xk-Ty2"/>
                                                 </connections>
                                             </tableCellView>
-                                            <tableCellView identifier="BigCell" id="c0H-2g-hDf">
+                                            <tableCellView identifier="BigCell" id="c0H-2g-hDf" customClass="SizeAdjustableCellView" customModule="Coppice" customModuleProvider="target">
                                                 <rect key="frame" x="1" y="17" width="224" height="40"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z11-3n-4cf">
-                                                        <rect key="frame" x="41" y="12" width="177" height="16"/>
+                                                        <rect key="frame" x="39" y="12" width="179" height="16"/>
                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Nav Table View Cell" usesSingleLineMode="YES" id="12R-Qa-dtM">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -103,22 +106,21 @@
                                                         </connections>
                                                     </textField>
                                                     <imageView wantsLayer="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="z8b-K0-KCH">
-                                                        <rect key="frame" x="3" y="4" width="32" height="32"/>
+                                                        <rect key="frame" x="2" y="4" width="32" height="32"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="width" constant="32" id="P9M-f6-ILW"/>
-                                                            <constraint firstAttribute="height" constant="32" id="zjO-iq-k2x"/>
+                                                            <constraint firstAttribute="width" secondItem="z8b-K0-KCH" secondAttribute="height" multiplier="1:1" id="yNi-ah-hBz"/>
                                                         </constraints>
-                                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSActionTemplate" id="Wng-Ly-dZN"/>
+                                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="Canvases-Small" id="Wng-Ly-dZN"/>
                                                         <connections>
                                                             <binding destination="c0H-2g-hDf" name="value" keyPath="objectValue.image" id="xQ7-hd-69L"/>
                                                         </connections>
                                                     </imageView>
                                                 </subviews>
                                                 <constraints>
-                                                    <constraint firstItem="Z11-3n-4cf" firstAttribute="leading" secondItem="z8b-K0-KCH" secondAttribute="trailing" constant="8" id="2rr-5a-wUL"/>
+                                                    <constraint firstItem="Z11-3n-4cf" firstAttribute="leading" secondItem="z8b-K0-KCH" secondAttribute="trailing" constant="7" id="2rr-5a-wUL"/>
                                                     <constraint firstAttribute="trailing" secondItem="Z11-3n-4cf" secondAttribute="trailing" constant="8" id="5Np-hy-cSi"/>
                                                     <constraint firstItem="Z11-3n-4cf" firstAttribute="centerY" secondItem="c0H-2g-hDf" secondAttribute="centerY" id="K9D-mz-dOp"/>
-                                                    <constraint firstItem="z8b-K0-KCH" firstAttribute="leading" secondItem="c0H-2g-hDf" secondAttribute="leading" constant="3" id="epW-pk-mQs"/>
+                                                    <constraint firstItem="z8b-K0-KCH" firstAttribute="leading" secondItem="c0H-2g-hDf" secondAttribute="leading" constant="2" id="epW-pk-mQs"/>
                                                     <constraint firstItem="z8b-K0-KCH" firstAttribute="centerY" secondItem="c0H-2g-hDf" secondAttribute="centerY" id="evb-vR-xGn"/>
                                                 </constraints>
                                                 <connections>
@@ -174,9 +176,9 @@
                     </scroller>
                 </scrollView>
                 <box boxType="custom" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="zq2-fk-8fk">
-                    <rect key="frame" x="-1" y="-1" width="193" height="24"/>
+                    <rect key="frame" x="-1" y="-1" width="230" height="24"/>
                     <view key="contentView" id="wHI-lB-o9q">
-                        <rect key="frame" x="1" y="1" width="191" height="22"/>
+                        <rect key="frame" x="1" y="1" width="228" height="22"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <popUpButton translatesAutoresizingMaskIntoConstraints="NO" id="KlR-BB-oJZ">
@@ -297,7 +299,9 @@
         <customObject id="1CQ-Ez-MOk" customClass="NewPageMenuDelegate" customModule="Coppice" customModuleProvider="target"/>
     </objects>
     <resources>
+        <image name="Canvases-Small" width="32" height="26"/>
         <image name="NSActionTemplate" width="14" height="14"/>
         <image name="NSAddTemplate" width="11" height="11"/>
+        <image name="TextPage-Small" width="16" height="14"/>
     </resources>
 </document>

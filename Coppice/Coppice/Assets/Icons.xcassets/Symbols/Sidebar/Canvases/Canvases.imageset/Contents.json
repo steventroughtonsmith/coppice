@@ -1,12 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "AddBoard.png",
+      "filename" : "Canvases.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "AddBoard@2x.png",
+      "filename" : "Canvases@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

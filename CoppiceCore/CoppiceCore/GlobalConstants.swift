@@ -49,24 +49,24 @@ public struct Symbols {
         public static let underline = "underline"
     }
 
-    public struct Page {
-        public enum Size {
-            case small
-            case regular
-            case large
+    public enum Size {
+        case small
+        case regular
+        case large
 
-            var suffix: String {
-                switch self {
-                case .small:
-                    return "-Small"
-                case .large:
-                    return "-Large"
-                default:
-                    return ""
-                }
+        var suffix: String {
+            switch self {
+            case .small:
+                return "-Small"
+            case .large:
+                return "-Large"
+            default:
+                return ""
             }
         }
+    }
 
+    public struct Page {
         public static func text(_ size: Size) -> String {
             return "TextPage\(size.suffix)"
         }
@@ -74,9 +74,15 @@ public struct Symbols {
         public static func image(_ size: Size) -> String {
             return "ImagePage\(size.suffix)"
         }
+    }
 
+    public struct Sidebar {
         public static func folder(_ size: Size) -> String {
             return "Folder\(size.suffix)"
+        }
+        
+        public static func canvases(_ size: Size) -> String {
+            return "Canvases\(size.suffix)"
         }
     }
 
@@ -117,6 +123,4 @@ public struct Symbols {
         }
         return "NSStopProgressFreestandingTemplate";
     }
-
-    public static let canvases = "Canvases-Small"
 }

@@ -8,10 +8,15 @@
 
 import AppKit
 
-class SourceListTableCellView: EditableLabelCell {
+class SourceListTableCellView: EditableLabelCell, SidebarSizable {
+    @IBOutlet var iconWidthConstraint: NSLayoutConstraint!
+    @IBOutlet var iconHeightConstraint: NSLayoutConstraint!
+
     var activeSidebarSize: ActiveSidebarSize = .medium {
         didSet {
             self.textField?.font = NSFont.controlContentFont(ofSize: self.activeSidebarSize.smallRowFontSize)
+            self.iconWidthConstraint.constant = self.activeSidebarSize.smallRowGlyphSize.width
+            self.iconHeightConstraint.constant = self.activeSidebarSize.smallRowGlyphSize.height
         }
     }
     

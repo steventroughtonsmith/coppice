@@ -1,12 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "LinkPage.png",
+      "filename" : "Folder-Large.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "LinkPage@2x.png",
+      "filename" : "Folder-Large@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

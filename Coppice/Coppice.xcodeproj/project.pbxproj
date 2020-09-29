@@ -263,6 +263,7 @@
 		99D329BB25224B1800E15683 /* TooManyDevicesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99D329B925224B1800E15683 /* TooManyDevicesView.xib */; };
 		99D329C225224C0F00E15683 /* DeviceTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D329C125224C0F00E15683 /* DeviceTableCellView.swift */; };
 		99D329D32522783900E15683 /* ActiveSidebarSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D329D22522783900E15683 /* ActiveSidebarSize.swift */; };
+		99D329F325234BB900E15683 /* SizeAdjustableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D329F225234BB900E15683 /* SizeAdjustableCellView.swift */; };
 		99D4D59822F8650300F69C1F /* SourceListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D4D59722F8650300F69C1F /* SourceListViewModelTests.swift */; };
 		99D507342501538E00670139 /* ErrorPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D507322501538E00670139 /* ErrorPopoverViewController.swift */; };
 		99D507352501538E00670139 /* ErrorPopoverViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99D507332501538E00670139 /* ErrorPopoverViewController.xib */; };
@@ -643,6 +644,7 @@
 		99D329B925224B1800E15683 /* TooManyDevicesView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TooManyDevicesView.xib; sourceTree = "<group>"; };
 		99D329C125224C0F00E15683 /* DeviceTableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTableCellView.swift; sourceTree = "<group>"; };
 		99D329D22522783900E15683 /* ActiveSidebarSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveSidebarSize.swift; sourceTree = "<group>"; };
+		99D329F225234BB900E15683 /* SizeAdjustableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeAdjustableCellView.swift; sourceTree = "<group>"; };
 		99D4D59722F8650300F69C1F /* SourceListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceListViewModelTests.swift; sourceTree = "<group>"; };
 		99D507322501538E00670139 /* ErrorPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorPopoverViewController.swift; sourceTree = "<group>"; };
 		99D507332501538E00670139 /* ErrorPopoverViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ErrorPopoverViewController.xib; sourceTree = "<group>"; };
@@ -813,6 +815,7 @@
 				99D329D22522783900E15683 /* ActiveSidebarSize.swift */,
 				993D2BFF24157196002E5BAC /* SourceListOutlineView.swift */,
 				993C0EE824B3A5C5009993D4 /* SourceListTableCellView.swift */,
+				99D329F225234BB900E15683 /* SizeAdjustableCellView.swift */,
 				996010F624F14FFA008B8F98 /* SpringLoadedTableRowView.swift */,
 				992A5C9522DCB7790012CCB6 /* SourceListView.xib */,
 				999DAAC923CCC5D80013EC36 /* SidebarHeaderView.swift */,
@@ -2113,6 +2116,7 @@
 				9998B4EC25164CA600E2D455 /* ButtonToolbarItem.swift in Sources */,
 				99C88EE42409631800339880 /* PageImageController.swift in Sources */,
 				99C865262306D12B004C7B89 /* PageSelectorViewModel.swift in Sources */,
+				99D329F325234BB900E15683 /* SizeAdjustableCellView.swift in Sources */,
 				99A0B855238C2F46005FCF25 /* TextEditorAttributes.swift in Sources */,
 				99146A2E24F016DC00A2AE48 /* SpringLoadedTableView.swift in Sources */,
 				992A5C9F22DCCDB30012CCB6 /* NSView+M3Extensions.swift in Sources */,

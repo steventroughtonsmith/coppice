@@ -1,12 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "AddPage.png",
+      "filename" : "Folder.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "AddPage@2x.png",
+      "filename" : "Folder@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

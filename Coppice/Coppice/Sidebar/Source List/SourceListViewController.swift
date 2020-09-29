@@ -508,7 +508,6 @@ extension SourceListViewController: NSOutlineViewDataSource {
             let persistentRepresentation = DocumentWindowViewModel.SidebarItem.from(persistentRepresentation: string) else {
                 return nil
         }
-
         return self.viewModel.node(for: persistentRepresentation)
     }
 
@@ -599,13 +598,13 @@ extension SourceListViewController: NSOutlineViewDelegate {
         case .navCell:
             view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("BigCell"), owner: self) as? NSTableCellView
         case .smallCell:
-            let cell = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("SmallCell"), owner: self) as? SourceListTableCellView
-            cell?.activeSidebarSize = self.activeSidebarSize
-            view = cell
+            view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("SmallCell"), owner: self) as? SourceListTableCellView
         case .groupCell:
             view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("GroupCell"), owner: self) as? NSTableCellView
         }
         view?.setAccessibilityLabel(sourceListItem.accessibilityDescription)
+        (view as? SidebarSizable)?.activeSidebarSize = self.activeSidebarSize
+        sourceListItem.activeSidebarSize = self.activeSidebarSize
         view?.objectValue = item
         return view
     }
