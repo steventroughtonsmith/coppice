@@ -16,6 +16,7 @@ public class ImagePageContent: NSObject, PageContent {
             if oldValue == nil && self.image != nil {
                 self.page?.updatePageSizes()
             }
+            self.didChange(\.image, oldValue: oldValue)
         }
     }
 
