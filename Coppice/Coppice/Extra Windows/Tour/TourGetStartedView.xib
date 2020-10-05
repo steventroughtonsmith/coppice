@@ -51,12 +51,29 @@ Thanks for following this tour, and we hope you enjoy using Coppice.</string>
                         <action selector="back:" target="-1" id="LeP-5R-Tmb"/>
                     </connections>
                 </button>
+                <button focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8iZ-Ox-dLh">
+                    <rect key="frame" x="233" y="200" width="175" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="175" id="dnH-Wb-Zps"/>
+                        <constraint firstAttribute="height" constant="30" id="uU0-8k-LsF"/>
+                    </constraints>
+                    <buttonCell key="cell" type="square" title="View Sample Document…" bezelStyle="shadowlessSquare" alignment="center" borderStyle="border" focusRingType="none" imageScaling="proportionallyDown" inset="2" id="htM-ZK-2r9" customClass="ColouredButtonCell" customModule="Coppice" customModuleProvider="target">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <color key="contentTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <connections>
+                        <action selector="openSampleDocument:" target="-1" id="v7c-L9-kLm"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
+                <constraint firstItem="8iZ-Ox-dLh" firstAttribute="centerX" secondItem="Odm-Ds-XH5" secondAttribute="centerX" id="6R9-WC-snT"/>
                 <constraint firstItem="vr0-15-9aM" firstAttribute="centerX" secondItem="Odm-Ds-XH5" secondAttribute="centerX" id="6VD-E8-4Mg"/>
                 <constraint firstItem="KwP-jq-q0B" firstAttribute="centerX" secondItem="Odm-Ds-XH5" secondAttribute="centerX" id="O78-TE-4bl"/>
                 <constraint firstItem="1B7-Ff-Jy9" firstAttribute="leading" secondItem="Odm-Ds-XH5" secondAttribute="leading" constant="20" symbolic="YES" id="QUh-1c-rhO"/>
                 <constraint firstItem="KwP-jq-q0B" firstAttribute="top" secondItem="vr0-15-9aM" secondAttribute="bottom" constant="25" id="Rss-WM-0dT"/>
+                <constraint firstItem="8iZ-Ox-dLh" firstAttribute="top" secondItem="KwP-jq-q0B" secondAttribute="bottom" constant="40" id="kV0-nf-VUB"/>
                 <constraint firstItem="vr0-15-9aM" firstAttribute="top" secondItem="Odm-Ds-XH5" secondAttribute="top" constant="20" id="ob0-Dg-0Kd"/>
                 <constraint firstItem="1B7-Ff-Jy9" firstAttribute="centerY" secondItem="vr0-15-9aM" secondAttribute="centerY" id="s76-sA-Ix3"/>
             </constraints>

@@ -87,6 +87,8 @@
 		99581093230D92C600D996C4 /* CanvasPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99581091230D92C600D996C4 /* CanvasPageViewController.xib */; };
 		99581095230D93F700D996C4 /* CanvasPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99581094230D93F700D996C4 /* CanvasPageViewModel.swift */; };
 		99582817247702B300080593 /* ResizeHandleAccessibilityElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99582816247702B300080593 /* ResizeHandleAccessibilityElement.swift */; };
+		995F9305252B5B1B00A753E4 /* ColouredButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995F9304252B5B1B00A753E4 /* ColouredButtonCell.swift */; };
+		995F931D252B654A00A753E4 /* Sample Document.coppicedoc in Resources */ = {isa = PBXBuildFile; fileRef = 995F931C252B654A00A753E4 /* Sample Document.coppicedoc */; };
 		996010F724F14FFA008B8F98 /* SpringLoadedTableRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996010F624F14FFA008B8F98 /* SpringLoadedTableRowView.swift */; };
 		9960CCE924B1EC1C001F092E /* MockEventContextFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9960CCE824B1EC1C001F092E /* MockEventContextFactory.swift */; };
 		996187F0249A5166007313BD /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996187EE249A5166007313BD /* PreferencesWindowController.swift */; };
@@ -461,6 +463,8 @@
 		99581091230D92C600D996C4 /* CanvasPageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CanvasPageViewController.xib; sourceTree = "<group>"; };
 		99581094230D93F700D996C4 /* CanvasPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageViewModel.swift; sourceTree = "<group>"; };
 		99582816247702B300080593 /* ResizeHandleAccessibilityElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizeHandleAccessibilityElement.swift; sourceTree = "<group>"; };
+		995F9304252B5B1B00A753E4 /* ColouredButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColouredButtonCell.swift; sourceTree = "<group>"; };
+		995F931C252B654A00A753E4 /* Sample Document.coppicedoc */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "Sample Document.coppicedoc"; sourceTree = "<group>"; };
 		996010F624F14FFA008B8F98 /* SpringLoadedTableRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpringLoadedTableRowView.swift; sourceTree = "<group>"; };
 		9960CCE824B1EC1C001F092E /* MockEventContextFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEventContextFactory.swift; sourceTree = "<group>"; };
 		996187EE249A5166007313BD /* PreferencesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
@@ -1165,6 +1169,7 @@
 				99D507322501538E00670139 /* ErrorPopoverViewController.swift */,
 				99D507332501538E00670139 /* ErrorPopoverViewController.xib */,
 				9991803F2510E2B400C931A7 /* IconPopUpButtonCell.swift */,
+				995F9304252B5B1B00A753E4 /* ColouredButtonCell.swift */,
 			);
 			path = "Generic Views";
 			sourceTree = "<group>";
@@ -1613,6 +1618,7 @@
 				99045FC324D43EC500FD3D33 /* Assets */,
 				9998B4E225163F0300E2D455 /* Help */,
 				99906377249BC5780008C747 /* ProFeatures.plist */,
+				995F931C252B654A00A753E4 /* Sample Document.coppicedoc */,
 				99FE019922CD1038004D380D /* MainMenu.xib */,
 				99FE019C22CD1038004D380D /* Info.plist */,
 				99BC431F250935B70032D7A3 /* sparkle_dsa_pub.pem */,
@@ -1889,6 +1895,7 @@
 				99581093230D92C600D996C4 /* CanvasPageViewController.xib in Resources */,
 				999007F724D07F1500DB5C13 /* TourPages.mp4 in Resources */,
 				9965FC3E23843143002FE10D /* CanvasPageInspectorContentView.xib in Resources */,
+				995F931D252B654A00A753E4 /* Sample Document.coppicedoc in Resources */,
 				996187FD249BB615007313BD /* SubscribeViewController.xib in Resources */,
 				999007F124D0607C00DB5C13 /* Tour.xcassets in Resources */,
 				999EA68D2433913A00BF254E /* Info.plist.prefix in Resources */,
@@ -1997,6 +2004,7 @@
 				9977119C239E91FD00FCC8C7 /* ViewModel.swift in Sources */,
 				992A5CB322DDF53C0012CCB6 /* DebugPageEditorViewModel.swift in Sources */,
 				9981E6D624C08F12005AF0EE /* WelcomeWindowController.swift in Sources */,
+				995F9305252B5B1B00A753E4 /* ColouredButtonCell.swift in Sources */,
 				99D5073A250254BF00670139 /* ProUpsellViewController.swift in Sources */,
 				99DEF28A22F32D350020A7CE /* DebugCanvasViewModelTypes.swift in Sources */,
 				99D329AA252237A000E15683 /* SubscriptionTableCellView.swift in Sources */,

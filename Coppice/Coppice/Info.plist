@@ -14,13 +14,15 @@
 			<key>CFBundleTypeIconFile</key>
 			<string>CoppiceDocIcon</string>
 			<key>CFBundleTypeName</key>
-			<string>DocumentType</string>
+			<string>Coppice Document</string>
 			<key>CFBundleTypeOSTypes</key>
 			<array>
 				<string>????</string>
 			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>LSHandlerRank</key>
+			<string>Default</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.mcubedsw.Coppice.document</string>

@@ -29,46 +29,31 @@
                             <outlet property="nextKeyView" destination="AoG-S8-AGC" id="jdt-o4-xsc"/>
                         </connections>
                     </customView>
-                    <box boxType="custom" borderType="none" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="ofJ-Al-ioR">
+                    <button focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AoG-S8-AGC" customClass="ColoredButton">
                         <rect key="frame" x="318" y="20" width="119" height="30"/>
-                        <view key="contentView" id="3U4-7C-uno">
-                            <rect key="frame" x="0.0" y="0.0" width="119" height="30"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            <subviews>
-                                <button focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AoG-S8-AGC">
-                                    <rect key="frame" x="0.0" y="0.0" width="119" height="30"/>
-                                    <buttonCell key="cell" type="bevel" title="Continue" bezelStyle="rounded" alignment="center" focusRingType="none" imageScaling="proportionallyDown" inset="2" id="58d-tL-bYz">
-                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                        <font key="font" metaFont="system"/>
-                                    </buttonCell>
-                                    <color key="contentTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                    <connections>
-                                        <action selector="continueClicked:" target="-2" id="hUU-2n-cVI"/>
-                                        <binding destination="-2" name="title" keyPath="self.continueButtonTitle" id="kg1-bU-ncd"/>
-                                    </connections>
-                                </button>
-                            </subviews>
-                            <constraints>
-                                <constraint firstItem="AoG-S8-AGC" firstAttribute="leading" secondItem="3U4-7C-uno" secondAttribute="leading" id="00w-qd-7jS"/>
-                                <constraint firstAttribute="bottom" secondItem="AoG-S8-AGC" secondAttribute="bottom" id="8uF-D7-dNz"/>
-                                <constraint firstAttribute="trailing" secondItem="AoG-S8-AGC" secondAttribute="trailing" id="99n-EV-0ud"/>
-                                <constraint firstItem="AoG-S8-AGC" firstAttribute="top" secondItem="3U4-7C-uno" secondAttribute="top" id="YCI-3Y-Dz3"/>
-                            </constraints>
-                        </view>
                         <constraints>
-                            <constraint firstAttribute="width" constant="119" id="Q2W-5R-O5B"/>
-                            <constraint firstAttribute="height" constant="30" id="qAA-rU-PTw"/>
+                            <constraint firstAttribute="height" constant="30" id="OVo-zI-LUr"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="119" id="W9d-vT-6QF"/>
                         </constraints>
-                        <color key="fillColor" name="linkColor" catalog="System" colorSpace="catalog"/>
-                    </box>
+                        <buttonCell key="cell" type="square" title="Continue" bezelStyle="shadowlessSquare" alignment="center" borderStyle="border" focusRingType="none" imageScaling="proportionallyDown" inset="2" id="58d-tL-bYz" customClass="ColouredButtonCell" customModule="Coppice" customModuleProvider="target">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <color key="contentTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <connections>
+                            <action selector="continueClicked:" target="-2" id="hUU-2n-cVI"/>
+                            <binding destination="-2" name="title" keyPath="self.continueButtonTitle" id="kg1-bU-ncd"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="8Th-lp-2xU" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" id="0bC-Ej-n4e"/>
-                    <constraint firstItem="ofJ-Al-ioR" firstAttribute="centerX" secondItem="se5-gp-TjO" secondAttribute="centerX" id="Wbu-rY-102"/>
-                    <constraint firstItem="ofJ-Al-ioR" firstAttribute="top" secondItem="8Th-lp-2xU" secondAttribute="bottom" id="YmS-d9-ESa"/>
+                    <constraint firstItem="AoG-S8-AGC" firstAttribute="centerX" secondItem="se5-gp-TjO" secondAttribute="centerX" id="A18-dW-Jdm"/>
                     <constraint firstAttribute="trailing" secondItem="8Th-lp-2xU" secondAttribute="trailing" id="bpM-Kj-hNA"/>
-                    <constraint firstAttribute="bottom" secondItem="ofJ-Al-ioR" secondAttribute="bottom" constant="20" id="eh0-BM-MPh"/>
                     <constraint firstItem="8Th-lp-2xU" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" id="lsY-la-xt6"/>
+                    <constraint firstAttribute="bottom" secondItem="AoG-S8-AGC" secondAttribute="bottom" constant="20" id="oes-gg-HPY"/>
+                    <constraint firstItem="AoG-S8-AGC" firstAttribute="top" secondItem="8Th-lp-2xU" secondAttribute="bottom" id="uHm-Av-pka"/>
+                    <constraint firstAttribute="bottom" secondItem="AoG-S8-AGC" secondAttribute="bottom" constant="20" symbolic="YES" id="zki-BZ-Znm"/>
                 </constraints>
                 <connections>
                     <outlet property="nextKeyView" destination="8Th-lp-2xU" id="pSw-96-3UL"/>

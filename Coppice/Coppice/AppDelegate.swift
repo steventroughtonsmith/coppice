@@ -54,7 +54,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             #endif
         }
 
-        let expiryDate = ISO8601DateFormatter().date(from: "2020-10-31T00:00:00Z")?.timeIntervalSinceReferenceDate ?? 0;
+        let expiryDate = ISO8601DateFormatter().date(from: "2020-11-15T00:00:00Z")?.timeIntervalSinceReferenceDate ?? 0;
         if Date.timeIntervalSinceReferenceDate >= expiryDate {
             let alert = NSAlert()
             alert.messageText = "This version has expired"
@@ -180,6 +180,28 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.subscriptionManager.checkSubscription()
     }
     #endif
+
+    @IBAction func openSampleDocument(_ sender: Any?) {
+        print("open sample document")
+        //Close the tour if needed
+        self.currentTourWindow?.close()
+
+        guard let sampleDocumentURL = Bundle.main.url(forResource: "Sample Document", withExtension: "coppicedoc") else {
+            return
+        }
+
+        self.documentController.openDocument(withContentsOf: sampleDocumentURL, display: true) { (document, boolean, error) in
+            print("document: \(document)")
+        }
+//        guard let document = try? self.documentController.duplicateDocument(withContentsOf: sampleDocumentURL, copying: true, displayName: "Sample Document") else {
+//            return
+//        }
+
+
+//        self.documentController.addDocument(document)
+//        document.makeWindowControllers()
+    }
+
 }
 
 
