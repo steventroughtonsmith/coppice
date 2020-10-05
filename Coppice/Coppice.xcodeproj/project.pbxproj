@@ -89,6 +89,7 @@
 		99582817247702B300080593 /* ResizeHandleAccessibilityElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99582816247702B300080593 /* ResizeHandleAccessibilityElement.swift */; };
 		995F9305252B5B1B00A753E4 /* ColouredButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995F9304252B5B1B00A753E4 /* ColouredButtonCell.swift */; };
 		995F931D252B654A00A753E4 /* Sample Document.coppicedoc in Resources */ = {isa = PBXBuildFile; fileRef = 995F931C252B654A00A753E4 /* Sample Document.coppicedoc */; };
+		995F9324252B695400A753E4 /* ImageEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995F9323252B695400A753E4 /* ImageEditorView.swift */; };
 		996010F724F14FFA008B8F98 /* SpringLoadedTableRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996010F624F14FFA008B8F98 /* SpringLoadedTableRowView.swift */; };
 		9960CCE924B1EC1C001F092E /* MockEventContextFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9960CCE824B1EC1C001F092E /* MockEventContextFactory.swift */; };
 		996187F0249A5166007313BD /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996187EE249A5166007313BD /* PreferencesWindowController.swift */; };
@@ -465,6 +466,7 @@
 		99582816247702B300080593 /* ResizeHandleAccessibilityElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizeHandleAccessibilityElement.swift; sourceTree = "<group>"; };
 		995F9304252B5B1B00A753E4 /* ColouredButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColouredButtonCell.swift; sourceTree = "<group>"; };
 		995F931C252B654A00A753E4 /* Sample Document.coppicedoc */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "Sample Document.coppicedoc"; sourceTree = "<group>"; };
+		995F9323252B695400A753E4 /* ImageEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorView.swift; sourceTree = "<group>"; };
 		996010F624F14FFA008B8F98 /* SpringLoadedTableRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpringLoadedTableRowView.swift; sourceTree = "<group>"; };
 		9960CCE824B1EC1C001F092E /* MockEventContextFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEventContextFactory.swift; sourceTree = "<group>"; };
 		996187EE249A5166007313BD /* PreferencesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
@@ -1391,6 +1393,7 @@
 			children = (
 				99C865222302E267004C7B89 /* ImageEditorViewModel.swift */,
 				99C8651E2302E256004C7B89 /* ImageEditorViewController.swift */,
+				995F9323252B695400A753E4 /* ImageEditorView.swift */,
 				99C8651F2302E256004C7B89 /* ImageEditorViewController.xib */,
 				99146A2924EEAB6200A2AE48 /* ImageEditorPlaceholderView.swift */,
 			);
@@ -2124,6 +2127,7 @@
 				9998B4EC25164CA600E2D455 /* ButtonToolbarItem.swift in Sources */,
 				99C88EE42409631800339880 /* PageImageController.swift in Sources */,
 				99C865262306D12B004C7B89 /* PageSelectorViewModel.swift in Sources */,
+				995F9324252B695400A753E4 /* ImageEditorView.swift in Sources */,
 				99D329F325234BB900E15683 /* SizeAdjustableCellView.swift in Sources */,
 				99A0B855238C2F46005FCF25 /* TextEditorAttributes.swift in Sources */,
 				99146A2E24F016DC00A2AE48 /* SpringLoadedTableView.swift in Sources */,

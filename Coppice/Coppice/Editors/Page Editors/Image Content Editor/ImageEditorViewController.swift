@@ -81,6 +81,6 @@ extension ImageEditorViewController: Editor {
 }
 
 
-extension ImageEditorViewController: ImageEditorView {
+extension ImageEditorViewController: ImageEditorViewProtocol {
     
 }

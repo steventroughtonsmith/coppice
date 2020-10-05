@@ -9,11 +9,11 @@
 import AppKit
 import CoppiceCore
 
-protocol ImageEditorView: class {
+protocol ImageEditorViewProtocol: class {
 }
 
 class ImageEditorViewModel: ViewModel {
-    weak var view: ImageEditorView?
+    weak var view: ImageEditorViewProtocol?
 
     @objc dynamic let imageContent: ImagePageContent
     init(imageContent: ImagePageContent, documentWindowViewModel: DocumentWindowViewModel) {
