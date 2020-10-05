@@ -41,6 +41,20 @@ class Document: NSDocument {
         }
     }
 
+    func selectFirstCanvas() {
+        guard let windowController = self.windowControllers.first as? DocumentWindowController else {
+            return
+        }
+
+        let documentViewModel = windowController.viewModel
+
+        if let canvas = self.modelController.canvasCollection.sortedCanvases.first {
+            documentViewModel.updateSelection([.canvas(canvas.id)])
+        } else {
+            documentViewModel.updateSelection([.canvases])
+        }
+    }
+
     override func read(from fileWrapper: FileWrapper, ofType typeName: String) throws {
         let modelReader = ModelReader(modelController: self.modelController, documentVersion: Document.documentVersion)
         do {

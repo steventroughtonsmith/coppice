@@ -190,8 +190,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             return
         }
 
-        self.documentController.openDocument(withContentsOf: sampleDocumentURL, display: true) { (document, boolean, error) in
-            print("document: \(document)")
+        guard let temporaryDirectory = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(sampleDocumentURL.lastPathComponent) else {
+            return
+        }
+
+        if (!FileManager.default.fileExists(atPath: temporaryDirectory.path)) {
+            try? FileManager.default.copyItem(at: sampleDocumentURL, to: temporaryDirectory)
+        }
+
+        self.documentController.openDocument(withContentsOf: temporaryDirectory, display: true) { (document, boolean, error) in
+            (document as? Document)?.selectFirstCanvas()
         }
 //        guard let document = try? self.documentController.duplicateDocument(withContentsOf: sampleDocumentURL, copying: true, displayName: "Sample Document") else {
 //            return
