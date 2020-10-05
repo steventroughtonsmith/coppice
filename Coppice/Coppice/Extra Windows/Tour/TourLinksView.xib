@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17147" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.AVKitIBPlugin" version="17147"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17147"/>
+        <plugIn identifier="com.apple.AVKitIBPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17505"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -90,6 +90,16 @@
                         <constraint firstItem="SiR-F7-G1l" firstAttribute="leading" secondItem="tCC-4I-FZ0" secondAttribute="leading" id="glb-kK-AnQ"/>
                     </constraints>
                 </customView>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5Fe-5f-dCm">
+                    <rect key="frame" x="14" y="461" width="44" height="32"/>
+                    <buttonCell key="cell" type="push" bezelStyle="rounded" image="BackChevron" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="CV5-gu-M45">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="back:" target="-1" id="Yo2-XT-DD2"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstItem="tCC-4I-FZ0" firstAttribute="centerX" secondItem="fhb-PG-pqo" secondAttribute="centerX" id="0tm-LS-Lcv"/>
@@ -99,7 +109,9 @@
                 <constraint firstItem="irG-kc-mGR" firstAttribute="centerX" secondItem="fhb-PG-pqo" secondAttribute="centerX" id="HET-qf-iIE"/>
                 <constraint firstItem="irG-kc-mGR" firstAttribute="top" secondItem="fhb-PG-pqo" secondAttribute="top" constant="20" id="MM0-vD-Jnw"/>
                 <constraint firstItem="tCC-4I-FZ0" firstAttribute="top" secondItem="mrc-XK-oRI" secondAttribute="bottom" constant="20" id="MrY-a9-evk"/>
+                <constraint firstItem="5Fe-5f-dCm" firstAttribute="leading" secondItem="fhb-PG-pqo" secondAttribute="leading" constant="20" symbolic="YES" id="VyC-FC-0Ex"/>
                 <constraint firstAttribute="trailing" secondItem="45N-66-eCF" secondAttribute="trailing" constant="50" id="Y88-eS-G9Y"/>
+                <constraint firstItem="5Fe-5f-dCm" firstAttribute="centerY" secondItem="irG-kc-mGR" secondAttribute="centerY" id="a4u-jf-X6Z"/>
                 <constraint firstItem="45N-66-eCF" firstAttribute="leading" secondItem="fhb-PG-pqo" secondAttribute="leading" constant="50" id="iKg-Oh-tCy"/>
                 <constraint firstItem="mrc-XK-oRI" firstAttribute="centerX" secondItem="fhb-PG-pqo" secondAttribute="centerX" id="trc-SY-enc"/>
             </constraints>
@@ -107,6 +119,7 @@
         </customView>
     </objects>
     <resources>
+        <image name="BackChevron" width="8" height="8"/>
         <image name="TourLinksPreview" width="838" height="568"/>
     </resources>
 </document>

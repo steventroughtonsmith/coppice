@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17132" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17132"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17505"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -41,14 +41,29 @@ Thanks for following this tour, and we hope you enjoy using Coppice.</string>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1B7-Ff-Jy9">
+                    <rect key="frame" x="14" y="375" width="44" height="32"/>
+                    <buttonCell key="cell" type="push" bezelStyle="rounded" image="BackChevron" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1yy-l0-F4v">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="back:" target="-1" id="LeP-5R-Tmb"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstItem="vr0-15-9aM" firstAttribute="centerX" secondItem="Odm-Ds-XH5" secondAttribute="centerX" id="6VD-E8-4Mg"/>
                 <constraint firstItem="KwP-jq-q0B" firstAttribute="centerX" secondItem="Odm-Ds-XH5" secondAttribute="centerX" id="O78-TE-4bl"/>
+                <constraint firstItem="1B7-Ff-Jy9" firstAttribute="leading" secondItem="Odm-Ds-XH5" secondAttribute="leading" constant="20" symbolic="YES" id="QUh-1c-rhO"/>
                 <constraint firstItem="KwP-jq-q0B" firstAttribute="top" secondItem="vr0-15-9aM" secondAttribute="bottom" constant="25" id="Rss-WM-0dT"/>
                 <constraint firstItem="vr0-15-9aM" firstAttribute="top" secondItem="Odm-Ds-XH5" secondAttribute="top" constant="20" id="ob0-Dg-0Kd"/>
+                <constraint firstItem="1B7-Ff-Jy9" firstAttribute="centerY" secondItem="vr0-15-9aM" secondAttribute="centerY" id="s76-sA-Ix3"/>
             </constraints>
             <point key="canvasLocation" x="107" y="173"/>
         </customView>
     </objects>
+    <resources>
+        <image name="BackChevron" width="8" height="8"/>
+    </resources>
 </document>

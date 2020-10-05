@@ -99,6 +99,41 @@ class TourWindowController: NSWindowController {
             self.isAnimatingPanel = false
         }
     }
+
+    @IBAction func back(_ sender: Any?) {
+        guard self.isAnimatingPanel == false else {
+            return
+        }
+        self.isAnimatingPanel = true
+        let currentPanel = self.tourPanels[self.currentPanelIndex]
+        guard let previousPanel = self.tourPanels[safe: self.currentPanelIndex - 1] else {
+            return
+        }
+
+        previousPanel.view.frame = self.panelContainer.bounds
+        previousPanel.view.frame.origin.x = -previousPanel.view.frame.width
+
+        self.contentViewController?.addChild(previousPanel)
+        self.panelContainer.addSubview(previousPanel.view)
+        self.panelContainer.layoutSubtreeIfNeeded()
+
+        NSView.animate(withDuration: 0.75, timingFunction: CAMediaTimingFunction(name: .easeInEaseOut)) {
+            var currentPanelFrame = currentPanel.view.frame
+            currentPanelFrame.origin.x = currentPanelFrame.width
+            currentPanel.view.frame = currentPanelFrame
+
+            previousPanel.view.animator().frame = self.panelContainer.bounds
+        } completion: {
+            currentPanel.removeFromParent()
+            currentPanel.view.removeFromSuperview()
+            self.currentPanelIndex -= 1
+            self.continueButton.isEnabled = true
+
+            self.perform(#selector(self.updateItem(to:)), with: previousPanel.titleLabel.cell, afterDelay: 0)
+
+            self.isAnimatingPanel = false
+        }
+    }
     
     @objc dynamic func updateItem(to item: Any) {
         NSApp.setAccessibilityApplicationFocusedUIElement(item)

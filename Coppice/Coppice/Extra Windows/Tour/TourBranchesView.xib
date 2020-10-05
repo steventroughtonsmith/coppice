@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17147" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.AVKitIBPlugin" version="17147"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17147"/>
+        <plugIn identifier="com.apple.AVKitIBPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17505"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -84,11 +84,23 @@
                     <color key="borderColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     <color key="fillColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                 </box>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OW1-ab-bqd">
+                    <rect key="frame" x="14" y="461" width="44" height="32"/>
+                    <buttonCell key="cell" type="push" bezelStyle="rounded" image="BackChevron" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mlj-u2-uOT">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="back:" target="-1" id="6wQ-1d-uar"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstItem="YUV-7h-yaN" firstAttribute="top" secondItem="wO9-IJ-Dzz" secondAttribute="bottom" constant="20" id="7iW-Q7-6my"/>
                 <constraint firstItem="wO9-IJ-Dzz" firstAttribute="centerX" secondItem="mrt-1A-BWJ" secondAttribute="centerX" id="EX8-q9-LZE"/>
                 <constraint firstItem="wO9-IJ-Dzz" firstAttribute="top" secondItem="dqE-Z8-BC6" secondAttribute="bottom" constant="20" id="HT7-B9-SEV"/>
+                <constraint firstItem="OW1-ab-bqd" firstAttribute="leading" secondItem="mrt-1A-BWJ" secondAttribute="leading" constant="20" symbolic="YES" id="Mcg-9i-EYd"/>
+                <constraint firstItem="OW1-ab-bqd" firstAttribute="centerY" secondItem="enx-DH-Cx5" secondAttribute="centerY" id="SqQ-ew-Mah"/>
                 <constraint firstItem="dqE-Z8-BC6" firstAttribute="centerX" secondItem="mrt-1A-BWJ" secondAttribute="centerX" id="UHG-0U-8HQ"/>
                 <constraint firstItem="YUV-7h-yaN" firstAttribute="centerX" secondItem="mrt-1A-BWJ" secondAttribute="centerX" id="VHl-FO-qph"/>
                 <constraint firstItem="enx-DH-Cx5" firstAttribute="centerX" secondItem="mrt-1A-BWJ" secondAttribute="centerX" id="eAW-5j-EDo"/>
@@ -100,6 +112,7 @@
         </customView>
     </objects>
     <resources>
+        <image name="BackChevron" width="8" height="8"/>
         <image name="TourBranchesPreview" width="824" height="600"/>
     </resources>
 </document>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17132" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.AVKitIBPlugin" version="17132"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17132"/>
+        <plugIn identifier="com.apple.AVKitIBPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17505"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -81,6 +81,16 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1FQ-0f-06f">
+                    <rect key="frame" x="14" y="461" width="44" height="32"/>
+                    <buttonCell key="cell" type="push" bezelStyle="rounded" image="BackChevron" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="QWN-8d-npA">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="back:" target="-1" id="1m3-eB-6TJ"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstItem="7eb-4t-njt" firstAttribute="centerX" secondItem="ws2-zD-fh0" secondAttribute="centerX" id="1Iy-Pl-SR4"/>
@@ -90,7 +100,9 @@
                 <constraint firstAttribute="trailing" secondItem="VN2-RM-VSd" secondAttribute="trailing" constant="50" id="NpO-49-wMW"/>
                 <constraint firstItem="VN2-RM-VSd" firstAttribute="top" secondItem="F3d-A9-yWy" secondAttribute="bottom" constant="33" id="dgr-P8-LJu"/>
                 <constraint firstItem="VN2-RM-VSd" firstAttribute="leading" secondItem="ws2-zD-fh0" secondAttribute="leading" constant="50" id="dmr-h9-2yv"/>
+                <constraint firstItem="1FQ-0f-06f" firstAttribute="centerY" secondItem="AmR-td-qgP" secondAttribute="centerY" id="dpR-Of-PrT"/>
                 <constraint firstItem="F3d-A9-yWy" firstAttribute="top" secondItem="7eb-4t-njt" secondAttribute="bottom" constant="25" id="i4k-Wi-wGU"/>
+                <constraint firstItem="1FQ-0f-06f" firstAttribute="leading" secondItem="ws2-zD-fh0" secondAttribute="leading" constant="20" symbolic="YES" id="sO2-PS-Zua"/>
                 <constraint firstItem="AmR-td-qgP" firstAttribute="top" secondItem="ws2-zD-fh0" secondAttribute="top" constant="20" id="uIV-5S-CHD"/>
                 <constraint firstAttribute="bottom" secondItem="VN2-RM-VSd" secondAttribute="bottom" constant="34" id="xZB-Ae-D4i"/>
             </constraints>
@@ -98,6 +110,7 @@
         </customView>
     </objects>
     <resources>
+        <image name="BackChevron" width="8" height="8"/>
         <image name="TourCanvasesPreview" width="838" height="568"/>
     </resources>
 </document>

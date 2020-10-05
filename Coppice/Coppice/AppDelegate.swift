@@ -163,11 +163,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 
     //MARK: - Tour
-    lazy var tourWindow: TourWindowController = {
-        return TourWindowController()
-    }()
+    var currentTourWindow: TourWindowController?
+    var tourCloseNotification: NSObjectProtocol?
     @IBAction func showTour(_ sender: Any?) {
-        self.tourWindow.showWindow(sender)
+        let tourWindow = TourWindowController()
+        self.currentTourWindow = tourWindow
+        tourWindow.showWindow(sender)
+        self.tourCloseNotification = NotificationCenter.default.addObserver(forName: NSWindow.willCloseNotification, object: tourWindow.window, queue: .main) { [weak self] (notification) in
+            self?.currentTourWindow = nil
+            self?.tourCloseNotification = nil
+        }
     }
 
     #if DEBUG
