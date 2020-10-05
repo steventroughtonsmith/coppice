@@ -61,6 +61,14 @@ class DocumentWindowViewModel: NSObject {
         }
     }
 
+    #if TEST
+    var proEnabled: Bool = true
+    #else
+    var proEnabled: Bool {
+        return CoppiceSubscriptionManager.shared.activationResponse?.isActive == true
+    }
+    #endif
+
 
     //MARK: - Search
     @objc dynamic var searchString: String?
@@ -285,7 +293,7 @@ class DocumentWindowViewModel: NSObject {
 
     var folderForNewPages: Folder {
         guard
-            CoppiceSubscriptionManager.shared.activationResponse?.isActive == true,
+            self.proEnabled,
             let selection = self.sidebarSelection.last(where: { $0 != .canvases })
         else {
             return self.modelController.rootFolder

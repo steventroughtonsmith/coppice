@@ -11,6 +11,8 @@ import Foundation
 @testable import CoppiceCore
 
 class MockLayoutEngine: LayoutEngine {
+    var editable: Bool = true
+
     var selectedPages: [LayoutEnginePage] = [] {
         didSet {
             self.selectedPages.forEach { $0.selected = true }
