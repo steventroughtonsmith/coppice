@@ -234,6 +234,13 @@ class CanvasElementView: NSView  {
             return self
         }
         let hitView = super.hitTest(point)
+        if
+            let currentEvent = NSApplication.shared.currentEvent,
+            currentEvent.type == .scrollWheel,
+            currentEvent.modifierFlags.contains(.option)
+        {
+            return hitView
+        }
         if (hitView == self.titleView || hitView == self.contentContainer || hitView == self.backgroundView || hitView == self.disabledContentMouseStealer) {
             return self
         }
