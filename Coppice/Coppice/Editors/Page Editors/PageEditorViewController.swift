@@ -35,7 +35,7 @@ class PageEditorViewController: NSViewController {
         }
     }
 
-    var currentContentEditor: (Editor & NSViewController)? {
+    var currentContentEditor: (PageContentEditor & NSViewController)? {
         didSet {
             oldValue?.view.removeFromSuperview()
             oldValue?.removeFromParent()
@@ -61,6 +61,17 @@ class PageEditorViewController: NSViewController {
         if (!HelpTipPresenter.shared.showTip(with: .textPageLink, fromToolbarItemWithIdentifier: .linkToPage)) {
             HelpTipPresenter.shared.showTip(with: .textPageLink, fromView: self.view, preferredEdge: .maxX)
         }
+    }
+
+
+    /// Start an editing action with a certain point
+    /// - Parameter point: The point in the coordinates of this view controller
+    func startEditing(at point: CGPoint) {
+        self.currentContentEditor?.startEditing(at: point)
+    }
+
+    func stopEditing() {
+        self.currentContentEditor?.stopEditing()
     }
 }
 

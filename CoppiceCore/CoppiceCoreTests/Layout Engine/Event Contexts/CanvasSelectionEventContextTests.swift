@@ -182,6 +182,16 @@ class CanvasSelectionEventContextTests: EventContextTestBase {
     }
 
 
+    //MARK: - Editability
+    func test_editability_tellsLayoutEngineToStopEditingPagesOnMouseDown() throws {
+        let eventContext = CanvasSelectionEventContext()
+
+        eventContext.downEvent(at: CGPoint(x: 100, y: 100), modifiers: [], eventCount: 1, in: self.mockLayoutEngine)
+
+        XCTAssertTrue(self.mockLayoutEngine.stopEditingPagesMock.wasCalled)
+    }
+
+
 
 //    func test_selection_mouseUpOnCanvasDeselectsAllPagesIfMouseNotMoved() {
 //        self.page1.selected = true

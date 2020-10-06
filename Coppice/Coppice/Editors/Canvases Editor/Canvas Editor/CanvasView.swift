@@ -94,9 +94,10 @@ class CanvasView: NSView {
         self.draggingCursor = NSCursor.current
         self.window?.disableCursorRects()
 
+        self.window?.makeFirstResponder(self)
+
         let point = self.convert(event.locationInWindow, from: nil)
         self.layoutEngine?.downEvent(at: point, modifiers: event.layoutEventModifiers, eventCount: event.clickCount)
-        self.window?.makeFirstResponder(self)
     }
 
     override func mouseDragged(with event: NSEvent) {

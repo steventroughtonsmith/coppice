@@ -34,7 +34,7 @@ public class CanvasLayoutEngineEventContextFactory: LayoutEngineEventContextFact
 
         switch pageComponent {
         case .titleBar, .content:
-            return SelectAndMoveEventContext(page: page, editable: layoutEngine.editable)
+            return SelectAndMoveEventContext(page: page, editable: layoutEngine.editable, component: pageComponent)
         default:
             //Can only resize when editable
             return (layoutEngine.editable) ? ResizePageEventContext(page: page, component: pageComponent) : nil

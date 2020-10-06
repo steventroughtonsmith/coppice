@@ -32,6 +32,8 @@ public class LayoutEnginePage: Equatable {
         return (self.layoutEngine?.enabledPage == self)
     }
 
+    public var isEditing: Bool = false
+
     public var zIndex = -1
 
     public weak var layoutEngine: CanvasLayoutEngine? {

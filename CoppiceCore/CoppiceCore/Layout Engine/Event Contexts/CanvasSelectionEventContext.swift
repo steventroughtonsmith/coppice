@@ -19,6 +19,7 @@ class CanvasSelectionEventContext: CanvasMouseEventContext {
             layout.deselectAll()
         }
         self.originalSelection = layout.selectedPages
+        layout.stopEditingPages()
     }
 
     func draggedEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: LayoutEngine) {

@@ -283,7 +283,7 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
 }
 
 
-extension TextEditorViewController: Editor {
+extension TextEditorViewController: PageContentEditor {
     var inspectors: [Inspector] {
         return [self.textEditorInspectorViewController]
     }
@@ -298,6 +298,19 @@ extension TextEditorViewController: Editor {
             NSView.animate(withDuration: 0) {
                 self.view.layoutSubtreeIfNeeded()
             }
+        }
+    }
+
+    func startEditing(at point: CGPoint) {
+        let textViewPoint = self.editingTextView.convert(point, from: self.view)
+        let insertionPoint = self.editingTextView.characterIndexForInsertion(at: textViewPoint)
+        self.view.window?.makeFirstResponder(self.editingTextView)
+        self.editingTextView.setSelectedRange(NSRange(location: insertionPoint, length: 0))
+    }
+
+    func stopEditing() {
+        if (self.editingText) {
+            self.view.window?.makeFirstResponder(nil)
         }
     }
 }

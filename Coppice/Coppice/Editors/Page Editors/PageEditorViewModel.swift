@@ -35,7 +35,7 @@ class PageEditorViewModel: ViewModel {
         }
     }
 
-    var contentEditor: (Editor & NSViewController) {
+    var contentEditor: (PageContentEditor & NSViewController) {
         switch self.page.content.contentType {
         case .text:
             let viewModel = TextEditorViewModel(textContent: (self.page.content as! TextPageContent),

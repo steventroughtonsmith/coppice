@@ -1138,6 +1138,13 @@ class CanvasLayoutEngineTests: XCTestCase {
 
 
 private class TestCanvasView: CanvasLayoutView {
+    var startEditingPage: LayoutEnginePage?
+    var startEditingPoint: CGPoint?
+    func startEditing(_ page: LayoutEnginePage, at point: CGPoint) {
+        self.startEditingPage = page
+        self.startEditingPoint = point
+    }
+
     var context: CanvasLayoutEngine.LayoutContext?
     func layoutChanged(with context: CanvasLayoutEngine.LayoutContext) {
         self.context = context

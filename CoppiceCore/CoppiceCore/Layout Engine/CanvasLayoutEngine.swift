@@ -24,6 +24,8 @@ public struct LayoutEventModifiers: OptionSet {
 
 public protocol CanvasLayoutView: class {
     func layoutChanged(with context: CanvasLayoutEngine.LayoutContext)
+    func startEditing(_ page: LayoutEnginePage, at point: CGPoint)
+    func stopEditing(_ page: LayoutEnginePage)
     var viewPortFrame: CGRect { get }
 }
 
@@ -254,6 +256,7 @@ public class CanvasLayoutEngine: NSObject, LayoutEngine {
         return selectionChanged
     }
 
+    //MARK: - Editability
     public weak var enabledPage: LayoutEnginePage?
     private func updateEnabledPage() {
         guard self.editable, self.selectedPages.count == 1, let page = self.selectedPages.first else {
@@ -261,6 +264,32 @@ public class CanvasLayoutEngine: NSObject, LayoutEngine {
             return
         }
         self.enabledPage = page
+    }
+
+    var pageBeingEdited: LayoutEnginePage? {
+        didSet {
+            guard self.pageBeingEdited != oldValue else {
+                return
+            }
+            oldValue?.isEditing = false
+            self.pageBeingEdited?.isEditing = true
+        }
+    }
+
+    public func startEditing(_ page: LayoutEnginePage, at point: CGPoint) {
+        if let currentPage = self.pageBeingEdited, (currentPage != page) {
+            self.view?.stopEditing(page)
+        }
+        self.pageBeingEdited = page
+        self.view?.startEditing(page, at: point)
+    }
+
+    public func stopEditingPages() {
+        guard let page = self.pageBeingEdited else {
+            return
+        }
+        self.view?.stopEditing(page)
+        self.pageBeingEdited = nil
     }
 
 

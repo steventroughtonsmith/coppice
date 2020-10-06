@@ -141,14 +141,12 @@ class CanvasElementView: NSView  {
 
     private let shadowInsets = NSEdgeInsets(top: 5, left: 10, bottom: 10, right: 10)
 
-
     private func updateSubviews(with layoutPage: LayoutEnginePage) {
         self.titleView.frame = layoutPage.titleBarFrame
         self.contentContainer.frame = layoutPage.contentContainerFrame
         self.contentContainerShadow.frame = layoutPage.contentContainerFrame.insetBy(dx: -1, dy: -1)
         self.disabledContentMouseStealer.frame = layoutPage.contentContainerFrame
     }
-
 
     override func updateLayer() {
         super.updateLayer()

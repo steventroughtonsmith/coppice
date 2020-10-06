@@ -751,6 +751,18 @@ extension CanvasEditorViewController: CanvasLayoutView {
         self.layout()
     }
 
+    func startEditing(_ page: LayoutEnginePage, at point: CGPoint) {
+        guard let pageVC = self.pageViewController(for: page) else {
+            return
+        }
+        print("start editing at \(point)")
+        pageVC.startEditing(atPagePoint: pageVC.view.convert(point, from: self.canvasView))
+    }
+
+    func stopEditing(_ page: LayoutEnginePage) {
+        self.pageViewController(for: page)?.stopEditing()
+    }
+
     var viewPortFrame: CGRect {
         return self.scrollView.contentView.bounds
     }

@@ -49,4 +49,7 @@ public protocol LayoutEngine: class {
     func modified(_ pages: [LayoutEnginePage])
     func finishedModifying(_ pages: [LayoutEnginePage])
     func tellDelegateToRemove(_ pages: [LayoutEnginePage])
+
+    func startEditing(_ page: LayoutEnginePage, at point: CGPoint)
+    func stopEditingPages()
 }

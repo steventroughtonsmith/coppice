@@ -64,4 +64,14 @@ class MockLayoutEngine: LayoutEngine {
     func tellDelegateToRemove(_ pages: [LayoutEnginePage]) {
         self.tellDelegateToRemoveMock.called(withArguments: pages)
     }
+
+    let startEditingMock = MockDetails<(LayoutEnginePage, CGPoint), Void>()
+    func startEditing(_ page: LayoutEnginePage, at point: CGPoint) {
+        self.startEditingMock.called(withArguments: (page, point))
+    }
+
+    let stopEditingPagesMock = MockDetails<Void, Void>()
+    func stopEditingPages() {
+        self.stopEditingPagesMock.called()
+    }
 }

@@ -74,9 +74,19 @@ class ImageEditorViewController: NSViewController, NSMenuItemValidation, NSToolb
 }
 
 
-extension ImageEditorViewController: Editor {
+extension ImageEditorViewController: PageContentEditor {
     var inspectors: [Inspector] {
         return [self.imageEditorInspectorViewController]
+    }
+
+    func startEditing(at point: CGPoint) {
+        self.view.window?.makeFirstResponder(self.imageView)
+    }
+
+    func stopEditing() {
+        if (self.view.window?.firstResponder == self.imageView) {
+            self.view.window?.makeFirstResponder(nil)
+        }
     }
 }
 

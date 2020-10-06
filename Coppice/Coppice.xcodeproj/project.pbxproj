@@ -54,7 +54,6 @@
 		992A5CB322DDF53C0012CCB6 /* DebugPageEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992A5CB222DDF53C0012CCB6 /* DebugPageEditorViewModel.swift */; };
 		993600E224AE2A81002C86E4 /* ModelObjects+AppKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993600E124AE2A81002C86E4 /* ModelObjects+AppKit.swift */; };
 		993600E924AE5F1F002C86E4 /* TestLayoutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993600E824AE5F1F002C86E4 /* TestLayoutDelegate.swift */; };
-		993600EB24AE832F002C86E4 /* MockLayoutEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993600EA24AE832F002C86E4 /* MockLayoutEngine.swift */; };
 		993C0EE924B3A5C5009993D4 /* SourceListTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993C0EE824B3A5C5009993D4 /* SourceListTableCellView.swift */; };
 		993D2BD824127E29002E5BAC /* CanvasListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993D2BD624127E29002E5BAC /* CanvasListViewController.swift */; };
 		993D2BD924127E29002E5BAC /* CanvasListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 993D2BD724127E29002E5BAC /* CanvasListView.xib */; };
@@ -90,6 +89,7 @@
 		995F9305252B5B1B00A753E4 /* ColouredButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995F9304252B5B1B00A753E4 /* ColouredButtonCell.swift */; };
 		995F931D252B654A00A753E4 /* Sample Document.coppicedoc in Resources */ = {isa = PBXBuildFile; fileRef = 995F931C252B654A00A753E4 /* Sample Document.coppicedoc */; };
 		995F9324252B695400A753E4 /* ImageEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995F9323252B695400A753E4 /* ImageEditorView.swift */; };
+		995F9376252CB74200A753E4 /* PageContentEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995F9375252CB74100A753E4 /* PageContentEditor.swift */; };
 		996010F724F14FFA008B8F98 /* SpringLoadedTableRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996010F624F14FFA008B8F98 /* SpringLoadedTableRowView.swift */; };
 		9960CCE924B1EC1C001F092E /* MockEventContextFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9960CCE824B1EC1C001F092E /* MockEventContextFactory.swift */; };
 		996187F0249A5166007313BD /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996187EE249A5166007313BD /* PreferencesWindowController.swift */; };
@@ -432,7 +432,6 @@
 		992A5CB222DDF53C0012CCB6 /* DebugPageEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugPageEditorViewModel.swift; sourceTree = "<group>"; };
 		993600E124AE2A81002C86E4 /* ModelObjects+AppKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelObjects+AppKit.swift"; sourceTree = "<group>"; };
 		993600E824AE5F1F002C86E4 /* TestLayoutDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestLayoutDelegate.swift; sourceTree = "<group>"; };
-		993600EA24AE832F002C86E4 /* MockLayoutEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLayoutEngine.swift; sourceTree = "<group>"; };
 		993C0EE824B3A5C5009993D4 /* SourceListTableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceListTableCellView.swift; sourceTree = "<group>"; };
 		993D2BD624127E29002E5BAC /* CanvasListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasListViewController.swift; sourceTree = "<group>"; };
 		993D2BD724127E29002E5BAC /* CanvasListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CanvasListView.xib; sourceTree = "<group>"; };
@@ -467,6 +466,7 @@
 		995F9304252B5B1B00A753E4 /* ColouredButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColouredButtonCell.swift; sourceTree = "<group>"; };
 		995F931C252B654A00A753E4 /* Sample Document.coppicedoc */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "Sample Document.coppicedoc"; sourceTree = "<group>"; };
 		995F9323252B695400A753E4 /* ImageEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorView.swift; sourceTree = "<group>"; };
+		995F9375252CB74100A753E4 /* PageContentEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageContentEditor.swift; sourceTree = "<group>"; };
 		996010F624F14FFA008B8F98 /* SpringLoadedTableRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpringLoadedTableRowView.swift; sourceTree = "<group>"; };
 		9960CCE824B1EC1C001F092E /* MockEventContextFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEventContextFactory.swift; sourceTree = "<group>"; };
 		996187EE249A5166007313BD /* PreferencesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
@@ -974,6 +974,7 @@
 			children = (
 				99FFF9CF2350BAF500EF02A0 /* PageEditorViewModel.swift */,
 				99FFF9CD2350BAE400EF02A0 /* PageEditorViewController.swift */,
+				995F9375252CB74100A753E4 /* PageContentEditor.swift */,
 				99C8650723016E90004C7B89 /* Text Content Editor */,
 				99C8651D2302E216004C7B89 /* Image Content Editor */,
 			);
@@ -1111,7 +1112,6 @@
 				997711C9239E9AF400FCC8C7 /* MockDocumentWindowViewModel.swift */,
 				99DA84EB245718D900F19917 /* MockBubblesModelController.swift */,
 				9970976C23AD1A7A00CD189B /* MockPageContent.swift */,
-				993600EA24AE832F002C86E4 /* MockLayoutEngine.swift */,
 				993600E824AE5F1F002C86E4 /* TestLayoutDelegate.swift */,
 				9960CCE824B1EC1C001F092E /* MockEventContextFactory.swift */,
 			);
@@ -2078,6 +2078,7 @@
 				993D2BDB24127E3B002E5BAC /* CanvasListViewModel.swift in Sources */,
 				999EA6B32436097500BF254E /* SidebarViewModel.swift in Sources */,
 				998CF0FC24ACF6A800EA26A6 /* NSBezierPath+M3Extensions.swift in Sources */,
+				995F9376252CB74200A753E4 /* PageContentEditor.swift in Sources */,
 				997344D62432236300DF4EDB /* PageLinkController.swift in Sources */,
 				99FDF129241FD52800AF1E51 /* CanvasesViewModel.swift in Sources */,
 				9973737A2423AD6C000D5F21 /* NoEditorViewController.swift in Sources */,
@@ -2177,7 +2178,6 @@
 				993600E924AE5F1F002C86E4 /* TestLayoutDelegate.swift in Sources */,
 				999EA6E7244CA88600BF254E /* SourceListViewModelTypesTests.swift in Sources */,
 				99A0B85E238D730E005FCF25 /* TextEditorInspectorTypesTests.swift in Sources */,
-				993600EB24AE832F002C86E4 /* MockLayoutEngine.swift in Sources */,
 				99A0B85C238D72F0005FCF25 /* TextEditorAttributesTests.swift in Sources */,
 				999EA6CD243CCCE200BF254E /* XCTestExtensions.swift in Sources */,
 				99868F4723995B4F009AC0F7 /* TextLinkFinderTests.swift in Sources */,
