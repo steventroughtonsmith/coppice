@@ -8,6 +8,13 @@
 
 import Foundation
 
+public protocol LayoutEnginePageView: AnyObject {
+    func startEditing(atContentPoint point: CGPoint)
+    func stopEditing()
+    func isLink(atContentPoint point: CGPoint) -> Bool
+    func openLink(atContentPoint point: CGPoint)
+}
+
 /// A class representing the layout information for a page inside the LayoutEngine
 ///
 /// The main frame that is manipulated is the contentFrame, which is what is persisted.
@@ -41,6 +48,8 @@ public class LayoutEnginePage: Equatable {
             self.recalculateEdgeFromParent()
         }
     }
+
+    public weak var view: LayoutEnginePageView?
 
     public var configuration: CanvasLayoutEngine.Configuration? {
         return self.layoutEngine?.configuration
@@ -172,6 +181,14 @@ public class LayoutEnginePage: Equatable {
 
 
     //MARK: - Layout Frames
+    func convertPointToContentSpace(_ point: CGPoint) -> CGPoint {
+        guard let layoutEngine = self.layoutEngine else {
+            return point
+        }
+        let contentOrigin = layoutEngine.convertPointToCanvasSpace(self.contentFrame.origin)
+        return point.minus(contentOrigin)
+    }
+
     private func layoutFrameMargins(for config: CanvasLayoutEngine.Configuration) -> CanvasLayoutMargins {
         return config.page.shadowOffset.adding(self.borderMargins(for: config))
     }

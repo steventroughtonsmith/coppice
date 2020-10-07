@@ -50,6 +50,6 @@ public protocol LayoutEngine: class {
     func finishedModifying(_ pages: [LayoutEnginePage])
     func tellDelegateToRemove(_ pages: [LayoutEnginePage])
 
-    func startEditing(_ page: LayoutEnginePage, at point: CGPoint)
+    func startEditing(_ page: LayoutEnginePage, atContentPoint point: CGPoint)
     func stopEditingPages()
 }

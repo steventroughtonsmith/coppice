@@ -24,8 +24,6 @@ public struct LayoutEventModifiers: OptionSet {
 
 public protocol CanvasLayoutView: class {
     func layoutChanged(with context: CanvasLayoutEngine.LayoutContext)
-    func startEditing(_ page: LayoutEnginePage, at point: CGPoint)
-    func stopEditing(_ page: LayoutEnginePage)
     var viewPortFrame: CGRect { get }
 }
 
@@ -276,19 +274,19 @@ public class CanvasLayoutEngine: NSObject, LayoutEngine {
         }
     }
 
-    public func startEditing(_ page: LayoutEnginePage, at point: CGPoint) {
+    public func startEditing(_ page: LayoutEnginePage, atContentPoint point: CGPoint) {
         if let currentPage = self.pageBeingEdited, (currentPage != page) {
-            self.view?.stopEditing(page)
+            page.view?.stopEditing()
         }
         self.pageBeingEdited = page
-        self.view?.startEditing(page, at: point)
+        page.view?.startEditing(atContentPoint: point)
     }
 
     public func stopEditingPages() {
         guard let page = self.pageBeingEdited else {
             return
         }
-        self.view?.stopEditing(page)
+        page.view?.stopEditing()
         self.pageBeingEdited = nil
     }
 

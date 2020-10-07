@@ -125,19 +125,7 @@ class CanvasPageViewController: NSViewController, CanvasPageView {
 
         self.view.layer?.add(animation, forKey: "flashAnimation")
     }
-
-    //MARK: - Editability
-    func startEditing(atPagePoint point: CGPoint) {
-        guard let pageEditor = self.viewModel.pageEditor else {
-            return
-        }
-        pageEditor.startEditing(at: pageEditor.view.convert(point, from: self.view))
-    }
-
-    func stopEditing() {
-        self.viewModel.pageEditor?.stopEditing()
-    }
-
+    
 
     //MARK: - Accessibility
     func setupAccessibility() {

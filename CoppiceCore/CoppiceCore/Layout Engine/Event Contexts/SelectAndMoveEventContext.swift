@@ -41,10 +41,13 @@ class SelectAndMoveEventContext: CanvasMouseEventContext {
                 layout.select(pages, extendingSelection: false)
             } else if (self.editable) {
                 layout.select([self.page], extendingSelection: false)
-                layout.startEditing(self.page, at: location)
+                layout.startEditing(self.page, atContentPoint: self.page.convertPointToContentSpace(location))
                 self.didStartEditing = true
             }
             self.didDoubleClick = true
+        }
+        else if (self.page.view?.isLink(atContentPoint: self.page.convertPointToContentSpace(location)) == true) {
+            self.page.view?.openLink(atContentPoint: self.page.convertPointToContentSpace(location))
         }
         //Otherwise we want to select just the clicked page if it isn't already selected (if it is then we assume the user is about the drag the selection
         else if (self.page.selected == false) {

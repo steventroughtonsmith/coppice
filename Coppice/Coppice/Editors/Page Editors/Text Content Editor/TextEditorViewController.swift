@@ -313,6 +313,27 @@ extension TextEditorViewController: PageContentEditor {
             self.view.window?.makeFirstResponder(nil)
         }
     }
+
+    func isLink(at point: CGPoint) -> Bool {
+        let textViewPoint = self.editingTextView.convert(point, from: self.view)
+        let insertionPoint = self.editingTextView.characterIndexForInsertion(at: textViewPoint)
+        guard let attributes = self.editingTextView.textStorage?.attributes(at: insertionPoint, effectiveRange: nil) else {
+            return false
+        }
+        return attributes[.link] != nil
+    }
+
+    func openLink(at point: CGPoint) {
+        let textViewPoint = self.editingTextView.convert(point, from: self.view)
+        let insertionPoint = self.editingTextView.characterIndexForInsertion(at: textViewPoint)
+        guard
+            let attributes = self.editingTextView.textStorage?.attributes(at: insertionPoint, effectiveRange: nil),
+            let link = attributes[.link]
+        else {
+            return
+        }
+        self.editingTextView.clicked(onLink: link, at: insertionPoint)
+    }
 }
 
 

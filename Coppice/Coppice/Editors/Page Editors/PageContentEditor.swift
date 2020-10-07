@@ -11,4 +11,14 @@ import Foundation
 protocol PageContentEditor: Editor {
     func startEditing(at point: CGPoint)
     func stopEditing()
+    func isLink(at point: CGPoint) -> Bool
+    func openLink(at point: CGPoint)
+}
+
+extension PageContentEditor {
+    func isLink(at point: CGPoint) -> Bool {
+        return false
+    }
+
+    func openLink(at point: CGPoint) {}
 }

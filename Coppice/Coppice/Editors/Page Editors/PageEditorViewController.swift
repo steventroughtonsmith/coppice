@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import CoppiceCore
 
 class PageEditorViewController: NSViewController {
     let viewModel: PageEditorViewModel
@@ -64,15 +65,7 @@ class PageEditorViewController: NSViewController {
     }
 
 
-    /// Start an editing action with a certain point
-    /// - Parameter point: The point in the coordinates of this view controller
-    func startEditing(at point: CGPoint) {
-        self.currentContentEditor?.startEditing(at: point)
-    }
 
-    func stopEditing() {
-        self.currentContentEditor?.stopEditing()
-    }
 }
 
 
@@ -87,5 +80,35 @@ extension PageEditorViewController: Editor {
 extension PageEditorViewController: PageEditorView {
     func contentChanged() {
         self.currentContentEditor = self.viewModel.contentEditor
+    }
+}
+
+
+extension PageEditorViewController: LayoutEnginePageView {
+    /// Start an editing action with a certain point
+    /// - Parameter point: The point in the coordinates of this view controller
+    func startEditing(atContentPoint point: CGPoint) {
+        //We need to flip the point from the canvas view
+        var flippedPoint = point
+        flippedPoint.y = self.view.frame.height - flippedPoint.y
+        self.currentContentEditor?.startEditing(at: flippedPoint)
+    }
+
+    func stopEditing() {
+        self.currentContentEditor?.stopEditing()
+    }
+
+    func isLink(atContentPoint point: CGPoint) -> Bool {
+        //We need to flip the point from the canvas view
+        var flippedPoint = point
+        flippedPoint.y = self.view.frame.height - flippedPoint.y
+        return self.currentContentEditor?.isLink(at: flippedPoint) ?? false
+    }
+
+    func openLink(atContentPoint point: CGPoint) {
+        //We need to flip the point from the canvas view
+        var flippedPoint = point
+        flippedPoint.y = self.view.frame.height - flippedPoint.y
+        self.currentContentEditor?.openLink(at: flippedPoint)
     }
 }
