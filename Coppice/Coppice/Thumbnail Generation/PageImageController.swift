@@ -65,6 +65,7 @@ class PageImageController: NSObject {
 
         let editorVM = PageEditorViewModel(page: page, documentWindowViewModel: documentViewModel)
         let contentEditor = editorVM.contentEditor
+        contentEditor.simulateInCanvas = true
         let editorView = contentEditor.view
         editorView.wantsLayer = true
         editorView.layer?.cornerRadius = 5

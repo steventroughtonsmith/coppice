@@ -13,6 +13,8 @@ protocol PageContentEditor: Editor {
     func stopEditing()
     func isLink(at point: CGPoint) -> Bool
     func openLink(at point: CGPoint)
+
+    var simulateInCanvas: Bool { get set }
 }
 
 extension PageContentEditor {

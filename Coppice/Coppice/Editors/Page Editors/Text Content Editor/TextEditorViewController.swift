@@ -46,10 +46,13 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
         self.scrollView.contentInsets = GlobalConstants.textEditorInsets
 
         self.editingTextView.textStorage?.delegate = self
+
+        self.updatePlaceholder()
     }
 
     override func viewDidAppear() {
         self.highlight(self.viewModel.highlightedRange)
+        self.updatePlaceholder()
         super.viewDidAppear()
     }
 
@@ -197,6 +200,13 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
     }
 
 
+    //MARK: - Placeholder
+    private func updatePlaceholder() {
+        self.placeHolderLabel.stringValue = self.isInCanvas ? NSLocalizedString("Double-click to start writing", comment: "Text Editor on canvas placeholder")
+                                                            : NSLocalizedString("Click to start writing", comment: "Text Editor placeholder")
+    }
+
+
     //MARK: - Update Model
     private var editingText = false {
         didSet {
@@ -276,8 +286,13 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
         }
         self.editingTextView.showFindIndicator(for: highlightRange)
     }
+
+    var simulateInCanvas: Bool = false
     
     var isInCanvas: Bool {
+        if self.simulateInCanvas {
+            return true
+        }
         return (self.parentEditor as? PageEditorViewController)?.isInCanvas ?? false
     }
 }
@@ -317,6 +332,9 @@ extension TextEditorViewController: PageContentEditor {
     func isLink(at point: CGPoint) -> Bool {
         let textViewPoint = self.editingTextView.convert(point, from: self.view)
         let insertionPoint = self.editingTextView.characterIndexForInsertion(at: textViewPoint)
+        guard (self.editingTextView.textStorage?.length ?? 0) > insertionPoint else {
+            return false
+        }
         guard let attributes = self.editingTextView.textStorage?.attributes(at: insertionPoint, effectiveRange: nil) else {
             return false
         }

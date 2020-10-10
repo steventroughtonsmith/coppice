@@ -10,6 +10,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="ImageEditorViewController" customModule="Coppice" customModuleProvider="target">
             <connections>
                 <outlet property="imageView" destination="0Hj-D9-Ryo" id="ToD-qa-1OG"/>
+                <outlet property="placeholderLabel" destination="VxA-Ei-f54" id="fsm-OG-6eL"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
         </customObject>

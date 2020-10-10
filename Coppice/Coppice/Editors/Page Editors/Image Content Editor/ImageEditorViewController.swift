@@ -29,6 +29,11 @@ class ImageEditorViewController: NSViewController, NSMenuItemValidation, NSToolb
         return ImageEditorInspectorViewController(viewModel: ImageEditorInspectorViewModel(imageContent: self.viewModel.imageContent, modelController: self.viewModel.modelController))
     }()
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.updatePlaceholderLabel()
+    }
+
     override func viewWillAppear() {
         super.viewWillAppear()
 
@@ -36,6 +41,11 @@ class ImageEditorViewController: NSViewController, NSMenuItemValidation, NSToolb
         self.imageDescriptionObserver = self.viewModel.publisher(for: \.accessibilityDescription).sink { [weak self] description in
             self?.imageView.setAccessibilityValueDescription(description)
         }
+    }
+
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        self.updatePlaceholderLabel()
     }
 
 
@@ -47,7 +57,12 @@ class ImageEditorViewController: NSViewController, NSMenuItemValidation, NSToolb
         self.imageDescriptionObserver = nil
     }
 
+    var simulateInCanvas: Bool = false
+
     var isInCanvas: Bool {
+        if self.simulateInCanvas {
+            return true
+        }
         return (self.parentEditor as? PageEditorViewController)?.isInCanvas ?? false
     }
 
@@ -71,6 +86,17 @@ class ImageEditorViewController: NSViewController, NSMenuItemValidation, NSToolb
         }
         return true
     }
+
+
+    @IBOutlet var placeholderLabel: NSTextField!
+    private func updatePlaceholderLabel() {
+        if (self.view.window?.firstResponder == self.imageView) || !self.isInCanvas {
+            self.placeholderLabel.stringValue = NSLocalizedString("Drag or paste an image here", comment: "Image Editor default placeholder")
+        }
+        else {
+            self.placeholderLabel.stringValue = NSLocalizedString("Double-click to edit image", comment: "Image Editor on canvas placeholder")
+        }
+    }
 }
 
 
@@ -81,12 +107,14 @@ extension ImageEditorViewController: PageContentEditor {
 
     func startEditing(at point: CGPoint) {
         self.view.window?.makeFirstResponder(self.imageView)
+        self.updatePlaceholderLabel()
     }
 
     func stopEditing() {
         if (self.view.window?.firstResponder == self.imageView) {
             self.view.window?.makeFirstResponder(nil)
         }
+        self.updatePlaceholderLabel()
     }
 }
 
