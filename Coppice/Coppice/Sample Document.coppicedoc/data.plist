@@ -327,9 +327,9 @@
 				<string>thumbnail</string>
 			</dict>
 			<key>title</key>
-			<string>New Canvas</string>
+			<string>Welcome</string>
 			<key>viewPort</key>
-			<string>{{-685, -464}, {1562.5, 1236}}</string>
+			<string>{{-685, -464}, {1244, 854}}</string>
 			<key>zoomFactor</key>
 			<real>1</real>
 		</dict>
