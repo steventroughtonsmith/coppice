@@ -66,6 +66,16 @@ class WelcomeWindowController: NSWindowController {
             self.window?.close()
         }
     }
+
+    @IBAction func revealInFinder(_ sender: Any) {
+        let row = self.recentTable.clickedRow
+        guard row > -1 else {
+            return
+        }
+
+        let documentURL = CoppiceDocumentController.shared.recentDocumentURLs[row]
+        NSWorkspace.shared.selectFile(documentURL.path, inFileViewerRootedAtPath: "")
+    }
 }
 
 extension WelcomeWindowController: NSTableViewDataSource {

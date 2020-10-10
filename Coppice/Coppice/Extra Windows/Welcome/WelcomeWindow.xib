@@ -203,6 +203,7 @@
                                     <connections>
                                         <action trigger="doubleAction" selector="openRecentDocument:" target="-2" id="X3I-Tq-SwQ"/>
                                         <outlet property="dataSource" destination="-2" id="G2b-YR-1PH"/>
+                                        <outlet property="menu" destination="VEE-1N-Mbq" id="itz-W4-IkX"/>
                                     </connections>
                                 </tableView>
                             </subviews>
@@ -247,6 +248,17 @@
             <point key="canvasLocation" x="232" y="80"/>
         </window>
         <userDefaultsController representsSharedInstance="YES" id="qdL-T2-Xpj"/>
+        <menu id="VEE-1N-Mbq">
+            <items>
+                <menuItem title="Reveal in Finder" id="OXT-hC-cFg">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="revealInFinder:" target="-2" id="M8s-ov-TX3"/>
+                    </connections>
+                </menuItem>
+            </items>
+            <point key="canvasLocation" x="44" y="402"/>
+        </menu>
     </objects>
     <resources>
         <image name="NSApplicationIcon" width="32" height="32"/>
