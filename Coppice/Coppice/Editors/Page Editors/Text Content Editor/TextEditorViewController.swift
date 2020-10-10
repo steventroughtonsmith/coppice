@@ -163,6 +163,17 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
         return true
     }
 
+    @IBOutlet var contextMenu: NSMenu!
+    @IBOutlet var createLinkedPageMenu: NSMenu! {
+        didSet {
+            self.createLinkedPageMenu.delegate = self.newPageMenuDelegate
+        }
+    }
+
+    @IBAction func addExternalLink(_ sender: Any?) {
+        self.editingTextView.orderFrontLinkPanel(sender)
+    }
+
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         if menuItem.action == #selector(toggleBold(_:)) {
             return self.validateItem(menuItem, keyPath: \.isBold, trait: .boldFontMask)
@@ -402,13 +413,27 @@ extension TextEditorViewController: NSTextStorageDelegate {
 
 extension TextEditorViewController: NSTextViewDelegate {
     func textView(_ view: NSTextView, menu: NSMenu, for event: NSEvent, at charIndex: Int) -> NSMenu? {
-        menu.addItem(NSMenuItem.separator())
-        menu.addItem(withTitle: "Link to Page…", action: #selector(linkToPage(_:)), keyEquivalent: "")
+        var insertionIndex = menu.indexOfItem(withTarget: nil, andAction: #selector(NSTextView.paste(_:)))
+        guard insertionIndex != -1 else {
+            return menu
+        }
 
-        let createPageItem = menu.addItem(withTitle: "Create New Linked Page", action: nil, keyEquivalent: "")
-        let createPageMenu = NSMenu()
-        createPageMenu.delegate = self.newPageMenuDelegate
-        createPageItem.submenu = createPageMenu
+        insertionIndex += 1 //Check next
+        while insertionIndex < menu.items.count {
+            if menu.item(at: insertionIndex)?.isSeparatorItem == true {
+                break
+            }
+        }
+        insertionIndex += 1 //Insert after separator
+
+        for item in self.contextMenu.items {
+            guard let copiedItem = item.copy() as? NSMenuItem else {
+                continue
+            }
+            menu.insertItem(copiedItem, at: insertionIndex)
+            insertionIndex += 1
+        }
+        menu.insertItem(NSMenuItem.separator(), at: insertionIndex)
         return menu
     }
 

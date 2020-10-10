@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17154" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17505"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TextEditorViewController" customModule="Coppice" customModuleProvider="target">
             <connections>
+                <outlet property="contextMenu" destination="IOB-is-6rC" id="HdU-Yv-MbH"/>
+                <outlet property="createLinkedPageMenu" destination="qi8-Qy-8DJ" id="v4S-Yj-Xwb"/>
                 <outlet property="editingTextView" destination="7Lj-ak-caX" id="chh-rV-jdO"/>
                 <outlet property="placeHolderLabel" destination="vqL-7l-juX" id="R00-mT-Ijb"/>
                 <outlet property="scrollView" destination="kjQ-m1-j9L" id="bI2-A3-M7N"/>
@@ -78,5 +80,27 @@
             <point key="canvasLocation" x="139" y="287"/>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="zLC-sP-eAX"/>
+        <menu id="IOB-is-6rC">
+            <items>
+                <menuItem title="Link to Page…" id="rtx-II-Apl">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="linkToPage:" target="-1" id="izl-Lz-8X7"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Create New Linked Page" id="6lh-7T-bec">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Create New Linked Page" id="qi8-Qy-8DJ"/>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="T54-md-2Zu"/>
+                <menuItem title="Add External Link…" id="Vbd-5V-wrV">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="addExternalLink:" target="-2" id="At6-Ul-Bjp"/>
+                    </connections>
+                </menuItem>
+            </items>
+            <point key="canvasLocation" x="-53" y="-166"/>
+        </menu>
     </objects>
 </document>
