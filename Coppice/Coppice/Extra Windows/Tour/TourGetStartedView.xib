@@ -10,6 +10,7 @@
             <connections>
                 <outlet property="titleLabel" destination="vr0-15-9aM" id="o5v-KF-Yrq"/>
                 <outlet property="view" destination="Odm-Ds-XH5" id="hSh-eo-hNx"/>
+                <outlet property="viewDocumentButton" destination="8iZ-Ox-dLh" id="0vw-Q6-Dlo"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>

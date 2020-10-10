@@ -20,7 +20,16 @@ class TourGetStartedViewController: TourPanelViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do view setup here.
+        let localizedTitle = NSLocalizedString("View Sample Document…", comment: "View sample document tour string")
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.alignment = .center
+        self.viewDocumentButton.attributedTitle = NSAttributedString(string: localizedTitle, attributes: [
+            .font: NSFont.systemFont(ofSize: NSFont.systemFontSize),
+            .foregroundColor: NSColor.white,
+            .paragraphStyle: paragraph
+        ])
     }
-    
+
+    @IBOutlet var viewDocumentButton: NSButton!
+
 }

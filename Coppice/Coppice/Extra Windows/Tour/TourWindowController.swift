@@ -30,31 +30,34 @@ class TourWindowController: NSWindowController {
         self.contentViewController?.addChild(welcome)
         self.panelContainer.addSubview(welcome.view)
         NSApp.setAccessibilityApplicationFocusedUIElement(self.tourPanels.first!.titleLabel.cell)
+        self.updateContinueButton()
     }
 
-    override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
-        var keyPaths = super.keyPathsForValuesAffectingValue(forKey: key)
-        if (key == #keyPath(continueButtonTitle)) {
-            keyPaths.insert("currentPanelIndex")
+    @objc dynamic private var currentPanelIndex: Int = 0 {
+        didSet {
+            self.updateContinueButton()
         }
-        return keyPaths
     }
-
-    @objc dynamic private var currentPanelIndex: Int = 0
 
     private var isLastPanel: Bool {
         return (self.currentPanelIndex == (self.tourPanels.count - 1))
     }
-
-
-    @objc dynamic var continueButtonTitle: String {
-        if self.isLastPanel {
-            return NSLocalizedString("Get Started", comment: "Tour Get Started Button Title")
-        }
-        return NSLocalizedString("Continue", comment: "Tour Continue Button Title")
-    }
     
     @IBOutlet weak var continueButton: NSButton!
+    func updateContinueButton() {
+        let localizedTitle = self.isLastPanel ? NSLocalizedString("Get Started", comment: "Tour Get Started Button Title")
+                                              : NSLocalizedString("Continue", comment: "Tour Continue Button Title")
+
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.alignment = .center
+        self.continueButton.attributedTitle = NSAttributedString(string: localizedTitle, attributes: [
+            .font: NSFont.systemFont(ofSize: NSFont.systemFontSize),
+            .foregroundColor: NSColor.white,
+            .paragraphStyle: paragraph
+        ])
+    }
+
+
     @IBOutlet weak var panelContainer: NSView!
     private var isAnimatingPanel = false
     @IBAction func continueClicked(_ sender: Any) {
