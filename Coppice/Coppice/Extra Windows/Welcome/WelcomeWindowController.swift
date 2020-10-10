@@ -20,6 +20,8 @@ class WelcomeWindowController: NSWindowController {
             self.buttonStackView.setCustomSpacing(30, after: newView)
         }
 
+        self.window?.isMovableByWindowBackground = true
+
         self.setupVersionLabel()
     }
 
