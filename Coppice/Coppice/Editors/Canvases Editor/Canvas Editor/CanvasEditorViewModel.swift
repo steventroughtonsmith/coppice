@@ -211,6 +211,12 @@ class CanvasEditorViewModel: ViewModel {
         self.updatePages()
     }
 
+    func newPage(of type: PageContentType, centredOn point: CGPoint? = nil) {
+        self.modelController.createPage(ofType: type, in: self.documentWindowViewModel.folderForNewPages) { (page) in
+            self.canvas.addPages([page], centredOn: point)
+        }
+    }
+
     func addPage(at link: PageLink, centredOn point: CGPoint? = nil) {
         for canvasPage in self.modelController.openPage(at: link, on: self.canvas) {
             self.view?.flash(canvasPage)

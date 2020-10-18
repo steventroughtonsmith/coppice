@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17154" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -12,10 +12,12 @@
                 <outlet property="bottomBarConstraint" destination="cIE-Y9-6bZ" id="Aip-DH-S2N"/>
                 <outlet property="canvasView" destination="PUw-B3-8ie" id="pZV-PX-WgV"/>
                 <outlet property="emptyStateView" destination="dCb-kT-jJL" id="gC8-g4-rny"/>
+                <outlet property="newPageMenuDelegate" destination="FiU-zh-H84" id="9BY-Iy-Nav"/>
                 <outlet property="proImageView" destination="ISC-P6-UI7" id="GC8-ow-0OZ"/>
                 <outlet property="scrollView" destination="WXD-co-iCD" id="Unx-zF-neD"/>
                 <outlet property="toggleCanvasListButton" destination="g2M-Yk-OJX" id="Xs1-6d-0gg"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+                <outlet property="zoomContextMenu" destination="I9j-mv-Yz8" id="Jqa-aD-8Pr"/>
                 <outlet property="zoomControl" destination="7ch-X7-loO" id="eBK-wO-l4u"/>
             </connections>
         </customObject>
@@ -99,6 +101,9 @@
                                     <view id="PUw-B3-8ie" customClass="CanvasView" customModule="Coppice" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="746" height="425"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <connections>
+                                            <outlet property="menu" destination="SlF-ag-V5X" id="ikr-zs-s4C"/>
+                                        </connections>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" name="CanvasBackground"/>
@@ -148,9 +153,6 @@
                                     </menu>
                                 </popUpButtonCell>
                                 <accessibility description="Canvas Zoom"/>
-                                <connections>
-                                    <action selector="zoomControlChanged:" target="-2" id="sSX-YU-klR"/>
-                                </connections>
                             </popUpButton>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="g2M-Yk-OJX">
                                 <rect key="frame" x="8" y="5" width="16" height="14"/>
@@ -221,9 +223,34 @@
             </constraints>
             <point key="canvasLocation" x="273" y="464.5"/>
         </customView>
+        <menu id="SlF-ag-V5X">
+            <items>
+                <menuItem title="New Page" id="2wj-mP-h3q">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="New Page" id="Jfl-E4-gyy">
+                        <connections>
+                            <outlet property="delegate" destination="FiU-zh-H84" id="RI7-NZ-QRu"/>
+                        </connections>
+                    </menu>
+                </menuItem>
+                <menuItem title="Add Page…" id="Esz-yn-4tU">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="addPageToCanvas:" target="-1" id="BS3-Hn-1Ss"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="a1Q-2r-p85"/>
+                <menuItem title="Zoom" id="iSN-xH-Uro">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Zoom" id="I9j-mv-Yz8"/>
+                </menuItem>
+            </items>
+            <point key="canvasLocation" x="-34" y="-416"/>
+        </menu>
+        <customObject id="FiU-zh-H84" customClass="NewPageMenuDelegate" customModule="Coppice" customModuleProvider="target"/>
     </objects>
     <resources>
-        <image name="ToggleCanvasList" width="16" height="14"/>
+        <image name="ToggleCanvasList" width="16" height="13"/>
         <namedColor name="CanvasBackground">
             <color red="0.88235294117647056" green="0.8901960784313725" blue="0.90588235294117647" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

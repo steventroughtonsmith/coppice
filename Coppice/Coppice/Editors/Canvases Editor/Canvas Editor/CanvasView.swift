@@ -88,6 +88,7 @@ class CanvasView: NSView {
 
 
     //MARK: - Events
+    var currentClickLocation: CGPoint?
     var draggingCursor: NSCursor?
     override func mouseDown(with event: NSEvent) {
         //We need to save the cursor so we can force it remain the same during a drag
@@ -97,6 +98,15 @@ class CanvasView: NSView {
         self.window?.makeFirstResponder(self)
 
         let point = self.convert(event.locationInWindow, from: nil)
+        self.currentClickLocation = point
+        //We need to support control click for context menus
+        if (self.hitTest(point) == self.pageLayer) {
+            if (event.modifierFlags.contains(.control)) {
+                self.showContextMenu(with: event)
+                return
+            }
+        }
+
         self.layoutEngine?.downEvent(at: point, modifiers: event.layoutEventModifiers, eventCount: event.clickCount)
     }
 
@@ -111,6 +121,7 @@ class CanvasView: NSView {
         self.draggingCursor = nil
         self.window?.enableCursorRects()
         let point = self.convert(event.locationInWindow, from: nil)
+        self.currentClickLocation = nil
         self.layoutEngine?.upEvent(at: point, modifiers: event.layoutEventModifiers, eventCount: event.clickCount)
         self.stopAutoscrolling()
     }
@@ -120,6 +131,16 @@ class CanvasView: NSView {
 
         self.updateCursor(forPageAt: point)
         self.layoutEngine?.moveEvent(at: point, modifiers: event.layoutEventModifiers)
+    }
+
+    override func rightMouseDown(with event: NSEvent) {
+        self.currentClickLocation = self.convert(event.locationInWindow, from: nil)
+        super.rightMouseDown(with: event)
+    }
+
+    override func rightMouseUp(with event: NSEvent) {
+        self.currentClickLocation = nil
+        super.rightMouseUp(with: event)
     }
 
     override func keyDown(with event: NSEvent) {
@@ -398,6 +419,15 @@ class CanvasView: NSView {
             NSCursor.arrow.set()
             self.currentCursor = nil
         }
+    }
+
+    //MARK: - Context menu
+    private func showContextMenu(with event: NSEvent) {
+        guard let menu = self.menu(for: event) else {
+            return
+        }
+
+        NSMenu.popUpContextMenu(menu, with: event, for: self)
     }
 
 

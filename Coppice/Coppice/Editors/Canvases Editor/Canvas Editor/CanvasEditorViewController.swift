@@ -113,6 +113,8 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
 
         self.setupAccessibility()
         self.setupPro()
+
+        self.newPageMenuDelegate.action = #selector(newPageFromContextMenu(_:))
     }
 
     var enabled: Bool = true
@@ -478,6 +480,7 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
 
     //MARK: - Zooming
     @IBOutlet weak var zoomControl: NSPopUpButton!
+    @IBOutlet weak var zoomContextMenu: NSMenu!
 
     @IBAction func zoomIn(_ sender: Any) {
         self.viewModel.zoomIn()
@@ -498,16 +501,29 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
         self.layoutEngine.viewPortChanged()
     }
 
+    lazy var zoomMenuDelegate: ZoomMenuDelegate = {
+        let zoomMenuDelegate = ZoomMenuDelegate()
+        zoomMenuDelegate.zoomLevels = self.viewModel.zoomLevels
+        return zoomMenuDelegate
+    }()
+
     private func updateZoomControl() {
-        self.zoomControl.removeAllItems()
-        for item in self.viewModel.zoomLevels {
-            self.zoomControl.addItem(withTitle: "\(item)%")
-        }
+        self.zoomControl.menu?.delegate = self.zoomMenuDelegate
+        self.zoomContextMenu.delegate = self.zoomMenuDelegate
+
+        self.zoomMenuDelegate.selectedLevel = self.viewModel.selectedZoomLevel
         self.zoomControl.selectItem(at: self.viewModel.selectedZoomLevel)
     }
 
-    @IBAction func zoomControlChanged(_ sender: Any?) {
-        self.viewModel.selectedZoomLevel = self.zoomControl.indexOfSelectedItem
+    @IBAction func zoomControlChanged(_ sender: NSMenuItem?) {
+        guard
+            let menuItem = sender,
+            let index = menuItem.menu?.index(of: menuItem)
+        else {
+            return
+        }
+
+        self.viewModel.selectedZoomLevel = index
     }
 
     private var zoomObservation: AnyCancellable!
@@ -536,13 +552,33 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
 
 
     //MARK: - Menu Items
+    @IBOutlet var newPageMenuDelegate: NewPageMenuDelegate!
+    @IBAction func newPageFromContextMenu(_ sender: NSMenuItem?) {
+        guard
+            let rawType = sender?.representedObject as? String,
+            let type = PageContentType(rawValue: rawType)
+        else {
+            return
+        }
+
+        var centrePoint: CGPoint?
+        if let location = self.canvasView.currentClickLocation {
+            centrePoint = self.layoutEngine.convertPointToPageSpace(location)
+        }
+        self.viewModel.newPage(of: type, centredOn: centrePoint)
+    }
+
     @IBAction func addPageToCanvas(_ sender: Any?) {
         guard let windowController = self.windowController as? DocumentWindowController else {
             return
         }
 
         windowController.showPageSelector(title: NSLocalizedString("Add page to canvas…", comment: "Add page selector title")) { [weak self] (page) in
-            self?.viewModel.addPages(with: [page.id])
+            var centrePoint: CGPoint?
+            if let location = self?.canvasView.currentClickLocation {
+                centrePoint = self?.layoutEngine.convertPointToPageSpace(location)
+            }
+            self?.viewModel.addPages(with: [page.id], centredOn: centrePoint)
         }
     }
 
@@ -581,6 +617,10 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
             return true
         }
         let notEditableTooltip = NSLocalizedString("The current Canvas is not editable", comment: "Non-editable canvas action tooltip")
+        if menuItem.action == #selector(newPageFromContextMenu(_:)) {
+            menuItem.toolTip = (self.layoutEngine.editable ? nil : notEditableTooltip)
+            return self.layoutEngine.editable
+        }
         if menuItem.action == #selector(addPageToCanvas(_:)) {
             menuItem.toolTip = (self.layoutEngine.editable ? nil : notEditableTooltip)
             return self.layoutEngine.editable
