@@ -470,7 +470,7 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
         }
 
         let newArrowView = PageArrowView(config: self.layoutEngine.configuration.arrow)
-        newArrowView.lineColour = self.viewModel.canvas.theme.arrowColour
+        newArrowView.lineColour = self.viewModel.theme.arrowColour
         self.canvasView.arrowLayer.addSubview(newArrowView)
         return newArrowView
     }
