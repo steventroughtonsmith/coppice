@@ -22,7 +22,9 @@ class PageEditorViewController: NSViewController {
     }
 
     override func loadView() {
-        self.view = NSView()
+        let view = ColourBackgroundView()
+        view.backgroundColour = NSColor.pageEditorBackground
+        self.view = view
     }
 
     override func viewDidLoad() {
@@ -53,10 +55,6 @@ class PageEditorViewController: NSViewController {
     private lazy var pageInspectorViewController: PageInspectorViewController = {
         return PageInspectorViewController(viewModel: self.viewModel.pageInspectorViewModel)
     }()
-
-    var isInCanvas: Bool {
-        return (self.parentEditor is CanvasPageViewController)
-    }
 
     @IBAction func linkToPage(_ sender: Any?) {
         if (!HelpTipPresenter.shared.showTip(with: .textPageLink, fromToolbarItemWithIdentifier: .linkToPage)) {

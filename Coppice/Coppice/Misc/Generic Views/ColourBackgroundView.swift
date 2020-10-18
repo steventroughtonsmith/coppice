@@ -8,12 +8,18 @@
 
 import Cocoa
 
-class EditorBackgroundView: NSView {
+class ColourBackgroundView: NSView {
+
+    var backgroundColour: NSColor? {
+        didSet {
+            self.setNeedsDisplay(self.bounds)
+        }
+    }
 
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
 
-        NSColor(named: "PageBackground")?.set()
+        self.backgroundColour?.set()
         self.bounds.fill()
     }
     

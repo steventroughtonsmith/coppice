@@ -17,9 +17,11 @@ class PageEditorViewModel: ViewModel {
     weak var view: PageEditorView?
     
     let page: Page
+    let isInCanvas: Bool
     private var contentObserver: NSObjectProtocol?
-    init(page: Page, documentWindowViewModel: DocumentWindowViewModel) {
+    init(page: Page, isInCanvas: Bool, documentWindowViewModel: DocumentWindowViewModel) {
         self.page = page
+        self.isInCanvas = isInCanvas
         super.init(documentWindowViewModel: documentWindowViewModel)
     }
 
@@ -39,11 +41,13 @@ class PageEditorViewModel: ViewModel {
         switch self.page.content.contentType {
         case .text:
             let viewModel = TextEditorViewModel(textContent: (self.page.content as! TextPageContent),
+                                                isInCanvas: self.isInCanvas,
                                                 documentWindowViewModel: self.documentWindowViewModel,
                                                 pageLinkManager: self.documentWindowViewModel.pageLinkController.pageLinkManager(for: self.page))
             return TextEditorViewController(viewModel: viewModel)
         case .image:
             let viewModel = ImageEditorViewModel(imageContent: (self.page.content as! ImagePageContent),
+                                                 isInCanvas: self.isInCanvas,
                                                  documentWindowViewModel: self.documentWindowViewModel )
             return ImageEditorViewController(viewModel: viewModel)
         }

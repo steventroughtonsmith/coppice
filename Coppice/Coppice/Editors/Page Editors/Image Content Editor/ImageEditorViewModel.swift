@@ -16,8 +16,10 @@ class ImageEditorViewModel: ViewModel {
     weak var view: ImageEditorViewProtocol?
 
     @objc dynamic let imageContent: ImagePageContent
-    init(imageContent: ImagePageContent, documentWindowViewModel: DocumentWindowViewModel) {
+    let isInCanvas: Bool
+    init(imageContent: ImagePageContent, isInCanvas: Bool, documentWindowViewModel: DocumentWindowViewModel) {
         self.imageContent = imageContent
+        self.isInCanvas = isInCanvas
         super.init(documentWindowViewModel: documentWindowViewModel)
     }
 

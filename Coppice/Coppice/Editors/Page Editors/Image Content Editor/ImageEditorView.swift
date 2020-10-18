@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class ImageEditorView: EditorBackgroundView {
+class ImageEditorView: ColourBackgroundView {
     @IBOutlet var imageView: NSImageView?
 
     override func hitTest(_ point: NSPoint) -> NSView? {

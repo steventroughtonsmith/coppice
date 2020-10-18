@@ -53,7 +53,8 @@ class EditorContainerViewController: NSViewController, SplitViewContainable {
         case .canvas:
             return self.canvasesEditor
         case .page(let page):
-            return page.createEditor(with: self.viewModel.documentWindowViewModel)
+            let viewModel = PageEditorViewModel(page: page, isInCanvas: false, documentWindowViewModel: self.viewModel.documentWindowViewModel)
+            return PageEditorViewController(viewModel: viewModel)
         case .none:
             return NoEditorViewController()
         }

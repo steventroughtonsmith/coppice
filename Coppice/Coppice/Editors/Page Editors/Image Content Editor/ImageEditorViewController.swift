@@ -31,6 +31,7 @@ class ImageEditorViewController: NSViewController, NSMenuItemValidation, NSToolb
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        (self.view as? ImageEditorView)?.backgroundColour = NSColor.pageEditorBackground
         self.updatePlaceholderLabel()
     }
 
@@ -63,7 +64,7 @@ class ImageEditorViewController: NSViewController, NSMenuItemValidation, NSToolb
         if self.simulateInCanvas {
             return true
         }
-        return (self.parentEditor as? PageEditorViewController)?.isInCanvas ?? false
+        return (self.parentEditor as? PageEditorViewController)?.viewModel.isInCanvas ?? false
     }
 
 

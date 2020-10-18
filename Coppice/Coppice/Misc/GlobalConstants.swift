@@ -24,6 +24,8 @@ extension NSColor {
     static let illustrationBorder = NSColor(named: "IllustrationBorder") ?? .gray
     static let illustrationSelectedBackground = NSColor(named: "IllustrationSelectedBackground") ?? .gray
     static let illustrationSelectedBorder = NSColor(named: "IllustrationSelectedBorder") ?? .black
+
+    static let pageEditorBackground = NSColor(named: "PageEditorBackground") ?? .windowBackgroundColor
 }
 
 

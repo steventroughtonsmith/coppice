@@ -81,7 +81,8 @@ class CanvasesViewController: NSSplitViewController {
         guard self.currentCanvasEditor?.viewModel.canvas != canvas else {
             return
         }
-        self.currentCanvasEditor = canvas.createEditor(with: self.viewModel.documentWindowViewModel) as? CanvasEditorViewController
+        let viewModel = CanvasEditorViewModel(canvas: canvas, documentWindowViewModel: self.viewModel.documentWindowViewModel)
+        self.currentCanvasEditor = CanvasEditorViewController(viewModel: viewModel)
         self.view.window?.recalculateKeyViewLoop()
     }
 

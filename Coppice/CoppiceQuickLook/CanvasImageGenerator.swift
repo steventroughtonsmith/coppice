@@ -132,7 +132,7 @@ class CanvasImageGenerator {
     }
 
     private func draw(_ textContent: TextPageContent, in rect: CGRect) {
-        var insets = GlobalConstants.textEditorInsets
+        var insets = GlobalConstants.textEditorInsets()
         //NSTextView adds some additional insets so we need to add them ourselves
         insets.left += 5
         insets.right += 5

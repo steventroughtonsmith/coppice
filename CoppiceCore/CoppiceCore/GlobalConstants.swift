@@ -21,15 +21,20 @@ public struct GlobalConstants {
 
     public static let bottomBarHeight: CGFloat = 27.0
 
-    public static let textEditorInsets = NSEdgeInsets(top: 10, left: 5, bottom: 5, right: 5)
+    public static func textEditorInsets(fullSize: Bool = false) -> NSEdgeInsets {
+        if (fullSize) {
+            return NSEdgeInsets(top: 40, left: 40, bottom: 5, right: 40)
+        }
+        return NSEdgeInsets(top: 10, left: 5, bottom: 5, right: 5)
+    }
 
     public static var maxAutomaticTextSize: CGSize {
         return CGSize(width: Page.standardSize.width * 1.5, height: Page.standardSize.height * 3)
     }
 
     public static var maxAutomaticTextSizeIncludingInsets: CGSize {
-        return self.maxAutomaticTextSize.plus(width: self.textEditorInsets.left + self.textEditorInsets.right + 10,
-                                              height: self.textEditorInsets.top + self.textEditorInsets.bottom + 10)
+        return self.maxAutomaticTextSize.plus(width: self.textEditorInsets().left + self.textEditorInsets().right + 10,
+                                              height: self.textEditorInsets().top + self.textEditorInsets().bottom + 10)
     }
 
     public static var maxCanvasThumbnailSize = CGSize(width: 240, height: 120)

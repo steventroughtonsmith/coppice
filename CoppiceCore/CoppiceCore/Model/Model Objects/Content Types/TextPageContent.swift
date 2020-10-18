@@ -56,7 +56,7 @@ public class TextPageContent: NSObject, PageContent {
 
     private func contentSize(insideBounds bounds: CGSize, minimumSize: CGSize) -> CGSize {
         var contentSize = self.text.boundingRect(with: bounds, options: [.usesLineFragmentOrigin]).size
-        let insets = GlobalConstants.textEditorInsets
+        let insets = GlobalConstants.textEditorInsets()
 
         let adjustedContentSize = contentSize.rounded().plus(width: insets.horizontalInsets, height: insets.verticalInsets)
 

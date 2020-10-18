@@ -19,9 +19,11 @@ class TextEditorViewModel: ViewModel {
     weak var view: TextEditorView?
     
     @objc dynamic let textContent: TextPageContent
+    let isInCanvas: Bool
     let pageLinkManager: PageLinkManager
-    init(textContent: TextPageContent, documentWindowViewModel: DocumentWindowViewModel, pageLinkManager: PageLinkManager) {
+    init(textContent: TextPageContent, isInCanvas: Bool, documentWindowViewModel: DocumentWindowViewModel, pageLinkManager: PageLinkManager) {
         self.textContent = textContent
+        self.isInCanvas = isInCanvas
         self.pageLinkManager = pageLinkManager
         super.init(documentWindowViewModel: documentWindowViewModel)
     }

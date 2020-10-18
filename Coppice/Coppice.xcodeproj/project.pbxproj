@@ -219,7 +219,6 @@
 		99AD8874237464C4000453E1 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AD8873237464C4000453E1 /* Alert.swift */; };
 		99AD88762374665D000453E1 /* Alert+AppKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AD88752374665D000453E1 /* Alert+AppKit.swift */; };
 		99AD88A5237B1700000453E1 /* DocumentWindowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AD88A4237B1700000453E1 /* DocumentWindowViewModel.swift */; };
-		99AD88A7237C35C7000453E1 /* EditableModelObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AD88A6237C35C7000453E1 /* EditableModelObject.swift */; };
 		99AD88A9237C36D0000453E1 /* Editor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AD88A8237C36D0000453E1 /* Editor.swift */; };
 		99B3474C2465846900B96B71 /* PixelPerfectTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B3474B2465846900B96B71 /* PixelPerfectTableView.swift */; };
 		99B3474E24658BA200B96B71 /* RoundSelectionTableRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B3474D24658BA200B96B71 /* RoundSelectionTableRowView.swift */; };
@@ -238,7 +237,7 @@
 		99C865292306D141004C7B89 /* PageSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C865272306D141004C7B89 /* PageSelectorViewController.swift */; };
 		99C8652A2306D141004C7B89 /* PageSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99C865282306D141004C7B89 /* PageSelectorViewController.xib */; };
 		99C88EE42409631800339880 /* PageImageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C88EE32409631800339880 /* PageImageController.swift */; };
-		99C88EE6240BC79A00339880 /* EditorBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C88EE5240BC79A00339880 /* EditorBackgroundView.swift */; };
+		99C88EE6240BC79A00339880 /* ColourBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C88EE5240BC79A00339880 /* ColourBackgroundView.swift */; };
 		99C88EEA240C2F3F00339880 /* NSWindow+KeyLoopDebug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C88EE9240C2F3F00339880 /* NSWindow+KeyLoopDebug.swift */; };
 		99C9AF1423631348009F909A /* CanvasTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9AF1323631348009F909A /* CanvasTextView.swift */; };
 		99C9AF1623632349009F909A /* NSView+CanvasLookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9AF1523632349009F909A /* NSView+CanvasLookup.swift */; };
@@ -601,7 +600,6 @@
 		99AD8873237464C4000453E1 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		99AD88752374665D000453E1 /* Alert+AppKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alert+AppKit.swift"; sourceTree = "<group>"; };
 		99AD88A4237B1700000453E1 /* DocumentWindowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentWindowViewModel.swift; sourceTree = "<group>"; };
-		99AD88A6237C35C7000453E1 /* EditableModelObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableModelObject.swift; sourceTree = "<group>"; };
 		99AD88A8237C36D0000453E1 /* Editor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Editor.swift; sourceTree = "<group>"; };
 		99B3474B2465846900B96B71 /* PixelPerfectTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelPerfectTableView.swift; sourceTree = "<group>"; };
 		99B3474D24658BA200B96B71 /* RoundSelectionTableRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundSelectionTableRowView.swift; sourceTree = "<group>"; };
@@ -621,7 +619,7 @@
 		99C865272306D141004C7B89 /* PageSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageSelectorViewController.swift; sourceTree = "<group>"; };
 		99C865282306D141004C7B89 /* PageSelectorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PageSelectorViewController.xib; sourceTree = "<group>"; };
 		99C88EE32409631800339880 /* PageImageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageImageController.swift; sourceTree = "<group>"; };
-		99C88EE5240BC79A00339880 /* EditorBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorBackgroundView.swift; sourceTree = "<group>"; };
+		99C88EE5240BC79A00339880 /* ColourBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColourBackgroundView.swift; sourceTree = "<group>"; };
 		99C88EE9240C2F3F00339880 /* NSWindow+KeyLoopDebug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSWindow+KeyLoopDebug.swift"; sourceTree = "<group>"; };
 		99C9AF1323631348009F909A /* CanvasTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasTextView.swift; sourceTree = "<group>"; };
 		99C9AF1523632349009F909A /* NSView+CanvasLookup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+CanvasLookup.swift"; sourceTree = "<group>"; };
@@ -859,7 +857,6 @@
 				992A5CA122DDF4B60012CCB6 /* EditorContainerViewModel.swift */,
 				992A5CA322DDF4C50012CCB6 /* EditorContainerViewController.swift */,
 				992A5CA422DDF4C50012CCB6 /* EditorContainerViewController.xib */,
-				99AD88A6237C35C7000453E1 /* EditableModelObject.swift */,
 				99AD88A8237C36D0000453E1 /* Editor.swift */,
 				992A5CA722DDF4E40012CCB6 /* Debug Editors */,
 			);
@@ -1163,7 +1160,7 @@
 			isa = PBXGroup;
 			children = (
 				998D0778241137A3004ADFF8 /* RectDrawingView.swift */,
-				99C88EE5240BC79A00339880 /* EditorBackgroundView.swift */,
+				99C88EE5240BC79A00339880 /* ColourBackgroundView.swift */,
 				99868F372397F005009AC0F7 /* FileDropView.swift */,
 				99488ACD23C78087009954AF /* EditableLabelCell.swift */,
 				9926951924AA34940050DFED /* ImmediateMenuSegmentedControl.swift */,
@@ -2147,13 +2144,12 @@
 				99D8E37E237EDB890098CF3B /* CanvasInspectorViewModel.swift in Sources */,
 				99902260241FDD52009A8446 /* NoCanvasViewController.swift in Sources */,
 				992A5CA222DDF4B60012CCB6 /* EditorContainerViewModel.swift in Sources */,
-				99AD88A7237C35C7000453E1 /* EditableModelObject.swift in Sources */,
 				992A5C9222DCB7530012CCB6 /* SourceListViewController.swift in Sources */,
 				99C9AF1623632349009F909A /* NSView+CanvasLookup.swift in Sources */,
 				991F935C24ADF64A006A0A09 /* HoverSegmentedControl.swift in Sources */,
 				9965FC4023843155002FE10D /* CanvasPageInspectorViewModel.swift in Sources */,
 				99D8E39023800F9A0098CF3B /* BaseInspectorViewController.swift in Sources */,
-				99C88EE6240BC79A00339880 /* EditorBackgroundView.swift in Sources */,
+				99C88EE6240BC79A00339880 /* ColourBackgroundView.swift in Sources */,
 				999EA6B42436097500BF254E /* SidebarViewController.swift in Sources */,
 				993D2BD824127E29002E5BAC /* CanvasListViewController.swift in Sources */,
 				999EA6BA243619E700BF254E /* SearchResultsViewModel.swift in Sources */,

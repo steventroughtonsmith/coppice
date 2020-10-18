@@ -14,6 +14,7 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
     @IBOutlet var editingTextView: NSTextView!
     @IBOutlet weak var scrollView: NSScrollView!
     @IBOutlet weak var placeHolderLabel: NSTextField!
+    @IBOutlet var widthConstraint: NSLayoutConstraint!
 
     @objc dynamic let viewModel: TextEditorViewModel
     init(viewModel: TextEditorViewModel) {
@@ -43,11 +44,19 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
 //        self.attributedTextObserver = self.publisher(for: \.viewModel.attributedText).sink { [weak self] in self?.updateTextView(with: $0) }
 //        self.highlightedRangeObserver = self.viewModel.$highlightedRange.sink { self.highlight($0) }
 
-        self.scrollView.contentInsets = GlobalConstants.textEditorInsets
+        self.scrollView.contentInsets = GlobalConstants.textEditorInsets(fullSize: !self.viewModel.isInCanvas)
 
         self.editingTextView.textStorage?.delegate = self
 
         self.updatePlaceholder()
+
+        self.widthConstraint.isActive = !self.viewModel.isInCanvas
+
+        if (!self.viewModel.isInCanvas) {
+            let shadow = NSShadow()
+            shadow.shadowBlurRadius = 3
+            self.scrollView.shadow = shadow
+        }
     }
 
     override func viewDidAppear() {
@@ -213,8 +222,8 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
 
     //MARK: - Placeholder
     private func updatePlaceholder() {
-        self.placeHolderLabel.stringValue = self.isInCanvas ? NSLocalizedString("Double-click to start writing", comment: "Text Editor on canvas placeholder")
-                                                            : NSLocalizedString("Click to start writing", comment: "Text Editor placeholder")
+        self.placeHolderLabel.stringValue = self.viewModel.isInCanvas ? NSLocalizedString("Double-click to start writing", comment: "Text Editor on canvas placeholder")
+                                                                      : NSLocalizedString("Click to start writing", comment: "Text Editor placeholder")
     }
 
 
@@ -297,15 +306,6 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
         }
         self.editingTextView.showFindIndicator(for: highlightRange)
     }
-
-    var simulateInCanvas: Bool = false
-    
-    var isInCanvas: Bool {
-        if self.simulateInCanvas {
-            return true
-        }
-        return (self.parentEditor as? PageEditorViewController)?.isInCanvas ?? false
-    }
 }
 
 
@@ -317,7 +317,7 @@ extension TextEditorViewController: PageContentEditor {
     func prepareForDisplay(withSafeAreaInsets safeAreaInsets: NSEdgeInsets) {
         if #available(OSX 10.16, *) {
             var insets = NSEdgeInsets(top: 10, left: 5, bottom: 5, right: 5)
-            if !self.isInCanvas {
+            if !self.viewModel.isInCanvas {
                 insets.top += safeAreaInsets.top
             }
             self.scrollView.contentInsets = insets
