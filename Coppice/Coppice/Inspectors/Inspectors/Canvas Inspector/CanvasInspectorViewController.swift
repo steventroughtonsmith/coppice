@@ -19,7 +19,7 @@ class CanvasInspectorViewController: BaseInspectorViewController {
         guard let control = sender as? NSView else {
             return
         }
-        CoppiceSubscriptionManager.shared.showProPopover(from: control, preferredEdge: .maxY)
+        CoppiceSubscriptionManager.shared.showProPopover(for: .canvasThemes, from: control, preferredEdge: .maxY)
     }
 
     

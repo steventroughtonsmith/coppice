@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17503.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17503.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17505"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -109,7 +109,7 @@
                                 <font key="font" metaFont="smallSystemBold"/>
                             </buttonCell>
                             <connections>
-                                <action selector="showProUpsell:" target="-2" id="ljU-K6-nlT"/>
+                                <action selector="showLinkingProUpsell:" target="-2" id="1Bz-1E-YQt"/>
                                 <binding destination="-2" name="hidden" keyPath="self.isProEnabled" id="7ww-7e-5f6"/>
                             </connections>
                         </button>
@@ -120,7 +120,7 @@
                                 <font key="font" metaFont="smallSystemBold"/>
                             </buttonCell>
                             <connections>
-                                <action selector="showProUpsell:" target="-2" id="Hhk-xH-2RV"/>
+                                <action selector="showThemeProUpsell:" target="-2" id="TRr-Te-icP"/>
                                 <binding destination="-2" name="hidden" keyPath="self.isProEnabled" id="hZX-Dz-H8e"/>
                             </connections>
                         </button>

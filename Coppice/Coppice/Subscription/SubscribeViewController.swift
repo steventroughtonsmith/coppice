@@ -10,12 +10,12 @@ import Cocoa
 
 class SubscribeViewController: NSViewController, DeactivatedSubscriptionMode {
     let header = NSLocalizedString("Upgrade to Pro", comment: "")
-    let subheader = NSLocalizedString("Unlock all of Coppice's features for just $xx.xx a year", comment: "")
-    let actionName = NSLocalizedString("Subscribe now for $xx.xx/year", comment: "")
+    let subheader = NSLocalizedString("Unlock all of Coppice's features for just $19.99 a year", comment: "")
+    let actionName = NSLocalizedString("Upgrade now for $19.99/year", comment: "")
     let toggleName = NSLocalizedString("Already subscribed? Sign In", comment: "")
 
     func performAction(_ sender: NSButton) {
-        print("subscribe")
+        self.subscriptionManager.openProPage()
     }
 
     let subscriptionManager: CoppiceSubscriptionManager

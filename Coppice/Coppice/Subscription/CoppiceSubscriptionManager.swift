@@ -238,8 +238,9 @@ class CoppiceSubscriptionManager: NSObject {
 
 
     //MARK: - Pro Upsell
-    func showProPopover(from view: NSView, preferredEdge: NSRectEdge) {
+    func showProPopover(for feature: ProFeature, from view: NSView, preferredEdge: NSRectEdge) {
         let upsellVC = ProUpsellViewController()
+        upsellVC.currentFeature = feature
         let popover = NSPopover()
         popover.contentViewController = upsellVC
         popover.behavior = .transient
@@ -275,5 +276,9 @@ class CoppiceSubscriptionManager: NSObject {
 
     var proTooltip: String {
         return NSLocalizedString("This feature requires a Coppice Pro subscription", comment: "")
+    }
+
+    func openProPage() {
+//        NSWorkspace.shared.open(URL(string: "https://coppiceapp.com/pro")!)
     }
 }

@@ -171,7 +171,7 @@ class DocumentWindowController: NSWindowController, NSMenuItemValidation {
 
     @IBAction func newCanvas(_ sender: Any?) {
         guard self.canCreateCanvases else {
-            self.showProPopover(from: sender)
+            self.showCanvasProPopover(from: sender)
             return
         }
         self.viewModel.modelController.createCanvas()
@@ -190,12 +190,12 @@ class DocumentWindowController: NSWindowController, NSMenuItemValidation {
         return true
     }
 
-    private func showProPopover(from sender: Any?) {
+    private func showCanvasProPopover(from sender: Any?) {
         guard let view = sender as? NSView else {
             return
         }
 
-        CoppiceSubscriptionManager.shared.showProPopover(from: view, preferredEdge: .maxY)
+        CoppiceSubscriptionManager.shared.showProPopover(for: .unlimitedCanvases, from: view, preferredEdge: .maxY)
     }
 
 

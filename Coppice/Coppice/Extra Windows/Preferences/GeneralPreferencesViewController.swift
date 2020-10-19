@@ -100,11 +100,20 @@ class GeneralPreferencesViewController: PreferencesViewController {
         }
     }
 
-    @IBAction func showProUpsell(_ sender: Any) {
+    //MARK: - Pro Upsell
+
+    @IBAction func showLinkingProUpsell(_ sender: Any) {
         guard let control = sender as? NSView else {
             return
         }
-        self.subscriptionManager.showProPopover(from: control, preferredEdge: .maxX)
+        self.subscriptionManager.showProPopover(for: .textAutoLinking, from: control, preferredEdge: .maxX)
+    }
+
+    @IBAction func showThemeProUpsell(_ sender: Any) {
+        guard let control = sender as? NSView else {
+            return
+        }
+        self.subscriptionManager.showProPopover(for: .canvasThemes, from: control, preferredEdge: .maxX)
     }
 
     //MARK: - Sidebar Size

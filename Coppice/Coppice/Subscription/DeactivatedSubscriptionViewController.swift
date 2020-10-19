@@ -84,6 +84,9 @@ class DeactivatedSubscriptionViewController: NSViewController {
 
 
     @IBAction func toggleMode(_ sender: Any?) {
+        //We aren't toggling mode for now, we'll just send the user straight to the Pro page online (we only really need this for in-app purchase)
+        NSWorkspace.shared.open(URL(string: "https://coppiceapp.com/pro")!)
+
 //        if (self.currentMode as NSViewController?) == self.signInVC {
 //            self.apply(self.subscribeVC)
 //        }

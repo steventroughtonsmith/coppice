@@ -13,7 +13,7 @@ class SignInViewController: NSViewController, DeactivatedSubscriptionMode {
     let header = NSLocalizedString("Activate Pro", comment: "")
     let subheader = NSLocalizedString("Sign in to your M Cubed account to activate your device", comment: "")
     let actionName = NSLocalizedString("Activate Device", comment: "")
-    let toggleName = NSLocalizedString("Not subscribed? Find out more", comment: "")
+    let toggleName = NSLocalizedString("Don't have Pro? Find out more", comment: "")
 
     let subscriptionManager: CoppiceSubscriptionManager
     init(subscriptionManager: CoppiceSubscriptionManager) {
