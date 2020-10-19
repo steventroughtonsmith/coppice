@@ -31,6 +31,8 @@ public class SubscriptionErrorFactory {
         public static let subscriptionPlans = "M3SubscriptionErrorSubscriptionPlansKey"
         public static let devices = "M3SubscriptionErrorDevicesKey"
         public static let context = "M3SubscriptionErrorContextKey"
+        public static let moreInfoTitle = "M3SubscriptionErrorMoreInfoTitleKey"
+        public static let moreInfoURL = "M3SubscriptionErrorMoreInfoURLKey"
     }
 
     public enum ErrorContext: String {
@@ -48,11 +50,24 @@ public class SubscriptionErrorFactory {
         case .invalidRequest:
             return self.createError(code: .other, context: .activate)
         case .loginFailed:
-            return self.createError(code: .loginFailed, context: .activate)
+            return self.createError(code: .loginFailed, context: .activate, additionalOptions: [
+                InfoKeys.moreInfoTitle: NSLocalizedString("Forgot Password…", comment: "Forgot password button"),
+                InfoKeys.moreInfoURL: URL(string: "https://mcubedsw.com/forgot_password")!
+            ])
         case .noSubscriptionFound:
-            return self.createError(code: .noSubscriptionFound, context: .activate)
+            return self.createError(code: .noSubscriptionFound, context: .activate, additionalOptions: [
+                InfoKeys.moreInfoTitle: NSLocalizedString("Find Out More…", comment: "Find out more about Coppice Pro button"),
+                InfoKeys.moreInfoURL: URL(string: "https://coppiceapp.com/pro")!
+            ])
         case .subscriptionExpired(let subscription):
-            return self.createError(code: .subscriptionExpired, context: .activate, additionalOptions: (subscription != nil) ? [InfoKeys.subscription: subscription!]: nil)
+            var additionalOptions: [String: Any] = [
+                InfoKeys.moreInfoTitle: NSLocalizedString("Renew", comment: "Renew Coppice Pro button"),
+                InfoKeys.moreInfoURL: URL(string: "https://coppiceapp.com/pro")!
+            ]
+            if let subscription = subscription {
+                additionalOptions[InfoKeys.subscription] = subscription
+            }
+            return self.createError(code: .subscriptionExpired, context: .activate, additionalOptions: additionalOptions)
         case .tooManyDevices(let devices):
             return self.createError(code: .tooManyDevices, context: .activate, additionalOptions: [InfoKeys.devices: devices])
         case .multipleSubscriptions(let plans):
@@ -164,11 +179,11 @@ extension SubscriptionErrorCodes {
         case .loginFailed:
             return NSLocalizedString("Please check your details and try again.", comment: "Login Failed Error Recovery")
         case .noSubscriptionFound:
-            return NSLocalizedString("You can purchase a subscription below.", comment: "No Subscription Found Error Recovery")
+            return NSLocalizedString("Upgrade to Coppice Pro to get access to all of Coppice's functionality.", comment: "No Subscription Found Error Recovery")
         case .multipleSubscriptionsFound:
             return NSLocalizedString("Please choose which subscription to activate this device on", comment: "Multiple Subscriptions Found Error Recovery")
         case .subscriptionExpired:
-            return NSLocalizedString("You can renew your subscription below.", comment: "Subscription Expired Error Recovery")
+            return NSLocalizedString("You can renew your subscription by purchasing through our website.", comment: "Subscription Expired Error Recovery")
         case .noDeviceFound:
             return NSLocalizedString("Please re-activate if you wish to continue using this device with your subscription.", comment: "No Device Found Subscription Error Recovery")
         case .tooManyDevices:

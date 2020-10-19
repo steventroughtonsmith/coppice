@@ -42,6 +42,7 @@ class SignInViewController: NSViewController, DeactivatedSubscriptionMode {
         guard let errorCode = SubscriptionErrorCodes(rawValue: error.code) else {
             return false
         }
+
         switch errorCode {
         case .noSubscriptionFound, .subscriptionExpired:
             ErrorPopoverViewController.show(error,
@@ -57,11 +58,4 @@ class SignInViewController: NSViewController, DeactivatedSubscriptionMode {
 
         return true
     }
-
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do view setup here.
-    }
-    
 }

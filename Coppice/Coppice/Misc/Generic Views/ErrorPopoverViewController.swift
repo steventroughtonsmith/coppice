@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import M3Subscriptions
 
 class ErrorPopoverViewController: NSViewController {
     static func show(_ error: NSError, relativeTo rect: NSRect, of view: NSView, preferredEdge: NSRectEdge) {
@@ -29,6 +30,8 @@ class ErrorPopoverViewController: NSViewController {
 
     @IBOutlet weak var titleLabel: NSTextField!
     @IBOutlet weak var bodyLabel: NSTextField!
+    @IBOutlet weak var findOutMoreButton: NSButton!
+    @IBOutlet weak var findOutMoreContainer: NSView!
 
 
     override func viewDidLoad() {
@@ -37,6 +40,21 @@ class ErrorPopoverViewController: NSViewController {
         self.titleLabel.stringValue = self.error.localizedDescription
         self.bodyLabel.stringValue = self.error.localizedFailureReason ?? self.error.localizedRecoverySuggestion ?? ""
         self.bodyLabel.isHidden = self.bodyLabel.stringValue.count == 0
+
+        if
+            let errorLabel = self.error.userInfo[SubscriptionErrorFactory.InfoKeys.moreInfoTitle] as? String,
+            (self.error.userInfo[SubscriptionErrorFactory.InfoKeys.moreInfoURL] != nil)
+        {
+            self.findOutMoreButton.title = errorLabel
+            self.findOutMoreContainer.isHidden = false
+        } else {
+            self.findOutMoreContainer.isHidden = true
+        }
     }
     
+    @IBAction func findOutMore(_ sender: Any) {
+        if let errorURL = self.error.userInfo[SubscriptionErrorFactory.InfoKeys.moreInfoURL] as? URL {
+            NSWorkspace.shared.open(errorURL)
+        }
+    }
 }
