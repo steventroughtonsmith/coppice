@@ -2358,7 +2358,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = "2020.1 beta 3";
+				MARKETING_VERSION = "2020.1 beta 4";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG TEST";
@@ -2516,7 +2516,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = "2020.1 beta 3";
+				MARKETING_VERSION = "2020.1 beta 4";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -2704,7 +2704,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = "2020.1 beta 3";
+				MARKETING_VERSION = "2020.1 beta 4";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice.CoppiceQuickLook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -2728,7 +2728,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = "2020.1 beta 3";
+				MARKETING_VERSION = "2020.1 beta 4";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice.CoppiceQuickLook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -2752,7 +2752,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = "2020.1 beta 3";
+				MARKETING_VERSION = "2020.1 beta 4";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice.CoppiceQuickLook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -2776,7 +2776,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = "2020.1 beta 3";
+				MARKETING_VERSION = "2020.1 beta 4";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice.CoppiceQuickLook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -2930,7 +2930,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = "2020.1 beta 3";
+				MARKETING_VERSION = "2020.1 beta 4";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -2960,7 +2960,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = "2020.1 beta 3";
+				MARKETING_VERSION = "2020.1 beta 4";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
