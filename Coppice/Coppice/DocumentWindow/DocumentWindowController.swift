@@ -140,6 +140,7 @@ class DocumentWindowController: NSWindowController, NSMenuItemValidation {
             .map(\.addIcon)
             .sink { [weak self] (icon) in
                 self?.newPageSegmentedControl.setImage(icon, forSegment: 0)
+                self?.newPageTouchBarItem?.collapsedRepresentationImage = icon
             }
     }
 

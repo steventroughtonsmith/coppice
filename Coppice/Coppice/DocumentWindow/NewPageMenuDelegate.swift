@@ -39,3 +39,16 @@ class NewPageMenuDelegate: NSObject, NSMenuDelegate {
 
     @IBAction func newPage(_ sender: Any?) {}
 }
+
+extension NewPageMenuDelegate: NSTouchBarDelegate {
+    func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItem.Identifier) -> NSTouchBarItem? {
+        guard let contentType = PageContentType(rawValue: identifier.rawValue) else {
+            return nil
+        }
+        let item = NSButtonTouchBarItem(identifier: identifier,
+                                        image: contentType.addIcon,
+                                        target: nil,
+                                        action: self.action)
+        return item
+    }
+}

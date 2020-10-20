@@ -134,6 +134,7 @@
 		9985F4DB23F44AAD00B96DC7 /* CanvasPageBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9985F4DA23F44AAD00B96DC7 /* CanvasPageBackgroundView.swift */; };
 		99868730253C719D004B29B0 /* ZoomMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9986872F253C719D004B29B0 /* ZoomMenuDelegate.swift */; };
 		99868746253DA104004B29B0 /* ProFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99868745253DA104004B29B0 /* ProFeature.swift */; };
+		9986874E253F079B004B29B0 /* DocumentWindowController+TouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9986874D253F079B004B29B0 /* DocumentWindowController+TouchBar.swift */; };
 		99868F322396AD55009AC0F7 /* ImageEditorInspectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99868F312396AD55009AC0F7 /* ImageEditorInspectorViewModel.swift */; };
 		99868F352396AD73009AC0F7 /* ImageEditorInspectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99868F332396AD73009AC0F7 /* ImageEditorInspectorViewController.swift */; };
 		99868F362396AD73009AC0F7 /* ImageEditorInspectorContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99868F342396AD73009AC0F7 /* ImageEditorInspectorContentView.xib */; };
@@ -513,6 +514,7 @@
 		9985F4DA23F44AAD00B96DC7 /* CanvasPageBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageBackgroundView.swift; sourceTree = "<group>"; };
 		9986872F253C719D004B29B0 /* ZoomMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomMenuDelegate.swift; sourceTree = "<group>"; };
 		99868745253DA104004B29B0 /* ProFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProFeature.swift; sourceTree = "<group>"; };
+		9986874D253F079B004B29B0 /* DocumentWindowController+TouchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DocumentWindowController+TouchBar.swift"; sourceTree = "<group>"; };
 		99868F312396AD55009AC0F7 /* ImageEditorInspectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorInspectorViewModel.swift; sourceTree = "<group>"; };
 		99868F332396AD73009AC0F7 /* ImageEditorInspectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorInspectorViewController.swift; sourceTree = "<group>"; };
 		99868F342396AD73009AC0F7 /* ImageEditorInspectorContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageEditorInspectorContentView.xib; sourceTree = "<group>"; };
@@ -1664,6 +1666,7 @@
 				99AD88A4237B1700000453E1 /* DocumentWindowViewModel.swift */,
 				998D077A2411513F004ADFF8 /* NewPageMenuDelegate.swift */,
 				99FE01E222D4CC8A004D380D /* DocumentWindowController.swift */,
+				9986874D253F079B004B29B0 /* DocumentWindowController+TouchBar.swift */,
 				99FE01E322D4CC8A004D380D /* DocumentWindow.xib */,
 				9970976A23ACFD2900CD189B /* RootSplitViewController.swift */,
 				9973737C2423BAD1000D5F21 /* RootSplitViewController.xib */,
@@ -2020,6 +2023,7 @@
 				9981E6D924C0AE1F005AF0EE /* RecentDocumentTableCellView.swift in Sources */,
 				9999A23D24F937B6001F8161 /* ActivatedSubscriptionViewController.swift in Sources */,
 				993D2C0024157196002E5BAC /* SourceListOutlineView.swift in Sources */,
+				9986874E253F079B004B29B0 /* DocumentWindowController+TouchBar.swift in Sources */,
 				998D077B2411513F004ADFF8 /* NewPageMenuDelegate.swift in Sources */,
 				99D8E37A237EDB890098CF3B /* PageInspectorViewModel.swift in Sources */,
 				99D5073D2502854600670139 /* ProButtonCell.swift in Sources */,
