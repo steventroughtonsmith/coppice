@@ -66,7 +66,7 @@ class MockLayoutEngine: LayoutEngine {
     }
 
     let startEditingMock = MockDetails<(LayoutEnginePage, CGPoint), Void>()
-    func startEditing(_ page: LayoutEnginePage, at point: CGPoint) {
+    func startEditing(_ page: LayoutEnginePage, atContentPoint point: CGPoint) {
         self.startEditingMock.called(withArguments: (page, point))
     }
 
