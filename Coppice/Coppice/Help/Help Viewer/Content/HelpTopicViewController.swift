@@ -9,7 +9,13 @@
 import Cocoa
 import WebKit
 
+protocol HelpTopicViewControllerDelegate: AnyObject {
+    func openTopic(withIdentifier identifier: String, from helpTopicViewController: HelpTopicViewController)
+}
+
+
 class HelpTopicViewController: NSViewController {
+    weak var delegate: HelpTopicViewControllerDelegate?
 
     var topic: HelpBook.Topic? {
         didSet {
@@ -53,8 +59,19 @@ class HelpTopicViewController: NSViewController {
     <meta charset="utf-8">
     <title>\(topic.title)</title>
     <link rel="stylesheet" href="../stylesheet.css">
+    <script type="text/javascript">
+        function updateLinks() {
+            var links = document.getElementsByTagName("a");
+            for (var link of links) {
+                var helpID = link.getAttribute("data-help-id");
+                if (helpID != null) {
+                    link.href = "coppice-help://" + helpID;
+                }
+            }
+        }
+    </script>
 </head>
-<body>
+<body onLoad="updateLinks()">
 \(content)
 </body>
 </html>
@@ -76,18 +93,23 @@ extension HelpTopicViewController: WKNavigationDelegate {
             return
         }
 
-        if (navigationAction.navigationType == .linkActivated) && (url.scheme == "coppice-help") {
-            decisionHandler(.allow)
-            return
-        }
-
-
         if (navigationAction.navigationType == .linkActivated) {
-            decisionHandler(.cancel)
-            NSWorkspace.shared.open(url)
-            return
+            if (url.scheme == "coppice-help") {
+                if let identifier = url.host {
+                    self.delegate?.openTopic(withIdentifier: identifier, from: self)
+                }
+            }
+            else {
+                NSWorkspace.shared.open(url)
+            }
         }
 
         decisionHandler(.cancel)
+    }
+
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        WKWebsiteDataStore.default().fetchDataRecords(ofTypes: Set([WKWebsiteDataTypeDiskCache])) { (records) in
+            print("record: \(records)")
+        }
     }
 }

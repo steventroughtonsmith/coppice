@@ -128,3 +128,11 @@ extension HelpViewerWindowController: HelpSearchResultsViewControllerDelegate {
         self.navigationStack.navigate(to: .topic(topic))
     }
 }
+
+extension HelpViewerWindowController: HelpTopicViewControllerDelegate {
+    func openTopic(withIdentifier identifier: String, from helpTopicViewController: HelpTopicViewController) {
+        if let topic = self.helpBook.topic(withID: identifier) {
+            self.navigationStack.navigate(to: .topic(topic))
+        }
+    }
+}

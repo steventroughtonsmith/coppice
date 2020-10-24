@@ -52,6 +52,7 @@ class HelpContentViewController: NSViewController {
         switch item {
         case .topic(let topic):
             self.helpTopicViewController.topic = topic
+            self.helpTopicViewController.delegate = self.windowController as? HelpTopicViewControllerDelegate
             self.currentViewController = self.helpTopicViewController
         case .search(let search):
             let controller = HelpSearchResultsViewController(topics: self.helpBook.topics(matchingSearchString: search))
@@ -60,5 +61,4 @@ class HelpContentViewController: NSViewController {
         }
     }
 }
-
 
