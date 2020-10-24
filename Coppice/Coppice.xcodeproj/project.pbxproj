@@ -34,6 +34,23 @@
 		99171EDC24AA48B200E96DE6 /* MainToolbarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99171EDB24AA48B200E96DE6 /* MainToolbarDelegate.swift */; };
 		99171EDE24AB4FCC00E96DE6 /* Symbols.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99171EDD24AB4FCC00E96DE6 /* Symbols.xcassets */; };
 		9919B93123D09FBB00C7A44D /* TextColourPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9919B93023D09FBB00C7A44D /* TextColourPicker.swift */; };
+		991B5F432541E32B002C483C /* HelpViewerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991B5F412541E32B002C483C /* HelpViewerWindowController.swift */; };
+		991B5F442541E32B002C483C /* HelpViewerWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 991B5F422541E32B002C483C /* HelpViewerWindowController.xib */; };
+		991B5F4D2541E36D002C483C /* HelpNavigationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 991B5F4B2541E36D002C483C /* HelpNavigationViewController.xib */; };
+		991B5F552541E37E002C483C /* HelpTopicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991B5F532541E37E002C483C /* HelpTopicViewController.swift */; };
+		991B5F562541E37E002C483C /* HelpTopicViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 991B5F542541E37E002C483C /* HelpTopicViewController.xib */; };
+		991B5F622541E45B002C483C /* HelpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991B5F612541E45B002C483C /* HelpController.swift */; };
+		991B5F732541E76C002C483C /* HelpViewerToolbarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991B5F722541E76C002C483C /* HelpViewerToolbarDelegate.swift */; };
+		991B5FAF2541F604002C483C /* HelpBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991B5FAE2541F604002C483C /* HelpBook.swift */; };
+		991B5FFB2542057C002C483C /* Test.helpbook in Resources */ = {isa = PBXBuildFile; fileRef = 991B5FFA2542057C002C483C /* Test.helpbook */; };
+		991B600225420DA7002C483C /* HelpNavigationTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991B600125420DA7002C483C /* HelpNavigationTableCellView.swift */; };
+		991B6087254311BC002C483C /* HelpContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991B6086254311BC002C483C /* HelpContentViewController.swift */; };
+		991B60A82543127B002C483C /* HelpNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991B5F4A2541E36D002C483C /* HelpNavigationViewController.swift */; };
+		991B60AF25432140002C483C /* NavigationStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991B60AE25432140002C483C /* NavigationStack.swift */; };
+		991B60B72543320C002C483C /* HelpSearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991B60B52543320C002C483C /* HelpSearchResultsViewController.swift */; };
+		991B60B82543320C002C483C /* HelpSearchResultsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 991B60B62543320C002C483C /* HelpSearchResultsViewController.xib */; };
+		991B60BF25433294002C483C /* HelpBook+Searching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991B60BE25433294002C483C /* HelpBook+Searching.swift */; };
+		991B60C6254334F2002C483C /* HelpSearchResultTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991B60C5254334F2002C483C /* HelpSearchResultTableCellView.swift */; };
 		991F935C24ADF64A006A0A09 /* HoverSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991F935B24ADF64A006A0A09 /* HoverSegmentedControl.swift */; };
 		9923B06B22F45F7E0035D8C6 /* TestObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9923B06A22F45F7E0035D8C6 /* TestObjects.swift */; };
 		9925B2622386A0DF001A8ADC /* TextEditorInspectorTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9925B2612386A0DF001A8ADC /* TextEditorInspectorTypes.swift */; };
@@ -414,6 +431,23 @@
 		99171EDB24AA48B200E96DE6 /* MainToolbarDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainToolbarDelegate.swift; sourceTree = "<group>"; };
 		99171EDD24AB4FCC00E96DE6 /* Symbols.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Symbols.xcassets; sourceTree = "<group>"; };
 		9919B93023D09FBB00C7A44D /* TextColourPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextColourPicker.swift; sourceTree = "<group>"; };
+		991B5F412541E32B002C483C /* HelpViewerWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpViewerWindowController.swift; sourceTree = "<group>"; };
+		991B5F422541E32B002C483C /* HelpViewerWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HelpViewerWindowController.xib; sourceTree = "<group>"; };
+		991B5F4A2541E36D002C483C /* HelpNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpNavigationViewController.swift; sourceTree = "<group>"; };
+		991B5F4B2541E36D002C483C /* HelpNavigationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HelpNavigationViewController.xib; sourceTree = "<group>"; };
+		991B5F532541E37E002C483C /* HelpTopicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpTopicViewController.swift; sourceTree = "<group>"; };
+		991B5F542541E37E002C483C /* HelpTopicViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HelpTopicViewController.xib; sourceTree = "<group>"; };
+		991B5F612541E45B002C483C /* HelpController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpController.swift; sourceTree = "<group>"; };
+		991B5F722541E76C002C483C /* HelpViewerToolbarDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpViewerToolbarDelegate.swift; sourceTree = "<group>"; };
+		991B5FAE2541F604002C483C /* HelpBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpBook.swift; sourceTree = "<group>"; };
+		991B5FFA2542057C002C483C /* Test.helpbook */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Test.helpbook; sourceTree = "<group>"; };
+		991B600125420DA7002C483C /* HelpNavigationTableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpNavigationTableCellView.swift; sourceTree = "<group>"; };
+		991B6086254311BC002C483C /* HelpContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpContentViewController.swift; sourceTree = "<group>"; };
+		991B60AE25432140002C483C /* NavigationStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationStack.swift; sourceTree = "<group>"; };
+		991B60B52543320C002C483C /* HelpSearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpSearchResultsViewController.swift; sourceTree = "<group>"; };
+		991B60B62543320C002C483C /* HelpSearchResultsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HelpSearchResultsViewController.xib; sourceTree = "<group>"; };
+		991B60BE25433294002C483C /* HelpBook+Searching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HelpBook+Searching.swift"; sourceTree = "<group>"; };
+		991B60C5254334F2002C483C /* HelpSearchResultTableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpSearchResultTableCellView.swift; sourceTree = "<group>"; };
 		991F935B24ADF64A006A0A09 /* HoverSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoverSegmentedControl.swift; sourceTree = "<group>"; };
 		9923B06A22F45F7E0035D8C6 /* TestObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestObjects.swift; sourceTree = "<group>"; };
 		9925B2612386A0DF001A8ADC /* TextEditorInspectorTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorInspectorTypes.swift; sourceTree = "<group>"; };
@@ -814,6 +848,62 @@
 				99D329A9252237A000E15683 /* SubscriptionTableCellView.swift */,
 			);
 			path = "Multiple Subscriptions";
+			sourceTree = "<group>";
+		};
+		991B5F402541E300002C483C /* Help */ = {
+			isa = PBXGroup;
+			children = (
+				991B5F612541E45B002C483C /* HelpController.swift */,
+				991B5F842541F267002C483C /* Model */,
+				991B5F792541F252002C483C /* Help Viewer */,
+			);
+			path = Help;
+			sourceTree = "<group>";
+		};
+		991B5F792541F252002C483C /* Help Viewer */ = {
+			isa = PBXGroup;
+			children = (
+				991B5F412541E32B002C483C /* HelpViewerWindowController.swift */,
+				991B5F422541E32B002C483C /* HelpViewerWindowController.xib */,
+				991B60AE25432140002C483C /* NavigationStack.swift */,
+				991B5F722541E76C002C483C /* HelpViewerToolbarDelegate.swift */,
+				991B6093254311C6002C483C /* Navigation */,
+				991B608D254311C0002C483C /* Content */,
+			);
+			path = "Help Viewer";
+			sourceTree = "<group>";
+		};
+		991B5F842541F267002C483C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				991B5FAE2541F604002C483C /* HelpBook.swift */,
+				991B60BE25433294002C483C /* HelpBook+Searching.swift */,
+				991B5FFA2542057C002C483C /* Test.helpbook */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		991B608D254311C0002C483C /* Content */ = {
+			isa = PBXGroup;
+			children = (
+				991B6086254311BC002C483C /* HelpContentViewController.swift */,
+				991B5F532541E37E002C483C /* HelpTopicViewController.swift */,
+				991B5F542541E37E002C483C /* HelpTopicViewController.xib */,
+				991B60B52543320C002C483C /* HelpSearchResultsViewController.swift */,
+				991B60B62543320C002C483C /* HelpSearchResultsViewController.xib */,
+				991B60C5254334F2002C483C /* HelpSearchResultTableCellView.swift */,
+			);
+			path = Content;
+			sourceTree = "<group>";
+		};
+		991B6093254311C6002C483C /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				991B5F4A2541E36D002C483C /* HelpNavigationViewController.swift */,
+				991B5F4B2541E36D002C483C /* HelpNavigationViewController.xib */,
+				991B600125420DA7002C483C /* HelpNavigationTableCellView.swift */,
+			);
+			path = Navigation;
 			sourceTree = "<group>";
 		};
 		992A5C9022DCB2EE0012CCB6 /* Source List */ = {
@@ -1233,7 +1323,7 @@
 			path = "Sparkle XPC";
 			sourceTree = "<group>";
 		};
-		9998B4E225163F0300E2D455 /* Help */ = {
+		9998B4E225163F0300E2D455 /* Help Tips */ = {
 			isa = PBXGroup;
 			children = (
 				9998B4E9251643D700E2D455 /* HelpTipPresenter.swift */,
@@ -1241,7 +1331,7 @@
 				9998B4E425163FAB00E2D455 /* HelpTipView.xib */,
 				9998B4E7251642D900E2D455 /* LinksHelp.mp4 */,
 			);
-			path = Help;
+			path = "Help Tips";
 			sourceTree = "<group>";
 		};
 		999EA68E2433929E00BF254E /* Build Scripts */ = {
@@ -1624,7 +1714,8 @@
 				99045FC224D43EB600FD3D33 /* Extra Windows */,
 				99045FC424D43EF400FD3D33 /* Misc */,
 				99045FC324D43EC500FD3D33 /* Assets */,
-				9998B4E225163F0300E2D455 /* Help */,
+				9998B4E225163F0300E2D455 /* Help Tips */,
+				991B5F402541E300002C483C /* Help */,
 				99906377249BC5780008C747 /* ProFeatures.plist */,
 				995F931C252B654A00A753E4 /* Sample Document.coppicedoc */,
 				99FE019922CD1038004D380D /* MainMenu.xib */,
@@ -1867,6 +1958,7 @@
 				9999A23A24F93796001F8161 /* CoppiceProViewController.xib in Resources */,
 				99C865212302E256004C7B89 /* ImageEditorViewController.xib in Resources */,
 				992A5CA622DDF4C50012CCB6 /* EditorContainerViewController.xib in Resources */,
+				991B5F442541E32B002C483C /* HelpViewerWindowController.xib in Resources */,
 				999007E524CF474300DB5C13 /* TourLinksView.xib in Resources */,
 				99FDF12D241FD53D00AF1E51 /* CanvasesView.xib in Resources */,
 				992A5CAF22DDF50F0012CCB6 /* DebugPageEditor.xib in Resources */,
@@ -1888,9 +1980,11 @@
 				992A5CAB22DDF5000012CCB6 /* DebugCanvasEditor.xib in Resources */,
 				992A5C9622DCB7790012CCB6 /* SourceListView.xib in Resources */,
 				999007D924CF472100DB5C13 /* TourWelcomeView.xib in Resources */,
+				991B5F562541E37E002C483C /* HelpTopicViewController.xib in Resources */,
 				99D8E37C237EDB890098CF3B /* CanvasInspectorContentView.xib in Resources */,
 				999007E124CF473A00DB5C13 /* TourCanvasesView.xib in Resources */,
 				996187F1249A5166007313BD /* PreferencesWindow.xib in Resources */,
+				991B5FFB2542057C002C483C /* Test.helpbook in Resources */,
 				99C8652A2306D141004C7B89 /* PageSelectorViewController.xib in Resources */,
 				999007EF24D05C1100DB5C13 /* TourLinks.mp4 in Resources */,
 				99488AA323BA3983009954AF /* SmallCanvasCell.xib in Resources */,
@@ -1910,6 +2004,7 @@
 				999EA68D2433913A00BF254E /* Info.plist.prefix in Resources */,
 				999EA6C1243628E500BF254E /* SearchResultTableCellView.xib in Resources */,
 				99C03F09232A99F400EB7516 /* Cursors.xcassets in Resources */,
+				991B60B82543320C002C483C /* HelpSearchResultsViewController.xib in Resources */,
 				99D8E39123800F9A0098CF3B /* BaseInspectorViewController.xib in Resources */,
 				999007E924CF474E00DB5C13 /* TourBranchesView.xib in Resources */,
 				99FE01E522D4CC8A004D380D /* DocumentWindow.xib in Resources */,
@@ -1919,6 +2014,7 @@
 				9973737B2423AD6C000D5F21 /* NoEditorViewController.xib in Resources */,
 				99488AA723BA3993009954AF /* LargeCanvasCell.xib in Resources */,
 				999007F524D079E200DB5C13 /* TourCanvases.mp4 in Resources */,
+				991B5F4D2541E36D002C483C /* HelpNavigationViewController.xib in Resources */,
 				99F0CD77246AF1C4006DE18E /* PreviewGenerationDebugWindow.xib in Resources */,
 				99FE019B22CD1038004D380D /* MainMenu.xib in Resources */,
 				9981E6D024C05811005AF0EE /* AboutWindow.xib in Resources */,
@@ -2022,16 +2118,22 @@
 				996010F724F14FFA008B8F98 /* SpringLoadedTableRowView.swift in Sources */,
 				9981E6D924C0AE1F005AF0EE /* RecentDocumentTableCellView.swift in Sources */,
 				9999A23D24F937B6001F8161 /* ActivatedSubscriptionViewController.swift in Sources */,
+				991B60AF25432140002C483C /* NavigationStack.swift in Sources */,
 				993D2C0024157196002E5BAC /* SourceListOutlineView.swift in Sources */,
 				9986874E253F079B004B29B0 /* DocumentWindowController+TouchBar.swift in Sources */,
+				991B6087254311BC002C483C /* HelpContentViewController.swift in Sources */,
+				991B60C6254334F2002C483C /* HelpSearchResultTableCellView.swift in Sources */,
 				998D077B2411513F004ADFF8 /* NewPageMenuDelegate.swift in Sources */,
+				991B5F622541E45B002C483C /* HelpController.swift in Sources */,
 				99D8E37A237EDB890098CF3B /* PageInspectorViewModel.swift in Sources */,
 				99D5073D2502854600670139 /* ProButtonCell.swift in Sources */,
 				99C865202302E256004C7B89 /* ImageEditorViewController.swift in Sources */,
 				996187F8249A6E72007313BD /* UpdatePreferencesViewController.swift in Sources */,
+				991B5FAF2541F604002C483C /* HelpBook.swift in Sources */,
 				9926951A24AA34940050DFED /* ImmediateMenuSegmentedControl.swift in Sources */,
 				99C8650923016EB2004C7B89 /* TextEditorViewModel.swift in Sources */,
 				999EA6BB243619E700BF254E /* SearchResultsViewController.swift in Sources */,
+				991B600225420DA7002C483C /* HelpNavigationTableCellView.swift in Sources */,
 				99B3474E24658BA200B96B71 /* RoundSelectionTableRowView.swift in Sources */,
 				9925B2622386A0DF001A8ADC /* TextEditorInspectorTypes.swift in Sources */,
 				999453ED24ED63640043C542 /* SystemProfileInfoItem.swift in Sources */,
@@ -2089,6 +2191,7 @@
 				995F9376252CB74200A753E4 /* PageContentEditor.swift in Sources */,
 				997344D62432236300DF4EDB /* PageLinkController.swift in Sources */,
 				99FDF129241FD52800AF1E51 /* CanvasesViewModel.swift in Sources */,
+				991B5F552541E37E002C483C /* HelpTopicViewController.swift in Sources */,
 				9973737A2423AD6C000D5F21 /* NoEditorViewController.swift in Sources */,
 				990F61A425222A3E00FA5A27 /* MultipleSubscriptionsViewController.swift in Sources */,
 				99DEF28822F1D72D0020A7CE /* SourceListViewModelTypes.swift in Sources */,
@@ -2097,6 +2200,7 @@
 				99FFF9D02350BAF500EF02A0 /* PageEditorViewModel.swift in Sources */,
 				99FFF9D22354C4F600EF02A0 /* GlobalConstants.swift in Sources */,
 				999DAACA23CCC5D80013EC36 /* SidebarHeaderView.swift in Sources */,
+				991B60A82543127B002C483C /* HelpNavigationViewController.swift in Sources */,
 				99C03F0B232A9A5E00EB7516 /* CanvasView.swift in Sources */,
 				99488A9B23BA392E009954AF /* SmallCanvasCell.swift in Sources */,
 				99D8E383237EDB890098CF3B /* InspectorContainerViewController.swift in Sources */,
@@ -2107,6 +2211,7 @@
 				999453EB24ED5BF10043C542 /* SystemProfileInfoTableCell.swift in Sources */,
 				9999A23624F93052001F8161 /* CoppiceSubscriptionManager.swift in Sources */,
 				99C865232302E267004C7B89 /* ImageEditorViewModel.swift in Sources */,
+				991B60B72543320C002C483C /* HelpSearchResultsViewController.swift in Sources */,
 				9985F4D923F2E13600B96DC7 /* CanvasPageTitleView.swift in Sources */,
 				99FE019122CD1037004D380D /* AppDelegate.swift in Sources */,
 				992710C424D1A29200C7C61A /* TourInterfaceView.swift in Sources */,
@@ -2124,6 +2229,7 @@
 				9951C26C230AEFAB006CAD4D /* PageSelectorWindowController.swift in Sources */,
 				99A97FD9246DBD4C00CDD95C /* CanvasCell.swift in Sources */,
 				9999A25925010F08001F8161 /* HoverView.swift in Sources */,
+				991B5F432541E32B002C483C /* HelpViewerWindowController.swift in Sources */,
 				99868F322396AD55009AC0F7 /* ImageEditorInspectorViewModel.swift in Sources */,
 				99488ACE23C78087009954AF /* EditableLabelCell.swift in Sources */,
 				999007EC24CF475900DB5C13 /* TourGetStartedViewController.swift in Sources */,
@@ -2155,6 +2261,7 @@
 				992A5C9222DCB7530012CCB6 /* SourceListViewController.swift in Sources */,
 				99C9AF1623632349009F909A /* NSView+CanvasLookup.swift in Sources */,
 				991F935C24ADF64A006A0A09 /* HoverSegmentedControl.swift in Sources */,
+				991B5F732541E76C002C483C /* HelpViewerToolbarDelegate.swift in Sources */,
 				9965FC4023843155002FE10D /* CanvasPageInspectorViewModel.swift in Sources */,
 				99D8E39023800F9A0098CF3B /* BaseInspectorViewController.swift in Sources */,
 				99C88EE6240BC79A00339880 /* ColourBackgroundView.swift in Sources */,
@@ -2164,6 +2271,7 @@
 				99C8650F23017222004C7B89 /* TextEditorViewController.swift in Sources */,
 				992A5CB122DDF5210012CCB6 /* DebugCanvasEditorViewModel.swift in Sources */,
 				992A5C9C22DCC6090012CCB6 /* SourceListViewModel.swift in Sources */,
+				991B60BF25433294002C483C /* HelpBook+Searching.swift in Sources */,
 				99C88EEA240C2F3F00339880 /* NSWindow+KeyLoopDebug.swift in Sources */,
 				99D8E381237EDB890098CF3B /* InspectorContainerViewModel.swift in Sources */,
 				99C9AF1423631348009F909A /* CanvasTextView.swift in Sources */,

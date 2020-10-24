@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17505"/>
+        <plugIn identifier="com.apple.WebKit2IBPlugin" version="17505"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="HelpTopicViewController" customModule="Coppice" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+                <outlet property="webView" destination="1aU-P9-mF2" id="dff-da-bPc"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <wkWebView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1aU-P9-mF2">
+                    <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
+                    <wkWebViewConfiguration key="configuration">
+                        <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                        <wkPreferences key="preferences" javaScriptCanOpenWindowsAutomatically="NO"/>
+                    </wkWebViewConfiguration>
+                </wkWebView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="1aU-P9-mF2" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="2uD-sB-Hvw"/>
+                <constraint firstItem="1aU-P9-mF2" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="Hbj-1k-VaX"/>
+                <constraint firstAttribute="trailing" secondItem="1aU-P9-mF2" secondAttribute="trailing" id="bvP-Jx-Alt"/>
+                <constraint firstAttribute="bottom" secondItem="1aU-P9-mF2" secondAttribute="bottom" id="z2N-G3-9Lg"/>
+            </constraints>
+            <point key="canvasLocation" x="33" y="154"/>
+        </customView>
+    </objects>
+</document>

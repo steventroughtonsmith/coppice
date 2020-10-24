@@ -54,7 +54,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             #endif
         }
 
-        let expiryDate = ISO8601DateFormatter().date(from: "2020-11-15T00:00:00Z")?.timeIntervalSinceReferenceDate ?? 0;
+        let expiryDate = ISO8601DateFormatter().date(from: "2020-12-31T00:00:00Z")?.timeIntervalSinceReferenceDate ?? 0;
         if Date.timeIntervalSinceReferenceDate >= expiryDate {
             let alert = NSAlert()
             alert.messageText = "This version has expired"
@@ -69,6 +69,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.subscriptionManager.delegate = self
 
         UserDefaults.standard.set(true, forKey: "NSTextViewAvoidLayoutWhileDrawing")
+
+        NSApplication.shared.registerUserInterfaceItemSearchHandler(HelpController.shared)
+        self.showHelpViewer(self)
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -208,6 +211,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 //        self.documentController.addDocument(document)
 //        document.makeWindowControllers()
+    }
+
+
+    //MARK: - Help
+    @IBAction func showHelpViewer(_ sender: Any?) {
+        HelpController.shared.showHelpViewer()
     }
 
 }

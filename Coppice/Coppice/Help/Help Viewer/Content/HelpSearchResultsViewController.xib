@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17505"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="HelpSearchResultsViewController" customModule="Coppice" customModuleProvider="target">
+            <connections>
+                <outlet property="tableView" destination="iZS-Ce-L5E" id="vkK-uC-Zwl"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="27" horizontalPageScroll="10" verticalLineScroll="27" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MJf-s1-bCq">
+                    <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
+                    <clipView key="contentView" id="BuJ-4s-wt6">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="25" rowSizeStyle="automatic" viewBased="YES" id="iZS-Ce-L5E">
+                                <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <size key="intercellSpacing" width="3" height="2"/>
+                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                <tableColumns>
+                                    <tableColumn width="477" minWidth="40" maxWidth="1000" id="1X2-4k-rLx">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                        </tableHeaderCell>
+                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" title="Text Cell" id="Mpe-LO-I3l">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <prototypeCellViews>
+                                            <tableCellView id="Zzb-JA-qUI" customClass="HelpSearchResultTableCellView" customModule="Coppice" customModuleProvider="target">
+                                                <rect key="frame" x="1" y="1" width="477" height="25"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <subviews>
+                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="CpE-Di-uwi">
+                                                        <rect key="frame" x="6" y="5" width="96" height="16"/>
+                                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="n6s-uL-sga">
+                                                            <font key="font" usesAppearanceFont="YES"/>
+                                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                    <levelIndicator verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="li2-9M-LO0">
+                                                        <rect key="frame" x="369" y="7" width="100" height="12"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="100" id="hOU-el-R4u"/>
+                                                        </constraints>
+                                                        <levelIndicatorCell key="cell" alignment="left" doubleValue="0.5" maxValue="1" levelIndicatorStyle="relevancy" id="G0o-vb-Qpe"/>
+                                                    </levelIndicator>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="li2-9M-LO0" firstAttribute="centerY" secondItem="Zzb-JA-qUI" secondAttribute="centerY" id="8Ru-B3-VQO"/>
+                                                    <constraint firstItem="CpE-Di-uwi" firstAttribute="leading" secondItem="Zzb-JA-qUI" secondAttribute="leading" constant="8" id="MA8-at-sdf"/>
+                                                    <constraint firstItem="CpE-Di-uwi" firstAttribute="centerY" secondItem="Zzb-JA-qUI" secondAttribute="centerY" id="TMJ-tP-TA1"/>
+                                                    <constraint firstAttribute="trailing" secondItem="li2-9M-LO0" secondAttribute="trailing" constant="8" id="eBv-Ar-8qp"/>
+                                                    <constraint firstItem="li2-9M-LO0" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="CpE-Di-uwi" secondAttribute="trailing" constant="8" symbolic="YES" id="koz-Bz-hrD"/>
+                                                </constraints>
+                                                <connections>
+                                                    <outlet property="relevanceIndicator" destination="li2-9M-LO0" id="6jX-Br-3CC"/>
+                                                    <outlet property="textField" destination="CpE-Di-uwi" id="Zhr-TQ-9JN"/>
+                                                </connections>
+                                            </tableCellView>
+                                        </prototypeCellViews>
+                                    </tableColumn>
+                                </tableColumns>
+                                <connections>
+                                    <action trigger="doubleAction" selector="openTopic:" target="-2" id="xes-b6-GRo"/>
+                                    <outlet property="dataSource" destination="-2" id="i1G-VX-Oqv"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                    </clipView>
+                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="LVK-rz-1b7">
+                        <rect key="frame" x="1" y="247" width="469" height="16"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="7ZZ-gm-1zT">
+                        <rect key="frame" x="224" y="17" width="15" height="102"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                </scrollView>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="MJf-s1-bCq" secondAttribute="bottom" id="01H-Ig-ezT"/>
+                <constraint firstItem="MJf-s1-bCq" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="U8f-9N-TvY"/>
+                <constraint firstItem="MJf-s1-bCq" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="eMf-4L-jOL"/>
+                <constraint firstAttribute="trailing" secondItem="MJf-s1-bCq" secondAttribute="trailing" id="v64-Ck-1NS"/>
+            </constraints>
+            <point key="canvasLocation" x="43" y="158"/>
+        </customView>
+    </objects>
+</document>

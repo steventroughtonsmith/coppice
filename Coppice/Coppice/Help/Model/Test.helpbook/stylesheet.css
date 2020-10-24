@@ -1,0 +1,11 @@
+:root {
+	color-scheme: light dark;
+}
+
+body {
+    font-family: "Helvetica";
+}
+
+@media(prefers-color-scheme: dark) {
+a { color: #3ec1c9; }
+}
