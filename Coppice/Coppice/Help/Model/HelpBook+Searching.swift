@@ -27,6 +27,9 @@ extension HelpBook {
             }
             let components = lowercaseSearch.split(separator: " ")
             for component in components {
+                if (lowercaseTitle.contains(component)) {
+                    relevance += 2
+                }
                 if (topic.tags.contains(String(component))) {
                     relevance += 2
                 }
