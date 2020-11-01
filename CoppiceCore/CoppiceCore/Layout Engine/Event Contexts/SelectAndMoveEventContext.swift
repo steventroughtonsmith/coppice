@@ -46,7 +46,7 @@ class SelectAndMoveEventContext: CanvasMouseEventContext {
             }
             self.didDoubleClick = true
         }
-        else if (self.page.view?.isLink(atContentPoint: self.page.convertPointToContentSpace(location)) == true) {
+        else if (self.page.view?.isLink(atContentPoint: self.page.convertPointToContentSpace(location)) == true) && self.editable {
             self.page.view?.openLink(atContentPoint: self.page.convertPointToContentSpace(location))
         }
         //Otherwise we want to select just the clicked page if it isn't already selected (if it is then we assume the user is about the drag the selection

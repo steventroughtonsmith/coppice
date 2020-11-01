@@ -357,8 +357,17 @@ extension TextEditorViewController: PageContentEditor {
 
     func isLink(at point: CGPoint) -> Bool {
         let textViewPoint = self.editingTextView.convert(point, from: self.view)
+        //We want to make sure the click is inside the bounds of the text
+        guard
+            self.editingTextView.bounds.contains(textViewPoint),
+            let textContainer = self.editingTextView.textContainer,
+            let layoutManager = self.editingTextView.layoutManager,
+            layoutManager.usedRect(for: textContainer).contains(textViewPoint)
+        else {
+            return false
+        }
         let insertionPoint = self.editingTextView.characterIndexForInsertion(at: textViewPoint)
-        guard (self.editingTextView.textStorage?.length ?? 0) > insertionPoint else {
+        guard (self.editingTextView.textStorage?.length ?? 0) >= insertionPoint else {
             return false
         }
         guard let attributes = self.editingTextView.textStorage?.attributes(at: insertionPoint, effectiveRange: nil) else {
