@@ -12,6 +12,8 @@
                 <outlet property="createLinkedPageMenu" destination="qi8-Qy-8DJ" id="v4S-Yj-Xwb"/>
                 <outlet property="editingTextView" destination="7Lj-ak-caX" id="chh-rV-jdO"/>
                 <outlet property="placeHolderLabel" destination="vqL-7l-juX" id="R00-mT-Ijb"/>
+                <outlet property="placeHolderLeftConstraint" destination="k3P-vy-7wT" id="YUO-k6-rSg"/>
+                <outlet property="placeHolderTopConstraint" destination="l26-r7-4no" id="0cl-Pq-kTd"/>
                 <outlet property="scrollView" destination="kjQ-m1-j9L" id="bI2-A3-M7N"/>
                 <outlet property="view" destination="c22-O7-iKe" id="j9z-KC-SpR"/>
                 <outlet property="widthConstraint" destination="Ugp-CO-ISV" id="qlU-3J-SNC"/>
@@ -19,7 +21,7 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customView id="c22-O7-iKe">
+        <customView id="c22-O7-iKe" customClass="TextEditorContainerView" customModule="Coppice" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="943" height="538"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
@@ -35,7 +37,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <size key="minSize" width="790" height="523"/>
-                                <size key="maxSize" width="790" height="10000000"/>
+                                <size key="maxSize" width="800" height="10000000"/>
                                 <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                 <connections>
                                     <binding destination="-2" name="editable" keyPath="self.enabled" id="LZt-K5-uK3"/>
@@ -59,7 +61,7 @@
                 </scrollView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vqL-7l-juX">
                     <rect key="frame" x="80" y="512" width="137" height="16"/>
-                    <textFieldCell key="cell" lineBreakMode="clipping" title="Click to start writing…" id="g2J-Sg-cKc">
+                    <textFieldCell key="cell" lineBreakMode="clipping" allowsUndo="NO" title="Click to start writing…" id="g2J-Sg-cKc">
                         <font key="font" usesAppearanceFont="YES"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="displayP3"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -82,6 +84,10 @@
                 <constraint firstItem="kjQ-m1-j9L" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" priority="200" id="lcE-Yn-hiU"/>
                 <constraint firstAttribute="bottom" secondItem="kjQ-m1-j9L" secondAttribute="bottom" id="o2w-H1-UDL"/>
             </constraints>
+            <connections>
+                <outlet property="canvasTextView" destination="7Lj-ak-caX" id="lcH-8a-6Kc"/>
+                <outlet property="placeHolderLabel" destination="vqL-7l-juX" id="E9W-Qw-FiR"/>
+            </connections>
             <point key="canvasLocation" x="563.5" y="175"/>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="zLC-sP-eAX"/>

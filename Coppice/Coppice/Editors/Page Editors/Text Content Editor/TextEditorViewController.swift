@@ -14,6 +14,8 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
     @IBOutlet var editingTextView: NSTextView!
     @IBOutlet weak var scrollView: NSScrollView!
     @IBOutlet weak var placeHolderLabel: NSTextField!
+    @IBOutlet var placeHolderLeftConstraint: NSLayoutConstraint!
+    @IBOutlet var placeHolderTopConstraint: NSLayoutConstraint!
     @IBOutlet var widthConstraint: NSLayoutConstraint!
 
     @objc dynamic let viewModel: TextEditorViewModel
@@ -57,6 +59,7 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
             shadow.shadowBlurRadius = 3
             self.scrollView.shadow = shadow
         }
+        self.setupTextViewNotifications()
     }
 
     override func viewDidAppear() {
@@ -99,12 +102,31 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
         return TextEditorInspectorViewController(viewModel: TextEditorInspectorViewModel(editor: self, modelController: self.viewModel.modelController))
     }()
 
+    private var textViewNotifications: [NSObjectProtocol] = []
+    private func setupTextViewNotifications() {
+        self.textViewNotifications.append(NotificationCenter.default.addObserver(forName: .canvasTextViewDidBecomeFirstResponder, object: nil, queue: .main, using: { [weak self] (_) in
+            self?.willChangeValue(for: \.showPlaceholder)
+            self?.didChangeValue(for: \.showPlaceholder)
+        }))
+        self.textViewNotifications.append(NotificationCenter.default.addObserver(forName: .canvasTextViewDidResignFirstResponder, object: nil, queue: .main, using: { [weak self] (_) in
+            self?.willChangeValue(for: \.showPlaceholder)
+            self?.didChangeValue(for: \.showPlaceholder)
+        }))
+    }
 
 
     //MARK: - Placeholder
     @objc dynamic var showPlaceholder: Bool {
-        return self.editingTextView.string.count == 0
+        return self.editingTextView.string.count == 0 && (self.view.window?.firstResponder != self.editingTextView)
     }
+
+    private func updatePlaceholder() {
+        self.placeHolderTopConstraint.constant = self.scrollView.contentInsets.top
+        self.placeHolderLeftConstraint.constant = self.scrollView.contentInsets.left + 5
+        self.placeHolderLabel.stringValue = self.viewModel.isInCanvas ? NSLocalizedString("Double-click to start writing", comment: "Text Editor on canvas placeholder")
+                                                                      : NSLocalizedString("Click to start writing", comment: "Text Editor placeholder")
+    }
+
 
 
     //MARK: - InspectableTextEditor
@@ -217,13 +239,6 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
         menuItem.state = isTraitTrue ? .on : .off
 
         return true
-    }
-
-
-    //MARK: - Placeholder
-    private func updatePlaceholder() {
-        self.placeHolderLabel.stringValue = self.viewModel.isInCanvas ? NSLocalizedString("Double-click to start writing", comment: "Text Editor on canvas placeholder")
-                                                                      : NSLocalizedString("Click to start writing", comment: "Text Editor placeholder")
     }
 
 
@@ -471,5 +486,18 @@ extension TextEditorViewController: NSTextViewDelegate {
 
     func textShouldEndEditing(_ textObject: NSText) -> Bool {
         return true
+    }
+}
+
+
+class TextEditorContainerView: NSView {
+    @IBOutlet var placeHolderLabel: NSTextField!
+    @IBOutlet var canvasTextView: CanvasTextView!
+    override func hitTest(_ point: NSPoint) -> NSView? {
+        let view = super.hitTest(point)
+        if (view == self.placeHolderLabel) {
+            return self.canvasTextView
+        }
+        return view
     }
 }

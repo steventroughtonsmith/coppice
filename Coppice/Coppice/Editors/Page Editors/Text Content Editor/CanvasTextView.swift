@@ -8,6 +8,11 @@
 
 import Cocoa
 
+extension Notification.Name {
+    static let canvasTextViewDidBecomeFirstResponder = Notification.Name(rawValue: "M3CanvasTextViewDidBecomeFirstResponderNotification")
+    static let canvasTextViewDidResignFirstResponder = Notification.Name(rawValue: "M3CanvasTextViewDidResignFirstResponderNotification")
+}
+
 class CanvasTextView: NSTextView {
     override func mouseMoved(with event: NSEvent) {
         guard let canvasView = self.canvasView else {
@@ -23,7 +28,24 @@ class CanvasTextView: NSTextView {
 
     override func becomeFirstResponder() -> Bool {
         self.flashIfTabFocus()
-        return super.becomeFirstResponder()
+
+        let became = super.becomeFirstResponder()
+        if (became) {
+            NotificationCenter.default.post(name: .canvasTextViewDidBecomeFirstResponder, object: self)
+        }
+        return became
+    }
+
+    override func resignFirstResponder() -> Bool {
+        let resigned = super.resignFirstResponder()
+        if (resigned) {
+            self.perform(#selector(postResignNotification), with: nil, afterDelay: 0)
+        }
+        return resigned
+    }
+
+    @objc dynamic func postResignNotification() {
+        NotificationCenter.default.post(name: .canvasTextViewDidResignFirstResponder, object: self)
     }
 
 
