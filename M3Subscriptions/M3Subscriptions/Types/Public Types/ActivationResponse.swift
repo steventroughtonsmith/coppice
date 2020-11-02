@@ -11,6 +11,7 @@ import Foundation
 public struct ActivationResponse {
     public var token: String?
     public var subscription: Subscription?
+    public var previousSubscription: Subscription?
     public var deviceName: String?
     public var payload: [String: Any]
     public var signature: String

@@ -242,6 +242,10 @@
 		99B3474C2465846900B96B71 /* PixelPerfectTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B3474B2465846900B96B71 /* PixelPerfectTableView.swift */; };
 		99B3474E24658BA200B96B71 /* RoundSelectionTableRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B3474D24658BA200B96B71 /* RoundSelectionTableRowView.swift */; };
 		99BC4320250935B70032D7A3 /* sparkle_dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 99BC431F250935B70032D7A3 /* sparkle_dsa_pub.pem */; };
+		99BC8B3725504ADA007ECBAE /* InfoAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BC8B3525504ADA007ECBAE /* InfoAlertViewController.swift */; };
+		99BC8B3825504ADA007ECBAE /* InfoAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99BC8B3625504ADA007ECBAE /* InfoAlertViewController.xib */; };
+		99BC8B4E2550568B007ECBAE /* DocumentContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BC8B4C2550568B007ECBAE /* DocumentContentViewController.swift */; };
+		99BC8B4F2550568B007ECBAE /* DocumentContentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99BC8B4D2550568B007ECBAE /* DocumentContentViewController.xib */; };
 		99C03F07232A8ED200EB7516 /* CanvasElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03F06232A8ED200EB7516 /* CanvasElementView.swift */; };
 		99C03F09232A99F400EB7516 /* Cursors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99C03F08232A99F400EB7516 /* Cursors.xcassets */; };
 		99C03F0B232A9A5E00EB7516 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03F0A232A9A5E00EB7516 /* CanvasView.swift */; };
@@ -643,6 +647,10 @@
 		99B3474D24658BA200B96B71 /* RoundSelectionTableRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundSelectionTableRowView.swift; sourceTree = "<group>"; };
 		99B7D28724D9973A004CF71A /* Info.plist.prefix */ = {isa = PBXFileReference; lastKnownFileType = text; path = Info.plist.prefix; sourceTree = "<group>"; };
 		99BC431F250935B70032D7A3 /* sparkle_dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sparkle_dsa_pub.pem; sourceTree = "<group>"; };
+		99BC8B3525504ADA007ECBAE /* InfoAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoAlertViewController.swift; sourceTree = "<group>"; };
+		99BC8B3625504ADA007ECBAE /* InfoAlertViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InfoAlertViewController.xib; sourceTree = "<group>"; };
+		99BC8B4C2550568B007ECBAE /* DocumentContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentContentViewController.swift; sourceTree = "<group>"; };
+		99BC8B4D2550568B007ECBAE /* DocumentContentViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DocumentContentViewController.xib; sourceTree = "<group>"; };
 		99C03F06232A8ED200EB7516 /* CanvasElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasElementView.swift; sourceTree = "<group>"; };
 		99C03F08232A99F400EB7516 /* Cursors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Cursors.xcassets; sourceTree = "<group>"; };
 		99C03F0A232A9A5E00EB7516 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
@@ -1759,12 +1767,16 @@
 				99FE01E222D4CC8A004D380D /* DocumentWindowController.swift */,
 				9986874D253F079B004B29B0 /* DocumentWindowController+TouchBar.swift */,
 				99FE01E322D4CC8A004D380D /* DocumentWindow.xib */,
+				99BC8B4C2550568B007ECBAE /* DocumentContentViewController.swift */,
+				99BC8B4D2550568B007ECBAE /* DocumentContentViewController.xib */,
 				9970976A23ACFD2900CD189B /* RootSplitViewController.swift */,
 				9973737C2423BAD1000D5F21 /* RootSplitViewController.xib */,
 				993D2BF82412B053002E5BAC /* NestableSplitView.swift */,
 				993D2BFD2412FB1C002E5BAC /* SplitViewContainable.swift */,
 				99171EDB24AA48B200E96DE6 /* MainToolbarDelegate.swift */,
 				9998B4EB25164CA600E2D455 /* ButtonToolbarItem.swift */,
+				99BC8B3525504ADA007ECBAE /* InfoAlertViewController.swift */,
+				99BC8B3625504ADA007ECBAE /* InfoAlertViewController.xib */,
 			);
 			path = DocumentWindow;
 			sourceTree = "<group>";
@@ -1994,6 +2006,7 @@
 				9981E6D724C08F12005AF0EE /* WelcomeWindow.xib in Resources */,
 				999007ED24CF475900DB5C13 /* TourGetStartedView.xib in Resources */,
 				99581083230D7EFB00D996C4 /* CanvasEditorViewController.xib in Resources */,
+				99BC8B4F2550568B007ECBAE /* DocumentContentViewController.xib in Resources */,
 				993D2BD924127E29002E5BAC /* CanvasListView.xib in Resources */,
 				99581093230D92C600D996C4 /* CanvasPageViewController.xib in Resources */,
 				999007F724D07F1500DB5C13 /* TourPages.mp4 in Resources */,
@@ -2028,6 +2041,7 @@
 				996187F5249A523D007313BD /* GeneralPreferencesViewController.xib in Resources */,
 				99115DC6249E304D008942DF /* SystemProfileInfoViewController.xib in Resources */,
 				990F61A525222A3E00FA5A27 /* MultipleSubscriptionsView.xib in Resources */,
+				99BC8B3825504ADA007ECBAE /* InfoAlertViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2253,6 +2267,7 @@
 				9985F4DB23F44AAD00B96DC7 /* CanvasPageBackgroundView.swift in Sources */,
 				99D507342501538E00670139 /* ErrorPopoverViewController.swift in Sources */,
 				9951C26E230AF011006CAD4D /* PageSelectorWindow.swift in Sources */,
+				99BC8B4E2550568B007ECBAE /* DocumentContentViewController.swift in Sources */,
 				99D8E385237EDCD50098CF3B /* Inspector.swift in Sources */,
 				99868730253C719D004B29B0 /* ZoomMenuDelegate.swift in Sources */,
 				99D8E37E237EDB890098CF3B /* CanvasInspectorViewModel.swift in Sources */,
@@ -2263,6 +2278,7 @@
 				991F935C24ADF64A006A0A09 /* HoverSegmentedControl.swift in Sources */,
 				991B5F732541E76C002C483C /* HelpViewerToolbarDelegate.swift in Sources */,
 				9965FC4023843155002FE10D /* CanvasPageInspectorViewModel.swift in Sources */,
+				99BC8B3725504ADA007ECBAE /* InfoAlertViewController.swift in Sources */,
 				99D8E39023800F9A0098CF3B /* BaseInspectorViewController.swift in Sources */,
 				99C88EE6240BC79A00339880 /* ColourBackgroundView.swift in Sources */,
 				999EA6B42436097500BF254E /* SidebarViewController.swift in Sources */,

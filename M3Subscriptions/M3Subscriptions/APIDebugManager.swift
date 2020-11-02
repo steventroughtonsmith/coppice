@@ -113,6 +113,23 @@ public class APIDebugManager: NSObject {
         none.target = self
         menu.addItem(NSMenuItem.separator())
 
+        var timestamp = Int(Date.timeIntervalBetween1970AndReferenceDate + Date.timeIntervalSinceReferenceDate)
+        timestamp += (24 * 60 * 60)
+
+        let activeInPast = menu.addItem(withTitle: "Active (Soon)", action: #selector(checkMenuItemSelected(_:)), keyEquivalent: "")
+        activeInPast.representedObject = "active::renewalStatus:renew::expirationTimestamp:\(timestamp)"
+        activeInPast.target = self
+
+        timestamp += (59 * 24 * 60 * 60)
+        let activeInFuture = menu.addItem(withTitle: "Active (Far Future)", action: #selector(checkMenuItemSelected(_:)), keyEquivalent: "")
+        activeInFuture.representedObject = "active::renewalStatus:renew::expirationTimestamp:\(timestamp)"
+        activeInFuture.target = self
+
+        let activeBillingFailed = menu.addItem(withTitle: "Active (Billing Failed)", action: #selector(checkMenuItemSelected(_:)), keyEquivalent: "")
+        activeBillingFailed.representedObject = "active::renewalStatus:failed::expirationTimestamp:\(timestamp)"
+        activeBillingFailed.target = self
+
+
         let noDevice = menu.addItem(withTitle: "No Device Found", action: #selector(checkMenuItemSelected(_:)), keyEquivalent: "")
         noDevice.representedObject = "no_device_found"
         noDevice.target = self

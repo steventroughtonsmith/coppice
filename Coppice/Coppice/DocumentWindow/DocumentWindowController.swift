@@ -13,6 +13,7 @@ import M3Subscriptions
 
 class DocumentWindowController: NSWindowController, NSMenuItemValidation {
     let splitViewController: RootSplitViewController
+    let documentContentViewController = DocumentContentViewController()
 
     @IBOutlet weak var searchField: NSSearchField!
 
@@ -51,10 +52,13 @@ class DocumentWindowController: NSWindowController, NSMenuItemValidation {
             window.styleMask.insert(.fullSizeContentView)
         }
 
+        self.documentContentViewController.addChild(self.splitViewController)
+        self.documentContentViewController.view.addSubview(self.splitViewController.view, withInsets: NSEdgeInsetsZero)
+
         if let contentView = window.contentView {
-            self.splitViewController.view.frame = contentView.bounds
+            self.documentContentViewController.view.frame = contentView.bounds
         }
-        self.contentViewController = self.splitViewController
+        self.contentViewController = self.documentContentViewController
 
 //        self.sidebarViewController.pagesTable.nextKeyView = self.editorContainerViewController.view
 //        self.editorContainerViewController.view.nextKeyView = self.inspectorContainerViewController.view
@@ -143,6 +147,16 @@ class DocumentWindowController: NSWindowController, NSMenuItemValidation {
                 self?.newPageSegmentedControl.setImage(icon, forSegment: 0)
                 self?.newPageTouchBarItem?.collapsedRepresentationImage = icon
             }
+    }
+
+
+    //MARK: - Info Alerts
+    func displayInfoAlert(_ infoAlert: InfoAlert) {
+        let viewController = InfoAlertViewController(alert: infoAlert)
+        viewController.didDismissBlock = { [weak self] in
+            self?.documentContentViewController.currentInfoAlert = nil
+        }
+        self.documentContentViewController.currentInfoAlert = viewController
     }
 
 

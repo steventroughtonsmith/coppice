@@ -55,8 +55,8 @@ public class SubscriptionController {
 
     public func checkSubscription(updatingDeviceName deviceName: String? = nil, completion:  @escaping SubscriptionCompletion) {
         guard
-            let response = ActivationResponse(url: self.licenceURL),
-            let token = response.token
+            let localResponse = ActivationResponse(url: self.licenceURL),
+            let token = localResponse.token
         else {
             completion(.failure(SubscriptionErrorFactory.notActivatedError()))
             return
@@ -64,12 +64,13 @@ public class SubscriptionController {
 
         self.subscriptionAPI.check(Device(name: deviceName), token: token) { (result) in
             switch result {
-            case .success(let response):
+            case .success(var response):
+                response.previousSubscription = localResponse.subscription
                 self.complete(with: response, completion: completion)
             case .failure(let failure):
                 switch failure {
                 case .generic(let error as NSError) where (error.domain == NSURLErrorDomain) && (deviceName == nil):
-                    self.attemptLocalValidation(with: response, dueTo: failure, completion: completion)
+                    self.attemptLocalValidation(with: localResponse, dueTo: failure, completion: completion)
                 default:
                     let error = SubscriptionErrorFactory.error(for: failure)
                     completion(.failure(error))
@@ -114,6 +115,7 @@ public class SubscriptionController {
         }
 
         var modifiedResponse = response
+        modifiedResponse.previousSubscription = modifiedResponse.subscription
         modifiedResponse.reevaluateSubscription()
         self.complete(with: modifiedResponse, writeToFile: false, completion: completion)
     }

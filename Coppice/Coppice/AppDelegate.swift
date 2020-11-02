@@ -238,5 +238,16 @@ extension AppDelegate: CoppiceSubscriptionManagerDelegate {
             alert.runModal()
         }
     }
+
+    func showInfoAlert(_ infoAlert: InfoAlert, for subscriptionManager: CoppiceSubscriptionManager) {
+        NSApplication.shared.enumerateWindows(options: .orderedFrontToBack) { (window, stop) in
+            guard let windowController = window.windowController as? DocumentWindowController else {
+                return
+            }
+
+            windowController.displayInfoAlert(infoAlert)
+            stop.pointee = true
+        }
+    }
 }
 

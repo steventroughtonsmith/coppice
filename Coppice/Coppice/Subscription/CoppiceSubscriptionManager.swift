@@ -12,13 +12,18 @@ import Combine
 
 protocol CoppiceSubscriptionManagerDelegate: AnyObject {
     func showCoppicePro(with error: NSError, for subscriptionManager: CoppiceSubscriptionManager)
+    func showInfoAlert(_ infoAlert: InfoAlert, for subscriptionManager: CoppiceSubscriptionManager)
 }
 
 class CoppiceSubscriptionManager: NSObject {
     let subscriptionController: SubscriptionController?
     weak var delegate: CoppiceSubscriptionManagerDelegate?
 
-    @Published var activationResponse: ActivationResponse?
+    @Published var activationResponse: ActivationResponse? {
+        didSet {
+            self.notifyOfChanges()
+        }
+    }
     @Published var currentCheckError: NSError?
 
     static var shared = CoppiceSubscriptionManager()
@@ -233,6 +238,40 @@ class CoppiceSubscriptionManager: NSObject {
     private func recheckInAnHour() {
         self.recheckTimer = Timer.scheduledTimer(withTimeInterval: 3600, repeats: false) { [weak self] _ in
             self?.checkSubscriptionIfNeeded()
+        }
+    }
+
+
+    //MARK: - Notify of changes
+    func notifyOfChanges() {
+        guard let response = self.activationResponse else {
+            return
+        }
+
+        guard
+            let currentSubscription = response.subscription,
+            let previousSubscription = response.previousSubscription
+        else {
+            return
+        }
+
+        //Just expired
+        if (currentSubscription.hasExpired && !previousSubscription.hasExpired) {
+            self.delegate?.showInfoAlert(InfoAlert(id: "test", level: .warning, title: "Your Coppice Pro subscription has expired.", message: "You can always upgrade again through our website.", autodismiss: false),
+                                         for: self)
+            return
+        }
+        //Just renewed
+        if (currentSubscription.hasExpired == false) && (currentSubscription.expirationDate > previousSubscription.expirationDate) {
+            self.delegate?.showInfoAlert(InfoAlert(id: "test", level: .info, title: "Thank you for renewing your subscription!"),
+                                         for: self)
+            return
+        }
+        //Billing failed
+        if (currentSubscription.hasExpired == false) && (currentSubscription.renewalStatus == .failed) {
+            self.delegate?.showInfoAlert(InfoAlert(id: "test", level: .error, title: "We were unable to renew your Coppice Pro subscription.", message: "Please log into your M Cubed Account and update your billing info.", autodismiss: false),
+                                         for: self)
+            return
         }
     }
 
