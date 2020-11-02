@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ImageEditorInspectorViewController" customModule="Coppice" customModuleProvider="target">
             <connections>
+                <outlet property="descriptionScrollViewHeight" destination="JsA-Ms-ke4" id="jpF-Q9-JNL"/>
+                <outlet property="descriptionTextView" destination="Nfg-9H-1PC" id="7Dr-Vv-Ful"/>
                 <outlet property="firstKeyView" destination="Nfg-9H-1PC" id="ZhN-HL-yLu"/>
                 <outlet property="lastKeyView" destination="Nfg-9H-1PC" id="1tL-WH-BQk"/>
             </connections>
@@ -35,6 +38,7 @@
                                 <connections>
                                     <accessibilityConnection property="title" destination="G8q-mk-dZR" id="86I-A1-yEK"/>
                                     <binding destination="-2" name="value" keyPath="self.viewModel.imageDescription" id="RP3-c2-ZQH"/>
+                                    <outlet property="delegate" destination="-2" id="eXX-EP-Q6r"/>
                                 </connections>
                             </textView>
                         </subviews>
