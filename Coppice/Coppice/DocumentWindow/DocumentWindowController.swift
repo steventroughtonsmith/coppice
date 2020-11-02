@@ -9,6 +9,7 @@
 import Cocoa
 import Combine
 import CoppiceCore
+import M3Subscriptions
 
 class DocumentWindowController: NSWindowController, NSMenuItemValidation {
     let splitViewController: RootSplitViewController
@@ -60,6 +61,7 @@ class DocumentWindowController: NSWindowController, NSMenuItemValidation {
         self.setupNewPageSegmentedControl()
         
         self.setupToolbar()
+        self.setupTitleBarInfoObservation()
     }
     
     var mainToolbarDelegate: MainToolbarDelegate?
@@ -142,6 +144,36 @@ class DocumentWindowController: NSWindowController, NSMenuItemValidation {
                 self?.newPageSegmentedControl.setImage(icon, forSegment: 0)
                 self?.newPageTouchBarItem?.collapsedRepresentationImage = icon
             }
+    }
+
+
+    //MARK: - Title Bar
+    lazy var titleBarInfoViewController: TitleBarInfoViewController = {
+        let vc = TitleBarInfoViewController()
+        vc.layoutAttribute = .right
+        return vc
+    }()
+
+    var activationObserver: AnyCancellable?
+    private func setupTitleBarInfoObservation() {
+        self.activationObserver = CoppiceSubscriptionManager.shared.$activationResponse.sink { [weak self] (response) in
+            self?.updateTitleBarInfo(with: response)
+        }
+    }
+
+    private func updateTitleBarInfo(with activation: ActivationResponse?) {
+        guard let window = self.window else {
+            return
+        }
+
+        guard let activation = activation else {
+            if window.titlebarAccessoryViewControllers.count > 0 {
+                window.removeTitlebarAccessoryViewController(at: 0)
+            }
+            return
+        }
+
+        window.addTitlebarAccessoryViewController(self.titleBarInfoViewController)
     }
 
 

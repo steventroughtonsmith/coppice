@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17505"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="TitleBarInfoViewController" customModule="Coppice" customModuleProvider="target">
+            <connections>
+                <outlet property="button" destination="Arc-1x-cHE" id="6qS-FH-oU0"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="168" height="18"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Arc-1x-cHE">
+                    <rect key="frame" x="2" y="0.0" width="164" height="17"/>
+                    <buttonCell key="cell" type="inline" title="Billing Failure" bezelStyle="inline" alignment="center" borderStyle="border" inset="2" id="ouQ-Xv-r7U">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="smallSystemBold"/>
+                    </buttonCell>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstItem="Arc-1x-cHE" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="1" id="hHX-dd-i9p"/>
+                <constraint firstItem="Arc-1x-cHE" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="2" id="jra-dB-9bt"/>
+                <constraint firstAttribute="trailing" secondItem="Arc-1x-cHE" secondAttribute="trailing" constant="2" id="lb6-qg-rlp"/>
+            </constraints>
+            <point key="canvasLocation" x="-62" y="38.5"/>
+        </customView>
+    </objects>
+</document>

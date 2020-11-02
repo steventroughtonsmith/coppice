@@ -51,6 +51,8 @@
 		991B60B82543320C002C483C /* HelpSearchResultsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 991B60B62543320C002C483C /* HelpSearchResultsViewController.xib */; };
 		991B60BF25433294002C483C /* HelpBook+Searching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991B60BE25433294002C483C /* HelpBook+Searching.swift */; };
 		991B60C6254334F2002C483C /* HelpSearchResultTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991B60C5254334F2002C483C /* HelpSearchResultTableCellView.swift */; };
+		991CDD8D2550275A00AF4847 /* TitleBarInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991CDD8B2550275A00AF4847 /* TitleBarInfoViewController.swift */; };
+		991CDD8E2550275A00AF4847 /* TitleBarInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 991CDD8C2550275A00AF4847 /* TitleBarInfoViewController.xib */; };
 		991F935C24ADF64A006A0A09 /* HoverSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991F935B24ADF64A006A0A09 /* HoverSegmentedControl.swift */; };
 		9923B06B22F45F7E0035D8C6 /* TestObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9923B06A22F45F7E0035D8C6 /* TestObjects.swift */; };
 		9925B2622386A0DF001A8ADC /* TextEditorInspectorTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9925B2612386A0DF001A8ADC /* TextEditorInspectorTypes.swift */; };
@@ -448,6 +450,8 @@
 		991B60B62543320C002C483C /* HelpSearchResultsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HelpSearchResultsViewController.xib; sourceTree = "<group>"; };
 		991B60BE25433294002C483C /* HelpBook+Searching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HelpBook+Searching.swift"; sourceTree = "<group>"; };
 		991B60C5254334F2002C483C /* HelpSearchResultTableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpSearchResultTableCellView.swift; sourceTree = "<group>"; };
+		991CDD8B2550275A00AF4847 /* TitleBarInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleBarInfoViewController.swift; sourceTree = "<group>"; };
+		991CDD8C2550275A00AF4847 /* TitleBarInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TitleBarInfoViewController.xib; sourceTree = "<group>"; };
 		991F935B24ADF64A006A0A09 /* HoverSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoverSegmentedControl.swift; sourceTree = "<group>"; };
 		9923B06A22F45F7E0035D8C6 /* TestObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestObjects.swift; sourceTree = "<group>"; };
 		9925B2612386A0DF001A8ADC /* TextEditorInspectorTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorInspectorTypes.swift; sourceTree = "<group>"; };
@@ -1765,6 +1769,8 @@
 				993D2BFD2412FB1C002E5BAC /* SplitViewContainable.swift */,
 				99171EDB24AA48B200E96DE6 /* MainToolbarDelegate.swift */,
 				9998B4EB25164CA600E2D455 /* ButtonToolbarItem.swift */,
+				991CDD8B2550275A00AF4847 /* TitleBarInfoViewController.swift */,
+				991CDD8C2550275A00AF4847 /* TitleBarInfoViewController.xib */,
 			);
 			path = DocumentWindow;
 			sourceTree = "<group>";
@@ -2010,6 +2016,7 @@
 				99FE01E522D4CC8A004D380D /* DocumentWindow.xib in Resources */,
 				99902261241FDD52009A8446 /* NoCanvasViewController.xib in Resources */,
 				99D5073B250254BF00670139 /* ProUpsellViewController.xib in Resources */,
+				991CDD8E2550275A00AF4847 /* TitleBarInfoViewController.xib in Resources */,
 				999EA6BC243619E700BF254E /* SearchResultsView.xib in Resources */,
 				9973737B2423AD6C000D5F21 /* NoEditorViewController.xib in Resources */,
 				99488AA723BA3993009954AF /* LargeCanvasCell.xib in Resources */,
@@ -2130,6 +2137,7 @@
 				99C865202302E256004C7B89 /* ImageEditorViewController.swift in Sources */,
 				996187F8249A6E72007313BD /* UpdatePreferencesViewController.swift in Sources */,
 				991B5FAF2541F604002C483C /* HelpBook.swift in Sources */,
+				991CDD8D2550275A00AF4847 /* TitleBarInfoViewController.swift in Sources */,
 				9926951A24AA34940050DFED /* ImmediateMenuSegmentedControl.swift in Sources */,
 				99C8650923016EB2004C7B89 /* TextEditorViewModel.swift in Sources */,
 				999EA6BB243619E700BF254E /* SearchResultsViewController.swift in Sources */,
