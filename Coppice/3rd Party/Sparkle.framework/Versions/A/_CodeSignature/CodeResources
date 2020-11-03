@@ -6,7 +6,7 @@
 	<dict>
 		<key>Resources/Autoupdate</key>
 		<data>
-		rKubgcjmT3RKTVmXSxsb0cWp2i8=
+		13FuOPRYMI6ss777Of4K25enrsA=
 		</data>
 		<key>Resources/DarkAqua.css</key>
 		<data>
@@ -14,7 +14,7 @@
 		</data>
 		<key>Resources/Info.plist</key>
 		<data>
-		VghTl9Jg/uFVUS0lULN7EkPj6OU=
+		AhxostNuY5EAQiBtsgLYkOZV9RQ=
 		</data>
 		<key>Resources/SUModelTranslation.plist</key>
 		<data>
@@ -26,11 +26,11 @@
 		</data>
 		<key>Resources/Updater.app/Contents/Info.plist</key>
 		<data>
-		9+dkQY2LBo6q14yWndfGg9jh7nU=
+		EsOZqtsEvW+Pi65jUq77CzHgGV8=
 		</data>
 		<key>Resources/Updater.app/Contents/MacOS/Updater</key>
 		<data>
-		wNlREfiyxBNoDxYGIo7k45eEFbE=
+		PuNPUMG8s8nY366yxfV7+udZAjI=
 		</data>
 		<key>Resources/Updater.app/Contents/PkgInfo</key>
 		<data>
@@ -1077,165 +1077,165 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			SPgGJy2WLOOBcU7TAlFvzpUU8NI=
+			EKb0II4rScztQ1pNSaYY0hKtuAg=
 			</data>
 			<key>hash2</key>
 			<data>
-			Vn59jAa+HxzzEm5qpBkPtpQYO5dFIxqkntxsWUmCL/A=
+			1jOSqkq6aVdiDZn++znPcb01/ckCvaJPtCb90wg0o6k=
 			</data>
 		</dict>
 		<key>Headers/SPUStandardUpdaterController.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			wYFA+1z2xdkHCrX3WEm5+3niqaI=
+			TWB82vrQrjGZd3CuoDJyY2XyrOY=
 			</data>
 			<key>hash2</key>
 			<data>
-			WpnOiDZ/ZcbnLbw8pNuJ5yOrkPCtbWYv9L/2PW9CImk=
+			CWut55+a+aXcDe9zPENeuXZbP0SssWM2ogM8nkZiNdM=
 			</data>
 		</dict>
 		<key>Headers/SPUStandardUserDriver.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			E9o7tbuEfShJZn918vLR07tc7sM=
+			3SC/68bHsFFdjmxTvQneBX41xtA=
 			</data>
 			<key>hash2</key>
 			<data>
-			QztncDN6dulLVCA7dF6bnpVbAvmxXuWGi1xNcGlLpoc=
+			/ojhDErUYyEJxF+d3qqtnQWzW3zKBwrnA/HCYA7nw0w=
 			</data>
 		</dict>
 		<key>Headers/SPUStandardUserDriverDelegate.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			ZwjUNW3O0k/oOuih0bZO7AYFquY=
+			da0VYiNv+0XSaG1z+96hchj6D/U=
 			</data>
 			<key>hash2</key>
 			<data>
-			CbV4VjBLzhuNYc7dMc+dg9ROfmIpWvTyA56LQ1FMq3Y=
+			SuqIse+W0PTAdH8IlnDVshgEiMgpWtvfIncjRGPg6WU=
 			</data>
 		</dict>
 		<key>Headers/SPUStandardUserDriverProtocol.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			UHrhwCqg5gvUZ5cjL6LFisnERas=
+			pqTO0HmbsNgBJCNQ0c12CCL3Ekk=
 			</data>
 			<key>hash2</key>
 			<data>
-			4f+yOQW6lIfOB3skIQGhtRb9jMz4amVJq7pZfM1MNAQ=
+			pTIDJWurqegrRgNPN/QrMzhQFeAWLTziefpsi7FPtOg=
 			</data>
 		</dict>
 		<key>Headers/SPUStatusCompletionResults.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			5BgARc6YuCSH3jOiq1l8Fig8NDM=
+			lMx/7KtmckSijJYHJQoX5884B7w=
 			</data>
 			<key>hash2</key>
 			<data>
-			cOMnB3S8bpx4hJP/R9YJRejdSV40EWz2lXzfA3e2D9Y=
+			osigXpOh9MVZ7LPy7eqCH9pPYCWuyTD5vd1DeRidCto=
 			</data>
 		</dict>
 		<key>Headers/SPUUpdatePermissionRequest.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			6MOBNm3CRevuda+rgji6h3J8sTc=
+			ikAnvuFzU2M7l+ETpb6nR+SU3Gc=
 			</data>
 			<key>hash2</key>
 			<data>
-			+UqH1wupNdw/TXzYSFK5XFO70UYWEThzrEPuZA4hocA=
+			tucz5cnaVTR7MRqG0CBmVXzAHV3W2njiL9xBkE1MnQs=
 			</data>
 		</dict>
 		<key>Headers/SPUUpdater.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			vwgRCLXsQjIFnNLzhZMisscrvqY=
+			13YMWmdYQcoBGHhPVGxqFifBJsg=
 			</data>
 			<key>hash2</key>
 			<data>
-			32R0ZGvXsE98LkuhoC7mDyEAL5JY54d1+DocdlIkWDc=
+			5L3J7tAqQ6g5iD0qTljfecljry+bnQihRO6KEE84Hu0=
 			</data>
 		</dict>
 		<key>Headers/SPUUpdaterDelegate.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			1zhiINVDB8O8mUvNpoYq2mHVnWs=
+			qE+62X1B3uKzkhMTcMSOtUQqpI0=
 			</data>
 			<key>hash2</key>
 			<data>
-			VjTzsLmlQd4ersKr1BppZWtS3VoNSKF/UiPer/00z1Y=
+			Ztng1qCDWecl1VmJALu/CZkkGRBtY9UGumcPhIJqzB8=
 			</data>
 		</dict>
 		<key>Headers/SPUUpdaterSettings.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			UdbJrrFYar5/OedQBFHYtnuucAE=
+			mAL4lacTTQii30Y34pAWPbtnPcE=
 			</data>
 			<key>hash2</key>
 			<data>
-			6hm6xrk2G5++ngoBuO22W4n56nKQwpBiPCtaS3AE6Ek=
+			JuKEpXrTESsNYBIT4So4nkFwdNFLzz4/mYrEaJsSFDA=
 			</data>
 		</dict>
 		<key>Headers/SPUUserDriver.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			5dYsYKUUfd4+U7RclZaj6JOd6AE=
+			3We2NQdzBUzYXHI0lyQ90RPGnTg=
 			</data>
 			<key>hash2</key>
 			<data>
-			YEuG2hFGdBnr5AKU1cXbpzCS+druwFcW71Qj86MVoJw=
+			FA4QSlUSMdq+JNBd8m+gfhlS0qvc1UsmEA5nrAg55/o=
 			</data>
 		</dict>
 		<key>Headers/SPUUserDriverCoreComponent.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			C8lEzedAlEyEQ5v0GXW+vvcmQTw=
+			MP0zZgK4Rfg4GJ9ky+7DgZJ8KR4=
 			</data>
 			<key>hash2</key>
 			<data>
-			KZ3rTWhmbBsA2uCRpO3HuYMRTKwxPZJ/ZzyCz9EaWWs=
+			f/4t21h0i8qWzGJIeKy3/46yp2Tv8YfDdxMykpRp0ok=
 			</data>
 		</dict>
 		<key>Headers/SUAppcast.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			zAt62NHSgAHaCtoNu1u+H3tkv/8=
+			13TQuK4wE40jejX7SSk2l4VAMfQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			YxX5qBVagA55zR5LI622almJMWXgMR1u39zYBU65ayM=
+			x7b2J8hXsM/CT22a26XOESqjuEwkWYH7en4VTNAg1bw=
 			</data>
 		</dict>
 		<key>Headers/SUAppcastItem.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			CtFdWSmDBA3ZmnQemGdgzghNBz4=
+			jyOawgx1oyhWr/Mn3yAB5rzH2jE=
 			</data>
 			<key>hash2</key>
 			<data>
-			u/CMiuHfRxntNopfYAjlA6KwvJBOSpcqhp/dnO0YD/8=
+			Xe3DWUMt741UYwgX/LvQvVTdYx0k86320M2elEvs9j0=
 			</data>
 		</dict>
 		<key>Headers/SUErrors.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Va3nEcc/mtqJ+a/b7F6VpcjpXuc=
+			i86GesMd/g29DSDugX9wzgEbPq8=
 			</data>
 			<key>hash2</key>
 			<data>
-			5BoS4Le13V+8gPMezdyRZA6uJ6w62mCIXQ4NBWX4sgQ=
+			YP/RbyrzxU6f7OnTOTuCgQBtDr5F45bFd+HZIWpXtkg=
 			</data>
 		</dict>
 		<key>Headers/SUExport.h</key>
@@ -1253,77 +1253,77 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			lL9pZWFXLvAknYunZTZZDhRFqcE=
+			By2sfsF4iEC36Qf9JSaeEUcaa1g=
 			</data>
 			<key>hash2</key>
 			<data>
-			whwXg5tZevzx561d1VrLM2nosKVbXQ+wL/1dSzfE0+Y=
+			nTApsuUAjkx+B36q+g9Ane8n5DVuT5MtmD1O8nQLI38=
 			</data>
 		</dict>
 		<key>Headers/SUUpdatePermissionResponse.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			jHbjOvFcFykORQwJ9uXSJxcOVZU=
+			HK47YYNf2b80GPD+mwDzpUrOsuc=
 			</data>
 			<key>hash2</key>
 			<data>
-			qHmA9L8e8P/orf31+4fRTDBjKR3tJKoWLFQHUl4LerM=
+			7KbZdVg1lILY5HDwq1m8m1jYQybZZTKemXzkMb1XyQw=
 			</data>
 		</dict>
 		<key>Headers/SUUpdater.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			9EmaftTR52tOZFQThF0qc8yhVTo=
+			QpKZ54dhXjUapW97jk9rF4GDiIs=
 			</data>
 			<key>hash2</key>
 			<data>
-			t/QHqmqLmKupAQCXH4t2gO1VY9mxv8tOdhos/HiJF2Y=
+			Fs7LPKM9DeyU5I7Yl/RcpVYQu7O4dJClv3fZbQ2i7FA=
 			</data>
 		</dict>
 		<key>Headers/SUUpdaterDelegate.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			QqC5eVe6S2znlELMuHm2cChw+oA=
+			5jr3gkUXJZdjw1mRPq4+nrO9Vzs=
 			</data>
 			<key>hash2</key>
 			<data>
-			tMpnUGGPWSBoNMboIeJXcKLWt9mSw7xUKjATwog2OhQ=
+			tDsb7VYPN10XG2r6iI+oLR1fywJO99UhCSfJfK4xQro=
 			</data>
 		</dict>
 		<key>Headers/SUVersionComparisonProtocol.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			zOzM1bnNjoow6PaXmYf0LGS8xo0=
+			XIUejM9q6CmObGfMkTezjTlokUA=
 			</data>
 			<key>hash2</key>
 			<data>
-			B3fZaMx21rCLSY+P4MhNJacbhmvJ66Xgn92oA5IcbQc=
+			umAJ+Y5IYClPSJwYMTh4sagFpSRDKjapTsJcoXxlrMY=
 			</data>
 		</dict>
 		<key>Headers/SUVersionDisplayProtocol.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			whHX4JUvfaDUCUjdBMmoO8+Ueec=
+			5kBHdkpWbmwW8JXg5OBf/vmC6PE=
 			</data>
 			<key>hash2</key>
 			<data>
-			PG9qYvZShQBQG0MvUvLOMDAXbz34lkx3e/r9rFQrWY8=
+			3nOb57dbI2cAYCH46qMQzw2YKViYbN4j0TTH5NuhcDs=
 			</data>
 		</dict>
 		<key>Headers/Sparkle.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			sKyvQz4vzTlY9T7GaKbyBSAA2Qk=
+			X9VTedkIjQzzXy9dTgvQ+oAVxTc=
 			</data>
 			<key>hash2</key>
 			<data>
-			/3IFcmEkDbSn86Y5a7Uur2GiBgwGdMtSnS55KU9z3Rk=
+			wBm9UBFf8yHxGnWWgs2oBV4lGTG3nu6FZThGsHZoy0A=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
@@ -1341,11 +1341,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			rKubgcjmT3RKTVmXSxsb0cWp2i8=
+			13FuOPRYMI6ss777Of4K25enrsA=
 			</data>
 			<key>hash2</key>
 			<data>
-			3zn/D9tPiE+ibRG0z0GPuzPWdC4e3PQJ44YFFnIpCyw=
+			QLg9mHajyAhiwxc94scJNsZc7u+UBER9ZQ/ZSyaYLZE=
 			</data>
 		</dict>
 		<key>Resources/DarkAqua.css</key>
@@ -1363,11 +1363,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			VghTl9Jg/uFVUS0lULN7EkPj6OU=
+			AhxostNuY5EAQiBtsgLYkOZV9RQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			fUmnfhrnawO85vM2dUb5Be8ppfKzOnkM/GUH7PQa4rE=
+			ffym4aUqYbtzYUtCh/5GjEax03Aq+9sXRKmC0xRHTXI=
 			</data>
 		</dict>
 		<key>Resources/SUModelTranslation.plist</key>
@@ -1396,22 +1396,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			9+dkQY2LBo6q14yWndfGg9jh7nU=
+			EsOZqtsEvW+Pi65jUq77CzHgGV8=
 			</data>
 			<key>hash2</key>
 			<data>
-			eimgVAfzH7ahsfEmk3LV1edvDA91N5gs/7/uUz4o3X8=
+			a/t67gPQTOVoerU3Fb2JxPC4EuNanTfuYQkwhXqAdqg=
 			</data>
 		</dict>
 		<key>Resources/Updater.app/Contents/MacOS/Updater</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			wNlREfiyxBNoDxYGIo7k45eEFbE=
+			PuNPUMG8s8nY366yxfV7+udZAjI=
 			</data>
 			<key>hash2</key>
 			<data>
-			tL97VpSed8gnfae9r/LixwqZkukzmSzHlIUXXmACn74=
+			9kOJ+UQeIg3TkQKmB2uK5OEhJoLSPmEk4luJtHIiSMg=
 			</data>
 		</dict>
 		<key>Resources/Updater.app/Contents/PkgInfo</key>

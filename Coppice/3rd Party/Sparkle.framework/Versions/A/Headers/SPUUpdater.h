@@ -6,9 +6,16 @@
 //  Copyright 2006 Andy Matuschak. All rights reserved.
 //
 
+#if __has_feature(modules)
+#if __has_warning("-Watimport-in-framework-header")
+#pragma clang diagnostic ignored "-Watimport-in-framework-header"
+#endif
+@import Foundation;
+#else
 #import <Foundation/Foundation.h>
-#import <Sparkle/SUExport.h>
-#import <Sparkle/SPUUserDriver.h>
+#endif
+#import "SUExport.h"
+#import "SPUUserDriver.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
