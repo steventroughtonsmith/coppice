@@ -58,8 +58,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if Date.timeIntervalSinceReferenceDate >= expiryDate {
             let alert = NSAlert()
             alert.messageText = "This version has expired"
-            alert.informativeText = "Please contact M Cubed Software or download the latest version"
-            alert.runModal()
+            alert.informativeText = "Please download the latest version"
+            alert.addButton(withTitle: "Download")
+            alert.addButton(withTitle: "Quit")
+            let result = alert.runModal()
+            if result == .alertFirstButtonReturn {
+                NSWorkspace.shared.open(URL(string: "https://mcubedsw.com/download/coppice/latest")!)
+            }
             NSApplication.shared.terminate(self)
         }
 
