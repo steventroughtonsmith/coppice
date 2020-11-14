@@ -28,10 +28,12 @@ class HelpViewerWindowController: NSWindowController {
     override func windowDidLoad() {
         super.windowDidLoad()
 
+        self.splitViewController.view.frame.size = CGSize(width: 900, height: 600)
+
         self.contentViewController = self.splitViewController
         self.setupToolbar()
 
-        self.navigationStack.navigate(to: .topic(self.helpBook.index))
+        self.navigationStack.navigate(to: .home)
     }
 
 

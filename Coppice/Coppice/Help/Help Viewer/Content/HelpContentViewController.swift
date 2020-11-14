@@ -50,6 +50,10 @@ class HelpContentViewController: NSViewController {
         }
         
         switch item {
+        case .home:
+            self.helpTopicViewController.topic = self.helpBook.home
+            self.helpTopicViewController.delegate = self.windowController as? HelpTopicViewControllerDelegate
+            self.currentViewController = self.helpTopicViewController
         case .topic(let topic):
             self.helpTopicViewController.topic = topic
             self.helpTopicViewController.delegate = self.windowController as? HelpTopicViewControllerDelegate

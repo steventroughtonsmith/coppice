@@ -1,0 +1,139 @@
+body {
+    font-family: -apple-system;
+    font-weight: 300;
+    font-size: 11pt;
+    padding: 30px;
+}
+
+p, li, blockquote {
+    line-height: 1.5em;
+    margin-bottom: 10px;
+}
+
+p {
+    margin-bottom: 25px;
+}
+
+h1 {
+    font-size: 1.5em
+}
+
+h2 {
+    font-size: 1em;
+    margin-bottom: 0px;
+}
+
+ul {
+    list-style: circle;
+}
+
+blockquote {
+    background: #f7f7f7;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+figure {
+    display: flex;
+}
+
+figure img {
+    border: none;
+}
+
+figure.left {
+    justify-content: flex-start
+}
+
+figure.centre {
+    justify-content: space-around
+}
+
+hr {
+    border: 0px;
+    border-top: 1px solid #ddd
+}
+
+details {
+    cursor: pointer;
+}
+
+aside, blockquote {
+    padding: 8px 12px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 10px;
+    font-size: 0.9em;
+    margin: 10px 10px 20px 10px;
+    font-weight: 300;
+    display: inline-flex;
+    font-family: "proxima-nova", sans-serif;
+}
+
+aside + aside {
+    margin-top: 0px;
+}
+
+aside.note {
+    background: #f7f7f7;
+    border-color: #ddd;
+}
+
+aside.note::before {
+    content: "Note:";
+    padding-right: 8px;
+    font-weight: 600;
+}
+
+aside.tip {
+    background: #def4d9;
+    border-color: #BDD3B4;
+}
+
+aside.tip::before {
+    content: "Tip:";
+    padding-right: 8px;
+    font-weight: 600;
+}
+
+details {
+    cursor: pointer;
+    border-bottom: 1px solid #ddd;
+}
+
+details[open] {
+    padding-bottom: 20px;
+}
+
+details:first-of-type {
+    border-top: 1px solid #ddd;
+}
+
+details summary {
+    font-weight: 600;
+    margin: 30px 0px;
+    outline: none;
+}
+
+span.alternate {
+    color: #757575;
+    font-style: italic;
+}
+
+details[open] summary {
+    margin-bottom: 20px;
+}
+
+details summary::-webkit-details-marker {
+    color: transparent;
+    background: url('disclosure-closed.png');
+    background-repeat: no-repeat;
+    background-size: 9px 9px
+}
+
+details[open] summary::-webkit-details-marker {
+    background: url('disclosure-open.png');
+    background-repeat: no-repeat;
+    background-size: 9px 9px
+}

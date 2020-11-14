@@ -296,6 +296,8 @@
 		99D5073A250254BF00670139 /* ProUpsellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D50738250254BF00670139 /* ProUpsellViewController.swift */; };
 		99D5073B250254BF00670139 /* ProUpsellViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99D50739250254BF00670139 /* ProUpsellViewController.xib */; };
 		99D5073D2502854600670139 /* ProButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D5073C2502854600670139 /* ProButtonCell.swift */; };
+		99D74AC225603A3500CE0792 /* Coppice.helpbook in Resources */ = {isa = PBXBuildFile; fileRef = 99D74AC125603A3500CE0792 /* Coppice.helpbook */; };
+		99D74AD3256045D800CE0792 /* TopicHTMLGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D74AD2256045D800CE0792 /* TopicHTMLGenerator.swift */; };
 		99D8E378237EDB890098CF3B /* PageInspectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D8E368237EDB890098CF3B /* PageInspectorViewController.swift */; };
 		99D8E379237EDB890098CF3B /* PageInspectorContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99D8E369237EDB890098CF3B /* PageInspectorContentView.xib */; };
 		99D8E37A237EDB890098CF3B /* PageInspectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D8E36A237EDB890098CF3B /* PageInspectorViewModel.swift */; };
@@ -703,6 +705,8 @@
 		99D50738250254BF00670139 /* ProUpsellViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProUpsellViewController.swift; sourceTree = "<group>"; };
 		99D50739250254BF00670139 /* ProUpsellViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProUpsellViewController.xib; sourceTree = "<group>"; };
 		99D5073C2502854600670139 /* ProButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProButtonCell.swift; sourceTree = "<group>"; };
+		99D74AC125603A3500CE0792 /* Coppice.helpbook */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Coppice.helpbook; sourceTree = "<group>"; };
+		99D74AD2256045D800CE0792 /* TopicHTMLGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicHTMLGenerator.swift; sourceTree = "<group>"; };
 		99D8E368237EDB890098CF3B /* PageInspectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageInspectorViewController.swift; sourceTree = "<group>"; };
 		99D8E369237EDB890098CF3B /* PageInspectorContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PageInspectorContentView.xib; sourceTree = "<group>"; };
 		99D8E36A237EDB890098CF3B /* PageInspectorViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageInspectorViewModel.swift; sourceTree = "<group>"; };
@@ -875,6 +879,7 @@
 				991B5F422541E32B002C483C /* HelpViewerWindowController.xib */,
 				991B60AE25432140002C483C /* NavigationStack.swift */,
 				991B5F722541E76C002C483C /* HelpViewerToolbarDelegate.swift */,
+				99D74AD2256045D800CE0792 /* TopicHTMLGenerator.swift */,
 				991B6093254311C6002C483C /* Navigation */,
 				991B608D254311C0002C483C /* Content */,
 			);
@@ -886,6 +891,7 @@
 			children = (
 				991B5FAE2541F604002C483C /* HelpBook.swift */,
 				991B60BE25433294002C483C /* HelpBook+Searching.swift */,
+				99D74AC125603A3500CE0792 /* Coppice.helpbook */,
 				991B5FFA2542057C002C483C /* Test.helpbook */,
 			);
 			path = Model;
@@ -2004,6 +2010,7 @@
 				999007DD24CF472E00DB5C13 /* TourPagesView.xib in Resources */,
 				9981E6D224C067A2005AF0EE /* Acknowledgements.rtf in Resources */,
 				9981E6D724C08F12005AF0EE /* WelcomeWindow.xib in Resources */,
+				99D74AC225603A3500CE0792 /* Coppice.helpbook in Resources */,
 				999007ED24CF475900DB5C13 /* TourGetStartedView.xib in Resources */,
 				99581083230D7EFB00D996C4 /* CanvasEditorViewController.xib in Resources */,
 				99BC8B4F2550568B007ECBAE /* DocumentContentViewController.xib in Resources */,
@@ -2238,6 +2245,7 @@
 				99868F382397F005009AC0F7 /* FileDropView.swift in Sources */,
 				99618800249BC0D7007313BD /* ProFeatureCell.swift in Sources */,
 				992A5CA522DDF4C50012CCB6 /* EditorContainerViewController.swift in Sources */,
+				99D74AD3256045D800CE0792 /* TopicHTMLGenerator.swift in Sources */,
 				99581078230D71E100D996C4 /* NSViewController+M3Extensions.swift in Sources */,
 				9965FC3D23843143002FE10D /* CanvasPageInspectorViewController.swift in Sources */,
 				9951C26C230AEFAB006CAD4D /* PageSelectorWindowController.swift in Sources */,

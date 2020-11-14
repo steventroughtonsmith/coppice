@@ -74,8 +74,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.subscriptionManager.delegate = self
 
         UserDefaults.standard.set(true, forKey: "NSTextViewAvoidLayoutWhileDrawing")
-        #warning("Re-enable after beta 5")
-//        NSApplication.shared.registerUserInterfaceItemSearchHandler(HelpController.shared)
+        NSApplication.shared.registerUserInterfaceItemSearchHandler(HelpController.shared)
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -220,12 +219,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     //MARK: - Help
     @IBAction func showHelpViewer(_ sender: Any?) {
-        let alert = NSAlert()
-        alert.messageText = "Help"
-        alert.informativeText = "Help isn’t available for Coppice."
-        alert.runModal()
-
-//        HelpController.shared.showHelpViewer()
+        HelpController.shared.showHelpViewer()
     }
 
 }

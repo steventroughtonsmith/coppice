@@ -11,6 +11,7 @@ import Combine
 
 class NavigationStack: NSObject {
     enum NavigationItem: Equatable {
+        case home
         case topic(HelpBook.Topic)
         case search(String)
     }

@@ -367,7 +367,7 @@ extension TextEditorViewController: PageContentEditor {
             return false
         }
         let insertionPoint = self.editingTextView.characterIndexForInsertion(at: textViewPoint)
-        guard (self.editingTextView.textStorage?.length ?? 0) >= insertionPoint else {
+        guard (self.editingTextView.textStorage?.length ?? 0) > insertionPoint else {
             return false
         }
         guard let attributes = self.editingTextView.textStorage?.attributes(at: insertionPoint, effectiveRange: nil) else {

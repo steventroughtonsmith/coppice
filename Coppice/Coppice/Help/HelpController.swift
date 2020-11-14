@@ -40,7 +40,7 @@ class HelpController: NSObject {
     private(set) var helpBook: HelpBook?
     private func loadHelpBook() {
         guard
-            let url = Bundle.main.url(forResource: "Test", withExtension: "helpbook"),
+            let url = Bundle.main.url(forResource: "Coppice", withExtension: "helpbook"),
             let data = try? Data(contentsOf: url.appendingPathComponent("index.json"))
         else {
             return

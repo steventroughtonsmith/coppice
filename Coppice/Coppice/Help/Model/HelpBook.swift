@@ -45,15 +45,21 @@ class HelpBook: Codable {
         static func ==(lhs: Topic, rhs: Topic) -> Bool {
             return lhs.id == rhs.id
         }
+
+        init(id: String, title: String, dateUpdated: Date, dateCreated: Date?, tags: [String]) {
+            self.id = id
+            self.title = title
+            self.dateUpdated = dateUpdated
+            self.dateCreated = dateCreated
+            self.tags = tags
+        }
     }
 
     enum CodingKeys: String, CodingKey {
-        case indexID = "index"
         case allGroups = "groups"
         case allTopics = "topics"
     }
 
-    private let indexID: String
     private(set) var allGroups: [Group]
     private(set) var allTopics: [Topic]
     let url: URL
@@ -65,7 +71,6 @@ class HelpBook: Codable {
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.indexID = try container.decode(String.self, forKey: .indexID)
         self.allGroups = try container.decode([Group].self, forKey: .allGroups)
         self.allTopics = try container.decode([Topic].self, forKey: .allTopics)
 
@@ -78,18 +83,15 @@ class HelpBook: Codable {
         self.allTopics.forEach { $0.helpBook = self }
     }
 
-
-    var index: Topic {
-        guard let topic = self.topic(withID: self.indexID) else {
-            preconditionFailure("You have not specified a valid index topic")
-        }
-        return topic
-    }
-
     func topic(withID id: String) -> Topic? {
         return self.allTopics.first(where: {$0.id == id})
     }
 
+    lazy var home: Topic = {
+        let topic = HelpBook.Topic(id: "_home", title: "Home", dateUpdated: Date(), dateCreated: nil, tags: [])
+        topic.helpBook = self
+        return topic
+    }()
 
     func content(for topic: Topic) -> String? {
         let targetURL = self.url.appendingPathComponent(topic.id).appendingPathComponent("index.html")

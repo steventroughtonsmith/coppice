@@ -36,13 +36,15 @@ class HelpTopicViewController: NSViewController {
     @IBAction func toggleFavourite(_ sender: Any?) {
         
     }
+
+    let htmlGenerator = TopicHTMLGenerator()
     
     @IBOutlet var webView: WKWebView!
     private func reloadData() {
         guard
             self.isViewLoaded,
             let topic = self.topic,
-            let content = self.generateHTML(for: topic)
+            let content = self.htmlGenerator.generateHTML(for: topic)
         else {
             return
         }
@@ -58,20 +60,9 @@ class HelpTopicViewController: NSViewController {
 <head>
     <meta charset="utf-8">
     <title>\(topic.title)</title>
-    <link rel="stylesheet" href="../stylesheet.css">
-    <script type="text/javascript">
-        function updateLinks() {
-            var links = document.getElementsByTagName("a");
-            for (var link of links) {
-                var helpID = link.getAttribute("data-help-id");
-                if (helpID != null) {
-                    link.href = "coppice-help://" + helpID;
-                }
-            }
-        }
-    </script>
+    <link rel="stylesheet" href="../_resources/stylesheet.css">
 </head>
-<body onLoad="updateLinks()">
+<body>
 \(content)
 </body>
 </html>
