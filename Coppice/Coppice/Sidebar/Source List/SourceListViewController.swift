@@ -338,18 +338,38 @@ class SourceListViewController: NSViewController, NSMenuItemValidation {
         guard let item = self.createdItem else {
             return
         }
+        //Always run this if we exit
+        defer {
+            self.createdItem = nil
+        }
+
         self.outlineView.expandItem(self.viewModel.pagesGroupNode)
+
+        guard let sourceListNode = self.viewModel.node(for: item) else {
+            return
+        }
+
+        self.outlineView.expandItem(sourceListNode.parent)
+
+        let index = self.outlineView.row(forItem: sourceListNode)
+        guard
+            (index >= 0),
+            let view = self.outlineView.view(atColumn: 0, row: index, makeIfNecessary: true) as? EditableLabelCell
+        else {
+            return
+        }
+
+        if case .folder(_) = sourceListNode.item {
+            view.startEditing()
+        }
         
         //We don't want to select the new item if we're in a canvas, as we don't want to switch the editor
         guard !self.selectedNodes.containsCanvases else {
             return
         }
-        if let sourceListNode = self.viewModel.node(for: item) {
-            let index = self.outlineView.row(forItem: sourceListNode)
-            self.outlineView.selectRowIndexes(IndexSet(integer: index), byExtendingSelection: false)
-        }
 
-        self.createdItem = nil
+        self.outlineView.selectRowIndexes(IndexSet(integer: index), byExtendingSelection: false)
+        view.startEditing()
     }
 
     func reloadSelection() {
