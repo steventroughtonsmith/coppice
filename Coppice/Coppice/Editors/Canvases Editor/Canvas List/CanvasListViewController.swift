@@ -331,6 +331,29 @@ extension CanvasListViewController: NSTableViewDataSource {
         let newPages = self.viewModel.addPages(fromFilesAtURLs: urls, toCanvasAtIndex: row)
         return (newPages.count > 0) // Accept the drop if at least one file led to a new page
     }
+
+
+    func tableView(_ tableView: NSTableView, draggingSession session: NSDraggingSession, willBeginAt screenPoint: NSPoint, forRowIndexes rowIndexes: IndexSet) {
+        guard rowIndexes.count == 1 else {
+            return
+        }
+
+        guard let cell = tableView.view(atColumn: 0, row: rowIndexes[rowIndexes.startIndex], makeIfNecessary: false) else {
+            return
+        }
+
+        guard let imageRep = cell.bitmapImageRepForCachingDisplay(in: cell.bounds) else {
+            return
+        }
+        cell.cacheDisplay(in: cell.bounds, to: imageRep)
+
+        let image = NSImage(size: cell.bounds.size)
+        image.addRepresentation(imageRep)
+
+        session.enumerateDraggingItems(for: tableView, classes: [NSPasteboardItem.self]) { (draggingItem, index, stop) in
+            draggingItem.setDraggingFrame(draggingItem.draggingFrame.rounded(), contents: image)
+        }
+    }
 }
 
 
