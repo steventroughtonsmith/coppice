@@ -11,7 +11,7 @@ import Combine
 import CoppiceCore
 
 class CanvasListViewController: NSViewController, SplitViewContainable, NSMenuItemValidation {
-    @IBOutlet weak var tableView: NSTableView!
+    @IBOutlet weak var tableView: SpringLoadedTableView!
     @IBOutlet weak var tableScrollView: NSScrollView!
     @IBOutlet weak var addButton: NSButton!
 
@@ -40,6 +40,8 @@ class CanvasListViewController: NSViewController, SplitViewContainable, NSMenuIt
         
         self.tableView.register(NSNib(nibNamed: "SmallCanvasCell", bundle: nil), forIdentifier: SmallCanvasCell.identifier)
         self.tableView.register(NSNib(nibNamed: "LargeCanvasCell", bundle: nil), forIdentifier: LargeCanvasCell.identifier)
+
+        self.tableView.springLoadingDelegate = self
 
         self.updateCanvasListState()
         self.setupActionButton()
@@ -345,15 +347,13 @@ extension CanvasListViewController: NSTableViewDelegate {
     }
 
     func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
-        let row = RoundSelectionTableRowView()
-        row.delegate = self
-        return row
+        return RoundSelectionTableRowView()
     }
 }
 
 
-extension CanvasListViewController: SpringLoadedTableRowViewDelegate {
-    func userDidSpringLoad(on row: SpringLoadedTableRowView) {
+extension CanvasListViewController: SpringLoadedTableViewDelegate {
+    func userDidSpringLoad(on row: NSTableRowView, of tableView: SpringLoadedTableView) {
         guard
             let canvasCell = row.view(atColumn: 0) as? NSTableCellView,
             let canvas = canvasCell.objectValue as? Canvas
@@ -363,5 +363,5 @@ extension CanvasListViewController: SpringLoadedTableRowViewDelegate {
         self.viewModel.select(canvas)
     }
 
-    func springLoadedDragEnded(_ row: SpringLoadedTableRowView) {}
+    func springLoadedDragEnded(_ tableView: SpringLoadedTableView) {}
 }
