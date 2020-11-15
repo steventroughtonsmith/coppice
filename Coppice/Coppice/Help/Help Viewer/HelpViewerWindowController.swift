@@ -112,7 +112,9 @@ class HelpViewerWindowController: NSWindowController {
     }
 
     override func supplementalTarget(forAction action: Selector, sender: Any?) -> Any? {
-        if (action == #selector(NavigationStack.back(_:))) || (action == #selector(NavigationStack.forward(_:))) {
+        if (action == #selector(NavigationStack.back(_:)))
+            || (action == #selector(NavigationStack.forward(_:))
+            || (action == #selector(NavigationStack.home(_:)))) {
             return self.navigationStack
         }
         return nil

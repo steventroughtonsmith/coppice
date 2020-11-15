@@ -52,6 +52,10 @@ class NavigationStack: NSObject {
     @IBAction func forward(_ sender: Any?) {
         self.currentIndex = min(self.currentIndex + 1, self.navigationStack.count - 1)
     }
+
+    @IBAction func home(_ sender: Any?) {
+        self.navigate(to: .home)
+    }
 }
 
 extension NavigationStack: NSToolbarItemValidation {

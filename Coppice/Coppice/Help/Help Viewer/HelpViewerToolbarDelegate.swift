@@ -14,6 +14,7 @@ extension NSToolbarItem.Identifier {
     static let helpNavigationBack = NSToolbarItem.Identifier(rawValue: "com.mcubedsw.coppice.help.Back")
     static let helpNavigationForward = NSToolbarItem.Identifier(rawValue: "com.mcubedsw.coppice.help.Forward")
     static let helpToggleSidebar = NSToolbarItem.Identifier(rawValue: "com.mcubedsw.coppice.help.ToggleSidebar")
+    static let helpHome = NSToolbarItem.Identifier(rawValue: "com.mcubedsw.coppice.help.Home")
     static let helpFavourite = NSToolbarItem.Identifier(rawValue: "com.mcubedsw.coppice.help.Favourite")
     static let helpSearch = NSToolbarItem.Identifier(rawValue: "com.mcubedsw.coppice.help.Search")
 }
@@ -63,6 +64,20 @@ class HelpViewerToolbarDelegate: NSObject {
         return item
     }()
 
+    var homeItem: NSToolbarItem = {
+        let item = ButtonToolbarItem(itemIdentifier: .helpHome,
+                                     image: NSImage(named: "HelpHome")!,
+                                     action: #selector(NavigationStack.home(_:)))
+        item.label = NSLocalizedString("Home", comment: "Home help toolbar item label")
+        item.paletteLabel = item.label
+        item.toolTip = item.label
+        if #available(macOS 10.16, *) {
+            item.isNavigational = true
+        }
+        item.autovalidates = true
+        return item
+    }()
+
     var favouriteItem: NSToolbarItem = {
         let item = ButtonToolbarItem(itemIdentifier: .helpFavourite,
                                      image: NSImage.symbol(withName: Symbols.Toolbars.link)!,
@@ -108,6 +123,7 @@ extension HelpViewerToolbarDelegate: NSToolbarDelegate {
             .helpNavigation,
             .helpFavourite,
             .helpToggleSidebar,
+            .helpHome,
             .helpSearch,
             .space,
             .flexibleSpace
@@ -117,6 +133,7 @@ extension HelpViewerToolbarDelegate: NSToolbarDelegate {
     func toolbarDefaultItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
         return [
             .helpNavigation,
+            .helpHome,
             .helpToggleSidebar,
             .flexibleSpace,
 //            .helpFavourite,
@@ -130,6 +147,8 @@ extension HelpViewerToolbarDelegate: NSToolbarDelegate {
             return self.navigationButtons
         case .helpSearch:
             return self.searchItem
+        case .helpHome:
+            return self.homeItem
         case .helpFavourite:
             return self.favouriteItem
         case .helpToggleSidebar:
