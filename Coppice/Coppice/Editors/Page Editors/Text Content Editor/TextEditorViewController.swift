@@ -46,6 +46,7 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
 //        self.attributedTextObserver = self.publisher(for: \.viewModel.attributedText).sink { [weak self] in self?.updateTextView(with: $0) }
 //        self.highlightedRangeObserver = self.viewModel.$highlightedRange.sink { self.highlight($0) }
 
+        self.scrollView.automaticallyAdjustsContentInsets = false
         self.scrollView.contentInsets = GlobalConstants.textEditorInsets(fullSize: !self.viewModel.isInCanvas)
 
         self.editingTextView.textStorage?.delegate = self
@@ -331,7 +332,7 @@ extension TextEditorViewController: PageContentEditor {
     
     func prepareForDisplay(withSafeAreaInsets safeAreaInsets: NSEdgeInsets) {
         if #available(OSX 10.16, *) {
-            var insets = NSEdgeInsets(top: 10, left: 5, bottom: 5, right: 5)
+            var insets = GlobalConstants.textEditorInsets(fullSize: !self.viewModel.isInCanvas)
             if !self.viewModel.isInCanvas {
                 insets.top += safeAreaInsets.top
             }

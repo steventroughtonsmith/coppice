@@ -50,43 +50,6 @@ class SpringLoadedTableRowView: NSTableRowView, NSSpringLoadingDestination {
         return .enabled
     }
 
-    override func prepareForDragOperation(_ sender: NSDraggingInfo) -> Bool {
-        print("prepare")
-        return super.prepareForDragOperation(sender)
-    }
-
-    override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
-        print("perform drag")
-        return super.performDragOperation(sender)
-    }
-
-    override func draggingEntered(_ info: NSDraggingInfo) -> NSDragOperation {
-        print("entered")
-        guard let types = info.draggingPasteboard.types else {
-            return super.draggingEntered(info)
-        }
-        guard
-            types.contains(ModelID.PasteboardType),
-            let item = info.draggingPasteboard.pasteboardItems?.first,
-            let id = ModelID(pasteboardItem: item),
-            id.modelType == Canvas.modelType
-        else {
-            return super.draggingEntered(info)
-        }
-        print("enclosingTableView: \(self.enclosingTableView)")
-        return super.draggingEntered(info)
-    }
-
-    override func draggingUpdated(_ sender: NSDraggingInfo) -> NSDragOperation {
-        print("dragging updated")
-        return super.draggingUpdated(sender)
-    }
-
-    override func draggingExited(_ sender: NSDraggingInfo?) {
-        print("dragging exited")
-        return super.draggingExited(sender)
-    }
-
     override func draggingEnded(_ sender: NSDraggingInfo) {
         self.delegate?.springLoadedDragEnded(self)
     }
