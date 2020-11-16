@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17140" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17503.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17140"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17503.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -47,7 +47,7 @@
                     </connections>
                 </popUpButton>
                 <popUpButton toolTip="Choose the typeface" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="U7t-eh-okS">
-                    <rect key="frame" x="-2" y="62" width="117" height="25"/>
+                    <rect key="frame" x="-2" y="63" width="118" height="25"/>
                     <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="DcM-Aj-qkw" id="sWc-mi-lkM">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
@@ -78,7 +78,7 @@
                     </connections>
                 </popUpButton>
                 <textField toolTip="Choose the text size" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tVJ-Wa-8Xo">
-                    <rect key="frame" x="122" y="65" width="50" height="21"/>
+                    <rect key="frame" x="122" y="67" width="50" height="21"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="50" id="pbu-RP-YEn"/>
                     </constraints>
@@ -104,7 +104,7 @@
                     </connections>
                 </textField>
                 <stepper toolTip="Text Size" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gJM-Vb-Oux">
-                    <rect key="frame" x="173" y="62" width="19" height="28"/>
+                    <rect key="frame" x="173" y="63" width="19" height="28"/>
                     <stepperCell key="cell" continuous="YES" alignment="left" maxValue="999" id="iIB-a3-m2I"/>
                     <connections>
                         <binding destination="-2" name="value" keyPath="self.viewModel.fontSize" id="ANJ-Uy-ROM"/>
@@ -112,7 +112,7 @@
                     </connections>
                 </stepper>
                 <segmentedControl toolTip="Choose the text alignment" horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lJO-MO-Qab">
-                    <rect key="frame" x="108" y="31" width="84" height="24"/>
+                    <rect key="frame" x="108" y="32" width="84" height="24"/>
                     <segmentedCell key="cell" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="rounded" trackingMode="selectOne" id="JpO-VM-NgB">
                         <font key="font" metaFont="system"/>
                         <segments>
@@ -151,7 +151,7 @@
                     </constraints>
                     <buttonCell key="cell" type="push" bezelStyle="rounded" image="textformat" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="eg9-Zg-fO5">
                         <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
-                        <font key="font" size="13" name="SFCompactDisplay-Regular"/>
+                        <font key="font" metaFont="system"/>
                     </buttonCell>
                     <accessibility description="Open Font Panel"/>
                     <connections>
@@ -159,7 +159,7 @@
                     </connections>
                 </button>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="332-eu-rTh" customClass="TextColourPicker" customModule="Coppice" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="31" width="102" height="24"/>
+                    <rect key="frame" x="1" y="31" width="101" height="26"/>
                     <accessibility description="Text Colour"/>
                     <connections>
                         <action selector="colourChanged:" target="-2" id="Zez-hq-PYB"/>
@@ -173,19 +173,19 @@
                 <constraint firstItem="gJM-Vb-Oux" firstAttribute="centerY" secondItem="U7t-eh-okS" secondAttribute="centerY" id="FQc-nX-ref"/>
                 <constraint firstItem="U7t-eh-okS" firstAttribute="top" secondItem="pqU-O1-BJI" secondAttribute="bottom" constant="10" id="Hsn-oI-lnE"/>
                 <constraint firstItem="b02-Xt-Yqt" firstAttribute="leading" secondItem="1fJ-zV-rDa" secondAttribute="trailing" constant="10" id="QPj-qd-nXX"/>
-                <constraint firstItem="U7t-eh-okS" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="UxW-kX-J1g"/>
+                <constraint firstItem="U7t-eh-okS" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="1" id="UxW-kX-J1g"/>
                 <constraint firstItem="1fJ-zV-rDa" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="1" id="We2-Vo-nXE"/>
                 <constraint firstItem="tVJ-Wa-8Xo" firstAttribute="centerY" secondItem="U7t-eh-okS" secondAttribute="centerY" id="Xfq-0j-Vy4"/>
                 <constraint firstAttribute="trailing" secondItem="lJO-MO-Qab" secondAttribute="trailing" id="aPg-5F-4MY"/>
                 <constraint firstItem="332-eu-rTh" firstAttribute="top" secondItem="U7t-eh-okS" secondAttribute="bottom" constant="10" id="b64-QC-mlD"/>
                 <constraint firstItem="b02-Xt-Yqt" firstAttribute="centerY" secondItem="1fJ-zV-rDa" secondAttribute="centerY" id="bym-Hv-3No"/>
                 <constraint firstItem="lJO-MO-Qab" firstAttribute="centerY" secondItem="332-eu-rTh" secondAttribute="centerY" id="e96-cn-2O6"/>
-                <constraint firstItem="pqU-O1-BJI" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="fdG-o5-Icf"/>
+                <constraint firstItem="pqU-O1-BJI" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="1" id="fdG-o5-Icf"/>
                 <constraint firstItem="tVJ-Wa-8Xo" firstAttribute="leading" secondItem="U7t-eh-okS" secondAttribute="trailing" constant="10" id="htk-xC-TC7"/>
                 <constraint firstAttribute="bottom" secondItem="1fJ-zV-rDa" secondAttribute="bottom" constant="1" id="lL8-yY-ZCJ"/>
                 <constraint firstItem="332-eu-rTh" firstAttribute="leading" secondItem="U7t-eh-okS" secondAttribute="leading" id="qLS-VT-2uP"/>
                 <constraint firstItem="gJM-Vb-Oux" firstAttribute="leading" secondItem="tVJ-Wa-8Xo" secondAttribute="trailing" constant="4" id="ro3-OG-h7w"/>
-                <constraint firstAttribute="trailing" secondItem="pqU-O1-BJI" secondAttribute="trailing" id="rwv-cd-bpI"/>
+                <constraint firstAttribute="trailing" secondItem="pqU-O1-BJI" secondAttribute="trailing" constant="1" id="rwv-cd-bpI"/>
                 <constraint firstItem="lJO-MO-Qab" firstAttribute="leading" secondItem="332-eu-rTh" secondAttribute="trailing" constant="8" id="tqW-d0-kbx"/>
                 <constraint firstItem="pqU-O1-BJI" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="1" id="xNV-Dm-SdA"/>
                 <constraint firstAttribute="trailing" secondItem="gJM-Vb-Oux" secondAttribute="trailing" constant="1" id="yu2-WY-scs"/>
