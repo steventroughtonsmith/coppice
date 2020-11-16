@@ -42,7 +42,6 @@
 		991B5F622541E45B002C483C /* HelpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991B5F612541E45B002C483C /* HelpController.swift */; };
 		991B5F732541E76C002C483C /* HelpViewerToolbarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991B5F722541E76C002C483C /* HelpViewerToolbarDelegate.swift */; };
 		991B5FAF2541F604002C483C /* HelpBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991B5FAE2541F604002C483C /* HelpBook.swift */; };
-		991B5FFB2542057C002C483C /* Test.helpbook in Resources */ = {isa = PBXBuildFile; fileRef = 991B5FFA2542057C002C483C /* Test.helpbook */; };
 		991B600225420DA7002C483C /* HelpNavigationTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991B600125420DA7002C483C /* HelpNavigationTableCellView.swift */; };
 		991B6087254311BC002C483C /* HelpContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991B6086254311BC002C483C /* HelpContentViewController.swift */; };
 		991B60A82543127B002C483C /* HelpNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991B5F4A2541E36D002C483C /* HelpNavigationViewController.swift */; };
@@ -241,6 +240,7 @@
 		99AD88A9237C36D0000453E1 /* Editor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AD88A8237C36D0000453E1 /* Editor.swift */; };
 		99B3474C2465846900B96B71 /* PixelPerfectTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B3474B2465846900B96B71 /* PixelPerfectTableView.swift */; };
 		99B3474E24658BA200B96B71 /* RoundSelectionTableRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B3474D24658BA200B96B71 /* RoundSelectionTableRowView.swift */; };
+		99B65D022562C1B8001DE408 /* Coppice.helpbook in Resources */ = {isa = PBXBuildFile; fileRef = 99B65D012562C1B7001DE408 /* Coppice.helpbook */; };
 		99BC4320250935B70032D7A3 /* sparkle_dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 99BC431F250935B70032D7A3 /* sparkle_dsa_pub.pem */; };
 		99BC8B3725504ADA007ECBAE /* InfoAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BC8B3525504ADA007ECBAE /* InfoAlertViewController.swift */; };
 		99BC8B3825504ADA007ECBAE /* InfoAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99BC8B3625504ADA007ECBAE /* InfoAlertViewController.xib */; };
@@ -296,7 +296,6 @@
 		99D5073A250254BF00670139 /* ProUpsellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D50738250254BF00670139 /* ProUpsellViewController.swift */; };
 		99D5073B250254BF00670139 /* ProUpsellViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99D50739250254BF00670139 /* ProUpsellViewController.xib */; };
 		99D5073D2502854600670139 /* ProButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D5073C2502854600670139 /* ProButtonCell.swift */; };
-		99D74AC225603A3500CE0792 /* Coppice.helpbook in Resources */ = {isa = PBXBuildFile; fileRef = 99D74AC125603A3500CE0792 /* Coppice.helpbook */; };
 		99D74AD3256045D800CE0792 /* TopicHTMLGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D74AD2256045D800CE0792 /* TopicHTMLGenerator.swift */; };
 		99D8E378237EDB890098CF3B /* PageInspectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D8E368237EDB890098CF3B /* PageInspectorViewController.swift */; };
 		99D8E379237EDB890098CF3B /* PageInspectorContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99D8E369237EDB890098CF3B /* PageInspectorContentView.xib */; };
@@ -446,7 +445,6 @@
 		991B5F612541E45B002C483C /* HelpController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpController.swift; sourceTree = "<group>"; };
 		991B5F722541E76C002C483C /* HelpViewerToolbarDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpViewerToolbarDelegate.swift; sourceTree = "<group>"; };
 		991B5FAE2541F604002C483C /* HelpBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpBook.swift; sourceTree = "<group>"; };
-		991B5FFA2542057C002C483C /* Test.helpbook */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Test.helpbook; sourceTree = "<group>"; };
 		991B600125420DA7002C483C /* HelpNavigationTableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpNavigationTableCellView.swift; sourceTree = "<group>"; };
 		991B6086254311BC002C483C /* HelpContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpContentViewController.swift; sourceTree = "<group>"; };
 		991B60AE25432140002C483C /* NavigationStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationStack.swift; sourceTree = "<group>"; };
@@ -647,6 +645,7 @@
 		99AD88A8237C36D0000453E1 /* Editor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Editor.swift; sourceTree = "<group>"; };
 		99B3474B2465846900B96B71 /* PixelPerfectTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelPerfectTableView.swift; sourceTree = "<group>"; };
 		99B3474D24658BA200B96B71 /* RoundSelectionTableRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundSelectionTableRowView.swift; sourceTree = "<group>"; };
+		99B65D012562C1B7001DE408 /* Coppice.helpbook */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Coppice.helpbook; sourceTree = "<group>"; };
 		99B7D28724D9973A004CF71A /* Info.plist.prefix */ = {isa = PBXFileReference; lastKnownFileType = text; path = Info.plist.prefix; sourceTree = "<group>"; };
 		99BC431F250935B70032D7A3 /* sparkle_dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sparkle_dsa_pub.pem; sourceTree = "<group>"; };
 		99BC8B3525504ADA007ECBAE /* InfoAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoAlertViewController.swift; sourceTree = "<group>"; };
@@ -705,7 +704,6 @@
 		99D50738250254BF00670139 /* ProUpsellViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProUpsellViewController.swift; sourceTree = "<group>"; };
 		99D50739250254BF00670139 /* ProUpsellViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProUpsellViewController.xib; sourceTree = "<group>"; };
 		99D5073C2502854600670139 /* ProButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProButtonCell.swift; sourceTree = "<group>"; };
-		99D74AC125603A3500CE0792 /* Coppice.helpbook */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Coppice.helpbook; sourceTree = "<group>"; };
 		99D74AD2256045D800CE0792 /* TopicHTMLGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicHTMLGenerator.swift; sourceTree = "<group>"; };
 		99D8E368237EDB890098CF3B /* PageInspectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageInspectorViewController.swift; sourceTree = "<group>"; };
 		99D8E369237EDB890098CF3B /* PageInspectorContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PageInspectorContentView.xib; sourceTree = "<group>"; };
@@ -865,6 +863,7 @@
 		991B5F402541E300002C483C /* Help */ = {
 			isa = PBXGroup;
 			children = (
+				99B65D012562C1B7001DE408 /* Coppice.helpbook */,
 				991B5F612541E45B002C483C /* HelpController.swift */,
 				991B5F842541F267002C483C /* Model */,
 				991B5F792541F252002C483C /* Help Viewer */,
@@ -891,8 +890,6 @@
 			children = (
 				991B5FAE2541F604002C483C /* HelpBook.swift */,
 				991B60BE25433294002C483C /* HelpBook+Searching.swift */,
-				99D74AC125603A3500CE0792 /* Coppice.helpbook */,
-				991B5FFA2542057C002C483C /* Test.helpbook */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2002,7 +1999,6 @@
 				99D8E37C237EDB890098CF3B /* CanvasInspectorContentView.xib in Resources */,
 				999007E124CF473A00DB5C13 /* TourCanvasesView.xib in Resources */,
 				996187F1249A5166007313BD /* PreferencesWindow.xib in Resources */,
-				991B5FFB2542057C002C483C /* Test.helpbook in Resources */,
 				99C8652A2306D141004C7B89 /* PageSelectorViewController.xib in Resources */,
 				999007EF24D05C1100DB5C13 /* TourLinks.mp4 in Resources */,
 				99488AA323BA3983009954AF /* SmallCanvasCell.xib in Resources */,
@@ -2010,7 +2006,6 @@
 				999007DD24CF472E00DB5C13 /* TourPagesView.xib in Resources */,
 				9981E6D224C067A2005AF0EE /* Acknowledgements.rtf in Resources */,
 				9981E6D724C08F12005AF0EE /* WelcomeWindow.xib in Resources */,
-				99D74AC225603A3500CE0792 /* Coppice.helpbook in Resources */,
 				999007ED24CF475900DB5C13 /* TourGetStartedView.xib in Resources */,
 				99581083230D7EFB00D996C4 /* CanvasEditorViewController.xib in Resources */,
 				99BC8B4F2550568B007ECBAE /* DocumentContentViewController.xib in Resources */,
@@ -2024,6 +2019,7 @@
 				999EA68D2433913A00BF254E /* Info.plist.prefix in Resources */,
 				999EA6C1243628E500BF254E /* SearchResultTableCellView.xib in Resources */,
 				99C03F09232A99F400EB7516 /* Cursors.xcassets in Resources */,
+				99B65D022562C1B8001DE408 /* Coppice.helpbook in Resources */,
 				991B60B82543320C002C483C /* HelpSearchResultsViewController.xib in Resources */,
 				99D8E39123800F9A0098CF3B /* BaseInspectorViewController.xib in Resources */,
 				999007E924CF474E00DB5C13 /* TourBranchesView.xib in Resources */,

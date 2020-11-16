@@ -40,7 +40,7 @@ class TopicHTMLGenerator: NSObject {
     private let linkRegex = try! NSRegularExpression(pattern: "\\{\\[link\\|(.*?)\\|(.*?)\\]\\}", options: .caseInsensitive)
 
     private func replaceLinks(inContent content: String) -> String {
-        let results = linkRegex.matches(in: content, options: [], range: NSRange(location: 0, length: content.count)).reversed()
+        let results = self.linkRegex.matches(in: content, options: [], range: NSRange(location: 0, length: content.count)).reversed()
         var nsContent = (content as NSString)
         for result in results {
             guard result.numberOfRanges == 3 else {
@@ -57,7 +57,20 @@ class TopicHTMLGenerator: NSObject {
     }
 
     private func replaceImages(inContent content: String) -> String {
-        return content
+        let results = self.imageRegex.matches(in: content, options: [], range: NSRange(location: 0, length: content.count)).reversed()
+        var nsContent = (content as NSString)
+        for result in results {
+            guard result.numberOfRanges == 3 else {
+                continue
+            }
+
+            let imageSrc = nsContent.substring(with: result.range(at: 1))
+            let attributes = nsContent.substring(with: result.range(at: 2))
+
+            let image = "<img src=\"\(imageSrc)\" \(attributes)>"
+            nsContent = nsContent.replacingCharacters(in: result.range, with: image) as NSString
+        }
+        return nsContent as String
     }
 
     private func replaceBundleInfo(inContent content: String) -> String {

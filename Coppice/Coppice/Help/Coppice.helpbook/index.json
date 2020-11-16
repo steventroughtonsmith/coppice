@@ -1,0 +1,636 @@
+{
+    "groups": [
+        {
+            "id": "basics",
+            "title": "Basics",
+            "topics": [
+                "intro_to_coppice",
+                "creating_a_document",
+                "open_or_close_documents",
+                "customise_the_toolbar",
+                "customise_the_sidebar_size"
+            ]
+        },
+        {
+            "id": "adding_content_as_pages",
+            "title": "Adding Content as Pages",
+            "topics": [
+                "create_a_blank_page",
+                "create_a_page_from_a_file",
+                "view_a_page",
+                "add_text_to_a_page",
+                "format_text_content",
+                "change_the_default_font_for_text_pages",
+                "set_the_image_of_an_image_page",
+                "add_an_image_description",
+                "edit_a_pages_title",
+                "re_order_pages",
+                "group_pages_into_folders"
+            ]
+        },
+        {
+            "id": "creating_links",
+            "title": "Creating Links",
+            "topics": [
+                "create_a_link",
+                "automatically_find_links_on_pages",
+                "add_an_external_link"
+            ]
+        },
+        {
+            "id": "canvases",
+            "title": "Canvases",
+            "topics": [
+                "creating_a_canvas",
+                "re_order_the_canvas_list",
+                "rename_a_canvas",
+                "change_the_canvas_theme",
+                "change_the_default_canvas_theme",
+                "add_a_page_to_a_canvas",
+                "select_pages",
+                "move_pages_around_a_canvas",
+                "remove_pages_from_a_canvas",
+                "resize_pages",
+                "change_the_zoom_level_of_a_canvas"
+            ]
+        },
+        {
+            "id": "coppice_pro_&_m_cubed_accounts",
+            "title": "Coppice Pro & M Cubed Accounts",
+            "topics": [
+                "activate_a_device",
+                "deactivate_a_device",
+                "resetting_your_password",
+                "purchasing_coppice_pro",
+                "rename_your_device",
+                "view_and_edit_your_subscription"
+            ]
+        }
+    ],
+    "topics": [
+        {
+            "id": "intro_to_coppice",
+            "title": "Intro to Coppice",
+            "dateCreated": "2020-11-08T14:03:47+0000",
+            "dateUpdated": "2020-11-16T13:08:32+0000",
+            "tags": [
+                "coppice",
+                "document",
+                "page",
+                "canvas",
+                "link",
+                "text",
+                "image"
+            ],
+            "appVersion": "2020.1",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/intro_to_coppice"
+        },
+        {
+            "id": "creating_a_document",
+            "title": "Creating a Document",
+            "dateCreated": "2020-11-08T14:08:17+0000",
+            "dateUpdated": "2020-11-16T13:08:43+0000",
+            "tags": [
+                "document",
+                "welcome",
+                "save"
+            ],
+            "appVersion": "2020.1",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/creating_a_document"
+        },
+        {
+            "id": "open_or_close_documents",
+            "title": "Open or Close Documents",
+            "dateCreated": "2020-11-08T14:12:01+0000",
+            "dateUpdated": "2020-11-16T13:08:15+0000",
+            "tags": [
+                "document",
+                "open",
+                "recent",
+                "welcome"
+            ],
+            "appVersion": "2020.1",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/open_or_close_documents"
+        },
+        {
+            "id": "customise_the_toolbar",
+            "title": "Customise the Toolbar",
+            "dateCreated": "2020-11-08T14:37:00+0000",
+            "dateUpdated": "2020-11-16T13:09:55+0000",
+            "tags": [
+                "toolbar",
+                "page",
+                "canvas",
+                "link",
+                "search"
+            ],
+            "appVersion": "2020.1",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/customise_the_toolbar"
+        },
+        {
+            "id": "customise_the_sidebar_size",
+            "title": "Customise the Sidebar Size",
+            "dateCreated": "2020-11-08T14:38:56+0000",
+            "dateUpdated": "2020-11-16T13:10:26+0000",
+            "tags": [
+                "sidebar",
+                "preferences"
+            ],
+            "appVersion": "2020.1",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/customise_the_sidebar_size"
+        },
+        {
+            "id": "create_a_blank_page",
+            "title": "Create a Blank Page",
+            "dateCreated": "2020-11-09T15:59:48+0000",
+            "dateUpdated": "2020-11-16T13:29:01+0000",
+            "tags": [
+                "create",
+                "page",
+                "text",
+                "image"
+            ],
+            "appVersion": "2020.1",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/create_a_blank_page"
+        },
+        {
+            "id": "create_a_page_from_a_file",
+            "title": "Create a Page From a File",
+            "dateCreated": "2020-11-09T16:02:57+0000",
+            "dateUpdated": "2020-11-16T13:36:48+0000",
+            "tags": [
+                "page",
+                "text",
+                "image",
+                "file",
+                "import"
+            ],
+            "appVersion": "2020.1",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/create_a_page_from_a_file"
+        },
+        {
+            "id": "view_a_page",
+            "title": "View a Page",
+            "dateCreated": "2020-11-09T16:05:18+0000",
+            "dateUpdated": "2020-11-16T13:37:29+0000",
+            "tags": [
+                "view",
+                "jump",
+                "page",
+                "sidebar",
+                "nav",
+                "navigate"
+            ],
+            "appVersion": "2020.1",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/view_a_page"
+        },
+        {
+            "id": "add_text_to_a_page",
+            "title": "Add Text to a Page",
+            "dateCreated": "2020-11-09T16:07:28+0000",
+            "dateUpdated": "2020-11-11T18:48:59+0000",
+            "tags": [
+                "text",
+                "page",
+                "editor",
+                "canvas",
+                "edit",
+                "type"
+            ],
+            "appVersion": "2020.1",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/add_text_to_a_page"
+        },
+        {
+            "id": "format_text_content",
+            "title": "Format Text Content",
+            "dateCreated": "2020-11-09T16:15:02+0000",
+            "dateUpdated": "2020-11-16T13:50:51+0000",
+            "tags": [
+                "page",
+                "text",
+                "format",
+                "edit",
+                "bold",
+                "italic",
+                "underline",
+                "font",
+                "size",
+                "alignment",
+                "color",
+                "colour",
+                "left",
+                "right",
+                "centre",
+                "cente"
+            ],
+            "appVersion": "2020.1",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/format_text_content"
+        },
+        {
+            "id": "change_the_default_font_for_text_pages",
+            "title": "Change the Default Font for Text Pages",
+            "dateCreated": "2020-11-09T16:22:09+0000",
+            "dateUpdated": "2020-11-16T13:51:13+0000",
+            "tags": [
+                "text",
+                "page",
+                "preference",
+                "default",
+                "font",
+                "size",
+                "typeface"
+            ],
+            "appVersion": "2020.1",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/change_the_default_font_for_text_pages"
+        },
+        {
+            "id": "set_the_image_of_an_image_page",
+            "title": "Set the Image of an Image Page",
+            "dateCreated": "2020-11-09T16:28:42+0000",
+            "dateUpdated": "2020-11-16T13:51:25+0000",
+            "tags": [
+                "image",
+                "page",
+                "edit",
+                "file",
+                "png",
+                "jpeg",
+                "jpg",
+                "gif",
+                "bmp",
+                "tiff"
+            ],
+            "appVersion": "2020.1",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/set_the_image_of_an_image_page"
+        },
+        {
+            "id": "add_an_image_description",
+            "title": "Add an Image Description",
+            "dateCreated": "2020-11-09T16:32:17+0000",
+            "dateUpdated": "2020-11-16T13:51:34+0000",
+            "tags": [
+                "image",
+                "description",
+                "page",
+                "accessibility"
+            ],
+            "appVersion": "2020.1",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/add_an_image_description"
+        },
+        {
+            "id": "edit_a_pages_title",
+            "title": "Edit a Page's Title",
+            "dateCreated": "2020-11-09T16:36:40+0000",
+            "dateUpdated": "2020-11-16T13:54:10+0000",
+            "tags": [
+                "page",
+                "title",
+                "name",
+                "sidebar",
+                "inspector",
+                "canvas"
+            ],
+            "appVersion": "2020.1",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/edit_a_pages_title"
+        },
+        {
+            "id": "re_order_pages",
+            "title": "Re-order Pages",
+            "dateCreated": "2020-11-09T16:40:52+0000",
+            "dateUpdated": "2020-11-16T13:54:28+0000",
+            "tags": [
+                "reorder",
+                "re-order",
+                "page",
+                "sort",
+                "sidebar"
+            ],
+            "appVersion": "2020.1",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/re_order_pages"
+        },
+        {
+            "id": "group_pages_into_folders",
+            "title": "Group Pages Into Folders",
+            "dateCreated": "2020-11-09T16:45:30+0000",
+            "dateUpdated": "2020-11-16T13:54:58+0000",
+            "tags": [
+                "page",
+                "group",
+                "folder",
+                "sidebar",
+                "create",
+                "remove",
+                "add",
+                "delete"
+            ],
+            "appVersion": "2020.1",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/group_pages_into_folders"
+        },
+        {
+            "id": "create_a_link",
+            "title": "Create a Link",
+            "dateCreated": "2020-11-10T14:16:43+0000",
+            "dateUpdated": "2020-11-16T13:59:58+0000",
+            "tags": [
+                "link",
+                "text",
+                "page",
+                "new",
+                "relationship"
+            ],
+            "appVersion": "2020.1",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/create_a_link"
+        },
+        {
+            "id": "automatically_find_links_on_pages",
+            "title": "Automatically Find Links on Pages",
+            "dateCreated": "2020-11-10T14:18:17+0000",
+            "dateUpdated": "2020-11-16T13:57:12+0000",
+            "tags": [
+                "auto",
+                "link",
+                "find",
+                "relationship",
+                "page",
+                "text",
+                "preference"
+            ],
+            "appVersion": "2020.1",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/automatically_find_links_on_pages"
+        },
+        {
+            "id": "add_an_external_link",
+            "title": "Add an External Link",
+            "dateCreated": "2020-11-10T14:19:58+0000",
+            "dateUpdated": "2020-11-16T13:57:34+0000",
+            "tags": [
+                "external",
+                "link",
+                "text",
+                "page",
+                "url",
+                "website"
+            ],
+            "appVersion": "2020.1",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/add_an_external_link"
+        },
+        {
+            "id": "creating_a_canvas",
+            "title": "Creating a Canvas",
+            "dateCreated": "2020-11-10T15:11:41+0000",
+            "dateUpdated": "2020-11-16T14:07:01+0000",
+            "tags": [
+                "canvas",
+                "new",
+                "list",
+                "document",
+                "coppice",
+                "pro"
+            ],
+            "appVersion": "2020.1",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/creating_a_canvas"
+        },
+        {
+            "id": "re_order_the_canvas_list",
+            "title": "Re-order the Canvas List",
+            "dateCreated": "2020-11-10T15:13:00+0000",
+            "dateUpdated": "2020-11-10T15:21:51+0000",
+            "tags": [
+                "canvas",
+                "list",
+                "sort",
+                "reorder",
+                "order",
+                "rearrange"
+            ],
+            "appVersion": "2020.1",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/re_order_the_canvas_list"
+        },
+        {
+            "id": "rename_a_canvas",
+            "title": "Rename a Canvas",
+            "dateCreated": "2020-11-10T15:20:59+0000",
+            "dateUpdated": "2020-11-16T14:07:51+0000",
+            "tags": [
+                "canvas",
+                "title",
+                "name",
+                "edit",
+                "list"
+            ],
+            "appVersion": "2020.1",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/rename_a_canvas"
+        },
+        {
+            "id": "change_the_canvas_theme",
+            "title": "Change the Canvas Theme",
+            "dateCreated": "2020-11-10T16:43:52+0000",
+            "dateUpdated": "2020-11-16T14:07:59+0000",
+            "tags": [
+                "canvas",
+                "theme",
+                "pro"
+            ],
+            "appVersion": "2020.1",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/change_the_canvas_theme"
+        },
+        {
+            "id": "change_the_default_canvas_theme",
+            "title": "Change the Default Canvas Theme",
+            "dateCreated": "2020-11-10T16:45:09+0000",
+            "dateUpdated": "2020-11-16T14:08:16+0000",
+            "tags": [
+                "coppice",
+                "pro",
+                "default",
+                "canvas",
+                "theme",
+                "preference"
+            ],
+            "appVersion": "2020.1",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/change_the_default_canvas_theme"
+        },
+        {
+            "id": "add_a_page_to_a_canvas",
+            "title": "Add a Page to a Canvas",
+            "dateCreated": "2020-11-10T16:50:00+0000",
+            "dateUpdated": "2020-11-16T14:08:45+0000",
+            "tags": [
+                "add",
+                "page",
+                "canvas",
+                "create"
+            ],
+            "appVersion": "2020.1",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/add_a_page_to_a_canvas"
+        },
+        {
+            "id": "select_pages",
+            "title": "Select Pages",
+            "dateCreated": "2020-11-10T16:59:50+0000",
+            "dateUpdated": "2020-11-10T16:59:50+0000",
+            "tags": [
+                "select",
+                "page",
+                "canvas",
+                "move"
+            ],
+            "appVersion": "2020.1",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/select_pages"
+        },
+        {
+            "id": "move_pages_around_a_canvas",
+            "title": "Move Pages Around a Canvas",
+            "dateCreated": "2020-11-10T17:01:39+0000",
+            "dateUpdated": "2020-11-11T18:58:58+0000",
+            "tags": [
+                "move",
+                "page",
+                "canvas"
+            ],
+            "appVersion": "2020.1",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/move_pages_around_a_canvas"
+        },
+        {
+            "id": "remove_pages_from_a_canvas",
+            "title": "Remove Pages From a Canvas",
+            "dateCreated": "2020-11-10T17:02:46+0000",
+            "dateUpdated": "2020-11-16T14:09:21+0000",
+            "tags": [
+                "remove",
+                "close",
+                "delete",
+                "page",
+                "canvas"
+            ],
+            "appVersion": "2020.1",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/remove_pages_from_a_canvas"
+        },
+        {
+            "id": "resize_pages",
+            "title": "Resize Pages",
+            "dateCreated": "2020-11-10T18:03:09+0000",
+            "dateUpdated": "2020-11-16T14:11:16+0000",
+            "tags": [
+                "resize",
+                "size",
+                "width",
+                "height",
+                "page",
+                "canvas"
+            ],
+            "appVersion": "2020.1",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/resize_pages"
+        },
+        {
+            "id": "change_the_zoom_level_of_a_canvas",
+            "title": "Change the Zoom Level of a Canvas",
+            "dateCreated": "2020-11-10T18:06:36+0000",
+            "dateUpdated": "2020-11-16T14:11:54+0000",
+            "tags": [
+                "zoom",
+                "canvas"
+            ],
+            "appVersion": "2020.1",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/change_the_zoom_level_of_a_canvas"
+        },
+        {
+            "id": "activate_a_device",
+            "title": "Activate a Device",
+            "dateCreated": "2020-11-11T17:49:42+0000",
+            "dateUpdated": "2020-11-16T14:12:20+0000",
+            "tags": [
+                "activate",
+                "device",
+                "preferences",
+                "account",
+                "subscription",
+                "coppice",
+                "pro"
+            ],
+            "appVersion": "2020.1",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/activate_a_device"
+        },
+        {
+            "id": "deactivate_a_device",
+            "title": "Deactivate a Device",
+            "dateCreated": "2020-11-11T17:51:53+0000",
+            "dateUpdated": "2020-11-16T14:12:54+0000",
+            "tags": [
+                "deactivate",
+                "device",
+                "mac",
+                "coppice",
+                "pro",
+                "subscription",
+                "account"
+            ],
+            "appVersion": "2020.1",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/deactivate_a_device"
+        },
+        {
+            "id": "resetting_your_password",
+            "title": "Resetting Your Password",
+            "dateCreated": "2020-11-11T17:56:01+0000",
+            "dateUpdated": "2020-11-16T14:13:13+0000",
+            "tags": [
+                "reset",
+                "forgot",
+                "password",
+                "account",
+                "email"
+            ],
+            "appVersion": "2020.1",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/resetting_your_password"
+        },
+        {
+            "id": "purchasing_coppice_pro",
+            "title": "Purchasing Coppice Pro",
+            "dateCreated": "2020-11-11T17:58:01+0000",
+            "dateUpdated": "2020-11-11T18:45:48+0000",
+            "tags": [
+                "purchase",
+                "buy",
+                "coppice",
+                "pro",
+                "canvas",
+                "theme",
+                "auto",
+                "link",
+                "folder"
+            ],
+            "appVersion": "2020.1",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/purchasing_coppice_pro"
+        },
+        {
+            "id": "rename_your_device",
+            "title": "Rename Your Device",
+            "dateCreated": "2020-11-11T18:00:03+0000",
+            "dateUpdated": "2020-11-16T14:13:41+0000",
+            "tags": [
+                "rename",
+                "device",
+                "coppice",
+                "pro",
+                "preference"
+            ],
+            "appVersion": "2020.1",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/rename_your_device"
+        },
+        {
+            "id": "view_and_edit_your_subscription",
+            "title": "View and Edit Your Subscription",
+            "dateCreated": "2020-11-11T18:01:58+0000",
+            "dateUpdated": "2020-11-16T14:13:55+0000",
+            "tags": [
+                "view",
+                "subscription",
+                "coppice",
+                "pro",
+                "account"
+            ],
+            "appVersion": "2020.1",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/view_and_edit_your_subscription"
+        }
+    ]
+}
