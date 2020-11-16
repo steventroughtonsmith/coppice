@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17154" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17503.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17503.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -66,7 +66,7 @@
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ONe-Ls-Dc6">
-                    <rect key="frame" x="361" y="13" width="105" height="32"/>
+                    <rect key="frame" x="368" y="13" width="99" height="32"/>
                     <buttonCell key="cell" type="push" title="Deactivate" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="o2h-R3-v74">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -76,7 +76,7 @@
                     </connections>
                 </button>
                 <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xEh-rb-7Mp">
-                    <rect key="frame" x="341" y="98" width="18" height="19"/>
+                    <rect key="frame" x="340" y="98" width="18" height="19"/>
                     <buttonCell key="cell" type="help" bezelStyle="helpButton" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="XRU-kB-dPu">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="smallSystem"/>
@@ -98,7 +98,7 @@
                             </textFieldCell>
                         </textField>
                         <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RnU-Ye-FeB">
-                            <rect key="frame" x="98" y="3" width="34" height="17"/>
+                            <rect key="frame" x="98" y="3" width="32" height="18"/>
                             <buttonCell key="cell" type="inline" title="Edit" bezelStyle="inline" alignment="center" borderStyle="border" inset="2" id="v4N-pW-h49">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="smallSystemBold"/>
@@ -125,9 +125,8 @@
                     <constraints>
                         <constraint firstItem="RnU-Ye-FeB" firstAttribute="leading" secondItem="tjC-Tn-had" secondAttribute="trailing" constant="8" symbolic="YES" id="6BP-hg-1iL"/>
                         <constraint firstAttribute="bottom" secondItem="tjC-Tn-had" secondAttribute="bottom" constant="4" id="6kd-ER-HTo"/>
-                        <constraint firstAttribute="bottom" secondItem="RnU-Ye-FeB" secondAttribute="bottom" constant="4" id="DRf-5q-LD7"/>
                         <constraint firstItem="Tiz-a1-QSm" firstAttribute="leading" secondItem="bjS-Pp-fE0" secondAttribute="leading" constant="4" id="Eqs-vE-myk"/>
-                        <constraint firstItem="RnU-Ye-FeB" firstAttribute="top" secondItem="bjS-Pp-fE0" secondAttribute="top" constant="4" id="V4M-0P-09G"/>
+                        <constraint firstItem="RnU-Ye-FeB" firstAttribute="centerY" secondItem="tjC-Tn-had" secondAttribute="centerY" id="MEC-6h-LTG"/>
                         <constraint firstItem="Tiz-a1-QSm" firstAttribute="top" secondItem="bjS-Pp-fE0" secondAttribute="top" constant="1" id="oXU-3r-S6F"/>
                         <constraint firstItem="tjC-Tn-had" firstAttribute="top" secondItem="bjS-Pp-fE0" secondAttribute="top" constant="4" id="ogC-4r-Aut"/>
                         <constraint firstAttribute="trailing" secondItem="Tiz-a1-QSm" secondAttribute="trailing" id="pGv-G3-iCd"/>

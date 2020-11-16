@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16097" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17503.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17503.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -17,10 +18,10 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="kif-cS-nHE">
-                    <rect key="frame" x="56" y="25" width="388" height="241"/>
+                    <rect key="frame" x="56" y="19" width="388" height="247"/>
                     <subviews>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vCB-Zd-CJQ">
-                            <rect key="frame" x="-2" y="89" width="91" height="16"/>
+                            <rect key="frame" x="-2" y="90" width="91" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Privacy:" id="bTx-fW-yBQ">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -28,7 +29,7 @@
                             </textFieldCell>
                         </textField>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Jaj-ZT-p0m">
-                            <rect key="frame" x="93" y="203" width="219" height="18"/>
+                            <rect key="frame" x="93" y="206" width="223" height="18"/>
                             <buttonCell key="cell" type="check" title="Automatically download updates" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Y59-M2-SRD">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -49,7 +50,7 @@
                             </connections>
                         </button>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3j8-mD-5vm">
-                            <rect key="frame" x="93" y="148" width="106" height="16"/>
+                            <rect key="frame" x="93" y="150" width="106" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="Today at x:xx am" id="Lnb-jy-Ceg">
                                 <dateFormatter key="formatter" dateStyle="medium" timeStyle="short" doesRelativeDateFormatting="YES" id="2KC-nS-zdI"/>
                                 <font key="font" metaFont="system"/>
@@ -72,7 +73,7 @@ This information is kept anonymously</string>
                             </textFieldCell>
                         </textField>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yzN-AU-nF1">
-                            <rect key="frame" x="-2" y="148" width="91" height="16"/>
+                            <rect key="frame" x="-2" y="150" width="91" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Last Checked:" id="HD4-mX-p0G">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -80,7 +81,7 @@ This information is kept anonymously</string>
                             </textFieldCell>
                         </textField>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lPw-Ol-wSV">
-                            <rect key="frame" x="93" y="225" width="217" height="18"/>
+                            <rect key="frame" x="93" y="230" width="221" height="18"/>
                             <buttonCell key="cell" type="check" title="Automatically check for updates" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="RZU-D7-IKX">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -90,7 +91,7 @@ This information is kept anonymously</string>
                             </connections>
                         </button>
                         <textField horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cIJ-ss-Sgw">
-                            <rect key="frame" x="-2" y="226" width="91" height="16"/>
+                            <rect key="frame" x="-2" y="231" width="91" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Updates:" id="OKX-jE-FUx">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -98,7 +99,7 @@ This information is kept anonymously</string>
                             </textFieldCell>
                         </textField>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kJq-xA-j30">
-                            <rect key="frame" x="93" y="88" width="199" height="18"/>
+                            <rect key="frame" x="93" y="89" width="203" height="18"/>
                             <buttonCell key="cell" type="check" title="Send anonymous system info" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="7bw-hI-TQQ">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -108,13 +109,13 @@ This information is kept anonymously</string>
                             </connections>
                         </button>
                         <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="Cej-M5-Hwj">
-                            <rect key="frame" x="0.0" y="182" width="388" height="5"/>
+                            <rect key="frame" x="0.0" y="184" width="388" height="5"/>
                         </box>
                         <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="LVI-eT-A08">
-                            <rect key="frame" x="0.0" y="122" width="388" height="5"/>
+                            <rect key="frame" x="0.0" y="124" width="388" height="5"/>
                         </box>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="19t-Ii-PNt">
-                            <rect key="frame" x="275" y="138" width="119" height="32"/>
+                            <rect key="frame" x="281" y="140" width="113" height="32"/>
                             <buttonCell key="cell" type="push" title="Check Now…" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Dfm-eN-6Ej">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -137,7 +138,7 @@ This information is kept anonymously</string>
                         <constraint firstItem="WFJ-qC-Sau" firstAttribute="leading" secondItem="kJq-xA-j30" secondAttribute="leading" id="TQq-NJ-ZHJ"/>
                         <constraint firstItem="vCB-Zd-CJQ" firstAttribute="leading" secondItem="yzN-AU-nF1" secondAttribute="leading" id="W3X-NE-y1i"/>
                         <constraint firstItem="yzN-AU-nF1" firstAttribute="firstBaseline" secondItem="3j8-mD-5vm" secondAttribute="firstBaseline" id="Wto-wR-Tj2"/>
-                        <constraint firstAttribute="trailing" secondItem="19t-Ii-PNt" secondAttribute="trailing" id="Ysn-TJ-KLZ"/>
+                        <constraint firstAttribute="trailing" secondItem="19t-Ii-PNt" secondAttribute="trailing" constant="1" id="Ysn-TJ-KLZ"/>
                         <constraint firstAttribute="trailing" secondItem="LVI-eT-A08" secondAttribute="trailing" id="aUA-Vz-uh6"/>
                         <constraint firstItem="yzN-AU-nF1" firstAttribute="leading" secondItem="kif-cS-nHE" secondAttribute="leading" id="ah0-Tq-XqU"/>
                         <constraint firstItem="cIJ-ss-Sgw" firstAttribute="firstBaseline" secondItem="lPw-Ol-wSV" secondAttribute="firstBaseline" id="bLH-bo-cR5"/>
