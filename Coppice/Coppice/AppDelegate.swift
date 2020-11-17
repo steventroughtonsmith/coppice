@@ -54,20 +54,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             #endif
         }
 
-        let expiryDate = ISO8601DateFormatter().date(from: "2020-12-31T00:00:00Z")?.timeIntervalSinceReferenceDate ?? 0;
-        if Date.timeIntervalSinceReferenceDate >= expiryDate {
-            let alert = NSAlert()
-            alert.messageText = "This version has expired"
-            alert.informativeText = "Please download the latest version"
-            alert.addButton(withTitle: "Download")
-            alert.addButton(withTitle: "Quit")
-            let result = alert.runModal()
-            if result == .alertFirstButtonReturn {
-                NSWorkspace.shared.open(URL(string: "https://mcubedsw.com/download/coppice/latest")!)
-            }
-            NSApplication.shared.terminate(self)
-        }
-
         self.newLinkedPageMenuDelegate.action = #selector(TextEditorViewController.createNewLinkedPage(_:))
         self.newLinkedPageMenuDelegate.includeKeyEquivalents = false
 
@@ -117,28 +103,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 }
             }
         }
-    }
-
-    @IBAction func betaFeedback(_ sender: Any?) {
-        let versionString = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") ?? "Unknown"
-        let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") ?? "N/A"
-        let bodyValue = "Coppice Version: \(versionString) (\(version))\nOS Version: \(ProcessInfo.processInfo.operatingSystemVersionString)\n\nPlease provide your feedback below:\n"
-
-        let subjectItem = URLQueryItem(name: "subject", value: "[Coppice Beta Feedback]")
-        let bodyItem = URLQueryItem(name: "body", value: bodyValue)
-
-        var urlComponents = URLComponents()
-        urlComponents.scheme = "mailto"
-        urlComponents.path = "support@mcubedsw.com"
-        urlComponents.queryItems = [subjectItem, bodyItem]
-        guard let url = urlComponents.url else {
-            let alert = NSAlert()
-            alert.messageText = "Something went wrong"
-            alert.informativeText = "Please contact M Cubed Software at support@mcubedsw.com"
-            alert.runModal()
-            return
-        }
-        NSWorkspace.shared.open(url)
     }
 
     //MARK: - Preferences
@@ -217,7 +181,43 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
 
-    //MARK: - Help
+    //MARK: - Help Menu
+    @IBAction func contactSupport(_ sender: Any?) {
+        let versionString = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") ?? "Unknown"
+        let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") ?? "N/A"
+        let bodyValue = "Coppice Version: \(versionString) (\(version))\nOS Version: \(ProcessInfo.processInfo.operatingSystemVersionString)\n\nPlease provide your feedback below:\n"
+
+        let subjectItem = URLQueryItem(name: "subject", value: "[Coppice Feedback]")
+        let bodyItem = URLQueryItem(name: "body", value: bodyValue)
+
+        var urlComponents = URLComponents()
+        urlComponents.scheme = "mailto"
+        urlComponents.path = "support@mcubedsw.com"
+        urlComponents.queryItems = [subjectItem, bodyItem]
+        guard let url = urlComponents.url else {
+            let alert = NSAlert()
+            alert.messageText = "Something went wrong"
+            alert.informativeText = "Please contact M Cubed Software at support@mcubedsw.com"
+            alert.runModal()
+            return
+        }
+        NSWorkspace.shared.open(url)
+    }
+
+    @IBAction func openCoppiceBlog(_ sender: Any?) {
+        guard let url = URL(string: "https://coppiceapp.com/blog") else {
+            return
+        }
+        NSWorkspace.shared.open(url)
+    }
+
+    @IBAction func openCoppiceTwitter(_ sender: Any?) {
+        guard let url = URL(string: "https://twitter.com/coppiceapp") else {
+            return
+        }
+        NSWorkspace.shared.open(url)
+    }
+
     @IBAction func showHelpViewer(_ sender: Any?) {
         HelpController.shared.showHelpViewer()
     }

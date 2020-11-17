@@ -886,13 +886,12 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Help" systemMenu="help" id="F2S-fz-NVQ">
                         <items>
-                            <menuItem title="Give Feedback…" id="lQ8-B9-jIX">
-                                <modifierMask key="keyEquivalentModifierMask"/>
+                            <menuItem title="Coppice Help" keyEquivalent="?" id="FKE-Sm-Kum">
                                 <connections>
-                                    <action selector="betaFeedback:" target="Voe-Tx-rLC" id="lnI-8k-0Un"/>
+                                    <action selector="showHelpViewer:" target="Voe-Tx-rLC" id="C2J-x0-q0k"/>
                                 </connections>
                             </menuItem>
-                            <menuItem isSeparatorItem="YES" id="gpy-7b-3S8"/>
+                            <menuItem isSeparatorItem="YES" id="fFc-Xd-UPY"/>
                             <menuItem title="Tour Coppice…" id="zRo-K4-HWS">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
@@ -905,9 +904,24 @@
                                     <action selector="openSampleDocument:" target="-1" id="Ken-uW-dU3"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Coppice Help" keyEquivalent="?" id="FKE-Sm-Kum">
+                            <menuItem isSeparatorItem="YES" id="gpy-7b-3S8"/>
+                            <menuItem title="The Coppice Blog…" id="4tQ-zh-RwQ">
+                                <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="showHelpViewer:" target="Voe-Tx-rLC" id="C2J-x0-q0k"/>
+                                    <action selector="openCoppiceBlog:" target="Voe-Tx-rLC" id="zZK-QG-vfD"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Coppice on Twitter…" id="CgQ-Pe-vu5">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="openCoppiceTwitter:" target="Voe-Tx-rLC" id="d6k-E7-efL"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="jML-tJ-N4O"/>
+                            <menuItem title="Contact Support…" id="lQ8-B9-jIX">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="contactSupport:" target="Voe-Tx-rLC" id="41C-wS-U2u"/>
                                 </connections>
                             </menuItem>
                         </items>
