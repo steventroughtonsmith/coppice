@@ -228,12 +228,6 @@ class DocumentWindowController: NSWindowController, NSMenuItemValidation {
         }
     }
 
-    @IBAction func add10PagesToCanvas(_ sender: Any?) {
-        (0..<10).forEach { _ in
-            self.viewModel.modelController.createPage(ofType: .text, in: self.viewModel.folderForNewPages)
-        }
-    }
-
 
     //MARK: - State Restoration
     override func encodeRestorableState(with coder: NSCoder) {

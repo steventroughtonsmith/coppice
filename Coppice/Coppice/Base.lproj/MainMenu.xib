@@ -831,58 +831,7 @@
                         </items>
                     </menu>
                 </menuItem>
-                <menuItem title="**DEBUG**" tag="-31" id="MEe-GM-s4t">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="**DEBUG**" id="Zxp-4f-sTY">
-                        <items>
-                            <menuItem title="Use Debug Editors" id="eVc-FK-quW">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <binding destination="dmx-ad-XFr" name="value" keyPath="values.M3UseDebugEditors" id="GU6-Pq-yrZ"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="K79-hu-nXg"/>
-                            <menuItem title="Show Canvas Origin" id="DeL-Pr-Wp8">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <binding destination="dmx-ad-XFr" name="value" keyPath="values.debugShowCanvasOrigin" id="bte-YU-xIi"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Add 10 Pages to Canvas" id="ac0-f9-nPz">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="add10PagesToCanvas:" target="-1" id="yIX-wd-NfI"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Show Key Loop" id="3sN-K9-Kh9">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="showKeyLoop:" target="-1" id="ePg-ey-DUo"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Show Preview Generation" id="fX0-cf-YEG">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="showPreviewGenerationWindow:" target="-1" id="87Y-Pd-StN"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="g7c-Ur-z7n"/>
-                            <menuItem title="Save Canvas as Image…" id="dpl-ZJ-d6z">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="saveCanvasImageToDisk:" target="-1" id="Z2C-00-fXa"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Log Responder Chain" id="lti-qw-8HG">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="logResponderChain:" target="-1" id="eqA-CO-gY8"/>
-                                </connections>
-                            </menuItem>
-                        </items>
-                    </menu>
-                </menuItem>
-                <menuItem title="Help" id="wpr-3q-Mcd">
+                <menuItem title="Help" identifier="h" id="wpr-3q-Mcd">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Help" systemMenu="help" id="F2S-fz-NVQ">
                         <items>

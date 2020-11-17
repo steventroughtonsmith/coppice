@@ -38,21 +38,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         ])
     }
 
+
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        if let debugMenu = NSApplication.shared.mainMenu?.item(withTag: -31) {
-            #if DEBUG
-            debugMenu.submenu?.addItem(NSMenuItem.separator())
-            let apiMenuItem = NSMenuItem(title: "API Debugging", action: nil, keyEquivalent: "")
-            let apiMenu = APIDebugManager.shared.buildMenu()
-            apiMenu.addItem(NSMenuItem.separator())
-            let checkItem = apiMenu.addItem(withTitle: "Check Subscription", action: #selector(checkSubscription(_:)), keyEquivalent: "")
-            checkItem.target = self
-            apiMenuItem.submenu = apiMenu
-            debugMenu.submenu?.addItem(apiMenuItem)
-            #else
-            NSApplication.shared.mainMenu?.removeItem(debugMenu)
-            #endif
+        #if DEBUG
+        if let mainMenu = NSApplication.shared.mainMenu, let windowMenu = mainMenu.item(withTitle: "Window") {
+            let index = mainMenu.index(of: windowMenu) + 1
+
+            let menuItem = mainMenu.insertItem(withTitle: "**DEBUG**", action: nil, keyEquivalent: "", at: index)
+            menuItem.submenu = DebugMenuBuilder().buildMenu()
         }
+        #endif
 
         self.newLinkedPageMenuDelegate.action = #selector(TextEditorViewController.createNewLinkedPage(_:))
         self.newLinkedPageMenuDelegate.includeKeyEquivalents = false

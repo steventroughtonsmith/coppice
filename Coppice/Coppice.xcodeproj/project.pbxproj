@@ -241,6 +241,7 @@
 		99B3474C2465846900B96B71 /* PixelPerfectTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B3474B2465846900B96B71 /* PixelPerfectTableView.swift */; };
 		99B3474E24658BA200B96B71 /* RoundSelectionTableRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B3474D24658BA200B96B71 /* RoundSelectionTableRowView.swift */; };
 		99B65D022562C1B8001DE408 /* Coppice.helpbook in Resources */ = {isa = PBXBuildFile; fileRef = 99B65D012562C1B7001DE408 /* Coppice.helpbook */; };
+		99B65D0925642202001DE408 /* DebugMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B65D0825642202001DE408 /* DebugMenuDelegate.swift */; };
 		99BC4320250935B70032D7A3 /* sparkle_dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 99BC431F250935B70032D7A3 /* sparkle_dsa_pub.pem */; };
 		99BC8B3725504ADA007ECBAE /* InfoAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BC8B3525504ADA007ECBAE /* InfoAlertViewController.swift */; };
 		99BC8B3825504ADA007ECBAE /* InfoAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99BC8B3625504ADA007ECBAE /* InfoAlertViewController.xib */; };
@@ -646,6 +647,7 @@
 		99B3474B2465846900B96B71 /* PixelPerfectTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelPerfectTableView.swift; sourceTree = "<group>"; };
 		99B3474D24658BA200B96B71 /* RoundSelectionTableRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundSelectionTableRowView.swift; sourceTree = "<group>"; };
 		99B65D012562C1B7001DE408 /* Coppice.helpbook */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Coppice.helpbook; sourceTree = "<group>"; };
+		99B65D0825642202001DE408 /* DebugMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuDelegate.swift; sourceTree = "<group>"; };
 		99B7D28724D9973A004CF71A /* Info.plist.prefix */ = {isa = PBXFileReference; lastKnownFileType = text; path = Info.plist.prefix; sourceTree = "<group>"; };
 		99BC431F250935B70032D7A3 /* sparkle_dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sparkle_dsa_pub.pem; sourceTree = "<group>"; };
 		99BC8B3525504ADA007ECBAE /* InfoAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoAlertViewController.swift; sourceTree = "<group>"; };
@@ -1648,6 +1650,8 @@
 		99F0CD72246AF18C006DE18E /* Debug Tools */ = {
 			isa = PBXGroup;
 			children = (
+				99B65D0825642202001DE408 /* DebugMenuDelegate.swift */,
+				99C88EE9240C2F3F00339880 /* NSWindow+KeyLoopDebug.swift */,
 				99F0CD73246AF196006DE18E /* Preview Generator */,
 			);
 			path = "Debug Tools";
@@ -1710,7 +1714,6 @@
 				997344D32432073400DF4EDB /* CoppiceDebug.entitlements */,
 				99FE019022CD1037004D380D /* AppDelegate.swift */,
 				99FCD7F224A7819400B44593 /* SparkleDelegate.swift */,
-				99C88EE9240C2F3F00339880 /* NSWindow+KeyLoopDebug.swift */,
 				99C41B6F22DCA94000C82DDE /* Model */,
 				99045FC524D43F0A00FD3D33 /* Document */,
 				99FE01E122D4C22B004D380D /* DocumentWindow */,
@@ -2284,6 +2287,7 @@
 				9965FC4023843155002FE10D /* CanvasPageInspectorViewModel.swift in Sources */,
 				99BC8B3725504ADA007ECBAE /* InfoAlertViewController.swift in Sources */,
 				99D8E39023800F9A0098CF3B /* BaseInspectorViewController.swift in Sources */,
+				99B65D0925642202001DE408 /* DebugMenuDelegate.swift in Sources */,
 				99C88EE6240BC79A00339880 /* ColourBackgroundView.swift in Sources */,
 				999EA6B42436097500BF254E /* SidebarViewController.swift in Sources */,
 				993D2BD824127E29002E5BAC /* CanvasListViewController.swift in Sources */,
