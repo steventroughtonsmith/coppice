@@ -146,6 +146,7 @@
 		9981E6D624C08F12005AF0EE /* WelcomeWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9981E6D424C08F12005AF0EE /* WelcomeWindowController.swift */; };
 		9981E6D724C08F12005AF0EE /* WelcomeWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9981E6D524C08F12005AF0EE /* WelcomeWindow.xib */; };
 		9981E6D924C0AE1F005AF0EE /* RecentDocumentTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9981E6D824C0AE1F005AF0EE /* RecentDocumentTableCellView.swift */; };
+		998336C3256BFDC900C25EB0 /* CoppiceApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998336C2256BFDC900C25EB0 /* CoppiceApplication.swift */; };
 		9985F4D923F2E13600B96DC7 /* CanvasPageTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9985F4D823F2E13600B96DC7 /* CanvasPageTitleView.swift */; };
 		9985F4DB23F44AAD00B96DC7 /* CanvasPageBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9985F4DA23F44AAD00B96DC7 /* CanvasPageBackgroundView.swift */; };
 		99868730253C719D004B29B0 /* ZoomMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9986872F253C719D004B29B0 /* ZoomMenuDelegate.swift */; };
@@ -549,6 +550,7 @@
 		9981E6D424C08F12005AF0EE /* WelcomeWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeWindowController.swift; sourceTree = "<group>"; };
 		9981E6D524C08F12005AF0EE /* WelcomeWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WelcomeWindow.xib; sourceTree = "<group>"; };
 		9981E6D824C0AE1F005AF0EE /* RecentDocumentTableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentDocumentTableCellView.swift; sourceTree = "<group>"; };
+		998336C2256BFDC900C25EB0 /* CoppiceApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoppiceApplication.swift; sourceTree = "<group>"; };
 		9985F4D823F2E13600B96DC7 /* CanvasPageTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageTitleView.swift; sourceTree = "<group>"; };
 		9985F4DA23F44AAD00B96DC7 /* CanvasPageBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageBackgroundView.swift; sourceTree = "<group>"; };
 		9986872F253C719D004B29B0 /* ZoomMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomMenuDelegate.swift; sourceTree = "<group>"; };
@@ -1713,6 +1715,7 @@
 				997344D42432076B00DF4EDB /* CoppiceTest.entitlements */,
 				997344D32432073400DF4EDB /* CoppiceDebug.entitlements */,
 				99FE019022CD1037004D380D /* AppDelegate.swift */,
+				998336C2256BFDC900C25EB0 /* CoppiceApplication.swift */,
 				99FCD7F224A7819400B44593 /* SparkleDelegate.swift */,
 				99C41B6F22DCA94000C82DDE /* Model */,
 				99045FC524D43F0A00FD3D33 /* Document */,
@@ -2190,6 +2193,7 @@
 				9981E6CB24C055CE005AF0EE /* PreferencesTabView.swift in Sources */,
 				99171EDC24AA48B200E96DE6 /* MainToolbarDelegate.swift in Sources */,
 				99FDF12C241FD53D00AF1E51 /* CanvasesViewController.swift in Sources */,
+				998336C3256BFDC900C25EB0 /* CoppiceApplication.swift in Sources */,
 				999007D824CF472100DB5C13 /* TourWelcomeViewController.swift in Sources */,
 				99D329D32522783900E15683 /* ActiveSidebarSize.swift in Sources */,
 				999007E424CF474300DB5C13 /* TourMovieViewController.swift in Sources */,
