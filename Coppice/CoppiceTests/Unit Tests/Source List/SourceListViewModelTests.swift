@@ -942,18 +942,18 @@ class SourceListViewModelTests: XCTestCase {
         XCTAssertNil(vm.createFolder(usingSelection: collection))
     }
 
-    func test_createFolderUsingSelection_createsAtEndOfContainingFolderOfLastNodeInSelection() throws {
+    func test_createFolderUsingSelection_createsAtEndOfCreationFolderOfLastNodeInSelection() throws {
         let vm = self.createViewModel()
         vm.startObserving()
 
-        let (page1, _, _, page2) = self.addTestData(to: vm)
+        let (page1, _, subPage1, _) = self.addTestData(to: vm)
         let page1Node = try XCTUnwrap(vm.node(for: .page(page1.id)))
-        let page2Node = try XCTUnwrap(vm.node(for: .page(page2.id)))
-        let expectedFolder = page2.containingFolder
+        let subPageNode = try XCTUnwrap(vm.node(for: .page(subPage1.id)))
+        let expectedFolder = subPage1.containingFolder
 
         let collection = SourceListNodeCollection()
         collection.add(page1Node)
-        collection.add(page2Node)
+        collection.add(subPageNode)
 
         guard case .folder(let folderID) = try XCTUnwrap(vm.createFolder(usingSelection: collection)) else {
             XCTFail()
