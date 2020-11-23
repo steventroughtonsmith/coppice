@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import Combine
 import M3Subscriptions
 
 class SignInViewController: NSViewController, DeactivatedSubscriptionMode {
@@ -57,5 +58,17 @@ class SignInViewController: NSViewController, DeactivatedSubscriptionMode {
         }
 
         return true
+    }
+
+    func reset() {
+        self.passwordField.stringValue = ""
+    }
+
+    @objc dynamic var canHitPrimaryButton = false
+}
+
+extension SignInViewController: NSTextFieldDelegate {
+    func controlTextDidChange(_ obj: Notification) {
+        self.canHitPrimaryButton = !self.emailField.stringValue.isEmpty && !self.passwordField.stringValue.isEmpty
     }
 }

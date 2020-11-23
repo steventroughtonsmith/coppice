@@ -47,13 +47,19 @@ class DeactivatedSubscriptionViewController: NSViewController {
         self.contentViewContainer.layer?.backgroundColor = NSColor(named: "CoppiceProContentBackground")?.cgColor
 
         self.apply(self.signInVC)
+
+    }
+
+    override func viewDidDisappear() {
+        super.viewDidDisappear()
+        self.signInVC.reset()
     }
 
     //MARK: - Modes
     private lazy var subscribeVC: SubscribeViewController = {
         return SubscribeViewController(subscriptionManager: self.subscriptionManager)
     }()
-    private lazy var signInVC: SignInViewController = {
+    @objc dynamic private lazy var signInVC: SignInViewController = {
         return SignInViewController(subscriptionManager: self.subscriptionManager)
     }()
 

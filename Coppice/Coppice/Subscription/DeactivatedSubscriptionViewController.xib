@@ -118,6 +118,7 @@ DQ
                                                 <color key="contentTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <connections>
                                                     <action selector="performPrimaryAction:" target="-2" id="yEp-Ir-xa2"/>
+                                                    <binding destination="-2" name="enabled" keyPath="self.signInVC.canHitPrimaryButton" id="CeV-ce-PxM"/>
                                                 </connections>
                                             </button>
                                         </subviews>
