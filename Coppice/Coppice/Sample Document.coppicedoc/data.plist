@@ -201,26 +201,6 @@
 	<array>
 		<dict>
 			<key>closedPageHierarchies</key>
-			<dict/>
-			<key>dateCreated</key>
-			<date>2020-11-10T14:59:29Z</date>
-			<key>dateModified</key>
-			<date>2020-11-10T14:59:29Z</date>
-			<key>id</key>
-			<string>Canvas_16DC5E9D-3C8D-4EDD-A455-FE9326D130E6</string>
-			<key>sortIndex</key>
-			<integer>2</integer>
-			<key>theme</key>
-			<string>dark</string>
-			<key>title</key>
-			<string>New Canvas</string>
-			<key>viewPort</key>
-			<string>{{-380, -220}, {1107, 1019}}</string>
-			<key>zoomFactor</key>
-			<real>1</real>
-		</dict>
-		<dict>
-			<key>closedPageHierarchies</key>
 			<dict>
 				<key>CanvasPage_265F4FDA-BE7E-4553-ADE5-8FDF29B673DF</key>
 				<dict>
@@ -400,26 +380,6 @@
 			<string>Welcome</string>
 			<key>viewPort</key>
 			<string>{{-209, -147}, {1107, 1019}}</string>
-			<key>zoomFactor</key>
-			<real>1</real>
-		</dict>
-		<dict>
-			<key>closedPageHierarchies</key>
-			<dict/>
-			<key>dateCreated</key>
-			<date>2020-11-10T15:02:58Z</date>
-			<key>dateModified</key>
-			<date>2020-11-10T15:02:58Z</date>
-			<key>id</key>
-			<string>Canvas_5FE86B1F-26A5-405F-91B0-8719FB67A7A3</string>
-			<key>sortIndex</key>
-			<integer>3</integer>
-			<key>theme</key>
-			<string>dark</string>
-			<key>title</key>
-			<string>New Canvas</string>
-			<key>viewPort</key>
-			<string>{{-380, -220}, {1107, 1019}}</string>
 			<key>zoomFactor</key>
 			<real>1</real>
 		</dict>
