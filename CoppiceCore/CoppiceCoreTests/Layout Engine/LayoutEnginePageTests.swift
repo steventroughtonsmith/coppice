@@ -614,6 +614,31 @@ class LayoutEnginePageTests: XCTestCase {
     }
 
 
+    //MARK: - removeChild(_:)
+    func test_removeChild_setsParentToNil() throws {
+        let layoutEngine = self.layoutEngine()
+        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 30, height: 60), minimumContentSize: .zero)
+        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: -7, y: 56, width: 10, height: 10), minimumContentSize: .zero)
+        root.addChild(child)
+        layoutEngine.add([root, child])
+
+        root.removeChild(child)
+
+        XCTAssertNil(child.parent)
+    }
+
+    func test_removeChild_removesChildFromChildren() throws {
+        let layoutEngine = self.layoutEngine()
+        let root = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 0, y: 0, width: 30, height: 60), minimumContentSize: .zero)
+        let child = LayoutEnginePage(id: UUID(), contentFrame: CGRect(x: -7, y: 56, width: 10, height: 10), minimumContentSize: .zero)
+        root.addChild(child)
+        layoutEngine.add([root, child])
+
+        root.removeChild(child)
+
+        XCTAssertFalse(root.children.contains(child))
+    }
+
     //MARK: - .allDescendents
     func test_allDesecendents_returnsEmptyArrayIfSuppliedPageHasNoChildren() {
         let layoutEngine = self.layoutEngine()

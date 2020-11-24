@@ -110,8 +110,4 @@ public extension ModelCollection where ModelType == Canvas {
     func matches(forSearchTerm searchTerm: String) -> [Canvas.Match] {
         return self.all.compactMap { $0.match(forSearchTerm: searchTerm) }.sorted { $0 < $1 }
     }
-
-    var sortedCanvases: [Canvas] {
-        return self.all.sorted { $0.sortIndex < $1.sortIndex }
-    }
 }

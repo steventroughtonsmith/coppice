@@ -220,8 +220,6 @@
 		999EA6C524362BFF00BF254E /* SearchResultsViewModelTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999EA6C424362BFF00BF254E /* SearchResultsViewModelTypes.swift */; };
 		999EA6C72436384F00BF254E /* SearchResultOutlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999EA6C62436384F00BF254E /* SearchResultOutlineView.swift */; };
 		999EA6CD243CCCE200BF254E /* XCTestExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999EA6CC243CCCE200BF254E /* XCTestExtensions.swift */; };
-		999EA6D4244096DF00BF254E /* Array+M3ExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999EA6D3244096DF00BF254E /* Array+M3ExtensionsTests.swift */; };
-		999EA6D624409D6C00BF254E /* CoreGraphics+M3ExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999EA6D524409D6C00BF254E /* CoreGraphics+M3ExtensionsTests.swift */; };
 		999EA6E7244CA88600BF254E /* SourceListViewModelTypesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999EA6E6244CA88600BF254E /* SourceListViewModelTypesTests.swift */; };
 		999EA6EA244E032A00BF254E /* SidebarViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999EA6E9244E032A00BF254E /* SidebarViewModelTests.swift */; };
 		999EA6ED244E053300BF254E /* SearchResultsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999EA6EC244E053300BF254E /* SearchResultsViewModelTests.swift */; };
@@ -627,8 +625,6 @@
 		999EA6C424362BFF00BF254E /* SearchResultsViewModelTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewModelTypes.swift; sourceTree = "<group>"; };
 		999EA6C62436384F00BF254E /* SearchResultOutlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultOutlineView.swift; sourceTree = "<group>"; };
 		999EA6CC243CCCE200BF254E /* XCTestExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestExtensions.swift; sourceTree = "<group>"; };
-		999EA6D3244096DF00BF254E /* Array+M3ExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+M3ExtensionsTests.swift"; sourceTree = "<group>"; };
-		999EA6D524409D6C00BF254E /* CoreGraphics+M3ExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreGraphics+M3ExtensionsTests.swift"; sourceTree = "<group>"; };
 		999EA6E6244CA88600BF254E /* SourceListViewModelTypesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceListViewModelTypesTests.swift; sourceTree = "<group>"; };
 		999EA6E9244E032A00BF254E /* SidebarViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewModelTests.swift; sourceTree = "<group>"; };
 		999EA6EC244E053300BF254E /* SearchResultsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewModelTests.swift; sourceTree = "<group>"; };
@@ -1395,8 +1391,6 @@
 		999EA6D2244096AD00BF254E /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				999EA6D3244096DF00BF254E /* Array+M3ExtensionsTests.swift */,
-				999EA6D524409D6C00BF254E /* CoreGraphics+M3ExtensionsTests.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2313,11 +2307,9 @@
 				999EA6EA244E032A00BF254E /* SidebarViewModelTests.swift in Sources */,
 				99771196239C530700FCC8C7 /* PageLinkManagerTests.swift in Sources */,
 				9957B088239FD3D800BA3C0B /* DocumentWindowViewModelTests.swift in Sources */,
-				999EA6D4244096DF00BF254E /* Array+M3ExtensionsTests.swift in Sources */,
 				9970976D23AD1A7A00CD189B /* MockPageContent.swift in Sources */,
 				999EA6ED244E053300BF254E /* SearchResultsViewModelTests.swift in Sources */,
 				9958107C230D75AA00D996C4 /* TextEditorViewModelTests.swift in Sources */,
-				999EA6D624409D6C00BF254E /* CoreGraphics+M3ExtensionsTests.swift in Sources */,
 				9960CCE924B1EC1C001F092E /* MockEventContextFactory.swift in Sources */,
 				993600E924AE5F1F002C86E4 /* TestLayoutDelegate.swift in Sources */,
 				999EA6E7244CA88600BF254E /* SourceListViewModelTypesTests.swift in Sources */,

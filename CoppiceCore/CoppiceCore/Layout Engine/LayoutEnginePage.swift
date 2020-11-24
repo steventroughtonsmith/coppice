@@ -173,8 +173,8 @@ public class LayoutEnginePage: Equatable {
     }
 
     public func removeChild(_ child: LayoutEnginePage) {
-        child.parent = nil
         if let index = self.children.firstIndex(of: child) {
+            child.parent = nil
             self.children.remove(at: index)
         }
     }

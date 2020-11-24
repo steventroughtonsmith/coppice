@@ -467,6 +467,17 @@ class CanvasLayoutEngineTests: XCTestCase {
     }
 
 
+    //MARK: - tellDelegateToRemove(_:)
+    func test_tellDelegateToRemove_callsDelegate() throws {
+        let delegate = MockCanvasLayoutEngineDelegate()
+        self.layoutEngine.delegate = delegate
+        self.layoutEngine.tellDelegateToRemove([self.page1, self.page3])
+
+        let (pages, _) = try XCTUnwrap(delegate.removePagesMock.arguments.first)
+        XCTAssertEqual(pages, [self.page1, self.page3])
+    }
+
+
     //MARK: - Mouse Events
     func test_downEvent_createsMouseEventFromContextEventFactoryWithLocation() throws {
         self.layoutEngine.downEvent(at: CGPoint(x: 123, y: 456))
@@ -1150,4 +1161,22 @@ private class TestCanvasView: CanvasLayoutView {
         self.context = context
     }
     var viewPortFrame: CGRect = .zero
+}
+
+
+private class MockCanvasLayoutEngineDelegate: CanvasLayoutEngineDelegate {
+    let movedPagesMock = MockDetails<([LayoutEnginePage], CanvasLayoutEngine), Void>()
+    func moved(pages: [LayoutEnginePage], in layout: CanvasLayoutEngine) {
+        movedPagesMock.called(withArguments: (pages, layout))
+    }
+
+    let removePagesMock = MockDetails<([LayoutEnginePage], CanvasLayoutEngine), Void>()
+    func remove(pages: [LayoutEnginePage], from layout: CanvasLayoutEngine) {
+        removePagesMock.called(withArguments: (pages, layout))
+    }
+
+    let reorderedPagesMock = MockDetails<([LayoutEnginePage], CanvasLayoutEngine), Void>()
+    func reordered(pages: [LayoutEnginePage], in layout: CanvasLayoutEngine) {
+        reorderedPagesMock.called(withArguments: (pages, layout))
+    }
 }

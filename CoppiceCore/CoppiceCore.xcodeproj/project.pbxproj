@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		99BC4352256C15F200BBB0EA /* Array+M3ExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BC4351256C15F200BBB0EA /* Array+M3ExtensionsTests.swift */; };
+		99BC4375256C168000BBB0EA /* CoreGraphics+M3ExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BC4374256C168000BBB0EA /* CoreGraphics+M3ExtensionsTests.swift */; };
+		99BC437B256C22E800BBB0EA /* ModelObjects+Misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BC437A256C22E800BBB0EA /* ModelObjects+Misc.swift */; };
+		99BC438B256C241D00BBB0EA /* ModelObjects+MiscTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BC438A256C241D00BBB0EA /* ModelObjects+MiscTests.swift */; };
 		99D0C76024C5DD1E002EEBFA /* CoppiceCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99D0C75624C5DD1E002EEBFA /* CoppiceCore.framework */; };
 		99D0C76724C5DD1E002EEBFA /* CoppiceCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 99D0C75924C5DD1E002EEBFA /* CoppiceCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		99D0C7FC24C5DE79002EEBFA /* CoppiceModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C7DF24C5DE79002EEBFA /* CoppiceModelController.swift */; };
@@ -113,6 +117,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		99BC4351256C15F200BBB0EA /* Array+M3ExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+M3ExtensionsTests.swift"; sourceTree = "<group>"; };
+		99BC4374256C168000BBB0EA /* CoreGraphics+M3ExtensionsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CoreGraphics+M3ExtensionsTests.swift"; sourceTree = "<group>"; };
+		99BC437A256C22E800BBB0EA /* ModelObjects+Misc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelObjects+Misc.swift"; sourceTree = "<group>"; };
+		99BC438A256C241D00BBB0EA /* ModelObjects+MiscTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelObjects+MiscTests.swift"; sourceTree = "<group>"; };
 		99D0C75624C5DD1E002EEBFA /* CoppiceCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CoppiceCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		99D0C75924C5DD1E002EEBFA /* CoppiceCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoppiceCore.h; sourceTree = "<group>"; };
 		99D0C75A24C5DD1E002EEBFA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -231,6 +239,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		99BC435A256C160A00BBB0EA /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				99BC4374256C168000BBB0EA /* CoreGraphics+M3ExtensionsTests.swift */,
+				99BC4351256C15F200BBB0EA /* Array+M3ExtensionsTests.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		99D0C74C24C5DD1E002EEBFA = {
 			isa = PBXGroup;
 			children = (
@@ -271,6 +288,7 @@
 				99D0C81E24C5DEC8002EEBFA /* Mocking.swift */,
 				99D0C81F24C5DEC8002EEBFA /* TestObjects.swift */,
 				99D0C81624C5DEC8002EEBFA /* XCTestExtensions.swift */,
+				99BC435A256C160A00BBB0EA /* Extensions */,
 				99D0C81724C5DEC8002EEBFA /* Helpers */,
 				99D0C82024C5DEC8002EEBFA /* Model */,
 				99D0C88E24C5FB2F002EEBFA /* Layout Engine */,
@@ -322,6 +340,7 @@
 				99D0C7F424C5DE79002EEBFA /* ModelObjects+Pasteboard.swift */,
 				99D0C7EC24C5DE79002EEBFA /* ModelObjects+Searching.swift */,
 				99D0C7FB24C5DE79002EEBFA /* ModelObjects+Defaults.swift */,
+				99BC437A256C22E800BBB0EA /* ModelObjects+Misc.swift */,
 				99D0C7EF24C5DE79002EEBFA /* FolderContainable.swift */,
 			);
 			path = "Model Objects";
@@ -390,6 +409,7 @@
 				99D0C83424C5DEC8002EEBFA /* PageTests.swift */,
 				99D0C83524C5DEC8002EEBFA /* ContentTypes */,
 				99D0C83824C5DEC8002EEBFA /* ModelObjects+SearchingTests.swift */,
+				99BC438A256C241D00BBB0EA /* ModelObjects+MiscTests.swift */,
 			);
 			path = ModelObjects;
 			sourceTree = "<group>";
@@ -606,6 +626,7 @@
 				99D0C80824C5DE79002EEBFA /* PageHierarchy.swift in Sources */,
 				99D0C80F24C5DE79002EEBFA /* ModelObjects+Pasteboard.swift in Sources */,
 				99D0C87524C5E0E1002EEBFA /* Array+M3Extensions.swift in Sources */,
+				99BC437B256C22E800BBB0EA /* ModelObjects+Misc.swift in Sources */,
 				99D0C8E224C5FBEA002EEBFA /* CanvasEventContext.swift in Sources */,
 				99D0C8E324C5FBEA002EEBFA /* SelectAndMoveEventContext.swift in Sources */,
 				99D0C8DC24C5FBEA002EEBFA /* LayoutEnginePage.swift in Sources */,
@@ -643,6 +664,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				99D0C86224C5DF0F002EEBFA /* CoppiceModelControllerFolderTests.swift in Sources */,
+				99BC4352256C15F200BBB0EA /* Array+M3ExtensionsTests.swift in Sources */,
 				99D0C85424C5DEC9002EEBFA /* CanvasPageTests.swift in Sources */,
 				99D0C85224C5DEC9002EEBFA /* ModelObjects+PasteboardTests.swift in Sources */,
 				99D0C89E24C5FB95002EEBFA /* CanvasLayoutEngineTests.swift in Sources */,
@@ -656,6 +678,7 @@
 				99D0C84724C5DEC9002EEBFA /* ModelSettingsTests.swift in Sources */,
 				99D0C84824C5DEC9002EEBFA /* ModelIDTests.swift in Sources */,
 				99D0C85624C5DEC9002EEBFA /* TextPageContentsTests.swift in Sources */,
+				99BC4375256C168000BBB0EA /* CoreGraphics+M3ExtensionsTests.swift in Sources */,
 				99D0C86324C5DF0F002EEBFA /* CoppiceModelControllerCanvasTests.swift in Sources */,
 				99D0C85924C5DEC9002EEBFA /* ModelReaderTests.swift in Sources */,
 				99D0C89F24C5FB95002EEBFA /* ArrowLayoutEngineTests.swift in Sources */,
@@ -674,6 +697,7 @@
 				99D0C84E24C5DEC9002EEBFA /* PageHierarchyTests.swift in Sources */,
 				99D0C86124C5DF0F002EEBFA /* CoppiceModelControllerTests.swift in Sources */,
 				99D0C84224C5DEC9002EEBFA /* Mocking.swift in Sources */,
+				99BC438B256C241D00BBB0EA /* ModelObjects+MiscTests.swift in Sources */,
 				99D0C86424C5DF0F002EEBFA /* CoppiceModelControllerCanvasPageTests.swift in Sources */,
 				99D0C89D24C5FB95002EEBFA /* CanvasLayoutEngineEventContextFactoryTests.swift in Sources */,
 				99D0C8A124C5FB95002EEBFA /* CanvasSelectionEventContextTests.swift in Sources */,

@@ -11,6 +11,20 @@ import XCTest
 
 class CanvasTests: XCTestCase {
 
+    //MARK: .zoomFactor
+    func test_zoomFactor_capsMaximumValueTo1() throws {
+        let canvas = Canvas()
+        canvas.zoomFactor = 2
+        XCTAssertEqual(canvas.zoomFactor, 1)
+    }
+
+    func test_zoomFactor_capsMinimumValueTo0Point25() throws {
+        let canvas = Canvas()
+        canvas.zoomFactor = 0.2
+        XCTAssertEqual(canvas.zoomFactor, 0.25)
+    }
+    
+
     //MARK: - .plistRepresentation
     func test_plistRepresentation_containsID() throws {
         let canvas = Canvas()
