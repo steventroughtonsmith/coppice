@@ -27,8 +27,13 @@ class CoppiceUITests: XCTestCase {
     }
 
     func testExample() {
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        let app = XCUIApplication()
+        let menuBarsQuery = app.menuBars
+        menuBarsQuery.menuBarItems["Window"].click()
+        menuBarsQuery/*@START_MENU_TOKEN@*/.menuItems["Welcome to Coppice"]/*[[".menuBarItems[\"Window\"]",".menus.menuItems[\"Welcome to Coppice\"]",".menuItems[\"Welcome to Coppice\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/.click()
+        app.windows["Welcome to Coppice"].buttons["New…"].click()
+
+        XCTAssertTrue(app.windows["Untitled"].waitForExistence(timeout: 1))
     }
 
 }

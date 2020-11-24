@@ -64,15 +64,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationShouldOpenUntitledFile(_ sender: NSApplication) -> Bool {
         #if TEST
-        return false
-        #else
+        if (UserDefaults.standard.bool(forKey: "UnitTestsEnabled")) {
+            return false
+        }
+        #endif
         //We need to do this here as applicationDidFinishLaunching is called before any documents are restored, but applicationShouldHandleReopen is not called on launch
         if (UserDefaults.standard.bool(forKey: .showWelcomeScreenOnLaunch)) {
             self.welcomeWindow.showWindow(nil)
             return false
         }
         return true
-        #endif
     }
 
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {

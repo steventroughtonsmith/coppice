@@ -242,6 +242,7 @@
 		99B65D022562C1B8001DE408 /* Coppice.helpbook in Resources */ = {isa = PBXBuildFile; fileRef = 99B65D012562C1B7001DE408 /* Coppice.helpbook */; };
 		99B65D0925642202001DE408 /* DebugMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B65D0825642202001DE408 /* DebugMenuDelegate.swift */; };
 		99BC4320250935B70032D7A3 /* sparkle_dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 99BC431F250935B70032D7A3 /* sparkle_dsa_pub.pem */; };
+		99BC43A2256D85DC00BBB0EA /* BubblesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FE01B122CD1038004D380D /* BubblesUITests.swift */; };
 		99BC8B3725504ADA007ECBAE /* InfoAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BC8B3525504ADA007ECBAE /* InfoAlertViewController.swift */; };
 		99BC8B3825504ADA007ECBAE /* InfoAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99BC8B3625504ADA007ECBAE /* InfoAlertViewController.xib */; };
 		99BC8B4E2550568B007ECBAE /* DocumentContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BC8B4C2550568B007ECBAE /* DocumentContentViewController.swift */; };
@@ -326,7 +327,6 @@
 		99FE019122CD1037004D380D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FE019022CD1037004D380D /* AppDelegate.swift */; };
 		99FE019322CD1037004D380D /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FE019222CD1037004D380D /* Document.swift */; };
 		99FE019B22CD1038004D380D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99FE019922CD1038004D380D /* MainMenu.xib */; };
-		99FE01B222CD1038004D380D /* BubblesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FE01B122CD1038004D380D /* BubblesUITests.swift */; };
 		99FE01E522D4CC8A004D380D /* DocumentWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99FE01E322D4CC8A004D380D /* DocumentWindow.xib */; };
 		99FFF9CC234E2F2F00EF02A0 /* FlippedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FFF9CB234E2F2F00EF02A0 /* FlippedView.swift */; };
 		99FFF9CE2350BAE400EF02A0 /* PageEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FFF9CD2350BAE400EF02A0 /* PageEditorViewController.swift */; };
@@ -2335,7 +2335,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				99FE01B222CD1038004D380D /* BubblesUITests.swift in Sources */,
+				99BC43A2256D85DC00BBB0EA /* BubblesUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2486,7 +2486,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = "2020.1 rc 1";
+				MARKETING_VERSION = 2020.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG TEST";
@@ -2644,7 +2644,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = "2020.1 rc 1";
+				MARKETING_VERSION = 2020.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -2832,7 +2832,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = "2020.1 rc 1";
+				MARKETING_VERSION = 2020.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice.CoppiceQuickLook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -2856,7 +2856,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = "2020.1 rc 1";
+				MARKETING_VERSION = 2020.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice.CoppiceQuickLook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -2880,7 +2880,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = "2020.1 rc 1";
+				MARKETING_VERSION = 2020.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice.CoppiceQuickLook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -2904,7 +2904,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = "2020.1 rc 1";
+				MARKETING_VERSION = 2020.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice.CoppiceQuickLook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -3058,7 +3058,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = "2020.1 rc 1";
+				MARKETING_VERSION = 2020.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -3088,7 +3088,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = "2020.1 rc 1";
+				MARKETING_VERSION = 2020.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

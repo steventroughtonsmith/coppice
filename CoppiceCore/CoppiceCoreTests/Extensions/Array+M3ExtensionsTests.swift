@@ -7,7 +7,6 @@
 //
 
 import XCTest
-@testable import Coppice
 @testable import CoppiceCore
 
 class Array_M3ExtensionsTests: XCTestCase {

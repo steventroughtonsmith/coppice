@@ -1,0 +1,26 @@
+{
+  "configurations" : [
+    {
+      "id" : "8B6EFBA5-9463-493B-9BA1-CCA7E9642436",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "commandLineArgumentEntries" : [
+
+    ]
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:Coppice.xcodeproj",
+        "identifier" : "99FE01AC22CD1038004D380D",
+        "name" : "CoppiceUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

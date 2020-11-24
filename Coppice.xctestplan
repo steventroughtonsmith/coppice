@@ -9,7 +9,11 @@
     }
   ],
   "defaultOptions" : {
-
+    "commandLineArgumentEntries" : [
+      {
+        "argument" : "-UnitTestsEnabled YES"
+      }
+    ]
   },
   "testTargets" : [
     {
