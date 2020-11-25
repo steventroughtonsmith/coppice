@@ -242,11 +242,12 @@
 		99B65D022562C1B8001DE408 /* Coppice.helpbook in Resources */ = {isa = PBXBuildFile; fileRef = 99B65D012562C1B7001DE408 /* Coppice.helpbook */; };
 		99B65D0925642202001DE408 /* DebugMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B65D0825642202001DE408 /* DebugMenuDelegate.swift */; };
 		99BC4320250935B70032D7A3 /* sparkle_dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 99BC431F250935B70032D7A3 /* sparkle_dsa_pub.pem */; };
-		99BC43A2256D85DC00BBB0EA /* BubblesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FE01B122CD1038004D380D /* BubblesUITests.swift */; };
 		99BC8B3725504ADA007ECBAE /* InfoAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BC8B3525504ADA007ECBAE /* InfoAlertViewController.swift */; };
 		99BC8B3825504ADA007ECBAE /* InfoAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99BC8B3625504ADA007ECBAE /* InfoAlertViewController.xib */; };
 		99BC8B4E2550568B007ECBAE /* DocumentContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BC8B4C2550568B007ECBAE /* DocumentContentViewController.swift */; };
 		99BC8B4F2550568B007ECBAE /* DocumentContentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99BC8B4D2550568B007ECBAE /* DocumentContentViewController.xib */; };
+		99BF4717256D97140098EB98 /* BaseUITestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BF4716256D97140098EB98 /* BaseUITestCase.swift */; };
+		99BF4723256D97A60098EB98 /* WelcomeScreenUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BF4722256D97A60098EB98 /* WelcomeScreenUITests.swift */; };
 		99C03F07232A8ED200EB7516 /* CanvasElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03F06232A8ED200EB7516 /* CanvasElementView.swift */; };
 		99C03F09232A99F400EB7516 /* Cursors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99C03F08232A99F400EB7516 /* Cursors.xcassets */; };
 		99C03F0B232A9A5E00EB7516 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03F0A232A9A5E00EB7516 /* CanvasView.swift */; };
@@ -652,6 +653,8 @@
 		99BC8B3625504ADA007ECBAE /* InfoAlertViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InfoAlertViewController.xib; sourceTree = "<group>"; };
 		99BC8B4C2550568B007ECBAE /* DocumentContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentContentViewController.swift; sourceTree = "<group>"; };
 		99BC8B4D2550568B007ECBAE /* DocumentContentViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DocumentContentViewController.xib; sourceTree = "<group>"; };
+		99BF4716256D97140098EB98 /* BaseUITestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUITestCase.swift; sourceTree = "<group>"; };
+		99BF4722256D97A60098EB98 /* WelcomeScreenUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScreenUITests.swift; sourceTree = "<group>"; };
 		99C03F06232A8ED200EB7516 /* CanvasElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasElementView.swift; sourceTree = "<group>"; };
 		99C03F08232A99F400EB7516 /* Cursors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Cursors.xcassets; sourceTree = "<group>"; };
 		99C03F0A232A9A5E00EB7516 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
@@ -741,7 +744,6 @@
 		99FE01A222CD1038004D380D /* CoppiceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoppiceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		99FE01A822CD1038004D380D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		99FE01AD22CD1038004D380D /* CoppiceUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoppiceUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		99FE01B122CD1038004D380D /* BubblesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubblesUITests.swift; sourceTree = "<group>"; };
 		99FE01B322CD1038004D380D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		99FE01E222D4CC8A004D380D /* DocumentWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentWindowController.swift; sourceTree = "<group>"; };
 		99FE01E322D4CC8A004D380D /* DocumentWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DocumentWindow.xib; sourceTree = "<group>"; };
@@ -1756,7 +1758,8 @@
 		99FE01B022CD1038004D380D /* CoppiceUITests */ = {
 			isa = PBXGroup;
 			children = (
-				99FE01B122CD1038004D380D /* BubblesUITests.swift */,
+				99BF4716256D97140098EB98 /* BaseUITestCase.swift */,
+				99BF4722256D97A60098EB98 /* WelcomeScreenUITests.swift */,
 				99FE01B322CD1038004D380D /* Info.plist */,
 			);
 			path = CoppiceUITests;
@@ -2335,7 +2338,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				99BC43A2256D85DC00BBB0EA /* BubblesUITests.swift in Sources */,
+				99BF4723256D97A60098EB98 /* WelcomeScreenUITests.swift in Sources */,
+				99BF4717256D97140098EB98 /* BaseUITestCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

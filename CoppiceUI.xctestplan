@@ -9,9 +9,7 @@
     }
   ],
   "defaultOptions" : {
-    "commandLineArgumentEntries" : [
 
-    ]
   },
   "testTargets" : [
     {

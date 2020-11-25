@@ -40,6 +40,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+
         #if DEBUG
         if let mainMenu = NSApplication.shared.mainMenu, let windowMenu = mainMenu.item(withTitle: "Window") {
             let index = mainMenu.index(of: windowMenu) + 1

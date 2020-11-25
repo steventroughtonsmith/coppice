@@ -16,4 +16,13 @@ import AppKit
         }
         set {}
     }
+
+    override func restoreWindow(withIdentifier identifier: NSUserInterfaceItemIdentifier, state: NSCoder, completionHandler: @escaping (NSWindow?, Error?) -> Void) -> Bool {
+        #if TEST
+        if (UserDefaults.standard.bool(forKey: "CoppiceDisableStateRestoration")) {
+            return false
+        }
+        #endif
+        return super.restoreWindow(withIdentifier: identifier, state: state, completionHandler: completionHandler)
+    }
 }
