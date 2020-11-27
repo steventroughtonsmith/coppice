@@ -188,6 +188,10 @@ fileprivate class TourInterfaceSidebarView: TourInterfaceComponentView {
     override var componentDescription: String {
         return NSLocalizedString("This is where all your Pages live", comment: "Welcome tour sidebar description")
     }
+
+    override func accessibilityIdentifier() -> String {
+        return "TourGraphicSidebar"
+    }
 }
 
 fileprivate class TourInterfaceToolbarView: TourInterfaceComponentView {
@@ -205,6 +209,10 @@ fileprivate class TourInterfaceToolbarView: TourInterfaceComponentView {
 
     override var componentDescription: String {
         return NSLocalizedString("You can find common actions here within easy reach", comment: "Welcome tour toolbar description")
+    }
+
+    override func accessibilityIdentifier() -> String {
+        return "TourGraphicToolbar"
     }
 }
 
@@ -224,6 +232,10 @@ fileprivate class TourInterfaceEditorView: TourInterfaceComponentView {
     override var componentDescription: String {
         return NSLocalizedString("You can edit Pages or Canvases from here", comment: "Welcome tour editor description")
     }
+
+    override func accessibilityIdentifier() -> String {
+        return "TourGraphicEditor"
+    }
 }
 
 fileprivate class TourInterfaceInspectorsView: TourInterfaceComponentView {
@@ -242,5 +254,9 @@ fileprivate class TourInterfaceInspectorsView: TourInterfaceComponentView {
 
     override var componentDescription: String {
         return NSLocalizedString("Additional controls to edit the item selected in the editor", comment: "Welcome tour inspectors description")
+    }
+
+    override func accessibilityIdentifier() -> String {
+        return "TourGraphicInspectors"
     }
 }

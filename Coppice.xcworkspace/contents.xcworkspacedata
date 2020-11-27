@@ -2,13 +2,13 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:CoppiceUI.xctestplan">
-   </FileRef>
-   <FileRef
       location = "group:Coppice/Coppice.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Coppice.xctestplan">
+   </FileRef>
+   <FileRef
+      location = "group:CoppiceUI.xctestplan">
    </FileRef>
    <FileRef
       location = "group:CoppiceCore/CoppiceCore.xcodeproj">

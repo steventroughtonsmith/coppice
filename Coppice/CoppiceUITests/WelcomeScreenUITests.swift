@@ -17,7 +17,15 @@ class WelcomeScreenUITests: BaseUITestCase {
 
     func test_showsCorrectVersion() throws {
         try self.openWelcomeWindow()
-        XCTAssertTrue(XCUIApplication().windows["Welcome to Coppice"].waitForExistence(timeout: 1))
+        let window = XCUIApplication().windows["Welcome to Coppice"]
+        XCTAssertTrue(window.waitForExistence(timeout: 1))
+
+        let bundle = try XCTUnwrap(Bundle(identifier: "com.mcubedsw.Coppice"))
+        let shortVersionString = try XCTUnwrap(bundle.object(forInfoDictionaryKey: "CFBundleShortVersionString"))
+
+        let item = window.staticTexts["versionLabel"]
+        let value = try XCTUnwrap(item.value as? String)
+        XCTAssertTrue(value.hasPrefix("Version \(shortVersionString)"))
     }
 
     func test_cantBeResized() throws {
