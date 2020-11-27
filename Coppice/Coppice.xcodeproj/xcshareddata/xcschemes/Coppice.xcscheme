@@ -54,6 +54,9 @@
          <TestPlanReference
             reference = "container:../CoppiceUI.xctestplan">
          </TestPlanReference>
+         <TestPlanReference
+            reference = "container:../CoppiceCI.xctestplan">
+         </TestPlanReference>
       </TestPlans>
       <Testables>
          <TestableReference

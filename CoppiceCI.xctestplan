@@ -1,0 +1,57 @@
+{
+  "configurations" : [
+    {
+      "id" : "593D181C-D6AF-40C2-A0B7-826B98ED6956",
+      "name" : "Configuration 1",
+      "options" : {
+        "commandLineArgumentEntries" : [
+
+        ]
+      }
+    },
+    {
+      "id" : "C6963420-8ED0-4A71-94AA-BB117EBAE5B6",
+      "name" : "Configuration 2",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Coppice.xcodeproj",
+        "identifier" : "99FE01A122CD1038004D380D",
+        "name" : "CoppiceTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Coppice.xcodeproj",
+        "identifier" : "99FE01AC22CD1038004D380D",
+        "name" : "CoppiceUITests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:..\/CoppiceCore\/CoppiceCore.xcodeproj",
+        "identifier" : "99D0C75E24C5DD1E002EEBFA",
+        "name" : "CoppiceCoreTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:..\/M3Subscriptions\/M3Subscriptions.xcodeproj",
+        "identifier" : "9984815A248E639C00BC0A8A",
+        "name" : "M3SubscriptionsTests"
+      }
+    }
+  ],
+  "version" : 1
+}

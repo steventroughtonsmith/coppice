@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:CoppiceCI.xctestplan">
+   </FileRef>
+   <FileRef
       location = "group:Coppice/Coppice.xcodeproj">
    </FileRef>
    <FileRef
