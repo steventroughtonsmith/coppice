@@ -657,7 +657,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = Z699XFM6P2;
+				DEVELOPMENT_TEAM = K3K39KWKBV;
 				INFOPLIST_FILE = M3SubscriptionsTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -678,7 +678,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = Z699XFM6P2;
+				DEVELOPMENT_TEAM = K3K39KWKBV;
 				INFOPLIST_FILE = M3SubscriptionsTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -779,7 +779,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = Z699XFM6P2;
+				DEVELOPMENT_TEAM = K3K39KWKBV;
 				INFOPLIST_FILE = M3SubscriptionsTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -799,7 +799,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = Z699XFM6P2;
+				DEVELOPMENT_TEAM = K3K39KWKBV;
 				INFOPLIST_FILE = M3SubscriptionsStageTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -819,7 +819,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = Z699XFM6P2;
+				DEVELOPMENT_TEAM = K3K39KWKBV;
 				INFOPLIST_FILE = M3SubscriptionsStageTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -838,7 +838,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = Z699XFM6P2;
+				DEVELOPMENT_TEAM = K3K39KWKBV;
 				INFOPLIST_FILE = M3SubscriptionsStageTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -930,7 +930,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = Z699XFM6P2;
+				DEVELOPMENT_TEAM = K3K39KWKBV;
 				INFOPLIST_FILE = M3SubscriptionsTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -950,7 +950,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = Z699XFM6P2;
+				DEVELOPMENT_TEAM = K3K39KWKBV;
 				INFOPLIST_FILE = M3SubscriptionsStageTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
