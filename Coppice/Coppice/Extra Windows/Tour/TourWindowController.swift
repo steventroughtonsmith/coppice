@@ -62,6 +62,9 @@ class TourWindowController: NSWindowController {
     private var isAnimatingPanel = false
     @IBAction func continueClicked(_ sender: Any) {
         guard self.isLastPanel == false else {
+            if (NSDocumentController.shared.documents.count == 0) {
+                NSDocumentController.shared.newDocument(self)
+            }
             self.close()
             return
         }
@@ -147,4 +150,11 @@ class TourWindowController: NSWindowController {
 
 class TourPanelViewController: NSViewController {
     @IBOutlet var titleLabel: NSTextField!
+    @IBOutlet var backButton: NSButton?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.titleLabel.cell?.setAccessibilityIdentifier("TourPanelTitle")
+        self.backButton?.cell?.setAccessibilityIdentifier("TourPanelBack")
+    }
 }

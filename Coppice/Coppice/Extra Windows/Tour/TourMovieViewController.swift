@@ -27,6 +27,8 @@ class TourMovieViewController: TourPanelViewController {
         super.viewDidLoad()
         // Do view setup here.
 
+        self.view.setAccessibilityIdentifier(self.tourIdentifier)
+
         guard let url = Bundle.main.url(forResource: self.tourIdentifier, withExtension: "mp4") else {
             return
         }
@@ -48,5 +50,4 @@ class TourMovieViewController: TourPanelViewController {
 
     @IBOutlet weak var previewImageView: NSImageView!
     @IBOutlet weak var playerView: AVPlayerView!
-
 }

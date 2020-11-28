@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TourGetStartedViewController" customModule="Coppice" customModuleProvider="target">
             <connections>
+                <outlet property="backButton" destination="1B7-Ff-Jy9" id="CDP-U3-cwc"/>
                 <outlet property="titleLabel" destination="vr0-15-9aM" id="o5v-KF-Yrq"/>
                 <outlet property="view" destination="Odm-Ds-XH5" id="hSh-eo-hNx"/>
                 <outlet property="viewDocumentButton" destination="8iZ-Ox-dLh" id="0vw-Q6-Dlo"/>

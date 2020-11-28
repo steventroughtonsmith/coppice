@@ -5,15 +5,10 @@
       "name" : "Configuration 1",
       "options" : {
         "commandLineArgumentEntries" : [
-
+          {
+            "argument" : "-DisableOpeningWindowAtLaunch YES"
+          }
         ]
-      }
-    },
-    {
-      "id" : "C6963420-8ED0-4A71-94AA-BB117EBAE5B6",
-      "name" : "Configuration 2",
-      "options" : {
-
       }
     }
   ],

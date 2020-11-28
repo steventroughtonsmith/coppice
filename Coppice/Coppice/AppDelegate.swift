@@ -65,7 +65,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationShouldOpenUntitledFile(_ sender: NSApplication) -> Bool {
         #if TEST
-        if (UserDefaults.standard.bool(forKey: "UnitTestsEnabled")) {
+        if (UserDefaults.standard.bool(forKey: "DisableOpeningWindowAtLaunch")) {
             return false
         }
         #endif

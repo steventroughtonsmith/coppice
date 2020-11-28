@@ -249,7 +249,7 @@ fileprivate class TourInterfaceInspectorsView: TourInterfaceComponentView {
     }
 
     override var componentName: String {
-        return NSLocalizedString("Inspector", comment: "Welcome tour inspectors name")
+        return NSLocalizedString("Inspectors", comment: "Welcome tour inspectors name")
     }
 
     override var componentDescription: String {
