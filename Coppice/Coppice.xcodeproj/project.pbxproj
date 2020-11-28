@@ -68,6 +68,7 @@
 		992A5CAF22DDF50F0012CCB6 /* DebugPageEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 992A5CAD22DDF50F0012CCB6 /* DebugPageEditor.xib */; };
 		992A5CB122DDF5210012CCB6 /* DebugCanvasEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992A5CB022DDF5210012CCB6 /* DebugCanvasEditorViewModel.swift */; };
 		992A5CB322DDF53C0012CCB6 /* DebugPageEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992A5CB222DDF53C0012CCB6 /* DebugPageEditorViewModel.swift */; };
+		9930A6EB25728CAC00E74AE5 /* HelpViewerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9930A6EA25728CAC00E74AE5 /* HelpViewerUITests.swift */; };
 		993600E224AE2A81002C86E4 /* ModelObjects+AppKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993600E124AE2A81002C86E4 /* ModelObjects+AppKit.swift */; };
 		993600E924AE5F1F002C86E4 /* TestLayoutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993600E824AE5F1F002C86E4 /* TestLayoutDelegate.swift */; };
 		993C0EE924B3A5C5009993D4 /* SourceListTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993C0EE824B3A5C5009993D4 /* SourceListTableCellView.swift */; };
@@ -472,6 +473,7 @@
 		992A5CAD22DDF50F0012CCB6 /* DebugPageEditor.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DebugPageEditor.xib; sourceTree = "<group>"; };
 		992A5CB022DDF5210012CCB6 /* DebugCanvasEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugCanvasEditorViewModel.swift; sourceTree = "<group>"; };
 		992A5CB222DDF53C0012CCB6 /* DebugPageEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugPageEditorViewModel.swift; sourceTree = "<group>"; };
+		9930A6EA25728CAC00E74AE5 /* HelpViewerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpViewerUITests.swift; sourceTree = "<group>"; };
 		993600E124AE2A81002C86E4 /* ModelObjects+AppKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelObjects+AppKit.swift"; sourceTree = "<group>"; };
 		993600E824AE5F1F002C86E4 /* TestLayoutDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestLayoutDelegate.swift; sourceTree = "<group>"; };
 		993C0EE824B3A5C5009993D4 /* SourceListTableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceListTableCellView.swift; sourceTree = "<group>"; };
@@ -1763,6 +1765,7 @@
 				99BF4716256D97140098EB98 /* BaseUITestCase.swift */,
 				99BF4722256D97A60098EB98 /* WelcomeScreenUITests.swift */,
 				99BF473D256EC49E0098EB98 /* TourWindowUITests.swift */,
+				9930A6EA25728CAC00E74AE5 /* HelpViewerUITests.swift */,
 				99FE01B322CD1038004D380D /* Info.plist */,
 			);
 			path = CoppiceUITests;
@@ -2343,6 +2346,7 @@
 			files = (
 				99BF4723256D97A60098EB98 /* WelcomeScreenUITests.swift in Sources */,
 				99BF4717256D97140098EB98 /* BaseUITestCase.swift in Sources */,
+				9930A6EB25728CAC00E74AE5 /* HelpViewerUITests.swift in Sources */,
 				99BF473E256EC49E0098EB98 /* TourWindowUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
