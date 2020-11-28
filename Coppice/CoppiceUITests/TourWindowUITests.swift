@@ -103,13 +103,20 @@ class TourWindowUITests: BaseUITestCase {
         try self.openTourWindow()
 
         let app = XCUIApplication()
-        let tourcontinueButton = app.windows["TourWindow"].buttons["TourContinue"]
-        tourcontinueButton.click()
-        tourcontinueButton.click()
-        tourcontinueButton.click()
-        tourcontinueButton.click()
-        tourcontinueButton.click()
-        tourcontinueButton.click()
+        let tourWindow = app.windows["TourWindow"]
+
+        let continueButton = tourWindow.buttons["TourContinue"]
+        continueButton.click()
+        _ = tourWindow.staticTexts["Pages"].waitForExistence(timeout: 2)
+        continueButton.click()
+        _ = tourWindow.staticTexts["Canvases"].waitForExistence(timeout: 2)
+        continueButton.click()
+        _ = tourWindow.staticTexts["Links"].waitForExistence(timeout: 2)
+        continueButton.click()
+        _ = tourWindow.staticTexts["Branches"].waitForExistence(timeout: 2)
+        continueButton.click()
+        _ = tourWindow.staticTexts["Get Started"].waitForExistence(timeout: 2)
+        continueButton.click()
 
         let documentWindows = app.windows.matching(identifier: "DocumentWindow")
         XCTAssertEqual(documentWindows.count, 1)
@@ -127,13 +134,20 @@ class TourWindowUITests: BaseUITestCase {
 
         try self.openTourWindow()
 
-        let tourcontinueButton = app.windows["TourWindow"].buttons["TourContinue"]
-        tourcontinueButton.click()
-        tourcontinueButton.click()
-        tourcontinueButton.click()
-        tourcontinueButton.click()
-        tourcontinueButton.click()
-        tourcontinueButton.click()
+        let tourWindow = app.windows["TourWindow"]
+
+        let continueButton = tourWindow.buttons["TourContinue"]
+        continueButton.click()
+        _ = tourWindow.staticTexts["Pages"].waitForExistence(timeout: 2)
+        continueButton.click()
+        _ = tourWindow.staticTexts["Canvases"].waitForExistence(timeout: 2)
+        continueButton.click()
+        _ = tourWindow.staticTexts["Links"].waitForExistence(timeout: 2)
+        continueButton.click()
+        _ = tourWindow.staticTexts["Branches"].waitForExistence(timeout: 2)
+        continueButton.click()
+        _ = tourWindow.staticTexts["Get Started"].waitForExistence(timeout: 2)
+        continueButton.click()
 
         XCTAssertEqual(documentWindows.count, 1)
         XCTAssertTrue(documentWindows["Untitled"].waitForExistence(timeout: 1))
@@ -145,12 +159,17 @@ class TourWindowUITests: BaseUITestCase {
         let app = XCUIApplication()
         let tourWindow = app.windows["TourWindow"]
 
-        let tourcontinueButton = tourWindow.buttons["TourContinue"]
-        tourcontinueButton.click()
-        tourcontinueButton.click()
-        tourcontinueButton.click()
-        tourcontinueButton.click()
-        tourcontinueButton.click()
+        let continueButton = app.windows["TourWindow"].buttons["TourContinue"]
+        continueButton.click()
+        _ = tourWindow.staticTexts["Pages"].waitForExistence(timeout: 2)
+        continueButton.click()
+        _ = tourWindow.staticTexts["Canvases"].waitForExistence(timeout: 2)
+        continueButton.click()
+        _ = tourWindow.staticTexts["Links"].waitForExistence(timeout: 2)
+        continueButton.click()
+        _ = tourWindow.staticTexts["Branches"].waitForExistence(timeout: 2)
+        continueButton.click()
+        _ = tourWindow.staticTexts["Get Started"].waitForExistence(timeout: 2)
 
         tourWindow.buttons["View Sample Document…"].click()
 
