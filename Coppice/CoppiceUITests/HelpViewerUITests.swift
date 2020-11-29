@@ -51,7 +51,7 @@ class HelpViewerUITests: BaseUITestCase {
         sidebarButton.click()
 
         let splitter = coppiceHelpWindow.splitters.element(boundBy: 0)
-        XCTAssertEqual(try XCTUnwrap(splitter.value as? Int), 0)
+        XCTAssertLessThanOrEqual(try XCTUnwrap(splitter.value as? Int), 0)
 
         sidebarButton.click()
         XCTAssertGreaterThan(try XCTUnwrap(splitter.value as? Int), 0)
