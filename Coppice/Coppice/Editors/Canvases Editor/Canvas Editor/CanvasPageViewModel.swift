@@ -16,15 +16,21 @@ class CanvasPageViewModel: ViewModel {
     weak var view: CanvasPageView?
 
     @objc dynamic let canvasPage: CanvasPage
+    /*
+            We need to store the page as well, as when a canvas page is closed its page is set to nil.
+            This prevents any observation from being able to be correctly removed
+         */
+    @objc dynamic let page: Page?
     init(canvasPage: CanvasPage, documentWindowViewModel: DocumentWindowViewModel) {
         self.canvasPage = canvasPage
+        self.page = canvasPage.page
         super.init(documentWindowViewModel: documentWindowViewModel)
     }
 
     override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
         var keyPaths = super.keyPathsForValuesAffectingValue(forKey: key)
         if (key == #keyPath(title)) {
-            keyPaths.insert("self.canvasPage.title")
+            keyPaths.insert("self.page.title")
         }
         if (key == #keyPath(accessibilityDescription)) {
             keyPaths.insert("self.canvasPage.parent.title")
@@ -34,12 +40,12 @@ class CanvasPageViewModel: ViewModel {
 
     @objc dynamic var title: String {
         get { return self.canvasPage.title }
-        set { self.canvasPage.page?.title = newValue }
+        set { self.page?.title = newValue }
     }
 
 
     lazy var pageEditor: PageEditorViewController? = {
-        guard let page = self.canvasPage.page else {
+        guard let page = self.page else {
             return nil
         }
 
