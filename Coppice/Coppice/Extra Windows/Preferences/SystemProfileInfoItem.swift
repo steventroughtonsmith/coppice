@@ -31,8 +31,8 @@ class SystemProfileInfoItemCreator {
         var info = [SystemProfileInfoItem]()
         for infoDict in combinedInfo {
             guard
-                let key = infoDict["key"] as? String,
-                let displayKey = infoDict["displayKey"] as? String,
+                let key = infoDict["key"],
+                let displayKey = infoDict["displayKey"],
                 let value = infoDict["value"],
                 let displayValue = infoDict["displayValue"]
             else {
@@ -65,7 +65,7 @@ class SystemProfileInfoItemCreator {
         case "bundleID":
             return NSLocalizedString("The Bundle ID simply lets us know it is Coppice that is sending the data.", comment: "")
         default:
-            fatalError()
+            preconditionFailure()
         }
     }
 

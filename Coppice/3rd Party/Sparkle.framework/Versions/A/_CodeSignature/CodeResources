@@ -6,7 +6,7 @@
 	<dict>
 		<key>Resources/Autoupdate</key>
 		<data>
-		13FuOPRYMI6ss777Of4K25enrsA=
+		QhNJ4ueDJViGair0eGxndAO+uDc=
 		</data>
 		<key>Resources/DarkAqua.css</key>
 		<data>
@@ -14,7 +14,7 @@
 		</data>
 		<key>Resources/Info.plist</key>
 		<data>
-		AhxostNuY5EAQiBtsgLYkOZV9RQ=
+		lfW+5lq7wpySwUfgXsH4agrC2Zo=
 		</data>
 		<key>Resources/SUModelTranslation.plist</key>
 		<data>
@@ -26,11 +26,11 @@
 		</data>
 		<key>Resources/Updater.app/Contents/Info.plist</key>
 		<data>
-		EsOZqtsEvW+Pi65jUq77CzHgGV8=
+		fyXHaj0HDUelEPZkgS/zu42B0Nk=
 		</data>
 		<key>Resources/Updater.app/Contents/MacOS/Updater</key>
 		<data>
-		PuNPUMG8s8nY366yxfV7+udZAjI=
+		72x/lFeSNEjr+HZ87Gk4s8nwfgk=
 		</data>
 		<key>Resources/Updater.app/Contents/PkgInfo</key>
 		<data>
@@ -1154,11 +1154,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			13YMWmdYQcoBGHhPVGxqFifBJsg=
+			tASsSrfB+6fwQnuuvFQamVQ/frQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			5L3J7tAqQ6g5iD0qTljfecljry+bnQihRO6KEE84Hu0=
+			Ksc3hhegMgskwcwDoCAy8qulLziCyDQ+nC5yG2xKx/E=
 			</data>
 		</dict>
 		<key>Headers/SPUUpdaterDelegate.h</key>
@@ -1341,11 +1341,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			13FuOPRYMI6ss777Of4K25enrsA=
+			QhNJ4ueDJViGair0eGxndAO+uDc=
 			</data>
 			<key>hash2</key>
 			<data>
-			QLg9mHajyAhiwxc94scJNsZc7u+UBER9ZQ/ZSyaYLZE=
+			q7s2+1QFeMAVIEBFryNFP0Cm/ShLUKk2yhZ8xv8yuDw=
 			</data>
 		</dict>
 		<key>Resources/DarkAqua.css</key>
@@ -1363,11 +1363,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			AhxostNuY5EAQiBtsgLYkOZV9RQ=
+			lfW+5lq7wpySwUfgXsH4agrC2Zo=
 			</data>
 			<key>hash2</key>
 			<data>
-			ffym4aUqYbtzYUtCh/5GjEax03Aq+9sXRKmC0xRHTXI=
+			6LDkOCAK8xlWXdBmuhIZZfuRDQ74dksaxQ+gBwMJ3gA=
 			</data>
 		</dict>
 		<key>Resources/SUModelTranslation.plist</key>
@@ -1396,22 +1396,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			EsOZqtsEvW+Pi65jUq77CzHgGV8=
+			fyXHaj0HDUelEPZkgS/zu42B0Nk=
 			</data>
 			<key>hash2</key>
 			<data>
-			a/t67gPQTOVoerU3Fb2JxPC4EuNanTfuYQkwhXqAdqg=
+			xb+i9ae57CabxbRGRVtY+VDj0OhwaMTt7KILw875Qko=
 			</data>
 		</dict>
 		<key>Resources/Updater.app/Contents/MacOS/Updater</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			PuNPUMG8s8nY366yxfV7+udZAjI=
+			72x/lFeSNEjr+HZ87Gk4s8nwfgk=
 			</data>
 			<key>hash2</key>
 			<data>
-			9kOJ+UQeIg3TkQKmB2uK5OEhJoLSPmEk4luJtHIiSMg=
+			FYgIMc2LMcox9F+msCoqsHPG0dVCwZtx0LNZqISYNf8=
 			</data>
 		</dict>
 		<key>Resources/Updater.app/Contents/PkgInfo</key>
