@@ -136,6 +136,12 @@ public class CanvasLayoutEngine: NSObject, LayoutEngine {
         self.informOfLayoutChange(with: self.recalculateCanvasSize())
     }
 
+    public func normaliseFrames(of pages: [LayoutEnginePage]) {
+        for page in pages {
+            page.layoutFrame = page.layoutFrame.rounded()
+        }
+    }
+
 
     //MARK: - Retrieving Pages
     public func page(withID uuid: UUID) -> LayoutEnginePage? {
@@ -167,6 +173,7 @@ public class CanvasLayoutEngine: NSObject, LayoutEngine {
 
     public func finishedModifying(_ pages: [LayoutEnginePage]) {
         self.updateEnabledPage()
+        self.normaliseFrames(of: pages)
         self.delegate?.moved(pages: pages, in: self)
     }
 

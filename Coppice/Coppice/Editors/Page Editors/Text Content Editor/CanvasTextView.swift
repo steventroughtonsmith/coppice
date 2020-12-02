@@ -75,4 +75,17 @@ class CanvasTextView: NSTextView {
             view.removeFromSuperview()
         })
     }
+
+    override var frame: NSRect {
+        get { super.frame }
+        set {
+            guard let scrollView = self.enclosingScrollView else {
+                super.frame = newValue
+                return
+            }
+            var newFrame = newValue
+            newFrame.size.width = scrollView.contentSize.width - scrollView.contentInsets.left - scrollView.contentInsets.right
+            super.frame = newFrame
+        }
+    }
 }
