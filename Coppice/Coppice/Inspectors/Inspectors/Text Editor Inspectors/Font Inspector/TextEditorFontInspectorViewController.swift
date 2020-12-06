@@ -11,20 +11,19 @@ import Combine
 import ObjectiveC
 import CoppiceCore
 
-class TextEditorInspectorViewController: BaseInspectorViewController {
+class TextEditorFontInspectorViewController: BaseInspectorViewController {
     override var contentViewNibName: NSNib.Name? {
-        return "TextEditorInspectorContentView"
+        return "TextEditorFontInspectorContentView"
     }
 
     override var ranking: InspectorRanking { return .content }
 
     @IBOutlet weak var colourPicker: TextColourPicker!
-    @IBOutlet weak var alignmentControl: NSSegmentedControl!
     @IBOutlet weak var styleControl: NSSegmentedControl!
     @IBOutlet weak var showFontPanelButton: NSButton!
     
-    var typedViewModel: TextEditorInspectorViewModel {
-        return self.viewModel as! TextEditorInspectorViewModel
+    var typedViewModel: TextEditorFontInspectorViewModel {
+        return self.viewModel as! TextEditorFontInspectorViewModel
     }
 
     
@@ -32,7 +31,6 @@ class TextEditorInspectorViewController: BaseInspectorViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.setupAlignmentControl()
         self.setupStyleControl()
         self.setupColourPicker()
 
@@ -58,30 +56,6 @@ class TextEditorInspectorViewController: BaseInspectorViewController {
     @IBAction func colourChanged(_ sender: Any) {
         self.typedViewModel.textColour = self.colourPicker.colour
     }
-
-    //MARK: - Alignment Control
-    private var alignmentObserver: AnyCancellable!
-    private func setupAlignmentControl() {
-        guard let alignmentControl = self.alignmentControl else {
-            return
-        }
-        alignmentControl.setTag(NSTextAlignment.left.rawValue, forSegment: 0)
-        alignmentControl.setTag(NSTextAlignment.center.rawValue, forSegment: 1)
-        alignmentControl.setTag(NSTextAlignment.right.rawValue, forSegment: 2)
-        
-        alignmentControl.setImage(NSImage.symbol(withName: Symbols.Text.alignLeft), forSegment: 0)
-        alignmentControl.setImage(NSImage.symbol(withName: Symbols.Text.alignCenter), forSegment: 1)
-        alignmentControl.setImage(NSImage.symbol(withName: Symbols.Text.alignRight), forSegment: 2)
-
-        self.alignmentObserver = self.typedViewModel.publisher(for: \.rawAlignment)
-                                                    .map {alignmentControl.segment(forTag: $0) }
-                                                    .assign(to: \.selectedSegment, on: alignmentControl)
-    }
-
-    @IBAction func alignmentClicked(_ sender: Any) {
-        self.typedViewModel.rawAlignment = self.alignmentControl.selectedTag()
-    }
-
 
     //MARK: - Style Control
     private var boldObserver: AnyCancellable!
@@ -112,7 +86,7 @@ class TextEditorInspectorViewController: BaseInspectorViewController {
         self.updateStyle(forSegment: 3, keyPath: \.isStruckthrough)
     }
 
-    private func updateStyle(forSegment segment: Int, keyPath: ReferenceWritableKeyPath<TextEditorInspectorViewModel, Bool>) {
+    private func updateStyle(forSegment segment: Int, keyPath: ReferenceWritableKeyPath<TextEditorFontInspectorViewModel, Bool>) {
         let selected = self.styleControl.isSelected(forSegment: segment)
         guard (selected != self.typedViewModel[keyPath: keyPath]) else {
             return

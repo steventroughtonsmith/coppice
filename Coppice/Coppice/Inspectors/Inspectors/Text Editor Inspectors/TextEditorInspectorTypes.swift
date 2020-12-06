@@ -40,8 +40,11 @@ class Typeface: NSObject {
 
 
 protocol InspectableTextEditor: class {
-    var selectionAttributes: TextEditorAttributes? { get }
-    var selectionAttributesDidChange: AnyPublisher<TextEditorAttributes?, Never> { get }
+    var selectedFontAttributes: TextEditorFontAttributes? { get }
+    var selectedFontAttributesDidChange: AnyPublisher<TextEditorFontAttributes?, Never> { get }
+    func updateSelection(with attributes: TextEditorFontAttributes)
 
-    func updateSelection(with attributes: TextEditorAttributes)
+    var selectedParagraphAttributes: TextEditorParagraphAttributes? { get }
+    var selectedParagraphAttributesDidChange: AnyPublisher<TextEditorParagraphAttributes?, Never> { get }
+    func updateSelection(with attributes: TextEditorParagraphAttributes)
 }

@@ -47,9 +47,6 @@ public struct Symbols {
         public static let bold = "bold"
         public static let italic = "italic"
         public static let strikethrough = "strikethrough"
-        public static let alignCenter = "text.aligncenter"
-        public static let alignLeft = "text.alignleft"
-        public static let alignRight = "text.alignright"
         public static let textFormat = "textformat"
         public static let underline = "underline"
     }

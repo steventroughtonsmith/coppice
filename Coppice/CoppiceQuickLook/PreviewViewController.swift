@@ -20,7 +20,6 @@ class PreviewViewController: NSViewController, QLPreviewingController {
     override func loadView() {
         super.loadView()
         // Do any additional setup after loading the view.
-        print("load view")
     }
 
     /*
@@ -39,7 +38,6 @@ class PreviewViewController: NSViewController, QLPreviewingController {
     let layoutEngine = CanvasLayoutEngine(configuration: .init(page: .mac, contentBorder: 100, arrow: .standard))
     
     func preparePreviewOfFile(at url: URL, completionHandler handler: @escaping (Error?) -> Void) {
-        print("prepare")
         let modelReader = ModelReader(modelController: self.modelController, documentVersion: GlobalConstants.documentVersion)
         do {
             let fileWrapper = try FileWrapper(url: url, options: [])

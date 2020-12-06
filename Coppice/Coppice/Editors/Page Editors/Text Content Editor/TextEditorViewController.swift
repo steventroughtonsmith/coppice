@@ -99,8 +99,12 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
         }
     }
 
-    private lazy var textEditorInspectorViewController: TextEditorInspectorViewController = {
-        return TextEditorInspectorViewController(viewModel: TextEditorInspectorViewModel(editor: self, modelController: self.viewModel.modelController))
+    private lazy var textEditorInspectorViewController: TextEditorFontInspectorViewController = {
+        return TextEditorFontInspectorViewController(viewModel: TextEditorFontInspectorViewModel(editor: self, modelController: self.viewModel.modelController))
+    }()
+
+    private lazy var textEditorParagraphInspectorViewController: TextEditorParagraphInspectorViewController = {
+        return TextEditorParagraphInspectorViewController(viewModel: TextEditorParagraphInspectorViewModel(editor: self, modelController: self.viewModel.modelController))
     }()
 
     private var textViewNotifications: [NSObjectProtocol] = []
@@ -131,18 +135,22 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
 
 
     //MARK: - InspectableTextEditor
-    @Published var selectionAttributes: TextEditorAttributes?
-
-    var selectionAttributesDidChange: AnyPublisher<TextEditorAttributes?, Never> {
-        return self.$selectionAttributes.eraseToAnyPublisher()
+    @Published var selectedFontAttributes: TextEditorFontAttributes?
+    var selectedFontAttributesDidChange: AnyPublisher<TextEditorFontAttributes?, Never> {
+        return self.$selectedFontAttributes.eraseToAnyPublisher()
     }
 
-    private func updateSelectionAttributes() {
+    @Published var selectedParagraphAttributes: TextEditorParagraphAttributes?
+    var selectedParagraphAttributesDidChange: AnyPublisher<TextEditorParagraphAttributes?, Never> {
+        return self.$selectedParagraphAttributes.eraseToAnyPublisher()
+    }
+
+    private func updateSelectedFontAttributes() {
         var baseAttributes = self.editingTextView.typingAttributes
         baseAttributes.merge(self.editingTextView.selectedTextAttributes) { (key1, _) in key1 }
 
         guard self.editingTextView.isTextSelected else {
-            self.selectionAttributes = TextEditorAttributes(attributes: baseAttributes)
+            self.selectedFontAttributes = TextEditorFontAttributes.withAttributes(baseAttributes)
             return
         }
 
@@ -151,13 +159,25 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
         }
 
         let ranges = self.editingTextView.selectedRanges.compactMap { $0.rangeValue }.filter { ($0.lowerBound < textStorage.length) && ($0.upperBound <= textStorage.length) }
-        self.selectionAttributes = textStorage.textEditorAttributes(in: ranges, typingAttributes: baseAttributes)
+        self.selectedFontAttributes = textStorage.textEditorFontAttributes(in: ranges, typingAttributes: baseAttributes)
     }
 
-    func updateSelection(with editorAttributes: TextEditorAttributes) {
+    private func updateSelectedParagraphAttributes() {
+        guard let textStorage = self.editingTextView.textStorage else {
+            return
+        }
+
+        var baseAttributes = self.editingTextView.typingAttributes
+        baseAttributes.merge(self.editingTextView.selectedTextAttributes) { (key1, _) in key1 }
+
+        let ranges = self.editingTextView.selectedRanges.compactMap { $0.rangeValue }.filter { ($0.lowerBound < textStorage.length) && ($0.upperBound <= textStorage.length) }
+        self.selectedParagraphAttributes = textStorage.textEditorParagraphAttributes(in: ranges, typingAttributes: baseAttributes)
+    }
+
+    func updateSelection(with editorAttributes: TextEditorFontAttributes) {
         guard self.editingTextView.isTextSelected else {
             self.editingTextView.typingAttributes = editorAttributes.apply(to: self.editingTextView.typingAttributes)
-            self.updateSelectionAttributes()
+            self.updateSelectedFontAttributes()
             return
         }
 
@@ -165,24 +185,32 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
         self.editingTextView.modifyText(in: ranges) { (textStorage) in
             textStorage.apply(editorAttributes, to: ranges)
         }
-        self.updateSelectionAttributes()
+        self.updateSelectedFontAttributes()
+    }
+
+    func updateSelection(with paragraphAttributes: TextEditorParagraphAttributes) {
+        let ranges = self.editingTextView.selectedRanges.compactMap { $0.rangeValue }
+        self.editingTextView.modifyText(in: ranges) { (textStorage) in
+            textStorage.apply(paragraphAttributes, to: ranges)
+        }
+        self.updateSelectedParagraphAttributes()
     }
 
 
     //MARK: - Fix Font Menu
     //For some reason certain fonts won't correctly show they can toggle bold or italic, so we have to handle that ourselves (BUB-190)
     @IBAction func toggleBold(_ sender: Any?) {
-        guard let attributes = self.selectionAttributes else {
+        guard let attributes = self.selectedFontAttributes else {
             return
         }
-        self.updateSelection(with: TextEditorAttributes(isBold: !(attributes.isBold ?? false)))
+        self.updateSelection(with: TextEditorFontAttributes(isBold: !(attributes.isBold ?? false)))
     }
 
     @IBAction func toggleItalic(_ sender: Any?) {
-        guard let attributes = self.selectionAttributes else {
+        guard let attributes = self.selectedFontAttributes else {
             return
         }
-        self.updateSelection(with: TextEditorAttributes(isItalic: !(attributes.isItalic ?? false)))
+        self.updateSelection(with: TextEditorFontAttributes(isItalic: !(attributes.isItalic ?? false)))
     }
 
     func validateToolbarItem(_ item: NSToolbarItem) -> Bool {
@@ -221,8 +249,8 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
         return true
     }
 
-    private func validateItem(_ menuItem: NSMenuItem, keyPath: KeyPath<TextEditorAttributes, Bool?>, trait: NSFontTraitMask) -> Bool {
-        guard let attributes = self.selectionAttributes else {
+    private func validateItem(_ menuItem: NSMenuItem, keyPath: KeyPath<TextEditorFontAttributes, Bool?>, trait: NSFontTraitMask) -> Bool {
+        guard let attributes = self.selectedFontAttributes else {
             return false
         }
         let isTraitTrue = (attributes[keyPath: keyPath] == nil) || (attributes[keyPath: keyPath] == true)
@@ -294,7 +322,8 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
         self.updatingText = true
         self.viewModel.attributedText = self.editingTextView.attributedString().copy() as! NSAttributedString
         self.updatingText = false
-        self.updateSelectionAttributes()
+        self.updateSelectedFontAttributes()
+        self.updateSelectedParagraphAttributes()
     }
 
 
@@ -327,7 +356,7 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
 
 extension TextEditorViewController: PageContentEditor {
     var inspectors: [Inspector] {
-        return [self.textEditorInspectorViewController]
+        return [self.textEditorInspectorViewController, self.textEditorParagraphInspectorViewController]
     }
     
     func prepareForDisplay(withSafeAreaInsets safeAreaInsets: NSEdgeInsets) {
@@ -478,7 +507,8 @@ extension TextEditorViewController: NSTextViewDelegate {
         guard (notification.object as? NSTextView) == self.editingTextView else {
             return
         }
-        self.updateSelectionAttributes()
+        self.updateSelectedFontAttributes()
+        self.updateSelectedParagraphAttributes()
     }
 
     func textView(_ textView: NSTextView, shouldChangeTextInRanges affectedRanges: [NSValue], replacementStrings: [String]?) -> Bool {

@@ -97,10 +97,4 @@ extension HelpTopicViewController: WKNavigationDelegate {
 
         decisionHandler(.cancel)
     }
-
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        WKWebsiteDataStore.default().fetchDataRecords(ofTypes: Set([WKWebsiteDataTypeDiskCache])) { (records) in
-            print("record: \(records)")
-        }
-    }
 }

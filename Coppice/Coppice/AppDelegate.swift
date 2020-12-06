@@ -149,7 +149,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     #endif
 
     @IBAction func openSampleDocument(_ sender: Any?) {
-        print("open sample document")
         //Close the tour if needed
         self.currentTourWindow?.close()
 

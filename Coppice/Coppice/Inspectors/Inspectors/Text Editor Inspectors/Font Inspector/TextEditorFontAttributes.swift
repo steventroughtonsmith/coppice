@@ -8,81 +8,56 @@
 
 import AppKit
 
-struct TextEditorAttributes: Equatable {
-    let fontFamily: String?
-    let fontPostscriptName: String?
-    let fontSize: CGFloat?
-    let textColour: NSColor?
-    let alignment: NSTextAlignment?
+struct TextEditorFontAttributes: Equatable {
+    var fontFamily: String? = nil
+    var fontPostscriptName: String? = nil
+    var fontSize: CGFloat? = nil
+    var textColour: NSColor? = nil
+    var isBold: Bool? = nil
+    var isItalic: Bool? = nil
+    var isUnderlined: Bool? = nil
+    var isStruckthrough: Bool? = nil
 
-    let isBold: Bool?
-    let isItalic: Bool?
-    let isUnderlined: Bool?
-    let isStruckthrough: Bool?
-
-    init(fontFamily: String? = nil, fontPostscriptName: String? = nil, fontSize: CGFloat? = nil, textColour: NSColor? = nil,
-         alignment: NSTextAlignment? = nil, isBold: Bool? = nil, isItalic: Bool? = nil, isUnderlined: Bool? = nil, isStruckthrough: Bool? = nil) {
-        self.fontFamily = fontFamily
-        self.fontPostscriptName = fontPostscriptName
-        self.fontSize = fontSize
-        self.textColour = textColour
-        self.alignment = alignment
-        self.isBold = isBold
-        self.isItalic = isItalic
-        self.isUnderlined = isUnderlined
-        self.isStruckthrough = isStruckthrough
-    }
-
-    init(attributes: [NSAttributedString.Key: Any]) {
+    static func withAttributes(_ attributes: [NSAttributedString.Key: Any]) -> Self {
         let font = attributes[.font] as? NSFont
         let fontFamily = font?.familyName
         let fontPostscriptName = font?.fontDescriptor.postscriptName
         let fontSize = font?.pointSize
         let textColour = attributes[.foregroundColor] as? NSColor
-        let paragraphStyle = attributes[.paragraphStyle] as? NSParagraphStyle
         let underlined = attributes[.underlineStyle] as? Int
         let struckthrough = attributes[.strikethroughStyle] as? Int
         let symbolicTraits = font?.fontDescriptor.symbolicTraits
 
-        self.init(fontFamily: fontFamily,
-                  fontPostscriptName: fontPostscriptName,
-                  fontSize: fontSize,
-                  textColour: textColour,
-                  alignment: paragraphStyle?.alignment,
-                  isBold: symbolicTraits?.contains(.bold),
-                  isItalic: symbolicTraits?.contains(.italic),
-                  isUnderlined: (underlined == 1),
-                  isStruckthrough: (struckthrough == 1))
+        return TextEditorFontAttributes(fontFamily: fontFamily,
+                                        fontPostscriptName: fontPostscriptName,
+                                        fontSize: fontSize,
+                                        textColour: textColour,
+                                        isBold: symbolicTraits?.contains(.bold),
+                                        isItalic: symbolicTraits?.contains(.italic),
+                                        isUnderlined: (underlined == 1),
+                                        isStruckthrough: (struckthrough == 1))
     }
 
-    static func merge(_ attributes: [TextEditorAttributes]) -> TextEditorAttributes {
-        func merge<Value: Hashable>(_ key: KeyPath<Self, Value?>, of attributes: [TextEditorAttributes]) -> Value? {
+    static func merge(_ attributes: [TextEditorFontAttributes]) -> TextEditorFontAttributes {
+        func merge<Value: Hashable>(_ key: KeyPath<Self, Value?>, of attributes: [TextEditorFontAttributes]) -> Value? {
             let set = Set(attributes.map { $0[keyPath: key] })
             return (set.count == 1) ? set.first! : nil
         }
 
-        return TextEditorAttributes(fontFamily: merge(\.fontFamily, of: attributes),
-                                    fontPostscriptName: merge(\.fontPostscriptName, of: attributes),
-                                    fontSize: merge(\.fontSize, of: attributes),
-                                    textColour: merge(\.textColour, of: attributes),
-                                    alignment: merge(\.alignment, of: attributes),
-                                    isBold: merge(\.isBold, of: attributes),
-                                    isItalic: merge(\.isItalic, of: attributes),
-                                    isUnderlined: merge(\.isUnderlined, of: attributes),
-                                    isStruckthrough: merge(\.isStruckthrough, of: attributes))
+        return TextEditorFontAttributes(fontFamily: merge(\.fontFamily, of: attributes),
+                                        fontPostscriptName: merge(\.fontPostscriptName, of: attributes),
+                                        fontSize: merge(\.fontSize, of: attributes),
+                                        textColour: merge(\.textColour, of: attributes),
+                                        isBold: merge(\.isBold, of: attributes),
+                                        isItalic: merge(\.isItalic, of: attributes),
+                                        isUnderlined: merge(\.isUnderlined, of: attributes),
+                                        isStruckthrough: merge(\.isStruckthrough, of: attributes))
     }
 
     func apply(to attributes: [NSAttributedString.Key: Any]) -> [NSAttributedString.Key: Any] {
         var modifiedAttributes = attributes
         if let textColour = self.textColour {
             modifiedAttributes[.foregroundColor] = textColour
-        }
-
-        if let alignment = self.alignment {
-            let paragraphStyle = (modifiedAttributes[.paragraphStyle] as? NSParagraphStyle)
-            let paragraphStyleCopy = (paragraphStyle?.mutableCopy() as? NSMutableParagraphStyle) ?? NSMutableParagraphStyle()
-            paragraphStyleCopy.alignment = alignment
-            modifiedAttributes[.paragraphStyle] = paragraphStyleCopy
         }
 
         if let underlined = self.isUnderlined {
@@ -135,11 +110,11 @@ struct TextEditorAttributes: Equatable {
         return modifiedAttributes
     }
 
-    private var symbolicTraitsWeCareAbout: [NSFontDescriptor.SymbolicTraits] = [.bold, .italic]
+    private static var symbolicTraitsWeCareAbout: [NSFontDescriptor.SymbolicTraits] = [.bold, .italic]
 
     private func limitedSymbolicTraits(from fontDescriptor: NSFontDescriptor) -> NSFontDescriptor.SymbolicTraits {
         var symbolicTraits = NSFontDescriptor.SymbolicTraits()
-        for trait in self.symbolicTraitsWeCareAbout {
+        for trait in Self.symbolicTraitsWeCareAbout {
             if (fontDescriptor.symbolicTraits.contains(trait)) {
                 symbolicTraits.insert(trait)
             }
@@ -150,7 +125,7 @@ struct TextEditorAttributes: Equatable {
     private func font(from fontDescriptor: NSFontDescriptor, size: CGFloat, applying symbolicTraits: NSFontDescriptor.SymbolicTraits) -> NSFont? {
         var font: NSFont? = nil
         var mutableTraits = symbolicTraits
-        var problematicTraits: [NSFontDescriptor.SymbolicTraits] = self.symbolicTraitsWeCareAbout
+        var problematicTraits: [NSFontDescriptor.SymbolicTraits] = Self.symbolicTraitsWeCareAbout
         while (font == nil) && (problematicTraits.count > 0) {
             let newDescriptor = fontDescriptor.withSymbolicTraits(mutableTraits)
             font = NSFont(descriptor: newDescriptor, size: size)
@@ -170,18 +145,18 @@ struct TextEditorAttributes: Equatable {
 
 
 extension NSMutableAttributedString {
-    func textEditorAttributes(in ranges: [NSRange], typingAttributes: [NSAttributedString.Key: Any]) -> TextEditorAttributes {
-        var textEditorAttributes = [TextEditorAttributes]()
+    func textEditorFontAttributes(in ranges: [NSRange], typingAttributes: [NSAttributedString.Key: Any]) -> TextEditorFontAttributes {
+        var textEditorAttributes = [TextEditorFontAttributes]()
         for range in ranges {
             self.enumerateAttributes(in: range, options: []) { (attributes, _, _) in
                 let mergedAttributes = attributes.merging(typingAttributes) { (key1, _) in key1 }
-                textEditorAttributes.append(TextEditorAttributes(attributes: mergedAttributes))
+                textEditorAttributes.append(TextEditorFontAttributes.withAttributes(mergedAttributes))
             }
         }
-        return TextEditorAttributes.merge(textEditorAttributes)
+        return TextEditorFontAttributes.merge(textEditorAttributes)
     }
 
-    func apply(_ textEditorAttributes: TextEditorAttributes, to ranges: [NSRange]) {
+    func apply(_ textEditorAttributes: TextEditorFontAttributes, to ranges: [NSRange]) {
         for selectionRange in ranges {
             self.enumerateAttributes(in: selectionRange, options: []) { (textAttributes, range, _) in
                 let newAttributes = textEditorAttributes.apply(to: textAttributes)

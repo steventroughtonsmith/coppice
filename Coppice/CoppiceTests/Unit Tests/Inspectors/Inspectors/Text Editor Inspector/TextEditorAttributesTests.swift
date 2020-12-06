@@ -14,128 +14,115 @@ class TextEditorAttributesTests: XCTestCase {
 
     //MARK: init(attributes:)
     func test_initAttributes_getsFontFamilyFromFont() {
-        let editorAttributes = TextEditorAttributes(attributes: [.font: NSFont(name: "Helvetica-Bold", size: 14)!])
+        let editorAttributes = TextEditorFontAttributes.withAttributes([.font: NSFont(name: "Helvetica-Bold", size: 14)!])
         XCTAssertEqual(editorAttributes.fontFamily, "Helvetica")
     }
 
     func test_initAttributes_getsPostscriptNameFromFont() {
-        let editorAttributes = TextEditorAttributes(attributes: [.font: NSFont(name: "Helvetica-Bold", size: 14)!])
+        let editorAttributes = TextEditorFontAttributes.withAttributes([.font: NSFont(name: "Helvetica-Bold", size: 14)!])
         XCTAssertEqual(editorAttributes.fontPostscriptName, "Helvetica-Bold")
     }
 
     func test_initAttributes_getsFontSizeFromFont() {
-        let editorAttributes = TextEditorAttributes(attributes: [.font: NSFont(name: "Helvetica-Bold", size: 14)!])
+        let editorAttributes = TextEditorFontAttributes.withAttributes([.font: NSFont(name: "Helvetica-Bold", size: 14)!])
         XCTAssertEqual(editorAttributes.fontSize, 14)
     }
 
     func test_initAttributes_getsTextColourFromForegroundColour() {
-        let editorAttributes = TextEditorAttributes(attributes: [.foregroundColor: NSColor.purple])
+        let editorAttributes = TextEditorFontAttributes.withAttributes([.foregroundColor: NSColor.purple])
         XCTAssertEqual(editorAttributes.textColour, NSColor.purple)
     }
 
-    func test_initAttributes_getsAlignmentFromParagraphStyle() {
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.alignment = .center
-        let editorAttributes = TextEditorAttributes(attributes: [.paragraphStyle: paragraphStyle])
-        XCTAssertEqual(editorAttributes.alignment, .center)
-    }
-
     func test_initAttributes_getsBoldFromFont() {
-        let editorAttributes = TextEditorAttributes(attributes: [.font: NSFont(name: "Helvetica-Bold", size: 14)!])
+        let editorAttributes = TextEditorFontAttributes.withAttributes([.font: NSFont(name: "Helvetica-Bold", size: 14)!])
         XCTAssertEqual(editorAttributes.isBold, true)
     }
 
     func test_initAttributes_getsItalicFromFont() {
-        let editorAttributes = TextEditorAttributes(attributes: [.font: NSFont(name: "Helvetica-Oblique", size: 14)!])
+        let editorAttributes = TextEditorFontAttributes.withAttributes([.font: NSFont(name: "Helvetica-Oblique", size: 14)!])
         XCTAssertEqual(editorAttributes.isItalic, true)
     }
 
     func test_initAttributes_getsUnderlinedFromUnderlineStyle() {
-        let editorAttributes = TextEditorAttributes(attributes: [.underlineStyle: 1])
+        let editorAttributes = TextEditorFontAttributes.withAttributes([.underlineStyle: 1])
         XCTAssertEqual(editorAttributes.isUnderlined, true)
     }
 
     func test_initAttribute_getsStruckthroughFromStrikethroughStyle() {
-        let editorAttributes = TextEditorAttributes(attributes: [.strikethroughStyle: 1])
+        let editorAttributes = TextEditorFontAttributes.withAttributes([.strikethroughStyle: 1])
         XCTAssertEqual(editorAttributes.isStruckthrough, true)
     }
 
 
     //MARK: TextEditorAttributes.merge(_:)
     func test_merge_mergingTwoIdentialEditorsResultInAnUnchangedEditor() {
-        let attributes = TextEditorAttributes(fontFamily: "Helvetica",
+        let attributes = TextEditorFontAttributes(fontFamily: "Helvetica",
                                               fontPostscriptName: "Helvetica-Bold",
                                               fontSize: 15,
                                               textColour: NSColor.black,
-                                              alignment: .left,
                                               isBold: true,
                                               isItalic: false,
                                               isUnderlined: true,
                                               isStruckthrough: false)
 
-        let mergedAttributes = TextEditorAttributes.merge([attributes, attributes])
+        let mergedAttributes = TextEditorFontAttributes.merge([attributes, attributes])
         XCTAssertEqual(mergedAttributes, attributes)
     }
 
     func test_merge_mergingTwoCompletelyDifferentEditorsResultsInANilEditor() {
-        let attributes1 = TextEditorAttributes(fontFamily: "Helvetica",
+        let attributes1 = TextEditorFontAttributes(fontFamily: "Helvetica",
                                                fontPostscriptName: "Helvetica-Bold",
                                                fontSize: 15,
                                                textColour: NSColor.black,
-                                               alignment: .left,
                                                isBold: true,
                                                isItalic: false,
                                                isUnderlined: true,
                                                isStruckthrough: false)
 
-        let attributes2 = TextEditorAttributes(fontFamily: "Arial",
+        let attributes2 = TextEditorFontAttributes(fontFamily: "Arial",
                                                fontPostscriptName: "Arial-Bold",
                                                fontSize: 20,
                                                textColour: NSColor.blue,
-                                               alignment: .right,
                                                isBold: false,
                                                isItalic: true,
                                                isUnderlined: false,
                                                isStruckthrough: true)
 
-        let mergedAttributes = TextEditorAttributes.merge([attributes1, attributes2])
-        let expectedAttributes = TextEditorAttributes()
+        let mergedAttributes = TextEditorFontAttributes.merge([attributes1, attributes2])
+        let expectedAttributes = TextEditorFontAttributes()
         XCTAssertEqual(mergedAttributes, expectedAttributes)
     }
 
     func test_merge_mergingTwoPartlyDifferentEditorsResultsInSameFieldsBeingUnchangedAndDifferentFieldsBeingNil() {
-        let attributes1 = TextEditorAttributes(fontFamily: "Helvetica",
+        let attributes1 = TextEditorFontAttributes(fontFamily: "Helvetica",
                                                fontPostscriptName: "Helvetica-Bold",
                                                fontSize: 15,
                                                textColour: NSColor.black,
-                                               alignment: .left,
                                                isBold: true,
                                                isItalic: false,
                                                isUnderlined: true,
                                                isStruckthrough: false)
 
-        let attributes2 = TextEditorAttributes(fontFamily: "Helvetica",
+        let attributes2 = TextEditorFontAttributes(fontFamily: "Helvetica",
                                                fontPostscriptName: "Helvetica-Oblique",
                                                fontSize: 15,
                                                textColour: NSColor.blue,
-                                               alignment: .left,
                                                isBold: false,
                                                isItalic: true,
                                                isUnderlined: true,
                                                isStruckthrough: false)
 
 
-        let expectedAttributes = TextEditorAttributes(fontFamily: "Helvetica",
+        let expectedAttributes = TextEditorFontAttributes(fontFamily: "Helvetica",
                                                       fontPostscriptName: nil,
                                                       fontSize: 15,
                                                       textColour: nil,
-                                                      alignment: .left,
                                                       isBold: nil,
                                                       isItalic: nil,
                                                       isUnderlined: true,
                                                       isStruckthrough: false)
 
-        let mergedAttributes = TextEditorAttributes.merge([attributes1, attributes2])
+        let mergedAttributes = TextEditorFontAttributes.merge([attributes1, attributes2])
         XCTAssertEqual(mergedAttributes, expectedAttributes)
     }
 
@@ -146,7 +133,7 @@ class TextEditorAttributesTests: XCTestCase {
             .font: NSFont(name: "Helvetica-BoldOblique", size: 14)!
         ]
 
-        let editorAttributes = TextEditorAttributes(fontFamily: "Menlo")
+        let editorAttributes = TextEditorFontAttributes(fontFamily: "Menlo")
         let newAttributes = editorAttributes.apply(to: baseAttributes)
 
         XCTAssertEqual((newAttributes[.font] as? NSFont), NSFont(name: "Menlo-BoldItalic", size: 14)!)
@@ -157,7 +144,7 @@ class TextEditorAttributesTests: XCTestCase {
             .font: NSFont(name: "Helvetica-Bold", size: 14)!
         ]
 
-        let editorAttributes = TextEditorAttributes(fontPostscriptName: "Menlo-Italic")
+        let editorAttributes = TextEditorFontAttributes(fontPostscriptName: "Menlo-Italic")
         let newAttributes = editorAttributes.apply(to: baseAttributes)
 
         XCTAssertEqual((newAttributes[.font] as? NSFont), NSFont(name: "Menlo-Italic", size: 14)!)
@@ -168,7 +155,7 @@ class TextEditorAttributesTests: XCTestCase {
             .font: NSFont(name: "Helvetica-Oblique", size: 14)!
         ]
 
-        let editorAttributes = TextEditorAttributes(isBold: true)
+        let editorAttributes = TextEditorFontAttributes(isBold: true)
         let newAttributes = editorAttributes.apply(to: baseAttributes)
 
         XCTAssertEqual((newAttributes[.font] as? NSFont), NSFont(name: "Helvetica-BoldOblique", size: 14)!)
@@ -179,7 +166,7 @@ class TextEditorAttributesTests: XCTestCase {
             .font: NSFont(name: "Helvetica-BoldOblique", size: 14)!
         ]
 
-        let editorAttributes = TextEditorAttributes(isBold: false)
+        let editorAttributes = TextEditorFontAttributes(isBold: false)
         let newAttributes = editorAttributes.apply(to: baseAttributes)
 
         XCTAssertEqual((newAttributes[.font] as? NSFont), NSFont(name: "Helvetica-Oblique", size: 14)!)
@@ -190,7 +177,7 @@ class TextEditorAttributesTests: XCTestCase {
             .font: NSFont(name: "Helvetica-Bold", size: 14)!
         ]
 
-        let editorAttributes = TextEditorAttributes(isItalic: true)
+        let editorAttributes = TextEditorFontAttributes(isItalic: true)
         let newAttributes = editorAttributes.apply(to: baseAttributes)
 
         XCTAssertEqual((newAttributes[.font] as? NSFont), NSFont(name: "Helvetica-BoldOblique", size: 14)!)
@@ -201,7 +188,7 @@ class TextEditorAttributesTests: XCTestCase {
             .font: NSFont(name: "Helvetica-BoldOblique", size: 14)!
         ]
 
-        let editorAttributes = TextEditorAttributes(isItalic: false)
+        let editorAttributes = TextEditorFontAttributes(isItalic: false)
         let newAttributes = editorAttributes.apply(to: baseAttributes)
 
         XCTAssertEqual((newAttributes[.font] as? NSFont), NSFont(name: "Helvetica-Bold", size: 14)!)
@@ -212,7 +199,7 @@ class TextEditorAttributesTests: XCTestCase {
             .font: NSFont(name: "Helvetica-BoldOblique", size: 14)!
         ]
 
-        let editorAttributes = TextEditorAttributes(fontFamily: "Arial Hebrew")
+        let editorAttributes = TextEditorFontAttributes(fontFamily: "Arial Hebrew")
         let newAttributes = editorAttributes.apply(to: baseAttributes)
 
         XCTAssertEqual((newAttributes[.font] as? NSFont), NSFont(name: "ArialHebrew-Bold", size: 14)!)
@@ -223,7 +210,7 @@ class TextEditorAttributesTests: XCTestCase {
             .font: NSFont(name: "Helvetica-BoldOblique", size: 14)!
         ]
 
-        let editorAttributes = TextEditorAttributes(fontFamily: "Impact")
+        let editorAttributes = TextEditorFontAttributes(fontFamily: "Impact")
         let newAttributes = editorAttributes.apply(to: baseAttributes)
 
         let font = (newAttributes[.font] as? NSFont)
@@ -236,7 +223,7 @@ class TextEditorAttributesTests: XCTestCase {
             .font: NSFont(name: "Helvetica-BoldOblique", size: 14)!
         ]
 
-        let editorAttributes = TextEditorAttributes()
+        let editorAttributes = TextEditorFontAttributes()
         let newAttributes = editorAttributes.apply(to: baseAttributes)
 
         XCTAssertEqual((newAttributes[.font] as? NSFont), (baseAttributes[.font] as? NSFont))
@@ -247,7 +234,7 @@ class TextEditorAttributesTests: XCTestCase {
             .foregroundColor: NSColor.yellow
         ]
 
-        let editorAttributes = TextEditorAttributes(textColour: NSColor.orange)
+        let editorAttributes = TextEditorFontAttributes(textColour: NSColor.orange)
         let newAttributes = editorAttributes.apply(to: baseAttributes)
         XCTAssertEqual((newAttributes[.foregroundColor] as? NSColor), NSColor.orange)
     }
@@ -257,19 +244,9 @@ class TextEditorAttributesTests: XCTestCase {
             .foregroundColor: NSColor.yellow
         ]
 
-        let editorAttributes = TextEditorAttributes()
+        let editorAttributes = TextEditorFontAttributes()
         let newAttributes = editorAttributes.apply(to: baseAttributes)
         XCTAssertEqual((newAttributes[.foregroundColor] as? NSColor), NSColor.yellow)
-    }
-
-    func test_applyTo_updatesParagraphStyleAlignmentIfSet() {
-        let baseAttributes: [NSAttributedString.Key: Any] = [
-            .paragraphStyle: NSParagraphStyle()
-        ]
-
-        let editorAttributes = TextEditorAttributes(alignment: .right)
-        let newAttributes = editorAttributes.apply(to: baseAttributes)
-        XCTAssertEqual((newAttributes[.paragraphStyle] as? NSParagraphStyle)?.alignment, .right)
     }
 
     func test_applyTo_doesntUpdateParagraphStyleIfNil() {
@@ -277,7 +254,7 @@ class TextEditorAttributesTests: XCTestCase {
             .paragraphStyle: NSParagraphStyle()
         ]
 
-        let editorAttributes = TextEditorAttributes()
+        let editorAttributes = TextEditorFontAttributes()
         let newAttributes = editorAttributes.apply(to: baseAttributes)
         XCTAssertEqual((newAttributes[.paragraphStyle] as? NSParagraphStyle), NSParagraphStyle())
     }
@@ -285,7 +262,7 @@ class TextEditorAttributesTests: XCTestCase {
     func test_applyTo_updatesUnderlineStyleIfSet() {
         let baseAttributes: [NSAttributedString.Key: Any] = [:]
 
-        let editorAttributes = TextEditorAttributes(isUnderlined: true)
+        let editorAttributes = TextEditorFontAttributes(isUnderlined: true)
         let newAttributes = editorAttributes.apply(to: baseAttributes)
         XCTAssertEqual((newAttributes[.underlineStyle] as? Int), 1)
     }
@@ -293,7 +270,7 @@ class TextEditorAttributesTests: XCTestCase {
     func test_applyTo_doesntUpdateUnderlineStyleIfNil() {
         let baseAttributes: [NSAttributedString.Key: Any] = [:]
 
-        let editorAttributes = TextEditorAttributes()
+        let editorAttributes = TextEditorFontAttributes()
         let newAttributes = editorAttributes.apply(to: baseAttributes)
         XCTAssertNil(newAttributes[.underlineStyle])
     }
@@ -303,7 +280,7 @@ class TextEditorAttributesTests: XCTestCase {
             .strikethroughStyle: 1
         ]
 
-        let editorAttributes = TextEditorAttributes(isStruckthrough: false)
+        let editorAttributes = TextEditorFontAttributes(isStruckthrough: false)
         let newAttributes = editorAttributes.apply(to: baseAttributes)
         XCTAssertNil(newAttributes[.strikethroughStyle])
     }
@@ -313,7 +290,7 @@ class TextEditorAttributesTests: XCTestCase {
             .strikethroughStyle: 1
         ]
 
-        let editorAttributes = TextEditorAttributes()
+        let editorAttributes = TextEditorFontAttributes()
         let newAttributes = editorAttributes.apply(to: baseAttributes)
         XCTAssertEqual((newAttributes[.strikethroughStyle] as? Int), 1)
     }
@@ -388,7 +365,7 @@ class TextEditorAttributesTests: XCTestCase {
     func test_applyTextEditorAttributes_updatesAttributesOfAllRangesToMatchSuppliedAttributes() {
         let testString = self.createTestString()
 
-        let testAttributes = TextEditorAttributes(fontFamily: "Arial", fontSize: 16, isUnderlined: false, isStruckthrough: true)
+        let testAttributes = TextEditorFontAttributes(fontFamily: "Arial", fontSize: 16, isUnderlined: false, isStruckthrough: true)
         testString.apply(testAttributes, to: [
             NSRange(location: 0, length: 18)
         ])
