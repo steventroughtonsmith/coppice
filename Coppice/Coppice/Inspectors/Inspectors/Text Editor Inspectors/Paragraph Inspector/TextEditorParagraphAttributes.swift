@@ -15,7 +15,21 @@ struct TextEditorParagraphAttributes {
     var listStyle: NSTextList.MarkerFormat? = nil
 
     static func with(_ paragraphStyle: NSParagraphStyle) -> Self {
-        return TextEditorParagraphAttributes(alignment: paragraphStyle.alignment,
+        var alignment = paragraphStyle.alignment
+        if (alignment == .natural) {
+            var writingDirection = paragraphStyle.baseWritingDirection
+            if (writingDirection == .natural) {
+                writingDirection = NSParagraphStyle.defaultWritingDirection(forLanguage: nil)
+            }
+            if (writingDirection == .leftToRight) {
+                alignment = .left
+            }
+            else if (writingDirection == .rightToLeft) {
+                alignment = .right
+            }
+        }
+
+        return TextEditorParagraphAttributes(alignment: alignment,
                                              lineHeightMultiple: paragraphStyle.lineHeightMultiple,
                                              paragraphSpacing: paragraphStyle.paragraphSpacing,
                                              listStyle: paragraphStyle.textLists.last?.markerFormat)
