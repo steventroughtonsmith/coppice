@@ -170,7 +170,7 @@ class TextEditorViewController: NSViewController, InspectableTextEditor, NSMenuI
         var baseAttributes = self.editingTextView.typingAttributes
         baseAttributes.merge(self.editingTextView.selectedTextAttributes) { (key1, _) in key1 }
 
-        let ranges = self.editingTextView.selectedRanges.compactMap { $0.rangeValue }.filter { ($0.lowerBound < textStorage.length) && ($0.upperBound <= textStorage.length) }
+        let ranges = self.editingTextView.selectedRanges.compactMap { $0.rangeValue }.filter { ($0.lowerBound <= textStorage.length) && ($0.upperBound <= textStorage.length) }
         self.selectedParagraphAttributes = textStorage.textEditorParagraphAttributes(in: ranges, typingAttributes: baseAttributes)
     }
 
