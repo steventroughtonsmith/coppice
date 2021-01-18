@@ -37,19 +37,3 @@ class Typeface: NSObject {
         return self.fontName == otherTypeface.fontName
     }
 }
-
-
-protocol InspectableTextEditor: class {
-    var selectedFontAttributes: TextEditorFontAttributes? { get }
-    var selectedFontAttributesDidChange: AnyPublisher<TextEditorFontAttributes?, Never> { get }
-    func updateSelection(with attributes: TextEditorFontAttributes)
-
-    var selectedParagraphAttributes: TextEditorParagraphAttributes? { get }
-    var selectedParagraphAttributesDidChange: AnyPublisher<TextEditorParagraphAttributes?, Never> { get }
-    func updateSelection(with attributes: TextEditorParagraphAttributes)
-
-    var selectedListTypes: [NSTextList]? { get }
-    var selectedListTypesDidChange: AnyPublisher<[NSTextList]?, Never> { get }
-    func updateSelection(withListType listType: NSTextList?)
-    func showCustomListPanel()
-}

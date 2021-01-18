@@ -152,7 +152,7 @@ class TextEditorParagraphInspectorViewController: BaseInspectorViewController {
                 return
             }
             if (specialItem == .customise) {
-                self.typedViewModel.editor?.showCustomListPanel()
+                self.typedViewModel.attributeEditor.showCustomListPanel()
                 return
             }
         }

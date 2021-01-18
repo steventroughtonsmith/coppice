@@ -36,7 +36,7 @@ class TextEditorInspectorViewModelTests: XCTestCase {
 
         self.modelController = CoppiceModelController(undoManager: UndoManager())
         self.editor = TestTextEditor()
-        self.viewModel = TextEditorFontInspectorViewModel(editor: self.editor, modelController: self.modelController)
+        self.viewModel = TextEditorFontInspectorViewModel(attributeEditor: self.editor, modelController: self.modelController)
     }
 
 

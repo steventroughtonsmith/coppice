@@ -164,6 +164,7 @@
 		998D077B2411513F004ADFF8 /* NewPageMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998D077A2411513F004ADFF8 /* NewPageMenuDelegate.swift */; };
 		998D077D2411578B004ADFF8 /* NSMenu+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998D077C2411578B004ADFF8 /* NSMenu+M3Extensions.swift */; };
 		998F178B23E46B4900B3437A /* ColourGridImageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998F178A23E46B4900B3437A /* ColourGridImageGenerator.swift */; };
+		998F98B525B5E4FA00A1134A /* TextEditorAttributeEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998F98B425B5E4F900A1134A /* TextEditorAttributeEditor.swift */; };
 		999007D424CF458900DB5C13 /* TourWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999007D224CF458900DB5C13 /* TourWindowController.swift */; };
 		999007D524CF458900DB5C13 /* TourWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 999007D324CF458900DB5C13 /* TourWindow.xib */; };
 		999007D824CF472100DB5C13 /* TourWelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999007D624CF472100DB5C13 /* TourWelcomeViewController.swift */; };
@@ -573,6 +574,7 @@
 		998D077A2411513F004ADFF8 /* NewPageMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPageMenuDelegate.swift; sourceTree = "<group>"; };
 		998D077C2411578B004ADFF8 /* NSMenu+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMenu+M3Extensions.swift"; sourceTree = "<group>"; };
 		998F178A23E46B4900B3437A /* ColourGridImageGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColourGridImageGenerator.swift; sourceTree = "<group>"; };
+		998F98B425B5E4F900A1134A /* TextEditorAttributeEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorAttributeEditor.swift; sourceTree = "<group>"; };
 		999007D224CF458900DB5C13 /* TourWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourWindowController.swift; sourceTree = "<group>"; };
 		999007D324CF458900DB5C13 /* TourWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TourWindow.xib; sourceTree = "<group>"; };
 		999007D624CF472100DB5C13 /* TourWelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourWelcomeViewController.swift; sourceTree = "<group>"; };
@@ -1167,7 +1169,6 @@
 		9965FC412384450C002FE10D /* Font Inspector */ = {
 			isa = PBXGroup;
 			children = (
-				99A0B854238C2F46005FCF25 /* TextEditorFontAttributes.swift */,
 				9965FC42238448FF002FE10D /* TextEditorFontInspectorViewModel.swift */,
 				9965FC4423844910002FE10D /* TextEditorFontInspectorViewController.swift */,
 				9965FC4523844910002FE10D /* TextEditorFontInspectorContentView.xib */,
@@ -1293,6 +1294,16 @@
 				995F9304252B5B1B00A753E4 /* ColouredButtonCell.swift */,
 			);
 			path = "Generic Views";
+			sourceTree = "<group>";
+		};
+		998F98BB25B5E5FD00A1134A /* Attributes */ = {
+			isa = PBXGroup;
+			children = (
+				99A0B854238C2F46005FCF25 /* TextEditorFontAttributes.swift */,
+				99C7B213257BEE85009E2F18 /* TextEditorParagraphAttributes.swift */,
+				998F98B425B5E4F900A1134A /* TextEditorAttributeEditor.swift */,
+			);
+			path = Attributes;
 			sourceTree = "<group>";
 		};
 		999007D124CF456600DB5C13 /* Tour */ = {
@@ -1498,6 +1509,7 @@
 			children = (
 				99C8650823016EB2004C7B89 /* TextEditorViewModel.swift */,
 				99C8650E23017222004C7B89 /* TextEditorViewController.swift */,
+				998F98BB25B5E5FD00A1134A /* Attributes */,
 				99C8650C23016EE5004C7B89 /* TextEditorViewController.xib */,
 				99C9AF1323631348009F909A /* CanvasTextView.swift */,
 				9977118E239A952900FCC8C7 /* Links */,
@@ -1532,7 +1544,6 @@
 		99C9005A25794A8100969E92 /* Paragraph Inspector */ = {
 			isa = PBXGroup;
 			children = (
-				99C7B213257BEE85009E2F18 /* TextEditorParagraphAttributes.swift */,
 				99C9006125794AE700969E92 /* TextEditorParagraphInspectorViewModel.swift */,
 				99C9006225794AE700969E92 /* TextEditorParagraphInspectorViewController.swift */,
 				99C9006325794AE700969E92 /* TextEditorParagraphInspectorView.xib */,
@@ -2213,6 +2224,7 @@
 				99E93E2923D32F15004CF4BB /* ColourGridView.swift in Sources */,
 				99581095230D93F700D996C4 /* CanvasPageViewModel.swift in Sources */,
 				9970977223AF9BE600CD189B /* PageExporter.swift in Sources */,
+				998F98B525B5E4FA00A1134A /* TextEditorAttributeEditor.swift in Sources */,
 				99AD88762374665D000453E1 /* Alert+AppKit.swift in Sources */,
 				99FFF9CE2350BAE400EF02A0 /* PageEditorViewController.swift in Sources */,
 				99AD8874237464C4000453E1 /* Alert.swift in Sources */,

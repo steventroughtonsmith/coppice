@@ -16,10 +16,10 @@ protocol TextEditorParagraphInspectorView: class {
 class TextEditorParagraphInspectorViewModel: BaseInspectorViewModel {
     weak var view: TextEditorParagraphInspectorView?
 
-    weak var editor: InspectableTextEditor?
+    let attributeEditor: TextEditorAttributeEditor
     let modelController: ModelController
-    init(editor: InspectableTextEditor, modelController: ModelController) {
-        self.editor = editor
+    init(attributeEditor: TextEditorAttributeEditor, modelController: ModelController) {
+        self.attributeEditor = attributeEditor
         self.modelController = modelController
         super.init()
         self.startObservingEditor()
@@ -53,8 +53,8 @@ class TextEditorParagraphInspectorViewModel: BaseInspectorViewModel {
     private var paragraphAttributesObserver: AnyCancellable?
     private var listTypesObserver: AnyCancellable?
     private func startObservingEditor() {
-        self.paragraphAttributesObserver = self.editor?.selectedParagraphAttributesDidChange.sink { [weak self] in self?.cachedParagraphAttributes = $0 }
-        self.listTypesObserver = self.editor?.selectedListTypesDidChange.sink { [weak self] in self?.cachedListTypes = $0 }
+        self.paragraphAttributesObserver = self.attributeEditor.$selectedParagraphAttributes.sink { [weak self] in self?.cachedParagraphAttributes = $0 }
+        self.listTypesObserver = self.attributeEditor.$selectedListTypes.sink { [weak self] in self?.cachedListTypes = $0 }
     }
 
     private var keyPathsAffectedByParagraphAttributes = [
@@ -67,7 +67,7 @@ class TextEditorParagraphInspectorViewModel: BaseInspectorViewModel {
     //MARK: - Properties
     @objc dynamic var rawAlignment: Int {
         get { self.cachedParagraphAttributes?.alignment?.rawValue ?? -1 }
-        set { self.editor?.updateSelection(with: TextEditorParagraphAttributes(alignment: NSTextAlignment(rawValue: newValue))) }
+        set { self.attributeEditor.updateSelection(with: TextEditorParagraphAttributes(alignment: NSTextAlignment(rawValue: newValue))) }
     }
 
     @objc dynamic var paragraphSpacing: NSNumber? {
@@ -79,7 +79,7 @@ class TextEditorParagraphInspectorViewModel: BaseInspectorViewModel {
         }
         set {
             if let spacing = newValue?.floatValue {
-                self.editor?.updateSelection(with: TextEditorParagraphAttributes(paragraphSpacing: CGFloat(spacing)))
+                self.attributeEditor.updateSelection(with: TextEditorParagraphAttributes(paragraphSpacing: CGFloat(spacing)))
             }
         }
     }
@@ -96,7 +96,7 @@ class TextEditorParagraphInspectorViewModel: BaseInspectorViewModel {
         }
         set {
             if let multiple = newValue?.floatValue {
-                self.editor?.updateSelection(with: TextEditorParagraphAttributes(lineHeightMultiple: CGFloat(multiple)))
+                self.attributeEditor.updateSelection(with: TextEditorParagraphAttributes(lineHeightMultiple: CGFloat(multiple)))
             }
         }
     }
@@ -106,6 +106,6 @@ class TextEditorParagraphInspectorViewModel: BaseInspectorViewModel {
     }
 
     func updateListType(to listType: NSTextList?) {
-        self.editor?.updateSelection(withListType: listType)
+        self.attributeEditor.updateSelection(withListType: listType)
     }
 }
