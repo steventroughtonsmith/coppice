@@ -12,7 +12,6 @@ struct TextEditorParagraphAttributes {
     var alignment: NSTextAlignment? = nil
     var lineHeightMultiple: CGFloat? = nil
     var paragraphSpacing: CGFloat? = nil
-    var listStyle: NSTextList.MarkerFormat? = nil
 
     static func with(_ paragraphStyle: NSParagraphStyle) -> Self {
         var alignment = paragraphStyle.alignment
@@ -31,8 +30,7 @@ struct TextEditorParagraphAttributes {
 
         return TextEditorParagraphAttributes(alignment: alignment,
                                              lineHeightMultiple: paragraphStyle.lineHeightMultiple,
-                                             paragraphSpacing: paragraphStyle.paragraphSpacing,
-                                             listStyle: paragraphStyle.textLists.last?.markerFormat)
+                                             paragraphSpacing: paragraphStyle.paragraphSpacing)
     }
 
     static func merge(_ attributes: [TextEditorParagraphAttributes]) -> TextEditorParagraphAttributes {
@@ -42,8 +40,7 @@ struct TextEditorParagraphAttributes {
         }
         return TextEditorParagraphAttributes(alignment: merge(\.alignment, of: attributes),
                                              lineHeightMultiple: merge(\.lineHeightMultiple, of: attributes),
-                                             paragraphSpacing: merge(\.paragraphSpacing, of: attributes),
-                                             listStyle: merge(\.listStyle, of: attributes))
+                                             paragraphSpacing: merge(\.paragraphSpacing, of: attributes))
     }
 
     func apply(to paragraphStyle: NSParagraphStyle) -> NSParagraphStyle {

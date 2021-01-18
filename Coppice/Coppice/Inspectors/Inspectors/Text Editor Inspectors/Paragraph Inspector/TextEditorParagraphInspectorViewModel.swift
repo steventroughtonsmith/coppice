@@ -33,38 +33,46 @@ class TextEditorParagraphInspectorViewModel: BaseInspectorViewModel {
         return "inspector.textEditorParagraph"
     }
 
-    private var cachedAttributes: TextEditorParagraphAttributes? {
+    private var cachedParagraphAttributes: TextEditorParagraphAttributes? {
         didSet {
-            self.keyPathsAffectedByAttributes.forEach {
+            self.keyPathsAffectedByParagraphAttributes.forEach {
                 self.willChangeValue(forKey: $0)
                 self.didChangeValue(forKey: $0)
             }
         }
     }
 
-
-    //MARK: - Observation
-    private var editorAttributesObserver: AnyCancellable?
-    private func startObservingEditor() {
-        self.editorAttributesObserver = self.editor?.selectedParagraphAttributesDidChange.sink { [weak self] in self?.cachedAttributes = $0 }
+    private var cachedListTypes: [NSTextList]? {
+        didSet {
+            self.willChangeValue(for: \.listTypes)
+            self.didChangeValue(for: \.listTypes)
+        }
     }
 
+    //MARK: - Observation
+    private var paragraphAttributesObserver: AnyCancellable?
+    private var listTypesObserver: AnyCancellable?
+    private func startObservingEditor() {
+        self.paragraphAttributesObserver = self.editor?.selectedParagraphAttributesDidChange.sink { [weak self] in self?.cachedParagraphAttributes = $0 }
+        self.listTypesObserver = self.editor?.selectedListTypesDidChange.sink { [weak self] in self?.cachedListTypes = $0 }
+    }
 
-    private var keyPathsAffectedByAttributes = [
+    private var keyPathsAffectedByParagraphAttributes = [
         #keyPath(rawAlignment),
         #keyPath(paragraphSpacing),
-        #keyPath(lineHeightMultiple)
+        #keyPath(lineHeightMultiple),
     ]
 
 
+    //MARK: - Properties
     @objc dynamic var rawAlignment: Int {
-        get { self.cachedAttributes?.alignment?.rawValue ?? -1 }
+        get { self.cachedParagraphAttributes?.alignment?.rawValue ?? -1 }
         set { self.editor?.updateSelection(with: TextEditorParagraphAttributes(alignment: NSTextAlignment(rawValue: newValue))) }
     }
 
     @objc dynamic var paragraphSpacing: NSNumber? {
         get {
-            guard let spacing = self.cachedAttributes?.paragraphSpacing else {
+            guard let spacing = self.cachedParagraphAttributes?.paragraphSpacing else {
                 return nil
             }
             return spacing as NSNumber
@@ -78,7 +86,7 @@ class TextEditorParagraphInspectorViewModel: BaseInspectorViewModel {
 
     @objc dynamic var lineHeightMultiple: NSNumber? {
         get {
-            guard var multiple = self.cachedAttributes?.lineHeightMultiple else {
+            guard var multiple = self.cachedParagraphAttributes?.lineHeightMultiple else {
                 return nil
             }
             if (multiple == 0) {
@@ -91,5 +99,13 @@ class TextEditorParagraphInspectorViewModel: BaseInspectorViewModel {
                 self.editor?.updateSelection(with: TextEditorParagraphAttributes(lineHeightMultiple: CGFloat(multiple)))
             }
         }
+    }
+
+    @objc dynamic var listTypes: [NSTextList]? {
+        return self.cachedListTypes
+    }
+
+    func updateListType(to listType: NSTextList?) {
+        self.editor?.updateSelection(withListType: listType)
     }
 }

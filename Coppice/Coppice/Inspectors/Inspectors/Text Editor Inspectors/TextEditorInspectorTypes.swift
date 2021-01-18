@@ -47,4 +47,9 @@ protocol InspectableTextEditor: class {
     var selectedParagraphAttributes: TextEditorParagraphAttributes? { get }
     var selectedParagraphAttributesDidChange: AnyPublisher<TextEditorParagraphAttributes?, Never> { get }
     func updateSelection(with attributes: TextEditorParagraphAttributes)
+
+    var selectedListTypes: [NSTextList]? { get }
+    var selectedListTypesDidChange: AnyPublisher<[NSTextList]?, Never> { get }
+    func updateSelection(withListType listType: NSTextList?)
+    func showCustomListPanel()
 }
