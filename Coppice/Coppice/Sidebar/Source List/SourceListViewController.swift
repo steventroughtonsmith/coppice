@@ -153,7 +153,7 @@ class SourceListViewController: NSViewController, NSMenuItemValidation {
     }
 
     @IBAction func newFolderFromSelection(_ sender: Any) {
-        self.createdItem = self.viewModel.createFolder(usingSelection: self.selectedNodes)
+        self.createdItem = self.viewModel.createFolder(usingSelection: self.nodesForAction)
     }
 
 

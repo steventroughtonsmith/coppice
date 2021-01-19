@@ -52,7 +52,9 @@ public final class Page: NSObject, CollectableModelObject, FolderContainable {
 
 
     //MARK: - FolderContainable
-    public weak var containingFolder: Folder?
+    public weak var containingFolder: Folder? {
+        didSet { self.didChange(\.containingFolder, oldValue: oldValue) }
+    }
 
     public var sortType: String {
         let type = self.content.contentType

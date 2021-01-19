@@ -31,7 +31,9 @@ public final class Folder: NSObject, CollectableModelObject, FolderContainable {
         return sorted[0].dateModified
     }
 
-    public weak var containingFolder: Folder?
+    public weak var containingFolder: Folder? {
+        didSet { self.didChange(\.containingFolder, oldValue: oldValue) }
+    }
     public var contents: [FolderContainable] = [] {
         didSet { self.didChange(\.contents, oldValue: oldValue) }
     }
