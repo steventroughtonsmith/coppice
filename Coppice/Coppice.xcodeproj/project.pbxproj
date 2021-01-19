@@ -232,9 +232,11 @@
 		99A0B857238D6F74005FCF25 /* NSTextView+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B856238D6F74005FCF25 /* NSTextView+M3Extensions.swift */; };
 		99A0B85C238D72F0005FCF25 /* TextEditorAttributesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B85B238D72F0005FCF25 /* TextEditorAttributesTests.swift */; };
 		99A0B85E238D730E005FCF25 /* TextEditorInspectorTypesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B85D238D730E005FCF25 /* TextEditorInspectorTypesTests.swift */; };
-		99A0B860238D732F005FCF25 /* TextEditorInspectorViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B85F238D732F005FCF25 /* TextEditorInspectorViewModelTests.swift */; };
+		99A0B860238D732F005FCF25 /* TextEditorFontInspectorViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B85F238D732F005FCF25 /* TextEditorFontInspectorViewModelTests.swift */; };
 		99A97FD9246DBD4C00CDD95C /* CanvasCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A97FD8246DBD4C00CDD95C /* CanvasCell.swift */; };
 		99A97FF72476ABD500CDD95C /* SearchResultTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A97FF62476ABD500CDD95C /* SearchResultTableCellView.swift */; };
+		99AA3C3625B719F40050A119 /* MockTextEditorAttributeEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AA3C3525B719F40050A119 /* MockTextEditorAttributeEditor.swift */; };
+		99AA3C3F25B71D3B0050A119 /* TextEditorParagraphInspectorViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AA3C3E25B71D3B0050A119 /* TextEditorParagraphInspectorViewModelTests.swift */; };
 		99AD8874237464C4000453E1 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AD8873237464C4000453E1 /* Alert.swift */; };
 		99AD88762374665D000453E1 /* Alert+AppKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AD88752374665D000453E1 /* Alert+AppKit.swift */; };
 		99AD88A5237B1700000453E1 /* DocumentWindowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AD88A4237B1700000453E1 /* DocumentWindowViewModel.swift */; };
@@ -645,9 +647,11 @@
 		99A0B856238D6F74005FCF25 /* NSTextView+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextView+M3Extensions.swift"; sourceTree = "<group>"; };
 		99A0B85B238D72F0005FCF25 /* TextEditorAttributesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorAttributesTests.swift; sourceTree = "<group>"; };
 		99A0B85D238D730E005FCF25 /* TextEditorInspectorTypesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorInspectorTypesTests.swift; sourceTree = "<group>"; };
-		99A0B85F238D732F005FCF25 /* TextEditorInspectorViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorInspectorViewModelTests.swift; sourceTree = "<group>"; };
+		99A0B85F238D732F005FCF25 /* TextEditorFontInspectorViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorFontInspectorViewModelTests.swift; sourceTree = "<group>"; };
 		99A97FD8246DBD4C00CDD95C /* CanvasCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasCell.swift; sourceTree = "<group>"; };
 		99A97FF62476ABD500CDD95C /* SearchResultTableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultTableCellView.swift; sourceTree = "<group>"; };
+		99AA3C3525B719F40050A119 /* MockTextEditorAttributeEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTextEditorAttributeEditor.swift; sourceTree = "<group>"; };
+		99AA3C3E25B71D3B0050A119 /* TextEditorParagraphInspectorViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorParagraphInspectorViewModelTests.swift; sourceTree = "<group>"; };
 		99AD8873237464C4000453E1 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		99AD88752374665D000453E1 /* Alert+AppKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alert+AppKit.swift"; sourceTree = "<group>"; };
 		99AD88A4237B1700000453E1 /* DocumentWindowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentWindowViewModel.swift; sourceTree = "<group>"; };
@@ -1234,6 +1238,7 @@
 				9970976C23AD1A7A00CD189B /* MockPageContent.swift */,
 				993600E824AE5F1F002C86E4 /* TestLayoutDelegate.swift */,
 				9960CCE824B1EC1C001F092E /* MockEventContextFactory.swift */,
+				99AA3C3525B719F40050A119 /* MockTextEditorAttributeEditor.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1456,19 +1461,20 @@
 			isa = PBXGroup;
 			children = (
 				999EA6F0244F271100BF254E /* Canvas Page Inspector */,
-				99A0B85A238D72D2005FCF25 /* Text Editor Inspector */,
+				99A0B85A238D72D2005FCF25 /* Text Editor Inspectors */,
 			);
 			path = Inspectors;
 			sourceTree = "<group>";
 		};
-		99A0B85A238D72D2005FCF25 /* Text Editor Inspector */ = {
+		99A0B85A238D72D2005FCF25 /* Text Editor Inspectors */ = {
 			isa = PBXGroup;
 			children = (
 				99A0B85B238D72F0005FCF25 /* TextEditorAttributesTests.swift */,
 				99A0B85D238D730E005FCF25 /* TextEditorInspectorTypesTests.swift */,
-				99A0B85F238D732F005FCF25 /* TextEditorInspectorViewModelTests.swift */,
+				99AA3C1F25B719A10050A119 /* Font Inspector */,
+				99AA3C2A25B719AC0050A119 /* Paragraph Inspector */,
 			);
-			path = "Text Editor Inspector";
+			path = "Text Editor Inspectors";
 			sourceTree = "<group>";
 		};
 		99A8F57B230C3BD800C3F08A /* Page Selector */ = {
@@ -1477,6 +1483,22 @@
 				99581075230C40FD00D996C4 /* PageSelectorViewModelTests.swift */,
 			);
 			path = "Page Selector";
+			sourceTree = "<group>";
+		};
+		99AA3C1F25B719A10050A119 /* Font Inspector */ = {
+			isa = PBXGroup;
+			children = (
+				99A0B85F238D732F005FCF25 /* TextEditorFontInspectorViewModelTests.swift */,
+			);
+			path = "Font Inspector";
+			sourceTree = "<group>";
+		};
+		99AA3C2A25B719AC0050A119 /* Paragraph Inspector */ = {
+			isa = PBXGroup;
+			children = (
+				99AA3C3E25B71D3B0050A119 /* TextEditorParagraphInspectorViewModelTests.swift */,
+			);
+			path = "Paragraph Inspector";
 			sourceTree = "<group>";
 		};
 		99AD8872237464B5000453E1 /* Generic Types */ = {
@@ -2370,12 +2392,14 @@
 				99A0B85C238D72F0005FCF25 /* TextEditorAttributesTests.swift in Sources */,
 				999EA6CD243CCCE200BF254E /* XCTestExtensions.swift in Sources */,
 				99868F4723995B4F009AC0F7 /* TextLinkFinderTests.swift in Sources */,
+				99AA3C3F25B71D3B0050A119 /* TextEditorParagraphInspectorViewModelTests.swift in Sources */,
 				997711CA239E9AF400FCC8C7 /* MockDocumentWindowViewModel.swift in Sources */,
-				99A0B860238D732F005FCF25 /* TextEditorInspectorViewModelTests.swift in Sources */,
+				99A0B860238D732F005FCF25 /* TextEditorFontInspectorViewModelTests.swift in Sources */,
 				99D4D59822F8650300F69C1F /* SourceListViewModelTests.swift in Sources */,
 				99581076230C40FD00D996C4 /* PageSelectorViewModelTests.swift in Sources */,
 				99DA84EC245718D900F19917 /* MockBubblesModelController.swift in Sources */,
 				99D170E6233D0542004EBD70 /* CanvasEditorViewModelTests.swift in Sources */,
+				99AA3C3625B719F40050A119 /* MockTextEditorAttributeEditor.swift in Sources */,
 				999EA6EF244E054400BF254E /* SearchResultsViewModelTypesTests.swift in Sources */,
 				999EA6F2244F272E00BF254E /* CanvasPageInspectorViewModelTests.swift in Sources */,
 				9923B06B22F45F7E0035D8C6 /* TestObjects.swift in Sources */,

@@ -326,10 +326,10 @@ class TextEditorAttributesTests: XCTestCase {
         return testString
     }
 
-    //MARK: - textEditorAttributes(in:typingAttributes:)
+    //MARK: - textEditorFontAttributes(in:typingAttributes:)
     func test_textEditorAttributesInRanges_returnsAttributesWithAllValuesSetIfAttributesAreEqualInRanges() {
         let testString = self.createTestString()
-        let attributes = testString.textEditorAttributes(in: [
+        let attributes = testString.textEditorFontAttributes(in: [
             NSRange(location: 0, length: 3),
             NSRange(location: 8, length: 3)
         ], typingAttributes: [:])
@@ -346,7 +346,7 @@ class TextEditorAttributesTests: XCTestCase {
 
     func test_textEditorAttributesInRanges_returnsMergedAttributesIfAttributesInRangesAreDifferent() {
         let testString = self.createTestString()
-        let attributes = testString.textEditorAttributes(in: [
+        let attributes = testString.textEditorFontAttributes(in: [
             NSRange(location: 4, length: 3),
             NSRange(location: 12, length: 6)
         ], typingAttributes: [:])

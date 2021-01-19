@@ -1,5 +1,5 @@
 //
-//  TextEditorInspectorViewModelTests.swift
+//  TextEditorFontInspectorViewModelTests.swift
 //  CoppiceTests
 //
 //  Created by Martin Pilkington on 26/11/2019.
@@ -11,23 +11,9 @@ import Combine
 @testable import Coppice
 @testable import CoppiceCore
 
-class TestTextEditor: InspectableTextEditor {
-    @Published var selectedFontAttributes: TextEditorFontAttributes?
-    var selectionAttributesDidChange: AnyPublisher<TextEditorFontAttributes?, Never> {
-        return self.$selectedFontAttributes.eraseToAnyPublisher()
-    }
+class TextEditorFontInspectorViewModelTests: XCTestCase {
 
-    var updatedSelectionAttributes: TextEditorFontAttributes?
-    func updateSelection(with attributes: TextEditorFontAttributes) {
-        self.updatedSelectionAttributes = attributes
-    }
-
-
-}
-
-class TextEditorInspectorViewModelTests: XCTestCase {
-
-    var editor: TestTextEditor!
+    var editor: MockTextEditorAttributeEditor!
     var modelController: CoppiceModelController!
     var viewModel: TextEditorFontInspectorViewModel!
 
@@ -35,7 +21,7 @@ class TextEditorInspectorViewModelTests: XCTestCase {
         super.setUp()
 
         self.modelController = CoppiceModelController(undoManager: UndoManager())
-        self.editor = TestTextEditor()
+        self.editor = MockTextEditorAttributeEditor()
         self.viewModel = TextEditorFontInspectorViewModel(attributeEditor: self.editor, modelController: self.modelController)
     }
 
@@ -63,7 +49,7 @@ class TextEditorInspectorViewModelTests: XCTestCase {
 
     func test_selectedFontFamily_setUpdatesEditorWithNewFamily() {
         self.viewModel.selectedFontFamily = "Impact"
-        XCTAssertEqual(self.editor.updatedSelectionAttributes, TextEditorFontAttributes(fontFamily: "Impact"))
+        XCTAssertEqual(self.editor.updatedFontAttributes, TextEditorFontAttributes(fontFamily: "Impact"))
     }
 
     func test_selectedTypeface_getReturnsTypefaceObjectMatchingAttributesPostscriptName() {
@@ -73,7 +59,7 @@ class TextEditorInspectorViewModelTests: XCTestCase {
 
     func test_selectedTypeface_setUpdatesEditorWithNewPostscriptName() {
         self.viewModel.selectedTypeface = Typeface(memberInfo: ["DejaVuSansMono-Bold", "Bold", 5, UInt(1)])
-        XCTAssertEqual(self.editor.updatedSelectionAttributes, TextEditorFontAttributes(fontPostscriptName: "DejaVuSansMono-Bold"))
+        XCTAssertEqual(self.editor.updatedFontAttributes, TextEditorFontAttributes(fontPostscriptName: "DejaVuSansMono-Bold"))
     }
 
     func test_fontSize_getReturnsFontSizeFromAttributes() {
@@ -83,17 +69,7 @@ class TextEditorInspectorViewModelTests: XCTestCase {
 
     func test_fontSize_setUpdatesEditorWithNewFontSize() {
         self.viewModel.fontSize = 42.0
-        XCTAssertEqual(self.editor.updatedSelectionAttributes, TextEditorFontAttributes(fontSize: 42.0))
-    }
-
-    func test_rawAlignment_getReturnsAlignmentFromAttributes() {
-        self.editor.selectedFontAttributes = TextEditorFontAttributes(alignment: .right)
-        XCTAssertEqual(self.viewModel.rawAlignment, NSTextAlignment.right.rawValue)
-    }
-
-    func test_rawAlignment_setUpdatesEditorWithNewTextAlignment() {
-        self.viewModel.rawAlignment = NSTextAlignment.center.rawValue
-        XCTAssertEqual(self.editor.updatedSelectionAttributes, TextEditorFontAttributes(alignment: .center))
+        XCTAssertEqual(self.editor.updatedFontAttributes, TextEditorFontAttributes(fontSize: 42.0))
     }
 
     func test_textColour_getReturnsColourFromAttributes() {
@@ -103,7 +79,7 @@ class TextEditorInspectorViewModelTests: XCTestCase {
 
     func test_textColour_setUpdatesEditorWithNewTextColour() {
         self.viewModel.textColour = NSColor.green
-        XCTAssertEqual(self.editor.updatedSelectionAttributes, TextEditorFontAttributes(textColour: NSColor.green))
+        XCTAssertEqual(self.editor.updatedFontAttributes, TextEditorFontAttributes(textColour: NSColor.green))
     }
 
     func test_isBold_getReturnsBoldFromAttributes() {
@@ -113,7 +89,7 @@ class TextEditorInspectorViewModelTests: XCTestCase {
 
     func test_isBold_setUpdatesEditorWithNewBoldValue() {
         self.viewModel.isBold = true
-        XCTAssertEqual(self.editor.updatedSelectionAttributes, TextEditorFontAttributes(isBold: true))
+        XCTAssertEqual(self.editor.updatedFontAttributes, TextEditorFontAttributes(isBold: true))
     }
 
     func test_isItalic_getReturnsItalicFromAttributes() {
@@ -123,7 +99,7 @@ class TextEditorInspectorViewModelTests: XCTestCase {
 
     func test_isItalic_setUpdatesEditorWithNewItalicValue() {
         self.viewModel.isItalic = true
-        XCTAssertEqual(self.editor.updatedSelectionAttributes, TextEditorFontAttributes(isItalic: true))
+        XCTAssertEqual(self.editor.updatedFontAttributes, TextEditorFontAttributes(isItalic: true))
     }
 
     func test_isUnderlined_getReturnsUnderlinedFromAttributes() {
@@ -133,7 +109,7 @@ class TextEditorInspectorViewModelTests: XCTestCase {
 
     func test_isUnderlined_setUpdatesEditorWithNewUnderlinedValue() {
         self.viewModel.isUnderlined = true
-        XCTAssertEqual(self.editor.updatedSelectionAttributes, TextEditorFontAttributes(isUnderlined: true))
+        XCTAssertEqual(self.editor.updatedFontAttributes, TextEditorFontAttributes(isUnderlined: true))
     }
 
     func test_isStruckthrough_getReturnsStrikethroughFromAttributes() {
@@ -143,6 +119,6 @@ class TextEditorInspectorViewModelTests: XCTestCase {
 
     func test_isStruckthrough_setUpdatesEditorWithNewStrikethroughValue() {
         self.viewModel.isStruckthrough = true
-        XCTAssertEqual(self.editor.updatedSelectionAttributes, TextEditorFontAttributes(isStruckthrough: true))
+        XCTAssertEqual(self.editor.updatedFontAttributes, TextEditorFontAttributes(isStruckthrough: true))
     }
 }
