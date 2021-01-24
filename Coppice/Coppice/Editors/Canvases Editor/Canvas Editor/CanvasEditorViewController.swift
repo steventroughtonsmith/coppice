@@ -367,7 +367,7 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
             guard let index = newPageUUIDs.firstIndex(of: vc.uuid) else {
                 continue
             }
-            pageViewsToOrder.insert(vc.view, at: index)
+            pageViewsToOrder[index] = vc.view
         }
         let pageViews = pageViewsToOrder.compactMap { $0 }
         self.canvasView.pageLayer.subviews = pageViews
