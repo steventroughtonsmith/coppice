@@ -98,6 +98,116 @@ class SourceListNodeCollectionTests: XCTestCase {
 
         XCTAssertTrue(collection.containsFolders)
     }
+
+
+    //MARK: - .commonAncestor
+    func test_commonAncestor_returnsNilIfNoNodesInCollection() throws {
+        let collection = SourceListNodeCollection()
+        XCTAssertNil(collection.commonAncestor)
+    }
+
+    func test_commonAncestor_returnsNilIfOnlyNodeHasNoParent() throws {
+        let node = PageSourceListNode(page: Page())
+        let collection = SourceListNodeCollection()
+        collection.add(node)
+
+        XCTAssertNil(collection.commonAncestor)
+    }
+
+    func test_commonAncestor_returnsParentOfTwoNodesWithSameParent() throws {
+        let folder = Folder()
+        let folderNode = FolderSourceListNode(folder: folder)
+        let page1Node = PageSourceListNode(page: Page())
+        let page2Node = PageSourceListNode(page: Page())
+        folder.insert([page1Node.page, page2Node.page])
+        folderNode.children = [page1Node, page2Node]
+
+        let collection = SourceListNodeCollection()
+        collection.add(page1Node)
+        collection.add(page2Node)
+
+        XCTAssertEqual(collection.commonAncestor, folderNode)
+    }
+
+    func test_commonAncestor_returnsParentFolderIfCollectionContainsChildrenOfThatFolderEvenIfThereIsAnotherFolderAbove() throws {
+        let rootFolder = Folder()
+        let rootFolderNode = FolderSourceListNode(folder: rootFolder)
+        let folder = Folder()
+        let folderNode = FolderSourceListNode(folder: folder)
+        rootFolder.insert([folder])
+        rootFolderNode.children = [folderNode]
+
+        let page1Node = PageSourceListNode(page: Page())
+        let page2Node = PageSourceListNode(page: Page())
+        folder.insert([page1Node.page, page2Node.page])
+        folderNode.children = [page1Node, page2Node]
+
+        let collection = SourceListNodeCollection()
+        collection.add(page1Node)
+        collection.add(page2Node)
+
+        XCTAssertEqual(collection.commonAncestor, folderNode)
+    }
+
+    func test_commonAncestor_returnsCommonAncestorFolderIfCollectionContainsFolderAndChildOfThatFolder() throws {
+        let rootFolder = Folder()
+        let rootFolderNode = FolderSourceListNode(folder: rootFolder)
+        let folder = Folder()
+        let folderNode = FolderSourceListNode(folder: folder)
+        rootFolder.insert([folder])
+        rootFolderNode.children = [folderNode]
+
+        let page1Node = PageSourceListNode(page: Page())
+        let page2Node = PageSourceListNode(page: Page())
+        folder.insert([page1Node.page, page2Node.page])
+        folderNode.children = [page1Node, page2Node]
+
+        let collection = SourceListNodeCollection()
+        collection.add(page1Node)
+        collection.add(folderNode)
+
+        XCTAssertEqual(collection.commonAncestor, rootFolderNode)
+    }
+
+    func test_commonAncestor_returnsCommonAncestorFolderIfCollectionContainsFolderAndChildOfAnotherFolder() throws {
+        let rootFolder = Folder()
+        let rootFolderNode = FolderSourceListNode(folder: rootFolder)
+        let folder1 = Folder()
+        let folder1Node = FolderSourceListNode(folder: folder1)
+        let folder2 = Folder()
+        let folder2Node = FolderSourceListNode(folder: folder2)
+        rootFolder.insert([folder1, folder2])
+        rootFolderNode.children = [folder1Node, folder2Node]
+
+        let page1Node = PageSourceListNode(page: Page())
+        let page2Node = PageSourceListNode(page: Page())
+        folder1.insert([page1Node.page, page2Node.page])
+        folder1Node.children = [page1Node, page2Node]
+
+        let collection = SourceListNodeCollection()
+        collection.add(page1Node)
+        collection.add(folder2Node)
+
+        XCTAssertEqual(collection.commonAncestor, rootFolderNode)
+    }
+
+    func test_commonAncestor_returnsNilIfNoSharedAncestorFound() throws {
+        let folder1 = Folder()
+        let folder1Node = FolderSourceListNode(folder: folder1)
+        let folder2 = Folder()
+        let folder2Node = FolderSourceListNode(folder: folder2)
+
+        let page1Node = PageSourceListNode(page: Page())
+        let page2Node = PageSourceListNode(page: Page())
+        folder1.insert([page1Node.page, page2Node.page])
+        folder1Node.children = [page1Node, page2Node]
+
+        let collection = SourceListNodeCollection()
+        collection.add(page1Node)
+        collection.add(folder2Node)
+
+        XCTAssertNil(collection.commonAncestor)
+    }
 }
 
 

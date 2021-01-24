@@ -37,6 +37,36 @@ class SourceListNodeCollection: NSObject {
             self.containsFolders = true
         }
     }
+
+    var commonAncestor: SourceListNode? {
+        guard self.nodesShareParent == false else {
+            return self.nodes.last?.parent
+        }
+
+        let allAncestors = self.nodes.map(\.ancestors)
+        var i = 0
+        var commonAncestor: SourceListNode? = nil
+        while i < allAncestors.count {
+            var currentAncestor: SourceListNode? = nil
+            for ancestors in allAncestors {
+                guard let ancestor = ancestors[safe: i] else {
+                    return commonAncestor
+                }
+                if currentAncestor == nil {
+                    currentAncestor = ancestor
+                    continue
+                }
+
+                guard currentAncestor == ancestor else {
+                    return commonAncestor
+                }
+            }
+            commonAncestor = currentAncestor
+            i += 1
+        }
+
+        return commonAncestor
+    }
 }
 
 class SourceListNode: NSObject {
@@ -75,6 +105,16 @@ class SourceListNode: NSObject {
         didSet {
             self.children.forEach { $0.parent = self }
         }
+    }
+
+    var ancestors: [SourceListNode] {
+        var currentParent = self.parent
+        var ancestors = [SourceListNode]()
+        while currentParent != nil {
+            ancestors.insert(currentParent!, at: 0)
+            currentParent = currentParent?.parent
+        }
+        return ancestors
     }
 
     /// The folder to create an item in if this item is selected

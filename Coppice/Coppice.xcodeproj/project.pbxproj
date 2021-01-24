@@ -1201,7 +1201,6 @@
 		9976611A23A3EB2C000D1741 /* Unit Tests */ = {
 			isa = PBXGroup;
 			children = (
-				999EA6D2244096AD00BF254E /* Extensions */,
 				9957B086239FD3CA00BA3C0B /* DocumentWindow */,
 				99C03EFE23293D9F00EB7516 /* Canvases Editor */,
 				999EA6E8244E031500BF254E /* Sidebar */,
@@ -1415,13 +1414,6 @@
 				999EA6C0243628E500BF254E /* SearchResultTableCellView.xib */,
 			);
 			path = Cells;
-			sourceTree = "<group>";
-		};
-		999EA6D2244096AD00BF254E /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 		999EA6E8244E031500BF254E /* Sidebar */ = {
