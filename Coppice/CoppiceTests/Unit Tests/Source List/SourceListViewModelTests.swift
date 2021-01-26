@@ -949,7 +949,6 @@ class SourceListViewModelTests: XCTestCase {
         let (page1, _, subPage1, _) = self.addTestData(to: vm)
         let page1Node = try XCTUnwrap(vm.node(for: .page(page1.id)))
         let subPageNode = try XCTUnwrap(vm.node(for: .page(subPage1.id)))
-        let expectedFolder = subPage1.containingFolder
 
         let collection = SourceListNodeCollection()
         collection.add(page1Node)
@@ -961,8 +960,8 @@ class SourceListViewModelTests: XCTestCase {
         }
 
         let folder = try XCTUnwrap(self.modelController.collection(for: Folder.self).objectWithID(folderID))
-        XCTAssertEqual(folder.containingFolder, expectedFolder)
-        XCTAssertEqual(expectedFolder?.contents.last as? Folder, folder)
+        XCTAssertEqual(folder.containingFolder, self.modelController.rootFolder)
+        XCTAssertEqual(self.modelController.rootFolder.contents.last as? Folder, folder)
     }
 
     func test_createFolderUsingSelection_addsAllItemsInSelectionToCreatedFolder() throws {

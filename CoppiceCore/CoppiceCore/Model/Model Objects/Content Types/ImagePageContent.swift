@@ -28,24 +28,49 @@ public class ImagePageContent: NSObject, PageContent {
         return true
     }
 
-    @objc dynamic public var imageDescription: String?
+    @objc dynamic public var imageDescription: String? {
+        didSet {
+            guard self.imageDescription != oldValue else {
+                return
+            }
+            self.didChange(\.imageDescription, oldValue: oldValue)
+        }
+    }
     public weak var page: Page?
+
+    public private(set) var otherMetadata: [String: Any]?
+    enum MetadataKeys: String, CaseIterable {
+        case description
+    }
 
     public init(data: Data? = nil, metadata: [String: Any]? = nil) {
         if let imageData = data, let image = NSImage(data: imageData) {
             self.image = image
         }
-        if let description = metadata?["description"] as? String {
-            self.imageDescription = description
+        if let metadata = metadata {
+            if let description = metadata[MetadataKeys.description.rawValue] as? String {
+                self.imageDescription = description
+            }
+
+            let otherKeys = MetadataKeys.allCases.map(\.rawValue)
+            self.otherMetadata = metadata.filter { (key, _) in
+                return !otherKeys.contains(key)
+            }
+        } else {
+            self.otherMetadata = nil
         }
+
     }
 
     public var modelFile: ModelFile {
         let imageData = self.image?.pngData()
         let filename = (self.page != nil) ? "\(self.page!.id.uuid.uuidString).png" : nil
-        var metadata: [String: Any]? = nil
+        var metadata: [String: Any]? = self.otherMetadata
         if let description = self.imageDescription {
-            metadata = ["description": description]
+            if (metadata == nil) {
+                metadata = [:]
+            }
+            metadata?[MetadataKeys.description.rawValue] = description
         }
         return ModelFile(type: self.contentType.rawValue, filename: filename, data: imageData, metadata: metadata)
     }

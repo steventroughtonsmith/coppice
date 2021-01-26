@@ -12,6 +12,7 @@ import Foundation
 
 class TestModelObject: ModelObject {
     var plistRepresentation = [String : Any]()
+    var otherProperties = [String : Any]()
 
     func update(fromPlistRepresentation plist: [String : Any]) {
     }
@@ -29,6 +30,7 @@ class TestModelObject: ModelObject {
 
 final class TestCollectableModelObject: NSObject, CollectableModelObject {
     var plistRepresentation = [String : Any]()
+    var otherProperties = [String : Any]()
 
     func update(fromPlistRepresentation plist: [String : Any]) {
     }
@@ -73,6 +75,7 @@ final class TestCollectableModelObject: NSObject, CollectableModelObject {
 
 final class RelationshipModelObject: NSObject, CollectableModelObject {
     var plistRepresentation = [String : Any]()
+    var otherProperties = [String : Any]()
 
     func update(fromPlistRepresentation plist: [String : Any]) {
     }

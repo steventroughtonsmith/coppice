@@ -87,6 +87,27 @@ class PageTests: XCTestCase {
         XCTAssertEqual(content.metadata?["description"] as? String, "Foo Bar Baz")
     }
 
+    func test_plistRepresentation_includesAnyOtherProperties() throws {
+        let page = Page()
+        page.contentSize = CGSize(width: 3, height: 4)
+        let plist: [String: Any] = [
+            "id": page.id.stringRepresentation,
+            "title": "Lorem Ipsum",
+            "dateCreated": Date(timeIntervalSinceReferenceDate: 1238),
+            "dateModified": Date(timeIntervalSinceReferenceDate: 9872),
+            "content": ModelFile(type: "text", filename: nil, data: nil, metadata: nil),
+            "foo": "bar",
+            "testing": Date(timeIntervalSinceReferenceDate: 11)
+        ]
+
+        XCTAssertNoThrow(try page.update(fromPlistRepresentation: plist))
+
+        let plistRepresentation = page.plistRepresentation
+
+        XCTAssertEqual(plistRepresentation["foo"] as? String, "bar")
+        XCTAssertEqual(plistRepresentation["testing"] as? Date, Date(timeIntervalSinceReferenceDate: 11))
+    }
+
 
     //MARK: - update(fromPlistRepresentation:)
     func test_updateFromPlistRepresentation_doesntUpdateIfIDsDontMatch() {
@@ -291,6 +312,46 @@ class PageTests: XCTestCase {
 
         XCTAssertThrowsError(try page.update(fromPlistRepresentation: plist), "") {
             XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .attributeNotFound("content"))
+        }
+    }
+
+    func test_updateFromPlistRepresentation_addsAnythingElseInPlistToOtherProperties() throws {
+        let page = Page()
+        page.contentSize = CGSize(width: 3, height: 4)
+        let plist: [String: Any] = [
+            "id": page.id.stringRepresentation,
+            "testing": Date(timeIntervalSinceReferenceDate: 11),
+            "title": "Lorem Ipsum",
+            "dateCreated": Date(timeIntervalSinceReferenceDate: 1238),
+            "dateModified": Date(timeIntervalSinceReferenceDate: 9872),
+            "content": ModelFile(type: "text", filename: nil, data: nil, metadata: nil),
+            "foo": "bar",
+        ]
+
+        XCTAssertNoThrow(try page.update(fromPlistRepresentation: plist))
+
+        XCTAssertEqual(page.otherProperties["foo"] as? String, "bar")
+        XCTAssertEqual(page.otherProperties["testing"] as? Date, Date(timeIntervalSinceReferenceDate: 11))
+    }
+
+    func test_updateFromPlistRepresentation_doesntIncludeAnySupportPlistKeysInOtherProperties() throws {
+        let page = Page()
+        page.contentSize = CGSize(width: 3, height: 4)
+        let plist: [String: Any] = [
+            "id": page.id.stringRepresentation,
+            "testing": Date(timeIntervalSinceReferenceDate: 11),
+            "title": "Lorem Ipsum",
+            "dateCreated": Date(timeIntervalSinceReferenceDate: 1238),
+            "dateModified": Date(timeIntervalSinceReferenceDate: 9872),
+            "content": ModelFile(type: "text", filename: nil, data: nil, metadata: nil),
+            "foo": "bar",
+        ]
+
+        XCTAssertNoThrow(try page.update(fromPlistRepresentation: plist))
+
+        XCTAssertEqual(page.otherProperties.count, 2)
+        for key in Page.PlistKeys.allCases {
+            XCTAssertNil(page.otherProperties[key.rawValue])
         }
     }
 

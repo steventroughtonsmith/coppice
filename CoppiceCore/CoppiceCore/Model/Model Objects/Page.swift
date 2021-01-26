@@ -50,6 +50,8 @@ public final class Page: NSObject, CollectableModelObject, FolderContainable {
         }
     }
 
+    public private(set) var otherProperties = [String : Any]()
+
 
     //MARK: - FolderContainable
     public weak var containingFolder: Folder? {
@@ -94,42 +96,61 @@ public final class Page: NSObject, CollectableModelObject, FolderContainable {
     public static var modelFileProperties: [String] {
         return ["content"]
     }
+
+    enum PlistKeys: String, CaseIterable {
+        case id
+        case title
+        case dateCreated
+        case dateModified
+        case content
+        case userPreferredSize
+    }
     
     public var plistRepresentation: [String : Any] {
-        var plist: [String: Any] = [
-            "id": self.id.stringRepresentation,
-            "title": self.title,
-            "dateCreated": self.dateCreated,
-            "dateModified": self.dateModified,
-            "content": self.content.modelFile
-        ]
+        var plist = self.otherProperties
+		plist[PlistKeys.id.rawValue] = self.id.stringRepresentation
+		plist[PlistKeys.title.rawValue] = self.title
+		plist[PlistKeys.dateCreated.rawValue] = self.dateCreated
+		plist[PlistKeys.dateModified.rawValue] = self.dateModified
+		plist[PlistKeys.content.rawValue] = self.content.modelFile
         if let preferredSize = self.userPreferredSize {
-            plist["userPreferredSize"] = NSStringFromSize(preferredSize)
+            plist[PlistKeys.userPreferredSize.rawValue] = NSStringFromSize(preferredSize)
         }
 
         return plist
     }
 
     public func update(fromPlistRepresentation plist: [String : Any]) throws {
-        guard self.id.stringRepresentation == (plist["id"] as? String) else {
+        guard self.id.stringRepresentation == (plist[PlistKeys.id.rawValue] as? String) else {
             throw ModelObjectUpdateErrors.idsDontMatch
         }
 
-        self.title = try self.attribute(withKey: "title", from: plist)
-        self.dateCreated = try self.attribute(withKey: "dateCreated", from: plist)
-        self.dateModified = try self.attribute(withKey: "dateModified", from: plist)
+        //Get values
+        let title: String = try self.attribute(withKey: PlistKeys.title.rawValue, from: plist)
+        let dateCreated: Date = try self.attribute(withKey: PlistKeys.dateCreated.rawValue, from: plist)
+        let dateModified: Date = try self.attribute(withKey: PlistKeys.dateModified.rawValue, from: plist)
 
-        if let userPreferredSizeString = plist["userPreferredSize"] as? String {
-            self.userPreferredSize = NSSizeFromString(userPreferredSizeString)
-        } else {
-            self.userPreferredSize = nil
+        var userPreferredSize: CGSize? = nil
+        if let userPreferredSizeString = plist[PlistKeys.userPreferredSize.rawValue] as? String {
+            userPreferredSize = NSSizeFromString(userPreferredSizeString)
         }
 
-        let content: ModelFile = try self.attribute(withKey: "content", from: plist)
+        let content: ModelFile = try self.attribute(withKey: PlistKeys.content.rawValue, from: plist)
         guard let contentType = PageContentType(rawValue: content.type) else {
-            throw ModelObjectUpdateErrors.attributeNotFound("content")
+            throw ModelObjectUpdateErrors.attributeNotFound(PlistKeys.content.rawValue)
         }
+
+        //Set values
+        self.title = title
+        self.dateCreated = dateCreated
+        self.dateModified = dateModified
+        self.userPreferredSize = userPreferredSize
         self.content = contentType.createContent(data: content.data, metadata: content.metadata)
+
+        let plistKeys = PlistKeys.allCases.map(\.rawValue)
+        self.otherProperties = plist.filter { (key, _) -> Bool in
+            return plistKeys.contains(key) == false
+        }
     }
 
     private func attribute<T>(withKey key: String, from plist: [String: Any]) throws -> T {

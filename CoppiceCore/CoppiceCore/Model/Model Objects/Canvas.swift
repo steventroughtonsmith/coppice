@@ -68,6 +68,8 @@ public final class Canvas: NSObject, CollectableModelObject {
 
     public var closedPageHierarchies: [ModelID: [ModelID: PageHierarchy]] = [:]
 
+    public private(set) var otherProperties = [String : Any]()
+
 
     //MARK: - Relationships
     public var pages: Set<CanvasPage> {
@@ -84,21 +86,35 @@ public final class Canvas: NSObject, CollectableModelObject {
         return ["thumbnail"]
     }
 
+    enum PlistKeys: String, CaseIterable {
+        case id
+        case title
+        case dateCreated
+        case dateModified
+        case sortIndex
+        case theme
+        case zoomFactor
+        case thumbnail
+        case viewPort
+        case closedPageHierarchies
+    }
+
     public var plistRepresentation: [String : Any] {
-        var plist: [String: Any] = [
-            "id": self.id.stringRepresentation,
-            "title": self.title,
-            "dateCreated": self.dateCreated,
-            "dateModified": self.dateModified,
-            "sortIndex": self.sortIndex,
-            "theme": self.theme.rawValue,
-            "zoomFactor": self.zoomFactor
-        ]
+        var plist = self.otherProperties
+
+            plist[PlistKeys.id.rawValue] = self.id.stringRepresentation
+            plist[PlistKeys.title.rawValue] = self.title
+            plist[PlistKeys.dateCreated.rawValue] = self.dateCreated
+            plist[PlistKeys.dateModified.rawValue] = self.dateModified
+            plist[PlistKeys.sortIndex.rawValue] = self.sortIndex
+            plist[PlistKeys.theme.rawValue] = self.theme.rawValue
+            plist[PlistKeys.zoomFactor.rawValue] = self.zoomFactor
+
         if let thumbnailData = self.thumbnail?.pngData() {
-            plist["thumbnail"] = ModelFile(type: "thumbnail", filename: "\(self.id.uuid.uuidString)-thumbnail.png", data: thumbnailData, metadata: [:])
+            plist[PlistKeys.thumbnail.rawValue] = ModelFile(type: "thumbnail", filename: "\(self.id.uuid.uuidString)-thumbnail.png", data: thumbnailData, metadata: [:])
         }
         if let viewPort = self.viewPort  {
-            plist["viewPort"] = NSStringFromRect(viewPort)
+            plist[PlistKeys.viewPort.rawValue] = NSStringFromRect(viewPort)
         }
 
         
@@ -107,7 +123,7 @@ public final class Canvas: NSObject, CollectableModelObject {
                 return (key.stringRepresentation, value.plistRepresentation)
             }))
         })
-        plist["closedPageHierarchies"] = plistableHierarchy
+        plist[PlistKeys.closedPageHierarchies.rawValue] = plistableHierarchy
 
         return plist
     }
@@ -117,24 +133,29 @@ public final class Canvas: NSObject, CollectableModelObject {
             throw ModelObjectUpdateErrors.idsDontMatch
         }
 
-        self.title = try self.attribute(withKey: "title", from: plist)
-        self.dateCreated = try self.attribute(withKey: "dateCreated", from: plist)
-        self.dateModified = try self.attribute(withKey: "dateModified", from: plist)
-        self.sortIndex = try self.attribute(withKey: "sortIndex", from: plist)
+        let title: String = try self.attribute(withKey: PlistKeys.title.rawValue, from: plist)
+        let dateCreated: Date = try self.attribute(withKey: PlistKeys.dateCreated.rawValue, from: plist)
+        let dateModified: Date = try self.attribute(withKey: PlistKeys.dateModified.rawValue, from: plist)
+        let sortIndex: Int = try self.attribute(withKey: PlistKeys.sortIndex.rawValue, from: plist)
 
-        let rawTheme: String = try self.attribute(withKey: "theme", from: plist)
+        let rawTheme: String = try self.attribute(withKey: PlistKeys.theme.rawValue, from: plist)
         guard let theme = Theme(rawValue: rawTheme) else {
-            throw ModelObjectUpdateErrors.attributeNotFound("theme")
+            throw ModelObjectUpdateErrors.attributeNotFound(PlistKeys.theme.rawValue)
         }
+
+        self.title = title
+        self.dateCreated = dateCreated
+        self.dateModified = dateModified
+        self.sortIndex = sortIndex
         self.theme = theme
 
-        if let viewPortString = plist["viewPort"] as? String {
+        if let viewPortString = plist[PlistKeys.viewPort.rawValue] as? String {
             self.viewPort = NSRectFromString(viewPortString)
         } else {
             self.viewPort = nil
         }
 
-        if let thumbnail = plist["thumbnail"] as? ModelFile {
+        if let thumbnail = plist[PlistKeys.thumbnail.rawValue] as? ModelFile {
             if let data = thumbnail.data {
                 self.thumbnail = NSImage(data: data)
             }
@@ -142,13 +163,13 @@ public final class Canvas: NSObject, CollectableModelObject {
             self.thumbnail = nil
         }
 
-        if let zoomFactor = plist["zoomFactor"] as? CGFloat {
+        if let zoomFactor = plist[PlistKeys.zoomFactor.rawValue] as? CGFloat {
             self.zoomFactor = zoomFactor
         } else {
             self.zoomFactor = 1
         }
 
-        if let plistableHierarchy = plist["closedPageHierarchies"] as? [String: [String: [String: Any]]] {
+        if let plistableHierarchy = plist[PlistKeys.closedPageHierarchies.rawValue] as? [String: [String: [String: Any]]] {
             let hierarchy = plistableHierarchy.compactMap { key, value -> (ModelID, [ModelID: PageHierarchy])? in
                 guard let canvasPageID = ModelID(string: key) else {
                     return nil
@@ -164,6 +185,11 @@ public final class Canvas: NSObject, CollectableModelObject {
             self.closedPageHierarchies = Dictionary(uniqueKeysWithValues: hierarchy)
         } else {
             self.closedPageHierarchies = [:]
+        }
+
+        let plistKeys = PlistKeys.allCases.map(\.rawValue)
+        self.otherProperties = plist.filter { (key, _) -> Bool in
+            return plistKeys.contains(key) == false
         }
     }
 

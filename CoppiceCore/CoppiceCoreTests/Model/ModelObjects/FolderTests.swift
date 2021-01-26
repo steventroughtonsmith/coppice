@@ -388,6 +388,26 @@ class FolderTests: XCTestCase {
         XCTAssertEqual(contents[2], object3.id.stringRepresentation)
     }
 
+    func test_plistRepresentation_includesAnyOtherProperties() throws {
+        let folder = self.foldersCollection.newObject()
+        let object1 = self.pagesCollection.newObject()
+        let object2 = self.foldersCollection.newObject()
+        let plist: [String: Any] = [
+            "id": folder.id.stringRepresentation,
+            "title": "Cool Pages",
+            "dateCreated": Date(timeIntervalSinceReferenceDate: 3106),
+            "foo": "bar",
+            "contents": [object1.id.stringRepresentation, object2.id.stringRepresentation],
+            "baz": ["hello": "world"],
+        ]
+
+        XCTAssertNoThrow(try folder.update(fromPlistRepresentation: plist))
+
+        let plistRepresentation = folder.plistRepresentation
+        XCTAssertEqual(plistRepresentation["foo"] as? String, "bar")
+        XCTAssertEqual(plistRepresentation["baz"] as? [String: String], ["hello": "world"])
+    }
+
 
     //MARK: - update(fromPlistRepresentation:)
     func test_updateFromPlistRepresentation_doesntUpdateIfIDsDontMatch() {
@@ -524,6 +544,45 @@ class FolderTests: XCTestCase {
 
         XCTAssertThrowsError(try folder.update(fromPlistRepresentation: plist)) {
             XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .attributeNotFound("dateCreated"))
+        }
+    }
+
+    func test_updateFromPlistRepresentation_addsAnythingElseInPlistToOtherProperties() throws {
+        let folder = self.foldersCollection.newObject()
+        let object1 = self.pagesCollection.newObject()
+        let object2 = self.foldersCollection.newObject()
+        let plist: [String: Any] = [
+            "id": folder.id.stringRepresentation,
+            "title": "Cool Pages",
+            "dateCreated": Date(timeIntervalSinceReferenceDate: 3106),
+            "foo": "bar",
+            "contents": [object1.id.stringRepresentation, object2.id.stringRepresentation],
+            "baz": ["hello": "world"],
+        ]
+
+        XCTAssertNoThrow(try folder.update(fromPlistRepresentation: plist))
+
+        XCTAssertEqual(folder.otherProperties["foo"] as? String, "bar")
+        XCTAssertEqual(folder.otherProperties["baz"] as? [String: String], ["hello": "world"])
+    }
+
+    func test_updateFromPlistRepresentation_doesntIncludeAnySupportPlistKeysInOtherProperties() throws {
+        let folder = self.foldersCollection.newObject()
+        let object1 = self.pagesCollection.newObject()
+        let object2 = self.foldersCollection.newObject()
+        let plist: [String: Any] = [
+            "id": folder.id.stringRepresentation,
+            "title": "Cool Pages",
+            "dateCreated": Date(timeIntervalSinceReferenceDate: 3106),
+            "foo": "bar",
+            "contents": [object1.id.stringRepresentation, object2.id.stringRepresentation],
+            "baz": ["hello": "world"],
+        ]
+
+        XCTAssertNoThrow(try folder.update(fromPlistRepresentation: plist))
+        XCTAssertEqual(folder.otherProperties.count, 2)
+        for key in Folder.PlistKeys.allCases {
+            XCTAssertNil(folder.otherProperties[key.rawValue])
         }
     }
 }

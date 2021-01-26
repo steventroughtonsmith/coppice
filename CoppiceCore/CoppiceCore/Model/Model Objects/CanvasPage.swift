@@ -37,6 +37,8 @@ public final class CanvasPage: NSObject, CollectableModelObject {
 
     public var zIndex: Int = -1
 
+    public private(set) var otherProperties = [String : Any]()
+
     
     //MARK: - Relationships
     @ModelObjectReference @objc dynamic public var page: Page? {
@@ -90,21 +92,30 @@ public final class CanvasPage: NSObject, CollectableModelObject {
 
 
     //MARK: - Plists
+    enum PlistKeys: String, CaseIterable {
+        case id
+        case frame
+        case zIndex
+        case page
+        case canvas
+        case parent
+    }
+    
     public var plistRepresentation: [String : Any] {
-        var plist: [String: Any] = [
-            "id": self.id.stringRepresentation,
-            "frame": NSStringFromRect(self.frame),
-            "zIndex": self.zIndex,
-        ]
+        var plist = self.otherProperties
+
+        plist[PlistKeys.id.rawValue] = self.id.stringRepresentation
+        plist[PlistKeys.frame.rawValue] = NSStringFromRect(self.frame)
+        plist[PlistKeys.zIndex.rawValue] = self.zIndex
 
         if let page = self.page {
-            plist["page"] = page.id.stringRepresentation
+            plist[PlistKeys.page.rawValue] = page.id.stringRepresentation
         }
         if let canvas = self.canvas {
-            plist["canvas"] = canvas.id.stringRepresentation
+            plist[PlistKeys.canvas.rawValue] = canvas.id.stringRepresentation
         }
         if let parent = self.parent {
-            plist["parent"] = parent.id.stringRepresentation
+            plist[PlistKeys.parent.rawValue] = parent.id.stringRepresentation
         }
         return plist
     }
@@ -114,27 +125,32 @@ public final class CanvasPage: NSObject, CollectableModelObject {
             throw ModelObjectUpdateErrors.modelControllerNotSet
         }
 
-        guard self.id.stringRepresentation == (plist["id"] as? String) else {
+        guard self.id.stringRepresentation == (plist[PlistKeys.id.rawValue] as? String) else {
             throw ModelObjectUpdateErrors.idsDontMatch
         }
 
-        let frameString: String = try self.attribute(withKey: "frame", from: plist)
+        let frameString: String = try self.attribute(withKey: PlistKeys.frame.rawValue, from: plist)
         self.frame = NSRectFromString(frameString)
 
-        if let parentString = plist["parent"] as? String, let parentID = ModelID(string: parentString) {
+        if let parentString = plist[PlistKeys.parent.rawValue] as? String, let parentID = ModelID(string: parentString) {
             self.parent = modelController.collection(for: CanvasPage.self).objectWithID(parentID)
         }
 
-        if let pageString = plist["page"] as? String, let pageID = ModelID(string: pageString) {
+        if let pageString = plist[PlistKeys.page.rawValue] as? String, let pageID = ModelID(string: pageString) {
             self.page = modelController.collection(for: Page.self).objectWithID(pageID)
         }
 
-        if let canvasString = plist["canvas"] as? String, let canvasID = ModelID(string: canvasString) {
+        if let canvasString = plist[PlistKeys.canvas.rawValue] as? String, let canvasID = ModelID(string: canvasString) {
             self.canvas = modelController.collection(for: Canvas.self).objectWithID(canvasID)
         }
 
-        if let zIndex = plist["zIndex"] as? Int {
+        if let zIndex = plist[PlistKeys.zIndex.rawValue] as? Int {
             self.zIndex = zIndex
+        }
+
+        let plistKeys = PlistKeys.allCases.map(\.rawValue)
+        self.otherProperties = plist.filter { (key, _) -> Bool in
+            return plistKeys.contains(key) == false
         }
     }
 

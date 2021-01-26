@@ -23,6 +23,7 @@ public protocol ModelObject: class {
 
     init()
 
+    var otherProperties: [String: Any] { get }
 
     static func modelID(with: UUID) -> ModelID
     static func modelID(withUUIDString: String) -> ModelID?

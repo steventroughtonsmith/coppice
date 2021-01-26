@@ -51,6 +51,7 @@ public class PageHierarchy {
     }
 
     public var plistRepresentation: [String: Any] {
+        //Changing this will require a bump to the document
         let childPlists = self.children.map(\.plistRepresentation)
 
         return [

@@ -23,19 +23,21 @@ public class TextPageContent: NSObject, PageContent {
         return false
     }
     public weak var page: Page?
+    public private(set) var otherMetadata: [String: Any]?
 
-    public init(data: Data? = nil) {
+    public init(data: Data? = nil, metadata: [String: Any]? = nil) {
         if let textData = data,
             let text = try? NSAttributedString(data: textData, options: [:], documentAttributes: nil) {
             self.text = text
         }
+        self.otherMetadata = metadata
     }
 
     public var modelFile: ModelFile {
         let textData = try? self.text.data(from: NSMakeRange(0, self.text.length),
                                            documentAttributes: [.documentType: NSAttributedString.DocumentType.rtf])
         let filename = (self.page != nil) ? "\(self.page!.id.uuid.uuidString).rtf" : nil
-        return ModelFile(type: self.contentType.rawValue, filename: filename, data: textData, metadata: nil)
+        return ModelFile(type: self.contentType.rawValue, filename: filename, data: textData, metadata: self.otherMetadata)
     }
 
     public func firstRangeOf(_ searchTerm: String) -> NSRange {

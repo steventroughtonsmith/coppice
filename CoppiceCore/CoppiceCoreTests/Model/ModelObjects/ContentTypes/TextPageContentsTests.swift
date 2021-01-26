@@ -33,7 +33,7 @@ class TextPageContentsTests: XCTestCase {
     //MARK: - .text
     func test_text_notifiesOfChangeIfNewValueIsDifferent() {
         let expectation = self.expectation(description: "Called observer")
-        let observer = self.modelController.collection(for: Page.self).addObserver { (change) in
+        let observer = self.modelController.pageCollection.addObserver { (change) in
             expectation.fulfill()
             XCTAssertEqual(change.changeType, .update)
             XCTAssertTrue(change.didUpdate(\.content))
@@ -50,7 +50,7 @@ class TextPageContentsTests: XCTestCase {
         self.content.text = NSAttributedString(string: "Hello World")
         let expectation = self.expectation(description: "Called observer")
         expectation.isInverted = true
-        let observer = self.modelController.collection(for: Page.self).addObserver { (change) in
+        let observer = self.modelController.pageCollection.addObserver { (change) in
             expectation.fulfill()
         }
 
@@ -96,6 +96,12 @@ class TextPageContentsTests: XCTestCase {
         XCTAssertEqual(content.text.string, "Hello World")
     }
 
+    func test_init_addsAnyMetadataToOtherMetadata() throws {
+        let content = TextPageContent(data: nil, metadata: ["foo": "bar", "hello": "world"])
+        XCTAssertEqual(content.otherMetadata?["foo"] as? String, "bar")
+        XCTAssertEqual(content.otherMetadata?["hello"] as? String, "world")
+    }
+
 
     //MARK: - .modelFile
     func test_modelFile_typeIsTextContentType() {
@@ -118,10 +124,18 @@ class TextPageContentsTests: XCTestCase {
         XCTAssertEqual(modelFile.data, expectedData)
     }
 
-    func test_modelFile_metadataIsNil() {
+    func test_modelFile_metadataIsNilForPlainFile() {
         self.content.text = NSAttributedString(string: "Hello World")
         let modelFile = self.content.modelFile
         XCTAssertNil(modelFile.metadata)
+    }
+
+    func test_modelFile_metadataIsSetToOtherMetadata() throws {
+        let content = TextPageContent(data: nil, metadata: ["foo": "bar", "hello": "world"])
+
+        let modelFile = content.modelFile
+        XCTAssertEqual(modelFile.metadata?["foo"] as? String, "bar")
+        XCTAssertEqual(modelFile.metadata?["hello"] as? String, "world")
     }
 
 

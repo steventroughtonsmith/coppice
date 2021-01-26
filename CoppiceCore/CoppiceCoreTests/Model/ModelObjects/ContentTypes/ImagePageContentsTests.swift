@@ -45,6 +45,19 @@ class ImagePageContentsTests: XCTestCase {
         XCTAssertNil(content.imageDescription)
     }
 
+    func test_init_setsOtherMetadataToAnyOtherValues() throws {
+        let content = ImagePageContent(metadata: ["bar": "foo", "baz": 42])
+        XCTAssertEqual(content.otherMetadata?["bar"] as? String, "foo")
+        XCTAssertEqual(content.otherMetadata?["baz"] as? Int, 42)
+    }
+
+    func test_init_doesntIncludeImageDescriptionInOtherMetadata() throws {
+        let content = ImagePageContent(metadata: ["description": "Hello World", "foo": 42])
+        XCTAssertEqual(content.otherMetadata?.count, 1)
+        XCTAssertEqual(content.otherMetadata?["foo"] as? Int, 42)
+        XCTAssertNil(content.otherMetadata?["description"])
+    }
+
 
     //MARK: - .modelFile
     func test_modelFile_typeIsSetToImageType() {
@@ -96,4 +109,19 @@ class ImagePageContentsTests: XCTestCase {
         XCTAssertNil(content.modelFile.metadata?["description"])
     }
 
+    func test_modelFile_metadataContainsOtherMetadata() throws {
+        let content = ImagePageContent(metadata: ["bar": "foo", "baz": 42])
+        let modelFile = content.modelFile
+        XCTAssertEqual(modelFile.metadata?["bar"] as? String, "foo")
+        XCTAssertEqual(modelFile.metadata?["baz"] as? Int, 42)
+    }
+
+    func test_modelFile_metadataContainsBothOtherMetadataAndDescription() throws {
+        let content = ImagePageContent(metadata: ["bar": "foo", "baz": 42])
+        content.imageDescription = "Hello!"
+        let modelFile = content.modelFile
+        XCTAssertEqual(modelFile.metadata?["bar"] as? String, "foo")
+        XCTAssertEqual(modelFile.metadata?["baz"] as? Int, 42)
+        XCTAssertEqual(modelFile.metadata?["description"] as? String, "Hello!")
+    }
 }

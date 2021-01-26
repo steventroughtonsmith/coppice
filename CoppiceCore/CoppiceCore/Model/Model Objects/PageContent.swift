@@ -15,7 +15,7 @@ public enum PageContentType: String, Equatable, CaseIterable {
     public func createContent(data: Data? = nil, metadata: [String: Any]? = nil) -> PageContent {
         switch self {
         case .text:
-            return TextPageContent(data: data)
+            return TextPageContent(data: data, metadata: metadata)
         case .image:
             return ImagePageContent(data: data, metadata: metadata)
         }
@@ -83,6 +83,7 @@ public protocol PageContent: class {
     var page: Page? { get set }
     var modelFile: ModelFile { get }
     var maintainAspectRatio: Bool { get }
+    var otherMetadata: [String: Any]? { get }
 
     func firstRangeOf(_ searchTerm: String) -> NSRange
 

@@ -362,6 +362,9 @@ class SourceListViewModel: ViewModel {
     }
 
     func createFolder(usingSelection collection: SourceListNodeCollection) -> DocumentWindowViewModel.SidebarItem? {
+        guard (collection.nodes.count > 0) else {
+            return nil
+        }
         let containingFolder = collection.commonAncestor?.folderForCreation ?? self.modelController.rootFolder
         let newFolder = self.modelController.createFolder(in: containingFolder, below: containingFolder.contents.last) { folder in
             folder.insert(collection.nodes.compactMap(\.folderContainable))
