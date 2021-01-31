@@ -32,6 +32,7 @@ class HelpBook: Codable {
         var dateUpdated: Date
         var dateCreated: Date?
         var tags: [String] = []
+        var appVersion: String
         weak var helpBook: HelpBook?
 
         enum CodingKeys: String, CodingKey {
@@ -40,18 +41,27 @@ class HelpBook: Codable {
             case dateUpdated
             case dateCreated
             case tags
+            case appVersion
         }
 
         static func ==(lhs: Topic, rhs: Topic) -> Bool {
             return lhs.id == rhs.id
         }
 
-        init(id: String, title: String, dateUpdated: Date, dateCreated: Date?, tags: [String]) {
+        init(id: String, title: String, dateUpdated: Date, dateCreated: Date?, tags: [String], appVersion: String) {
             self.id = id
             self.title = title
             self.dateUpdated = dateUpdated
             self.dateCreated = dateCreated
             self.tags = tags
+            self.appVersion = appVersion
+        }
+
+        var isNewInCurrentVersion: Bool {
+            guard let versionString = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String else {
+                return false
+            }
+            return versionString.hasPrefix(self.appVersion)
         }
     }
 
@@ -88,7 +98,7 @@ class HelpBook: Codable {
     }
 
     lazy var home: Topic = {
-        let topic = HelpBook.Topic(id: "_home", title: "Home", dateUpdated: Date(), dateCreated: nil, tags: [])
+        let topic = HelpBook.Topic(id: "_home", title: "Home", dateUpdated: Date(), dateCreated: nil, tags: [], appVersion: "2020.1")
         topic.helpBook = self
         return topic
     }()

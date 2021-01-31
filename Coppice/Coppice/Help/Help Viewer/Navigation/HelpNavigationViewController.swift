@@ -167,6 +167,13 @@ extension HelpNavigationViewController {
             default: return false
             }
         }
+
+        var isNew: Bool {
+            switch self {
+            case .topic(let topic): return topic.isNewInCurrentVersion
+            default:                return false
+            }
+        }
     }
 
     class NavigationNode {

@@ -10,6 +10,8 @@ import Cocoa
 
 class HelpNavigationTableCellView: NSTableCellView {
 
+    @IBOutlet var newDotImageView: NSImageView?
+
     override var objectValue: Any? {
         didSet {
             self.reloadData()
@@ -22,6 +24,8 @@ class HelpNavigationTableCellView: NSTableCellView {
         }
 
         self.textField?.stringValue = node.item.title
+
+        self.newDotImageView?.isHidden = !node.item.isNew
     }
     
 }
