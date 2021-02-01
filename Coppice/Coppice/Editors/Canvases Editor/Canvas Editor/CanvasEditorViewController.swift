@@ -671,7 +671,6 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
         return false
     }
 
-    #if DEBUG
     @IBAction func saveCanvasImageToDisk(_ sender: Any?) {
         guard let window = self.view.window else {
             return
@@ -682,13 +681,16 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
 
         savePanel.beginSheetModal(for: window) { (modalResponse) in
             if modalResponse == .OK, let url = savePanel.url {
-                try? view?.generateImage()?.jpegData()?.write(to: url)
+                do {
+                    try view?.generateImage()?.jpegData()?.write(to: url)
+                } catch let e {
+                    self.windowController?.presentError(e)
+                }
             }
             window.endSheet(savePanel)
             savePanel.orderOut(nil)
         }
     }
-    #endif
 
 
     //MARK: - SplitViewContainable

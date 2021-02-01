@@ -169,6 +169,18 @@ class CanvasElementView: NSView  {
         }
     }
 
+    func invertShadows() {
+        let shadow = self.standardDropShadow
+        shadow.shadowOffset = CGSize(width: 0, height: -shadow.shadowOffset.height)
+        self.backgroundView.shadow = shadow
+        self.contentContainerShadow.shadow = shadow
+    }
+
+    func restoreShadows() {
+        self.backgroundView.shadow = self.standardDropShadow
+        self.contentContainerShadow.shadow = self.standardDropShadow
+    }
+
 
     //MARK: - Background Visibility
     private func updateBackgroundVisibility(animated: Bool) {

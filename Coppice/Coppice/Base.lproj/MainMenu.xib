@@ -170,6 +170,12 @@
                                     <action selector="exportPages:" target="-1" id="laE-iw-FeU"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Export Canvas as Image…" id="yTG-ic-QCo">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="saveCanvasImageToDisk:" target="-1" id="Mds-ma-I2p"/>
+                                </connections>
+                            </menuItem>
                         </items>
                     </menu>
                 </menuItem>

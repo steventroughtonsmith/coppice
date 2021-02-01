@@ -467,7 +467,13 @@ class CanvasView: NSView {
         return self.layoutEngine?.accessibilityResize(component, of: page, by: delta) ?? .zero
     }
 
+
+    //MARK: - Exporting
     func generateImage() -> NSImage? {
+        //For some reason shadows are drawn inverted when put into an image so we need to invert them first
+        for page in self.pageLayer.subviews {
+            (page as? CanvasElementView)?.invertShadows()
+        }
         let thumbnailRect = self.thumbnailRect
         guard let bitmapRep = self.bitmapImageRepForCachingDisplay(in: thumbnailRect) else {
             return nil
@@ -477,6 +483,10 @@ class CanvasView: NSView {
 
         let largeImage = NSImage(size: thumbnailRect.size)
         largeImage.addRepresentation(bitmapRep)
+
+        for page in self.pageLayer.subviews {
+            (page as? CanvasElementView)?.restoreShadows()
+        }
 
         return largeImage
     }
