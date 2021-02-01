@@ -210,6 +210,9 @@
 		9999A24524F95235001F8161 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9999A24324F95235001F8161 /* SignInViewController.swift */; };
 		9999A24624F95235001F8161 /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9999A24424F95235001F8161 /* SignInViewController.xib */; };
 		9999A25925010F08001F8161 /* HoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9999A25825010F08001F8161 /* HoverView.swift */; };
+		999A316425C81C0B00FF60E5 /* WhatsNewWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999A316225C81C0B00FF60E5 /* WhatsNewWindowController.swift */; };
+		999A316525C81C0B00FF60E5 /* WhatsNewWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 999A316325C81C0B00FF60E5 /* WhatsNewWindow.xib */; };
+		999A317125C83CF700FF60E5 /* VersionNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999A317025C83CF700FF60E5 /* VersionNumber.swift */; };
 		999DAACA23CCC5D80013EC36 /* SidebarHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999DAAC923CCC5D80013EC36 /* SidebarHeaderView.swift */; };
 		999EA68D2433913A00BF254E /* Info.plist.prefix in Resources */ = {isa = PBXBuildFile; fileRef = 999EA68C2433913A00BF254E /* Info.plist.prefix */; };
 		999EA6B32436097500BF254E /* SidebarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999EA6B02436097500BF254E /* SidebarViewModel.swift */; };
@@ -622,6 +625,9 @@
 		9999A24324F95235001F8161 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		9999A24424F95235001F8161 /* SignInViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SignInViewController.xib; sourceTree = "<group>"; };
 		9999A25825010F08001F8161 /* HoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoverView.swift; sourceTree = "<group>"; };
+		999A316225C81C0B00FF60E5 /* WhatsNewWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewWindowController.swift; sourceTree = "<group>"; };
+		999A316325C81C0B00FF60E5 /* WhatsNewWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WhatsNewWindow.xib; sourceTree = "<group>"; };
+		999A317025C83CF700FF60E5 /* VersionNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionNumber.swift; sourceTree = "<group>"; };
 		999DAAC923CCC5D80013EC36 /* SidebarHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarHeaderView.swift; sourceTree = "<group>"; };
 		999EA68C2433913A00BF254E /* Info.plist.prefix */ = {isa = PBXFileReference; lastKnownFileType = text; path = Info.plist.prefix; sourceTree = "<group>"; };
 		999EA68F243392B600BF254E /* prepare_infoplist_prefix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = prepare_infoplist_prefix.swift; sourceTree = "<group>"; };
@@ -830,6 +836,7 @@
 		99045FC224D43EB600FD3D33 /* Extra Windows */ = {
 			isa = PBXGroup;
 			children = (
+				999A316125C81B9A00FF60E5 /* Whats New */,
 				999007D124CF456600DB5C13 /* Tour */,
 				9981E6D324C08D0F005AF0EE /* Welcome */,
 				9981E6CC24C057F8005AF0EE /* About */,
@@ -857,6 +864,7 @@
 				99AD8872237464B5000453E1 /* Generic Types */,
 				998D077E24115D04004ADFF8 /* Generic Views */,
 				992A5C9D22DCCDA20012CCB6 /* Extensions */,
+				999A317025C83CF700FF60E5 /* VersionNumber.swift */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -1371,6 +1379,15 @@
 				9998B4E7251642D900E2D455 /* LinksHelp.mp4 */,
 			);
 			path = "Help Tips";
+			sourceTree = "<group>";
+		};
+		999A316125C81B9A00FF60E5 /* Whats New */ = {
+			isa = PBXGroup;
+			children = (
+				999A316225C81C0B00FF60E5 /* WhatsNewWindowController.swift */,
+				999A316325C81C0B00FF60E5 /* WhatsNewWindow.xib */,
+			);
+			path = "Whats New";
 			sourceTree = "<group>";
 		};
 		999EA68E2433929E00BF254E /* Build Scripts */ = {
@@ -2074,6 +2091,7 @@
 				993D2BD924127E29002E5BAC /* CanvasListView.xib in Resources */,
 				99581093230D92C600D996C4 /* CanvasPageViewController.xib in Resources */,
 				999007F724D07F1500DB5C13 /* TourPages.mp4 in Resources */,
+				999A316525C81C0B00FF60E5 /* WhatsNewWindow.xib in Resources */,
 				9965FC3E23843143002FE10D /* CanvasPageInspectorContentView.xib in Resources */,
 				995F931D252B654A00A753E4 /* Sample Document.coppicedoc in Resources */,
 				996187FD249BB615007313BD /* SubscribeViewController.xib in Resources */,
@@ -2281,6 +2299,7 @@
 				993600E224AE2A81002C86E4 /* ModelObjects+AppKit.swift in Sources */,
 				99488A9F23BA3954009954AF /* LargeCanvasCell.swift in Sources */,
 				99FFF9D02350BAF500EF02A0 /* PageEditorViewModel.swift in Sources */,
+				999A317125C83CF700FF60E5 /* VersionNumber.swift in Sources */,
 				99FFF9D22354C4F600EF02A0 /* GlobalConstants.swift in Sources */,
 				999DAACA23CCC5D80013EC36 /* SidebarHeaderView.swift in Sources */,
 				991B60A82543127B002C483C /* HelpNavigationViewController.swift in Sources */,
@@ -2337,6 +2356,7 @@
 				99771194239BF97600FCC8C7 /* NSAttributedString+M3Extensions.swift in Sources */,
 				99771190239A95C300FCC8C7 /* TextLinkFinder.swift in Sources */,
 				9985F4DB23F44AAD00B96DC7 /* CanvasPageBackgroundView.swift in Sources */,
+				999A316425C81C0B00FF60E5 /* WhatsNewWindowController.swift in Sources */,
 				99D507342501538E00670139 /* ErrorPopoverViewController.swift in Sources */,
 				9951C26E230AF011006CAD4D /* PageSelectorWindow.swift in Sources */,
 				99BC8B4E2550568B007ECBAE /* DocumentContentViewController.swift in Sources */,

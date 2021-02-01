@@ -57,6 +57,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         UserDefaults.standard.set(true, forKey: "NSTextViewAvoidLayoutWhileDrawing")
         NSApplication.shared.registerUserInterfaceItemSearchHandler(HelpController.shared)
+
+        self.whatsNewWindow.showIfNeeded()
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -140,6 +142,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             self?.currentTourWindow = nil
             self?.tourCloseNotification = nil
         }
+    }
+
+    //MARK: - What's New
+    var whatsNewWindow = WhatsNewWindowController()
+    @IBAction func whatsNewInCoppice(_ sender: Any?) {
+        self.whatsNewWindow.showWindow(sender)
     }
 
     #if DEBUG

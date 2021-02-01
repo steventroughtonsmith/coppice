@@ -26,6 +26,8 @@ public enum UserDefaultsKeys: String {
     case showWelcomeScreenOnLaunch = "M3ShowWelcomeScreenOnLaunch"
 
     case sidebarSize = "M3SidebarSize"
+
+    case currentVersion = "M3CurrentVersion"
 }
 
 public extension UserDefaults {
