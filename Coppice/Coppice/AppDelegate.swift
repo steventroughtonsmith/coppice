@@ -59,6 +59,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NSApplication.shared.registerUserInterfaceItemSearchHandler(HelpController.shared)
 
         self.whatsNewWindow.showIfNeeded()
+
+        //Documents should be restored by the next run loop
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
+            if (self.documentController.documents.count == 0) && UserDefaults.standard.bool(forKey: .showWelcomeScreenOnLaunch) {
+                self.welcomeWindow.showWindow(nil)
+            }
+        }
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -71,12 +78,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             return false
         }
         #endif
-        //We need to do this here as applicationDidFinishLaunching is called before any documents are restored, but applicationShouldHandleReopen is not called on launch
-        if (UserDefaults.standard.bool(forKey: .showWelcomeScreenOnLaunch)) {
-            self.welcomeWindow.showWindow(nil)
-            return false
-        }
-        return true
+        return !UserDefaults.standard.bool(forKey: .showWelcomeScreenOnLaunch)
     }
 
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
