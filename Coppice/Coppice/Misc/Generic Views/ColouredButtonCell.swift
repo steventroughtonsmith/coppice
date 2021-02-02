@@ -27,10 +27,11 @@ class ColouredButton: NSButton {
 
 class ColouredButtonCell: NSButtonCell {
     override func drawBezel(withFrame cellFrame: NSRect, in controlView: NSView) {
+        let color = (controlView as? ColouredButton)?.backgroundColor ?? NSColor.linkColor
         if self.isHighlighted {
-            NSColor.linkColor.highlight(withLevel: 0.2)?.set()
+            color.highlight(withLevel: 0.2)?.set()
         } else {
-            NSColor.linkColor.set()
+            color.set()
         }
         NSBezierPath(roundedRect: cellFrame, xRadius: 5, yRadius: 5).fill()
     }
