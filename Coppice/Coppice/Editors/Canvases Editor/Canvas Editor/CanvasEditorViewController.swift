@@ -663,33 +663,7 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
             menuItem.toolTip = NSLocalizedString("Start editing a Page to create a link", comment: "Canvas Link to Page disabled tooltip")
             return false
         }
-        #if DEBUG
-        if menuItem.action == #selector(saveCanvasImageToDisk(_:)) {
-            return true
-        }
-        #endif
         return false
-    }
-
-    @IBAction func saveCanvasImageToDisk(_ sender: Any?) {
-        guard let window = self.view.window else {
-            return
-        }
-        let savePanel = NSSavePanel()
-        savePanel.nameFieldStringValue = "\(self.viewModel.canvas.title).jpeg"
-        let view = self.canvasView
-
-        savePanel.beginSheetModal(for: window) { (modalResponse) in
-            if modalResponse == .OK, let url = savePanel.url {
-                do {
-                    try view?.generateImage()?.jpegData()?.write(to: url)
-                } catch let e {
-                    self.windowController?.presentError(e)
-                }
-            }
-            window.endSheet(savePanel)
-            savePanel.orderOut(nil)
-        }
     }
 
 

@@ -9,7 +9,7 @@
 import Cocoa
 import CoppiceCore
 
-class CanvasesViewController: NSSplitViewController {
+class CanvasesViewController: NSSplitViewController, NSMenuItemValidation {
     let viewModel: CanvasesViewModel
     init(viewModel: CanvasesViewModel) {
         self.viewModel = viewModel
@@ -130,6 +130,48 @@ class CanvasesViewController: NSSplitViewController {
 
     @IBAction func toggleCanvasList(_ sender: Any?) {
         self.isSidebarCompact.toggle()
+    }
+
+
+    //MARK: - Exporting
+
+    @IBAction func exportCanvasAsImage(_ sender: Any?) {
+        guard
+            let window = self.view.window,
+            let canvas = self.viewModel.currentCanvas
+        else {
+            return
+        }
+        let savePanel = NSSavePanel()
+        savePanel.nameFieldStringValue = "\(canvas.title).jpeg"
+
+        savePanel.beginSheetModal(for: window) { (modalResponse) in
+            if modalResponse == .OK, let url = savePanel.url {
+                self.generateImage(for: canvas) { image in
+                    do {
+                        try image.jpegData()?.write(to: url)
+                    } catch let e {
+                        self.windowController?.presentError(e)
+                    }
+                }
+            }
+            window.endSheet(savePanel)
+            savePanel.orderOut(nil)
+        }
+    }
+
+    private func generateImage(for canvas: Canvas, completion: @escaping (NSImage) -> Void) {
+        let imageGenerator = CanvasImageGenerator(canvas: canvas, contentBorder: 200)
+        if let image = imageGenerator.generateImage() {
+            completion(image)
+        }
+    }
+
+    func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+        if menuItem.action == #selector(exportCanvasAsImage(_:)) {
+            return self.viewModel.currentCanvas != nil
+        }
+        return false
     }
 }
 

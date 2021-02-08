@@ -173,7 +173,7 @@
                             <menuItem title="Export Canvas as Image…" id="yTG-ic-QCo">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="saveCanvasImageToDisk:" target="-1" id="Mds-ma-I2p"/>
+                                    <action selector="exportCanvasAsImage:" target="-1" id="ZXY-WP-qWJ"/>
                                 </connections>
                             </menuItem>
                         </items>

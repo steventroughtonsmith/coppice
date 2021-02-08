@@ -20,7 +20,6 @@ class DebugMenuBuilder: NSObject {
 
     let showPreviewGenerationItem = NSMenuItem(title: "Show Preview Generation…", action: #selector(DocumentWindowController.showPreviewGenerationWindow(_:)), keyEquivalent: "")
 
-    let saveCanvasAsImageItem = NSMenuItem(title: "Save Canvas as Image…", action: #selector(CanvasEditorViewController.saveCanvasImageToDisk(_:)), keyEquivalent: "")
 
     let logResponderChainItem = NSMenuItem(title: "Log Responder Chain", action: #selector(DocumentWindowController.logResponderChain(_:)), keyEquivalent: "")
 
@@ -31,7 +30,6 @@ class DebugMenuBuilder: NSObject {
         menu.addItem(self.showKeyLoopItem)
         menu.addItem(self.showPreviewGenerationItem)
         menu.addItem(NSMenuItem.separator())
-        menu.addItem(self.saveCanvasAsImageItem)
         menu.addItem(self.logResponderChainItem)
         return menu
     }

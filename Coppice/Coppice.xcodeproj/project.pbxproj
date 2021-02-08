@@ -331,6 +331,7 @@
 		99DEF28A22F32D350020A7CE /* DebugCanvasViewModelTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DEF28922F32D350020A7CE /* DebugCanvasViewModelTypes.swift */; };
 		99E93E2923D32F15004CF4BB /* ColourGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E93E2823D32F15004CF4BB /* ColourGridView.swift */; };
 		99E93E2B23D32F61004CF4BB /* ColourGridButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E93E2A23D32F61004CF4BB /* ColourGridButton.swift */; };
+		99F0A73125D16CEB00C9D2C4 /* CanvasImageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C8E924C7022D002EEBFA /* CanvasImageGenerator.swift */; };
 		99F0CD76246AF1C4006DE18E /* PreviewGenerationDebugWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F0CD74246AF1C4006DE18E /* PreviewGenerationDebugWindow.swift */; };
 		99F0CD77246AF1C4006DE18E /* PreviewGenerationDebugWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99F0CD75246AF1C4006DE18E /* PreviewGenerationDebugWindow.xib */; };
 		99FCD7F324A7819400B44593 /* SparkleDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FCD7F224A7819400B44593 /* SparkleDelegate.swift */; };
@@ -2252,6 +2253,7 @@
 				99D8E38B237F58FA0098CF3B /* NIBInstantiable.swift in Sources */,
 				99AD88A5237B1700000453E1 /* DocumentWindowViewModel.swift in Sources */,
 				99488AAE23C37B98009954AF /* CanvasThumbnailGenerator.swift in Sources */,
+				99F0A73125D16CEB00C9D2C4 /* CanvasImageGenerator.swift in Sources */,
 				993D2BF92412B053002E5BAC /* NestableSplitView.swift in Sources */,
 				99E93E2923D32F15004CF4BB /* ColourGridView.swift in Sources */,
 				99581095230D93F700D996C4 /* CanvasPageViewModel.swift in Sources */,
