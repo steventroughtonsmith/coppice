@@ -132,7 +132,7 @@ class TextEditorAttributeEditor {
 
             //We want an copy of the old string as we need it to calculate the ranges of the old list markers to replace
             let oldString = textStorage.copy() as! NSAttributedString
-            var replacements: [(NSRange, String)] = []
+            var replacements: [(NSRange, String, NSParagraphStyle)] = []
             textStorage.enumerateAttribute(.paragraphStyle, in: editingRange, options: []) { (attribute, effectiveRange, _) in
                 guard
                     let oldParagraphStyle = attribute as? NSParagraphStyle,
@@ -176,16 +176,23 @@ class TextEditorAttributeEditor {
 
                     //Add the range and text to replace. We don't actually replace here as we don't want to mess up enumerateAttributes()
                     if let list = textLists.last {
-                        replacements.append((existingRange, "\t\(list.marker(forItemNumber: textStorage.itemNumber(in: list, at: substringRange.location)))\t"))
+                        replacements.append((existingRange, "\t\(list.marker(forItemNumber: textStorage.itemNumber(in: list, at: substringRange.location)))\t", newParagraphStyle))
                     } else {
-                        replacements.append((existingRange, ""))
+                        replacements.append((existingRange, "", newParagraphStyle))
                     }
                 }
             }
 
             //Going from back to front (so the ranges remain valid) apply all the list replacements
-            for (range, string) in replacements.reversed() {
+            for (range, string, paragraphStyle) in replacements.reversed() {
                 textStorage.replaceCharacters(in: range, with: string)
+                //If we're adding a list then we need to make absolutely sure what is added has the paragraph style
+                //This is especially true for the earliest range we're adding as it may use the attributes of the text before
+                if (range.length == 0) {
+                    let addedRange = NSRange(location: range.location, length: string.count)
+                    textStorage.removeAttribute(.paragraphStyle, range: addedRange)
+                    textStorage.addAttribute(.paragraphStyle, value: paragraphStyle, range: addedRange)
+                }
                 //We also want to update the selectionLocation so the cursor goes back to the start of the location, which may have shifted due to other list items changing above
                 if (range.location < selectedLocation) {
                     selectedLocation += (string.count - range.length)
