@@ -8,193 +8,13 @@
 			<key>canvas</key>
 			<string>Canvas_5C45392D-B2B5-4372-92A3-084A047A76AD</string>
 			<key>frame</key>
-			<string>{{232.30078125, 847.55859375}, {300, 170}}</string>
-			<key>id</key>
-			<string>CanvasPage_05863806-62C1-494F-BB8C-B6021A540DF2</string>
-			<key>page</key>
-			<string>Page_954F8308-CC20-439C-BFED-7BDDEF6AFC61</string>
-			<key>parent</key>
-			<string>CanvasPage_C10B3E19-F07F-41C6-BC59-C40FF1D266F6</string>
-			<key>zIndex</key>
-			<integer>10</integer>
-		</dict>
-		<dict>
-			<key>canvas</key>
-			<string>Canvas_5C45392D-B2B5-4372-92A3-084A047A76AD</string>
-			<key>frame</key>
-			<string>{{-180.66796875, -111.2265625}, {293, 417}}</string>
+			<string>{{-181, -111}, {293, 417}}</string>
 			<key>id</key>
 			<string>CanvasPage_328D44A1-9D21-4EDB-A1F1-B97DFA63ACE6</string>
 			<key>page</key>
 			<string>Page_D6B1951C-45AA-42B7-B4E4-B3FA3C2A4676</string>
 			<key>zIndex</key>
-			<integer>7</integer>
-		</dict>
-		<dict>
-			<key>canvas</key>
-			<string>Canvas_5C45392D-B2B5-4372-92A3-084A047A76AD</string>
-			<key>frame</key>
-			<string>{{-667.046875, -71.00390625}, {332, 215}}</string>
-			<key>id</key>
-			<string>CanvasPage_6325569A-EC06-41D4-9412-032CEF5D68F7</string>
-			<key>page</key>
-			<string>Page_54811B65-62E0-481D-9C54-30AE0A2540C6</string>
-			<key>parent</key>
-			<string>CanvasPage_328D44A1-9D21-4EDB-A1F1-B97DFA63ACE6</string>
-			<key>zIndex</key>
-			<integer>8</integer>
-		</dict>
-		<dict>
-			<key>canvas</key>
-			<string>Canvas_5C45392D-B2B5-4372-92A3-084A047A76AD</string>
-			<key>frame</key>
-			<string>{{565.44921875, 526.796875}, {385, 249}}</string>
-			<key>id</key>
-			<string>CanvasPage_79169389-EC6E-4AD8-9E9D-8EFA0BBF495C</string>
-			<key>page</key>
-			<string>Page_AA4DFD1B-E6CB-498B-895B-69992D24571E</string>
-			<key>parent</key>
-			<string>CanvasPage_C10B3E19-F07F-41C6-BC59-C40FF1D266F6</string>
-			<key>zIndex</key>
-			<integer>12</integer>
-		</dict>
-		<dict>
-			<key>canvas</key>
-			<string>Canvas_5C45392D-B2B5-4372-92A3-084A047A76AD</string>
-			<key>frame</key>
-			<string>{{-614.171875, -360.75390625}, {470, 218}}</string>
-			<key>id</key>
-			<string>CanvasPage_B20F6474-7A66-489B-A65B-346C8A14D5A6</string>
-			<key>page</key>
-			<string>Page_61E4F38E-6721-440F-AB8E-E9DEBC234D75</string>
-			<key>zIndex</key>
-			<integer>9</integer>
-		</dict>
-		<dict>
-			<key>canvas</key>
-			<string>Canvas_5C45392D-B2B5-4372-92A3-084A047A76AD</string>
-			<key>frame</key>
-			<string>{{80.796875, 440.7578125}, {322, 185}}</string>
-			<key>id</key>
-			<string>CanvasPage_C10B3E19-F07F-41C6-BC59-C40FF1D266F6</string>
-			<key>page</key>
-			<string>Page_534D6ADC-FDC6-4668-9130-5CDBDAB3680A</string>
-			<key>parent</key>
-			<string>CanvasPage_328D44A1-9D21-4EDB-A1F1-B97DFA63ACE6</string>
-			<key>zIndex</key>
-			<integer>13</integer>
-		</dict>
-		<dict>
-			<key>canvas</key>
-			<string>Canvas_5C45392D-B2B5-4372-92A3-084A047A76AD</string>
-			<key>frame</key>
-			<string>{{-164.2578125, -590.46875}, {338, 200}}</string>
-			<key>id</key>
-			<string>CanvasPage_C41FA204-087C-40D0-A15A-9F9F17523E05</string>
-			<key>page</key>
-			<string>Page_8873E427-613D-41C2-B45B-96F5A1AF7CE2</string>
-			<key>parent</key>
-			<string>CanvasPage_328D44A1-9D21-4EDB-A1F1-B97DFA63ACE6</string>
-			<key>zIndex</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>canvas</key>
-			<string>Canvas_5C45392D-B2B5-4372-92A3-084A047A76AD</string>
-			<key>frame</key>
-			<string>{{653.234375, 899.64453125}, {311.7021276595745, 100}}</string>
-			<key>id</key>
-			<string>CanvasPage_D2F599F2-ED9B-4824-BF33-D5248A2D79A8</string>
-			<key>page</key>
-			<string>Page_D0D70A91-7263-4DC7-97DF-C39F529BCBBB</string>
-			<key>parent</key>
-			<string>CanvasPage_05863806-62C1-494F-BB8C-B6021A540DF2</string>
-			<key>zIndex</key>
-			<integer>11</integer>
-		</dict>
-		<dict>
-			<key>canvas</key>
-			<string>Canvas_5C45392D-B2B5-4372-92A3-084A047A76AD</string>
-			<key>frame</key>
-			<string>{{210.6015625, -1015.296875}, {268, 169}}</string>
-			<key>id</key>
-			<string>CanvasPage_DC183BCE-F55B-4B48-9EA5-44502E50A308</string>
-			<key>page</key>
-			<string>Page_954F8308-CC20-439C-BFED-7BDDEF6AFC61</string>
-			<key>parent</key>
-			<string>CanvasPage_C41FA204-087C-40D0-A15A-9F9F17523E05</string>
-			<key>zIndex</key>
-			<integer>3</integer>
-		</dict>
-		<dict>
-			<key>canvas</key>
-			<string>Canvas_5C45392D-B2B5-4372-92A3-084A047A76AD</string>
-			<key>frame</key>
-			<string>{{-473.89453125, -970.94921875}, {219, 142}}</string>
-			<key>id</key>
-			<string>CanvasPage_DD9FF71F-710A-4DBE-A5D6-6B094AEC1476</string>
-			<key>page</key>
-			<string>Page_9C42EA88-4436-44F5-B7FB-EAA804763F95</string>
-			<key>parent</key>
-			<string>CanvasPage_C41FA204-087C-40D0-A15A-9F9F17523E05</string>
-			<key>zIndex</key>
-			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>canvas</key>
-			<string>Canvas_5C45392D-B2B5-4372-92A3-084A047A76AD</string>
-			<key>frame</key>
-			<string>{{-457.6953125, 408.453125}, {395, 424}}</string>
-			<key>id</key>
-			<string>CanvasPage_DF5DAD2B-DDFA-4AF2-B5CF-7FD0307ADB14</string>
-			<key>page</key>
-			<string>Page_F22967AD-A7F6-42B0-96DE-D8981A35083B</string>
-			<key>parent</key>
-			<string>CanvasPage_328D44A1-9D21-4EDB-A1F1-B97DFA63ACE6</string>
-			<key>zIndex</key>
 			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>canvas</key>
-			<string>Canvas_5C45392D-B2B5-4372-92A3-084A047A76AD</string>
-			<key>frame</key>
-			<string>{{-1073.45703125, -88.40234375}, {310, 249}}</string>
-			<key>id</key>
-			<string>CanvasPage_EDA82A6A-30D8-493F-B528-3BE0D8352498</string>
-			<key>page</key>
-			<string>Page_5B5199D0-F7D8-4BCE-9F3C-017D48A74A8F</string>
-			<key>parent</key>
-			<string>CanvasPage_6325569A-EC06-41D4-9412-032CEF5D68F7</string>
-			<key>zIndex</key>
-			<integer>6</integer>
-		</dict>
-		<dict>
-			<key>canvas</key>
-			<string>Canvas_5C45392D-B2B5-4372-92A3-084A047A76AD</string>
-			<key>frame</key>
-			<string>{{-11.04296875, -954.19140625}, {177, 106}}</string>
-			<key>id</key>
-			<string>CanvasPage_EDB64EF2-FF97-40C4-9256-EA9B832321D5</string>
-			<key>page</key>
-			<string>Page_5A704B52-0452-4039-8918-481366162DA2</string>
-			<key>parent</key>
-			<string>CanvasPage_C41FA204-087C-40D0-A15A-9F9F17523E05</string>
-			<key>zIndex</key>
-			<integer>5</integer>
-		</dict>
-		<dict>
-			<key>canvas</key>
-			<string>Canvas_5C45392D-B2B5-4372-92A3-084A047A76AD</string>
-			<key>frame</key>
-			<string>{{-218.60546875, -969.89453125}, {184, 132}}</string>
-			<key>id</key>
-			<string>CanvasPage_FFAC9BB2-C064-41F2-A6A7-49D06B352EE9</string>
-			<key>page</key>
-			<string>Page_32ACD746-4D1E-4E30-BC88-10597069853E</string>
-			<key>parent</key>
-			<string>CanvasPage_C41FA204-087C-40D0-A15A-9F9F17523E05</string>
-			<key>zIndex</key>
-			<integer>4</integer>
 		</dict>
 	</array>
 	<key>canvases</key>
@@ -203,21 +23,83 @@
 			<key>closedPageHierarchies</key>
 			<dict>
 				<key>CanvasPage_265F4FDA-BE7E-4553-ADE5-8FDF29B673DF</key>
+				<dict/>
+				<key>CanvasPage_328D44A1-9D21-4EDB-A1F1-B97DFA63ACE6</key>
 				<dict>
-					<key>Page_2936E0F0-0B47-4234-97C4-042B9930CBC8</key>
+					<key>Page_534D6ADC-FDC6-4668-9130-5CDBDAB3680A</key>
 					<dict>
 						<key>children</key>
 						<array/>
 						<key>frame</key>
-						<string>{{1059.5859375, -320.00390625}, {245, 166}}</string>
+						<string>{{80.796875, 440.7578125}, {322, 185}}</string>
 						<key>id</key>
-						<string>CanvasPage_2E10377C-79DC-4953-9958-D2A5846937D9</string>
+						<string>CanvasPage_C10B3E19-F07F-41C6-BC59-C40FF1D266F6</string>
 						<key>pageID</key>
-						<string>Page_2936E0F0-0B47-4234-97C4-042B9930CBC8</string>
+						<string>Page_534D6ADC-FDC6-4668-9130-5CDBDAB3680A</string>
 					</dict>
-				</dict>
-				<key>CanvasPage_328D44A1-9D21-4EDB-A1F1-B97DFA63ACE6</key>
-				<dict>
+					<key>Page_54811B65-62E0-481D-9C54-30AE0A2540C6</key>
+					<dict>
+						<key>children</key>
+						<array/>
+						<key>frame</key>
+						<string>{{-667.046875, -71.00390625}, {332, 215}}</string>
+						<key>id</key>
+						<string>CanvasPage_6325569A-EC06-41D4-9412-032CEF5D68F7</string>
+						<key>pageID</key>
+						<string>Page_54811B65-62E0-481D-9C54-30AE0A2540C6</string>
+					</dict>
+					<key>Page_8873E427-613D-41C2-B45B-96F5A1AF7CE2</key>
+					<dict>
+						<key>children</key>
+						<array>
+							<dict>
+								<key>children</key>
+								<array/>
+								<key>frame</key>
+								<string>{{-473.89453125, -970.94921875}, {219, 142}}</string>
+								<key>id</key>
+								<string>CanvasPage_DD9FF71F-710A-4DBE-A5D6-6B094AEC1476</string>
+								<key>pageID</key>
+								<string>Page_9C42EA88-4436-44F5-B7FB-EAA804763F95</string>
+							</dict>
+							<dict>
+								<key>children</key>
+								<array/>
+								<key>frame</key>
+								<string>{{-218.60546875, -969.89453125}, {184, 132}}</string>
+								<key>id</key>
+								<string>CanvasPage_FFAC9BB2-C064-41F2-A6A7-49D06B352EE9</string>
+								<key>pageID</key>
+								<string>Page_32ACD746-4D1E-4E30-BC88-10597069853E</string>
+							</dict>
+							<dict>
+								<key>children</key>
+								<array/>
+								<key>frame</key>
+								<string>{{-11.04296875, -954.19140625}, {177, 106}}</string>
+								<key>id</key>
+								<string>CanvasPage_EDB64EF2-FF97-40C4-9256-EA9B832321D5</string>
+								<key>pageID</key>
+								<string>Page_5A704B52-0452-4039-8918-481366162DA2</string>
+							</dict>
+							<dict>
+								<key>children</key>
+								<array/>
+								<key>frame</key>
+								<string>{{210.6015625, -1015.296875}, {268, 169}}</string>
+								<key>id</key>
+								<string>CanvasPage_DC183BCE-F55B-4B48-9EA5-44502E50A308</string>
+								<key>pageID</key>
+								<string>Page_954F8308-CC20-439C-BFED-7BDDEF6AFC61</string>
+							</dict>
+						</array>
+						<key>frame</key>
+						<string>{{-164.2578125, -590.46875}, {338, 200}}</string>
+						<key>id</key>
+						<string>CanvasPage_C41FA204-087C-40D0-A15A-9F9F17523E05</string>
+						<key>pageID</key>
+						<string>Page_8873E427-613D-41C2-B45B-96F5A1AF7CE2</string>
+					</dict>
 					<key>Page_B1CA31B5-52AF-4385-9FAD-C0A4FB9330E8</key>
 					<dict>
 						<key>children</key>
@@ -229,9 +111,32 @@
 						<key>pageID</key>
 						<string>Page_B1CA31B5-52AF-4385-9FAD-C0A4FB9330E8</string>
 					</dict>
+					<key>Page_F22967AD-A7F6-42B0-96DE-D8981A35083B</key>
+					<dict>
+						<key>children</key>
+						<array/>
+						<key>frame</key>
+						<string>{{-457.6953125, 408.453125}, {395, 424}}</string>
+						<key>id</key>
+						<string>CanvasPage_DF5DAD2B-DDFA-4AF2-B5CF-7FD0307ADB14</string>
+						<key>pageID</key>
+						<string>Page_F22967AD-A7F6-42B0-96DE-D8981A35083B</string>
+					</dict>
 				</dict>
 				<key>CanvasPage_6325569A-EC06-41D4-9412-032CEF5D68F7</key>
-				<dict/>
+				<dict>
+					<key>Page_5B5199D0-F7D8-4BCE-9F3C-017D48A74A8F</key>
+					<dict>
+						<key>children</key>
+						<array/>
+						<key>frame</key>
+						<string>{{-1073.45703125, -88.40234375}, {310, 249}}</string>
+						<key>id</key>
+						<string>CanvasPage_EDA82A6A-30D8-493F-B528-3BE0D8352498</string>
+						<key>pageID</key>
+						<string>Page_5B5199D0-F7D8-4BCE-9F3C-017D48A74A8F</string>
+					</dict>
+				</dict>
 				<key>CanvasPage_9AD950ED-1D78-421B-BC21-44F2E1536AA6</key>
 				<dict>
 					<key>Page_9D3F640C-D34B-4199-AAA2-66A50EB73DB3</key>
@@ -247,7 +152,41 @@
 					</dict>
 				</dict>
 				<key>CanvasPage_C10B3E19-F07F-41C6-BC59-C40FF1D266F6</key>
-				<dict/>
+				<dict>
+					<key>Page_954F8308-CC20-439C-BFED-7BDDEF6AFC61</key>
+					<dict>
+						<key>children</key>
+						<array>
+							<dict>
+								<key>children</key>
+								<array/>
+								<key>frame</key>
+								<string>{{653.234375, 899.64453125}, {311.7021276595745, 100}}</string>
+								<key>id</key>
+								<string>CanvasPage_D2F599F2-ED9B-4824-BF33-D5248A2D79A8</string>
+								<key>pageID</key>
+								<string>Page_D0D70A91-7263-4DC7-97DF-C39F529BCBBB</string>
+							</dict>
+						</array>
+						<key>frame</key>
+						<string>{{232.30078125, 847.55859375}, {300, 170}}</string>
+						<key>id</key>
+						<string>CanvasPage_05863806-62C1-494F-BB8C-B6021A540DF2</string>
+						<key>pageID</key>
+						<string>Page_954F8308-CC20-439C-BFED-7BDDEF6AFC61</string>
+					</dict>
+					<key>Page_AA4DFD1B-E6CB-498B-895B-69992D24571E</key>
+					<dict>
+						<key>children</key>
+						<array/>
+						<key>frame</key>
+						<string>{{565, 527}, {385, 249}}</string>
+						<key>id</key>
+						<string>CanvasPage_79169389-EC6E-4AD8-9E9D-8EFA0BBF495C</string>
+						<key>pageID</key>
+						<string>Page_AA4DFD1B-E6CB-498B-895B-69992D24571E</string>
+					</dict>
+				</dict>
 				<key>CanvasPage_C41FA204-087C-40D0-A15A-9F9F17523E05</key>
 				<dict>
 					<key>Page_30FF5DE7-2CBF-45D3-A80D-BDD7315989D7</key>
@@ -278,9 +217,30 @@
 					<key>Page_1936587F-75AA-48EB-B37E-CCF64BEAC684</key>
 					<dict>
 						<key>children</key>
-						<array/>
+						<array>
+							<dict>
+								<key>children</key>
+								<array/>
+								<key>frame</key>
+								<string>{{1141, -245}, {209, 129}}</string>
+								<key>id</key>
+								<string>CanvasPage_163220FF-8A14-42AC-86B2-6E12E1B5DCD4</string>
+								<key>pageID</key>
+								<string>Page_B335F5A3-20DA-4950-BCDF-19A3758B453F</string>
+							</dict>
+							<dict>
+								<key>children</key>
+								<array/>
+								<key>frame</key>
+								<string>{{1142, -430}, {207, 160}}</string>
+								<key>id</key>
+								<string>CanvasPage_2E10377C-79DC-4953-9958-D2A5846937D9</string>
+								<key>pageID</key>
+								<string>Page_2936E0F0-0B47-4234-97C4-042B9930CBC8</string>
+							</dict>
+						</array>
 						<key>frame</key>
-						<string>{{706.60546875, -299.82421875}, {244, 125}}</string>
+						<string>{{713, -313}, {244, 194}}</string>
 						<key>id</key>
 						<string>CanvasPage_265F4FDA-BE7E-4553-ADE5-8FDF29B673DF</string>
 						<key>pageID</key>
@@ -379,7 +339,7 @@
 			<key>title</key>
 			<string>Welcome</string>
 			<key>viewPort</key>
-			<string>{{-209, -147}, {1107, 1019}}</string>
+			<string>{{-749, -442}, {1460, 1137}}</string>
 			<key>zoomFactor</key>
 			<real>1</real>
 		</dict>
@@ -411,6 +371,7 @@
 				<string>Page_9D3F640C-D34B-4199-AAA2-66A50EB73DB3</string>
 				<string>Page_1936587F-75AA-48EB-B37E-CCF64BEAC684</string>
 				<string>Page_2936E0F0-0B47-4234-97C4-042B9930CBC8</string>
+				<string>Page_B335F5A3-20DA-4950-BCDF-19A3758B453F</string>
 			</array>
 			<key>dateCreated</key>
 			<date>2020-10-05T11:59:07Z</date>
@@ -515,7 +476,7 @@
 			<key>id</key>
 			<string>Page_2936E0F0-0B47-4234-97C4-042B9930CBC8</string>
 			<key>title</key>
-			<string>Text Inspector</string>
+			<string>Font Inspector</string>
 		</dict>
 		<dict>
 			<key>content</key>
@@ -776,6 +737,23 @@
 			<key>content</key>
 			<dict>
 				<key>filename</key>
+				<string>B335F5A3-20DA-4950-BCDF-19A3758B453F.png</string>
+				<key>type</key>
+				<string>image</string>
+			</dict>
+			<key>dateCreated</key>
+			<date>2021-02-15T13:30:43Z</date>
+			<key>dateModified</key>
+			<date>2021-02-15T13:30:43Z</date>
+			<key>id</key>
+			<string>Page_B335F5A3-20DA-4950-BCDF-19A3758B453F</string>
+			<key>title</key>
+			<string>Paragraph inspector</string>
+		</dict>
+		<dict>
+			<key>content</key>
+			<dict>
+				<key>filename</key>
 				<string>D0D70A91-7263-4DC7-97DF-C39F529BCBBB.png</string>
 				<key>type</key>
 				<string>image</string>
@@ -885,6 +863,6 @@
 		<string>Folder_57122DE1-7179-4496-BD0D-877C2C9FE9A3</string>
 	</dict>
 	<key>version</key>
-	<integer>1</integer>
+	<integer>2</integer>
 </dict>
 </plist>
