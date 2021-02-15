@@ -25,7 +25,8 @@
                 "add_an_image_description",
                 "edit_a_pages_title",
                 "re_order_pages",
-                "group_pages_into_folders"
+                "group_pages_into_folders",
+                "lists"
             ]
         },
         {
@@ -51,7 +52,8 @@
                 "move_pages_around_a_canvas",
                 "remove_pages_from_a_canvas",
                 "resize_pages",
-                "change_the_zoom_level_of_a_canvas"
+                "change_the_zoom_level_of_a_canvas",
+                "exporting_canvases"
             ]
         },
         {
@@ -204,7 +206,7 @@
             "id": "format_text_content",
             "title": "Format Text Content",
             "dateCreated": "2020-11-09T16:15:02+0000",
-            "dateUpdated": "2020-11-16T13:50:51+0000",
+            "dateUpdated": "2021-02-09T15:07:02+0000",
             "tags": [
                 "page",
                 "text",
@@ -221,7 +223,12 @@
                 "left",
                 "right",
                 "centre",
-                "cente"
+                "center",
+                "line",
+                "height",
+                "paragraph",
+                "space",
+                "spacing"
             ],
             "appVersion": "2020.1",
             "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/format_text_content"
@@ -631,6 +638,38 @@
             ],
             "appVersion": "2020.1",
             "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/view_and_edit_your_subscription"
+        },
+        {
+            "id": "exporting_canvases",
+            "title": "Exporting Canvases",
+            "dateCreated": "2021-02-15T10:52:04+0000",
+            "dateUpdated": "2021-02-15T10:52:04+0000",
+            "tags": [
+                "export",
+                "canvas",
+                "image",
+                "jpeg",
+                "jpg"
+            ],
+            "appVersion": "2021.1",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/exporting_canvases"
+        },
+        {
+            "id": "lists",
+            "title": "Lists",
+            "dateCreated": "2021-02-15T10:56:50+0000",
+            "dateUpdated": "2021-02-15T12:48:31+0000",
+            "tags": [
+                "text",
+                "page",
+                "list",
+                "bullet",
+                "number",
+                "nest",
+                "paragraph"
+            ],
+            "appVersion": "2021.1",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/lists"
         }
     ]
 }
