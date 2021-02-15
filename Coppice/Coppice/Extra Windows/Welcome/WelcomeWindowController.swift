@@ -21,6 +21,7 @@ class WelcomeWindowController: NSWindowController {
         }
 
         self.window?.isMovableByWindowBackground = true
+        self.window?.isExcludedFromWindowsMenu = true
 
         self.setupVersionLabel()
     }
