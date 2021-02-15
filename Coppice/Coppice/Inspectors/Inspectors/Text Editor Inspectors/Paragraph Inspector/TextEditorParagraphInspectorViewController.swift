@@ -77,7 +77,7 @@ class TextEditorParagraphInspectorViewController: BaseInspectorViewController {
         let styles: [String] = [
             "{disc}", "{hyphen}", "{diamond}", "{check}",
             "{decimal}.",
-            "{upper-latin}.", "{lower-latin}.",
+            "{upper-alpha}.", "{lower-alpha}.",
             "{upper-roman}.", "{lower-roman}.",
         ]
 
