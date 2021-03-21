@@ -12,6 +12,7 @@ class PageSelectorViewController: NSViewController {
 
     @IBOutlet var pagesArrayController: NSArrayController!
     @IBOutlet weak var searchField: NSTextField!
+    @IBOutlet var tableView: NSTableView!
     @objc dynamic let viewModel: PageSelectorViewModel
     init(viewModel: PageSelectorViewModel) {
         self.viewModel = viewModel
@@ -60,10 +61,13 @@ extension PageSelectorViewController: NSTextFieldDelegate {
         }
         if (commandSelector == #selector(moveUp(_:))) {
             self.pagesArrayController.selectPrevious(self)
+            //Turns out NSArrayController doesn't update the selectionIndex immediately
+            self.tableView.scrollRowToVisible(max(self.pagesArrayController.selectionIndex - 1, 0))
             return true
         }
         if (commandSelector == #selector(moveDown(_:))) {
             self.pagesArrayController.selectNext(self)
+            self.tableView.scrollRowToVisible(min(self.pagesArrayController.selectionIndex + 1, self.viewModel.matchingPages.count - 1))
             return true
         }
         if (commandSelector == #selector(insertNewline(_:))) {

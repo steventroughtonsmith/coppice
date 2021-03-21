@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="PageSelectorViewController" customModule="Bubbles" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="PageSelectorViewController" customModule="Coppice" customModuleProvider="target">
             <connections>
                 <outlet property="pagesArrayController" destination="aiO-Pl-vbK" id="mrG-mD-8ws"/>
                 <outlet property="searchField" destination="TDW-xH-h0K" id="tys-GY-xa6"/>
+                <outlet property="tableView" destination="73f-TD-SgA" id="gPy-UJ-kTW"/>
                 <outlet property="view" destination="cQT-fe-yw1" id="kqK-vc-08B"/>
             </connections>
         </customObject>
@@ -35,7 +37,7 @@
                                     <color key="backgroundColor" red="0.11764705882352941" green="0.11764705882352941" blue="0.11764705882352941" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn width="396" minWidth="40" maxWidth="1000" id="rVD-O9-kq8">
+                                        <tableColumn width="387" minWidth="40" maxWidth="1000" id="rVD-O9-kq8">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -214,10 +216,10 @@
     <resources>
         <image name="LargeSearch" width="22" height="22"/>
         <namedColor name="PageSelectorBackground">
-            <color red="0.92156034710000001" green="0.91761565209999996" blue="0.92157334089999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.92199999094009399" green="0.9179999828338623" blue="0.92199999094009399" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="PageSelectorInnerStroke">
-            <color red="0.92148047690000001" green="0.92169898750000001" blue="0.91737532619999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.92100000381469727" green="0.92199999094009399" blue="0.91699999570846558" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>
