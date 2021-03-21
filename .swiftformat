@@ -1,0 +1,10 @@
+--indent 4
+--self insert
+--extensionacl on-declarations
+--modifierorder required,dynamic,override,public,private,private(set),lazy
+--ranges no-space
+--patternlet inline
+
+--disable consecutiveBlankLines, strongOutlets, blankLinesAroundMark, unusedArguments
+--disable spaceInsideComments, redundantParens, andOperator, consecutiveSpaces, redundantReturn
+--disable indent, redundantNilInit, redundantType, redundantObjc, enumNamespaces

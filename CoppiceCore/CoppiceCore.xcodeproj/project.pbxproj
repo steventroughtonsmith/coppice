@@ -516,6 +516,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 99D0C76A24C5DD1E002EEBFA /* Build configuration list for PBXNativeTarget "CoppiceCore" */;
 			buildPhases = (
+				99E533102607B4070017DC5D /* ShellScript */,
 				99D0C75124C5DD1E002EEBFA /* Headers */,
 				99D0C75224C5DD1E002EEBFA /* Sources */,
 				99D0C75324C5DD1E002EEBFA /* Frameworks */,
@@ -604,6 +605,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		99E533102607B4070017DC5D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftformat >/dev/null; then\n  swiftformat --lint .\nelse\n  echo \"warning: SwiftFormat not installed, download from https://github.com/nicklockwood/SwiftFormat\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		99D0C75224C5DD1E002EEBFA /* Sources */ = {

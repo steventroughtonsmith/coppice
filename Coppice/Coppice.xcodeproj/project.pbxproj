@@ -1905,6 +1905,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 99FE01B622CD1038004D380D /* Build configuration list for PBXNativeTarget "Coppice" */;
 			buildPhases = (
+				99E533122607B4300017DC5D /* ShellScript */,
 				99FE018922CD1037004D380D /* Sources */,
 				99FE018A22CD1037004D380D /* Frameworks */,
 				99FE018B22CD1037004D380D /* Resources */,
@@ -1968,7 +1969,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1200;
-				LastUpgradeCheck = 1220;
+				LastUpgradeCheck = 1240;
 				ORGANIZATIONNAME = "M Cubed Software";
 				TargetAttributes = {
 					999EA6912433973A00BF254E = {
@@ -2168,6 +2169,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "GITHASH=$( git rev-parse --short HEAD )\n\"$SRCROOT/Build Scripts/prepare_infoplist_prefix.swift\" --build-number \"$SRCROOT/Coppice/.build_number\" --git-hash $GITHASH\n";
+		};
+		99E533122607B4300017DC5D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftformat >/dev/null; then\n  swiftformat --lint .\nelse\n  echo \"warning: SwiftFormat not installed, download from https://github.com/nicklockwood/SwiftFormat\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

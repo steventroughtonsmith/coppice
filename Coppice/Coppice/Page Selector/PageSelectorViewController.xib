@@ -71,10 +71,10 @@
                                                                         </binding>
                                                                     </connections>
                                                                 </imageView>
-                                                                <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" ambiguous="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x6F-fQ-DI6">
+                                                                <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" placeholderIntrinsicWidth="318" placeholderIntrinsicHeight="34" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x6F-fQ-DI6">
                                                                     <rect key="frame" x="58" y="8" width="318" height="34"/>
                                                                     <subviews>
-                                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="751" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TvE-FE-fxp">
+                                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="TvE-FE-fxp">
                                                                             <rect key="frame" x="-2" y="18" width="96" height="16"/>
                                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" placeholderString="Untitled Page" id="TJg-3g-qZJ">
                                                                                 <font key="font" metaFont="system"/>

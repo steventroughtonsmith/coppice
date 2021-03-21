@@ -314,6 +314,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 99848152248E635600BC0A8A /* Build configuration list for PBXNativeTarget "M3Subscriptions" */;
 			buildPhases = (
+				99E533112607B41C0017DC5D /* ShellScript */,
 				99848145248E635600BC0A8A /* Headers */,
 				99848146248E635600BC0A8A /* Sources */,
 				99848147248E635600BC0A8A /* Frameworks */,
@@ -431,6 +432,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		99E533112607B41C0017DC5D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftformat >/dev/null; then\n  swiftformat --lint .\nelse\n  echo \"warning: SwiftFormat not installed, download from https://github.com/nicklockwood/SwiftFormat\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		99848146248E635600BC0A8A /* Sources */ = {
