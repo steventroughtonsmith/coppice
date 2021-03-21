@@ -14,6 +14,7 @@ class SearchResultsViewController: NSViewController {
     @IBOutlet weak var matchesLabel: NSTextField!
     @IBOutlet weak var clearSearchButton: NSButton!
     @IBOutlet weak var outlineScrollView: NSScrollView!
+    @IBOutlet var topConstraint: NSLayoutConstraint!
 
     @objc dynamic let viewModel: SearchResultsViewModel
     init(viewModel: SearchResultsViewModel) {
@@ -33,6 +34,10 @@ class SearchResultsViewController: NSViewController {
         self.outlineView.register(NSNib(nibNamed: "SearchResultTableCellView", bundle: nil), forIdentifier: NSUserInterfaceItemIdentifier(rawValue: "SearchResultCell"))
         self.outlineView.setDraggingSourceOperationMask(.copy, forLocal: false)
         self.outlineView.registerForDraggedTypes([ModelID.PasteboardType])
+
+        if #available(OSX 10.16, *) {
+            self.topConstraint.constant = 42
+        }
 
         self.setupAccessibility()
     }

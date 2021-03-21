@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -11,6 +12,7 @@
                 <outlet property="matchesLabel" destination="3HR-q7-tBD" id="i9k-9B-56C"/>
                 <outlet property="outlineScrollView" destination="5Zc-O9-1Mp" id="eUB-xM-cFV"/>
                 <outlet property="outlineView" destination="vkU-1v-9tc" id="haR-5s-Ocu"/>
+                <outlet property="topConstraint" destination="itO-oo-EEo" id="QhM-eP-y56"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
         </customObject>
@@ -24,7 +26,7 @@
                     <rect key="frame" x="0.0" y="633" width="239" height="32"/>
                     <subviews>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3HR-q7-tBD">
-                            <rect key="frame" x="8" y="8" width="191" height="16"/>
+                            <rect key="frame" x="8" y="8" width="192" height="16"/>
                             <textFieldCell key="cell" truncatesLastVisibleLine="YES" title="Matches for" id="1dc-Qy-QXD">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -35,7 +37,7 @@
                             </connections>
                         </textField>
                         <button toolTip="Clear the search result" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7PD-vW-nIR">
-                            <rect key="frame" x="217" y="9" width="14" height="14"/>
+                            <rect key="frame" x="218" y="9.5" width="13" height="13"/>
                             <buttonCell key="cell" type="bevel" title="Clear Search" bezelStyle="rounded" image="NSStopProgressFreestandingTemplate" imagePosition="only" alignment="center" controlSize="small" imageScaling="proportionallyDown" inset="2" id="BXe-71-OHC">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="controlContent" size="11"/>
@@ -70,14 +72,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="239" height="632"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" columnReordering="NO" columnResizing="NO" emptySelection="NO" autosaveColumns="NO" autosaveName="SearchResultsList" rowHeight="22" viewBased="YES" indentationPerLevel="14" outlineTableColumn="yLr-kG-YDQ" id="vkU-1v-9tc" customClass="SearchResultOutlineView" customModule="Coppice" customModuleProvider="target">
+                            <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" columnReordering="NO" columnResizing="NO" emptySelection="NO" autosaveColumns="NO" autosaveName="SearchResultsList" rowHeight="22" viewBased="YES" floatsGroupRows="NO" indentationPerLevel="14" outlineTableColumn="yLr-kG-YDQ" id="vkU-1v-9tc" customClass="SearchResultOutlineView" customModule="Coppice" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="239" height="632"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <size key="intercellSpacing" width="3" height="0.0"/>
                                 <color key="backgroundColor" name="_sourceListBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
-                                    <tableColumn width="236" minWidth="16" maxWidth="1000" id="yLr-kG-YDQ">
+                                    <tableColumn width="207" minWidth="16" maxWidth="1000" id="yLr-kG-YDQ">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -90,11 +92,11 @@
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         <prototypeCellViews>
                                             <tableCellView identifier="HeaderCell" misplaced="YES" id="fJR-BF-w98">
-                                                <rect key="frame" x="1" y="0.0" width="236" height="17"/>
+                                                <rect key="frame" x="11" y="0.0" width="216" height="17"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="aCX-s2-w2H">
-                                                        <rect key="frame" x="1" y="2" width="234" height="14"/>
+                                                        <rect key="frame" x="1" y="2" width="214" height="14"/>
                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="p4t-nS-taF">
                                                             <font key="font" metaFont="controlContent" size="11"/>
                                                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -150,6 +152,6 @@
         <userDefaultsController representsSharedInstance="YES" id="VRd-pY-hHR"/>
     </objects>
     <resources>
-        <image name="NSStopProgressFreestandingTemplate" width="14" height="14"/>
+        <image name="NSStopProgressFreestandingTemplate" width="15" height="15"/>
     </resources>
 </document>
