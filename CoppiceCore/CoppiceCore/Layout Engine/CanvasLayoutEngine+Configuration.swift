@@ -8,8 +8,8 @@
 
 import Foundation
 
-public extension CanvasLayoutEngine {
-    struct Configuration {
+extension CanvasLayoutEngine {
+    public struct Configuration {
         public struct Page {
             public let titleHeight: CGFloat
             public let borderSize: CGFloat
@@ -86,15 +86,15 @@ public struct CanvasLayoutMargins: Equatable {
     }
 }
 
-public extension CGRect {
-    func grow(by layoutMargins: CanvasLayoutMargins) -> CGRect {
+extension CGRect {
+    public func grow(by layoutMargins: CanvasLayoutMargins) -> CGRect {
         return CGRect(x: (self.origin.x - layoutMargins.left),
                       y: (self.origin.y - layoutMargins.top),
                       width: (self.size.width + layoutMargins.left + layoutMargins.right),
                       height: (self.size.height + layoutMargins.top + layoutMargins.bottom))
     }
 
-    func shrink(by layoutMargins: CanvasLayoutMargins) -> CGRect {
+    public func shrink(by layoutMargins: CanvasLayoutMargins) -> CGRect {
         return CGRect(x: (self.origin.x + layoutMargins.left),
                       y: (self.origin.y + layoutMargins.top),
                       width: (self.size.width - layoutMargins.left - layoutMargins.right),

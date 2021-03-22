@@ -10,7 +10,7 @@ import Cocoa
 import Combine
 import CoppiceCore
 
-protocol SearchResultsView: class {
+protocol SearchResultsView: AnyObject {
     func reload()
 }
 
@@ -29,7 +29,7 @@ class SearchResultsViewModel: ViewModel {
 
         let attributes = NSMutableAttributedString(string: actualResults, attributes: [
             .foregroundColor: NSColor.secondaryLabelColor,
-            .font: NSFont.systemFont(ofSize: NSFont.systemFontSize)
+            .font: NSFont.systemFont(ofSize: NSFont.systemFontSize),
         ])
 
         let firstQuote = (actualResults as NSString).range(of: "\"")
@@ -37,7 +37,7 @@ class SearchResultsViewModel: ViewModel {
         let range = NSUnionRange(firstQuote, secondQuote)
         attributes.setAttributes([
             .foregroundColor: NSColor.textColor,
-            .font: NSFont.systemFont(ofSize: NSFont.systemFontSize, weight: .medium)
+            .font: NSFont.systemFont(ofSize: NSFont.systemFontSize, weight: .medium),
         ], range: range)
         return attributes
     }
@@ -48,7 +48,7 @@ class SearchResultsViewModel: ViewModel {
 
     var selectedResults: [SearchResult] = [] {
         didSet {
-            self.documentWindowViewModel.updateSelection(selectedResults.map(\.sidebarItem))
+            self.documentWindowViewModel.updateSelection(self.selectedResults.map(\.sidebarItem))
         }
     }
 
@@ -77,7 +77,7 @@ class SearchResultsViewModel: ViewModel {
             return []
         }
         let canvasMatches = self.modelController.canvasCollection.matches(forSearchTerm: self.searchTerm)
-        let sortedCanvases = canvasMatches.map { CanvasSearchResult(match: $0, searchTerm: self.searchTerm)}
+        let sortedCanvases = canvasMatches.map { CanvasSearchResult(match: $0, searchTerm: self.searchTerm) }
         return sortedCanvases
     }
 
@@ -86,7 +86,7 @@ class SearchResultsViewModel: ViewModel {
             return []
         }
         let pageMatches = self.modelController.pageCollection.matches(forSearchTerm: self.searchTerm)
-        let sortedPages = pageMatches.map { PageSearchResult(match: $0, searchTerm: self.searchTerm)}
+        let sortedPages = pageMatches.map { PageSearchResult(match: $0, searchTerm: self.searchTerm) }
         return sortedPages
     }
 

@@ -6,9 +6,9 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 @testable import Coppice
 @testable import CoppiceCore
+import XCTest
 
 class CanvasEditorViewModelTests: XCTestCase {
     var modelController: MockCoppiceModelController!
@@ -436,9 +436,7 @@ class CanvasEditorViewModelTests: XCTestCase {
 
     //MARK: - Helpers
     class TestCanvasEditorView: CanvasEditorView {
-        func notifyAccessibilityOfMove(_ canvasPages: [CanvasPage]) {
-            
-        }
+        func notifyAccessibilityOfMove(_ canvasPages: [CanvasPage]) {}
 
         var flashedPages = [CanvasPage]()
         func flash(_ canvasPage: CanvasPage) {

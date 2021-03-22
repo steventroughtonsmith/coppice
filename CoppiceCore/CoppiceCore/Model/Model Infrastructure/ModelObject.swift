@@ -16,7 +16,7 @@ public enum ModelObjectUpdateErrors: Error, Equatable {
 
 //MARK: -
 /// The protocol root for model objects, used where generics can't be
-public protocol ModelObject: class {
+public protocol ModelObject: AnyObject {
     var id: ModelID { get set }
     static var modelType: ModelType { get }
     var modelController: ModelController? { get }
@@ -41,16 +41,16 @@ public protocol ModelObject: class {
 }
 
 
-public extension ModelObject {
-    static func modelID(with uuid: UUID) -> ModelID {
+extension ModelObject {
+    public static func modelID(with uuid: UUID) -> ModelID {
         return ModelID(modelType: self.modelType, uuid: uuid)
     }
 
-    static func modelID(withUUIDString uuidString: String) -> ModelID? {
+    public static func modelID(withUUIDString uuidString: String) -> ModelID? {
         return ModelID(modelType: self.modelType, uuidString: uuidString)
     }
 
-    static var modelFileProperties: [String] {
+    public static var modelFileProperties: [String] {
         return []
     }
 }
@@ -89,20 +89,20 @@ public protocol CollectableModelObject: ModelObject, Hashable {
 
 
 //MARK: -
-public extension CollectableModelObject {
-    var modelController: ModelController? {
+extension CollectableModelObject {
+    public var modelController: ModelController? {
         return self.collection?.modelController
     }
 
-    @discardableResult static func create(in modelController: ModelController, setupBlock: ((Self) -> Void)? = nil) -> Self {
+    @discardableResult public static func create(in modelController: ModelController, setupBlock: ((Self) -> Void)? = nil) -> Self {
         return modelController.collection(for: Self.self).newObject(setupBlock: setupBlock)
     }
 
-    func objectWasInserted() {}
+    public func objectWasInserted() {}
 
-    func objectWasDeleted() {}
-    
-    func didChange<T>(_ keyPath: ReferenceWritableKeyPath<Self, T>, oldValue: T) {
+    public func objectWasDeleted() {}
+
+    public func didChange<T>(_ keyPath: ReferenceWritableKeyPath<Self, T>, oldValue: T) {
         let id = self.id
         self.collection?.notifyOfChange(to: self, changeType: .update, keyPath: keyPath)
         self.collection?.registerUndoAction(withName: nil) { (collection) in
@@ -110,10 +110,11 @@ public extension CollectableModelObject {
         }
     }
 
-    func didChangeRelationship<T: CollectableModelObject>(_ keyPath: ReferenceWritableKeyPath<Self, T?>, inverseKeyPath: KeyPath<T, Set<Self>>, oldValue: T?) {
+    public func didChangeRelationship<T: CollectableModelObject>(_ keyPath: ReferenceWritableKeyPath<Self, T?>, inverseKeyPath: KeyPath<T, Set<Self>>, oldValue: T?) {
         guard let relationshipObject = oldValue ?? self[keyPath: keyPath],
               let selfCollection = self.collection,
-              let relationshipCollection = relationshipObject.collection else {
+              let relationshipCollection = relationshipObject.collection
+        else {
                 return
         }
         let id = self.id
@@ -122,7 +123,8 @@ public extension CollectableModelObject {
         selfCollection.registerUndoAction(withName: nil) { (collection) in
             var value: T? = nil
             if let objectID = oldID,
-               let oldObject = relationshipCollection.objectWithID(objectID) {
+               let oldObject = relationshipCollection.objectWithID(objectID)
+            {
                 value = oldObject
             }
             collection.setValue(value, for: keyPath, ofObjectWithID: id)
@@ -131,7 +133,7 @@ public extension CollectableModelObject {
         relationshipCollection.notifyOfChange(to: relationshipObject, changeType: .update, keyPath: inverseKeyPath)
     }
 
-    func relationship<T: CollectableModelObject>(for keyPath: ReferenceWritableKeyPath<T, Self?>) -> Set<T> {
+    public func relationship<T: CollectableModelObject>(for keyPath: ReferenceWritableKeyPath<T, Self?>) -> Set<T> {
         guard let modelController = self.modelController else {
             return Set<T>()
         }
@@ -139,7 +141,7 @@ public extension CollectableModelObject {
         return collection.objectsForRelationship(on: self, inverseKeyPath: keyPath)
     }
 
-    func performUpdate(_ updateBlock: (Self) -> Void) {
+    public func performUpdate(_ updateBlock: (Self) -> Void) {
         self.modelController?.pushChangeGroup()
         updateBlock(self)
         self.modelController?.popChangeGroup()
@@ -153,7 +155,7 @@ public struct ModelFile {
     public let data: Data?
     public let metadata: [String: Any]?
 
-    public init(type: String, filename: String?, data: Data?, metadata: [String : Any]?) {
+    public init(type: String, filename: String?, data: Data?, metadata: [String: Any]?) {
         self.type = type
         self.filename = filename
         self.data = data

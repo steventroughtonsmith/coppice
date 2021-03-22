@@ -42,7 +42,8 @@ public struct ActivationResponse {
         guard
             let data = try? Data(contentsOf: url),
             let json = (try? JSONSerialization.jsonObject(with: data, options: [])) as? [String: Any],
-            let apiData = APIData(json: json) else {
+            let apiData = APIData(json: json)
+        else {
             return nil
         }
 

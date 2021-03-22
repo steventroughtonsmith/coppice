@@ -6,11 +6,10 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 @testable import CoppiceCore
+import XCTest
 
 class ModelObjects_PasteboardTests: XCTestCase {
-
     //MARK: - .pasteboardWriter
     func test_pasteboardWriter_canvasWriterContainsModelID() {
         let canvas = Canvas()
@@ -277,7 +276,6 @@ class ModelObjects_PasteboardTests: XCTestCase {
 
         XCTAssertEqual(provider.pasteboardPropertyList(forType: ModelID.PasteboardType) as? ModelID, modelID)
         XCTAssertEqual(provider.pasteboardPropertyList(forType: .color) as? NSColor, NSColor.blue)
-
     }
 
     func test_pasteboardPropertyListForType_doesntReturnAnythingForTypeNotInAdditionalItems() {

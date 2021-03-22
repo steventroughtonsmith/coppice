@@ -36,6 +36,7 @@ public class ImagePageContent: NSObject, PageContent {
             self.didChange(\.imageDescription, oldValue: oldValue)
         }
     }
+
     public weak var page: Page?
 
     public private(set) var otherMetadata: [String: Any]?
@@ -59,7 +60,6 @@ public class ImagePageContent: NSObject, PageContent {
         } else {
             self.otherMetadata = nil
         }
-
     }
 
     public var modelFile: ModelFile {

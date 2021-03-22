@@ -8,11 +8,11 @@
 
 import AppKit
 
-public extension Page {
-    static var fallbackFontName: String { "Helvetica Neue" }
-    static var fallbackFontSize: Float { 13.0 }
+extension Page {
+    public static var fallbackFontName: String { "Helvetica Neue" }
+    public static var fallbackFontSize: Float { 13.0 }
 
-    static var defaultFont: NSFont {
+    public static var defaultFont: NSFont {
         let fontName = UserDefaults.standard.string(forKey: .defaultFontName) ?? self.fallbackFontName
         var fontSize = UserDefaults.standard.float(forKey: .defaultFontSize)
         if fontSize == 0 {
@@ -30,8 +30,8 @@ public extension Page {
     }
 }
 
-public extension Canvas {
-    static var defaultTheme: Theme {
+extension Canvas {
+    public static var defaultTheme: Theme {
         guard let rawDefaultTheme = UserDefaults.standard.string(forKey: .defaultCanvasTheme) else {
             return .auto
         }

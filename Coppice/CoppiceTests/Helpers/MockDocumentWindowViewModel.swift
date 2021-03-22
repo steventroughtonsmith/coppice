@@ -11,8 +11,7 @@ import Cocoa
 @testable import CoppiceCore
 
 class MockWindow: DocumentWindow {
-    func invalidateRestorableState() {
-    }
+    func invalidateRestorableState() {}
 
     var suppliedAlert: Alert?
     var callback: ((Int) -> Void)?

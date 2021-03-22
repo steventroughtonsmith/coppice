@@ -8,7 +8,7 @@
 
 import AppKit
 
-protocol ColourGridViewDelegate: class {
+protocol ColourGridViewDelegate: AnyObject {
     func didSelect(_ colour: NSColor, in gridView: ColourGridView)
 }
 
@@ -32,25 +32,24 @@ class ColourGridView: NSView {
         ColourOption(hex: "#7f7f7f", localizedName: NSLocalizedString("Grey", comment: "Grey colour name")),
         ColourOption(hex: "#a8a8a8", localizedName: NSLocalizedString("Pale Grey", comment: "Pale Grey colour name")),
         ColourOption(hex: "#ffffff", localizedName: NSLocalizedString("White", comment: "White colour name")),
-		//Second row (Dark)
+        //Second row (Dark)
         ColourOption(hex: "#a24432", localizedName: NSLocalizedString("Dark Red", comment: "Dark Red colour name")),
         ColourOption(hex: "#a7a72a", localizedName: NSLocalizedString("Dark Yellow", comment: "Dark Yellow colour name")),
         ColourOption(hex: "#00a000", localizedName: NSLocalizedString("Dark Green", comment: "Dark Green colour name")),
         ColourOption(hex: "#005ea5", localizedName: NSLocalizedString("Dark Blue", comment: "Dark Blue colour name")),
         ColourOption(hex: "#b127b0", localizedName: NSLocalizedString("Dark Purple", comment: "Dark Purple colour name")),
-		//Second row (Standard)
+        //Second row (Standard)
         ColourOption(hex: "#ff2600", localizedName: NSLocalizedString("Red", comment: "Red colour name")),
         ColourOption(hex: "#e8e81d", localizedName: NSLocalizedString("Yellow", comment: "Yellow colour name")),
         ColourOption(hex: "#37ee37", localizedName: NSLocalizedString("Green", comment: "Green colour name")),
         ColourOption(hex: "#0096ff", localizedName: NSLocalizedString("Blue", comment: "Blue colour name")),
         ColourOption(hex: "#ff40ff", localizedName: NSLocalizedString("Purple", comment: "Purple colour name")),
-		//Second row (Pale)
+        //Second row (Pale)
         ColourOption(hex: "#ff7e79", localizedName: NSLocalizedString("Pale Red", comment: "Pale Red colour name")),
         ColourOption(hex: "#fffc79", localizedName: NSLocalizedString("Pale Yellow", comment: "Pale Yellow colour name")),
         ColourOption(hex: "#73fa79", localizedName: NSLocalizedString("Pale Green", comment: "Pale Green colour name")),
         ColourOption(hex: "#76d6ff", localizedName: NSLocalizedString("Pale Blue", comment: "Pale Blue colour name")),
         ColourOption(hex: "#ff85ff", localizedName: NSLocalizedString("Pale Purple", comment: "Pale Purple colour name")),
-
     ]
 
     override init(frame frameRect: NSRect) {
@@ -125,7 +124,7 @@ class ColourGridView: NSView {
 
         var rowButtons = [ColourGridButton]()
         for colourOption in colours {
-            let colourView = ColourGridButton(colour: colourOption.colour, target: self, action: #selector(selectColour(_:)))
+            let colourView = ColourGridButton(colour: colourOption.colour, target: self, action: #selector(self.selectColour(_:)))
             colourView.setAccessibilityLabel(colourOption.localizedName)
             colourView.toolTip = colourOption.localizedName
             rowButtons.append(colourView)

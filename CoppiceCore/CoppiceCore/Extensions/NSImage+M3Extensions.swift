@@ -8,8 +8,8 @@
 
 import AppKit
 
-public extension NSImage {
-    func pngData() -> Data? {
+extension NSImage {
+    public func pngData() -> Data? {
         guard let data = self.tiffRepresentation else {
             return nil
         }
@@ -17,7 +17,7 @@ public extension NSImage {
         return rep?.representation(using: .png, properties: [.compressionMethod: NSBitmapImageRep.TIFFCompression.none])
     }
 
-    func jpegData() -> Data? {
+    public func jpegData() -> Data? {
         guard let data = self.tiffRepresentation else {
             return nil
         }
@@ -28,7 +28,7 @@ public extension NSImage {
         ])
     }
 
-    static func symbol(withName symbolName: String, accessibilityDescription: String? = nil) -> NSImage? {
+    public static func symbol(withName symbolName: String, accessibilityDescription: String? = nil) -> NSImage? {
         if #available(OSX 10.16, *) {
             if let symbol = NSImage(systemSymbolName: symbolName, accessibilityDescription: accessibilityDescription) {
                 return symbol

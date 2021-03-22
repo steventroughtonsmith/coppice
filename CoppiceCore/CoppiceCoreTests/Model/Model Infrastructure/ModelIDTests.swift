@@ -6,11 +6,10 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 import CoppiceCore
+import XCTest
 
 class ModelIDTests: XCTestCase {
-
     //MARK: - init?(modelType:uuidString:)
     func test_init_successfullyInitialisesWithValidUUIDString() throws {
         let expectedUUID = UUID()
@@ -62,5 +61,4 @@ class ModelIDTests: XCTestCase {
         let newModelID = ModelID(pasteboardItem: pasteboardItem)
         XCTAssertEqual(modelID, newModelID)
     }
-
 }

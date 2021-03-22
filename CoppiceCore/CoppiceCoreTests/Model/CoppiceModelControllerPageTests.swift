@@ -6,8 +6,8 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 @testable import CoppiceCore
+import XCTest
 
 class CoppiceModelControllerPageTests: XCTestCase {
     var undoManager: UndoManager!
@@ -120,7 +120,7 @@ class CoppiceModelControllerPageTests: XCTestCase {
     func test_createPagesFromFilesAtURLs_createsNewPagesForSuppliedFileURLs() {
         let fileURLs = [
             self.testBundle.url(forResource: "test-image", withExtension: "png")!,
-            self.testBundle.url(forResource: "test-rtf", withExtension: "rtf")!
+            self.testBundle.url(forResource: "test-rtf", withExtension: "rtf")!,
         ]
 
         let pages = self.modelController.createPages(fromFilesAt: fileURLs, in: self.folder)
@@ -136,7 +136,7 @@ class CoppiceModelControllerPageTests: XCTestCase {
 
         let fileURLs = [
             self.testBundle.url(forResource: "test-image", withExtension: "png")!,
-            self.testBundle.url(forResource: "test-rtf", withExtension: "rtf")!
+            self.testBundle.url(forResource: "test-rtf", withExtension: "rtf")!,
         ]
 
         let pages = self.modelController.createPages(fromFilesAt: fileURLs, in: self.folder, below: nil)
@@ -146,8 +146,8 @@ class CoppiceModelControllerPageTests: XCTestCase {
         XCTAssertEqual(imagePage.containingFolder, self.folder)
         XCTAssertEqual(textPage.containingFolder, self.folder)
 
-        XCTAssertEqual(self.folder.contents[safe:0] as? Page, imagePage)
-        XCTAssertEqual(self.folder.contents[safe:1] as? Page, textPage)
+        XCTAssertEqual(self.folder.contents[safe: 0] as? Page, imagePage)
+        XCTAssertEqual(self.folder.contents[safe: 1] as? Page, textPage)
     }
 
     func test_createPagesFromFilesAtURLs_addsPagesToFolderBelowSuppliedItem() throws {
@@ -157,7 +157,7 @@ class CoppiceModelControllerPageTests: XCTestCase {
 
         let fileURLs = [
             try XCTUnwrap(self.testBundle.url(forResource: "test-image", withExtension: "png")),
-            try XCTUnwrap(self.testBundle.url(forResource: "test-rtf", withExtension: "rtf"))
+            try XCTUnwrap(self.testBundle.url(forResource: "test-rtf", withExtension: "rtf")),
         ]
 
         let pages = self.modelController.createPages(fromFilesAt: fileURLs, in: self.folder, below: initialPage1)
@@ -167,14 +167,14 @@ class CoppiceModelControllerPageTests: XCTestCase {
         XCTAssertEqual(imagePage.containingFolder, self.folder)
         XCTAssertEqual(textPage.containingFolder, self.folder)
 
-        XCTAssertEqual(self.folder.contents[safe:1] as? Page, imagePage)
-        XCTAssertEqual(self.folder.contents[safe:2] as? Page, textPage)
+        XCTAssertEqual(self.folder.contents[safe: 1] as? Page, imagePage)
+        XCTAssertEqual(self.folder.contents[safe: 2] as? Page, textPage)
     }
 
     func test_createPagesFromFilesAtURLs_callsSetupBlock() {
         let fileURLs = [
             self.testBundle.url(forResource: "test-image", withExtension: "png")!,
-            self.testBundle.url(forResource: "test-rtf", withExtension: "rtf")!
+            self.testBundle.url(forResource: "test-rtf", withExtension: "rtf")!,
         ]
 
         var actualPages: [Page]?
@@ -188,7 +188,7 @@ class CoppiceModelControllerPageTests: XCTestCase {
     func test_createPagesFromFilesAtURLs_undoingRemovesPagesFromCollection() throws {
         let fileURLs = [
             self.testBundle.url(forResource: "test-image", withExtension: "png")!,
-            self.testBundle.url(forResource: "test-rtf", withExtension: "rtf")!
+            self.testBundle.url(forResource: "test-rtf", withExtension: "rtf")!,
         ]
 
         let pages = self.modelController.createPages(fromFilesAt: fileURLs, in: self.folder)
@@ -208,7 +208,7 @@ class CoppiceModelControllerPageTests: XCTestCase {
 
         let fileURLs = [
             self.testBundle.url(forResource: "test-image", withExtension: "png")!,
-            self.testBundle.url(forResource: "test-rtf", withExtension: "rtf")!
+            self.testBundle.url(forResource: "test-rtf", withExtension: "rtf")!,
         ]
 
         let pages = self.modelController.createPages(fromFilesAt: fileURLs, in: self.folder)
@@ -224,7 +224,7 @@ class CoppiceModelControllerPageTests: XCTestCase {
     func test_createPagesFromFilesAtURLs_redoingRecreatesPagesWithSameIDsAndContent() throws {
         let fileURLs = [
             self.testBundle.url(forResource: "test-image", withExtension: "png")!,
-            self.testBundle.url(forResource: "test-rtf", withExtension: "rtf")!
+            self.testBundle.url(forResource: "test-rtf", withExtension: "rtf")!,
         ]
 
         let pages = self.modelController.createPages(fromFilesAt: fileURLs, in: self.folder)
@@ -258,7 +258,7 @@ class CoppiceModelControllerPageTests: XCTestCase {
 
         let fileURLs = [
             self.testBundle.url(forResource: "test-image", withExtension: "png")!,
-            self.testBundle.url(forResource: "test-rtf", withExtension: "rtf")!
+            self.testBundle.url(forResource: "test-rtf", withExtension: "rtf")!,
         ]
 
         let pages = self.modelController.createPages(fromFilesAt: fileURLs, in: self.folder, below: initialPage1)
@@ -420,7 +420,7 @@ class CoppiceModelControllerPageTests: XCTestCase {
     func test_deletePage_redoRemovesPageFromFolderAgain() throws {
         let page = self.modelController.createPage(in: self.folder)
         self.undoManager.removeAllActions()
-        
+
         self.modelController.delete(page)
 
         self.undoManager.undo()

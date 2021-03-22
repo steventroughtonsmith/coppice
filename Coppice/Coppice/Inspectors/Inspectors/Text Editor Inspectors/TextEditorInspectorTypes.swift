@@ -20,7 +20,8 @@ class Typeface: NSObject {
             let fontName = memberInfo[0] as? String,
             let displayName = memberInfo[1] as? String,
             let weight = memberInfo[2] as? Int,
-            let rawTraits = memberInfo[3] as? UInt else {
+            let rawTraits = memberInfo[3] as? UInt
+        else {
                 return nil
         }
         self.fontName = fontName

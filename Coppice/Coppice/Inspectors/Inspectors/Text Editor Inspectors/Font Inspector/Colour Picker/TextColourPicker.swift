@@ -248,7 +248,8 @@ class TextColourPicker: NSControl {
 
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
         guard let colourData = sender.draggingPasteboard.pasteboardItems?.first?.data(forType: .color),
-            let colour = try? NSKeyedUnarchiver.unarchivedObject(ofClass: NSColor.self, from: colourData) else {
+            let colour = try? NSKeyedUnarchiver.unarchivedObject(ofClass: NSColor.self, from: colourData)
+        else {
                 return false
         }
 

@@ -6,11 +6,10 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 @testable import CoppiceCore
+import XCTest
 
 class PageContentTests: XCTestCase {
-
     func test_pageContentType_contentTypeForUTIReturnsTextForPlainTextUTI() {
         XCTAssertEqual(PageContentType.contentType(forUTI: kUTTypePlainText as String), .text)
     }

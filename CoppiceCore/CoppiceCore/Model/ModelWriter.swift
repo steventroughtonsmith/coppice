@@ -47,7 +47,7 @@ public class ModelWriter: NSObject {
 
         return FileWrapper(directoryWithFileWrappers: [
             "data.plist": dataPlistWrapper,
-            "content": contentFileWrapper
+            "content": contentFileWrapper,
         ])
     }
 

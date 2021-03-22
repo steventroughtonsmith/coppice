@@ -6,8 +6,8 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import Foundation
 @testable import CoppiceCore
+import Foundation
 
 class MockEventContextFactory: LayoutEngineEventContextFactory {
     let createMouseEventContextMock = MockDetails<(CGPoint, LayoutEngine), CanvasMouseEventContext?>()

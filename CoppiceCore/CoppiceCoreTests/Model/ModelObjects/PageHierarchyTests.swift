@@ -6,11 +6,10 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 @testable import CoppiceCore
+import XCTest
 
 class PageHierarchyTests: XCTestCase {
-
     var modelController: CoppiceModelController!
     var parentPage: CanvasPage!
     var childPage1: CanvasPage!
@@ -72,7 +71,7 @@ class PageHierarchyTests: XCTestCase {
         XCTAssertNil(PageHierarchy(plistRepresentation: [
             "pageID": Page.modelID(with: UUID()).stringRepresentation,
             "frame": NSStringFromRect(.zero),
-            "children": []
+            "children": [],
         ]))
     }
 
@@ -80,7 +79,7 @@ class PageHierarchyTests: XCTestCase {
         XCTAssertNil(PageHierarchy(plistRepresentation: [
             "id": CanvasPage.modelID(with: UUID()).stringRepresentation,
             "frame": NSStringFromRect(.zero),
-            "children": []
+            "children": [],
         ]))
     }
 
@@ -88,7 +87,7 @@ class PageHierarchyTests: XCTestCase {
         XCTAssertNil(PageHierarchy(plistRepresentation: [
             "id": CanvasPage.modelID(with: UUID()).stringRepresentation,
             "pageID": Page.modelID(with: UUID()).stringRepresentation,
-            "children": []
+            "children": [],
         ]))
     }
 
@@ -96,7 +95,7 @@ class PageHierarchyTests: XCTestCase {
         XCTAssertNil(PageHierarchy(plistRepresentation: [
             "id": CanvasPage.modelID(with: UUID()).stringRepresentation,
             "pageID": Page.modelID(with: UUID()).stringRepresentation,
-            "frame": NSStringFromRect(.zero)
+            "frame": NSStringFromRect(.zero),
         ]))
     }
 
@@ -129,8 +128,8 @@ class PageHierarchyTests: XCTestCase {
                     "id": expectedID.stringRepresentation,
                     "pageID": expectedPageID.stringRepresentation,
                     "frame": NSStringFromRect(expectedFrame),
-                    "children": []
-                ]
+                    "children": [],
+                ],
             ],
         ]))
 
@@ -173,5 +172,4 @@ class PageHierarchyTests: XCTestCase {
                 (($0["frame"] as? String) == NSStringFromRect(self.childPage2.frame))
         }))
     }
-
 }

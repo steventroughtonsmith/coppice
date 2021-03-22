@@ -22,8 +22,7 @@ struct TextEditorParagraphAttributes {
             }
             if (writingDirection == .leftToRight) {
                 alignment = .left
-            }
-            else if (writingDirection == .rightToLeft) {
+            } else if (writingDirection == .rightToLeft) {
                 alignment = .right
             }
         }

@@ -18,7 +18,7 @@ class DocumentWindowController: NSWindowController, NSMenuItemValidation {
     @IBOutlet weak var searchField: NSSearchField!
 
     private var pageSelectorWindowController: PageSelectorWindowController?
-    
+
 
     @objc dynamic let viewModel: DocumentWindowViewModel
     init(viewModel: DocumentWindowViewModel) {
@@ -41,13 +41,13 @@ class DocumentWindowController: NSWindowController, NSMenuItemValidation {
         preconditionFailure("init(coder:) has not been implemented")
     }
 
-    override func windowDidLoad(){
+    override func windowDidLoad() {
         super.windowDidLoad()
-        
+
         guard let window = self.window else {
             return
         }
-        
+
         if #available(OSX 10.16, *) {
             window.styleMask.insert(.fullSizeContentView)
         }
@@ -63,10 +63,10 @@ class DocumentWindowController: NSWindowController, NSMenuItemValidation {
 //        self.sidebarViewController.pagesTable.nextKeyView = self.editorContainerViewController.view
 //        self.editorContainerViewController.view.nextKeyView = self.inspectorContainerViewController.view
         self.setupNewPageSegmentedControl()
-        
+
         self.setupToolbar()
     }
-    
+
     var mainToolbarDelegate: MainToolbarDelegate?
     private func setupToolbar() {
         let toolbar = NSToolbar(identifier: "mainToolbar")
@@ -77,7 +77,7 @@ class DocumentWindowController: NSWindowController, NSMenuItemValidation {
         } else {
             toolbar.displayMode = .iconAndLabel
         }
-        
+
         let toolbarDelegate = MainToolbarDelegate(searchField: self.searchField,
                                                   newPageControl: self.newPageSegmentedControl,
                                                   splitView: self.splitViewController.splitView)
@@ -194,7 +194,7 @@ class DocumentWindowController: NSWindowController, NSMenuItemValidation {
     }
 
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
-        if (menuItem.action == #selector(newCanvas(_:))) {
+        if (menuItem.action == #selector(self.newCanvas(_:))) {
             let subManager = CoppiceSubscriptionManager.shared
             let proEnabled = (subManager.activationResponse?.isActive == true)
 

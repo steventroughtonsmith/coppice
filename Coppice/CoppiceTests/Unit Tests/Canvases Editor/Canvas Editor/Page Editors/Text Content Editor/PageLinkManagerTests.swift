@@ -6,9 +6,9 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 @testable import Coppice
 @testable import CoppiceCore
+import XCTest
 
 class PageLinkManagerTests: XCTestCase {
     var modelController: CoppiceModelController!

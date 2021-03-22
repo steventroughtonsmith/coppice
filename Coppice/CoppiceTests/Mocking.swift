@@ -6,8 +6,8 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 import Foundation
+import XCTest
 
 class MockDetails<Arguments, Return> {
     var expectation: XCTestExpectation?

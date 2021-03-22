@@ -26,7 +26,7 @@ class IconPopUpButtonCell: NSPopUpButtonCell {
             let imageSize = image.size
             //Set the initial bounds we can draw in
             var imageRect = controlView.alignmentRect(forFrame: rect)
-            imageRect.size.width -= 10;
+            imageRect.size.width -= 10
 
             //Centre in view
             imageRect.origin.x = (imageRect.size.width - imageSize.width) - 4
@@ -34,7 +34,5 @@ class IconPopUpButtonCell: NSPopUpButtonCell {
             imageRect.size = imageSize
             return imageRect.rounded()
         }
-        
     }
-
 }

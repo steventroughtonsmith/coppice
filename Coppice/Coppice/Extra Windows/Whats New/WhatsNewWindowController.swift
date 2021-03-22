@@ -9,7 +9,6 @@
 import Cocoa
 
 class WhatsNewWindowController: NSWindowController {
-
     override var windowNibName: NSNib.Name? {
         return "WhatsNewWindow"
     }
@@ -56,7 +55,7 @@ class WhatsNewWindowController: NSWindowController {
             self.window?.makeKeyAndOrderFront(self)
         }
     }
-    
+
     @IBAction func seeReleaseNotes(_ sender: Any) {
         NSWorkspace.shared.open(URL(string: "https://coppiceapp.com/release_notes")!)
     }

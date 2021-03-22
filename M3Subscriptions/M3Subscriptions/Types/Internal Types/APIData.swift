@@ -6,8 +6,8 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import Foundation
 import CommonCrypto
+import Foundation
 
 struct APIData {
     enum Response: Equatable {
@@ -58,7 +58,8 @@ struct APIData {
     init?(json: [String: Any]) {
         guard let payload = json["payload"] as? [String: Any],
             let response = payload["response"] as? String,
-            let signature = json["signature"] as? String else {
+            let signature = json["signature"] as? String
+        else {
                 return nil
         }
 
@@ -91,7 +92,7 @@ struct APIData {
 
         let options: [String: Any] = [kSecAttrKeyType as String: kSecAttrKeyTypeRSA,
                                       kSecAttrKeyClass as String: kSecAttrKeyClassPublic,
-                                      kSecAttrKeySizeInBits as String : 2048]
+                                      kSecAttrKeySizeInBits as String: 2048]
         var error: Unmanaged<CFError>?
         guard let key = SecKeyCreateWithData(data as CFData, options as CFDictionary, &error) else {
             return nil
@@ -109,7 +110,8 @@ struct APIData {
                                     .rsaSignatureDigestPKCS1v15SHA256,
                                     hashedPayload as CFData,
                                     signatureData as CFData,
-                                    &error) else {
+                                    &error)
+        else {
                                         return nil
         }
         return signature

@@ -8,6 +8,6 @@
 
 import Foundation
 
-public extension Result where Success == Void {
-    static var success: Result<Success, Failure> { .success(()) }
+extension Result where Success == Void {
+    public static var success: Result<Success, Failure> { .success(()) }
 }

@@ -32,7 +32,7 @@ extension CanvasKeyEventContext {
 }
 
 
-public protocol LayoutEngine: class {
+public protocol LayoutEngine: AnyObject {
     var editable: Bool { get }
     var selectedPages: [LayoutEnginePage] { get }
     var canvasSize: CGSize { get }

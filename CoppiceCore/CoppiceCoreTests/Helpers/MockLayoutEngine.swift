@@ -6,8 +6,8 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import Foundation
 @testable import CoppiceCore
+import Foundation
 
 class MockLayoutEngine: LayoutEngine {
     var editable: Bool = true
@@ -17,6 +17,7 @@ class MockLayoutEngine: LayoutEngine {
             self.selectedPages.forEach { $0.selected = true }
         }
     }
+
     var canvasSize: CGSize = .zero
     var selectionRect: CGRect?
 

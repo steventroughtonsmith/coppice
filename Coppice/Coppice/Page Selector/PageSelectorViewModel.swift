@@ -9,7 +9,7 @@
 import AppKit
 import CoppiceCore
 
-protocol PageSelectorView: class {}
+protocol PageSelectorView: AnyObject {}
 
 class PageSelectorViewModel: NSObject {
     weak var view: PageSelectorView?

@@ -10,13 +10,13 @@ import Cocoa
 import CoppiceCore
 
 class SystemProfileInfoViewController: NSViewController {
-
     let systemInfo: [SystemProfileInfoItem]
     init(systemInfo: [SystemProfileInfoItem]) {
         self.systemInfo = systemInfo
         super.init(nibName: "SystemProfileInfoViewController", bundle: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -25,7 +25,7 @@ class SystemProfileInfoViewController: NSViewController {
         super.viewDidLoad()
         // Do view setup here.
     }
-    
+
     @IBAction func ok(_ sender: Any) {
         self.dismiss(self)
     }

@@ -6,11 +6,10 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 @testable import CoppiceCore
+import XCTest
 
 class PageLinkTests: XCTestCase {
-
     //MARK: init?(url:)
     func test_initURL_returnsNilIfURLDoesntUseCorrectScheme() {
         let url = URL(string: "http://www.mcubedsw.com")!
@@ -126,5 +125,4 @@ class PageLinkTests: XCTestCase {
         let items = try XCTUnwrap(components.queryItems?.indexed(by: \.name))
         XCTAssertEqual(items[PageLink.queryAutoName]?.value, "1")
     }
-
 }

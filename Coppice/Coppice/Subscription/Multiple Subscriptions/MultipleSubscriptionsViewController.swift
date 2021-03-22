@@ -20,6 +20,7 @@ class MultipleSubscriptionsViewController: NSViewController {
         super.init(nibName: "MultipleSubscriptionsView", bundle: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -58,7 +59,6 @@ extension MultipleSubscriptionsViewController: NSTableViewDataSource {
     func numberOfRows(in tableView: NSTableView) -> Int {
         return self.subscriptions.count
     }
-
 }
 
 extension MultipleSubscriptionsViewController: NSTableViewDelegate {
@@ -79,6 +79,4 @@ extension MultipleSubscriptionsViewController: SubscriptionTableCellViewDelegate
     func didSelect(_ tableCell: SubscriptionTableCellView) {
         self.selectedSubscription = tableCell.subscription
     }
-
-
 }

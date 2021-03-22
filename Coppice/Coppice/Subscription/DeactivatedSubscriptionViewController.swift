@@ -8,7 +8,7 @@
 
 import Cocoa
 
-protocol DeactivatedSubscriptionMode: class {
+protocol DeactivatedSubscriptionMode: AnyObject {
     var header: String { get }
     var subheader: String { get }
     var actionName: String { get }
@@ -16,7 +16,7 @@ protocol DeactivatedSubscriptionMode: class {
     func performAction(_ sender: NSButton)
 }
 
-protocol DeactivatedSubscriptionViewControllerDelegate: class {
+protocol DeactivatedSubscriptionViewControllerDelegate: AnyObject {
     func didChangeMode(in viewController: DeactivatedSubscriptionViewController)
 }
 
@@ -35,6 +35,7 @@ class DeactivatedSubscriptionViewController: NSViewController {
         super.init(nibName: "DeactivatedSubscriptionViewController", bundle: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -47,7 +48,6 @@ class DeactivatedSubscriptionViewController: NSViewController {
         self.contentViewContainer.layer?.backgroundColor = NSColor(named: "CoppiceProContentBackground")?.cgColor
 
         self.apply(self.signInVC)
-
     }
 
     override func viewDidDisappear() {
@@ -59,6 +59,7 @@ class DeactivatedSubscriptionViewController: NSViewController {
     private lazy var subscribeVC: SubscribeViewController = {
         return SubscribeViewController(subscriptionManager: self.subscriptionManager)
     }()
+
     @objc dynamic private lazy var signInVC: SignInViewController = {
         return SignInViewController(subscriptionManager: self.subscriptionManager)
     }()

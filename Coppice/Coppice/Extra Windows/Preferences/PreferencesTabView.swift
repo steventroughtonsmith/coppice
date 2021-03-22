@@ -9,7 +9,7 @@
 import AppKit
 import Carbon.HIToolbox
 
-protocol PreferencesTabViewDelegate: class {
+protocol PreferencesTabViewDelegate: AnyObject {
     func escapeWasPressed(in tabView: PreferencesTabView)
 }
 
@@ -109,6 +109,7 @@ class PreferencesViewController: NSViewController {
         self.tabViewItem = item
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

@@ -126,7 +126,7 @@ extension HelpViewerToolbarDelegate: NSToolbarDelegate {
             .helpHome,
             .helpSearch,
             .space,
-            .flexibleSpace
+            .flexibleSpace,
         ]
     }
 

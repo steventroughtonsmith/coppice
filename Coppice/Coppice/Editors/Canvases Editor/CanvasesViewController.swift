@@ -17,6 +17,7 @@ class CanvasesViewController: NSSplitViewController, NSMenuItemValidation {
         viewModel.view = self
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -120,8 +121,8 @@ class CanvasesViewController: NSSplitViewController, NSMenuItemValidation {
 
     override func splitViewDidResizeSubviews(_ notification: Notification) {
         super.splitViewDidResizeSubviews(notification)
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(thumbnailsNeedUpdate), object: nil)
-        self.perform(#selector(thumbnailsNeedUpdate), with: nil, afterDelay: 0)
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.thumbnailsNeedUpdate), object: nil)
+        self.perform(#selector(self.thumbnailsNeedUpdate), with: nil, afterDelay: 0)
     }
 
     @objc dynamic func thumbnailsNeedUpdate() {
@@ -168,7 +169,7 @@ class CanvasesViewController: NSSplitViewController, NSMenuItemValidation {
     }
 
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
-        if menuItem.action == #selector(exportCanvasAsImage(_:)) {
+        if menuItem.action == #selector(self.exportCanvasAsImage(_:)) {
             return self.viewModel.currentCanvas != nil
         }
         return false

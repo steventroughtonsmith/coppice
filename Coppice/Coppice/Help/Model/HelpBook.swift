@@ -21,7 +21,7 @@ class HelpBook: Codable {
             case topicIDs = "topics"
         }
 
-        static func ==(lhs: Group, rhs: Group) -> Bool {
+        static func == (lhs: Group, rhs: Group) -> Bool {
             return lhs.id == rhs.id
         }
     }
@@ -44,7 +44,7 @@ class HelpBook: Codable {
             case appVersion
         }
 
-        static func ==(lhs: Topic, rhs: Topic) -> Bool {
+        static func == (lhs: Topic, rhs: Topic) -> Bool {
             return lhs.id == rhs.id
         }
 
@@ -77,7 +77,7 @@ class HelpBook: Codable {
     enum DecodingError: Error {
         case noURLSupplied
     }
-    
+
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
@@ -94,7 +94,7 @@ class HelpBook: Codable {
     }
 
     func topic(withID id: String) -> Topic? {
-        return self.allTopics.first(where: {$0.id == id})
+        return self.allTopics.first(where: { $0.id == id })
     }
 
     lazy var home: Topic = {

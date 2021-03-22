@@ -6,8 +6,8 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 @testable import CoppiceCore
+import XCTest
 
 class CoppiceModelControllerFolderTests: XCTestCase {
     var undoManager: UndoManager!
@@ -21,7 +21,7 @@ class CoppiceModelControllerFolderTests: XCTestCase {
         self.modelController = CoppiceModelController(undoManager: self.undoManager)
         self.parentFolder = Folder.create(in: self.modelController)
     }
-    
+
 
     //MARK: - .rootFolder
     func test_rootFolder_createsNewRootFolderIfNotInSettings() {
@@ -238,7 +238,7 @@ class CoppiceModelControllerFolderTests: XCTestCase {
         let folder = self.modelController.createFolder(in: self.parentFolder)
         let page1 = Page.create(in: self.modelController) { $0.title = "Hello World" }
         let subFolder1 = Folder.create(in: self.modelController) { $0.title = "Folders!" }
-        let page2 = Page.create(in: self.modelController) { $0.title = "Foo Bar"}
+        let page2 = Page.create(in: self.modelController) { $0.title = "Foo Bar" }
 
         folder.insert([page1, subFolder1, page2])
         self.undoManager.removeAllActions()

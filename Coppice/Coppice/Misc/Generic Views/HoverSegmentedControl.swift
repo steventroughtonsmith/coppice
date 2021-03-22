@@ -34,7 +34,6 @@ class HoverSegmentedControl: NSSegmentedControl {
     override func mouseExited(with event: NSEvent) {
         super.mouseExited(with: event)
         self.chevronImage.removeFromSuperview()
-
     }
 
     private var chevronImage: NSImageView = {

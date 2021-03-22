@@ -7,14 +7,15 @@
 //
 
 import Cocoa
-import XCTest
-@testable import M3Subscriptions
 import CommonCrypto
+@testable import M3Subscriptions
+import XCTest
 
 class APITestCase: XCTestCase {
     enum SigningError: Error {
         case signingError
     }
+
     override func setUpWithError() throws {
         try super.setUpWithError()
         //set public key

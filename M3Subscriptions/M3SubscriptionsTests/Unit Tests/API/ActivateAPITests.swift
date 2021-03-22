@@ -6,8 +6,8 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 @testable import M3Subscriptions
+import XCTest
 
 class ActivateAPITests: APITestCase {
     func test_run_calling_requestsActivateAPIEndpoint() throws {
@@ -148,7 +148,8 @@ class ActivateAPITests: APITestCase {
 
         guard
             case .failure(let failure) = try XCTUnwrap(actualResult),
-            case .invalidRequest = failure else {
+            case .invalidRequest = failure
+        else {
                 XCTFail("Result is not an invalidRequest error")
                 return
         }
@@ -174,7 +175,8 @@ class ActivateAPITests: APITestCase {
 
         guard
             case .failure(let failure) = try XCTUnwrap(actualResult),
-            case .generic(let error) = failure else {
+            case .generic(let error) = failure
+        else {
                 XCTFail("Result is not a generic error")
                 return
         }
@@ -205,15 +207,16 @@ class ActivateAPITests: APITestCase {
 
         guard
             case .failure(let failure) = try XCTUnwrap(actualResult),
-            case .loginFailed = failure else {
+            case .loginFailed = failure
+        else {
                 XCTFail("Result is not a loginFailed error")
                 return
         }
     }
 
     func test_run_errorHandling_returnsFailureAndSubscriptionPlansIfReceived_multiple_subscriptions_Response() throws {
-        let plan1: [String: Any] = ["id": "plan1", "name": "Plan A", "expirationDate": "2022-01-01T01:01:01Z", "maxDeviceCount":5, "currentDeviceCount":4, "renewalStatus": "renew"]
-        let plan2: [String: Any] = ["id": "plan2", "name": "Plan B", "expirationDate": "2021-12-21T12:21:12Z", "maxDeviceCount":3, "currentDeviceCount":3, "renewalStatus": "cancelled"]
+        let plan1: [String: Any] = ["id": "plan1", "name": "Plan A", "expirationDate": "2022-01-01T01:01:01Z", "maxDeviceCount": 5, "currentDeviceCount": 4, "renewalStatus": "renew"]
+        let plan2: [String: Any] = ["id": "plan2", "name": "Plan B", "expirationDate": "2021-12-21T12:21:12Z", "maxDeviceCount": 3, "currentDeviceCount": 3, "renewalStatus": "cancelled"]
         let payload: [String: Any] = ["response": "multiple_subscriptions", "subscriptions": [plan1, plan2]]
         let signature = try self.signature(forPayload: payload)
         let json: [String: Any] = ["payload": payload, "signature": signature]
@@ -236,7 +239,8 @@ class ActivateAPITests: APITestCase {
 
         guard
             case .failure(let failure) = try XCTUnwrap(actualResult),
-            case .multipleSubscriptions(let subscriptions) = failure else {
+            case .multipleSubscriptions(let subscriptions) = failure
+        else {
                 XCTFail("Result is not a multipleSubscriptions failure")
                 return
         }
@@ -279,7 +283,8 @@ class ActivateAPITests: APITestCase {
 
         guard
             case .failure(let failure) = try XCTUnwrap(actualResult),
-            case .noSubscriptionFound = failure else {
+            case .noSubscriptionFound = failure
+        else {
                 XCTFail("Result is not a noSubscriptionFound error")
                 return
         }
@@ -288,7 +293,7 @@ class ActivateAPITests: APITestCase {
     func test_run_errorHandling_returnsFailureAndSubscriptionIfReceived_subscription_expired_Response() throws {
         let payload: [String: Any] = [
             "response": "subscription_expired",
-            "subscription": ["name": "Plan C", "expirationDate": "2020-01-02T03:04:05Z", "renewalStatus": "cancelled"]
+            "subscription": ["name": "Plan C", "expirationDate": "2020-01-02T03:04:05Z", "renewalStatus": "cancelled"],
         ]
         let signature = try self.signature(forPayload: payload)
         let json: [String: Any] = ["payload": payload, "signature": signature]
@@ -311,7 +316,8 @@ class ActivateAPITests: APITestCase {
 
         guard
             case .failure(let failure) = try XCTUnwrap(actualResult),
-            case .subscriptionExpired(let subscription) = failure else {
+            case .subscriptionExpired(let subscription) = failure
+        else {
                 XCTFail("Result is not a subscriptionExpired failure")
                 return
         }
@@ -348,7 +354,8 @@ class ActivateAPITests: APITestCase {
 
         guard
             case .failure(let failure) = try XCTUnwrap(actualResult),
-            case .tooManyDevices(let devices) = failure else {
+            case .tooManyDevices(let devices) = failure
+        else {
                 XCTFail("Result is not a tooManyDevices failure")
                 return
         }
@@ -372,10 +379,10 @@ class ActivateAPITests: APITestCase {
             "subscription": [
                 "name": "Plan C",
                 "expirationDate": "2020-01-02T03:04:05Z",
-                "renewalStatus": renewalStatus.rawValue
+                "renewalStatus": renewalStatus.rawValue,
             ],
             "device": [
-                "name": "My iMac"
+                "name": "My iMac",
             ],
         ]
         if (!isExpired) {

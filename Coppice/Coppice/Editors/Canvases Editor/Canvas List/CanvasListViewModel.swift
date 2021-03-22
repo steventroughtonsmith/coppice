@@ -10,7 +10,7 @@ import Cocoa
 import Combine
 import CoppiceCore
 
-protocol CanvasListView: class {
+protocol CanvasListView: AnyObject {
     func reload()
     func reloadSelection()
 }
@@ -113,7 +113,7 @@ class CanvasListViewModel: ViewModel {
         }
 
         var canvases: [Canvas?] = self.canvases
-        guard let currentIndex = canvases.firstIndex(where: { $0?.id == id}) else {
+        guard let currentIndex = canvases.firstIndex(where: { $0?.id == id }) else {
             return
         }
 

@@ -56,5 +56,4 @@ class HelpViewerUITests: BaseUITestCase {
         sidebarButton.click()
         XCTAssertGreaterThan(try XCTUnwrap(splitter.value as? Int), 0)
     }
-
 }

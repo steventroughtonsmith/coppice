@@ -6,12 +6,11 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 @testable import Coppice
 @testable import CoppiceCore
+import XCTest
 
 class SidebarViewModelTests: XCTestCase {
-
     func test_tellsViewToDisplaySourceListIfSearchStringIsNil() {
         let documentViewModel = DocumentWindowViewModel(modelController: CoppiceModelController(undoManager: UndoManager()))
         documentViewModel.searchString = ""
@@ -42,7 +41,6 @@ class SidebarViewModelTests: XCTestCase {
 
         XCTAssertEqual(view.displaySearchResultsString, "foo")
     }
-
 }
 
 class TestSidebarView: SidebarView {
@@ -57,6 +55,6 @@ class TestSidebarView: SidebarView {
     var displaySearchResultsString: String? = nil
     func displaySearchResults(forSearchTerm searchTerm: String) {
         self.expectation?.fulfill()
-        displaySearchResultsString = searchTerm
+        self.displaySearchResultsString = searchTerm
     }
 }

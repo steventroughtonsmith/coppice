@@ -9,9 +9,7 @@
 import Cocoa
 
 class SearchResultOutlineView: NSOutlineView {
-
     override func frameOfOutlineCell(atRow row: Int) -> NSRect {
         return .zero
     }
-    
 }

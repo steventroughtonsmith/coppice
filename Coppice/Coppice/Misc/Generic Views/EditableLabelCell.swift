@@ -43,10 +43,9 @@ class EditableLabelCell: NSTableCellView {
         textField.drawsBackground = true
         textField.backgroundColor = NSColor.controlBackgroundColor
         textField.target = self
-        textField.action = #selector(endEditing(_:))
+        textField.action = #selector(self.endEditing(_:))
         textField.delegate = self
         self.window?.makeFirstResponder(textField)
-
     }
 
     @objc dynamic private func endEditing(_ sender: Any?) {
@@ -67,9 +66,7 @@ class EditableLabelCell: NSTableCellView {
 }
 
 //MARK: - Accessibility
-extension EditableLabelCell {
-
-}
+extension EditableLabelCell {}
 
 extension EditableLabelCell: NSTextFieldDelegate {
     func controlTextDidEndEditing(_ obj: Notification) {

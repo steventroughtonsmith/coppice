@@ -12,6 +12,7 @@ class RectDrawingView: NSView {
     override var isFlipped: Bool {
         return true
     }
+
     var rects: [(CGRect, NSColor)] = [] {
         didSet {
             self.setNeedsDisplay(self.bounds)

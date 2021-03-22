@@ -6,11 +6,10 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 import CoppiceCore
+import XCTest
 
 class ModelReaderTests: XCTestCase {
-
     var canvasIDs: [UUID]!
     var plistCanvases: [[String: Any]]!
     var pageIDs: [UUID]!
@@ -38,7 +37,7 @@ class ModelReaderTests: XCTestCase {
                 "dateModified": Date(timeIntervalSinceReferenceDate: 300),
                 "sortIndex": 2,
                 "theme": "auto",
-                "viewPort": NSStringFromRect(CGRect(x: 10, y: 20, width: 30, height: 40))
+                "viewPort": NSStringFromRect(CGRect(x: 10, y: 20, width: 30, height: 40)),
             ],
             [
                 "id": Canvas.modelID(with: self.canvasIDs[1]).stringRepresentation,
@@ -57,7 +56,7 @@ class ModelReaderTests: XCTestCase {
                 "title": "Page 1",
                 "dateCreated": Date(timeIntervalSinceReferenceDate: 123),
                 "dateModified": Date(timeIntervalSinceReferenceDate: 456),
-                "content": ["type": "text", "filename": "\(self.pageIDs[0].uuidString).rtf"]
+                "content": ["type": "text", "filename": "\(self.pageIDs[0].uuidString).rtf"],
             ],
             [
                 "id": Page.modelID(with: self.pageIDs[1]).stringRepresentation,
@@ -65,15 +64,15 @@ class ModelReaderTests: XCTestCase {
                 "dateCreated": Date(timeIntervalSinceReferenceDate: 0),
                 "dateModified": Date(timeIntervalSinceReferenceDate: 0),
                 "userPreferredSize": NSStringFromSize(CGSize(width: 1024, height: 768)),
-                "content": ["type": "text"]
+                "content": ["type": "text"],
             ],
             [
                 "id": Page.modelID(with: self.pageIDs[2]).stringRepresentation,
                 "title": "Page 3",
                 "dateCreated": Date(timeIntervalSinceReferenceDate: 999),
                 "dateModified": Date(timeIntervalSinceReferenceDate: 9999),
-                "content": ["type": "image", "filename": "\(self.pageIDs[2].uuidString).png", "metadata": ["description": "This is an image"]]
-            ]
+                "content": ["type": "image", "filename": "\(self.pageIDs[2].uuidString).png", "metadata": ["description": "This is an image"]],
+            ],
         ]
 
         self.canvasPageIDs = [UUID(), UUID(), UUID()]
@@ -82,21 +81,21 @@ class ModelReaderTests: XCTestCase {
                 "id": CanvasPage.modelID(with: self.canvasPageIDs[0]).stringRepresentation,
                 "frame": NSStringFromRect(CGRect(x: 0, y: 1, width: 2, height: 3)),
                 "page": Page.modelID(with: self.pageIDs[0]).stringRepresentation,
-                "canvas": Canvas.modelID(with: self.canvasIDs[0]).stringRepresentation
+                "canvas": Canvas.modelID(with: self.canvasIDs[0]).stringRepresentation,
             ],
             [
                 "id": CanvasPage.modelID(with: self.canvasPageIDs[1]).stringRepresentation,
                 "frame": NSStringFromRect(CGRect(x: 30, y: 50, width: 200, height: 400)),
                 "page": Page.modelID(with: self.pageIDs[1]).stringRepresentation,
                 "canvas": Canvas.modelID(with: self.canvasIDs[0]).stringRepresentation,
-                "parent": CanvasPage.modelID(with: self.canvasPageIDs[0]).stringRepresentation
+                "parent": CanvasPage.modelID(with: self.canvasPageIDs[0]).stringRepresentation,
             ],
             [
                 "id": CanvasPage.modelID(with: self.canvasPageIDs[2]).stringRepresentation,
                 "frame": NSStringFromRect(CGRect(x: -30, y: -2, width: 600, height: 40)),
                 "page": Page.modelID(with: self.pageIDs[1]).stringRepresentation,
-                "canvas": Canvas.modelID(with: self.canvasIDs[1]).stringRepresentation
-            ]
+                "canvas": Canvas.modelID(with: self.canvasIDs[1]).stringRepresentation,
+            ],
         ]
 
         self.content = [
@@ -114,16 +113,16 @@ class ModelReaderTests: XCTestCase {
                     Page.modelID(with: self.pageIDs[0]).stringRepresentation,
                     Folder.modelID(with: self.folderIDs[1]).stringRepresentation,
                     Page.modelID(with: self.pageIDs[2]).stringRepresentation,
-                ]
+                ],
             ],
             [
                 "id": Folder.modelID(with: self.folderIDs[1]).stringRepresentation,
                 "title": "My New Folder",
                 "dateCreated": Date(timeIntervalSinceReferenceDate: 9241),
                 "contents": [
-                    Page.modelID(with: self.pageIDs[1]).stringRepresentation
-                ]
-            ]
+                    Page.modelID(with: self.pageIDs[1]).stringRepresentation,
+                ],
+            ],
         ]
 
 
@@ -139,11 +138,11 @@ class ModelReaderTests: XCTestCase {
 
         self.testFileWrapper = FileWrapper(directoryWithFileWrappers: [
             "data.plist": FileWrapper(regularFileWithContents: plistData),
-            "content": FileWrapper(directoryWithFileWrappers: self.content.mapValues { FileWrapper(regularFileWithContents: $0) })
+            "content": FileWrapper(directoryWithFileWrappers: self.content.mapValues { FileWrapper(regularFileWithContents: $0) }),
         ])
 
         self.modelController = CoppiceModelController(undoManager: UndoManager())
-        self.modelReader = ModelReader(modelController: modelController, documentVersion: 4)
+        self.modelReader = ModelReader(modelController: self.modelController, documentVersion: 4)
     }
 
     func test_read_createsAllCanvasesFromPlist() {
@@ -399,7 +398,7 @@ class ModelReaderTests: XCTestCase {
     func test_errors_throwsCorruptDataErrorIfDataPlistExistsButIsEmpty() {
         let fileWrapper = FileWrapper(directoryWithFileWrappers: [
             "data.plist": FileWrapper(regularFileWithContents: Data()),
-            "content": FileWrapper(directoryWithFileWrappers: [:])
+            "content": FileWrapper(directoryWithFileWrappers: [:]),
         ])
         do {
             try self.modelReader.read(fileWrapper)
@@ -414,7 +413,7 @@ class ModelReaderTests: XCTestCase {
     func test_errors_throwsCorruptDataErrorIfPlistCannotBeDecoded() {
         let fileWrapper = FileWrapper(directoryWithFileWrappers: [
             "data.plist": FileWrapper(regularFileWithContents: "abcdefgh".data(using: .utf8)!),
-            "content": FileWrapper(directoryWithFileWrappers: [:])
+            "content": FileWrapper(directoryWithFileWrappers: [:]),
         ])
         do {
             try self.modelReader.read(fileWrapper)
@@ -443,7 +442,7 @@ class ModelReaderTests: XCTestCase {
 
         let fileWrapper = FileWrapper(directoryWithFileWrappers: [
             "data.plist": FileWrapper(regularFileWithContents: plistData),
-            "content": FileWrapper(directoryWithFileWrappers: [:])
+            "content": FileWrapper(directoryWithFileWrappers: [:]),
         ])
         do {
             try self.modelReader.read(fileWrapper)
@@ -461,7 +460,7 @@ class ModelReaderTests: XCTestCase {
 
         let fileWrapper = FileWrapper(directoryWithFileWrappers: [
             "data.plist": FileWrapper(regularFileWithContents: plistData),
-            "content": FileWrapper(directoryWithFileWrappers: [:])
+            "content": FileWrapper(directoryWithFileWrappers: [:]),
         ])
         do {
             try self.modelReader.read(fileWrapper)
@@ -479,7 +478,7 @@ class ModelReaderTests: XCTestCase {
 
         let fileWrapper = FileWrapper(directoryWithFileWrappers: [
             "data.plist": FileWrapper(regularFileWithContents: plistData),
-            "content": FileWrapper(directoryWithFileWrappers: [:])
+            "content": FileWrapper(directoryWithFileWrappers: [:]),
         ])
         do {
             try self.modelReader.read(fileWrapper)
@@ -497,7 +496,7 @@ class ModelReaderTests: XCTestCase {
 
         let fileWrapper = FileWrapper(directoryWithFileWrappers: [
             "data.plist": FileWrapper(regularFileWithContents: plistData),
-            "content": FileWrapper(directoryWithFileWrappers: [:])
+            "content": FileWrapper(directoryWithFileWrappers: [:]),
         ])
         do {
             try self.modelReader.read(fileWrapper)
@@ -520,7 +519,7 @@ class ModelReaderTests: XCTestCase {
 
         let fileWrapper = FileWrapper(directoryWithFileWrappers: [
             "data.plist": FileWrapper(regularFileWithContents: plistData),
-            "content": FileWrapper(directoryWithFileWrappers: [:])
+            "content": FileWrapper(directoryWithFileWrappers: [:]),
         ])
         do {
             try self.modelReader.read(fileWrapper)
@@ -537,7 +536,7 @@ class ModelReaderTests: XCTestCase {
             "canvases": [],
             "pages": [
                 ["id": Page.modelID(with: UUID()).stringRepresentation, "title": "Page With ID"],
-                ["title": "Page Without ID"]
+                ["title": "Page Without ID"],
             ],
             "canvasPages": [],
             "folders": [],
@@ -546,7 +545,7 @@ class ModelReaderTests: XCTestCase {
 
         let fileWrapper = FileWrapper(directoryWithFileWrappers: [
             "data.plist": FileWrapper(regularFileWithContents: plistData),
-            "content": FileWrapper(directoryWithFileWrappers: [:])
+            "content": FileWrapper(directoryWithFileWrappers: [:]),
         ])
         do {
             try self.modelReader.read(fileWrapper)
@@ -564,7 +563,7 @@ class ModelReaderTests: XCTestCase {
             "pages": [],
             "canvasPages": [
                 ["id": Page.modelID(with: UUID()).stringRepresentation, "frame": NSStringFromRect(CGRect(x: 0, y: 2, width: 8, height: 9))],
-                ["frame": NSStringFromRect(CGRect(x: 0, y: 12, width: 5, height: 4))]
+                ["frame": NSStringFromRect(CGRect(x: 0, y: 12, width: 5, height: 4))],
             ],
             "folders": [],
         ]
@@ -572,7 +571,7 @@ class ModelReaderTests: XCTestCase {
 
         let fileWrapper = FileWrapper(directoryWithFileWrappers: [
             "data.plist": FileWrapper(regularFileWithContents: plistData),
-            "content": FileWrapper(directoryWithFileWrappers: [:])
+            "content": FileWrapper(directoryWithFileWrappers: [:]),
         ])
         do {
             try self.modelReader.read(fileWrapper)
@@ -592,13 +591,13 @@ class ModelReaderTests: XCTestCase {
             "folders": [
                 ["id": Page.modelID(with: UUID()).stringRepresentation, "title": "My Folder", "contents": []],
                 ["title": "Second Folder", "contents": []],
-            ]
+            ],
         ]
         let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
 
         let fileWrapper = FileWrapper(directoryWithFileWrappers: [
             "data.plist": FileWrapper(regularFileWithContents: plistData),
-            "content": FileWrapper(directoryWithFileWrappers: [:])
+            "content": FileWrapper(directoryWithFileWrappers: [:]),
         ])
         do {
             try self.modelReader.read(fileWrapper)
@@ -614,7 +613,7 @@ class ModelReaderTests: XCTestCase {
     func test_errors_throwsModelObjectUpdateErrorIfCanvasUpdateFailed() {
         let plist: [String: [[String: Any]]] = [
             "canvases": [
-                ["id": Canvas.modelID(with: UUID()).stringRepresentation]
+                ["id": Canvas.modelID(with: UUID()).stringRepresentation],
             ],
             "pages": [],
             "canvasPages": [],
@@ -624,7 +623,7 @@ class ModelReaderTests: XCTestCase {
 
         let fileWrapper = FileWrapper(directoryWithFileWrappers: [
             "data.plist": FileWrapper(regularFileWithContents: plistData),
-            "content": FileWrapper(directoryWithFileWrappers: [:])
+            "content": FileWrapper(directoryWithFileWrappers: [:]),
         ])
         do {
             try self.modelReader.read(fileWrapper)
@@ -640,7 +639,7 @@ class ModelReaderTests: XCTestCase {
         let plist: [String: [[String: Any]]] = [
             "canvases": [],
             "pages": [
-                ["id": Page.modelID(with: UUID()).stringRepresentation]
+                ["id": Page.modelID(with: UUID()).stringRepresentation],
             ],
             "canvasPages": [],
             "folders": [],
@@ -649,7 +648,7 @@ class ModelReaderTests: XCTestCase {
 
         let fileWrapper = FileWrapper(directoryWithFileWrappers: [
             "data.plist": FileWrapper(regularFileWithContents: plistData),
-            "content": FileWrapper(directoryWithFileWrappers: [:])
+            "content": FileWrapper(directoryWithFileWrappers: [:]),
         ])
         do {
             try self.modelReader.read(fileWrapper)
@@ -666,7 +665,7 @@ class ModelReaderTests: XCTestCase {
             "canvases": [],
             "pages": [],
             "canvasPages": [
-                ["id": CanvasPage.modelID(with: UUID()).stringRepresentation]
+                ["id": CanvasPage.modelID(with: UUID()).stringRepresentation],
             ],
             "folders": [],
         ]
@@ -674,7 +673,7 @@ class ModelReaderTests: XCTestCase {
 
         let fileWrapper = FileWrapper(directoryWithFileWrappers: [
             "data.plist": FileWrapper(regularFileWithContents: plistData),
-            "content": FileWrapper(directoryWithFileWrappers: [:])
+            "content": FileWrapper(directoryWithFileWrappers: [:]),
         ])
         do {
             try self.modelReader.read(fileWrapper)
@@ -692,14 +691,14 @@ class ModelReaderTests: XCTestCase {
             "pages": [],
             "canvasPages": [],
             "folders": [
-                ["id": Folder.modelID(with: UUID()).stringRepresentation]
+                ["id": Folder.modelID(with: UUID()).stringRepresentation],
             ],
         ]
         let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
 
         let fileWrapper = FileWrapper(directoryWithFileWrappers: [
             "data.plist": FileWrapper(regularFileWithContents: plistData),
-            "content": FileWrapper(directoryWithFileWrappers: [:])
+            "content": FileWrapper(directoryWithFileWrappers: [:]),
         ])
         do {
             try self.modelReader.read(fileWrapper)

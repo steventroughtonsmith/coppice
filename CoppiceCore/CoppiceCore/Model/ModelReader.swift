@@ -9,7 +9,6 @@
 import Cocoa
 
 public class ModelReader: NSObject {
-
     public enum Errors: Error {
         case corruptData
         case missingCollection(String)
@@ -27,7 +26,8 @@ public class ModelReader: NSObject {
 
     public func read(_ fileWrapper: FileWrapper) throws {
         guard let plistWrapper = fileWrapper.fileWrappers?["data.plist"],
-            let contentWrappers = fileWrapper.fileWrappers?["content"]?.fileWrappers else {
+            let contentWrappers = fileWrapper.fileWrappers?["content"]?.fileWrappers
+        else {
             return
         }
 

@@ -19,7 +19,7 @@ class SourceListTableCellView: EditableLabelCell, SidebarSizable {
             self.iconHeightConstraint.constant = self.activeSidebarSize.smallRowGlyphSize.height
         }
     }
-    
+
     override var draggingImageComponents: [NSDraggingImageComponent] {
         let components = super.draggingImageComponents
         guard

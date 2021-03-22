@@ -9,7 +9,6 @@
 import XCTest
 
 class BaseUITestCase: XCTestCase {
-
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
 
@@ -28,6 +27,5 @@ class BaseUITestCase: XCTestCase {
 
     func performAdditionalSetup(on app: XCUIApplication) throws {}
 
-    override func tearDownWithError() throws { }
-
+    override func tearDownWithError() throws {}
 }

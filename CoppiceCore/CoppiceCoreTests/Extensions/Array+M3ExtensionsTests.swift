@@ -6,8 +6,8 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 @testable import CoppiceCore
+import XCTest
 
 class Array_M3ExtensionsTests: XCTestCase {
     //MARK: - [safe:]
@@ -37,10 +37,10 @@ class Array_M3ExtensionsTests: XCTestCase {
         let array = [
             TestValue(name: "Bob", age: 42),
             TestValue(name: "Alice", age: 31),
-            TestValue(name: "Patrick", age: 12)
+            TestValue(name: "Patrick", age: 12),
         ]
 
-        let dictionary = array.indexed(by:\.name)
+        let dictionary = array.indexed(by: \.name)
 
         XCTAssertEqual(dictionary.count, 3)
         XCTAssertTrue(dictionary.values.contains(array[0]))
@@ -52,10 +52,10 @@ class Array_M3ExtensionsTests: XCTestCase {
         let array = [
             TestValue(name: "Bob", age: 42),
             TestValue(name: "Alice", age: 31),
-            TestValue(name: "Patrick", age: 12)
+            TestValue(name: "Patrick", age: 12),
         ]
 
-        let dictionary = array.indexed(by:\.name)
+        let dictionary = array.indexed(by: \.name)
 
         XCTAssertEqual(dictionary.count, 3)
         XCTAssertEqual(dictionary["Bob"]?.name, "Bob")
@@ -90,5 +90,4 @@ class Array_M3ExtensionsTests: XCTestCase {
         let results = array[IndexSet(arrayLiteral: 2, 3, 6)]
         XCTAssertEqual(results, [30, 40])
     }
-
 }

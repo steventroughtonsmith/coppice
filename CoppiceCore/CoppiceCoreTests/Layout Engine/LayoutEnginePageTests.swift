@@ -6,11 +6,10 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 import CoppiceCore
+import XCTest
 
 class LayoutEnginePageTests: XCTestCase {
-
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
@@ -33,7 +32,7 @@ class LayoutEnginePageTests: XCTestCase {
     func test_init_increasesContentSizeIfBelowMinimum() {
         let layoutEngine = self.layoutEngine()
         let page = LayoutEnginePage(id: UUID(),
-                                    contentFrame: CGRect(x: 0, y: 0, width:20, height: 40),
+                                    contentFrame: CGRect(x: 0, y: 0, width: 20, height: 40),
                                     minimumContentSize: CGSize(width: 50, height: 60))
         layoutEngine.add([page])
         XCTAssertEqual(page.contentFrame, CGRect(x: 0, y: 0, width: 50, height: 60))
@@ -91,7 +90,7 @@ class LayoutEnginePageTests: XCTestCase {
                                              pageCornerResizeHandleSize: 12)
 
         let minimumContentSize = CGSize(width: 120, height: 40)
-        let page = LayoutEnginePage(id: UUID(), contentFrame: .zero, minimumContentSize:minimumContentSize)
+        let page = LayoutEnginePage(id: UUID(), contentFrame: .zero, minimumContentSize: minimumContentSize)
         layoutEngine.add([page])
 
         let expectedSize = minimumContentSize.plus(width: 20, height: 43)
@@ -190,7 +189,7 @@ class LayoutEnginePageTests: XCTestCase {
 
         XCTAssertEqual(page.layoutFrameInPageSpace, CGRect(origin: CGPoint(x: -17, y: -18), size: page.layoutFrame.size))
     }
-    
+
 
     //MARK: - .visualPageFrame
     func test_visualPageFrame_isSameSizeAsLayoutFrameWithZeroOriginIfShadowIsZero() {
@@ -718,7 +717,8 @@ class LayoutEnginePageTests: XCTestCase {
                       pageEdgeResizeHandleSize: CGFloat = 0,
                       pageCornerResizeHandleSize: CGFloat = 0,
                       contentBorder: CGFloat = 20,
-                      arrowHeadSize: CGFloat = 5) -> CanvasLayoutEngine {
+                      arrowHeadSize: CGFloat = 5) -> CanvasLayoutEngine
+    {
         return CanvasLayoutEngine(configuration: .init(page: .init(titleHeight: pageTitleHeight,
                                                                    borderSize: pageBorderSize,
                                                                    shadowOffset: pageShadowOffset,

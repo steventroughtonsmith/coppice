@@ -23,7 +23,7 @@ struct DeactivateAPI {
         #if DEBUG
         var body = [
             "deviceID": self.device.id,
-            "token": self.token
+            "token": self.token,
         ]
         if let debugString = APIDebugManager.shared.deactivateDebugString {
             body["debug"] = debugString
@@ -31,7 +31,7 @@ struct DeactivateAPI {
         #else
         let body = [
             "deviceID": self.device.id,
-            "token": self.token
+            "token": self.token,
         ]
         #endif
 

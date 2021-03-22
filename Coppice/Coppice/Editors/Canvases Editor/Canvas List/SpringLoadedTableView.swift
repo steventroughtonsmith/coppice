@@ -9,7 +9,7 @@
 import Cocoa
 import CoppiceCore
 
-protocol SpringLoadedTableViewDelegate: class {
+protocol SpringLoadedTableViewDelegate: AnyObject {
     func userDidSpringLoad(on row: NSTableRowView, of tableView: SpringLoadedTableView)
     func springLoadedDragEnded(_ tableView: SpringLoadedTableView)
 }

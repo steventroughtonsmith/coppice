@@ -61,9 +61,6 @@ class PageEditorViewController: NSViewController {
             HelpTipPresenter.shared.showTip(with: .textPageLink, fromView: self.view, preferredEdge: .maxX)
         }
     }
-
-
-
 }
 
 

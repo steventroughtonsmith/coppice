@@ -39,7 +39,7 @@ class CanvasTextView: NSTextView {
     override func resignFirstResponder() -> Bool {
         let resigned = super.resignFirstResponder()
         if (resigned) {
-            self.perform(#selector(postResignNotification), with: nil, afterDelay: 0)
+            self.perform(#selector(self.postResignNotification), with: nil, afterDelay: 0)
         }
         return resigned
     }
@@ -69,7 +69,7 @@ class CanvasTextView: NSTextView {
         view.alphaValue = 0.6
         self.addSubview(view)
 
-        NSView.animate(withDuration: 1.0, timingFunction: CAMediaTimingFunction.init(name: .easeOut), animations: {
+        NSView.animate(withDuration: 1.0, timingFunction: CAMediaTimingFunction(name: .easeOut), animations: {
             view.alphaValue = 0
         }, completion: {
             view.removeFromSuperview()

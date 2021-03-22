@@ -24,6 +24,7 @@ class SubscribeViewController: NSViewController, DeactivatedSubscriptionMode {
         super.init(nibName: "SubscribeViewController", bundle: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -93,5 +94,4 @@ class SubscribeViewController: NSViewController, DeactivatedSubscriptionMode {
         self.featureStackView.addArrangedSubview(stackView)
         stackView.trailingAnchor.constraint(equalTo: self.featureStackView.trailingAnchor).isActive = true
     }
-
 }

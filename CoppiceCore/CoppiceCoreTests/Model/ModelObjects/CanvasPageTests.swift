@@ -6,8 +6,8 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 @testable import CoppiceCore
+import XCTest
 
 class CanvasPageTests: XCTestCase {
     var modelController: CoppiceModelController!
@@ -73,7 +73,7 @@ class CanvasPageTests: XCTestCase {
             "bar": "foo",
             "frame": NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
             "zIndex": 31,
-            "point": NSStringFromPoint(CGPoint(x: 15, y: 51))
+            "point": NSStringFromPoint(CGPoint(x: 15, y: 51)),
         ]
 
         XCTAssertNoThrow(try canvasPage.update(fromPlistRepresentation: plist))
@@ -105,7 +105,7 @@ class CanvasPageTests: XCTestCase {
             "frame": NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
             "page": newPage.id.stringRepresentation,
             "canvas": newCanvas.id.stringRepresentation,
-            "canvasPage": parent.id.stringRepresentation
+            "canvasPage": parent.id.stringRepresentation,
         ]
 
         XCTAssertThrowsError(try canvasPage.update(fromPlistRepresentation: plist), "") {
@@ -205,7 +205,7 @@ class CanvasPageTests: XCTestCase {
             "bar": "foo",
             "frame": NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
             "zIndex": 31,
-            "point": NSStringFromPoint(CGPoint(x: 15, y: 51))
+            "point": NSStringFromPoint(CGPoint(x: 15, y: 51)),
         ]
 
         XCTAssertNoThrow(try canvasPage.update(fromPlistRepresentation: plist))
@@ -223,7 +223,7 @@ class CanvasPageTests: XCTestCase {
             "bar": "foo",
             "frame": NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
             "zIndex": 31,
-            "point": NSStringFromPoint(CGPoint(x: 15, y: 51))
+            "point": NSStringFromPoint(CGPoint(x: 15, y: 51)),
         ]
 
         XCTAssertNoThrow(try canvasPage.update(fromPlistRepresentation: plist))

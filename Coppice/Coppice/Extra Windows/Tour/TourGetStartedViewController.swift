@@ -9,11 +9,11 @@
 import Cocoa
 
 class TourGetStartedViewController: TourPanelViewController {
-
     override init(nibName nibNameOrNil: NSNib.Name?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: "TourGetStartedView", bundle: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -26,10 +26,9 @@ class TourGetStartedViewController: TourPanelViewController {
         self.viewDocumentButton.attributedTitle = NSAttributedString(string: localizedTitle, attributes: [
             .font: NSFont.systemFont(ofSize: NSFont.systemFontSize),
             .foregroundColor: NSColor.white,
-            .paragraphStyle: paragraph
+            .paragraphStyle: paragraph,
         ])
     }
 
     @IBOutlet var viewDocumentButton: NSButton!
-
 }

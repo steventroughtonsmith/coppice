@@ -6,11 +6,10 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 import CoppiceCore
+import XCTest
 
 class ModelControllerTests: XCTestCase {
-
     //MARK: - addModelCollection(for:)
     func test_addModelCollectionForType_addsNewCollectionToAllCollections() {
         let modelController = ModelControllerForTests()
@@ -39,7 +38,6 @@ class ModelControllerTests: XCTestCase {
         modelController.removeModelCollection(for: TestCollectableModelObject.self)
 
         XCTAssertNil(modelController.allCollections[TestCollectableModelObject.modelType])
-
     }
 
 
@@ -58,7 +56,7 @@ class ModelControllerTests: XCTestCase {
 class ModelControllerForTests: ModelController {
     let undoManager: UndoManager = UndoManager()
 
-    var allCollections: [ModelType : Any] = [:]
+    var allCollections: [ModelType: Any] = [:]
 
     var settings = ModelSettings()
 

@@ -10,8 +10,7 @@ import Cocoa
 import Combine
 import CoppiceCore
 
-protocol TextEditorParagraphInspectorView: class {
-}
+protocol TextEditorParagraphInspectorView: AnyObject {}
 
 class TextEditorParagraphInspectorViewModel: BaseInspectorViewModel {
     weak var view: TextEditorParagraphInspectorView?

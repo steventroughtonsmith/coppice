@@ -10,7 +10,7 @@ import AppKit
 @testable import CoppiceCore
 
 class MockPageContent: NSObject, PageContent, NSFilePromiseProviderDelegate {
-    var otherMetadata: [String : Any]?
+    var otherMetadata: [String: Any]?
 
 
     var filePromiseProvider: ExtendableFilePromiseProvider {
@@ -34,7 +34,7 @@ class MockPageContent: NSObject, PageContent, NSFilePromiseProviderDelegate {
     func sizeToFitContent(currentSize: CGSize) -> CGSize {
         return currentSize
     }
-    
+
 
     var searchRange = NSRange(location: NSNotFound, length: 0)
     func firstRangeOf(_ searchTerm: String) -> NSRange {

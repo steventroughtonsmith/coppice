@@ -6,13 +6,12 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 @testable import Coppice
 @testable import CoppiceCore
+import XCTest
 
 
 class SourceListViewModelTests: XCTestCase {
-
     var notificationCenter: NotificationCenter!
 
     var documentWindowViewModel: DocumentWindowViewModel!
@@ -38,7 +37,7 @@ class SourceListViewModelTests: XCTestCase {
 
     private func createViewModel() -> SourceListViewModel {
         return  SourceListViewModel(documentWindowViewModel: self.documentWindowViewModel,
-                                 notificationCenter: self.notificationCenter)
+                                    notificationCenter: self.notificationCenter)
     }
 
     private func addTestData(to viewModel: SourceListViewModel) -> (Page, Folder, Page, Page) {
@@ -465,7 +464,6 @@ class SourceListViewModelTests: XCTestCase {
         XCTAssertEqual(vm.selectedNodes.count, 2)
         XCTAssertTrue(vm.selectedNodes.contains(where: { $0.item == .page(page1.id) }))
         XCTAssertTrue(vm.selectedNodes.contains(where: { $0.item == .page(subPage.id) }))
-
     }
 
     func test_updateSelectedNodes_setsSelectedNodesToMatchSuppliedFolderItems() {
@@ -1097,9 +1095,8 @@ class SourceListViewModelTests: XCTestCase {
 //MARK: - Helpers
 
 private class MockSourceListView: SourceListView {
-    func prepareForReload() {
+    func prepareForReload() {}
 
-    }
     var reloadCalled = false
     func reload() {
         self.reloadCalled = true

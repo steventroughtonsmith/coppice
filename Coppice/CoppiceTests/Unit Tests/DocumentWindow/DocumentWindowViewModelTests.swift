@@ -6,12 +6,11 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 @testable import Coppice
 @testable import CoppiceCore
+import XCTest
 
 class DocumentWindowViewModelTests: XCTestCase {
-
     var modelController: MockCoppiceModelController!
 
     var folder: Folder!
@@ -344,7 +343,7 @@ class DocumentWindowViewModelTests: XCTestCase {
 
         let (deletedPage) = try XCTUnwrap(self.modelController.deleteFolderItemsMock.arguments[safe: 0])
         XCTAssertEqual(deletedPage.count, 1)
-        XCTAssertEqual(deletedPage.first as? Page, page)
+        XCTAssertEqual(deletedPage.first as? Page, self.page)
     }
 
 
@@ -523,7 +522,7 @@ class DocumentWindowViewModelTests: XCTestCase {
         callback(0)
 
         let (deletedCanvas) = try XCTUnwrap(self.modelController.deleteCanvasMock.arguments[safe: 0])
-        XCTAssertEqual(deletedCanvas, canvas)
+        XCTAssertEqual(deletedCanvas, self.canvas)
     }
 
 

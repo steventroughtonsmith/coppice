@@ -13,6 +13,7 @@ class SystemProfileInfoTableCell: NSTableCellView {
         case key
         case value
     }
+
     var cellType = CellType.key {
         didSet {
             self.reloadData()
@@ -29,6 +30,7 @@ class SystemProfileInfoTableCell: NSTableCellView {
             self.reloadData()
         }
     }
+
     var showRawData = true {
         didSet {
             self.reloadData()
@@ -45,7 +47,6 @@ class SystemProfileInfoTableCell: NSTableCellView {
         case .value:
             self.textField?.objectValue = (self.showRawData ? infoItem.value : infoItem.displayValue)
         }
-
     }
 
     @IBAction func showInfo(_ sender: Any) {

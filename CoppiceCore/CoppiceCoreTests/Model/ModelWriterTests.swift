@@ -6,8 +6,8 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 import CoppiceCore
+import XCTest
 
 class ModelWriterTests: XCTestCase {
     var testModel: ModelController!
@@ -47,7 +47,7 @@ class ModelWriterTests: XCTestCase {
         let canvasCollection = self.testModel.collection(for: Canvas.self)
         self.canvases = [
             canvasCollection.newObject { $0.title = "Canvas 1" },
-            canvasCollection.newObject { $0.title = "Canvas 2" }
+            canvasCollection.newObject { $0.title = "Canvas 2" },
         ]
 
         let canvasPagesCollection = self.testModel.collection(for: CanvasPage.self)
@@ -63,7 +63,7 @@ class ModelWriterTests: XCTestCase {
             canvasPagesCollection.newObject() {
                 $0.page = self.pages[1]
                 $0.canvas = self.canvases[1]
-            }
+            },
         ]
 
         self.canvasPages[1].parent = self.canvasPages[0]
@@ -76,7 +76,7 @@ class ModelWriterTests: XCTestCase {
             },
             foldersCollection.newObject() {
                 $0.title = "My Folder"
-            }
+            },
         ]
         self.testModel.settings.set(self.folders[0].id, for: .rootFolder)
 
@@ -138,7 +138,7 @@ class ModelWriterTests: XCTestCase {
         let fileWrapper = try writer.generateFileWrapper()
         let data = try XCTUnwrap(fileWrapper.fileWrappers?["data.plist"]?.regularFileContents)
         let plist = try XCTUnwrap(try PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: Any])
-        let folders = try XCTUnwrap(plist["folders"] as? [[String : Any]])
+        let folders = try XCTUnwrap(plist["folders"] as? [[String: Any]])
         XCTAssertEqual(folders.count, 2)
     }
 

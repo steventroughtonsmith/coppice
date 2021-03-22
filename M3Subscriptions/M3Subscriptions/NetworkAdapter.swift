@@ -89,8 +89,7 @@ class URLSessionNetworkAdapter: NetworkAdapter {
                 }
 
                 completion(.success(apiData))
-            }
-            catch let e {
+            } catch let e {
                 completion(.failure(e))
             }
         }

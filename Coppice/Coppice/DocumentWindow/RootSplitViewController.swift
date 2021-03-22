@@ -33,6 +33,7 @@ class RootSplitViewController: NSSplitViewController, NSMenuItemValidation {
         ]
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -43,8 +44,8 @@ class RootSplitViewController: NSSplitViewController, NSMenuItemValidation {
         super.viewDidLoad()
 
 
-        NotificationCenter.default.addObserver(self, selector: #selector(willStartDrag(_:)), name: .nestableSplitViewWillStartDrag, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didEndDrag(_:)), name: .nestableSplitViewDidEndDrag, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.willStartDrag(_:)), name: .nestableSplitViewWillStartDrag, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.didEndDrag(_:)), name: .nestableSplitViewDidEndDrag, object: nil)
     }
 
     @objc func willStartDrag(_ notification: Notification) {
@@ -81,12 +82,12 @@ class RootSplitViewController: NSSplitViewController, NSMenuItemValidation {
     }
 
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
-        if (menuItem.action == #selector(toggleInspectors(_:))) {
+        if (menuItem.action == #selector(self.toggleInspectors(_:))) {
             let containerItemIsCollapsed = self.splitViewItem(for: self.inspectorContainerViewController)?.isCollapsed ?? false
             menuItem.title = containerItemIsCollapsed ? NSLocalizedString("Show Inspector", comment: "Show inspector menu item")
                                                       : NSLocalizedString("Hide Inspector", comment: "Hide inspector menu item")
         }
-        if (menuItem.action == #selector(toggleSidebar(_:))) {
+        if (menuItem.action == #selector(self.toggleSidebar(_:))) {
             let containerItemIsCollapsed = self.splitViewItem(for: self.sidebarViewController)?.isCollapsed ?? false
             menuItem.title = containerItemIsCollapsed ? NSLocalizedString("Show Sidebar", comment: "Show sidebar menu item")
                                                       : NSLocalizedString("Hide Sidebar", comment: "Hide sidebar menu item")

@@ -6,13 +6,12 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import Foundation
 @testable import Coppice
 @testable import CoppiceCore
+import Foundation
 
 class TestLayoutDelegate: CanvasLayoutEngineDelegate {
-    func reordered(pages: [LayoutEnginePage], in layout: CanvasLayoutEngine) {
-    }
+    func reordered(pages: [LayoutEnginePage], in layout: CanvasLayoutEngine) {}
 
     var movedPages: [LayoutEnginePage]?
     func moved(pages: [LayoutEnginePage], in layout: CanvasLayoutEngine) {

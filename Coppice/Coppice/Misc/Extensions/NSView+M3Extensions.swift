@@ -18,9 +18,9 @@ extension NSView {
                                                          metrics: ["left": NSNumber(value: Double(insets.left)), "right": NSNumber(value: Double(insets.right))],
                                                          views: ["view": subview])
         constraints += NSLayoutConstraint.constraints(withVisualFormat: "V:|-(top)-[view]-(bottom)-|",
-                                                     options: [],
-                                                     metrics: ["top": NSNumber(value: Double(insets.top)), "bottom": NSNumber(value: Double(insets.bottom))],
-                                                     views: ["view": subview])
+                                                      options: [],
+                                                      metrics: ["top": NSNumber(value: Double(insets.top)), "bottom": NSNumber(value: Double(insets.bottom))],
+                                                      views: ["view": subview])
         NSLayoutConstraint.activate(constraints)
     }
 

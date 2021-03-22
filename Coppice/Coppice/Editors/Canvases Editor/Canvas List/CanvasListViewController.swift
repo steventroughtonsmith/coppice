@@ -18,10 +18,11 @@ class CanvasListViewController: NSViewController, SplitViewContainable, NSMenuIt
     let viewModel: CanvasListViewModel
     init(viewModel: CanvasListViewModel) {
         self.viewModel = viewModel
-        super.init(nibName:"CanvasListView", bundle: nil)
+        super.init(nibName: "CanvasListView", bundle: nil)
         viewModel.view = self
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -30,14 +31,14 @@ class CanvasListViewController: NSViewController, SplitViewContainable, NSMenuIt
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         if #available(macOS 11, *) {
             self.tableView.style = .fullWidth
         }
 
         self.tableView.setDraggingSourceOperationMask(.copy, forLocal: true)
         self.tableView.registerForDraggedTypes([ModelID.PasteboardType, .fileURL])
-        
+
         self.tableView.register(NSNib(nibNamed: "SmallCanvasCell", bundle: nil), forIdentifier: SmallCanvasCell.identifier)
         self.tableView.register(NSNib(nibNamed: "LargeCanvasCell", bundle: nil), forIdentifier: LargeCanvasCell.identifier)
 
@@ -72,7 +73,7 @@ class CanvasListViewController: NSViewController, SplitViewContainable, NSMenuIt
         self.viewAppeared = false
     }
 
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
         guard keyPath == UserDefaultsKeys.canvasListIsCompact.rawValue else {
             super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
             return
@@ -101,7 +102,6 @@ class CanvasListViewController: NSViewController, SplitViewContainable, NSMenuIt
     static let regularMaximumSize: CGFloat = 250
 
     private func updateCanvasListState() {
-
         self.splitViewItem?.minimumThickness = (self.isCompact ? CanvasListViewController.compactSize : CanvasListViewController.regularMinimumSize)
         self.splitViewItem?.maximumThickness = (self.isCompact ? CanvasListViewController.compactSize : CanvasListViewController.regularMaximumSize)
         self.reload()
@@ -122,7 +122,7 @@ class CanvasListViewController: NSViewController, SplitViewContainable, NSMenuIt
     @IBOutlet weak var actionButton: NSPopUpButton!
 
     private func setupActionButton() {
-        for menuItem in contextMenu.items {
+        for menuItem in self.contextMenu.items {
             let menuItemCopy = menuItem.copy() as! NSMenuItem
             self.actionButton.menu?.addItem(menuItemCopy)
         }
@@ -155,11 +155,11 @@ class CanvasListViewController: NSViewController, SplitViewContainable, NSMenuIt
     }
 
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
-        if menuItem.action == #selector(editCanvasTitle(_:)) {
+        if menuItem.action == #selector(self.editCanvasTitle(_:)) {
             return (self.rowForAction != -1) && (self.isCompact == false)
         }
 
-        if menuItem.action == #selector(deleteCanvas(_:)) {
+        if menuItem.action == #selector(self.deleteCanvas(_:)) {
             return (self.rowForAction != -1)
         }
         return false
@@ -188,7 +188,8 @@ class CanvasListViewController: NSViewController, SplitViewContainable, NSMenuIt
         guard
             let scrollView = self.tableScrollView,
             let addButton = self.addButton,
-            let actionButton = self.actionButton else {
+            let actionButton = self.actionButton
+        else {
                 return
         }
 
@@ -254,7 +255,8 @@ extension CanvasListViewController: NSTableViewDataSource {
 
     private func validateObjectDrop(on table: NSTableView, with info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableView.DropOperation) -> NSDragOperation {
         guard let item = info.draggingPasteboard.pasteboardItems?.first,
-            let id = ModelID(pasteboardItem: item) else {
+            let id = ModelID(pasteboardItem: item)
+        else {
                 return []
         }
 
@@ -305,7 +307,7 @@ extension CanvasListViewController: NSTableViewDataSource {
             return false
         }
 
-        let modelIDs = items.compactMap({ ModelID(pasteboardItem: $0) })
+        let modelIDs = items.compactMap { ModelID(pasteboardItem: $0) }
 
         if modelIDs.count == 1, let id = modelIDs.first, (id.modelType == Canvas.modelType) {
             self.viewModel.moveCanvas(with: id, aboveCanvasAtIndex: row)
@@ -327,7 +329,7 @@ extension CanvasListViewController: NSTableViewDataSource {
             return false
         }
 
-        let urls = items.compactMap{ $0.data(forType: .fileURL) }.compactMap { URL(dataRepresentation: $0, relativeTo: nil) }
+        let urls = items.compactMap { $0.data(forType: .fileURL) }.compactMap { URL(dataRepresentation: $0, relativeTo: nil) }
         let newPages = self.viewModel.addPages(fromFilesAtURLs: urls, toCanvasAtIndex: row)
         return (newPages.count > 0) // Accept the drop if at least one file led to a new page
     }

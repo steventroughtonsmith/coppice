@@ -14,7 +14,8 @@ class SimpleLabelPopoverViewController: NSViewController {
         self.label = label
         super.init(nibName: "SimpleLabelPopoverViewController", bundle: nil)
     }
-    
+
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

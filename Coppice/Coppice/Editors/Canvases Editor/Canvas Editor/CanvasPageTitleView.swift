@@ -9,7 +9,7 @@
 import Cocoa
 import CoppiceCore
 
-protocol CanvasPageTitleViewDelegate: class {
+protocol CanvasPageTitleViewDelegate: AnyObject {
     func closeClicked(in titleView: CanvasPageTitleView)
     func didChangeTitle(to newTitle: String, in titleView: CanvasPageTitleView)
 }
@@ -83,7 +83,7 @@ class CanvasPageTitleView: NSView {
 
         label.setAccessibilityHelp(NSLocalizedString("Interact with this element to edit the title", comment: "Page title field accessibility help"))
 
-        let customAction = NSAccessibilityCustomAction(name: NSLocalizedString("Edit Title", comment: "Edit Title of canvas page accessibility action name")) {[weak self] in
+        let customAction = NSAccessibilityCustomAction(name: NSLocalizedString("Edit Title", comment: "Edit Title of canvas page accessibility action name")) { [weak self] in
             self?.makeTitleEditable()
             return true
         }

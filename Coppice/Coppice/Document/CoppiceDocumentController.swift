@@ -12,5 +12,4 @@ class CoppiceDocumentController: NSDocumentController {
     override func willPresentError(_ error: Error) -> Error {
         return error
     }
-
 }

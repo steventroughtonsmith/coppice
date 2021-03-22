@@ -19,5 +19,4 @@ extension NSMenu {
         }
         return false
     }
-
 }

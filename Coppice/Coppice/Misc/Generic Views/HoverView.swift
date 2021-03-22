@@ -8,7 +8,7 @@
 
 import Cocoa
 
-@objc protocol HoverViewDelegate: class {
+@objc protocol HoverViewDelegate: AnyObject {
     func mouseDidEnter(_ hoverView: HoverView)
     func mouseDidExit(_ hoverView: HoverView)
 }

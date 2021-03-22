@@ -10,7 +10,6 @@ import Cocoa
 import CoppiceCore
 
 class DocumentContentViewController: NSViewController {
-
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
@@ -28,7 +27,7 @@ class DocumentContentViewController: NSViewController {
                 self.view.addSubview(newValue.view)
                 NSLayoutConstraint.activate([
                     self.view.centerXAnchor.constraint(equalTo: newValue.view.centerXAnchor),
-                    self.view.bottomAnchor.constraint(equalTo: newValue.view.bottomAnchor, constant: 50)
+                    self.view.bottomAnchor.constraint(equalTo: newValue.view.bottomAnchor, constant: 50),
                 ])
                 newValue.view.alphaValue = 0
             }
@@ -42,5 +41,4 @@ class DocumentContentViewController: NSViewController {
             }
         }
     }
-
 }

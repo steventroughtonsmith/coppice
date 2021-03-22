@@ -19,7 +19,7 @@ public class ModelSettings {
 
     public init() {}
 
-    private var settings = [Setting : Any]()
+    private var settings = [Setting: Any]()
 
     public func value(for setting: Setting) -> Any? {
         return self.settings[setting]

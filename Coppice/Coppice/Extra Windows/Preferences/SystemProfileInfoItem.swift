@@ -112,7 +112,7 @@ class SystemProfileInfoItemCreator {
     ]
 
     private static let iMacProModels = [
-        "1,1": "(2017)"
+        "1,1": "(2017)",
     ]
 
     private static let macMiniModels = [
@@ -124,7 +124,7 @@ class SystemProfileInfoItemCreator {
 
     private static let macProModels = [
         "6,1": "(Late 2013)",
-        "7,1": "(2019)"
+        "7,1": "(2019)",
     ]
 
     private static let macBookModels = [

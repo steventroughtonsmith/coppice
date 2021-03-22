@@ -7,11 +7,11 @@
 //
 
 import AppKit
-import CoppiceCore
 import Combine
+import CoppiceCore
 import M3Subscriptions
 
-protocol CanvasEditorView: class {
+protocol CanvasEditorView: AnyObject {
     func updateZoomFactor()
     func flash(_ canvasPage: CanvasPage)
     func notifyAccessibilityOfMove(_ canvasPages: [CanvasPage])
@@ -43,6 +43,7 @@ class CanvasEditorViewModel: ViewModel {
             self.layoutEngine.editable = !self.isLocked
         }
     }
+
     var activationObserver: AnyCancellable?
     private func setupProObservation() {
         self.activationObserver = CoppiceSubscriptionManager.shared.$activationResponse.sink { [weak self] response in
@@ -277,7 +278,7 @@ class CanvasEditorViewModel: ViewModel {
     }
 
     var canZoomIn: Bool {
-        return self.selectedZoomLevel < (zoomLevels.count - 1)
+        return self.selectedZoomLevel < (self.zoomLevels.count - 1)
     }
 
     func zoomIn() {

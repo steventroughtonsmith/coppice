@@ -6,8 +6,8 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 @testable import M3Subscriptions
+import XCTest
 
 class SubscriptionTests: XCTestCase {
     func test_init_returnsNilIfNameIsMissing() throws {
@@ -23,7 +23,7 @@ class SubscriptionTests: XCTestCase {
         let payload: [String: Any] = [
             "name": 31,
             "expirationDate": "2019-11-10T09:08:07Z",
-            "renewalStatus": "renew"
+            "renewalStatus": "renew",
         ]
         XCTAssertNil(Subscription(payload: payload, hasExpired: false))
     }
@@ -31,7 +31,7 @@ class SubscriptionTests: XCTestCase {
     func test_init_returnsNilIfExpirationDateIsMissing() throws {
         let payload: [String: Any] = [
             "name": "Plan B",
-            "renewalStatus": "renew"
+            "renewalStatus": "renew",
         ]
         XCTAssertNil(Subscription(payload: payload, hasExpired: false))
     }
@@ -40,7 +40,7 @@ class SubscriptionTests: XCTestCase {
         let payload: [String: Any] = [
             "name": "Plan B",
             "expirationDate": 1931,
-            "renewalStatus": "renew"
+            "renewalStatus": "renew",
         ]
         XCTAssertNil(Subscription(payload: payload, hasExpired: false))
     }
@@ -49,7 +49,7 @@ class SubscriptionTests: XCTestCase {
         let payload: [String: Any] = [
             "name": "Plan B",
             "expirationDate": "Hello World!",
-            "renewalStatus": "renew"
+            "renewalStatus": "renew",
         ]
         XCTAssertNil(Subscription(payload: payload, hasExpired: false))
     }
@@ -66,7 +66,7 @@ class SubscriptionTests: XCTestCase {
         let payload: [String: Any] = [
             "name": "Plan B",
             "expirationDate": "2019-11-10T09:08:07Z",
-            "renewalStatus": 5
+            "renewalStatus": 5,
         ]
         XCTAssertNil(Subscription(payload: payload, hasExpired: false))
     }

@@ -80,13 +80,13 @@ class ThumbnailController: NSObject {
     //MARK: - Perform Update
     let canvasChangeQueue = NSMutableOrderedSet()
     func needsUpdatedThumbnail(for canvas: Canvas) {
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(updateThumbnails), object: nil)
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.updateThumbnails), object: nil)
         self.canvasChangeQueue.add(canvas)
-        self.perform(#selector(updateThumbnails), with: nil, afterDelay: 3)
+        self.perform(#selector(self.updateThumbnails), with: nil, afterDelay: 3)
     }
 
     @objc dynamic func updateThumbnails() {
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(updateThumbnails), object: nil)
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.updateThumbnails), object: nil)
         guard self.currentThumbnailSize != .zero else {
             return
         }

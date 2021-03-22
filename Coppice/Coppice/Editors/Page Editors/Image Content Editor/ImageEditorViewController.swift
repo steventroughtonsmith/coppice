@@ -11,7 +11,7 @@ import Combine
 
 class ImageEditorViewController: NSViewController, NSMenuItemValidation, NSToolbarItemValidation {
     @IBOutlet weak var imageView: NSImageView!
-    
+
     @objc dynamic let viewModel: ImageEditorViewModel
     init(viewModel: ImageEditorViewModel) {
         self.viewModel = viewModel
@@ -73,7 +73,7 @@ class ImageEditorViewController: NSViewController, NSMenuItemValidation, NSToolb
     }
 
     func validateToolbarItem(_ item: NSToolbarItem) -> Bool {
-        if item.action == #selector(linkToPage(_:)) {
+        if item.action == #selector(self.linkToPage(_:)) {
             item.toolTip = NSLocalizedString("Image Pages don't current support links", comment: "Image Page link to page disabled tooltip")
             return false
         }
@@ -81,7 +81,7 @@ class ImageEditorViewController: NSViewController, NSMenuItemValidation, NSToolb
     }
 
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
-        if menuItem.action == #selector(linkToPage(_:)) {
+        if menuItem.action == #selector(self.linkToPage(_:)) {
             menuItem.toolTip = NSLocalizedString("Image Pages don't current support links", comment: "Image Pages link to page disabled tooltip")
             return false
         }
@@ -93,8 +93,7 @@ class ImageEditorViewController: NSViewController, NSMenuItemValidation, NSToolb
     private func updatePlaceholderLabel() {
         if (self.view.window?.firstResponder == self.imageView) || !self.isInCanvas {
             self.placeholderLabel.stringValue = NSLocalizedString("Drag or paste an image here", comment: "Image Editor default placeholder")
-        }
-        else {
+        } else {
             self.placeholderLabel.stringValue = NSLocalizedString("Double-click to edit image", comment: "Image Editor on canvas placeholder")
         }
     }
@@ -120,6 +119,4 @@ extension ImageEditorViewController: PageContentEditor {
 }
 
 
-extension ImageEditorViewController: ImageEditorViewProtocol {
-    
-}
+extension ImageEditorViewController: ImageEditorViewProtocol {}

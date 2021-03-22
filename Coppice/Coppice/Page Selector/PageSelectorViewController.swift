@@ -9,7 +9,6 @@
 import Cocoa
 
 class PageSelectorViewController: NSViewController {
-
     @IBOutlet var pagesArrayController: NSArrayController!
     @IBOutlet weak var searchField: NSTextField!
     @IBOutlet var tableView: NSTableView!
@@ -50,8 +49,7 @@ class PageSelectorViewController: NSViewController {
     }
 }
 
-extension PageSelectorViewController: PageSelectorView {
-}
+extension PageSelectorViewController: PageSelectorView {}
 
 extension PageSelectorViewController: NSTextFieldDelegate {
     func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
@@ -79,7 +77,6 @@ extension PageSelectorViewController: NSTextFieldDelegate {
     func controlTextDidEndEditing(_ obj: Notification) {
         self.view.window?.perform(#selector(NSWindow.makeFirstResponder(_:)), with: self.searchField, afterDelay: 0)
     }
-    
 }
 
 extension PageSelectorViewController: NSTableViewDelegate {

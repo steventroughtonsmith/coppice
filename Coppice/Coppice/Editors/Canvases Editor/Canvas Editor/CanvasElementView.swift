@@ -133,7 +133,7 @@ class CanvasElementView: NSView  {
         self.addSubview(self.contentContainer)
         //        self.addSubview(self.debugView)
         self.debugView.frame = self.bounds
-        
+
 
         self.updateBackgroundVisibility(animated: false)
         self.setupAccessibility()
@@ -224,7 +224,7 @@ class CanvasElementView: NSView  {
             (layoutPage.rectInLayoutFrame(for: .resizeLeft), NSColor.blue.withAlphaComponent(0.7)),
             (layoutPage.rectInLayoutFrame(for: .resizeRight), NSColor.yellow.withAlphaComponent(0.7)),
             (layoutPage.rectInLayoutFrame(for: .resizeTop), NSColor.green.withAlphaComponent(0.7)),
-            (layoutPage.rectInLayoutFrame(for: .resizeBottom), NSColor.red.withAlphaComponent(0.7))
+            (layoutPage.rectInLayoutFrame(for: .resizeBottom), NSColor.red.withAlphaComponent(0.7)),
         ]
     }
 
@@ -318,7 +318,8 @@ class CanvasElementView: NSView  {
     private func updateElement(at keyPath: ReferenceWritableKeyPath<CanvasElementView, ResizeHandleAccessibilityElement?>,
                                with layoutPage: LayoutEnginePage,
                                component: LayoutEnginePageComponent,
-                               label: String) {
+                               label: String)
+    {
         let handleElement: ResizeHandleAccessibilityElement
         if let element = self[keyPath: keyPath] {
             handleElement = element
@@ -362,6 +363,7 @@ class ShadowView: NSView {
     override var isFlipped: Bool {
         return true
     }
+
     override func draw(_ dirtyRect: NSRect) {
         let path = NSBezierPath(roundedRect: self.bounds, xRadius: 5, yRadius: 5)
         NSColor(named: "PageViewStroke")?.set()

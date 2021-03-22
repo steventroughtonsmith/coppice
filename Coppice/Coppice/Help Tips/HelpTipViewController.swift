@@ -6,8 +6,8 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import Cocoa
 import AVKit
+import Cocoa
 
 class HelpTipViewController: NSViewController {
     struct HelpTip {
@@ -26,6 +26,7 @@ class HelpTipViewController: NSViewController {
         super.init(nibName: "HelpTipView", bundle: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -53,7 +54,7 @@ class HelpTipViewController: NSViewController {
 
     override func viewDidAppear() {
         super.viewDidAppear()
-        self.perform(#selector(play), with: nil, afterDelay: 1)
+        self.perform(#selector(self.play), with: nil, afterDelay: 1)
     }
 
     @objc dynamic private func play() {

@@ -61,9 +61,9 @@ class ColourGridImageGenerator {
         selectionPath.fill()
 
         let string: NSString = "✓"
-        let attributes: [NSAttributedString.Key : Any] = [
+        let attributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: NSColor.white,
-            .font: NSFont.systemFont(ofSize: 10)
+            .font: NSFont.systemFont(ofSize: 10),
         ]
 
         var tickRect = string.boundingRect(with: selectionFrame.size, options: [], attributes: attributes)

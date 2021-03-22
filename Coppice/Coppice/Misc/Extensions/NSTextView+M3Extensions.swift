@@ -14,7 +14,7 @@ extension NSTextView {
             return
         }
 
-        let rangesAsValues = ranges.map { NSValue(range: $0)}
+        let rangesAsValues = ranges.map { NSValue(range: $0) }
         guard self.shouldChangeText(inRanges: rangesAsValues, replacementStrings: nil) else {
             return
         }

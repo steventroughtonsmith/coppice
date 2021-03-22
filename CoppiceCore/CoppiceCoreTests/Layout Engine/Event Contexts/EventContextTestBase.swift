@@ -6,8 +6,8 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 @testable import CoppiceCore
+import XCTest
 
 let testEventContextLayoutASCII = """
           |
@@ -25,7 +25,6 @@ let testEventContextLayoutASCII = """
 """
 
 class EventContextTestBase: XCTestCase {
-
     var page1: TestLayoutEnginePage!
     var page2: TestLayoutEnginePage!
     var page3: TestLayoutEnginePage!
@@ -62,9 +61,9 @@ class EventContextTestBase: XCTestCase {
         self.page3.testConfiguration = self.testConfiguration
 
         self.page3Wide = TestLayoutEnginePage(id: UUID(),
-                                          contentFrame: CGRect(x: 10, y: -10, width: 40, height: 20),
-                                          maintainAspectRatio: true,
-                                          minimumContentSize: CGSize(width: 0, height: 0))
+                                              contentFrame: CGRect(x: 10, y: -10, width: 40, height: 20),
+                                              maintainAspectRatio: true,
+                                              minimumContentSize: CGSize(width: 0, height: 0))
         self.page3Wide.testConfiguration = self.testConfiguration
 
         self.mockLayoutEngine = MockLayoutEngine()
@@ -87,7 +86,6 @@ class EventContextTestBase: XCTestCase {
             page.testLayoutFrame = pageFrame
         }
     }
-
 }
 
 

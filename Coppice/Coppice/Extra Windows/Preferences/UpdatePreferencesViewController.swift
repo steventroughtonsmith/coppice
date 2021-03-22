@@ -15,10 +15,6 @@ class UpdatePreferencesViewController: PreferencesViewController {
         self.updaterController = updaterController
         super.init(nibName: "UpdatePreferencesViewController", bundle: nil)
     }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 
     override var tabLabel: String {
         return NSLocalizedString("Updates", comment: "Updates Preferences Title")

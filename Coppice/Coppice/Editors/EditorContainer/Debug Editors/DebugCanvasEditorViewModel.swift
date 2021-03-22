@@ -9,7 +9,7 @@
 import Cocoa
 import CoppiceCore
 
-protocol DebugCanvasEditorView: class {
+protocol DebugCanvasEditorView: AnyObject {
     func reloadPage(_ page: CanvasPage)
 }
 
@@ -42,7 +42,7 @@ class DebugCanvasEditorViewModel: NSObject {
 
     var pages: [DebugCanvasPageItem] {
         return self.canvas.pages
-            .sorted(by: {$0.id.uuid.uuidString < $1.id.uuid.uuidString})
+            .sorted(by: { $0.id.uuid.uuidString < $1.id.uuid.uuidString })
             .map { DebugCanvasPageItem(canvasPage: $0) }
     }
 
@@ -58,11 +58,9 @@ class DebugCanvasEditorViewModel: NSObject {
         }
     }
 
-    func removeSelected() {
+    func removeSelected() {}
 
-    }
 
-    
     //MARK: - Observation
     private var observation: ModelCollection<CanvasPage>.Observation?
     func startObservingChanges() {

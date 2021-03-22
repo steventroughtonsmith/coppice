@@ -18,10 +18,6 @@ class GeneralPreferencesViewController: PreferencesViewController {
         super.init(nibName: "GeneralPreferencesViewController", bundle: nil)
         self.startObservation()
     }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 
     var activationObservation: AnyCancellable?
     private func startObservation() {

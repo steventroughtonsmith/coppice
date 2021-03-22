@@ -17,6 +17,7 @@ class HelpViewerWindowController: NSWindowController {
         self.setupNavigationObservation()
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -71,7 +72,7 @@ class HelpViewerWindowController: NSWindowController {
         contentSplitItem.minimumThickness = 500
         controller.splitViewItems = [
             NSSplitViewItem(sidebarWithViewController: self.navigationViewController),
-            contentSplitItem
+            contentSplitItem,
         ]
         return controller
     }()
@@ -114,7 +115,8 @@ class HelpViewerWindowController: NSWindowController {
     override func supplementalTarget(forAction action: Selector, sender: Any?) -> Any? {
         if (action == #selector(NavigationStack.back(_:)))
             || (action == #selector(NavigationStack.forward(_:))
-            || (action == #selector(NavigationStack.home(_:)))) {
+            || (action == #selector(NavigationStack.home(_:))))
+        {
             return self.navigationStack
         }
         return nil

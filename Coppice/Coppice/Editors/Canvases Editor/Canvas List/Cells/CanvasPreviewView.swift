@@ -18,16 +18,19 @@ class CanvasPreviewView: NSView {
 
     //MARK: - Border Style
     @IBInspectable var backgroundColor: NSColor = .black {
-        didSet { self.setNeedsDisplay(self.bounds)}
+        didSet { self.setNeedsDisplay(self.bounds) }
     }
+
     @IBInspectable var borderColor: NSColor = .white {
-        didSet { self.setNeedsDisplay(self.bounds)}
+        didSet { self.setNeedsDisplay(self.bounds) }
     }
+
     @IBInspectable var borderWidth: CGFloat = 1 {
-        didSet { self.setNeedsDisplay(self.bounds)}
+        didSet { self.setNeedsDisplay(self.bounds) }
     }
+
     @IBInspectable var cornerRadius: CGFloat = 3 {
-        didSet { self.setNeedsDisplay(self.bounds)}
+        didSet { self.setNeedsDisplay(self.bounds) }
     }
 
 

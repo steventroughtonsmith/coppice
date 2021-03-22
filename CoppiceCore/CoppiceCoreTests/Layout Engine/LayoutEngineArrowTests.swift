@@ -6,8 +6,8 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 import CoppiceCore
+import XCTest
 
 class LayoutEngineArrowTests: XCTestCase {
     override func setUpWithError() throws {

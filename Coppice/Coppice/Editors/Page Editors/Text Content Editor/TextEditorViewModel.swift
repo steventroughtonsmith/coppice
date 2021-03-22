@@ -6,9 +6,9 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import Foundation
 import Combine
 import CoppiceCore
+import Foundation
 
 protocol TextEditorView: Editor {
     func addLink(with url: URL, to range: NSRange)
@@ -17,7 +17,7 @@ protocol TextEditorView: Editor {
 
 class TextEditorViewModel: ViewModel {
     weak var view: TextEditorView?
-    
+
     @objc dynamic let textContent: TextPageContent
     let isInCanvas: Bool
     let pageLinkManager: PageLinkManager

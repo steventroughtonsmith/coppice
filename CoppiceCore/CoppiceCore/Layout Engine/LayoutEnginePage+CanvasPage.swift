@@ -7,8 +7,8 @@
 
 import Foundation
 
-public extension LayoutEnginePage {
-    static func pages(from canvasPages: [CanvasPage]) -> [LayoutEnginePage] {
+extension LayoutEnginePage {
+    public static func pages(from canvasPages: [CanvasPage]) -> [LayoutEnginePage] {
         var layoutEnginePages = [UUID: LayoutEnginePage]()
         for canvasPage in canvasPages {
             layoutEnginePages[canvasPage.id.uuid] = LayoutEnginePage(canvasPage: canvasPage)
@@ -28,7 +28,7 @@ public extension LayoutEnginePage {
         return Array(layoutEnginePages.values)
     }
 
-    convenience init(canvasPage: CanvasPage) {
+    public convenience init(canvasPage: CanvasPage) {
         self.init(id: canvasPage.id.uuid,
                   contentFrame: canvasPage.frame,
                   maintainAspectRatio: canvasPage.maintainAspectRatio,

@@ -9,7 +9,6 @@
 import Cocoa
 
 class HelpNavigationTableCellView: NSTableCellView {
-
     @IBOutlet var newDotImageView: NSImageView?
 
     override var objectValue: Any? {
@@ -27,5 +26,4 @@ class HelpNavigationTableCellView: NSTableCellView {
 
         self.newDotImageView?.isHidden = !node.item.isNew
     }
-    
 }

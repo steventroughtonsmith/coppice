@@ -16,6 +16,7 @@ public struct ModelType: RawRepresentable, Equatable, Hashable {
     public init?(_ rawValue: String) {
         self.init(rawValue: rawValue)
     }
+
     public init?(rawValue: String) {
         self.rawValue = rawValue
     }
@@ -61,7 +62,8 @@ extension ModelID {
             let propertyList = pasteboardItem.propertyList(forType: ModelID.PasteboardType) as? [String: String],
             let uuidString = propertyList[ModelID.UUIDKey],
             let modelTypeString = propertyList[ModelID.modelTypeKey],
-            let modelType = ModelType(rawValue: modelTypeString) else {
+            let modelType = ModelType(rawValue: modelTypeString)
+        else {
                 return nil
         }
         self.init(modelType: modelType, uuidString: uuidString)
@@ -78,7 +80,8 @@ extension ModelID {
     public init?(string: String) {
         let components = string.split(separator: "_")
         guard components.count == 2,
-            let modelType = ModelType(rawValue: String(components[0])) else {
+            let modelType = ModelType(rawValue: String(components[0]))
+        else {
             return nil
         }
         self.init(modelType: modelType, uuidString: String(components[1]))

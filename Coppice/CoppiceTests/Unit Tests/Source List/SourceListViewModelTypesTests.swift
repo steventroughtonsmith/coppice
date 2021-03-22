@@ -6,9 +6,9 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 @testable import Coppice
 @testable import CoppiceCore
+import XCTest
 
 class SourceListNodeCollectionTests: XCTestCase {
     //MARK: - .count

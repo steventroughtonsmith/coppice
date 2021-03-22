@@ -9,8 +9,7 @@
 import AppKit
 import CoppiceCore
 
-protocol ImageEditorViewProtocol: class {
-}
+protocol ImageEditorViewProtocol: AnyObject {}
 
 class ImageEditorViewModel: ViewModel {
     weak var view: ImageEditorViewProtocol?

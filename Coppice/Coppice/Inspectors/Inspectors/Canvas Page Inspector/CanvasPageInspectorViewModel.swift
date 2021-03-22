@@ -6,8 +6,8 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import Foundation
 import CoppiceCore
+import Foundation
 
 class CanvasPageInspectorViewModel: BaseInspectorViewModel {
     @objc dynamic let canvasPage: CanvasPage
@@ -17,7 +17,7 @@ class CanvasPageInspectorViewModel: BaseInspectorViewModel {
         self.canvasPage = canvasPage
         self.modelController = modelController
         if let page = canvasPage.page, page.content.maintainAspectRatio {
-            widthToHeightAspectRatio = canvasPage.frame.width / canvasPage.frame.height
+            self.widthToHeightAspectRatio = canvasPage.frame.width / canvasPage.frame.height
         } else {
             self.widthToHeightAspectRatio = nil
         }

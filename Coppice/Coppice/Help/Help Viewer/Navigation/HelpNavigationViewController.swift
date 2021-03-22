@@ -23,6 +23,7 @@ class HelpNavigationViewController: NSViewController {
         self.setupNavigationNodes()
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -163,7 +164,7 @@ extension HelpNavigationViewController {
 
         var isGroup: Bool {
             switch self {
-            case .group(_): return true
+            case .group: return true
             default: return false
             }
         }

@@ -6,11 +6,10 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 import CoppiceCore
+import XCTest
 
 class ModelSettingsTests: XCTestCase {
-
     //MARK: - value(for:)
     func test_valueForSetting_returnsSettingIfItExists() {
         let settings = ModelSettings()
@@ -180,7 +179,7 @@ class ModelSettingsTests: XCTestCase {
         let settings = ModelSettings()
         settings.update(withPlist: [
             "StringKey": "Testing",
-            "BoolKey": true
+            "BoolKey": true,
         ])
 
         XCTAssertEqual(settings.string(for: .stringKey), "Testing")
@@ -216,7 +215,7 @@ class ModelSettingsTests: XCTestCase {
             "StringKey": "Foobar",
             "IntegerKey": 31,
             "BoolKey": true,
-            "ModelIDKey": modelID2.stringRepresentation
+            "ModelIDKey": modelID2.stringRepresentation,
         ])
 
         XCTAssertEqual(settings.string(for: .stringKey), "Foobar")

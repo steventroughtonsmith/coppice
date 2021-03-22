@@ -18,10 +18,6 @@ class CoppiceProViewController: PreferencesViewController {
         self.startObservation()
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     //MARK: - Tab Info
     override var tabLabel: String {
         return NSLocalizedString("Coppice Pro", comment: "Pro Preferences Title")

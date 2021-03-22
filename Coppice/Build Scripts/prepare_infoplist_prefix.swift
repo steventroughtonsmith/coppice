@@ -46,7 +46,7 @@ func enumerateInput(_ block: (String) throws -> String) throws {
 
 func getBuildNumber() throws -> String {
     let arguments = CommandLine.arguments
-    guard let buildNumberIndex = arguments.firstIndex(where: {$0 == "--build-number" }), (arguments.count > buildNumberIndex + 1) else {
+    guard let buildNumberIndex = arguments.firstIndex(where: { $0 == "--build-number" }), (arguments.count > buildNumberIndex + 1) else {
         throw NSError(domain: "com.mcubedsw.script", code: -1, userInfo: [NSLocalizedDescriptionKey: "--build-number argument not provided"])
     }
 
@@ -56,7 +56,7 @@ func getBuildNumber() throws -> String {
 
 func getGitHash() throws -> String {
     let arguments = CommandLine.arguments
-    guard let gitHashIndex = arguments.firstIndex(where: {$0 == "--git-hash" }), (arguments.count > gitHashIndex + 1) else {
+    guard let gitHashIndex = arguments.firstIndex(where: { $0 == "--git-hash" }), (arguments.count > gitHashIndex + 1) else {
         throw NSError(domain: "com.mcubedsw.script", code: -1, userInfo: [NSLocalizedDescriptionKey: "--git-hash argument not provided"])
     }
     return arguments[gitHashIndex + 1]

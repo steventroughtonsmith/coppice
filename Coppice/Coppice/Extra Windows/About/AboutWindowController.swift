@@ -9,7 +9,6 @@
 import Cocoa
 
 class AboutWindowController: NSWindowController {
-
     override var windowNibName: NSNib.Name? {
         return "AboutWindow"
     }
@@ -33,7 +32,7 @@ class AboutWindowController: NSWindowController {
 
         self.copyrightLabel.stringValue = copyright
 
-        let localizedVersion = NSLocalizedString("Version %@ (%@)", comment: "Version string");
+        let localizedVersion = NSLocalizedString("Version %@ (%@)", comment: "Version string")
         let versionString = String(format: localizedVersion, version, build)
         self.versionLabel.stringValue = versionString
     }
@@ -53,7 +52,8 @@ class AboutWindowController: NSWindowController {
 
         self.window?.beginSheet(self.acknowledgementsWindow, completionHandler: nil)
     }
+
     @IBAction func closeAcknowledgements(_ sender: Any) {
-        self.window?.endSheet(self.acknowledgementsWindow);
+        self.window?.endSheet(self.acknowledgementsWindow)
     }
 }

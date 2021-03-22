@@ -9,7 +9,6 @@
 import Cocoa
 
 class ColourBackgroundView: NSView {
-
     var backgroundColour: NSColor? {
         didSet {
             self.setNeedsDisplay(self.bounds)
@@ -22,5 +21,4 @@ class ColourBackgroundView: NSView {
         self.backgroundColour?.set()
         self.bounds.fill()
     }
-    
 }

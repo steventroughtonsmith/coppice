@@ -9,7 +9,7 @@
 import Cocoa
 import CoppiceCore
 
-protocol PageLinkManagerDelegate: class {
+protocol PageLinkManagerDelegate: AnyObject {
     func willStartParsing(in manager: PageLinkManager)
     func didFinishParsing(in manager: PageLinkManager)
     func shouldChangeText(in ranges: [NSRange], manager: PageLinkManager) -> Bool
@@ -62,6 +62,7 @@ class PageLinkManager: NSObject {
             self.setNeedsReparse()
         }
     }
+
     weak var delegate: PageLinkManagerDelegate?
 
     var isProEnabled = false
@@ -74,12 +75,12 @@ class PageLinkManager: NSObject {
         else {
             return
         }
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(reparseLinks), object: nil)
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.reparseLinks), object: nil)
         guard self.isReparsing == false else {
             return
         }
 
-        self.perform(#selector(reparseLinks), with: nil, afterDelay: self.parsingDelay)
+        self.perform(#selector(self.reparseLinks), with: nil, afterDelay: self.parsingDelay)
     }
 
     private var lastParsedText: NSAttributedString?
@@ -113,7 +114,7 @@ class PageLinkManager: NSObject {
             return
         }
 
-        let shouldChange = self.delegate?.shouldChangeText(in: [NSRange(location:0, length: storage.length)], manager: self) ?? true
+        let shouldChange = self.delegate?.shouldChangeText(in: [NSRange(location: 0, length: storage.length)], manager: self) ?? true
         guard shouldChange else {
             return
         }
@@ -135,7 +136,8 @@ class PageLinkManager: NSObject {
 
     private func update(_ page: Page) {
         guard let textContent = page.content as? TextPageContent,
-            textContent.text != self.lastParsedText else {
+            textContent.text != self.lastParsedText
+        else {
             return
         }
         let pages = Array(self.modelController.collection(for: Page.self).all)

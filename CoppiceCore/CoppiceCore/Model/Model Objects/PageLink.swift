@@ -25,7 +25,8 @@ public struct PageLink: Equatable {
     public init?(url: URL) {
         guard let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false),
             urlComponents.scheme == GlobalConstants.urlScheme,
-            urlComponents.host == PageLink.host else {
+            urlComponents.host == PageLink.host
+        else {
             return nil
         }
 

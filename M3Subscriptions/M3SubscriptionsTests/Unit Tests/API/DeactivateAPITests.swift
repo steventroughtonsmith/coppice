@@ -6,8 +6,8 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 @testable import M3Subscriptions
+import XCTest
 
 class DeactivateAPITests: APITestCase {
     //MARK: - Sending request
@@ -71,7 +71,8 @@ class DeactivateAPITests: APITestCase {
 
         guard
             case .failure(let failure) = try XCTUnwrap(actualResult),
-            case .generic(let error) = failure else {
+            case .generic(let error) = failure
+        else {
             XCTFail("Result is not a generic error")
             return
         }
@@ -101,7 +102,8 @@ class DeactivateAPITests: APITestCase {
 
         guard
             case .failure(let failure) = try XCTUnwrap(actualResult),
-            case .noDeviceFound = failure else {
+            case .noDeviceFound = failure
+        else {
 //                XCTFail("Result is not a noDeviceFound failure")
                 return
         }
@@ -138,5 +140,4 @@ class DeactivateAPITests: APITestCase {
         XCTAssertFalse(info.isActive)
         XCTAssertFalse(info.deviceIsActivated)
     }
-
 }

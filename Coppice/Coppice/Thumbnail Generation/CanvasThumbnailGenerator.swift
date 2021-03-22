@@ -127,7 +127,8 @@ class CanvasThumbnailGenerator: NSObject {
         let plainPageRect = self.drawPlainPage(withBackgroundColour: .white, with: rect, context: context)
         guard
             let textContent = page.content as? TextPageContent,
-            context.dryRun == false else {
+            context.dryRun == false
+        else {
             return plainPageRect
         }
 
@@ -177,7 +178,7 @@ class CanvasThumbnailGenerator: NSObject {
         var currentLine = 0
         while (currentY < rect.maxY) {
             //Lets get some info on what our size should be
-            let (widthPercentage, isSmallWidth) = lineInfo(forSeed: seed, forLine: currentLine)
+            let (widthPercentage, isSmallWidth) = self.lineInfo(forSeed: seed, forLine: currentLine)
             lineRects.append(CGRect(x: rect.minX, y: currentY, width: (rect.width * widthPercentage), height: textHeight).rounded())
             currentY += (textHeight * 2)
             //If we have a small width, we're at the end of a 'paragraph', so add an empty line
@@ -197,7 +198,7 @@ class CanvasThumbnailGenerator: NSObject {
 
         //As the lines go on we'll cycle the values from right to left to work out our line size (looping through)
         //We'll then use this to work out what percentage of the flexible part (max - base) this line should have
-        let seedComponent = component(fromSeed: seed, forLine: line)
+        let seedComponent = self.component(fromSeed: seed, forLine: line)
         let baseWidth = isSmallLine ? CGFloat(0.2) : CGFloat(0.8)
         let maxWidth = isSmallLine ? CGFloat(0.6) : CGFloat(1.0)
         let offsetWidth = (maxWidth - baseWidth) * (CGFloat(seedComponent) / 10.0)
@@ -219,7 +220,8 @@ class CanvasThumbnailGenerator: NSObject {
     private func drawImagePage(_ page: Page, with rect: CGRect, context: Context) -> CGRect {
         guard
             let imageContent = page.content as? ImagePageContent,
-            let image = imageContent.image else {
+            let image = imageContent.image
+        else {
                 return self.drawPlainPage(withBackgroundColour: NSColor(white: 0.4, alpha: 1), with: rect, context: context)
         }
 
@@ -317,7 +319,7 @@ class CanvasThumbnailGenerator: NSObject {
                 control1 = CGPoint(x: startPoint.x, y: (startPoint.y + endPoint.y) / 2)
                 control2 = CGPoint(x: endPoint.x, y: (startPoint.y + endPoint.y) / 2)
             }
-            
+
             let bezierPath = NSBezierPath()
             bezierPath.move(to: startPoint)
             bezierPath.curve(to: endPoint, controlPoint1: control1, controlPoint2: control2)
@@ -329,6 +331,4 @@ class CanvasThumbnailGenerator: NSObject {
             }
         }
     }
-
-
 }

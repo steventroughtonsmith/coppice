@@ -6,8 +6,8 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import Foundation
 import Carbon.HIToolbox
+import Foundation
 
 class RemovePageEventContext: CanvasKeyEventContext {
     static var acceptedKeyCodes = [UInt16(kVK_Delete), UInt16(kVK_ForwardDelete)]

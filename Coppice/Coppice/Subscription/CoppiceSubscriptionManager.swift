@@ -7,8 +7,8 @@
 //
 
 import Cocoa
-import M3Subscriptions
 import Combine
+import M3Subscriptions
 
 protocol CoppiceSubscriptionManagerDelegate: AnyObject {
     func showCoppicePro(with error: NSError, for subscriptionManager: CoppiceSubscriptionManager)
@@ -24,6 +24,7 @@ class CoppiceSubscriptionManager: NSObject {
             self.notifyOfChanges()
         }
     }
+
     @Published var currentCheckError: NSError?
 
     static var shared = CoppiceSubscriptionManager()
@@ -67,11 +68,9 @@ class CoppiceSubscriptionManager: NSObject {
                 }
                 if (error.code == SubscriptionErrorCodes.multipleSubscriptionsFound.rawValue) {
                     self.showMultipleSubscriptionsSheet(with: activationContext, for: error, on: window, errorHandler: errorHandler)
-                }
-                else if (error.code == SubscriptionErrorCodes.tooManyDevices.rawValue) {
+                } else if (error.code == SubscriptionErrorCodes.tooManyDevices.rawValue) {
                     self.showTooManyDevicesSubscriptionSheet(with: activationContext, for: error, on: window, errorHandler: errorHandler)
-                }
-                else {
+                } else {
                     self.handle(error, on: window, with: errorHandler)
                 }
             }
@@ -174,7 +173,8 @@ class CoppiceSubscriptionManager: NSObject {
         if
             let response = self.activationResponse,
             response.deviceIsActivated,
-            (response.subscription?.renewalStatus == .failed) {
+            (response.subscription?.renewalStatus == .failed)
+        {
             checkInterval /= 4
         }
 
@@ -188,7 +188,6 @@ class CoppiceSubscriptionManager: NSObject {
         } else {
             self.recheckInAnHour()
         }
-        
     }
 
     func checkSubscription() {
@@ -290,7 +289,7 @@ class CoppiceSubscriptionManager: NSObject {
         let localizedPro = NSLocalizedString("PRO", comment: "Coppice Pro short name")
         let attributedPro = NSAttributedString(string: localizedPro, attributes: [
             .foregroundColor: NSColor.white,
-            .font: NSFont.boldSystemFont(ofSize: 11)
+            .font: NSFont.boldSystemFont(ofSize: 11),
         ])
 
         let bounds = attributedPro.boundingRect(with: CGSize(width: 100, height: 100), options: .usesLineFragmentOrigin)

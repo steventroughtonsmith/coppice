@@ -6,11 +6,10 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 @testable import CoppiceCore
+import XCTest
 
 class ArrowLayoutEngineTests: XCTestCase {
-
     var layoutEngine: CanvasLayoutEngine!
     var rootPage: LayoutEnginePage!
     override func setUpWithError() throws {
@@ -101,13 +100,13 @@ class ArrowLayoutEngineTests: XCTestCase {
         let arrows = engine.calculateArrows()
         XCTAssertEqual(arrows.count, 4)
         XCTAssertTrue(arrows.contains(LayoutEngineArrow(startPoint: self.arrowPoint(x: 0, y: 20, edge:  .left, page: self.rootPage),
-                                            endPoint: self.arrowPoint(x: -12, y: 9, edge:  .right, page: left))))
+                                                        endPoint: self.arrowPoint(x: -12, y: 9, edge:  .right, page: left))))
         XCTAssertTrue(arrows.contains(LayoutEngineArrow(startPoint: self.arrowPoint(x: 10, y: 0, edge:  .top, page: self.rootPage),
-                                            endPoint: self.arrowPoint(x: 9, y: -12, edge:  .bottom, page: top))))
+                                                        endPoint: self.arrowPoint(x: 9, y: -12, edge:  .bottom, page: top))))
         XCTAssertTrue(arrows.contains(LayoutEngineArrow(startPoint: self.arrowPoint(x: 20, y: 20, edge:  .right, page: self.rootPage),
-                                            endPoint: self.arrowPoint(x: 32, y: 9, edge:  .left, page: right))))
+                                                        endPoint: self.arrowPoint(x: 32, y: 9, edge:  .left, page: right))))
         XCTAssertTrue(arrows.contains(LayoutEngineArrow(startPoint: self.arrowPoint(x: 10, y: 40, edge:  .bottom, page: self.rootPage),
-                                            endPoint: self.arrowPoint(x: 9, y: 52, edge:  .top, page: bottom))))
+                                                        endPoint: self.arrowPoint(x: 9, y: 52, edge:  .top, page: bottom))))
     }
 
     func test_calculateArrows_childToTopLeftOfParent() throws {
@@ -185,13 +184,13 @@ class ArrowLayoutEngineTests: XCTestCase {
         let arrows = engine.calculateArrows()
         XCTAssertEqual(arrows.count, 4)
         XCTAssertTrue(arrows.contains(LayoutEngineArrow(startPoint: self.arrowPoint(x: 0, y: 20, edge:  .left, page: self.rootPage),
-                                            endPoint: self.arrowPoint(x: -40, y: -15, edge:  .right, page: leftTop))))
+                                                        endPoint: self.arrowPoint(x: -40, y: -15, edge:  .right, page: leftTop))))
         XCTAssertTrue(arrows.contains(LayoutEngineArrow(startPoint: self.arrowPoint(x: 10, y: 0, edge:  .top, page: self.rootPage),
-                                            endPoint: self.arrowPoint(x: 30, y: -33, edge:  .bottom, page: topRight))))
+                                                        endPoint: self.arrowPoint(x: 30, y: -33, edge:  .bottom, page: topRight))))
         XCTAssertTrue(arrows.contains(LayoutEngineArrow(startPoint: self.arrowPoint(x: 20, y: 20, edge:  .right, page: self.rootPage),
-                                            endPoint: self.arrowPoint(x: 80, y: 47, edge:  .left, page: rightBottom))))
+                                                        endPoint: self.arrowPoint(x: 80, y: 47, edge:  .left, page: rightBottom))))
         XCTAssertTrue(arrows.contains(LayoutEngineArrow(startPoint: self.arrowPoint(x: 10, y: 40, edge:  .bottom, page: self.rootPage),
-                                            endPoint: self.arrowPoint(x: -10, y: 82, edge: .top, page: bottomLeft))))
+                                                        endPoint: self.arrowPoint(x: -10, y: 82, edge: .top, page: bottomLeft))))
     }
 
 
@@ -272,11 +271,11 @@ class ArrowLayoutEngineTests: XCTestCase {
         XCTAssertEqual(arrows.count, 3)
 
         XCTAssertTrue(arrows.contains(LayoutEngineArrow(startPoint: self.arrowPoint(x: 0, y: 7, edge:  .left, page: self.rootPage),
-                                            endPoint: self.arrowPoint(x: -10, y: -13, edge:  .right, page: child1))))
+                                                        endPoint: self.arrowPoint(x: -10, y: -13, edge:  .right, page: child1))))
         XCTAssertTrue(arrows.contains(LayoutEngineArrow(startPoint: self.arrowPoint(x: 0, y: 20, edge:  .left, page: self.rootPage),
-                                            endPoint: self.arrowPoint(x: -30, y: 5, edge:  .right, page: child2))))
+                                                        endPoint: self.arrowPoint(x: -30, y: 5, edge:  .right, page: child2))))
         XCTAssertTrue(arrows.contains(LayoutEngineArrow(startPoint: self.arrowPoint(x: 0, y: 33, edge:  .left, page: self.rootPage),
-                                            endPoint: self.arrowPoint(x: -10, y: 30, edge:  .right, page: child3))))
+                                                        endPoint: self.arrowPoint(x: -10, y: 30, edge:  .right, page: child3))))
     }
 
     func test_calculateArrows_multipleChildrenAboveParent() {
@@ -288,9 +287,9 @@ class ArrowLayoutEngineTests: XCTestCase {
         XCTAssertEqual(arrows.count, 2)
 
         XCTAssertTrue(arrows.contains(LayoutEngineArrow(startPoint: self.arrowPoint(x: 5, y: 0, edge:  .top, page: self.rootPage),
-                                            endPoint: self.arrowPoint(x: 0, y: -10, edge:  .bottom, page: child1))))
+                                                        endPoint: self.arrowPoint(x: 0, y: -10, edge:  .bottom, page: child1))))
         XCTAssertTrue(arrows.contains(LayoutEngineArrow(startPoint: self.arrowPoint(x: 15, y: 0, edge:  .top, page: self.rootPage),
-                                            endPoint: self.arrowPoint(x: 27, y: -30, edge:  .bottom, page: child2))))
+                                                        endPoint: self.arrowPoint(x: 27, y: -30, edge:  .bottom, page: child2))))
     }
 
     func test_calculateArrows_multipleChildrenToRightOfParent() {
@@ -302,9 +301,9 @@ class ArrowLayoutEngineTests: XCTestCase {
         XCTAssertEqual(arrows.count, 2)
 
         XCTAssertTrue(arrows.contains(LayoutEngineArrow(startPoint: self.arrowPoint(x: 20, y: 10, edge:  .right, page: self.rootPage),
-                                            endPoint: self.arrowPoint(x: 30, y: -13, edge:  .left, page: child1))))
+                                                        endPoint: self.arrowPoint(x: 30, y: -13, edge:  .left, page: child1))))
         XCTAssertTrue(arrows.contains(LayoutEngineArrow(startPoint: self.arrowPoint(x: 20, y: 30, edge:  .right, page: self.rootPage),
-                                            endPoint: self.arrowPoint(x: 40, y: 5, edge:  .left, page: child2))))
+                                                        endPoint: self.arrowPoint(x: 40, y: 5, edge:  .left, page: child2))))
     }
 
     func test_calculateArrows_multipleChildrenBelowParent() {
@@ -317,11 +316,11 @@ class ArrowLayoutEngineTests: XCTestCase {
         XCTAssertEqual(arrows.count, 3)
 
         XCTAssertTrue(arrows.contains(LayoutEngineArrow(startPoint: self.arrowPoint(x: 3, y: 40, edge:  .bottom, page: self.rootPage),
-                                            endPoint: self.arrowPoint(x: 0, y: 50, edge:  .top, page: child1))))
+                                                        endPoint: self.arrowPoint(x: 0, y: 50, edge:  .top, page: child1))))
         XCTAssertTrue(arrows.contains(LayoutEngineArrow(startPoint: self.arrowPoint(x: 17, y: 40, edge:  .bottom, page: self.rootPage),
-                                            endPoint: self.arrowPoint(x: 27, y: 60, edge:  .top, page: child2))))
+                                                        endPoint: self.arrowPoint(x: 27, y: 60, edge:  .top, page: child2))))
         XCTAssertTrue(arrows.contains(LayoutEngineArrow(startPoint: self.arrowPoint(x: 10, y: 40, edge:  .bottom, page: self.rootPage),
-                                            endPoint: self.arrowPoint(x: 15, y: 90, edge:  .top, page: child3))))
+                                                        endPoint: self.arrowPoint(x: 15, y: 90, edge:  .top, page: child3))))
     }
 
 
@@ -335,9 +334,9 @@ class ArrowLayoutEngineTests: XCTestCase {
         XCTAssertEqual(arrows.count, 2)
 
         XCTAssertTrue(arrows.contains(LayoutEngineArrow(startPoint: self.arrowPoint(x: 0, y: 20, edge:  .left, page: self.rootPage),
-                                            endPoint: self.arrowPoint(x: -20, y: 10, edge:  .right, page: child1))))
+                                                        endPoint: self.arrowPoint(x: -20, y: 10, edge:  .right, page: child1))))
         XCTAssertTrue(arrows.contains(LayoutEngineArrow(startPoint: self.arrowPoint(x: -30, y: 10, edge:  .left, page: child1),
-                                            endPoint: self.arrowPoint(x: -70, y: 15, edge:  .right, page: grandChild1))))
+                                                        endPoint: self.arrowPoint(x: -70, y: 15, edge:  .right, page: grandChild1))))
     }
 
     func test_calculateArrows_multipleLevelsOfChildrenAboveParent()  throws {
@@ -350,11 +349,11 @@ class ArrowLayoutEngineTests: XCTestCase {
         XCTAssertEqual(arrows.count, 3)
 
         XCTAssertTrue(arrows.contains(LayoutEngineArrow(startPoint: self.arrowPoint(x: 10, y: 0, edge:  .top, page: self.rootPage),
-                                            endPoint: self.arrowPoint(x: 10, y: -5, edge:  .bottom, page: child1))))
+                                                        endPoint: self.arrowPoint(x: 10, y: -5, edge:  .bottom, page: child1))))
         XCTAssertTrue(arrows.contains(LayoutEngineArrow(startPoint: self.arrowPoint(x: 8, y: -15, edge:  .top, page: child1),
-                                            endPoint: self.arrowPoint(x: 10, y: -30, edge:  .bottom, page: grandChild1))))
+                                                        endPoint: self.arrowPoint(x: 10, y: -30, edge:  .bottom, page: grandChild1))))
         XCTAssertTrue(arrows.contains(LayoutEngineArrow(startPoint: self.arrowPoint(x: 13, y: -15, edge:  .top, page: child1),
-                                            endPoint: self.arrowPoint(x: 25, y: -30, edge:  .bottom, page: grandChild2))))
+                                                        endPoint: self.arrowPoint(x: 25, y: -30, edge:  .bottom, page: grandChild2))))
     }
 
     func test_calculateArrows_multipleLevelsOfChildrenToRightOfParent()  throws {
@@ -367,11 +366,11 @@ class ArrowLayoutEngineTests: XCTestCase {
         XCTAssertEqual(arrows.count, 3)
 
         XCTAssertTrue(arrows.contains(LayoutEngineArrow(startPoint: self.arrowPoint(x: 20, y: 20, edge:  .right, page: self.rootPage),
-                                            endPoint: self.arrowPoint(x: 40, y: 10, edge:  .left, page: child1))))
+                                                        endPoint: self.arrowPoint(x: 40, y: 10, edge:  .left, page: child1))))
         XCTAssertTrue(arrows.contains(LayoutEngineArrow(startPoint: self.arrowPoint(x: 50, y: 10, edge:  .right, page: child1),
-                                            endPoint: self.arrowPoint(x: 80, y: 15, edge:  .left, page: grandChild1))))
+                                                        endPoint: self.arrowPoint(x: 80, y: 15, edge:  .left, page: grandChild1))))
         XCTAssertTrue(arrows.contains(LayoutEngineArrow(startPoint: self.arrowPoint(x: 90, y: 15, edge:  .right, page: grandChild1),
-                                            endPoint: self.arrowPoint(x: 120, y: 20, edge:  .left, page: greatGrandChild1))))
+                                                        endPoint: self.arrowPoint(x: 120, y: 20, edge:  .left, page: greatGrandChild1))))
     }
 
     func test_calculateArrows_multipleLevelsOfChildrenBelowParent()  throws {
@@ -383,9 +382,9 @@ class ArrowLayoutEngineTests: XCTestCase {
         XCTAssertEqual(arrows.count, 2)
 
         XCTAssertTrue(arrows.contains(LayoutEngineArrow(startPoint: self.arrowPoint(x: 10, y: 40, edge:  .bottom, page: self.rootPage),
-                                            endPoint: self.arrowPoint(x: 0, y: 50, edge:  .top, page: child1))))
+                                                        endPoint: self.arrowPoint(x: 0, y: 50, edge:  .top, page: child1))))
         XCTAssertTrue(arrows.contains(LayoutEngineArrow(startPoint: self.arrowPoint(x: 0, y: 60, edge:  .bottom, page: child1),
-                                            endPoint: self.arrowPoint(x: 25, y: 90, edge:  .top, page: grandChild1))))
+                                                        endPoint: self.arrowPoint(x: 25, y: 90, edge:  .top, page: grandChild1))))
     }
 
     func test_calculateArrows_childToLeftOfGrandChildAndParent() {
@@ -397,9 +396,9 @@ class ArrowLayoutEngineTests: XCTestCase {
         XCTAssertEqual(arrows.count, 2)
 
         XCTAssertTrue(arrows.contains(LayoutEngineArrow(startPoint: self.arrowPoint(x: 0, y: 20, edge:  .left, page: self.rootPage),
-                                            endPoint: self.arrowPoint(x: -90, y: 8, edge:  .right, page: child1))))
+                                                        endPoint: self.arrowPoint(x: -90, y: 8, edge:  .right, page: child1))))
         XCTAssertTrue(arrows.contains(LayoutEngineArrow(startPoint: self.arrowPoint(x: -90, y: 13, edge:  .right, page: child1),
-                                            endPoint: self.arrowPoint(x: -40, y: 20, edge:  .left, page: grandChild1))))
+                                                        endPoint: self.arrowPoint(x: -40, y: 20, edge:  .left, page: grandChild1))))
     }
 
     func test_calculateArrows_childAboveGrandchildAndParent() {
@@ -411,9 +410,9 @@ class ArrowLayoutEngineTests: XCTestCase {
         XCTAssertEqual(arrows.count, 2)
 
         XCTAssertTrue(arrows.contains(LayoutEngineArrow(startPoint: self.arrowPoint(x: 10, y: 0, edge:  .top, page: self.rootPage),
-                                            endPoint: self.arrowPoint(x: 23, y: -90, edge:  .bottom, page: child1))))
+                                                        endPoint: self.arrowPoint(x: 23, y: -90, edge:  .bottom, page: child1))))
         XCTAssertTrue(arrows.contains(LayoutEngineArrow(startPoint: self.arrowPoint(x: 18, y: -90, edge:  .bottom, page: child1),
-                                            endPoint: self.arrowPoint(x: 5, y: -20, edge:  .top, page: grandChild1))))
+                                                        endPoint: self.arrowPoint(x: 5, y: -20, edge:  .top, page: grandChild1))))
     }
 
     func test_calculateArrows_childToRightOfGrandchildAndParent() {
@@ -425,9 +424,9 @@ class ArrowLayoutEngineTests: XCTestCase {
         XCTAssertEqual(arrows.count, 2)
 
         XCTAssertTrue(arrows.contains(LayoutEngineArrow(startPoint: self.arrowPoint(x: 20, y: 20, edge:  .right, page: self.rootPage),
-                                            endPoint: self.arrowPoint(x: 100, y: 23, edge:  .left, page: child1))))
+                                                        endPoint: self.arrowPoint(x: 100, y: 23, edge:  .left, page: child1))))
         XCTAssertTrue(arrows.contains(LayoutEngineArrow(startPoint: self.arrowPoint(x: 100, y: 18, edge:  .left, page: child1),
-                                            endPoint: self.arrowPoint(x: 50, y: -5, edge:  .right, page: grandChild1))))
+                                                        endPoint: self.arrowPoint(x: 50, y: -5, edge:  .right, page: grandChild1))))
     }
 
     func test_calculateArrows_childBelowGrandchildAndParent() {
@@ -439,9 +438,9 @@ class ArrowLayoutEngineTests: XCTestCase {
         XCTAssertEqual(arrows.count, 2)
 
         XCTAssertTrue(arrows.contains(LayoutEngineArrow(startPoint: self.arrowPoint(x: 10, y: 40, edge:  .bottom, page: self.rootPage),
-                                            endPoint: self.arrowPoint(x: 18, y: 100, edge:  .top, page: child1))))
+                                                        endPoint: self.arrowPoint(x: 18, y: 100, edge:  .top, page: child1))))
         XCTAssertTrue(arrows.contains(LayoutEngineArrow(startPoint: self.arrowPoint(x: 23, y: 100, edge:  .top, page: child1),
-                                            endPoint: self.arrowPoint(x: 21, y: 60, edge:  .bottom, page: grandChild1))))
+                                                        endPoint: self.arrowPoint(x: 21, y: 60, edge:  .bottom, page: grandChild1))))
     }
 
 

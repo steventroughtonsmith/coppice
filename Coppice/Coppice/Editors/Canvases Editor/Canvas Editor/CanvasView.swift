@@ -9,7 +9,7 @@
 import Cocoa
 import CoppiceCore
 
-protocol CanvasViewDelegate: class {
+protocol CanvasViewDelegate: AnyObject {
     func willStartEditing(_ canvasView: CanvasView)
     func didDropPages(with ids: [ModelID], at point: CGPoint, on canvasView: CanvasView)
     func didDropFiles(withURLs urls: [URL], at point: CGPoint, on canvasView: CanvasView)
@@ -71,7 +71,7 @@ class CanvasView: NSView {
         return nil
     }
 
-    
+
     //MARK: - First Responder
     override var acceptsFirstResponder: Bool {
         return true
@@ -180,7 +180,7 @@ class CanvasView: NSView {
             let delta = contentView.bounds.origin.minus(previousPosition)
             let point = self.convert(event.locationInWindow, from: nil).plus(delta)
             self.layoutEngine?.draggedEvent(at: point, modifiers: event.layoutEventModifiers)
-            self.perform(#selector(startAutoscrolling(with:)), with: event, afterDelay: 0.01)
+            self.perform(#selector(self.startAutoscrolling(with:)), with: event, afterDelay: 0.01)
         }
     }
 
@@ -270,7 +270,8 @@ class CanvasView: NSView {
         sender.enumerateDraggingItems(for: nil, classes: [NSPasteboardItem.self]) { (draggingItem, index, stop) in
             guard let pasteboardItem = draggingItem.item as? NSPasteboardItem,
                 let modelID = ModelID(pasteboardItem: pasteboardItem),
-                modelID.modelType == Page.modelType else {
+                modelID.modelType == Page.modelType
+            else {
                     return
             }
 
@@ -304,7 +305,8 @@ class CanvasView: NSView {
         draggingInfo.enumerateDraggingItems(for: nil, classes: [NSPasteboardItem.self], using: { (draggingItem, index, stop) in
             guard let pasteboardItem = draggingItem.item as? NSPasteboardItem,
                 let modelID = ModelID(pasteboardItem: pasteboardItem),
-                modelID.modelType == Page.modelType else {
+                modelID.modelType == Page.modelType
+            else {
                     return
             }
             guard let image = self.delegate?.dragImageForPage(with: modelID, in: self) else {
@@ -324,7 +326,8 @@ class CanvasView: NSView {
     //MARK: - Page Drag & Drop
     func pageDraggingUpdates(_ sender: NSDraggingInfo) -> NSDragOperation {
         guard let item = sender.draggingPasteboard.pasteboardItems?.first,
-            let id = ModelID(pasteboardItem: item) else {
+            let id = ModelID(pasteboardItem: item)
+        else {
                 return []
         }
         if id.modelType == Page.modelType {
@@ -368,7 +371,7 @@ class CanvasView: NSView {
             return false
         }
 
-        let urls = items.compactMap{ $0.data(forType: .fileURL) }.compactMap { URL(dataRepresentation: $0, relativeTo: nil) }
+        let urls = items.compactMap { $0.data(forType: .fileURL) }.compactMap { URL(dataRepresentation: $0, relativeTo: nil) }
         let dropPoint = self.convert(sender.draggingLocation, from: nil)
         self.delegate?.didDropFiles(withURLs: urls, at: dropPoint, on: self)
         return true

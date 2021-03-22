@@ -9,13 +9,13 @@
 import Cocoa
 import CoppiceCore
 
-protocol PageEditorView: class {
+protocol PageEditorView: AnyObject {
     func contentChanged()
 }
 
 class PageEditorViewModel: ViewModel {
     weak var view: PageEditorView?
-    
+
     let page: Page
     let isInCanvas: Bool
     private var contentObserver: NSObjectProtocol?
@@ -48,7 +48,7 @@ class PageEditorViewModel: ViewModel {
         case .image:
             let viewModel = ImageEditorViewModel(imageContent: (self.page.content as! ImagePageContent),
                                                  isInCanvas: self.isInCanvas,
-                                                 documentWindowViewModel: self.documentWindowViewModel )
+                                                 documentWindowViewModel: self.documentWindowViewModel)
             return ImageEditorViewController(viewModel: viewModel)
         }
     }

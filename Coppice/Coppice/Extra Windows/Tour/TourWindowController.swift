@@ -9,7 +9,6 @@
 import Cocoa
 
 class TourWindowController: NSWindowController {
-
     override var windowNibName: NSNib.Name? {
         return "TourWindow"
     }
@@ -20,7 +19,7 @@ class TourWindowController: NSWindowController {
         TourMovieViewController(tourIdentifier: "TourCanvases"),
         TourMovieViewController(tourIdentifier: "TourLinks"),
         TourMovieViewController(tourIdentifier: "TourBranches"),
-        TourGetStartedViewController()
+        TourGetStartedViewController(),
     ]
 
     override func windowDidLoad() {
@@ -42,7 +41,7 @@ class TourWindowController: NSWindowController {
     private var isLastPanel: Bool {
         return (self.currentPanelIndex == (self.tourPanels.count - 1))
     }
-    
+
     @IBOutlet weak var continueButton: NSButton!
     func updateContinueButton() {
         let localizedTitle = self.isLastPanel ? NSLocalizedString("Get Started", comment: "Tour Get Started Button Title")
@@ -53,7 +52,7 @@ class TourWindowController: NSWindowController {
         self.continueButton.attributedTitle = NSAttributedString(string: localizedTitle, attributes: [
             .font: NSFont.systemFont(ofSize: NSFont.systemFontSize),
             .foregroundColor: NSColor.white,
-            .paragraphStyle: paragraph
+            .paragraphStyle: paragraph,
         ])
     }
 
@@ -99,9 +98,9 @@ class TourWindowController: NSWindowController {
             currentPanel.view.removeFromSuperview()
             self.currentPanelIndex += 1
             self.continueButton.isEnabled = true
-            
+
             self.perform(#selector(self.updateItem(to:)), with: nextPanel.titleLabel.cell, afterDelay: 0)
-            
+
             self.isAnimatingPanel = false
         }
     }
@@ -140,7 +139,7 @@ class TourWindowController: NSWindowController {
             self.isAnimatingPanel = false
         }
     }
-    
+
     @objc dynamic func updateItem(to item: Any) {
         NSApp.setAccessibilityApplicationFocusedUIElement(item)
         NSAccessibility.post(element: item, notification: .focusedUIElementChanged)

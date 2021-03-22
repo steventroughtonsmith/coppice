@@ -9,7 +9,7 @@
 import Cocoa
 import Combine
 
-protocol SidebarView: class {
+protocol SidebarView: AnyObject {
     func displaySourceList()
     func displaySearchResults(forSearchTerm searchTerm: String)
 }

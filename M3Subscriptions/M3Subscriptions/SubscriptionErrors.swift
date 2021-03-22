@@ -52,17 +52,17 @@ public class SubscriptionErrorFactory {
         case .loginFailed:
             return self.createError(code: .loginFailed, context: .activate, additionalOptions: [
                 InfoKeys.moreInfoTitle: NSLocalizedString("Forgot Password…", comment: "Forgot password button"),
-                InfoKeys.moreInfoURL: URL(string: "https://mcubedsw.com/forgot_password")!
+                InfoKeys.moreInfoURL: URL(string: "https://mcubedsw.com/forgot_password")!,
             ])
         case .noSubscriptionFound:
             return self.createError(code: .noSubscriptionFound, context: .activate, additionalOptions: [
                 InfoKeys.moreInfoTitle: NSLocalizedString("Find Out More…", comment: "Find out more about Coppice Pro button"),
-                InfoKeys.moreInfoURL: URL(string: "https://coppiceapp.com/pro")!
+                InfoKeys.moreInfoURL: URL(string: "https://coppiceapp.com/pro")!,
             ])
         case .subscriptionExpired(let subscription):
             var additionalOptions: [String: Any] = [
                 InfoKeys.moreInfoTitle: NSLocalizedString("Renew", comment: "Renew Coppice Pro button"),
-                InfoKeys.moreInfoURL: URL(string: "https://coppiceapp.com/pro")!
+                InfoKeys.moreInfoURL: URL(string: "https://coppiceapp.com/pro")!,
             ]
             if let subscription = subscription {
                 additionalOptions[InfoKeys.subscription] = subscription
@@ -86,7 +86,7 @@ public class SubscriptionErrorFactory {
         case .noSubscriptionFound:
             return self.createError(code: .noSubscriptionFound, context: .check)
         case .subscriptionExpired(let subscription):
-            return self.createError(code: .subscriptionExpired, context: .check, additionalOptions: (subscription != nil) ? [InfoKeys.subscription: subscription!]: nil)
+            return self.createError(code: .subscriptionExpired, context: .check, additionalOptions: (subscription != nil) ? [InfoKeys.subscription: subscription!] : nil)
         }
     }
 
@@ -109,7 +109,7 @@ public class SubscriptionErrorFactory {
         var userInfo: [String: Any] = [
             NSLocalizedDescriptionKey: code.localizedDescription(for: context),
             NSLocalizedRecoverySuggestionErrorKey: code.localizedRecoverySuggestion(for: context),
-            InfoKeys.context: context.rawValue
+            InfoKeys.context: context.rawValue,
         ]
         if let options = additionalOptions {
             userInfo.merge(options, uniquingKeysWith: { arg1, arg2 in arg1 })

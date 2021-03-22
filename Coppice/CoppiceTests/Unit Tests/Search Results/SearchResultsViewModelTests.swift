@@ -6,9 +6,9 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 @testable import Coppice
 @testable import CoppiceCore
+import XCTest
 
 class SearchResultsViewModelTests: XCTestCase {
     var modelController: CoppiceModelController!
@@ -79,7 +79,7 @@ class SearchResultsViewModelTests: XCTestCase {
         XCTAssertEqual(self.viewModel.results[safe: 0]?.results.count, 2)
         XCTAssertEqual(self.viewModel.results[safe: 1]?.results.count, 1)
     }
-    
+
 
     //MARK: - addPages(with:to:)
     func test_addPagesWithIDsToCanvas_addsPagesToCanvas() throws {

@@ -6,8 +6,8 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 import CoppiceCore
+import XCTest
 
 class ModelObjectTests: XCTestCase {
     var modelController: TestModelController!
@@ -34,7 +34,7 @@ class ModelObjectTests: XCTestCase {
         XCTAssertEqual(modelID.modelType, TestModelObject.modelType)
     }
 
-    func test_modelIDWithUUIDString_returnsModelIDWithObjectsTypeAndUUIDFromSuppliedString() throws{
+    func test_modelIDWithUUIDString_returnsModelIDWithObjectsTypeAndUUIDFromSuppliedString() throws {
         let expectedUUID = UUID()
         let modelID = try XCTUnwrap(TestModelObject.modelID(withUUIDString: expectedUUID.uuidString))
         XCTAssertEqual(modelID.uuid, expectedUUID)

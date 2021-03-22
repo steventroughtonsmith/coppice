@@ -13,6 +13,7 @@ extension HelpBook {
         var topic: Topic
         var relevance: Float
     }
+
     func topics(matchingSearchString searchString: String) -> [SearchResult] {
         var results = [SearchResult]()
         for topic in self.allTopics {

@@ -6,11 +6,10 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 @testable import CoppiceCore
+import XCTest
 
 class CoppiceModelControllerTests: XCTestCase {
-
     //MARK: - init(undoManager:)
     func test_init_setsUndoManagerToSuppliedManager() {
         let undoManager = UndoManager()
@@ -102,5 +101,4 @@ class CoppiceModelControllerTests: XCTestCase {
         let expectedIdentifier = modelController.identifier.uuidString
         XCTAssertEqual(modelController.settings.string(for: .documentIdentifier), expectedIdentifier)
     }
-
 }

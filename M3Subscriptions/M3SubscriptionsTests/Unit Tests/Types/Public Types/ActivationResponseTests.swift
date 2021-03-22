@@ -6,8 +6,8 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 @testable import M3Subscriptions
+import XCTest
 
 class ActivationResponseTests: APITestCase {
     func test_init_returnsNilIfSubscriptionIsMissingAndStateRequiresSubscription() throws {
@@ -25,10 +25,10 @@ class ActivationResponseTests: APITestCase {
             "subscription": [
                 "name": "My Subscription Plan",
                 "expirationDate": "2005-10-15T20:15:10Z",
-                "renewalStatus": "renew"
+                "renewalStatus": "renew",
             ],
             "device": [
-                "name": "My Shiny New Mac"
+                "name": "My Shiny New Mac",
             ],
             "token": "tokenX",
         ]
@@ -61,8 +61,8 @@ class ActivationResponseTests: APITestCase {
     private func performIsActiveTest(withResponse response: String) throws -> Bool {
         let payload: [String: Any] = [
             "response": response,
-            "subscription": [ "name": "X", "expirationDate": "2005-10-15T20:15:10Z", "renewalStatus": "renew" ],
-            "device": [ "name": "My Shiny New Mac" ],
+            "subscription": ["name": "X", "expirationDate": "2005-10-15T20:15:10Z", "renewalStatus": "renew"],
+            "device": ["name": "My Shiny New Mac"],
             "token": "tokenX",
         ]
         let signature = try self.signature(forPayload: payload)
@@ -106,8 +106,8 @@ class ActivationResponseTests: APITestCase {
     func test_isActive_returnsFalseIfResponseIsActiveButTokenIsNil() throws {
         let payload: [String: Any] = [
             "response": "active",
-            "subscription": [ "name": "X", "expirationDate": "2005-10-15T20:15:10Z", "renewalStatus": "renew" ],
-            "device": [ "name": "My Shiny New Mac" ],
+            "subscription": ["name": "X", "expirationDate": "2005-10-15T20:15:10Z", "renewalStatus": "renew"],
+            "device": ["name": "My Shiny New Mac"],
         ]
         let signature = try self.signature(forPayload: payload)
         let data = try XCTUnwrap(APIData(json: ["payload": payload, "signature": signature]))
@@ -118,8 +118,8 @@ class ActivationResponseTests: APITestCase {
     func test_isActive_returnsFalseIfResponseIsActiveTokenIsSetButSubscriptionHasExpired() throws {
         let payload: [String: Any] = [
             "response": "active",
-            "subscription": [ "name": "X", "expirationDate": "2005-10-15T20:15:10Z", "renewalStatus": "renew" ],
-            "device": [ "name": "My Shiny New Mac" ],
+            "subscription": ["name": "X", "expirationDate": "2005-10-15T20:15:10Z", "renewalStatus": "renew"],
+            "device": ["name": "My Shiny New Mac"],
         ]
         let signature = try self.signature(forPayload: payload)
         let data = try XCTUnwrap(APIData(json: ["payload": payload, "signature": signature]))
@@ -131,9 +131,9 @@ class ActivationResponseTests: APITestCase {
     func test_isActive_returnsTrueIfResponseIsActiveTokenIsSetAndSubscriptionHasNotExpired() throws {
         let payload: [String: Any] = [
             "response": "active",
-            "subscription": [ "name": "X", "expirationDate": "2005-10-15T20:15:10Z", "renewalStatus": "renew" ],
-            "device": [ "name": "My Shiny New Mac" ],
-            "token": "tokenX"
+            "subscription": ["name": "X", "expirationDate": "2005-10-15T20:15:10Z", "renewalStatus": "renew"],
+            "device": ["name": "My Shiny New Mac"],
+            "token": "tokenX",
         ]
         let signature = try self.signature(forPayload: payload)
         let data = try XCTUnwrap(APIData(json: ["payload": payload, "signature": signature]))

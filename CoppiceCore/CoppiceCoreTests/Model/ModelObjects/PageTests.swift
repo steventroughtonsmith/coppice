@@ -6,11 +6,10 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 @testable import CoppiceCore
+import XCTest
 
 class PageTests: XCTestCase {
-
     //MARK: - .plistRepresentation
     func test_plistRepresentation_containsID() throws {
         let page = Page()
@@ -97,7 +96,7 @@ class PageTests: XCTestCase {
             "dateModified": Date(timeIntervalSinceReferenceDate: 9872),
             "content": ModelFile(type: "text", filename: nil, data: nil, metadata: nil),
             "foo": "bar",
-            "testing": Date(timeIntervalSinceReferenceDate: 11)
+            "testing": Date(timeIntervalSinceReferenceDate: 11),
         ]
 
         XCTAssertNoThrow(try page.update(fromPlistRepresentation: plist))
@@ -117,7 +116,7 @@ class PageTests: XCTestCase {
             "title": "Lorem Ipsum",
             "dateCreated": Date(timeIntervalSinceReferenceDate: 1234),
             "dateModified": Date(timeIntervalSinceReferenceDate: 9876),
-            "content": ModelFile(type: "text", filename: nil, data: nil, metadata: nil)
+            "content": ModelFile(type: "text", filename: nil, data: nil, metadata: nil),
         ]
 
         XCTAssertThrowsError(try page.update(fromPlistRepresentation: plist), "") {
@@ -132,7 +131,7 @@ class PageTests: XCTestCase {
             "title": "Lorem Ipsum",
             "dateCreated": Date(timeIntervalSinceReferenceDate: 1235),
             "dateModified": Date(timeIntervalSinceReferenceDate: 9875),
-            "content": ModelFile(type: "text", filename: nil, data: nil, metadata: nil)
+            "content": ModelFile(type: "text", filename: nil, data: nil, metadata: nil),
         ]
 
         XCTAssertNoThrow(try page.update(fromPlistRepresentation: plist))
@@ -146,7 +145,7 @@ class PageTests: XCTestCase {
             "id": page.id.stringRepresentation,
             "dateCreated": Date(timeIntervalSinceReferenceDate: 1235),
             "dateModified": Date(timeIntervalSinceReferenceDate: 9875),
-            "content": ModelFile(type: "text", filename: nil, data: nil, metadata: nil)
+            "content": ModelFile(type: "text", filename: nil, data: nil, metadata: nil),
         ]
 
         XCTAssertThrowsError(try page.update(fromPlistRepresentation: plist), "") {
@@ -161,7 +160,7 @@ class PageTests: XCTestCase {
             "title": "Lorem Ipsum",
             "dateCreated": Date(timeIntervalSinceReferenceDate: 1236),
             "dateModified": Date(timeIntervalSinceReferenceDate: 9874),
-            "content": ModelFile(type: "text", filename: nil, data: nil, metadata: nil)
+            "content": ModelFile(type: "text", filename: nil, data: nil, metadata: nil),
         ]
 
         XCTAssertNoThrow(try page.update(fromPlistRepresentation: plist))
@@ -175,7 +174,7 @@ class PageTests: XCTestCase {
             "id": page.id.stringRepresentation,
             "title": "Lorem Ipsum",
             "dateModified": Date(timeIntervalSinceReferenceDate: 9874),
-            "content": ModelFile(type: "text", filename: nil, data: nil, metadata: nil)
+            "content": ModelFile(type: "text", filename: nil, data: nil, metadata: nil),
         ]
 
         XCTAssertThrowsError(try page.update(fromPlistRepresentation: plist), "") {
@@ -190,7 +189,7 @@ class PageTests: XCTestCase {
             "title": "Lorem Ipsum",
             "dateCreated": Date(timeIntervalSinceReferenceDate: 1237),
             "dateModified": Date(timeIntervalSinceReferenceDate: 9873),
-            "content": ModelFile(type: "text", filename: nil, data: nil, metadata: nil)
+            "content": ModelFile(type: "text", filename: nil, data: nil, metadata: nil),
         ]
 
         XCTAssertNoThrow(try page.update(fromPlistRepresentation: plist))
@@ -204,7 +203,7 @@ class PageTests: XCTestCase {
             "id": page.id.stringRepresentation,
             "title": "Lorem Ipsum",
             "dateCreated": Date(timeIntervalSinceReferenceDate: 1237),
-            "content": ModelFile(type: "empty", filename: nil, data: nil, metadata: nil)
+            "content": ModelFile(type: "empty", filename: nil, data: nil, metadata: nil),
         ]
 
         XCTAssertThrowsError(try page.update(fromPlistRepresentation: plist), "") {
@@ -220,7 +219,7 @@ class PageTests: XCTestCase {
             "dateCreated": Date(timeIntervalSinceReferenceDate: 1238),
             "dateModified": Date(timeIntervalSinceReferenceDate: 9872),
             "userPreferredSize": NSStringFromSize(CGSize(width: 320, height: 480)),
-            "content": ModelFile(type: "text", filename: nil, data: nil, metadata: nil)
+            "content": ModelFile(type: "text", filename: nil, data: nil, metadata: nil),
         ]
 
         XCTAssertNoThrow(try page.update(fromPlistRepresentation: plist))
@@ -236,7 +235,7 @@ class PageTests: XCTestCase {
             "title": "Lorem Ipsum",
             "dateCreated": Date(timeIntervalSinceReferenceDate: 1238),
             "dateModified": Date(timeIntervalSinceReferenceDate: 9872),
-            "content": ModelFile(type: "text", filename: nil, data: nil, metadata: nil)
+            "content": ModelFile(type: "text", filename: nil, data: nil, metadata: nil),
         ]
 
         XCTAssertNoThrow(try page.update(fromPlistRepresentation: plist))
@@ -247,13 +246,13 @@ class PageTests: XCTestCase {
     func test_updateFromPlistRepresentation_updatesContentToTextContentIfTextContentInPlist() throws {
         let page = Page()
         let data = try NSAttributedString(string: "Foobar Baz", attributes: [.font: NSFont.systemFont(ofSize: 5)]).data(from: NSRange(location: 0, length: 10),
-                                                                     documentAttributes: [.documentType: NSAttributedString.DocumentType.rtf])
+                                                                                                                        documentAttributes: [.documentType: NSAttributedString.DocumentType.rtf])
         let plist: [String: Any] = [
             "id": page.id.stringRepresentation,
             "title": "Lorem Ipsum",
             "dateCreated": Date(timeIntervalSinceReferenceDate: 1238),
             "dateModified": Date(timeIntervalSinceReferenceDate: 9872),
-            "content": ModelFile(type: "text", filename: "\(page.id.uuid.uuidString).rtf", data: data, metadata: nil)
+            "content": ModelFile(type: "text", filename: "\(page.id.uuid.uuidString).rtf", data: data, metadata: nil),
         ]
 
         XCTAssertNoThrow(try page.update(fromPlistRepresentation: plist))
@@ -275,7 +274,7 @@ class PageTests: XCTestCase {
             "title": "Lorem Ipsum",
             "dateCreated": Date(timeIntervalSinceReferenceDate: 1238),
             "dateModified": Date(timeIntervalSinceReferenceDate: 9872),
-            "content": ModelFile(type: "image", filename: "\(page.id.uuid.uuidString).png", data: data, metadata: ["description": "Hello World"])
+            "content": ModelFile(type: "image", filename: "\(page.id.uuid.uuidString).png", data: data, metadata: ["description": "Hello World"]),
         ]
 
         XCTAssertNoThrow(try page.update(fromPlistRepresentation: plist))
@@ -303,11 +302,11 @@ class PageTests: XCTestCase {
         let page = Page()
         page.content = TextPageContent()
         let plist: [String: Any] = [
-           "id": page.id.stringRepresentation,
-           "title": "Lorem Ipsum",
-           "dateCreated": Date(timeIntervalSinceReferenceDate: 1238),
-           "dateModified": Date(timeIntervalSinceReferenceDate: 9872),
-           "content": ModelFile(type: "foobar", filename: nil, data: nil, metadata: nil)
+            "id": page.id.stringRepresentation,
+            "title": "Lorem Ipsum",
+            "dateCreated": Date(timeIntervalSinceReferenceDate: 1238),
+            "dateModified": Date(timeIntervalSinceReferenceDate: 9872),
+            "content": ModelFile(type: "foobar", filename: nil, data: nil, metadata: nil),
         ]
 
         XCTAssertThrowsError(try page.update(fromPlistRepresentation: plist), "") {
@@ -380,7 +379,7 @@ class PageTests: XCTestCase {
         XCTAssertEqual(canvasPage2.frame, CGRect(x: 60, y: 70, width: 80, height: 90))
     }
 
-    func test_updatePageSizes_updatesFrameSizeOfPageOnAllCanvasesIfUserPreferredSizeIsNotSet() throws{
+    func test_updatePageSizes_updatesFrameSizeOfPageOnAllCanvasesIfUserPreferredSizeIsNotSet() throws {
         let modelController = CoppiceModelController(undoManager: UndoManager())
         let page = modelController.collection(for: Page.self).newObject() {
             let content = ImagePageContent()

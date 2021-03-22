@@ -22,6 +22,7 @@ class SignInViewController: NSViewController, DeactivatedSubscriptionMode {
         super.init(nibName: "SignInViewController", bundle: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

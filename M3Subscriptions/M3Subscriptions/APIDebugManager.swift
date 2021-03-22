@@ -43,29 +43,29 @@ public class APIDebugManager: NSObject {
 
     private func buildActivateMenu() -> NSMenu {
         let menu = NSMenu()
-        let none = menu.addItem(withTitle: "None", action: #selector(activateMenuItemSelected(_:)), keyEquivalent: "")
+        let none = menu.addItem(withTitle: "None", action: #selector(self.activateMenuItemSelected(_:)), keyEquivalent: "")
         none.target = self
         menu.addItem(NSMenuItem.separator())
 
-        let noSubscription = menu.addItem(withTitle: "No Subscription Found", action: #selector(activateMenuItemSelected(_:)), keyEquivalent: "")
+        let noSubscription = menu.addItem(withTitle: "No Subscription Found", action: #selector(self.activateMenuItemSelected(_:)), keyEquivalent: "")
         noSubscription.representedObject = "no_subscription_found"
         noSubscription.target = self
 
-        let multipleSubscriptions2 = menu.addItem(withTitle: "2 Subscriptions Found", action: #selector(activateMenuItemSelected(_:)), keyEquivalent: "")
+        let multipleSubscriptions2 = menu.addItem(withTitle: "2 Subscriptions Found", action: #selector(self.activateMenuItemSelected(_:)), keyEquivalent: "")
         multipleSubscriptions2.representedObject = "multiple_subscriptions::number:2"
         multipleSubscriptions2.target = self
-        let multipleSubscriptions5 = menu.addItem(withTitle: "5 Subscription Found", action: #selector(activateMenuItemSelected(_:)), keyEquivalent: "")
+        let multipleSubscriptions5 = menu.addItem(withTitle: "5 Subscription Found", action: #selector(self.activateMenuItemSelected(_:)), keyEquivalent: "")
         multipleSubscriptions5.representedObject = "multiple_subscriptions::number:5"
         multipleSubscriptions5.target = self
 
-        let subscriptionExpiredCancelled = menu.addItem(withTitle: "Subscription Expired (Cancelled)", action: #selector(activateMenuItemSelected(_:)), keyEquivalent: "")
+        let subscriptionExpiredCancelled = menu.addItem(withTitle: "Subscription Expired (Cancelled)", action: #selector(self.activateMenuItemSelected(_:)), keyEquivalent: "")
         subscriptionExpiredCancelled.representedObject = "subscription_expired::renewalStatus:cancelled"
         subscriptionExpiredCancelled.target = self
-        let subscriptionExpiredFailed = menu.addItem(withTitle: "Subscription Expired (Billing Failed)", action: #selector(activateMenuItemSelected(_:)), keyEquivalent: "")
+        let subscriptionExpiredFailed = menu.addItem(withTitle: "Subscription Expired (Billing Failed)", action: #selector(self.activateMenuItemSelected(_:)), keyEquivalent: "")
         subscriptionExpiredFailed.representedObject = "subscription_expired::renewalStatus:failed"
         subscriptionExpiredFailed.target = self
 
-        let tooManyDevices = menu.addItem(withTitle: "Too Many Devices", action: #selector(activateMenuItemSelected(_:)), keyEquivalent: "")
+        let tooManyDevices = menu.addItem(withTitle: "Too Many Devices", action: #selector(self.activateMenuItemSelected(_:)), keyEquivalent: "")
         tooManyDevices.representedObject = "too_many_devices::number:3"
         tooManyDevices.target = self
 
@@ -85,11 +85,11 @@ public class APIDebugManager: NSObject {
 
     private func buildDeactivateMenu() -> NSMenu {
         let menu = NSMenu()
-        let none = menu.addItem(withTitle: "None", action: #selector(deactivateMenuItemSelected(_:)), keyEquivalent: "")
+        let none = menu.addItem(withTitle: "None", action: #selector(self.deactivateMenuItemSelected(_:)), keyEquivalent: "")
         none.target = self
         menu.addItem(NSMenuItem.separator())
 
-        let noDevice = menu.addItem(withTitle: "No Device Found", action: #selector(deactivateMenuItemSelected(_:)), keyEquivalent: "")
+        let noDevice = menu.addItem(withTitle: "No Device Found", action: #selector(self.deactivateMenuItemSelected(_:)), keyEquivalent: "")
         noDevice.representedObject = "no_device_found"
         noDevice.target = self
 
@@ -109,39 +109,39 @@ public class APIDebugManager: NSObject {
 
     private func buildCheckMenu() -> NSMenu {
         let menu = NSMenu()
-        let none = menu.addItem(withTitle: "None", action: #selector(checkMenuItemSelected(_:)), keyEquivalent: "")
+        let none = menu.addItem(withTitle: "None", action: #selector(self.checkMenuItemSelected(_:)), keyEquivalent: "")
         none.target = self
         menu.addItem(NSMenuItem.separator())
 
         var timestamp = Int(Date.timeIntervalBetween1970AndReferenceDate + Date.timeIntervalSinceReferenceDate)
         timestamp += (24 * 60 * 60)
 
-        let activeInPast = menu.addItem(withTitle: "Active (Soon)", action: #selector(checkMenuItemSelected(_:)), keyEquivalent: "")
+        let activeInPast = menu.addItem(withTitle: "Active (Soon)", action: #selector(self.checkMenuItemSelected(_:)), keyEquivalent: "")
         activeInPast.representedObject = "active::renewalStatus:renew::expirationTimestamp:\(timestamp)"
         activeInPast.target = self
 
         timestamp += (59 * 24 * 60 * 60)
-        let activeInFuture = menu.addItem(withTitle: "Active (Far Future)", action: #selector(checkMenuItemSelected(_:)), keyEquivalent: "")
+        let activeInFuture = menu.addItem(withTitle: "Active (Far Future)", action: #selector(self.checkMenuItemSelected(_:)), keyEquivalent: "")
         activeInFuture.representedObject = "active::renewalStatus:renew::expirationTimestamp:\(timestamp)"
         activeInFuture.target = self
 
-        let activeBillingFailed = menu.addItem(withTitle: "Active (Billing Failed)", action: #selector(checkMenuItemSelected(_:)), keyEquivalent: "")
+        let activeBillingFailed = menu.addItem(withTitle: "Active (Billing Failed)", action: #selector(self.checkMenuItemSelected(_:)), keyEquivalent: "")
         activeBillingFailed.representedObject = "active::renewalStatus:failed::expirationTimestamp:\(timestamp)"
         activeBillingFailed.target = self
 
 
-        let noDevice = menu.addItem(withTitle: "No Device Found", action: #selector(checkMenuItemSelected(_:)), keyEquivalent: "")
+        let noDevice = menu.addItem(withTitle: "No Device Found", action: #selector(self.checkMenuItemSelected(_:)), keyEquivalent: "")
         noDevice.representedObject = "no_device_found"
         noDevice.target = self
 
-        let noSubscription = menu.addItem(withTitle: "No Subscription Found", action: #selector(checkMenuItemSelected(_:)), keyEquivalent: "")
+        let noSubscription = menu.addItem(withTitle: "No Subscription Found", action: #selector(self.checkMenuItemSelected(_:)), keyEquivalent: "")
         noSubscription.representedObject = "no_subscription_found"
         noSubscription.target = self
 
-        let subscriptionExpiredCancelled = menu.addItem(withTitle: "Subscription Expired (Cancelled)", action: #selector(checkMenuItemSelected(_:)), keyEquivalent: "")
+        let subscriptionExpiredCancelled = menu.addItem(withTitle: "Subscription Expired (Cancelled)", action: #selector(self.checkMenuItemSelected(_:)), keyEquivalent: "")
         subscriptionExpiredCancelled.representedObject = "subscription_expired::renewalStatus:cancelled"
         subscriptionExpiredCancelled.target = self
-        let subscriptionExpiredFailed = menu.addItem(withTitle: "Subscription Expired (Billing Failed)", action: #selector(checkMenuItemSelected(_:)), keyEquivalent: "")
+        let subscriptionExpiredFailed = menu.addItem(withTitle: "Subscription Expired (Billing Failed)", action: #selector(self.checkMenuItemSelected(_:)), keyEquivalent: "")
         subscriptionExpiredFailed.representedObject = "subscription_expired::renewalStatus:failed"
         subscriptionExpiredFailed.target = self
 

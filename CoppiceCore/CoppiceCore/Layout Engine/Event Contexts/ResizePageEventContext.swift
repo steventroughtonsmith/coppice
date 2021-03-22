@@ -72,8 +72,7 @@ class ResizePageEventContext: CanvasMouseEventContext {
                 deltaX = layout.canvasSize.width - layoutFrame.maxX
             }
             layoutFrame.size.width += deltaX
-        }
-        else if (self.component.isLeft) {
+        } else if (self.component.isLeft) {
             if (layoutFrame.width - deltaX < self.page.minimumLayoutSize.width) {
                 deltaX = -(self.page.minimumLayoutSize.width - layoutFrame.width)
             }
@@ -97,8 +96,7 @@ class ResizePageEventContext: CanvasMouseEventContext {
                 deltaY = layout.canvasSize.height - layoutFrame.maxY
             }
             layoutFrame.size.height += deltaY
-        }
-        else if (self.component.isTop) {
+        } else if (self.component.isTop) {
             if (layoutFrame.height - deltaY < self.page.minimumLayoutSize.height) {
                 deltaY = -(self.page.minimumLayoutSize.height - layoutFrame.height)
             }
@@ -117,8 +115,7 @@ class ResizePageEventContext: CanvasMouseEventContext {
     private func performAspectResize(with delta: CGPoint, in layout: LayoutEngine) -> CGPoint {
         if (self.component.isTop) {
             return self.performTopAspectResize(with: delta, in: layout)
-        }
-        else if (self.component.isBottom) {
+        } else if (self.component.isBottom) {
             return self.performBottomAspectResize(with: delta, in: layout)
         }
         return .zero
@@ -140,8 +137,7 @@ class ResizePageEventContext: CanvasMouseEventContext {
         if self.component.isLeft && (layoutFrame.minX + deltaX < 0) {
             deltaX = -layoutFrame.minX
             deltaY = deltaX / self.page.aspectRatio
-        }
-        else if self.component.isRight && ((layoutFrame.maxX - deltaX) > layout.canvasSize.width) {
+        } else if self.component.isRight && ((layoutFrame.maxX - deltaX) > layout.canvasSize.width) {
             deltaX = -(layout.canvasSize.width - layoutFrame.maxX)
             deltaY = deltaX / self.page.aspectRatio
         }
@@ -187,8 +183,7 @@ class ResizePageEventContext: CanvasMouseEventContext {
         if self.component.isLeft && (layoutFrame.minX - deltaX < 0) {
             deltaX = layoutFrame.minX
             deltaY = deltaX / self.page.aspectRatio
-        }
-        else if self.component.isRight && ((layoutFrame.maxX + deltaX) > layout.canvasSize.width) {
+        } else if self.component.isRight && ((layoutFrame.maxX + deltaX) > layout.canvasSize.width) {
             deltaX = layout.canvasSize.width - layoutFrame.maxX
             deltaY = deltaX / self.page.aspectRatio
         }

@@ -14,6 +14,7 @@ struct InfoAlert {
         case warning
         case error
     }
+
     var id: String
     var level: Level
     var title: String
@@ -29,6 +30,7 @@ class InfoAlertViewController: NSViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -76,12 +78,12 @@ class InfoAlertViewController: NSViewController {
     override func viewDidAppear() {
         super.viewDidAppear()
         if self.alert.autodismiss {
-            self.perform(#selector(dismissAlert(_:)), with: nil, afterDelay: 15)
+            self.perform(#selector(self.dismissAlert(_:)), with: nil, afterDelay: 15)
         }
     }
 
     @IBAction func dismissAlert(_ sender: Any?) {
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(dismissAlert(_:)), object: nil)
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.dismissAlert(_:)), object: nil)
         self.didDismissBlock?()
     }
 

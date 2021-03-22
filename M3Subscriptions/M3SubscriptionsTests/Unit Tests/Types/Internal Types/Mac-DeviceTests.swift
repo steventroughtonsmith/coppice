@@ -6,11 +6,10 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 @testable import M3Subscriptions
+import XCTest
 
 class Mac_DeviceTests: XCTestCase {
-
     func test_type_isMac() throws {
         let device = Device()
         XCTAssertEqual(device.type, .mac)

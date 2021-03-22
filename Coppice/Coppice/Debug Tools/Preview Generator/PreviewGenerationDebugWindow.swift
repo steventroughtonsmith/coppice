@@ -10,7 +10,6 @@ import Cocoa
 import CoppiceCore
 
 class PreviewGenerationDebugWindow: NSWindowController {
-
     @IBOutlet weak var largeImageView: NSImageView!
     @IBOutlet weak var mediumImageView: NSImageView!
     @IBOutlet weak var smallImageView: NSImageView!
@@ -32,6 +31,7 @@ class PreviewGenerationDebugWindow: NSWindowController {
         return "PreviewGenerationDebugWindow"
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -74,7 +74,8 @@ class PreviewGenerationDebugWindow: NSWindowController {
     @IBAction func generateImages(_ sender: Any) {
         guard
             let rawTheme = self.themePopUp.selectedItem?.representedObject as? String,
-            let theme = Canvas.Theme.init(rawValue: rawTheme) else {
+            let theme = Canvas.Theme(rawValue: rawTheme)
+        else {
                 return
         }
 

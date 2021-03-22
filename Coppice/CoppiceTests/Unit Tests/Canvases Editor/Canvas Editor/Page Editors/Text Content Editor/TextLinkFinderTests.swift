@@ -6,9 +6,9 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 @testable import Coppice
 @testable import CoppiceCore
+import XCTest
 
 class TextLinkFinderTests: XCTestCase {
     //MARK: - Empty Inputs
@@ -100,7 +100,7 @@ class TextLinkFinderTests: XCTestCase {
         let changes = TextLinkFinder().findLinkChanges(in: NSAttributedString(string: "double trouble on the double!"), using: [page1])
         XCTAssertEqual(changes.linksToAdd, [
             self.linkFor(loc: 0, length: 6, page: page1, isAuto: true),
-            self.linkFor(loc: 22, length: 6, page: page1, isAuto: true)
+            self.linkFor(loc: 22, length: 6, page: page1, isAuto: true),
         ])
     }
 
@@ -202,7 +202,7 @@ class TextLinkFinderTests: XCTestCase {
         let page2 = Page()
         page2.title = "foo"
         let string = NSMutableAttributedString(string: "Here is an external link auto test")
-        string.addAttribute(.link, value: URL(string:"https://mcubedsw.com")!, range: NSRange(location: 11, length: 13))
+        string.addAttribute(.link, value: URL(string: "https://mcubedsw.com")!, range: NSRange(location: 11, length: 13))
         let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1, page2])
         XCTAssertEqual(changes.linksToAdd, [])
     }
@@ -213,7 +213,7 @@ class TextLinkFinderTests: XCTestCase {
         let page2 = Page()
         page2.title = "foo"
         let string = NSMutableAttributedString(string: "Here is an external link auto test")
-        string.addAttribute(.link, value: URL(string:"https://mcubedsw.com")!, range: NSRange(location: 11, length: 13))
+        string.addAttribute(.link, value: URL(string: "https://mcubedsw.com")!, range: NSRange(location: 11, length: 13))
         let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1, page2])
         XCTAssertEqual(changes.linksToAdd, [])
     }
@@ -224,7 +224,7 @@ class TextLinkFinderTests: XCTestCase {
         let page2 = Page()
         page2.title = "foo"
         let string = NSMutableAttributedString(string: "Here is an external link auto test")
-        string.addAttribute(.link, value: URL(string:"https://mcubedsw.com")!, range: NSRange(location: 11, length: 13))
+        string.addAttribute(.link, value: URL(string: "https://mcubedsw.com")!, range: NSRange(location: 11, length: 13))
         let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1, page2])
         XCTAssertEqual(changes.linksToAdd, [])
     }
@@ -235,7 +235,7 @@ class TextLinkFinderTests: XCTestCase {
         let page2 = Page()
         page2.title = "foo"
         let string = NSMutableAttributedString(string: "Here is an external link auto test")
-        string.addAttribute(.link, value: URL(string:"https://mcubedsw.com")!, range: NSRange(location: 11, length: 13))
+        string.addAttribute(.link, value: URL(string: "https://mcubedsw.com")!, range: NSRange(location: 11, length: 13))
         let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1, page2])
         XCTAssertEqual(changes.linksToAdd, [])
     }
@@ -325,7 +325,7 @@ class TextLinkFinderTests: XCTestCase {
         let page = Page()
         page.title = "Page with external link"
         let string = NSMutableAttributedString(string: "This string contains a link to an external site")
-        string.addAttribute(.link, value: URL(string:"https://mcubedsw.com")!, range: NSRange(location: 23, length: 4))
+        string.addAttribute(.link, value: URL(string: "https://mcubedsw.com")!, range: NSRange(location: 23, length: 4))
 
         let changes = TextLinkFinder().findLinkChanges(in: string, using: [page])
         XCTAssertEqual(changes.linksToAdd, [])
@@ -367,7 +367,7 @@ class TextLinkFinderTests: XCTestCase {
         XCTAssertEqual(changes.linksToAdd, [
             self.linkFor(loc: 7, length: 6, page: page5, isAuto: true),
             self.linkFor(loc: 14, length: 5, page: page7, isAuto: true),
-            self.linkFor(loc: 25, length: 2, page: page6, isAuto: true)
+            self.linkFor(loc: 25, length: 2, page: page6, isAuto: true),
         ])
 
         XCTAssertEqual(changes.linksToRemove, [
@@ -375,7 +375,7 @@ class TextLinkFinderTests: XCTestCase {
             self.linkFor(loc: 10, length: 3, page: nil, isAuto: true),
         ])
     }
-    
+
 
     //MARK: - Helper
 

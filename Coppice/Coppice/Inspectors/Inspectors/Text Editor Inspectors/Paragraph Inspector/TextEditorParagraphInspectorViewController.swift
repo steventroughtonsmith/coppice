@@ -42,7 +42,7 @@ class TextEditorParagraphInspectorViewController: BaseInspectorViewController {
         alignmentControl.setTag(NSTextAlignment.justified.rawValue, forSegment: 3)
 
         self.alignmentObserver = self.typedViewModel.publisher(for: \.rawAlignment)
-            .map {alignmentControl.segment(forTag: $0) }
+            .map { alignmentControl.segment(forTag: $0) }
             .assign(to: \.selectedSegment, on: alignmentControl)
     }
 
@@ -82,7 +82,7 @@ class TextEditorParagraphInspectorViewController: BaseInspectorViewController {
         ]
 
         for style in styles {
-            let textList = NSTextList(markerFormat: .init(rawValue:style), options: 0)
+            let textList = NSTextList(markerFormat: .init(rawValue: style), options: 0)
             self.listStylePopUpButton.addItem(withTitle: self.popUpTitle(for: textList))
             self.listStylePopUpButton.lastItem?.representedObject = style
         }
@@ -90,7 +90,7 @@ class TextEditorParagraphInspectorViewController: BaseInspectorViewController {
         self.listStylePopUpButton.menu?.addItem(NSMenuItem.separator())
         self.listStylePopUpButton.addItem(withTitle: "X Y Z")
         self.listStylePopUpButton.lastItem?.tag = SpecialListItemTags.customValue.rawValue
-        self.listStylePopUpButton.addItem(withTitle: NSLocalizedString("Custom…", comment: "Custom list style option name"));
+        self.listStylePopUpButton.addItem(withTitle: NSLocalizedString("Custom…", comment: "Custom list style option name"))
         self.listStylePopUpButton.lastItem?.tag = SpecialListItemTags.customise.rawValue
 
         self.listStylePopUpObserver = self.typedViewModel.publisher(for: \.listTypes).sink { [weak self] newValue in
@@ -168,5 +168,4 @@ class TextEditorParagraphInspectorViewController: BaseInspectorViewController {
 }
 
 
-extension TextEditorParagraphInspectorViewController: TextEditorParagraphInspectorView {
-}
+extension TextEditorParagraphInspectorViewController: TextEditorParagraphInspectorView {}

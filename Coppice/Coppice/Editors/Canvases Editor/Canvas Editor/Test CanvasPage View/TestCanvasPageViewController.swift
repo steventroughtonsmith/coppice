@@ -10,14 +10,15 @@ import Cocoa
 import CoppiceCore
 
 class TestCanvasPageViewController: NSViewController {
-
     let id: UUID
     var width: CGFloat {
         didSet { self.updateFrame() }
     }
+
     var height: CGFloat {
         didSet { self.updateFrame() }
     }
+
     var position: CGPoint {
         didSet { self.updateFrame() }
     }

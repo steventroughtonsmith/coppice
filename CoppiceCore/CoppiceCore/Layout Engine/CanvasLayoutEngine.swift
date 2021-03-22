@@ -22,13 +22,13 @@ public struct LayoutEventModifiers: OptionSet {
 }
 
 
-public protocol CanvasLayoutView: class {
+public protocol CanvasLayoutView: AnyObject {
     func layoutChanged(with context: CanvasLayoutEngine.LayoutContext)
     var viewPortFrame: CGRect { get }
 }
 
 
-public protocol CanvasLayoutEngineDelegate: class {
+public protocol CanvasLayoutEngineDelegate: AnyObject {
     func moved(pages: [LayoutEnginePage], in layout: CanvasLayoutEngine)
     func remove(pages: [LayoutEnginePage], from layout: CanvasLayoutEngine)
     func reordered(pages: [LayoutEnginePage], in layout: CanvasLayoutEngine)
@@ -404,8 +404,8 @@ public class CanvasLayoutEngine: NSObject, LayoutEngine {
 }
 
 
-public extension CanvasLayoutEngine {
-    struct LayoutContext: Equatable {
+extension CanvasLayoutEngine {
+    public struct LayoutContext: Equatable {
         public var sizeChanged = false
         public var pageOffsetChange: CGPoint?
         public var selectionChanged = false
@@ -424,6 +424,5 @@ public extension CanvasLayoutEngine {
             self.selectionChanged = selectionChanged
             self.backgroundVisibilityChanged = backgroundVisibilityChanged
         }
-
     }
 }

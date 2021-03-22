@@ -30,7 +30,7 @@ class WelcomeWindowController: NSWindowController {
         let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
         let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String
 
-        let localizedVersion = NSLocalizedString("Version %@ (%@)", comment: "Version string");
+        let localizedVersion = NSLocalizedString("Version %@ (%@)", comment: "Version string")
         let versionString = String(format: localizedVersion, version ?? "Unknown", build ?? "Unknown")
         self.versionLabel.stringValue = versionString
     }
@@ -38,6 +38,7 @@ class WelcomeWindowController: NSWindowController {
     override var windowNibName: NSNib.Name? {
         return "WelcomeWindow"
     }
+
     @IBAction func newDocument(_ sender: Any) {
         CoppiceDocumentController.shared.newDocument(sender)
         self.window?.close()
@@ -48,8 +49,7 @@ class WelcomeWindowController: NSWindowController {
         self.window?.close()
     }
 
-    @IBAction func takeTour(_ sender: Any?) {
-    }
+    @IBAction func takeTour(_ sender: Any?) {}
 
     @IBAction func openRecentDocument(_ sender: Any?) {
         let row = self.recentTable.clickedRow

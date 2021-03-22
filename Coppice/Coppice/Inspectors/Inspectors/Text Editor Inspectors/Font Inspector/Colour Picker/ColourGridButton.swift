@@ -24,7 +24,7 @@ class ColourGridButton: NSButton {
             self.setNeedsDisplay(self.bounds)
         }
     }
-    
+
     var roundedCorner: ColourGridButtonCell.Corner? {
         get { (self.cell as? ColourGridButtonCell)?.roundedCorner }
         set { (self.cell as? ColourGridButtonCell)?.roundedCorner = newValue }
@@ -54,7 +54,7 @@ class ColourGridButtonCell: NSButtonCell {
     var colour: NSColor = .black
     var selected: Bool = false
     var roundedCorner: Corner?
-    
+
     enum Corner: Equatable {
         case topLeft
         case topRight
@@ -65,7 +65,7 @@ class ColourGridButtonCell: NSButtonCell {
     //Don't override the plain draw method as otherwise we get a weird focus ring
     override func drawBezel(withFrame cellFrame: NSRect, in controlView: NSView) {
         let path = self.roundedPath(in: cellFrame)
-        colour.set()
+        self.colour.set()
         path.fill()
 
         self.drawBorder(in: cellFrame)
@@ -76,19 +76,19 @@ class ColourGridButtonCell: NSButtonCell {
             self.drawSelection(in: cellFrame)
         }
     }
-    
+
     private func roundedPath(in rect: CGRect) -> NSBezierPath {
         guard let corner = self.roundedCorner else {
             return NSBezierPath(rect: rect)
         }
-        
+
         return NSBezierPath(roundedRect: rect,
                             topLeftRadius: (corner == .topLeft) ? 8 : nil,
                             topRightRadius: (corner == .topRight) ? 8 : nil,
                             bottomLeftRadius: (corner == .bottomLeft) ? 8 : nil,
                             bottomRightRadius: (corner == .bottomRight) ? 8 : nil)
     }
-    
+
     override func drawInterior(withFrame cellFrame: NSRect, in controlView: NSView) {
         //We don't need an interior
     }
@@ -135,9 +135,9 @@ class ColourGridButtonCell: NSButtonCell {
         selectionPath.fill()
 
         let string: NSString = "✓"
-        let attributes: [NSAttributedString.Key : Any] = [
+        let attributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: NSColor.white,
-            .font: NSFont.systemFont(ofSize: 10)
+            .font: NSFont.systemFont(ofSize: 10),
         ]
 
         var tickRect = string.boundingRect(with: selectionFrame.size, options: [], attributes: attributes)
@@ -145,7 +145,7 @@ class ColourGridButtonCell: NSButtonCell {
 
         string.draw(in: tickRect, withAttributes: attributes)
     }
-    
+
     override func focusRingMaskBounds(forFrame cellFrame: NSRect, in controlView: NSView) -> NSRect {
         return cellFrame
     }

@@ -16,7 +16,7 @@ public protocol LayoutEngineEventContextFactory {
 
 public class CanvasLayoutEngineEventContextFactory: LayoutEngineEventContextFactory {
     public init() {}
-    
+
     public func createMouseEventContext(for location: CGPoint, in layoutEngine: LayoutEngine) -> CanvasMouseEventContext? {
         //Canvas click
         guard let page = layoutEngine.page(atCanvasPoint: location) else {

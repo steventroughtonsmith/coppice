@@ -6,8 +6,8 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 import CoppiceCore
+import XCTest
 
 class ModelCollectionTests: XCTestCase {
     var collection: ModelCollection<TestCollectableModelObject>!
@@ -256,7 +256,6 @@ class ModelCollectionTests: XCTestCase {
         newObject.intProperty = 5
         self.wait(for: [intExpectation], timeout: 0)
         self.collection.removeObserver(intObserver)
-
     }
 
     func test_changeGroups_doesntNotifyObserverUntilAfterChangeGroupPopped() {

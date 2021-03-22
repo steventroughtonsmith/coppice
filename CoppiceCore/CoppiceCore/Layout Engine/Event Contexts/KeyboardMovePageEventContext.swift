@@ -6,8 +6,8 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import Foundation
 import Carbon.HIToolbox
+import Foundation
 
 class KeyboardMovePageEventContext: CanvasKeyEventContext {
     static var acceptedKeyCodes = [UInt16(kVK_LeftArrow), UInt16(kVK_RightArrow), UInt16(kVK_UpArrow), UInt16(kVK_DownArrow)]

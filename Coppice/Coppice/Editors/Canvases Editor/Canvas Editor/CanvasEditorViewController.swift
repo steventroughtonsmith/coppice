@@ -11,7 +11,6 @@ import Combine
 import CoppiceCore
 
 class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSToolbarItemValidation, SplitViewContainable {
-
     @IBOutlet weak var scrollView: NSScrollView!
     @IBOutlet weak var canvasView: CanvasView!
     @IBOutlet weak var toggleCanvasListButton: NSButton!
@@ -66,10 +65,10 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
             self?.updateSelection(with: responder)
         })
 
-        self.windowBecomeKeyObserver = NotificationCenter.default.addObserver(forName: NSWindow.didBecomeKeyNotification, object: self.view.window, queue: .main, using: { [weak self ](_) in
+        self.windowBecomeKeyObserver = NotificationCenter.default.addObserver(forName: NSWindow.didBecomeKeyNotification, object: self.view.window, queue: .main, using: { [weak self] (_) in
             self?.updateActivateState(with: self?.view.window?.firstResponder)
         })
-        self.windowResignKeyObserver = NotificationCenter.default.addObserver(forName: NSWindow.didResignKeyNotification, object: self.view.window, queue: .main, using: { [weak self ](_) in
+        self.windowResignKeyObserver = NotificationCenter.default.addObserver(forName: NSWindow.didResignKeyNotification, object: self.view.window, queue: .main, using: { [weak self] (_) in
             self?.updateActivateState(with: self?.view.window?.firstResponder)
         })
     }
@@ -100,7 +99,7 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
 
         self.forceFullLayout()
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(scrollingChanged(_:)),
+                                               selector: #selector(self.scrollingChanged(_:)),
                                                name: NSView.boundsDidChangeNotification,
                                                object: self.scrollView.contentView)
 
@@ -114,7 +113,7 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
         self.setupAccessibility()
         self.setupPro()
 
-        self.newPageMenuDelegate.action = #selector(newPageFromContextMenu(_:))
+        self.newPageMenuDelegate.action = #selector(self.newPageFromContextMenu(_:))
     }
 
     var enabled: Bool = true
@@ -130,7 +129,7 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
 
     override func viewDidAppear() {
         super.viewDidAppear()
-        self.perform(#selector(forceFullLayout), with: nil, afterDelay: 4)
+        self.perform(#selector(self.forceFullLayout), with: nil, afterDelay: 4)
         self.setupActiveStateObservers()
     }
 
@@ -147,8 +146,8 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
             self.updateLayoutIfNeeded()
             return
         }
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(updateLayoutIfNeeded), object: nil)
-        self.perform(#selector(updateLayoutIfNeeded), with: nil, afterDelay: 0)
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.updateLayoutIfNeeded), object: nil)
+        self.perform(#selector(self.updateLayoutIfNeeded), with: nil, afterDelay: 0)
     }
 
     @objc private func updateLayoutIfNeeded() {
@@ -178,7 +177,8 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
 
     func updateActivateState(with firstResponder: NSResponder?) {
         guard let view = firstResponder as? NSView,
-            let window = view.window else {
+            let window = view.window
+        else {
             self.active = false
             return
         }
@@ -197,11 +197,11 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
     }
 
     @objc func scrollingChanged(_ sender: Any?) {
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(notifyOfViewPortChangeIfNeeded), object: nil)
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.notifyOfViewPortChangeIfNeeded), object: nil)
         if !self.isLayingOut {
             self.updateLastOriginOffset()
         }
-        self.perform(#selector(notifyOfViewPortChangeIfNeeded), with: nil, afterDelay: 0.5)
+        self.perform(#selector(self.notifyOfViewPortChangeIfNeeded), with: nil, afterDelay: 0.5)
     }
 
     @objc func notifyOfViewPortChangeIfNeeded() {
@@ -235,7 +235,7 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
         self.viewModel.viewPortInCanvasSpace = CGRect(origin: origin, size: self.scrollView.frame.size)
     }
 
-    
+
     //MARK: - Layout
     private var hasLaidOut = false
     private var isLayingOut = false
@@ -390,7 +390,8 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
     private func updateSelection(with firstResponder: NSResponder?) {
         guard
             let view = firstResponder as? NSView,
-            let canvasPageVC = self.pageViewController(containing: view) else {
+            let canvasPageVC = self.pageViewController(containing: view)
+        else {
                 return
         }
 
@@ -400,7 +401,7 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
 
     //MARK: - Page View Controller Management
     private var pageViewControllers: [CanvasPageViewController] {
-        return self.children.compactMap({ $0 as? CanvasPageViewController })
+        return self.children.compactMap { $0 as? CanvasPageViewController }
     }
 
     private func pageViewController(for page: LayoutEnginePage) -> CanvasPageViewController? {
@@ -601,9 +602,9 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
     }
 
     func validateToolbarItem(_ item: NSToolbarItem) -> Bool {
-        if item.action == #selector(linkToPage(_:)) {
+        if item.action == #selector(self.linkToPage(_:)) {
             if self.selectedPages.count == 1 {
-                item.toolTip = nil;
+                item.toolTip = nil
                 return true
             }
             item.toolTip = NSLocalizedString("Start editing a Page to create a link", comment: "Canvas Link to Page disabled tooltip")
@@ -613,19 +614,19 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
     }
 
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
-        if menuItem.action == #selector(zoomControlChanged(_:)) {
+        if menuItem.action == #selector(self.zoomControlChanged(_:)) {
             return true
         }
         let notEditableTooltip = NSLocalizedString("The current Canvas is not editable", comment: "Non-editable canvas action tooltip")
-        if menuItem.action == #selector(newPageFromContextMenu(_:)) {
+        if menuItem.action == #selector(self.newPageFromContextMenu(_:)) {
             menuItem.toolTip = (self.layoutEngine.editable ? nil : notEditableTooltip)
             return self.layoutEngine.editable
         }
-        if menuItem.action == #selector(addPageToCanvas(_:)) {
+        if menuItem.action == #selector(self.addPageToCanvas(_:)) {
             menuItem.toolTip = (self.layoutEngine.editable ? nil : notEditableTooltip)
             return self.layoutEngine.editable
         }
-        if menuItem.action == #selector(removeSelectedPages(_:)) {
+        if menuItem.action == #selector(self.removeSelectedPages(_:)) {
             menuItem.toolTip = (self.layoutEngine.editable ? nil : notEditableTooltip)
             guard self.layoutEngine.editable else {
                 return false
@@ -638,26 +639,27 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
             }
             return (selectedPagesCount > 0)
         }
-        if menuItem.action == #selector(deleteItems(_:)) {
+        if menuItem.action == #selector(self.deleteItems(_:)) {
             menuItem.toolTip = (self.layoutEngine.editable ? nil : notEditableTooltip)
             return (self.viewModel.selectedCanvasPages.count == 1) && self.layoutEngine.editable
         }
-        if menuItem.action == #selector(zoomIn(_:)) {
+        if menuItem.action == #selector(self.zoomIn(_:)) {
             return self.viewModel.canZoomIn
         }
-        if menuItem.action == #selector(zoomOut(_:)) {
+        if menuItem.action == #selector(self.zoomOut(_:)) {
             return self.viewModel.canZoomOut
         }
-        if menuItem.action == #selector(zoomTo100(_:)) {
+        if menuItem.action == #selector(self.zoomTo100(_:)) {
             return self.viewModel.canZoomTo100
         }
-        if menuItem.action == #selector(selectAll(_:)) ||
-            menuItem.action == #selector(deselectAll(_:)) {
+        if menuItem.action == #selector(self.selectAll(_:)) ||
+            menuItem.action == #selector(self.deselectAll(_:))
+        {
             return true
         }
-        if menuItem.action == #selector(linkToPage(_:)) {
+        if menuItem.action == #selector(self.linkToPage(_:)) {
             if self.selectedPages.count == 1 {
-                menuItem.toolTip = nil;
+                menuItem.toolTip = nil
                 return true
             }
             menuItem.toolTip = NSLocalizedString("Start editing a Page to create a link", comment: "Canvas Link to Page disabled tooltip")
@@ -680,7 +682,8 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
         guard
             let scrollView = self.scrollView,
             let toggleButton = self.toggleCanvasListButton,
-            let zoomControl = self.zoomControl else {
+            let zoomControl = self.zoomControl
+        else {
                 return
         }
 
@@ -693,13 +696,11 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
 
     //MARK: - Pro
     @IBOutlet weak var proImageView: NSImageView!
-    @IBAction func proUpSell(_ sender: Any) {
-    }
+    @IBAction func proUpSell(_ sender: Any) {}
 
     private func setupPro() {
         self.proImageView.image = CoppiceSubscriptionManager.shared.proImage
     }
-
 }
 
 
@@ -721,7 +722,7 @@ extension CanvasEditorViewController: CanvasViewDelegate {
     func willStartEditing(_ canvasView: CanvasView) {
         self.viewModel.documentWindowViewModel.registerStartOfEditing()
     }
-    
+
     func didDropPages(with ids: [ModelID], at point: CGPoint, on canvasView: CanvasView) {
         let pageSpacePoint = self.layoutEngine.convertPointToPageSpace(point)
         self.viewModel.addPages(with: ids, centredOn: pageSpacePoint)
@@ -760,7 +761,7 @@ extension CanvasEditorViewController: CanvasEditorView {
 
 extension CanvasEditorViewController: CanvasLayoutView {
     func layoutChanged(with context: CanvasLayoutEngine.LayoutContext) {
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(layout), object: nil)
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.layout), object: nil)
         if let currentContext = self.currentLayoutContext {
             self.currentLayoutContext = currentContext.merged(with: context)
         } else {

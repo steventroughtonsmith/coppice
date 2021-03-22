@@ -6,12 +6,11 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import XCTest
-@testable import CoppiceCore
 import Carbon.HIToolbox
+@testable import CoppiceCore
+import XCTest
 
 class KeyboardMovePageEventContextTests: EventContextTestBase {
-
     private func layoutFrames(shiftingSelected pages: [LayoutEnginePage], by delta: CGPoint = .zero) -> [CGRect] {
         var frames = [CGRect]()
         for page in pages {
@@ -24,7 +23,7 @@ class KeyboardMovePageEventContextTests: EventContextTestBase {
         return frames
     }
 
-    private func performKeyboardMoveTest(keyCode: Int, downEventCount: Int = 1, expectedShift: CGPoint = .zero, modifiers: (Int) -> LayoutEventModifiers = {_ in []}) -> (actual: [CGRect], expected: [CGRect]) {
+    private func performKeyboardMoveTest(keyCode: Int, downEventCount: Int = 1, expectedShift: CGPoint = .zero, modifiers: (Int) -> LayoutEventModifiers = { _ in [] }) -> (actual: [CGRect], expected: [CGRect]) {
         let pages = [self.page1, self.page2, self.page3] as [LayoutEnginePage]
         let expectedFrames = self.layoutFrames(shiftingSelected: pages, by: expectedShift)
 
@@ -377,5 +376,4 @@ class KeyboardMovePageEventContextTests: EventContextTestBase {
 
         XCTAssertFalse(self.mockLayoutEngine.finishedModifyingMock.wasCalled)
     }
-
 }

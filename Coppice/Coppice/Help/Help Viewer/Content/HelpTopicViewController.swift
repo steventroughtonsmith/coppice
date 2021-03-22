@@ -33,12 +33,10 @@ class HelpTopicViewController: NSViewController {
     }
 
 
-    @IBAction func toggleFavourite(_ sender: Any?) {
-        
-    }
+    @IBAction func toggleFavourite(_ sender: Any?) {}
 
     let htmlGenerator = TopicHTMLGenerator()
-    
+
     @IBOutlet var webView: WKWebView!
     private func reloadData() {
         guard
@@ -52,7 +50,6 @@ class HelpTopicViewController: NSViewController {
     }
 
     private func generateHTML(for topic: HelpBook.Topic) -> String? {
-
         let content = topic.helpBook?.content(for: topic) ?? "<p>Topic not found</p>"
 
         let rootHTML = """
@@ -89,8 +86,7 @@ extension HelpTopicViewController: WKNavigationDelegate {
                 if let identifier = url.host {
                     self.delegate?.openTopic(withIdentifier: identifier, from: self)
                 }
-            }
-            else {
+            } else {
                 NSWorkspace.shared.open(url)
             }
         }

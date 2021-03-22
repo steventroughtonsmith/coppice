@@ -64,8 +64,8 @@ class Document: NSDocument {
             throw NSError(domain: GlobalConstants.appErrorDomain,
                           code: GlobalConstants.ErrorCodes.readingDocumentFailed.rawValue,
                           userInfo: [
-                            NSLocalizedFailureReasonErrorKey: NSLocalizedString("This document was saved by a newer version of Coppice", comment: "Document version too new error reason"),
-                            NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString("Please download the latest version of Coppice to open this Document", comment: "Document version too new error recovery suggestion")
+                              NSLocalizedFailureReasonErrorKey: NSLocalizedString("This document was saved by a newer version of Coppice", comment: "Document version too new error reason"),
+                              NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString("Please download the latest version of Coppice to open this Document", comment: "Document version too new error recovery suggestion"),
                           ])
         } catch {
             throw NSError(domain: GlobalConstants.appErrorDomain,
@@ -87,11 +87,11 @@ class Document: NSDocument {
     //MARK: - URL handling
     func handle(_ url: URL) -> Bool {
         guard let pageLink = PageLink(url: url),
-            let windowController = self.windowControllers.first as? DocumentWindowController else {
+            let windowController = self.windowControllers.first as? DocumentWindowController
+        else {
             return false
         }
         return windowController.viewModel.openPage(at: pageLink)
     }
-
 }
 

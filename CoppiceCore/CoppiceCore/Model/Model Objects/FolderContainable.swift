@@ -19,8 +19,8 @@ public protocol FolderContainable: ModelObject {
     func removeFromContainingFolder()
 }
 
-public extension FolderContainable {
-    func removeFromContainingFolder() {
+extension FolderContainable {
+    public func removeFromContainingFolder() {
         self.containingFolder?.remove([self])
     }
 }

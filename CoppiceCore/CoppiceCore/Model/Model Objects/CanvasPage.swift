@@ -8,7 +8,7 @@
 
 import Cocoa
 
-public final class CanvasPage: NSObject, CollectableModelObject {
+final public class CanvasPage: NSObject, CollectableModelObject {
     public static let modelType: ModelType = ModelType(rawValue: "CanvasPage")!
 
     public var id = ModelID(modelType: CanvasPage.modelType)
@@ -19,7 +19,7 @@ public final class CanvasPage: NSObject, CollectableModelObject {
         didSet { self.didChange(\.frame, oldValue: oldValue) }
     }
 
-    public override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
+    override public class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
         var keyPaths = super.keyPathsForValuesAffectingValue(forKey: key)
         if key == "title" {
             keyPaths.insert("self.page.title")
@@ -27,7 +27,7 @@ public final class CanvasPage: NSObject, CollectableModelObject {
         return keyPaths
     }
 
-    @objc dynamic public var title : String {
+    @objc dynamic public var title: String {
         return self.page?.title ?? ""
     }
 
@@ -37,9 +37,9 @@ public final class CanvasPage: NSObject, CollectableModelObject {
 
     public var zIndex: Int = -1
 
-    public private(set) var otherProperties = [String : Any]()
+    public private(set) var otherProperties = [String: Any]()
 
-    
+
     //MARK: - Relationships
     @ModelObjectReference @objc dynamic public var page: Page? {
         didSet {
@@ -51,7 +51,7 @@ public final class CanvasPage: NSObject, CollectableModelObject {
             self.didChangeValue(for: \.title)
         }
     }
-    
+
     @ModelObjectReference public var canvas: Canvas? {
         didSet { self.didChangeRelationship(\.canvas, inverseKeyPath: \.pages, oldValue: oldValue) }
     }
@@ -63,7 +63,7 @@ public final class CanvasPage: NSObject, CollectableModelObject {
             self.didChangeValue(for: \.title)
         }
     }
-    
+
     public var children: Set<CanvasPage> {
         self.relationship(for: \.parent)
     }
@@ -72,7 +72,7 @@ public final class CanvasPage: NSObject, CollectableModelObject {
         if self.page?.id == page.id {
             return self
         }
-        if let child = self.children.first(where: {$0.page?.id == page.id }) {
+        if let child = self.children.first(where: { $0.page?.id == page.id }) {
             return child
         }
         return nil
@@ -100,8 +100,8 @@ public final class CanvasPage: NSObject, CollectableModelObject {
         case canvas
         case parent
     }
-    
-    public var plistRepresentation: [String : Any] {
+
+    public var plistRepresentation: [String: Any] {
         var plist = self.otherProperties
 
         plist[PlistKeys.id.rawValue] = self.id.stringRepresentation
@@ -120,7 +120,7 @@ public final class CanvasPage: NSObject, CollectableModelObject {
         return plist
     }
 
-    public func update(fromPlistRepresentation plist: [String : Any]) throws {
+    public func update(fromPlistRepresentation plist: [String: Any]) throws {
         guard let modelController = self.modelController else {
             throw ModelObjectUpdateErrors.modelControllerNotSet
         }

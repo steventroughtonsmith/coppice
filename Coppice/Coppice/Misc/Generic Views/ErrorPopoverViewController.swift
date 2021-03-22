@@ -24,6 +24,7 @@ class ErrorPopoverViewController: NSViewController {
         super.init(nibName: "ErrorPopoverViewController", bundle: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -51,7 +52,7 @@ class ErrorPopoverViewController: NSViewController {
             self.findOutMoreContainer.isHidden = true
         }
     }
-    
+
     @IBAction func findOutMore(_ sender: Any) {
         if let errorURL = self.error.userInfo[SubscriptionErrorFactory.InfoKeys.moreInfoURL] as? URL {
             NSWorkspace.shared.open(errorURL)

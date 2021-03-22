@@ -6,12 +6,11 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 @testable import Coppice
 @testable import CoppiceCore
+import XCTest
 
 class TextEditorInspectorTypesTests: XCTestCase {
-
     func test_typeface_initAssignsValuesToCorrectProperties() throws {
         let fontTraitMask = NSFontTraitMask(arrayLiteral: [.boldFontMask, .italicFontMask])
         let fontMember: [Any] = ["Helvetica-Bold", "Bold", 4, fontTraitMask.rawValue]
@@ -29,5 +28,4 @@ class TextEditorInspectorTypesTests: XCTestCase {
 
         XCTAssertEqual(typeface1, typeface2)
     }
-
 }

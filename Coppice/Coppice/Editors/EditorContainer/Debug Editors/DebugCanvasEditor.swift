@@ -29,7 +29,7 @@ class DebugCanvasEditor: NSViewController {
         super.init(nibName: "DebugCanvasEditor", bundle: nil)
         viewModel.view = self
     }
-    
+
     required init?(coder: NSCoder) {
         preconditionFailure("init(coder:) has not been implemented")
     }
@@ -72,7 +72,8 @@ extension DebugCanvasEditor: NSTableViewDataSource {
 
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
         guard let column = tableColumn,
-            let identifier = Columns(rawValue: column.identifier.rawValue) else {
+            let identifier = Columns(rawValue: column.identifier.rawValue)
+        else {
                 return nil
         }
         let page = self.viewModel.pages[row]
@@ -96,7 +97,8 @@ extension DebugCanvasEditor: NSTableViewDataSource {
 
     func tableView(_ tableView: NSTableView, setObjectValue object: Any?, for tableColumn: NSTableColumn?, row: Int) {
         guard let column = tableColumn,
-            let identifier = Columns(rawValue: column.identifier.rawValue) else {
+            let identifier = Columns(rawValue: column.identifier.rawValue)
+        else {
                 return
         }
         let page = self.viewModel.pages[row]
@@ -122,7 +124,8 @@ extension DebugCanvasEditor: NSTableViewDataSource {
     func tableView(_ tableView: NSTableView,
                    validateDrop info: NSDraggingInfo,
                    proposedRow row: Int,
-                   proposedDropOperation dropOperation: NSTableView.DropOperation) -> NSDragOperation {
+                   proposedDropOperation dropOperation: NSTableView.DropOperation) -> NSDragOperation
+    {
         tableView.setDropRow(-1, dropOperation: .on)
         return .move
     }
@@ -130,7 +133,8 @@ extension DebugCanvasEditor: NSTableViewDataSource {
     func tableView(_ tableView: NSTableView,
                    acceptDrop info: NSDraggingInfo,
                    row: Int,
-                   dropOperation: NSTableView.DropOperation) -> Bool {
+                   dropOperation: NSTableView.DropOperation) -> Bool
+    {
         guard let items = info.draggingPasteboard.pasteboardItems else {
             return false
         }

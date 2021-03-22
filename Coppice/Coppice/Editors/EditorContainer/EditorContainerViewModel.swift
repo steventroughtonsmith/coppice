@@ -9,7 +9,7 @@
 import Cocoa
 import Combine
 
-protocol EditorContainerView: class {
+protocol EditorContainerView: AnyObject {
     func editorChanged()
 }
 
@@ -22,7 +22,7 @@ class EditorContainerViewModel: ViewModel {
 
     var currentEditor: DocumentWindowViewModel.Editor = .none {
         didSet {
-            guard currentEditor != oldValue else {
+            guard self.currentEditor != oldValue else {
                 return
             }
             self.view?.editorChanged()

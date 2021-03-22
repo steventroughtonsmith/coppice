@@ -26,5 +26,4 @@ class HelpSearchResultTableCellView: NSTableCellView {
         self.textField?.stringValue = searchResult.topic.title
         self.relevanceIndicator.floatValue = searchResult.relevance
     }
-    
 }

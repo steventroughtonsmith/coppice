@@ -24,9 +24,11 @@ class SearchResult: NSObject {
     @objc dynamic var title: NSAttributedString? {
         return nil
     }
+
     @objc dynamic var body: NSAttributedString? {
         return nil
     }
+
     @objc dynamic var image: NSImage? {
         return nil
     }
@@ -42,7 +44,7 @@ class SearchResult: NSObject {
     }
 
 
-    static let standardTitleAttributes: [NSAttributedString.Key : Any] = {
+    static let standardTitleAttributes: [NSAttributedString.Key: Any] = {
         let paragraph = NSMutableParagraphStyle()
         paragraph.lineBreakMode = .byTruncatingTail
 
@@ -54,7 +56,7 @@ class SearchResult: NSObject {
         return attributes
     }()
 
-    static let standardBodyAttributes: [NSAttributedString.Key : Any] = {
+    static let standardBodyAttributes: [NSAttributedString.Key: Any] = {
         let paragraph = NSMutableParagraphStyle()
         paragraph.lineBreakMode = .byTruncatingTail
 
@@ -153,7 +155,7 @@ class CanvasSearchResult: SearchResult {
 
     override var body: NSAttributedString? {
         switch self.match.matchType {
-        case .title(_):
+        case .title:
             return nil
         case .pages(let numberOfPages):
             let localizedBodyTemplate: String

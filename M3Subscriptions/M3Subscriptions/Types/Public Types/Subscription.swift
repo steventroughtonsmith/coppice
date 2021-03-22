@@ -11,9 +11,9 @@ import Foundation
 public struct Subscription: Equatable {
     public enum RenewalStatus: String {
         case unknown
-        case renew = "renew"
-        case cancelled = "cancelled"
-        case failed = "failed"
+        case renew
+        case cancelled
+        case failed
     }
 
     public var id: String?

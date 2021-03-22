@@ -32,7 +32,7 @@ struct ActivateAPI {
             "bundleID": self.request.bundleID,
             "deviceID": self.device.id,
             "deviceType": self.device.type.rawValue,
-            "version": self.device.appVersion
+            "version": self.device.appVersion,
         ]
 
         guard let deviceName = self.device.name else {

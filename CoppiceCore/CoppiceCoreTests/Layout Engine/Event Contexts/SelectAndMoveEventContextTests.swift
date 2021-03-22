@@ -6,11 +6,10 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 @testable import CoppiceCore
+import XCTest
 
 class SelectAndMoveEventContextTests: EventContextTestBase {
-
     //MARK: - Single selection
     func test_singleSelection_clickingOnUnselectedPagesTitleTellsLayoutToSelectJustThatPageOnDownEvent() throws {
         let eventContext = SelectAndMoveEventContext(page: self.page3, editable: true, component: .titleBar)
@@ -145,7 +144,6 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
 
         eventContext.upEvent(at: clickPoint, modifiers: .shift, eventCount: 0, in: self.mockLayoutEngine)
         XCTAssertEqual(self.mockLayoutEngine.selectPagesMock.arguments.count, selectCallCount)
-
     }
 
     func test_shiftSelection_clickingOnPagesContentTellsDoesntTellLayoutToSelectOnUpEvent() throws {

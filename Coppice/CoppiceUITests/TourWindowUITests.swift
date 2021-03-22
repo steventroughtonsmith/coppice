@@ -9,7 +9,6 @@
 import XCTest
 
 class TourWindowUITests: BaseUITestCase {
-
     private func openTourWindow() throws {
         let menuBarsQuery = XCUIApplication().menuBars
         menuBarsQuery.menuBarItems["Help"].click()
@@ -63,7 +62,7 @@ class TourWindowUITests: BaseUITestCase {
     func test_canMoveForwardAndBackwardThroughEntireTour() throws {
         try self.openTourWindow()
 
-        let tourWindow = XCUIApplication()/*@START_MENU_TOKEN@*/.windows["TourWindow"]/*[[".windows[\"Tour\"]",".windows[\"TourWindow\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
+        let tourWindow = XCUIApplication()/*@START_MENU_TOKEN@*/ .windows["TourWindow"]/*[[".windows[\"Tour\"]",".windows[\"TourWindow\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
         let continueButton = tourWindow.buttons["TourContinue"]
         continueButton.click()
         XCTAssertTrue(tourWindow.staticTexts["Pages"].waitForExistence(timeout: 2))
@@ -127,7 +126,7 @@ class TourWindowUITests: BaseUITestCase {
         let app = XCUIApplication()
         let menuBarsQuery = app.menuBars
         menuBarsQuery.menuBarItems["File"].click()
-        menuBarsQuery/*@START_MENU_TOKEN@*/.menuItems["New Document"]/*[[".menuBarItems[\"File\"]",".menus.menuItems[\"New Document\"]",".menuItems[\"New Document\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/.click()
+        menuBarsQuery/*@START_MENU_TOKEN@*/ .menuItems["New Document"]/*[[".menuBarItems[\"File\"]",".menus.menuItems[\"New Document\"]",".menuItems[\"New Document\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/ .click()
 
         let documentWindows = app.windows.matching(identifier: "DocumentWindow")
         XCTAssertEqual(documentWindows.count, 1)

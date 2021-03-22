@@ -18,7 +18,7 @@ public class PageHierarchy {
         guard let page = canvasPage.page else {
             return nil
         }
-        let children = canvasPage.children.compactMap { PageHierarchy(canvasPage: $0 )}
+        let children = canvasPage.children.compactMap { PageHierarchy(canvasPage: $0) }
         self.init(id: canvasPage.id, pageID: page.id, frame: canvasPage.frame, children: children)
     }
 
@@ -58,7 +58,7 @@ public class PageHierarchy {
             "id": self.id.stringRepresentation,
             "pageID": self.pageID.stringRepresentation,
             "frame": NSStringFromRect(self.frame),
-            "children": childPlists
+            "children": childPlists,
         ]
     }
 }

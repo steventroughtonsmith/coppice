@@ -10,7 +10,7 @@ import Cocoa
 import Combine
 import CoppiceCore
 
-protocol SourceListView: class {
+protocol SourceListView: AnyObject {
     func reload()
     func reloadSelection()
 }
@@ -79,18 +79,18 @@ class SourceListViewModel: ViewModel {
 
 
     var allNodes: [SourceListNode] {
-        return Array(nodesByItem.values)
+        return Array(self.nodesByItem.values)
     }
 
     private var nodesByItem = [DocumentWindowViewModel.SidebarItem: SourceListNode]()
 
     func setNeedsReload() {
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(reloadSourceListNodes), object: nil)
-        self.perform(#selector(reloadSourceListNodes), with: nil, afterDelay: 0)
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.reloadSourceListNodes), object: nil)
+        self.perform(#selector(self.reloadSourceListNodes), with: nil, afterDelay: 0)
     }
 
     @objc dynamic func reloadSourceListNodes() {
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(reloadSourceListNodes), object: nil)
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.reloadSourceListNodes), object: nil)
         self.addAndRemoveNodes()
         self.updateHierarchy()
         self.updateSelectedNodes(with: self.documentWindowViewModel.sidebarSelection)
@@ -208,7 +208,7 @@ class SourceListViewModel: ViewModel {
             return
         }
         let normalisedItems: [DocumentWindowViewModel.SidebarItem] = items.map {
-            if case .canvas(_) = $0 {
+            if case .canvas = $0 {
                 return .canvases
             }
             return $0
@@ -225,7 +225,8 @@ class SourceListViewModel: ViewModel {
         }
 
         guard let folder = self.modelController.folderCollection.objectWithID(folderID),
-              self.validate(ids: ids, and: folder) else {
+              self.validate(ids: ids, and: folder)
+        else {
                 return (false, node, index)
         }
         return (true, node, index)
@@ -237,8 +238,8 @@ class SourceListViewModel: ViewModel {
         }
 
         guard let folder = self.modelController.folderCollection.objectWithID(folderID),
-              self.validate(ids: ids, and: folder) else
-        {
+              self.validate(ids: ids, and: folder)
+        else {
             return false
         }
 
@@ -290,7 +291,7 @@ class SourceListViewModel: ViewModel {
         guard let sourceListNode = node else {
             return (self.validateFiles(at: urls), self.pagesGroupNode, -1)
         }
-        guard case .folder(_) = sourceListNode.item else {
+        guard case .folder = sourceListNode.item else {
             return (false, node, index)
         }
 
@@ -303,8 +304,8 @@ class SourceListViewModel: ViewModel {
         }
 
         guard let folder = self.modelController.folderCollection.objectWithID(folderID),
-            self.validateFiles(at: urls) else
-        {
+            self.validateFiles(at: urls)
+        else {
             return false
         }
 
@@ -312,7 +313,7 @@ class SourceListViewModel: ViewModel {
             self.modelController.createPages(fromFilesAt: urls, in: folder, below: folder.contents.last)
             return true
         }
-        
+
         let trueIndex = index - 1
         if (trueIndex == -1) {
             self.modelController.createPages(fromFilesAt: urls, in: folder)
@@ -325,7 +326,8 @@ class SourceListViewModel: ViewModel {
     private func validateFiles(at urls: [URL]) -> Bool {
         for url in urls {
             guard let resourceValues = try? url.resourceValues(forKeys: Set([.typeIdentifierKey])),
-                let typeIdentifier = resourceValues.typeIdentifier else {
+                let typeIdentifier = resourceValues.typeIdentifier
+            else {
                     return false
             }
 

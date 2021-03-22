@@ -8,22 +8,22 @@
 
 import AppKit
 
-public extension Canvas {
-    var pasteboardWriter: NSPasteboardWriting {
+extension Canvas {
+    public var pasteboardWriter: NSPasteboardWriting {
         return self.id.pasteboardItem
     }
 }
 
-public extension Page {
-    var pasteboardWriter: NSPasteboardWriting {
+extension Page {
+    public var pasteboardWriter: NSPasteboardWriting {
         let filePromiseProvider = self.content.filePromiseProvider
         filePromiseProvider.additionalItems[ModelID.PasteboardType] = self.id.plistRepresentation
         return filePromiseProvider
     }
 }
 
-public extension Folder {
-    var pasteboardWriter: NSPasteboardWriting {
+extension Folder {
+    public var pasteboardWriter: NSPasteboardWriting {
         return self.id.pasteboardItem
     }
 }
@@ -48,7 +48,7 @@ extension TextPageContent: NSFilePromiseProviderDelegate {
         do {
             try data.write(to: url)
             completionHandler(nil)
-        } catch let error {
+        } catch {
             completionHandler(error)
         }
     }
@@ -74,7 +74,7 @@ extension ImagePageContent: NSFilePromiseProviderDelegate {
         do {
             try data.write(to: url)
             completionHandler(nil)
-        } catch let error {
+        } catch {
             completionHandler(error)
         }
     }
@@ -84,7 +84,7 @@ extension ImagePageContent: NSFilePromiseProviderDelegate {
 public class ExtendableFilePromiseProvider: NSFilePromiseProvider {
     public var additionalItems: [NSPasteboard.PasteboardType: Any] = [:]
 
-    public override func writableTypes(for pasteboard: NSPasteboard) -> [NSPasteboard.PasteboardType] {
+    override public func writableTypes(for pasteboard: NSPasteboard) -> [NSPasteboard.PasteboardType] {
         var types = super.writableTypes(for: pasteboard)
         if self.additionalItems.count > 0 {
             types.append(contentsOf: self.additionalItems.keys)
@@ -92,7 +92,7 @@ public class ExtendableFilePromiseProvider: NSFilePromiseProvider {
         return types
     }
 
-    public override func pasteboardPropertyList(forType type: NSPasteboard.PasteboardType) -> Any? {
+    override public func pasteboardPropertyList(forType type: NSPasteboard.PasteboardType) -> Any? {
         if let item = self.additionalItems[type] {
             return item
         }

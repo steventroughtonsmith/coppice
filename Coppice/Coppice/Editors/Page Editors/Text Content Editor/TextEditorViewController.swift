@@ -84,7 +84,8 @@ class TextEditorViewController: NSViewController, NSMenuItemValidation, NSToolba
         }
 
         guard let rawType = item.representedObject as? String,
-            let type = PageContentType(rawValue: rawType) else {
+            let type = PageContentType(rawValue: rawType)
+        else {
             return
         }
         let selectedRange = self.editingTextView.selectedRange()
@@ -419,7 +420,7 @@ class TextEditorViewController: NSViewController, NSMenuItemValidation, NSToolba
     }
 
     func validateToolbarItem(_ item: NSToolbarItem) -> Bool {
-        if item.action == #selector(linkToPage(_:)) {
+        if item.action == #selector(self.linkToPage(_:)) {
             let enabled = (self.editingTextView.selectedRange().length > 0)
             item.toolTip = enabled ? NSLocalizedString("Link to Page", comment: "Link to Page enabled tooltip")
                                    : NSLocalizedString("Select some text to link it to another Page", comment: "Link to Page disabled tooltip")
@@ -440,13 +441,13 @@ class TextEditorViewController: NSViewController, NSMenuItemValidation, NSToolba
     }
 
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
-        if menuItem.action == #selector(toggleBold(_:)) {
+        if menuItem.action == #selector(self.toggleBold(_:)) {
             return self.validateItem(menuItem, keyPath: \.isBold, trait: .boldFontMask)
         }
-        if menuItem.action == #selector(toggleItalic(_:)) {
+        if menuItem.action == #selector(self.toggleItalic(_:)) {
             return self.validateItem(menuItem, keyPath: \.isItalic, trait: .italicFontMask)
         }
-        if menuItem.action == #selector(linkToPage(_:)) {
+        if menuItem.action == #selector(self.linkToPage(_:)) {
             let enabled = (self.editingTextView.selectedRange().length > 0)
             menuItem.toolTip = enabled ? nil : NSLocalizedString("Select some text to link it to another Page", comment: "Link to Page disabled tooltip")
             return enabled
@@ -509,7 +510,7 @@ class TextEditorViewController: NSViewController, NSMenuItemValidation, NSToolba
     }
 
     private func textNeedsUpating(singleCharacterChange: Bool) {
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(updateText), object: nil)
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.updateText), object: nil)
         //This is to stop recording any edits while undoing/redoing
         guard (self.viewModel.undoManager.isUndoing == false) && (self.viewModel.undoManager.isRedoing == false) && !self.updatingText else {
             return
@@ -518,7 +519,7 @@ class TextEditorViewController: NSViewController, NSMenuItemValidation, NSToolba
         if !singleCharacterChange {
             self.updateText()
         } else {
-            self.perform(#selector(updateText), with: nil, afterDelay: 0.5)
+            self.perform(#selector(self.updateText), with: nil, afterDelay: 0.5)
         }
     }
 
@@ -562,7 +563,7 @@ extension TextEditorViewController: PageContentEditor {
     var inspectors: [Inspector] {
         return [self.textEditorInspectorViewController, self.textEditorParagraphInspectorViewController]
     }
-    
+
     func prepareForDisplay(withSafeAreaInsets safeAreaInsets: NSEdgeInsets) {
         if #available(OSX 10.16, *) {
             var insets = GlobalConstants.textEditorInsets(fullSize: !self.viewModel.isInCanvas)

@@ -15,6 +15,7 @@ class PageArrowView: NSView {
             self.setNeedsDisplay(self.bounds)
         }
     }
+
     var lineColour: NSColor = .black {
         didSet {
             self.setNeedsDisplay(self.bounds)

@@ -6,11 +6,10 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 @testable import CoppiceCore
+import XCTest
 
 class CanvasSelectionEventContextTests: EventContextTestBase {
-
     //MARK: - Draw selection rect
     func test_drawSelectionRect_setsLayoutsSelectionRectOnDraggedEvent() throws {
         let eventContext = CanvasSelectionEventContext()
@@ -270,5 +269,4 @@ class CanvasSelectionEventContextTests: EventContextTestBase {
 //        let finalSelectedPages = self.layoutEngine.selectedPages
 //        XCTAssertTrue(try XCTUnwrap(finalSelectedPages[safe: 0]) === self.page2)
 //    }
-
 }

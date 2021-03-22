@@ -12,6 +12,6 @@ class ImageEditorView: ColourBackgroundView {
     @IBOutlet var imageView: NSImageView?
 
     override func hitTest(_ point: NSPoint) -> NSView? {
-        return self.imageView;
+        return self.imageView
     }
 }

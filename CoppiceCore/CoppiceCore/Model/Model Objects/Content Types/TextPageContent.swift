@@ -22,12 +22,14 @@ public class TextPageContent: NSObject, PageContent {
     public var maintainAspectRatio: Bool {
         return false
     }
+
     public weak var page: Page?
     public private(set) var otherMetadata: [String: Any]?
 
     public init(data: Data? = nil, metadata: [String: Any]? = nil) {
         if let textData = data,
-            let text = try? NSAttributedString(data: textData, options: [:], documentAttributes: nil) {
+            let text = try? NSAttributedString(data: textData, options: [:], documentAttributes: nil)
+        {
             self.text = text
         }
         self.otherMetadata = metadata

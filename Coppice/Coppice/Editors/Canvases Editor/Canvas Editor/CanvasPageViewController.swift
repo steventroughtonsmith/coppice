@@ -10,7 +10,7 @@ import Cocoa
 import Combine
 import CoppiceCore
 
-protocol CanvasPageViewControllerDelegate: class {
+protocol CanvasPageViewControllerDelegate: AnyObject {
     func close(_ page: CanvasPageViewController)
     func toggleSelection(of page: CanvasPageViewController)
 }
@@ -76,9 +76,7 @@ class CanvasPageViewController: NSViewController, CanvasPageView {
         self.setupAccessibility()
     }
 
-    deinit {
-
-    }
+    deinit {}
 
     override func viewWillAppear() {
         super.viewWillAppear()
@@ -114,9 +112,9 @@ class CanvasPageViewController: NSViewController, CanvasPageView {
     func flash() {
         let animation = CAKeyframeAnimation(keyPath: #keyPath(CALayer.transform))
         var transform = CATransform3DIdentity
-        transform = CATransform3DTranslate(transform, self.view.bounds.width/2, self.view.bounds.height/2, 0)
+        transform = CATransform3DTranslate(transform, self.view.bounds.width / 2, self.view.bounds.height / 2, 0)
         transform = CATransform3DScale(transform, 1.1, 1.1, 1)
-        transform = CATransform3DTranslate(transform, -self.view.bounds.width/2, -self.view.bounds.height/2, 0)
+        transform = CATransform3DTranslate(transform, -self.view.bounds.width / 2, -self.view.bounds.height / 2, 0)
 
         animation.values = [CATransform3DIdentity, transform, CATransform3DIdentity]
         animation.keyTimes = [0, 0.3, 1]
@@ -125,7 +123,7 @@ class CanvasPageViewController: NSViewController, CanvasPageView {
 
         self.view.layer?.add(animation, forKey: "flashAnimation")
     }
-    
+
 
     //MARK: - Accessibility
     func setupAccessibility() {

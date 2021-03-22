@@ -9,7 +9,6 @@
 import Cocoa
 
 class PageSelectorWindowController: NSWindowController {
-
     init(viewModel: PageSelectorViewModel) {
         let viewController = PageSelectorViewController(viewModel: viewModel)
         let window = PageSelectorWindow(contentViewController: viewController)
@@ -43,6 +42,4 @@ class PageSelectorWindowController: NSWindowController {
     }
 }
 
-extension PageSelectorWindowController: NSWindowDelegate {
-    
-}
+extension PageSelectorWindowController: NSWindowDelegate {}

@@ -51,7 +51,8 @@ class SearchResultsViewController: NSViewController {
         guard
             let scrollView = self.outlineScrollView,
             let matchesLabel = self.matchesLabel.cell,
-            let clearSearchButton = self.clearSearchButton else {
+            let clearSearchButton = self.clearSearchButton
+        else {
                 return
         }
 

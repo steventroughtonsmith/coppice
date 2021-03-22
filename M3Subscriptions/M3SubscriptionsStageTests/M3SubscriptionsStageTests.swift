@@ -6,8 +6,8 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 @testable import M3Subscriptions
+import XCTest
 
 struct TestData {
     struct Emails {
@@ -57,7 +57,7 @@ struct TestData {
 
 
 class M3SubscriptionsStageTests: XCTestCase {
-    var prepareURL:URL!
+    var prepareURL: URL!
     var licenceURL: URL!
     var controller: SubscriptionController!
 
@@ -258,7 +258,7 @@ class M3SubscriptionsStageTests: XCTestCase {
 
         var actualError: NSError?
         self.performAndWaitFor("Wait for subscription plans") { (expectation) in
-            self.controller.activate(withEmail: TestData.Emails.multipleSubscriptions, password: TestData.password){ result in
+            self.controller.activate(withEmail: TestData.Emails.multipleSubscriptions, password: TestData.password) { result in
                 if case .failure(let error) = result {
                     actualError = error
                 }
@@ -271,8 +271,8 @@ class M3SubscriptionsStageTests: XCTestCase {
 
         let plans = try XCTUnwrap(error.userInfo[SubscriptionErrorFactory.InfoKeys.subscriptionPlans] as? [Subscription])
         XCTAssertEqual(plans.count, 2)
-        XCTAssertTrue(plans.contains(where: { $0.name == TestData.SubscriptionName.appAAnnual && $0.renewalStatus == .failed}))
-        XCTAssertTrue(plans.contains(where: { $0.name == TestData.SubscriptionName.appAMonthly && $0.renewalStatus == .renew}))
+        XCTAssertTrue(plans.contains(where: { $0.name == TestData.SubscriptionName.appAAnnual && $0.renewalStatus == .failed }))
+        XCTAssertTrue(plans.contains(where: { $0.name == TestData.SubscriptionName.appAMonthly && $0.renewalStatus == .renew }))
     }
 
     func test_activate_accountHasTwoActiveSubscriptionsForTheSameAppAndSubscriptionIDProvided() throws {
@@ -330,8 +330,8 @@ class M3SubscriptionsStageTests: XCTestCase {
 
         let devices = try XCTUnwrap(error.userInfo[SubscriptionErrorFactory.InfoKeys.devices] as? [SubscriptionDevice])
         XCTAssertEqual(devices.count, 2)
-        XCTAssertTrue(devices.contains(where: { $0.name == TestData.DeviceNames.tooManyDevices1}))
-        XCTAssertTrue(devices.contains(where: { $0.name == TestData.DeviceNames.tooManyDevices2}))
+        XCTAssertTrue(devices.contains(where: { $0.name == TestData.DeviceNames.tooManyDevices1 }))
+        XCTAssertTrue(devices.contains(where: { $0.name == TestData.DeviceNames.tooManyDevices2 }))
     }
 
     func test_activate_accountHasSubscriptionButIsMaxedOutOnDeviceTypeAndDeactivatingDeviceTokenProvided() throws {
@@ -420,14 +420,14 @@ class M3SubscriptionsStageTests: XCTestCase {
         XCTAssertEqual(subscription.renewalStatus, .renew)
         XCTAssertGreaterThan(subscription.expirationDate.timeIntervalSinceReferenceDate, Date().timeIntervalSinceReferenceDate)
     }
-    
+
 
     //MARK: - Check
     func test_check_noMatchingTokenInAccount() throws {
         let storedPayload: [String: Any] = [
             "response": "active",
             "token": "foobarbaz",
-            "subscription": ["name": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"]
+            "subscription": ["name": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"],
         ]
         let storedSignature = "Xt5EWbwKITWOegS+Sfqsv1EdgZ//9fkL1+8WXaEWbWjL6LzrpOShF0CBxVr/A0FLNqFXacnHmwFKANR6XiPV8q/t8ZnRvWoEaP4nGmheKFfw+uY6myQUZY4wYg7R2Yc7Zr7q+ushJ8WRhL0pNnie8tq9UXTJp+EwTjRDLU+BsJvI5ccvGp34MJ10BVDKo+/cjRche8gdhBM/jIppaCBT5fOZMyFl20K9bzSQFIpYROsK0SUIacvq3SZB3RHOFyuYoqIzl7C35pb14XpS4L0w+236HAr0DPuH0fca9+wp4cmUj0FdZ+vOnVt3CIW6z3qviI6OGtWrUUJVgeKKNKzfeQ=="
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
@@ -451,14 +451,14 @@ class M3SubscriptionsStageTests: XCTestCase {
         let storedPayload: [String: Any] = [
             "response": "active",
             "token": TestData.Tokens.basic,
-            "subscription": ["name": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"]
+            "subscription": ["name": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"],
         ]
         let storedSignature = "jmYgnt5w2lDqcWbQsgTtXmE6BXNcfQV+lTBrtvYRVpPanOlZ3/yse6WToa4lx/xO0/f0kpx8rsXcm7ir9RAgY4sZbh8kAhhEsj+JLZ5dB2lx2TvfuMXO0bcbuIIBpSEDVQwD4o8pMCtlCJ2EKGDxZktTEnsCS6uVQxH7Hq2geaSmkdlyz4XYC/s2zY+OFl/tvdOLYazy057PCZ8odL6c4dIUcao1QejbvXEOfILrVGQMrhtm4lSRaY0LWAyMIbpaJlS3MYzmFoV3BViBb8yX1tUsokcDZDfqTCWxsFwxxwm6V18waLrZM2yep3lK+l2bfNyVPxgnPQosvgbAWR6t6g=="
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
 
         var actualError: NSError?
         self.performAndWaitFor("Wait for error", timeout: 2) { (expectation) in
-            self.controller.checkSubscription(){ result in
+            self.controller.checkSubscription() { result in
                 if case .failure(let error) = result {
                     actualError = error
                 }
@@ -476,7 +476,7 @@ class M3SubscriptionsStageTests: XCTestCase {
         let storedPayload: [String: Any] = [
             "response": "active",
             "token": TestData.Tokens.basicExpired,
-            "subscription": ["name": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"]
+            "subscription": ["name": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"],
         ]
         let storedSignature = "e8gCPoA00KISi07ByKTa8sze80oZJzEP4RmfF8gMi2OsLon/4dus44dOIaFz6NwCyvvd/JG+aZnrA7pYJmpTIYzKwudcb6Ha3qbe0rFwch64ndcUqR3HleRRdmgF459OHgaeXwvCeOxVX+OcQzpai3z3YI1lrtSIPntakIXan/q+TNDTBeS9sF+zUq1qsZCn77AJJ2qK4g+HX2niH97FlMk8eLfcjuve6RMLlK0fFQf8W5J9a4GlVnsNm+jzmeNEVMr4yXb8cTP/Y974tjFyYqx/NoYQcNSwDh1YkndWSWtNZSXsjhJp9cVZr+UCIDjJrkNQW6TdC2rHUbZX2j3zHQ=="
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
@@ -508,7 +508,7 @@ class M3SubscriptionsStageTests: XCTestCase {
         let storedPayload: [String: Any] = [
             "response": "active",
             "token": TestData.Tokens.basic,
-            "subscription": ["name": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"]
+            "subscription": ["name": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"],
         ]
         let storedSignature = "jmYgnt5w2lDqcWbQsgTtXmE6BXNcfQV+lTBrtvYRVpPanOlZ3/yse6WToa4lx/xO0/f0kpx8rsXcm7ir9RAgY4sZbh8kAhhEsj+JLZ5dB2lx2TvfuMXO0bcbuIIBpSEDVQwD4o8pMCtlCJ2EKGDxZktTEnsCS6uVQxH7Hq2geaSmkdlyz4XYC/s2zY+OFl/tvdOLYazy057PCZ8odL6c4dIUcao1QejbvXEOfILrVGQMrhtm4lSRaY0LWAyMIbpaJlS3MYzmFoV3BViBb8yX1tUsokcDZDfqTCWxsFwxxwm6V18waLrZM2yep3lK+l2bfNyVPxgnPQosvgbAWR6t6g=="
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
@@ -541,7 +541,7 @@ class M3SubscriptionsStageTests: XCTestCase {
         let storedPayload: [String: Any] = [
             "response": "active",
             "token": "foobarbaz",
-            "subscription": ["name": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"]
+            "subscription": ["name": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"],
         ]
         let storedSignature = "Xt5EWbwKITWOegS+Sfqsv1EdgZ//9fkL1+8WXaEWbWjL6LzrpOShF0CBxVr/A0FLNqFXacnHmwFKANR6XiPV8q/t8ZnRvWoEaP4nGmheKFfw+uY6myQUZY4wYg7R2Yc7Zr7q+ushJ8WRhL0pNnie8tq9UXTJp+EwTjRDLU+BsJvI5ccvGp34MJ10BVDKo+/cjRche8gdhBM/jIppaCBT5fOZMyFl20K9bzSQFIpYROsK0SUIacvq3SZB3RHOFyuYoqIzl7C35pb14XpS4L0w+236HAr0DPuH0fca9+wp4cmUj0FdZ+vOnVt3CIW6z3qviI6OGtWrUUJVgeKKNKzfeQ=="
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
@@ -565,7 +565,7 @@ class M3SubscriptionsStageTests: XCTestCase {
         let storedPayload: [String: Any] = [
             "response": "active",
             "token": TestData.Tokens.basic,
-            "subscription": ["name": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"]
+            "subscription": ["name": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"],
         ]
         let storedSignature = "jmYgnt5w2lDqcWbQsgTtXmE6BXNcfQV+lTBrtvYRVpPanOlZ3/yse6WToa4lx/xO0/f0kpx8rsXcm7ir9RAgY4sZbh8kAhhEsj+JLZ5dB2lx2TvfuMXO0bcbuIIBpSEDVQwD4o8pMCtlCJ2EKGDxZktTEnsCS6uVQxH7Hq2geaSmkdlyz4XYC/s2zY+OFl/tvdOLYazy057PCZ8odL6c4dIUcao1QejbvXEOfILrVGQMrhtm4lSRaY0LWAyMIbpaJlS3MYzmFoV3BViBb8yX1tUsokcDZDfqTCWxsFwxxwm6V18waLrZM2yep3lK+l2bfNyVPxgnPQosvgbAWR6t6g=="
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
@@ -588,7 +588,7 @@ class M3SubscriptionsStageTests: XCTestCase {
         let storedPayload: [String: Any] = [
             "response": "active",
             "token": TestData.Tokens.basic,
-            "subscription": ["name": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"]
+            "subscription": ["name": TestData.SubscriptionName.appBAnnual, "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"],
         ]
 
         let storedSignature = "jmYgnt5w2lDqcWbQsgTtXmE6BXNcfQV+lTBrtvYRVpPanOlZ3/yse6WToa4lx/xO0/f0kpx8rsXcm7ir9RAgY4sZbh8kAhhEsj+JLZ5dB2lx2TvfuMXO0bcbuIIBpSEDVQwD4o8pMCtlCJ2EKGDxZktTEnsCS6uVQxH7Hq2geaSmkdlyz4XYC/s2zY+OFl/tvdOLYazy057PCZ8odL6c4dIUcao1QejbvXEOfILrVGQMrhtm4lSRaY0LWAyMIbpaJlS3MYzmFoV3BViBb8yX1tUsokcDZDfqTCWxsFwxxwm6V18waLrZM2yep3lK+l2bfNyVPxgnPQosvgbAWR6t6g=="

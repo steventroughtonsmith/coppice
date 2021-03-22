@@ -6,14 +6,12 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import Foundation
-import CoppiceCore
 import Combine
+import CoppiceCore
+import Foundation
 import M3Subscriptions
 
-protocol CanvasInspectorView: class {
-
-}
+protocol CanvasInspectorView: AnyObject {}
 
 
 class CanvasInspectorViewModel: BaseInspectorViewModel {
@@ -71,7 +69,7 @@ class CanvasInspectorViewModel: BaseInspectorViewModel {
 
     //MARK: - Pro
     @objc dynamic var isProEnabled = false
-    
+
     var activationObserver: AnyCancellable?
     private func setupProObservation() {
         self.activationObserver = CoppiceSubscriptionManager.shared.$activationResponse

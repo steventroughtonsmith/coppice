@@ -45,7 +45,7 @@ class InspectorContainerViewController: NSViewController, SplitViewContainable {
                 self.stackView.addArrangedSubview($0.view)
                 let constraints = [
                     $0.view.leadingAnchor.constraint(equalTo: self.stackView.leadingAnchor),
-                    $0.view.trailingAnchor.constraint(equalTo: self.stackView.trailingAnchor)
+                    $0.view.trailingAnchor.constraint(equalTo: self.stackView.trailingAnchor),
                 ]
                 NSLayoutConstraint.activate(constraints)
 
@@ -68,5 +68,4 @@ class InspectorContainerViewController: NSViewController, SplitViewContainable {
     }
 }
 
-extension InspectorContainerViewController: InspectorContainerView {
-}
+extension InspectorContainerViewController: InspectorContainerView {}

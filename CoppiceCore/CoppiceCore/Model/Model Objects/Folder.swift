@@ -9,7 +9,7 @@
 import Foundation
 
 
-public final class Folder: NSObject, CollectableModelObject, FolderContainable {
+final public class Folder: NSObject, CollectableModelObject, FolderContainable {
     public static var modelType: ModelType = ModelType(rawValue: "Folder")!
     public static let rootFolderTitle = "__ROOT__FOLDER__"
 
@@ -34,6 +34,7 @@ public final class Folder: NSObject, CollectableModelObject, FolderContainable {
     public weak var containingFolder: Folder? {
         didSet { self.didChange(\.containingFolder, oldValue: oldValue) }
     }
+
     public var contents: [FolderContainable] = [] {
         didSet { self.didChange(\.contents, oldValue: oldValue) }
     }
@@ -42,7 +43,7 @@ public final class Folder: NSObject, CollectableModelObject, FolderContainable {
         return "0Folder"
     }
 
-    public private(set) var otherProperties = [String : Any]()
+    public private(set) var otherProperties = [String: Any]()
 
     public func insert(_ objects: [FolderContainable], below item: FolderContainable? = nil) {
         self.modelController?.pushChangeGroup()
@@ -56,7 +57,7 @@ public final class Folder: NSObject, CollectableModelObject, FolderContainable {
 
         for object in objects {
             if object.containingFolder == self {
-                if let index = contents.firstIndex(where: { $0?.id == object.id}) {
+                if let index = contents.firstIndex(where: { $0?.id == object.id }) {
                     contents[index] = nil
                 }
             } else {
@@ -77,7 +78,7 @@ public final class Folder: NSObject, CollectableModelObject, FolderContainable {
 
     public func remove(_ objects: [FolderContainable]) {
         for object in objects {
-            if let index = self.contents.firstIndex(where: {$0.id == object.id}) {
+            if let index = self.contents.firstIndex(where: { $0.id == object.id }) {
                 self.contents.remove(at: index)
             }
         }
@@ -122,8 +123,8 @@ public final class Folder: NSObject, CollectableModelObject, FolderContainable {
         case contents
         case dateCreated
     }
-    
-    public var plistRepresentation: [String : Any] {
+
+    public var plistRepresentation: [String: Any] {
         var plist = self.otherProperties
 
         plist[PlistKeys.id.rawValue] = self.id.stringRepresentation
@@ -134,7 +135,7 @@ public final class Folder: NSObject, CollectableModelObject, FolderContainable {
         return plist
     }
 
-    public func update(fromPlistRepresentation plist: [String : Any]) throws {
+    public func update(fromPlistRepresentation plist: [String: Any]) throws {
         guard self.id.stringRepresentation == (plist[PlistKeys.id.rawValue] as? String) else {
             throw ModelObjectUpdateErrors.idsDontMatch
         }

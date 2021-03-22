@@ -6,11 +6,11 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import Foundation
 import Combine
 import CoppiceCore
+import Foundation
 
-protocol CanvasesView: class {
+protocol CanvasesView: AnyObject {
     func currentCanvasChanged()
     func canvasListStateChanged()
 }

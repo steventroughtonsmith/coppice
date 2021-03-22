@@ -8,15 +8,15 @@
 
 import Foundation
 
-public extension Array {
-    subscript(safe index: Self.Index) -> Element? {
+extension Array {
+    public subscript(safe index: Self.Index) -> Element? {
         guard (index < self.count) else {
             return nil
         }
         return self[index]
     }
 
-    func indexed<Key>(by keyPath: KeyPath<Element, Key>) -> [Key: Element] {
+    public func indexed<Key>(by keyPath: KeyPath<Element, Key>) -> [Key: Element] {
         var dictionary = [Key: Element]()
         for item in self {
             dictionary[item[keyPath: keyPath]] = item
@@ -24,7 +24,7 @@ public extension Array {
         return dictionary
     }
 
-    subscript(indexSet: IndexSet) -> [Element] {
+    public subscript(indexSet: IndexSet) -> [Element] {
         var elements = [Element]()
         for index in indexSet {
             guard (index >= 0) && (index < self.count) else {

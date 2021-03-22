@@ -8,7 +8,7 @@
 
 import Cocoa
 
-@objc protocol FileDropViewDelegate: class {
+@objc protocol FileDropViewDelegate: AnyObject {
     func validateDrop(forFileURL url: URL) -> Bool
     func acceptDrop(forFileURL url: URL) -> Bool
 }
@@ -30,7 +30,7 @@ class FileDropView: NSView {
     private func sharedSetup() {
         self.registerForDraggedTypes([.fileURL])
     }
-    
+
 
     override var acceptsFirstResponder: Bool {
         return true

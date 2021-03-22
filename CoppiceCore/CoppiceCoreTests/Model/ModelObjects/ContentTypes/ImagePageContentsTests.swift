@@ -6,11 +6,10 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 @testable import CoppiceCore
+import XCTest
 
 class ImagePageContentsTests: XCTestCase {
-
     var modelController: CoppiceModelController!
 
     override func setUp() {

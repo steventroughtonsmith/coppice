@@ -82,7 +82,7 @@ public struct Symbols {
         public static func folder(_ size: Size) -> String {
             return "Folder\(size.suffix)"
         }
-        
+
         public static func canvases(_ size: Size) -> String {
             return "Canvases\(size.suffix)"
         }
@@ -96,6 +96,7 @@ public struct Symbols {
             }
             return "NSActionTemplate"
         }
+
         public static let link = "LinkNew"
         public static let plus = "plus"
         public static var newCanvas: String {
@@ -104,18 +105,21 @@ public struct Symbols {
             }
             return "NewCanvas"
         }
+
         public static var leftSidebar: String {
             if ProcessInfo.processInfo.operatingSystemVersion.majorVersion == 10 {
                 return "ToggleSidebar10"
             }
             return "ToggleSidebar"
         }
+
         public static var rightSidebar: String {
             if ProcessInfo.processInfo.operatingSystemVersion.majorVersion == 10 {
                 return "ToggleInspectors10"
             }
             return "ToggleInspectors"
         }
+
         public static let canvasListToggle = "ToggleCanvasList"
     }
 
@@ -123,6 +127,6 @@ public struct Symbols {
         if #available(OSX 10.16, *) {
             return "xmark.circle.fill"
         }
-        return "NSStopProgressFreestandingTemplate";
+        return "NSStopProgressFreestandingTemplate"
     }
 }

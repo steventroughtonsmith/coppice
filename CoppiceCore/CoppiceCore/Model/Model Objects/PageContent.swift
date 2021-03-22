@@ -64,7 +64,6 @@ public enum PageContentType: String, Equatable, CaseIterable {
         switch self {
         case .text, .image:
             return "N"
-
         }
     }
 
@@ -78,7 +77,7 @@ public enum PageContentType: String, Equatable, CaseIterable {
     }
 }
 
-public protocol PageContent: class {
+public protocol PageContent: AnyObject {
     var contentType: PageContentType { get }
     var page: Page? { get set }
     var modelFile: ModelFile { get }
@@ -94,8 +93,8 @@ public protocol PageContent: class {
     var filePromiseProvider: ExtendableFilePromiseProvider { get }
 }
 
-public extension PageContent {
-    func didChange<T>(_ keyPath: ReferenceWritableKeyPath<Self,T>, oldValue: T) {
+extension PageContent {
+    public func didChange<T>(_ keyPath: ReferenceWritableKeyPath<Self, T>, oldValue: T) {
         guard let page = self.page else {
             return
         }
@@ -107,7 +106,7 @@ public extension PageContent {
         }
     }
 
-    func firstRangeOf(_ searchTerm: String) -> NSRange {
+    public func firstRangeOf(_ searchTerm: String) -> NSRange {
         return NSRange(location: NSNotFound, length: 0)
     }
 }

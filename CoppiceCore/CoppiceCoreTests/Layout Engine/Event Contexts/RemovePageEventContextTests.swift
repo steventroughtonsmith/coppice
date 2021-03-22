@@ -6,9 +6,9 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import XCTest
-@testable import CoppiceCore
 import Carbon.HIToolbox
+@testable import CoppiceCore
+import XCTest
 
 class RemovePageEventContextTests: XCTestCase {
     func test_keyUp_pressingBackspaceWithNothingSelectedDoesNothing() {

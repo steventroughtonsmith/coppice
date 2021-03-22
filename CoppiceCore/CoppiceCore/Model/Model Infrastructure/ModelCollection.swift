@@ -16,7 +16,6 @@ public enum ModelChangeType: Equatable {
 
 
 public class ModelCollection<ModelType: CollectableModelObject> {
-
     public struct Observation {
         fileprivate let id = UUID()
         fileprivate let filterIDs: [ModelID]?
@@ -24,7 +23,7 @@ public class ModelCollection<ModelType: CollectableModelObject> {
 
         fileprivate func notifyOfChange(_ change: Change) {
             if ((self.filterIDs == nil) || (self.filterIDs?.contains(change.object.id) == true)) {
-                changeHandler(change)
+                self.changeHandler(change)
             }
         }
     }
@@ -61,7 +60,7 @@ public class ModelCollection<ModelType: CollectableModelObject> {
 
     class ChangeGroup {
         private(set) var changes = [ModelType: Change]()
-        private func change(for object: ModelType) -> Change{
+        private func change(for object: ModelType) -> Change {
             if let change = self.changes[object] {
                 return change
             }
@@ -124,7 +123,7 @@ public class ModelCollection<ModelType: CollectableModelObject> {
     }
 
     public func delete(_ object: ModelType) {
-        if let index = self.all.firstIndex(where: {$0.id == object.id}) {
+        if let index = self.all.firstIndex(where: { $0.id == object.id }) {
             self.registerUndoAction() { collection in
                 collection.insert(object)
             }

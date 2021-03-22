@@ -18,11 +18,11 @@ class BaseInspectorViewController: NSViewController, Inspector {
         self.viewModel = viewModel
         super.init(nibName: "BaseInspectorViewController", bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         preconditionFailure("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLayout() {
         super.viewDidLayout()
         self.updateTrackingArea()
@@ -48,15 +48,15 @@ class BaseInspectorViewController: NSViewController, Inspector {
 
     private func loadContentView() {
         guard let nibName = self.contentViewNibName,
-              let nib = NSNib(nibNamed: nibName, bundle: nil) else
-        {
+              let nib = NSNib(nibNamed: nibName, bundle: nil)
+        else {
             return
         }
 
         var topLevelObjects: NSArray? = nil
         nib.instantiate(withOwner: self, topLevelObjects: &topLevelObjects)
 
-        guard let contentView = topLevelObjects?.first(where: { $0 is NSView}) as? NSView else {
+        guard let contentView = topLevelObjects?.first(where: { $0 is NSView }) as? NSView else {
             return
         }
         self.contentContainer.addSubview(contentView, withInsets: NSEdgeInsets(top: 0, left: 0, bottom: 20, right: 0))

@@ -14,6 +14,7 @@ struct Alert {
         case cancel
         case other
     }
+
     let title: String
     let message: String
     let buttons: [(ButtonType, String)]

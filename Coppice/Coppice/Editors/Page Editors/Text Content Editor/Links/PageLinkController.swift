@@ -7,8 +7,8 @@
 //
 
 import Cocoa
-import CoppiceCore
 import Combine
+import CoppiceCore
 import M3Subscriptions
 
 class PageLinkController {

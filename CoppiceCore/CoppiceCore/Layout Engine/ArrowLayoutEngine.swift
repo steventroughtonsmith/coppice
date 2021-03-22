@@ -18,7 +18,7 @@ public class ArrowLayoutEngine {
 
     public func calculateArrows() -> [LayoutEngineArrow] {
         var arrows = [LayoutEngineArrow]()
-        for page in pages {
+        for page in self.pages {
             guard page.parent == nil else {
                 continue
             }

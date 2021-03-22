@@ -17,7 +17,8 @@ public struct SubscriptionDevice: Equatable {
         guard
             let deactivationToken = payload["deactivationToken"] as? String,
             let name = payload["name"] as? String,
-            let activationDateString = payload["activationDate"] as? String else {
+            let activationDateString = payload["activationDate"] as? String
+        else {
                 return nil
         }
 

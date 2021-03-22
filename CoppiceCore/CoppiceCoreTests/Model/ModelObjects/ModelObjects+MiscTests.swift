@@ -5,11 +5,10 @@
 //  Created by Martin Pilkington on 23/11/2020.
 //
 
-import XCTest
 @testable import CoppiceCore
+import XCTest
 
 class ModelObjects_MiscTests: XCTestCase {
-
     func test_modelCollectionCanvas_sortedCanvases_returnsCanvasesInAscendingSortOrder() throws {
         let modelController = CoppiceModelController(undoManager: UndoManager())
 
@@ -25,5 +24,4 @@ class ModelObjects_MiscTests: XCTestCase {
 
         XCTAssertEqual(modelController.collection(for: Canvas.self).sortedCanvases, [canvas4, canvas1, canvas3, canvas2])
     }
-
 }

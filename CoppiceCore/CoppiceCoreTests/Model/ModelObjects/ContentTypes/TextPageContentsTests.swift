@@ -6,8 +6,8 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 @testable import CoppiceCore
+import XCTest
 
 class TextPageContentsTests: XCTestCase {
     var modelController: CoppiceModelController!
@@ -71,7 +71,7 @@ class TextPageContentsTests: XCTestCase {
 
     func test_contentSize_contentWidthIsNoLargerThan1_5TimesTheStandardWidthPlusInsets() throws {
         var string = "a b c d e"
-        (0..<500).forEach { _ in string = "\(string) a b c d e"}
+        (0..<500).forEach { _ in string = "\(string) a b c d e" }
         self.content.text = NSAttributedString(string: string)
         let size = try XCTUnwrap(self.content.initialContentSize)
         let expectedMax = (Page.standardSize.width * 1.5) + GlobalConstants.textEditorInsets().horizontalInsets + 10
@@ -80,7 +80,7 @@ class TextPageContentsTests: XCTestCase {
 
     func test_contentSize_contentHeightIsNoLargerThan3TimesTheStandardHeightPlusInsets() throws {
         var string = "a b c d e"
-        (0..<500).forEach { _ in string = "\(string) a b c d e"}
+        (0..<500).forEach { _ in string = "\(string) a b c d e" }
         self.content.text = NSAttributedString(string: string)
         let size = try XCTUnwrap(self.content.initialContentSize)
         let expectedMax = (Page.standardSize.height * 3) + GlobalConstants.textEditorInsets().verticalInsets + 10

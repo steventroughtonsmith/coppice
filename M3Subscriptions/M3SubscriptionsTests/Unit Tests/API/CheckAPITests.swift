@@ -6,8 +6,8 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 @testable import M3Subscriptions
+import XCTest
 
 class CheckAPITests: APITestCase {
     func test_run_calling_requestsCheckAPIEndpoint() throws {
@@ -99,7 +99,8 @@ class CheckAPITests: APITestCase {
 
         guard
             case .failure(let failure) = try XCTUnwrap(actualResult),
-            case .generic(let error) = failure else {
+            case .generic(let error) = failure
+        else {
                 XCTFail("Result is not a generic error")
                 return
         }
@@ -129,7 +130,8 @@ class CheckAPITests: APITestCase {
 
         guard
             case .failure(let failure) = try XCTUnwrap(actualResult),
-            case .noDeviceFound = failure else {
+            case .noDeviceFound = failure
+        else {
                 XCTFail("Result is not a noDeviceFound failure")
                 return
         }
@@ -157,7 +159,8 @@ class CheckAPITests: APITestCase {
 
         guard
             case .failure(let failure) = try XCTUnwrap(actualResult),
-            case .noSubscriptionFound = failure else {
+            case .noSubscriptionFound = failure
+        else {
                 XCTFail("Result is not a noSubscriptionFound failure")
                 return
         }
@@ -171,10 +174,10 @@ class CheckAPITests: APITestCase {
             "subscription": [
                 "name": "Plan C",
                 "expirationDate": "2020-01-02T03:04:05Z",
-                "renewalStatus": renewalStatus.rawValue
+                "renewalStatus": renewalStatus.rawValue,
             ],
             "device": [
-                "name": "Bob's Mac Pro"
+                "name": "Bob's Mac Pro",
             ],
         ]
         if (!isExpired) {

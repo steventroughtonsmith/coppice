@@ -6,16 +6,15 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import Foundation
 @testable import Coppice
 @testable import CoppiceCore
+import Foundation
 
 class TestModelObject: ModelObject {
-    var plistRepresentation = [String : Any]()
-    var otherProperties = [String : Any]()
+    var plistRepresentation = [String: Any]()
+    var otherProperties = [String: Any]()
 
-    func update(fromPlistRepresentation plist: [String : Any]) {
-    }
+    func update(fromPlistRepresentation plist: [String: Any]) {}
 
     static var modelType: ModelType = ModelType("Test")!
 
@@ -23,17 +22,14 @@ class TestModelObject: ModelObject {
 
     var modelController: ModelController?
 
-    required init() {
-        
-    }
+    required init() {}
 }
 
 final class TestCollectableModelObject: NSObject, CollectableModelObject {
-    var plistRepresentation = [String : Any]()
-    var otherProperties = [String : Any]()
+    var plistRepresentation = [String: Any]()
+    var otherProperties = [String: Any]()
 
-    func update(fromPlistRepresentation plist: [String : Any]) {
-    }
+    func update(fromPlistRepresentation plist: [String: Any]) {}
 
     var collection: ModelCollection<TestCollectableModelObject>?
 
@@ -74,11 +70,10 @@ final class TestCollectableModelObject: NSObject, CollectableModelObject {
 }
 
 final class RelationshipModelObject: NSObject, CollectableModelObject {
-    var plistRepresentation = [String : Any]()
-    var otherProperties = [String : Any]()
+    var plistRepresentation = [String: Any]()
+    var otherProperties = [String: Any]()
 
-    func update(fromPlistRepresentation plist: [String : Any]) {
-    }
+    func update(fromPlistRepresentation plist: [String: Any]) {}
 
     var collection: ModelCollection<RelationshipModelObject>?
 
@@ -95,11 +90,9 @@ class TestModelController: NSObject, ModelController {
     var settings = ModelSettings()
 
     var undoManager = UndoManager()
-    var allCollections = [ModelType : Any]()
+    var allCollections = [ModelType: Any]()
 
     func object(with id: ModelID) -> ModelObject? {
         return self.collection(for: TestCollectableModelObject.self).objectWithID(id)
     }
-
-
 }

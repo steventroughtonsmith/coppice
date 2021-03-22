@@ -6,13 +6,12 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 import Combine
 @testable import Coppice
 @testable import CoppiceCore
+import XCTest
 
 class TextEditorFontInspectorViewModelTests: XCTestCase {
-
     var editor: MockTextEditorAttributeEditor!
     var modelController: CoppiceModelController!
     var viewModel: TextEditorFontInspectorViewModel!

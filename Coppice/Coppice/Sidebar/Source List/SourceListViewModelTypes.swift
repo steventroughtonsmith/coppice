@@ -19,7 +19,7 @@ class SourceListNodeCollection: NSObject {
     private(set) var nodes: [SourceListNode] = []
 
     var count: Int {
-        return nodes.count
+        return self.nodes.count
     }
 
     func add(_ node: SourceListNode) {
@@ -27,13 +27,13 @@ class SourceListNodeCollection: NSObject {
             self.nodesShareParent = (lastNode.parent === node.parent)
         }
 
-        nodes.append(node)
+        self.nodes.append(node)
         switch node.item {
-        case .canvases, .canvas(_):
+        case .canvases, .canvas:
             self.containsCanvases = true
-        case .page(_):
+        case .page:
             self.containsPages = true
-        case .folder(_):
+        case .folder:
             self.containsFolders = true
         }
     }
@@ -78,8 +78,9 @@ class SourceListNode: NSObject {
 
     @objc dynamic var title: String {
         get { return "Source List Item" }
-        set { }
+        set {}
     }
+
     @objc dynamic var image: NSImage? {
         return nil
     }
@@ -163,7 +164,7 @@ class CanvasesSourceListNode: SourceListNode {
 
     @objc dynamic override var title: String {
         get { return NSLocalizedString("Canvases", comment: "Canvases source list row title") }
-        set { }
+        set {}
     }
 
     @objc dynamic override var image: NSImage? {
@@ -181,7 +182,7 @@ class PagesGroupSourceListNode: SourceListNode {
 
     @objc dynamic override var title: String {
         get { return NSLocalizedString("Pages", comment: "Pages group source list row title") }
-        set { }
+        set {}
     }
 }
 

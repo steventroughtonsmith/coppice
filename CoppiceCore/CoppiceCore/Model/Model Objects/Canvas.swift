@@ -8,7 +8,7 @@
 
 import Cocoa
 
-public final class Canvas: NSObject, CollectableModelObject {
+final public class Canvas: NSObject, CollectableModelObject {
     public enum Theme: String, CaseIterable {
         case auto
         case dark
@@ -34,11 +34,12 @@ public final class Canvas: NSObject, CollectableModelObject {
         self.sortIndex = self.collection?.all.count ?? 0
     }
 
-    
+
     //MARK: - Attributes
     @objc dynamic public var title: String = "New Canvas" {
         didSet { self.didChange(\.title, oldValue: oldValue) }
     }
+
     public var dateCreated = Date()
     public var dateModified = Date()
     @objc dynamic public var sortIndex = 0 {
@@ -46,7 +47,7 @@ public final class Canvas: NSObject, CollectableModelObject {
     }
 
     public var theme: Theme = Canvas.defaultTheme {
-        didSet { self.didChange(\.theme, oldValue: oldValue)}
+        didSet { self.didChange(\.theme, oldValue: oldValue) }
     }
 
     public var viewPort: CGRect?
@@ -55,8 +56,7 @@ public final class Canvas: NSObject, CollectableModelObject {
         didSet {
             if self.zoomFactor > 1 {
                 self.zoomFactor = 1
-            }
-            else if self.zoomFactor < 0.25 {
+            } else if self.zoomFactor < 0.25 {
                 self.zoomFactor = 0.25
             }
         }
@@ -68,7 +68,7 @@ public final class Canvas: NSObject, CollectableModelObject {
 
     public var closedPageHierarchies: [ModelID: [ModelID: PageHierarchy]] = [:]
 
-    public private(set) var otherProperties = [String : Any]()
+    public private(set) var otherProperties = [String: Any]()
 
 
     //MARK: - Relationships
@@ -99,7 +99,7 @@ public final class Canvas: NSObject, CollectableModelObject {
         case closedPageHierarchies
     }
 
-    public var plistRepresentation: [String : Any] {
+    public var plistRepresentation: [String: Any] {
         var plist = self.otherProperties
 
             plist[PlistKeys.id.rawValue] = self.id.stringRepresentation
@@ -117,7 +117,7 @@ public final class Canvas: NSObject, CollectableModelObject {
             plist[PlistKeys.viewPort.rawValue] = NSStringFromRect(viewPort)
         }
 
-        
+
         let plistableHierarchy = Dictionary(uniqueKeysWithValues: self.closedPageHierarchies.map { key, value in
             return (key.stringRepresentation, Dictionary(uniqueKeysWithValues: value.map { key, value in
                 return (key.stringRepresentation, value.plistRepresentation)
@@ -128,7 +128,7 @@ public final class Canvas: NSObject, CollectableModelObject {
         return plist
     }
 
-    public func update(fromPlistRepresentation plist: [String : Any]) throws {
+    public func update(fromPlistRepresentation plist: [String: Any]) throws {
         guard self.id.stringRepresentation == (plist["id"] as? String) else {
             throw ModelObjectUpdateErrors.idsDontMatch
         }

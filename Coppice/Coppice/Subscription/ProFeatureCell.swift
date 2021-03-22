@@ -13,5 +13,4 @@ class ProFeatureCell: NSView, NIBInstantiable {
 
     @IBOutlet weak var titleField: NSTextField!
     @IBOutlet weak var bodyField: NSTextField!
-
 }

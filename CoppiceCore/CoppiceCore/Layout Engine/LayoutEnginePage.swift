@@ -56,10 +56,11 @@ public class LayoutEnginePage: Equatable {
     }
 
     public init(id: UUID,
-         contentFrame: CGRect,
-         maintainAspectRatio: Bool = false,
-         minimumContentSize: CGSize = Page.minimumSize,
-         zIndex: Int = -1) {
+                contentFrame: CGRect,
+                maintainAspectRatio: Bool = false,
+                minimumContentSize: CGSize = Page.minimumSize,
+                zIndex: Int = -1)
+    {
         self.id = id
         self.contentFrame = contentFrame
         self.maintainAspectRatio = maintainAspectRatio
@@ -92,6 +93,7 @@ public class LayoutEnginePage: Equatable {
             self.recalculateEdgeFromParent()
         }
     }
+
     public private(set) var edgeFromParent: Edge?
 
     public private(set) var children = [LayoutEnginePage]()
@@ -213,7 +215,6 @@ public class LayoutEnginePage: Equatable {
             return canvasFrame.grow(by: margins)
         }
         set {
-
             let pageOrigin = self.layoutEngine?.convertPointToPageSpace(newValue.origin) ?? newValue.origin
             let contentFrame = CGRect(origin: pageOrigin, size: newValue.size)
             guard let config = self.configuration else {
@@ -307,16 +308,14 @@ public class LayoutEnginePage: Equatable {
         if (component.isCorner) {
             width = configuration.page.cornerResizeHandleSize
             height = configuration.page.cornerResizeHandleSize
-        }
-        else if (component == .resizeRight || component == .resizeLeft) {
+        } else if (component == .resizeRight || component == .resizeLeft) {
             guard self.maintainAspectRatio == false else {
                 return .zero
             }
             y = configuration.page.cornerResizeHandleSize
             width = configuration.page.edgeResizeHandleSize
             height = layoutSize.height - (2 * configuration.page.cornerResizeHandleSize)
-        }
-        else if (component == .resizeTop || component == .resizeBottom) {
+        } else if (component == .resizeTop || component == .resizeBottom) {
             guard self.maintainAspectRatio == false else {
                 return .zero
             }

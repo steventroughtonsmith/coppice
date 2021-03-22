@@ -124,6 +124,4 @@ public class SubscriptionController {
         response.write(to: self.licenceURL)
         completion(.success(response))
     }
-
-
 }

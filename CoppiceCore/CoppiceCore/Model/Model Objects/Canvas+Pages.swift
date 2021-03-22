@@ -68,7 +68,8 @@ extension Canvas {
 
     private func open(_ hierarchy: PageHierarchy, linkedFrom sourcePage: CanvasPage) -> [CanvasPage] {
         guard let canvasPageCollection = self.modelController?.collection(for: CanvasPage.self),
-            let pageCollection = self.modelController?.collection(for: Page.self) else {
+            let pageCollection = self.modelController?.collection(for: Page.self)
+        else {
                 preconditionFailure("Could not find canvas page collection")
         }
 
@@ -109,7 +110,7 @@ extension Canvas {
 
 
     //MARK: - Frame calculation
-    private enum PageDirection : Equatable {
+    private enum PageDirection: Equatable {
         case left
         case right
         case above

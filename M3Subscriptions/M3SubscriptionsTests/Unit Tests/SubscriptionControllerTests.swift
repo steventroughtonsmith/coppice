@@ -6,8 +6,8 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 @testable import M3Subscriptions
+import XCTest
 
 class SubscriptionControllerTests: APITestCase {
     var licenceURL: URL!
@@ -45,7 +45,7 @@ class SubscriptionControllerTests: APITestCase {
 
     //MARK: - activate(withEmail:password:subscription:deactivatingDevice:)
     func test_activate_tellsSubscriptionAPIToActivateWithRequestAndDevice() throws {
-        self.controller.activate(withEmail: "foo@bar.com", password: "123456") {_ in }
+        self.controller.activate(withEmail: "foo@bar.com", password: "123456") { _ in }
 
         XCTAssertEqual(self.mockAPI.calledMethod, "activate")
         let actualRequest = try XCTUnwrap(self.mockAPI.requestArgument)
@@ -61,7 +61,7 @@ class SubscriptionControllerTests: APITestCase {
 
     func test_activate_tellsSubscriptionAPIToActivateWithSubscriptionPlanIfSupplied() throws {
         let plan = try XCTUnwrap(Subscription(payload: ["id": "foobar", "name": "Plan 3", "maxDeviceCount": 3, "currentDeviceCount": 2, "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"], hasExpired: false))
-        self.controller.activate(withEmail: "baz@possum.com", password: "abcdef", subscription: plan)  {_ in }
+        self.controller.activate(withEmail: "baz@possum.com", password: "abcdef", subscription: plan)  { _ in }
 
         XCTAssertEqual(self.mockAPI.calledMethod, "activate")
         let actualRequest = try XCTUnwrap(self.mockAPI.requestArgument)
@@ -73,7 +73,7 @@ class SubscriptionControllerTests: APITestCase {
 
     func test_activate_tellsSubscriptionAPIToActivateWhileDeactivatingDeviceIfSupplied() throws {
         let device = try XCTUnwrap(SubscriptionDevice(payload: ["deactivationToken": "deleteimac", "name": "My iMac", "activationDate": "2035-01-01T00:00:00Z"]))
-        self.controller.activate(withEmail: "baz@possum.com", password: "abcdef", deactivatingDevice: device)  {_ in }
+        self.controller.activate(withEmail: "baz@possum.com", password: "abcdef", deactivatingDevice: device)  { _ in }
 
         XCTAssertEqual(self.mockAPI.calledMethod, "activate")
         let actualRequest = try XCTUnwrap(self.mockAPI.requestArgument)
@@ -158,8 +158,8 @@ class SubscriptionControllerTests: APITestCase {
 
     func test_activate_returnsMultipleSubscriptionsErrorWithSubscriptionPlans() throws {
         let plans = [
-            try XCTUnwrap(Subscription(payload: ["id": "plan1", "name": "Plan A", "expirationDate":"2034-02-05T00:00:00Z", "maxDeviceCount": 5, "currentDeviceCount": 3, "renewalStatus": "renew"], hasExpired: false)),
-            try XCTUnwrap(Subscription(payload: ["id": "foobar", "name": "Plan 3", "maxDeviceCount": 3, "currentDeviceCount": 2, "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"], hasExpired: false))
+            try XCTUnwrap(Subscription(payload: ["id": "plan1", "name": "Plan A", "expirationDate": "2034-02-05T00:00:00Z", "maxDeviceCount": 5, "currentDeviceCount": 3, "renewalStatus": "renew"], hasExpired: false)),
+            try XCTUnwrap(Subscription(payload: ["id": "foobar", "name": "Plan 3", "maxDeviceCount": 3, "currentDeviceCount": 2, "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"], hasExpired: false)),
         ]
 
         self.mockAPI.activateResponse = .failure(.multipleSubscriptions(plans))
@@ -182,7 +182,7 @@ class SubscriptionControllerTests: APITestCase {
     func test_activate_returnsTooManyDevicesErrorWithDevices() throws {
         let devices = [
             try XCTUnwrap(SubscriptionDevice(payload: ["deactivationToken": "deleteimac", "name": "My iMac", "activationDate": "2035-01-01T00:00:00Z"])),
-            try XCTUnwrap(SubscriptionDevice(payload: ["deactivationToken": "macpro", "name": "A Mac Pro", "activationDate": "2031-09-21T00:16:00Z"]))
+            try XCTUnwrap(SubscriptionDevice(payload: ["deactivationToken": "macpro", "name": "A Mac Pro", "activationDate": "2031-09-21T00:16:00Z"])),
         ]
 
         self.mockAPI.activateResponse = .failure(.tooManyDevices(devices))
@@ -336,9 +336,9 @@ class SubscriptionControllerTests: APITestCase {
     func test_checkSubscription_tellsSubscriptionAPIToCheckWithTokenAndDevice() throws {
         let storedPayload: [String: Any] = [
             "response": "active",
-            "token":"abctoken123",
-            "subscription": ["name":"Plan B", "expirationDate":"2035-01-01T00:00:00Z", "renewalStatus": "renew"],
-            "device": ["name": "My iMac"]
+            "token": "abctoken123",
+            "subscription": ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"],
+            "device": ["name": "My iMac"],
         ]
         let storedSignature = try self.signature(forPayload: storedPayload)
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
@@ -363,9 +363,9 @@ class SubscriptionControllerTests: APITestCase {
     func test_checkSubscription_tellsSubscriptionAPIToCheckWithDeviceNameIfSupplied() throws {
         let storedPayload: [String: Any] = [
             "response": "active",
-            "token":"abctoken123",
-            "subscription": ["name":"Plan B", "expirationDate":"2035-01-01T00:00:00Z", "renewalStatus": "renew"],
-            "device": ["name": "My iMac"]
+            "token": "abctoken123",
+            "subscription": ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"],
+            "device": ["name": "My iMac"],
         ]
         let storedSignature = try self.signature(forPayload: storedPayload)
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
@@ -401,9 +401,9 @@ class SubscriptionControllerTests: APITestCase {
     func test_checkSubscription_returnsServerConnectionErrorIfAPICallFailedAndLocalLicenceIsInvalid() throws {
         var storedPayload: [String: Any] = [
             "response": "active",
-            "token":"abctoken123",
-            "subscription": ["name":"Plan B", "expirationDate":"2035-01-01T00:00:00Z", "renewalStatus": "renew"],
-            "device": ["name": "My iMac"]
+            "token": "abctoken123",
+            "subscription": ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"],
+            "device": ["name": "My iMac"],
         ]
         let storedSignature = try self.signature(forPayload: storedPayload)
         storedPayload["token"] = "invalid-token"
@@ -428,9 +428,9 @@ class SubscriptionControllerTests: APITestCase {
     func test_checkSubscription_returnsActivationResponseWithExpiredSubscriptionIfAPICallFailedAndLocalLicenceIsValidButBeyondExpirationDate() throws {
         let storedPayload: [String: Any] = [
             "response": "active",
-            "token":"abctoken123",
-            "subscription": ["name":"Plan B", "expirationDate":"2015-01-01T00:00:00Z", "renewalStatus": "renew"],
-            "device": ["name": "My iMac"]
+            "token": "abctoken123",
+            "subscription": ["name": "Plan B", "expirationDate": "2015-01-01T00:00:00Z", "renewalStatus": "renew"],
+            "device": ["name": "My iMac"],
         ]
         let storedSignature = try self.signature(forPayload: storedPayload)
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
@@ -461,13 +461,13 @@ class SubscriptionControllerTests: APITestCase {
     func test_checkSubscription_returnsActivationResponseIfAPICallFailedAndLocalLicenceIsValid() throws {
         let storedPayload: [String: Any] = [
             "response": "active",
-            "token":"abctoken123",
-            "subscription": ["name":"Plan B", "expirationDate":"2035-01-01T00:00:00Z", "renewalStatus": "renew"],
-            "device": ["name": "My iMac"]
+            "token": "abctoken123",
+            "subscription": ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"],
+            "device": ["name": "My iMac"],
         ]
         let storedSignature = try self.signature(forPayload: storedPayload)
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
-        let expectedSubscription = Subscription(payload: ["name": "Plan B", "expirationDate":"2035-01-01T00:00:00Z", "renewalStatus": "renew"], hasExpired: false)
+        let expectedSubscription = Subscription(payload: ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"], hasExpired: false)
         let expectedError = NSError(domain: NSURLErrorDomain, code: 31, userInfo: nil)
         self.mockAPI.checkResponse = .failure(.generic(expectedError))
 
@@ -492,9 +492,9 @@ class SubscriptionControllerTests: APITestCase {
     func test_checkSubscription_returnsNoDeviceFoundError() throws {
         let storedPayload: [String: Any] = [
             "response": "active",
-            "token":"abctoken123",
-            "subscription": ["name":"Plan B", "expirationDate":"2035-01-01T00:00:00Z", "renewalStatus": "renew"],
-            "device": ["name": "My iMac"]
+            "token": "abctoken123",
+            "subscription": ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"],
+            "device": ["name": "My iMac"],
         ]
         let storedSignature = try self.signature(forPayload: storedPayload)
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
@@ -517,9 +517,9 @@ class SubscriptionControllerTests: APITestCase {
     func test_checkSubscription_returnsNoSubscriptionFoundError() throws {
         let storedPayload: [String: Any] = [
             "response": "active",
-            "token":"abctoken123",
-            "subscription": ["name":"Plan B", "expirationDate":"2035-01-01T00:00:00Z", "renewalStatus": "renew"],
-            "device": ["name": "My iMac"]
+            "token": "abctoken123",
+            "subscription": ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"],
+            "device": ["name": "My iMac"],
         ]
         let storedSignature = try self.signature(forPayload: storedPayload)
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
@@ -542,9 +542,9 @@ class SubscriptionControllerTests: APITestCase {
     func test_checkSubscription_returnsActivationResponseWithExpiredSubscription() throws {
         let storedPayload: [String: Any] = [
             "response": "active",
-            "token":"abctoken123",
-            "subscription": ["name":"Plan B", "expirationDate":"2035-01-01T00:00:00Z", "renewalStatus": "renew"],
-            "device": ["name": "My iMac"]
+            "token": "abctoken123",
+            "subscription": ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"],
+            "device": ["name": "My iMac"],
         ]
         let storedSignature = try self.signature(forPayload: storedPayload)
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
@@ -552,7 +552,7 @@ class SubscriptionControllerTests: APITestCase {
         let payload: [String: Any] = [
             "response": "subscription_expired",
             "token": "updated-token",
-            "subscription": ["name":"Plan B", "expirationDate":"2035-01-01T00:00:00Z", "renewalStatus": "renew"],
+            "subscription": ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"],
             "device": ["name": "My iMac"],
         ]
         let signature = try self.signature(forPayload: payload)
@@ -583,9 +583,9 @@ class SubscriptionControllerTests: APITestCase {
     private func run_checkSubscription_returnsActiveResponseIfStillActivated(with renewalStatus: Subscription.RenewalStatus) throws {
         let storedPayload: [String: Any] = [
             "response": "active",
-            "token":"abctoken123",
-            "subscription": ["name":"Plan B", "expirationDate":"2035-01-01T00:00:00Z", "renewalStatus": renewalStatus.rawValue],
-            "device": ["name": "My iMac"]
+            "token": "abctoken123",
+            "subscription": ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": renewalStatus.rawValue],
+            "device": ["name": "My iMac"],
         ]
         let storedSignature = try self.signature(forPayload: storedPayload)
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
@@ -593,7 +593,7 @@ class SubscriptionControllerTests: APITestCase {
         let payload: [String: Any] = [
             "response": "active",
             "token": "updated-token",
-            "subscription": ["name":"Plan B", "expirationDate":"2036-01-01T01:01:01Z", "renewalStatus": renewalStatus.rawValue],
+            "subscription": ["name": "Plan B", "expirationDate": "2036-01-01T01:01:01Z", "renewalStatus": renewalStatus.rawValue],
             "device": ["name": "My iMac"],
         ]
         let signature = try self.signature(forPayload: payload)
@@ -636,9 +636,9 @@ class SubscriptionControllerTests: APITestCase {
     func test_checkSubscription_storesSuccessfulActivationToDiskIfActive() throws {
         let storedPayload: [String: Any] = [
             "response": "active",
-            "token":"abctoken123",
-            "subscription": ["name":"Plan B", "expirationDate":"2035-01-01T00:00:00Z", "renewalStatus": "renew"],
-            "device": ["name": "My iMac"]
+            "token": "abctoken123",
+            "subscription": ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"],
+            "device": ["name": "My iMac"],
         ]
         let storedSignature = try self.signature(forPayload: storedPayload)
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
@@ -646,7 +646,7 @@ class SubscriptionControllerTests: APITestCase {
         let payload: [String: Any] = [
             "response": "active",
             "token": "updated-token",
-            "subscription": ["name":"Plan B", "expirationDate":"2036-01-01T01:01:01Z", "renewalStatus": "renew"],
+            "subscription": ["name": "Plan B", "expirationDate": "2036-01-01T01:01:01Z", "renewalStatus": "renew"],
             "device": ["name": "My iMac"],
         ]
         let signature = try self.signature(forPayload: payload)
@@ -676,9 +676,9 @@ class SubscriptionControllerTests: APITestCase {
     func test_checkSubscription_storesActivationToDiskIfExpired() throws {
         let storedPayload: [String: Any] = [
             "response": "active",
-            "token":"abctoken123",
-            "subscription": ["name":"Plan B", "expirationDate":"2035-01-01T00:00:00Z", "renewalStatus": "renew"],
-            "device": ["name": "My iMac"]
+            "token": "abctoken123",
+            "subscription": ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"],
+            "device": ["name": "My iMac"],
         ]
         let storedSignature = try self.signature(forPayload: storedPayload)
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
@@ -686,7 +686,7 @@ class SubscriptionControllerTests: APITestCase {
         let payload: [String: Any] = [
             "response": "subscription_expired",
             "token": "updated-token",
-            "subscription": ["name":"Plan B", "expirationDate":"2035-01-01T00:00:00Z", "renewalStatus": "cancelled"],
+            "subscription": ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "cancelled"],
             "device": ["name": "My iMac"],
         ]
         let signature = try self.signature(forPayload: payload)
@@ -820,9 +820,9 @@ class SubscriptionControllerTests: APITestCase {
     func test_deactivate_tellsSubscriptionAPIToDeactivateWithDeviceAndSavedToken() throws {
         let storedPayload: [String: Any] = [
             "response": "active",
-            "token":"abctoken123",
-            "subscription": ["name":"Plan B", "expirationDate":"2035-01-01T00:00:00Z", "renewalStatus": "renew"],
-            "device": ["name": "My iMac"]
+            "token": "abctoken123",
+            "subscription": ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"],
+            "device": ["name": "My iMac"],
         ]
         let storedSignature = try self.signature(forPayload: storedPayload)
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
@@ -843,9 +843,9 @@ class SubscriptionControllerTests: APITestCase {
     func test_deactivate_returnsNoDeviceFoundError() throws {
         let storedPayload: [String: Any] = [
             "response": "active",
-            "token":"abctoken123",
-            "subscription": ["name":"Plan B", "expirationDate":"2035-01-01T00:00:00Z", "renewalStatus": "renew"],
-            "device": ["name": "My iMac"]
+            "token": "abctoken123",
+            "subscription": ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"],
+            "device": ["name": "My iMac"],
         ]
         let storedSignature = try self.signature(forPayload: storedPayload)
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
@@ -869,9 +869,9 @@ class SubscriptionControllerTests: APITestCase {
     func test_deactivate_returnsGenericError() throws {
         let storedPayload: [String: Any] = [
             "response": "active",
-            "token":"abctoken123",
-            "subscription": ["name":"Plan B", "expirationDate":"2035-01-01T00:00:00Z", "renewalStatus": "renew"],
-            "device": ["name": "My iMac"]
+            "token": "abctoken123",
+            "subscription": ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"],
+            "device": ["name": "My iMac"],
         ]
         let storedSignature = try self.signature(forPayload: storedPayload)
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
@@ -897,9 +897,9 @@ class SubscriptionControllerTests: APITestCase {
     func test_deactivate_returnsGenericNilError() throws {
         let storedPayload: [String: Any] = [
             "response": "active",
-            "token":"abctoken123",
-            "subscription": ["name":"Plan B", "expirationDate":"2035-01-01T00:00:00Z", "renewalStatus": "renew"],
-            "device": ["name": "My iMac"]
+            "token": "abctoken123",
+            "subscription": ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"],
+            "device": ["name": "My iMac"],
         ]
         let storedSignature = try self.signature(forPayload: storedPayload)
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
@@ -923,9 +923,9 @@ class SubscriptionControllerTests: APITestCase {
     func test_deactivate_removesLicenceOnDiskIfSuccessfullyDeactivated() throws {
         let storedPayload: [String: Any] = [
             "response": "active",
-            "token":"abctoken123",
-            "subscription": ["name":"Plan B", "expirationDate":"2035-01-01T00:00:00Z", "renewalStatus": "renew"],
-            "device": ["name": "My iMac"]
+            "token": "abctoken123",
+            "subscription": ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"],
+            "device": ["name": "My iMac"],
         ]
         let storedSignature = try self.signature(forPayload: storedPayload)
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
@@ -939,11 +939,10 @@ class SubscriptionControllerTests: APITestCase {
         self.waitForExpectations(timeout: 1)
 
         XCTAssertFalse(FileManager.default.fileExists(atPath: self.licenceURL.path))
-
     }
 
     func test_deactivate_returnsDeactivated() throws {
-        let payload: [String: Any] = ["response": "active", "token":"abctoken123", "subscriptionName":"Plan B", "expirationDate":"2035-01-01T00:00:00Z"]
+        let payload: [String: Any] = ["response": "active", "token": "abctoken123", "subscriptionName": "Plan B", "expirationDate": "2035-01-01T00:00:00Z"]
         let signature = try self.signature(forPayload: payload)
         try self.writeLicence(["payload": payload, "signature": signature])
 
@@ -985,5 +984,4 @@ class SubscriptionControllerTests: APITestCase {
 //
 //        XCTAssertNil(self.controller.recheckTimer)
 //    }
-
 }

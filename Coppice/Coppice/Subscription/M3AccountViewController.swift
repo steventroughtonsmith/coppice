@@ -9,7 +9,6 @@
 import Cocoa
 
 class CoppiceProViewController: NSViewController {
-
     func createTabItem() -> NSTabViewItem {
         let item = NSTabViewItem(viewController: self)
         item.label = NSLocalizedString("Coppice Pro", comment: "Pro Preferences Title")
@@ -21,5 +20,4 @@ class CoppiceProViewController: NSViewController {
         super.viewDidLoad()
         // Do view setup here.
     }
-    
 }

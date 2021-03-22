@@ -24,6 +24,7 @@ class ActivatedSubscriptionViewController: NSViewController {
         super.init(nibName: "ActivatedSubscriptionViewController", bundle: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -135,6 +136,7 @@ class ActivatedSubscriptionViewController: NSViewController {
             self.updateEditDeviceButton()
         }
     }
+
     var isEditingDeviceName: Bool = false {
         didSet {
             guard oldValue != self.isEditingDeviceName else {

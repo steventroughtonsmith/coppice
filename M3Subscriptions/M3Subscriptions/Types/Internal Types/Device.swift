@@ -13,6 +13,7 @@ struct Device {
         case mac
         case ipad
     }
+
     var name: String?
 
     var type: DeviceType {

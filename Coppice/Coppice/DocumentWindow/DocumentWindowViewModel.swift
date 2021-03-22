@@ -6,11 +6,11 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import Foundation
 import Combine
 import CoppiceCore
+import Foundation
 
-protocol DocumentWindow: class {
+protocol DocumentWindow: AnyObject {
     func showAlert(_ alert: Alert, callback: @escaping (Int) -> Void)
     func invalidateRestorableState()
 }
@@ -130,7 +130,7 @@ class DocumentWindowViewModel: NSObject {
             }
             self.currentEditor = .page(page)
         //Don't bother changing for a folder
-        case .folder(_):
+        case .folder:
             return
         }
     }
@@ -278,7 +278,7 @@ class DocumentWindowViewModel: NSObject {
 
     //MARK: - New Page Helpers
     @Published var lastCreatePageType: PageContentType = .text
-    
+
     var canvasForNewPages: Canvas? {
         guard self.sidebarSelection.firstIndex(of: .canvases) != nil else {
             return nil
@@ -300,7 +300,7 @@ class DocumentWindowViewModel: NSObject {
         }
 
         switch selection {
-        case .canvases, .canvas(_):
+        case .canvases, .canvas:
             return self.modelController.rootFolder
         case .page(let modelID):
             return self.modelController.pageCollection.objectWithID(modelID)?.containingFolder ?? self.modelController.rootFolder
@@ -393,7 +393,6 @@ class DocumentWindowViewModel: NSObject {
             target.undoableUpdateSelection(oldItems, selectedCanvasID: oldCanvasID)
         }
     }
-
 }
 
 
@@ -407,8 +406,7 @@ extension DocumentWindowViewModel {
 
         if let page = folderItems.first as? Page {
             return self.alertForDeletingSinglePage(page)
-        }
-        else if let folder = folderItems.first as? Folder {
+        } else if let folder = folderItems.first as? Folder {
             return self.alertForDeletingSingleFolder(folder)
         }
         return nil
@@ -452,8 +450,7 @@ extension DocumentWindowViewModel {
         for item in items {
             if item is Page {
                 hasPages = true
-            }
-            else if item is Folder {
+            } else if item is Folder {
                 hasFolders = true
             }
 
@@ -553,7 +550,8 @@ extension DocumentWindowViewModel {
             }
 
             guard components.count == 2,
-                let modelID = ModelID(string: components[1]) else {
+                let modelID = ModelID(string: components[1])
+            else {
                     return nil
             }
 

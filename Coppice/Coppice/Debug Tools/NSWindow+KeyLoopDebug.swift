@@ -59,11 +59,13 @@ class KeyLoopView: NSView {
             self.setNeedsDisplay(self.bounds)
         }
     }
+
     init(viewRects: [CGRect]) {
         self.viewRects = viewRects
         super.init(frame: .zero)
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

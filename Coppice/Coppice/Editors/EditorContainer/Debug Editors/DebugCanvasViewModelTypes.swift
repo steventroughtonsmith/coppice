@@ -6,8 +6,8 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import Foundation
 import CoppiceCore
+import Foundation
 
 class DebugCanvasPageItem {
     let canvasPage: CanvasPage
@@ -48,7 +48,8 @@ class DebugCanvasPageItem {
         get { self.canvasPage.parent?.id.uuid.uuidString ?? "" }
         set {
             guard let id = CanvasPage.modelID(withUUIDString: newValue),
-                  id != self.canvasPage.id else {
+                  id != self.canvasPage.id
+            else {
                 self.canvasPage.parent = nil
                 return
             }

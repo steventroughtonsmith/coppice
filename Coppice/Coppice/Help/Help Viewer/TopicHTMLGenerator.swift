@@ -14,11 +14,11 @@ class TopicHTMLGenerator: NSObject {
             return self.generatePage(with: topic.title, content: "<p>Topic not found</p>")
         }
 
-        content = replaceLinks(inContent: content)
-        content = replaceImages(inContent: content)
-        content = replaceBundleInfo(inContent: content)
+        content = self.replaceLinks(inContent: content)
+        content = self.replaceImages(inContent: content)
+        content = self.replaceBundleInfo(inContent: content)
 
-        return generatePage(with: topic.title, content: content)
+        return self.generatePage(with: topic.title, content: content)
     }
 
     private func generatePage(with title: String, content: String) -> String {

@@ -105,7 +105,6 @@ class CanvasImageGenerator {
             path.setClip()
             self.drawContents(of: page, in: visualFrame)
             NSGraphicsContext.current?.restoreGraphicsState()
-
         }
     }
 

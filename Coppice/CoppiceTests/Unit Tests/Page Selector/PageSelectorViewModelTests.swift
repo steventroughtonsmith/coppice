@@ -6,12 +6,11 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 @testable import Coppice
 @testable import CoppiceCore
+import XCTest
 
 class PageSelectorViewModelTests: XCTestCase {
-
     var modelController: ModelController!
     var applePage: Page!
     var raspberryPage: Page!
@@ -148,5 +147,4 @@ class PageSelectorViewModelTests: XCTestCase {
 
         XCTAssertEqual(selectedPage, self.raspberryPage)
     }
-
 }

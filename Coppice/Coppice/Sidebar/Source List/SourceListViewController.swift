@@ -212,20 +212,20 @@ class SourceListViewController: NSViewController, NSMenuItemValidation {
 
     //MARK: - Menu Validation
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
-        if menuItem.action == #selector(newPage(_:)) {
+        if menuItem.action == #selector(self.newPage(_:)) {
             return true
         }
 
         let subManager = CoppiceSubscriptionManager.shared
         let proEnabled = (subManager.activationResponse?.isActive ?? false)
 
-        if menuItem.action == #selector(newFolder(_:)) {
+        if menuItem.action == #selector(self.newFolder(_:)) {
             menuItem.image = proEnabled ? nil : subManager.proImage
             menuItem.toolTip = proEnabled ? nil  : subManager.proTooltip
             return proEnabled
         }
 
-        if menuItem.action == #selector(newFolderFromSelection(_:)) {
+        if menuItem.action == #selector(self.newFolderFromSelection(_:)) {
             menuItem.image = proEnabled ? nil : subManager.proImage
             menuItem.toolTip = proEnabled ? nil  : subManager.proTooltip
 
@@ -236,34 +236,34 @@ class SourceListViewController: NSViewController, NSMenuItemValidation {
             return selection.nodesShareParent && proEnabled
         }
 
-        if menuItem.action == #selector(editItemTitle(_:)) {
+        if menuItem.action == #selector(self.editItemTitle(_:)) {
             let nodesCollection = self.nodesForAction
             return (nodesCollection.count == 1) && (nodesCollection.containsCanvases == false)
         }
 
-        if menuItem.action == #selector(deleteItems(_:)) {
+        if menuItem.action == #selector(self.deleteItems(_:)) {
             return self.validateDeleteItemMenuItem(menuItem)
         }
 
-        if menuItem.action == #selector(importFiles(_:)) {
+        if menuItem.action == #selector(self.importFiles(_:)) {
             return true
         }
 
-        if menuItem.action == #selector(exportPages(_:)) {
+        if menuItem.action == #selector(self.exportPages(_:)) {
             return PageExporter.validate(menuItem, forExporting: self.nodesForAction)
         }
 
-        if menuItem.action == #selector(sortFolder(_:)) {
+        if menuItem.action == #selector(self.sortFolder(_:)) {
             let selection = self.nodesForAction
             return (selection.count == 1) && selection.containsFolders
         }
 
-        if menuItem.action == #selector(addToCanvas(_:)) {
+        if menuItem.action == #selector(self.addToCanvas(_:)) {
             return (self.nodesForAction.count > 0)
                 && (self.nodesForAction.containsFolders == false)
                 && (self.nodesForAction.containsCanvases == false)
         }
-        
+
         return false
     }
 
@@ -288,11 +288,9 @@ class SourceListViewController: NSViewController, NSMenuItemValidation {
 
         if nodes.containsPages && !nodes.containsFolders {
             menuItem.title = NSLocalizedString("Delete Pages", comment: "Delete multiple pages menu item")
-        }
-        else if nodes.containsFolders && !nodes.containsPages {
+        } else if nodes.containsFolders && !nodes.containsPages {
             menuItem.title = NSLocalizedString("Delete Folders", comment: "Delete multiple folders menu item")
-        }
-        else {
+        } else {
             menuItem.title = NSLocalizedString("Delete Items", comment: "Delete multiple items menu item")
         }
         return (nodes.count > 1)
@@ -359,10 +357,10 @@ class SourceListViewController: NSViewController, NSMenuItemValidation {
             return
         }
 
-        if case .folder(_) = sourceListNode.item {
+        if case .folder = sourceListNode.item {
             view.startEditing()
         }
-        
+
         //We don't want to select the new item if we're in a canvas, as we don't want to switch the editor
         guard !self.selectedNodes.containsCanvases else {
             return
@@ -405,7 +403,7 @@ class SourceListViewController: NSViewController, NSMenuItemValidation {
         guard let menuItem = sender as? NSMenuItem else {
             return
         }
-        
+
         let selection = self.nodesForAction
         guard (selection.count == 1) && selection.containsFolders else {
             return
@@ -417,8 +415,7 @@ class SourceListViewController: NSViewController, NSMenuItemValidation {
 
         if let folder = (selection.nodes[0] as? FolderSourceListNode)?.folder {
             folder.sort(using: sortMethod)
-        }
-        else if let folder = (selection.nodes[0] as? PagesGroupSourceListNode)?.rootFolder {
+        } else if let folder = (selection.nodes[0] as? PagesGroupSourceListNode)?.rootFolder {
             folder.sort(using: sortMethod)
         }
     }
@@ -429,7 +426,8 @@ class SourceListViewController: NSViewController, NSMenuItemValidation {
         guard
             let scrollView = self.outlineScrollView,
             let addButton = self.addPullDownButton,
-            let actionButton = self.actionPullDownButton else {
+            let actionButton = self.actionPullDownButton
+        else {
             return
         }
 
@@ -440,7 +438,7 @@ class SourceListViewController: NSViewController, NSMenuItemValidation {
     }
 
 
-   
+
 
     //MARK: - Row Size
     var activeSidebarSize: ActiveSidebarSize {
@@ -453,7 +451,7 @@ class SourceListViewController: NSViewController, NSMenuItemValidation {
         return ActiveSidebarSize(sidebarSize: sidebarSize)
     }
 
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
         self.outlineView.reloadData()
     }
 }
@@ -527,7 +525,8 @@ extension SourceListViewController: NSOutlineViewDataSource {
 
     func outlineView(_ outlineView: NSOutlineView, itemForPersistentObject object: Any) -> Any? {
         guard let string = object as? String,
-            let persistentRepresentation = DocumentWindowViewModel.SidebarItem.from(persistentRepresentation: string) else {
+            let persistentRepresentation = DocumentWindowViewModel.SidebarItem.from(persistentRepresentation: string)
+        else {
                 return nil
         }
         return self.viewModel.node(for: persistentRepresentation)
@@ -562,7 +561,7 @@ extension SourceListViewController: NSOutlineViewDataSource {
             return .generic
         }
         if types.contains(.fileURL) {
-            let fileURLs = items.compactMap { $0.data(forType: .fileURL) }.compactMap { URL(dataRepresentation: $0, relativeTo: nil)}
+            let fileURLs = items.compactMap { $0.data(forType: .fileURL) }.compactMap { URL(dataRepresentation: $0, relativeTo: nil) }
             let (canDrop, targetNode, targetIndex) = self.viewModel.canDropFiles(at: fileURLs, onto: (item as? SourceListNode), atChildIndex: index)
             guard canDrop else {
                 return []
@@ -589,7 +588,7 @@ extension SourceListViewController: NSOutlineViewDataSource {
         }
 
         if types.contains(.fileURL) {
-            let fileURLs = items.compactMap { $0.data(forType: .fileURL) }.compactMap { URL(dataRepresentation: $0, relativeTo: nil)}
+            let fileURLs = items.compactMap { $0.data(forType: .fileURL) }.compactMap { URL(dataRepresentation: $0, relativeTo: nil) }
             return self.viewModel.dropFiles(at: fileURLs, onto: (item as? SourceListNode), atChildIndex: index)
         }
 
@@ -693,8 +692,6 @@ extension SourceListViewController: SpringLoadedTableRowViewDelegate {
         self.viewModel.springLoadedNode = nil
         self.reloadSelection()
     }
-
-
 }
 
 
@@ -707,12 +704,12 @@ extension SourceListViewController: NSMenuDelegate {
         return self.viewModel.canvases.count
     }
 
-    func menu(_ menu: NSMenu, update item: NSMenuItem, at index: Int, shouldCancel: Bool) -> Bool {//
+    func menu(_ menu: NSMenu, update item: NSMenuItem, at index: Int, shouldCancel: Bool) -> Bool { //
         let canvas = self.viewModel.canvases[index]
         item.title = canvas.title
         item.representedObject = canvas
         item.target = self
-        item.action = #selector(addToCanvas(_:))
+        item.action = #selector(self.addToCanvas(_:))
         return true
     }
 }

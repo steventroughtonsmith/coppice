@@ -8,8 +8,8 @@
 
 import Cocoa
 import Combine
-import ObjectiveC
 import CoppiceCore
+import ObjectiveC
 
 class TextEditorFontInspectorViewController: BaseInspectorViewController {
     override var contentViewNibName: NSNib.Name? {
@@ -21,12 +21,12 @@ class TextEditorFontInspectorViewController: BaseInspectorViewController {
     @IBOutlet weak var colourPicker: TextColourPicker!
     @IBOutlet weak var styleControl: NSSegmentedControl!
     @IBOutlet weak var showFontPanelButton: NSButton!
-    
+
     var typedViewModel: TextEditorFontInspectorViewModel {
         return self.viewModel as! TextEditorFontInspectorViewModel
     }
 
-    
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +36,7 @@ class TextEditorFontInspectorViewController: BaseInspectorViewController {
 
         let children = self.view.accessibilityChildren()?.compactMap { $0 as? NSAccessibilityElementProtocol }
         self.view.setAccessibilityChildrenInNavigationOrder(children)
-        
+
         self.showFontPanelButton.image = NSImage.symbol(withName: Symbols.Text.textFormat)
     }
 
@@ -72,7 +72,7 @@ class TextEditorFontInspectorViewController: BaseInspectorViewController {
                                                     .sink { styleControl?.setSelected($0, forSegment: 2) }
         self.strikethroughObserver = self.typedViewModel.publisher(for: \.isStruckthrough)
                                                         .sink { styleControl?.setSelected($0, forSegment: 3) }
-        
+
         styleControl?.setImage(NSImage.symbol(withName: Symbols.Text.bold), forSegment: 0)
         styleControl?.setImage(NSImage.symbol(withName: Symbols.Text.italic), forSegment: 1)
         styleControl?.setImage(NSImage.symbol(withName: Symbols.Text.underline), forSegment: 2)

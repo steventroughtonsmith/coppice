@@ -6,12 +6,11 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 
-protocol InspectorContainerView: class {
-}
+protocol InspectorContainerView: AnyObject {}
 
 
 class InspectorContainerViewModel: ViewModel {

@@ -14,11 +14,10 @@ class SparkleDelegate: NSObject, SPUUpdaterDelegate {
         return ["osVersion", "cputype", "model", "lang", "appVersion"]
     }
 
-    func feedParameters(for updater: SPUUpdater, sendingSystemProfile sendingProfile: Bool) -> [[String : String]] {
+    func feedParameters(for updater: SPUUpdater, sendingSystemProfile sendingProfile: Bool) -> [[String: String]] {
         if sendingProfile, let bundleID = Bundle.main.bundleIdentifier {
             return [["key": "bundleID", "value": bundleID, "displayKey": "Bundle ID", "displayValue": bundleID]]
         }
         return []
     }
-    
 }

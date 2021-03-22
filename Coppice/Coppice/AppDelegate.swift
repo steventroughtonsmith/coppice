@@ -7,14 +7,13 @@
 //
 
 import Cocoa
-import Sparkle
 import CoppiceCore
 import M3Subscriptions
+import Sparkle
 
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
-
     @IBOutlet weak var newLinkedPageMenuDelegate: NewPageMenuDelegate!
     @IBOutlet weak var updaterController: SPUStandardUpdaterController!
 
@@ -34,13 +33,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             .defaultCanvasTheme: Canvas.Theme.auto.rawValue,
             .autoLinkingTextPagesEnabled: true,
             .showWelcomeScreenOnLaunch: true,
-            .sidebarSize: SidebarSize.system.rawValue
+            .sidebarSize: SidebarSize.system.rawValue,
         ])
     }
 
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-
         #if DEBUG
         if let mainMenu = NSApplication.shared.mainMenu, let windowMenu = mainMenu.item(withTitle: "Window") {
             let index = mainMenu.index(of: windowMenu) + 1
@@ -110,6 +108,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     lazy var preferencesWindow: PreferencesWindowController = {
         return PreferencesWindowController(updaterController: self.updaterController, subscriptionManager: self.subscriptionManager)
     }()
+
     @IBAction func showPreferences(_ sender: Any?) {
         self.preferencesWindow.showWindow(sender)
     }
@@ -128,6 +127,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     lazy var welcomeWindow: WelcomeWindowController = {
         return WelcomeWindowController()
     }()
+
     @IBAction func showWelcomeWindow(_ sender: Any?) {
         self.welcomeWindow.showWindow(sender)
     }
@@ -227,7 +227,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBAction func showHelpViewer(_ sender: Any?) {
         HelpController.shared.showHelpViewer()
     }
-
 }
 
 

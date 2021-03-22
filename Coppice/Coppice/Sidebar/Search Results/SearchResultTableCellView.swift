@@ -10,7 +10,6 @@ import Cocoa
 import CoppiceCore
 
 class SearchResultTableCellView: NSTableCellView {
-
     override var objectValue: Any? {
         didSet {
             self.updateAccessibility()
@@ -25,7 +24,7 @@ class SearchResultTableCellView: NSTableCellView {
         var accessibilityLabel = ""
         if let title = searchResult.title?.string {
             accessibilityLabel.append("\(title). ")
-        } else if case .page(_) = searchResult.sidebarItem {
+        } else if case .page = searchResult.sidebarItem {
             accessibilityLabel.append("\(Page.localizedDefaultTitle). ")
         }
         if let body = searchResult.body?.string {
@@ -34,5 +33,4 @@ class SearchResultTableCellView: NSTableCellView {
         self.setAccessibilityLabel(accessibilityLabel)
         self.setAccessibilityChildren(nil)
     }
-    
 }

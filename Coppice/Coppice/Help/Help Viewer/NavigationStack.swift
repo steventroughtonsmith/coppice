@@ -60,10 +60,10 @@ class NavigationStack: NSObject {
 
 extension NavigationStack: NSToolbarItemValidation {
     func validateToolbarItem(_ item: NSToolbarItem) -> Bool {
-        if (item.action == #selector(back(_:))) {
+        if (item.action == #selector(self.back(_:))) {
             return self.currentIndex > 0
         }
-        if (item.action == #selector(forward(_:))) {
+        if (item.action == #selector(self.forward(_:))) {
             return self.currentIndex < (self.navigationStack.count - 1)
         }
         return true

@@ -6,11 +6,10 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 @testable import CoppiceCore
+import XCTest
 
 class CoreGraphics_M3ExtensionsTests: XCTestCase {
-
     //MARK: - CGPoint.identity
     func test_point_identity_valuesAreOne() {
         XCTAssertEqual(CGPoint.identity, CGPoint(x: 1, y: 1))
@@ -242,7 +241,7 @@ class CoreGraphics_M3ExtensionsTests: XCTestCase {
             CGPoint(x: 3, y: -2),
             CGPoint(x: 10, y: -2),
             CGPoint(x: 5, y: 14),
-            CGPoint(x: -2, y: -3)
+            CGPoint(x: -2, y: -3),
         ])
         XCTAssertEqual(rect, CGRect(x: -2, y: -3, width: 12, height: 17))
     }

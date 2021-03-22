@@ -29,7 +29,7 @@ public struct ModelObjectReference<T: CollectableModelObject> {
 
     public var projectedValue: Self {
         get { self }
-        set { self = newValue}
+        set { self = newValue }
     }
 
     private var valueCollection: ModelCollection<T>? {

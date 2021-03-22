@@ -13,12 +13,12 @@ class ZoomMenuDelegate: NSObject, NSMenuDelegate {
     var selectedLevel: Int?
 
     func numberOfItems(in menu: NSMenu) -> Int {
-        return zoomLevels.count
+        return self.zoomLevels.count
     }
 
     func menu(_ menu: NSMenu, update item: NSMenuItem, at index: Int, shouldCancel: Bool) -> Bool {
-        item.title = "\(zoomLevels[index])%"
-        item.action = #selector(zoomControlChanged(_:))
+        item.title = "\(self.zoomLevels[index])%"
+        item.action = #selector(self.zoomControlChanged(_:))
         item.target = nil
         if let level = selectedLevel {
             item.state = (index == level) ? .on : .off

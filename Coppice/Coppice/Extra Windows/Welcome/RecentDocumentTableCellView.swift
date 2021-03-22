@@ -27,5 +27,4 @@ class RecentDocumentTableCellView: NSTableCellView {
         self.pathLabel.stringValue = url.deletingLastPathComponent().path
         self.iconView.image = NSWorkspace.shared.icon(forFile: url.path)
     }
-    
 }

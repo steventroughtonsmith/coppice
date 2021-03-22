@@ -6,12 +6,11 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 @testable import Coppice
 @testable import CoppiceCore
+import XCTest
 
 class TextEditorViewModelTests: XCTestCase {
-
     var modelController: CoppiceModelController!
     var page: Page!
     var textContent: TextPageContent!
@@ -124,12 +123,9 @@ class TextEditorViewModelTests: XCTestCase {
 }
 
 private class MockEditorView: TextEditorView {
-    func updateTextView(with text: NSAttributedString) {
-        
-    }
+    func updateTextView(with text: NSAttributedString) {}
 
-    func prepareForDisplay(withSafeAreaInsets safeAreaInsets: NSEdgeInsets) {   
-    }
+    func prepareForDisplay(withSafeAreaInsets safeAreaInsets: NSEdgeInsets) {}
 
     var addedLink: (URL, NSRange)?
     func addLink(with url: URL, to range: NSRange) {
@@ -141,9 +137,9 @@ private class MockEditorView: TextEditorView {
     var inspectors: [Inspector] = []
     var parentEditor: Editor?
     var childEditors: [Editor] = []
-    func inspectorsDidChange() {
-    }
-    func open(_ link: PageLink) {
-    }
+    func inspectorsDidChange() {}
+
+    func open(_ link: PageLink) {}
+
     var enabled: Bool = true
 }

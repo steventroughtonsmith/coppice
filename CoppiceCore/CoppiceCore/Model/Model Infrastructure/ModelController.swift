@@ -8,9 +8,9 @@
 
 import Foundation
 
-public protocol ModelController: class, ModelChangeGroupHandler {
+public protocol ModelController: AnyObject, ModelChangeGroupHandler {
     var undoManager: UndoManager { get }
-    var allCollections: [ModelType: Any] {get set}
+    var allCollections: [ModelType: Any] { get set }
     var settings: ModelSettings { get }
     @discardableResult func addModelCollection<T: CollectableModelObject>(for type: T.Type) -> ModelCollection<T>
     func removeModelCollection<T: CollectableModelObject>(for type: T.Type)
@@ -21,38 +21,38 @@ public protocol ModelController: class, ModelChangeGroupHandler {
     func disableUndo(_ caller: () throws -> Void) rethrows
 }
 
-public extension ModelController {
-    @discardableResult func addModelCollection<T: CollectableModelObject>(for type: T.Type) -> ModelCollection<T> {
+extension ModelController {
+    @discardableResult public func addModelCollection<T: CollectableModelObject>(for type: T.Type) -> ModelCollection<T> {
         let modelCollection = ModelCollection<T>()
         modelCollection.modelController = self
         self.allCollections[type.modelType] = modelCollection
         return modelCollection
     }
 
-    func removeModelCollection<T: CollectableModelObject>(for type: T.Type) {
+    public func removeModelCollection<T: CollectableModelObject>(for type: T.Type) {
         self.allCollections.removeValue(forKey: type.modelType)
     }
 
-    func collection<T: CollectableModelObject>(for type: T.Type) -> ModelCollection<T> {
+    public func collection<T: CollectableModelObject>(for type: T.Type) -> ModelCollection<T> {
         guard let model = self.allCollections[type.modelType] as? ModelCollection<T> else {
             preconditionFailure("Collection with type '\(type.modelType)' does not exist")
         }
         return model
     }
 
-    func pushChangeGroup() {
+    public func pushChangeGroup() {
         self.allCollections.values
             .compactMap { $0 as? ModelChangeGroupHandler }
             .forEach { $0.pushChangeGroup() }
     }
 
-    func popChangeGroup() {
+    public func popChangeGroup() {
         self.allCollections.values
             .compactMap { $0 as? ModelChangeGroupHandler }
             .forEach { $0.popChangeGroup() }
     }
 
-    func disableUndo(_ caller: () throws -> Void) rethrows {
+    public func disableUndo(_ caller: () throws -> Void) rethrows {
         self.undoManager.disableUndoRegistration()
         try caller()
         self.undoManager.enableUndoRegistration()

@@ -6,9 +6,9 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import XCTest
-@testable import CoppiceCore
 import Carbon.HIToolbox
+@testable import CoppiceCore
+import XCTest
 
 let testLayoutASCII = """
           |
@@ -33,7 +33,6 @@ let testLayoutASCII = """
 
 
 class CanvasLayoutEngineTests: XCTestCase {
-
     var mockContextFactory = MockEventContextFactory()
     var layoutEngine: CanvasLayoutEngine!
     var page1: LayoutEnginePage!
@@ -224,7 +223,6 @@ class CanvasLayoutEngineTests: XCTestCase {
         self.layoutEngine.selectAll()
 
         XCTAssertNil(self.layoutEngine.enabledPage)
-
     }
 
     func test_selectAll_informsViewOfLayoutChange() throws {
@@ -1160,6 +1158,7 @@ private class TestCanvasView: CanvasLayoutView {
     func layoutChanged(with context: CanvasLayoutEngine.LayoutContext) {
         self.context = context
     }
+
     var viewPortFrame: CGRect = .zero
 }
 
@@ -1167,16 +1166,16 @@ private class TestCanvasView: CanvasLayoutView {
 private class MockCanvasLayoutEngineDelegate: CanvasLayoutEngineDelegate {
     let movedPagesMock = MockDetails<([LayoutEnginePage], CanvasLayoutEngine), Void>()
     func moved(pages: [LayoutEnginePage], in layout: CanvasLayoutEngine) {
-        movedPagesMock.called(withArguments: (pages, layout))
+        self.movedPagesMock.called(withArguments: (pages, layout))
     }
 
     let removePagesMock = MockDetails<([LayoutEnginePage], CanvasLayoutEngine), Void>()
     func remove(pages: [LayoutEnginePage], from layout: CanvasLayoutEngine) {
-        removePagesMock.called(withArguments: (pages, layout))
+        self.removePagesMock.called(withArguments: (pages, layout))
     }
 
     let reorderedPagesMock = MockDetails<([LayoutEnginePage], CanvasLayoutEngine), Void>()
     func reordered(pages: [LayoutEnginePage], in layout: CanvasLayoutEngine) {
-        reorderedPagesMock.called(withArguments: (pages, layout))
+        self.reorderedPagesMock.called(withArguments: (pages, layout))
     }
 }

@@ -20,6 +20,7 @@ class TooManyDevicesViewController: NSViewController {
         super.init(nibName: "TooManyDevicesView", bundle: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -58,7 +59,6 @@ extension TooManyDevicesViewController: NSTableViewDataSource {
     func numberOfRows(in tableView: NSTableView) -> Int {
         return self.devices.count
     }
-
 }
 
 extension TooManyDevicesViewController: NSTableViewDelegate {

@@ -8,7 +8,7 @@
 
 import Cocoa
 
-protocol TourInterfaceViewDelegate: class {
+protocol TourInterfaceViewDelegate: AnyObject {
     func hovered(over component: TourInterfaceComponentView?, in interfaceView: TourInterfaceView)
 }
 
@@ -130,7 +130,7 @@ class TourInterfaceComponentView: NSView, NSAccessibilityImage {
     }
 
     var selected: Bool = false {
-        didSet { self.setNeedsDisplay(self.bounds ) }
+        didSet { self.setNeedsDisplay(self.bounds) }
     }
 
     let lineWidth: CGFloat = 2
@@ -160,7 +160,7 @@ class TourInterfaceComponentView: NSView, NSAccessibilityImage {
 }
 
 
-fileprivate class TourInterfaceSidebarView: TourInterfaceComponentView {
+private class TourInterfaceSidebarView: TourInterfaceComponentView {
     override func draw(_ dirtyRect: NSRect) {
         self.setupColours()
         let path = NSBezierPath(roundedRect: self.bounds.insetBy(dx: 0.5, dy: 0.5), topLeftRadius: self.cornerRadius, bottomLeftRadius: self.cornerRadius)
@@ -194,7 +194,7 @@ fileprivate class TourInterfaceSidebarView: TourInterfaceComponentView {
     }
 }
 
-fileprivate class TourInterfaceToolbarView: TourInterfaceComponentView {
+private class TourInterfaceToolbarView: TourInterfaceComponentView {
     override func draw(_ dirtyRect: NSRect) {
         self.setupColours()
         let path = NSBezierPath(roundedRect: self.bounds.insetBy(dx: 0.5, dy: 0.5), topRightRadius: self.cornerRadius)
@@ -216,7 +216,7 @@ fileprivate class TourInterfaceToolbarView: TourInterfaceComponentView {
     }
 }
 
-fileprivate class TourInterfaceEditorView: TourInterfaceComponentView {
+private class TourInterfaceEditorView: TourInterfaceComponentView {
     override func draw(_ dirtyRect: NSRect) {
         self.setupColours()
         let path = NSBezierPath(rect: self.bounds.insetBy(dx: 0.5, dy: 0.5))
@@ -238,7 +238,7 @@ fileprivate class TourInterfaceEditorView: TourInterfaceComponentView {
     }
 }
 
-fileprivate class TourInterfaceInspectorsView: TourInterfaceComponentView {
+private class TourInterfaceInspectorsView: TourInterfaceComponentView {
     override func draw(_ dirtyRect: NSRect) {
         self.setupColours()
         let path = NSBezierPath(roundedRect: self.bounds.insetBy(dx: 0.5, dy: 0.5), bottomRightRadius: self.cornerRadius)

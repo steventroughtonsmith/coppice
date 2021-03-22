@@ -10,7 +10,6 @@ import Cocoa
 
 @IBDesignable
 class SidebarHeaderView: NSView {
-
     @IBInspectable var drawTopBorder: Bool = true
 
     override func draw(_ dirtyRect: NSRect) {
@@ -24,5 +23,4 @@ class SidebarHeaderView: NSView {
         NSColor(named: "SidebarHeaderShadow")?.set()
         rect.fill()
     }
-    
 }

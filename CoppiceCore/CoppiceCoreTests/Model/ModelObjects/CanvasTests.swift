@@ -6,11 +6,10 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 @testable import CoppiceCore
+import XCTest
 
 class CanvasTests: XCTestCase {
-
     //MARK: .zoomFactor
     func test_zoomFactor_capsMaximumValueTo1() throws {
         let canvas = Canvas()
@@ -23,7 +22,7 @@ class CanvasTests: XCTestCase {
         canvas.zoomFactor = 0.2
         XCTAssertEqual(canvas.zoomFactor, 0.25)
     }
-    
+
 
     //MARK: - .plistRepresentation
     func test_plistRepresentation_containsID() throws {
@@ -126,12 +125,12 @@ class CanvasTests: XCTestCase {
         let pageID3 = Page.modelID(with: UUID())
         pageHierarchies[canvasPageID1] = [pageID1: PageHierarchy(canvasPage: canvasPage1)!]
         pageHierarchies[canvasPageID2] = [pageID2: PageHierarchy(canvasPage: canvasPage2)!,
-                                      pageID3: PageHierarchy(canvasPage: canvasPage3)!]
+                                          pageID3: PageHierarchy(canvasPage: canvasPage3)!]
 
         canvas.closedPageHierarchies = pageHierarchies
 
         let plist = canvas.plistRepresentation
-        let hierarchies = try XCTUnwrap(plist["closedPageHierarchies"] as? [String : [String : Any ]])
+        let hierarchies = try XCTUnwrap(plist["closedPageHierarchies"] as? [String: [String: Any]])
         let firstHierarchy = try XCTUnwrap(hierarchies[canvasPageID1.stringRepresentation])
         let secondHierarchy = try XCTUnwrap(hierarchies[canvasPageID2.stringRepresentation])
 
@@ -161,7 +160,7 @@ class CanvasTests: XCTestCase {
             "sortIndex": 1,
             "theme": "auto",
             "thumbnail": ModelFile(type: "thumbnail", filename: nil, data: expectedImageData, metadata: [:]),
-            "testingAttribute": 12345
+            "testingAttribute": 12345,
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: plist))
@@ -181,7 +180,7 @@ class CanvasTests: XCTestCase {
             "title": "Hello Bar",
             "dateCreated": Date(timeIntervalSinceReferenceDate: 30),
             "dateModified": Date(timeIntervalSinceReferenceDate: 1453),
-            "sortIndex": 5
+            "sortIndex": 5,
         ]
 
         XCTAssertThrowsError(try canvas.update(fromPlistRepresentation: plist), "") {
@@ -402,7 +401,7 @@ class CanvasTests: XCTestCase {
             "dateModified": Date(timeIntervalSinceReferenceDate: 1455),
             "sortIndex": 1,
             "theme": "auto",
-            "thumbnail": ModelFile(type: "thumbnail", filename: nil, data: expectedImageData, metadata: [:])
+            "thumbnail": ModelFile(type: "thumbnail", filename: nil, data: expectedImageData, metadata: [:]),
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: plist))
@@ -445,7 +444,7 @@ class CanvasTests: XCTestCase {
             "dateModified": Date(timeIntervalSinceReferenceDate: 1455),
             "sortIndex": 1,
             "theme": "auto",
-            "closedPageHierarchies": hierarchyDict
+            "closedPageHierarchies": hierarchyDict,
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: plist))
@@ -492,7 +491,7 @@ class CanvasTests: XCTestCase {
             "sortIndex": 1,
             "theme": "auto",
             "thumbnail": ModelFile(type: "thumbnail", filename: nil, data: expectedImageData, metadata: [:]),
-            "zoomFactor": CGFloat(0.75)
+            "zoomFactor": CGFloat(0.75),
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: plist))
@@ -532,7 +531,7 @@ class CanvasTests: XCTestCase {
             "sortIndex": 1,
             "theme": "auto",
             "thumbnail": ModelFile(type: "thumbnail", filename: nil, data: expectedImageData, metadata: [:]),
-            "testingAttribute": 12345
+            "testingAttribute": 12345,
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: plist))
@@ -553,7 +552,7 @@ class CanvasTests: XCTestCase {
             "sortIndex": 1,
             "theme": "auto",
             "thumbnail": ModelFile(type: "thumbnail", filename: nil, data: expectedImageData, metadata: [:]),
-            "testingAttribute": 12345
+            "testingAttribute": 12345,
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: plist))
@@ -1116,8 +1115,8 @@ class CanvasTests: XCTestCase {
         canvas.closedPageHierarchies = [parentPage.id: [page.id: rootHierarchy]]
 
         let canvasPages = try XCTUnwrap(canvas.open(page, linkedFrom: parentPage))
-        XCTAssertEqual(canvasPages.filter({ $0.parent?.id == parentPage.id}).count, 1)
-        XCTAssertEqual(canvasPages.filter({ $0.parent?.id == rootCanvasPageID}).count, 2)
+        XCTAssertEqual(canvasPages.filter { $0.parent?.id == parentPage.id }.count, 1)
+        XCTAssertEqual(canvasPages.filter { $0.parent?.id == rootCanvasPageID }.count, 2)
     }
 
     func test_openPageLinkedFrom_openingClosedHierarchySetsCanvasToReceiverOnAllPages() throws {

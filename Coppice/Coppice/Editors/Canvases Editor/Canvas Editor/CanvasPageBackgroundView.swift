@@ -76,5 +76,4 @@ class CanvasPageBackgroundView: NSView {
         path.lineWidth = 2
         path.stroke()
     }
-    
 }

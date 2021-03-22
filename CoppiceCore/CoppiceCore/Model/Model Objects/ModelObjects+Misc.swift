@@ -7,8 +7,8 @@
 
 import Foundation
 
-public extension ModelCollection where ModelType == Canvas {
-    var sortedCanvases: [Canvas] {
+extension ModelCollection where ModelType == Canvas {
+    public var sortedCanvases: [Canvas] {
         return self.all.sorted { $0.sortIndex < $1.sortIndex }
     }
 }

@@ -6,10 +6,10 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import Foundation
 import AppKit
 import Combine
 import CoppiceCore
+import Foundation
 
 class TextEditorFontInspectorViewModel: BaseInspectorViewModel {
     let attributeEditor: TextEditorAttributeEditor
@@ -75,7 +75,8 @@ class TextEditorFontInspectorViewModel: BaseInspectorViewModel {
 
     @objc dynamic var typefaces: [Typeface] {
         guard let selectedFontFamily = self.selectedFontFamily,
-            let members = NSFontManager.shared.availableMembers(ofFontFamily: selectedFontFamily) else {
+            let members = NSFontManager.shared.availableMembers(ofFontFamily: selectedFontFamily)
+        else {
             return []
         }
         return members.compactMap { Typeface(memberInfo: $0) }.sorted { $0.weight < $1.weight }
@@ -87,6 +88,7 @@ class TextEditorFontInspectorViewModel: BaseInspectorViewModel {
         get { self.cachedAttributes?.fontFamily }
         set { self.attributeEditor.updateSelection(with: TextEditorFontAttributes(fontFamily: newValue)) }
     }
+
     @objc dynamic var selectedTypeface: Typeface? {
         get { self.typefaces.first { $0.fontName == self.cachedAttributes?.fontPostscriptName } }
         set { self.attributeEditor.updateSelection(with: TextEditorFontAttributes(fontPostscriptName: newValue?.fontName)) }
@@ -107,13 +109,13 @@ class TextEditorFontInspectorViewModel: BaseInspectorViewModel {
     }
 
     @objc dynamic var textColour: NSColor? {
-        get { self.cachedAttributes?.textColour}
+        get { self.cachedAttributes?.textColour }
         set { self.attributeEditor.updateSelection(with: TextEditorFontAttributes(textColour: newValue)) }
     }
 
     @objc dynamic var isBold: Bool {
         get { self.cachedAttributes?.isBold ?? false }
-        set {self.attributeEditor.updateSelection(with: TextEditorFontAttributes(isBold: newValue)) }
+        set { self.attributeEditor.updateSelection(with: TextEditorFontAttributes(isBold: newValue)) }
     }
 
     @objc dynamic var isItalic: Bool {

@@ -6,12 +6,11 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 @testable import Coppice
 @testable import CoppiceCore
+import XCTest
 
 class CanvasPageInspectorViewModelTests: XCTestCase {
-
     //MARK: - .width
     func test_width_returnsCanvasPageFrameWidth() throws {
         let canvasPage = CanvasPage()
@@ -192,5 +191,4 @@ class CanvasPageInspectorViewModelTests: XCTestCase {
         viewModel.height = 90
         XCTAssertEqual(canvasPage.frame.size, CGSize(width: 150, height: 300))
     }
-
 }

@@ -46,7 +46,7 @@ class PageImageController: NSObject {
         if let cachedImage = self.cache.object(forKey: (id.uuid as NSUUID)) {
             return cachedImage
         }
-        
+
         guard let newImage = self.generateImage(forPageWithID: id) else {
             return nil
         }

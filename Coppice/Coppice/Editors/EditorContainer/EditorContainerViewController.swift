@@ -10,7 +10,6 @@ import Cocoa
 import CoppiceCore
 
 class EditorContainerViewController: NSViewController, SplitViewContainable {
-
     let viewModel: EditorContainerViewModel
     init(viewModel: EditorContainerViewModel) {
         self.viewModel = viewModel

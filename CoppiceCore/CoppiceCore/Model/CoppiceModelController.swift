@@ -14,7 +14,8 @@ public class CoppiceModelController: NSObject, ModelController {
 
     public lazy var identifier: UUID = {
         if let identifierString = self.settings.string(for: .documentIdentifier),
-            let identifier = UUID(uuidString: identifierString) {
+            let identifier = UUID(uuidString: identifierString)
+        {
             return identifier
         }
 
@@ -111,7 +112,8 @@ public class CoppiceModelController: NSObject, ModelController {
     //MARK: - Folder
     public lazy var rootFolder: Folder = {
         if let id = self.settings.modelID(for: .rootFolder),
-            let rootFolder = self.folderCollection.objectWithID(id) {
+            let rootFolder = self.folderCollection.objectWithID(id)
+        {
             return rootFolder
         }
 
@@ -161,11 +163,9 @@ public class CoppiceModelController: NSObject, ModelController {
         for item in folderItems {
             if let page = item as? Page {
                 self.delete(page)
-            }
-            else if let folder = item as? Folder {
+            } else if let folder = item as? Folder {
                 self.delete(folder)
-            }
-            else {
+            } else {
                 assertionFailure("Tried deleting a folder item that isn't a page or file")
             }
         }
@@ -238,7 +238,8 @@ public class CoppiceModelController: NSObject, ModelController {
         let undoActionName = NSLocalizedString("Open Page Link", comment: "Open Page Link Undo Action Name")
 
         guard let source = link.source,
-            let sourcePage = self.canvasPageCollection.objectWithID(source) else {
+            let sourcePage = self.canvasPageCollection.objectWithID(source)
+        else {
                 self.undoManager.setActionName(undoActionName)
                 return canvas.addPages([page])
         }
@@ -264,9 +265,9 @@ public class CoppiceModelController: NSObject, ModelController {
 
 
 //MARK: - ModelSettingsKeys
-public extension ModelSettings.Setting {
-    static let pageSortKeySetting = ModelSettings.Setting(rawValue: "pageSortKey")
-    static let pageGroupExpanded = ModelSettings.Setting(rawValue: "pageGroupExpanded")
-    static let rootFolder = ModelSettings.Setting(rawValue: "rootFolder")
-    static let documentIdentifier = ModelSettings.Setting(rawValue: "identifier")
+extension ModelSettings.Setting {
+    public static let pageSortKeySetting = ModelSettings.Setting(rawValue: "pageSortKey")
+    public static let pageGroupExpanded = ModelSettings.Setting(rawValue: "pageGroupExpanded")
+    public static let rootFolder = ModelSettings.Setting(rawValue: "rootFolder")
+    public static let documentIdentifier = ModelSettings.Setting(rawValue: "identifier")
 }

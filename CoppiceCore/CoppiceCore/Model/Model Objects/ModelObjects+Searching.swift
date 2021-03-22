@@ -8,8 +8,8 @@
 
 import Foundation
 
-public extension Page {
-    struct Match: Comparable {
+extension Page {
+    public struct Match: Comparable {
         public enum MatchType: Equatable {
             case title(NSRange)
             case content(NSRange)
@@ -17,16 +17,16 @@ public extension Page {
 
         public static func < (lhs: Page.Match, rhs: Page.Match) -> Bool {
             switch lhs.matchType {
-            case .title(_):
+            case .title:
                 switch rhs.matchType {
-                case .title(_):
+                case .title:
                     return lhs.page.title < rhs.page.title
-                case .content(_):
+                case .content:
                     return true
                 }
             case .content(let lhsRange):
                 switch rhs.matchType {
-                case .title(_):
+                case .title:
                     return false
                 case .content(let rhsRange):
                     return lhsRange.location < rhsRange.location
@@ -38,7 +38,7 @@ public extension Page {
         public let matchType: MatchType
     }
 
-    func match(forSearchTerm searchTerm: String) -> Match? {
+    public func match(forSearchTerm searchTerm: String) -> Match? {
         let titleRange = (self.title as NSString).range(of: searchTerm, options: [.caseInsensitive, .diacriticInsensitive])
         if titleRange.location != NSNotFound {
             return Match(page: self, matchType: .title(titleRange))
@@ -53,35 +53,36 @@ public extension Page {
     }
 }
 
-public extension ModelCollection where ModelType == Page {
-    func matches(forSearchTerm searchTerm: String) -> [Page.Match] {
+extension ModelCollection where ModelType == Page {
+    public func matches(forSearchTerm searchTerm: String) -> [Page.Match] {
         return self.all.compactMap { $0.match(forSearchTerm: searchTerm) }.sorted { $0 < $1 }
     }
 }
 
 
 
-public extension Canvas {
-    struct Match: Comparable {
+extension Canvas {
+    public struct Match: Comparable {
         public enum MatchType: Equatable {
             case title(NSRange)
             case pages(Int)
         }
+
         public let canvas: Canvas
         public let matchType: MatchType
 
         public static func < (lhs: Canvas.Match, rhs: Canvas.Match) -> Bool {
             switch lhs.matchType {
-            case .title(_):
+            case .title:
                 switch rhs.matchType {
-                case .title(_):
+                case .title:
                     return lhs.canvas.title < rhs.canvas.title
-                case .pages(_):
+                case .pages:
                     return true
                 }
             case .pages(let lhsCount):
                 switch rhs.matchType {
-                case .title(_):
+                case .title:
                     return false
                 case .pages(let rhsCount):
                     return lhsCount > rhsCount
@@ -90,7 +91,7 @@ public extension Canvas {
         }
     }
 
-    func match(forSearchTerm searchTerm: String) -> Match? {
+    public func match(forSearchTerm searchTerm: String) -> Match? {
         let titleRange = (self.title as NSString).range(of: searchTerm, options: [.caseInsensitive, .diacriticInsensitive])
         if titleRange.location != NSNotFound {
             return Match(canvas: self, matchType: .title(titleRange))
@@ -106,8 +107,8 @@ public extension Canvas {
 }
 
 
-public extension ModelCollection where ModelType == Canvas {
-    func matches(forSearchTerm searchTerm: String) -> [Canvas.Match] {
+extension ModelCollection where ModelType == Canvas {
+    public func matches(forSearchTerm searchTerm: String) -> [Canvas.Match] {
         return self.all.compactMap { $0.match(forSearchTerm: searchTerm) }.sorted { $0 < $1 }
     }
 }

@@ -9,7 +9,6 @@
 import Cocoa
 
 class NoEditorViewController: NSViewController {
-
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.

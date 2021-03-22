@@ -6,12 +6,11 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 @testable import Coppice
 @testable import CoppiceCore
+import XCTest
 
 class CanvasListViewModelTests: XCTestCase {
-
     var modelController: MockCoppiceModelController!
     var documentViewModel: MockDocumentWindowViewModel!
     var viewModel: CanvasListViewModel!
