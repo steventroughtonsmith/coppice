@@ -337,13 +337,15 @@
             "id": "create_a_link",
             "title": "Create a Link",
             "dateCreated": "2020-11-10T14:16:43+0000",
-            "dateUpdated": "2020-11-16T13:59:58+0000",
+            "dateUpdated": "2021-03-15T16:15:41+0000",
             "tags": [
                 "link",
                 "text",
                 "page",
                 "new",
-                "relationship"
+                "relationship",
+                "remove",
+                "delete"
             ],
             "appVersion": "2020.1",
             "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/create_a_link"
