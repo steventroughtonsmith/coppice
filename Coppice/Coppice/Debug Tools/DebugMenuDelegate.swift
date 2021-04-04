@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import M3Subscriptions
 
 #if DEBUG
 class DebugMenuBuilder: NSObject {
@@ -23,6 +24,13 @@ class DebugMenuBuilder: NSObject {
 
     let logResponderChainItem = NSMenuItem(title: "Log Responder Chain", action: #selector(DocumentWindowController.logResponderChain(_:)), keyEquivalent: "")
 
+    let checkSubscriptionMenuItem = NSMenuItem(title: "Check Subscription", action: #selector(AppDelegate.checkSubscription(_:)), keyEquivalent: "")
+
+    let subscriptionDebugMenuItem: NSMenuItem = {
+        let menuItem = NSMenuItem(title: "Subscriptions", action: nil, keyEquivalent: "")
+        menuItem.submenu = APIDebugManager.shared.buildMenu()
+        return menuItem
+    }()
 
     func buildMenu() -> NSMenu {
         let menu = NSMenu(title: "**DEBUG**")
@@ -31,6 +39,10 @@ class DebugMenuBuilder: NSObject {
         menu.addItem(self.showPreviewGenerationItem)
         menu.addItem(NSMenuItem.separator())
         menu.addItem(self.logResponderChainItem)
+        menu.addItem(NSMenuItem.separator())
+        menu.addItem(self.checkSubscriptionMenuItem)
+        menu.addItem(self.subscriptionDebugMenuItem)
+
         return menu
     }
 }
