@@ -101,7 +101,7 @@ class CoppiceSubscriptionManager: NSObject {
         }
     }
 
-    func updateDeviceName(deviceName: String, on window: NSWindow, errorHandler: @escaping ErrorHandler) {
+    func updateDeviceName(deviceName: String, completion: @escaping (Result<ActivationResponse, Error>) -> Void) {
         guard let controller = self.subscriptionController else {
             return
         }
@@ -110,8 +110,9 @@ class CoppiceSubscriptionManager: NSObject {
             case .success(let response):
                 self.activationResponse = response
                 self.currentCheckError = nil
+                completion(.success(response))
             case .failure(let error):
-                self.handle(error, on: window, with: errorHandler)
+                completion(.failure(error))
             }
             self.completeCheck()
         }

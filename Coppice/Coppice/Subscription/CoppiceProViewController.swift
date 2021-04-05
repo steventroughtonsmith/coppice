@@ -29,9 +29,7 @@ class CoppiceProViewController: PreferencesViewController {
 
     //MARK: - View Controllers
     lazy var deactivatedViewController: DeactivatedSubscriptionViewController = {
-        let vc = DeactivatedSubscriptionViewController(subscriptionManager: self.subscriptionManager)
-        vc.delegate = self
-        return vc
+        return DeactivatedSubscriptionViewController(subscriptionManager: self.subscriptionManager)
     }()
 
     lazy var activatedViewController: ActivatedSubscriptionViewController = {
@@ -59,6 +57,8 @@ class CoppiceProViewController: PreferencesViewController {
         self.currentContentView = self.activatedViewController
     }
 
+    @IBOutlet var containerView: NSView!
+
     var currentContentView: NSViewController? {
         didSet {
             guard self.currentContentView != oldValue else {
@@ -68,10 +68,18 @@ class CoppiceProViewController: PreferencesViewController {
             oldValue?.view.removeFromSuperview()
             if let newValue = self.currentContentView {
                 self.addChild(newValue)
-                self.view.addSubview(newValue.view, withInsets: NSEdgeInsetsZero)
+                self.containerView.addSubview(newValue.view, withInsets: NSEdgeInsetsZero)
             }
             self.updateSize()
         }
+    }
+
+    @IBAction func showTerms(_ sender: Any?) {
+        NSWorkspace.shared.open(URL(string: "https://coppiceapp.com/terms")!)
+    }
+
+    @IBAction func showPrivacyPolicy(_ sender: Any?) {
+        NSWorkspace.shared.open(URL(string: "https://coppiceapp.com/privacy")!)
     }
 
 
@@ -87,11 +95,5 @@ class CoppiceProViewController: PreferencesViewController {
         OperationQueue.main.addOperation {
             self.updateView(with: response)
         }
-    }
-}
-
-extension CoppiceProViewController: DeactivatedSubscriptionViewControllerDelegate {
-    func didChangeMode(in viewController: DeactivatedSubscriptionViewController) {
-        self.updateSize()
     }
 }

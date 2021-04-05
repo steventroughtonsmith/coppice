@@ -7,28 +7,9 @@
 //
 
 import Cocoa
-
-protocol DeactivatedSubscriptionMode: AnyObject {
-    var header: String { get }
-    var subheader: String { get }
-    var actionName: String { get }
-    var toggleName: String { get }
-    func performAction(_ sender: NSButton)
-}
-
-protocol DeactivatedSubscriptionViewControllerDelegate: AnyObject {
-    func didChangeMode(in viewController: DeactivatedSubscriptionViewController)
-}
+import M3Subscriptions
 
 class DeactivatedSubscriptionViewController: NSViewController {
-    weak var delegate: DeactivatedSubscriptionViewControllerDelegate?
-
-    @IBOutlet weak var contentViewContainer: NSView!
-    @IBOutlet weak var headerLabel: NSTextField!
-    @IBOutlet weak var subheaderLabel: NSTextField!
-    @IBOutlet weak var primaryButton: NSButton!
-    @IBOutlet weak var toggleButton: NSButton!
-
     let subscriptionManager: CoppiceSubscriptionManager
     init(subscriptionManager: CoppiceSubscriptionManager) {
         self.subscriptionManager = subscriptionManager
@@ -43,70 +24,64 @@ class DeactivatedSubscriptionViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
-
-        self.contentViewContainer.wantsLayer = true
-        self.contentViewContainer.layer?.backgroundColor = NSColor(named: "CoppiceProContentBackground")?.cgColor
-
-        self.apply(self.signInVC)
     }
 
     override func viewDidDisappear() {
         super.viewDidDisappear()
-        self.signInVC.reset()
-    }
-
-    //MARK: - Modes
-    private lazy var subscribeVC: SubscribeViewController = {
-        return SubscribeViewController(subscriptionManager: self.subscriptionManager)
-    }()
-
-    @objc dynamic private lazy var signInVC: SignInViewController = {
-        return SignInViewController(subscriptionManager: self.subscriptionManager)
-    }()
-
-    var currentMode: (NSViewController & DeactivatedSubscriptionMode)?
-
-    func apply(_ mode: (NSViewController & DeactivatedSubscriptionMode)) {
-        self.currentMode?.view.removeFromSuperview()
-        self.currentMode?.removeFromParent()
-
-        self.contentViewContainer.addSubview(mode.view, withInsets: NSEdgeInsetsZero)
-        self.addChild(mode)
-
-        self.headerLabel.stringValue = mode.header
-        self.subheaderLabel.stringValue = mode.subheader
-        self.primaryButton.title = mode.actionName
-        self.toggleButton.title = mode.toggleName
-
-        self.currentMode = mode
-        self.delegate?.didChangeMode(in: self)
+        self.passwordField.stringValue = ""
     }
 
 
-    //MARK: - Actions
-    @IBAction func performPrimaryAction(_ sender: Any?) {
-        self.currentMode?.performAction(self.primaryButton)
+    //MARK: - Outlets
+    @IBOutlet weak var emailField: NSTextField!
+    @IBOutlet weak var passwordField: NSTextField!
+
+
+    //MARK: - Activate
+    @IBAction func activate(_ sender: NSButton?) {
+        guard
+            let window = self.view.window,
+            let button = sender
+        else {
+            return
+        }
+        self.subscriptionManager.activate(withEmail: self.emailField.stringValue, password: self.passwordField.stringValue, on: window) { error in
+            return self.handleActivateError(error, on: button)
+        }
     }
 
+    private func handleActivateError(_ error: NSError, on button: NSButton) -> Bool {
+        guard let errorCode = SubscriptionErrorCodes(rawValue: error.code) else {
+            return false
+        }
+
+        switch errorCode {
+        case .noSubscriptionFound, .subscriptionExpired:
+            ErrorPopoverViewController.show(error,
+                                            relativeTo: button.bounds,
+                                            of: button,
+                                            preferredEdge: .maxX) //Show to the right so the user knows to select the button below
+        default:
+            ErrorPopoverViewController.show(error,
+                                            relativeTo: button.bounds,
+                                            of: button,
+                                            preferredEdge: .maxY)
+        }
+
+        return true
+    }
+
+    @objc dynamic var canActivateDevice = false
 
 
-    @IBAction func toggleMode(_ sender: Any?) {
-        //We aren't toggling mode for now, we'll just send the user straight to the Pro page online (we only really need this for in-app purchase)
+    //MARK: - Pro Upsell
+    @IBAction func showPro(_ sender: Any?) {
         NSWorkspace.shared.open(URL(string: "https://coppiceapp.com/pro")!)
-
-//        if (self.currentMode as NSViewController?) == self.signInVC {
-//            self.apply(self.subscribeVC)
-//        }
-//        else {
-//            self.apply(self.signInVC)
-//        }
     }
+}
 
-    @IBAction func showTerms(_ sender: Any?) {
-        NSWorkspace.shared.open(URL(string: "https://coppiceapp.com/terms")!)
-    }
-
-    @IBAction func showPrivacyPolicy(_ sender: Any?) {
-        NSWorkspace.shared.open(URL(string: "https://coppiceapp.com/privacy")!)
+extension DeactivatedSubscriptionViewController: NSTextFieldDelegate {
+    func controlTextDidChange(_ obj: Notification) {
+        self.canActivateDevice = !self.emailField.stringValue.isEmpty && !self.passwordField.stringValue.isEmpty
     }
 }
