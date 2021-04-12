@@ -103,7 +103,7 @@
                 <constraint firstItem="wYH-WF-pcx" firstAttribute="top" secondItem="BQE-4f-7tU" secondAttribute="bottom" constant="20" id="PN7-kW-Mt9"/>
                 <constraint firstItem="ahC-00-DvU" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="RMN-Rc-6JA"/>
                 <constraint firstAttribute="trailing" secondItem="ahC-00-DvU" secondAttribute="trailing" id="TTc-KY-apt"/>
-                <constraint firstAttribute="bottom" secondItem="wYH-WF-pcx" secondAttribute="bottom" constant="20" symbolic="YES" id="bc7-6c-2gL"/>
+                <constraint firstAttribute="bottom" secondItem="wYH-WF-pcx" secondAttribute="bottom" priority="250" constant="20" symbolic="YES" id="bc7-6c-2gL"/>
                 <constraint firstItem="BQE-4f-7tU" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="uqF-0S-Y2g"/>
                 <constraint firstItem="ahC-00-DvU" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="yuC-1V-oTi"/>
             </constraints>
