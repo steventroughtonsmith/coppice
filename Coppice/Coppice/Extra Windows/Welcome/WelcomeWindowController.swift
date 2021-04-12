@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import CoppiceCore
 
 class WelcomeWindowController: NSWindowController {
     @IBOutlet weak var buttonStackView: NSStackView!
@@ -22,6 +23,8 @@ class WelcomeWindowController: NSWindowController {
 
         self.window?.isMovableByWindowBackground = true
         self.window?.isExcludedFromWindowsMenu = true
+
+        self.recentTable.setDraggingSourceOperationMask(.copy, forLocal: false)
 
         self.setupVersionLabel()
     }
@@ -86,5 +89,33 @@ extension WelcomeWindowController: NSTableViewDataSource {
 
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
         return CoppiceDocumentController.shared.recentDocumentURLs[row]
+    }
+
+    func tableView(_ tableView: NSTableView, pasteboardWriterForRow row: Int) -> NSPasteboardWriting? {
+        let provider = NSFilePromiseProvider(fileType: "com.mcubedsw.Coppice.document", delegate: self)
+        provider.userInfo = CoppiceDocumentController.shared.recentDocumentURLs[row]
+        return provider
+    }
+}
+
+extension WelcomeWindowController: NSFilePromiseProviderDelegate {
+    func filePromiseProvider(_ filePromiseProvider: NSFilePromiseProvider, fileNameForType fileType: String) -> String {
+        guard let url = filePromiseProvider.userInfo as? URL else {
+            return ""
+        }
+        return url.lastPathComponent
+    }
+
+    func filePromiseProvider(_ filePromiseProvider: NSFilePromiseProvider, writePromiseTo url: URL, completionHandler: @escaping (Error?) -> Void) {
+        guard let existingURL = filePromiseProvider.userInfo as? URL else {
+            completionHandler(nil)
+            return
+        }
+        do {
+            try FileManager.default.copyItem(at: existingURL, to: url)
+            completionHandler(nil)
+        } catch {
+            completionHandler(error)
+        }
     }
 }
