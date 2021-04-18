@@ -1079,9 +1079,9 @@
 			children = (
 				9958107E230D7EEB00D996C4 /* CanvasEditorViewModel.swift */,
 				99581080230D7EFB00D996C4 /* CanvasEditorViewController.swift */,
+				99581081230D7EFB00D996C4 /* CanvasEditorViewController.xib */,
 				9986872F253C719D004B29B0 /* ZoomMenuDelegate.swift */,
 				99C03F0A232A9A5E00EB7516 /* CanvasView.swift */,
-				99581081230D7EFB00D996C4 /* CanvasEditorViewController.xib */,
 				99581094230D93F700D996C4 /* CanvasPageViewModel.swift */,
 				99581090230D92C600D996C4 /* CanvasPageViewController.swift */,
 				99581091230D92C600D996C4 /* CanvasPageViewController.xib */,

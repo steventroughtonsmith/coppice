@@ -183,7 +183,7 @@ public class LayoutEnginePage: Equatable {
 
 
     //MARK: - Layout Frames
-    func convertPointToContentSpace(_ point: CGPoint) -> CGPoint {
+    public func convertPointToContentSpace(_ point: CGPoint) -> CGPoint {
         guard let layoutEngine = self.layoutEngine else {
             return point
         }

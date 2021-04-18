@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -57,7 +57,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Psl-Eo-tCJ">
-                                        <rect key="frame" x="647" y="0.0" width="111" height="27"/>
+                                        <rect key="frame" x="646" y="0.0" width="113" height="27"/>
                                         <buttonCell key="cell" type="push" title="Find out more …" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="JwI-7q-YHE">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="smallSystem"/>
@@ -139,7 +139,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <popUpButton toolTip="Change the zoom level of the canvas" translatesAutoresizingMaskIntoConstraints="NO" id="7ch-X7-loO">
-                                <rect key="frame" x="700" y="3" width="53" height="18"/>
+                                <rect key="frame" x="705" y="5" width="48" height="14"/>
                                 <popUpButtonCell key="cell" type="roundTextured" title="100%" bezelStyle="texturedRounded" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" selectedItem="sLc-r6-goS" id="1Fw-Vb-jEB">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="message" size="11"/>
@@ -237,6 +237,12 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="addPageToCanvas:" target="-1" id="BS3-Hn-1Ss"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Edit Page" id="TXL-fj-kJC">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="editPage:" target="-2" id="hMf-dO-GP8"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="a1Q-2r-p85"/>

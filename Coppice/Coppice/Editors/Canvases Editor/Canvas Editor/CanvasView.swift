@@ -71,6 +71,13 @@ class CanvasView: NSView {
         return nil
     }
 
+    var clickedPageView: CanvasElementView? {
+        guard let location = self.currentClickLocation else {
+            return nil
+        }
+        return self.pageView(at: location)
+    }
+
 
     //MARK: - First Responder
     override var acceptsFirstResponder: Bool {

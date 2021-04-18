@@ -583,6 +583,17 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
         }
     }
 
+    @IBAction func editPage(_ sender: Any) {
+        guard
+            let clickedLocation = self.canvasView.currentClickLocation,
+            let page = self.layoutEngine.page(atCanvasPoint: clickedLocation)
+        else {
+            return
+        }
+
+        self.layoutEngine.startEditing(page, atContentPoint: page.convertPointToContentSpace(clickedLocation))
+    }
+
     @IBAction func removeSelectedPages(_ sender: Any?) {
         self.viewModel.selectedCanvasPages.forEach { self.viewModel.close($0) }
     }
@@ -664,6 +675,9 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
             }
             menuItem.toolTip = NSLocalizedString("Start editing a Page to create a link", comment: "Canvas Link to Page disabled tooltip")
             return false
+        }
+        if menuItem.action == #selector(self.editPage(_:)) {
+            return self.canvasView.clickedPageView != nil
         }
         return false
     }
