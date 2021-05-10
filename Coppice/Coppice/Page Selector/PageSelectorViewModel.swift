@@ -16,12 +16,12 @@ class PageSelectorViewModel: NSObject {
 
     typealias SelectionBlock = (Page) -> Void
 
-    let modelController: ModelController
+    let documentWindowViewModel: DocumentWindowViewModel
     let title: String
     let selectionBlock: SelectionBlock
-    init(title: String, modelController: ModelController, selectionBlock: @escaping SelectionBlock) {
+    init(title: String, documentWindowViewModel: DocumentWindowViewModel, selectionBlock: @escaping SelectionBlock) {
         self.title = title
-        self.modelController = modelController
+        self.documentWindowViewModel = documentWindowViewModel
         self.selectionBlock = selectionBlock
         super.init()
         self.updatePages()
@@ -34,59 +34,79 @@ class PageSelectorViewModel: NSObject {
         }
     }
 
-    @objc dynamic private(set) var matchingPages = [PageSelectorResult]()
+    @objc dynamic private(set) var rows = [PageSelectorRow]()
 
     private func updatePages() {
-        let sortedPages = self.modelController.collection(for: Page.self).all.sorted(by: {
+        let sortedPages = self.documentWindowViewModel.modelController.pageCollection.all.sorted(by: {
             //If one or other page is untitled we want to favour the titled page
             if ($0.title.count == 0) || ($1.title.count == 0) {
                 return $0.title.count > $1.title.count
             }
             return $0.title < $1.title
         })
-        guard self.searchTerm.count > 1 else {
-            self.matchingPages = sortedPages.map { PageSelectorResult(page: $0) }
-            return
+        var newRows: [PageSelectorRow]
+        if self.searchTerm.count > 1 {
+            let filteredPages = sortedPages.filter { $0.title.lowercased().contains(self.searchTerm.lowercased()) }
+            newRows = filteredPages.map { PageSelectorRow(page: $0) }
+        } else {
+            newRows = sortedPages.map { PageSelectorRow(page: $0) }
         }
 
-        let filteredPages = sortedPages.filter { $0.title.lowercased().contains(self.searchTerm.lowercased()) }
-        self.matchingPages = filteredPages.map { PageSelectorResult(page: $0) }
+        newRows.append(PageSelectorRow(title: NSLocalizedString("Create New…", comment: "Page selector - page creation header"), body: nil, image: nil, rowType: .header))
+        newRows.append(contentsOf: PageContentType.allCases.map { PageSelectorRow(contentType: $0) })
+        self.rows = newRows
     }
 
-    func confirmSelection(of result: PageSelectorResult) {
-        self.selectionBlock(result.page)
+    func confirmSelection(of result: PageSelectorRow) {
+        switch result.rowType {
+        case .page(let page):
+            self.selectionBlock(page)
+        case .contentType(let contentType):
+            let page = self.documentWindowViewModel.modelController.createPage(ofType: contentType, in: self.documentWindowViewModel.folderForNewPages, below: nil) { page in
+                page.title = self.searchTerm
+            }
+
+            self.selectionBlock(page)
+        case .header:
+            break
+        }
     }
 }
 
-class PageSelectorResult: NSObject {
-    @objc dynamic var title: String {
-        return self.page.title
+class PageSelectorRow: NSObject {
+    @objc dynamic let title: String
+    @objc dynamic let body: String?
+    @objc dynamic let image: NSImage?
+
+    enum RowType: Equatable {
+        case page(Page)
+        case contentType(PageContentType)
+        case header
     }
 
-    @objc dynamic var body: String? {
-        guard let textContent = self.page.content as? TextPageContent else {
-            return nil
+    let rowType: RowType
+
+    convenience init(page: Page) {
+        let title = page.title
+        var body: String?
+        if let string = (page.content as? TextPageContent)?.text.string, string.count > 0 {
+            body = string
         }
-        let string = textContent.text.string
-        if string.count == 0 {
-            return nil
+        var image = page.content.contentType.icon(.large)
+        if let imageContent = (page.content as? ImagePageContent)?.image {
+            image = imageContent
         }
-        return string
+        self.init(title: title, body: body, image: image, rowType: .page(page))
     }
 
-    @objc dynamic var image: NSImage? {
-        guard
-            let imageContent = self.page.content as? ImagePageContent,
-            let image = imageContent.image
-        else {
-            return self.page.content.contentType.icon(.large)
-        }
-        return image
+    convenience init(contentType: PageContentType) {
+        self.init(title: contentType.localizedName, body: nil, image: contentType.icon(.large), rowType: .contentType(contentType))
     }
 
-    let page: Page
-    init(page: Page) {
-        self.page = page
-        super.init()
+    init(title: String, body: String?, image: NSImage?, rowType: RowType = .header) {
+        self.title = title
+        self.body = body
+        self.image = image
+        self.rowType = rowType
     }
 }

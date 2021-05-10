@@ -101,7 +101,7 @@ class DocumentWindowController: NSWindowController, NSMenuItemValidation {
             return
         }
 
-        let viewModel = PageSelectorViewModel(title: title, modelController: document.modelController) { [weak self] page in
+        let viewModel = PageSelectorViewModel(title: title, documentWindowViewModel: self.viewModel) { [weak self] page in
             callback(page)
             self?.pageSelectorWindowController = nil
         }

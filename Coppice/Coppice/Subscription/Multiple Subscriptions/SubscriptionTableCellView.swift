@@ -16,6 +16,7 @@ protocol SubscriptionTableCellViewDelegate: AnyObject {
 
 class SubscriptionTableCellView: NSTableCellView, TableCell {
     static let identifier = NSUserInterfaceItemIdentifier("SubscriptionCell")
+    static var nib: NSNib? = nil
 
     weak var delegate: SubscriptionTableCellViewDelegate?
 

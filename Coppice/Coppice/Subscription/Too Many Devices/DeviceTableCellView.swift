@@ -16,6 +16,7 @@ protocol DeviceTableCellViewDelegate: AnyObject {
 
 class DeviceTableCellView: NSTableCellView, TableCell {
     static let identifier = NSUserInterfaceItemIdentifier("DeviceCell")
+    static var nib: NSNib? = nil
 
     weak var delegate: DeviceTableCellViewDelegate?
 

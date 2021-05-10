@@ -9,12 +9,13 @@
 import Cocoa
 
 class PageSelectorViewController: NSViewController {
-    @IBOutlet var pagesArrayController: NSArrayController!
     @IBOutlet weak var searchField: NSTextField!
     @IBOutlet var tableView: NSTableView!
     @objc dynamic let viewModel: PageSelectorViewModel
+    let dataSource: PageSelectorTableViewDataSource
     init(viewModel: PageSelectorViewModel) {
         self.viewModel = viewModel
+        self.dataSource = PageSelectorTableViewDataSource(viewModel: viewModel)
         super.init(nibName: "PageSelectorViewController", bundle: nil)
         viewModel.view = self
     }
@@ -27,6 +28,7 @@ class PageSelectorViewController: NSViewController {
         super.viewDidLoad()
         self.searchField.placeholderString = self.viewModel.title
         self.view.window?.makeFirstResponder(self.searchField)
+        self.dataSource.tableView = self.tableView
     }
 
     //For some reason NSWindow doesn't enable this and we can't do it in the window controller
@@ -39,9 +41,7 @@ class PageSelectorViewController: NSViewController {
     }
 
     @discardableResult func confirmSelection() -> Bool {
-        guard let result = self.pagesArrayController.selectedObjects.first as? PageSelectorResult else {
-            return false
-        }
+        let result = self.viewModel.rows[self.tableView.selectedRow]
 
         self.performClose(nil)
         self.viewModel.confirmSelection(of: result)
@@ -58,14 +58,16 @@ extension PageSelectorViewController: NSTextFieldDelegate {
             return true
         }
         if (commandSelector == #selector(moveUp(_:))) {
-            self.pagesArrayController.selectPrevious(self)
+            self.dataSource.selectPrevious()
+//            self.pagesArrayController.selectPrevious(self)
             //Turns out NSArrayController doesn't update the selectionIndex immediately
-            self.tableView.scrollRowToVisible(max(self.pagesArrayController.selectionIndex - 1, 0))
+//            self.tableView.scrollRowToVisible(max(self.pagesArrayController.selectionIndex - 1, 0))
             return true
         }
         if (commandSelector == #selector(moveDown(_:))) {
-            self.pagesArrayController.selectNext(self)
-            self.tableView.scrollRowToVisible(min(self.pagesArrayController.selectionIndex + 1, self.viewModel.matchingPages.count - 1))
+            self.dataSource.selectNext()
+//            self.pagesArrayController.selectNext(self)
+//            self.tableView.scrollRowToVisible(min(self.pagesArrayController.selectionIndex + 1, self.viewModel.rows.count - 1))
             return true
         }
         if (commandSelector == #selector(insertNewline(_:))) {

@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="PageSelectorViewController" customModule="Coppice" customModuleProvider="target">
             <connections>
-                <outlet property="pagesArrayController" destination="aiO-Pl-vbK" id="mrG-mD-8ws"/>
                 <outlet property="searchField" destination="TDW-xH-h0K" id="tys-GY-xa6"/>
                 <outlet property="tableView" destination="73f-TD-SgA" id="gPy-UJ-kTW"/>
                 <outlet property="view" destination="cQT-fe-yw1" id="kqK-vc-08B"/>
@@ -30,14 +29,14 @@
                             <rect key="frame" x="1" y="1" width="399" height="299"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <tableView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="42" viewBased="YES" id="73f-TD-SgA">
+                                <tableView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" tableStyle="fullWidth" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="42" viewBased="YES" id="73f-TD-SgA">
                                     <rect key="frame" x="0.0" y="0.0" width="399" height="299"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" red="0.11764705882352941" green="0.11764705882352941" blue="0.11764705882352941" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn width="387" minWidth="40" maxWidth="1000" id="rVD-O9-kq8">
+                                        <tableColumn width="385" minWidth="40" maxWidth="1000" id="rVD-O9-kq8">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -48,99 +47,6 @@
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
-                                            <prototypeCellViews>
-                                                <tableCellView id="FjO-Ad-VPx">
-                                                    <rect key="frame" x="1" y="1" width="396" height="42"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <subviews>
-                                                        <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="10" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I48-zR-ryd">
-                                                            <rect key="frame" x="10" y="3" width="376" height="50"/>
-                                                            <subviews>
-                                                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fzf-fG-VJK">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="48" height="50"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="width" constant="48" id="LqW-IA-xlN"/>
-                                                                    </constraints>
-                                                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="aCL-mL-WZJ"/>
-                                                                    <connections>
-                                                                        <binding destination="FjO-Ad-VPx" name="value" keyPath="objectValue.image" id="LGK-XU-bpM"/>
-                                                                        <binding destination="FjO-Ad-VPx" name="hidden" keyPath="objectValue.image" id="cdo-Zd-lnj">
-                                                                            <dictionary key="options">
-                                                                                <string key="NSValueTransformerName">NSIsNil</string>
-                                                                            </dictionary>
-                                                                        </binding>
-                                                                    </connections>
-                                                                </imageView>
-                                                                <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" placeholderIntrinsicWidth="318" placeholderIntrinsicHeight="34" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x6F-fQ-DI6">
-                                                                    <rect key="frame" x="58" y="8" width="318" height="34"/>
-                                                                    <subviews>
-                                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="TvE-FE-fxp">
-                                                                            <rect key="frame" x="-2" y="18" width="96" height="16"/>
-                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" placeholderString="Untitled Page" id="TJg-3g-qZJ">
-                                                                                <font key="font" metaFont="system"/>
-                                                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                                            </textFieldCell>
-                                                                            <connections>
-                                                                                <binding destination="FjO-Ad-VPx" name="value" keyPath="objectValue.title" id="Zqx-5h-HxV">
-                                                                                    <dictionary key="options">
-                                                                                        <string key="NSNullPlaceholder">Untitled Page</string>
-                                                                                    </dictionary>
-                                                                                </binding>
-                                                                            </connections>
-                                                                        </textField>
-                                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="8uD-Zl-59y">
-                                                                            <rect key="frame" x="-2" y="0.0" width="84" height="14"/>
-                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="RJx-of-qrz">
-                                                                                <font key="font" metaFont="controlContent" size="11"/>
-                                                                                <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
-                                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                                            </textFieldCell>
-                                                                            <connections>
-                                                                                <binding destination="FjO-Ad-VPx" name="value" keyPath="objectValue.body" id="5dA-SD-0o7"/>
-                                                                                <binding destination="FjO-Ad-VPx" name="hidden" keyPath="objectValue.body" id="TVt-YM-ond">
-                                                                                    <dictionary key="options">
-                                                                                        <string key="NSValueTransformerName">NSIsNil</string>
-                                                                                    </dictionary>
-                                                                                </binding>
-                                                                            </connections>
-                                                                        </textField>
-                                                                    </subviews>
-                                                                    <visibilityPriorities>
-                                                                        <integer value="1000"/>
-                                                                        <integer value="1000"/>
-                                                                    </visibilityPriorities>
-                                                                    <customSpacing>
-                                                                        <real value="3.4028234663852886e+38"/>
-                                                                        <real value="3.4028234663852886e+38"/>
-                                                                    </customSpacing>
-                                                                </stackView>
-                                                            </subviews>
-                                                            <constraints>
-                                                                <constraint firstAttribute="bottom" secondItem="fzf-fG-VJK" secondAttribute="bottom" id="N7W-jQ-8qJ"/>
-                                                                <constraint firstItem="fzf-fG-VJK" firstAttribute="top" secondItem="I48-zR-ryd" secondAttribute="top" id="huV-Pe-Sby"/>
-                                                            </constraints>
-                                                            <visibilityPriorities>
-                                                                <integer value="1000"/>
-                                                                <integer value="1000"/>
-                                                            </visibilityPriorities>
-                                                            <customSpacing>
-                                                                <real value="3.4028234663852886e+38"/>
-                                                                <real value="3.4028234663852886e+38"/>
-                                                            </customSpacing>
-                                                        </stackView>
-                                                    </subviews>
-                                                    <constraints>
-                                                        <constraint firstItem="I48-zR-ryd" firstAttribute="leading" secondItem="FjO-Ad-VPx" secondAttribute="leading" constant="10" id="Nlj-RN-w4O"/>
-                                                        <constraint firstAttribute="trailing" secondItem="I48-zR-ryd" secondAttribute="trailing" constant="10" id="QlP-Xz-XgR"/>
-                                                        <constraint firstAttribute="bottom" secondItem="I48-zR-ryd" secondAttribute="bottom" constant="3" id="bVf-yy-5Pt"/>
-                                                        <constraint firstItem="I48-zR-ryd" firstAttribute="top" secondItem="FjO-Ad-VPx" secondAttribute="top" constant="3" id="kfW-wg-ieT"/>
-                                                    </constraints>
-                                                </tableCellView>
-                                            </prototypeCellViews>
-                                            <connections>
-                                                <binding destination="aiO-Pl-vbK" name="value" keyPath="arrangedObjects" id="HgU-8o-I0t"/>
-                                            </connections>
                                         </tableColumn>
                                     </tableColumns>
                                     <connections>
@@ -207,11 +113,6 @@
             <color key="fillColor" name="PageSelectorBackground"/>
             <point key="canvasLocation" x="-177.5" y="517"/>
         </box>
-        <arrayController id="aiO-Pl-vbK">
-            <connections>
-                <binding destination="-2" name="contentArray" keyPath="self.viewModel.matchingPages" id="CG8-eq-miL"/>
-            </connections>
-        </arrayController>
     </objects>
     <resources>
         <image name="LargeSearch" width="22" height="22"/>
