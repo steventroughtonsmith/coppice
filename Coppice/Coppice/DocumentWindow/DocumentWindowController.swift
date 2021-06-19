@@ -97,10 +97,6 @@ class DocumentWindowController: NSWindowController, NSMenuItemValidation {
     }
 
     func showPageSelector(title: String, callback: @escaping PageSelectorViewModel.SelectionBlock) {
-        guard let document = self.document as? Document else {
-            return
-        }
-
         let viewModel = PageSelectorViewModel(title: title, documentWindowViewModel: self.viewModel) { [weak self] page in
             callback(page)
             self?.pageSelectorWindowController = nil

@@ -13,6 +13,7 @@ enum InspectorRanking: Int {
     case page = 20
     case canvasPage = 30
     case content = 40
+    case link = 50
 }
 
 protocol Inspector {

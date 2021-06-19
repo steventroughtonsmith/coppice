@@ -104,6 +104,7 @@
 		99D0C8E524C5FBEA002EEBFA /* ResizePageEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C8D924C5FBEA002EEBFA /* ResizePageEventContext.swift */; };
 		99D0C8EF24C72494002EEBFA /* LayoutEnginePage+CanvasPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C8EE24C72494002EEBFA /* LayoutEnginePage+CanvasPage.swift */; };
 		99D0C8F124C728C7002EEBFA /* ArrowDrawHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C8F024C728C7002EEBFA /* ArrowDrawHelper.swift */; };
+		99F0D5FC267D30D70020D37C /* NSRange+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F0D5FB267D30D70020D37C /* NSRange+M3Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -218,6 +219,7 @@
 		99D0C8D924C5FBEA002EEBFA /* ResizePageEventContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResizePageEventContext.swift; sourceTree = "<group>"; };
 		99D0C8EE24C72494002EEBFA /* LayoutEnginePage+CanvasPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LayoutEnginePage+CanvasPage.swift"; sourceTree = "<group>"; };
 		99D0C8F024C728C7002EEBFA /* ArrowDrawHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrowDrawHelper.swift; sourceTree = "<group>"; };
+		99F0D5FB267D30D70020D37C /* NSRange+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRange+M3Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -430,6 +432,7 @@
 				99D0C87224C5E0B2002EEBFA /* NSEdgeInsets+M3Extensions.swift */,
 				99D0C86D24C5E080002EEBFA /* NSImage+M3Extensions.swift */,
 				99D0C86E24C5E080002EEBFA /* CoreGraphics+M3Extensions.swift */,
+				99F0D5FB267D30D70020D37C /* NSRange+M3Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -675,6 +678,7 @@
 				99D0C8DE24C5FBEA002EEBFA /* CanvasLayoutEngine.swift in Sources */,
 				99D0C81324C5DE79002EEBFA /* TextPageContent.swift in Sources */,
 				99D0C80A24C5DE79002EEBFA /* FolderContainable.swift in Sources */,
+				99F0D5FC267D30D70020D37C /* NSRange+M3Extensions.swift in Sources */,
 				99D0C87124C5E080002EEBFA /* CoreGraphics+M3Extensions.swift in Sources */,
 				99D0C80924C5DE79002EEBFA /* Folder.swift in Sources */,
 			);

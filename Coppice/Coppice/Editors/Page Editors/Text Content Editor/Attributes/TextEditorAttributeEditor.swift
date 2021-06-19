@@ -8,11 +8,21 @@
 
 import AppKit
 import Combine
+import CoppiceCore
 
-class TextEditorAttributeEditor {
+class TextEditorAttributeEditor: LinkEditor {
     var textView: CanvasTextView? {
         didSet {
             self.update()
+        }
+    }
+
+    var editorEnabled: Bool = false {
+        didSet {
+            guard self.editorEnabled != oldValue else {
+                return
+            }
+            self.updateLinkEditorProperties()
         }
     }
 
@@ -20,12 +30,12 @@ class TextEditorAttributeEditor {
         self.updateSelectedFontAttributes()
         self.updateSelectedParagraphAttributes()
         self.updateListTypes()
+        self.updateLinkEditorProperties()
     }
 
 
     //MARK: - Font Attributes
     @Published var selectedFontAttributes: TextEditorFontAttributes?
-
 
     /// Update the current selection in the text editor with the supplied font attributes
     /// - Parameter editorAttributes: The attributes to apply to the selection, or set at the typing attributes
@@ -270,6 +280,91 @@ class TextEditorAttributeEditor {
     /// Show the build in advanced list editor
     func showCustomListPanel() {
         self.textView?.orderFrontListPanel(self)
+    }
+
+    //MARK: - Links
+
+    @Published var isSelectionInLinkContainer = false
+
+    var isSelectionInLinkContainerPublisher: Published<Bool>.Publisher {
+        return self.$isSelectionInLinkContainer
+    }
+
+    @Published var selectedLink: LinkEditorValue = .noSelection
+
+    var selectedLinkPublisher: Published<LinkEditorValue>.Publisher {
+        return self.$selectedLink
+    }
+
+    func updateLinkEditorProperties() {
+        guard
+            let textView = self.textView,
+            let textStorage = textView.textStorage
+        else {
+            self.selectedLink = .noSelection
+            return
+        }
+
+        guard self.editorEnabled else {
+            self.selectedLink = .noSelection
+            return
+        }
+
+        self.selectedLink = .empty
+
+        let ranges = textView.selectedRanges.compactMap { $0.rangeValue }.filter { ($0.lowerBound < textStorage.length) && ($0.upperBound <= textStorage.length) }
+        var links = [(URL, Bool)]()
+        for range in ranges {
+            guard range.length > 0 else {
+                var effectiveRange: NSRange = NSRange(location: NSNotFound, length: 0)
+                guard
+                    let url = textStorage.attribute(.link, at: range.location, effectiveRange: &effectiveRange) as? URL
+                else {
+                    continue
+                }
+                links.append((url, effectiveRange.contains(range)))
+                continue
+            }
+
+            textView.textStorage?.enumerateAttribute(.link, in: range, options: []) { value, effectiveRange, _ in
+                guard let url = value as? URL else {
+                    return
+                }
+                links.append((url, effectiveRange.contains(range)))
+            }
+        }
+
+        guard links.count > 0 else {
+            self.selectedLink = .empty
+            return
+        }
+
+        guard links.count == 1 else {
+            self.selectedLink = .multipleSelection
+            return
+        }
+
+        let (link, fillsRange) = links[0]
+        guard fillsRange == true else {
+            self.selectedLink = .multipleSelection
+            return
+        }
+
+        guard let pageLink = PageLink(url: link) else {
+            self.selectedLink = .url(link)
+            return
+        }
+
+        self.selectedLink = .pageLink(pageLink)
+    }
+
+    func updateSelection(with link: LinkEditorValue) {
+        //Ignore multiple or no selection
+
+        //For each range, get expanded range (increase forward and back if start or end mid way through existing link)
+        //Merge any ranges if necessary
+        //Remove any links in existing range
+        //If new link then add in range
     }
 }
 

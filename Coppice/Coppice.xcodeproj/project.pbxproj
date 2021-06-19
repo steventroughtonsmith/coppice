@@ -69,6 +69,9 @@
 		992A5CB122DDF5210012CCB6 /* DebugCanvasEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992A5CB022DDF5210012CCB6 /* DebugCanvasEditorViewModel.swift */; };
 		992A5CB322DDF53C0012CCB6 /* DebugPageEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992A5CB222DDF53C0012CCB6 /* DebugPageEditorViewModel.swift */; };
 		9930A6EB25728CAC00E74AE5 /* HelpViewerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9930A6EA25728CAC00E74AE5 /* HelpViewerUITests.swift */; };
+		9930F4AA267631B000DE8975 /* LinkInspectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9930F4A7267631B000DE8975 /* LinkInspectorViewModel.swift */; };
+		9930F4AB267631B000DE8975 /* LinkInspectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9930F4A8267631B000DE8975 /* LinkInspectorViewController.swift */; };
+		9930F4AC267631B000DE8975 /* LinkInspectorContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9930F4A9267631B000DE8975 /* LinkInspectorContentView.xib */; };
 		993600E224AE2A81002C86E4 /* ModelObjects+AppKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993600E124AE2A81002C86E4 /* ModelObjects+AppKit.swift */; };
 		993600E924AE5F1F002C86E4 /* TestLayoutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993600E824AE5F1F002C86E4 /* TestLayoutDelegate.swift */; };
 		993C0EE924B3A5C5009993D4 /* SourceListTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993C0EE824B3A5C5009993D4 /* SourceListTableCellView.swift */; };
@@ -275,6 +278,7 @@
 		99C9006625794AE700969E92 /* TextEditorParagraphInspectorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99C9006325794AE700969E92 /* TextEditorParagraphInspectorView.xib */; };
 		99C9AF1423631348009F909A /* CanvasTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9AF1323631348009F909A /* CanvasTextView.swift */; };
 		99C9AF1623632349009F909A /* NSView+CanvasLookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9AF1523632349009F909A /* NSView+CanvasLookup.swift */; };
+		99D03F1B267BA6F600B9CE1B /* LinkEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D03F1A267BA6F600B9CE1B /* LinkEditor.swift */; };
 		99D0C6ED24C5A606002EEBFA /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C6EC24C5A606002EEBFA /* main.c */; };
 		99D0C6EF24C5A606002EEBFA /* GetMetadataForFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C6EE24C5A606002EEBFA /* GetMetadataForFile.m */; };
 		99D0C6F724C5A606002EEBFA /* CoppiceSpotlight.mdimporter in Copy Spotlight */ = {isa = PBXBuildFile; fileRef = 99D0C6E924C5A606002EEBFA /* CoppiceSpotlight.mdimporter */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -486,6 +490,9 @@
 		992A5CB022DDF5210012CCB6 /* DebugCanvasEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugCanvasEditorViewModel.swift; sourceTree = "<group>"; };
 		992A5CB222DDF53C0012CCB6 /* DebugPageEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugPageEditorViewModel.swift; sourceTree = "<group>"; };
 		9930A6EA25728CAC00E74AE5 /* HelpViewerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpViewerUITests.swift; sourceTree = "<group>"; };
+		9930F4A7267631B000DE8975 /* LinkInspectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkInspectorViewModel.swift; sourceTree = "<group>"; };
+		9930F4A8267631B000DE8975 /* LinkInspectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkInspectorViewController.swift; sourceTree = "<group>"; };
+		9930F4A9267631B000DE8975 /* LinkInspectorContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LinkInspectorContentView.xib; sourceTree = "<group>"; };
 		993600E124AE2A81002C86E4 /* ModelObjects+AppKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelObjects+AppKit.swift"; sourceTree = "<group>"; };
 		993600E824AE5F1F002C86E4 /* TestLayoutDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestLayoutDelegate.swift; sourceTree = "<group>"; };
 		993C0EE824B3A5C5009993D4 /* SourceListTableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceListTableCellView.swift; sourceTree = "<group>"; };
@@ -696,6 +703,7 @@
 		99C9006325794AE700969E92 /* TextEditorParagraphInspectorView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextEditorParagraphInspectorView.xib; sourceTree = "<group>"; };
 		99C9AF1323631348009F909A /* CanvasTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasTextView.swift; sourceTree = "<group>"; };
 		99C9AF1523632349009F909A /* NSView+CanvasLookup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+CanvasLookup.swift"; sourceTree = "<group>"; };
+		99D03F1A267BA6F600B9CE1B /* LinkEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkEditor.swift; sourceTree = "<group>"; };
 		99D0C6E924C5A606002EEBFA /* CoppiceSpotlight.mdimporter */ = {isa = PBXFileReference; explicitFileType = "wrapper.spotlight-importer"; includeInIndex = 0; path = CoppiceSpotlight.mdimporter; sourceTree = BUILT_PRODUCTS_DIR; };
 		99D0C6EC24C5A606002EEBFA /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = main.c; path = CoppiceSpotlight/main.c; sourceTree = SOURCE_ROOT; };
 		99D0C6EE24C5A606002EEBFA /* GetMetadataForFile.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GetMetadataForFile.m; sourceTree = "<group>"; };
@@ -1011,6 +1019,17 @@
 				992A5CAD22DDF50F0012CCB6 /* DebugPageEditor.xib */,
 			);
 			path = "Debug Editors";
+			sourceTree = "<group>";
+		};
+		9930F4A62676318900DE8975 /* Link Inspector */ = {
+			isa = PBXGroup;
+			children = (
+				99D03F1A267BA6F600B9CE1B /* LinkEditor.swift */,
+				9930F4A7267631B000DE8975 /* LinkInspectorViewModel.swift */,
+				9930F4A8267631B000DE8975 /* LinkInspectorViewController.swift */,
+				9930F4A9267631B000DE8975 /* LinkInspectorContentView.xib */,
+			);
+			path = "Link Inspector";
 			sourceTree = "<group>";
 		};
 		993D2BD52411B421002E5BAC /* Canvas List */ = {
@@ -1688,6 +1707,7 @@
 				9965FC3A23843131002FE10D /* Canvas Page Inspector */,
 				99D8E367237EDB890098CF3B /* Page Inspector */,
 				99D8E36C237EDB890098CF3B /* Canvas Inspector */,
+				9930F4A62676318900DE8975 /* Link Inspector */,
 			);
 			path = Inspectors;
 			sourceTree = "<group>";
@@ -2058,6 +2078,7 @@
 				99C865212302E256004C7B89 /* ImageEditorViewController.xib in Resources */,
 				992A5CA622DDF4C50012CCB6 /* EditorContainerViewController.xib in Resources */,
 				991B5F442541E32B002C483C /* HelpViewerWindowController.xib in Resources */,
+				9930F4AC267631B000DE8975 /* LinkInspectorContentView.xib in Resources */,
 				999007E524CF474300DB5C13 /* TourLinksView.xib in Resources */,
 				99FDF12D241FD53D00AF1E51 /* CanvasesView.xib in Resources */,
 				992A5CAF22DDF50F0012CCB6 /* DebugPageEditor.xib in Resources */,
@@ -2329,12 +2350,14 @@
 				991B60A82543127B002C483C /* HelpNavigationViewController.swift in Sources */,
 				99C03F0B232A9A5E00EB7516 /* CanvasView.swift in Sources */,
 				99488A9B23BA392E009954AF /* SmallCanvasCell.swift in Sources */,
+				9930F4AA267631B000DE8975 /* LinkInspectorViewModel.swift in Sources */,
 				99D8E383237EDB890098CF3B /* InspectorContainerViewController.swift in Sources */,
 				99FCD7F324A7819400B44593 /* SparkleDelegate.swift in Sources */,
 				996187F4249A523D007313BD /* GeneralPreferencesViewController.swift in Sources */,
 				998F178B23E46B4900B3437A /* ColourGridImageGenerator.swift in Sources */,
 				99D329C225224C0F00E15683 /* DeviceTableCellView.swift in Sources */,
 				999453EB24ED5BF10043C542 /* SystemProfileInfoTableCell.swift in Sources */,
+				9930F4AB267631B000DE8975 /* LinkInspectorViewController.swift in Sources */,
 				9999A23624F93052001F8161 /* CoppiceSubscriptionManager.swift in Sources */,
 				99C865232302E267004C7B89 /* ImageEditorViewModel.swift in Sources */,
 				991B60B72543320C002C483C /* HelpSearchResultsViewController.swift in Sources */,
@@ -2406,6 +2429,7 @@
 				992A5C9C22DCC6090012CCB6 /* SourceListViewModel.swift in Sources */,
 				991B60BF25433294002C483C /* HelpBook+Searching.swift in Sources */,
 				99C88EEA240C2F3F00339880 /* NSWindow+KeyLoopDebug.swift in Sources */,
+				99D03F1B267BA6F600B9CE1B /* LinkEditor.swift in Sources */,
 				99D8E381237EDB890098CF3B /* InspectorContainerViewModel.swift in Sources */,
 				99C9AF1423631348009F909A /* CanvasTextView.swift in Sources */,
 			);

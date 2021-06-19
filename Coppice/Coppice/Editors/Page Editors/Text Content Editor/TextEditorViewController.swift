@@ -67,7 +67,11 @@ class TextEditorViewController: NSViewController, NSMenuItemValidation, NSToolba
         super.viewDidAppear()
     }
 
-    @objc dynamic var enabled: Bool = true
+    @objc dynamic var enabled: Bool = true {
+        didSet {
+            self.attributeEditor.editorEnabled = self.enabled
+        }
+    }
 
     @IBAction func createNewLinkedPage(_ sender: Any?) {
         guard let item = sender as? NSMenuItem else {
@@ -106,6 +110,10 @@ class TextEditorViewController: NSViewController, NSMenuItemValidation, NSToolba
 
     private lazy var textEditorParagraphInspectorViewController: TextEditorParagraphInspectorViewController = {
         return TextEditorParagraphInspectorViewController(viewModel: TextEditorParagraphInspectorViewModel(attributeEditor: self.attributeEditor, modelController: self.viewModel.modelController))
+    }()
+
+    private lazy var linkInspectorViewController: LinkInspectorViewController = {
+        return LinkInspectorViewController(viewModel: LinkInspectorViewModel(linkEditor: self.attributeEditor, documentWindowViewModel: self.viewModel.documentWindowViewModel))
     }()
 
     private var textViewNotifications: [NSObjectProtocol] = []
@@ -292,7 +300,7 @@ class TextEditorViewController: NSViewController, NSMenuItemValidation, NSToolba
 
 extension TextEditorViewController: PageContentEditor {
     var inspectors: [Inspector] {
-        return [self.textEditorInspectorViewController, self.textEditorParagraphInspectorViewController]
+        return [self.textEditorInspectorViewController, self.textEditorParagraphInspectorViewController, self.linkInspectorViewController]
     }
 
     func prepareForDisplay(withSafeAreaInsets safeAreaInsets: NSEdgeInsets) {
@@ -430,6 +438,12 @@ extension TextEditorViewController: NSTextViewDelegate {
     func textView(_ textView: NSTextView, clickedOnLink link: Any, at charIndex: Int) -> Bool {
         guard let url = link as? URL else {
             return false
+        }
+
+        //If the user is holding option we want to capture the link event but NOT open the link
+        guard NSApp.currentEvent?.modifierFlags.contains(.option) != true else {
+            textView.selectedRanges = [NSValue(range: NSRange(location: charIndex, length: 0))]
+            return true
         }
 
         guard let pageLink = PageLink(url: url) else {
