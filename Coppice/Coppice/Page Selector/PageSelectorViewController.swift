@@ -81,16 +81,4 @@ extension PageSelectorViewController: NSTextFieldDelegate {
     }
 }
 
-extension PageSelectorViewController: NSTableViewDelegate {
-    func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
-        return PageSelectorTableRowView()
-    }
-}
 
-
-class PageSelectorTableRowView: NSTableRowView {
-    override var isEmphasized: Bool {
-        get { return self.isSelected }
-        set {}
-    }
-}

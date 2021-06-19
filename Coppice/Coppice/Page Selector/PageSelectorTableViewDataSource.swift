@@ -25,6 +25,7 @@ class PageSelectorTableViewDataSource: NSObject {
             self.tableView?.delegate = self
             self.tableView?.register(PageSelectorContentTableCellView.self)
             self.tableView?.register(PageSelectorHeaderTableCellView.self)
+            self.tableView?.sizeLastColumnToFit()
         }
     }
 
@@ -83,9 +84,9 @@ extension PageSelectorTableViewDataSource: NSTableViewDelegate {
     func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
         switch self.viewModel.rows[row].rowType {
         case .header:
-            return 20
+            return 32
         default:
-            return 42
+            return 28
         }
     }
 
@@ -97,4 +98,16 @@ extension PageSelectorTableViewDataSource: NSTableViewDelegate {
             return true
         }
     }
+
+    func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
+        return PageSelectorTableRowView()
+    }
 }
+
+class PageSelectorTableRowView: NSTableRowView {
+    override var isEmphasized: Bool {
+        get { return self.isSelected }
+        set {}
+    }
+}
+

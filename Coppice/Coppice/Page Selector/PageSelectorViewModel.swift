@@ -92,15 +92,12 @@ class PageSelectorRow: NSObject {
         if let string = (page.content as? TextPageContent)?.text.string, string.count > 0 {
             body = string
         }
-        var image = page.content.contentType.icon(.large)
-        if let imageContent = (page.content as? ImagePageContent)?.image {
-            image = imageContent
-        }
+        let image = page.content.contentType.icon(.small)
         self.init(title: title, body: body, image: image, rowType: .page(page))
     }
 
     convenience init(contentType: PageContentType) {
-        self.init(title: contentType.localizedName, body: nil, image: contentType.icon(.large), rowType: .contentType(contentType))
+        self.init(title: contentType.localizedName, body: nil, image: contentType.icon(.small), rowType: .contentType(contentType))
     }
 
     init(title: String, body: String?, image: NSImage?, rowType: RowType = .header) {
