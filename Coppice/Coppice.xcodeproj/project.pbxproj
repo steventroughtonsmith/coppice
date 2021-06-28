@@ -32,7 +32,6 @@
 		99146A2A24EEAB6200A2AE48 /* ImageEditorPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99146A2924EEAB6200A2AE48 /* ImageEditorPlaceholderView.swift */; };
 		99146A2E24F016DC00A2AE48 /* SpringLoadedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99146A2D24F016DC00A2AE48 /* SpringLoadedTableView.swift */; };
 		99171EDC24AA48B200E96DE6 /* MainToolbarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99171EDB24AA48B200E96DE6 /* MainToolbarDelegate.swift */; };
-		99171EDE24AB4FCC00E96DE6 /* Symbols.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99171EDD24AB4FCC00E96DE6 /* Symbols.xcassets */; };
 		9919B93123D09FBB00C7A44D /* TextColourPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9919B93023D09FBB00C7A44D /* TextColourPicker.swift */; };
 		991B5F432541E32B002C483C /* HelpViewerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991B5F412541E32B002C483C /* HelpViewerWindowController.swift */; };
 		991B5F442541E32B002C483C /* HelpViewerWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 991B5F422541E32B002C483C /* HelpViewerWindowController.xib */; };
@@ -453,7 +452,6 @@
 		99146A2924EEAB6200A2AE48 /* ImageEditorPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorPlaceholderView.swift; sourceTree = "<group>"; };
 		99146A2D24F016DC00A2AE48 /* SpringLoadedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpringLoadedTableView.swift; sourceTree = "<group>"; };
 		99171EDB24AA48B200E96DE6 /* MainToolbarDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainToolbarDelegate.swift; sourceTree = "<group>"; };
-		99171EDD24AB4FCC00E96DE6 /* Symbols.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Symbols.xcassets; sourceTree = "<group>"; };
 		9919B93023D09FBB00C7A44D /* TextColourPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextColourPicker.swift; sourceTree = "<group>"; };
 		991B5F412541E32B002C483C /* HelpViewerWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpViewerWindowController.swift; sourceTree = "<group>"; };
 		991B5F422541E32B002C483C /* HelpViewerWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HelpViewerWindowController.xib; sourceTree = "<group>"; };
@@ -862,7 +860,6 @@
 				99FE019722CD1038004D380D /* Colours.xcassets */,
 				99C03F08232A99F400EB7516 /* Cursors.xcassets */,
 				9970977523B93A5800CD189B /* Icons.xcassets */,
-				99171EDD24AB4FCC00E96DE6 /* Symbols.xcassets */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -2088,7 +2085,6 @@
 				99D329BB25224B1800E15683 /* TooManyDevicesView.xib in Resources */,
 				999007F324D06C7000DB5C13 /* TourBranches.mp4 in Resources */,
 				999007D524CF458900DB5C13 /* TourWindow.xib in Resources */,
-				99171EDE24AB4FCC00E96DE6 /* Symbols.xcassets in Resources */,
 				9999A23E24F937B6001F8161 /* ActivatedSubscriptionViewController.xib in Resources */,
 				9958108F230D909900D996C4 /* TestCanvasPageViewController.xib in Resources */,
 				99BC4320250935B70032D7A3 /* sparkle_dsa_pub.pem in Resources */,

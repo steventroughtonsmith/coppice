@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19115.2" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19115.3" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19115.2"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19115.3"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -10,14 +10,14 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <tableCellView id="wB7-lT-8Rz" customClass="PageSelectorContentTableCellView" customModule="Coppice" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="398" height="58"/>
+            <rect key="frame" x="0.0" y="0.0" width="398" height="26"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nnv-g7-26u">
-                    <rect key="frame" x="0.0" y="4" width="398" height="50"/>
+                    <rect key="frame" x="0.0" y="2" width="398" height="22"/>
                     <subviews>
                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="h31-jh-pa8">
-                            <rect key="frame" x="0.0" y="15" width="20" height="20"/>
+                            <rect key="frame" x="0.0" y="1" width="20" height="20"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="h31-jh-pa8" secondAttribute="height" multiplier="1:1" id="3Fn-dE-uhl"/>
                                 <constraint firstAttribute="width" constant="20" id="DpX-I1-15e"/>
@@ -33,7 +33,7 @@
                             </connections>
                         </imageView>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="HDG-6d-bpm">
-                            <rect key="frame" x="26" y="17" width="96" height="16"/>
+                            <rect key="frame" x="26" y="3" width="96" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" placeholderString="Untitled Page" id="QaC-bi-YSE">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -47,11 +47,11 @@
                                 </binding>
                             </connections>
                         </textField>
-                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="OL1-Jv-bdB">
-                            <rect key="frame" x="128" y="0.0" width="270" height="50"/>
+                        <customView placeholderIntrinsicWidth="270" placeholderIntrinsicHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="OL1-Jv-bdB">
+                            <rect key="frame" x="128" y="0.0" width="270" height="22"/>
                             <subviews>
                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="yGi-Dx-CdY">
-                                    <rect key="frame" x="16" y="17" width="256" height="16"/>
+                                    <rect key="frame" x="16" y="3" width="256" height="16"/>
                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="Jvy-KG-nCr">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="tertiaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -67,7 +67,7 @@
                                     </connections>
                                 </textField>
                                 <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="dSf-PU-MEM">
-                                    <rect key="frame" x="0.0" y="22" width="10" height="5"/>
+                                    <rect key="frame" x="0.0" y="8" width="10" height="5"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="10" id="C6G-Zy-Mfr"/>
                                     </constraints>
@@ -104,12 +104,12 @@
                 </stackView>
             </subviews>
             <constraints>
-                <constraint firstItem="nnv-g7-26u" firstAttribute="top" secondItem="wB7-lT-8Rz" secondAttribute="top" constant="4" id="7Xb-y5-lz3"/>
-                <constraint firstAttribute="bottom" secondItem="nnv-g7-26u" secondAttribute="bottom" constant="4" id="GIp-K4-Y8F"/>
+                <constraint firstItem="nnv-g7-26u" firstAttribute="top" secondItem="wB7-lT-8Rz" secondAttribute="top" constant="2" id="7Xb-y5-lz3"/>
+                <constraint firstAttribute="bottom" secondItem="nnv-g7-26u" secondAttribute="bottom" constant="2" id="GIp-K4-Y8F"/>
                 <constraint firstItem="nnv-g7-26u" firstAttribute="leading" secondItem="wB7-lT-8Rz" secondAttribute="leading" id="SK3-je-X8D"/>
                 <constraint firstAttribute="trailing" secondItem="nnv-g7-26u" secondAttribute="trailing" id="Vu8-1v-KKE"/>
             </constraints>
-            <point key="canvasLocation" x="54" y="-138"/>
+            <point key="canvasLocation" x="54" y="-145"/>
         </tableCellView>
     </objects>
 </document>

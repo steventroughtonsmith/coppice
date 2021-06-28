@@ -84,9 +84,9 @@ extension PageSelectorTableViewDataSource: NSTableViewDelegate {
     func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
         switch self.viewModel.rows[row].rowType {
         case .header:
-            return 32
+            return 37
         default:
-            return 28
+            return 26
         }
     }
 
