@@ -74,5 +74,5 @@ class LinkInspectorViewController: BaseInspectorViewController {
         //Select completion
         //Create page
         //Clear
-        //External URL edge case 
+        //External URL edge case
 }

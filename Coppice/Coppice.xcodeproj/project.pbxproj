@@ -1989,7 +1989,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1200;
-				LastUpgradeCheck = 1240;
+				LastUpgradeCheck = 1300;
 				ORGANIZATIONNAME = "M Cubed Software";
 				TargetAttributes = {
 					999EA6912433973A00BF254E = {

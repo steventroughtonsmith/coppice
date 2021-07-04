@@ -17,7 +17,7 @@ extension NSTableView {
     func register<CellType: TableCell>(_ type: CellType.Type) {
         self.register(type.nib, forIdentifier: type.identifier)
     }
-    
+
     func makeView<CellType: TableCell>(of type: CellType.Type, owner: Any? = nil) -> CellType? {
         return self.makeView(withIdentifier: type.identifier, owner: owner) as? CellType
     }

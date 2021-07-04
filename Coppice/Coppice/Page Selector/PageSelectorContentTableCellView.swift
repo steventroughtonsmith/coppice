@@ -11,5 +11,4 @@ import Cocoa
 class PageSelectorContentTableCellView: NSTableCellView, TableCell {
     static var identifier = NSUserInterfaceItemIdentifier(rawValue: "PageSelectorContentCell")
     static var nib = NSNib(nibNamed: "PageSelectorContentTableCellView", bundle: nil)
-    
 }
