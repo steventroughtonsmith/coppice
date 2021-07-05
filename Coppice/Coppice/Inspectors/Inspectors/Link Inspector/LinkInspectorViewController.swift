@@ -75,4 +75,32 @@ class LinkInspectorViewController: BaseInspectorViewController {
         //Create page
         //Clear
         //External URL edge case
+
+    private var pageSelector: PageSelectorWindowController?
+}
+
+extension LinkInspectorViewController: NSSearchFieldDelegate {
+    func controlTextDidBeginEditing(_ obj: Notification) {
+        let viewModel = PageSelectorViewModel(title: "", documentWindowViewModel: self.typedViewModel.documentWindowViewModel) { page in
+            print("page: \(page)")
+        }
+        self.pageSelector = PageSelectorWindowController(viewModel: viewModel)
+        self.pageSelector?.show(from: self.linkField, preferredEdge: .minY)
+    }
+
+    func controlTextDidChange(_ obj: Notification) {
+        self.pageSelector?.viewModel.searchTerm = self.linkField.stringValue
+    }
+
+    func controlTextDidEndEditing(_ obj: Notification) {
+        self.pageSelector?.close()
+        self.pageSelector = nil
+    }
+
+    func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
+        guard let pageSelector = self.pageSelector else {
+            return false
+        }
+        return pageSelector.viewController.control(control, textView: textView, doCommandBy: commandSelector)
+    }
 }

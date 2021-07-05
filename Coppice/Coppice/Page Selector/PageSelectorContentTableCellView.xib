@@ -14,13 +14,13 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nnv-g7-26u">
-                    <rect key="frame" x="0.0" y="2" width="398" height="22"/>
+                    <rect key="frame" x="2" y="2" width="396" height="22"/>
                     <subviews>
                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="h31-jh-pa8">
-                            <rect key="frame" x="0.0" y="1" width="20" height="20"/>
+                            <rect key="frame" x="0.0" y="3" width="16" height="16"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="h31-jh-pa8" secondAttribute="height" multiplier="1:1" id="3Fn-dE-uhl"/>
-                                <constraint firstAttribute="width" constant="20" id="DpX-I1-15e"/>
+                                <constraint firstAttribute="width" constant="16" id="DpX-I1-15e"/>
                             </constraints>
                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="vas-td-KH2"/>
                             <connections>
@@ -33,7 +33,7 @@
                             </connections>
                         </imageView>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="HDG-6d-bpm">
-                            <rect key="frame" x="26" y="3" width="96" height="16"/>
+                            <rect key="frame" x="22" y="3" width="96" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" placeholderString="Untitled Page" id="QaC-bi-YSE">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -48,10 +48,10 @@
                             </connections>
                         </textField>
                         <customView placeholderIntrinsicWidth="270" placeholderIntrinsicHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="OL1-Jv-bdB">
-                            <rect key="frame" x="128" y="0.0" width="270" height="22"/>
+                            <rect key="frame" x="124" y="0.0" width="272" height="22"/>
                             <subviews>
                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="yGi-Dx-CdY">
-                                    <rect key="frame" x="16" y="3" width="256" height="16"/>
+                                    <rect key="frame" x="16" y="3" width="258" height="16"/>
                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="Jvy-KG-nCr">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="tertiaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -80,6 +80,14 @@
                                 <constraint firstItem="yGi-Dx-CdY" firstAttribute="leading" secondItem="dSf-PU-MEM" secondAttribute="trailing" constant="8" id="eC6-5a-IpH"/>
                             </constraints>
                             <connections>
+                                <binding destination="wB7-lT-8Rz" name="hidden2" keyPath="isDisplayedFromView" previousBinding="aDH-gy-Vuu" id="yFh-PJ-MV5">
+                                    <dictionary key="options">
+                                        <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                        <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                        <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                        <integer key="NSNullPlaceholder" value="-1"/>
+                                    </dictionary>
+                                </binding>
                                 <binding destination="wB7-lT-8Rz" name="hidden" keyPath="objectValue.body" id="aDH-gy-Vuu">
                                     <dictionary key="options">
                                         <string key="NSValueTransformerName">NSIsNil</string>
@@ -106,9 +114,13 @@
             <constraints>
                 <constraint firstItem="nnv-g7-26u" firstAttribute="top" secondItem="wB7-lT-8Rz" secondAttribute="top" constant="2" id="7Xb-y5-lz3"/>
                 <constraint firstAttribute="bottom" secondItem="nnv-g7-26u" secondAttribute="bottom" constant="2" id="GIp-K4-Y8F"/>
-                <constraint firstItem="nnv-g7-26u" firstAttribute="leading" secondItem="wB7-lT-8Rz" secondAttribute="leading" id="SK3-je-X8D"/>
+                <constraint firstItem="nnv-g7-26u" firstAttribute="leading" secondItem="wB7-lT-8Rz" secondAttribute="leading" constant="2" id="SK3-je-X8D"/>
                 <constraint firstAttribute="trailing" secondItem="nnv-g7-26u" secondAttribute="trailing" id="Vu8-1v-KKE"/>
             </constraints>
+            <connections>
+                <outlet property="detailsField" destination="yGi-Dx-CdY" id="XEI-p1-5zQ"/>
+                <outlet property="titleField" destination="HDG-6d-bpm" id="haE-y8-IPq"/>
+            </connections>
             <point key="canvasLocation" x="54" y="-145"/>
         </tableCellView>
     </objects>

@@ -11,6 +11,8 @@ import Cocoa
 class PageSelectorViewController: NSViewController {
     @IBOutlet weak var searchField: NSTextField!
     @IBOutlet var tableView: NSTableView!
+    @IBOutlet var searchFieldContainer: NSView!
+
     @objc dynamic let viewModel: PageSelectorViewModel
     let dataSource: PageSelectorTableViewDataSource
     init(viewModel: PageSelectorViewModel) {
@@ -26,9 +28,39 @@ class PageSelectorViewController: NSViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         self.searchField.placeholderString = self.viewModel.title
-        self.view.window?.makeFirstResponder(self.searchField)
+        self.configureSearchField()
+
+        if (self.displayMode == .fromWindow) {
+            self.view.window?.makeFirstResponder(self.searchField)
+        }
         self.dataSource.tableView = self.tableView
+    }
+
+
+    //MARK: - Mode
+
+    enum DisplayMode: Equatable {
+        case fromWindow
+        case fromView
+    }
+
+    var displayMode: DisplayMode = .fromWindow {
+        didSet {
+            guard self.displayMode != oldValue else {
+                return
+            }
+            self.configureSearchField()
+            self.dataSource.displayMode = self.displayMode
+        }
+    }
+
+    private func configureSearchField() {
+        guard isViewLoaded else {
+            return
+        }
+        self.searchFieldContainer.isHidden = (self.displayMode == .fromView)
     }
 
     //For some reason NSWindow doesn't enable this and we can't do it in the window controller

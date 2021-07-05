@@ -252,6 +252,7 @@
 		99BC8B3825504ADA007ECBAE /* InfoAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99BC8B3625504ADA007ECBAE /* InfoAlertViewController.xib */; };
 		99BC8B4E2550568B007ECBAE /* DocumentContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BC8B4C2550568B007ECBAE /* DocumentContentViewController.swift */; };
 		99BC8B4F2550568B007ECBAE /* DocumentContentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99BC8B4D2550568B007ECBAE /* DocumentContentViewController.xib */; };
+		99BF09542691FF5D00528E61 /* PageSelectorTableRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BF09532691FF5D00528E61 /* PageSelectorTableRowView.swift */; };
 		99BF4717256D97140098EB98 /* BaseUITestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BF4716256D97140098EB98 /* BaseUITestCase.swift */; };
 		99BF4723256D97A60098EB98 /* WelcomeScreenUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BF4722256D97A60098EB98 /* WelcomeScreenUITests.swift */; };
 		99BF473E256EC49E0098EB98 /* TourWindowUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BF473D256EC49E0098EB98 /* TourWindowUITests.swift */; };
@@ -676,6 +677,7 @@
 		99BC8B3625504ADA007ECBAE /* InfoAlertViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InfoAlertViewController.xib; sourceTree = "<group>"; };
 		99BC8B4C2550568B007ECBAE /* DocumentContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentContentViewController.swift; sourceTree = "<group>"; };
 		99BC8B4D2550568B007ECBAE /* DocumentContentViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DocumentContentViewController.xib; sourceTree = "<group>"; };
+		99BF09532691FF5D00528E61 /* PageSelectorTableRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageSelectorTableRowView.swift; sourceTree = "<group>"; };
 		99BF4716256D97140098EB98 /* BaseUITestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUITestCase.swift; sourceTree = "<group>"; };
 		99BF4722256D97A60098EB98 /* WelcomeScreenUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScreenUITests.swift; sourceTree = "<group>"; };
 		99BF473D256EC49E0098EB98 /* TourWindowUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourWindowUITests.swift; sourceTree = "<group>"; };
@@ -1580,10 +1582,11 @@
 			children = (
 				99C865252306D12B004C7B89 /* PageSelectorViewModel.swift */,
 				99C865272306D141004C7B89 /* PageSelectorViewController.swift */,
-				99A061D5264953A20050CC25 /* PageSelectorTableViewDataSource.swift */,
 				99C865282306D141004C7B89 /* PageSelectorViewController.xib */,
+				99A061D5264953A20050CC25 /* PageSelectorTableViewDataSource.swift */,
 				99ECA0B226496F4B00480C19 /* PageSelectorContentTableCellView.swift */,
 				99ECA0B626496F7D00480C19 /* PageSelectorContentTableCellView.xib */,
+				99BF09532691FF5D00528E61 /* PageSelectorTableRowView.swift */,
 				99ECA0B426496F6E00480C19 /* PageSelectorHeaderTableCellView.swift */,
 				99ECA0B826496F8A00480C19 /* PageSelectorHeaderTableCellView.xib */,
 				9951C26B230AEFAB006CAD4D /* PageSelectorWindowController.swift */,
@@ -2327,6 +2330,7 @@
 				9970976B23ACFD2900CD189B /* RootSplitViewController.swift in Sources */,
 				99E93E2B23D32F61004CF4BB /* ColourGridButton.swift in Sources */,
 				9962AB8923732D9400337834 /* CoppiceDocumentController.swift in Sources */,
+				99BF09542691FF5D00528E61 /* PageSelectorTableRowView.swift in Sources */,
 				993D2BDB24127E3B002E5BAC /* CanvasListViewModel.swift in Sources */,
 				999EA6B32436097500BF254E /* SidebarViewModel.swift in Sources */,
 				998CF0FC24ACF6A800EA26A6 /* NSBezierPath+M3Extensions.swift in Sources */,

@@ -26,6 +26,15 @@ class PageSelectorTableViewDataSource: NSObject {
             self.tableView?.register(PageSelectorContentTableCellView.self)
             self.tableView?.register(PageSelectorHeaderTableCellView.self)
             self.tableView?.sizeLastColumnToFit()
+
+            self.tableView?.enclosingScrollView?.contentInsets = self.displayMode.contentInsets
+        }
+    }
+
+    var displayMode: PageSelectorViewController.DisplayMode = .fromWindow {
+        didSet {
+            self.tableView?.enclosingScrollView?.contentInsets = self.displayMode.contentInsets
+            self.tableView?.reloadData()
         }
     }
 
@@ -77,16 +86,18 @@ extension PageSelectorTableViewDataSource: NSTableViewDelegate {
         case .header:
             return tableView.makeView(of: PageSelectorHeaderTableCellView.self)
         default:
-            return tableView.makeView(of: PageSelectorContentTableCellView.self)
+            let cell = tableView.makeView(of: PageSelectorContentTableCellView.self)
+            cell?.mode = self.displayMode
+            return cell
         }
     }
 
     func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
         switch self.viewModel.rows[row].rowType {
         case .header:
-            return 37
+            return self.displayMode.headerHeight
         default:
-            return 26
+            return self.displayMode.rowHeight
         }
     }
 
@@ -100,14 +111,41 @@ extension PageSelectorTableViewDataSource: NSTableViewDelegate {
     }
 
     func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
-        return PageSelectorTableRowView()
+        let row = PageSelectorTableRowView()
+        row.cornerRadius = self.displayMode.cornerRadius
+        return row
     }
 }
 
-class PageSelectorTableRowView: NSTableRowView {
-    override var isEmphasized: Bool {
-        get { return self.isSelected }
-        set {}
+extension PageSelectorViewController.DisplayMode {
+    var cornerRadius: CGFloat {
+        switch self {
+        case .fromWindow:       return 6
+        case .fromView:  return 4
+        }
+    }
+
+    var headerHeight: CGFloat {
+        switch self {
+        case .fromWindow:       return 37
+        case .fromView:  return 37
+        }
+    }
+
+    var rowHeight: CGFloat {
+        switch self {
+        case .fromWindow:       return 26
+        case .fromView:  return 22
+        }
+    }
+
+    var contentInsets: NSEdgeInsets {
+        switch self {
+        case .fromWindow:
+            return NSEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        case .fromView:
+            return NSEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
+        }
     }
 }
 

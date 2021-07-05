@@ -9,9 +9,12 @@
 import Cocoa
 
 class PageSelectorWindowController: NSWindowController {
+    let viewController: PageSelectorViewController
+    let viewModel: PageSelectorViewModel
     init(viewModel: PageSelectorViewModel) {
-        let viewController = PageSelectorViewController(viewModel: viewModel)
-        let window = PageSelectorWindow(contentViewController: viewController)
+        self.viewModel = viewModel
+        self.viewController = PageSelectorViewController(viewModel: viewModel)
+        let window = PageSelectorWindow(contentViewController: self.viewController)
 
         super.init(window: window)
 
@@ -23,10 +26,14 @@ class PageSelectorWindowController: NSWindowController {
     }
 
     func windowDidResignMain(_ notification: Notification) {
+        guard self.viewController.displayMode == .fromWindow else {
+            return
+        }
         self.close()
     }
 
     func show(over window: NSWindow?) {
+        self.viewController.displayMode = .fromWindow
         if let parentWindow = window, let selectorWindow = self.window {
             let parentFrame = parentWindow.frame
             var selectorFrame = selectorWindow.frame
@@ -39,6 +46,28 @@ class PageSelectorWindowController: NSWindowController {
             selectorWindow.setFrameOrigin(selectorFrame.origin)
         }
         self.showWindow(self)
+    }
+
+    func show(from view: NSView, preferredEdge: NSRectEdge) {
+        guard
+            let parentWindow = view.window,
+            let window = self.window
+        else {
+            return
+        }
+        self.viewController.displayMode = .fromView
+        let frameInWindow = view.convert(view.frame, to: nil)
+        let frameInScreen = parentWindow.convertToScreen(frameInWindow)
+
+        let width = max(view.frame.width, 250)
+        let height = width / 2 * 3
+        let x = frameInScreen.minX - 8
+        let y = frameInScreen.minY - height - 4
+
+        self.window?.setFrame(CGRect(x: x, y: y, width: width, height: height), display: false)
+
+        parentWindow.addChildWindow(window, ordered: .above)
+        window.orderFront(self)
     }
 }
 
