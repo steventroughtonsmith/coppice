@@ -99,6 +99,13 @@ extension LinkInspectorViewController: NSSearchFieldDelegate {
     }
 
     func controlTextDidChange(_ obj: Notification) {
+        guard self.linkField.stringValue.count > 0 else {
+            self.pageSelector?.close()
+            return
+        }
+        if self.pageSelector?.window?.isVisible == false {
+            self.pageSelector?.show(from: self.linkField, preferredEdge: .minY)
+        }
         self.pageSelector?.viewModel.searchTerm = self.linkField.stringValue
     }
 
