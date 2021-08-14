@@ -50,7 +50,17 @@ class LinkInspectorViewController: BaseInspectorViewController {
         self.subscribers[.textValue] = self.typedViewModel.$textValue.assign(to: \.stringValue, on: self.linkField)
         self.subscribers[.icon] = self.typedViewModel.$icon.sink(receiveValue: { image in
             searchFieldCell.resetSearchButtonCell()
-            searchButtonCell.image = image
+            guard let image = image else {
+                searchButtonCell.image = nil
+                return
+            }
+            //NSSearchFieldCell doesn't listen to our y adjustedments so lets just adjust the image itself
+            let adjustedImage = NSImage(size: CGSize(width: image.size.width, height: image.size.height + 2), flipped: false, drawingHandler: { rect in
+                image.draw(at: CGPoint(x: 0, y: 0), from: .zero, operation: .sourceOver, fraction: 1)
+                return true
+            })
+            adjustedImage.isTemplate = true
+            searchButtonCell.image = adjustedImage
         })
         self.subscribers[.placeholderValue] = self.typedViewModel.$placeholderValue.compactMap { $0 }.assign(to: \.placeholderString, on: self.linkField)
         self.subscribers[.linkFieldEnabled] = self.typedViewModel.$linkFieldEnabled.assign(to: \.isEnabled, on: self.linkField)

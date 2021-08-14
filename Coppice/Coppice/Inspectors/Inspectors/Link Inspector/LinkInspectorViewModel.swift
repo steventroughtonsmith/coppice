@@ -53,33 +53,10 @@ class LinkInspectorViewModel: BaseInspectorViewModel {
     @Published private(set) var linkFieldEnabled = false
 
     private func updateProperties(with value: LinkEditorValue) {
-        var textValue = ""
-        var icon: NSImage? = nil
-        var placeholderValue = NSLocalizedString("No link", comment: "Link field: no link placeholder")
-        var linkFieldEnabled = true
-        switch value {
-        case .noSelection:
-            placeholderValue = NSLocalizedString("No selection", comment: "Link field: no selection placeholder")
-            linkFieldEnabled = false
-        case .empty:
-            break
-        case .multipleSelection:
-            placeholderValue = NSLocalizedString("Multiple selection", comment: "Link field: multiple selection placeholder")
-        case .pageLink(let pageLink):
-            guard let page = self.documentWindowViewModel.modelController.pageCollection.objectWithID(pageLink.destination) else {
-                textValue = NSLocalizedString("Invalid", comment: "Link field: invalid link")
-                break
-            }
-            textValue = page.title
-            icon = page.content.contentType.icon(.small)
-        case .url(let url):
-            textValue = url.absoluteString
-        }
-
-        self.textValue = textValue
-        self.icon = icon
-        self.placeholderValue = placeholderValue
-        self.linkFieldEnabled = linkFieldEnabled
+        self.textValue = value.textValue(with: self.documentWindowViewModel.modelController)
+        self.icon = value.icon(with: self.documentWindowViewModel.modelController)
+        self.placeholderValue = value.placeholderValue
+        self.linkFieldEnabled = (value != .noSelection)
     }
 
     func link(to url: URL) {

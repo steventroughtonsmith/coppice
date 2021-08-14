@@ -310,8 +310,6 @@ class TextEditorAttributeEditor: LinkEditor {
             return
         }
 
-        self.selectedLink = .empty
-
         let ranges = textView.selectedRanges.compactMap { $0.rangeValue }.filter { ($0.lowerBound < textStorage.length) && ($0.upperBound <= textStorage.length) }
         var links = [(URL, Bool)]()
         for range in ranges {
@@ -335,7 +333,11 @@ class TextEditorAttributeEditor: LinkEditor {
         }
 
         guard links.count > 0 else {
-            self.selectedLink = .empty
+            if ranges.count == 1, ranges[0].length == 0 {
+                self.selectedLink = .noSelection
+            } else {
+                self.selectedLink = .empty
+            }
             return
         }
 
