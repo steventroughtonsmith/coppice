@@ -33,6 +33,23 @@ class PageSelectorContentTableCellView: NSTableCellView, TableCell {
         self.updateControlSize()
     }
 
+    override var backgroundStyle: NSView.BackgroundStyle {
+        didSet {
+            guard self.backgroundStyle != oldValue else {
+                return
+            }
+
+            switch self.backgroundStyle {
+            case .emphasized:
+                self.imageView?.contentTintColor = .white
+                self.titleField.textColor = .white
+            default:
+                self.imageView?.contentTintColor = nil
+                self.titleField.textColor = .labelColor
+            }
+        }
+    }
+
     private func updateControlSize() {
         self.isDisplayedFromView = (self.mode == .fromView)
 
