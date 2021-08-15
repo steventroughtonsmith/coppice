@@ -11,15 +11,20 @@ import Cocoa
 class PageSelectorViewController: NSViewController {
     @IBOutlet weak var searchField: NSTextField!
     @IBOutlet var tableView: NSTableView!
+    @IBOutlet var tableScrollView: NSScrollView!
     @IBOutlet var searchFieldContainer: NSView!
+    @IBOutlet var scrollViewHeightConstraint: NSLayoutConstraint!
 
     @objc dynamic let viewModel: PageSelectorViewModel
     let dataSource: PageSelectorTableViewDataSource
     init(viewModel: PageSelectorViewModel) {
         self.viewModel = viewModel
         self.dataSource = PageSelectorTableViewDataSource(viewModel: viewModel)
+
         super.init(nibName: "PageSelectorViewController", bundle: nil)
+
         viewModel.view = self
+        self.dataSource.delegate = self
     }
 
     required init?(coder: NSCoder) {
@@ -36,6 +41,7 @@ class PageSelectorViewController: NSViewController {
             self.view.window?.makeFirstResponder(self.searchField)
         }
         self.dataSource.tableView = self.tableView
+        self.updateViewHeight()
     }
 
 
@@ -53,6 +59,7 @@ class PageSelectorViewController: NSViewController {
             }
             self.configureSearchField()
             self.dataSource.displayMode = self.displayMode
+            self.updateViewHeight()
         }
     }
 
@@ -78,6 +85,15 @@ class PageSelectorViewController: NSViewController {
         self.performClose(nil)
         self.viewModel.confirmSelection(of: result)
         return true
+    }
+
+    private func updateViewHeight() {
+        guard self.isViewLoaded else {
+            return
+        }
+        var boundedHeight = max(0, min(self.tableView.intrinsicContentSize.height, 301))
+        boundedHeight += self.tableScrollView.contentInsets.top + self.tableScrollView.contentInsets.bottom
+        self.scrollViewHeightConstraint.constant = boundedHeight
     }
 }
 
@@ -110,6 +126,12 @@ extension PageSelectorViewController: NSTextFieldDelegate {
 
     func controlTextDidEndEditing(_ obj: Notification) {
         self.view.window?.perform(#selector(NSWindow.makeFirstResponder(_:)), with: self.searchField, afterDelay: 0)
+    }
+}
+
+extension PageSelectorViewController: PageSelectorTableViewDataSourceDelegate {
+    func didReloadTable(for dataSource: PageSelectorTableViewDataSource) {
+        self.updateViewHeight()
     }
 }
 

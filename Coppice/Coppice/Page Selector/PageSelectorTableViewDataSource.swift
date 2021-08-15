@@ -8,6 +8,10 @@
 
 import Cocoa
 
+protocol PageSelectorTableViewDataSourceDelegate: AnyObject {
+    func didReloadTable(for dataSource: PageSelectorTableViewDataSource)
+}
+
 class PageSelectorTableViewDataSource: NSObject {
     let viewModel: PageSelectorViewModel
     private var observations: [NSKeyValueObservation] = []
@@ -15,9 +19,11 @@ class PageSelectorTableViewDataSource: NSObject {
         self.viewModel = viewModel
         super.init()
         self.observations.append(viewModel.observe(\.rows, changeHandler: { [weak self] (_, _) in
-            self?.tableView?.reloadData()
+            self?.reloadData()
         }))
     }
+
+    weak var delegate: PageSelectorTableViewDataSourceDelegate?
 
     var tableView: NSTableView? {
         didSet {
@@ -34,8 +40,13 @@ class PageSelectorTableViewDataSource: NSObject {
     var displayMode: PageSelectorViewController.DisplayMode = .fromWindow {
         didSet {
             self.tableView?.enclosingScrollView?.contentInsets = self.displayMode.contentInsets
-            self.tableView?.reloadData()
+            self.reloadData()
         }
+    }
+
+    private func reloadData() {
+        self.tableView?.reloadData()
+        self.delegate?.didReloadTable(for: self)
     }
 
     func selectNext() {

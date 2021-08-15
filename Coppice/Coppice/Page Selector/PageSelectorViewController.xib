@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19115.3" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19150" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19115.3"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19150"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="PageSelectorViewController" customModule="Coppice" customModuleProvider="target">
             <connections>
+                <outlet property="scrollViewHeightConstraint" destination="b8s-mt-c4T" id="Zok-1H-sHA"/>
                 <outlet property="searchField" destination="TDW-xH-h0K" id="tys-GY-xa6"/>
                 <outlet property="searchFieldContainer" destination="Ir3-VV-8s6" id="8PB-9N-RVW"/>
+                <outlet property="tableScrollView" destination="Idl-nm-Yb3" id="w8R-zV-5xT"/>
                 <outlet property="tableView" destination="73f-TD-SgA" id="gPy-UJ-kTW"/>
                 <outlet property="view" destination="cQT-fe-yw1" id="kqK-vc-08B"/>
             </connections>
@@ -107,6 +109,9 @@
                                     </subviews>
                                     <nil key="backgroundColor"/>
                                 </clipView>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="301" id="b8s-mt-c4T"/>
+                                </constraints>
                                 <edgeInsets key="contentInsets" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
                                 <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="Jbh-yX-lBY">
                                     <rect key="frame" x="1" y="283" width="398" height="16"/>
