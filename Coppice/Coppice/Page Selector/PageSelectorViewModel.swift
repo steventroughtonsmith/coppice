@@ -52,6 +52,10 @@ class PageSelectorViewModel: NSObject {
             newRows = sortedPages.map { PageSelectorRow(page: $0) }
         }
 
+        if newRows.count > 0 {
+            newRows.append(PageSelectorRow.divider)
+        }
+
         newRows.append(PageSelectorRow(title: NSLocalizedString("Create New…", comment: "Page selector - page creation header"), body: nil, image: nil, rowType: .header))
         newRows.append(contentsOf: PageContentType.allCases.map { PageSelectorRow(contentType: $0) })
         self.rows = newRows
@@ -67,7 +71,7 @@ class PageSelectorViewModel: NSObject {
             }
 
             self.selectionBlock(page)
-        case .header:
+        case .header, .divider:
             break
         }
     }
@@ -81,7 +85,17 @@ class PageSelectorRow: NSObject {
     enum RowType: Equatable {
         case page(Page)
         case contentType(PageContentType)
+        case divider
         case header
+
+        var isSelectable: Bool {
+            switch self {
+            case .page, .contentType:
+                return true
+            case .divider, .header:
+                return false
+            }
+        }
     }
 
     let rowType: RowType
@@ -98,6 +112,10 @@ class PageSelectorRow: NSObject {
 
     convenience init(contentType: PageContentType) {
         self.init(title: contentType.localizedName, body: nil, image: contentType.icon(.small), rowType: .contentType(contentType))
+    }
+
+    static var divider: PageSelectorRow {
+        return PageSelectorRow(title: "", body: nil, image: nil, rowType: .divider)
     }
 
     init(title: String, body: String?, image: NSImage?, rowType: RowType = .header) {

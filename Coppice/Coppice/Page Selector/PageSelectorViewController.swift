@@ -94,6 +94,25 @@ class PageSelectorViewController: NSViewController {
         var boundedHeight = max(0, min(self.tableView.intrinsicContentSize.height, 301))
         boundedHeight += self.tableScrollView.contentInsets.top + self.tableScrollView.contentInsets.bottom
         self.scrollViewHeightConstraint.constant = boundedHeight
+
+        self.updateTrackingArea()
+    }
+
+    //MARK: - Tracking/Hover
+    private var scrollTrackingArea: NSTrackingArea?
+    private func updateTrackingArea() {
+        if let oldTrackingArea = self.scrollTrackingArea {
+            self.tableScrollView.removeTrackingArea(oldTrackingArea)
+        }
+
+        let newTrackingArea = NSTrackingArea(rect: self.tableScrollView.bounds, options: [.activeInActiveApp, .mouseMoved], owner: self, userInfo: nil)
+        self.tableScrollView.addTrackingArea(newTrackingArea)
+        self.scrollTrackingArea = newTrackingArea
+    }
+
+    override func mouseMoved(with event: NSEvent) {
+        let eventInTable = self.tableView.convert(event.locationInWindow, from: nil)
+        self.dataSource.selectRow(at: eventInTable)
     }
 }
 

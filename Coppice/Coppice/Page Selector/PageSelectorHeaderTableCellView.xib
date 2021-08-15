@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19115.3" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19150" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19115.3"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19150"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -10,7 +10,7 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <tableCellView id="ZKs-KT-rlN" customClass="PageSelectorHeaderTableCellView" customModule="Coppice" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="392" height="37"/>
+            <rect key="frame" x="0.0" y="0.0" width="392" height="24"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="eLg-dL-Vu4">
@@ -21,16 +21,10 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="4QJ-TH-lsl">
-                    <rect key="frame" x="0.0" y="29" width="392" height="5"/>
-                </box>
             </subviews>
             <constraints>
-                <constraint firstItem="4QJ-TH-lsl" firstAttribute="leading" secondItem="ZKs-KT-rlN" secondAttribute="leading" id="Bni-OH-inM"/>
                 <constraint firstItem="eLg-dL-Vu4" firstAttribute="leading" secondItem="ZKs-KT-rlN" secondAttribute="leading" id="NHl-ox-1jK"/>
-                <constraint firstAttribute="trailing" secondItem="4QJ-TH-lsl" secondAttribute="trailing" id="Vix-yd-Bh5"/>
-                <constraint firstItem="4QJ-TH-lsl" firstAttribute="top" secondItem="ZKs-KT-rlN" secondAttribute="top" constant="5" id="d6u-Mr-JYP"/>
-                <constraint firstItem="eLg-dL-Vu4" firstAttribute="top" secondItem="4QJ-TH-lsl" secondAttribute="bottom" constant="12" id="jnc-Vw-Qp0"/>
+                <constraint firstItem="eLg-dL-Vu4" firstAttribute="top" secondItem="ZKs-KT-rlN" secondAttribute="top" constant="5" id="NU7-gF-p2l"/>
                 <constraint firstAttribute="bottom" secondItem="eLg-dL-Vu4" secondAttribute="bottom" constant="5" id="n9I-bH-N6S"/>
             </constraints>
             <point key="canvasLocation" x="78" y="158"/>

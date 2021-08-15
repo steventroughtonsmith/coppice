@@ -260,6 +260,8 @@
 		99C03F09232A99F400EB7516 /* Cursors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99C03F08232A99F400EB7516 /* Cursors.xcassets */; };
 		99C03F0B232A9A5E00EB7516 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03F0A232A9A5E00EB7516 /* CanvasView.swift */; };
 		99C03F0D2334D04200EB7516 /* NSScrollView+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03F0C2334D04200EB7516 /* NSScrollView+M3Extensions.swift */; };
+		99C4FBE126C94F11009D035D /* PageSelectorDividerTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C4FBE026C94F11009D035D /* PageSelectorDividerTableCellView.swift */; };
+		99C4FBE326C94F22009D035D /* PageSelectorDividerTableCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99C4FBE226C94F22009D035D /* PageSelectorDividerTableCellView.xib */; };
 		99C7B214257BEE85009E2F18 /* TextEditorParagraphAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C7B213257BEE85009E2F18 /* TextEditorParagraphAttributes.swift */; };
 		99C8650923016EB2004C7B89 /* TextEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C8650823016EB2004C7B89 /* TextEditorViewModel.swift */; };
 		99C8650D23016EE5004C7B89 /* TextEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99C8650C23016EE5004C7B89 /* TextEditorViewController.xib */; };
@@ -685,6 +687,8 @@
 		99C03F08232A99F400EB7516 /* Cursors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Cursors.xcassets; sourceTree = "<group>"; };
 		99C03F0A232A9A5E00EB7516 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
 		99C03F0C2334D04200EB7516 /* NSScrollView+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSScrollView+M3Extensions.swift"; sourceTree = "<group>"; };
+		99C4FBE026C94F11009D035D /* PageSelectorDividerTableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageSelectorDividerTableCellView.swift; sourceTree = "<group>"; };
+		99C4FBE226C94F22009D035D /* PageSelectorDividerTableCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PageSelectorDividerTableCellView.xib; sourceTree = "<group>"; };
 		99C7B213257BEE85009E2F18 /* TextEditorParagraphAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorParagraphAttributes.swift; sourceTree = "<group>"; };
 		99C8650823016EB2004C7B89 /* TextEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorViewModel.swift; sourceTree = "<group>"; };
 		99C8650C23016EE5004C7B89 /* TextEditorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextEditorViewController.xib; sourceTree = "<group>"; };
@@ -1589,6 +1593,8 @@
 				99BF09532691FF5D00528E61 /* PageSelectorTableRowView.swift */,
 				99ECA0B426496F6E00480C19 /* PageSelectorHeaderTableCellView.swift */,
 				99ECA0B826496F8A00480C19 /* PageSelectorHeaderTableCellView.xib */,
+				99C4FBE026C94F11009D035D /* PageSelectorDividerTableCellView.swift */,
+				99C4FBE226C94F22009D035D /* PageSelectorDividerTableCellView.xib */,
 				9951C26B230AEFAB006CAD4D /* PageSelectorWindowController.swift */,
 				9951C26D230AF011006CAD4D /* PageSelectorWindow.swift */,
 			);
@@ -2133,6 +2139,7 @@
 				9973737B2423AD6C000D5F21 /* NoEditorViewController.xib in Resources */,
 				99488AA723BA3993009954AF /* LargeCanvasCell.xib in Resources */,
 				999007F524D079E200DB5C13 /* TourCanvases.mp4 in Resources */,
+				99C4FBE326C94F22009D035D /* PageSelectorDividerTableCellView.xib in Resources */,
 				991B5F4D2541E36D002C483C /* HelpNavigationViewController.xib in Resources */,
 				99F0CD77246AF1C4006DE18E /* PreviewGenerationDebugWindow.xib in Resources */,
 				99FE019B22CD1038004D380D /* MainMenu.xib in Resources */,
@@ -2399,6 +2406,7 @@
 				99146A2E24F016DC00A2AE48 /* SpringLoadedTableView.swift in Sources */,
 				992A5C9F22DCCDB30012CCB6 /* NSView+M3Extensions.swift in Sources */,
 				99868F4523995739009AC0F7 /* PageLinkManager.swift in Sources */,
+				99C4FBE126C94F11009D035D /* PageSelectorDividerTableCellView.swift in Sources */,
 				99771194239BF97600FCC8C7 /* NSAttributedString+M3Extensions.swift in Sources */,
 				99771190239A95C300FCC8C7 /* TextLinkFinder.swift in Sources */,
 				9985F4DB23F44AAD00B96DC7 /* CanvasPageBackgroundView.swift in Sources */,

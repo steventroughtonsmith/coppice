@@ -103,6 +103,7 @@
                                             </tableColumns>
                                             <connections>
                                                 <action trigger="doubleAction" selector="tableDoubleClicked:" target="-2" id="Kff-fa-2du"/>
+                                                <action selector="tableDoubleClicked:" target="-2" id="gxg-DD-y54"/>
                                                 <outlet property="delegate" destination="-2" id="5Sn-BE-Gh9"/>
                                             </connections>
                                         </tableView>

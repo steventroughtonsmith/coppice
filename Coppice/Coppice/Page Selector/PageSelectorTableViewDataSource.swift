@@ -31,6 +31,7 @@ class PageSelectorTableViewDataSource: NSObject {
             self.tableView?.delegate = self
             self.tableView?.register(PageSelectorContentTableCellView.self)
             self.tableView?.register(PageSelectorHeaderTableCellView.self)
+            self.tableView?.register(PageSelectorDividerTableCellView.self)
             self.tableView?.sizeLastColumnToFit()
 
             self.tableView?.enclosingScrollView?.contentInsets = self.displayMode.contentInsets
@@ -53,31 +54,48 @@ class PageSelectorTableViewDataSource: NSObject {
         guard let tableView = self.tableView else {
             return
         }
-        var nextRow = tableView.selectedRow + 1
-        if self.viewModel.rows[safe: nextRow]?.rowType == .header {
-            nextRow += 1
+        var nextRowIndex = tableView.selectedRow + 1
+        while let nextRow = self.viewModel.rows[safe: nextRowIndex], nextRow.rowType.isSelectable == false {
+            nextRowIndex += 1
         }
-        guard (nextRow < tableView.numberOfRows) else {
+        guard (nextRowIndex < tableView.numberOfRows) else {
             return
         }
 
-        tableView.selectRowIndexes(IndexSet(integer: nextRow), byExtendingSelection: false)
-        tableView.scrollRowToVisible(nextRow)
+        tableView.selectRowIndexes(IndexSet(integer: nextRowIndex), byExtendingSelection: false)
+        tableView.scrollRowToVisible(nextRowIndex)
     }
 
     func selectPrevious() {
         guard let tableView = self.tableView else {
             return
         }
-        var nextRow = tableView.selectedRow - 1
-        if self.viewModel.rows[safe: nextRow]?.rowType == .header {
-            nextRow -= 1
+        var nextRowIndex = tableView.selectedRow - 1
+        while let nextRow = self.viewModel.rows[safe: nextRowIndex], nextRow.rowType.isSelectable == false {
+            nextRowIndex -= 1
         }
-        guard (nextRow >= 0) else {
+        guard (nextRowIndex >= 0) else {
             return
         }
-        tableView.selectRowIndexes(IndexSet(integer: nextRow), byExtendingSelection: false)
-        tableView.scrollRowToVisible(nextRow)
+        tableView.selectRowIndexes(IndexSet(integer: nextRowIndex), byExtendingSelection: false)
+        tableView.scrollRowToVisible(nextRowIndex)
+    }
+
+    func selectRow(at point: NSPoint) {
+        guard let tableView = tableView else {
+            return
+        }
+
+        let row = tableView.row(at: point)
+
+        guard
+            row >= 0,
+            self.tableView(tableView, shouldSelectRow: row)
+        else {
+            return
+        }
+
+        tableView.selectRowIndexes(IndexSet(integer: row), byExtendingSelection: false)
     }
 }
 
@@ -96,6 +114,8 @@ extension PageSelectorTableViewDataSource: NSTableViewDelegate {
         switch self.viewModel.rows[row].rowType {
         case .header:
             return tableView.makeView(of: PageSelectorHeaderTableCellView.self)
+        case .divider:
+            return tableView.makeView(of: PageSelectorDividerTableCellView.self)
         default:
             let cell = tableView.makeView(of: PageSelectorContentTableCellView.self)
             cell?.mode = self.displayMode
@@ -107,6 +127,8 @@ extension PageSelectorTableViewDataSource: NSTableViewDelegate {
         switch self.viewModel.rows[row].rowType {
         case .header:
             return self.displayMode.headerHeight
+        case .divider:
+            return self.displayMode.dividerHeight
         default:
             return self.displayMode.rowHeight
         }
@@ -114,7 +136,7 @@ extension PageSelectorTableViewDataSource: NSTableViewDelegate {
 
     func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
         switch self.viewModel.rows[row].rowType {
-        case .header:
+        case .header, .divider:
             return false
         default:
             return true
@@ -138,9 +160,13 @@ extension PageSelectorViewController.DisplayMode {
 
     var headerHeight: CGFloat {
         switch self {
-        case .fromWindow:       return 37
-        case .fromView:  return 37
+        case .fromWindow:       return 24
+        case .fromView:  return 24
         }
+    }
+
+    var dividerHeight: CGFloat {
+        return 11
     }
 
     var rowHeight: CGFloat {
