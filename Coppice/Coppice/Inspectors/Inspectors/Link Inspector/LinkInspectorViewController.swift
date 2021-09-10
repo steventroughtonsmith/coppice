@@ -42,7 +42,8 @@ class LinkInspectorViewController: BaseInspectorViewController {
         guard
             let linkField = self.linkField,
             let searchFieldCell = (linkField.cell as? NSSearchFieldCell),
-            let searchButtonCell = searchFieldCell.searchButtonCell
+            let searchButtonCell = searchFieldCell.searchButtonCell,
+            let cancelButtonCell = searchFieldCell.cancelButtonCell
         else {
             return
         }
@@ -64,6 +65,9 @@ class LinkInspectorViewController: BaseInspectorViewController {
         })
         self.subscribers[.placeholderValue] = self.typedViewModel.$placeholderValue.compactMap { $0 }.assign(to: \.placeholderString, on: self.linkField)
         self.subscribers[.linkFieldEnabled] = self.typedViewModel.$linkFieldEnabled.assign(to: \.isEnabled, on: self.linkField)
+
+        cancelButtonCell.target = self
+        cancelButtonCell.action = #selector(self.clearLink(_:))
     }
 
     //Editor connection
@@ -87,12 +91,16 @@ class LinkInspectorViewController: BaseInspectorViewController {
         //External URL edge case
 
     private var pageSelector: PageSelectorWindowController?
+
+    @IBAction func clearLink(_ sender: NSButton) {
+        self.typedViewModel.clearLink()
+    }
 }
 
 extension LinkInspectorViewController: NSSearchFieldDelegate {
     func controlTextDidBeginEditing(_ obj: Notification) {
         let viewModel = PageSelectorViewModel(title: "", documentWindowViewModel: self.typedViewModel.documentWindowViewModel) { page in
-            print("page: \(page)")
+            self.typedViewModel.link(to: page)
         }
         self.pageSelector = PageSelectorWindowController(viewModel: viewModel)
         self.pageSelector?.show(from: self.linkField, preferredEdge: .minY)

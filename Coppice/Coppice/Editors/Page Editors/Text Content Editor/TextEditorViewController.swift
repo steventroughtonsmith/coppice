@@ -113,7 +113,9 @@ class TextEditorViewController: NSViewController, NSMenuItemValidation, NSToolba
     }()
 
     private lazy var linkInspectorViewController: LinkInspectorViewController = {
-        return LinkInspectorViewController(viewModel: LinkInspectorViewModel(linkEditor: self.attributeEditor, documentWindowViewModel: self.viewModel.documentWindowViewModel))
+        return LinkInspectorViewController(viewModel: LinkInspectorViewModel(linkEditor: self.attributeEditor,
+                                                                             page: self.viewModel.textContent.page,
+                                                                             documentWindowViewModel: self.viewModel.documentWindowViewModel))
     }()
 
     private var textViewNotifications: [NSObjectProtocol] = []

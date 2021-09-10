@@ -361,12 +361,59 @@ class TextEditorAttributeEditor: LinkEditor {
     }
 
     func updateSelection(with link: LinkEditorValue) {
-        //Ignore multiple or no selection
+        guard let textView = self.textView else {
+            return
+        }
 
-        //For each range, get expanded range (increase forward and back if start or end mid way through existing link)
-        //Merge any ranges if necessary
-        //Remove any links in existing range
-        //If new link then add in range
+        var url: URL?
+        switch link {
+        case .noSelection, .multipleSelection:
+            return
+        case .empty:
+            url = nil
+        case .pageLink(let pageLink):
+            url = pageLink.url
+        case .url(let externalURL):
+            url = externalURL
+        }
+
+        guard let selectedRange = textView.selectedRanges.first?.rangeValue else {
+            return
+        }
+
+        let existingLinkRanges = self.existingLinkRanges(in: selectedRange)
+
+        var newLinkRange = selectedRange
+        existingLinkRanges.forEach { newLinkRange = newLinkRange.union($0) }
+
+        textView.modifyText(in: [newLinkRange]) { textStorage in
+            existingLinkRanges.forEach { textStorage.removeAttribute(.link, range: $0) }
+            if let url = url {
+                textStorage.addAttribute(.link, value: url, range: newLinkRange)
+            }
+        }
+    }
+
+    private func existingLinkRanges(in range: NSRange) -> [NSRange] {
+        guard let textStorage = self.textView?.textStorage else {
+            return []
+        }
+
+        guard range.length > 0 else {
+            var effectiveRange: NSRange = NSRange(location: NSNotFound, length: 0)
+            _ = textStorage.attribute(.link, at: range.location, effectiveRange: &effectiveRange)
+            return [effectiveRange]
+        }
+
+        var existingLinkRanges = [NSRange]()
+        textStorage.enumerateAttribute(.link, in: range, options: [.longestEffectiveRangeNotRequired]) { attributes, effectiveRange, _ in
+            var longestEffectiveRange = NSRange(location: NSNotFound, length: 0)
+            let url = textStorage.attribute(.link, at: effectiveRange.location, effectiveRange: &longestEffectiveRange)
+            if url != nil {
+                existingLinkRanges.append(longestEffectiveRange)
+            }
+        }
+        return existingLinkRanges
     }
 }
 
