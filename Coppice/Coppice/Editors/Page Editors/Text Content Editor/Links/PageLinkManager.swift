@@ -108,7 +108,11 @@ class PageLinkManager: NSObject {
             return
         }
         let pages = Array(self.modelController.collection(for: Page.self).all)
-        let links = TextLinkFinder().findLinkChanges(in: storage, using: pages)
+        var ignoring = [Page]()
+        if let page = self.modelController.collection(for: Page.self).objectWithID(self.pageID) {
+            ignoring.append(page)
+        }
+        let links = TextLinkFinder().findLinkChanges(in: storage, using: pages, ignoring: ignoring)
 
         guard (links.linksToAdd.count > 0) || (links.linksToRemove.count > 0) else {
             return
@@ -141,7 +145,7 @@ class PageLinkManager: NSObject {
             return
         }
         let pages = Array(self.modelController.collection(for: Page.self).all)
-        let links = TextLinkFinder().findLinkChanges(in: textContent.text, using: pages)
+        let links = TextLinkFinder().findLinkChanges(in: textContent.text, using: pages, ignoring: [page])
 
         guard (links.linksToAdd.count > 0) || (links.linksToRemove.count > 0) else {
             return
