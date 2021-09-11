@@ -226,7 +226,7 @@ class DocumentWindowViewModel: NSObject {
 
         switch change.changeType {
         case .insert:
-            self.updateSelection([.folder(change.object.id)])
+            break
         case .delete:
             let newSelection = self.sidebarSelection.filter { $0 != .folder(change.object.id) }
             self.updateSelection(newSelection)

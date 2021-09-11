@@ -359,6 +359,7 @@ class SourceListViewController: NSViewController, NSMenuItemValidation {
 
         if case .folder = sourceListNode.item {
             view.startEditing()
+            return
         }
 
         //We don't want to select the new item if we're in a canvas, as we don't want to switch the editor
