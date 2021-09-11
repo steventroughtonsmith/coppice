@@ -45,6 +45,10 @@ class EditableLabelCell: NSTableCellView {
         textField.target = self
         textField.action = #selector(self.endEditing(_:))
         textField.delegate = self
+
+        //If we don't force a layout here, the first cell we create will end up with conflicting constraints with the field editor
+        //By forcing a layout we make sure the text field is correctly aligned so the field editor can be when becoming first responder
+        self.layoutSubtreeIfNeeded()
         self.window?.makeFirstResponder(textField)
     }
 
