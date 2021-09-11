@@ -126,7 +126,7 @@ struct TextEditorFontAttributes: Equatable {
         var font: NSFont? = nil
         var mutableTraits = symbolicTraits
         var problematicTraits: [NSFontDescriptor.SymbolicTraits] = Self.symbolicTraitsWeCareAbout
-        while (font == nil) && (problematicTraits.count > 0) {
+        while (symbolicTraits.rawValue != 0) && (font == nil) && (problematicTraits.count > 0) {
             let newDescriptor = fontDescriptor.withSymbolicTraits(mutableTraits)
             font = NSFont(descriptor: newDescriptor, size: size)
             if let trait = problematicTraits.last {

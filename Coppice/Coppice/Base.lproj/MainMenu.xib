@@ -575,12 +575,12 @@
                                         <menuItem isSeparatorItem="YES" id="5gT-KC-WSO"/>
                                         <menuItem title="Bigger" tag="3" keyEquivalent="+" id="Ptp-SP-VEL">
                                             <connections>
-                                                <action selector="modifyFont:" target="YLy-65-1bz" id="Uc7-di-UnL"/>
+                                                <action selector="increaseFontSize:" target="-1" id="xjV-28-dr0"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Smaller" tag="4" keyEquivalent="-" id="i1d-Er-qST">
                                             <connections>
-                                                <action selector="modifyFont:" target="YLy-65-1bz" id="HcX-Lf-eNd"/>
+                                                <action selector="decreaseFontSize:" target="-1" id="88P-DL-0UJ"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="kx3-Dk-x3B"/>
