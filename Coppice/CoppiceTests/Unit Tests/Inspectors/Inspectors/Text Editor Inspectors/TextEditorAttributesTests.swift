@@ -24,7 +24,7 @@ class TextEditorAttributesTests: XCTestCase {
 
     func test_initAttributes_getsFontSizeFromFont() {
         let editorAttributes = TextEditorFontAttributes.withAttributes([.font: NSFont(name: "Helvetica-Bold", size: 14)!])
-        XCTAssertEqual(editorAttributes.fontSize, 14)
+        XCTAssertEqual(editorAttributes.fontSize, .absolute(14))
     }
 
     func test_initAttributes_getsTextColourFromForegroundColour() {
@@ -57,7 +57,7 @@ class TextEditorAttributesTests: XCTestCase {
     func test_merge_mergingTwoIdentialEditorsResultInAnUnchangedEditor() {
         let attributes = TextEditorFontAttributes(fontFamily: "Helvetica",
                                                   fontPostscriptName: "Helvetica-Bold",
-                                                  fontSize: 15,
+                                                  fontSize: .absolute(15),
                                                   textColour: NSColor.black,
                                                   isBold: true,
                                                   isItalic: false,
@@ -71,7 +71,7 @@ class TextEditorAttributesTests: XCTestCase {
     func test_merge_mergingTwoCompletelyDifferentEditorsResultsInANilEditor() {
         let attributes1 = TextEditorFontAttributes(fontFamily: "Helvetica",
                                                    fontPostscriptName: "Helvetica-Bold",
-                                                   fontSize: 15,
+                                                   fontSize: .absolute(15),
                                                    textColour: NSColor.black,
                                                    isBold: true,
                                                    isItalic: false,
@@ -80,7 +80,7 @@ class TextEditorAttributesTests: XCTestCase {
 
         let attributes2 = TextEditorFontAttributes(fontFamily: "Arial",
                                                    fontPostscriptName: "Arial-Bold",
-                                                   fontSize: 20,
+                                                   fontSize: .absolute(20),
                                                    textColour: NSColor.blue,
                                                    isBold: false,
                                                    isItalic: true,
@@ -95,7 +95,7 @@ class TextEditorAttributesTests: XCTestCase {
     func test_merge_mergingTwoPartlyDifferentEditorsResultsInSameFieldsBeingUnchangedAndDifferentFieldsBeingNil() {
         let attributes1 = TextEditorFontAttributes(fontFamily: "Helvetica",
                                                    fontPostscriptName: "Helvetica-Bold",
-                                                   fontSize: 15,
+                                                   fontSize: .absolute(15),
                                                    textColour: NSColor.black,
                                                    isBold: true,
                                                    isItalic: false,
@@ -104,7 +104,7 @@ class TextEditorAttributesTests: XCTestCase {
 
         let attributes2 = TextEditorFontAttributes(fontFamily: "Helvetica",
                                                    fontPostscriptName: "Helvetica-Oblique",
-                                                   fontSize: 15,
+                                                   fontSize: .absolute(15),
                                                    textColour: NSColor.blue,
                                                    isBold: false,
                                                    isItalic: true,
@@ -114,7 +114,7 @@ class TextEditorAttributesTests: XCTestCase {
 
         let expectedAttributes = TextEditorFontAttributes(fontFamily: "Helvetica",
                                                           fontPostscriptName: nil,
-                                                          fontSize: 15,
+                                                          fontSize: .absolute(15),
                                                           textColour: nil,
                                                           isBold: nil,
                                                           isItalic: nil,
@@ -294,6 +294,50 @@ class TextEditorAttributesTests: XCTestCase {
         XCTAssertEqual((newAttributes[.strikethroughStyle] as? Int), 1)
     }
 
+    func test_applyTo_updatesFontSizeToNewAbsoluteValue() throws {
+        let baseAttributes: [NSAttributedString.Key: Any] = [
+            .font: NSFont(name: "Helvetica-BoldOblique", size: 14)!,
+        ]
+
+        let editorAttributes = TextEditorFontAttributes(fontSize: .absolute(24))
+        let newAttributes = editorAttributes.apply(to: baseAttributes)
+
+        XCTAssertEqual((newAttributes[.font] as? NSFont), NSFont(name: "Helvetica-BoldOblique", size: 24)!)
+    }
+
+    func test_applyTo_increasesFontSizeBy1IfFontSizeIsIncrease() throws {
+        let baseAttributes: [NSAttributedString.Key: Any] = [
+            .font: NSFont(name: "Helvetica-BoldOblique", size: 14.5)!,
+        ]
+
+        let editorAttributes = TextEditorFontAttributes(fontSize: .increase)
+        let newAttributes = editorAttributes.apply(to: baseAttributes)
+
+        XCTAssertEqual((newAttributes[.font] as? NSFont), NSFont(name: "Helvetica-BoldOblique", size: 15.5)!)
+    }
+
+    func test_applyTo_decreasesFontSizeBy1IfFontSizeIsDecrease() throws {
+        let baseAttributes: [NSAttributedString.Key: Any] = [
+            .font: NSFont(name: "Helvetica-BoldOblique", size: 14)!,
+        ]
+
+        let editorAttributes = TextEditorFontAttributes(fontSize: .decrease)
+        let newAttributes = editorAttributes.apply(to: baseAttributes)
+
+        XCTAssertEqual((newAttributes[.font] as? NSFont), NSFont(name: "Helvetica-BoldOblique", size: 13)!)
+    }
+
+    func test_applyTo_decreasesFontSizeTo1IfFontSizeIsDecreaseAndCurrentSizeIsBelow2() throws {
+        let baseAttributes: [NSAttributedString.Key: Any] = [
+            .font: NSFont(name: "Helvetica-BoldOblique", size: 1.4)!,
+        ]
+
+        let editorAttributes = TextEditorFontAttributes(fontSize: .decrease)
+        let newAttributes = editorAttributes.apply(to: baseAttributes)
+
+        XCTAssertEqual((newAttributes[.font] as? NSFont), NSFont(name: "Helvetica-BoldOblique", size: 1)!)
+    }
+
 
     //MARK: - NSMutableAttributesString Extensions
 
@@ -335,7 +379,7 @@ class TextEditorAttributesTests: XCTestCase {
 
         XCTAssertEqual(attributes.fontFamily, "Helvetica")
         XCTAssertEqual(attributes.fontPostscriptName, "Helvetica")
-        XCTAssertEqual(attributes.fontSize, 14)
+        XCTAssertEqual(attributes.fontSize, .absolute(14))
         XCTAssertEqual(attributes.textColour, NSColor.red)
         XCTAssertEqual(attributes.isBold, false)
         XCTAssertEqual(attributes.isItalic, false)
@@ -363,7 +407,7 @@ class TextEditorAttributesTests: XCTestCase {
     func test_applyTextEditorAttributes_updatesAttributesOfAllRangesToMatchSuppliedAttributes() {
         let testString = self.createTestString()
 
-        let testAttributes = TextEditorFontAttributes(fontFamily: "Arial", fontSize: 16, isUnderlined: false, isStruckthrough: true)
+        let testAttributes = TextEditorFontAttributes(fontFamily: "Arial", fontSize: .absolute(16), isUnderlined: false, isStruckthrough: true)
         testString.apply(testAttributes, to: [
             NSRange(location: 0, length: 18),
         ])

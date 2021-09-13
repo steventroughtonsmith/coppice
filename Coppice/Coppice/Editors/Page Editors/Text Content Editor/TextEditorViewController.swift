@@ -161,17 +161,11 @@ class TextEditorViewController: NSViewController, NSMenuItemValidation, NSToolba
     }
 
     @IBAction func increaseFontSize(_ sender: Any?) {
-        guard let currentFontSize = self.attributeEditor.selectedFontAttributes?.fontSize else {
-            return
-        }
-        self.attributeEditor.updateSelection(with: TextEditorFontAttributes(fontSize: currentFontSize + 1))
+        self.attributeEditor.updateSelection(with: TextEditorFontAttributes(fontSize: .increase))
     }
 
     @IBAction func decreaseFontSize(_ sender: Any?) {
-        guard let currentFontSize = self.attributeEditor.selectedFontAttributes?.fontSize else {
-            return
-        }
-        self.attributeEditor.updateSelection(with: TextEditorFontAttributes(fontSize: currentFontSize - 1))
+        self.attributeEditor.updateSelection(with: TextEditorFontAttributes(fontSize: .decrease))
     }
 
     func validateToolbarItem(_ item: NSToolbarItem) -> Bool {
@@ -201,15 +195,6 @@ class TextEditorViewController: NSViewController, NSMenuItemValidation, NSToolba
         }
         if menuItem.action == #selector(self.toggleItalic(_:)) {
             return self.validateItem(menuItem, keyPath: \.isItalic, trait: .italicFontMask)
-        }
-        if menuItem.action == #selector(self.increaseFontSize(_:)) {
-            return (self.attributeEditor.selectedFontAttributes?.fontSize != nil)
-        }
-        if menuItem.action == #selector(self.increaseFontSize(_:)) {
-            guard let currentFontSize = self.attributeEditor.selectedFontAttributes?.fontSize else {
-                return false
-            }
-            return currentFontSize > 1
         }
         if menuItem.action == #selector(self.linkToPage(_:)) {
             let enabled = (self.editingTextView.selectedRange().length > 0)

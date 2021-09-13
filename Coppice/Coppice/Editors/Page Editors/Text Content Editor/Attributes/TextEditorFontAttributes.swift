@@ -9,9 +9,26 @@
 import AppKit
 
 struct TextEditorFontAttributes: Equatable {
+    enum FontSize: Equatable, Hashable {
+        case absolute(CGFloat)
+        case increase
+        case decrease
+
+        func newFontSize(for font: NSFont) -> CGFloat {
+            switch self {
+            case .absolute(let fontSize):
+                return fontSize
+            case .increase:
+                return font.pointSize + 1
+            case .decrease:
+                return max(font.pointSize - 1, 1)
+            }
+        }
+    }
+
     var fontFamily: String? = nil
     var fontPostscriptName: String? = nil
-    var fontSize: CGFloat? = nil
+    var fontSize: FontSize? = nil
     var textColour: NSColor? = nil
     var isBold: Bool? = nil
     var isItalic: Bool? = nil
@@ -22,7 +39,12 @@ struct TextEditorFontAttributes: Equatable {
         let font = attributes[.font] as? NSFont
         let fontFamily = font?.familyName
         let fontPostscriptName = font?.fontDescriptor.postscriptName
-        let fontSize = font?.pointSize
+        let fontSize: FontSize?
+        if let size = font?.pointSize {
+            fontSize = .absolute(size)
+        } else {
+            fontSize = nil
+        }
         let textColour = attributes[.foregroundColor] as? NSColor
         let underlined = attributes[.underlineStyle] as? Int
         let struckthrough = attributes[.strikethroughStyle] as? Int
@@ -77,35 +99,35 @@ struct TextEditorFontAttributes: Equatable {
             return modifiedAttributes
         }
 
-        let fontSize = self.fontSize ?? font.pointSize
-
         if let postScriptName = self.fontPostscriptName {
-            modifiedAttributes[.font] = NSFont(name: postScriptName, size: fontSize)
+            modifiedAttributes[.font] = NSFont(name: postScriptName, size: self.fontSize?.newFontSize(for: font) ?? font.pointSize)
         } else {
-            var fontDescriptor = font.fontDescriptor
-            var symbolicTraits = self.limitedSymbolicTraits(from: fontDescriptor)
+            var newFont = font
 
             if let family = self.fontFamily {
-                fontDescriptor = fontDescriptor.withFamily(family)
+                newFont = NSFontManager.shared.convert(newFont, toFamily: family)
             }
 
             if let isBold = self.isBold {
                 if isBold {
-                    symbolicTraits.insert(.bold)
+                    newFont = NSFontManager.shared.convert(newFont, toHaveTrait: .boldFontMask)
                 } else {
-                    symbolicTraits.remove(.bold)
+                    newFont = NSFontManager.shared.convert(newFont, toNotHaveTrait: .boldFontMask)
                 }
             }
 
             if let isItalic = self.isItalic {
                 if isItalic {
-                    symbolicTraits.insert(.italic)
+                    newFont = NSFontManager.shared.convert(newFont, toHaveTrait: .italicFontMask)
                 } else {
-                    symbolicTraits.remove(.italic)
+                    newFont = NSFontManager.shared.convert(newFont, toNotHaveTrait: .italicFontMask)
                 }
             }
 
-            modifiedAttributes[.font] = self.font(from: fontDescriptor, size: fontSize, applying: symbolicTraits)
+            if let fontSize = self.fontSize {
+                newFont = NSFontManager.shared.convert(newFont, toSize: fontSize.newFontSize(for: newFont))
+            }
+            modifiedAttributes[.font] = newFont
         }
         return modifiedAttributes
     }

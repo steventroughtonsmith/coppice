@@ -62,13 +62,13 @@ class TextEditorFontInspectorViewModelTests: XCTestCase {
     }
 
     func test_fontSize_getReturnsFontSizeFromAttributes() {
-        self.editor.selectedFontAttributes = TextEditorFontAttributes(fontSize: 30.0)
+        self.editor.selectedFontAttributes = TextEditorFontAttributes(fontSize: .absolute(30.0))
         XCTAssertEqual(self.viewModel.fontSize, NSNumber(floatLiteral: 30.0))
     }
 
     func test_fontSize_setUpdatesEditorWithNewFontSize() {
         self.viewModel.fontSize = 42.0
-        XCTAssertEqual(self.editor.updatedFontAttributes, TextEditorFontAttributes(fontSize: 42.0))
+        XCTAssertEqual(self.editor.updatedFontAttributes, TextEditorFontAttributes(fontSize: .absolute(42.0)))
     }
 
     func test_textColour_getReturnsColourFromAttributes() {

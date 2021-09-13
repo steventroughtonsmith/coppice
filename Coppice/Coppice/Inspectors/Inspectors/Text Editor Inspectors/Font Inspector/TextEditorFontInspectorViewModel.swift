@@ -96,14 +96,17 @@ class TextEditorFontInspectorViewModel: BaseInspectorViewModel {
 
     @objc dynamic var fontSize: NSNumber? {
         get {
-            guard let fontSize = self.cachedAttributes?.fontSize else {
+            guard
+                let fontSize = self.cachedAttributes?.fontSize,
+                case .absolute(let actualSize) = fontSize
+            else {
                 return nil
             }
-            return fontSize as NSNumber
+            return actualSize as NSNumber
         }
         set {
             if let fontSize = newValue?.floatValue {
-                self.attributeEditor.updateSelection(with: TextEditorFontAttributes(fontSize: CGFloat(fontSize)))
+                self.attributeEditor.updateSelection(with: TextEditorFontAttributes(fontSize: .absolute(CGFloat(fontSize))))
             }
         }
     }
