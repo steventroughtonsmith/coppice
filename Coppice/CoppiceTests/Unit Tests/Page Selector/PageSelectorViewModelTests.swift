@@ -18,7 +18,7 @@ class PageSelectorViewModelTests: XCTestCase {
     var strawberryPage: Page!
     var bananaPage: Page!
 
-    let expectedAdditionalRows = (PageContentType.allCases.count + 1)
+    let expectedAdditionalRows = (PageContentType.allCases.count + 2)
 
     override func setUp() {
         super.setUp()
@@ -145,8 +145,8 @@ class PageSelectorViewModelTests: XCTestCase {
     func test_rows_includesHeaderRowAfterPages() throws {
         let viewModel = PageSelectorViewModel(title: "", documentWindowViewModel: self.documentWindowViewModel) { (_) in }
 
-        XCTAssertEqual(viewModel.rows[safe: 4]?.title, "Create New…")
-        XCTAssertEqual(viewModel.rows[safe: 4]?.rowType, .header)
+        XCTAssertEqual(viewModel.rows[safe: 5]?.title, "Create New…")
+        XCTAssertEqual(viewModel.rows[safe: 5]?.rowType, .header)
     }
 
     func test_rows_includesContentTypesAfterHeaderRow() throws {
@@ -158,7 +158,7 @@ class PageSelectorViewModelTests: XCTestCase {
             }
             return false
         }
-        XCTAssertEqual(contentTypeRows.first, try XCTUnwrap(viewModel.rows[safe: 5]))
+        XCTAssertEqual(contentTypeRows.first, try XCTUnwrap(viewModel.rows[safe: 6]))
         XCTAssertEqual(contentTypeRows.count, PageContentType.allCases.count)
         for contentType in PageContentType.allCases {
             XCTAssertTrue(contentTypeRows.contains(where: { $0.rowType == .contentType(contentType) }))

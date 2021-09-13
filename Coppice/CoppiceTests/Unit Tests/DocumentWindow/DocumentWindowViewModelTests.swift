@@ -51,20 +51,28 @@ class DocumentWindowViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.sidebarSelection, [.canvases])
     }
 
-    func test_selection_creatingNewFolderSelectsItInSidebarIfEditorWasNotCanvasEditor() throws {
+    func test_selection_creatingNewFolderDoesntSelectItInSidebarIfEditorWasOtherFolder() throws {
         let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         viewModel.updateSelection([.folder(self.folder.id)])
 
-        let folder = self.modelController.createFolder(in: self.modelController.rootFolder)
-        XCTAssertEqual(viewModel.sidebarSelection, [.folder(folder.id)])
+        self.modelController.createFolder(in: self.modelController.rootFolder)
+        XCTAssertEqual(viewModel.sidebarSelection, [.folder(self.folder.id)])
     }
 
-    func test_selection_creatingNewFolderDoesntSelectItInSidebarIfEditorWasCanvaseditor() throws {
+    func test_selection_creatingNewFolderDoesntSelectItInSidebarIfEditorWasCanvasEditor() throws {
         let viewModel = DocumentWindowViewModel(modelController: self.modelController)
         viewModel.updateSelection([.canvases])
 
         self.modelController.createFolder(in: self.modelController.rootFolder)
         XCTAssertEqual(viewModel.sidebarSelection, [.canvases])
+    }
+
+    func test_selection_creatingNewFolderDoesntSelectItInSidebarIfEditorWasPageEditor() throws {
+        let viewModel = DocumentWindowViewModel(modelController: self.modelController)
+        viewModel.updateSelection([.page(self.page.id)])
+
+        self.modelController.createFolder(in: self.modelController.rootFolder)
+        XCTAssertEqual(viewModel.sidebarSelection, [.page(self.page.id)])
     }
 
     func test_selection_creatingNewCanvasSelectsCanvasesInSidebarAndSetsAsSelectedCanvasID() throws {
