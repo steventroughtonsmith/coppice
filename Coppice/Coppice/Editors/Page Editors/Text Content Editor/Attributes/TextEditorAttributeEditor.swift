@@ -220,7 +220,7 @@ class TextEditorAttributeEditor: LinkEditor {
             return
         }
 
-        let string = "\t\(list.marker(forItemNumber: 0))\t"
+        let string = "\t\(list.marker(forItemNumber: 1))\t"
         var attributes = textView.typingAttributes
         let paragraphStyle = (attributes[.paragraphStyle] as? NSParagraphStyle) ?? textView.defaultParagraphStyle ?? NSParagraphStyle()
         if let mutableStyle = paragraphStyle.mutableCopy() as? NSMutableParagraphStyle {
