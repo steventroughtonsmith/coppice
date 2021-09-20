@@ -93,6 +93,33 @@ public class CoppiceModelController: NSObject, ModelController {
         return newPages
     }
 
+    @discardableResult public func duplicatePages(_ pages: [Page]) -> [Page] {
+        self.pushChangeGroup()
+        self.undoManager.beginUndoGrouping()
+
+        let duplicatedPages = pages.map { page -> Page in
+            let duplicatedPage = Page.create(in: self) {
+                var plist = page.plistRepresentation
+                plist[Page.PlistKeys.id.rawValue] = $0.id.stringRepresentation
+
+                let newDateCreated = Date()
+                plist[Page.PlistKeys.dateCreated.rawValue] = newDateCreated
+                plist[Page.PlistKeys.dateModified.rawValue] = newDateCreated
+
+                try? $0.update(fromPlistRepresentation: plist)
+            }
+
+            page.containingFolder?.insert([duplicatedPage], below: page)
+            return duplicatedPage
+        }
+
+        self.undoManager.setActionName(NSLocalizedString("Duplicate Pages", comment: "Duplicate pages undo action name"))
+        self.undoManager.endUndoGrouping()
+        self.popChangeGroup()
+
+        return duplicatedPages
+    }
+
     public func delete(_ page: Page) {
         self.pushChangeGroup()
         self.undoManager.beginUndoGrouping()

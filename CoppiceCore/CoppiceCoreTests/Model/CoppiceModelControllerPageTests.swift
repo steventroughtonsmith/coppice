@@ -117,16 +117,10 @@ class CoppiceModelControllerPageTests: XCTestCase {
 
 
     //MARK: - createPages(fromFilesAt:in:below:setup:)
-    func test_createPagesFromFilesAtURLs_createsNewPagesForSuppliedFileURLs() {
-        let fileURLs = [
-            self.testBundle.url(forResource: "test-image", withExtension: "png")!,
-            self.testBundle.url(forResource: "test-rtf", withExtension: "rtf")!,
-        ]
-
-        let pages = self.modelController.createPages(fromFilesAt: fileURLs, in: self.folder)
-        XCTAssertEqual(pages.count, 2)
-        XCTAssertEqual(pages[safe: 0]?.content.contentType, .image)
-        XCTAssertEqual(pages[safe: 1]?.content.contentType, .text)
+    func test_createPagesFromFilesAtURLs_createsNewPagesForSuppliedFileURLs() throws {
+        let (imagePage, textPage) = try self.createTestPagesFromFiles()
+        XCTAssertEqual(imagePage.content.contentType, .image)
+        XCTAssertEqual(textPage.content.contentType, .text)
     }
 
     func test_createPagesFromFilesAtURLs_addsPagesToStartOfSuppliedFolderIfItemIsNil() throws {
@@ -134,14 +128,7 @@ class CoppiceModelControllerPageTests: XCTestCase {
         let initialPage2 = self.modelController.collection(for: Page.self).newObject()
         self.folder.insert([initialPage1, initialPage2])
 
-        let fileURLs = [
-            self.testBundle.url(forResource: "test-image", withExtension: "png")!,
-            self.testBundle.url(forResource: "test-rtf", withExtension: "rtf")!,
-        ]
-
-        let pages = self.modelController.createPages(fromFilesAt: fileURLs, in: self.folder, below: nil)
-        let imagePage = try XCTUnwrap(pages[safe: 0])
-        let textPage = try XCTUnwrap(pages[safe: 1])
+        let (imagePage, textPage) = try self.createTestPagesFromFiles()
 
         XCTAssertEqual(imagePage.containingFolder, self.folder)
         XCTAssertEqual(textPage.containingFolder, self.folder)
@@ -155,14 +142,7 @@ class CoppiceModelControllerPageTests: XCTestCase {
         let initialPage2 = self.modelController.collection(for: Page.self).newObject()
         self.folder.insert([initialPage1, initialPage2])
 
-        let fileURLs = [
-            try XCTUnwrap(self.testBundle.url(forResource: "test-image", withExtension: "png")),
-            try XCTUnwrap(self.testBundle.url(forResource: "test-rtf", withExtension: "rtf")),
-        ]
-
-        let pages = self.modelController.createPages(fromFilesAt: fileURLs, in: self.folder, below: initialPage1)
-        let imagePage = try XCTUnwrap(pages[safe: 0])
-        let textPage = try XCTUnwrap(pages[safe: 1])
+        let (imagePage, textPage) = try self.createTestPagesFromFiles(below: initialPage1)
 
         XCTAssertEqual(imagePage.containingFolder, self.folder)
         XCTAssertEqual(textPage.containingFolder, self.folder)
@@ -186,14 +166,7 @@ class CoppiceModelControllerPageTests: XCTestCase {
     }
 
     func test_createPagesFromFilesAtURLs_undoingRemovesPagesFromCollection() throws {
-        let fileURLs = [
-            self.testBundle.url(forResource: "test-image", withExtension: "png")!,
-            self.testBundle.url(forResource: "test-rtf", withExtension: "rtf")!,
-        ]
-
-        let pages = self.modelController.createPages(fromFilesAt: fileURLs, in: self.folder)
-        let imagePage = try XCTUnwrap(pages[safe: 0])
-        let textPage = try XCTUnwrap(pages[safe: 1])
+        let (imagePage, textPage) = try self.createTestPagesFromFiles()
 
         self.undoManager.undo()
 
@@ -206,14 +179,7 @@ class CoppiceModelControllerPageTests: XCTestCase {
         let initialPage2 = self.modelController.collection(for: Page.self).newObject()
         self.folder.insert([initialPage1, initialPage2])
 
-        let fileURLs = [
-            self.testBundle.url(forResource: "test-image", withExtension: "png")!,
-            self.testBundle.url(forResource: "test-rtf", withExtension: "rtf")!,
-        ]
-
-        let pages = self.modelController.createPages(fromFilesAt: fileURLs, in: self.folder)
-        let imagePage = try XCTUnwrap(pages[safe: 0])
-        let textPage = try XCTUnwrap(pages[safe: 1])
+        let (imagePage, textPage) = try self.createTestPagesFromFiles()
 
         self.undoManager.undo()
 
@@ -222,14 +188,7 @@ class CoppiceModelControllerPageTests: XCTestCase {
     }
 
     func test_createPagesFromFilesAtURLs_redoingRecreatesPagesWithSameIDsAndContent() throws {
-        let fileURLs = [
-            self.testBundle.url(forResource: "test-image", withExtension: "png")!,
-            self.testBundle.url(forResource: "test-rtf", withExtension: "rtf")!,
-        ]
-
-        let pages = self.modelController.createPages(fromFilesAt: fileURLs, in: self.folder)
-        let imagePage = try XCTUnwrap(pages.first)
-        let textPage = try XCTUnwrap(pages.last)
+        let (imagePage, textPage) = try self.createTestPagesFromFiles()
 
         self.undoManager.undo()
         XCTAssertFalse(self.modelController.pageCollection.contains(imagePage))
@@ -256,14 +215,7 @@ class CoppiceModelControllerPageTests: XCTestCase {
         let initialPage2 = self.modelController.collection(for: Page.self).newObject()
         self.folder.insert([initialPage1, initialPage2])
 
-        let fileURLs = [
-            self.testBundle.url(forResource: "test-image", withExtension: "png")!,
-            self.testBundle.url(forResource: "test-rtf", withExtension: "rtf")!,
-        ]
-
-        let pages = self.modelController.createPages(fromFilesAt: fileURLs, in: self.folder, below: initialPage1)
-        let imagePage = try XCTUnwrap(pages[safe: 0])
-        let textPage = try XCTUnwrap(pages[safe: 1])
+        let (imagePage, textPage) = try self.createTestPagesFromFiles(below: initialPage1)
 
         self.undoManager.undo()
 
@@ -277,6 +229,136 @@ class CoppiceModelControllerPageTests: XCTestCase {
 
         XCTAssertEqual(self.folder.contents[safe: 1] as? Page, redoneImagePage)
         XCTAssertEqual(self.folder.contents[safe: 2] as? Page, redoneTextPage)
+    }
+
+
+    //MARK: - duplicate(_:)
+    func test_duplicatePages_returnedPagesHaveDifferentIDsToSuppliedPages() throws {
+        let (imagePage, textPage) = try self.createTestPagesFromFiles()
+
+        let duplicatedPages = self.modelController.duplicatePages([imagePage, textPage])
+        let duplicatedImagePage = try XCTUnwrap(duplicatedPages[safe: 0])
+        let duplicatedTextPage = try XCTUnwrap(duplicatedPages[safe: 1])
+
+        XCTAssertNotEqual(duplicatedImagePage.id, imagePage.id)
+        XCTAssertNotEqual(duplicatedTextPage.id, textPage.id)
+    }
+
+    func test_duplicatePages_returnedPagesHaveSameTitleAsSuppliedPages() throws {
+        let (imagePage, textPage) = try self.createTestPagesFromFiles()
+
+        let duplicatedPages = self.modelController.duplicatePages([imagePage, textPage])
+        let duplicatedImagePage = try XCTUnwrap(duplicatedPages[safe: 0])
+        let duplicatedTextPage = try XCTUnwrap(duplicatedPages[safe: 1])
+
+        XCTAssertEqual(duplicatedImagePage.title, imagePage.title)
+        XCTAssertEqual(duplicatedTextPage.title, textPage.title)
+    }
+
+    func test_duplicatePages_returnedPagesHaveSameContentAsSuppliedPages() throws {
+        let (imagePage, textPage) = try self.createTestPagesFromFiles()
+        let imagePageContent = try XCTUnwrap(imagePage.content as? ImagePageContent)
+        let textPageContent = try XCTUnwrap(textPage.content as? TextPageContent)
+
+        let duplicatedPages = self.modelController.duplicatePages([imagePage, textPage])
+        let duplicatedImagePageContent = try XCTUnwrap(duplicatedPages[safe: 0]?.content as? ImagePageContent)
+        let duplicatedTextPageContent = try XCTUnwrap(duplicatedPages[safe: 1]?.content as? TextPageContent)
+
+        XCTAssertEqual(duplicatedImagePageContent.image?.pngData(), imagePageContent.image?.pngData())
+        XCTAssertEqual(duplicatedImagePageContent.imageDescription, imagePageContent.imageDescription)
+        XCTAssertEqual(duplicatedTextPageContent.text, textPageContent.text)
+    }
+
+    func test_duplicatePages_returnedPagesHaveNewDates() throws {
+        let (imagePage, textPage) = try self.createTestPagesFromFiles()
+
+        let currentDate = Date()
+        let duplicatedPages = self.modelController.duplicatePages([imagePage, textPage])
+        let duplicatedImagePage = try XCTUnwrap(duplicatedPages[safe: 0])
+        let duplicatedTextPage = try XCTUnwrap(duplicatedPages[safe: 1])
+
+        XCTAssertGreaterThanOrEqual(duplicatedImagePage.dateCreated, currentDate)
+        XCTAssertEqual(duplicatedImagePage.dateCreated, duplicatedImagePage.dateModified)
+        XCTAssertGreaterThanOrEqual(duplicatedTextPage.dateCreated, currentDate)
+        XCTAssertEqual(duplicatedTextPage.dateCreated, duplicatedTextPage.dateModified)
+    }
+
+    func test_duplicatePages_returnedPagesAreAddedToSameFolderAsOriginalAndBelowOriginalIfFoldersAreSame() throws {
+        let (imagePage, textPage) = try self.createTestPagesFromFiles()
+
+        let duplicatedPages = self.modelController.duplicatePages([imagePage, textPage])
+        let duplicatedImagePage = try XCTUnwrap(duplicatedPages[safe: 0])
+        let duplicatedTextPage = try XCTUnwrap(duplicatedPages[safe: 1])
+
+        XCTAssertEqual(self.folder.contents[safe: 1] as? Page, duplicatedImagePage)
+        XCTAssertEqual(self.folder.contents[safe: 3] as? Page, duplicatedTextPage)
+    }
+
+    func test_duplicatePages_returnedPagesAreAddedToSameFolderAsOriginalAndBelowOriginalIfFoldersAreDifferent() throws {
+        let (imagePage, textPage) = try self.createTestPagesFromFiles()
+
+        self.modelController.rootFolder.insert([imagePage], below: nil)
+
+        let duplicatedPages = self.modelController.duplicatePages([imagePage, textPage])
+        let duplicatedImagePage = try XCTUnwrap(duplicatedPages[safe: 0])
+        let duplicatedTextPage = try XCTUnwrap(duplicatedPages[safe: 1])
+
+        XCTAssertEqual(self.modelController.rootFolder.contents[safe: 1] as? Page, duplicatedImagePage)
+        XCTAssertEqual(self.folder.contents[safe: 1] as? Page, duplicatedTextPage)
+    }
+
+    func test_duplicatePages_undoRemovesDuplicatedPagesFromCollection() throws {
+        let (imagePage, textPage) = try self.createTestPagesFromFiles()
+
+        let duplicatedPages = self.modelController.duplicatePages([imagePage, textPage])
+        let duplicatedImagePage = try XCTUnwrap(duplicatedPages[safe: 0])
+        let duplicatedTextPage = try XCTUnwrap(duplicatedPages[safe: 1])
+
+        self.undoManager.undo()
+
+        XCTAssertNil(self.modelController.pageCollection.objectWithID(duplicatedImagePage.id))
+        XCTAssertNil(self.modelController.pageCollection.objectWithID(duplicatedTextPage.id))
+    }
+
+    func test_duplicatePages_redoAddsDuplicatedPagesBackToCollectionWithSameIDAndContent() throws {
+        let (imagePage, textPage) = try self.createTestPagesFromFiles()
+
+        let duplicatedPages = self.modelController.duplicatePages([imagePage, textPage])
+        let duplicatedImagePage = try XCTUnwrap(duplicatedPages[safe: 0])
+        let duplicatedTextPage = try XCTUnwrap(duplicatedPages[safe: 1])
+
+        self.undoManager.undo()
+        self.undoManager.redo()
+
+        let redoneImagePage = try XCTUnwrap(self.modelController.pageCollection.objectWithID(duplicatedImagePage.id))
+        XCTAssertEqual(redoneImagePage.title, duplicatedImagePage.title)
+        XCTAssertEqual(redoneImagePage.dateCreated, duplicatedImagePage.dateCreated)
+        XCTAssertEqual(redoneImagePage.dateModified, duplicatedImagePage.dateModified)
+        XCTAssertEqual(redoneImagePage.content.contentType, duplicatedImagePage.content.contentType)
+        XCTAssertEqual((redoneImagePage.content as? ImagePageContent)?.image, (duplicatedImagePage.content as? ImagePageContent)?.image)
+
+        let redoneTextPage = try XCTUnwrap(self.modelController.pageCollection.objectWithID(duplicatedTextPage.id))
+        XCTAssertEqual(redoneTextPage.title, duplicatedTextPage.title)
+        XCTAssertEqual(redoneTextPage.dateCreated, duplicatedTextPage.dateCreated)
+        XCTAssertEqual(redoneTextPage.dateModified, duplicatedTextPage.dateModified)
+        XCTAssertEqual(redoneTextPage.content.contentType, duplicatedTextPage.content.contentType)
+        XCTAssertEqual((redoneTextPage.content as? TextPageContent)?.text, (duplicatedTextPage.content as? TextPageContent)?.text)
+    }
+
+    func test_duplicatePages_redoAddsDuplicatedPagesBackToFolder() throws {
+        let (imagePage, textPage) = try self.createTestPagesFromFiles()
+
+        self.modelController.rootFolder.insert([imagePage], below: nil)
+
+        let duplicatedPages = self.modelController.duplicatePages([imagePage, textPage])
+        let duplicatedImagePage = try XCTUnwrap(duplicatedPages[safe: 0])
+        let duplicatedTextPage = try XCTUnwrap(duplicatedPages[safe: 1])
+
+        self.undoManager.undo()
+        self.undoManager.redo()
+
+        XCTAssertEqual(self.modelController.rootFolder.contents[safe: 1] as? Page, duplicatedImagePage)
+        XCTAssertEqual(self.folder.contents[safe: 1] as? Page, duplicatedTextPage)
     }
 
 
@@ -428,5 +510,20 @@ class CoppiceModelControllerPageTests: XCTestCase {
         self.undoManager.redo()
 
         XCTAssertFalse(self.folder.contents.contains(where: { $0.id == page.id }))
+    }
+
+
+    //MARK: - Helper
+    private func createTestPagesFromFiles(below containable: FolderContainable? = nil) throws -> (imagePage: Page, textPage: Page) {
+        let fileURLs = [
+            self.testBundle.url(forResource: "test-image", withExtension: "png")!,
+            self.testBundle.url(forResource: "test-rtf", withExtension: "rtf")!,
+        ]
+
+        let pages = self.modelController.createPages(fromFilesAt: fileURLs, in: self.folder, below: containable)
+        let imagePage = try XCTUnwrap(pages[safe: 0])
+        let textPage = try XCTUnwrap(pages[safe: 1])
+
+        return (imagePage, textPage)
     }
 }

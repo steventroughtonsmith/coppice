@@ -515,6 +515,12 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Page" id="paa-hx-EBq">
                         <items>
+                            <menuItem title="Duplicate Page" id="60V-Iu-8uS">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="duplicatePage:" target="-1" id="e7U-wE-I0Y"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="Delete Page…" id="SAj-jc-4Yd">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>

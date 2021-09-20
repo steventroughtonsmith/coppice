@@ -219,31 +219,43 @@ class SourceListViewModel: ViewModel {
 
 
     //MARK: - Item Drag & Drop
-    func canDropItems(with ids: [ModelID], onto node: SourceListNode?, atChildIndex index: Int) -> (Bool, SourceListNode?, Int) {
+    enum DropMode {
+        case move
+        case copy
+    }
+
+    func canDropItems(with ids: [ModelID], onto node: SourceListNode?, atChildIndex index: Int, mode: DropMode) -> (Bool, SourceListNode?, Int) {
         guard let sourceListNode = node, case .folder(let folderID) = sourceListNode.item else {
             return (false, node, index)
         }
 
         guard let folder = self.modelController.folderCollection.objectWithID(folderID),
-              self.validate(ids: ids, and: folder)
+              self.validate(ids: ids, and: folder, mode: mode)
         else {
                 return (false, node, index)
         }
         return (true, node, index)
     }
 
-    func dropItems(with ids: [ModelID], onto node: SourceListNode?, atChildIndex index: Int) -> Bool {
+    func dropItems(with ids: [ModelID], onto node: SourceListNode?, atChildIndex index: Int, mode: DropMode) -> Bool {
         guard let sourceListNode = node, case .folder(let folderID) = sourceListNode.item else {
             return false
         }
 
         guard let folder = self.modelController.folderCollection.objectWithID(folderID),
-              self.validate(ids: ids, and: folder)
+              self.validate(ids: ids, and: folder, mode: mode)
         else {
             return false
         }
 
-        let items = ids.compactMap { self.modelController.object(with: $0) as? FolderContainable }
+        let items: [FolderContainable]
+        switch mode {
+        case .move:
+            items = ids.compactMap { self.modelController.object(with: $0) as? FolderContainable }
+        case .copy:
+            let pages = ids.compactMap { self.modelController.pageCollection.objectWithID($0) }
+            items = self.modelController.duplicatePages(pages)
+        }
 
         if index == -1 {
             folder.insert(items, below: folder.contents.last)
@@ -262,7 +274,7 @@ class SourceListViewModel: ViewModel {
         return false
     }
 
-    private func validate(ids: [ModelID], and folder: Folder) -> Bool {
+    private func validate(ids: [ModelID], and folder: Folder, mode: DropMode) -> Bool {
         guard (CoppiceSubscriptionManager.shared.activationResponse?.isActive == true) || folder == self.modelController.rootFolder else {
             return false
         }
@@ -275,9 +287,17 @@ class SourceListViewModel: ViewModel {
             currentFolder = currentFolder?.containingFolder
         }
 
+        let validModelTypes: [ModelType]
+        switch mode {
+        case .move:
+            validModelTypes = [Page.modelType, Folder.modelType]
+        case .copy:
+            validModelTypes = [Page.modelType]
+        }
+
         //Check all ids are valid
         for id in ids {
-            guard (id.modelType == Page.modelType) || (id.modelType == Folder.modelType) else {
+            guard validModelTypes.contains(id.modelType) else {
                 return false
             }
         }
@@ -380,6 +400,11 @@ class SourceListViewModel: ViewModel {
                                                      in: (lastNode?.folderForCreation ?? self.documentWindowViewModel.folderForNewPages),
                                                      below: lastNode?.folderItemForCreation)
         return pages.map { .page($0.id) }
+    }
+
+    @discardableResult func duplicatePages(inNodes collection: SourceListNodeCollection) -> [DocumentWindowViewModel.SidebarItem] {
+        let duplicatedPages = self.modelController.duplicatePages(collection.nodes.compactMap { ($0 as? PageSourceListNode)?.page })
+        return duplicatedPages.map { .page($0.id) }
     }
 
 

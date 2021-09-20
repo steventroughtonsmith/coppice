@@ -43,12 +43,14 @@ class SourceListViewModelTests: XCTestCase {
     private func addTestData(to viewModel: SourceListViewModel) -> (Page, Folder, Page, Page) {
         let rootFolder = self.modelController.rootFolder
         let page = self.modelController.collection(for: Page.self).newObject()
+        page.title = "Foobar"
         rootFolder.insert([page])
         let folder = self.modelController.collection(for: Folder.self).newObject()
         rootFolder.insert([folder], below: page)
         let subPage1 = self.modelController.collection(for: Page.self).newObject()
         folder.insert([subPage1])
         let page2 = self.modelController.collection(for: Page.self).newObject()
+        page2.title = "Baz"
         rootFolder.insert([page2], below: folder)
         viewModel.reloadSourceListNodes()
 
@@ -498,7 +500,7 @@ class SourceListViewModelTests: XCTestCase {
 
         let node = try XCTUnwrap(vm.node(for: .page(page1.id)))
 
-        let (canDrop, _, _) = vm.canDropItems(with: [folder.id, subpage1.id, page2.id], onto: node, atChildIndex: -1)
+        let (canDrop, _, _) = vm.canDropItems(with: [folder.id, subpage1.id, page2.id], onto: node, atChildIndex: -1, mode: .move)
         XCTAssertFalse(canDrop)
     }
 
@@ -508,7 +510,7 @@ class SourceListViewModelTests: XCTestCase {
 
         let (_, folder, subpage1, page2) = self.addTestData(to: vm)
 
-        let (canDrop, _, _) = vm.canDropItems(with: [folder.id, subpage1.id, page2.id], onto: vm.canvasesNode, atChildIndex: -1)
+        let (canDrop, _, _) = vm.canDropItems(with: [folder.id, subpage1.id, page2.id], onto: vm.canvasesNode, atChildIndex: -1, mode: .move)
         XCTAssertFalse(canDrop)
     }
 
@@ -520,7 +522,7 @@ class SourceListViewModelTests: XCTestCase {
         let node = try XCTUnwrap(vm.node(for: .folder(folder.id)))
         let rootFolder = self.modelController.rootFolder
 
-        let (canDrop, _, _) = vm.canDropItems(with: [rootFolder.id, subpage1.id, page2.id], onto: node, atChildIndex: -1)
+        let (canDrop, _, _) = vm.canDropItems(with: [rootFolder.id, subpage1.id, page2.id], onto: node, atChildIndex: -1, mode: .move)
         XCTAssertFalse(canDrop)
     }
 
@@ -535,7 +537,7 @@ class SourceListViewModelTests: XCTestCase {
         let node = try XCTUnwrap(vm.node(for: .folder(childFolder.id)))
         let rootFolder = self.modelController.rootFolder
 
-        let (canDrop, _, _) = vm.canDropItems(with: [rootFolder.id, subpage1.id, page2.id], onto: node, atChildIndex: -1)
+        let (canDrop, _, _) = vm.canDropItems(with: [rootFolder.id, subpage1.id, page2.id], onto: node, atChildIndex: -1, mode: .move)
         XCTAssertFalse(canDrop)
     }
 
@@ -546,7 +548,7 @@ class SourceListViewModelTests: XCTestCase {
         let (_, folder, subpage1, page2) = self.addTestData(to: vm)
         let node = try XCTUnwrap(vm.node(for: .folder(folder.id)))
 
-        let (canDrop, _, _) = vm.canDropItems(with: [subpage1.id, Canvas.modelID(with: UUID()), page2.id], onto: node, atChildIndex: -1)
+        let (canDrop, _, _) = vm.canDropItems(with: [subpage1.id, Canvas.modelID(with: UUID()), page2.id], onto: node, atChildIndex: -1, mode: .move)
         XCTAssertFalse(canDrop)
     }
 
@@ -557,17 +559,37 @@ class SourceListViewModelTests: XCTestCase {
         let (_, folder, subpage1, page2) = self.addTestData(to: vm)
         let node = try XCTUnwrap(vm.node(for: .folder(folder.id)))
 
-        let (canDrop, _, _) = vm.canDropItems(with: [subpage1.id, CanvasPage.modelID(with: UUID()), page2.id], onto: node, atChildIndex: -1)
+        let (canDrop, _, _) = vm.canDropItems(with: [subpage1.id, CanvasPage.modelID(with: UUID()), page2.id], onto: node, atChildIndex: -1, mode: .move)
         XCTAssertFalse(canDrop)
     }
 
-    func test_canDropItemsWithIDsOntoNode_returnsTrueIfDroppedOntoFolderAndAllIDsArePagesOrFolders() throws {
+    func test_canDropItemsWithIDsOntoNode_returnsTrueIfDroppedOntoFolderAndAllIDsArePagesOrFoldersWhenModeIsMove() throws {
         let vm = self.createViewModel()
         vm.startObserving()
 
         let (_, folder, _, page2) = self.addTestData(to: vm)
 
-        let (canDrop, _, _) = vm.canDropItems(with: [folder.id, page2.id], onto: vm.pagesGroupNode, atChildIndex: 0)
+        let (canDrop, _, _) = vm.canDropItems(with: [folder.id, page2.id], onto: vm.pagesGroupNode, atChildIndex: 0, mode: .move)
+        XCTAssertTrue(canDrop)
+    }
+
+    func test_canDropItemsWithIDsOntoNode_returnsFalseIfDroppedOntoFolderAndOneIDIsFolderWhenModeIsCopy() throws {
+        let vm = self.createViewModel()
+        vm.startObserving()
+
+        let (_, folder, _, page2) = self.addTestData(to: vm)
+
+        let (canDrop, _, _) = vm.canDropItems(with: [folder.id, page2.id], onto: vm.pagesGroupNode, atChildIndex: 0, mode: .copy)
+        XCTAssertFalse(canDrop)
+    }
+
+    func test_canDropItemsWithIDsOntoNode_returnsTrueIfDroppedOntoFolderAndAllIDsArePagesWhenModeIsCopy() throws {
+        let vm = self.createViewModel()
+        vm.startObserving()
+
+        let (page1, _, _, page2) = self.addTestData(to: vm)
+
+        let (canDrop, _, _) = vm.canDropItems(with: [page1.id, page2.id], onto: vm.pagesGroupNode, atChildIndex: 0, mode: .copy)
         XCTAssertTrue(canDrop)
     }
 
@@ -581,7 +603,7 @@ class SourceListViewModelTests: XCTestCase {
 
         let node = try XCTUnwrap(vm.node(for: .page(page1.id)))
 
-        XCTAssertFalse(vm.dropItems(with: [folder.id, subpage1.id, page2.id], onto: node, atChildIndex: -1))
+        XCTAssertFalse(vm.dropItems(with: [folder.id, subpage1.id, page2.id], onto: node, atChildIndex: -1, mode: .move))
     }
 
     func test_dropItemsWithIDsOntoNode_returnsFalseIfnodeIsCanvasesGroup() {
@@ -590,7 +612,7 @@ class SourceListViewModelTests: XCTestCase {
 
         let (_, folder, subpage1, page2) = self.addTestData(to: vm)
 
-        XCTAssertFalse(vm.dropItems(with: [folder.id, subpage1.id, page2.id], onto: vm.canvasesNode, atChildIndex: -1))
+        XCTAssertFalse(vm.dropItems(with: [folder.id, subpage1.id, page2.id], onto: vm.canvasesNode, atChildIndex: -1, mode: .move))
     }
 
     func test_dropItemsWithIDsOntoNode_returnsFalseIfNodesFolderIsInIDs() throws {
@@ -601,7 +623,7 @@ class SourceListViewModelTests: XCTestCase {
         let node = try XCTUnwrap(vm.node(for: .folder(folder.id)))
         let rootFolder = self.modelController.rootFolder
 
-        XCTAssertFalse(vm.dropItems(with: [rootFolder.id, subpage1.id, page2.id], onto: node, atChildIndex: -1))
+        XCTAssertFalse(vm.dropItems(with: [rootFolder.id, subpage1.id, page2.id], onto: node, atChildIndex: -1, mode: .move))
     }
 
     func test_dropItemsWithIDsOntoNode_returnsFalseIfNodesFolderAncestorIsInIDs() throws {
@@ -615,7 +637,7 @@ class SourceListViewModelTests: XCTestCase {
         let node = try XCTUnwrap(vm.node(for: .folder(childFolder.id)))
         let rootFolder = self.modelController.rootFolder
 
-        XCTAssertFalse(vm.dropItems(with: [rootFolder.id, subpage1.id, page2.id], onto: node, atChildIndex: -1))
+        XCTAssertFalse(vm.dropItems(with: [rootFolder.id, subpage1.id, page2.id], onto: node, atChildIndex: -1, mode: .move))
     }
 
     func test_dropItemsWithIDsOntoNode_returnsFalseIfOneIDIsACanvasID() throws {
@@ -625,7 +647,7 @@ class SourceListViewModelTests: XCTestCase {
         let (_, folder, subpage1, page2) = self.addTestData(to: vm)
         let node = try XCTUnwrap(vm.node(for: .folder(folder.id)))
 
-        XCTAssertFalse(vm.dropItems(with: [subpage1.id, Canvas.modelID(with: UUID()), page2.id], onto: node, atChildIndex: -1))
+        XCTAssertFalse(vm.dropItems(with: [subpage1.id, Canvas.modelID(with: UUID()), page2.id], onto: node, atChildIndex: -1, mode: .move))
     }
 
     func test_dropItemsWithIDsOntoNode_returnsFalseIfOneIDIsACanvasPageID() throws {
@@ -635,7 +657,17 @@ class SourceListViewModelTests: XCTestCase {
         let (_, folder, subpage1, page2) = self.addTestData(to: vm)
         let node = try XCTUnwrap(vm.node(for: .folder(folder.id)))
 
-        XCTAssertFalse(vm.dropItems(with: [subpage1.id, CanvasPage.modelID(with: UUID()), page2.id], onto: node, atChildIndex: -1))
+        XCTAssertFalse(vm.dropItems(with: [subpage1.id, CanvasPage.modelID(with: UUID()), page2.id], onto: node, atChildIndex: -1, mode: .move))
+    }
+
+    func test_dropItemsWithIDsOntoNode_returnsFalseIfOneIDIsAFolderIDAndModeIsCopy() throws {
+        let vm = self.createViewModel()
+        vm.startObserving()
+
+        let (_, folder, subpage1, page2) = self.addTestData(to: vm)
+        let node = try XCTUnwrap(vm.node(for: .folder(folder.id)))
+
+        XCTAssertFalse(vm.dropItems(with: [subpage1.id, folder.id, page2.id], onto: vm.pagesGroupNode, atChildIndex: -1, mode: .copy))
     }
 
     func test_dropItemsWithIDsOntoNode_insertsItemsToEndOfFolderIfIndexIsMinus1() throws {
@@ -644,7 +676,7 @@ class SourceListViewModelTests: XCTestCase {
 
         let (page1, folder, _, _) = self.addTestData(to: vm)
 
-        XCTAssertTrue(vm.dropItems(with: [page1.id, folder.id], onto: vm.pagesGroupNode, atChildIndex: -1))
+        XCTAssertTrue(vm.dropItems(with: [page1.id, folder.id], onto: vm.pagesGroupNode, atChildIndex: -1, mode: .move))
 
         let rootFolder = self.modelController.rootFolder
         XCTAssertEqual(rootFolder.contents[safe: 1] as? Page, page1)
@@ -657,7 +689,7 @@ class SourceListViewModelTests: XCTestCase {
 
         let (_, folder, _, page2) = self.addTestData(to: vm)
 
-        XCTAssertTrue(vm.dropItems(with: [folder.id, page2.id], onto: vm.pagesGroupNode, atChildIndex: 0))
+        XCTAssertTrue(vm.dropItems(with: [folder.id, page2.id], onto: vm.pagesGroupNode, atChildIndex: 0, mode: .move))
 
         let rootFolder = self.modelController.rootFolder
         XCTAssertEqual(rootFolder.contents[safe: 0] as? Folder, folder)
@@ -670,10 +702,31 @@ class SourceListViewModelTests: XCTestCase {
 
         let (page1, _, _, _) = self.addTestData(to: vm)
 
-        XCTAssertTrue(vm.dropItems(with: [page1.id], onto: vm.pagesGroupNode, atChildIndex: 2))
+        XCTAssertTrue(vm.dropItems(with: [page1.id], onto: vm.pagesGroupNode, atChildIndex: 2, mode: .move))
 
         let rootFolder = self.modelController.rootFolder
         XCTAssertEqual(rootFolder.contents[safe: 1] as? Page, page1)
+    }
+
+    func test_dropItemsWithIDsOntoNode_duplicatesPagesBeforeInsertingBelowItemAtIndexIfModeIsCopy() throws {
+        let vm = self.createViewModel()
+        vm.startObserving()
+
+        let (page1, folder, _, page2) = self.addTestData(to: vm)
+        let expectedPage1Folder = try XCTUnwrap(page1.containingFolder)
+        let expectedPage2Folder = try XCTUnwrap(page2.containingFolder)
+
+        let node = try XCTUnwrap(vm.node(for: .folder(folder.id)))
+        XCTAssertTrue(vm.dropItems(with: [page1.id, page2.id], onto: node, atChildIndex: 1, mode: .copy))
+
+        XCTAssertEqual(page1.containingFolder, expectedPage1Folder)
+        XCTAssertEqual(page2.containingFolder, expectedPage2Folder)
+
+        let duplicatedPage1 = try XCTUnwrap(folder.contents[safe: 1] as? Page)
+        XCTAssertEqual(duplicatedPage1.title, page1.title)
+
+        let duplicatedPage2 = try XCTUnwrap(folder.contents[safe: 2] as? Page)
+        XCTAssertEqual(duplicatedPage2.title, page2.title)
     }
 
 

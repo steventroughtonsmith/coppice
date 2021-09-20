@@ -156,6 +156,15 @@ class SourceListViewController: NSViewController, NSMenuItemValidation {
         self.createdItem = self.viewModel.createFolder(usingSelection: self.nodesForAction)
     }
 
+    @IBAction func duplicatePage(_ sender: Any) {
+        let pageNodes = self.viewModel.duplicatePages(inNodes: self.nodesForAction)
+        if (pageNodes.count == 1) {
+            self.createdItem = pageNodes[0]
+        } else {
+            self.viewModel.documentWindowViewModel.updateSelection(pageNodes)
+        }
+    }
+
 
     //MARK: - Action Menu Actions
     @IBAction func editItemTitle(_ sender: Any) {
@@ -239,6 +248,13 @@ class SourceListViewController: NSViewController, NSMenuItemValidation {
         if menuItem.action == #selector(self.editItemTitle(_:)) {
             let nodesCollection = self.nodesForAction
             return (nodesCollection.count == 1) && (nodesCollection.containsCanvases == false)
+        }
+
+        if menuItem.action == #selector(self.duplicatePage(_:)) {
+            let nodesCollection = self.nodesForAction
+            menuItem.title = (nodesCollection.count == 1) ? NSLocalizedString("Duplicate Page", comment: "Duplicate single page menu item title")
+                                                          : NSLocalizedString("Duplicate Pages", comment: "Duplicate multiple pages menu item title")
+            return (nodesCollection.containsPages == true) && (nodesCollection.containsFolders == false)
         }
 
         if menuItem.action == #selector(self.deleteItems(_:)) {
@@ -554,12 +570,13 @@ extension SourceListViewController: NSOutlineViewDataSource {
 
         if types.contains(ModelID.PasteboardType) {
             let modelIDs = items.compactMap { ModelID(pasteboardItem: $0) }
-            let (canDrop, targetNode, targetIndex) = self.viewModel.canDropItems(with: modelIDs, onto: (item as? SourceListNode), atChildIndex: index)
+            let optionHeld = NSApp.currentEvent?.modifierFlags.contains(.option) ?? false
+            let (canDrop, targetNode, targetIndex) = self.viewModel.canDropItems(with: modelIDs, onto: (item as? SourceListNode), atChildIndex: index, mode: optionHeld ? .copy : .move)
             guard canDrop else {
                 return []
             }
             outlineView.setDropItem(targetNode, dropChildIndex: targetIndex)
-            return .generic
+            return optionHeld ? .copy : .move
         }
         if types.contains(.fileURL) {
             let fileURLs = items.compactMap { $0.data(forType: .fileURL) }.compactMap { URL(dataRepresentation: $0, relativeTo: nil) }
@@ -585,7 +602,8 @@ extension SourceListViewController: NSOutlineViewDataSource {
 
         if types.contains(ModelID.PasteboardType) {
             let modelIDs = items.compactMap { ModelID(pasteboardItem: $0) }
-            return self.viewModel.dropItems(with: modelIDs, onto: (item as? SourceListNode), atChildIndex: index)
+            let optionHeld = NSApp.currentEvent?.modifierFlags.contains(.option) ?? false
+            return self.viewModel.dropItems(with: modelIDs, onto: (item as? SourceListNode), atChildIndex: index, mode: optionHeld ? .copy : .move)
         }
 
         if types.contains(.fileURL) {
