@@ -23,7 +23,6 @@ class CanvasInspectorViewModel: BaseInspectorViewModel {
         self.canvas = canvas
         self.modelController = modelController
         super.init()
-        self.setupProObservation()
     }
 
     override var title: String? {
@@ -64,16 +63,5 @@ class CanvasInspectorViewModel: BaseInspectorViewModel {
             }
             self.canvas.theme = Canvas.Theme.allCases[newValue]
         }
-    }
-
-
-    //MARK: - Pro
-    @objc dynamic var isProEnabled = false
-
-    var activationObserver: AnyCancellable?
-    private func setupProObservation() {
-        self.activationObserver = CoppiceSubscriptionManager.shared.$activationResponse
-            .map { $0?.isActive ?? false }
-            .assign(to: \.isProEnabled, on: self)
     }
 }

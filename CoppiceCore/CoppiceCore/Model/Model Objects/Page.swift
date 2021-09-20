@@ -53,6 +53,11 @@ final public class Page: NSObject, CollectableModelObject, FolderContainable {
 
     public private(set) var otherProperties = [String: Any]()
 
+    /// Added in 2021.2
+    @objc dynamic public var allowsAutoLinking: Bool = true {
+        didSet { self.didChange(\.allowsAutoLinking, oldValue: oldValue) }
+    }
+
 
     //MARK: - FolderContainable
     public weak var containingFolder: Folder? {
@@ -105,6 +110,7 @@ final public class Page: NSObject, CollectableModelObject, FolderContainable {
         case dateModified
         case content
         case userPreferredSize
+        case allowsAutoLinking //Added 2021.2
     }
 
     public var plistRepresentation: [String: Any] {
@@ -117,6 +123,7 @@ final public class Page: NSObject, CollectableModelObject, FolderContainable {
         if let preferredSize = self.userPreferredSize {
             plist[PlistKeys.userPreferredSize.rawValue] = NSStringFromSize(preferredSize)
         }
+        plist[PlistKeys.allowsAutoLinking.rawValue] = self.allowsAutoLinking
 
         return plist
     }
@@ -141,12 +148,15 @@ final public class Page: NSObject, CollectableModelObject, FolderContainable {
             throw ModelObjectUpdateErrors.attributeNotFound(PlistKeys.content.rawValue)
         }
 
+        let allowsAutoLinking = (plist[PlistKeys.allowsAutoLinking.rawValue] as? Bool) ?? true
+
         //Set values
         self.title = title
         self.dateCreated = dateCreated
         self.dateModified = dateModified
         self.userPreferredSize = userPreferredSize
         self.content = contentType.createContent(data: content.data, metadata: content.metadata)
+        self.allowsAutoLinking = allowsAutoLinking
 
         let plistKeys = PlistKeys.allCases.map(\.rawValue)
         self.otherProperties = plist.filter { (key, _) -> Bool in

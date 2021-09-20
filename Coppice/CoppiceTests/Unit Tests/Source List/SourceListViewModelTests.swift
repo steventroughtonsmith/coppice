@@ -667,7 +667,7 @@ class SourceListViewModelTests: XCTestCase {
         let (_, folder, subpage1, page2) = self.addTestData(to: vm)
         let node = try XCTUnwrap(vm.node(for: .folder(folder.id)))
 
-        XCTAssertFalse(vm.dropItems(with: [subpage1.id, folder.id, page2.id], onto: vm.pagesGroupNode, atChildIndex: -1, mode: .copy))
+        XCTAssertFalse(vm.dropItems(with: [subpage1.id, folder.id, page2.id], onto: node, atChildIndex: -1, mode: .copy))
     }
 
     func test_dropItemsWithIDsOntoNode_insertsItemsToEndOfFolderIfIndexIsMinus1() throws {

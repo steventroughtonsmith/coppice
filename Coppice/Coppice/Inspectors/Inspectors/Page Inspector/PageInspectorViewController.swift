@@ -14,6 +14,13 @@ class PageInspectorViewController: BaseInspectorViewController {
     }
 
     override var ranking: InspectorRanking { return .page }
+
+    @IBAction func showProUpsell(_ sender: Any) {
+        guard let control = sender as? NSView else {
+            return
+        }
+        CoppiceSubscriptionManager.shared.showProPopover(for: .textAutoLinking, from: control, preferredEdge: .maxY)
+    }
 }
 
 

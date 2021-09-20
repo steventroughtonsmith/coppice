@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17140" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19158" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17140"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19158"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -16,11 +17,11 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <userDefaultsController representsSharedInstance="YES" id="ETG-0C-8jU"/>
         <customView id="phm-4T-vFe">
-            <rect key="frame" x="0.0" y="0.0" width="307" height="21"/>
+            <rect key="frame" x="0.0" y="0.0" width="307" height="45"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cbs-QW-dFw">
-                    <rect key="frame" x="35" y="0.0" width="272" height="21"/>
+                    <rect key="frame" x="35" y="24" width="272" height="21"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Untitled page" drawsBackground="YES" usesSingleLineMode="YES" id="czh-dI-xk3">
                         <font key="font" usesAppearanceFont="YES"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -36,23 +37,72 @@
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vru-RT-UeN">
-                    <rect key="frame" x="-2" y="2" width="31" height="16"/>
+                    <rect key="frame" x="-2" y="26" width="31" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Title" id="gx6-FE-zW9">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" horizontalClippingResistancePriority="400" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MUp-Lm-5zC">
+                    <rect key="frame" x="35" y="0.0" width="272" height="16"/>
+                    <subviews>
+                        <button toolTip="Allow auto-linking to this page from other pages. Disabling this will prevent the auto-linker from considering this page." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LKy-bs-Kyo">
+                            <rect key="frame" x="-2" y="-1" width="226" height="18"/>
+                            <buttonCell key="cell" type="check" title="Allows Auto-Linking" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Nxb-Ib-CpH">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <binding destination="-2" name="enabled" keyPath="self.viewModel.isProEnabled" id="oxq-7n-nc0"/>
+                                <binding destination="-2" name="value" keyPath="self.viewModel.page.allowsAutoLinking" id="2QZ-7H-KPR"/>
+                            </connections>
+                        </button>
+                        <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gIn-TM-p9U">
+                            <rect key="frame" x="226" y="-7" width="52" height="27"/>
+                            <buttonCell key="cell" type="push" title="PRO" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="5za-KC-L2L" customClass="ProButtonCell" customModule="Coppice" customModuleProvider="target">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="smallSystemBold"/>
+                            </buttonCell>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="color" keyPath="bezelColor">
+                                    <color key="value" name="CoppiceGreen"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="showProUpsell:" target="-2" id="yVD-Bu-s0c"/>
+                                <binding destination="-2" name="hidden" keyPath="self.viewModel.isProEnabled" id="i2j-Wv-vEg"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <visibilityPriorities>
+                        <integer value="1000"/>
+                        <real value="300"/>
+                    </visibilityPriorities>
+                    <customSpacing>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                    </customSpacing>
+                </stackView>
             </subviews>
             <constraints>
+                <constraint firstItem="MUp-Lm-5zC" firstAttribute="top" secondItem="cbs-QW-dFw" secondAttribute="bottom" constant="8" symbolic="YES" id="0ju-CR-EF2"/>
+                <constraint firstItem="MUp-Lm-5zC" firstAttribute="leading" secondItem="cbs-QW-dFw" secondAttribute="leading" id="5Xj-nU-eVp"/>
                 <constraint firstItem="cbs-QW-dFw" firstAttribute="top" secondItem="phm-4T-vFe" secondAttribute="top" id="6AW-aj-pjc"/>
                 <constraint firstItem="cbs-QW-dFw" firstAttribute="leading" secondItem="vru-RT-UeN" secondAttribute="trailing" constant="8" id="7mX-qO-Ak0"/>
-                <constraint firstAttribute="bottom" secondItem="cbs-QW-dFw" secondAttribute="bottom" id="SiK-wp-Jts"/>
                 <constraint firstItem="vru-RT-UeN" firstAttribute="leading" secondItem="phm-4T-vFe" secondAttribute="leading" id="Xht-zJ-WJU"/>
+                <constraint firstAttribute="trailing" secondItem="MUp-Lm-5zC" secondAttribute="trailing" id="fxR-7g-u22"/>
+                <constraint firstAttribute="bottom" secondItem="MUp-Lm-5zC" secondAttribute="bottom" id="mu2-Gi-26u"/>
                 <constraint firstItem="vru-RT-UeN" firstAttribute="firstBaseline" secondItem="cbs-QW-dFw" secondAttribute="firstBaseline" id="o9C-kL-fAg"/>
+                <constraint firstItem="LKy-bs-Kyo" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="cbs-QW-dFw" secondAttribute="trailing" id="q5c-5P-KSA"/>
                 <constraint firstAttribute="trailing" secondItem="cbs-QW-dFw" secondAttribute="trailing" id="yzD-i0-2TO"/>
             </constraints>
-            <point key="canvasLocation" x="13.5" y="11.5"/>
+            <point key="canvasLocation" x="-589.5" y="26.5"/>
         </customView>
     </objects>
+    <resources>
+        <namedColor name="CoppiceGreen">
+            <color red="0.13300000131130219" green="0.56499999761581421" blue="0.086000002920627594" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
 </document>
