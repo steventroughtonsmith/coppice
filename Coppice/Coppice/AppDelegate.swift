@@ -156,6 +156,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBAction func checkSubscription(_ sender: Any?) {
         self.subscriptionManager.checkSubscription()
     }
+
+    @IBAction func toggleProDisabled(_ sender: NSMenuItem) {
+        self.subscriptionManager.proDisabled.toggle()
+        sender.state = (self.subscriptionManager.proDisabled ? .on : .off)
+    }
     #endif
 
     @IBAction func openSampleDocument(_ sender: Any?) {

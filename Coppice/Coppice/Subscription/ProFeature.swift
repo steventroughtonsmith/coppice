@@ -10,7 +10,7 @@ import Foundation
 
 enum ProFeature {
     case unlimitedCanvases
-    case canvasThemes
+    case canvasAppearance
     case textAutoLinking
     case pageFolders
 }
@@ -19,7 +19,7 @@ extension ProFeature {
     var title: String {
         switch self {
         case .unlimitedCanvases:    return NSLocalizedString("Unlimited Canvases", comment: "Unlimited Canvases upsell title")
-        case .canvasThemes:         return NSLocalizedString("Canvas Themes", comment: "Canvas Themes upsell title")
+        case .canvasAppearance:     return NSLocalizedString("Canvas Appearance", comment: "Canvas Apperance upsell title")
         case .textAutoLinking:      return NSLocalizedString("Automatic Page Linking", comment: "Automatic Page Linking upsell title")
         case .pageFolders:          return NSLocalizedString("Page Folders", comment: "Page Folders upsell title")
         }
@@ -29,8 +29,8 @@ extension ProFeature {
         switch self {
         case .unlimitedCanvases:
             return NSLocalizedString("Unlocking Coppice Pro allows you create an unlimited number of Canvases in each document, letting you make sense your thoughts from many different angles.", comment: "Unlimited Canvases upsell body")
-        case .canvasThemes:
-            return NSLocalizedString("Feel like changing things up? With Coppice Pro you choose which theme to use for each Canvas.", comment: "Canvas Themes upsell body")
+        case .canvasAppearance:
+            return NSLocalizedString("Feel like changing things up? With Coppice Pro you gain more ways to customise your canvases, including selecting the Canvas theme", comment: "Canvas Themes upsell body")
         case .textAutoLinking:
             return NSLocalizedString("Thoughts and ideas don't live in isolation. Upgrade to Pro and Coppice can help you connect your thoughts by automatically linking pages for you.", comment: "Automatic Page Linking upsell body")
         case .pageFolders:

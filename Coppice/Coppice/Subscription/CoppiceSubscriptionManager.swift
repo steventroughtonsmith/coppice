@@ -320,4 +320,24 @@ class CoppiceSubscriptionManager: NSObject {
     func openProPage() {
         NSWorkspace.shared.open(URL(string: "https://coppiceapp.com/pro")!)
     }
+
+    #if DEBUG
+    private var previousActivationResponse: ActivationResponse?
+
+    var proDisabled = false {
+        didSet {
+            guard self.proDisabled != oldValue else {
+                return
+            }
+
+            if self.proDisabled {
+                self.previousActivationResponse = self.activationResponse
+                self.activationResponse = nil
+            } else {
+                self.activationResponse = self.previousActivationResponse
+                self.previousActivationResponse = nil
+            }
+        }
+    }
+    #endif
 }

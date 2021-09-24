@@ -68,6 +68,11 @@ final public class Canvas: NSObject, CollectableModelObject {
 
     public var closedPageHierarchies: [ModelID: [ModelID: PageHierarchy]] = [:]
 
+    ///Added 2021.2
+    public var alwaysShowPageTitles: Bool = false {
+        didSet { self.didChange(\.alwaysShowPageTitles, oldValue: oldValue) }
+    }
+
     public private(set) var otherProperties = [String: Any]()
 
 
@@ -97,18 +102,20 @@ final public class Canvas: NSObject, CollectableModelObject {
         case thumbnail
         case viewPort
         case closedPageHierarchies
+        case alwaysShowPageTitles ///Added 2021.2
     }
 
     public var plistRepresentation: [String: Any] {
         var plist = self.otherProperties
 
-            plist[PlistKeys.id.rawValue] = self.id.stringRepresentation
-            plist[PlistKeys.title.rawValue] = self.title
-            plist[PlistKeys.dateCreated.rawValue] = self.dateCreated
-            plist[PlistKeys.dateModified.rawValue] = self.dateModified
-            plist[PlistKeys.sortIndex.rawValue] = self.sortIndex
-            plist[PlistKeys.theme.rawValue] = self.theme.rawValue
-            plist[PlistKeys.zoomFactor.rawValue] = self.zoomFactor
+        plist[PlistKeys.id.rawValue] = self.id.stringRepresentation
+        plist[PlistKeys.title.rawValue] = self.title
+        plist[PlistKeys.dateCreated.rawValue] = self.dateCreated
+        plist[PlistKeys.dateModified.rawValue] = self.dateModified
+        plist[PlistKeys.sortIndex.rawValue] = self.sortIndex
+        plist[PlistKeys.theme.rawValue] = self.theme.rawValue
+        plist[PlistKeys.zoomFactor.rawValue] = self.zoomFactor
+        plist[PlistKeys.alwaysShowPageTitles.rawValue] = self.alwaysShowPageTitles
 
         if let thumbnailData = self.thumbnail?.pngData() {
             plist[PlistKeys.thumbnail.rawValue] = ModelFile(type: "thumbnail", filename: "\(self.id.uuid.uuidString)-thumbnail.png", data: thumbnailData, metadata: [:])
@@ -185,6 +192,10 @@ final public class Canvas: NSObject, CollectableModelObject {
             self.closedPageHierarchies = Dictionary(uniqueKeysWithValues: hierarchy)
         } else {
             self.closedPageHierarchies = [:]
+        }
+
+        if let alwaysShowPageTitles = plist[PlistKeys.alwaysShowPageTitles.rawValue] as? Bool {
+            self.alwaysShowPageTitles = alwaysShowPageTitles
         }
 
         let plistKeys = PlistKeys.allCases.map(\.rawValue)

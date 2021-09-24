@@ -28,8 +28,13 @@ public class LayoutEnginePage: Equatable {
     public let id: UUID
     public var selected: Bool = false
     public var showBackground: Bool {
-        if self.layoutEngine?.currentlyHoveredPage == self {
-            return true
+        if let layoutEngine = self.layoutEngine {
+            if layoutEngine.alwaysShowPageTitles == true {
+                return true
+            }
+            if layoutEngine.currentlyHoveredPage == self {
+                return true
+            }
         }
         return self.selected
     }

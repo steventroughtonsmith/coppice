@@ -44,6 +44,15 @@ class CanvasEditorViewModel: ViewModel {
         }
     }
 
+    private var isProEnabled = false {
+        didSet {
+            guard isProEnabled != oldValue else {
+                return
+            }
+            self.updateAlwaysShowPageTitles()
+        }
+    }
+
     var activationObserver: AnyCancellable?
     private func setupProObservation() {
         self.activationObserver = CoppiceSubscriptionManager.shared.$activationResponse.sink { [weak self] response in
@@ -52,6 +61,7 @@ class CanvasEditorViewModel: ViewModel {
     }
 
     private func updateLockedStatus(for activationResponse: ActivationResponse?) {
+        self.isProEnabled = activationResponse?.isActive == true
         if activationResponse?.isActive == true {
             self.isLocked = false
             return
@@ -59,6 +69,10 @@ class CanvasEditorViewModel: ViewModel {
 
         let firstCanvas = self.modelController.canvasCollection.sortedCanvases.first
         self.isLocked = (self.canvas != firstCanvas)
+    }
+
+    private func updateAlwaysShowPageTitles() {
+        self.layoutEngine.alwaysShowPageTitles = self.isProEnabled && self.canvas.alwaysShowPageTitles
     }
 
 
@@ -70,6 +84,9 @@ class CanvasEditorViewModel: ViewModel {
         self.canvasObserver = self.modelController.collection(for: Canvas.self).addObserver(filterBy: [self.canvas.id]) { [weak self] change in
             if change.changeType == .update, !change.didUpdate(\.thumbnail) {
                 self?.updatePages()
+                if change.didUpdate(\.alwaysShowPageTitles) {
+                    self?.updateAlwaysShowPageTitles()
+                }
             }
         }
         self.canvasPageObserver = self.modelController.collection(for: CanvasPage.self).addObserver() { [weak self] _ in

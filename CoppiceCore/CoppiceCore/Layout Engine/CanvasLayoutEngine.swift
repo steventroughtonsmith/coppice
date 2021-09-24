@@ -401,6 +401,16 @@ public class CanvasLayoutEngine: NSObject, LayoutEngine {
     private func informOfLayoutChange(with context: LayoutContext) {
         self.view?.layoutChanged(with: context)
     }
+
+    //MARK: - Appearance
+    public var alwaysShowPageTitles: Bool = false {
+        didSet {
+            guard self.alwaysShowPageTitles != oldValue else {
+                return
+            }
+            self.informOfLayoutChange(with: LayoutContext(backgroundVisibilityChanged: true))
+        }
+    }
 }
 
 

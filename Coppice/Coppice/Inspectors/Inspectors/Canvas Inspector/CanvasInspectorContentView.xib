@@ -16,11 +16,11 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="ehY-F7-MGj">
-            <rect key="frame" x="0.0" y="0.0" width="307" height="50"/>
+            <rect key="frame" x="0.0" y="0.0" width="307" height="78"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="b0f-QP-nLp">
-                    <rect key="frame" x="50" y="29" width="257" height="21"/>
+                    <rect key="frame" x="50" y="57" width="257" height="21"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="2n3-qS-CN5">
                         <font key="font" usesAppearanceFont="YES"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -33,7 +33,7 @@
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VTj-SJ-Zad">
-                    <rect key="frame" x="-2" y="31" width="46" height="16"/>
+                    <rect key="frame" x="-2" y="59" width="46" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Title" id="gqQ-0A-VwJ">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -41,7 +41,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IBt-e7-HOq">
-                    <rect key="frame" x="-2" y="4" width="46" height="16"/>
+                    <rect key="frame" x="-2" y="32" width="46" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Theme" id="s1P-mu-Ye4">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -49,7 +49,7 @@
                     </textFieldCell>
                 </textField>
                 <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Frv-F3-WrV">
-                    <rect key="frame" x="50" y="1" width="256" height="20"/>
+                    <rect key="frame" x="50" y="29" width="256" height="20"/>
                     <subviews>
                         <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Kri-qI-nSO">
                             <rect key="frame" x="-3" y="-4" width="215" height="25"/>
@@ -101,22 +101,65 @@
                         <real value="3.4028234663852886e+38"/>
                     </customSpacing>
                 </stackView>
+                <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L7R-v2-buJ">
+                    <rect key="frame" x="50" y="1" width="256" height="20"/>
+                    <subviews>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6Ig-y4-Hm7">
+                            <rect key="frame" x="-2" y="1" width="210" height="18"/>
+                            <buttonCell key="cell" type="check" title="Always Show Page Titles" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="akb-aI-p9g">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <binding destination="-2" name="enabled" keyPath="self.viewModel.isProEnabled" id="emq-rs-NUL"/>
+                                <binding destination="-2" name="value" keyPath="self.viewModel.alwaysShowPageTitles" id="EWu-5N-X6y"/>
+                            </connections>
+                        </button>
+                        <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nuG-iG-L1a">
+                            <rect key="frame" x="210" y="-5" width="52" height="27"/>
+                            <buttonCell key="cell" type="push" title="PRO" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rir-ho-JpD" customClass="ProButtonCell" customModule="Coppice" customModuleProvider="target">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="smallSystemBold"/>
+                            </buttonCell>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="color" keyPath="bezelColor">
+                                    <color key="value" name="CoppiceGreen"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="showProUpsell:" target="-2" id="hQe-HY-Oep"/>
+                                <binding destination="-2" name="hidden" keyPath="self.viewModel.isProEnabled" id="Cz5-Ry-YKo"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <visibilityPriorities>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                    </visibilityPriorities>
+                    <customSpacing>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                    </customSpacing>
+                </stackView>
             </subviews>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="b0f-QP-nLp" secondAttribute="trailing" id="Act-sR-nMp"/>
+                <constraint firstAttribute="bottom" secondItem="L7R-v2-buJ" secondAttribute="bottom" constant="1" id="FZw-cr-Egx"/>
+                <constraint firstItem="L7R-v2-buJ" firstAttribute="top" secondItem="Frv-F3-WrV" secondAttribute="bottom" constant="8" symbolic="YES" id="Fiq-0c-oiq"/>
                 <constraint firstItem="Frv-F3-WrV" firstAttribute="leading" secondItem="IBt-e7-HOq" secondAttribute="trailing" constant="8" symbolic="YES" id="GJO-ri-JAH"/>
                 <constraint firstAttribute="trailing" secondItem="Frv-F3-WrV" secondAttribute="trailing" constant="1" id="Iis-7N-0IE"/>
                 <constraint firstItem="IBt-e7-HOq" firstAttribute="firstBaseline" secondItem="Kri-qI-nSO" secondAttribute="firstBaseline" id="OaV-kd-uXy"/>
                 <constraint firstItem="b0f-QP-nLp" firstAttribute="top" secondItem="ehY-F7-MGj" secondAttribute="top" id="Pf1-p6-b1a"/>
-                <constraint firstAttribute="bottom" secondItem="Frv-F3-WrV" secondAttribute="bottom" constant="1" id="Zrf-8N-2Mt"/>
+                <constraint firstItem="L7R-v2-buJ" firstAttribute="leading" secondItem="Frv-F3-WrV" secondAttribute="leading" id="Xhc-gp-bNN"/>
                 <constraint firstItem="VTj-SJ-Zad" firstAttribute="firstBaseline" secondItem="b0f-QP-nLp" secondAttribute="firstBaseline" id="cwp-qL-Ozp"/>
+                <constraint firstItem="L7R-v2-buJ" firstAttribute="trailing" secondItem="Frv-F3-WrV" secondAttribute="trailing" id="fM0-Hc-J8s"/>
                 <constraint firstItem="IBt-e7-HOq" firstAttribute="leading" secondItem="VTj-SJ-Zad" secondAttribute="leading" id="ibD-OF-j1z"/>
                 <constraint firstItem="Frv-F3-WrV" firstAttribute="top" secondItem="b0f-QP-nLp" secondAttribute="bottom" constant="8" symbolic="YES" id="nhC-i5-2fd"/>
                 <constraint firstItem="b0f-QP-nLp" firstAttribute="leading" secondItem="VTj-SJ-Zad" secondAttribute="trailing" constant="8" id="o6b-TB-L9J"/>
                 <constraint firstItem="VTj-SJ-Zad" firstAttribute="leading" secondItem="ehY-F7-MGj" secondAttribute="leading" id="sWc-Oj-OkF"/>
                 <constraint firstItem="IBt-e7-HOq" firstAttribute="trailing" secondItem="VTj-SJ-Zad" secondAttribute="trailing" id="z7X-tq-RJA"/>
             </constraints>
-            <point key="canvasLocation" x="13.5" y="39"/>
+            <point key="canvasLocation" x="13.5" y="73"/>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="eo6-R9-T9q"/>
     </objects>

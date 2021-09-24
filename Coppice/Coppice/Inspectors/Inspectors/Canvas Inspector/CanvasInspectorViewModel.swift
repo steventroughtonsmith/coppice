@@ -64,4 +64,9 @@ class CanvasInspectorViewModel: BaseInspectorViewModel {
             self.canvas.theme = Canvas.Theme.allCases[newValue]
         }
     }
+
+    @objc dynamic var alwaysShowPageTitles: Bool {
+        get { self.canvas.alwaysShowPageTitles }
+        set { self.canvas.alwaysShowPageTitles = newValue }
+    }
 }

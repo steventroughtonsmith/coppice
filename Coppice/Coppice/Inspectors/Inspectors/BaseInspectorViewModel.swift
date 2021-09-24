@@ -39,6 +39,8 @@ class BaseInspectorViewModel: NSObject {
     private func setupProObservation() {
         self.activationObserver = CoppiceSubscriptionManager.shared.$activationResponse
             .map { $0?.isActive ?? false }
-            .assign(to: \.isProEnabled, on: self)
+            .sink { [weak self] newValue in
+                self?.isProEnabled = newValue
+            }
     }
 }

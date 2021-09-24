@@ -24,6 +24,7 @@ class DebugMenuBuilder: NSObject {
 
     let logResponderChainItem = NSMenuItem(title: "Log Responder Chain", action: #selector(DocumentWindowController.logResponderChain(_:)), keyEquivalent: "")
 
+    let proDisabledMenuItem = NSMenuItem(title: "Pro Disabled", action: #selector(AppDelegate.toggleProDisabled(_:)), keyEquivalent: "")
     let checkSubscriptionMenuItem = NSMenuItem(title: "Check Subscription", action: #selector(AppDelegate.checkSubscription(_:)), keyEquivalent: "")
 
     let subscriptionDebugMenuItem: NSMenuItem = {
@@ -40,6 +41,7 @@ class DebugMenuBuilder: NSObject {
         menu.addItem(NSMenuItem.separator())
         menu.addItem(self.logResponderChainItem)
         menu.addItem(NSMenuItem.separator())
+        menu.addItem(self.proDisabledMenuItem)
         menu.addItem(self.checkSubscriptionMenuItem)
         menu.addItem(self.subscriptionDebugMenuItem)
 

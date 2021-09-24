@@ -109,7 +109,7 @@ class GeneralPreferencesViewController: PreferencesViewController {
         guard let control = sender as? NSView else {
             return
         }
-        self.subscriptionManager.showProPopover(for: .canvasThemes, from: control, preferredEdge: .maxX)
+        self.subscriptionManager.showProPopover(for: .canvasAppearance, from: control, preferredEdge: .maxX)
     }
 
     //MARK: - Sidebar Size
