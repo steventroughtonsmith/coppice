@@ -26,7 +26,7 @@ class EditorContainerViewController: NSViewController, SplitViewContainable {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.view.widthAnchor.constraint(greaterThanOrEqualToConstant: 300).isActive = true
+        self.view.widthAnchor.constraint(greaterThanOrEqualToConstant: 363).isActive = true
     }
 
 

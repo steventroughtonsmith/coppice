@@ -25,9 +25,6 @@ class PageEditorViewController: NSViewController {
         let view = ColourBackgroundView()
         view.backgroundColour = NSColor.pageEditorBackground
         self.view = view
-
-        //Set a minimum width for page editors
-        view.widthAnchor.constraint(greaterThanOrEqualToConstant: 363).isActive = true
     }
 
     override func viewDidLoad() {
