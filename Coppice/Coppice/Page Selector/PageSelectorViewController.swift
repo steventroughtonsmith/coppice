@@ -44,6 +44,9 @@ class PageSelectorViewController: NSViewController {
         self.updateViewHeight()
     }
 
+    override func flagsChanged(with event: NSEvent) {
+        self.viewModel.showFolderNames = event.modifierFlags.contains(.option)
+    }
 
     //MARK: - Mode
 

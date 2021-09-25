@@ -36,6 +36,15 @@ class PageSelectorViewModel: NSObject {
 
     @objc dynamic private(set) var rows = [PageSelectorRow]()
 
+    var showFolderNames = false {
+        didSet {
+            guard self.showFolderNames != oldValue else {
+                return
+            }
+            self.rows.forEach { $0.showFolderName = self.showFolderNames}
+        }
+    }
+
     private func updatePages() {
         let sortedPages = self.documentWindowViewModel.modelController.pageCollection.all.sorted(by: {
             //If one or other page is untitled we want to favour the titled page
@@ -79,8 +88,11 @@ class PageSelectorViewModel: NSObject {
 
 class PageSelectorRow: NSObject {
     @objc dynamic let title: String
-    @objc dynamic let body: String?
     @objc dynamic let image: NSImage?
+
+    @objc dynamic var body: String? {
+        return self.showFolderName ? self.folderPath : self.content
+    }
 
     enum RowType: Equatable {
         case page(Page)
@@ -99,6 +111,8 @@ class PageSelectorRow: NSObject {
     }
 
     let rowType: RowType
+    private let content: String?
+    private let folderPath: String?
 
     convenience init(page: Page) {
         let title = page.title
@@ -107,7 +121,7 @@ class PageSelectorRow: NSObject {
             body = string
         }
         let image = page.content.contentType.icon(.small)
-        self.init(title: title, body: body, image: image, rowType: .page(page))
+        self.init(title: title, body: body, folderPath: page.containingFolder?.pathString, image: image, rowType: .page(page))
     }
 
     convenience init(contentType: PageContentType) {
@@ -118,10 +132,21 @@ class PageSelectorRow: NSObject {
         return PageSelectorRow(title: "", body: nil, image: nil, rowType: .divider)
     }
 
-    init(title: String, body: String?, image: NSImage?, rowType: RowType = .header) {
+    init(title: String, body: String?, folderPath: String? = nil, image: NSImage?, rowType: RowType = .header) {
         self.title = title
-        self.body = body
+        self.content = body
+        self.folderPath = folderPath
         self.image = image
         self.rowType = rowType
+    }
+
+    @objc dynamic var showFolderName = false
+
+    override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
+        var keyPaths = super.keyPathsForValuesAffectingValue(forKey: key)
+        if key == #keyPath(body) {
+            keyPaths.insert("showFolderName")
+        }
+        return keyPaths
     }
 }

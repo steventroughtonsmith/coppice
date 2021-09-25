@@ -115,6 +115,22 @@ final public class Folder: NSObject, CollectableModelObject, FolderContainable {
         self.contents = self.contents.sorted(by: method.compare)
     }
 
+    //MARK: - Path
+    public var pathString: String? {
+        guard self.title != Folder.rootFolderTitle else {
+            return nil
+        }
+
+        var folders = [Folder]()
+        var currentFolder: Folder? = self
+        while currentFolder != nil, currentFolder?.title != Folder.rootFolderTitle {
+            folders.append(currentFolder!)
+            currentFolder = currentFolder?.containingFolder
+        }
+
+        return folders.map(\.title).joined(separator: "  ◁  ")
+    }
+
 
     //MARK: - Plist
     enum PlistKeys: String, CaseIterable {
