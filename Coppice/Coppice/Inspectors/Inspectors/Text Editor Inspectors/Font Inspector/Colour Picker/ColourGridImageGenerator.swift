@@ -32,7 +32,7 @@ class ColourGridImageGenerator {
 
     private func drawBorder(in rect: CGRect) {
         //Draw Border
-        if (NSApp.effectiveAppearance.name == .darkAqua) {
+        if (NSApp.effectiveAppearance.isDarkMode) {
             NSColor.white.withAlphaComponent(0.3).set()
         } else {
             NSColor.black.withAlphaComponent(0.3).set()

@@ -25,7 +25,7 @@ extension Canvas.Theme {
             return NSColor.arrowLight
         case .auto:
             return NSColor(name: "ArrowColour") { (appearance) -> NSColor in
-                return (appearance.name == .darkAqua) ? NSColor.arrowDark : NSColor.arrowLight
+                return appearance.isDarkMode ? NSColor.arrowDark : NSColor.arrowLight
             }
         }
     }
@@ -38,7 +38,7 @@ extension Canvas.Theme {
             return NSColor.canvasBackgroundLight
         case .auto:
             return NSColor(name: "CanvasBackground") { (appearance) -> NSColor in
-                return (appearance.name == .darkAqua) ? NSColor.canvasBackgroundDark : NSColor.canvasBackgroundLight
+                return appearance.isDarkMode ? NSColor.canvasBackgroundDark : NSColor.canvasBackgroundLight
             }
         }
     }

@@ -22,7 +22,7 @@ class LinkInspectorViewController: BaseInspectorViewController {
         return self.viewModel as! LinkInspectorViewModel
     }
 
-    @IBOutlet var linkField: NSSearchField!
+    @IBOutlet var linkControl: LinkControl!
 
 
     //MARK: - Subscribers
@@ -30,7 +30,7 @@ class LinkInspectorViewController: BaseInspectorViewController {
         case textValue
         case icon
         case placeholderValue
-        case linkFieldEnabled
+        case linkControlEnabled
     }
 
     private var subscribers: [SubscriptionKeys: AnyCancellable] = [:]
@@ -38,36 +38,19 @@ class LinkInspectorViewController: BaseInspectorViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-
-        guard
-            let linkField = self.linkField,
-            let searchFieldCell = (linkField.cell as? NSSearchFieldCell),
-            let searchButtonCell = searchFieldCell.searchButtonCell,
-            let cancelButtonCell = searchFieldCell.cancelButtonCell
-        else {
+        guard let linkControl = self.linkControl else {
             return
         }
 
-        self.subscribers[.textValue] = self.typedViewModel.$textValue.assign(to: \.stringValue, on: self.linkField)
-        self.subscribers[.icon] = self.typedViewModel.$icon.sink(receiveValue: { image in
-            searchFieldCell.resetSearchButtonCell()
-            guard let image = image else {
-                searchButtonCell.image = nil
-                return
-            }
-            //NSSearchFieldCell doesn't listen to our y adjustedments so lets just adjust the image itself
-            let adjustedImage = NSImage(size: CGSize(width: image.size.width, height: image.size.height + 2), flipped: false, drawingHandler: { rect in
-                image.draw(at: CGPoint(x: 0, y: 0), from: .zero, operation: .sourceOver, fraction: 1)
-                return true
-            })
-            adjustedImage.isTemplate = true
-            searchButtonCell.image = adjustedImage
-        })
-        self.subscribers[.placeholderValue] = self.typedViewModel.$placeholderValue.compactMap { $0 }.assign(to: \.placeholderString, on: self.linkField)
-        self.subscribers[.linkFieldEnabled] = self.typedViewModel.$linkFieldEnabled.assign(to: \.isEnabled, on: self.linkField)
+        self.subscribers[.textValue] = self.typedViewModel.$textValue.assign(to: \.textValue, on: self.linkControl)
+        self.subscribers[.icon] = self.typedViewModel.$icon.assign(to: \.icon, on: self.linkControl)
+        self.subscribers[.placeholderValue] = self.typedViewModel.$placeholderValue.compactMap { $0 }.assign(to: \.placeholderString, on: self.linkControl)
+        self.subscribers[.linkControlEnabled] = self.typedViewModel.$linkFieldEnabled.assign(to: \.isEnabled, on: self.linkControl)
 
-        cancelButtonCell.target = self
-        cancelButtonCell.action = #selector(self.clearLink(_:))
+        linkControl.textField.delegate = self
+
+        linkControl.clearButton.target = self
+        linkControl.clearButton.action = #selector(self.clearLink(_:))
     }
 
     //Editor connection
@@ -100,21 +83,26 @@ class LinkInspectorViewController: BaseInspectorViewController {
 extension LinkInspectorViewController: NSSearchFieldDelegate {
     func controlTextDidBeginEditing(_ obj: Notification) {
         let viewModel = PageSelectorViewModel(title: "", documentWindowViewModel: self.typedViewModel.documentWindowViewModel) { page in
+            //We may get an actual page back but if the text field is empty then there's no selector, so assume the user wants to remove the link
+            guard self.linkControl.textValue.count > 0 else {
+                self.typedViewModel.clearLink()
+                return
+            }
             self.typedViewModel.link(to: page)
         }
         self.pageSelector = PageSelectorWindowController(viewModel: viewModel)
-        self.pageSelector?.show(from: self.linkField, preferredEdge: .minY)
+        self.pageSelector?.show(from: self.linkControl, preferredEdge: .minY)
     }
 
     func controlTextDidChange(_ obj: Notification) {
-        guard self.linkField.stringValue.count > 0 else {
+        guard self.linkControl.textValue.count > 0 else {
             self.pageSelector?.close()
             return
         }
         if self.pageSelector?.window?.isVisible == false {
-            self.pageSelector?.show(from: self.linkField, preferredEdge: .minY)
+            self.pageSelector?.show(from: self.linkControl, preferredEdge: .minY)
         }
-        self.pageSelector?.viewModel.searchTerm = self.linkField.stringValue
+        self.pageSelector?.viewModel.searchTerm = self.linkControl.textValue
     }
 
     func controlTextDidEndEditing(_ obj: Notification) {

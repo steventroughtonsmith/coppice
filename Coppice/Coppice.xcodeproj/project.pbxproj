@@ -27,10 +27,12 @@
 		990F61A425222A3E00FA5A27 /* MultipleSubscriptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F61A225222A3E00FA5A27 /* MultipleSubscriptionsViewController.swift */; };
 		990F61A525222A3E00FA5A27 /* MultipleSubscriptionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 990F61A325222A3E00FA5A27 /* MultipleSubscriptionsView.xib */; };
 		990F61A725222C2D00FA5A27 /* Subscriptions+LocalizedStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F61A625222C2D00FA5A27 /* Subscriptions+LocalizedStrings.swift */; };
+		9910EA4F2700828F003741D8 /* LinkControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9910EA4E2700828F003741D8 /* LinkControl.swift */; };
 		99115DC5249E304D008942DF /* SystemProfileInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99115DC3249E304D008942DF /* SystemProfileInfoViewController.swift */; };
 		99115DC6249E304D008942DF /* SystemProfileInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99115DC4249E304D008942DF /* SystemProfileInfoViewController.xib */; };
 		99146A2A24EEAB6200A2AE48 /* ImageEditorPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99146A2924EEAB6200A2AE48 /* ImageEditorPlaceholderView.swift */; };
 		99146A2E24F016DC00A2AE48 /* SpringLoadedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99146A2D24F016DC00A2AE48 /* SpringLoadedTableView.swift */; };
+		9914C8E5271097E400654689 /* NSShadow+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9914C8E4271097E400654689 /* NSShadow+M3Extensions.swift */; };
 		99171EDC24AA48B200E96DE6 /* MainToolbarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99171EDB24AA48B200E96DE6 /* MainToolbarDelegate.swift */; };
 		9919B93123D09FBB00C7A44D /* TextColourPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9919B93023D09FBB00C7A44D /* TextColourPicker.swift */; };
 		991B5F432541E32B002C483C /* HelpViewerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991B5F412541E32B002C483C /* HelpViewerWindowController.swift */; };
@@ -262,6 +264,7 @@
 		99C03F0D2334D04200EB7516 /* NSScrollView+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C03F0C2334D04200EB7516 /* NSScrollView+M3Extensions.swift */; };
 		99C4FBE126C94F11009D035D /* PageSelectorDividerTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C4FBE026C94F11009D035D /* PageSelectorDividerTableCellView.swift */; };
 		99C4FBE326C94F22009D035D /* PageSelectorDividerTableCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99C4FBE226C94F22009D035D /* PageSelectorDividerTableCellView.xib */; };
+		99C729F42708B35800BD35A4 /* NSAppearance+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C729F32708B35800BD35A4 /* NSAppearance+M3Extensions.swift */; };
 		99C7B214257BEE85009E2F18 /* TextEditorParagraphAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C7B213257BEE85009E2F18 /* TextEditorParagraphAttributes.swift */; };
 		99C8650923016EB2004C7B89 /* TextEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C8650823016EB2004C7B89 /* TextEditorViewModel.swift */; };
 		99C8650D23016EE5004C7B89 /* TextEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99C8650C23016EE5004C7B89 /* TextEditorViewController.xib */; };
@@ -450,10 +453,12 @@
 		990F61A225222A3E00FA5A27 /* MultipleSubscriptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleSubscriptionsViewController.swift; sourceTree = "<group>"; };
 		990F61A325222A3E00FA5A27 /* MultipleSubscriptionsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MultipleSubscriptionsView.xib; sourceTree = "<group>"; };
 		990F61A625222C2D00FA5A27 /* Subscriptions+LocalizedStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Subscriptions+LocalizedStrings.swift"; sourceTree = "<group>"; };
+		9910EA4E2700828F003741D8 /* LinkControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkControl.swift; sourceTree = "<group>"; };
 		99115DC3249E304D008942DF /* SystemProfileInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemProfileInfoViewController.swift; sourceTree = "<group>"; };
 		99115DC4249E304D008942DF /* SystemProfileInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SystemProfileInfoViewController.xib; sourceTree = "<group>"; };
 		99146A2924EEAB6200A2AE48 /* ImageEditorPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorPlaceholderView.swift; sourceTree = "<group>"; };
 		99146A2D24F016DC00A2AE48 /* SpringLoadedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpringLoadedTableView.swift; sourceTree = "<group>"; };
+		9914C8E4271097E400654689 /* NSShadow+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSShadow+M3Extensions.swift"; sourceTree = "<group>"; };
 		99171EDB24AA48B200E96DE6 /* MainToolbarDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainToolbarDelegate.swift; sourceTree = "<group>"; };
 		9919B93023D09FBB00C7A44D /* TextColourPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextColourPicker.swift; sourceTree = "<group>"; };
 		991B5F412541E32B002C483C /* HelpViewerWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpViewerWindowController.swift; sourceTree = "<group>"; };
@@ -689,6 +694,7 @@
 		99C03F0C2334D04200EB7516 /* NSScrollView+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSScrollView+M3Extensions.swift"; sourceTree = "<group>"; };
 		99C4FBE026C94F11009D035D /* PageSelectorDividerTableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageSelectorDividerTableCellView.swift; sourceTree = "<group>"; };
 		99C4FBE226C94F22009D035D /* PageSelectorDividerTableCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PageSelectorDividerTableCellView.xib; sourceTree = "<group>"; };
+		99C729F32708B35800BD35A4 /* NSAppearance+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAppearance+M3Extensions.swift"; sourceTree = "<group>"; };
 		99C7B213257BEE85009E2F18 /* TextEditorParagraphAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorParagraphAttributes.swift; sourceTree = "<group>"; };
 		99C8650823016EB2004C7B89 /* TextEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorViewModel.swift; sourceTree = "<group>"; };
 		99C8650C23016EE5004C7B89 /* TextEditorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextEditorViewController.xib; sourceTree = "<group>"; };
@@ -994,6 +1000,8 @@
 				99B3474B2465846900B96B71 /* PixelPerfectTableView.swift */,
 				998CF0FB24ACF6A800EA26A6 /* NSBezierPath+M3Extensions.swift */,
 				99D329B0252241EB00E15683 /* NSTableView+M3Extensions.swift */,
+				99C729F32708B35800BD35A4 /* NSAppearance+M3Extensions.swift */,
+				9914C8E4271097E400654689 /* NSShadow+M3Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1031,6 +1039,7 @@
 				9930F4A7267631B000DE8975 /* LinkInspectorViewModel.swift */,
 				9930F4A8267631B000DE8975 /* LinkInspectorViewController.swift */,
 				9930F4A9267631B000DE8975 /* LinkInspectorContentView.xib */,
+				9910EA4E2700828F003741D8 /* LinkControl.swift */,
 			);
 			path = "Link Inspector";
 			sourceTree = "<group>";
@@ -2243,6 +2252,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9914C8E5271097E400654689 /* NSShadow+M3Extensions.swift in Sources */,
 				9981E6CF24C05811005AF0EE /* AboutWindowController.swift in Sources */,
 				992A5CAA22DDF5000012CCB6 /* DebugCanvasEditor.swift in Sources */,
 				99C865292306D141004C7B89 /* PageSelectorViewController.swift in Sources */,
@@ -2314,6 +2324,8 @@
 				9919B93123D09FBB00C7A44D /* TextColourPicker.swift in Sources */,
 				99FE019322CD1037004D380D /* Document.swift in Sources */,
 				9958108E230D909900D996C4 /* TestCanvasPageViewController.swift in Sources */,
+				9910EA4F2700828F003741D8 /* LinkControl.swift in Sources */,
+				99C729F42708B35800BD35A4 /* NSAppearance+M3Extensions.swift in Sources */,
 				99AD88A9237C36D0000453E1 /* Editor.swift in Sources */,
 				99A0B853238961BF005FCF25 /* NSColor+M3Extensions.swift in Sources */,
 				9902F4A923882ADA00AF646F /* NSSegmentedControl+M3Extensions.swift in Sources */,
@@ -2633,6 +2645,7 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
 				);
 				MARKETING_VERSION = 2021.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice;
@@ -2791,6 +2804,7 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
 				);
 				MARKETING_VERSION = 2021.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice;
@@ -3205,6 +3219,7 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
 				);
 				MARKETING_VERSION = 2021.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice;
@@ -3235,6 +3250,7 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
 				);
 				MARKETING_VERSION = 2021.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice;

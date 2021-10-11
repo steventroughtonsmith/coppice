@@ -106,6 +106,10 @@ extension CGSize {
         return size
     }
 
+    public func scaleDownToFit(_ size: CGSize) -> CGSize {
+        return self.scaleDownToFit(width: size.width, height: size.height)
+    }
+
     public func scaleDownToFit(width: CGFloat, height: CGFloat) -> CGSize {
         var newSize = self
         if newSize.width > width {
@@ -125,6 +129,13 @@ extension CGSize {
 
     public func toPoint() -> CGPoint {
         return CGPoint(x: self.width, y: self.height)
+    }
+
+    public func centred(in rect: CGRect) -> CGRect {
+        var newRect = CGRect(origin: .zero, size: self)
+        newRect.origin.x = rect.midX - (self.width / 2)
+        newRect.origin.y = rect.midY - (self.height / 2)
+        return newRect
     }
 }
 

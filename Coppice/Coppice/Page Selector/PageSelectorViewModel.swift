@@ -41,7 +41,7 @@ class PageSelectorViewModel: NSObject {
             guard self.showFolderNames != oldValue else {
                 return
             }
-            self.rows.forEach { $0.showFolderName = self.showFolderNames}
+            self.rows.forEach { $0.showFolderName = self.showFolderNames }
         }
     }
 

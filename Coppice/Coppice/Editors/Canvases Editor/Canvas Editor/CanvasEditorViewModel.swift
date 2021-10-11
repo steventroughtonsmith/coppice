@@ -46,7 +46,7 @@ class CanvasEditorViewModel: ViewModel {
 
     private var isProEnabled = false {
         didSet {
-            guard isProEnabled != oldValue else {
+            guard self.isProEnabled != oldValue else {
                 return
             }
             self.updateAlwaysShowPageTitles()
