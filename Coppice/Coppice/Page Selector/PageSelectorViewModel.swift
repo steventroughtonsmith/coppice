@@ -14,7 +14,12 @@ protocol PageSelectorView: AnyObject {}
 class PageSelectorViewModel: NSObject {
     weak var view: PageSelectorView?
 
-    typealias SelectionBlock = (Page) -> Void
+    enum Result {
+        case page(Page)
+        case url(URL)
+    }
+
+    typealias SelectionBlock = (Result) -> Void
 
     let documentWindowViewModel: DocumentWindowViewModel
     let title: String
@@ -45,6 +50,15 @@ class PageSelectorViewModel: NSObject {
         }
     }
 
+    var allowsExternalLinks = false {
+        didSet {
+            guard self.allowsExternalLinks != oldValue else {
+                return
+            }
+            self.updatePages()
+        }
+    }
+
     private func updatePages() {
         let sortedPages = self.documentWindowViewModel.modelController.pageCollection.all.sorted(by: {
             //If one or other page is untitled we want to favour the titled page
@@ -67,19 +81,27 @@ class PageSelectorViewModel: NSObject {
 
         newRows.append(PageSelectorRow(title: NSLocalizedString("Create New…", comment: "Page selector - page creation header"), body: nil, image: nil, rowType: .header))
         newRows.append(contentsOf: PageContentType.allCases.map { PageSelectorRow(contentType: $0) })
+        if self.allowsExternalLinks, URL(string: self.searchTerm)?.scheme != nil {
+            newRows.append(PageSelectorRow.externalLink)
+        }
         self.rows = newRows
     }
 
     func confirmSelection(of result: PageSelectorRow) {
         switch result.rowType {
         case .page(let page):
-            self.selectionBlock(page)
+            self.selectionBlock(.page(page))
         case .contentType(let contentType):
             let page = self.documentWindowViewModel.modelController.createPage(ofType: contentType, in: self.documentWindowViewModel.folderForNewPages, below: nil) { page in
                 page.title = self.searchTerm
             }
 
-            self.selectionBlock(page)
+            self.selectionBlock(.page(page))
+        case .externalLink:
+            guard let url = URL(string: self.searchTerm) else {
+                return
+            }
+            self.selectionBlock(.url(url))
         case .header, .divider:
             break
         }
@@ -97,12 +119,13 @@ class PageSelectorRow: NSObject {
     enum RowType: Equatable {
         case page(Page)
         case contentType(PageContentType)
+        case externalLink
         case divider
         case header
 
         var isSelectable: Bool {
             switch self {
-            case .page, .contentType:
+            case .page, .contentType, .externalLink:
                 return true
             case .divider, .header:
                 return false
@@ -126,6 +149,10 @@ class PageSelectorRow: NSObject {
 
     convenience init(contentType: PageContentType) {
         self.init(title: contentType.localizedName, body: nil, image: contentType.icon(.small), rowType: .contentType(contentType))
+    }
+
+    static var externalLink: PageSelectorRow {
+        return PageSelectorRow(title: NSLocalizedString("External Link", comment: "Page Selector: External Link Type"), body: nil, image: NSImage(named: "external-link"), rowType: .externalLink)
     }
 
     static var divider: PageSelectorRow {

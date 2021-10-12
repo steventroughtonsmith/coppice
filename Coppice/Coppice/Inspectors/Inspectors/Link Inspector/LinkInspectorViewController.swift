@@ -82,14 +82,16 @@ class LinkInspectorViewController: BaseInspectorViewController {
 
 extension LinkInspectorViewController: NSSearchFieldDelegate {
     func controlTextDidBeginEditing(_ obj: Notification) {
-        let viewModel = PageSelectorViewModel(title: "", documentWindowViewModel: self.typedViewModel.documentWindowViewModel) { page in
+        let viewModel = PageSelectorViewModel(title: "", documentWindowViewModel: self.typedViewModel.documentWindowViewModel) { result in
             //We may get an actual page back but if the text field is empty then there's no selector, so assume the user wants to remove the link
             guard self.linkControl.textValue.count > 0 else {
                 self.typedViewModel.clearLink()
                 return
             }
-            self.typedViewModel.link(to: page)
+
+            self.typedViewModel.link(to: result)
         }
+        viewModel.allowsExternalLinks = true
         self.pageSelector = PageSelectorWindowController(viewModel: viewModel)
         self.pageSelector?.show(from: self.linkControl, preferredEdge: .minY)
     }

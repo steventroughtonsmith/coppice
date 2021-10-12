@@ -574,7 +574,10 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, NSTool
             return
         }
 
-        windowController.showPageSelector(title: NSLocalizedString("Add page to canvas…", comment: "Add page selector title")) { [weak self] (page) in
+        windowController.showPageSelector(title: NSLocalizedString("Add page to canvas…", comment: "Add page selector title")) { [weak self] result in
+            guard case .page(let page) = result else {
+                return
+            }
             var centrePoint: CGPoint?
             if let location = self?.canvasView.currentClickLocation {
                 centrePoint = self?.layoutEngine.convertPointToPageSpace(location)

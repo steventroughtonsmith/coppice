@@ -97,7 +97,10 @@ class TextEditorViewController: NSViewController, NSMenuItemValidation, NSToolba
             return
         }
         let selectedRange = self.editingTextView.selectedRange()
-        windowController.showPageSelector(title: "Link to page…") { [weak self] (page) in
+        windowController.showPageSelector(title: "Link to page…") { [weak self] result in
+            guard case .page(let page) = result else {
+                return
+            }
             self?.viewModel.link(to: page, for: selectedRange)
         }
     }

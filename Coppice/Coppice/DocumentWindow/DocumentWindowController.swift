@@ -91,7 +91,10 @@ class DocumentWindowController: NSWindowController, NSMenuItemValidation {
     }
 
     @IBAction func jumpToPage(_ sender: Any?) {
-        self.showPageSelector(title: "Jump to page…") { [weak self] page in
+        self.showPageSelector(title: "Jump to page…") { [weak self] result in
+            guard case .page(let page) = result else {
+                return
+            }
             self?.viewModel.openPage(at: page.linkToPage())
         }
     }
