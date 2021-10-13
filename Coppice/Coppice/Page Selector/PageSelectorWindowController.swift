@@ -64,7 +64,12 @@ class PageSelectorWindowController: NSWindowController {
         let x = frameInScreen.minX - 8
         let y = frameInScreen.minY - height - 4
 
-        self.window?.setFrame(CGRect(x: x, y: y, width: width, height: height), display: false)
+        var windowFrame = CGRect(x: x, y: y, width: width, height: height)
+        if let screen = window.screen, screen.frame.contains(windowFrame) == false {
+            windowFrame.origin.x = screen.frame.maxX - width
+        }
+
+        self.window?.setFrame(windowFrame, display: false)
 
         parentWindow.addChildWindow(window, ordered: .above)
         window.orderFront(self)
