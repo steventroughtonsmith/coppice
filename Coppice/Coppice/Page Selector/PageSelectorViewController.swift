@@ -87,7 +87,7 @@ class PageSelectorViewController: NSViewController {
 
         self.performClose(nil)
         self.viewModel.confirmSelection(of: result)
-        return true
+        return false
     }
 
     private func updateViewHeight() {

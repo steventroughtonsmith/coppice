@@ -53,26 +53,6 @@ class LinkInspectorViewController: BaseInspectorViewController {
         linkControl.clearButton.action = #selector(self.clearLink(_:))
     }
 
-    //Editor connection
-        //hasURLContainerSelected
-        //selectedURL
-
-    //Handle read states:
-        //No selection
-        //Selection but no URL
-        //External URL
-        //Page URL
-        //Invalid URL
-
-    //Editing
-        //Type external URL
-        //Type name
-        //Show completions
-        //Select completion
-        //Create page
-        //Clear
-        //External URL edge case
-
     private var pageSelector: PageSelectorWindowController?
 
     @IBAction func clearLink(_ sender: NSButton) {

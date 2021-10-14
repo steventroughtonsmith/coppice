@@ -80,10 +80,10 @@ class PageSelectorViewModel: NSObject {
         }
 
         newRows.append(PageSelectorRow(title: NSLocalizedString("Create New…", comment: "Page selector - page creation header"), body: nil, image: nil, rowType: .header))
-        newRows.append(contentsOf: PageContentType.allCases.map { PageSelectorRow(contentType: $0) })
         if self.allowsExternalLinks, URL(string: self.searchTerm)?.scheme != nil {
             newRows.append(PageSelectorRow.externalLink)
         }
+        newRows.append(contentsOf: PageContentType.allCases.map { PageSelectorRow(contentType: $0) })
         self.rows = newRows
     }
 
