@@ -28,6 +28,8 @@ public enum UserDefaultsKeys: String {
     case sidebarSize = "M3SidebarSize"
 
     case currentVersion = "M3CurrentVersion"
+
+    case showProFeaturesInInspector = "M3ShowProFeaturesInInspector"
 }
 
 extension UserDefaults {

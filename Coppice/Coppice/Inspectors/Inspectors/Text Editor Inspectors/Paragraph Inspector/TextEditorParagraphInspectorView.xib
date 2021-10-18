@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19158" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19158"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -19,7 +19,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <segmentedControl toolTip="Choose the text alignment" horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="I2O-a3-Q17">
-                    <rect key="frame" x="-1" y="56" width="192" height="24"/>
+                    <rect key="frame" x="8" y="56" width="174" height="24"/>
                     <segmentedCell key="cell" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="rounded" trackingMode="selectOne" id="qfF-ma-uJb">
                         <font key="font" metaFont="system"/>
                         <segments>
@@ -35,10 +35,10 @@
                     </connections>
                 </segmentedControl>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="MX3-af-rnJ">
-                    <rect key="frame" x="123" y="29" width="66" height="20"/>
+                    <rect key="frame" x="121" y="29" width="68" height="20"/>
                     <subviews>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="loF-vh-lag">
-                            <rect key="frame" x="0.0" y="0.0" width="49" height="21"/>
+                            <rect key="frame" x="0.0" y="0.0" width="41" height="21"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" title="3 pt" drawsBackground="YES" id="KYR-Wk-wyY">
                                 <numberFormatter key="formatter" formatterBehavior="custom10_4" usesGroupingSeparator="NO" lenient="YES" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" id="D3A-qa-fjU">
                                     <real key="minimum" value="0.0"/>
@@ -59,7 +59,7 @@
                             </connections>
                         </textField>
                         <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="T4t-Gb-o1I">
-                            <rect key="frame" x="50" y="-4" width="19" height="28"/>
+                            <rect key="frame" x="42" y="-4" width="19" height="28"/>
                             <stepperCell key="cell" continuous="YES" alignment="left" maxValue="100" id="ywa-nb-BfL"/>
                             <connections>
                                 <binding destination="-2" name="value" keyPath="self.viewModel.paragraphSpacing" id="KiR-ZK-JmZ"/>
@@ -71,12 +71,12 @@
                         <constraint firstItem="loF-vh-lag" firstAttribute="centerY" secondItem="T4t-Gb-o1I" secondAttribute="centerY" id="Jve-Yp-A8S"/>
                         <constraint firstAttribute="bottom" secondItem="T4t-Gb-o1I" secondAttribute="bottom" id="RcN-Lr-veV"/>
                         <constraint firstItem="T4t-Gb-o1I" firstAttribute="top" secondItem="MX3-af-rnJ" secondAttribute="top" id="ReO-Jq-tbT"/>
-                        <constraint firstAttribute="trailing" secondItem="T4t-Gb-o1I" secondAttribute="trailing" id="aOH-cm-w3n"/>
+                        <constraint firstAttribute="trailing" secondItem="T4t-Gb-o1I" secondAttribute="trailing" constant="10" id="aOH-cm-w3n"/>
                         <constraint firstItem="T4t-Gb-o1I" firstAttribute="leading" secondItem="loF-vh-lag" secondAttribute="trailing" constant="4" id="zZj-Je-WNZ"/>
                     </constraints>
                 </customView>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QE9-PE-u6j">
-                    <rect key="frame" x="22" y="-3" width="171" height="25"/>
+                    <rect key="frame" x="31" y="-3" width="153" height="25"/>
                     <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="xkG-C3-ONd" id="oJx-BA-8wo">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
@@ -93,7 +93,7 @@
                     </connections>
                 </popUpButton>
                 <imageView toolTip="Line Height" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jcC-V2-EPg">
-                    <rect key="frame" x="1" y="31" width="16" height="16"/>
+                    <rect key="frame" x="10" y="31" width="16" height="16"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="16" id="Nhu-AV-HFp"/>
                         <constraint firstAttribute="width" constant="16" id="wq9-fa-PgK"/>
@@ -102,7 +102,7 @@
                     <accessibility description="Line Height"/>
                 </imageView>
                 <imageView toolTip="Paragraph Spacing" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CY8-8a-Zdw">
-                    <rect key="frame" x="99" y="31" width="16" height="16"/>
+                    <rect key="frame" x="97" y="31" width="16" height="16"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="16" id="iVp-ba-Kcb"/>
                         <constraint firstAttribute="height" constant="16" id="yAe-zR-nVw"/>
@@ -111,7 +111,7 @@
                     <accessibility description="Paragraph Spacing"/>
                 </imageView>
                 <imageView toolTip="List" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JEQ-pj-s4q">
-                    <rect key="frame" x="1" y="3" width="16" height="16"/>
+                    <rect key="frame" x="10" y="3" width="16" height="16"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="16" id="Atj-Uc-Mz7"/>
                         <constraint firstAttribute="width" constant="16" id="Fxy-b8-ri8"/>
@@ -120,10 +120,10 @@
                     <accessibility description="List"/>
                 </imageView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="7CS-Nf-o3a">
-                    <rect key="frame" x="25" y="29" width="66" height="20"/>
+                    <rect key="frame" x="34" y="29" width="55" height="20"/>
                     <subviews>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8gV-XY-YDH">
-                            <rect key="frame" x="0.0" y="0.0" width="49" height="21"/>
+                            <rect key="frame" x="0.0" y="0.0" width="38" height="21"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" title="1.0" drawsBackground="YES" id="BHT-b5-Iah">
                                 <numberFormatter key="formatter" formatterBehavior="custom10_4" numberStyle="decimal" lenient="YES" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" minimumFractionDigits="1" maximumFractionDigits="1" id="Y5w-M8-P85">
                                     <real key="minimum" value="0.10000000000000001"/>
@@ -141,7 +141,7 @@
                             </connections>
                         </textField>
                         <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="g4W-FF-Rtl">
-                            <rect key="frame" x="50" y="-4" width="19" height="28"/>
+                            <rect key="frame" x="39" y="-4" width="19" height="28"/>
                             <stepperCell key="cell" continuous="YES" alignment="left" increment="0.10000000000000001" minValue="0.10000000000000001" maxValue="100" doubleValue="0.10000000000000001" id="Sl1-wx-XcS"/>
                             <connections>
                                 <binding destination="-2" name="value" keyPath="self.viewModel.lineHeightMultiple" id="a2K-Ld-bdp"/>
@@ -166,15 +166,15 @@
                 <constraint firstAttribute="bottom" secondItem="QE9-PE-u6j" secondAttribute="bottom" constant="1" id="Dfp-mb-QbM"/>
                 <constraint firstItem="QE9-PE-u6j" firstAttribute="leading" secondItem="7CS-Nf-o3a" secondAttribute="leading" id="FFL-xU-jRy"/>
                 <constraint firstItem="CY8-8a-Zdw" firstAttribute="leading" secondItem="7CS-Nf-o3a" secondAttribute="trailing" constant="8" symbolic="YES" id="LdZ-gy-EU6"/>
-                <constraint firstItem="I2O-a3-Q17" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="1" id="MtO-AM-Tmz"/>
+                <constraint firstItem="I2O-a3-Q17" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="10" id="MtO-AM-Tmz"/>
                 <constraint firstItem="7CS-Nf-o3a" firstAttribute="width" secondItem="loF-vh-lag" secondAttribute="width" multiplier="1.34694" id="Qk1-zV-0gA"/>
                 <constraint firstItem="7CS-Nf-o3a" firstAttribute="centerY" secondItem="jcC-V2-EPg" secondAttribute="centerY" id="RPZ-cT-SeK"/>
                 <constraint firstItem="QE9-PE-u6j" firstAttribute="top" secondItem="7CS-Nf-o3a" secondAttribute="bottom" constant="8" id="WA9-NK-ZUP"/>
-                <constraint firstAttribute="trailing" secondItem="QE9-PE-u6j" secondAttribute="trailing" constant="1" id="Yn5-Od-j55"/>
+                <constraint firstAttribute="trailing" secondItem="QE9-PE-u6j" secondAttribute="trailing" constant="10" id="Yn5-Od-j55"/>
                 <constraint firstItem="I2O-a3-Q17" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="1" id="bc0-Un-7Nj"/>
                 <constraint firstAttribute="trailing" secondItem="MX3-af-rnJ" secondAttribute="trailing" constant="1" id="mWd-7H-cTe"/>
-                <constraint firstAttribute="trailing" secondItem="I2O-a3-Q17" secondAttribute="trailing" constant="1" id="pbQ-fg-bFx"/>
-                <constraint firstItem="jcC-V2-EPg" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="1" id="sMr-X8-qHP"/>
+                <constraint firstAttribute="trailing" secondItem="I2O-a3-Q17" secondAttribute="trailing" constant="10" id="pbQ-fg-bFx"/>
+                <constraint firstItem="jcC-V2-EPg" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="10" id="sMr-X8-qHP"/>
                 <constraint firstItem="MX3-af-rnJ" firstAttribute="centerY" secondItem="7CS-Nf-o3a" secondAttribute="centerY" id="uue-Zc-n2Q"/>
                 <constraint firstItem="7CS-Nf-o3a" firstAttribute="top" secondItem="I2O-a3-Q17" secondAttribute="bottom" constant="8" symbolic="YES" id="v8x-cv-J4c"/>
                 <constraint firstItem="loF-vh-lag" firstAttribute="leading" secondItem="CY8-8a-Zdw" secondAttribute="trailing" constant="8" symbolic="YES" id="zzd-bA-zrv"/>

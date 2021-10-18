@@ -43,7 +43,9 @@ class RootSplitViewController: NSSplitViewController, NSMenuItemValidation {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.splitView.autosaveName = "RootSplitView"
 
+        //Observe for any nested split view changes so we can lock our split view
         NotificationCenter.default.addObserver(self, selector: #selector(self.willStartDrag(_:)), name: .nestableSplitViewWillStartDrag, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.didEndDrag(_:)), name: .nestableSplitViewDidEndDrag, object: nil)
     }

@@ -18,7 +18,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="itn-Ol-t7P" customClass="LinkControl" customModule="Coppice" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="0.0" width="238" height="22"/>
+                    <rect key="frame" x="10" y="0.0" width="218" height="22"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="image" keyPath="icon" value="TextPage-Small"/>
                         <userDefinedRuntimeAttribute type="string" keyPath="textValue" value="This is a really long string here!"/>
@@ -27,8 +27,8 @@
                 </customView>
             </subviews>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="itn-Ol-t7P" secondAttribute="trailing" id="GJK-PD-yaV"/>
-                <constraint firstItem="itn-Ol-t7P" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="shh-UU-YHg"/>
+                <constraint firstAttribute="trailing" secondItem="itn-Ol-t7P" secondAttribute="trailing" constant="10" id="GJK-PD-yaV"/>
+                <constraint firstItem="itn-Ol-t7P" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="10" id="shh-UU-YHg"/>
                 <constraint firstAttribute="bottom" secondItem="itn-Ol-t7P" secondAttribute="bottom" id="vbf-u5-bD1"/>
                 <constraint firstItem="itn-Ol-t7P" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="zGP-Sd-ASK"/>
             </constraints>

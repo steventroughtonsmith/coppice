@@ -25,7 +25,20 @@ class InspectorContainerViewModel: ViewModel {
         self.inspectorObserver = self.documentWindowViewModel.$currentInspectors.sink { [weak self] (inspectors) in
             self?.inspectors = inspectors.sorted { $0.ranking.rawValue < $1.ranking.rawValue }
         }
+        self.setupProObservation()
     }
 
     @Published var inspectors: [Inspector] = []
+
+    //MARK: - Pro
+    @objc dynamic var isProEnabled = false
+
+    var activationObserver: AnyCancellable?
+    private func setupProObservation() {
+        self.activationObserver = CoppiceSubscriptionManager.shared.$activationResponse
+            .map { $0?.isActive ?? false }
+            .sink { [weak self] newValue in
+                self?.isProEnabled = newValue
+            }
+    }
 }

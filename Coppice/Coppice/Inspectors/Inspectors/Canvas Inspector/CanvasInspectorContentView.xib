@@ -3,14 +3,13 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19158"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="CanvasInspectorViewController" customModule="Coppice" customModuleProvider="target">
             <connections>
                 <outlet property="firstKeyView" destination="b0f-QP-nLp" id="3Al-oa-MMF"/>
-                <outlet property="lastKeyView" destination="Kri-qI-nSO" id="1u2-hb-9nJ"/>
+                <outlet property="upsellView" destination="fHf-ZQ-tG5" id="Gbb-vB-law"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
@@ -20,7 +19,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="b0f-QP-nLp">
-                    <rect key="frame" x="50" y="57" width="257" height="21"/>
+                    <rect key="frame" x="60" y="57" width="237" height="21"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="2n3-qS-CN5">
                         <font key="font" usesAppearanceFont="YES"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -29,11 +28,10 @@
                     <connections>
                         <accessibilityConnection property="title" destination="VTj-SJ-Zad" id="AYT-lN-q2t"/>
                         <binding destination="-2" name="value" keyPath="self.viewModel.canvasTitle" id="XdU-H6-0jB"/>
-                        <outlet property="nextKeyView" destination="Kri-qI-nSO" id="7Zm-6h-2Rk"/>
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VTj-SJ-Zad">
-                    <rect key="frame" x="-2" y="59" width="46" height="16"/>
+                    <rect key="frame" x="-2" y="59" width="56" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Title" id="gqQ-0A-VwJ">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -41,131 +39,86 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IBt-e7-HOq">
-                    <rect key="frame" x="-2" y="32" width="46" height="16"/>
+                    <rect key="frame" x="8" y="32" width="46" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Theme" id="s1P-mu-Ye4">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Frv-F3-WrV">
-                    <rect key="frame" x="50" y="29" width="256" height="20"/>
-                    <subviews>
-                        <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Kri-qI-nSO">
-                            <rect key="frame" x="-3" y="-4" width="215" height="25"/>
-                            <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="zAD-di-hl3" id="eNE-Ou-a6G">
-                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="menu"/>
-                                <menu key="menu" id="LfI-KY-Dbj">
-                                    <items>
-                                        <menuItem title="Item 1" state="on" id="zAD-di-hl3"/>
-                                        <menuItem title="Item 2" id="bfM-5z-W0I"/>
-                                        <menuItem title="Item 3" id="DfD-4q-J1P"/>
-                                    </items>
-                                </menu>
-                            </popUpButtonCell>
-                            <connections>
-                                <accessibilityConnection property="title" destination="IBt-e7-HOq" id="egy-fw-Z6g"/>
-                                <binding destination="-2" name="enabled" keyPath="self.viewModel.isProEnabled" id="AYi-Jb-dZh"/>
-                                <binding destination="-2" name="selectedIndex" keyPath="self.viewModel.selectedThemeIndex" previousBinding="Jy9-Vy-kwx" id="g3a-sG-ZMn"/>
-                                <binding destination="-2" name="contentValues" keyPath="self.viewModel.themes" id="Jy9-Vy-kwx"/>
-                            </connections>
-                        </popUpButton>
-                        <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5hH-lc-yqQ">
-                            <rect key="frame" x="210" y="-5" width="52" height="27"/>
-                            <buttonCell key="cell" type="push" title="PRO" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="DUN-8v-xh0" customClass="ProButtonCell" customModule="Coppice" customModuleProvider="target">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="smallSystemBold"/>
-                            </buttonCell>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="color" keyPath="bezelColor">
-                                    <color key="value" name="CoppiceGreen"/>
-                                </userDefinedRuntimeAttribute>
-                            </userDefinedRuntimeAttributes>
-                            <connections>
-                                <action selector="showProUpsell:" target="-2" id="TgU-Qz-ZWk"/>
-                                <binding destination="-2" name="hidden" keyPath="self.viewModel.isProEnabled" id="FGT-jg-eMy"/>
-                            </connections>
-                        </button>
-                    </subviews>
-                    <constraints>
-                        <constraint firstAttribute="bottom" secondItem="Kri-qI-nSO" secondAttribute="bottom" id="Nkl-QD-4JE"/>
-                        <constraint firstItem="Kri-qI-nSO" firstAttribute="top" secondItem="Frv-F3-WrV" secondAttribute="top" id="ywP-jK-uoO"/>
-                    </constraints>
-                    <visibilityPriorities>
-                        <integer value="1000"/>
-                        <integer value="1000"/>
-                    </visibilityPriorities>
-                    <customSpacing>
-                        <real value="3.4028234663852886e+38"/>
-                        <real value="3.4028234663852886e+38"/>
-                    </customSpacing>
-                </stackView>
-                <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L7R-v2-buJ">
-                    <rect key="frame" x="50" y="1" width="256" height="20"/>
-                    <subviews>
-                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6Ig-y4-Hm7">
-                            <rect key="frame" x="-2" y="1" width="210" height="18"/>
-                            <buttonCell key="cell" type="check" title="Always Show Page Titles" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="akb-aI-p9g">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                            <connections>
-                                <binding destination="-2" name="enabled" keyPath="self.viewModel.isProEnabled" id="emq-rs-NUL"/>
-                                <binding destination="-2" name="value" keyPath="self.viewModel.alwaysShowPageTitles" id="EWu-5N-X6y"/>
-                            </connections>
-                        </button>
-                        <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nuG-iG-L1a">
-                            <rect key="frame" x="210" y="-5" width="52" height="27"/>
-                            <buttonCell key="cell" type="push" title="PRO" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rir-ho-JpD" customClass="ProButtonCell" customModule="Coppice" customModuleProvider="target">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="smallSystemBold"/>
-                            </buttonCell>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="color" keyPath="bezelColor">
-                                    <color key="value" name="CoppiceGreen"/>
-                                </userDefinedRuntimeAttribute>
-                            </userDefinedRuntimeAttributes>
-                            <connections>
-                                <action selector="showProUpsell:" target="-2" id="hQe-HY-Oep"/>
-                                <binding destination="-2" name="hidden" keyPath="self.viewModel.isProEnabled" id="Cz5-Ry-YKo"/>
-                            </connections>
-                        </button>
-                    </subviews>
-                    <visibilityPriorities>
-                        <integer value="1000"/>
-                        <integer value="1000"/>
-                    </visibilityPriorities>
-                    <customSpacing>
-                        <real value="3.4028234663852886e+38"/>
-                        <real value="3.4028234663852886e+38"/>
-                    </customSpacing>
-                </stackView>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Eiq-HG-L94">
+                    <rect key="frame" x="57" y="25" width="244" height="25"/>
+                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="WU8-uF-FJR" id="XMb-UI-pTQ">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="menu"/>
+                        <menu key="menu" id="WWi-F2-O08">
+                            <items>
+                                <menuItem title="Item 1" state="on" id="WU8-uF-FJR"/>
+                                <menuItem title="Item 2" id="PAl-u7-yM3"/>
+                                <menuItem title="Item 3" id="4hb-5k-C6X"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <connections>
+                        <accessibilityConnection property="title" destination="IBt-e7-HOq" id="ANz-od-cv2"/>
+                        <binding destination="-2" name="contentValues" keyPath="self.viewModel.themes" id="NiI-sn-DkL"/>
+                        <binding destination="-2" name="enabled" keyPath="self.viewModel.isProEnabled" id="MeK-C3-eXk"/>
+                        <binding destination="-2" name="selectedIndex" keyPath="self.viewModel.selectedThemeIndex" previousBinding="NiI-sn-DkL" id="UNM-dW-yEt"/>
+                    </connections>
+                </popUpButton>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VUv-qV-IeB">
+                    <rect key="frame" x="58" y="4" width="239" height="18"/>
+                    <buttonCell key="cell" type="check" title="Always Show Page Titles" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Gxn-RB-DG9">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="-2" name="enabled" keyPath="self.viewModel.isProEnabled" id="jfz-Nz-jrG"/>
+                        <binding destination="-2" name="value" keyPath="self.viewModel.alwaysShowPageTitles" id="bgZ-Pl-deN"/>
+                    </connections>
+                </button>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="fHf-ZQ-tG5" customClass="InspectorUpsellView" customModule="Coppice" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="307" height="54"/>
+                    <connections>
+                        <binding destination="-2" name="hidden2" keyPath="self.viewModel.isProEnabled" previousBinding="Rpb-Z1-PCS" id="58b-w5-xwd">
+                            <dictionary key="options">
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
+                            </dictionary>
+                        </binding>
+                        <binding destination="eo6-R9-T9q" name="hidden" keyPath="values.M3ShowProFeaturesInInspector" id="Rpb-Z1-PCS">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </customView>
             </subviews>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="b0f-QP-nLp" secondAttribute="trailing" id="Act-sR-nMp"/>
-                <constraint firstAttribute="bottom" secondItem="L7R-v2-buJ" secondAttribute="bottom" constant="1" id="FZw-cr-Egx"/>
-                <constraint firstItem="L7R-v2-buJ" firstAttribute="top" secondItem="Frv-F3-WrV" secondAttribute="bottom" constant="8" symbolic="YES" id="Fiq-0c-oiq"/>
-                <constraint firstItem="Frv-F3-WrV" firstAttribute="leading" secondItem="IBt-e7-HOq" secondAttribute="trailing" constant="8" symbolic="YES" id="GJO-ri-JAH"/>
-                <constraint firstAttribute="trailing" secondItem="Frv-F3-WrV" secondAttribute="trailing" constant="1" id="Iis-7N-0IE"/>
-                <constraint firstItem="IBt-e7-HOq" firstAttribute="firstBaseline" secondItem="Kri-qI-nSO" secondAttribute="firstBaseline" id="OaV-kd-uXy"/>
+                <constraint firstItem="fHf-ZQ-tG5" firstAttribute="top" secondItem="Eiq-HG-L94" secondAttribute="top" constant="-5" id="1WT-NH-owg"/>
+                <constraint firstAttribute="trailing" secondItem="fHf-ZQ-tG5" secondAttribute="trailing" id="1sx-8b-fLJ"/>
+                <constraint firstItem="VUv-qV-IeB" firstAttribute="trailing" secondItem="Eiq-HG-L94" secondAttribute="trailing" id="38a-p3-gmv"/>
+                <constraint firstAttribute="bottom" secondItem="VUv-qV-IeB" secondAttribute="bottom" constant="5" id="3bq-eH-dtf"/>
+                <constraint firstAttribute="trailing" secondItem="b0f-QP-nLp" secondAttribute="trailing" constant="10" id="Act-sR-nMp"/>
+                <constraint firstItem="fHf-ZQ-tG5" firstAttribute="bottom" secondItem="VUv-qV-IeB" secondAttribute="bottom" constant="5" id="PS3-c2-cfX"/>
                 <constraint firstItem="b0f-QP-nLp" firstAttribute="top" secondItem="ehY-F7-MGj" secondAttribute="top" id="Pf1-p6-b1a"/>
-                <constraint firstItem="L7R-v2-buJ" firstAttribute="leading" secondItem="Frv-F3-WrV" secondAttribute="leading" id="Xhc-gp-bNN"/>
+                <constraint firstItem="Eiq-HG-L94" firstAttribute="trailing" secondItem="b0f-QP-nLp" secondAttribute="trailing" id="XDR-pE-0Tx"/>
+                <constraint firstItem="Eiq-HG-L94" firstAttribute="top" secondItem="b0f-QP-nLp" secondAttribute="bottom" constant="8" id="XN9-gy-oaa"/>
+                <constraint firstItem="VUv-qV-IeB" firstAttribute="top" secondItem="Eiq-HG-L94" secondAttribute="bottom" constant="8" symbolic="YES" id="ZYF-hT-bWX"/>
                 <constraint firstItem="VTj-SJ-Zad" firstAttribute="firstBaseline" secondItem="b0f-QP-nLp" secondAttribute="firstBaseline" id="cwp-qL-Ozp"/>
-                <constraint firstItem="L7R-v2-buJ" firstAttribute="trailing" secondItem="Frv-F3-WrV" secondAttribute="trailing" id="fM0-Hc-J8s"/>
-                <constraint firstItem="IBt-e7-HOq" firstAttribute="leading" secondItem="VTj-SJ-Zad" secondAttribute="leading" id="ibD-OF-j1z"/>
-                <constraint firstItem="Frv-F3-WrV" firstAttribute="top" secondItem="b0f-QP-nLp" secondAttribute="bottom" constant="8" symbolic="YES" id="nhC-i5-2fd"/>
+                <constraint firstItem="IBt-e7-HOq" firstAttribute="firstBaseline" secondItem="Eiq-HG-L94" secondAttribute="firstBaseline" id="e8K-VG-uBd"/>
+                <constraint firstItem="VUv-qV-IeB" firstAttribute="leading" secondItem="Eiq-HG-L94" secondAttribute="leading" id="efj-Gb-sTv"/>
+                <constraint firstItem="IBt-e7-HOq" firstAttribute="leading" secondItem="VTj-SJ-Zad" secondAttribute="leading" constant="10" id="ibD-OF-j1z"/>
+                <constraint firstItem="fHf-ZQ-tG5" firstAttribute="leading" secondItem="ehY-F7-MGj" secondAttribute="leading" id="md6-BQ-bbN"/>
                 <constraint firstItem="b0f-QP-nLp" firstAttribute="leading" secondItem="VTj-SJ-Zad" secondAttribute="trailing" constant="8" id="o6b-TB-L9J"/>
+                <constraint firstItem="Eiq-HG-L94" firstAttribute="leading" secondItem="IBt-e7-HOq" secondAttribute="trailing" constant="8" symbolic="YES" id="rE2-rd-wIT"/>
                 <constraint firstItem="VTj-SJ-Zad" firstAttribute="leading" secondItem="ehY-F7-MGj" secondAttribute="leading" id="sWc-Oj-OkF"/>
                 <constraint firstItem="IBt-e7-HOq" firstAttribute="trailing" secondItem="VTj-SJ-Zad" secondAttribute="trailing" id="z7X-tq-RJA"/>
             </constraints>
-            <point key="canvasLocation" x="13.5" y="73"/>
+            <point key="canvasLocation" x="23.5" y="72"/>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="eo6-R9-T9q"/>
     </objects>
-    <resources>
-        <namedColor name="CoppiceGreen">
-            <color red="0.13300000131130219" green="0.56499999761581421" blue="0.086000002920627594" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-    </resources>
 </document>

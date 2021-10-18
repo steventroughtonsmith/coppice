@@ -10,7 +10,7 @@ import Cocoa
 import Combine
 
 class InspectorContainerViewController: NSViewController, SplitViewContainable {
-    let viewModel: InspectorContainerViewModel
+    @objc dynamic let viewModel: InspectorContainerViewModel
 
     @IBOutlet weak var stackView: NSStackView!
     init(viewModel: InspectorContainerViewModel) {
@@ -26,6 +26,15 @@ class InspectorContainerViewController: NSViewController, SplitViewContainable {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupObservation()
+    }
+
+    @IBOutlet var topConstraint: NSLayoutConstraint!
+
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        if #available(macOS 11.0, *) {
+            self.topConstraint.constant = self.view.safeAreaInsets.top
+        }
     }
 
 
@@ -65,6 +74,28 @@ class InspectorContainerViewController: NSViewController, SplitViewContainable {
         item.holdingPriority = NSLayoutConstraint.Priority(260)
         item.canCollapse = true
         return item
+    }
+
+
+    //MARK: - Pro
+    @IBOutlet var proImageView: NSImageView! {
+        didSet {
+            let image = CoppiceSubscriptionManager.shared.proImage
+            self.proImageView.image = image
+        }
+    }
+
+    @IBAction func showProInfo(_ sender: Any) {
+        CoppiceSubscriptionManager.shared.openProPage()
+    }
+
+    @objc dynamic var showProFeatures: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: .showProFeaturesInInspector)
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: .showProFeaturesInInspector)
+        }
     }
 }
 

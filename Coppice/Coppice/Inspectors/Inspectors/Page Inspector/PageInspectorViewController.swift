@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import Combine
 
 class PageInspectorViewController: BaseInspectorViewController {
     override var contentViewNibName: NSNib.Name? {
@@ -15,11 +16,20 @@ class PageInspectorViewController: BaseInspectorViewController {
 
     override var ranking: InspectorRanking { return .page }
 
-    @IBAction func showProUpsell(_ sender: Any) {
-        guard let control = sender as? NSView else {
-            return
+    @IBOutlet var upsellView: InspectorUpsellView!
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.subscribers[.isProEnabled] = self.viewModel.publisher(for: \.isProEnabled).sink { isProEnabled in
+            self.upsellView.proFeature = isProEnabled ? nil : .textAutoLinking
         }
-        CoppiceSubscriptionManager.shared.showProPopover(for: .textAutoLinking, from: control, preferredEdge: .maxY)
+    }
+
+    //MARK: - Subscribers
+    private var subscribers: [SubscriberKey: AnyCancellable] = [:]
+
+    private enum SubscriberKey {
+        case isProEnabled
     }
 }
 

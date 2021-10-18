@@ -277,12 +277,27 @@ class CoppiceSubscriptionManager: NSObject {
 
 
     //MARK: - Pro Upsell
-    func showProPopover(for feature: ProFeature, from view: NSView, preferredEdge: NSRectEdge) {
+    enum ProPopoverUserAction {
+        case hover
+        case click
+    }
+
+    func createProPopover(for feature: ProFeature, userAction: ProPopoverUserAction) -> NSPopover {
         let upsellVC = ProUpsellViewController()
         upsellVC.currentFeature = feature
         let popover = NSPopover()
         popover.contentViewController = upsellVC
-        popover.behavior = .transient
+        switch userAction {
+        case .hover:
+            popover.behavior = .applicationDefined
+        case .click:
+            popover.behavior = .transient
+        }
+        return popover
+    }
+
+    func showProPopover(for feature: ProFeature, from view: NSView, preferredEdge: NSRectEdge) {
+        let popover = self.createProPopover(for: feature, userAction: .click)
         popover.show(relativeTo: view.bounds, of: view, preferredEdge: preferredEdge)
     }
 
@@ -321,6 +336,8 @@ class CoppiceSubscriptionManager: NSObject {
         NSWorkspace.shared.open(URL(string: "https://coppiceapp.com/pro")!)
     }
 
+
+    //MARK: - Debug
     #if DEBUG
     private var previousActivationResponse: ActivationResponse?
 

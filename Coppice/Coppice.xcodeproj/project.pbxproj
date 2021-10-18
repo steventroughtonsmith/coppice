@@ -245,6 +245,7 @@
 		99AD88762374665D000453E1 /* Alert+AppKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AD88752374665D000453E1 /* Alert+AppKit.swift */; };
 		99AD88A5237B1700000453E1 /* DocumentWindowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AD88A4237B1700000453E1 /* DocumentWindowViewModel.swift */; };
 		99AD88A9237C36D0000453E1 /* Editor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AD88A8237C36D0000453E1 /* Editor.swift */; };
+		99B04ED8271DCA8600C42E46 /* InspectorUpsellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B04ED7271DCA8600C42E46 /* InspectorUpsellView.swift */; };
 		99B3474C2465846900B96B71 /* PixelPerfectTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B3474B2465846900B96B71 /* PixelPerfectTableView.swift */; };
 		99B3474E24658BA200B96B71 /* RoundSelectionTableRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B3474D24658BA200B96B71 /* RoundSelectionTableRowView.swift */; };
 		99B65D022562C1B8001DE408 /* Coppice.helpbook in Resources */ = {isa = PBXBuildFile; fileRef = 99B65D012562C1B7001DE408 /* Coppice.helpbook */; };
@@ -674,6 +675,7 @@
 		99AD88752374665D000453E1 /* Alert+AppKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alert+AppKit.swift"; sourceTree = "<group>"; };
 		99AD88A4237B1700000453E1 /* DocumentWindowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentWindowViewModel.swift; sourceTree = "<group>"; };
 		99AD88A8237C36D0000453E1 /* Editor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Editor.swift; sourceTree = "<group>"; };
+		99B04ED7271DCA8600C42E46 /* InspectorUpsellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectorUpsellView.swift; sourceTree = "<group>"; };
 		99B3474B2465846900B96B71 /* PixelPerfectTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelPerfectTableView.swift; sourceTree = "<group>"; };
 		99B3474D24658BA200B96B71 /* RoundSelectionTableRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundSelectionTableRowView.swift; sourceTree = "<group>"; };
 		99B65D012562C1B7001DE408 /* Coppice.helpbook */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Coppice.helpbook; sourceTree = "<group>"; };
@@ -1717,6 +1719,7 @@
 				99D8E39223800FB90098CF3B /* BaseInspectorViewModel.swift */,
 				99D8E38E23800F9A0098CF3B /* BaseInspectorViewController.swift */,
 				99D8E38F23800F9A0098CF3B /* BaseInspectorViewController.xib */,
+				99B04ED7271DCA8600C42E46 /* InspectorUpsellView.swift */,
 				99868F302396AD24009AC0F7 /* Image Editor Inspector */,
 				99C9005B25794AA500969E92 /* Text Editor Inspectors */,
 				9965FC3A23843131002FE10D /* Canvas Page Inspector */,
@@ -2264,6 +2267,7 @@
 				99868746253DA104004B29B0 /* ProFeature.swift in Sources */,
 				9965FC4623844910002FE10D /* TextEditorFontInspectorViewController.swift in Sources */,
 				99ECA0B526496F6E00480C19 /* PageSelectorHeaderTableCellView.swift in Sources */,
+				99B04ED8271DCA8600C42E46 /* InspectorUpsellView.swift in Sources */,
 				999453F024ED698D0043C542 /* SimpleLabelPopoverViewController.swift in Sources */,
 				9977119C239E91FD00FCC8C7 /* ViewModel.swift in Sources */,
 				992A5CB322DDF53C0012CCB6 /* DebugPageEditorViewModel.swift in Sources */,

@@ -34,6 +34,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             .autoLinkingTextPagesEnabled: true,
             .showWelcomeScreenOnLaunch: true,
             .sidebarSize: SidebarSize.system.rawValue,
+            .showProFeaturesInInspector: true,
         ])
     }
 

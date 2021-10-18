@@ -1,60 +1,191 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19158" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19158"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="InspectorContainerViewController" customModule="Coppice" customModuleProvider="target">
             <connections>
+                <outlet property="proImageView" destination="OMy-u2-KJr" id="fgW-Sc-FIU"/>
                 <outlet property="stackView" destination="o7a-ej-oXw" id="fet-UQ-tZ6"/>
+                <outlet property="topConstraint" destination="oo2-nZ-BSR" id="APM-nP-oeb"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="Hz6-mo-xeY">
-            <rect key="frame" x="0.0" y="0.0" width="210" height="300"/>
+            <rect key="frame" x="0.0" y="0.0" width="310" height="698"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zkb-NC-iT9">
-                    <rect key="frame" x="0.0" y="0.0" width="210" height="300"/>
-                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="jmX-5L-ayH" customClass="FlippedClipView" customModule="Coppice" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="210" height="300"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" placeholderIntrinsicWidth="184" placeholderIntrinsicHeight="300" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="o7a-ej-oXw">
-                                <rect key="frame" x="0.0" y="0.0" width="210" height="300"/>
-                            </stackView>
-                        </subviews>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="o7a-ej-oXw" secondAttribute="trailing" id="M2L-T0-gBX"/>
-                            <constraint firstItem="o7a-ej-oXw" firstAttribute="top" secondItem="jmX-5L-ayH" secondAttribute="top" id="jv2-bI-Zm4"/>
-                            <constraint firstItem="o7a-ej-oXw" firstAttribute="leading" secondItem="jmX-5L-ayH" secondAttribute="leading" id="yYe-WV-rjz"/>
-                        </constraints>
-                    </clipView>
+                <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uR6-D1-WKg">
+                    <rect key="frame" x="0.0" y="0.0" width="310" height="698"/>
+                    <subviews>
+                        <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="BKL-Dd-Coc">
+                            <rect key="frame" x="0.0" y="543" width="310" height="155"/>
+                            <view key="contentView" id="SWX-GZ-x5S">
+                                <rect key="frame" x="0.0" y="0.0" width="310" height="155"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="8Wf-F0-Ntf">
+                                        <rect key="frame" x="0.0" y="0.0" width="310" height="155"/>
+                                        <subviews>
+                                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="3Nz-ve-Bm2">
+                                                <rect key="frame" x="8" y="80" width="294" height="32"/>
+                                                <textFieldCell key="cell" selectable="YES" alignment="center" title="Unlock all of Coppice's features by upgrading to Coppice Pro" id="cft-7H-M9U">
+                                                    <font key="font" metaFont="system"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="ZFb-AT-ah1">
+                                                <rect key="frame" x="71" y="120" width="169" height="20"/>
+                                                <subviews>
+                                                    <imageView horizontalHuggingPriority="252" verticalHuggingPriority="750" placeholderIntrinsicWidth="40" placeholderIntrinsicHeight="16" translatesAutoresizingMaskIntoConstraints="NO" id="OMy-u2-KJr">
+                                                        <rect key="frame" x="0.0" y="2" width="40" height="16"/>
+                                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="vej-mo-Nuj"/>
+                                                    </imageView>
+                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JIv-vi-BP3">
+                                                        <rect key="frame" x="46" y="0.0" width="125" height="20"/>
+                                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Upgrade to Pro" id="dP9-Uh-ciP">
+                                                            <font key="font" metaFont="systemSemibold" size="17"/>
+                                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="JIv-vi-BP3" firstAttribute="top" secondItem="ZFb-AT-ah1" secondAttribute="top" id="2df-MQ-KGm"/>
+                                                    <constraint firstItem="JIv-vi-BP3" firstAttribute="top" secondItem="ZFb-AT-ah1" secondAttribute="top" id="FXd-Au-Xsu"/>
+                                                    <constraint firstAttribute="bottom" secondItem="JIv-vi-BP3" secondAttribute="bottom" id="Owg-JG-kw9"/>
+                                                    <constraint firstItem="JIv-vi-BP3" firstAttribute="leading" secondItem="OMy-u2-KJr" secondAttribute="trailing" constant="8" id="QHM-Eg-W7s"/>
+                                                    <constraint firstItem="OMy-u2-KJr" firstAttribute="leading" secondItem="ZFb-AT-ah1" secondAttribute="leading" id="Rc0-Qc-kAs"/>
+                                                    <constraint firstItem="OMy-u2-KJr" firstAttribute="centerY" secondItem="JIv-vi-BP3" secondAttribute="centerY" id="dER-IZ-AaF"/>
+                                                    <constraint firstAttribute="trailing" secondItem="JIv-vi-BP3" secondAttribute="trailing" id="rsw-Jv-gV8"/>
+                                                </constraints>
+                                            </customView>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="daE-h4-lvh">
+                                                <rect key="frame" x="62" y="55" width="185" height="16"/>
+                                                <buttonCell key="cell" type="check" title="Show Pro Features in Inspector" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="Rgw-D8-C7a">
+                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                    <font key="font" metaFont="smallSystem"/>
+                                                </buttonCell>
+                                                <color key="contentTintColor" name="CoppiceGreen"/>
+                                                <connections>
+                                                    <binding destination="-2" name="value" keyPath="self.showProFeatures" id="wVx-xP-viI"/>
+                                                </connections>
+                                            </button>
+                                            <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="izd-Oe-Qhm">
+                                                <rect key="frame" x="0.0" y="-2" width="310" height="5"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="1" id="H47-mh-bTN"/>
+                                                </constraints>
+                                            </box>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vuk-wL-K8N">
+                                                <rect key="frame" x="90" y="9" width="131" height="32"/>
+                                                <buttonCell key="cell" type="push" title="Find Out More…" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Scp-he-3TY">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="showProInfo:" target="-2" id="MBC-Eh-1h7"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="daE-h4-lvh" firstAttribute="centerX" secondItem="8Wf-F0-Ntf" secondAttribute="centerX" id="0jp-Ta-qhc"/>
+                                            <constraint firstItem="vuk-wL-K8N" firstAttribute="top" secondItem="daE-h4-lvh" secondAttribute="bottom" constant="20" id="6eS-gx-5mg"/>
+                                            <constraint firstItem="3Nz-ve-Bm2" firstAttribute="leading" secondItem="8Wf-F0-Ntf" secondAttribute="leading" constant="10" id="6zr-Kk-Xf7"/>
+                                            <constraint firstItem="vuk-wL-K8N" firstAttribute="centerX" secondItem="8Wf-F0-Ntf" secondAttribute="centerX" id="G01-nf-WLJ"/>
+                                            <constraint firstAttribute="trailing" secondItem="3Nz-ve-Bm2" secondAttribute="trailing" constant="10" id="GcW-L6-HPI"/>
+                                            <constraint firstItem="ZFb-AT-ah1" firstAttribute="top" secondItem="8Wf-F0-Ntf" secondAttribute="top" constant="15" id="N5Q-zZ-trk"/>
+                                            <constraint firstItem="ZFb-AT-ah1" firstAttribute="centerX" secondItem="8Wf-F0-Ntf" secondAttribute="centerX" id="bdz-q6-xgi"/>
+                                            <constraint firstAttribute="bottom" secondItem="izd-Oe-Qhm" secondAttribute="bottom" id="g7g-gY-yep"/>
+                                            <constraint firstAttribute="trailing" secondItem="izd-Oe-Qhm" secondAttribute="trailing" id="p2n-h0-i9a"/>
+                                            <constraint firstItem="izd-Oe-Qhm" firstAttribute="top" secondItem="vuk-wL-K8N" secondAttribute="bottom" constant="15" id="sNS-Zv-xJ9"/>
+                                            <constraint firstItem="3Nz-ve-Bm2" firstAttribute="top" secondItem="ZFb-AT-ah1" secondAttribute="bottom" constant="8" id="tHg-Co-wpx"/>
+                                            <constraint firstItem="daE-h4-lvh" firstAttribute="top" secondItem="3Nz-ve-Bm2" secondAttribute="bottom" constant="10" id="uhd-Ft-cnW"/>
+                                            <constraint firstItem="izd-Oe-Qhm" firstAttribute="leading" secondItem="8Wf-F0-Ntf" secondAttribute="leading" id="wCs-or-wj1"/>
+                                        </constraints>
+                                    </customView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="8Wf-F0-Ntf" secondAttribute="trailing" id="AE1-Am-Xvd"/>
+                                    <constraint firstItem="8Wf-F0-Ntf" firstAttribute="leading" secondItem="SWX-GZ-x5S" secondAttribute="leading" id="IlC-F4-qCM"/>
+                                    <constraint firstItem="8Wf-F0-Ntf" firstAttribute="top" secondItem="SWX-GZ-x5S" secondAttribute="top" id="brF-lw-jgt"/>
+                                    <constraint firstAttribute="bottom" secondItem="8Wf-F0-Ntf" secondAttribute="bottom" id="fvt-Tq-Dip"/>
+                                </constraints>
+                            </view>
+                            <color key="fillColor" name="CoppiceInspectorBackground"/>
+                            <connections>
+                                <binding destination="-2" name="hidden" keyPath="self.viewModel.isProEnabled" id="qos-Bp-ouH"/>
+                            </connections>
+                        </box>
+                        <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zkb-NC-iT9">
+                            <rect key="frame" x="0.0" y="0.0" width="310" height="543"/>
+                            <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="jmX-5L-ayH" customClass="FlippedClipView" customModule="Coppice" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="310" height="543"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" placeholderIntrinsicWidth="184" placeholderIntrinsicHeight="300" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="o7a-ej-oXw">
+                                        <rect key="frame" x="0.0" y="243" width="310" height="300"/>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="o7a-ej-oXw" secondAttribute="trailing" id="M2L-T0-gBX"/>
+                                    <constraint firstItem="o7a-ej-oXw" firstAttribute="top" secondItem="jmX-5L-ayH" secondAttribute="top" id="jv2-bI-Zm4"/>
+                                    <constraint firstItem="o7a-ej-oXw" firstAttribute="leading" secondItem="jmX-5L-ayH" secondAttribute="leading" id="yYe-WV-rjz"/>
+                                </constraints>
+                            </clipView>
+                            <constraints>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="245" id="IN1-pr-iCa"/>
+                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="310" id="RHN-jS-goW"/>
+                            </constraints>
+                            <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="Nsn-oy-slE">
+                                <rect key="frame" x="-100" y="-100" width="184" height="16"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </scroller>
+                            <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="NeV-Vp-Zxt">
+                                <rect key="frame" x="294" y="0.0" width="16" height="543"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </scroller>
+                            <accessibility description="Inspectors"/>
+                        </scrollView>
+                    </subviews>
                     <constraints>
-                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="210" id="IN1-pr-iCa"/>
-                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="310" id="RHN-jS-goW"/>
+                        <constraint firstItem="Zkb-NC-iT9" firstAttribute="leading" secondItem="uR6-D1-WKg" secondAttribute="leading" id="mxd-vS-jzU"/>
+                        <constraint firstAttribute="trailing" secondItem="Zkb-NC-iT9" secondAttribute="trailing" id="qXC-2p-QGi"/>
+                        <constraint firstAttribute="trailing" secondItem="BKL-Dd-Coc" secondAttribute="trailing" id="vNa-1e-Upd"/>
+                        <constraint firstItem="BKL-Dd-Coc" firstAttribute="leading" secondItem="uR6-D1-WKg" secondAttribute="leading" id="zcT-Vu-Gtd"/>
                     </constraints>
-                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="Nsn-oy-slE">
-                        <rect key="frame" x="-100" y="-100" width="184" height="16"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                    <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="NeV-Vp-Zxt">
-                        <rect key="frame" x="194" y="0.0" width="16" height="300"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                    <accessibility description="Inspectors"/>
-                </scrollView>
+                    <visibilityPriorities>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                    </visibilityPriorities>
+                    <customSpacing>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                    </customSpacing>
+                </stackView>
             </subviews>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="Zkb-NC-iT9" secondAttribute="bottom" id="LLC-GV-6Jn"/>
-                <constraint firstAttribute="trailing" secondItem="Zkb-NC-iT9" secondAttribute="trailing" id="b06-Zs-Iak"/>
-                <constraint firstItem="Zkb-NC-iT9" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="iLM-3r-QBA"/>
-                <constraint firstItem="Zkb-NC-iT9" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="qCJ-YU-Xjr"/>
+                <constraint firstAttribute="bottom" secondItem="uR6-D1-WKg" secondAttribute="bottom" id="Sgx-Tz-Wpd"/>
+                <constraint firstAttribute="trailing" secondItem="uR6-D1-WKg" secondAttribute="trailing" id="cYk-wM-A3e"/>
+                <constraint firstItem="uR6-D1-WKg" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="iz6-02-URO"/>
+                <constraint firstItem="uR6-D1-WKg" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="oo2-nZ-BSR"/>
             </constraints>
-            <point key="canvasLocation" x="-73" y="-39"/>
+            <point key="canvasLocation" x="-73" y="16"/>
         </customView>
     </objects>
+    <resources>
+        <namedColor name="CoppiceGreen">
+            <color red="0.13300000131130219" green="0.56499999761581421" blue="0.086000002920627594" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="CoppiceInspectorBackground">
+            <color red="0.87300002574920654" green="0.95499998331069946" blue="0.85100001096725464" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
 </document>

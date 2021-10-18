@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import Combine
 
 class CanvasInspectorViewController: BaseInspectorViewController {
     override var contentViewNibName: NSNib.Name? {
@@ -15,10 +16,19 @@ class CanvasInspectorViewController: BaseInspectorViewController {
 
     override var ranking: InspectorRanking { return .canvas }
 
-    @IBAction func showProUpsell(_ sender: Any) {
-        guard let control = sender as? NSView else {
-            return
+    @IBOutlet var upsellView: InspectorUpsellView!
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.subscribers[.isProEnabled] = self.viewModel.publisher(for: \.isProEnabled).sink { isProEnabled in
+            self.upsellView.proFeature = isProEnabled ? nil : .canvasAppearance
         }
-        CoppiceSubscriptionManager.shared.showProPopover(for: .canvasAppearance, from: control, preferredEdge: .maxY)
+    }
+
+    //MARK: - Subscribers
+    private var subscribers: [SubscriberKey: AnyCancellable] = [:]
+
+    private enum SubscriberKey {
+        case isProEnabled
     }
 }

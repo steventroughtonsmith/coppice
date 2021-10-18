@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19158" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19158"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -22,17 +22,17 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yd0-mM-B7h">
-                    <rect key="frame" x="0.0" y="0.0" width="322" height="60"/>
+                    <rect key="frame" x="10" y="0.0" width="302" height="60"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="nyN-lN-nod">
-                        <rect key="frame" x="1" y="1" width="320" height="58"/>
+                        <rect key="frame" x="1" y="1" width="300" height="58"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" findStyle="bar" smartInsertDelete="YES" id="Nfg-9H-1PC">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="58"/>
+                                <rect key="frame" x="0.0" y="0.0" width="300" height="58"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="InspectorTextViewBackground"/>
-                                <size key="minSize" width="320" height="58"/>
+                                <size key="minSize" width="300" height="58"/>
                                 <size key="maxSize" width="402" height="10000000"/>
                                 <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                 <connections>
@@ -51,12 +51,12 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="FhR-Sr-fcc">
-                        <rect key="frame" x="305" y="1" width="16" height="58"/>
+                        <rect key="frame" x="285" y="1" width="16" height="58"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="G8q-mk-dZR">
-                    <rect key="frame" x="-2" y="64" width="74" height="16"/>
+                    <rect key="frame" x="8" y="64" width="74" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="Description" id="jFf-qA-lLK">
                         <font key="font" usesAppearanceFont="YES"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -66,10 +66,10 @@
             </subviews>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="yd0-mM-B7h" secondAttribute="bottom" id="2QR-vw-egX"/>
-                <constraint firstAttribute="trailing" secondItem="yd0-mM-B7h" secondAttribute="trailing" id="F3u-wR-RwI"/>
-                <constraint firstItem="yd0-mM-B7h" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="dD7-IJ-8pe"/>
+                <constraint firstAttribute="trailing" secondItem="yd0-mM-B7h" secondAttribute="trailing" constant="10" id="F3u-wR-RwI"/>
+                <constraint firstItem="yd0-mM-B7h" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="10" id="dD7-IJ-8pe"/>
                 <constraint firstItem="G8q-mk-dZR" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="jWz-cy-GCn"/>
-                <constraint firstItem="G8q-mk-dZR" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="rkV-1m-bL3"/>
+                <constraint firstItem="G8q-mk-dZR" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="10" id="rkV-1m-bL3"/>
                 <constraint firstItem="yd0-mM-B7h" firstAttribute="top" secondItem="G8q-mk-dZR" secondAttribute="bottom" constant="4" id="zlc-t1-1kx"/>
             </constraints>
             <point key="canvasLocation" x="60" y="49"/>
