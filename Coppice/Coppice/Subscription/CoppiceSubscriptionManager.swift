@@ -290,8 +290,10 @@ class CoppiceSubscriptionManager: NSObject {
         switch userAction {
         case .hover:
             popover.behavior = .applicationDefined
+            upsellVC.showFindOutMore = false
         case .click:
             popover.behavior = .transient
+            upsellVC.showFindOutMore = true
         }
         return popover
     }

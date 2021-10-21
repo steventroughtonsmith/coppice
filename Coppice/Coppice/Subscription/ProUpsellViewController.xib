@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19455" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19455"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ProUpsellViewController" customModule="Coppice" customModuleProvider="target">
             <connections>
                 <outlet property="bodyField" destination="fcy-LH-vr3" id="fEw-6P-kz9"/>
+                <outlet property="findOutMoreButton" destination="fhn-G2-gYg" id="4sS-Za-W00"/>
                 <outlet property="proIcon" destination="zsI-yF-xQR" id="8Sn-Pp-805"/>
                 <outlet property="titleField" destination="juz-ON-NP8" id="hVf-1w-Qlz"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
@@ -20,53 +21,80 @@
             <rect key="frame" x="0.0" y="0.0" width="340" height="130"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fcy-LH-vr3">
-                    <rect key="frame" x="18" y="66" width="304" height="16"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="300" id="pPd-8L-I6c"/>
-                    </constraints>
-                    <textFieldCell key="cell" title="This feature requires a Coppice Pro subscription." id="Tox-lu-qPx">
-                        <font key="font" usesAppearanceFont="YES"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fhn-G2-gYg">
-                    <rect key="frame" x="103" y="13" width="135" height="32"/>
-                    <buttonCell key="cell" type="push" title="Find out more…" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="erh-1O-nzw">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="findOutMore:" target="-2" id="4c1-zC-ZCU"/>
-                    </connections>
-                </button>
-                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="750" placeholderIntrinsicWidth="40" placeholderIntrinsicHeight="20" translatesAutoresizingMaskIntoConstraints="NO" id="zsI-yF-xQR">
-                    <rect key="frame" x="20" y="90" width="40" height="20"/>
-                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="Jic-pu-fZx"/>
-                </imageView>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="juz-ON-NP8">
-                    <rect key="frame" x="66" y="90" width="180" height="21"/>
-                    <textFieldCell key="cell" lineBreakMode="clipping" title="Coppice Pro Feature" id="zkW-hj-gQK">
-                        <font key="font" metaFont="systemBold" size="18"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
+                <stackView distribution="fill" orientation="vertical" alignment="centerX" spacing="25" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dqq-WQ-U7Z">
+                    <rect key="frame" x="20" y="20" width="300" height="90"/>
+                    <subviews>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="hut-ut-pDH">
+                            <rect key="frame" x="0.0" y="45" width="300" height="45"/>
+                            <subviews>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="juz-ON-NP8">
+                                    <rect key="frame" x="46" y="24" width="256" height="21"/>
+                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Coppice Pro Feature" id="zkW-hj-gQK">
+                                        <font key="font" metaFont="systemBold" size="18"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <imageView horizontalHuggingPriority="252" verticalHuggingPriority="750" placeholderIntrinsicWidth="40" placeholderIntrinsicHeight="20" translatesAutoresizingMaskIntoConstraints="NO" id="zsI-yF-xQR">
+                                    <rect key="frame" x="0.0" y="23" width="40" height="21"/>
+                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="Jic-pu-fZx"/>
+                                </imageView>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fcy-LH-vr3">
+                                    <rect key="frame" x="-2" y="0.0" width="304" height="16"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="300" id="pPd-8L-I6c"/>
+                                    </constraints>
+                                    <textFieldCell key="cell" title="This feature requires a Coppice Pro subscription." id="Tox-lu-qPx">
+                                        <font key="font" usesAppearanceFont="YES"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="fcy-LH-vr3" firstAttribute="top" secondItem="juz-ON-NP8" secondAttribute="bottom" constant="8" symbolic="YES" id="05M-D3-cYB"/>
+                                <constraint firstAttribute="bottom" secondItem="fcy-LH-vr3" secondAttribute="bottom" id="65E-pu-nNc"/>
+                                <constraint firstItem="fcy-LH-vr3" firstAttribute="leading" secondItem="hut-ut-pDH" secondAttribute="leading" id="6It-59-CPN"/>
+                                <constraint firstItem="juz-ON-NP8" firstAttribute="leading" secondItem="zsI-yF-xQR" secondAttribute="trailing" constant="8" symbolic="YES" id="6Ox-mE-On5"/>
+                                <constraint firstItem="fcy-LH-vr3" firstAttribute="leading" secondItem="hut-ut-pDH" secondAttribute="leading" id="8LN-1v-Fbt"/>
+                                <constraint firstAttribute="trailing" secondItem="juz-ON-NP8" secondAttribute="trailing" id="8sg-K4-6k0"/>
+                                <constraint firstItem="juz-ON-NP8" firstAttribute="centerY" secondItem="zsI-yF-xQR" secondAttribute="centerY" constant="-1" id="FBH-If-qdR"/>
+                                <constraint firstAttribute="trailing" secondItem="fcy-LH-vr3" secondAttribute="trailing" id="M7N-5A-CLl"/>
+                                <constraint firstItem="juz-ON-NP8" firstAttribute="top" secondItem="hut-ut-pDH" secondAttribute="top" id="T9f-Gz-GOm"/>
+                                <constraint firstItem="zsI-yF-xQR" firstAttribute="leading" secondItem="hut-ut-pDH" secondAttribute="leading" id="qJc-yy-XKR"/>
+                                <constraint firstItem="zsI-yF-xQR" firstAttribute="leading" secondItem="hut-ut-pDH" secondAttribute="leading" id="shx-0I-6Sz"/>
+                                <constraint firstItem="zsI-yF-xQR" firstAttribute="top" secondItem="hut-ut-pDH" secondAttribute="top" constant="1" id="xjK-E7-y8v"/>
+                                <constraint firstAttribute="trailing" secondItem="fcy-LH-vr3" secondAttribute="trailing" id="yAV-tL-0Sy"/>
+                            </constraints>
+                        </customView>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fhn-G2-gYg">
+                            <rect key="frame" x="86" y="-7" width="129" height="32"/>
+                            <buttonCell key="cell" type="push" title="Find out more…" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="erh-1O-nzw">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="findOutMore:" target="-2" id="4c1-zC-ZCU"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <visibilityPriorities>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                    </visibilityPriorities>
+                    <customSpacing>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                    </customSpacing>
+                </stackView>
             </subviews>
             <constraints>
-                <constraint firstItem="juz-ON-NP8" firstAttribute="centerY" secondItem="zsI-yF-xQR" secondAttribute="centerY" constant="-1" id="F2Z-KE-Bj0"/>
-                <constraint firstItem="fcy-LH-vr3" firstAttribute="top" secondItem="juz-ON-NP8" secondAttribute="bottom" constant="8" symbolic="YES" id="HJk-9l-NiP"/>
-                <constraint firstItem="zsI-yF-xQR" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="20" id="TpB-9y-vlQ"/>
-                <constraint firstAttribute="trailing" secondItem="fcy-LH-vr3" secondAttribute="trailing" constant="20" symbolic="YES" id="V8g-Zo-9Jj"/>
-                <constraint firstItem="zsI-yF-xQR" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="XEB-4Q-mTb"/>
-                <constraint firstAttribute="bottom" secondItem="fhn-G2-gYg" secondAttribute="bottom" constant="20" id="b29-fk-gKc"/>
-                <constraint firstItem="juz-ON-NP8" firstAttribute="leading" secondItem="zsI-yF-xQR" secondAttribute="trailing" constant="8" symbolic="YES" id="lst-JT-fnJ"/>
-                <constraint firstItem="fhn-G2-gYg" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="uwn-3c-DHq"/>
-                <constraint firstItem="fhn-G2-gYg" firstAttribute="top" secondItem="fcy-LH-vr3" secondAttribute="bottom" constant="25" id="xX7-80-k29"/>
-                <constraint firstItem="fcy-LH-vr3" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="yIc-Hl-yPs"/>
+                <constraint firstAttribute="bottom" secondItem="dqq-WQ-U7Z" secondAttribute="bottom" constant="20" symbolic="YES" id="60D-4L-dUF"/>
+                <constraint firstItem="dqq-WQ-U7Z" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="20" id="AxZ-KU-VBX"/>
+                <constraint firstAttribute="trailing" secondItem="dqq-WQ-U7Z" secondAttribute="trailing" constant="20" symbolic="YES" id="M27-jq-aNl"/>
+                <constraint firstItem="dqq-WQ-U7Z" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="jyi-15-1MA"/>
             </constraints>
-            <point key="canvasLocation" x="-40" y="85.5"/>
+            <point key="canvasLocation" x="-265" y="-161"/>
         </customView>
     </objects>
 </document>

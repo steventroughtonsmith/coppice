@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19158" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19455" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19158"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19455"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="PageInspectorViewController" customModule="Coppice" customModuleProvider="target">
             <connections>
+                <outlet property="allowsAutoLinkingCheckbox" destination="SAM-0N-iqK" id="KKA-Aq-Aca"/>
                 <outlet property="firstKeyView" destination="cbs-QW-dFw" id="HUu-kA-5MM"/>
                 <outlet property="lastKeyView" destination="cbs-QW-dFw" id="m1I-Ez-Th6"/>
                 <outlet property="upsellView" destination="lds-rY-Uyf" id="KUY-Np-xym"/>
@@ -62,7 +63,7 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button toolTip="Allow auto-linking to this page from other pages. Disabling this will prevent the auto-linker from considering this page." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SAM-0N-iqK">
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SAM-0N-iqK">
                     <rect key="frame" x="43" y="4" width="254" height="18"/>
                     <buttonCell key="cell" type="check" title="Allows Auto-Linking" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="kfS-yN-eyD">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>

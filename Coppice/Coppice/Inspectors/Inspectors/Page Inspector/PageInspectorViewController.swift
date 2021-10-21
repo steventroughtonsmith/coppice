@@ -20,8 +20,19 @@ class PageInspectorViewController: BaseInspectorViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.subscribers[.isProEnabled] = self.viewModel.publisher(for: \.isProEnabled).sink { isProEnabled in
-            self.upsellView.proFeature = isProEnabled ? nil : .textAutoLinking
+        self.subscribers[.isProEnabled] = self.viewModel.publisher(for: \.isProEnabled).sink { [weak self] isProEnabled in
+            self?.upsellView.proFeature = isProEnabled ? nil : .textAutoLinking
+            self?.updateProControlsTooltips(isProEnabled: isProEnabled)
+        }
+    }
+
+    @IBOutlet var allowsAutoLinkingCheckbox: NSButton!
+
+    private func updateProControlsTooltips(isProEnabled: Bool) {
+        if isProEnabled {
+            self.allowsAutoLinkingCheckbox.toolTip = NSLocalizedString("Allow auto-linking to this page from other pages. Disabling this will prevent the auto-linker from considering this page.", comment: "Page Inspector: Allows Auto-Linking Tooltip")
+        } else {
+            self.allowsAutoLinkingCheckbox.toolTip = nil
         }
     }
 

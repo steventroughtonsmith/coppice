@@ -13,8 +13,15 @@ class ProUpsellViewController: NSViewController {
     @IBOutlet var proIcon: NSImageView!
     @IBOutlet var titleField: NSTextField!
     @IBOutlet var bodyField: NSTextField!
+    @IBOutlet var findOutMoreButton: NSButton!
 
     var currentFeature: ProFeature? {
+        didSet {
+            self.reloadData()
+        }
+    }
+
+    var showFindOutMore: Bool = true {
         didSet {
             self.reloadData()
         }
@@ -34,6 +41,7 @@ class ProUpsellViewController: NSViewController {
 
         self.titleField.stringValue = feature.title
         self.bodyField.stringValue = feature.body
+        self.findOutMoreButton.isHidden = !self.showFindOutMore
     }
 
     @IBAction func findOutMore(_ sender: Any) {
