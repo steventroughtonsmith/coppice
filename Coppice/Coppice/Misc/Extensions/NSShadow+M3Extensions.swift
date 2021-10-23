@@ -11,7 +11,7 @@ import AppKit
 extension NSShadow {
     convenience init(offset: CGSize, blurRadius: CGFloat, color: NSColor) {
         self.init()
-        
+
         self.shadowOffset = offset
         self.shadowBlurRadius = blurRadius
         self.shadowColor = color

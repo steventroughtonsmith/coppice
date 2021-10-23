@@ -68,12 +68,12 @@ class ImageEditorViewController: NSViewController, NSMenuItemValidation, NSToolb
     }
 
 
-    @IBAction func linkToPage(_ sender: Any?) {
+    @IBAction func editLink(_ sender: Any?) {
         //We need an empty implementation just so validation occurs
     }
 
     func validateToolbarItem(_ item: NSToolbarItem) -> Bool {
-        if item.action == #selector(self.linkToPage(_:)) {
+        if item.action == #selector(self.editLink(_:)) {
             item.toolTip = NSLocalizedString("Image Pages don't current support links", comment: "Image Page link to page disabled tooltip")
             return false
         }
@@ -81,7 +81,7 @@ class ImageEditorViewController: NSViewController, NSMenuItemValidation, NSToolb
     }
 
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
-        if menuItem.action == #selector(self.linkToPage(_:)) {
+        if menuItem.action == #selector(self.editLink(_:)) {
             menuItem.toolTip = NSLocalizedString("Image Pages don't current support links", comment: "Image Pages link to page disabled tooltip")
             return false
         }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19455" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19455"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -93,23 +93,29 @@
         <userDefaultsController representsSharedInstance="YES" id="zLC-sP-eAX"/>
         <menu id="IOB-is-6rC">
             <items>
-                <menuItem title="Link to Page…" id="rtx-II-Apl">
+                <menuItem title="Create Link" id="rtx-II-Apl">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="linkToPage:" target="-1" id="izl-Lz-8X7"/>
+                        <action selector="editLink:" target="-1" id="5Bg-aF-frS"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Create New Linked Page" id="6lh-7T-bec">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Create New Linked Page" id="qi8-Qy-8DJ"/>
                 </menuItem>
-                <menuItem isSeparatorItem="YES" id="T54-md-2Zu"/>
-                <menuItem title="Add External Link…" id="Vbd-5V-wrV">
+                <menuItem title="Copy Link" id="Qt8-W5-J56">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="addExternalLink:" target="-2" id="At6-Ul-Bjp"/>
+                        <action selector="copyExistingLink:" target="-1" id="IYr-tM-KPH"/>
                     </connections>
                 </menuItem>
+                <menuItem title="Remove Link" id="oLn-hV-FeF">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="removeLink:" target="-1" id="jaz-Qs-hlk"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="T54-md-2Zu"/>
             </items>
             <point key="canvasLocation" x="-53" y="-166"/>
         </menu>

@@ -50,7 +50,7 @@ extension DocumentWindowController: NSTouchBarDelegate {
             let linkToPage = NSButtonTouchBarItem(identifier: .linkToPage,
                                                   image: NSImage(named: Symbols.Toolbars.link)!,
                                                   target: nil,
-                                                  action: #selector(TextEditorViewController.linkToPage(_:)))
+                                                  action: #selector(TextEditorViewController.editLink(_:)))
             linkToPage.visibilityPriority = .high
             linkToPage.customizationLabel = NSLocalizedString("Link to Page", comment: "Link to Page toolbar item title")
             return linkToPage

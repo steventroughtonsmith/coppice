@@ -78,10 +78,10 @@ class DocumentWindowController: NSWindowController, NSMenuItemValidation {
             toolbar.displayMode = .iconAndLabel
         }
 
-        let toolbarDelegate = MainToolbarDelegate(searchField: self.searchField,
+        let toolbarDelegate = MainToolbarDelegate(toolbar: toolbar,
+                                                  searchField: self.searchField,
                                                   newPageControl: self.newPageSegmentedControl,
                                                   splitView: self.splitViewController.splitView)
-        toolbar.delegate = toolbarDelegate
         self.mainToolbarDelegate = toolbarDelegate
         self.window?.toolbar = toolbar
     }

@@ -58,6 +58,14 @@ class LinkInspectorViewController: BaseInspectorViewController {
     @IBAction func clearLink(_ sender: NSButton) {
         self.typedViewModel.clearLink()
     }
+
+    func startEditingLink() {
+        self.view.window?.makeFirstResponder(self.linkControl.textField)
+    }
+
+    func clearLink() {
+        self.typedViewModel.clearLink()
+    }
 }
 
 extension LinkInspectorViewController: NSSearchFieldDelegate {

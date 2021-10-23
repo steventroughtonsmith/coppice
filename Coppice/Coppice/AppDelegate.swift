@@ -35,6 +35,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             .showWelcomeScreenOnLaunch: true,
             .sidebarSize: SidebarSize.system.rawValue,
             .showProFeaturesInInspector: true,
+            .needsLinkUpgrade: false,
         ])
     }
 

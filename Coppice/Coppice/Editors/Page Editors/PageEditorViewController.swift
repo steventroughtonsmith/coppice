@@ -55,12 +55,6 @@ class PageEditorViewController: NSViewController {
     private lazy var pageInspectorViewController: PageInspectorViewController = {
         return PageInspectorViewController(viewModel: self.viewModel.pageInspectorViewModel)
     }()
-
-    @IBAction func linkToPage(_ sender: Any?) {
-        if (!HelpTipPresenter.shared.showTip(with: .textPageLink, fromToolbarItemWithIdentifier: .linkToPage)) {
-            HelpTipPresenter.shared.showTip(with: .textPageLink, fromView: self.view, preferredEdge: .maxX)
-        }
-    }
 }
 
 

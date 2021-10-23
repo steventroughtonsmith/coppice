@@ -19,4 +19,21 @@ extension NSMenu {
         }
         return false
     }
+
+    func removeSection(startingAtItemWithAction selector: Selector) {
+        let initialIndex = self.indexOfItem(withTarget: nil, andAction: selector)
+        guard initialIndex != -1 else {
+            return
+        }
+
+        while self.numberOfItems > initialIndex {
+            guard let item = self.item(at: initialIndex) else {
+                break
+            }
+            self.removeItem(item)
+            if item.isSeparatorItem {
+                break
+            }
+        }
+    }
 }

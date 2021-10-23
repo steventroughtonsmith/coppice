@@ -92,17 +92,23 @@ class TextEditorViewController: NSViewController, NSMenuItemValidation, NSToolba
         self.viewModel.createNewLinkedPage(ofType: type, from: selectedRange, updatingSelection: updatingSelection)
     }
 
-    @IBAction func linkToPage(_ sender: Any?) {
-        guard let windowController = (self.windowController as? DocumentWindowController) else {
+    @IBAction func editLink(_ sender: Any?) {
+        self.linkInspectorViewController.startEditingLink()
+    }
+
+    @IBAction func copyExistingLink(_ sender: Any?) {
+        guard case .url(let url) = self.attributeEditor.selectedLink else {
             return
         }
-        let selectedRange = self.editingTextView.selectedRange()
-        windowController.showPageSelector(title: "Link to page…") { [weak self] result in
-            guard case .page(let page) = result else {
-                return
-            }
-            self?.viewModel.link(to: page, for: selectedRange)
-        }
+
+        let pasteboardItem = NSPasteboardItem()
+        pasteboardItem.setString(url.absoluteString, forType: .URL)
+        NSPasteboard.general.clearContents()
+        NSPasteboard.general.writeObjects([pasteboardItem])
+    }
+
+    @IBAction func removeLink(_ sender: Any?) {
+        self.attributeEditor.updateSelection(with: .empty)
     }
 
     let attributeEditor = TextEditorAttributeEditor()
@@ -172,7 +178,7 @@ class TextEditorViewController: NSViewController, NSMenuItemValidation, NSToolba
     }
 
     func validateToolbarItem(_ item: NSToolbarItem) -> Bool {
-        if item.action == #selector(self.linkToPage(_:)) {
+        if item.action == #selector(self.editLink(_:)) {
             let enabled = (self.editingTextView.selectedRange().length > 0)
             item.toolTip = enabled ? NSLocalizedString("Link to Page", comment: "Link to Page enabled tooltip")
                                    : NSLocalizedString("Select some text to link it to another Page", comment: "Link to Page disabled tooltip")
@@ -188,10 +194,6 @@ class TextEditorViewController: NSViewController, NSMenuItemValidation, NSToolba
         }
     }
 
-    @IBAction func addExternalLink(_ sender: Any?) {
-        self.editingTextView.orderFrontLinkPanel(sender)
-    }
-
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         if menuItem.action == #selector(self.toggleBold(_:)) {
             return self.validateItem(menuItem, keyPath: \.isBold, trait: .boldFontMask)
@@ -199,10 +201,49 @@ class TextEditorViewController: NSViewController, NSMenuItemValidation, NSToolba
         if menuItem.action == #selector(self.toggleItalic(_:)) {
             return self.validateItem(menuItem, keyPath: \.isItalic, trait: .italicFontMask)
         }
-        if menuItem.action == #selector(self.linkToPage(_:)) {
-            let enabled = (self.editingTextView.selectedRange().length > 0)
-            menuItem.toolTip = enabled ? nil : NSLocalizedString("Select some text to link it to another Page", comment: "Link to Page disabled tooltip")
-            return enabled
+        if menuItem.action == #selector(self.editLink(_:)) {
+            switch self.attributeEditor.selectedLink {
+            case .noSelection:
+                menuItem.toolTip = NSLocalizedString("Select some text to create a link", comment: "Link to Page disabled tooltip")
+                menuItem.title = NSLocalizedString("Create Link", comment: "Create Link menu item title")
+            case .empty:
+                menuItem.toolTip = nil
+                menuItem.title = NSLocalizedString("Create Link", comment: "Create Link menu item title")
+            case .multipleSelection, .pageLink, .url:
+                menuItem.toolTip = nil
+                menuItem.title = NSLocalizedString("Edit Link", comment: "Edit Link menu item title")
+            }
+            return (self.attributeEditor.selectedLink != .noSelection)
+        }
+        if menuItem.action == #selector(self.copyExistingLink(_:)) {
+            let isCopyableLink: Bool
+
+            switch self.attributeEditor.selectedLink {
+            case .noSelection, .empty, .multipleSelection, .pageLink:
+                isCopyableLink = false
+            case .url:
+                isCopyableLink = true
+            }
+
+            if menuItem.menu?.isInMainMenu == false {
+                menuItem.isHidden = !isCopyableLink
+            }
+            return isCopyableLink
+        }
+        if menuItem.action == #selector(self.removeLink(_:)) {
+            let isSingleLink: Bool
+
+            switch self.attributeEditor.selectedLink {
+            case .noSelection, .empty, .multipleSelection:
+                isSingleLink = false
+            case .pageLink, .url:
+                isSingleLink = true
+            }
+
+            if menuItem.menu?.isInMainMenu == false {
+                menuItem.isHidden = !isSingleLink
+            }
+            return isSingleLink
         }
         return true
     }
@@ -424,6 +465,8 @@ extension TextEditorViewController: NSTextStorageDelegate {
 
 extension TextEditorViewController: NSTextViewDelegate {
     func textView(_ view: NSTextView, menu: NSMenu, for event: NSEvent, at charIndex: Int) -> NSMenu? {
+        menu.removeSection(startingAtItemWithAction: #selector(self.copyExistingLink(_:)))
+
         var insertionIndex = menu.indexOfItem(withTarget: nil, andAction: #selector(NSTextView.paste(_:)))
         guard insertionIndex != -1 else {
             return menu

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19455" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19455"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="LinkUpgradeViewController" customModule="Coppice" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView misplaced="YES" id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="302" height="160"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OQh-iG-ulY">
+                    <rect key="frame" x="15" y="128" width="17" height="17"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="17" id="Rre-p8-pZW"/>
+                        <constraint firstAttribute="height" constant="17" id="dsz-te-0AK"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="LinkNew" id="UOO-Mg-tAm"/>
+                </imageView>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PFP-Nu-Eoo">
+                    <rect key="frame" x="38" y="127" width="232" height="19"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="Introducing the Link Inspector" id="YKL-5E-9kc">
+                        <font key="font" metaFont="systemSemibold" size="16"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="400" translatesAutoresizingMaskIntoConstraints="NO" id="tZX-sI-UdM">
+                    <rect key="frame" x="13" y="55" width="276" height="64"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="272" id="NKC-Ve-AHu"/>
+                    </constraints>
+                    <textFieldCell key="cell" id="zb6-1p-drY">
+                        <font key="font" metaFont="system"/>
+                        <string key="title">Links are now managed in the Link Inspector.
+
+To create a link, select some text in a page, click on the Link control, and start typing.</string>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lWy-8j-8fh">
+                    <rect key="frame" x="125" y="8" width="53" height="32"/>
+                    <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="4gy-lY-qn5">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                    </buttonCell>
+                    <connections>
+                        <action selector="okClicked:" target="-2" id="gx6-Iq-kkF"/>
+                    </connections>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstItem="lWy-8j-8fh" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="5Ne-fu-uco"/>
+                <constraint firstItem="tZX-sI-UdM" firstAttribute="top" secondItem="PFP-Nu-Eoo" secondAttribute="bottom" constant="8" symbolic="YES" id="HQM-DU-1o5"/>
+                <constraint firstItem="lWy-8j-8fh" firstAttribute="top" secondItem="tZX-sI-UdM" secondAttribute="bottom" constant="20" id="Po9-o2-8GR"/>
+                <constraint firstAttribute="bottom" secondItem="lWy-8j-8fh" secondAttribute="bottom" constant="15" id="US5-PS-eRd"/>
+                <constraint firstItem="PFP-Nu-Eoo" firstAttribute="leading" secondItem="OQh-iG-ulY" secondAttribute="trailing" constant="8" id="b3L-mp-qGT"/>
+                <constraint firstItem="tZX-sI-UdM" firstAttribute="leading" secondItem="OQh-iG-ulY" secondAttribute="leading" id="c8E-Gg-qma"/>
+                <constraint firstItem="PFP-Nu-Eoo" firstAttribute="centerY" secondItem="OQh-iG-ulY" secondAttribute="centerY" id="jcQ-uS-iMH"/>
+                <constraint firstAttribute="trailing" secondItem="tZX-sI-UdM" secondAttribute="trailing" constant="15" id="uqG-bn-mZ1"/>
+                <constraint firstItem="OQh-iG-ulY" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="15" id="x3E-gy-nFd"/>
+                <constraint firstItem="OQh-iG-ulY" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="15" id="yRY-L9-ucB"/>
+            </constraints>
+            <point key="canvasLocation" x="54.5" y="106"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="LinkNew" width="17" height="17"/>
+    </resources>
+</document>

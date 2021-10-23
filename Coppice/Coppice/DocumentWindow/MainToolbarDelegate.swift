@@ -20,17 +20,22 @@ extension NSToolbarItem.Identifier {
 }
 
 class MainToolbarDelegate: NSObject {
+    let toolbar: NSToolbar
     let searchField: NSSearchField
     let newPageControl: NSView
     let splitView: NSSplitView
 
     let menuDelegate = NewPageMenuDelegate()
 
-    init(searchField: NSSearchField, newPageControl: NSView, splitView: NSSplitView) {
+    init(toolbar: NSToolbar, searchField: NSSearchField, newPageControl: NSView, splitView: NSSplitView) {
+        self.toolbar = toolbar
         self.searchField = searchField
         self.newPageControl = newPageControl
         self.splitView = splitView
+
         super.init()
+
+        toolbar.delegate = self
     }
 
 
@@ -58,14 +63,16 @@ class MainToolbarDelegate: NSObject {
         return item
     }()
 
-    var linkToPageItem: NSToolbarItem = {
-        let item = ButtonToolbarItem(itemIdentifier: .linkToPage,
-                                     image: NSImage.symbol(withName: Symbols.Toolbars.link)!,
-                                     action: #selector(TextEditorViewController.linkToPage(_:)))
+    lazy var linkToPageItem: NSToolbarItem = {
+        let item = NSToolbarItem(itemIdentifier: .linkToPage)
+        let button = NSButton(image: NSImage.symbol(withName: Symbols.Toolbars.link)!,
+                              target: self,
+                              action: #selector(self.showLinkUpgrade(_:)))
+        button.bezelStyle = .texturedRounded
+        item.view = button
         item.label = NSLocalizedString("Link to Page", comment: "Link to Page toolbar item label")
         item.paletteLabel = item.label
         item.toolTip = item.label
-        item.autovalidates = true
         return item
     }()
 
@@ -105,6 +112,27 @@ class MainToolbarDelegate: NSObject {
         item.view = self.searchField
         return item
     }()
+
+    //MARK: - Link Item Clear Up
+    //We removed the link item in 2021.2 as we now have an inspector. The first time a user clicks on it we'll inform the user how to create a link
+    @objc func showLinkUpgrade(_ sender: NSButton) {
+        let upgradeView = LinkUpgradeViewController()
+
+        let popover = NSPopover()
+        popover.behavior = .applicationDefined
+        popover.contentViewController = upgradeView
+
+        let toolbar = self.toolbar
+        let linkItem = self.linkToPageItem
+        upgradeView.callback = {
+            popover.close()
+            if let itemIndex = toolbar.visibleItems?.firstIndex(of: linkItem) {
+                toolbar.removeItem(at: itemIndex)
+            }
+        }
+
+        popover.show(relativeTo: sender.bounds, of: sender, preferredEdge: .maxY)
+    }
 }
 
 
@@ -113,13 +141,15 @@ extension MainToolbarDelegate: NSToolbarDelegate {
         var identifiers: [NSToolbarItem.Identifier] = [
             .newPage,
             .newCanvas,
-            .linkToPage,
             .customToggleSidebar,
             .toggleInspectors,
             .search,
             .space,
             .flexibleSpace,
         ]
+        if UserDefaults.standard.bool(forKey: .needsLinkUpgrade) {
+            identifiers.append(.linkToPage)
+        }
         if #available(OSX 10.16, *) {
             identifiers.append(.sidebarTrackingSeparator)
         }
@@ -132,12 +162,15 @@ extension MainToolbarDelegate: NSToolbarDelegate {
             .space,
             .newPage,
             .newCanvas,
-            .space,
-            .linkToPage,
             .flexibleSpace,
             .search,
             .toggleInspectors,
         ]
+
+        if UserDefaults.standard.bool(forKey: .needsLinkUpgrade) {
+            identifiers.insert(.linkToPage, at: 4)
+            identifiers.insert(.space, at: 4)
+        }
 
         if #available(OSX 10.16, *) {
             identifiers[1] = .flexibleSpace

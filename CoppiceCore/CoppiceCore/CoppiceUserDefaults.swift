@@ -30,6 +30,10 @@ public enum UserDefaultsKeys: String {
     case currentVersion = "M3CurrentVersion"
 
     case showProFeaturesInInspector = "M3ShowProFeaturesInInspector"
+
+    case runMigrations = "M3RunMigrations"
+
+    case needsLinkUpgrade = "M3NeedsLinkUpgrade"
 }
 
 extension UserDefaults {

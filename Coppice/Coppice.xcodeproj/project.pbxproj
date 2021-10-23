@@ -23,6 +23,9 @@
 /* Begin PBXBuildFile section */
 		9902F4A923882ADA00AF646F /* NSSegmentedControl+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9902F4A823882ADA00AF646F /* NSSegmentedControl+M3Extensions.swift */; };
 		99062DE02519117C009D3317 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99062DDF2519117C009D3317 /* AVKit.framework */; };
+		990B81A4272308CB00628E0B /* VersionMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990B81A3272308CB00628E0B /* VersionMigrator.swift */; };
+		990B81A72724181F00628E0B /* LinkUpgradeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990B81A52724181F00628E0B /* LinkUpgradeViewController.swift */; };
+		990B81A82724182000628E0B /* LinkUpgradeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 990B81A62724181F00628E0B /* LinkUpgradeViewController.xib */; };
 		990D2441235DEFE2001B1FD9 /* PageArrowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990D2440235DEFE2001B1FD9 /* PageArrowView.swift */; };
 		990F61A425222A3E00FA5A27 /* MultipleSubscriptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F61A225222A3E00FA5A27 /* MultipleSubscriptionsViewController.swift */; };
 		990F61A525222A3E00FA5A27 /* MultipleSubscriptionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 990F61A325222A3E00FA5A27 /* MultipleSubscriptionsView.xib */; };
@@ -450,6 +453,9 @@
 /* Begin PBXFileReference section */
 		9902F4A823882ADA00AF646F /* NSSegmentedControl+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSSegmentedControl+M3Extensions.swift"; sourceTree = "<group>"; };
 		99062DDF2519117C009D3317 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
+		990B81A3272308CB00628E0B /* VersionMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionMigrator.swift; sourceTree = "<group>"; };
+		990B81A52724181F00628E0B /* LinkUpgradeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkUpgradeViewController.swift; sourceTree = "<group>"; };
+		990B81A62724181F00628E0B /* LinkUpgradeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LinkUpgradeViewController.xib; sourceTree = "<group>"; };
 		990D2440235DEFE2001B1FD9 /* PageArrowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageArrowView.swift; sourceTree = "<group>"; };
 		990F61A225222A3E00FA5A27 /* MultipleSubscriptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleSubscriptionsViewController.swift; sourceTree = "<group>"; };
 		990F61A325222A3E00FA5A27 /* MultipleSubscriptionsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MultipleSubscriptionsView.xib; sourceTree = "<group>"; };
@@ -1409,6 +1415,8 @@
 				9998B4E325163FAB00E2D455 /* HelpTipViewController.swift */,
 				9998B4E425163FAB00E2D455 /* HelpTipView.xib */,
 				9998B4E7251642D900E2D455 /* LinksHelp.mp4 */,
+				990B81A52724181F00628E0B /* LinkUpgradeViewController.swift */,
+				990B81A62724181F00628E0B /* LinkUpgradeViewController.xib */,
 			);
 			path = "Help Tips";
 			sourceTree = "<group>";
@@ -1829,6 +1837,7 @@
 				99FE019022CD1037004D380D /* AppDelegate.swift */,
 				998336C2256BFDC900C25EB0 /* CoppiceApplication.swift */,
 				99FCD7F224A7819400B44593 /* SparkleDelegate.swift */,
+				990B81A3272308CB00628E0B /* VersionMigrator.swift */,
 				99C41B6F22DCA94000C82DDE /* Model */,
 				99045FC524D43F0A00FD3D33 /* Document */,
 				99FE01E122D4C22B004D380D /* DocumentWindow */,
@@ -2090,6 +2099,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				990B81A82724182000628E0B /* LinkUpgradeViewController.xib in Resources */,
 				99C8650D23016EE5004C7B89 /* TextEditorViewController.xib in Resources */,
 				99D8E382237EDB890098CF3B /* InspectorContainerViewController.xib in Resources */,
 				9999A23A24F93796001F8161 /* CoppiceProViewController.xib in Resources */,
@@ -2342,6 +2352,7 @@
 				99D329D32522783900E15683 /* ActiveSidebarSize.swift in Sources */,
 				999007E424CF474300DB5C13 /* TourMovieViewController.swift in Sources */,
 				993D2BFE2412FB1C002E5BAC /* SplitViewContainable.swift in Sources */,
+				990B81A72724181F00628E0B /* LinkUpgradeViewController.swift in Sources */,
 				99A97FF72476ABD500CDD95C /* SearchResultTableCellView.swift in Sources */,
 				9999A24124F950E7001F8161 /* DeactivatedSubscriptionViewController.swift in Sources */,
 				992A5CAE22DDF50F0012CCB6 /* DebugPageEditor.swift in Sources */,
@@ -2426,6 +2437,7 @@
 				99771194239BF97600FCC8C7 /* NSAttributedString+M3Extensions.swift in Sources */,
 				99771190239A95C300FCC8C7 /* TextLinkFinder.swift in Sources */,
 				9985F4DB23F44AAD00B96DC7 /* CanvasPageBackgroundView.swift in Sources */,
+				990B81A4272308CB00628E0B /* VersionMigrator.swift in Sources */,
 				999A316425C81C0B00FF60E5 /* WhatsNewWindowController.swift in Sources */,
 				99D507342501538E00670139 /* ErrorPopoverViewController.swift in Sources */,
 				9951C26E230AF011006CAD4D /* PageSelectorWindow.swift in Sources */,

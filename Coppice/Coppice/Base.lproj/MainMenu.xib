@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19158" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19455" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19158"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19455"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -534,9 +534,9 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="hAC-oJ-HIS"/>
-                            <menuItem title="Link to Page…" keyEquivalent="l" id="UkZ-4o-fVA">
+                            <menuItem title="Create Link" keyEquivalent="l" id="UkZ-4o-fVA">
                                 <connections>
-                                    <action selector="linkToPage:" target="-1" id="wiE-PO-GfH"/>
+                                    <action selector="editLink:" target="-1" id="r7g-iW-UKr"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Create New Linked Page" id="Pxl-0h-U84">
