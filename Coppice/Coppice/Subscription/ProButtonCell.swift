@@ -13,7 +13,7 @@ class ProButtonCell: NSButtonCell {
         let drawFrame = frame.insetBy(controlView.alignmentRectInsets)
         let bezierPath = NSBezierPath(roundedRect: drawFrame, xRadius: 4, yRadius: 4)
         let coppiceGreen = NSColor(named: "CoppiceGreen")
-        if (self.isHighlighted) {
+        if (self.isHighlighted && self.action != nil) {
             coppiceGreen?.highlight(withLevel: 0.2)?.setFill()
         } else {
             coppiceGreen?.setFill()
