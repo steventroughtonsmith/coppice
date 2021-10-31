@@ -209,10 +209,11 @@ class LinkControlTextField: NSTextField {
         NSColor.black.set()
 
         var rect = self.bounds
-        rect.origin.x += 1
-        rect.size.width -= 1
+        rect.origin.x += 2
+        rect.size.width -= 2
         let path: NSBezierPath
         if self.isFullWidth {
+            rect.size.width -= 2
             path = NSBezierPath(roundedRect: rect, xRadius: 5, yRadius: 5)
         } else {
             path = NSBezierPath(roundedRect: rect, topLeftRadius: 5, bottomLeftRadius: 5)
