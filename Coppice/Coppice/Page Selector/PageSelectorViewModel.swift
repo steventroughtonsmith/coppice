@@ -7,6 +7,7 @@
 //
 
 import AppKit
+import Combine
 import CoppiceCore
 
 protocol PageSelectorView: AnyObject {}
@@ -30,8 +31,31 @@ class PageSelectorViewModel: NSObject {
         self.selectionBlock = selectionBlock
         super.init()
         self.updatePages()
+
+        self.subscribers[.isProEnabled] = CoppiceSubscriptionManager.shared.$activationResponse
+            .map { $0?.isActive ?? false }
+            .sink { [weak self] newValue in
+                self?.isProEnabled = newValue
+            }
     }
 
+    //MARK: - Subscribers
+    private var subscribers: [SubscriberKey: AnyCancellable] = [:]
+
+    private enum SubscriberKey {
+        case isProEnabled
+    }
+
+    private var isProEnabled: Bool = false {
+        didSet {
+            guard self.isProEnabled != oldValue else {
+                return
+            }
+            self.updateShowFolderNames()
+        }
+    }
+
+    //MARK: - Properties
 
     @objc dynamic var searchTerm: String = "" {
         didSet {
@@ -46,8 +70,12 @@ class PageSelectorViewModel: NSObject {
             guard self.showFolderNames != oldValue else {
                 return
             }
-            self.rows.forEach { $0.showFolderName = self.showFolderNames }
+            self.updateShowFolderNames()
         }
+    }
+
+    private func updateShowFolderNames() {
+        self.rows.forEach { $0.showFolderName = self.showFolderNames && self.isProEnabled }
     }
 
     var allowsExternalLinks = false {
