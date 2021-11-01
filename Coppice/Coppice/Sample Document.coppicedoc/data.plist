@@ -20,6 +20,8 @@
 	<key>canvases</key>
 	<array>
 		<dict>
+			<key>alwaysShowPageTitles</key>
+			<false/>
 			<key>closedPageHierarchies</key>
 			<dict>
 				<key>CanvasPage_265F4FDA-BE7E-4553-ADE5-8FDF29B673DF</key>
@@ -56,6 +58,26 @@
 								<key>children</key>
 								<array/>
 								<key>frame</key>
+								<string>{{210.6015625, -1015.296875}, {268, 169}}</string>
+								<key>id</key>
+								<string>CanvasPage_DC183BCE-F55B-4B48-9EA5-44502E50A308</string>
+								<key>pageID</key>
+								<string>Page_954F8308-CC20-439C-BFED-7BDDEF6AFC61</string>
+							</dict>
+							<dict>
+								<key>children</key>
+								<array/>
+								<key>frame</key>
+								<string>{{-11.04296875, -954.19140625}, {177, 106}}</string>
+								<key>id</key>
+								<string>CanvasPage_EDB64EF2-FF97-40C4-9256-EA9B832321D5</string>
+								<key>pageID</key>
+								<string>Page_5A704B52-0452-4039-8918-481366162DA2</string>
+							</dict>
+							<dict>
+								<key>children</key>
+								<array/>
+								<key>frame</key>
 								<string>{{-473.89453125, -970.94921875}, {219, 142}}</string>
 								<key>id</key>
 								<string>CanvasPage_DD9FF71F-710A-4DBE-A5D6-6B094AEC1476</string>
@@ -72,26 +94,6 @@
 								<key>pageID</key>
 								<string>Page_32ACD746-4D1E-4E30-BC88-10597069853E</string>
 							</dict>
-							<dict>
-								<key>children</key>
-								<array/>
-								<key>frame</key>
-								<string>{{-11.04296875, -954.19140625}, {177, 106}}</string>
-								<key>id</key>
-								<string>CanvasPage_EDB64EF2-FF97-40C4-9256-EA9B832321D5</string>
-								<key>pageID</key>
-								<string>Page_5A704B52-0452-4039-8918-481366162DA2</string>
-							</dict>
-							<dict>
-								<key>children</key>
-								<array/>
-								<key>frame</key>
-								<string>{{210.6015625, -1015.296875}, {268, 169}}</string>
-								<key>id</key>
-								<string>CanvasPage_DC183BCE-F55B-4B48-9EA5-44502E50A308</string>
-								<key>pageID</key>
-								<string>Page_954F8308-CC20-439C-BFED-7BDDEF6AFC61</string>
-							</dict>
 						</array>
 						<key>frame</key>
 						<string>{{-164.2578125, -590.46875}, {338, 200}}</string>
@@ -105,7 +107,7 @@
 						<key>children</key>
 						<array/>
 						<key>frame</key>
-						<string>{{309.6640625, -76.96875}, {300, 230}}</string>
+						<string>{{309, -74}, {300, 230}}</string>
 						<key>id</key>
 						<string>CanvasPage_D5615854-CFCC-40AE-A053-EE604AFEAB0E</string>
 						<key>pageID</key>
@@ -169,7 +171,7 @@
 							</dict>
 						</array>
 						<key>frame</key>
-						<string>{{232.30078125, 847.55859375}, {300, 170}}</string>
+						<string>{{232, 848}, {300, 246}}</string>
 						<key>id</key>
 						<string>CanvasPage_05863806-62C1-494F-BB8C-B6021A540DF2</string>
 						<key>pageID</key>
@@ -180,7 +182,7 @@
 						<key>children</key>
 						<array/>
 						<key>frame</key>
-						<string>{{565, 527}, {385, 249}}</string>
+						<string>{{565, 527}, {385, 213}}</string>
 						<key>id</key>
 						<string>CanvasPage_79169389-EC6E-4AD8-9E9D-8EFA0BBF495C</string>
 						<key>pageID</key>
@@ -205,7 +207,7 @@
 						<key>children</key>
 						<array/>
 						<key>frame</key>
-						<string>{{-611.0234375, -583.80078125}, {283, 203}}</string>
+						<string>{{-610, -558}, {283, 135}}</string>
 						<key>id</key>
 						<string>CanvasPage_02E318D1-FDC5-49FC-BB1D-7B87266B96BE</string>
 						<key>pageID</key>
@@ -327,19 +329,10 @@
 			<integer>1</integer>
 			<key>theme</key>
 			<string>dark</string>
-			<key>thumbnail</key>
-			<dict>
-				<key>filename</key>
-				<string>5C45392D-B2B5-4372-92A3-084A047A76AD-thumbnail.png</string>
-				<key>metadata</key>
-				<dict/>
-				<key>type</key>
-				<string>thumbnail</string>
-			</dict>
 			<key>title</key>
 			<string>Welcome</string>
 			<key>viewPort</key>
-			<string>{{-749, -442}, {1460, 1137}}</string>
+			<string>{{-797, -496}, {1565, 1178}}</string>
 			<key>zoomFactor</key>
 			<real>1</real>
 		</dict>
@@ -445,6 +438,8 @@
 	<key>pages</key>
 	<array>
 		<dict>
+			<key>allowsAutoLinking</key>
+			<true/>
 			<key>content</key>
 			<dict>
 				<key>filename</key>
@@ -462,6 +457,8 @@
 			<string>Text Pages</string>
 		</dict>
 		<dict>
+			<key>allowsAutoLinking</key>
+			<true/>
 			<key>content</key>
 			<dict>
 				<key>filename</key>
@@ -479,6 +476,8 @@
 			<string>Font Inspector</string>
 		</dict>
 		<dict>
+			<key>allowsAutoLinking</key>
+			<true/>
 			<key>content</key>
 			<dict>
 				<key>filename</key>
@@ -496,6 +495,8 @@
 			<string>Can I open Coppice Pro documents without Pro?</string>
 		</dict>
 		<dict>
+			<key>allowsAutoLinking</key>
+			<true/>
 			<key>content</key>
 			<dict>
 				<key>filename</key>
@@ -513,6 +514,8 @@
 			<string>Multiple Canvases</string>
 		</dict>
 		<dict>
+			<key>allowsAutoLinking</key>
+			<true/>
 			<key>content</key>
 			<dict>
 				<key>filename</key>
@@ -530,6 +533,8 @@
 			<string>Links</string>
 		</dict>
 		<dict>
+			<key>allowsAutoLinking</key>
+			<true/>
 			<key>content</key>
 			<dict>
 				<key>filename</key>
@@ -547,6 +552,8 @@
 			<string>Branches</string>
 		</dict>
 		<dict>
+			<key>allowsAutoLinking</key>
+			<true/>
 			<key>content</key>
 			<dict>
 				<key>filename</key>
@@ -564,6 +571,8 @@
 			<string>Adding a Page to a Canvas</string>
 		</dict>
 		<dict>
+			<key>allowsAutoLinking</key>
+			<true/>
 			<key>content</key>
 			<dict>
 				<key>filename</key>
@@ -581,6 +590,8 @@
 			<string>Folders</string>
 		</dict>
 		<dict>
+			<key>allowsAutoLinking</key>
+			<true/>
 			<key>content</key>
 			<dict>
 				<key>filename</key>
@@ -598,6 +609,8 @@
 			<string>Remembering Branches</string>
 		</dict>
 		<dict>
+			<key>allowsAutoLinking</key>
+			<true/>
 			<key>content</key>
 			<dict>
 				<key>filename</key>
@@ -615,6 +628,8 @@
 			<string>Creating a Page</string>
 		</dict>
 		<dict>
+			<key>allowsAutoLinking</key>
+			<true/>
 			<key>content</key>
 			<dict>
 				<key>filename</key>
@@ -632,6 +647,8 @@
 			<string>New Page button</string>
 		</dict>
 		<dict>
+			<key>allowsAutoLinking</key>
+			<true/>
 			<key>content</key>
 			<dict>
 				<key>filename</key>
@@ -649,6 +666,8 @@
 			<string>Coppice Pro</string>
 		</dict>
 		<dict>
+			<key>allowsAutoLinking</key>
+			<true/>
 			<key>content</key>
 			<dict>
 				<key>filename</key>
@@ -666,6 +685,8 @@
 			<string>Auto Linking</string>
 		</dict>
 		<dict>
+			<key>allowsAutoLinking</key>
+			<true/>
 			<key>content</key>
 			<dict>
 				<key>filename</key>
@@ -683,6 +704,8 @@
 			<string>Canvas Themes</string>
 		</dict>
 		<dict>
+			<key>allowsAutoLinking</key>
+			<true/>
 			<key>content</key>
 			<dict>
 				<key>filename</key>
@@ -700,6 +723,8 @@
 			<string>Coppice Logo</string>
 		</dict>
 		<dict>
+			<key>allowsAutoLinking</key>
+			<true/>
 			<key>content</key>
 			<dict>
 				<key>filename</key>
@@ -717,6 +742,8 @@
 			<string>Creating a Link</string>
 		</dict>
 		<dict>
+			<key>allowsAutoLinking</key>
+			<true/>
 			<key>content</key>
 			<dict>
 				<key>filename</key>
@@ -734,6 +761,8 @@
 			<string>Pages</string>
 		</dict>
 		<dict>
+			<key>allowsAutoLinking</key>
+			<true/>
 			<key>content</key>
 			<dict>
 				<key>filename</key>
@@ -751,6 +780,8 @@
 			<string>Paragraph inspector</string>
 		</dict>
 		<dict>
+			<key>allowsAutoLinking</key>
+			<true/>
 			<key>content</key>
 			<dict>
 				<key>filename</key>
@@ -768,6 +799,8 @@
 			<string>Auto Linking Preferences</string>
 		</dict>
 		<dict>
+			<key>allowsAutoLinking</key>
+			<true/>
 			<key>content</key>
 			<dict>
 				<key>filename</key>
@@ -785,6 +818,8 @@
 			<string>Welcome to Coppice</string>
 		</dict>
 		<dict>
+			<key>allowsAutoLinking</key>
+			<true/>
 			<key>content</key>
 			<dict>
 				<key>filename</key>
@@ -802,6 +837,8 @@
 			<string>How do I get Coppice Pro?</string>
 		</dict>
 		<dict>
+			<key>allowsAutoLinking</key>
+			<true/>
 			<key>content</key>
 			<dict>
 				<key>filename</key>
@@ -819,6 +856,8 @@
 			<string>Why is a Page appearing twice?</string>
 		</dict>
 		<dict>
+			<key>allowsAutoLinking</key>
+			<true/>
 			<key>content</key>
 			<dict>
 				<key>filename</key>
@@ -836,6 +875,8 @@
 			<string>Canvases</string>
 		</dict>
 		<dict>
+			<key>allowsAutoLinking</key>
+			<true/>
 			<key>content</key>
 			<dict>
 				<key>filename</key>
