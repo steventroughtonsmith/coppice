@@ -1459,7 +1459,6 @@
 				999EA6B8243619E700BF254E /* SearchResultsViewController.swift */,
 				999EA6C62436384F00BF254E /* SearchResultOutlineView.swift */,
 				999EA6B9243619E700BF254E /* SearchResultsView.xib */,
-				99A97FF62476ABD500CDD95C /* SearchResultTableCellView.swift */,
 				999EA6BD243628A700BF254E /* Cells */,
 			);
 			path = "Search Results";
@@ -1468,6 +1467,7 @@
 		999EA6BD243628A700BF254E /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				99A97FF62476ABD500CDD95C /* SearchResultTableCellView.swift */,
 				999EA6C0243628E500BF254E /* SearchResultTableCellView.xib */,
 			);
 			path = Cells;

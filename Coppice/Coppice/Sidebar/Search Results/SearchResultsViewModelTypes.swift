@@ -102,15 +102,22 @@ class PageSearchResult: SearchResult {
             return nil
         }
 
+        var baseString = textContent.text.string
         guard case .content(let contentRange) = self.match.matchType else {
-            return NSAttributedString(string: textContent.text.string, attributes: SearchResult.standardBodyAttributes)
+            if let firstLinebreakIndex = baseString.firstIndex(of: "\n") {
+                baseString = String(baseString[baseString.startIndex..<firstLinebreakIndex])
+            }
+            return NSAttributedString(string: baseString, attributes: SearchResult.standardBodyAttributes)
         }
 
-        var baseString = textContent.text.string
         var matchRange = contentRange
         if contentRange.upperBound >= 20 {
             baseString = "… \((baseString as NSString).substring(from: contentRange.location))"
             matchRange.location = 2
+        }
+
+        if let firstLinebreakIndex = baseString.firstIndex(of: "\n") {
+            baseString = String(baseString[baseString.startIndex..<firstLinebreakIndex])
         }
 
         let attributedString = NSMutableAttributedString(string: baseString, attributes: SearchResult.standardBodyAttributes)

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17147" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19455" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17147"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19455"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -14,10 +14,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zb9-sd-qz2">
-                    <rect key="frame" x="10" y="0.0" width="218" height="42"/>
+                    <rect key="frame" x="10" y="4" width="218" height="34"/>
                     <subviews>
                         <imageView translatesAutoresizingMaskIntoConstraints="NO" id="TBf-N9-M31">
-                            <rect key="frame" x="0.0" y="5" width="32" height="32"/>
+                            <rect key="frame" x="0.0" y="-2" width="32" height="38"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="32" id="GgA-77-W2B"/>
                                 <constraint firstAttribute="width" constant="32" id="rSk-kA-ngz"/>
@@ -33,7 +33,7 @@
                             </connections>
                         </imageView>
                         <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="750" verticalHuggingPriority="750" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nUz-QF-j1K">
-                            <rect key="frame" x="40" y="4" width="178" height="34"/>
+                            <rect key="frame" x="40" y="0.0" width="178" height="34"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Jk6-xs-qbl">
                                     <rect key="frame" x="-2" y="18" width="31" height="16"/>
@@ -50,7 +50,7 @@
                                         </binding>
                                     </connections>
                                 </textField>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="psw-0t-wmi">
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="psw-0t-wmi">
                                     <rect key="frame" x="-2" y="0.0" width="31" height="14"/>
                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" title="Body" usesSingleLineMode="YES" id="z1X-Jv-Neu">
                                         <font key="font" metaFont="label" size="11"/>
@@ -88,15 +88,16 @@
                 </stackView>
             </subviews>
             <constraints>
-                <constraint firstItem="Zb9-sd-qz2" firstAttribute="top" secondItem="QA8-LS-8io" secondAttribute="top" id="LCA-rx-6EE"/>
+                <constraint firstItem="Zb9-sd-qz2" firstAttribute="top" relation="greaterThanOrEqual" secondItem="QA8-LS-8io" secondAttribute="top" id="LCA-rx-6EE"/>
                 <constraint firstItem="Zb9-sd-qz2" firstAttribute="leading" secondItem="QA8-LS-8io" secondAttribute="leading" constant="10" id="dQl-wP-GNk"/>
-                <constraint firstAttribute="bottom" secondItem="Zb9-sd-qz2" secondAttribute="bottom" id="uza-rV-usX"/>
+                <constraint firstItem="Zb9-sd-qz2" firstAttribute="centerY" secondItem="QA8-LS-8io" secondAttribute="centerY" id="kTu-0i-QSf"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Zb9-sd-qz2" secondAttribute="bottom" id="uza-rV-usX"/>
                 <constraint firstAttribute="trailing" secondItem="Zb9-sd-qz2" secondAttribute="trailing" constant="8" id="znn-98-glU"/>
             </constraints>
             <point key="canvasLocation" x="136" y="-25"/>
         </tableCellView>
     </objects>
     <resources>
-        <image name="NSActionTemplate" width="14" height="14"/>
+        <image name="NSActionTemplate" width="15" height="15"/>
     </resources>
 </document>
