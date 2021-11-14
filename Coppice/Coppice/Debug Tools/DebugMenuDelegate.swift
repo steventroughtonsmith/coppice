@@ -33,6 +33,21 @@ class DebugMenuBuilder: NSObject {
         return menuItem
     }()
 
+    let windowSizeMenuItem: NSMenuItem = {
+        let menuItem = NSMenuItem(title: "Resize Window", action: nil, keyEquivalent: "")
+
+        let submenu = NSMenu()
+        submenu.addItem(withTitle: "Big Screenshot",
+                        action: #selector(DocumentWindowController.applyWindowSize(_:)),
+                        keyEquivalent: "").representedObject = CGSize(width: 1312, height: 736)
+        submenu.addItem(withTitle: "Compact Screenshot",
+                        action: #selector(DocumentWindowController.applyWindowSize(_:)),
+                        keyEquivalent: "").representedObject = CGSize(width: 1070, height: 600)
+        menuItem.submenu = submenu
+
+        return menuItem
+    }()
+
     func buildMenu() -> NSMenu {
         let menu = NSMenu(title: "**DEBUG**")
         menu.addItem(self.debugCanvasOriginItem)
@@ -44,7 +59,8 @@ class DebugMenuBuilder: NSObject {
         menu.addItem(self.proDisabledMenuItem)
         menu.addItem(self.checkSubscriptionMenuItem)
         menu.addItem(self.subscriptionDebugMenuItem)
-
+        menu.addItem(NSMenuItem.separator())
+        menu.addItem(self.windowSizeMenuItem)
         return menu
     }
 }

@@ -253,6 +253,19 @@ class DocumentWindowController: NSWindowController, NSMenuItemValidation {
     @IBAction func showPreviewGenerationWindow(_ sender: Any?) {
         self.previewGenerationWindowController.window?.makeKeyAndOrderFront(sender)
     }
+
+    @IBAction func applyWindowSize(_ sender: NSMenuItem) {
+        guard
+            let window = self.window,
+            let size = sender.representedObject as? CGSize
+        else {
+            return
+        }
+
+        var newFrame = window.frame
+        newFrame.size = size
+        window.setFrame(newFrame, display: true)
+    }
     #endif
 }
 
