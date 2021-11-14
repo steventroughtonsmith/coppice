@@ -108,11 +108,19 @@ class PageSelectorViewModel: NSObject {
         }
 
         newRows.append(PageSelectorRow(title: NSLocalizedString("Create New…", comment: "Page selector - page creation header"), body: nil, image: nil, rowType: .header))
-        if self.allowsExternalLinks, URL(string: self.searchTerm)?.scheme != nil {
+        if self.showExternalLinkRow(forSearchTerm: self.searchTerm) {
             newRows.append(PageSelectorRow.externalLink)
         }
         newRows.append(contentsOf: PageContentType.allCases.map { PageSelectorRow(contentType: $0) })
         self.rows = newRows
+    }
+
+    private func showExternalLinkRow(forSearchTerm searchTerm: String) -> Bool {
+        guard self.allowsExternalLinks else {
+            return false
+        }
+
+        return (self.standardisedURL(forSearchTerm: searchTerm) != nil)
     }
 
     func confirmSelection(of result: PageSelectorRow) {
@@ -126,13 +134,29 @@ class PageSelectorViewModel: NSObject {
 
             self.selectionBlock(.page(page))
         case .externalLink:
-            guard let url = URL(string: self.searchTerm) else {
+            guard let url = self.standardisedURL(forSearchTerm: self.searchTerm) else {
                 return
             }
             self.selectionBlock(.url(url))
         case .header, .divider:
             break
         }
+    }
+
+    private func standardisedURL(forSearchTerm searchTerm: String) -> URL? {
+        //We have a valid URL with a scheme
+        if let url = URL(string: searchTerm), url.scheme != nil {
+            return url
+        }
+        //Has a www prefix
+        if searchTerm.hasPrefix("www"), let url = URL(string: "https://\(searchTerm)") {
+            return url
+        }
+        //We have no page matches and something that might be a domain
+        if searchTerm.contains("."), let url = URL(string: "https://\(searchTerm)") {
+            return url
+        }
+        return nil
     }
 }
 

@@ -335,6 +335,8 @@ class TextEditorAttributeEditor: LinkEditor {
         guard links.count > 0 else {
             if ranges.count == 1, ranges[0].length == 0 {
                 self.selectedLink = .noSelection
+            } else if textView.selectedRange().location == textStorage.length {
+                self.selectedLink = .noSelection
             } else {
                 self.selectedLink = .empty
             }
