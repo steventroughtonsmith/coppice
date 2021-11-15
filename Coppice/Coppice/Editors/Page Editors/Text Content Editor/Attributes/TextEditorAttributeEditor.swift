@@ -165,6 +165,8 @@ class TextEditorAttributeEditor: LinkEditor {
                 }
                 newParagraphStyle.textLists = textLists
 
+                self.adjustTabStops(in: newParagraphStyle)
+
                 //Update the paragraph style on the text storage
                 textStorage.removeAttribute(.paragraphStyle, range: effectiveRange)
                 textStorage.addAttribute(.paragraphStyle, value: newParagraphStyle, range: effectiveRange)
@@ -225,10 +227,37 @@ class TextEditorAttributeEditor: LinkEditor {
         let paragraphStyle = (attributes[.paragraphStyle] as? NSParagraphStyle) ?? textView.defaultParagraphStyle ?? NSParagraphStyle()
         if let mutableStyle = paragraphStyle.mutableCopy() as? NSMutableParagraphStyle {
             mutableStyle.textLists = [list]
+            self.adjustTabStops(in: mutableStyle)
             attributes[.paragraphStyle] = mutableStyle.copy()
         }
 
         textStorage.append(NSAttributedString(string: string, attributes: attributes))
+    }
+
+    private func adjustTabStops(in paragraphStyle: NSMutableParagraphStyle) {
+        guard paragraphStyle.textLists.count > 0 else {
+            paragraphStyle.tabStops = NSParagraphStyle().tabStops
+            paragraphStyle.headIndent = 0
+            return
+        }
+
+        let headIndent: CGFloat = 36
+        let initialTab: CGFloat = 11
+        let tabOffset: CGFloat = 28
+
+        let listCount = paragraphStyle.textLists.count
+
+        var newStops = [NSTextTab]()
+        newStops.append(NSTextTab(textAlignment: .left,
+                                  location: (headIndent * CGFloat(listCount - 1)) + initialTab,
+                                  options: [:]))
+        newStops.append(NSTextTab(textAlignment: .natural, location: headIndent * CGFloat(listCount), options: [:]))
+
+        let otherTabs = (listCount..<12).map { NSTextTab(textAlignment: .left, location: CGFloat($0 + 1) * tabOffset, options: [:]) }
+        newStops.append(contentsOf: otherTabs)
+
+        paragraphStyle.tabStops = newStops
+        paragraphStyle.headIndent = headIndent
     }
 
     private func updateListTypes() {
