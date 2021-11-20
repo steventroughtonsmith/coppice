@@ -1,0 +1,15 @@
+{
+    "payload": {
+        "token": "5e270c5d-bc46-43f9-8cf9-d1fb84dd6783",
+        "subscription": {
+            "expirationDate": "2050-12-12T00:00:00+00:00",
+            "name": "Coppice Beta",
+            "renewalStatus": "renew"
+        },
+        "device": {
+            "name": "M Cubed iMac"
+        },
+        "response": "active"
+    },
+    "signature": "KKijKFY3P8KknVF7+fQ8PhCuovb65fhP49Oy6Anv7/ob6pE0+YAoOJQvJK9kU2GZcdkmZRYeCirDX7zvKR5jBcVN53AQd0eOAH/MZl1V2A+BsMVNZUCwRAC3NL0n9D8pTH5RJ/rlbCZaHgAWg+fzAlnf6afqz99l+olkfpzOGQgf1DvCdljwmiRjQ9dOA6A+fRXYM+XUjSu66sjZ55woZUIdlVJ84cPt37+VBhhRz2tQv0le6Mdw5jlA07Luez3TMkw4CV5cecTCt4ap3uqB04PW8rMtrDAl9Xmnf3+gZJPvSWFVoJtx+YqEtAnXYKqNX+tSNb5U5I6lWfOylMtDng=="
+}

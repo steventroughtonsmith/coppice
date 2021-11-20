@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.AVKitIBPlugin" version="17506"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
+        <plugIn identifier="com.apple.AVKitIBPlugin" version="19529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -23,7 +23,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="irG-kc-mGR">
-                    <rect key="frame" x="281" y="461" width="78" height="35"/>
+                    <rect key="frame" x="281" y="461" width="79" height="35"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="Links" id="KFD-y4-ig0">
                         <font key="font" metaFont="systemBold" size="30"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -43,7 +43,7 @@
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="45N-66-eCF">
                     <rect key="frame" x="48" y="34" width="544" height="16"/>
-                    <textFieldCell key="cell" selectable="YES" alignment="center" title="Simply select some text and choose Link to Page from the Toolbar or Menu Bar." id="dLQ-ai-fMG">
+                    <textFieldCell key="cell" selectable="YES" alignment="center" title="Simply select some text and start typing in the Link inspector to add a link." id="dLQ-ai-fMG">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -92,7 +92,7 @@
                     </constraints>
                 </customView>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5Fe-5f-dCm">
-                    <rect key="frame" x="14" y="461" width="44" height="32"/>
+                    <rect key="frame" x="13" y="462" width="38" height="32"/>
                     <buttonCell key="cell" type="push" bezelStyle="rounded" image="BackChevron" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="CV5-gu-M45">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>

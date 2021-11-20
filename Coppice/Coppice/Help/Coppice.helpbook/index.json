@@ -26,7 +26,8 @@
                 "edit_a_pages_title",
                 "re_order_pages",
                 "group_pages_into_folders",
-                "lists"
+                "lists",
+                "tables"
             ]
         },
         {
@@ -45,7 +46,7 @@
                 "creating_a_canvas",
                 "re_order_the_canvas_list",
                 "rename_a_canvas",
-                "change_the_canvas_theme",
+                "customise_canvas_appearance",
                 "change_the_default_canvas_theme",
                 "add_a_page_to_a_canvas",
                 "select_pages",
@@ -74,7 +75,7 @@
             "id": "intro_to_coppice",
             "title": "Intro to Coppice",
             "dateCreated": "2020-11-08T14:03:47+0000",
-            "dateUpdated": "2020-11-16T13:08:32+0000",
+            "dateUpdated": "2021-11-08T15:25:31+0000",
             "tags": [
                 "coppice",
                 "document",
@@ -85,7 +86,7 @@
                 "image"
             ],
             "appVersion": "2020.1",
-            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/intro_to_coppice"
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/intro_to_coppice?draft=1"
         },
         {
             "id": "creating_a_document",
@@ -98,13 +99,13 @@
                 "save"
             ],
             "appVersion": "2020.1",
-            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/creating_a_document"
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/creating_a_document?draft=1"
         },
         {
             "id": "open_or_close_documents",
             "title": "Open or Close Documents",
             "dateCreated": "2020-11-08T14:12:01+0000",
-            "dateUpdated": "2020-11-16T13:08:15+0000",
+            "dateUpdated": "2021-11-08T15:26:50+0000",
             "tags": [
                 "document",
                 "open",
@@ -112,7 +113,7 @@
                 "welcome"
             ],
             "appVersion": "2020.1",
-            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/open_or_close_documents"
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/open_or_close_documents?draft=1"
         },
         {
             "id": "customise_the_toolbar",
@@ -127,7 +128,7 @@
                 "search"
             ],
             "appVersion": "2020.1",
-            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/customise_the_toolbar"
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/customise_the_toolbar?draft=1"
         },
         {
             "id": "customise_the_sidebar_size",
@@ -139,13 +140,13 @@
                 "preferences"
             ],
             "appVersion": "2020.1",
-            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/customise_the_sidebar_size"
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/customise_the_sidebar_size?draft=1"
         },
         {
             "id": "create_a_blank_page",
             "title": "Create a Blank Page",
             "dateCreated": "2020-11-09T15:59:48+0000",
-            "dateUpdated": "2020-11-16T13:29:01+0000",
+            "dateUpdated": "2021-11-05T15:23:49+0000",
             "tags": [
                 "create",
                 "page",
@@ -153,7 +154,7 @@
                 "image"
             ],
             "appVersion": "2020.1",
-            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/create_a_blank_page"
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/create_a_blank_page?draft=1"
         },
         {
             "id": "create_a_page_from_a_file",
@@ -168,7 +169,7 @@
                 "import"
             ],
             "appVersion": "2020.1",
-            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/create_a_page_from_a_file"
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/create_a_page_from_a_file?draft=1"
         },
         {
             "id": "view_a_page",
@@ -184,7 +185,7 @@
                 "navigate"
             ],
             "appVersion": "2020.1",
-            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/view_a_page"
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/view_a_page?draft=1"
         },
         {
             "id": "add_text_to_a_page",
@@ -200,7 +201,7 @@
                 "type"
             ],
             "appVersion": "2020.1",
-            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/add_text_to_a_page"
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/add_text_to_a_page?draft=1"
         },
         {
             "id": "format_text_content",
@@ -231,7 +232,7 @@
                 "spacing"
             ],
             "appVersion": "2020.1",
-            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/format_text_content"
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/format_text_content?draft=1"
         },
         {
             "id": "change_the_default_font_for_text_pages",
@@ -248,7 +249,7 @@
                 "typeface"
             ],
             "appVersion": "2020.1",
-            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/change_the_default_font_for_text_pages"
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/change_the_default_font_for_text_pages?draft=1"
         },
         {
             "id": "set_the_image_of_an_image_page",
@@ -268,7 +269,7 @@
                 "tiff"
             ],
             "appVersion": "2020.1",
-            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/set_the_image_of_an_image_page"
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/set_the_image_of_an_image_page?draft=1"
         },
         {
             "id": "add_an_image_description",
@@ -282,7 +283,7 @@
                 "accessibility"
             ],
             "appVersion": "2020.1",
-            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/add_an_image_description"
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/add_an_image_description?draft=1"
         },
         {
             "id": "edit_a_pages_title",
@@ -298,7 +299,7 @@
                 "canvas"
             ],
             "appVersion": "2020.1",
-            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/edit_a_pages_title"
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/edit_a_pages_title?draft=1"
         },
         {
             "id": "re_order_pages",
@@ -313,7 +314,7 @@
                 "sidebar"
             ],
             "appVersion": "2020.1",
-            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/re_order_pages"
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/re_order_pages?draft=1"
         },
         {
             "id": "group_pages_into_folders",
@@ -331,13 +332,13 @@
                 "delete"
             ],
             "appVersion": "2020.1",
-            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/group_pages_into_folders"
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/group_pages_into_folders?draft=1"
         },
         {
             "id": "create_a_link",
             "title": "Create a Link",
             "dateCreated": "2020-11-10T14:16:43+0000",
-            "dateUpdated": "2021-03-15T16:15:41+0000",
+            "dateUpdated": "2021-11-08T16:30:20+0000",
             "tags": [
                 "link",
                 "text",
@@ -348,13 +349,13 @@
                 "delete"
             ],
             "appVersion": "2020.1",
-            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/create_a_link"
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/create_a_link?draft=1"
         },
         {
             "id": "automatically_find_links_on_pages",
             "title": "Automatically Find Links on Pages",
             "dateCreated": "2020-11-10T14:18:17+0000",
-            "dateUpdated": "2020-11-16T13:57:12+0000",
+            "dateUpdated": "2021-11-05T15:23:34+0000",
             "tags": [
                 "auto",
                 "link",
@@ -365,13 +366,13 @@
                 "preference"
             ],
             "appVersion": "2020.1",
-            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/automatically_find_links_on_pages"
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/automatically_find_links_on_pages?draft=1"
         },
         {
             "id": "add_an_external_link",
             "title": "Add an External Link",
             "dateCreated": "2020-11-10T14:19:58+0000",
-            "dateUpdated": "2020-11-16T13:57:34+0000",
+            "dateUpdated": "2021-11-05T15:29:45+0000",
             "tags": [
                 "external",
                 "link",
@@ -381,7 +382,7 @@
                 "website"
             ],
             "appVersion": "2020.1",
-            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/add_an_external_link"
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/add_an_external_link?draft=1"
         },
         {
             "id": "creating_a_canvas",
@@ -397,7 +398,7 @@
                 "pro"
             ],
             "appVersion": "2020.1",
-            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/creating_a_canvas"
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/creating_a_canvas?draft=1"
         },
         {
             "id": "re_order_the_canvas_list",
@@ -413,7 +414,7 @@
                 "rearrange"
             ],
             "appVersion": "2020.1",
-            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/re_order_the_canvas_list"
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/re_order_the_canvas_list?draft=1"
         },
         {
             "id": "rename_a_canvas",
@@ -428,20 +429,20 @@
                 "list"
             ],
             "appVersion": "2020.1",
-            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/rename_a_canvas"
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/rename_a_canvas?draft=1"
         },
         {
-            "id": "change_the_canvas_theme",
-            "title": "Change the Canvas Theme",
+            "id": "customise_canvas_appearance",
+            "title": "Customise Canvas Appearance",
             "dateCreated": "2020-11-10T16:43:52+0000",
-            "dateUpdated": "2020-11-16T14:07:59+0000",
+            "dateUpdated": "2021-11-05T15:17:39+0000",
             "tags": [
                 "canvas",
                 "theme",
                 "pro"
             ],
             "appVersion": "2020.1",
-            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/change_the_canvas_theme"
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/customise_canvas_appearance?draft=1"
         },
         {
             "id": "change_the_default_canvas_theme",
@@ -457,7 +458,7 @@
                 "preference"
             ],
             "appVersion": "2020.1",
-            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/change_the_default_canvas_theme"
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/change_the_default_canvas_theme?draft=1"
         },
         {
             "id": "add_a_page_to_a_canvas",
@@ -471,7 +472,7 @@
                 "create"
             ],
             "appVersion": "2020.1",
-            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/add_a_page_to_a_canvas"
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/add_a_page_to_a_canvas?draft=1"
         },
         {
             "id": "select_pages",
@@ -485,7 +486,7 @@
                 "move"
             ],
             "appVersion": "2020.1",
-            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/select_pages"
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/select_pages?draft=1"
         },
         {
             "id": "move_pages_around_a_canvas",
@@ -498,7 +499,7 @@
                 "canvas"
             ],
             "appVersion": "2020.1",
-            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/move_pages_around_a_canvas"
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/move_pages_around_a_canvas?draft=1"
         },
         {
             "id": "remove_pages_from_a_canvas",
@@ -513,7 +514,7 @@
                 "canvas"
             ],
             "appVersion": "2020.1",
-            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/remove_pages_from_a_canvas"
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/remove_pages_from_a_canvas?draft=1"
         },
         {
             "id": "resize_pages",
@@ -529,7 +530,7 @@
                 "canvas"
             ],
             "appVersion": "2020.1",
-            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/resize_pages"
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/resize_pages?draft=1"
         },
         {
             "id": "change_the_zoom_level_of_a_canvas",
@@ -541,7 +542,7 @@
                 "canvas"
             ],
             "appVersion": "2020.1",
-            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/change_the_zoom_level_of_a_canvas"
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/change_the_zoom_level_of_a_canvas?draft=1"
         },
         {
             "id": "activate_a_device",
@@ -558,13 +559,13 @@
                 "pro"
             ],
             "appVersion": "2020.1",
-            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/activate_a_device"
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/activate_a_device?draft=1"
         },
         {
             "id": "deactivate_a_device",
             "title": "Deactivate a Device",
             "dateCreated": "2020-11-11T17:51:53+0000",
-            "dateUpdated": "2020-11-16T14:12:54+0000",
+            "dateUpdated": "2021-11-05T15:23:54+0000",
             "tags": [
                 "deactivate",
                 "device",
@@ -575,7 +576,7 @@
                 "account"
             ],
             "appVersion": "2020.1",
-            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/deactivate_a_device"
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/deactivate_a_device?draft=1"
         },
         {
             "id": "resetting_your_password",
@@ -590,7 +591,7 @@
                 "email"
             ],
             "appVersion": "2020.1",
-            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/resetting_your_password"
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/resetting_your_password?draft=1"
         },
         {
             "id": "purchasing_coppice_pro",
@@ -609,13 +610,13 @@
                 "folder"
             ],
             "appVersion": "2020.1",
-            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/purchasing_coppice_pro"
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/purchasing_coppice_pro?draft=1"
         },
         {
             "id": "rename_your_device",
             "title": "Rename Your Device",
             "dateCreated": "2020-11-11T18:00:03+0000",
-            "dateUpdated": "2020-11-16T14:13:41+0000",
+            "dateUpdated": "2021-11-05T15:23:59+0000",
             "tags": [
                 "rename",
                 "device",
@@ -624,7 +625,7 @@
                 "preference"
             ],
             "appVersion": "2020.1",
-            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/rename_your_device"
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/rename_your_device?draft=1"
         },
         {
             "id": "view_and_edit_your_subscription",
@@ -639,7 +640,7 @@
                 "account"
             ],
             "appVersion": "2020.1",
-            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/view_and_edit_your_subscription"
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/view_and_edit_your_subscription?draft=1"
         },
         {
             "id": "exporting_canvases",
@@ -654,7 +655,7 @@
                 "jpg"
             ],
             "appVersion": "2021.1",
-            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/exporting_canvases"
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/exporting_canvases?draft=1"
         },
         {
             "id": "lists",
@@ -671,7 +672,23 @@
                 "paragraph"
             ],
             "appVersion": "2021.1",
-            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/lists"
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/lists?draft=1"
+        },
+        {
+            "id": "tables",
+            "title": "Tables",
+            "dateCreated": "2021-11-06T14:25:51+0000",
+            "dateUpdated": "2021-11-06T14:25:51+0000",
+            "tags": [
+                "page",
+                "text",
+                "table",
+                "cell",
+                "border",
+                "background"
+            ],
+            "appVersion": "2021.2",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/tables?draft=1"
         }
     ]
 }

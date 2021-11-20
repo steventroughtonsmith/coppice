@@ -202,8 +202,10 @@ class PageSelectorViewModelTests: XCTestCase {
     func test_confirmSelection_selectingPageCallsSelectionBlockWithPageFromSuppliedResult() {
         var selectedPage: Page?
         self.performAndWaitFor("Selector Block called", timeout: 0.5) { expectation in
-            let viewModel = PageSelectorViewModel(title: "", documentWindowViewModel: self.documentWindowViewModel) { (page) in
-                selectedPage = page
+            let viewModel = PageSelectorViewModel(title: "", documentWindowViewModel: self.documentWindowViewModel) { (result) in
+                if case .page(let page) = result {
+                    selectedPage = page
+                }
                 expectation.fulfill()
             }
 
@@ -217,8 +219,10 @@ class PageSelectorViewModelTests: XCTestCase {
         var selectedPage: Page?
         self.performAndWaitFor("Selector Block called", timeout: 0.5) { expectation in
             expectation.isInverted = true
-            let viewModel = PageSelectorViewModel(title: "", documentWindowViewModel: self.documentWindowViewModel) { (page) in
-                selectedPage = page
+            let viewModel = PageSelectorViewModel(title: "", documentWindowViewModel: self.documentWindowViewModel) { (result) in
+                if case .page(let page) = result {
+                    selectedPage = page
+                }
                 expectation.fulfill()
             }
 
@@ -231,8 +235,10 @@ class PageSelectorViewModelTests: XCTestCase {
     func test_confirmSelection_selectingContentTypeCreatesPageOfTypeWithTitleAndPassesToSelectionBlock() throws {
         var selectedPage: Page?
         self.performAndWaitFor("Selector Block called", timeout: 0.5) { expectation in
-            let viewModel = PageSelectorViewModel(title: "", documentWindowViewModel: self.documentWindowViewModel) { (page) in
-                selectedPage = page
+            let viewModel = PageSelectorViewModel(title: "", documentWindowViewModel: self.documentWindowViewModel) { (result) in
+                if case .page(let page) = result {
+                    selectedPage = page
+                }
                 expectation.fulfill()
             }
 

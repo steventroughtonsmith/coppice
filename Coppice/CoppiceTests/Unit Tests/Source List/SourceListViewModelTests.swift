@@ -11,7 +11,7 @@
 import XCTest
 
 
-class SourceListViewModelTests: XCTestCase {
+class SourceListViewModelTests: BaseTestCase {
     var notificationCenter: NotificationCenter!
 
     var documentWindowViewModel: DocumentWindowViewModel!
@@ -563,13 +563,25 @@ class SourceListViewModelTests: XCTestCase {
         XCTAssertFalse(canDrop)
     }
 
-    func test_canDropItemsWithIDsOntoNode_returnsTrueIfDroppedOntoFolderAndAllIDsArePagesOrFoldersWhenModeIsMove() throws {
+    func test_canDropItemsWithIDsOntoNode_returnsTrueIfDroppedOntoRootFolderAndAllIDsArePagesOrFoldersWhenModeIsMove() throws {
         let vm = self.createViewModel()
         vm.startObserving()
 
         let (_, folder, _, page2) = self.addTestData(to: vm)
 
         let (canDrop, _, _) = vm.canDropItems(with: [folder.id, page2.id], onto: vm.pagesGroupNode, atChildIndex: 0, mode: .move)
+        XCTAssertTrue(canDrop)
+    }
+
+    func test_canDropItemsWithIDsOntoNode_returnsTrueIfDroppedOntoFolderAndAllIDsArePagesOrFoldersWhenModeIsMove() throws {
+        try self.configureForPro()
+
+        let vm = self.createViewModel()
+        vm.startObserving()
+
+        let (_, folder, _, page2) = self.addTestData(to: vm)
+        let folderNode = vm.node(for: .folder(folder.id))
+        let (canDrop, _, _) = vm.canDropItems(with: [page2.id], onto: folderNode, atChildIndex: 0, mode: .move)
         XCTAssertTrue(canDrop)
     }
 
@@ -709,6 +721,8 @@ class SourceListViewModelTests: XCTestCase {
     }
 
     func test_dropItemsWithIDsOntoNode_duplicatesPagesBeforeInsertingBelowItemAtIndexIfModeIsCopy() throws {
+        try self.configureForPro()
+
         let vm = self.createViewModel()
         vm.startObserving()
 

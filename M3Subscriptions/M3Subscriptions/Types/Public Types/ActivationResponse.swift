@@ -69,8 +69,6 @@ public struct ActivationResponse {
         self.signature = data.signature
     }
 
-
-
     func write(to url: URL) {
         let json: [String: Any] = ["payload": self.payload, "signature": self.signature]
         guard let data = try? JSONSerialization.data(withJSONObject: json, options: .sortedKeys) else {

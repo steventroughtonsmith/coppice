@@ -339,6 +339,8 @@
 		99DA84EE2457203700F19917 /* Mocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DA84ED2457203600F19917 /* Mocking.swift */; };
 		99DEF28822F1D72D0020A7CE /* SourceListViewModelTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DEF28722F1D72D0020A7CE /* SourceListViewModelTypes.swift */; };
 		99DEF28A22F32D350020A7CE /* DebugCanvasViewModelTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DEF28922F32D350020A7CE /* DebugCanvasViewModelTypes.swift */; };
+		99E47E232747EC9E007D180F /* test-api-response-success.json in Resources */ = {isa = PBXBuildFile; fileRef = 99E47E222747EC9E007D180F /* test-api-response-success.json */; };
+		99E47E272747F06A007D180F /* BaseTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E47E262747F06A007D180F /* BaseTestCase.swift */; };
 		99E93E2923D32F15004CF4BB /* ColourGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E93E2823D32F15004CF4BB /* ColourGridView.swift */; };
 		99E93E2B23D32F61004CF4BB /* ColourGridButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E93E2A23D32F61004CF4BB /* ColourGridButton.swift */; };
 		99ECA0B326496F4B00480C19 /* PageSelectorContentTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99ECA0B226496F4B00480C19 /* PageSelectorContentTableCellView.swift */; };
@@ -775,6 +777,8 @@
 		99DA84ED2457203600F19917 /* Mocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocking.swift; sourceTree = "<group>"; };
 		99DEF28722F1D72D0020A7CE /* SourceListViewModelTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceListViewModelTypes.swift; sourceTree = "<group>"; };
 		99DEF28922F32D350020A7CE /* DebugCanvasViewModelTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugCanvasViewModelTypes.swift; sourceTree = "<group>"; };
+		99E47E222747EC9E007D180F /* test-api-response-success.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "test-api-response-success.json"; sourceTree = "<group>"; };
+		99E47E262747F06A007D180F /* BaseTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTestCase.swift; sourceTree = "<group>"; };
 		99E93E2823D32F15004CF4BB /* ColourGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColourGridView.swift; sourceTree = "<group>"; };
 		99E93E2A23D32F61004CF4BB /* ColourGridButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColourGridButton.swift; sourceTree = "<group>"; };
 		99ECA0B226496F4B00480C19 /* PageSelectorContentTableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageSelectorContentTableCellView.swift; sourceTree = "<group>"; };
@@ -1683,6 +1687,7 @@
 		99D0C88624C5F33D002EEBFA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				99E47E222747EC9E007D180F /* test-api-response-success.json */,
 				99D0C88724C5F33D002EEBFA /* test-image.png */,
 				99D0C88824C5F33D002EEBFA /* test-rtf.rtf */,
 				99D0C88924C5F33D002EEBFA /* test-zip.zip */,
@@ -1871,6 +1876,7 @@
 				9923B06A22F45F7E0035D8C6 /* TestObjects.swift */,
 				999EA6CC243CCCE200BF254E /* XCTestExtensions.swift */,
 				99DA84ED2457203600F19917 /* Mocking.swift */,
+				99E47E262747F06A007D180F /* BaseTestCase.swift */,
 				9976611B23A3EB61000D1741 /* Functional Tests */,
 				9976611A23A3EB2C000D1741 /* Unit Tests */,
 				997711C8239E9AD900FCC8C7 /* Helpers */,
@@ -2188,6 +2194,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				99D0C88A24C5F33D002EEBFA /* test-image.png in Resources */,
+				99E47E232747EC9E007D180F /* test-api-response-success.json in Resources */,
 				99D0C88C24C5F33D002EEBFA /* test-zip.zip in Resources */,
 				99D0C88B24C5F33D002EEBFA /* test-rtf.rtf in Resources */,
 			);
@@ -2488,6 +2495,7 @@
 				99A0B85C238D72F0005FCF25 /* TextEditorAttributesTests.swift in Sources */,
 				999EA6CD243CCCE200BF254E /* XCTestExtensions.swift in Sources */,
 				99868F4723995B4F009AC0F7 /* TextLinkFinderTests.swift in Sources */,
+				99E47E272747F06A007D180F /* BaseTestCase.swift in Sources */,
 				99AA3C3F25B71D3B0050A119 /* TextEditorParagraphInspectorViewModelTests.swift in Sources */,
 				997711CA239E9AF400FCC8C7 /* MockDocumentWindowViewModel.swift in Sources */,
 				99A0B860238D732F005FCF25 /* TextEditorFontInspectorViewModelTests.swift in Sources */,

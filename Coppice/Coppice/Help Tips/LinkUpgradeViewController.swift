@@ -12,6 +12,6 @@ class LinkUpgradeViewController: NSViewController {
     var callback: (() -> Void)?
 
     @IBAction func okClicked(_ sender: Any) {
-        callback?()
+        self.callback?()
     }
 }
