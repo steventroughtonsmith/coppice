@@ -80,6 +80,7 @@ extension LinkInspectorViewController: NSSearchFieldDelegate {
             self.typedViewModel.link(to: result)
         }
         viewModel.allowsExternalLinks = true
+        viewModel.folderForPageCreation = self.typedViewModel.page?.containingFolder
         self.pageSelector = PageSelectorWindowController(viewModel: viewModel)
         self.pageSelector?.show(from: self.linkControl, preferredEdge: .minY)
     }

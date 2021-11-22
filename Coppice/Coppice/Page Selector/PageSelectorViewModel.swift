@@ -87,6 +87,8 @@ class PageSelectorViewModel: NSObject {
         }
     }
 
+    var folderForPageCreation: Folder?
+
     private func updatePages() {
         let sortedPages = self.documentWindowViewModel.modelController.pageCollection.all.sorted(by: {
             //If one or other page is untitled we want to favour the titled page
@@ -128,7 +130,7 @@ class PageSelectorViewModel: NSObject {
         case .page(let page):
             self.selectionBlock(.page(page))
         case .contentType(let contentType):
-            let page = self.documentWindowViewModel.modelController.createPage(ofType: contentType, in: self.documentWindowViewModel.folderForNewPages, below: nil) { page in
+            let page = self.documentWindowViewModel.modelController.createPage(ofType: contentType, in: self.folderForPageCreation ?? self.documentWindowViewModel.folderForNewPages, below: nil) { page in
                 page.title = self.searchTerm
             }
 
