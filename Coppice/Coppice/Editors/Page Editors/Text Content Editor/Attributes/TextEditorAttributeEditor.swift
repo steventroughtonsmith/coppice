@@ -181,9 +181,14 @@ class TextEditorAttributeEditor: LinkEditor {
                         if (oldList.startingItemNumber > 1) {
                             itemNumber = oldList.startingItemNumber + (itemNumber - 1)
                         }
+
                         //We just need the length of the marker as the location is always the start of the line
                         //We also add 2 as we always have a tab before and after
                         existingRange.length = oldList.marker(forItemNumber: itemNumber).count + 2
+                        //Make sure we bound it to the line
+                        if (existingRange.upperBound > substringRange.upperBound) {
+                            existingRange.length -= existingRange.upperBound - substringRange.upperBound
+                        }
                     }
 
                     //Add the range and text to replace. We don't actually replace here as we don't want to mess up enumerateAttributes()
