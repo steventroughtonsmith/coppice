@@ -119,6 +119,18 @@ class CoreGraphics_M3ExtensionsTests: XCTestCase {
         XCTAssertEqual(point.toSize(), CGSize(width: 42, height: 31))
     }
 
+    //MARK: - CGPoint.distance(to:)
+    func test_distanceToOtherPoint_returnsCorrectDistanceIfPointToUpperRightOfSelf() throws {
+        let point = CGPoint(x: 42, y: 31)
+        let otherPoint = CGPoint(x: 46, y: 34)
+        XCTAssertEqual(point.distance(to: otherPoint), 5)
+    }
+
+    func test_distanceToOtherPoint_returnsCorrectDistanceIfPointToLowerLeftOfSelf() throws {
+        let point = CGPoint(x: -42, y: -31)
+        let otherPoint = CGPoint(x: -46, y: -34)
+        XCTAssertEqual(point.distance(to: otherPoint), 5)
+    }
 
 
 
@@ -188,7 +200,7 @@ class CoreGraphics_M3ExtensionsTests: XCTestCase {
     }
 
     //MARK: - CGSize.toRect(withOrigin:)
-    func test_toRectWithOrigin_createsRectWithReceiverAsSizeAndSuppliedOrigin() {
+    func test_size_toRectWithOrigin_createsRectWithReceiverAsSizeAndSuppliedOrigin() {
         let size = CGSize(width: 13, height: 14)
         let point = CGPoint(x: 15, y: 16)
         XCTAssertEqual(size.toRect(withOrigin: point), CGRect(x: 15, y: 16, width: 13, height: 14))
@@ -199,6 +211,69 @@ class CoreGraphics_M3ExtensionsTests: XCTestCase {
         let size = CGSize(width: 42, height: 31)
         XCTAssertEqual(size.toPoint(), CGPoint(x: 42, y: 31))
     }
+
+    //MARK: - CGSize.scaleDownToFit(width:height:)
+    func test_size_scaleDownToFit_doesntChangeSizeIfWidthAndHeightGreaterThanSelf() throws {
+        let size = CGSize(width: 120, height: 90)
+        let scaled = size.scaleDownToFit(width: 121, height: 91)
+        XCTAssertEqual(scaled, size)
+    }
+
+    func test_size_scaleDownToFit_doesntChangeSizeIfWidthAndHeightEqualToSelf() throws {
+        let size = CGSize(width: 120, height: 90)
+        let scaled = size.scaleDownToFit(width: 120, height: 90)
+        XCTAssertEqual(scaled, size)
+    }
+
+    func test_size_scaleDownToFit_setsWidthToSuppliedWidthAndScalesHeightIfTooWide() throws {
+        let size = CGSize(width: 120, height: 90)
+        let scaled = size.scaleDownToFit(width: 60, height: 100)
+        XCTAssertEqual(scaled, CGSize(width: 60, height: 45))
+    }
+
+    func test_size_scaleDownToFit_setsHeightToSuppliedHeightAndScalesWidthIfTooTall() throws {
+        let size = CGSize(width: 120, height: 90)
+        let scaled = size.scaleDownToFit(width: 150, height: 60)
+        XCTAssertEqual(scaled, CGSize(width: 80, height: 60))
+    }
+
+    func test_size_scaleDownToFit_setsHeightToSuppliedHeightAndScalesWidthIfTooWideAndTooTall() throws {
+        let size = CGSize(width: 120, height: 90)
+        let scaled = size.scaleDownToFit(width: 60, height: 30)
+        XCTAssertEqual(scaled, CGSize(width: 40, height: 30))
+    }
+
+    func test_size_scaleDownToFit_scalesDownWidthAndHeightIfUsingCGSizeVersion() throws {
+        let size = CGSize(width: 120, height: 90)
+        let scaled = size.scaleDownToFit(CGSize(width: 60, height: 30))
+        XCTAssertEqual(scaled, CGSize(width: 40, height: 30))
+    }
+
+    //MARK: - CGSize.centred(in:)
+    func test_size_centredInRect_centresInRectBiggerThanSize() throws {
+        let size = CGSize(width: 120, height: 33)
+        let rect = CGRect(x: -10, y: 30, width: 200, height: 200)
+
+        let centredRect = size.centred(in: rect)
+        XCTAssertEqual(centredRect, CGRect(origin: CGPoint(x: 30, y: 113.5), size: size))
+    }
+
+    func test_size_centredInRect_centresInRectSameSizeAsSize() throws {
+        let size = CGSize(width: 120, height: 33)
+        let rect = CGRect(x: -10, y: 30, width: 120, height: 33)
+
+        let centredRect = size.centred(in: rect)
+        XCTAssertEqual(centredRect, CGRect(origin: CGPoint(x: -10, y: 30), size: size))
+    }
+
+    func test_size_centredInRect_centresInRectSmallerThanSize() throws {
+        let size = CGSize(width: 120, height: 33)
+        let rect = CGRect(x: -10, y: 30, width: 51, height: 27)
+
+        let centredRect = size.centred(in: rect)
+        XCTAssertEqual(centredRect, CGRect(origin: CGPoint(x: -44.5, y: 27), size: size))
+    }
+
 
 
     //MARK: - CGRect.init(width:height:centredIn:)
@@ -287,5 +362,24 @@ class CoreGraphics_M3ExtensionsTests: XCTestCase {
     func test_rect_midPoint_returnsMiddleOfRect() {
         let rect = CGRect(x: 22, y: 13, width: 8, height: 7)
         XCTAssertEqual(rect.midPoint, CGPoint(x: 26, y: 16.5))
+    }
+
+    //MARK: - insetBy(_:flipped:)
+    func test_rect_insetByEdgeInsets_insetsPositiveInsets() {
+        let rect = CGRect(x: 41, y: 52, width: 89, height: 62)
+        let insets = NSEdgeInsets(top: 2, left: 3, bottom: 5, right: 6)
+        XCTAssertEqual(rect.insetBy(insets), CGRect(x: 44, y: 54, width: 80, height: 55))
+    }
+
+    func test_rect_insetByEdgeInsets_insetsNegativeInsets() throws {
+        let rect = CGRect(x: 41, y: 52, width: 89, height: 62)
+        let insets = NSEdgeInsets(top: -7, left: -2, bottom: -4, right: -5)
+        XCTAssertEqual(rect.insetBy(insets), CGRect(x: 39, y: 45, width: 96, height: 73))
+    }
+
+    func test_rect_insetByEdgeInsets_usesBottomToAdjustOriginIfNotFlipped() throws {
+        let rect = CGRect(x: 41, y: 52, width: 89, height: 62)
+        let insets = NSEdgeInsets(top: 2, left: 3, bottom: 5, right: 6)
+        XCTAssertEqual(rect.insetBy(insets, flipped: false), CGRect(x: 44, y: 57, width: 80, height: 55))
     }
 }

@@ -271,7 +271,7 @@ public class CanvasLayoutEngine: NSObject, LayoutEngine {
         self.enabledPage = page
     }
 
-    var pageBeingEdited: LayoutEnginePage? {
+    private(set) var pageBeingEdited: LayoutEnginePage? {
         didSet {
             guard self.pageBeingEdited != oldValue else {
                 return
@@ -283,7 +283,7 @@ public class CanvasLayoutEngine: NSObject, LayoutEngine {
 
     public func startEditing(_ page: LayoutEnginePage, atContentPoint point: CGPoint) {
         if let currentPage = self.pageBeingEdited, (currentPage != page) {
-            page.view?.stopEditing()
+            currentPage.view?.stopEditing()
         }
         self.pageBeingEdited = page
         page.view?.startEditing(atContentPoint: point)

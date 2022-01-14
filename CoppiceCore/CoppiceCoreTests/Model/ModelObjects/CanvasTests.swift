@@ -147,6 +147,14 @@ class CanvasTests: XCTestCase {
         XCTAssertEqual(sortIndex, 0.25)
     }
 
+    func test_plistRepresentation_containsAlwaysShowPageTitles() throws {
+        let canvas = Canvas()
+        canvas.alwaysShowPageTitles = true
+        let plist = canvas.plistRepresentation
+        let alwaysShowPageTitles = try XCTUnwrap(plist["alwaysShowPageTitles"] as? Bool)
+        XCTAssertTrue(alwaysShowPageTitles)
+    }
+
     func test_plistRepresentation_includesAnyOtherProperties() throws {
         let canvas = Canvas()
 
@@ -516,6 +524,26 @@ class CanvasTests: XCTestCase {
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: plist))
 
         XCTAssertEqual(canvas.zoomFactor, 1)
+    }
+
+    func test_updateFromPlistRepresentation_setsAlwaysShowPageTitlesIfSet() throws {
+        let canvas = Canvas()
+
+        let expectedImageData = NSImage(named: "NSAddTemplate")!.pngData()!
+        let plist: [String: Any] = [
+            "id": canvas.id.stringRepresentation,
+            "title": "Hello Bar",
+            "dateCreated": Date(timeIntervalSinceReferenceDate: 32),
+            "dateModified": Date(timeIntervalSinceReferenceDate: 1455),
+            "sortIndex": 1,
+            "theme": "auto",
+            "thumbnail": ModelFile(type: "thumbnail", filename: nil, data: expectedImageData, metadata: [:]),
+            "alwaysShowPageTitles": true,
+        ]
+
+        XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: plist))
+
+        XCTAssertTrue(canvas.alwaysShowPageTitles)
     }
 
     func test_updateFromPlistRepresentation_addsAnythingElseInPlistToOtherProperties() throws {
@@ -1402,5 +1430,28 @@ class CanvasTests: XCTestCase {
         let canvasPages = canvas.addPages([page, page2, page3])
         XCTAssertEqual(canvasPages[safe: 1]?.frame, CGRect(x: 70, y: 65, width: 100, height: 50))
         XCTAssertEqual(canvasPages[safe: 2]?.frame, CGRect(x: 90, y: 85, width: 50, height: 120))
+    }
+
+    //MARK: - .sortedPages
+    func test_sortedPages_returnsPagesSortedByZIndexAscending() throws {
+        let modelController = CoppiceModelController(undoManager: UndoManager())
+
+        let canvas = Canvas.create(in: modelController)
+
+        let page = Page.create(in: modelController)
+        let page2 = Page.create(in: modelController)
+        let page3 = Page.create(in: modelController)
+
+        let canvasPages = canvas.addPages([page, page2, page3])
+
+        let canvasPage = try XCTUnwrap(canvasPages[safe: 0])
+        let canvasPage2 = try XCTUnwrap(canvasPages[safe: 1])
+        let canvasPage3 = try XCTUnwrap(canvasPages[safe: 2])
+
+        canvasPage2.zIndex = 2
+        canvasPage.zIndex = 1
+        canvasPage3.zIndex = 0
+
+        XCTAssertEqual(canvas.sortedPages, [canvasPage3, canvasPage, canvasPage2])
     }
 }

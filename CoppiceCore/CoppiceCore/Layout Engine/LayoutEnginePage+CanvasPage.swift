@@ -8,6 +8,9 @@
 import Foundation
 
 extension LayoutEnginePage {
+    /// Maps the supplied `CanvasPage`s into `LayoutEnginePage`s, sorting out the parent-child hierarchy
+    ///
+    /// Note, only handles canvas pages passed in, any children that are not in the supplied directory are not added
     public static func pages(from canvasPages: [CanvasPage]) -> [LayoutEnginePage] {
         var layoutEnginePages = [UUID: LayoutEnginePage]()
         for canvasPage in canvasPages {

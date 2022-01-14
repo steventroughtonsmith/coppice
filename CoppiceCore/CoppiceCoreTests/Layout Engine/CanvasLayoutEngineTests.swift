@@ -1143,6 +1143,68 @@ class CanvasLayoutEngineTests: XCTestCase {
         self.page2.zIndex = 2
         self.page3.zIndex = 1
     }
+
+    //MARK: - startEditing(_:atContentPoint:)
+    func test_startEditingPage_updatesPageBeingEditedToSuppliedPage() throws {
+        self.layoutEngine.startEditing(self.page2, atContentPoint: CGPoint(x: 40, y: 50))
+        XCTAssertEqual(self.layoutEngine.pageBeingEdited, self.page2)
+    }
+
+    func test_startEditingPage_tellsPageToStartEditingAtSuppliedPoint() throws {
+        let mockView = MockLayoutEnginePageView()
+        page3.view = mockView
+
+        self.layoutEngine.startEditing(self.page3, atContentPoint: CGPoint(x: 40, y: 50))
+
+        let actualPoint = try XCTUnwrap(mockView.startEditingMock.arguments.first)
+        XCTAssertEqual(actualPoint, CGPoint(x: 40, y: 50))
+    }
+
+    func test_startEditingPage_tellsPreviousPageToStopEditing() throws {
+        self.layoutEngine.startEditing(self.page2, atContentPoint: CGPoint(x: 40, y: 50))
+
+        let mockView = MockLayoutEnginePageView()
+        page2.view = mockView
+
+        self.layoutEngine.startEditing(self.page3, atContentPoint: CGPoint(x: 40, y: 50))
+
+        XCTAssertTrue(mockView.stopEditingMock.wasCalled)
+    }
+
+    func test_startEditingPage_setsPageIsEditingToTrue() throws {
+        self.layoutEngine.startEditing(self.page2, atContentPoint: CGPoint(x: 40, y: 50))
+        XCTAssertTrue(self.page2.isEditing)
+    }
+
+    func test_startEditingPage_setsOldPageBeingEditedIsEditedToFalse() throws {
+        self.layoutEngine.startEditing(self.page2, atContentPoint: CGPoint(x: 40, y: 50))
+        self.layoutEngine.startEditing(self.page3, atContentPoint: CGPoint(x: 40, y: 50))
+        XCTAssertFalse(self.page2.isEditing)
+    }
+
+    //MARK: - endEditing()
+    func test_stopEditingPage_tellsPageBeingEditedToStopEditing() throws {
+        self.layoutEngine.startEditing(self.page2, atContentPoint: CGPoint(x: 40, y: 50))
+        let mockView = MockLayoutEnginePageView()
+        page2.view = mockView
+
+        self.layoutEngine.stopEditingPages()
+
+        XCTAssertTrue(mockView.stopEditingMock.wasCalled)
+    }
+
+    func test_stopEditingPage_setsPageBeingEditedToNil() throws {
+        self.layoutEngine.startEditing(self.page2, atContentPoint: CGPoint(x: 40, y: 50))
+        XCTAssertNotNil(self.layoutEngine.pageBeingEdited)
+        self.layoutEngine.stopEditingPages()
+        XCTAssertNil(self.layoutEngine.pageBeingEdited)
+    }
+
+    func test_stopEditingPage_setsPageBeingEditedsIsEditingToFalse() throws {
+        self.layoutEngine.startEditing(self.page2, atContentPoint: CGPoint(x: 40, y: 50))
+        self.layoutEngine.stopEditingPages()
+        XCTAssertFalse(self.page2.isEditing)
+    }
 }
 
 

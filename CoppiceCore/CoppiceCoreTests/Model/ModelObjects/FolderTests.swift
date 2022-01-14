@@ -360,6 +360,30 @@ class FolderTests: XCTestCase {
     }
 
 
+    //MARK: - .pathString
+    func test_pathString_returnsNilIfUsingRootFolderTitle() throws {
+        let rootFolder = self.foldersCollection.newObject() { $0.title = Folder.rootFolderTitle }
+        XCTAssertNil(rootFolder.pathString)
+    }
+
+    func test_pathString_returnsTitleIfContainedByRootFolder() throws {
+        let rootFolder = self.foldersCollection.newObject() { $0.title = Folder.rootFolderTitle }
+        let folder = self.foldersCollection.newObject { $0.title = "Hello World" }
+        rootFolder.insert([folder])
+        XCTAssertEqual(folder.pathString, "Hello World")
+    }
+
+    func test_pathString_returnsTitleOfFolderAndParents() throws {
+        let rootFolder = self.foldersCollection.newObject() { $0.title = Folder.rootFolderTitle }
+        let folder = self.foldersCollection.newObject { $0.title = "Hello World" }
+        rootFolder.insert([folder])
+        let childFolder = self.foldersCollection.newObject { $0.title = "Foobar" }
+        folder.insert([childFolder])
+        let grandchildFolder = self.foldersCollection.newObject { $0.title = "Coppice" }
+        childFolder.insert([grandchildFolder])
+        XCTAssertEqual(grandchildFolder.pathString, "Coppice  ◁  Foobar  ◁  Hello World")
+    }
+
 
     //MARK: - .plistRepresentation
     func test_plistRepresentation_containsID() throws {

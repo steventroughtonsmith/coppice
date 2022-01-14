@@ -88,6 +88,24 @@ class TextPageContentsTests: XCTestCase {
     }
 
 
+    //MARK: - sizeToFitContent(currentSize:)
+    func test_sizeToFitContent_doesntChangeWidth() throws {
+        self.content.text = NSAttributedString(string: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tincidunt metus vitae posuere efficitur. Aliquam eget dapibus magna. Pellentesque porttitor et sapien ac mattis. Mauris justo urna, dictum in commodo sed, laoreet a est. Vestibulum porta felis non orci egestas, sed sollicitudin dui gravida. Cras gravida dapibus magna, vel bibendum dui euismod et. Nulla pulvinar vitae eros sit amet aliquam. Donec pretium massa ac facilisis gravida. Morbi tincidunt iaculis lacus, ut sagittis ligula laoreet a.\n\nDuis id posuere justo, at mollis elit. Ut malesuada leo ante, ut molestie justo feugiat sit amet. Donec ac tortor mattis, tincidunt ligula vel, tempor dolor. Donec mattis ultricies augue. Nam semper, lectus in faucibus ultricies, nibh erat volutpat mauris, ac dapibus ligula mauris nec libero. Etiam vitae rutrum mauris. Proin in sem ac nisl dignissim lobortis. Proin placerat eros ipsum, et aliquam nibh tincidunt ut. Vivamus sed convallis nisi. Donec tincidunt, leo non sodales eleifend, urna mauris consectetur neque, eget facilisis erat sem nec tellus. Mauris a molestie quam, et facilisis nibh. Curabitur id dui nec lectus rhoncus auctor in a tellus. Cras laoreet sollicitudin est, nec pellentesque ipsum cursus ut.")
+
+        let newSize = self.content.sizeToFitContent(currentSize: CGSize(width: 300, height: 500))
+        XCTAssertEqual(newSize.width, 300)
+    }
+
+    func test_sizeToFitContent_adjustsHeightToFitTextPlusInsets() throws {
+        self.content.text = NSAttributedString(string: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tincidunt metus vitae posuere efficitur. Aliquam eget dapibus magna. Pellentesque porttitor et sapien ac mattis. Mauris justo urna, dictum in commodo sed, laoreet a est. Vestibulum porta felis non orci egestas, sed sollicitudin dui gravida. Cras gravida dapibus magna, vel bibendum dui euismod et. Nulla pulvinar vitae eros sit amet aliquam. Donec pretium massa ac facilisis gravida. Morbi tincidunt iaculis lacus, ut sagittis ligula laoreet a.\n\nDuis id posuere justo, at mollis elit. Ut malesuada leo ante, ut molestie justo feugiat sit amet. Donec ac tortor mattis, tincidunt ligula vel, tempor dolor. Donec mattis ultricies augue. Nam semper, lectus in faucibus ultricies, nibh erat volutpat mauris, ac dapibus ligula mauris nec libero. Etiam vitae rutrum mauris. Proin in sem ac nisl dignissim lobortis. Proin placerat eros ipsum, et aliquam nibh tincidunt ut. Vivamus sed convallis nisi. Donec tincidunt, leo non sodales eleifend, urna mauris consectetur neque, eget facilisis erat sem nec tellus. Mauris a molestie quam, et facilisis nibh. Curabitur id dui nec lectus rhoncus auctor in a tellus. Cras laoreet sollicitudin est, nec pellentesque ipsum cursus ut.")
+
+        let newSize = self.content.sizeToFitContent(currentSize: CGSize(width: 300, height: 500))
+        let textSize = self.content.text.boundingRect(with: CGSize(width: 300, height: 10_000_000), options: [.usesLineFragmentOrigin]).size
+        let insets = GlobalConstants.textEditorInsets()
+        XCTAssertEqual(newSize.height, textSize.rounded().height + insets.verticalInsets + 20)
+    }
+
+
     //MARK: - init(data:)
     func test_init_createsTextBasedOnSuppliedData() throws {
         let data = try NSAttributedString(string: "Hello World").data(from: NSRange(location: 0, length: 11), documentAttributes: [.documentType: NSAttributedString.DocumentType.rtf])

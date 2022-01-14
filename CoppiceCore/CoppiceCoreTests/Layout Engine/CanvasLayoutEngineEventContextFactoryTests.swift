@@ -65,7 +65,7 @@ class CanvasLayoutEngineEventContextFactoryTests: XCTestCase {
         XCTAssertEqual(typedContext.page, page)
     }
 
-    func test_crateMouseEventContext_returnsResizePageEventContextIfResizeLeftClicked() throws {
+    func test_createMouseEventContext_returnsResizePageEventContextIfResizeLeftClicked() throws {
         let page = TestLayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 30, height: 30))
         page.testComponent = .resizeLeft
 
@@ -77,7 +77,7 @@ class CanvasLayoutEngineEventContextFactoryTests: XCTestCase {
         XCTAssertEqual(typedContext.component, .resizeLeft)
     }
 
-    func test_crateMouseEventContext_returnsResizePageEventContextIfResizeTopClicked() throws {
+    func test_createMouseEventContext_returnsResizePageEventContextIfResizeTopClicked() throws {
         let page = TestLayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 30, height: 30))
         page.testComponent = .resizeTop
 
@@ -89,7 +89,7 @@ class CanvasLayoutEngineEventContextFactoryTests: XCTestCase {
         XCTAssertEqual(typedContext.component, .resizeTop)
     }
 
-    func test_crateMouseEventContext_returnsResizePageEventContextIfResizeRightClicked() throws {
+    func test_createMouseEventContext_returnsResizePageEventContextIfResizeRightClicked() throws {
         let page = TestLayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 30, height: 30))
         page.testComponent = .resizeRight
 
@@ -101,7 +101,7 @@ class CanvasLayoutEngineEventContextFactoryTests: XCTestCase {
         XCTAssertEqual(typedContext.component, .resizeRight)
     }
 
-    func test_crateMouseEventContext_returnsResizePageEventContextIfResizeBottomClicked() throws {
+    func test_createMouseEventContext_returnsResizePageEventContextIfResizeBottomClicked() throws {
         let page = TestLayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 30, height: 30))
         page.testComponent = .resizeBottom
 
@@ -113,7 +113,7 @@ class CanvasLayoutEngineEventContextFactoryTests: XCTestCase {
         XCTAssertEqual(typedContext.component, .resizeBottom)
     }
 
-    func test_crateMouseEventContext_returnsResizePageEventContextIfResizeTopLeftClicked() throws {
+    func test_createMouseEventContext_returnsResizePageEventContextIfResizeTopLeftClicked() throws {
         let page = TestLayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 30, height: 30))
         page.testComponent = .resizeTopLeft
 
@@ -125,7 +125,7 @@ class CanvasLayoutEngineEventContextFactoryTests: XCTestCase {
         XCTAssertEqual(typedContext.component, .resizeTopLeft)
     }
 
-    func test_crateMouseEventContext_returnsResizePageEventContextIfResizeTopRightClicked() throws {
+    func test_createMouseEventContext_returnsResizePageEventContextIfResizeTopRightClicked() throws {
         let page = TestLayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 30, height: 30))
         page.testComponent = .resizeTopRight
 
@@ -137,7 +137,7 @@ class CanvasLayoutEngineEventContextFactoryTests: XCTestCase {
         XCTAssertEqual(typedContext.component, .resizeTopRight)
     }
 
-    func test_crateMouseEventContext_returnsResizePageEventContextIfResizeBottomRightClicked() throws {
+    func test_createMouseEventContext_returnsResizePageEventContextIfResizeBottomRightClicked() throws {
         let page = TestLayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 30, height: 30))
         page.testComponent = .resizeBottomRight
 
@@ -149,7 +149,7 @@ class CanvasLayoutEngineEventContextFactoryTests: XCTestCase {
         XCTAssertEqual(typedContext.component, .resizeBottomRight)
     }
 
-    func test_crateMouseEventContext_returnsResizePageEventContextIfResizeBottomLeftClicked() throws {
+    func test_createMouseEventContext_returnsResizePageEventContextIfResizeBottomLeftClicked() throws {
         let page = TestLayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 30, height: 30))
         page.testComponent = .resizeBottomLeft
 
@@ -163,6 +163,16 @@ class CanvasLayoutEngineEventContextFactoryTests: XCTestCase {
 
 
     //MARK: - createKeyEventContext(for:in:)
+    func test_createKeyEventContext_returnsNilIfLayoutEngineIsNotEditable() throws {
+        self.mockLayoutEngine.editable = false
+        let page1 = TestLayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 30, height: 30))
+        let page2 = TestLayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 120, y: 120, width: 30, height: 30))
+        self.mockLayoutEngine.selectedPages = [page1, page2]
+
+        let context = self.factory.createKeyEventContext(for: UInt16(kVK_LeftArrow), in: self.mockLayoutEngine)
+        XCTAssertNil(context)
+    }
+
     func test_createKeyEventContext_returnsNilIfNoPagesAreSelected() throws {
         let context = self.factory.createKeyEventContext(for: UInt16(kVK_LeftArrow), in: self.mockLayoutEngine)
         XCTAssertNil(context)

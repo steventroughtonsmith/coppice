@@ -251,6 +251,62 @@ class LayoutEnginePageTests: XCTestCase {
     }
 
 
+    //MARK: - .showBackground
+    func test_showBackground_returnsTrueIfLayoutEngineSetToAlwaysShowPageTitles() throws {
+        let layoutEngine = self.layoutEngine()
+        let page = LayoutEnginePage(id: UUID(),
+                                    contentFrame: CGRect(x: 0, y: 0, width: 20, height: 40),
+                                    minimumContentSize: CGSize(width: 50, height: 60))
+        layoutEngine.add([page])
+
+        page.selected = false
+        layoutEngine.alwaysShowPageTitles = true
+
+        XCTAssertTrue(page.showBackground)
+    }
+
+    func test_showBackground_returnsTrueIfPageIsCurrentlyHoveredPageInLayoutEngine() throws {
+        let layoutEngine = self.layoutEngine()
+        let page = LayoutEnginePage(id: UUID(),
+                                    contentFrame: CGRect(x: 0, y: 0, width: 20, height: 40),
+                                    minimumContentSize: CGSize(width: 50, height: 60))
+        layoutEngine.add([page])
+
+        layoutEngine.currentlyHoveredPage = page
+
+        page.selected = false
+        layoutEngine.alwaysShowPageTitles = false
+
+        XCTAssertTrue(page.showBackground)
+    }
+
+    func test_showBackground_returnsTrueIfPageIsSelected() throws {
+        let layoutEngine = self.layoutEngine()
+        let page = LayoutEnginePage(id: UUID(),
+                                    contentFrame: CGRect(x: 0, y: 0, width: 20, height: 40),
+                                    minimumContentSize: CGSize(width: 50, height: 60))
+        layoutEngine.add([page])
+
+        page.selected = true
+        layoutEngine.alwaysShowPageTitles = false
+
+        XCTAssertTrue(page.showBackground)
+    }
+
+    func test_showBackground_returnsFalseIfNotSelectedOrHoveredAndLayoutEngineNotSetToAlwaysShowTitles() throws {
+        let layoutEngine = self.layoutEngine()
+        let page = LayoutEnginePage(id: UUID(),
+                                    contentFrame: CGRect(x: 0, y: 0, width: 20, height: 40),
+                                    minimumContentSize: CGSize(width: 50, height: 60))
+        layoutEngine.add([page])
+
+        page.selected = false
+        layoutEngine.alwaysShowPageTitles = false
+
+        XCTAssertFalse(page.showBackground)
+    }
+
+
     //MARK: - component(at:)
     func performPageComponentTest(_ block: (LayoutEnginePage) throws -> Void) throws {
         let layoutEngine = self.layoutEngine(pageTitleHeight: 10,
@@ -708,7 +764,26 @@ class LayoutEnginePageTests: XCTestCase {
         XCTAssertTrue(children.contains(greatGrandchild2))
     }
 
+    //MARK: - pages(from:)
+    func test_pagesFromCanvasPages_returnsLayoutEnginePageForEachCanvasPage() throws {
+        let canvasPage1 = CanvasPage()
+        canvasPage1.frame = CGRect(x: 10, y: 20, width: 300, height: 400)
+        canvasPage1.zIndex = 3
+        let canvasPage2 = CanvasPage()
+        canvasPage2.frame = CGRect(x: 90, y: 80, width: 700, height: 600)
+        canvasPage2.zIndex = 2
 
+        let pages = LayoutEnginePage.pages(from: [canvasPage1, canvasPage2])
+
+        let page1 = try XCTUnwrap(pages[safe: 0])
+        XCTAssertEqual(page1.id, canvasPage1.id.uuid)
+        XCTAssertEqual(page1.contentFrame, CGRect(x: 10, y: 20, width: 300, height: 400))
+        XCTAssertEqual(page1.zIndex, 3)
+        let page2 = try XCTUnwrap(pages[safe: 1])
+        XCTAssertEqual(page2.id, canvasPage2.id.uuid)
+        XCTAssertEqual(page2.contentFrame, CGRect(x: 90, y: 80, width: 700, height: 600))
+        XCTAssertEqual(page2.zIndex, 2)
+    }
 
     //MARK: - Helpers
     func layoutEngine(pageTitleHeight: CGFloat = 0,

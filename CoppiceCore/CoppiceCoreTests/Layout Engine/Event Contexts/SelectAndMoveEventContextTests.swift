@@ -90,6 +90,32 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
     }
 
 
+    //MARK: - Invoke Link
+    func test_invokeLink_tellsPageToOpenLinkIfDownLocationIsLinkAndPageIsEditable() throws {
+        let mockView = MockLayoutEnginePageView()
+        mockView.isLinkMock.returnValue = true
+        self.page1.view = mockView
+
+        let eventContext = SelectAndMoveEventContext(page: self.page1, editable: true, component: .content)
+
+        eventContext.downEvent(at: .zero, modifiers: [], eventCount: 1, in: self.mockLayoutEngine)
+        XCTAssertTrue(mockView.openLinkMock.wasCalled)
+        eventContext.upEvent(at: .zero, modifiers: [], eventCount: 1, in: self.mockLayoutEngine)
+    }
+
+    func test_invokeLink_doesntTellPageToOpenLinkIfDownLocationIsLinkButPageIsNotEditable() throws {
+        let mockView = MockLayoutEnginePageView()
+        mockView.isLinkMock.returnValue = true
+        self.page1.view = mockView
+
+        let eventContext = SelectAndMoveEventContext(page: self.page1, editable: false, component: .content)
+
+        eventContext.downEvent(at: .zero, modifiers: [], eventCount: 1, in: self.mockLayoutEngine)
+        XCTAssertFalse(mockView.openLinkMock.wasCalled)
+        eventContext.upEvent(at: .zero, modifiers: [], eventCount: 1, in: self.mockLayoutEngine)
+    }
+
+
     //MARK: - Shift Selection
     func test_shiftSelection_clickingOnUnselectedPagesTitleTellsLayoutToAddPageToSelectionOnDownEvent() throws {
         let clickPoint = self.page1.titlePoint

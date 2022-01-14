@@ -49,6 +49,30 @@ class ModelControllerTests: XCTestCase {
         let collection = modelController.collection(for: TestCollectableModelObject.self)
         XCTAssertTrue(collection === expectedCollection)
     }
+
+
+    //MARK: - disableUndo(_:)
+    func test_disableUndo_disablesUndoWhileInSuppliedBlock() throws {
+        let modelController = ModelControllerForTests()
+        XCTAssertTrue(modelController.undoManager.isUndoRegistrationEnabled)
+        var blockCalled = false
+        modelController.disableUndo {
+            XCTAssertFalse(modelController.undoManager.isUndoRegistrationEnabled)
+            blockCalled = true
+        }
+        XCTAssertTrue(blockCalled)
+    }
+
+    func test_disableUndo_reenablesUndoAfterCall() throws {
+        let modelController = ModelControllerForTests()
+        XCTAssertTrue(modelController.undoManager.isUndoRegistrationEnabled)
+        var blockCalled = false
+        modelController.disableUndo {
+            blockCalled = true
+        }
+        XCTAssertTrue(blockCalled)
+        XCTAssertTrue(modelController.undoManager.isUndoRegistrationEnabled)
+    }
 }
 
 
