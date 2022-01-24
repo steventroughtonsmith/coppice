@@ -114,11 +114,11 @@ class TextEditorViewController: NSViewController, NSMenuItemValidation, NSToolba
     let attributeEditor = TextEditorAttributeEditor()
 
     private lazy var textEditorInspectorViewController: TextEditorFontInspectorViewController = {
-        return TextEditorFontInspectorViewController(viewModel: TextEditorFontInspectorViewModel(attributeEditor: self.attributeEditor, modelController: self.viewModel.modelController))
+        return TextEditorFontInspectorViewController(viewModel: TextEditorFontInspectorViewModel(attributeEditor: self.attributeEditor))
     }()
 
     private lazy var textEditorParagraphInspectorViewController: TextEditorParagraphInspectorViewController = {
-        return TextEditorParagraphInspectorViewController(viewModel: TextEditorParagraphInspectorViewModel(attributeEditor: self.attributeEditor, modelController: self.viewModel.modelController))
+        return TextEditorParagraphInspectorViewController(viewModel: TextEditorParagraphInspectorViewModel(attributeEditor: self.attributeEditor))
     }()
 
     private lazy var linkInspectorViewController: LinkInspectorViewController = {

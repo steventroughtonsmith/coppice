@@ -10,11 +10,9 @@ import Cocoa
 import CoppiceCore
 
 class ImageEditorInspectorViewModel: BaseInspectorViewModel {
-    @objc dynamic let imageContent: ImagePageContent
-    let modelController: ModelController
-    init(imageContent: ImagePageContent, modelController: ModelController) {
-        self.imageContent = imageContent
-        self.modelController = modelController
+    @objc dynamic let editorViewModel: ImageEditorViewModel
+    init(editorViewModel: ImageEditorViewModel) {
+        self.editorViewModel = editorViewModel
         super.init()
     }
 
@@ -29,17 +27,17 @@ class ImageEditorInspectorViewModel: BaseInspectorViewModel {
     override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
         var keyPaths = super.keyPathsForValuesAffectingValue(forKey: key)
         if key == #keyPath(imageDescription) {
-            keyPaths.insert("self.imageContent.imageDescription")
+            keyPaths.insert("self.editorViewModel.imageContent.imageDescription")
         }
         return keyPaths
     }
 
     @objc dynamic var imageDescription: String {
         get {
-            return self.imageContent.imageDescription ?? ""
+			return self.editorViewModel.imageContent.imageDescription ?? ""
         }
         set {
-            self.imageContent.imageDescription = newValue
+			self.editorViewModel.imageContent.imageDescription = newValue
         }
     }
 }

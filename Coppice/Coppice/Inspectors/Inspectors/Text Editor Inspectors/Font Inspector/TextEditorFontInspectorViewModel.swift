@@ -13,10 +13,8 @@ import Foundation
 
 class TextEditorFontInspectorViewModel: BaseInspectorViewModel {
     let attributeEditor: TextEditorAttributeEditor
-    let modelController: ModelController
-    init(attributeEditor: TextEditorAttributeEditor, modelController: ModelController) {
+    init(attributeEditor: TextEditorAttributeEditor) {
         self.attributeEditor = attributeEditor
-        self.modelController = modelController
         super.init()
         self.startObservingEditor()
     }

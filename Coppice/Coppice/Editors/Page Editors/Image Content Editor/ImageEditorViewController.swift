@@ -26,7 +26,7 @@ class ImageEditorViewController: NSViewController, NSMenuItemValidation, NSToolb
     var enabled: Bool = true
 
     private lazy var imageEditorInspectorViewController: ImageEditorInspectorViewController = {
-        return ImageEditorInspectorViewController(viewModel: ImageEditorInspectorViewModel(imageContent: self.viewModel.imageContent, modelController: self.viewModel.modelController))
+        return ImageEditorInspectorViewController(viewModel: ImageEditorInspectorViewModel(editorViewModel: self.viewModel))
     }()
 
     override func viewDidLoad() {
