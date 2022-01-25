@@ -48,6 +48,9 @@
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
+                                    <connections>
+                                        <action selector="rotateRight:" target="-2" id="sGT-Mr-YbR"/>
+                                    </connections>
                                 </button>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bQL-eb-QHN">
                                     <rect key="frame" x="69" y="-7" width="42" height="32"/>
@@ -55,6 +58,9 @@
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
+                                    <connections>
+                                        <action selector="rotateLeft:" target="-2" id="HHE-cv-fwg"/>
+                                    </connections>
                                 </button>
                             </subviews>
                             <constraints>

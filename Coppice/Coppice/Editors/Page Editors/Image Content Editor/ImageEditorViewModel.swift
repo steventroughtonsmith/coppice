@@ -44,4 +44,27 @@ class ImageEditorViewModel: ViewModel {
     @objc dynamic var accessibilityDescription: String? {
         return self.imageContent.imageDescription
     }
+
+	//MARK: - Rotation
+	func rotateLeft() {
+		if let rotatedImage = self.image?.rotate90Degrees(.left) {
+			self.image = rotatedImage
+		}
+	}
+
+	func rotateRight() {
+		if let rotatedImage = self.image?.rotate90Degrees(.right) {
+			self.image = rotatedImage
+		}
+	}
+
+
+
+	//mode (.view, .crop, .hotspot)
+
+	//rotate left/right
+	//.cropInsets
+	//.hotspots
+
+	//LinkEditor
 }

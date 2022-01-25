@@ -22,6 +22,10 @@ class ImageEditorInspectorViewController: BaseInspectorViewController {
         self.updateTextViewHeight()
     }
 
+	private var typedViewModel: ImageEditorInspectorViewModel {
+		return self.viewModel as! ImageEditorInspectorViewModel
+	}
+
     private func updateTextViewHeight() {
         guard
             let layoutManager = self.descriptionTextView.layoutManager,
@@ -35,6 +39,14 @@ class ImageEditorInspectorViewController: BaseInspectorViewController {
 
         self.descriptionScrollViewHeight.constant = max(60, min(height, 150))
     }
+
+	@IBAction func rotateLeft(_ sender: Any) {
+		self.typedViewModel.rotateLeft()
+	}
+
+	@IBAction func rotateRight(_ sender: Any) {
+		self.typedViewModel.rotateRight()
+	}
 }
 
 extension ImageEditorInspectorViewController: NSTextViewDelegate {

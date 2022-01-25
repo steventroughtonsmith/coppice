@@ -40,4 +40,12 @@ class ImageEditorInspectorViewModel: BaseInspectorViewModel {
 			self.editorViewModel.imageContent.imageDescription = newValue
         }
     }
+
+	func rotateLeft() {
+		self.editorViewModel.rotateLeft()
+	}
+
+	func rotateRight() {
+		self.editorViewModel.rotateRight()
+	}
 }
