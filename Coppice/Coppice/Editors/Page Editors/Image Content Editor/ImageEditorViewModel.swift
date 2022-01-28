@@ -58,6 +58,14 @@ class ImageEditorViewModel: ViewModel {
 		}
 	}
 
+	//MARK: - Mode
+    enum Mode: Int {
+		case view
+		case crop
+		case hotspot
+	}
+
+	@Published var mode: Mode = .view
 
 
 	//mode (.view, .crop, .hotspot)

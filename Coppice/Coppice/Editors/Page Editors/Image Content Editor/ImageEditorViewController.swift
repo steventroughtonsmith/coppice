@@ -11,6 +11,7 @@ import Combine
 
 class ImageEditorViewController: NSViewController, NSMenuItemValidation, NSToolbarItemValidation {
     @IBOutlet weak var imageView: NSImageView!
+	@IBOutlet var placeholderView: ImageEditorPlaceholderView!
 
     @objc dynamic let viewModel: ImageEditorViewModel
     init(viewModel: ImageEditorViewModel) {
@@ -29,49 +30,56 @@ class ImageEditorViewController: NSViewController, NSMenuItemValidation, NSToolb
         return ImageEditorInspectorViewController(viewModel: ImageEditorInspectorViewModel(editorViewModel: self.viewModel))
     }()
 
+
+	//MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        (self.view as? ImageEditorView)?.backgroundColour = NSColor.pageEditorBackground
-        self.updatePlaceholderLabel()
+        (self.view as? ColourBackgroundView)?.backgroundColour = NSColor.pageEditorBackground
     }
 
     override func viewWillAppear() {
         super.viewWillAppear()
 
-        self.imageView.imageScaling = self.isInCanvas ? .scaleProportionallyUpOrDown : .scaleProportionallyDown
-        self.imageDescriptionObserver = self.viewModel.publisher(for: \.accessibilityDescription).sink { [weak self] description in
-            self?.imageView.setAccessibilityValueDescription(description)
-        }
+		self.subscribers[.mode] = self.viewModel.$mode.sink { [weak self] newMode in
+			self?.switchTo(newMode)
+		}
     }
 
-    override func viewDidAppear() {
-        super.viewDidAppear()
-        self.updatePlaceholderLabel()
-    }
+	//MARK: - Subscribers
+	private enum SubscriberKey {
+		case mode
+	}
 
+	private var subscribers: [SubscriberKey: AnyCancellable] = [:]
 
-    var imageDescriptionObserver: AnyCancellable!
-    override func viewDidDisappear() {
-        super.viewDidDisappear()
+	//MARK: - Mode
+	private func switchTo(_ mode: ImageEditorViewModel.Mode) {
+		switch mode {
+		case .view, .hotspot:
+            self.editorModeViewController = ImageEditorViewModeViewController(viewModel: self.viewModel)
+		case .crop:
+			self.editorModeViewController = ImageEditorCropModeViewController()
+		}
+	}
 
-        self.imageDescriptionObserver?.cancel()
-        self.imageDescriptionObserver = nil
-    }
+	private var editorModeViewController: (NSViewController & PageContentEditor)? {
+		didSet {
+			oldValue?.removeFromParent()
+			oldValue?.view.removeFromSuperview()
 
-    var simulateInCanvas: Bool = false
+			if let overlayViewController = self.editorModeViewController {
+				self.addChild(overlayViewController)
+				self.view.addSubview(overlayViewController.view, withInsets: NSEdgeInsetsZero)
+			}
+		}
+	}
 
-    var isInCanvas: Bool {
-        if self.simulateInCanvas {
-            return true
-        }
-        return (self.parentEditor as? PageEditorViewController)?.viewModel.isInCanvas ?? false
-    }
-
-
+	//MARK: - Linking
     @IBAction func editLink(_ sender: Any?) {
         //We need an empty implementation just so validation occurs
     }
 
+	//MARK: - Valdiation
     func validateToolbarItem(_ item: NSToolbarItem) -> Bool {
         if item.action == #selector(self.editLink(_:)) {
             item.toolTip = NSLocalizedString("Image Pages don't current support links", comment: "Image Page link to page disabled tooltip")
@@ -87,16 +95,6 @@ class ImageEditorViewController: NSViewController, NSMenuItemValidation, NSToolb
         }
         return true
     }
-
-
-    @IBOutlet var placeholderLabel: NSTextField!
-    private func updatePlaceholderLabel() {
-        if (self.view.window?.firstResponder == self.imageView) || !self.isInCanvas {
-            self.placeholderLabel.stringValue = NSLocalizedString("Drag or paste an image here", comment: "Image Editor default placeholder")
-        } else {
-            self.placeholderLabel.stringValue = NSLocalizedString("Double-click to edit image", comment: "Image Editor on canvas placeholder")
-        }
-    }
 }
 
 
@@ -106,15 +104,11 @@ extension ImageEditorViewController: PageContentEditor {
     }
 
     func startEditing(at point: CGPoint) {
-        self.view.window?.makeFirstResponder(self.imageView)
-        self.updatePlaceholderLabel()
+        self.editorModeViewController?.startEditing(at: point)
     }
 
     func stopEditing() {
-        if (self.view.window?.firstResponder == self.imageView) {
-            self.view.window?.makeFirstResponder(nil)
-        }
-        self.updatePlaceholderLabel()
+        self.editorModeViewController?.stopEditing()
     }
 }
 

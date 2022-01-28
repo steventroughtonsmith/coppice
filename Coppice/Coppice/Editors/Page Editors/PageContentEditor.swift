@@ -21,4 +21,19 @@ extension PageContentEditor {
     }
 
     func openLink(at point: CGPoint) {}
+
+    var pageEditorViewController: PageEditorViewController? {
+        var currentParent = self.parentEditor
+        while currentParent != nil {
+            if let pageEditorViewController = currentParent as? PageEditorViewController {
+                return pageEditorViewController
+            }
+            currentParent = currentParent?.parentEditor
+        }
+        return nil
+    }
+
+    var isInCanvas: Bool {
+        return self.pageEditorViewController?.viewModel.isInCanvas ?? false
+    }
 }

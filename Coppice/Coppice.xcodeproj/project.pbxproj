@@ -37,6 +37,13 @@
 		99146A2E24F016DC00A2AE48 /* SpringLoadedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99146A2D24F016DC00A2AE48 /* SpringLoadedTableView.swift */; };
 		9914C8E5271097E400654689 /* NSShadow+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9914C8E4271097E400654689 /* NSShadow+M3Extensions.swift */; };
 		99171EDC24AA48B200E96DE6 /* MainToolbarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99171EDB24AA48B200E96DE6 /* MainToolbarDelegate.swift */; };
+		9918674427A430B600A1CC3E /* ImageEditorCropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9918674327A430B600A1CC3E /* ImageEditorCropView.swift */; };
+		9918674627A4383F00A1CC3E /* ImageEditorCropModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9918674527A4383F00A1CC3E /* ImageEditorCropModeViewController.swift */; };
+		9918674927A445AD00A1CC3E /* ImageEditorViewModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9918674727A445AD00A1CC3E /* ImageEditorViewModeViewController.swift */; };
+		9918674A27A445AD00A1CC3E /* ImageEditorViewModeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9918674827A445AD00A1CC3E /* ImageEditorViewModeViewController.xib */; };
+		9918674F27A4465D00A1CC3E /* ImageEditorHotspotModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9918674D27A4465D00A1CC3E /* ImageEditorHotspotModeViewController.swift */; };
+		9918675027A4465D00A1CC3E /* ImageEditorHotspotModeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9918674E27A4465D00A1CC3E /* ImageEditorHotspotModeViewController.xib */; };
+		9918675227A4467700A1CC3E /* ImageEditorCropModeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9918675127A4467700A1CC3E /* ImageEditorCropModeViewController.xib */; };
 		9919B93123D09FBB00C7A44D /* TextColourPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9919B93023D09FBB00C7A44D /* TextColourPicker.swift */; };
 		991B5F432541E32B002C483C /* HelpViewerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991B5F412541E32B002C483C /* HelpViewerWindowController.swift */; };
 		991B5F442541E32B002C483C /* HelpViewerWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 991B5F422541E32B002C483C /* HelpViewerWindowController.xib */; };
@@ -114,7 +121,7 @@
 		995B4B7F261B390F00F2AD01 /* RenameDeviceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 995B4B7D261B390F00F2AD01 /* RenameDeviceViewController.xib */; };
 		995F9305252B5B1B00A753E4 /* ColouredButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995F9304252B5B1B00A753E4 /* ColouredButtonCell.swift */; };
 		995F931D252B654A00A753E4 /* Sample Document.coppicedoc in Resources */ = {isa = PBXBuildFile; fileRef = 995F931C252B654A00A753E4 /* Sample Document.coppicedoc */; };
-		995F9324252B695400A753E4 /* ImageEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995F9323252B695400A753E4 /* ImageEditorView.swift */; };
+		995F9324252B695400A753E4 /* ImageEditorViewModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995F9323252B695400A753E4 /* ImageEditorViewModeView.swift */; };
 		995F9376252CB74200A753E4 /* PageContentEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995F9375252CB74100A753E4 /* PageContentEditor.swift */; };
 		996010F724F14FFA008B8F98 /* SpringLoadedTableRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996010F624F14FFA008B8F98 /* SpringLoadedTableRowView.swift */; };
 		9960CCE924B1EC1C001F092E /* MockEventContextFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9960CCE824B1EC1C001F092E /* MockEventContextFactory.swift */; };
@@ -469,6 +476,13 @@
 		99146A2D24F016DC00A2AE48 /* SpringLoadedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpringLoadedTableView.swift; sourceTree = "<group>"; };
 		9914C8E4271097E400654689 /* NSShadow+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSShadow+M3Extensions.swift"; sourceTree = "<group>"; };
 		99171EDB24AA48B200E96DE6 /* MainToolbarDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainToolbarDelegate.swift; sourceTree = "<group>"; };
+		9918674327A430B600A1CC3E /* ImageEditorCropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorCropView.swift; sourceTree = "<group>"; };
+		9918674527A4383F00A1CC3E /* ImageEditorCropModeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorCropModeViewController.swift; sourceTree = "<group>"; };
+		9918674727A445AD00A1CC3E /* ImageEditorViewModeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorViewModeViewController.swift; sourceTree = "<group>"; };
+		9918674827A445AD00A1CC3E /* ImageEditorViewModeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageEditorViewModeViewController.xib; sourceTree = "<group>"; };
+		9918674D27A4465D00A1CC3E /* ImageEditorHotspotModeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorHotspotModeViewController.swift; sourceTree = "<group>"; };
+		9918674E27A4465D00A1CC3E /* ImageEditorHotspotModeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageEditorHotspotModeViewController.xib; sourceTree = "<group>"; };
+		9918675127A4467700A1CC3E /* ImageEditorCropModeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageEditorCropModeViewController.xib; sourceTree = "<group>"; };
 		9919B93023D09FBB00C7A44D /* TextColourPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextColourPicker.swift; sourceTree = "<group>"; };
 		991B5F412541E32B002C483C /* HelpViewerWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpViewerWindowController.swift; sourceTree = "<group>"; };
 		991B5F422541E32B002C483C /* HelpViewerWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HelpViewerWindowController.xib; sourceTree = "<group>"; };
@@ -545,7 +559,7 @@
 		995B4B7D261B390F00F2AD01 /* RenameDeviceViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RenameDeviceViewController.xib; sourceTree = "<group>"; };
 		995F9304252B5B1B00A753E4 /* ColouredButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColouredButtonCell.swift; sourceTree = "<group>"; };
 		995F931C252B654A00A753E4 /* Sample Document.coppicedoc */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "Sample Document.coppicedoc"; sourceTree = "<group>"; };
-		995F9323252B695400A753E4 /* ImageEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorView.swift; sourceTree = "<group>"; };
+		995F9323252B695400A753E4 /* ImageEditorViewModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorViewModeView.swift; sourceTree = "<group>"; };
 		995F9375252CB74100A753E4 /* PageContentEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageContentEditor.swift; sourceTree = "<group>"; };
 		996010F624F14FFA008B8F98 /* SpringLoadedTableRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpringLoadedTableRowView.swift; sourceTree = "<group>"; };
 		9960CCE824B1EC1C001F092E /* MockEventContextFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEventContextFactory.swift; sourceTree = "<group>"; };
@@ -918,6 +932,35 @@
 				99D329A9252237A000E15683 /* SubscriptionTableCellView.swift */,
 			);
 			path = "Multiple Subscriptions";
+			sourceTree = "<group>";
+		};
+		9918674227A4303300A1CC3E /* Crop Mode */ = {
+			isa = PBXGroup;
+			children = (
+				9918674327A430B600A1CC3E /* ImageEditorCropView.swift */,
+				9918674527A4383F00A1CC3E /* ImageEditorCropModeViewController.swift */,
+				9918675127A4467700A1CC3E /* ImageEditorCropModeViewController.xib */,
+			);
+			path = "Crop Mode";
+			sourceTree = "<group>";
+		};
+		9918674B27A445B100A1CC3E /* View Mode */ = {
+			isa = PBXGroup;
+			children = (
+				995F9323252B695400A753E4 /* ImageEditorViewModeView.swift */,
+				9918674727A445AD00A1CC3E /* ImageEditorViewModeViewController.swift */,
+				9918674827A445AD00A1CC3E /* ImageEditorViewModeViewController.xib */,
+			);
+			path = "View Mode";
+			sourceTree = "<group>";
+		};
+		9918674C27A4464800A1CC3E /* Hotspot Mode */ = {
+			isa = PBXGroup;
+			children = (
+				9918674D27A4465D00A1CC3E /* ImageEditorHotspotModeViewController.swift */,
+				9918674E27A4465D00A1CC3E /* ImageEditorHotspotModeViewController.xib */,
+			);
+			path = "Hotspot Mode";
 			sourceTree = "<group>";
 		};
 		991B5F402541E300002C483C /* Help */ = {
@@ -1597,9 +1640,11 @@
 			children = (
 				99C865222302E267004C7B89 /* ImageEditorViewModel.swift */,
 				99C8651E2302E256004C7B89 /* ImageEditorViewController.swift */,
-				995F9323252B695400A753E4 /* ImageEditorView.swift */,
 				99C8651F2302E256004C7B89 /* ImageEditorViewController.xib */,
 				99146A2924EEAB6200A2AE48 /* ImageEditorPlaceholderView.swift */,
+				9918674B27A445B100A1CC3E /* View Mode */,
+				9918674227A4303300A1CC3E /* Crop Mode */,
+				9918674C27A4464800A1CC3E /* Hotspot Mode */,
 			);
 			path = "Image Content Editor";
 			sourceTree = "<group>";
@@ -2169,6 +2214,7 @@
 				999007F524D079E200DB5C13 /* TourCanvases.mp4 in Resources */,
 				99C4FBE326C94F22009D035D /* PageSelectorDividerTableCellView.xib in Resources */,
 				991B5F4D2541E36D002C483C /* HelpNavigationViewController.xib in Resources */,
+				9918675227A4467700A1CC3E /* ImageEditorCropModeViewController.xib in Resources */,
 				99F0CD77246AF1C4006DE18E /* PreviewGenerationDebugWindow.xib in Resources */,
 				99FE019B22CD1038004D380D /* MainMenu.xib in Resources */,
 				9981E6D024C05811005AF0EE /* AboutWindow.xib in Resources */,
@@ -2176,11 +2222,13 @@
 				99ECA0B726496F7D00480C19 /* PageSelectorContentTableCellView.xib in Resources */,
 				995B4B7F261B390F00F2AD01 /* RenameDeviceViewController.xib in Resources */,
 				99488AF123C8D5B0009954AF /* Colours.xcassets in Resources */,
+				9918674A27A445AD00A1CC3E /* ImageEditorViewModeViewController.xib in Resources */,
 				9998B4E8251642D900E2D455 /* LinksHelp.mp4 in Resources */,
 				99D8E379237EDB890098CF3B /* PageInspectorContentView.xib in Resources */,
 				99906375249BC5780008C747 /* ProFeatures.plist in Resources */,
 				99C9006625794AE700969E92 /* TextEditorParagraphInspectorView.xib in Resources */,
 				9973737D2423BAD1000D5F21 /* RootSplitViewController.xib in Resources */,
+				9918675027A4465D00A1CC3E /* ImageEditorHotspotModeViewController.xib in Resources */,
 				9998B4E625163FAB00E2D455 /* HelpTipView.xib in Resources */,
 				996187F5249A523D007313BD /* GeneralPreferencesViewController.xib in Resources */,
 				99115DC6249E304D008942DF /* SystemProfileInfoViewController.xib in Resources */,
@@ -2352,6 +2400,7 @@
 				9902F4A923882ADA00AF646F /* NSSegmentedControl+M3Extensions.swift in Sources */,
 				990D2441235DEFE2001B1FD9 /* PageArrowView.swift in Sources */,
 				9981E6CB24C055CE005AF0EE /* PreferencesTabView.swift in Sources */,
+				9918674F27A4465D00A1CC3E /* ImageEditorHotspotModeViewController.swift in Sources */,
 				99171EDC24AA48B200E96DE6 /* MainToolbarDelegate.swift in Sources */,
 				99FDF12C241FD53D00AF1E51 /* CanvasesViewController.swift in Sources */,
 				998336C3256BFDC900C25EB0 /* CoppiceApplication.swift in Sources */,
@@ -2373,7 +2422,9 @@
 				9962AB8923732D9400337834 /* CoppiceDocumentController.swift in Sources */,
 				99BF09542691FF5D00528E61 /* PageSelectorTableRowView.swift in Sources */,
 				993D2BDB24127E3B002E5BAC /* CanvasListViewModel.swift in Sources */,
+				9918674427A430B600A1CC3E /* ImageEditorCropView.swift in Sources */,
 				999EA6B32436097500BF254E /* SidebarViewModel.swift in Sources */,
+				9918674927A445AD00A1CC3E /* ImageEditorViewModeViewController.swift in Sources */,
 				998CF0FC24ACF6A800EA26A6 /* NSBezierPath+M3Extensions.swift in Sources */,
 				995F9376252CB74200A753E4 /* PageContentEditor.swift in Sources */,
 				997344D62432236300DF4EDB /* PageLinkController.swift in Sources */,
@@ -2433,7 +2484,7 @@
 				99C88EE42409631800339880 /* PageImageController.swift in Sources */,
 				99C7B214257BEE85009E2F18 /* TextEditorParagraphAttributes.swift in Sources */,
 				99C865262306D12B004C7B89 /* PageSelectorViewModel.swift in Sources */,
-				995F9324252B695400A753E4 /* ImageEditorView.swift in Sources */,
+				995F9324252B695400A753E4 /* ImageEditorViewModeView.swift in Sources */,
 				99D329F325234BB900E15683 /* SizeAdjustableCellView.swift in Sources */,
 				99C9006525794AE700969E92 /* TextEditorParagraphInspectorViewController.swift in Sources */,
 				99A0B855238C2F46005FCF25 /* TextEditorFontAttributes.swift in Sources */,
@@ -2471,6 +2522,7 @@
 				992A5CB122DDF5210012CCB6 /* DebugCanvasEditorViewModel.swift in Sources */,
 				992A5C9C22DCC6090012CCB6 /* SourceListViewModel.swift in Sources */,
 				991B60BF25433294002C483C /* HelpBook+Searching.swift in Sources */,
+				9918674627A4383F00A1CC3E /* ImageEditorCropModeViewController.swift in Sources */,
 				99C88EEA240C2F3F00339880 /* NSWindow+KeyLoopDebug.swift in Sources */,
 				99D03F1B267BA6F600B9CE1B /* LinkEditor.swift in Sources */,
 				99D8E381237EDB890098CF3B /* InspectorContainerViewModel.swift in Sources */,

@@ -45,6 +45,10 @@ extension Editor where Self: NSViewController {
         return nil
     }
 
+    var inspectors: [Inspector] {
+        return []
+    }
+
     var childEditors: [Editor] {
         return self.children.compactMap { $0 as? Editor }
     }

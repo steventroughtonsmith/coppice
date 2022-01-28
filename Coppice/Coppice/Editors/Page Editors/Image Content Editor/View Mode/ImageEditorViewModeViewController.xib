@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="ImageEditorViewModeViewController" customModule="Coppice" customModuleProvider="target">
+            <connections>
+                <outlet property="imageView" destination="Jrr-vg-V2r" id="Ze9-gK-Yv8"/>
+                <outlet property="imageViewTopConstraint" destination="9WV-aP-NdL" id="OZD-u0-i1j"/>
+                <outlet property="placeholderLabel" destination="F6T-DX-9C5" id="7BS-Kc-Emf"/>
+                <outlet property="placeholderView" destination="CyX-gS-Aru" id="Kbd-5o-1ZK"/>
+                <outlet property="placeholderViewTopConstraint" destination="8Rl-fp-Zbm" id="h8O-ra-0qb"/>
+                <outlet property="view" destination="SxK-8L-6C9" id="W9w-Lz-A0s"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="SxK-8L-6C9" customClass="ImageEditorViewModeView" customModule="Coppice" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Jrr-vg-V2r">
+                    <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
+                    <imageCell key="cell" selectable="YES" editable="YES" alignment="left" imageScaling="proportionallyDown" id="oYV-SD-BX2"/>
+                    <connections>
+                        <binding destination="-2" name="value" keyPath="self.viewModel.image" id="ehx-z3-S3I"/>
+                    </connections>
+                </imageView>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="CyX-gS-Aru" customClass="ImageEditorPlaceholderView" customModule="Coppice" customModuleProvider="target">
+                    <rect key="frame" x="20" y="20" width="440" height="232"/>
+                    <subviews>
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="F6T-DX-9C5">
+                            <rect key="frame" x="143" y="95" width="154" height="42"/>
+                            <constraints>
+                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="150" id="qBi-Gx-K3B"/>
+                            </constraints>
+                            <textFieldCell key="cell" alignment="center" title="Drag or paste an image here" id="giZ-aL-K7M">
+                                <font key="font" metaFont="system" size="18"/>
+                                <color key="textColor" name="PagePlaceholder"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="F6T-DX-9C5" secondAttribute="trailing" constant="10" id="4tg-lI-heA"/>
+                        <constraint firstItem="F6T-DX-9C5" firstAttribute="centerX" secondItem="CyX-gS-Aru" secondAttribute="centerX" id="6XM-X7-bg3"/>
+                        <constraint firstItem="F6T-DX-9C5" firstAttribute="centerY" secondItem="CyX-gS-Aru" secondAttribute="centerY" id="GP3-9O-ws9"/>
+                        <constraint firstItem="F6T-DX-9C5" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="CyX-gS-Aru" secondAttribute="leading" constant="10" id="jTS-hU-75J"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="color" keyPath="colour">
+                            <color key="value" name="PagePlaceholder"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <binding destination="-2" name="hidden" keyPath="self.viewModel.image" id="bmV-U5-hYI">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSIsNotNil</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </customView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="CyX-gS-Aru" firstAttribute="top" secondItem="SxK-8L-6C9" secondAttribute="top" constant="20" symbolic="YES" id="8Rl-fp-Zbm"/>
+                <constraint firstItem="Jrr-vg-V2r" firstAttribute="top" secondItem="SxK-8L-6C9" secondAttribute="top" id="9WV-aP-NdL"/>
+                <constraint firstAttribute="bottom" secondItem="Jrr-vg-V2r" secondAttribute="bottom" id="BIF-za-owf"/>
+                <constraint firstAttribute="trailing" secondItem="Jrr-vg-V2r" secondAttribute="trailing" id="CA3-38-4FP"/>
+                <constraint firstAttribute="bottom" secondItem="CyX-gS-Aru" secondAttribute="bottom" constant="20" symbolic="YES" id="Hsz-Ix-IX7"/>
+                <constraint firstItem="CyX-gS-Aru" firstAttribute="leading" secondItem="SxK-8L-6C9" secondAttribute="leading" constant="20" symbolic="YES" id="OKi-XA-L3g"/>
+                <constraint firstAttribute="trailing" secondItem="CyX-gS-Aru" secondAttribute="trailing" constant="20" symbolic="YES" id="biW-nN-kJk"/>
+                <constraint firstItem="Jrr-vg-V2r" firstAttribute="leading" secondItem="SxK-8L-6C9" secondAttribute="leading" id="oEC-JU-jOi"/>
+            </constraints>
+            <connections>
+                <outlet property="imageView" destination="Jrr-vg-V2r" id="C0d-rJ-290"/>
+            </connections>
+            <point key="canvasLocation" x="61" y="123"/>
+        </customView>
+    </objects>
+    <resources>
+        <namedColor name="PagePlaceholder">
+            <color white="0.43000000715255737" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </namedColor>
+    </resources>
+</document>

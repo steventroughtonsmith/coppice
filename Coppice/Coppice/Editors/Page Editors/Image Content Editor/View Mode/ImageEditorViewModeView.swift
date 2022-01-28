@@ -1,5 +1,5 @@
 //
-//  ImageEditorView.swift
+//  ImageEditorViewModeView.swift
 //  Coppice
 //
 //  Created by Martin Pilkington on 05/10/2020.
@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class ImageEditorView: ColourBackgroundView {
+class ImageEditorViewModeView: NSView {
     @IBOutlet var imageView: NSImageView?
 
     override func hitTest(_ point: NSPoint) -> NSView? {
