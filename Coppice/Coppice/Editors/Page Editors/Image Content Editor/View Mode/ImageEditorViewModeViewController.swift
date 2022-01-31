@@ -29,7 +29,6 @@ class ImageEditorViewModeViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.updatePlaceholderLabel()
-        self.fixConstraintsOnBigSur()
     }
 
     override func viewWillAppear() {
@@ -58,19 +57,6 @@ class ImageEditorViewModeViewController: NSViewController {
     }
 
     private var subscribers: [SubscriberKey: AnyCancellable] = [:]
-
-    //MARK: - Constraints Fix
-    @IBOutlet var imageViewTopConstraint: NSLayoutConstraint!
-    @IBOutlet var placeholderViewTopConstraint: NSLayoutConstraint!
-
-    private func fixConstraintsOnBigSur() {
-        self.imageViewTopConstraint.isActive = false
-        self.placeholderViewTopConstraint.isActive = false
-        if #available(macOS 11.0, *) {
-            self.imageView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
-            self.placeholderView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true
-        }
-    }
 
     //MARK: - Placeholder Label
     @IBOutlet var placeholderLabel: NSTextField!

@@ -10,10 +10,8 @@
         <customObject id="-2" userLabel="File's Owner" customClass="ImageEditorViewModeViewController" customModule="Coppice" customModuleProvider="target">
             <connections>
                 <outlet property="imageView" destination="Jrr-vg-V2r" id="Ze9-gK-Yv8"/>
-                <outlet property="imageViewTopConstraint" destination="9WV-aP-NdL" id="OZD-u0-i1j"/>
                 <outlet property="placeholderLabel" destination="F6T-DX-9C5" id="7BS-Kc-Emf"/>
                 <outlet property="placeholderView" destination="CyX-gS-Aru" id="Kbd-5o-1ZK"/>
-                <outlet property="placeholderViewTopConstraint" destination="8Rl-fp-Zbm" id="h8O-ra-0qb"/>
                 <outlet property="view" destination="SxK-8L-6C9" id="W9w-Lz-A0s"/>
             </connections>
         </customObject>

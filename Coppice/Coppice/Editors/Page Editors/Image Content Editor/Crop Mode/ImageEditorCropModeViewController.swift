@@ -14,6 +14,12 @@ class ImageEditorCropModeViewController: NSViewController {
 	override func loadView() {
 		self.view = ImageEditorCropView()
 	}
+
+    override func viewDidAppear() {
+        super.viewDidAppear()
+
+        (self.view as? ImageEditorCropView)?.cropRect = self.view.bounds.insetBy(dx: 40, dy: 40)
+    }
 }
 
 extension ImageEditorCropModeViewController: PageContentEditor {

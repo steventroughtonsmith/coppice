@@ -69,7 +69,23 @@ class ImageEditorViewController: NSViewController, NSMenuItemValidation, NSToolb
 
 			if let overlayViewController = self.editorModeViewController {
 				self.addChild(overlayViewController)
-				self.view.addSubview(overlayViewController.view, withInsets: NSEdgeInsetsZero)
+                overlayViewController.view.translatesAutoresizingMaskIntoConstraints = false
+                self.view.addSubview(overlayViewController.view)
+                if #available(macOS 11.0, *) {
+                    NSLayoutConstraint.activate([
+                        overlayViewController.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+                        overlayViewController.view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+                        overlayViewController.view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+                        overlayViewController.view.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+                    ])
+                } else {
+                    NSLayoutConstraint.activate([
+                        overlayViewController.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+                        overlayViewController.view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+                        overlayViewController.view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+                        overlayViewController.view.topAnchor.constraint(equalTo: self.view.topAnchor),
+                    ])
+                }
 			}
 		}
 	}
