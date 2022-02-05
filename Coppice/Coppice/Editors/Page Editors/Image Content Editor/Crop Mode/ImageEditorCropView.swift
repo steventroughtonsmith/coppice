@@ -8,8 +8,6 @@
 
 import Cocoa
 
-//TODO: Shrink down handles when size gets too small
-//TODO: Move crop area around
 //TODO: Show dimensions when cropping (potentially also set dimensions)
 //TODO: Scrolling
 //TODO: Convert view crop rect to image crop rect
@@ -37,17 +35,19 @@ class ImageEditorCropView: NSView {
     private struct DragState {
         var initialPoint: CGPoint
         var initialCropRect: CGRect
-        var draggedHandle: DragHandle
+        var draggedHandle: DragHandle?
+        var isMoving: Bool
     }
 
     private var dragState: DragState?
 
     override func mouseDown(with event: NSEvent) {
         let point = self.convert(event.locationInWindow, from: nil)
-        guard let draggedHandle = self.dragHandle(at: point) else {
+        guard self.interactionRectForMoving(in: self.drawingRect).contains(point) == false else {
+            self.dragState = DragState(initialPoint: point, initialCropRect: self.cropRect, draggedHandle: nil, isMoving: true)
             return
         }
-        self.dragState = DragState(initialPoint: point, initialCropRect: self.cropRect, draggedHandle: draggedHandle)
+        self.dragState = DragState(initialPoint: point, initialCropRect: self.cropRect, draggedHandle: self.dragHandle(at: point), isMoving: false)
     }
 
     override func mouseDragged(with event: NSEvent) {
@@ -57,9 +57,12 @@ class ImageEditorCropView: NSView {
 
         let pointInView = self.convert(event.locationInWindow, from: nil)
 
-        let delta = pointInView.minus(dragState.initialPoint)
-
-        self.cropRect = dragState.draggedHandle.adjustedCropRect(withInitialRect: dragState.initialCropRect, delta: delta, maxSize: self.imageSize)
+        let delta = pointInView.minus(dragState.initialPoint).rounded()
+        if let draggedHandle = dragState.draggedHandle {
+            self.cropRect = draggedHandle.adjustedCropRect(withInitialRect: dragState.initialCropRect, delta: delta, maxSize: self.imageSize)
+        } else if dragState.isMoving {
+            self.cropRect = self.movedCropRect(withInitialRect: dragState.initialCropRect, delta: delta)
+        }
     }
 
     override func mouseUp(with event: NSEvent) {
@@ -76,6 +79,35 @@ class ImageEditorCropView: NSView {
             }
         }
         return nil
+    }
+
+    private func interactionRectForMoving(in rect: CGRect) -> CGRect {
+        var dx: CGFloat = 20
+        var dy: CGFloat = 20
+        if rect.width < DragHandle.minimumSizeForSideHandles {
+            dx = (DragHandle.handleDepth / 2) + DragHandle.interactionMargin
+        }
+        if rect.height < DragHandle.minimumSizeForSideHandles {
+            dy = (DragHandle.handleDepth / 2) + DragHandle.interactionMargin
+        }
+        return rect.insetBy(dx: dx, dy: dy)
+    }
+
+    private func movedCropRect(withInitialRect initialRect: CGRect, delta: CGPoint) -> CGRect {
+        var dx = delta.x
+        if (initialRect.minX + dx) < 0 {
+            dx = -initialRect.minX
+        } else if (initialRect.maxX + dx) > self.imageSize.width {
+            dx = self.imageSize.width - initialRect.maxX
+        }
+
+        var dy = delta.y
+        if (initialRect.minY + dy) < 0 {
+            dy = -initialRect.minY
+        } else if (initialRect.maxY + dy) > self.imageSize.height {
+            dy = self.imageSize.height - initialRect.maxY
+        }
+        return initialRect.offsetBy(dx: dx, dy: dy)
     }
 
 
@@ -133,7 +165,7 @@ extension ImageEditorCropView {
         private static let sideHandleLength: CGFloat = 26.0
         private static let cornerHandleLength: CGFloat = 18.0
         private static let minimumCornerHandleLength: CGFloat = 10.0
-        private static let interactionMargin: CGFloat = 2
+        static let interactionMargin: CGFloat = 2
         static let handleDepth: CGFloat = 8
 
         static var minimumSize: CGFloat {
