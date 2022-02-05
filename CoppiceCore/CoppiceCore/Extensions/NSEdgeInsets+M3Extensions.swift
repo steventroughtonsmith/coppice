@@ -16,4 +16,8 @@ extension NSEdgeInsets {
     public var verticalInsets: CGFloat {
         return self.top + self.bottom
     }
+
+    public var inverted: NSEdgeInsets {
+        return NSEdgeInsets(top: -self.top, left: -self.left, bottom: -self.bottom, right: -self.right)
+    }
 }

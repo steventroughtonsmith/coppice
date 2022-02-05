@@ -21,7 +21,7 @@ class TextEditorParagraphInspectorViewModelTests: XCTestCase {
 
         self.modelController = CoppiceModelController(undoManager: UndoManager())
         self.editor = MockTextEditorAttributeEditor()
-        self.viewModel = TextEditorParagraphInspectorViewModel(attributeEditor: self.editor, modelController: self.modelController)
+        self.viewModel = TextEditorParagraphInspectorViewModel(attributeEditor: self.editor)
     }
 
 

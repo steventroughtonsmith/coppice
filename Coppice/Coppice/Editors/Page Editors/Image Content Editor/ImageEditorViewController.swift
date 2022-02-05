@@ -58,7 +58,7 @@ class ImageEditorViewController: NSViewController, NSMenuItemValidation, NSToolb
 		case .view, .hotspot:
             self.editorModeViewController = ImageEditorViewModeViewController(viewModel: self.viewModel)
 		case .crop:
-			self.editorModeViewController = ImageEditorCropModeViewController()
+            self.editorModeViewController = ImageEditorCropModeViewController(viewModel: self.viewModel)
 		}
 	}
 

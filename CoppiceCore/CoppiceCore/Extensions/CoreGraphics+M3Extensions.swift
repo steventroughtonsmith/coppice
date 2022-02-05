@@ -211,4 +211,11 @@ extension CGRect {
         rect.size.height -= (edgeInsets.top + edgeInsets.bottom)
         return rect
     }
+
+    public func moved(byX x: CGFloat, y: CGFloat) -> CGRect {
+        var rect = self
+        rect.origin.x += x
+        rect.origin.y += y
+        return rect
+    }
 }

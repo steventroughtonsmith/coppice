@@ -1,15 +1,108 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11134" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11134"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner"/>
+        <customObject id="-2" userLabel="File's Owner" customClass="ImageEditorCropModeViewController" customModule="Coppice" customModuleProvider="target">
+            <connections>
+                <outlet property="cropView" destination="WgG-b0-LwI" id="Iou-6p-NEc"/>
+                <outlet property="view" destination="c22-O7-iKe" id="0hE-MC-b4y"/>
+            </connections>
+        </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="c22-O7-iKe">
-            <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
+            <rect key="frame" x="0.0" y="0.0" width="758" height="592"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="mGl-vP-E1k">
+                    <rect key="frame" x="284" y="201" width="190" height="190"/>
+                    <subviews>
+                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="150" placeholderIntrinsicHeight="150" translatesAutoresizingMaskIntoConstraints="NO" id="efa-aa-AT3">
+                            <rect key="frame" x="20" y="20" width="150" height="150"/>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="8hl-Uc-22S"/>
+                            <connections>
+                                <binding destination="-2" name="value" keyPath="self.viewModel.image" id="QlH-hk-lxQ"/>
+                            </connections>
+                        </imageView>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="WgG-b0-LwI" customClass="ImageEditorCropView" customModule="Coppice" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="190" height="190"/>
+                        </customView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="WgG-b0-LwI" firstAttribute="top" secondItem="mGl-vP-E1k" secondAttribute="top" id="4eq-dk-KHy"/>
+                        <constraint firstItem="WgG-b0-LwI" firstAttribute="leading" secondItem="mGl-vP-E1k" secondAttribute="leading" id="6nr-Yb-qq7"/>
+                        <constraint firstAttribute="bottom" secondItem="WgG-b0-LwI" secondAttribute="bottom" id="HoN-mI-JkJ"/>
+                        <constraint firstAttribute="bottom" secondItem="efa-aa-AT3" secondAttribute="bottom" constant="20" id="LGc-9W-skS"/>
+                        <constraint firstAttribute="trailing" secondItem="efa-aa-AT3" secondAttribute="trailing" constant="20" id="btm-Ka-ccf"/>
+                        <constraint firstItem="efa-aa-AT3" firstAttribute="leading" secondItem="mGl-vP-E1k" secondAttribute="leading" constant="20" id="cwe-52-cdz"/>
+                        <constraint firstAttribute="trailing" secondItem="WgG-b0-LwI" secondAttribute="trailing" id="d2g-Xs-lMZ"/>
+                        <constraint firstItem="efa-aa-AT3" firstAttribute="top" secondItem="mGl-vP-E1k" secondAttribute="top" constant="20" id="qcb-0R-y6M"/>
+                    </constraints>
+                </customView>
+                <box boxType="custom" borderType="none" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="lGJ-jm-7LJ">
+                    <rect key="frame" x="0.0" y="0.0" width="284" height="592"/>
+                    <view key="contentView" id="C2j-kU-sW4">
+                        <rect key="frame" x="0.0" y="0.0" width="284" height="592"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                    <color key="fillColor" name="CropModeBackground"/>
+                </box>
+                <box boxType="custom" borderType="none" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="Hcw-Me-2sL">
+                    <rect key="frame" x="474" y="0.0" width="284" height="592"/>
+                    <view key="contentView" id="va5-p1-6QZ">
+                        <rect key="frame" x="0.0" y="0.0" width="284" height="592"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                    <color key="fillColor" name="CropModeBackground"/>
+                </box>
+                <box boxType="custom" borderType="none" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="KoM-cR-dXn">
+                    <rect key="frame" x="284" y="391" width="190" height="201"/>
+                    <view key="contentView" id="Yws-Vi-dm4">
+                        <rect key="frame" x="0.0" y="0.0" width="190" height="201"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                    <color key="fillColor" name="CropModeBackground"/>
+                </box>
+                <box boxType="custom" borderType="none" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="87P-Zw-4Zn">
+                    <rect key="frame" x="284" y="0.0" width="190" height="201"/>
+                    <view key="contentView" id="5iS-zs-4Kt">
+                        <rect key="frame" x="0.0" y="0.0" width="190" height="201"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                    <color key="fillColor" name="CropModeBackground"/>
+                </box>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="Hcw-Me-2sL" secondAttribute="trailing" id="5YI-4H-4E2"/>
+                <constraint firstItem="Hcw-Me-2sL" firstAttribute="leading" secondItem="mGl-vP-E1k" secondAttribute="trailing" id="8XK-Up-ccW"/>
+                <constraint firstItem="lGJ-jm-7LJ" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="9S7-D9-d6p"/>
+                <constraint firstAttribute="bottom" secondItem="87P-Zw-4Zn" secondAttribute="bottom" id="AeV-9z-TFy"/>
+                <constraint firstItem="Hcw-Me-2sL" firstAttribute="leading" secondItem="87P-Zw-4Zn" secondAttribute="trailing" id="FiE-cg-QXF"/>
+                <constraint firstItem="Hcw-Me-2sL" firstAttribute="leading" secondItem="KoM-cR-dXn" secondAttribute="trailing" id="Glb-pz-Wkf"/>
+                <constraint firstItem="Hcw-Me-2sL" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="Ii8-LE-z0t"/>
+                <constraint firstAttribute="bottom" secondItem="Hcw-Me-2sL" secondAttribute="bottom" id="Irh-v4-jww"/>
+                <constraint firstItem="87P-Zw-4Zn" firstAttribute="top" secondItem="mGl-vP-E1k" secondAttribute="bottom" id="KrW-WY-v8o"/>
+                <constraint firstAttribute="bottom" secondItem="lGJ-jm-7LJ" secondAttribute="bottom" id="NYo-21-slX"/>
+                <constraint firstItem="87P-Zw-4Zn" firstAttribute="leading" secondItem="lGJ-jm-7LJ" secondAttribute="trailing" id="QkE-jJ-zBz"/>
+                <constraint firstItem="KoM-cR-dXn" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="W79-hB-8q9"/>
+                <constraint firstItem="mGl-vP-E1k" firstAttribute="centerX" secondItem="c22-O7-iKe" secondAttribute="centerX" id="ds8-aa-ASj"/>
+                <constraint firstItem="mGl-vP-E1k" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="e6j-4n-Qao"/>
+                <constraint firstItem="mGl-vP-E1k" firstAttribute="top" secondItem="KoM-cR-dXn" secondAttribute="bottom" id="eW1-qT-aGR"/>
+                <constraint firstItem="lGJ-jm-7LJ" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="pQ9-E9-f7q"/>
+                <constraint firstItem="mGl-vP-E1k" firstAttribute="leading" secondItem="lGJ-jm-7LJ" secondAttribute="trailing" id="s0A-GD-1nr"/>
+                <constraint firstItem="KoM-cR-dXn" firstAttribute="leading" secondItem="lGJ-jm-7LJ" secondAttribute="trailing" id="sCr-il-ieq"/>
+            </constraints>
+            <point key="canvasLocation" x="58" y="-248"/>
         </customView>
     </objects>
+    <resources>
+        <namedColor name="CropModeBackground">
+            <color red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
 </document>
