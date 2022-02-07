@@ -16,6 +16,9 @@ public class ImagePageContent: NSObject, PageContent {
             if oldValue == nil && self.image != nil {
                 self.page?.updatePageSizes()
             }
+            if image != oldValue, let image = self.image {
+                self.cropRect = CGRect(origin: .zero, size: image.size)
+            }
             self.didChange(\.image, oldValue: oldValue)
         }
     }
@@ -37,11 +40,14 @@ public class ImagePageContent: NSObject, PageContent {
         }
     }
 
+    public var cropRect: CGRect
+
     public weak var page: Page?
 
     public private(set) var otherMetadata: [String: Any]?
     enum MetadataKeys: String, CaseIterable {
         case description
+        case cropRect
     }
 
     public init(data: Data? = nil, metadata: [String: Any]? = nil) {
@@ -53,25 +59,35 @@ public class ImagePageContent: NSObject, PageContent {
                 self.imageDescription = description
             }
 
+            if let cropRectString = metadata[MetadataKeys.cropRect.rawValue] as? String {
+                self.cropRect = NSRectFromString(cropRectString)
+            } else {
+                self.cropRect = .zero
+            }
+
             let otherKeys = MetadataKeys.allCases.map(\.rawValue)
             self.otherMetadata = metadata.filter { (key, _) in
                 return !otherKeys.contains(key)
             }
         } else {
             self.otherMetadata = nil
+            self.cropRect = .zero
+        }
+
+        if self.cropRect == .zero, let image = self.image {
+            self.cropRect = CGRect(origin: .zero, size: image.size)
         }
     }
 
     public var modelFile: ModelFile {
         let imageData = self.image?.pngData()
         let filename = (self.page != nil) ? "\(self.page!.id.uuid.uuidString).png" : nil
-        var metadata: [String: Any]? = self.otherMetadata
+        var metadata: [String: Any] = self.otherMetadata ?? [:]
         if let description = self.imageDescription {
-            if (metadata == nil) {
-                metadata = [:]
-            }
-            metadata?[MetadataKeys.description.rawValue] = description
+            metadata[MetadataKeys.description.rawValue] = description
         }
+        metadata[MetadataKeys.cropRect.rawValue] = NSStringFromRect(self.cropRect)
+
         return ModelFile(type: self.contentType.rawValue, filename: filename, data: imageData, metadata: metadata)
     }
 

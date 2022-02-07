@@ -57,6 +57,60 @@ class ImagePageContentsTests: XCTestCase {
         XCTAssertNil(content.otherMetadata?["description"])
     }
 
+    func test_init_setsTheCropRectFromMetadataIfValidString() throws {
+        let content = ImagePageContent(metadata: ["cropRect": NSStringFromRect(CGRect(x: 20, y: 30, width: 42, height: 55))])
+        XCTAssertEqual(content.cropRect, CGRect(x: 20, y: 30, width: 42, height: 55))
+    }
+
+    func test_init_setsTheCropRectFromImageIfInvalidStringInMetadata() throws {
+        let bundle = Bundle(for: type(of: self))
+        let imageURL = bundle.url(forResource: "test-image", withExtension: "png")!
+        let image = NSImage(byReferencing: imageURL)
+        let imageData = try XCTUnwrap(image.pngData())
+
+        let content = ImagePageContent(data: imageData, metadata: ["cropRect": "hello world"])
+        XCTAssertEqual(content.cropRect, CGRect(origin: .zero, size: image.size))
+    }
+
+    func test_init_setsTheCropRectFromImageIfNoStringInMetadata() throws {
+        let bundle = Bundle(for: type(of: self))
+        let imageURL = bundle.url(forResource: "test-image", withExtension: "png")!
+        let image = NSImage(byReferencing: imageURL)
+        let imageData = try XCTUnwrap(image.pngData())
+
+        let content = ImagePageContent(data: imageData)
+        XCTAssertEqual(content.cropRect, CGRect(origin: .zero, size: image.size))
+    }
+
+    func test_init_setsTheCropRectToZeroIfNoImageAndNoStringInMetadata() throws {
+        let content = ImagePageContent(metadata: [:])
+        XCTAssertEqual(content.cropRect, .zero)
+    }
+
+    //MARK: - .image
+    func test_image_cropRectIsResetToImageSizeWhenImageChanges() throws {
+        let bundle = Bundle(for: type(of: self))
+        let imageURL = bundle.url(forResource: "test-image", withExtension: "png")!
+        let image = NSImage(byReferencing: imageURL)
+
+        let content = ImagePageContent()
+        content.cropRect = CGRect(x: 100, y: 80, width: 60, height: 40)
+        content.image = image
+        XCTAssertEqual(content.cropRect, CGRect(origin: .zero, size: image.size))
+    }
+
+    func test_image_cropRectIsNotChangedIfSettingSameImage() throws {
+        let bundle = Bundle(for: type(of: self))
+        let imageURL = bundle.url(forResource: "test-image", withExtension: "png")!
+        let image = NSImage(byReferencing: imageURL)
+
+        let content = ImagePageContent()
+        content.image = image
+        content.cropRect = CGRect(x: 100, y: 80, width: 60, height: 40)
+        content.image = image
+        XCTAssertEqual(content.cropRect, CGRect(x: 100, y: 80, width: 60, height: 40))
+    }
+
 
     //MARK: - .modelFile
     func test_modelFile_typeIsSetToImageType() {
@@ -106,6 +160,13 @@ class ImagePageContentsTests: XCTestCase {
         content.imageDescription = nil
 
         XCTAssertNil(content.modelFile.metadata?["description"])
+    }
+
+    func test_modelFile_metadataContainsCropRect() {
+        let content = ImagePageContent()
+        content.cropRect = CGRect(x: 20, y: 40, width: 66, height: 88)
+
+        XCTAssertEqual(content.modelFile.metadata?["cropRect"] as? String, NSStringFromRect(CGRect(x: 20, y: 40, width: 66, height: 88)))
     }
 
     func test_modelFile_metadataContainsOtherMetadata() throws {
