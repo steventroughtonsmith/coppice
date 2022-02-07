@@ -33,7 +33,7 @@ class ImageEditorCropModeViewController: NSViewController {
 
         self.cropView.cropRect = image.size.toRect()
         self.cropView.imageSize = image.size
-        self.cropView.insets = NSEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+        self.cropView.insets = NSEdgeInsets(top: 20, left: 40, bottom: 20, right: 40)
     }
 
     override func viewDidLoad() {

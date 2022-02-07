@@ -8,7 +8,6 @@
 
 import Cocoa
 
-//TODO: Show dimensions when cropping (potentially also set dimensions)
 //TODO: Scrolling
 //TODO: Convert view crop rect to image crop rect
 //TODO: Make accessibile
@@ -39,7 +38,11 @@ class ImageEditorCropView: NSView {
         var isMoving: Bool
     }
 
-    private var dragState: DragState?
+    private var dragState: DragState? {
+        didSet {
+            self.setNeedsDisplay(self.bounds)
+        }
+    }
 
     override func mouseDown(with event: NSEvent) {
         let point = self.convert(event.locationInWindow, from: nil)
@@ -122,6 +125,7 @@ class ImageEditorCropView: NSView {
 
         self.drawClipBox()
         self.drawDragHandles()
+        self.drawDimensionsPanel()
     }
 
     private func drawClipBox() {
@@ -148,6 +152,29 @@ class ImageEditorCropView: NSView {
             path.lineWidth = DragHandle.handleDepth - 2
             path.stroke()
         }
+    }
+
+    private func drawDimensionsPanel() {
+        guard let dragState = self.dragState, dragState.isMoving == false else {
+            return
+        }
+
+        let dimensionsText = "\(Int(self.cropRect.width)) x \(Int(self.cropRect.height)) px"
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: NSFont.boldSystemFont(ofSize: 11),
+            .foregroundColor: NSColor.white,
+        ]
+
+        let textBounds = (dimensionsText as NSString).boundingRect(with: NSSize(width: 1000, height: 14), options: [], attributes: attributes, context: nil)
+        let panelSize = CGSize(width: textBounds.width.rounded(.up) + 10, height: 14)
+        var panelRect = panelSize.rounded(.up).centred(in: self.drawingRect)
+        panelRect.origin.y = self.drawingRect.maxY + (DragHandle.handleDepth / 2) + 2
+
+        NSColor(white: 0, alpha: 0.8).set()
+        NSBezierPath(roundedRect: panelRect, xRadius: (panelRect.size.height / 2), yRadius: (panelRect.size.height / 2)).fill()
+
+        let textRect = textBounds.rounded(.up).size.centred(in: panelRect)
+        (dimensionsText as NSString).draw(in: textRect, withAttributes: attributes)
     }
 }
 
