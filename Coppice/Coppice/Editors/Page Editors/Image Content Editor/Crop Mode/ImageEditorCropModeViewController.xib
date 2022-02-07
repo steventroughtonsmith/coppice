@@ -19,83 +19,115 @@
             <rect key="frame" x="0.0" y="0.0" width="758" height="592"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <customView translatesAutoresizingMaskIntoConstraints="NO" id="mGl-vP-E1k">
-                    <rect key="frame" x="264" y="201" width="230" height="190"/>
-                    <subviews>
-                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="150" placeholderIntrinsicHeight="150" translatesAutoresizingMaskIntoConstraints="NO" id="efa-aa-AT3">
-                            <rect key="frame" x="40" y="20" width="150" height="150"/>
-                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="8hl-Uc-22S"/>
-                            <connections>
-                                <binding destination="-2" name="value" keyPath="self.viewModel.image" id="QlH-hk-lxQ"/>
-                            </connections>
-                        </imageView>
-                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="WgG-b0-LwI" customClass="ImageEditorCropView" customModule="Coppice" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="230" height="190"/>
-                        </customView>
-                    </subviews>
+                <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uq5-p1-Uds">
+                    <rect key="frame" x="-1" y="-1" width="760" height="594"/>
+                    <clipView key="contentView" id="18z-ZP-gXA" customClass="FlippedClipView" customModule="Coppice" customModuleProvider="target">
+                        <rect key="frame" x="1" y="1" width="758" height="592"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <customView ambiguous="YES" placeholderIntrinsicWidth="758" placeholderIntrinsicHeight="592" translatesAutoresizingMaskIntoConstraints="NO" id="G7B-ie-Vfn" userLabel="Document View">
+                                <rect key="frame" x="0.0" y="0.0" width="758" height="592"/>
+                                <subviews>
+                                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="mGl-vP-E1k">
+                                        <rect key="frame" x="265" y="182" width="230" height="230"/>
+                                        <subviews>
+                                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="150" placeholderIntrinsicHeight="150" translatesAutoresizingMaskIntoConstraints="NO" id="efa-aa-AT3">
+                                                <rect key="frame" x="40" y="40" width="150" height="150"/>
+                                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="8hl-Uc-22S"/>
+                                                <connections>
+                                                    <binding destination="-2" name="value" keyPath="self.viewModel.image" id="QlH-hk-lxQ"/>
+                                                </connections>
+                                            </imageView>
+                                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="WgG-b0-LwI" customClass="ImageEditorCropView" customModule="Coppice" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="230" height="230"/>
+                                            </customView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="WgG-b0-LwI" firstAttribute="top" secondItem="mGl-vP-E1k" secondAttribute="top" id="4eq-dk-KHy"/>
+                                            <constraint firstItem="WgG-b0-LwI" firstAttribute="leading" secondItem="mGl-vP-E1k" secondAttribute="leading" id="6nr-Yb-qq7"/>
+                                            <constraint firstAttribute="bottom" secondItem="WgG-b0-LwI" secondAttribute="bottom" id="HoN-mI-JkJ"/>
+                                            <constraint firstAttribute="bottom" secondItem="efa-aa-AT3" secondAttribute="bottom" constant="40" id="LGc-9W-skS"/>
+                                            <constraint firstAttribute="trailing" secondItem="efa-aa-AT3" secondAttribute="trailing" constant="40" id="btm-Ka-ccf"/>
+                                            <constraint firstItem="efa-aa-AT3" firstAttribute="leading" secondItem="mGl-vP-E1k" secondAttribute="leading" constant="40" id="cwe-52-cdz"/>
+                                            <constraint firstAttribute="trailing" secondItem="WgG-b0-LwI" secondAttribute="trailing" id="d2g-Xs-lMZ"/>
+                                            <constraint firstItem="efa-aa-AT3" firstAttribute="top" secondItem="mGl-vP-E1k" secondAttribute="top" constant="40" id="qcb-0R-y6M"/>
+                                        </constraints>
+                                    </customView>
+                                    <box boxType="custom" borderType="none" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="lGJ-jm-7LJ">
+                                        <rect key="frame" x="0.0" y="0.0" width="265" height="594"/>
+                                        <view key="contentView" id="C2j-kU-sW4">
+                                            <rect key="frame" x="0.0" y="0.0" width="265" height="594"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </view>
+                                        <color key="fillColor" name="CropModeBackground"/>
+                                    </box>
+                                    <box boxType="custom" borderType="none" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="Hcw-Me-2sL">
+                                        <rect key="frame" x="495" y="0.0" width="265" height="594"/>
+                                        <view key="contentView" id="va5-p1-6QZ">
+                                            <rect key="frame" x="0.0" y="0.0" width="265" height="594"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </view>
+                                        <color key="fillColor" name="CropModeBackground"/>
+                                    </box>
+                                    <box boxType="custom" borderType="none" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="KoM-cR-dXn">
+                                        <rect key="frame" x="265" y="412" width="230" height="182"/>
+                                        <view key="contentView" id="Yws-Vi-dm4">
+                                            <rect key="frame" x="0.0" y="0.0" width="230" height="182"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </view>
+                                        <color key="fillColor" name="CropModeBackground"/>
+                                    </box>
+                                    <box boxType="custom" borderType="none" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="87P-Zw-4Zn">
+                                        <rect key="frame" x="265" y="0.0" width="230" height="182"/>
+                                        <view key="contentView" id="5iS-zs-4Kt">
+                                            <rect key="frame" x="0.0" y="0.0" width="230" height="182"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </view>
+                                        <color key="fillColor" name="CropModeBackground"/>
+                                    </box>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="mGl-vP-E1k" firstAttribute="top" secondItem="KoM-cR-dXn" secondAttribute="bottom" id="08F-d9-Tmn"/>
+                                    <constraint firstItem="87P-Zw-4Zn" firstAttribute="leading" secondItem="lGJ-jm-7LJ" secondAttribute="trailing" id="0Vi-hf-A3r"/>
+                                    <constraint firstItem="KoM-cR-dXn" firstAttribute="leading" secondItem="lGJ-jm-7LJ" secondAttribute="trailing" id="0nN-GW-DeK"/>
+                                    <constraint firstAttribute="trailing" secondItem="Hcw-Me-2sL" secondAttribute="trailing" id="5xT-em-EU1"/>
+                                    <constraint firstAttribute="bottom" secondItem="lGJ-jm-7LJ" secondAttribute="bottom" id="6LG-cg-PcU"/>
+                                    <constraint firstItem="mGl-vP-E1k" firstAttribute="centerY" secondItem="G7B-ie-Vfn" secondAttribute="centerY" id="8BO-X4-kBc"/>
+                                    <constraint firstItem="mGl-vP-E1k" firstAttribute="leading" secondItem="lGJ-jm-7LJ" secondAttribute="trailing" id="AKt-y3-XS5"/>
+                                    <constraint firstAttribute="bottom" secondItem="Hcw-Me-2sL" secondAttribute="bottom" id="DGH-3g-gtL"/>
+                                    <constraint firstItem="Hcw-Me-2sL" firstAttribute="top" secondItem="G7B-ie-Vfn" secondAttribute="top" id="KhZ-ep-qJK"/>
+                                    <constraint firstItem="Hcw-Me-2sL" firstAttribute="leading" secondItem="KoM-cR-dXn" secondAttribute="trailing" id="P4M-iY-9xF"/>
+                                    <constraint firstItem="Hcw-Me-2sL" firstAttribute="leading" secondItem="87P-Zw-4Zn" secondAttribute="trailing" id="Q2Y-lL-BSr"/>
+                                    <constraint firstItem="Hcw-Me-2sL" firstAttribute="leading" secondItem="mGl-vP-E1k" secondAttribute="trailing" id="UsQ-iE-skQ"/>
+                                    <constraint firstItem="lGJ-jm-7LJ" firstAttribute="leading" secondItem="G7B-ie-Vfn" secondAttribute="leading" id="lxA-OY-0eB"/>
+                                    <constraint firstItem="KoM-cR-dXn" firstAttribute="top" secondItem="G7B-ie-Vfn" secondAttribute="top" id="mrF-2z-Zgr"/>
+                                    <constraint firstAttribute="bottom" secondItem="87P-Zw-4Zn" secondAttribute="bottom" id="n5u-fp-AGL"/>
+                                    <constraint firstItem="lGJ-jm-7LJ" firstAttribute="top" secondItem="G7B-ie-Vfn" secondAttribute="top" id="ofA-a6-Tqo"/>
+                                    <constraint firstItem="mGl-vP-E1k" firstAttribute="centerX" secondItem="G7B-ie-Vfn" secondAttribute="centerX" id="q87-Nu-9xx"/>
+                                    <constraint firstItem="87P-Zw-4Zn" firstAttribute="top" secondItem="mGl-vP-E1k" secondAttribute="bottom" id="xw3-5f-4py"/>
+                                </constraints>
+                            </customView>
+                        </subviews>
+                    </clipView>
                     <constraints>
-                        <constraint firstItem="WgG-b0-LwI" firstAttribute="top" secondItem="mGl-vP-E1k" secondAttribute="top" id="4eq-dk-KHy"/>
-                        <constraint firstItem="WgG-b0-LwI" firstAttribute="leading" secondItem="mGl-vP-E1k" secondAttribute="leading" id="6nr-Yb-qq7"/>
-                        <constraint firstAttribute="bottom" secondItem="WgG-b0-LwI" secondAttribute="bottom" id="HoN-mI-JkJ"/>
-                        <constraint firstAttribute="bottom" secondItem="efa-aa-AT3" secondAttribute="bottom" constant="20" id="LGc-9W-skS"/>
-                        <constraint firstAttribute="trailing" secondItem="efa-aa-AT3" secondAttribute="trailing" constant="40" id="btm-Ka-ccf"/>
-                        <constraint firstItem="efa-aa-AT3" firstAttribute="leading" secondItem="mGl-vP-E1k" secondAttribute="leading" constant="40" id="cwe-52-cdz"/>
-                        <constraint firstAttribute="trailing" secondItem="WgG-b0-LwI" secondAttribute="trailing" id="d2g-Xs-lMZ"/>
-                        <constraint firstItem="efa-aa-AT3" firstAttribute="top" secondItem="mGl-vP-E1k" secondAttribute="top" constant="20" id="qcb-0R-y6M"/>
+                        <constraint firstItem="G7B-ie-Vfn" firstAttribute="height" relation="greaterThanOrEqual" secondItem="Uq5-p1-Uds" secondAttribute="height" id="UW1-6x-wXY"/>
+                        <constraint firstItem="G7B-ie-Vfn" firstAttribute="width" relation="greaterThanOrEqual" secondItem="Uq5-p1-Uds" secondAttribute="width" id="eJ5-I0-hHM"/>
                     </constraints>
-                </customView>
-                <box boxType="custom" borderType="none" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="lGJ-jm-7LJ">
-                    <rect key="frame" x="0.0" y="0.0" width="264" height="592"/>
-                    <view key="contentView" id="C2j-kU-sW4">
-                        <rect key="frame" x="0.0" y="0.0" width="264" height="592"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    </view>
-                    <color key="fillColor" name="CropModeBackground"/>
-                </box>
-                <box boxType="custom" borderType="none" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="Hcw-Me-2sL">
-                    <rect key="frame" x="494" y="0.0" width="264" height="592"/>
-                    <view key="contentView" id="va5-p1-6QZ">
-                        <rect key="frame" x="0.0" y="0.0" width="264" height="592"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    </view>
-                    <color key="fillColor" name="CropModeBackground"/>
-                </box>
-                <box boxType="custom" borderType="none" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="KoM-cR-dXn">
-                    <rect key="frame" x="264" y="391" width="230" height="201"/>
-                    <view key="contentView" id="Yws-Vi-dm4">
-                        <rect key="frame" x="0.0" y="0.0" width="230" height="201"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    </view>
-                    <color key="fillColor" name="CropModeBackground"/>
-                </box>
-                <box boxType="custom" borderType="none" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="87P-Zw-4Zn">
-                    <rect key="frame" x="264" y="0.0" width="230" height="201"/>
-                    <view key="contentView" id="5iS-zs-4Kt">
-                        <rect key="frame" x="0.0" y="0.0" width="230" height="201"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    </view>
-                    <color key="fillColor" name="CropModeBackground"/>
-                </box>
+                    <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="wCm-vb-ZeD">
+                        <rect key="frame" x="1" y="577" width="758" height="16"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="Wrp-BJ-3ew">
+                        <rect key="frame" x="743" y="1" width="16" height="592"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                </scrollView>
             </subviews>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="Hcw-Me-2sL" secondAttribute="trailing" id="5YI-4H-4E2"/>
-                <constraint firstItem="Hcw-Me-2sL" firstAttribute="leading" secondItem="mGl-vP-E1k" secondAttribute="trailing" id="8XK-Up-ccW"/>
-                <constraint firstItem="lGJ-jm-7LJ" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="9S7-D9-d6p"/>
-                <constraint firstAttribute="bottom" secondItem="87P-Zw-4Zn" secondAttribute="bottom" id="AeV-9z-TFy"/>
-                <constraint firstItem="Hcw-Me-2sL" firstAttribute="leading" secondItem="87P-Zw-4Zn" secondAttribute="trailing" id="FiE-cg-QXF"/>
-                <constraint firstItem="Hcw-Me-2sL" firstAttribute="leading" secondItem="KoM-cR-dXn" secondAttribute="trailing" id="Glb-pz-Wkf"/>
-                <constraint firstItem="Hcw-Me-2sL" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="Ii8-LE-z0t"/>
-                <constraint firstAttribute="bottom" secondItem="Hcw-Me-2sL" secondAttribute="bottom" id="Irh-v4-jww"/>
-                <constraint firstItem="87P-Zw-4Zn" firstAttribute="top" secondItem="mGl-vP-E1k" secondAttribute="bottom" id="KrW-WY-v8o"/>
-                <constraint firstAttribute="bottom" secondItem="lGJ-jm-7LJ" secondAttribute="bottom" id="NYo-21-slX"/>
-                <constraint firstItem="87P-Zw-4Zn" firstAttribute="leading" secondItem="lGJ-jm-7LJ" secondAttribute="trailing" id="QkE-jJ-zBz"/>
-                <constraint firstItem="KoM-cR-dXn" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="W79-hB-8q9"/>
-                <constraint firstItem="mGl-vP-E1k" firstAttribute="centerX" secondItem="c22-O7-iKe" secondAttribute="centerX" id="ds8-aa-ASj"/>
-                <constraint firstItem="mGl-vP-E1k" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="e6j-4n-Qao"/>
-                <constraint firstItem="mGl-vP-E1k" firstAttribute="top" secondItem="KoM-cR-dXn" secondAttribute="bottom" id="eW1-qT-aGR"/>
-                <constraint firstItem="lGJ-jm-7LJ" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="pQ9-E9-f7q"/>
-                <constraint firstItem="mGl-vP-E1k" firstAttribute="leading" secondItem="lGJ-jm-7LJ" secondAttribute="trailing" id="s0A-GD-1nr"/>
-                <constraint firstItem="KoM-cR-dXn" firstAttribute="leading" secondItem="lGJ-jm-7LJ" secondAttribute="trailing" id="sCr-il-ieq"/>
+                <constraint firstItem="Uq5-p1-Uds" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="-1" id="8xn-Lh-Qa1"/>
+                <constraint firstItem="Uq5-p1-Uds" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="-1" id="AHf-JB-5Lq"/>
+                <constraint firstAttribute="trailing" secondItem="Uq5-p1-Uds" secondAttribute="trailing" constant="-1" id="kPB-iB-ua4"/>
+                <constraint firstAttribute="bottom" secondItem="Uq5-p1-Uds" secondAttribute="bottom" constant="-1" id="mus-LW-yW1"/>
             </constraints>
             <point key="canvasLocation" x="58" y="-248"/>
         </customView>

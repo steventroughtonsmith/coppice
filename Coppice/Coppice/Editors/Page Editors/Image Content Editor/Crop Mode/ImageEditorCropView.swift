@@ -8,7 +8,6 @@
 
 import Cocoa
 
-//TODO: Scrolling
 //TODO: Convert view crop rect to image crop rect
 //TODO: Make accessibile
 
@@ -54,22 +53,28 @@ class ImageEditorCropView: NSView {
     }
 
     override func mouseDragged(with event: NSEvent) {
+        let pointInView = self.convert(event.locationInWindow, from: nil)
+
+        self.adjustCropRect(forDraggedPoint: pointInView)
+        self.startAutoscrolling(with: event)
+    }
+
+    override func mouseUp(with event: NSEvent) {
+        self.dragState = nil
+        self.stopAutoscrolling()
+    }
+
+    private func adjustCropRect(forDraggedPoint draggedPoint: CGPoint) {
         guard let dragState = self.dragState else {
             return
         }
 
-        let pointInView = self.convert(event.locationInWindow, from: nil)
-
-        let delta = pointInView.minus(dragState.initialPoint).rounded()
+        let delta = draggedPoint.minus(dragState.initialPoint).rounded()
         if let draggedHandle = dragState.draggedHandle {
             self.cropRect = draggedHandle.adjustedCropRect(withInitialRect: dragState.initialCropRect, delta: delta, maxSize: self.imageSize)
         } else if dragState.isMoving {
             self.cropRect = self.movedCropRect(withInitialRect: dragState.initialCropRect, delta: delta)
         }
-    }
-
-    override func mouseUp(with event: NSEvent) {
-        self.dragState = nil
     }
 
     private func dragHandle(at point: CGPoint) -> DragHandle? {
@@ -112,6 +117,32 @@ class ImageEditorCropView: NSView {
         }
         return initialRect.offsetBy(dx: dx, dy: dy)
     }
+
+
+    //MARK: - Autoscroll
+    @objc func startAutoscrolling(with event: NSEvent) {
+        self.stopAutoscrolling()
+
+        guard
+            let dragState = self.dragState,
+            let contentView = self.enclosingScrollView?.contentView
+        else {
+            return
+        }
+
+        let previousPosition = contentView.bounds.origin
+        if (self.autoscroll(with: event)) {
+            let delta = contentView.bounds.origin.minus(previousPosition)
+            let pointInView = self.convert(event.locationInWindow, from: nil).plus(delta)
+            self.adjustCropRect(forDraggedPoint: pointInView)
+            self.perform(#selector(self.startAutoscrolling(with:)), with: event, afterDelay: 0.05)
+        }
+    }
+
+    private func stopAutoscrolling() {
+        NSObject.cancelPreviousPerformRequests(withTarget: self)
+    }
+
 
 
     //MARK: - Drawing
