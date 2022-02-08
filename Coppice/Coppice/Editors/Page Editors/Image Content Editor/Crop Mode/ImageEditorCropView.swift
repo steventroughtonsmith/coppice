@@ -8,13 +8,23 @@
 
 import Cocoa
 
-//TODO: Convert view crop rect to image crop rect
+//TODO: Make size to fit content respect crop rect
+//TODO: Make dropping onto canvas respect crop rect (may be fixed above)
+//TODO: Disable text & image inspectors when page is not being edited
+//TODO: Resize image page when editing crop mode
+//TODO: Resize image page when exiting crop mode (if crop rect has changed)
 //TODO: Make accessibile
+
+protocol ImageEditorCropViewDelegate: AnyObject {
+    func didFinishChangingCropRect(in view: ImageEditorCropView)
+}
 
 class ImageEditorCropView: NSView {
     override var isFlipped: Bool {
         return true
     }
+
+    weak var delegate: ImageEditorCropViewDelegate?
 
     /// The crop rectangle of the image, based of the image's top-left corner
     var cropRect: CGRect = .zero {
@@ -60,6 +70,9 @@ class ImageEditorCropView: NSView {
     }
 
     override func mouseUp(with event: NSEvent) {
+        if self.dragState?.initialCropRect != self.cropRect {
+            self.delegate?.didFinishChangingCropRect(in: self)
+        }
         self.dragState = nil
         self.stopAutoscrolling()
     }
@@ -124,7 +137,7 @@ class ImageEditorCropView: NSView {
         self.stopAutoscrolling()
 
         guard
-            let dragState = self.dragState,
+            self.dragState != nil,
             let contentView = self.enclosingScrollView?.contentView
         else {
             return

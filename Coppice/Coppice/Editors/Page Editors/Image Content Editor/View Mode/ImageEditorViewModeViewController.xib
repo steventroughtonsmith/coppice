@@ -25,7 +25,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
                     <imageCell key="cell" selectable="YES" editable="YES" alignment="left" imageScaling="proportionallyDown" id="oYV-SD-BX2"/>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.viewModel.image" id="ehx-z3-S3I"/>
+                        <binding destination="-2" name="value" keyPath="self.viewModel.croppedImage" id="inw-er-ZZJ"/>
                     </connections>
                 </imageView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="CyX-gS-Aru" customClass="ImageEditorPlaceholderView" customModule="Coppice" customModuleProvider="target">
@@ -55,7 +55,7 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                     <connections>
-                        <binding destination="-2" name="hidden" keyPath="self.viewModel.image" id="bmV-U5-hYI">
+                        <binding destination="-2" name="hidden" keyPath="self.viewModel.croppedImage" id="Uwe-gu-HOg">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>

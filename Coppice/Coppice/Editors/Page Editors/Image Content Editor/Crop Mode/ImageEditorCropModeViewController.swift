@@ -31,17 +31,36 @@ class ImageEditorCropModeViewController: NSViewController {
             return
         }
 
-        self.cropView.cropRect = image.size.toRect()
+        self.cropView.cropRect = self.viewModel.cropRect
         self.cropView.imageSize = image.size
         self.cropView.insets = NSEdgeInsets(top: 40, left: 40, bottom: 40, right: 40)
+
+        self.cropView.delegate = self
+
+        self.subscribers[.cropRect] = self.viewModel.publisher(for: \.cropRect).assign(to: \.cropRect, on: self.cropView)
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewDidDisappear() {
+        super.viewDidDisappear()
+        self.subscribers[.cropRect]?.cancel()
+        self.subscribers[.cropRect] = nil
     }
+
+    //MARK: - Subscribers
+    private enum SubscriberKey {
+        case cropRect
+    }
+
+    private var subscribers: [SubscriberKey: AnyCancellable] = [:]
 }
 
 extension ImageEditorCropModeViewController: PageContentEditor {
     func startEditing(at point: CGPoint) {}
     func stopEditing() {}
+}
+
+extension ImageEditorCropModeViewController: ImageEditorCropViewDelegate {
+    func didFinishChangingCropRect(in view: ImageEditorCropView) {
+        self.viewModel.cropRect = self.cropView.cropRect
+    }
 }

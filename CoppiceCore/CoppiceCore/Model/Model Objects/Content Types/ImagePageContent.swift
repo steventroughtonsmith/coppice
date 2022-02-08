@@ -40,7 +40,14 @@ public class ImagePageContent: NSObject, PageContent {
         }
     }
 
-    public var cropRect: CGRect
+    @objc dynamic public var cropRect: CGRect {
+        didSet {
+            guard self.cropRect != oldValue else {
+                return
+            }
+            self.didChange(\.cropRect, oldValue: oldValue)
+        }
+    }
 
     public weak var page: Page?
 

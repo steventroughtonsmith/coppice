@@ -7,6 +7,7 @@
 //
 
 import AppKit
+import Combine
 import CoppiceCore
 
 protocol ImageEditorViewProtocol: AnyObject {}
@@ -20,7 +21,26 @@ class ImageEditorViewModel: ViewModel {
         self.imageContent = imageContent
         self.isInCanvas = isInCanvas
         super.init(documentWindowViewModel: documentWindowViewModel)
+        self.regenerateCroppedImage()
+
+        self.subscribers[.image] = imageContent.publisher(for: \.image).receive(on: DispatchQueue.main).sink { [weak self] _ in
+            self?.regenerateCroppedImage()
+        }
+        self.subscribers[.cropRect] = imageContent.publisher(for: \.cropRect).receive(on: DispatchQueue.main).sink { [weak self] _ in
+            self?.regenerateCroppedImage()
+        }
     }
+
+    //MARK: - Subscribers
+    private enum SubscriberKey {
+        case image
+        case cropRect
+    }
+
+    private var subscribers: [SubscriberKey: AnyCancellable] = [:]
+
+
+    //MARK: - Properties
 
     override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
         var keyPaths = super.keyPathsForValuesAffectingValue(forKey: key)
@@ -30,6 +50,9 @@ class ImageEditorViewModel: ViewModel {
         if key == #keyPath(accessibilityDescription) {
             keyPaths.insert("imageContent.imageDescription")
         }
+        if key == #keyPath(cropRect) {
+            keyPaths.insert("imageContent.cropRect")
+        }
         return keyPaths
     }
 
@@ -38,12 +61,40 @@ class ImageEditorViewModel: ViewModel {
         set {
             self.documentWindowViewModel.registerStartOfEditing()
             self.imageContent.image = newValue
+            self.regenerateCroppedImage()
+        }
+    }
+
+    @objc dynamic var cropRect: CGRect {
+        get { self.imageContent.cropRect }
+        set {
+            self.imageContent.cropRect = newValue
+            self.regenerateCroppedImage()
         }
     }
 
     @objc dynamic var accessibilityDescription: String? {
         return self.imageContent.imageDescription
     }
+
+    //MARK: - Cropped Image
+    @objc dynamic var croppedImage: NSImage?
+
+    private func regenerateCroppedImage() {
+        guard let image = self.image else {
+            self.croppedImage = nil
+            return
+        }
+
+        let croppedImage = NSImage(size: self.cropRect.size)
+        croppedImage.lockFocus()
+        //TODO: iOS don't flip the image
+        image.draw(in: CGRect(origin: .zero, size: self.cropRect.size), from: self.cropRect.flipped(in: CGRect(origin: .zero, size: image.size)), operation: .sourceOver, fraction: 1, respectFlipped: true, hints: nil)
+        croppedImage.unlockFocus()
+
+        self.croppedImage = croppedImage
+    }
+
 
 	//MARK: - Rotation
 	func rotateLeft() {

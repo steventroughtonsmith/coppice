@@ -218,4 +218,10 @@ extension CGRect {
         rect.origin.y += y
         return rect
     }
+
+    public func flipped(in rect: CGRect) -> CGRect {
+        var flippedRect = self
+        flippedRect.origin.y = rect.height - flippedRect.maxY
+        return flippedRect
+    }
 }

@@ -175,7 +175,8 @@ final public class Page: NSObject, CollectableModelObject, FolderContainable {
 
 extension ModelCollection where ModelType == Page {
     @discardableResult public func newPage(fromFileAt url: URL) -> Page? {
-        guard let resourceValues = try? url.resourceValues(forKeys: Set([.typeIdentifierKey])),
+        guard
+            let resourceValues = try? url.resourceValues(forKeys: Set([.typeIdentifierKey])),
             let typeIdentifier = resourceValues.typeIdentifier
         else {
                 return nil
@@ -197,7 +198,8 @@ extension ModelCollection where ModelType == Page {
     }
 
     public func setContentValue<Value, ContentType>(_ value: Value, for keyPath: ReferenceWritableKeyPath<ContentType, Value>, ofPageWithID id: ModelID) {
-        guard let page = self.objectWithID(id),
+        guard
+            let page = self.objectWithID(id),
             let content = page.content as? ContentType
         else {
             return
