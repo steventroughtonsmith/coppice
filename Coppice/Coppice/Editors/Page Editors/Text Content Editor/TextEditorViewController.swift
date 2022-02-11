@@ -354,6 +354,9 @@ class TextEditorViewController: NSViewController, NSMenuItemValidation, NSToolba
 
 extension TextEditorViewController: PageContentEditor {
     var inspectors: [Inspector] {
+        guard self.enabled else {
+            return []
+        }
         return [self.textEditorInspectorViewController, self.textEditorParagraphInspectorViewController, self.linkInspectorViewController]
     }
 

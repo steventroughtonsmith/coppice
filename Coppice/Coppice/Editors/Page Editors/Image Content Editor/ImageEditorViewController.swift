@@ -116,6 +116,9 @@ class ImageEditorViewController: NSViewController, NSMenuItemValidation, NSToolb
 
 extension ImageEditorViewController: PageContentEditor {
     var inspectors: [Inspector] {
+        guard self.enabled else {
+            return []
+        }
         return [self.imageEditorInspectorViewController]
     }
 
