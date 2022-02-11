@@ -24,7 +24,10 @@ public class ImagePageContent: NSObject, PageContent {
     }
 
     public var initialContentSize: CGSize? {
-        return self.image?.size
+        guard self.image != nil else {
+            return nil
+        }
+        return self.cropRect.size
     }
 
     public var maintainAspectRatio: Bool {
@@ -99,6 +102,9 @@ public class ImagePageContent: NSObject, PageContent {
     }
 
     public func sizeToFitContent(currentSize: CGSize) -> CGSize {
-        return self.image?.size ?? currentSize
+        guard self.image != nil else {
+            return currentSize
+        }
+        return self.cropRect.size
     }
 }

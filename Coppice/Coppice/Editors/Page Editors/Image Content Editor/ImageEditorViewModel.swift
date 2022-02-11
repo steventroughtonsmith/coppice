@@ -44,14 +44,14 @@ class ImageEditorViewModel: ViewModel {
 
     override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
         var keyPaths = super.keyPathsForValuesAffectingValue(forKey: key)
-        if (key == "image") {
+        if key == #keyPath(image) {
             keyPaths.insert("imageContent.image")
-        }
-        if key == #keyPath(accessibilityDescription) {
+        } else if key == #keyPath(accessibilityDescription) {
             keyPaths.insert("imageContent.imageDescription")
-        }
-        if key == #keyPath(cropRect) {
+        } else if key == #keyPath(cropRect) {
             keyPaths.insert("imageContent.cropRect")
+        } else if key == #keyPath(croppedImage) {
+            keyPaths.insert("cachedCroppedImage")
         }
         return keyPaths
     }
@@ -78,11 +78,17 @@ class ImageEditorViewModel: ViewModel {
     }
 
     //MARK: - Cropped Image
-    @objc dynamic var croppedImage: NSImage?
+    @objc dynamic private var cachedCroppedImage: NSImage?
+    @objc dynamic var croppedImage: NSImage? {
+        get { self.cachedCroppedImage }
+        set {
+            self.image = newValue
+        }
+    }
 
     private func regenerateCroppedImage() {
         guard let image = self.image else {
-            self.croppedImage = nil
+            self.cachedCroppedImage = nil
             return
         }
 
@@ -92,7 +98,7 @@ class ImageEditorViewModel: ViewModel {
         image.draw(in: CGRect(origin: .zero, size: self.cropRect.size), from: self.cropRect.flipped(in: CGRect(origin: .zero, size: image.size)), operation: .sourceOver, fraction: 1, respectFlipped: true, hints: nil)
         croppedImage.unlockFocus()
 
-        self.croppedImage = croppedImage
+        self.cachedCroppedImage = croppedImage
     }
 
 

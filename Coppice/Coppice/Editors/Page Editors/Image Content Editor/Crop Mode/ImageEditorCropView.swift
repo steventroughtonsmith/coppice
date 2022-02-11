@@ -8,13 +8,6 @@
 
 import Cocoa
 
-//TODO: Make size to fit content respect crop rect
-//TODO: Make dropping onto canvas respect crop rect (may be fixed above)
-//TODO: Disable text & image inspectors when page is not being edited
-//TODO: Resize image page when editing crop mode
-//TODO: Resize image page when exiting crop mode (if crop rect has changed)
-//TODO: Make accessibile
-
 protocol ImageEditorCropViewDelegate: AnyObject {
     func didFinishChangingCropRect(in view: ImageEditorCropView)
 }

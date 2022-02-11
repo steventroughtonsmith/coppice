@@ -239,7 +239,7 @@ class CanvasThumbnailGenerator: NSObject {
         let page = NSBezierPath(roundedRect: scaledRect.insetBy(dx: 1, dy: 1), xRadius: radius, yRadius: radius)
         page.setClip()
 
-        image.draw(in: scaledRect)
+        image.draw(in: scaledRect, from: imageContent.cropRect.flipped(in: CGRect(origin: .zero, size: image.size)), operation: .sourceOver, fraction: 1, respectFlipped: true, hints: nil)
         NSGraphicsContext.restoreGraphicsState()
         return scaledRect
     }
