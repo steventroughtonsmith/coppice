@@ -100,6 +100,9 @@ public class CanvasLayoutEngine: NSObject, LayoutEngine {
     private var pagesByUUID = [UUID: LayoutEnginePage]()
 
     public func add(_ pages: [LayoutEnginePage]) {
+        guard pages.count > 0 else {
+            return
+        }
         for page in pages {
             guard self.pagesByUUID[page.id] == nil else {
                 assertionFailure("Adding a page to the layout engine twice: \(page.id)")
@@ -116,6 +119,9 @@ public class CanvasLayoutEngine: NSObject, LayoutEngine {
     }
 
     public func remove(_ pages: [LayoutEnginePage]) {
+        guard pages.count > 0 else {
+            return
+        }
         self.pages = self.pages.filter { !pages.contains($0) }
         for page in pages {
             page.parent?.removeChild(page)

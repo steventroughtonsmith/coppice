@@ -15,7 +15,7 @@ struct Tag {
 final public class Page: NSObject, CollectableModelObject, FolderContainable {
     public static let modelType: ModelType = ModelType(rawValue: "Page")!
     public static let standardSize = CGSize(width: 300, height: 200)
-    public static let minimumSize = CGSize(width: 150, height: 100)
+    public static let defaultMinimumContentSize = CGSize(width: 150, height: 100)
     public static let contentChangedNotification = Notification.Name("PageContentChangedNotification")
     public static let localizedDefaultTitle = "Untitled Page"
 

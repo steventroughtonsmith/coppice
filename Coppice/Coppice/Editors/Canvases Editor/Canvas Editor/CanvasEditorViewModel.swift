@@ -160,7 +160,7 @@ class CanvasEditorViewModel: ViewModel {
         }
 
         let newPages = canvasPages
-            .map { LayoutEnginePage(id: $0.id.uuid, contentFrame: $0.frame, maintainAspectRatio: $0.maintainAspectRatio, zIndex: $0.zIndex) }
+            .map { LayoutEnginePage(id: $0.id.uuid, contentFrame: $0.frame, maintainAspectRatio: $0.maintainAspectRatio, minimumContentSize: $0.minimumContentSize, zIndex: $0.zIndex) }
             .sorted { $0.zIndex < $1.zIndex }
         let newPagesByID = newPages.indexed(by: \.id)
 

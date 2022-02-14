@@ -28,6 +28,10 @@ public class ImagePageContent: NSObject, PageContent {
         return self.cropRect.size
     }
 
+    public var minimumContentSize: CGSize {
+        return (self.image != nil) ? CGSize(width: 32, height: 32) : Page.defaultMinimumContentSize
+    }
+
     public var maintainAspectRatio: Bool {
         return true
     }

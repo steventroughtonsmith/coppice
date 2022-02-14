@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20036.2" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20036.2"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -68,9 +68,9 @@
                 <constraint firstItem="Jrr-vg-V2r" firstAttribute="top" secondItem="SxK-8L-6C9" secondAttribute="top" id="9WV-aP-NdL"/>
                 <constraint firstAttribute="bottom" secondItem="Jrr-vg-V2r" secondAttribute="bottom" id="BIF-za-owf"/>
                 <constraint firstAttribute="trailing" secondItem="Jrr-vg-V2r" secondAttribute="trailing" id="CA3-38-4FP"/>
-                <constraint firstAttribute="bottom" secondItem="CyX-gS-Aru" secondAttribute="bottom" constant="20" symbolic="YES" id="Hsz-Ix-IX7"/>
+                <constraint firstAttribute="bottom" secondItem="CyX-gS-Aru" secondAttribute="bottom" priority="999" constant="20" symbolic="YES" id="Hsz-Ix-IX7"/>
                 <constraint firstItem="CyX-gS-Aru" firstAttribute="leading" secondItem="SxK-8L-6C9" secondAttribute="leading" constant="20" symbolic="YES" id="OKi-XA-L3g"/>
-                <constraint firstAttribute="trailing" secondItem="CyX-gS-Aru" secondAttribute="trailing" constant="20" symbolic="YES" id="biW-nN-kJk"/>
+                <constraint firstAttribute="trailing" secondItem="CyX-gS-Aru" secondAttribute="trailing" priority="999" constant="20" symbolic="YES" id="biW-nN-kJk"/>
                 <constraint firstItem="Jrr-vg-V2r" firstAttribute="leading" secondItem="SxK-8L-6C9" secondAttribute="leading" id="oEC-JU-jOi"/>
             </constraints>
             <connections>

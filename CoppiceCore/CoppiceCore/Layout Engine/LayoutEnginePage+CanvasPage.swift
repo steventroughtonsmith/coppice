@@ -35,6 +35,7 @@ extension LayoutEnginePage {
         self.init(id: canvasPage.id.uuid,
                   contentFrame: canvasPage.frame,
                   maintainAspectRatio: canvasPage.maintainAspectRatio,
+                  minimumContentSize: canvasPage.minimumContentSize,
                   zIndex: canvasPage.zIndex)
     }
 }

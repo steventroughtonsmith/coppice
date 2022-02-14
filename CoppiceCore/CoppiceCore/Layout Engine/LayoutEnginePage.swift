@@ -63,7 +63,7 @@ public class LayoutEnginePage: Equatable {
     public init(id: UUID,
                 contentFrame: CGRect,
                 maintainAspectRatio: Bool = false,
-                minimumContentSize: CGSize = Page.minimumSize,
+                minimumContentSize: CGSize = Page.defaultMinimumContentSize,
                 zIndex: Int = -1)
     {
         self.id = id

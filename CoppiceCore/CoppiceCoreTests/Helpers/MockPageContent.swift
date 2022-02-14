@@ -10,8 +10,11 @@ import AppKit
 @testable import CoppiceCore
 
 class MockPageContent: NSObject, PageContent, NSFilePromiseProviderDelegate {
-    var otherMetadata: [String: Any]?
+    var minimumContentSize: CGSize {
+        return Page.defaultMinimumContentSize
+    }
 
+    var otherMetadata: [String: Any]?
 
     var filePromiseProvider: ExtendableFilePromiseProvider {
         return ExtendableFilePromiseProvider(fileType: (kUTTypeText as String), delegate: self)

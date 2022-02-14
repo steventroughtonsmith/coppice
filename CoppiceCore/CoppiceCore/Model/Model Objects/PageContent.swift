@@ -87,6 +87,7 @@ public protocol PageContent: AnyObject {
     func firstRangeOf(_ searchTerm: String) -> NSRange
 
     var initialContentSize: CGSize? { get }
+    var minimumContentSize: CGSize { get }
 
     func sizeToFitContent(currentSize: CGSize) -> CGSize
 

@@ -17,6 +17,9 @@ class ImageEditorPlaceholderView: NSView {
 
         self.colour.withAlphaComponent(0.75).set()
         let bounds = self.bounds.insetBy(dx: 2, dy: 2)
+        guard bounds.size != .zero else {
+            return
+        }
 
         self.drawCorner(in: bounds, xEdge: .min, yEdge: .max, size: 10) //Top-left
         self.drawCorner(in: bounds, xEdge: .max, yEdge: .max, size: 10) //Top-right

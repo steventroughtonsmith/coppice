@@ -35,6 +35,10 @@ final public class CanvasPage: NSObject, CollectableModelObject {
         return self.page?.content.maintainAspectRatio ?? false
     }
 
+    public var minimumContentSize: CGSize {
+        return self.page?.content.minimumContentSize ?? Page.defaultMinimumContentSize
+    }
+
     public var zIndex: Int = -1
 
     public private(set) var otherProperties = [String: Any]()

@@ -50,22 +50,43 @@ class CanvasPageTitleView: NSView {
     }
 
     private func setupSubviews() {
-        self.addSubview(self.titleLabel)
-        self.addSubview(self.closeButton)
+        self.addSubview(self.stackView)
 
-        let labelCenterX = self.titleLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor)
+        self.stackView.addArrangedSubview(self.closeButton)
+        self.stackView.addArrangedSubview(self.titleContainer)
+
+        self.titleContainer.addSubview(self.titleLabel)
+
+        let labelCenterX = self.titleLabel.centerXAnchor.constraint(equalTo: self.titleContainer.centerXAnchor)
         labelCenterX.priority = .init(749)
         NSLayoutConstraint.activate([
-            self.closeButton.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 1),
-            self.closeButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5),
+            //Stack View
+            self.stackView.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 1),
+            self.stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5),
+            self.trailingAnchor.constraint(equalTo: self.stackView.trailingAnchor, constant: 5),
+            //Close Button
             self.closeButton.widthAnchor.constraint(equalToConstant: 16),
             self.closeButton.heightAnchor.constraint(equalToConstant: 16),
+            self.closeButton.leadingAnchor.constraint(equalTo: self.stackView.leadingAnchor),
+            //Label
             labelCenterX,
-            self.titleLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 1),
-            self.titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: self.closeButton.trailingAnchor, constant: 5),
-            self.trailingAnchor.constraint(greaterThanOrEqualTo: self.titleLabel.trailingAnchor, constant: 5),
+            self.titleLabel.centerYAnchor.constraint(equalTo: self.titleContainer.centerYAnchor, constant: 1),
+            self.titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: self.titleContainer.leadingAnchor, constant: 0),
+            self.titleContainer.trailingAnchor.constraint(greaterThanOrEqualTo: self.titleLabel.trailingAnchor, constant: 0),
         ])
         self.updateTitleState()
+    }
+
+    override func layout() {
+        super.layout()
+
+        if self.bounds.width < 64, (self.titleContainer.isHidden == false) {
+            self.titleContainer.isHidden = true
+            super.layout()
+        } else if self.bounds.width >= 64, self.titleContainer.isHidden {
+            self.titleContainer.isHidden = false
+            super.layout()
+        }
     }
 
 
@@ -99,6 +120,21 @@ class CanvasPageTitleView: NSView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setAccessibilityLabel(NSLocalizedString("Close Page", comment: "Close Page button accessibility label"))
         return button
+    }()
+
+    lazy var stackView: NSStackView = {
+        let stackView = NSStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.orientation = .horizontal
+        stackView.spacing = 5
+        stackView.distribution = .equalSpacing
+        return stackView
+    }()
+
+    lazy var titleContainer: NSView = {
+        let view = NSView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
 
 

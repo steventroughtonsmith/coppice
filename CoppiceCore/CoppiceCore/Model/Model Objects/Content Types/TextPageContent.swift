@@ -52,8 +52,12 @@ public class TextPageContent: NSObject, PageContent {
         return self.contentSize(insideBounds: GlobalConstants.maxAutomaticTextSize, minimumSize: Page.standardSize)
     }
 
+    public var minimumContentSize: CGSize {
+        return CGSize(width: 150, height: 100)
+    }
+
     public func sizeToFitContent(currentSize: CGSize) -> CGSize {
-        var newContentSize = self.contentSize(insideBounds: CGSize(width: currentSize.width, height: 20000), minimumSize: Page.minimumSize)
+        var newContentSize = self.contentSize(insideBounds: CGSize(width: currentSize.width, height: 20000), minimumSize: Page.defaultMinimumContentSize)
         newContentSize.width = currentSize.width
         return newContentSize
     }

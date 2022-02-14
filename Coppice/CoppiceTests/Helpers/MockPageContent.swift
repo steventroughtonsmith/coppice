@@ -11,6 +11,10 @@ import AppKit
 @testable import CoppiceCore
 
 class MockPageContent: NSObject, PageContent, NSFilePromiseProviderDelegate {
+    var minimumContentSize: CGSize {
+        return Page.defaultMinimumContentSize
+    }
+
     var otherMetadata: [String: Any]?
 
 

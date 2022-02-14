@@ -25,8 +25,8 @@ class CanvasPageInspectorViewModelTests: XCTestCase {
         canvasPage.frame = CGRect(x: 19, y: 31, width: 218, height: 921)
         let viewModel = CanvasPageInspectorViewModel(canvasPage: canvasPage, modelController: CoppiceModelController(undoManager: UndoManager()))
 
-        viewModel.width = Int(Page.minimumSize.width + 1)
-        XCTAssertEqual(canvasPage.frame.width, Page.minimumSize.width + 1)
+        viewModel.width = Int(Page.defaultMinimumContentSize.width + 1)
+        XCTAssertEqual(canvasPage.frame.width, Page.defaultMinimumContentSize.width + 1)
     }
 
     func test_width_setsCanvasPageFrameWidthToSuppliedValueIfEqualToMinimumWidth() throws {
@@ -34,8 +34,8 @@ class CanvasPageInspectorViewModelTests: XCTestCase {
         canvasPage.frame = CGRect(x: 19, y: 31, width: 218, height: 921)
         let viewModel = CanvasPageInspectorViewModel(canvasPage: canvasPage, modelController: CoppiceModelController(undoManager: UndoManager()))
 
-        viewModel.width = Int(Page.minimumSize.width)
-        XCTAssertEqual(canvasPage.frame.width, Page.minimumSize.width)
+        viewModel.width = Int(Page.defaultMinimumContentSize.width)
+        XCTAssertEqual(canvasPage.frame.width, Page.defaultMinimumContentSize.width)
     }
 
     func test_width_setsCanvasPageFrameWidthToMinimumPageWidthIfLessThanMinimumWidth() throws {
@@ -43,8 +43,8 @@ class CanvasPageInspectorViewModelTests: XCTestCase {
         canvasPage.frame = CGRect(x: 19, y: 31, width: 218, height: 921)
         let viewModel = CanvasPageInspectorViewModel(canvasPage: canvasPage, modelController: CoppiceModelController(undoManager: UndoManager()))
 
-        viewModel.width = Int(Page.minimumSize.width - 1)
-        XCTAssertEqual(canvasPage.frame.width, Page.minimumSize.width)
+        viewModel.width = Int(Page.defaultMinimumContentSize.width - 1)
+        XCTAssertEqual(canvasPage.frame.width, Page.defaultMinimumContentSize.width)
     }
 
     func test_width_alsoSetsHeightIfPageContentShouldMaintainAspectRatio() throws {
@@ -116,8 +116,8 @@ class CanvasPageInspectorViewModelTests: XCTestCase {
         canvasPage.frame = CGRect(x: 19, y: 31, width: 200, height: 218)
         let viewModel = CanvasPageInspectorViewModel(canvasPage: canvasPage, modelController: CoppiceModelController(undoManager: UndoManager()))
 
-        viewModel.height = Int(Page.minimumSize.height + 1)
-        XCTAssertEqual(canvasPage.frame.height, Page.minimumSize.height + 1)
+        viewModel.height = Int(Page.defaultMinimumContentSize.height + 1)
+        XCTAssertEqual(canvasPage.frame.height, Page.defaultMinimumContentSize.height + 1)
     }
 
     func test_height_setsCanvasPageFrameHeightToSuppliedValueIfEqualToMinimumHeight() throws {
@@ -125,8 +125,8 @@ class CanvasPageInspectorViewModelTests: XCTestCase {
         canvasPage.frame = CGRect(x: 19, y: 31, width: 200, height: 218)
         let viewModel = CanvasPageInspectorViewModel(canvasPage: canvasPage, modelController: CoppiceModelController(undoManager: UndoManager()))
 
-        viewModel.height = Int(Page.minimumSize.height)
-        XCTAssertEqual(canvasPage.frame.height, Page.minimumSize.height)
+        viewModel.height = Int(Page.defaultMinimumContentSize.height)
+        XCTAssertEqual(canvasPage.frame.height, Page.defaultMinimumContentSize.height)
     }
 
     func test_height_setsCanvasPageFrameHeightToSuppliedValueIfLessThanMinimumHeight() throws {
@@ -134,8 +134,8 @@ class CanvasPageInspectorViewModelTests: XCTestCase {
         canvasPage.frame = CGRect(x: 19, y: 31, width: 200, height: 218)
         let viewModel = CanvasPageInspectorViewModel(canvasPage: canvasPage, modelController: CoppiceModelController(undoManager: UndoManager()))
 
-        viewModel.height = Int(Page.minimumSize.height - 1)
-        XCTAssertEqual(canvasPage.frame.height, Page.minimumSize.height)
+        viewModel.height = Int(Page.defaultMinimumContentSize.height - 1)
+        XCTAssertEqual(canvasPage.frame.height, Page.defaultMinimumContentSize.height)
     }
 
     func test_height_alsoSetsWidthIfPageContentShouldMaintainAspectRatio() throws {

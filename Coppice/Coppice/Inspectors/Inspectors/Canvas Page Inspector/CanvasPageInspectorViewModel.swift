@@ -12,15 +12,11 @@ import Foundation
 class CanvasPageInspectorViewModel: BaseInspectorViewModel {
     @objc dynamic let canvasPage: CanvasPage
     let modelController: ModelController
-    let widthToHeightAspectRatio: CGFloat?
+
     init(canvasPage: CanvasPage, modelController: ModelController) {
         self.canvasPage = canvasPage
         self.modelController = modelController
-        if let page = canvasPage.page, page.content.maintainAspectRatio {
-            self.widthToHeightAspectRatio = canvasPage.frame.width / canvasPage.frame.height
-        } else {
-            self.widthToHeightAspectRatio = nil
-        }
+
         super.init()
     }
 
@@ -38,6 +34,14 @@ class CanvasPageInspectorViewModel: BaseInspectorViewModel {
             keyPaths.insert("canvasPage.frame")
         }
         return keyPaths
+    }
+
+    var widthToHeightAspectRatio: CGFloat? {
+        if let page = canvasPage.page, page.content.maintainAspectRatio {
+            return self.canvasPage.frame.width / self.canvasPage.frame.height
+        } else {
+            return nil
+        }
     }
 
     @objc dynamic var width: Int {
@@ -87,11 +91,11 @@ class CanvasPageInspectorViewModel: BaseInspectorViewModel {
     }
 
     @objc dynamic var minimumWidth: Int {
-        return Int(Page.minimumSize.width)
+        return Int(self.canvasPage.minimumContentSize.width)
     }
 
     @objc dynamic var minimumHeight: Int {
-        return Int(Page.minimumSize.height)
+        return Int(self.canvasPage.minimumContentSize.height)
     }
 
     func sizeToFitContent() {
