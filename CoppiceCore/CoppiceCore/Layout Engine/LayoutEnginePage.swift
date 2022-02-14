@@ -72,7 +72,6 @@ public class LayoutEnginePage: Equatable {
         self.minimumContentSize = minimumContentSize
         self.zIndex = zIndex
 
-        self.aspectRatio = contentFrame.width / contentFrame.height
         self.validateSize()
     }
 
@@ -89,7 +88,9 @@ public class LayoutEnginePage: Equatable {
     }
 
     public let maintainAspectRatio: Bool
-    public let aspectRatio: CGFloat
+    public var aspectRatio: CGFloat {
+        return self.contentFrame.width / self.contentFrame.height
+    }
 
 
     //MARK: - Relationships

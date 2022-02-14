@@ -122,7 +122,7 @@ class CanvasListViewModelTests: XCTestCase {
 
         let (urls, _, _, _) = try XCTUnwrap(self.modelController.createPagesFromFilesMock.arguments.first)
         XCTAssertEqual(urls, [url])
-        XCTAssertEqual(pages.first?.canvases.first?.canvas, self.canvas3)
+        XCTAssertEqual(pages.first?.canvasPages.first?.canvas, self.canvas3)
     }
 
 

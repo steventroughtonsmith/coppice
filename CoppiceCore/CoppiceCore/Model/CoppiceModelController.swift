@@ -123,7 +123,7 @@ public class CoppiceModelController: NSObject, ModelController {
     public func delete(_ page: Page) {
         self.pushChangeGroup()
         self.undoManager.beginUndoGrouping()
-        page.canvases.forEach {
+        page.canvasPages.forEach {
             self.canvasPageCollection.delete($0)
         }
 

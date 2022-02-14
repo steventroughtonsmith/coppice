@@ -69,7 +69,7 @@ class ThumbnailController: NSObject {
     }
 
     private func changed(_ page: Page) {
-        for canvasPage in page.canvases {
+        for canvasPage in page.canvasPages {
             if let canvas = canvasPage.canvas {
                 self.needsUpdatedThumbnail(for: canvas)
             }

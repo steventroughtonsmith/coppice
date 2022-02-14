@@ -39,7 +39,8 @@ class ModelWriterTests: XCTestCase {
                 $0.id = Page.modelID(with: pageUUIDS[2])
                 $0.title = "Page 3"
                 let content = ImagePageContent()
-                content.image = NSImage(named: "NSAddTemplate")
+                let image = NSImage(named: "NSAddTemplate")
+                content.image = image
                 $0.content = content
             },
         ]
@@ -107,12 +108,15 @@ class ModelWriterTests: XCTestCase {
         let plist = try XCTUnwrap(try PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: Any])
         let pages = try XCTUnwrap(plist["pages"] as? [[String: Any]])
 
-        let page1Content = pages[0]["content"] as? [String: String]
-        XCTAssertEqual(page1Content, ["type": "text", "filename": "\(self.pages[0].id.uuid.uuidString).rtf"])
-        let page2Content = pages[1]["content"] as? [String: String]
-        XCTAssertEqual(page2Content, ["type": "text", "filename": "\(self.pages[1].id.uuid.uuidString).rtf"])
-        let page3Content = pages[2]["content"] as? [String: String]
-        XCTAssertEqual(page3Content, ["type": "image", "filename": "\(self.pages[2].id.uuid.uuidString).png"])
+        let page1Content = try XCTUnwrap(pages[0]["content"] as? [String: Any])
+        XCTAssertEqual(page1Content["type"] as? String, "text")
+        XCTAssertEqual(page1Content["filename"] as? String, "\(self.pages[0].id.uuid.uuidString).rtf")
+        let page2Content = try XCTUnwrap(pages[1]["content"] as? [String: Any])
+        XCTAssertEqual(page2Content["type"] as? String, "text")
+        XCTAssertEqual(page2Content["filename"] as? String, "\(self.pages[1].id.uuid.uuidString).rtf")
+        let page3Content = try XCTUnwrap(pages[2]["content"] as? [String: Any])
+        XCTAssertEqual(page3Content["type"] as? String, "image")
+        XCTAssertEqual(page3Content["filename"] as? String, "\(self.pages[2].id.uuid.uuidString).png")
     }
 
     func test_plist_containsAllCanvasPages() throws {

@@ -187,7 +187,7 @@ class CanvasEditorViewModelTests: XCTestCase {
         let pages = self.canvas.pages.compactMap(\.page)
         XCTAssertTrue(pages.contains(page1))
         XCTAssertTrue(pages.contains(page2))
-        XCTAssertEqual(page1.canvases.first?.frame.midPoint, CGPoint(x: 30, y: 50))
+        XCTAssertEqual(page1.canvasPages.first?.frame.midPoint, CGPoint(x: 30, y: 50))
     }
 
     //MARK: - addPages(forFilesAtURLs:centredOn:)

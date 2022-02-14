@@ -71,7 +71,7 @@ final public class Page: NSObject, CollectableModelObject, FolderContainable {
     }
 
 
-    // MARK: - Relationships
+    // MARK: - Content
     public var content: PageContent {
         didSet {
             self.content.page = self
@@ -80,7 +80,12 @@ final public class Page: NSObject, CollectableModelObject, FolderContainable {
         }
     }
 
-    public var canvases: Set<CanvasPage> {
+    func contentSizeDidChange(to newSize: CGSize, oldSize: CGSize?) {
+        self.canvasPages.forEach { $0.contentSizeDidChange(to: newSize, oldSize: oldSize) }
+    }
+
+    //MARK: - Relationships
+    public var canvasPages: Set<CanvasPage> {
         return self.relationship(for: \.page)
     }
 
@@ -90,7 +95,7 @@ final public class Page: NSObject, CollectableModelObject, FolderContainable {
         guard self.userPreferredSize == nil else {
             return
         }
-        self.canvases.forEach { canvasPage in
+        self.canvasPages.forEach { canvasPage in
             var frame = canvasPage.frame
             frame.size = self.contentSize
             canvasPage.frame = frame

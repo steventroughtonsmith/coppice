@@ -29,7 +29,7 @@ class TextEditorViewModelTests: XCTestCase {
 
         self.documentWindowViewModel = MockDocumentWindowViewModel(modelController: self.modelController)
         self.viewModel = TextEditorViewModel(textContent: self.textContent,
-                                             isInCanvas: false,
+                                             viewMode: .full,
                                              documentWindowViewModel: self.documentWindowViewModel,
                                              pageLinkManager: PageLinkManager(pageID: self.page.id, modelController: self.modelController))
     }

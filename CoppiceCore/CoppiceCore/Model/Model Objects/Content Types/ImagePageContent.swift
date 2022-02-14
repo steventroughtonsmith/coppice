@@ -13,11 +13,9 @@ public class ImagePageContent: NSObject, PageContent {
     public let contentType = PageContentType.image
     @objc dynamic public var image: NSImage? {
         didSet {
-            if oldValue == nil && self.image != nil {
-                self.page?.updatePageSizes()
-            }
             if image != oldValue, let image = self.image {
                 self.cropRect = CGRect(origin: .zero, size: image.size)
+                self.page?.contentSizeDidChange(to: image.size, oldSize: oldValue?.size)
             }
             self.didChange(\.image, oldValue: oldValue)
         }
@@ -49,6 +47,9 @@ public class ImagePageContent: NSObject, PageContent {
                 return
             }
             self.didChange(\.cropRect, oldValue: oldValue)
+            if self.cropRect != .zero {
+                self.page?.contentSizeDidChange(to: self.cropRect.size, oldSize: oldValue.size)
+            }
         }
     }
 

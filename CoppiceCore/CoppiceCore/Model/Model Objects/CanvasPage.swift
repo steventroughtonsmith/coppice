@@ -47,7 +47,7 @@ final public class CanvasPage: NSObject, CollectableModelObject {
                 self.frame.size = page.contentSize
             }
             self.willChangeValue(for: \.title)
-            self.didChangeRelationship(\.page, inverseKeyPath: \.canvases, oldValue: oldValue)
+            self.didChangeRelationship(\.page, inverseKeyPath: \.canvasPages, oldValue: oldValue)
             self.didChangeValue(for: \.title)
         }
     }
@@ -88,6 +88,20 @@ final public class CanvasPage: NSObject, CollectableModelObject {
         self.$page.performCleanUp()
         self.$canvas.performCleanUp()
         self.$parent.performCleanUp()
+    }
+
+
+    //MARK: - Helpers
+    func contentSizeDidChange(to newSize: CGSize, oldSize: CGSize?) {
+        var newFrame = self.frame
+        if let oldSize = oldSize {
+            let scaleFactor = self.frame.width / oldSize.width
+            newFrame.size = newSize.multiplied(by: scaleFactor)
+        } else {
+            newFrame.size = newSize
+        }
+
+        self.frame = newFrame
     }
 
 

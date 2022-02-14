@@ -774,12 +774,13 @@ class LayoutEnginePageTests: XCTestCase {
         canvasPage2.zIndex = 2
 
         let pages = LayoutEnginePage.pages(from: [canvasPage1, canvasPage2])
+        XCTAssertEqual(pages.count, 2)
 
-        let page1 = try XCTUnwrap(pages[safe: 0])
+        let page1 = try XCTUnwrap(pages.first(where: { $0.id == canvasPage1.id.uuid }))
         XCTAssertEqual(page1.id, canvasPage1.id.uuid)
         XCTAssertEqual(page1.contentFrame, CGRect(x: 10, y: 20, width: 300, height: 400))
         XCTAssertEqual(page1.zIndex, 3)
-        let page2 = try XCTUnwrap(pages[safe: 1])
+        let page2 = try XCTUnwrap(pages.first(where: { $0.id == canvasPage2.id.uuid }))
         XCTAssertEqual(page2.id, canvasPage2.id.uuid)
         XCTAssertEqual(page2.contentFrame, CGRect(x: 90, y: 80, width: 700, height: 600))
         XCTAssertEqual(page2.zIndex, 2)

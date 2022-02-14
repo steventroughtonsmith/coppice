@@ -104,7 +104,7 @@ class CoppiceModelControllerCanvasPageTests: XCTestCase {
         self.undoManager.undo()
 
         XCTAssertFalse(self.canvas.pages.contains(where: { $0.id == canvasPage.id }))
-        XCTAssertFalse(self.page.canvases.contains(where: { $0.id == canvasPage.id }))
+        XCTAssertFalse(self.page.canvasPages.contains(where: { $0.id == canvasPage.id }))
         XCTAssertFalse(self.modelController.canvasPageCollection.contains(canvasPage))
     }
 
@@ -119,7 +119,7 @@ class CoppiceModelControllerCanvasPageTests: XCTestCase {
         self.undoManager.undo()
 
         XCTAssertFalse(self.canvas.pages.contains(where: { $0.id == canvasPage.id }))
-        XCTAssertFalse(self.page.canvases.contains(where: { $0.id == canvasPage.id }))
+        XCTAssertFalse(self.page.canvasPages.contains(where: { $0.id == canvasPage.id }))
         XCTAssertFalse(self.modelController.canvasPageCollection.contains(canvasPage))
     }
 
@@ -134,7 +134,7 @@ class CoppiceModelControllerCanvasPageTests: XCTestCase {
 
         self.undoManager.undo()
         XCTAssertFalse(self.canvas.pages.contains(where: { $0.id == canvasPage.id }))
-        XCTAssertFalse(self.page.canvases.contains(where: { $0.id == canvasPage.id }))
+        XCTAssertFalse(self.page.canvasPages.contains(where: { $0.id == canvasPage.id }))
         XCTAssertFalse(self.modelController.canvasPageCollection.contains(canvasPage))
         self.undoManager.redo()
 
@@ -155,7 +155,7 @@ class CoppiceModelControllerCanvasPageTests: XCTestCase {
 
         self.undoManager.undo()
         XCTAssertFalse(self.canvas.pages.contains(where: { $0.id == canvasPage.id }))
-        XCTAssertFalse(self.page.canvases.contains(where: { $0.id == canvasPage.id }))
+        XCTAssertFalse(self.page.canvasPages.contains(where: { $0.id == canvasPage.id }))
         XCTAssertFalse(self.modelController.canvasPageCollection.contains(canvasPage))
         self.undoManager.redo()
 

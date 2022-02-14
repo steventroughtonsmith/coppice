@@ -413,7 +413,7 @@ extension DocumentWindowViewModel {
     }
 
     private func alertForDeletingSinglePage(_ page: Page) -> Alert? {
-        let canvases = Set(page.canvases.compactMap { $0.canvas })
+        let canvases = Set(page.canvasPages.compactMap { $0.canvas })
         guard canvases.count > 0 else {
             return nil
         }
