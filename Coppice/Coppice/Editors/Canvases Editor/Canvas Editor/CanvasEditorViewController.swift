@@ -668,6 +668,38 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
     }
 
 
+    //MARK: - Focus Mode
+    private var currentFocusModeEditor: (PageContentEditor & NSViewController)? {
+        didSet {
+            oldValue?.removeFromParent()
+            oldValue?.view.removeFromSuperview()
+            if let newValue = self.currentFocusModeEditor {
+                self.addChild(newValue)
+                self.view.addSubview(newValue.view)
+                newValue.view.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    self.scrollView.leadingAnchor.constraint(equalTo: newValue.view.leadingAnchor),
+                    self.scrollView.trailingAnchor.constraint(equalTo: newValue.view.trailingAnchor),
+                    self.scrollView.topAnchor.constraint(equalTo: newValue.view.topAnchor),
+                    self.scrollView.bottomAnchor.constraint(equalTo: newValue.view.bottomAnchor),
+                ])
+                self.layoutEngine.editable = false
+            } else {
+                self.layoutEngine.editable = true
+            }
+            self.inspectorsDidChange()
+        }
+    }
+
+    func enterFocusMode(for pageContentEditor: PageContentEditor) {
+        self.currentFocusModeEditor = pageContentEditor.contentEditorForFocusMode()
+    }
+
+    func exitFocusMode() {
+        self.currentFocusModeEditor = nil
+    }
+
+
     //MARK: - SplitViewContainable
     func createSplitViewItem() -> NSSplitViewItem {
         let splitViewItem = NSSplitViewItem(viewController: self)
@@ -705,6 +737,9 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
 
 extension CanvasEditorViewController: Editor {
     var inspectors: [Inspector] {
+        if let focusModeEditor = self.currentFocusModeEditor {
+            return focusModeEditor.inspectors
+        }
         guard self.layoutEngine.editable, self.selectedPages.count == 1 else {
             return [self.canvasInspector]
         }

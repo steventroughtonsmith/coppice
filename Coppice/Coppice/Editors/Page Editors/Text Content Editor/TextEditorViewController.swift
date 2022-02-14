@@ -43,7 +43,7 @@ class TextEditorViewController: NSViewController, NSMenuItemValidation, NSToolba
         self.updateTextView(with: self.viewModel.attributedText)
 
         self.scrollView.automaticallyAdjustsContentInsets = false
-        self.scrollView.contentInsets = GlobalConstants.textEditorInsets(fullSize: !self.viewModel.isInCanvas)
+        self.scrollView.contentInsets = GlobalConstants.textEditorInsets(fullSize: (self.viewModel.viewMode != .canvas))
 
         self.editingTextView.textStorage?.delegate = self
 
@@ -51,9 +51,9 @@ class TextEditorViewController: NSViewController, NSMenuItemValidation, NSToolba
 
         self.attributeEditor.textView = self.editingTextView
 
-        self.widthConstraint.isActive = !self.viewModel.isInCanvas
+        self.widthConstraint.isActive = (self.viewModel.viewMode != .canvas)
 
-        if (!self.viewModel.isInCanvas) {
+        if (self.viewModel.viewMode != .canvas) {
             let shadow = NSShadow()
             shadow.shadowBlurRadius = 3
             self.scrollView.shadow = shadow
@@ -148,8 +148,8 @@ class TextEditorViewController: NSViewController, NSMenuItemValidation, NSToolba
     private func updatePlaceholder() {
         self.placeHolderTopConstraint.constant = self.scrollView.contentInsets.top
         self.placeHolderLeftConstraint.constant = self.scrollView.contentInsets.left + 5
-        self.placeHolderLabel.stringValue = self.viewModel.isInCanvas ? NSLocalizedString("Double-click to start writing", comment: "Text Editor on canvas placeholder")
-                                                                      : NSLocalizedString("Click to start writing", comment: "Text Editor placeholder")
+        self.placeHolderLabel.stringValue = self.viewModel.viewMode == .canvas ? NSLocalizedString("Double-click to start writing", comment: "Text Editor on canvas placeholder")
+                                                                               : NSLocalizedString("Click to start writing", comment: "Text Editor placeholder")
     }
 
 
@@ -362,8 +362,8 @@ extension TextEditorViewController: PageContentEditor {
 
     func prepareForDisplay(withSafeAreaInsets safeAreaInsets: NSEdgeInsets) {
         if #available(OSX 10.16, *) {
-            var insets = GlobalConstants.textEditorInsets(fullSize: !self.viewModel.isInCanvas)
-            if !self.viewModel.isInCanvas {
+            var insets = GlobalConstants.textEditorInsets(fullSize: (self.viewModel.viewMode != .canvas))
+            if (self.viewModel.viewMode != .canvas) {
                 insets.top += safeAreaInsets.top
             }
             self.scrollView.contentInsets = insets

@@ -63,7 +63,7 @@ class PageImageController: NSObject {
             return nil
         }
 
-        let editorVM = PageEditorViewModel(page: page, isInCanvas: true, documentWindowViewModel: documentViewModel)
+        let editorVM = PageEditorViewModel(page: page, viewMode: .canvas, documentWindowViewModel: documentViewModel)
         let contentEditor = editorVM.contentEditor
         let editorView = contentEditor.view
         editorView.wantsLayer = true

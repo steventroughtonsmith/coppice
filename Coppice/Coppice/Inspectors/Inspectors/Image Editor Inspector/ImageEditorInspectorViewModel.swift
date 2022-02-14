@@ -60,7 +60,7 @@ class ImageEditorInspectorViewModel: BaseInspectorViewModel {
             return self.editorViewModel.mode.rawValue
         }
         set {
-            self.editorViewModel.mode = ImageEditorViewModel.Mode(rawValue: newValue) ?? .view
+            self.editorViewModel.updateMode(ImageEditorViewModel.Mode(rawValue: newValue) ?? .view)
         }
     }
 

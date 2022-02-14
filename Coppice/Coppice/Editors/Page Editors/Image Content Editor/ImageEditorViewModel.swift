@@ -10,16 +10,19 @@ import AppKit
 import Combine
 import CoppiceCore
 
-protocol ImageEditorViewProtocol: AnyObject {}
+protocol ImageEditorViewProtocol: AnyObject {
+    func switchToCanvasCropMode()
+    func exitCanvasCropMode()
+}
 
 class ImageEditorViewModel: ViewModel {
     weak var view: ImageEditorViewProtocol?
 
     @objc dynamic let imageContent: ImagePageContent
-    let isInCanvas: Bool
-    init(imageContent: ImagePageContent, isInCanvas: Bool, documentWindowViewModel: DocumentWindowViewModel) {
+    let viewMode: PageContentEditorViewMode
+    init(imageContent: ImagePageContent, viewMode: PageContentEditorViewMode, documentWindowViewModel: DocumentWindowViewModel) {
         self.imageContent = imageContent
-        self.isInCanvas = isInCanvas
+        self.viewMode = viewMode
         super.init(documentWindowViewModel: documentWindowViewModel)
         self.regenerateCroppedImage()
 
@@ -122,7 +125,17 @@ class ImageEditorViewModel: ViewModel {
 		case hotspot
 	}
 
-	@Published var mode: Mode = .view
+    @Published private(set) var mode: Mode = .view
+
+    func updateMode(_ mode: Mode) {
+        self.mode = mode
+        if self.viewMode == .canvas, case .crop = mode {
+            self.view?.switchToCanvasCropMode()
+            self.mode = .view
+        } else {
+            self.view?.exitCanvasCropMode()
+        }
+    }
 
 
 	//mode (.view, .crop, .hotspot)

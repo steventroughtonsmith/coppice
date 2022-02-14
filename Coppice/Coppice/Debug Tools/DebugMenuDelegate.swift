@@ -44,11 +44,11 @@ class DebugMenuBuilder: NSObject {
                         action: #selector(DocumentWindowController.applyWindowSize(_:)),
                         keyEquivalent: "").representedObject = CGSize(width: 1070, height: 600)
 		submenu.addItem(withTitle: "Smallest MBA Screen",
-                        action: #selector(DocumentWindowController.applyWindowSize(_:)),
-                        keyEquivalent: "").representedObject = CGSize(width: 1024, height: 616)
+		                action: #selector(DocumentWindowController.applyWindowSize(_:)),
+		                keyEquivalent: "").representedObject = CGSize(width: 1024, height: 616)
 		submenu.addItem(withTitle: "14\" MBP",
-                        action: #selector(DocumentWindowController.applyWindowSize(_:)),
-                        keyEquivalent: "").representedObject = CGSize(width: 1512, height: 958)
+		                action: #selector(DocumentWindowController.applyWindowSize(_:)),
+		                keyEquivalent: "").representedObject = CGSize(width: 1512, height: 958)
         menuItem.submenu = submenu
 
         return menuItem

@@ -129,7 +129,21 @@ extension ImageEditorViewController: PageContentEditor {
     func stopEditing() {
         self.editorModeViewController?.stopEditing()
     }
+
+    func contentEditorForFocusMode() -> (NSViewController & PageContentEditor)? {
+        let viewModel = ImageEditorViewModel(imageContent: self.viewModel.imageContent, viewMode: .focus, documentWindowViewModel: self.viewModel.documentWindowViewModel)
+        viewModel.updateMode(self.viewModel.mode)
+        return ImageEditorViewController(viewModel: viewModel)
+    }
 }
 
 
-extension ImageEditorViewController: ImageEditorViewProtocol {}
+extension ImageEditorViewController: ImageEditorViewProtocol {
+    func switchToCanvasCropMode() {
+        self.enterFocusMode()
+    }
+
+    func exitCanvasCropMode() {
+        self.exitFocusMode()
+    }
+}

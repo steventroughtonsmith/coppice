@@ -48,7 +48,7 @@ class CanvasPageViewModel: ViewModel {
             return nil
         }
 
-        let viewModel = PageEditorViewModel(page: page, isInCanvas: true, documentWindowViewModel: self.documentWindowViewModel)
+        let viewModel = PageEditorViewModel(page: page, viewMode: .canvas, documentWindowViewModel: self.documentWindowViewModel)
         return PageEditorViewController(viewModel: viewModel)
     }()
 
