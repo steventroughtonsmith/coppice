@@ -80,6 +80,7 @@ public enum PageContentType: String, Equatable, CaseIterable {
 public protocol PageContent: AnyObject {
     var contentType: PageContentType { get }
     var page: Page? { get set }
+    var undoManager: UndoManager? { get }
     var modelFile: ModelFile { get }
     var maintainAspectRatio: Bool { get }
     var otherMetadata: [String: Any]? { get }
@@ -95,6 +96,10 @@ public protocol PageContent: AnyObject {
 }
 
 extension PageContent {
+    public var undoManager: UndoManager? {
+        return self.page?.undoManager
+    }
+
     public func didChange<T>(_ keyPath: ReferenceWritableKeyPath<Self, T>, oldValue: T) {
         guard let page = self.page else {
             return

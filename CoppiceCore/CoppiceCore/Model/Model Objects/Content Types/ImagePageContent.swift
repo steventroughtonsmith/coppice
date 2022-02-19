@@ -13,11 +13,13 @@ public class ImagePageContent: NSObject, PageContent {
     public let contentType = PageContentType.image
     @objc dynamic public var image: NSImage? {
         didSet {
+            self.undoManager?.beginUndoGrouping()
             if image != oldValue, let image = self.image {
                 self.cropRect = CGRect(origin: .zero, size: image.size)
                 self.page?.contentSizeDidChange(to: image.size, oldSize: oldValue?.size)
             }
             self.didChange(\.image, oldValue: oldValue)
+            self.undoManager?.endUndoGrouping()
         }
     }
 
@@ -50,10 +52,12 @@ public class ImagePageContent: NSObject, PageContent {
             guard self.cropRect != oldValue else {
                 return
             }
+            self.undoManager?.beginUndoGrouping()
             self.didChange(\.cropRect, oldValue: oldValue)
             if self.cropRect != .zero {
                 self.page?.contentSizeDidChange(to: self.cropRect.size, oldSize: oldValue.size)
             }
+            self.undoManager?.endUndoGrouping()
         }
     }
 

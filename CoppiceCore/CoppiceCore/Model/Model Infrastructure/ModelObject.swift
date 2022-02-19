@@ -20,6 +20,7 @@ public protocol ModelObject: AnyObject {
     var id: ModelID { get set }
     static var modelType: ModelType { get }
     var modelController: ModelController? { get }
+    var undoManager: UndoManager? { get }
 
     init()
 
@@ -52,6 +53,10 @@ extension ModelObject {
 
     public static var modelFileProperties: [String] {
         return []
+    }
+
+    public var undoManager: UndoManager? {
+        return self.modelController?.undoManager
     }
 }
 

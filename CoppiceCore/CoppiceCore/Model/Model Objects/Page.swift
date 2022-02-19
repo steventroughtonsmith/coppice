@@ -81,6 +81,11 @@ final public class Page: NSObject, CollectableModelObject, FolderContainable {
     }
 
     func contentSizeDidChange(to newSize: CGSize, oldSize: CGSize?) {
+        if let undoManager = self.undoManager {
+            guard undoManager.isUndoing == false, undoManager.isRedoing == false else {
+                return
+            }
+        }
         self.canvasPages.forEach { $0.contentSizeDidChange(to: newSize, oldSize: oldSize) }
     }
 
