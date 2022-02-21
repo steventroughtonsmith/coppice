@@ -7,7 +7,7 @@
 //
 
 import AppKit
-
+import Combine
 
 public class ImagePageContent: NSObject, PageContent {
     public let contentType = PageContentType.image
@@ -61,19 +61,38 @@ public class ImagePageContent: NSObject, PageContent {
         }
     }
 
+    @objc dynamic public var hotspots: [ImageHotspot] = [] {
+        didSet {
+            guard self.hotspots != oldValue else {
+                return
+            }
+            self.didChange(\.hotspots, oldValue: oldValue)
+        }
+    }
+
     public weak var page: Page?
 
     public private(set) var otherMetadata: [String: Any]?
     enum MetadataKeys: String, CaseIterable {
         case description
         case cropRect
+        case hotspots
     }
 
-    public init(data: Data? = nil, metadata: [String: Any]? = nil) {
+    public init(data: Data? = nil) {
         if let imageData = data, let image = NSImage(data: imageData) {
             self.image = image
+            self.cropRect = CGRect(origin: .zero, size: image.size)
+        } else {
+            self.cropRect = .zero
         }
-        if let metadata = metadata {
+    }
+
+    public init(modelFile: ModelFile) throws {
+        if let imageData = modelFile.data, let image = NSImage(data: imageData) {
+            self.image = image
+        }
+        if let metadata = modelFile.metadata {
             if let description = metadata[MetadataKeys.description.rawValue] as? String {
                 self.imageDescription = description
             }
@@ -82,6 +101,12 @@ public class ImagePageContent: NSObject, PageContent {
                 self.cropRect = NSRectFromString(cropRectString)
             } else {
                 self.cropRect = .zero
+            }
+
+            if let hotspotsArray = metadata[MetadataKeys.hotspots.rawValue] as? [[String: Any]] {
+                self.hotspots = try hotspotsArray.map { try ImageHotspot(dictionaryRepresentation: $0) }
+            } else {
+                self.hotspots = []
             }
 
             let otherKeys = MetadataKeys.allCases.map(\.rawValue)
@@ -106,6 +131,7 @@ public class ImagePageContent: NSObject, PageContent {
             metadata[MetadataKeys.description.rawValue] = description
         }
         metadata[MetadataKeys.cropRect.rawValue] = NSStringFromRect(self.cropRect)
+        metadata[MetadataKeys.hotspots.rawValue] = self.hotspots.map(\.dictionaryRepresentation)
 
         return ModelFile(type: self.contentType.rawValue, filename: filename, data: imageData, metadata: metadata)
     }

@@ -12,12 +12,21 @@ public enum PageContentType: String, Equatable, CaseIterable {
     case text
     case image
 
-    public func createContent(data: Data? = nil, metadata: [String: Any]? = nil) -> PageContent {
+    public func createContent(data: Data? = nil) -> PageContent {
         switch self {
         case .text:
-            return TextPageContent(data: data, metadata: metadata)
+            return TextPageContent(data: data)
         case .image:
-            return ImagePageContent(data: data, metadata: metadata)
+            return ImagePageContent(data: data)
+        }
+    }
+
+    public func createContent(modelFile: ModelFile) throws -> PageContent {
+        switch self {
+        case .text:
+            return try TextPageContent(modelFile: modelFile)
+        case .image:
+            return try ImagePageContent(modelFile: modelFile)
         }
     }
 

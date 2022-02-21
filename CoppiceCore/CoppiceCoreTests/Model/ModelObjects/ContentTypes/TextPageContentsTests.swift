@@ -115,7 +115,8 @@ class TextPageContentsTests: XCTestCase {
     }
 
     func test_init_addsAnyMetadataToOtherMetadata() throws {
-        let content = TextPageContent(data: nil, metadata: ["foo": "bar", "hello": "world"])
+        let modelFile = ModelFile(type: "text", filename: nil, data: nil, metadata: ["foo": "bar", "hello": "world"])
+        let content = try TextPageContent(modelFile: modelFile)
         XCTAssertEqual(content.otherMetadata?["foo"] as? String, "bar")
         XCTAssertEqual(content.otherMetadata?["hello"] as? String, "world")
     }
@@ -149,7 +150,8 @@ class TextPageContentsTests: XCTestCase {
     }
 
     func test_modelFile_metadataIsSetToOtherMetadata() throws {
-        let content = TextPageContent(data: nil, metadata: ["foo": "bar", "hello": "world"])
+        let initialModelFile = ModelFile(type: "text", filename: nil, data: nil, metadata: ["foo": "bar", "hello": "world"])
+        let content = try TextPageContent(modelFile: initialModelFile)
 
         let modelFile = content.modelFile
         XCTAssertEqual(modelFile.metadata?["foo"] as? String, "bar")

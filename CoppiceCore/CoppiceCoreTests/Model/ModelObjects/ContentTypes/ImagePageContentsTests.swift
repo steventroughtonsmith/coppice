@@ -34,8 +34,9 @@ class ImagePageContentsTests: XCTestCase {
         XCTAssertEqual(content.image?.pngData(), imageData)
     }
 
-    func test_init_setsDescriptionToValueFromMetadata() {
-        let content = ImagePageContent(metadata: ["description": "Hello World"])
+    func test_init_setsDescriptionToValueFromMetadata() throws {
+        let modelFile = ModelFile(type: "image", filename: nil, data: nil, metadata: ["description": "Hello World"])
+        let content = try ImagePageContent(modelFile: modelFile)
         XCTAssertEqual(content.imageDescription, "Hello World")
     }
 
@@ -45,20 +46,23 @@ class ImagePageContentsTests: XCTestCase {
     }
 
     func test_init_setsOtherMetadataToAnyOtherValues() throws {
-        let content = ImagePageContent(metadata: ["bar": "foo", "baz": 42])
+        let modelFile = ModelFile(type: "image", filename: nil, data: nil, metadata: ["bar": "foo", "baz": 42])
+        let content = try ImagePageContent(modelFile: modelFile)
         XCTAssertEqual(content.otherMetadata?["bar"] as? String, "foo")
         XCTAssertEqual(content.otherMetadata?["baz"] as? Int, 42)
     }
 
     func test_init_doesntIncludeImageDescriptionInOtherMetadata() throws {
-        let content = ImagePageContent(metadata: ["description": "Hello World", "foo": 42])
+        let modelFile = ModelFile(type: "image", filename: nil, data: nil, metadata: ["description": "Hello World", "foo": 42])
+        let content = try ImagePageContent(modelFile: modelFile)
         XCTAssertEqual(content.otherMetadata?.count, 1)
         XCTAssertEqual(content.otherMetadata?["foo"] as? Int, 42)
         XCTAssertNil(content.otherMetadata?["description"])
     }
 
     func test_init_setsTheCropRectFromMetadataIfValidString() throws {
-        let content = ImagePageContent(metadata: ["cropRect": NSStringFromRect(CGRect(x: 20, y: 30, width: 42, height: 55))])
+        let modelFile = ModelFile(type: "image", filename: nil, data: nil, metadata: ["cropRect": NSStringFromRect(CGRect(x: 20, y: 30, width: 42, height: 55))])
+        let content = try ImagePageContent(modelFile: modelFile)
         XCTAssertEqual(content.cropRect, CGRect(x: 20, y: 30, width: 42, height: 55))
     }
 
@@ -68,7 +72,8 @@ class ImagePageContentsTests: XCTestCase {
         let image = NSImage(byReferencing: imageURL)
         let imageData = try XCTUnwrap(image.pngData())
 
-        let content = ImagePageContent(data: imageData, metadata: ["cropRect": "hello world"])
+        let modelFile = ModelFile(type: "image", filename: nil, data: imageData, metadata:  ["cropRect": "hello world"])
+        let content = try ImagePageContent(modelFile: modelFile)
         XCTAssertEqual(content.cropRect, CGRect(origin: .zero, size: image.size))
     }
 
@@ -78,13 +83,44 @@ class ImagePageContentsTests: XCTestCase {
         let image = NSImage(byReferencing: imageURL)
         let imageData = try XCTUnwrap(image.pngData())
 
-        let content = ImagePageContent(data: imageData)
+        let modelFile = ModelFile(type: "image", filename: nil, data: imageData, metadata: nil)
+        let content = try ImagePageContent(modelFile: modelFile)
         XCTAssertEqual(content.cropRect, CGRect(origin: .zero, size: image.size))
     }
 
     func test_init_setsTheCropRectToZeroIfNoImageAndNoStringInMetadata() throws {
-        let content = ImagePageContent(metadata: [:])
+        let modelFile = ModelFile(type: "image", filename: nil, data: nil, metadata: [:])
+        let content = try ImagePageContent(modelFile: modelFile)
         XCTAssertEqual(content.cropRect, .zero)
+    }
+
+    func test_init_setsHotspotsFromMetadataIfValuesAreValid() throws {
+        let modelFile = ModelFile(type: "image", filename: nil, data: nil, metadata: [
+            "hotspots": [
+                ["kind": "rectangle", "points": [["X": 24, "Y": 32.1], ["X": 42, "Y": 1.23]]],
+                ["kind": "oval", "points": [["X": 1, "Y": 2.0], ["X": 3, "Y": 4.0]], "link": URL(string: "https://coppiceapp.com")!],
+                ["kind": "polygon", "points": [["X": -1, "Y": -2.0], ["X": -3, "Y": -4.0]]],
+            ],
+        ])
+
+        let content = try ImagePageContent(modelFile: modelFile)
+        XCTAssertEqual(content.hotspots, [
+            ImageHotspot(kind: .rectangle, points: [CGPoint(x: 24, y: 32.1), CGPoint(x: 42, y: 1.23)], link: nil),
+            ImageHotspot(kind: .oval, points: [CGPoint(x: 1, y: 2.0), CGPoint(x: 3, y: 4.0)], link: URL(string: "https://coppiceapp.com")!),
+            ImageHotspot(kind: .polygon, points: [CGPoint(x: -1, y: -2.0), CGPoint(x: -3, y: -4.0)], link: nil),
+        ])
+    }
+
+    func test_init_setsHotspotsToEmptyArrayIfMetadataValueIsNotArrayOfDictionaries() throws {
+        XCTFail()
+    }
+
+    func test_init_setsHotspotsToEmptyArrayIfValueIsNotInMetadata() throws {
+        XCTFail()
+    }
+
+    func test_init_throwsErrorIfHotspotDictionaryIsInvalidValue() throws {
+        XCTFail()
     }
 
     //MARK: - .image
@@ -169,15 +205,43 @@ class ImagePageContentsTests: XCTestCase {
         XCTAssertEqual(content.modelFile.metadata?["cropRect"] as? String, NSStringFromRect(CGRect(x: 20, y: 40, width: 66, height: 88)))
     }
 
+    func test_modelFile_metadataContainsHotspots() throws {
+        let content = ImagePageContent()
+        content.hotspots = [
+            ImageHotspot(kind: .rectangle, points: [CGPoint(x: 24, y: 32.1), CGPoint(x: 42, y: 1.23)], link: nil),
+            ImageHotspot(kind: .oval, points: [CGPoint(x: 1, y: 2.0), CGPoint(x: 3, y: 4.0)], link: URL(string: "https://coppiceapp.com")!),
+            ImageHotspot(kind: .polygon, points: [CGPoint(x: -1, y: -2.0), CGPoint(x: -3, y: -4.0)], link: nil),
+        ]
+
+        let hotspots = try XCTUnwrap(content.modelFile.metadata?["hotspots"] as? [[String: Any]])
+
+        let hotspot1 = try XCTUnwrap(hotspots[safe: 0])
+        XCTAssertEqual(hotspot1["kind"] as? String, "rectangle")
+        XCTAssertEqual(hotspot1["points"] as? [[String: Double]], [["X": 24, "Y": 32.1], ["X": 42, "Y": 1.23]])
+        XCTAssertNil(hotspot1["link"])
+
+        let hotspot2 = try XCTUnwrap(hotspots[safe: 1])
+        XCTAssertEqual(hotspot2["kind"] as? String, "oval")
+        XCTAssertEqual(hotspot2["points"] as? [[String: Double]], [["X": 1, "Y": 2.0], ["X": 3, "Y": 4.0]])
+        XCTAssertEqual(hotspot2["link"] as? URL, URL(string: "https://coppiceapp.com")!)
+
+        let hotspot3 = try XCTUnwrap(hotspots[safe: 2])
+        XCTAssertEqual(hotspot3["kind"] as? String, "polygon")
+        XCTAssertEqual(hotspot3["points"] as? [[String: Double]], [["X": -1, "Y": -2.0], ["X": -3, "Y": -4.0]])
+        XCTAssertNil(hotspot3["link"])
+    }
+
     func test_modelFile_metadataContainsOtherMetadata() throws {
-        let content = ImagePageContent(metadata: ["bar": "foo", "baz": 42])
+        let initialModelFile = ModelFile(type: "image", filename: nil, data: nil, metadata: ["bar": "foo", "baz": 42])
+        let content = try ImagePageContent(modelFile: initialModelFile)
         let modelFile = content.modelFile
         XCTAssertEqual(modelFile.metadata?["bar"] as? String, "foo")
         XCTAssertEqual(modelFile.metadata?["baz"] as? Int, 42)
     }
 
     func test_modelFile_metadataContainsBothOtherMetadataAndDescription() throws {
-        let content = ImagePageContent(metadata: ["bar": "foo", "baz": 42])
+        let initialModelFile = ModelFile(type: "image", filename: nil, data: nil, metadata: ["bar": "foo", "baz": 42])
+        let content = try ImagePageContent(modelFile: initialModelFile)
         content.imageDescription = "Hello!"
         let modelFile = content.modelFile
         XCTAssertEqual(modelFile.metadata?["bar"] as? String, "foo")

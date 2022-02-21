@@ -153,8 +153,8 @@ final public class Page: NSObject, CollectableModelObject, FolderContainable {
             userPreferredSize = NSSizeFromString(userPreferredSizeString)
         }
 
-        let content: ModelFile = try self.attribute(withKey: PlistKeys.content.rawValue, from: plist)
-        guard let contentType = PageContentType(rawValue: content.type) else {
+        let contentModelFile: ModelFile = try self.attribute(withKey: PlistKeys.content.rawValue, from: plist)
+        guard let contentType = PageContentType(rawValue: contentModelFile.type) else {
             throw ModelObjectUpdateErrors.attributeNotFound(PlistKeys.content.rawValue)
         }
 
@@ -165,7 +165,7 @@ final public class Page: NSObject, CollectableModelObject, FolderContainable {
         self.dateCreated = dateCreated
         self.dateModified = dateModified
         self.userPreferredSize = userPreferredSize
-        self.content = contentType.createContent(data: content.data, metadata: content.metadata)
+        self.content = try contentType.createContent(modelFile: contentModelFile)
         self.allowsAutoLinking = allowsAutoLinking
 
         let plistKeys = PlistKeys.allCases.map(\.rawValue)

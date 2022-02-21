@@ -26,13 +26,21 @@ public class TextPageContent: NSObject, PageContent {
     public weak var page: Page?
     public private(set) var otherMetadata: [String: Any]?
 
-    public init(data: Data? = nil, metadata: [String: Any]? = nil) {
-        if let textData = data,
-            let text = try? NSAttributedString(data: textData, options: [:], documentAttributes: nil)
+    public init(modelFile: ModelFile) throws {
+        if let textData = modelFile.data,
+           let text = try? NSAttributedString(data: textData, options: [:], documentAttributes: nil)
         {
             self.text = text
         }
-        self.otherMetadata = metadata
+        self.otherMetadata = modelFile.metadata
+    }
+
+    public init(data: Data? = nil) {
+        if let textData = data,
+           let text = try? NSAttributedString(data: textData, options: [:], documentAttributes: nil)
+        {
+            self.text = text
+        }
     }
 
     public var modelFile: ModelFile {

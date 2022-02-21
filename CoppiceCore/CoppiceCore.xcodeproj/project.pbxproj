@@ -107,6 +107,8 @@
 		99D0C8F124C728C7002EEBFA /* ArrowDrawHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C8F024C728C7002EEBFA /* ArrowDrawHelper.swift */; };
 		99E47E2C274BF8DC007D180F /* NSRange+M3ExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E47E2B274BF8DC007D180F /* NSRange+M3ExtensionsTests.swift */; };
 		99F0D5FC267D30D70020D37C /* NSRange+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F0D5FB267D30D70020D37C /* NSRange+M3Extensions.swift */; };
+		99F6BD1F27C3D21F00E5AD20 /* ImageHotspot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F6BD1E27C3D21F00E5AD20 /* ImageHotspot.swift */; };
+		99F6BD2127C3D23F00E5AD20 /* ImageHotspotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F6BD2027C3D23F00E5AD20 /* ImageHotspotTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -224,6 +226,8 @@
 		99D0C8F024C728C7002EEBFA /* ArrowDrawHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrowDrawHelper.swift; sourceTree = "<group>"; };
 		99E47E2B274BF8DC007D180F /* NSRange+M3ExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRange+M3ExtensionsTests.swift"; sourceTree = "<group>"; };
 		99F0D5FB267D30D70020D37C /* NSRange+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRange+M3Extensions.swift"; sourceTree = "<group>"; };
+		99F6BD1E27C3D21F00E5AD20 /* ImageHotspot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageHotspot.swift; sourceTree = "<group>"; };
+		99F6BD2027C3D23F00E5AD20 /* ImageHotspotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageHotspotTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -358,6 +362,7 @@
 			children = (
 				99D0C7F924C5DE79002EEBFA /* TextPageContent.swift */,
 				99D0C7FA24C5DE79002EEBFA /* ImagePageContent.swift */,
+				99F6BD1E27C3D21F00E5AD20 /* ImageHotspot.swift */,
 			);
 			path = "Content Types";
 			sourceTree = "<group>";
@@ -427,6 +432,7 @@
 			children = (
 				99D0C83624C5DEC8002EEBFA /* TextPageContentsTests.swift */,
 				99D0C83724C5DEC8002EEBFA /* ImagePageContentsTests.swift */,
+				99F6BD2027C3D23F00E5AD20 /* ImageHotspotTests.swift */,
 			);
 			path = ContentTypes;
 			sourceTree = "<group>";
@@ -673,6 +679,7 @@
 				99D0C8DA24C5FBEA002EEBFA /* CanvasLayoutEngine+Configuration.swift in Sources */,
 				99D0C8DD24C5FBEA002EEBFA /* LayoutEngineArrow.swift in Sources */,
 				99D0C80E24C5DE79002EEBFA /* Canvas+Pages.swift in Sources */,
+				99F6BD1F27C3D21F00E5AD20 /* ImageHotspot.swift in Sources */,
 				99D0C80424C5DE79002EEBFA /* ModelID.swift in Sources */,
 				99D0C86724C5DFBA002EEBFA /* GlobalConstants.swift in Sources */,
 				99D0C7FC24C5DE79002EEBFA /* CoppiceModelController.swift in Sources */,
@@ -706,6 +713,7 @@
 				99D0C8A024C5FB95002EEBFA /* LayoutEngineArrowTests.swift in Sources */,
 				99D0C8A424C5FB95002EEBFA /* ResizePageEventContextTests.swift in Sources */,
 				99D0C89C24C5FB95002EEBFA /* LayoutEnginePageTests.swift in Sources */,
+				99F6BD2127C3D23F00E5AD20 /* ImageHotspotTests.swift in Sources */,
 				99D0C84724C5DEC9002EEBFA /* ModelSettingsTests.swift in Sources */,
 				99D0C84824C5DEC9002EEBFA /* ModelIDTests.swift in Sources */,
 				99D0C85624C5DEC9002EEBFA /* TextPageContentsTests.swift in Sources */,
