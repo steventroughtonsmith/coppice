@@ -6,7 +6,7 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import Cocoa
+import Foundation
 
 public struct LayoutEventModifiers: OptionSet {
     public let rawValue: UInt

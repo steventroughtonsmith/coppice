@@ -55,10 +55,12 @@ class ImageEditorViewController: NSViewController, NSMenuItemValidation, NSToolb
 	//MARK: - Mode
 	private func switchTo(_ mode: ImageEditorViewModel.Mode) {
 		switch mode {
-		case .view, .hotspot:
+		case .view:
             self.editorModeViewController = ImageEditorViewModeViewController(viewModel: self.viewModel)
 		case .crop:
             self.editorModeViewController = ImageEditorCropModeViewController(viewModel: self.viewModel)
+        case .hotspot:
+            self.editorModeViewController = ImageEditorHotspotModeViewController(viewModel: ImageEditorHotspotModeViewModel(imageContent: self.viewModel.imageContent))
 		}
 	}
 

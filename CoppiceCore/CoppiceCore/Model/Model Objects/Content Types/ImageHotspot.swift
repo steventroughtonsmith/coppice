@@ -12,7 +12,6 @@ enum ImageHotspotErrors: Error, Equatable {
     case invalidPoint
 }
 
-//TODO: Change to struct to make undo/redo easier
 public class ImageHotspot: NSObject {
     public enum Kind: String {
         case rectangle

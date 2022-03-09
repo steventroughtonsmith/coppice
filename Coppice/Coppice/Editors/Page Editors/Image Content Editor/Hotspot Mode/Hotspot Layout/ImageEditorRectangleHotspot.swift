@@ -1,0 +1,344 @@
+//
+//  ImageEditorRectangleHotspot.swift
+//  Coppice
+//
+//  Created by Martin Pilkington on 25/02/2022.
+//  Copyright © 2022 M Cubed Software. All rights reserved.
+//
+
+import AppKit
+import CoppiceCore
+
+class ImageEditorRectangleHotspot: ImageEditorHotspot {
+    enum Shape {
+        case rectangle
+        case oval
+    }
+
+    let shape: Shape
+    private(set) var rect: CGRect
+    var url: URL? = nil
+    private(set) var mode: ImageEditorHotspotMode
+    let imageSize: CGSize
+    init(shape: Shape, rect: CGRect, url: URL? = nil, mode: ImageEditorHotspotMode, imageSize: CGSize) {
+        self.shape = shape
+        self.rect = rect
+        self.url = url
+        self.mode = mode
+        self.imageSize = imageSize
+    }
+
+    var hotspotPath: NSBezierPath {
+        switch self.shape {
+        case .oval:
+            return NSBezierPath(ovalIn: self.rect)
+        case .rectangle:
+            return NSBezierPath(rect: self.rect)
+        }
+    }
+
+    var editingBoundsPath: NSBezierPath? {
+        switch self.mode {
+        case .view:
+            return nil
+        case .edit, .create:
+            return NSBezierPath(rect: self.rect)
+        }
+    }
+
+
+    //MARK: - Handle Rects
+    var editingHandleRects: [CGRect] {
+        switch self.mode {
+        case .view, .create:
+            return []
+        case .edit:
+            return self.editingHandleRectsByDragKind.map { $0.1 }
+        }
+    }
+
+    private var editingHandleRectsByDragKind: [(DragHandle, CGRect)] {
+        let size = self.resizeHandleSize
+        return [
+            (.resizeBottomRight,  CGRect(x: self.rect.maxX - (size / 2), y: self.rect.maxY - (size / 2), width: size, height: size)),
+            (.resizeTopRight, CGRect(x: self.rect.maxX - (size / 2), y: self.rect.minY - (size / 2), width: size, height: size)),
+            (.resizeBottomLeft, CGRect(x: self.rect.minX - (size / 2), y: self.rect.maxY - (size / 2), width: size, height: size)),
+            (.resizeTopLeft, CGRect(x: self.rect.minX - (size / 2), y: self.rect.minY - (size / 2), width: size, height: size)),
+        ]
+    }
+
+    var isSelected: Bool = false
+
+    var imageHotspot: ImageHotspot? {
+        switch self.mode {
+        case .create:
+            return nil
+        case .view, .edit:
+            let points = [
+                self.rect.point(atX: .min, y: .min),
+                self.rect.point(atX: .max, y: .min),
+                self.rect.point(atX: .max, y: .max),
+                self.rect.point(atX: .min, y: .max),
+            ]
+            switch self.shape {
+            case .rectangle:
+                return ImageHotspot(kind: .rectangle, points: points, link: self.url)
+            case .oval:
+                return ImageHotspot(kind: .oval, points: points, link: self.url)
+            }
+        }
+    }
+
+    weak var layoutEngine: ImageEditorHotspotLayoutEngine?
+
+    func hitTest(at point: CGPoint) -> Bool {
+        switch self.mode {
+        case .edit, .create:
+            guard let editingBoundsPath = self.editingBoundsPath else {
+                //This should never be called in theory
+                return self.rect.contains(point)
+            }
+            self.editingHandleRects.forEach { editingBoundsPath.appendRect($0) }
+            return editingBoundsPath.contains(point)
+        case .view:
+            return self.hotspotPath.contains(point)
+        }
+    }
+
+
+    //MARK: - Events
+    private struct DragState {
+        var initialPoint: CGPoint
+        var initialRect: CGRect
+        var handle: DragHandle
+    }
+
+    private var currentDragState: DragState?
+    func downEvent(at point: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int) {
+        guard
+            self.currentDragState == nil,
+            let handle = self.dragHandle(at: point)
+        else {
+            return
+        }
+
+        self.currentDragState = DragState(initialPoint: point, initialRect: self.rect, handle: handle)
+    }
+
+    func draggedEvent(at point: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int) {
+        guard let dragState = self.currentDragState else {
+            return
+        }
+
+        let delta = point.minus(dragState.initialPoint)
+
+        switch dragState.handle {
+        case .move:
+            self.moveHotspot(dragState: dragState, delta: delta)
+        case .resizeTopLeft, .resizeBottomRight, .resizeBottomLeft, .resizeTopRight:
+            self.resizeHotspot(dragState: dragState, delta: delta, modifier: modifiers)
+        }
+    }
+
+    func upEvent(at point: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int) {
+        guard let dragState = self.currentDragState else {
+            return
+        }
+
+        let delta = point.minus(dragState.initialPoint)
+
+        switch dragState.handle {
+        case .move:
+            self.selectHotspot(dragState: dragState, delta: delta, modifiers: modifiers)
+        case .resizeTopLeft, .resizeBottomRight, .resizeBottomLeft, .resizeTopRight:
+            if self.mode == .create {
+                self.finishCreation(dragState: dragState, delta: delta, modifiers: modifiers)
+            }
+        }
+        self.currentDragState = nil
+    }
+
+    func movedEvent(at point: CGPoint) {
+        //TODO: implement
+    }
+
+
+    //MARK: - Handle Helpers
+    private func dragHandle(at point: CGPoint) -> DragHandle? {
+        switch self.mode {
+        case .create:
+            return .resizeBottomRight
+        case .view:
+            return nil
+        case .edit:
+            for (kind, rect) in self.editingHandleRectsByDragKind {
+                if rect.contains(point) {
+                    return kind
+                }
+            }
+            if self.editingBoundsPath?.contains(point) == true {
+                return .move
+            }
+            return nil
+        }
+    }
+
+    private func moveHotspot(dragState: DragState, delta: CGPoint) {
+        guard self.mode == .edit else {
+            return
+        }
+        
+        var dx = delta.x
+        if (dragState.initialRect.minX + dx) < 0 {
+            dx = -dragState.initialRect.minX
+        } else if (dragState.initialRect.maxX + dx) > self.imageSize.width {
+            dx = self.imageSize.width - dragState.initialRect.maxX
+        }
+
+        var dy = delta.y
+        if (dragState.initialRect.minY + dy) < 0 {
+            dy = -dragState.initialRect.minY
+        } else if (dragState.initialRect.maxY + dy) > self.imageSize.height {
+            dy = self.imageSize.height - dragState.initialRect.maxY
+        }
+        self.rect = dragState.initialRect.offsetBy(dx: dx, dy: dy)
+    }
+
+    private func resizeHotspot(dragState: DragState, delta: CGPoint, modifier: LayoutEventModifiers) {
+        var adjustedRect = dragState.initialRect
+
+        enum Direction {
+            case horizontal
+            case vertical
+
+            var sizeKeyPath: WritableKeyPath<CGSize, CGFloat> {
+                switch self {
+                case .horizontal:
+                    return \CGSize.width
+                case .vertical:
+                    return \CGSize.height
+                }
+            }
+
+            var originKeyPath: WritableKeyPath<CGPoint, CGFloat> {
+                switch self {
+                case .horizontal:
+                    return \CGPoint.x
+                case .vertical:
+                    return \CGPoint.y
+                }
+            }
+        }
+
+        func adjust(rect: CGRect, originOffset: CGFloat, direction: Direction) -> CGRect {
+            var adjustedRect = rect
+            let origin = modifier.contains(.option) ? (rect.size[keyPath: direction.sizeKeyPath] / 2) : originOffset
+            let initialDragDelta = (rect.size[keyPath: direction.sizeKeyPath] - originOffset) - origin
+            let newDragDelta = initialDragDelta + delta[keyPath: direction.originKeyPath]
+
+            let newOrigin: CGFloat
+            let newSize: CGFloat
+            if modifier.contains(.option) {
+                newOrigin = -abs(newDragDelta)
+                newSize = 2 * newDragDelta
+            } else {
+                newOrigin = (newDragDelta < 0) ? newDragDelta : 0
+                newSize = newDragDelta
+            }
+
+            var originAdjustment = newOrigin + origin
+            var sizeAdjustment = newSize
+            let currentOrigin = adjustedRect.origin[keyPath: direction.originKeyPath]
+            if (currentOrigin + originAdjustment) < 0 {
+                originAdjustment = -currentOrigin
+                sizeAdjustment = currentOrigin + originOffset
+            }
+
+
+            if (currentOrigin + originOffset + newSize) > self.imageSize[keyPath: direction.sizeKeyPath] {
+                sizeAdjustment = self.imageSize[keyPath: direction.sizeKeyPath] - currentOrigin - originOffset
+            }
+
+            adjustedRect.origin[keyPath: direction.originKeyPath] += originAdjustment
+            adjustedRect.size[keyPath: direction.sizeKeyPath] = abs(sizeAdjustment)
+            return adjustedRect
+        }
+
+        if dragState.handle.isTop {
+            adjustedRect = adjust(rect: adjustedRect, originOffset: dragState.initialRect.height, direction: .vertical)
+        } else if dragState.handle.isBottom {
+            adjustedRect = adjust(rect: adjustedRect, originOffset: 0, direction: .vertical)
+        }
+
+        if dragState.handle.isLeft {
+            adjustedRect = adjust(rect: adjustedRect, originOffset: dragState.initialRect.width, direction: .horizontal)
+        } else if dragState.handle.isRight {
+            adjustedRect = adjust(rect: adjustedRect, originOffset: 0, direction: .horizontal)
+        }
+
+        self.rect = adjustedRect
+    }
+
+    private func selectHotspot(dragState: DragState, delta: CGPoint, modifiers: LayoutEventModifiers) {
+        guard delta == .zero else {
+            return
+        }
+
+        if modifiers.contains(.shift) {
+            isSelected.toggle()
+        } else {
+            layoutEngine?.deselectAll()
+            isSelected = true
+        }
+    }
+
+    private func finishCreation(dragState: DragState, delta: CGPoint, modifiers: LayoutEventModifiers) {
+        self.mode = .edit
+    }
+}
+
+extension ImageEditorRectangleHotspot {
+    enum DragHandle {
+        case resizeTopLeft
+        case resizeTopRight
+        case resizeBottomLeft
+        case resizeBottomRight
+        case move
+
+        var isTop: Bool {
+            switch self {
+            case .resizeTopLeft, .resizeTopRight:
+                return true
+            case .resizeBottomLeft, .resizeBottomRight, .move:
+                return false
+            }
+        }
+
+        var isBottom: Bool {
+            switch self {
+            case .resizeBottomLeft, .resizeBottomRight:
+                return true
+            case .resizeTopLeft, .resizeTopRight, .move:
+                return false
+            }
+        }
+
+        var isLeft: Bool {
+            switch self {
+            case .resizeTopLeft, .resizeBottomLeft:
+                return true
+            case .resizeTopRight, .resizeBottomRight, .move:
+                return false
+            }
+        }
+
+        var isRight: Bool {
+            switch self {
+            case .resizeTopRight, .resizeBottomRight:
+                return true
+            case .resizeTopLeft, .resizeBottomLeft, .move:
+                return false
+            }
+        }
+    }
+}

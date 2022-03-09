@@ -357,6 +357,12 @@
 		99F0A73125D16CEB00C9D2C4 /* CanvasImageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C8E924C7022D002EEBFA /* CanvasImageGenerator.swift */; };
 		99F0CD76246AF1C4006DE18E /* PreviewGenerationDebugWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F0CD74246AF1C4006DE18E /* PreviewGenerationDebugWindow.swift */; };
 		99F0CD77246AF1C4006DE18E /* PreviewGenerationDebugWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99F0CD75246AF1C4006DE18E /* PreviewGenerationDebugWindow.xib */; };
+		99F6BD2327C3EEC800E5AD20 /* ImageEditorHotspotLayoutEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F6BD2227C3EEC800E5AD20 /* ImageEditorHotspotLayoutEngine.swift */; };
+		99F77A1B27C91BA1009D7FF7 /* ImageEditorHotspotModeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F77A1A27C91BA1009D7FF7 /* ImageEditorHotspotModeViewModel.swift */; };
+		99F77A2027C920CE009D7FF7 /* ImageEditorHotspotLayoutEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F77A1F27C920CE009D7FF7 /* ImageEditorHotspotLayoutEngineTests.swift */; };
+		99F77A2227C9264F009D7FF7 /* MockImageEditorHotspot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F77A2127C9264F009D7FF7 /* MockImageEditorHotspot.swift */; };
+		99F77A2527C94D2B009D7FF7 /* ImageEditorRectangleHotspot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F77A2427C94D2B009D7FF7 /* ImageEditorRectangleHotspot.swift */; };
+		99F77A2727C94F31009D7FF7 /* ImageEditorRectangleHotspotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F77A2627C94F31009D7FF7 /* ImageEditorRectangleHotspotTests.swift */; };
 		99FCD7F324A7819400B44593 /* SparkleDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FCD7F224A7819400B44593 /* SparkleDelegate.swift */; };
 		99FDF129241FD52800AF1E51 /* CanvasesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FDF128241FD52800AF1E51 /* CanvasesViewModel.swift */; };
 		99FDF12C241FD53D00AF1E51 /* CanvasesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FDF12A241FD53D00AF1E51 /* CanvasesViewController.swift */; };
@@ -801,6 +807,12 @@
 		99ECA0B826496F8A00480C19 /* PageSelectorHeaderTableCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PageSelectorHeaderTableCellView.xib; sourceTree = "<group>"; };
 		99F0CD74246AF1C4006DE18E /* PreviewGenerationDebugWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewGenerationDebugWindow.swift; sourceTree = "<group>"; };
 		99F0CD75246AF1C4006DE18E /* PreviewGenerationDebugWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreviewGenerationDebugWindow.xib; sourceTree = "<group>"; };
+		99F6BD2227C3EEC800E5AD20 /* ImageEditorHotspotLayoutEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorHotspotLayoutEngine.swift; sourceTree = "<group>"; };
+		99F77A1A27C91BA1009D7FF7 /* ImageEditorHotspotModeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorHotspotModeViewModel.swift; sourceTree = "<group>"; };
+		99F77A1F27C920CE009D7FF7 /* ImageEditorHotspotLayoutEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorHotspotLayoutEngineTests.swift; sourceTree = "<group>"; };
+		99F77A2127C9264F009D7FF7 /* MockImageEditorHotspot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockImageEditorHotspot.swift; sourceTree = "<group>"; };
+		99F77A2427C94D2B009D7FF7 /* ImageEditorRectangleHotspot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorRectangleHotspot.swift; sourceTree = "<group>"; };
+		99F77A2627C94F31009D7FF7 /* ImageEditorRectangleHotspotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorRectangleHotspotTests.swift; sourceTree = "<group>"; };
 		99FCD7F224A7819400B44593 /* SparkleDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparkleDelegate.swift; sourceTree = "<group>"; };
 		99FDF128241FD52800AF1E51 /* CanvasesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasesViewModel.swift; sourceTree = "<group>"; };
 		99FDF12A241FD53D00AF1E51 /* CanvasesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasesViewController.swift; sourceTree = "<group>"; };
@@ -959,6 +971,8 @@
 			children = (
 				9918674D27A4465D00A1CC3E /* ImageEditorHotspotModeViewController.swift */,
 				9918674E27A4465D00A1CC3E /* ImageEditorHotspotModeViewController.xib */,
+				99F77A1A27C91BA1009D7FF7 /* ImageEditorHotspotModeViewModel.swift */,
+				99F77A2327C94C82009D7FF7 /* Hotspot Layout */,
 			);
 			path = "Hotspot Mode";
 			sourceTree = "<group>";
@@ -1294,6 +1308,7 @@
 		9976611A23A3EB2C000D1741 /* Unit Tests */ = {
 			isa = PBXGroup;
 			children = (
+				99F77A1C27C92096009D7FF7 /* Editors */,
 				9957B086239FD3CA00BA3C0B /* DocumentWindow */,
 				99C03EFE23293D9F00EB7516 /* Canvases Editor */,
 				999EA6E8244E031500BF254E /* Sidebar */,
@@ -1331,6 +1346,7 @@
 				993600E824AE5F1F002C86E4 /* TestLayoutDelegate.swift */,
 				9960CCE824B1EC1C001F092E /* MockEventContextFactory.swift */,
 				99AA3C3525B719F40050A119 /* MockTextEditorAttributeEditor.swift */,
+				99F77A2127C9264F009D7FF7 /* MockImageEditorHotspot.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1836,6 +1852,40 @@
 				99F0CD75246AF1C4006DE18E /* PreviewGenerationDebugWindow.xib */,
 			);
 			path = "Preview Generator";
+			sourceTree = "<group>";
+		};
+		99F77A1C27C92096009D7FF7 /* Editors */ = {
+			isa = PBXGroup;
+			children = (
+				99F77A1D27C9209B009D7FF7 /* Page Editors */,
+			);
+			path = Editors;
+			sourceTree = "<group>";
+		};
+		99F77A1D27C9209B009D7FF7 /* Page Editors */ = {
+			isa = PBXGroup;
+			children = (
+				99F77A1E27C920A4009D7FF7 /* Image Content Editor */,
+			);
+			path = "Page Editors";
+			sourceTree = "<group>";
+		};
+		99F77A1E27C920A4009D7FF7 /* Image Content Editor */ = {
+			isa = PBXGroup;
+			children = (
+				99F77A1F27C920CE009D7FF7 /* ImageEditorHotspotLayoutEngineTests.swift */,
+				99F77A2627C94F31009D7FF7 /* ImageEditorRectangleHotspotTests.swift */,
+			);
+			path = "Image Content Editor";
+			sourceTree = "<group>";
+		};
+		99F77A2327C94C82009D7FF7 /* Hotspot Layout */ = {
+			isa = PBXGroup;
+			children = (
+				99F6BD2227C3EEC800E5AD20 /* ImageEditorHotspotLayoutEngine.swift */,
+				99F77A2427C94D2B009D7FF7 /* ImageEditorRectangleHotspot.swift */,
+			);
+			path = "Hotspot Layout";
 			sourceTree = "<group>";
 		};
 		99FDF127241FD50C00AF1E51 /* Canvases Editor */ = {
@@ -2352,6 +2402,7 @@
 				991B6087254311BC002C483C /* HelpContentViewController.swift in Sources */,
 				991B60C6254334F2002C483C /* HelpSearchResultTableCellView.swift in Sources */,
 				998D077B2411513F004ADFF8 /* NewPageMenuDelegate.swift in Sources */,
+				99F77A2527C94D2B009D7FF7 /* ImageEditorRectangleHotspot.swift in Sources */,
 				991B5F622541E45B002C483C /* HelpController.swift in Sources */,
 				99D8E37A237EDB890098CF3B /* PageInspectorViewModel.swift in Sources */,
 				99D5073D2502854600670139 /* ProButtonCell.swift in Sources */,
@@ -2454,6 +2505,7 @@
 				99C865232302E267004C7B89 /* ImageEditorViewModel.swift in Sources */,
 				991B60B72543320C002C483C /* HelpSearchResultsViewController.swift in Sources */,
 				9985F4D923F2E13600B96DC7 /* CanvasPageTitleView.swift in Sources */,
+				99F6BD2327C3EEC800E5AD20 /* ImageEditorHotspotLayoutEngine.swift in Sources */,
 				99FE019122CD1037004D380D /* AppDelegate.swift in Sources */,
 				992710C424D1A29200C7C61A /* TourInterfaceView.swift in Sources */,
 				99A0B857238D6F74005FCF25 /* NSTextView+M3Extensions.swift in Sources */,
@@ -2492,6 +2544,7 @@
 				992A5C9F22DCCDB30012CCB6 /* NSView+M3Extensions.swift in Sources */,
 				99868F4523995739009AC0F7 /* PageLinkManager.swift in Sources */,
 				99C4FBE126C94F11009D035D /* PageSelectorDividerTableCellView.swift in Sources */,
+				99F77A1B27C91BA1009D7FF7 /* ImageEditorHotspotModeViewModel.swift in Sources */,
 				99771194239BF97600FCC8C7 /* NSAttributedString+M3Extensions.swift in Sources */,
 				99771190239A95C300FCC8C7 /* TextLinkFinder.swift in Sources */,
 				9985F4DB23F44AAD00B96DC7 /* CanvasPageBackgroundView.swift in Sources */,
@@ -2542,18 +2595,21 @@
 				9958107C230D75AA00D996C4 /* TextEditorViewModelTests.swift in Sources */,
 				9960CCE924B1EC1C001F092E /* MockEventContextFactory.swift in Sources */,
 				993600E924AE5F1F002C86E4 /* TestLayoutDelegate.swift in Sources */,
+				99F77A2727C94F31009D7FF7 /* ImageEditorRectangleHotspotTests.swift in Sources */,
 				999EA6E7244CA88600BF254E /* SourceListViewModelTypesTests.swift in Sources */,
 				99A0B85E238D730E005FCF25 /* TextEditorInspectorTypesTests.swift in Sources */,
 				99A0B85C238D72F0005FCF25 /* TextEditorAttributesTests.swift in Sources */,
 				999EA6CD243CCCE200BF254E /* XCTestExtensions.swift in Sources */,
 				99868F4723995B4F009AC0F7 /* TextLinkFinderTests.swift in Sources */,
 				99E47E272747F06A007D180F /* BaseTestCase.swift in Sources */,
+				99F77A2027C920CE009D7FF7 /* ImageEditorHotspotLayoutEngineTests.swift in Sources */,
 				99AA3C3F25B71D3B0050A119 /* TextEditorParagraphInspectorViewModelTests.swift in Sources */,
 				997711CA239E9AF400FCC8C7 /* MockDocumentWindowViewModel.swift in Sources */,
 				99A0B860238D732F005FCF25 /* TextEditorFontInspectorViewModelTests.swift in Sources */,
 				99D4D59822F8650300F69C1F /* SourceListViewModelTests.swift in Sources */,
 				99581076230C40FD00D996C4 /* PageSelectorViewModelTests.swift in Sources */,
 				99DA84EC245718D900F19917 /* MockBubblesModelController.swift in Sources */,
+				99F77A2227C9264F009D7FF7 /* MockImageEditorHotspot.swift in Sources */,
 				99D170E6233D0542004EBD70 /* CanvasEditorViewModelTests.swift in Sources */,
 				99AA3C3625B719F40050A119 /* MockTextEditorAttributeEditor.swift in Sources */,
 				999EA6EF244E054400BF254E /* SearchResultsViewModelTypesTests.swift in Sources */,
