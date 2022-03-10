@@ -28,42 +28,42 @@ class ImageEditorRectangleHotspot: ImageEditorHotspot {
         self.imageSize = imageSize
     }
 
-    var hotspotPath: NSBezierPath {
+    func hotspotPath(forScale scale: CGFloat = 1) -> NSBezierPath {
         switch self.shape {
         case .oval:
-            return NSBezierPath(ovalIn: self.rect)
+            return NSBezierPath(ovalIn: self.rect.multiplied(by: scale))
         case .rectangle:
-            return NSBezierPath(rect: self.rect)
+            return NSBezierPath(rect: self.rect.multiplied(by: scale))
         }
     }
 
-    var editingBoundsPath: NSBezierPath? {
+    func editingBoundsPath(forScale scale: CGFloat = 1) -> NSBezierPath? {
         switch self.mode {
         case .view:
             return nil
         case .edit, .create:
-            return NSBezierPath(rect: self.rect)
+            return NSBezierPath(rect: self.rect.multiplied(by: scale))
         }
     }
 
-
     //MARK: - Handle Rects
-    var editingHandleRects: [CGRect] {
+    func editingHandleRects(forScale scale: CGFloat = 1) -> [CGRect] {
         switch self.mode {
         case .view, .create:
             return []
         case .edit:
-            return self.editingHandleRectsByDragKind.map { $0.1 }
+            return self.editingHandleRectsByDragKind(forScale: scale).map { $0.1 }
         }
     }
 
-    private var editingHandleRectsByDragKind: [(DragHandle, CGRect)] {
+    private func editingHandleRectsByDragKind(forScale scale: CGFloat) -> [(DragHandle, CGRect)] {
         let size = self.resizeHandleSize
+        let scaledRect = self.rect.multiplied(by: scale)
         return [
-            (.resizeBottomRight,  CGRect(x: self.rect.maxX - (size / 2), y: self.rect.maxY - (size / 2), width: size, height: size)),
-            (.resizeTopRight, CGRect(x: self.rect.maxX - (size / 2), y: self.rect.minY - (size / 2), width: size, height: size)),
-            (.resizeBottomLeft, CGRect(x: self.rect.minX - (size / 2), y: self.rect.maxY - (size / 2), width: size, height: size)),
-            (.resizeTopLeft, CGRect(x: self.rect.minX - (size / 2), y: self.rect.minY - (size / 2), width: size, height: size)),
+            (.resizeBottomRight,  CGRect(x: scaledRect.maxX - (size / 2), y: scaledRect.maxY - (size / 2), width: size, height: size)),
+            (.resizeTopRight, CGRect(x: scaledRect.maxX - (size / 2), y: scaledRect.minY - (size / 2), width: size, height: size)),
+            (.resizeBottomLeft, CGRect(x: scaledRect.minX - (size / 2), y: scaledRect.maxY - (size / 2), width: size, height: size)),
+            (.resizeTopLeft, CGRect(x: scaledRect.minX - (size / 2), y: scaledRect.minY - (size / 2), width: size, height: size)),
         ]
     }
 
@@ -94,14 +94,14 @@ class ImageEditorRectangleHotspot: ImageEditorHotspot {
     func hitTest(at point: CGPoint) -> Bool {
         switch self.mode {
         case .edit, .create:
-            guard let editingBoundsPath = self.editingBoundsPath else {
+            guard let editingBoundsPath = self.editingBoundsPath() else {
                 //This should never be called in theory
                 return self.rect.contains(point)
             }
-            self.editingHandleRects.forEach { editingBoundsPath.appendRect($0) }
+            self.editingHandleRects().forEach { editingBoundsPath.appendRect($0) }
             return editingBoundsPath.contains(point)
         case .view:
-            return self.hotspotPath.contains(point)
+            return self.hotspotPath().contains(point)
         }
     }
 
@@ -171,12 +171,12 @@ class ImageEditorRectangleHotspot: ImageEditorHotspot {
         case .view:
             return nil
         case .edit:
-            for (kind, rect) in self.editingHandleRectsByDragKind {
+            for (kind, rect) in self.editingHandleRectsByDragKind(forScale: 1) {
                 if rect.contains(point) {
                     return kind
                 }
             }
-            if self.editingBoundsPath?.contains(point) == true {
+            if self.editingBoundsPath()?.contains(point) == true {
                 return .move
             }
             return nil
@@ -187,7 +187,7 @@ class ImageEditorRectangleHotspot: ImageEditorHotspot {
         guard self.mode == .edit else {
             return
         }
-        
+
         var dx = delta.x
         if (dragState.initialRect.minX + dx) < 0 {
             dx = -dragState.initialRect.minX
@@ -230,50 +230,74 @@ class ImageEditorRectangleHotspot: ImageEditorHotspot {
             }
         }
 
-        func adjust(rect: CGRect, originOffset: CGFloat, direction: Direction) -> CGRect {
+        func adjust(rect: CGRect, offsetFromOrigin: CGFloat, direction: Direction) -> CGRect {
+            guard delta[keyPath: direction.originKeyPath] != 0 else {
+                return rect
+            }
+
             var adjustedRect = rect
-            let origin = modifier.contains(.option) ? (rect.size[keyPath: direction.sizeKeyPath] / 2) : originOffset
-            let initialDragDelta = (rect.size[keyPath: direction.sizeKeyPath] - originOffset) - origin
-            let newDragDelta = initialDragDelta + delta[keyPath: direction.originKeyPath]
+            //Work out the origin to use for the drag (will be either opposite the handle or half way down the rect)
+            let dragOrigin = modifier.contains(.option) ? (rect.size[keyPath: direction.sizeKeyPath] / 2) : offsetFromOrigin
+            //Work out how far from the origin the current point is
+            let initialOffsetFromDragOrigin = (rect.size[keyPath: direction.sizeKeyPath] - offsetFromOrigin) - dragOrigin
+            //Add our delta
+            let newOffsetFromDragOrigin = initialOffsetFromDragOrigin + delta[keyPath: direction.originKeyPath]
 
             let newOrigin: CGFloat
-            let newSize: CGFloat
+            var newSize: CGFloat
             if modifier.contains(.option) {
-                newOrigin = -abs(newDragDelta)
-                newSize = 2 * newDragDelta
+                newOrigin = -abs(newOffsetFromDragOrigin)
+                newSize = 2 * abs(newOffsetFromDragOrigin)
             } else {
-                newOrigin = (newDragDelta < 0) ? newDragDelta : 0
-                newSize = newDragDelta
+                newOrigin = (newOffsetFromDragOrigin < 0) ? newOffsetFromDragOrigin : 0
+                newSize = abs(newOffsetFromDragOrigin)
             }
 
-            var originAdjustment = newOrigin + origin
-            var sizeAdjustment = newSize
-            let currentOrigin = adjustedRect.origin[keyPath: direction.originKeyPath]
-            if (currentOrigin + originAdjustment) < 0 {
-                originAdjustment = -currentOrigin
-                sizeAdjustment = currentOrigin + originOffset
+            var rectOriginAdjustment = newOrigin + dragOrigin
+
+            if modifier.contains(.option) {
+                let currentMidPoint = adjustedRect.midPoint[keyPath: direction.originKeyPath]
+                let proposedMin = currentMidPoint - (newSize / 2)
+                if proposedMin < 0 {
+                    newSize += proposedMin * 2
+                    rectOriginAdjustment -= proposedMin
+                }
+                //Checking bottom/right edge
+                let proposedMax = currentMidPoint + (newSize / 2)
+                if proposedMax > self.imageSize[keyPath: direction.sizeKeyPath] {
+                    let adjustment = proposedMax - self.imageSize[keyPath: direction.sizeKeyPath]
+                    newSize -= adjustment * 2
+                    rectOriginAdjustment += adjustment
+                }
+            } else {
+                let currentOrigin = adjustedRect.origin[keyPath: direction.originKeyPath]
+                let proposedMin = currentOrigin + rectOriginAdjustment
+                if proposedMin < 0 {
+                    rectOriginAdjustment = -currentOrigin
+                    newSize = currentOrigin + offsetFromOrigin
+                }
+
+                let proposedMax = currentOrigin + rectOriginAdjustment + newSize
+                if proposedMax > self.imageSize[keyPath: direction.sizeKeyPath] {
+                    newSize = self.imageSize[keyPath: direction.sizeKeyPath] - currentOrigin - rectOriginAdjustment
+                }
             }
 
-
-            if (currentOrigin + originOffset + newSize) > self.imageSize[keyPath: direction.sizeKeyPath] {
-                sizeAdjustment = self.imageSize[keyPath: direction.sizeKeyPath] - currentOrigin - originOffset
-            }
-
-            adjustedRect.origin[keyPath: direction.originKeyPath] += originAdjustment
-            adjustedRect.size[keyPath: direction.sizeKeyPath] = abs(sizeAdjustment)
+            adjustedRect.origin[keyPath: direction.originKeyPath] += rectOriginAdjustment
+            adjustedRect.size[keyPath: direction.sizeKeyPath] = abs(newSize)
             return adjustedRect
         }
 
         if dragState.handle.isTop {
-            adjustedRect = adjust(rect: adjustedRect, originOffset: dragState.initialRect.height, direction: .vertical)
+            adjustedRect = adjust(rect: adjustedRect, offsetFromOrigin: dragState.initialRect.height, direction: .vertical)
         } else if dragState.handle.isBottom {
-            adjustedRect = adjust(rect: adjustedRect, originOffset: 0, direction: .vertical)
+            adjustedRect = adjust(rect: adjustedRect, offsetFromOrigin: 0, direction: .vertical)
         }
 
         if dragState.handle.isLeft {
-            adjustedRect = adjust(rect: adjustedRect, originOffset: dragState.initialRect.width, direction: .horizontal)
+            adjustedRect = adjust(rect: adjustedRect, offsetFromOrigin: dragState.initialRect.width, direction: .horizontal)
         } else if dragState.handle.isRight {
-            adjustedRect = adjust(rect: adjustedRect, originOffset: 0, direction: .horizontal)
+            adjustedRect = adjust(rect: adjustedRect, offsetFromOrigin: 0, direction: .horizontal)
         }
 
         self.rect = adjustedRect
@@ -285,10 +309,10 @@ class ImageEditorRectangleHotspot: ImageEditorHotspot {
         }
 
         if modifiers.contains(.shift) {
-            isSelected.toggle()
+            self.isSelected.toggle()
         } else {
-            layoutEngine?.deselectAll()
-            isSelected = true
+            self.layoutEngine?.deselectAll()
+            self.isSelected = true
         }
     }
 

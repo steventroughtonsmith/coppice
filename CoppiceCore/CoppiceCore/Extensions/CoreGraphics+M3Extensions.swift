@@ -224,4 +224,8 @@ extension CGRect {
         flippedRect.origin.y = rect.height - flippedRect.maxY
         return flippedRect
     }
+
+    public func multiplied(by factor: CGFloat) -> CGRect {
+        return CGRect(origin: self.origin.multiplied(by: factor), size: self.size.multiplied(by: factor))
+    }
 }

@@ -56,6 +56,16 @@ class ImageEditorHotspotLayoutEngine {
         self.delegate?.layoutDidChange(in: self)
     }
 
+    func flagsChanged(at point: CGPoint, modifiers: LayoutEventModifiers) {
+        guard let currentHotspotForEvents = self.currentHotspotForEvents else {
+            return
+        }
+
+        currentHotspotForEvents.draggedEvent(at: point, modifiers: modifiers, eventCount: 1)
+
+        self.delegate?.layoutDidChange(in: self)
+    }
+
     func movedEvent(at point: CGPoint) {
 
     }
@@ -79,9 +89,9 @@ protocol ImageEditorHotspot: AnyObject {
     var resizeHandleSize: CGFloat { get }
 
     //MARK: - Drawing/Interaction
-    var hotspotPath: NSBezierPath { get }
-    var editingBoundsPath: NSBezierPath? { get }
-    var editingHandleRects: [CGRect] { get }
+    func hotspotPath(forScale scale: CGFloat) -> NSBezierPath
+    func editingBoundsPath(forScale scale: CGFloat) -> NSBezierPath?
+    func editingHandleRects(forScale scale: CGFloat) -> [CGRect]
 
     //MARK: - State
     var isSelected: Bool { get set }

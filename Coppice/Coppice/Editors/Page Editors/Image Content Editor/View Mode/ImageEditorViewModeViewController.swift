@@ -42,6 +42,15 @@ class ImageEditorViewModeViewController: NSViewController {
         self.subscribers[.image] = self.viewModel.publisher(for: \.image).sink { [weak self] image in
             self?.hotspotView.imageSize = image?.size ?? .zero
         }
+
+        self.hotspotView.maintainsAspectRatio = (self.isInCanvas == false)
+
+        if self.isInCanvas {
+            NSLayoutConstraint.activate([
+                self.hotspotView.widthAnchor.constraint(equalTo: self.imageView.widthAnchor),
+                self.hotspotView.heightAnchor.constraint(equalTo: self.imageView.heightAnchor),
+            ])
+        }
     }
 
     override func viewDidAppear() {

@@ -9,6 +9,10 @@
 import Cocoa
 
 class ImageEditorHotspotView: NSView {
+    override var acceptsFirstResponder: Bool {
+        return true
+    }
+
     override var isFlipped: Bool {
         return true
     }
@@ -16,11 +20,13 @@ class ImageEditorHotspotView: NSView {
     var imageSize: CGSize = .zero {
         didSet {
             self.invalidateIntrinsicContentSize()
-            guard self.imageSize.width > 0, self.imageSize.height > 0 else {
-                self.aspectRatioConstraint = nil
-                return
-            }
-            self.aspectRatioConstraint = self.widthAnchor.constraint(equalTo: self.heightAnchor, multiplier: self.imageSize.width / self.imageSize.height)
+            self.updateAspectRatioConstraint()
+        }
+    }
+
+    var maintainsAspectRatio: Bool = true {
+        didSet {
+            self.updateAspectRatioConstraint()
         }
     }
 
@@ -39,6 +45,15 @@ class ImageEditorHotspotView: NSView {
         }
     }
 
+    private func updateAspectRatioConstraint() {
+        guard self.maintainsAspectRatio, self.imageSize.width > 0, self.imageSize.height > 0 else {
+            self.aspectRatioConstraint = nil
+            return
+        }
+        self.aspectRatioConstraint = self.widthAnchor.constraint(equalTo: self.heightAnchor, multiplier: self.imageSize.width / self.imageSize.height)
+
+    }
+
     override var intrinsicContentSize: NSSize {
         guard self.imageSize.width > 0, self.imageSize.height > 0 else {
             return NSSize(width: NSView.noIntrinsicMetric, height: NSView.noIntrinsicMetric)
@@ -53,14 +68,16 @@ class ImageEditorHotspotView: NSView {
             return
         }
 
+        let scale = self.frame.width / self.imageSize.width
+
         for hotspot in layoutEngine.hotspots {
             NSColor.black.withAlphaComponent(0.8).setFill()
             NSColor.white.setStroke()
-            hotspot.hotspotPath.fill()
-            hotspot.hotspotPath.stroke()
+            hotspot.hotspotPath(forScale: scale).fill()
+            hotspot.hotspotPath(forScale: scale).stroke()
 
             NSColor.white.setFill()
-            hotspot.editingHandleRects.forEach { $0.fill() }
+            hotspot.editingHandleRects(forScale: scale).forEach { $0.fill() }
         }
     }
 
@@ -93,6 +110,12 @@ class ImageEditorHotspotView: NSView {
         let pointInView = self.convert(event.locationInWindow, from: nil)
         let pointInImage = self.convertPointToImageSpace(pointInView)
         self.layoutEngine?.upEvent(at: pointInImage, modifiers: event.layoutEventModifiers, eventCount: event.clickCount)
+    }
+
+    override func flagsChanged(with event: NSEvent) {
+        let pointInView = self.convert(event.locationInWindow, from: nil)
+        let pointInImage = self.convertPointToImageSpace(pointInView)
+        self.layoutEngine?.flagsChanged(at: pointInImage, modifiers: event.layoutEventModifiers)
     }
 }
 

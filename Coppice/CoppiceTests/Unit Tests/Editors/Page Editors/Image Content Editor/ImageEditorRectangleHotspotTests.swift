@@ -412,6 +412,22 @@ class ImageEditorRectangleHotspotTests: XCTestCase {
         XCTAssertRectEqual(rightHotspot.rect, CGRect(x: 50, y: 40, width: 100, height: 120))
     }
 
+    func test_resizingTop_holdingOptionWhileResizingResizesDoesntGoUpBeyondImageBounds() throws {
+        let leftHotspot = self.createHotspot(shape: .oval, rect: CGRect(x: 50, y: 40, width: 100, height: 100), mode: .edit, drag: TestDrag(startPoint: (x: .min, y: .min), deltaY: -60, modifiers: .option))
+        XCTAssertRectEqual(leftHotspot.rect, CGRect(x: 50, y: 0, width: 100, height: 180))
+
+        let rightHotspot = self.createHotspot(shape: .oval, rect: CGRect(x: 50, y: 40, width: 100, height: 100), mode: .edit, drag: TestDrag(startPoint: (x: .max, y: .min), deltaY: -60, modifiers: .option))
+        XCTAssertRectEqual(rightHotspot.rect, CGRect(x: 50, y: 0, width: 100, height: 180))
+    }
+
+    func test_resizingTop_holdingOptionWhileResizingResizesDoesntGoDownBeyondImageBounds() throws {
+        let leftHotspot = self.createHotspot(shape: .oval, rect: CGRect(x: 50, y: 60, width: 100, height: 100), mode: .edit, drag: TestDrag(startPoint: (x: .min, y: .min), deltaY: -60, modifiers: .option))
+        XCTAssertRectEqual(leftHotspot.rect, CGRect(x: 50, y: 20, width: 100, height: 180))
+
+        let rightHotspot = self.createHotspot(shape: .oval, rect: CGRect(x: 50, y: 60, width: 100, height: 100), mode: .edit, drag: TestDrag(startPoint: (x: .max, y: .min), deltaY: -60, modifiers: .option))
+        XCTAssertRectEqual(rightHotspot.rect, CGRect(x: 50, y: 20, width: 100, height: 180))
+    }
+
     func test_resizingTop_doesNotAllowResizingInViewMode() throws {
         let leftHotspot = self.createHotspot(shape: .oval, mode: .view, drag: TestDrag(startPoint: (x: .min, y: .min), deltaY: 10))
         XCTAssertRectEqual(leftHotspot.rect, CGRect(x: 50, y: 50, width: 100, height: 100))
@@ -484,6 +500,22 @@ class ImageEditorRectangleHotspotTests: XCTestCase {
 
         let rightHotspot = self.createHotspot(shape: .oval, mode: .edit, drag: TestDrag(startPoint: (x: .max, y: .max), deltaY: -70, modifiers: .option))
         XCTAssertRectEqual(rightHotspot.rect, CGRect(x: 50, y: 80, width: 100, height: 40))
+    }
+
+    func test_resizingBottom_holdingOptionWhileResizingResizesDoesntGoUpBeyondImageBounds() throws {
+        let leftHotspot = self.createHotspot(shape: .oval, rect: CGRect(x: 50, y: 40, width: 100, height: 100), mode: .edit, drag: TestDrag(startPoint: (x: .min, y: .max), deltaY: 60, modifiers: .option))
+        XCTAssertRectEqual(leftHotspot.rect, CGRect(x: 50, y: 0, width: 100, height: 180))
+
+        let rightHotspot = self.createHotspot(shape: .oval, rect: CGRect(x: 50, y: 40, width: 100, height: 100), mode: .edit, drag: TestDrag(startPoint: (x: .max, y: .max), deltaY: 60, modifiers: .option))
+        XCTAssertRectEqual(rightHotspot.rect, CGRect(x: 50, y: 0, width: 100, height: 180))
+    }
+
+    func test_resizingBottom_holdingOptionWhileResizingResizesDoesntGoDownBeyondImageBounds() throws {
+        let leftHotspot = self.createHotspot(shape: .oval, rect: CGRect(x: 50, y: 60, width: 100, height: 100), mode: .edit, drag: TestDrag(startPoint: (x: .min, y: .max), deltaY: 60, modifiers: .option))
+        XCTAssertRectEqual(leftHotspot.rect, CGRect(x: 50, y: 20, width: 100, height: 180))
+
+        let rightHotspot = self.createHotspot(shape: .oval, rect: CGRect(x: 50, y: 60, width: 100, height: 100), mode: .edit, drag: TestDrag(startPoint: (x: .max, y: .max), deltaY: 60, modifiers: .option))
+        XCTAssertRectEqual(rightHotspot.rect, CGRect(x: 50, y: 20, width: 100, height: 180))
     }
 
     func test_resizingBottom_doesNotAllowResizingInViewMode() throws {
