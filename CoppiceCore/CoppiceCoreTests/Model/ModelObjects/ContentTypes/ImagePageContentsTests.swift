@@ -112,15 +112,33 @@ class ImagePageContentsTests: XCTestCase {
     }
 
     func test_init_setsHotspotsToEmptyArrayIfMetadataValueIsNotArrayOfDictionaries() throws {
-        XCTFail()
+        let modelFile = ModelFile(type: "image", filename: nil, data: nil, metadata: [
+            "hotspots": 42,
+        ])
+
+		let content = try ImagePageContent(modelFile: modelFile)
+        XCTAssertEqual(content.hotspots, [])
     }
 
     func test_init_setsHotspotsToEmptyArrayIfValueIsNotInMetadata() throws {
-        XCTFail()
+        let modelFile = ModelFile(type: "image", filename: nil, data: nil, metadata: [:])
+
+        let content = try ImagePageContent(modelFile: modelFile)
+        XCTAssertEqual(content.hotspots, [])
     }
 
     func test_init_throwsErrorIfHotspotDictionaryIsInvalidValue() throws {
-        XCTFail()
+        let modelFile = ModelFile(type: "image", filename: nil, data: nil, metadata: [
+            "hotspots": [
+                ["kind": "rectangle", "points": [["X": 24, "Y": 32.1], ["X": 42, "Y": 1.23]]],
+                ["points": [["X": 1, "Y": 2.0], ["X": 3, "Y": 4.0]], "link": URL(string: "https://coppiceapp.com")!],
+                ["kind": "polygon", "points": [["X": -1, "Y": -2.0], ["X": -3, "Y": -4.0]]],
+            ],
+        ])
+
+        XCTAssertThrowsError(try ImagePageContent(modelFile: modelFile)) {
+            XCTAssertEqual(($0 as? ImageHotspotErrors), .attributeNotFound("kind"))
+        }
     }
 
     //MARK: - .image

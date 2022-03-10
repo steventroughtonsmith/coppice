@@ -46,19 +46,45 @@ class ImageHotspotTests: XCTestCase {
     }
 
     func test_initDictionaryRepresentation_throwsAttributeNotFoundIfKindNotInDictionary() throws {
-        XCTFail()
+        let dictionary: [String: Any] = [
+            "points": [["X": 42.1, "Y": 60], ["X": 90, "Y": 60], ["X": -12.3, "Y": 1234.5]],
+        ]
+
+        XCTAssertThrowsError(try ImageHotspot(dictionaryRepresentation: dictionary)) {
+            XCTAssertEqual(($0 as? ImageHotspotErrors), .attributeNotFound("kind"))
+        }
     }
 
     func test_initDictionaryRepresentation_throwsAttributeNotFoundIfKindNotValidValue() throws {
-        XCTFail()
+        let dictionary: [String: Any] = [
+            "kind": 42,
+            "points": [["X": 42.1, "Y": 60], ["X": 90, "Y": 60], ["X": -12.3, "Y": 1234.5]],
+        ]
+
+        XCTAssertThrowsError(try ImageHotspot(dictionaryRepresentation: dictionary)) {
+            XCTAssertEqual(($0 as? ImageHotspotErrors), .attributeNotFound("kind"))
+        }
     }
 
     func test_initDictionaryRepresentation_throwsAttributeNotFoundIfPointsNotInDictionary() throws {
-        XCTFail()
+        let dictionary: [String: Any] = [
+            "kind": "polygon",
+        ]
+
+        XCTAssertThrowsError(try ImageHotspot(dictionaryRepresentation: dictionary)) {
+            XCTAssertEqual(($0 as? ImageHotspotErrors), .attributeNotFound("points"))
+        }
     }
 
     func test_initDictionaryRepresentation_throwsInvalidPointIfAPointInDictionaryNotValidValue() throws {
-        XCTFail()
+        let dictionary: [String: Any] = [
+            "kind": "polygon",
+            "points": [["X": 42.1, "Y": 60], ["A": 5, "Y": 60], ["X": -12.3, "Y": 1234.5]],
+        ]
+
+        XCTAssertThrowsError(try ImageHotspot(dictionaryRepresentation: dictionary)) {
+            XCTAssertEqual(($0 as? ImageHotspotErrors), .invalidPoint)
+        }
     }
 
 
