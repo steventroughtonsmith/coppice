@@ -23,6 +23,7 @@
 /* Begin PBXBuildFile section */
 		9902F4A923882ADA00AF646F /* NSSegmentedControl+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9902F4A823882ADA00AF646F /* NSSegmentedControl+M3Extensions.swift */; };
 		99062DE02519117C009D3317 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99062DDF2519117C009D3317 /* AVKit.framework */; };
+		990B543927D8FE8F004FDA93 /* ImageEditorHotspotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990B543827D8FE8F004FDA93 /* ImageEditorHotspotView.swift */; };
 		990B81A4272308CB00628E0B /* VersionMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990B81A3272308CB00628E0B /* VersionMigrator.swift */; };
 		990B81A72724181F00628E0B /* LinkUpgradeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990B81A52724181F00628E0B /* LinkUpgradeViewController.swift */; };
 		990B81A82724182000628E0B /* LinkUpgradeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 990B81A62724181F00628E0B /* LinkUpgradeViewController.xib */; };
@@ -468,6 +469,7 @@
 /* Begin PBXFileReference section */
 		9902F4A823882ADA00AF646F /* NSSegmentedControl+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSSegmentedControl+M3Extensions.swift"; sourceTree = "<group>"; };
 		99062DDF2519117C009D3317 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
+		990B543827D8FE8F004FDA93 /* ImageEditorHotspotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorHotspotView.swift; sourceTree = "<group>"; };
 		990B81A3272308CB00628E0B /* VersionMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionMigrator.swift; sourceTree = "<group>"; };
 		990B81A52724181F00628E0B /* LinkUpgradeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkUpgradeViewController.swift; sourceTree = "<group>"; };
 		990B81A62724181F00628E0B /* LinkUpgradeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LinkUpgradeViewController.xib; sourceTree = "<group>"; };
@@ -972,7 +974,6 @@
 				9918674D27A4465D00A1CC3E /* ImageEditorHotspotModeViewController.swift */,
 				9918674E27A4465D00A1CC3E /* ImageEditorHotspotModeViewController.xib */,
 				99F77A1A27C91BA1009D7FF7 /* ImageEditorHotspotModeViewModel.swift */,
-				99F77A2327C94C82009D7FF7 /* Hotspot Layout */,
 			);
 			path = "Hotspot Mode";
 			sourceTree = "<group>";
@@ -1661,6 +1662,7 @@
 				9918674B27A445B100A1CC3E /* View Mode */,
 				9918674227A4303300A1CC3E /* Crop Mode */,
 				9918674C27A4464800A1CC3E /* Hotspot Mode */,
+				99F77A2327C94C82009D7FF7 /* Hotspot Layout */,
 			);
 			path = "Image Content Editor";
 			sourceTree = "<group>";
@@ -1882,6 +1884,7 @@
 		99F77A2327C94C82009D7FF7 /* Hotspot Layout */ = {
 			isa = PBXGroup;
 			children = (
+				990B543827D8FE8F004FDA93 /* ImageEditorHotspotView.swift */,
 				99F6BD2227C3EEC800E5AD20 /* ImageEditorHotspotLayoutEngine.swift */,
 				99F77A2427C94D2B009D7FF7 /* ImageEditorRectangleHotspot.swift */,
 			);
@@ -2371,6 +2374,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9914C8E5271097E400654689 /* NSShadow+M3Extensions.swift in Sources */,
+				990B543927D8FE8F004FDA93 /* ImageEditorHotspotView.swift in Sources */,
 				9981E6CF24C05811005AF0EE /* AboutWindowController.swift in Sources */,
 				992A5CAA22DDF5000012CCB6 /* DebugCanvasEditor.swift in Sources */,
 				99C865292306D141004C7B89 /* PageSelectorViewController.swift in Sources */,

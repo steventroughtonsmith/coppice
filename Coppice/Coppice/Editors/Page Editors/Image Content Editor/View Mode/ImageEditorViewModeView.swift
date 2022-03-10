@@ -10,8 +10,8 @@ import Cocoa
 
 class ImageEditorViewModeView: NSView {
     @IBOutlet var imageView: NSImageView?
-
-    override func hitTest(_ point: NSPoint) -> NSView? {
-        return self.imageView
-    }
+//
+//    override func hitTest(_ point: NSPoint) -> NSView? {
+//        return self.imageView
+//    }
 }
