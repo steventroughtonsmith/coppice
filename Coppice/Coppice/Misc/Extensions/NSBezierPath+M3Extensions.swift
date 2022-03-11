@@ -101,4 +101,11 @@ extension NSBezierPath {
         }
         close()
     }
+
+    convenience init(lineFrom point1: CGPoint, to point2: CGPoint) {
+        self.init()
+
+        move(to: point1)
+        line(to: point2)
+    }
 }

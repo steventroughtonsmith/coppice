@@ -90,7 +90,7 @@ protocol ImageEditorHotspot: AnyObject {
 
     //MARK: - Drawing/Interaction
     func hotspotPath(forScale scale: CGFloat) -> NSBezierPath
-    func editingBoundsPath(forScale scale: CGFloat) -> NSBezierPath?
+    func editingBoundsPaths(forScale scale: CGFloat) -> [(path: NSBezierPath, phase: CGFloat)]
     func editingHandleRects(forScale scale: CGFloat) -> [CGRect]
 
     //MARK: - State

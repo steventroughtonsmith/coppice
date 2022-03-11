@@ -70,15 +70,38 @@ class ImageEditorHotspotView: NSView {
 
         let scale = self.frame.width / self.imageSize.width
 
+        let hotspotFill = NSColor(white: 1, alpha: 0.2)
+        let hotspotStroke = NSColor(white: 0, alpha: 0.6)
+
         for hotspot in layoutEngine.hotspots {
-            NSColor.black.withAlphaComponent(0.8).setFill()
-            NSColor.white.setStroke()
-            hotspot.hotspotPath(forScale: scale).fill()
-            hotspot.hotspotPath(forScale: scale).stroke()
+            hotspotFill.setFill()
+            hotspotStroke.setStroke()
+
+            let hotspotPath = hotspot.hotspotPath(forScale: scale)
+            hotspotPath.lineWidth = 2
+            hotspotPath.fill()
+            hotspotPath.stroke()
+
+            hotspot.editingBoundsPaths(forScale: scale).forEach { self.strokeEditingPath($0) }
 
             NSColor.white.setFill()
-            hotspot.editingHandleRects(forScale: scale).forEach { $0.fill() }
+            hotspotStroke.setStroke()
+            hotspot.editingHandleRects(forScale: scale).forEach {
+                let bezierPath = NSBezierPath(ovalIn: $0)
+                bezierPath.fill()
+                bezierPath.stroke()
+            }
         }
+    }
+
+    private func strokeEditingPath(_ editingPath: (path: NSBezierPath, phase: CGFloat)) {
+        editingPath.path.lineWidth = 2
+        NSColor.black.setStroke()
+        editingPath.path.stroke()
+        NSColor.white.setStroke()
+        let steps: [CGFloat] = [4.0, 4.0]
+        editingPath.path.setLineDash(steps, count: 2, phase: editingPath.phase)
+        editingPath.path.stroke()
     }
 
 

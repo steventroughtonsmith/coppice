@@ -46,17 +46,49 @@ class ImageEditorRectangleHotspot: ImageEditorHotspot {
         }
     }
 
+    func editingBoundsPaths(forScale scale: CGFloat) -> [(path: NSBezierPath, phase: CGFloat)] {
+        var paths = [(path: NSBezierPath, phase: CGFloat)]()
+        let editingHandles = self.editingHandleRectsByDragKind(forScale: scale).indexed(by: \.handle)
+
+        func addPath(from handle1: DragHandle, to handle2: DragHandle, phase: CGFloat = 0) {
+            let path = NSBezierPath(lineFrom: editingHandles[handle1]!.frame.midPoint, to: editingHandles[handle2]!.frame.midPoint)
+            paths.append((path, phase))
+        }
+
+        if self.currentDragState?.handle.isBottom == true {
+            //We calculate the phase to stop the lines shifting as we move
+            let phase = 8 - self.rect.height.truncatingRemainder(dividingBy: 8)
+            addPath(from: .resizeTopLeft, to: .resizeBottomLeft, phase: phase)
+            addPath(from: .resizeTopRight, to: .resizeBottomRight, phase: phase)
+        } else { //If top or move or not dragging then fall back to this
+            //The phase is locked to 4 rather than 0 so we don't invert the colours
+            addPath(from: .resizeBottomLeft, to: .resizeTopLeft, phase: 4)
+            addPath(from: .resizeBottomRight, to: .resizeTopRight, phase: 4)
+        }
+
+        if self.currentDragState?.handle.isRight == true {
+            let phase = 8 - self.rect.width.truncatingRemainder(dividingBy: 8)
+            addPath(from: .resizeTopLeft, to: .resizeTopRight, phase: phase)
+            addPath(from: .resizeBottomLeft, to: .resizeBottomRight, phase: phase)
+        } else { //If left or move or not dragging then fall back to this
+            addPath(from: .resizeTopRight, to: .resizeTopLeft, phase: 4)
+            addPath(from: .resizeBottomRight, to: .resizeBottomLeft, phase: 4)
+        }
+
+        return paths
+    }
+
     //MARK: - Handle Rects
     func editingHandleRects(forScale scale: CGFloat = 1) -> [CGRect] {
         switch self.mode {
         case .view, .create:
             return []
         case .edit:
-            return self.editingHandleRectsByDragKind(forScale: scale).map { $0.1 }
+            return self.editingHandleRectsByDragKind(forScale: scale).sorted { $0.handle.drawingOrder < $1.handle.drawingOrder }.map(\.frame)
         }
     }
 
-    private func editingHandleRectsByDragKind(forScale scale: CGFloat) -> [(DragHandle, CGRect)] {
+    private func editingHandleRectsByDragKind(forScale scale: CGFloat) -> [(handle: DragHandle, frame: CGRect)] {
         let size = self.resizeHandleSize
         let scaledRect = self.rect.multiplied(by: scale)
         return [
@@ -362,6 +394,21 @@ extension ImageEditorRectangleHotspot {
                 return true
             case .resizeTopLeft, .resizeBottomLeft, .move:
                 return false
+            }
+        }
+
+        var drawingOrder: Int {
+            switch self {
+            case .resizeTopLeft:
+                return 1
+            case .resizeTopRight:
+                return 2
+            case .resizeBottomRight:
+                return 3
+            case .resizeBottomLeft:
+                return 4
+            case .move:
+                return 0
             }
         }
     }
