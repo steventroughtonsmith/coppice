@@ -66,9 +66,24 @@
                 <customView horizontalCompressionResistancePriority="251" verticalCompressionResistancePriority="251" placeholderIntrinsicWidth="163" placeholderIntrinsicHeight="96" translatesAutoresizingMaskIntoConstraints="NO" id="NcL-jm-nLM" customClass="ImageEditorHotspotView" customModule="Coppice" customModuleProvider="target">
                     <rect key="frame" x="159" y="88" width="163" height="96"/>
                 </customView>
+                <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Iri-qd-6tl">
+                    <rect key="frame" x="205" y="29" width="70" height="24"/>
+                    <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="bVA-kj-8nw">
+                        <font key="font" metaFont="system"/>
+                        <segments>
+                            <segment label="R"/>
+                            <segment label="C" selected="YES" tag="1"/>
+                            <segment label="P"/>
+                        </segments>
+                    </segmentedCell>
+                    <connections>
+                        <action selector="toggleHotspotKind:" target="-2" id="VxD-ez-H40"/>
+                    </connections>
+                </segmentedControl>
             </subviews>
             <constraints>
                 <constraint firstItem="NcL-jm-nLM" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="SxK-8L-6C9" secondAttribute="leading" id="0UF-kB-uaK"/>
+                <constraint firstAttribute="bottom" secondItem="Iri-qd-6tl" secondAttribute="bottom" constant="30" id="0ib-SX-DmJ"/>
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="NcL-jm-nLM" secondAttribute="bottom" id="1Yo-NJ-7bS"/>
                 <constraint firstItem="NcL-jm-nLM" firstAttribute="centerX" secondItem="SxK-8L-6C9" secondAttribute="centerX" id="5Kv-LL-20b"/>
                 <constraint firstItem="CyX-gS-Aru" firstAttribute="top" secondItem="SxK-8L-6C9" secondAttribute="top" constant="20" symbolic="YES" id="8Rl-fp-Zbm"/>
@@ -81,6 +96,7 @@
                 <constraint firstItem="CyX-gS-Aru" firstAttribute="leading" secondItem="SxK-8L-6C9" secondAttribute="leading" constant="20" symbolic="YES" id="OKi-XA-L3g"/>
                 <constraint firstItem="NcL-jm-nLM" firstAttribute="top" relation="greaterThanOrEqual" secondItem="SxK-8L-6C9" secondAttribute="top" id="bKW-EC-d8v"/>
                 <constraint firstAttribute="trailing" secondItem="CyX-gS-Aru" secondAttribute="trailing" priority="999" constant="20" symbolic="YES" id="biW-nN-kJk"/>
+                <constraint firstItem="Iri-qd-6tl" firstAttribute="centerX" secondItem="SxK-8L-6C9" secondAttribute="centerX" id="heX-Qh-pCJ"/>
                 <constraint firstItem="Jrr-vg-V2r" firstAttribute="leading" secondItem="SxK-8L-6C9" secondAttribute="leading" id="oEC-JU-jOi"/>
             </constraints>
             <connections>

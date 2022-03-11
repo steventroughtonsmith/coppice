@@ -41,6 +41,7 @@ class ImageEditorViewModeViewController: NSViewController {
         }
         self.subscribers[.image] = self.viewModel.publisher(for: \.image).sink { [weak self] image in
             self?.hotspotView.imageSize = image?.size ?? .zero
+            self?.layoutEngine.imageSize = image?.size ?? .zero
         }
 
         self.hotspotView.maintainsAspectRatio = (self.isInCanvas == false)
@@ -95,6 +96,16 @@ class ImageEditorViewModeViewController: NSViewController {
         let barracks = ImageEditorRectangleHotspot(shape: .rectangle, rect: CGRect(x: 520, y: 150, width: 40, height: 50), url: nil, mode: .edit, imageSize: self.viewModel.image?.size ?? .zero)
 
         self.layoutEngine.hotspots = [hissingWoods, tavern, barracks]
+    }
+
+    @IBAction func toggleHotspotKind(_ sender: NSSegmentedControl) {
+        if sender.selectedSegment == 0 {
+            self.layoutEngine.hotspotKindForCreation = .rectangle
+        } else if sender.selectedSegment == 1 {
+            self.layoutEngine.hotspotKindForCreation = .oval
+        } else if sender.selectedSegment == 2 {
+            self.layoutEngine.hotspotKindForCreation = .polygon
+        }
     }
 }
 

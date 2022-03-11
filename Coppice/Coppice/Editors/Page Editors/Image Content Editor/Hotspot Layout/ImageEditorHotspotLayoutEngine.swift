@@ -26,6 +26,10 @@ class ImageEditorHotspotLayoutEngine {
         }
     }
 
+    var imageSize: CGSize = .zero
+
+    var hotspotKindForCreation: ImageHotspot.Kind = .rectangle
+
     private(set) var highlightedHotspot: ImageEditorHotspot?
     func selectAll() {
         self.hotspots.forEach { $0.isSelected = true }
@@ -39,13 +43,20 @@ class ImageEditorHotspotLayoutEngine {
 
     private var currentHotspotForEvents: ImageEditorHotspot?
     func downEvent(at point: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int) {
-        guard let hotspot = hotspots.last(where: { $0.hitTest(at: point) }) else {
-            //MARK: - Handle creation
-            return
+        let hotspotForEvent: ImageEditorHotspot
+        if let hotspot = hotspots.last(where: { $0.hitTest(at: point) }){
+            hotspotForEvent = hotspot
+        } else {
+            if self.hotspotKindForCreation == .oval {
+                hotspotForEvent = ImageEditorRectangleHotspot(shape: .oval, rect: CGRect(origin: point, size: .zero), url: nil, mode: .create, imageSize: self.imageSize)
+            } else {
+                hotspotForEvent = ImageEditorRectangleHotspot(shape: .rectangle, rect: CGRect(origin: point, size: .zero), url: nil, mode: .create, imageSize: self.imageSize)
+            }
+            self.hotspots.append(hotspotForEvent)
         }
 
-        self.currentHotspotForEvents = hotspot
-        hotspot.downEvent(at: point, modifiers: modifiers, eventCount: eventCount)
+        self.currentHotspotForEvents = hotspotForEvent
+        hotspotForEvent.downEvent(at: point, modifiers: modifiers, eventCount: eventCount)
     }
 
     func draggedEvent(at point: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int) {
