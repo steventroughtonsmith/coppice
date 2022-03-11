@@ -20,7 +20,12 @@ protocol ImageEditorHotspotLayoutEngineDelegate: AnyObject {
 class ImageEditorHotspotLayoutEngine {
     weak var delegate: ImageEditorHotspotLayoutEngineDelegate?
 
-    var hotspots: [ImageEditorHotspot] = [] //Ordered last to first = front to back
+    var hotspots: [ImageEditorHotspot] = [] {  //Ordered last to first = front to back
+        didSet {
+            self.hotspots.forEach { $0.layoutEngine = self }
+        }
+    }
+
     private(set) var highlightedHotspot: ImageEditorHotspot?
     func selectAll() {
         self.hotspots.forEach { $0.isSelected = true }
@@ -39,7 +44,7 @@ class ImageEditorHotspotLayoutEngine {
             return
         }
 
-        currentHotspotForEvents = hotspot
+        self.currentHotspotForEvents = hotspot
         hotspot.downEvent(at: point, modifiers: modifiers, eventCount: eventCount)
     }
 
@@ -70,13 +75,17 @@ class ImageEditorHotspotLayoutEngine {
 
     }
 
-    func keyUpEvent(with keyCode: UInt16, modifiers: LayoutEventModifiers) {
+    func performKeyEquivalent(with keyCode: UInt16, modifiers: LayoutEventModifiers) -> Bool {
         if keyCode == UInt16(kVK_Delete) {
             self.hotspots = self.hotspots.filter { $0.isSelected == false }
             self.delegate?.layoutDidChange(in: self)
             self.delegate?.didCommitEdit(in: self)
+            return true
         }
+        return false
     }
+
+
 }
 
 enum ImageEditorHotspotMode {

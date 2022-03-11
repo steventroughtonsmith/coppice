@@ -71,10 +71,11 @@ class ImageEditorHotspotView: NSView {
         let scale = self.frame.width / self.imageSize.width
 
         let hotspotFill = NSColor(white: 1, alpha: 0.2)
+        let selectedHotspotFill = NSColor.controlAccentColor.withAlphaComponent(0.2)
         let hotspotStroke = NSColor(white: 0, alpha: 0.6)
 
         for hotspot in layoutEngine.hotspots {
-            hotspotFill.setFill()
+            (hotspot.isSelected ? selectedHotspotFill : hotspotFill).setFill()
             hotspotStroke.setStroke()
 
             let hotspotPath = hotspot.hotspotPath(forScale: scale)
@@ -139,6 +140,19 @@ class ImageEditorHotspotView: NSView {
         let pointInView = self.convert(event.locationInWindow, from: nil)
         let pointInImage = self.convertPointToImageSpace(pointInView)
         self.layoutEngine?.flagsChanged(at: pointInImage, modifiers: event.layoutEventModifiers)
+    }
+
+    override func performKeyEquivalent(with event: NSEvent) -> Bool {
+        return self.layoutEngine?.performKeyEquivalent(with: event.keyCode, modifiers: event.layoutEventModifiers) ?? false
+    }
+
+    //MARK: - Selection
+    @IBAction override func selectAll(_ sender: Any?) {
+        self.layoutEngine?.selectAll()
+    }
+
+    @IBAction func deselectAll(_ sender: Any?) {
+        self.layoutEngine?.deselectAll()
     }
 }
 
