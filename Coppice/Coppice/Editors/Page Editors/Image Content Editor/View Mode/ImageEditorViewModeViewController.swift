@@ -90,22 +90,13 @@ class ImageEditorViewModeViewController: NSViewController {
 
     private func setupLayoutEngine() {
         self.hotspotView.layoutEngine = self.layoutEngine
+        self.layoutEngine.isEditable = false
 
-        let hissingWoods = ImageEditorRectangleHotspot(shape: .rectangle, rect: CGRect(x: 33, y: 210, width: 30, height: 170), url: nil, mode: .edit, imageSize: self.viewModel.image?.size ?? .zero)
-        let tavern = ImageEditorRectangleHotspot(shape: .oval, rect: CGRect(x: 460, y: 390, width: 50, height: 40), url: nil, mode: .edit, imageSize: self.viewModel.image?.size ?? .zero)
-        let barracks = ImageEditorRectangleHotspot(shape: .rectangle, rect: CGRect(x: 520, y: 150, width: 40, height: 50), url: nil, mode: .edit, imageSize: self.viewModel.image?.size ?? .zero)
+        let hissingWoods = ImageEditorRectangleHotspot(shape: .rectangle, rect: CGRect(x: 33, y: 210, width: 30, height: 170), url: nil, imageSize: self.viewModel.image?.size ?? .zero)
+        let tavern = ImageEditorRectangleHotspot(shape: .oval, rect: CGRect(x: 460, y: 390, width: 50, height: 40), url: nil, imageSize: self.viewModel.image?.size ?? .zero)
+        let barracks = ImageEditorRectangleHotspot(shape: .rectangle, rect: CGRect(x: 520, y: 150, width: 40, height: 50), url: nil, imageSize: self.viewModel.image?.size ?? .zero)
 
         self.layoutEngine.hotspots = [hissingWoods, tavern, barracks]
-    }
-
-    @IBAction func toggleHotspotKind(_ sender: NSSegmentedControl) {
-        if sender.selectedSegment == 0 {
-            self.layoutEngine.hotspotKindForCreation = .rectangle
-        } else if sender.selectedSegment == 1 {
-            self.layoutEngine.hotspotKindForCreation = .oval
-        } else if sender.selectedSegment == 2 {
-            self.layoutEngine.hotspotKindForCreation = .polygon
-        }
     }
 }
 

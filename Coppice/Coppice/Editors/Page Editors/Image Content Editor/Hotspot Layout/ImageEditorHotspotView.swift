@@ -83,6 +83,14 @@ class ImageEditorHotspotView: NSView {
             hotspotPath.fill()
             hotspotPath.stroke()
 
+            if hotspot.isClicked {
+                NSColor(white: 0, alpha: 0.15).setFill()
+                hotspotPath.fill()
+            } else if hotspot.isHighlighted {
+                NSColor(white: 1, alpha: 0.15).setFill()
+                hotspotPath.fill()
+            }
+
             hotspot.editingBoundsPaths(forScale: scale).forEach { self.strokeEditingPath($0) }
 
             NSColor.white.setFill()
@@ -136,6 +144,12 @@ class ImageEditorHotspotView: NSView {
         self.layoutEngine?.upEvent(at: pointInImage, modifiers: event.layoutEventModifiers, eventCount: event.clickCount)
     }
 
+    override func mouseMoved(with event: NSEvent) {
+        let pointInView = self.convert(event.locationInWindow, from: nil)
+        let pointInImage = self.convertPointToImageSpace(pointInView)
+        self.layoutEngine?.movedEvent(at: pointInImage)
+    }
+
     override func flagsChanged(with event: NSEvent) {
         let pointInView = self.convert(event.locationInWindow, from: nil)
         let pointInImage = self.convertPointToImageSpace(pointInView)
@@ -153,6 +167,21 @@ class ImageEditorHotspotView: NSView {
 
     @IBAction func deselectAll(_ sender: Any?) {
         self.layoutEngine?.deselectAll()
+    }
+
+
+    //MARK: - Tracking Areas
+    private var moveTrackingArea: NSTrackingArea?
+    override func updateTrackingAreas() {
+        if let moveTrackingArea = self.moveTrackingArea {
+            self.removeTrackingArea(moveTrackingArea)
+            self.moveTrackingArea = nil
+        }
+
+        let newTrackingArea = NSTrackingArea(rect: self.bounds, options: [.mouseMoved, .activeInKeyWindow], owner: self, userInfo: nil)
+        self.moveTrackingArea = newTrackingArea
+        self.addTrackingArea(newTrackingArea)
+
     }
 }
 

@@ -20,7 +20,7 @@ class ImageEditorRectangleHotspot: ImageEditorHotspot {
     var url: URL? = nil
     private(set) var mode: ImageEditorHotspotMode
     let imageSize: CGSize
-    init(shape: Shape, rect: CGRect, url: URL? = nil, mode: ImageEditorHotspotMode, imageSize: CGSize) {
+    init(shape: Shape, rect: CGRect, url: URL? = nil, mode: ImageEditorHotspotMode = .complete, imageSize: CGSize) {
         self.shape = shape
         self.rect = rect
         self.url = url
@@ -37,16 +37,15 @@ class ImageEditorRectangleHotspot: ImageEditorHotspot {
         }
     }
 
-    func editingBoundsPath(forScale scale: CGFloat = 1) -> NSBezierPath? {
-        switch self.mode {
-        case .view:
-            return nil
-        case .edit, .create:
-            return NSBezierPath(rect: self.rect.multiplied(by: scale))
-        }
+    var isEditable: Bool {
+        return self.layoutEngine?.isEditable ?? false
     }
 
     func editingBoundsPaths(forScale scale: CGFloat) -> [(path: NSBezierPath, phase: CGFloat)] {
+        guard self.isEditable else {
+            return []
+        }
+
         var paths = [(path: NSBezierPath, phase: CGFloat)]()
         let editingHandles = self.editingHandleRectsByDragKind(forScale: scale).indexed(by: \.handle)
 
@@ -81,9 +80,12 @@ class ImageEditorRectangleHotspot: ImageEditorHotspot {
     //MARK: - Handle Rects
     func editingHandleRects(forScale scale: CGFloat = 1) -> [CGRect] {
         switch self.mode {
-        case .view, .create:
+        case .creating:
             return []
-        case .edit:
+        case .complete:
+            guard self.isEditable else {
+                return []
+            }
             return self.editingHandleRectsByDragKind(forScale: scale).sorted { $0.handle.drawingOrder < $1.handle.drawingOrder }.map(\.frame)
         }
     }
@@ -100,12 +102,14 @@ class ImageEditorRectangleHotspot: ImageEditorHotspot {
     }
 
     var isSelected: Bool = false
+    var isHighlighted: Bool = false
+    private(set) var isClicked: Bool = false
 
     var imageHotspot: ImageHotspot? {
         switch self.mode {
-        case .create:
+        case .creating:
             return nil
-        case .view, .edit:
+        case .complete:
             let points = [
                 self.rect.point(atX: .min, y: .min),
                 self.rect.point(atX: .max, y: .min),
@@ -124,17 +128,12 @@ class ImageEditorRectangleHotspot: ImageEditorHotspot {
     weak var layoutEngine: ImageEditorHotspotLayoutEngine?
 
     func hitTest(at point: CGPoint) -> Bool {
-        switch self.mode {
-        case .edit, .create:
-            guard let editingBoundsPath = self.editingBoundsPath() else {
-                //This should never be called in theory
-                return self.rect.contains(point)
-            }
-            self.editingHandleRects().forEach { editingBoundsPath.appendRect($0) }
-            return editingBoundsPath.contains(point)
-        case .view:
+        guard self.isEditable else {
             return self.hotspotPath().contains(point)
         }
+        let editingBoundsPath = NSBezierPath(rect: self.rect)
+        self.editingHandleRects().forEach { editingBoundsPath.appendRect($0) }
+        return editingBoundsPath.contains(point)
     }
 
 
@@ -147,6 +146,7 @@ class ImageEditorRectangleHotspot: ImageEditorHotspot {
 
     private var currentDragState: DragState?
     func downEvent(at point: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int) {
+        self.isClicked = true
         guard
             self.currentDragState == nil,
             let handle = self.dragHandle(at: point)
@@ -158,6 +158,7 @@ class ImageEditorRectangleHotspot: ImageEditorHotspot {
     }
 
     func draggedEvent(at point: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int) {
+        self.isClicked = self.rect.contains(point)
         guard let dragState = self.currentDragState else {
             return
         }
@@ -173,6 +174,7 @@ class ImageEditorRectangleHotspot: ImageEditorHotspot {
     }
 
     func upEvent(at point: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int) {
+        self.isClicked = false
         guard let dragState = self.currentDragState else {
             return
         }
@@ -183,7 +185,7 @@ class ImageEditorRectangleHotspot: ImageEditorHotspot {
         case .move:
             self.selectHotspot(dragState: dragState, delta: delta, modifiers: modifiers)
         case .resizeTopLeft, .resizeBottomRight, .resizeBottomLeft, .resizeTopRight:
-            if self.mode == .create {
+            if self.mode == .creating {
                 self.finishCreation(dragState: dragState, delta: delta, modifiers: modifiers)
             }
         }
@@ -198,17 +200,18 @@ class ImageEditorRectangleHotspot: ImageEditorHotspot {
     //MARK: - Handle Helpers
     private func dragHandle(at point: CGPoint) -> DragHandle? {
         switch self.mode {
-        case .create:
+        case .creating:
             return .resizeBottomRight
-        case .view:
-            return nil
-        case .edit:
+        case .complete:
+            guard self.isEditable else {
+                return nil
+            }
             for (kind, rect) in self.editingHandleRectsByDragKind(forScale: 1) {
                 if rect.contains(point) {
                     return kind
                 }
             }
-            if self.editingBoundsPath()?.contains(point) == true {
+            if self.rect.contains(point) {
                 return .move
             }
             return nil
@@ -216,7 +219,7 @@ class ImageEditorRectangleHotspot: ImageEditorHotspot {
     }
 
     private func moveHotspot(dragState: DragState, delta: CGPoint) {
-        guard self.mode == .edit else {
+        guard self.mode == .complete, self.isEditable else {
             return
         }
 
@@ -349,7 +352,7 @@ class ImageEditorRectangleHotspot: ImageEditorHotspot {
     }
 
     private func finishCreation(dragState: DragState, delta: CGPoint, modifiers: LayoutEventModifiers) {
-        self.mode = .edit
+        self.mode = .complete
     }
 }
 

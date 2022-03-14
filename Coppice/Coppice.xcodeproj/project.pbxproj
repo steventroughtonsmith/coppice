@@ -971,9 +971,9 @@
 		9918674C27A4464800A1CC3E /* Hotspot Mode */ = {
 			isa = PBXGroup;
 			children = (
+				99F77A1A27C91BA1009D7FF7 /* ImageEditorHotspotModeViewModel.swift */,
 				9918674D27A4465D00A1CC3E /* ImageEditorHotspotModeViewController.swift */,
 				9918674E27A4465D00A1CC3E /* ImageEditorHotspotModeViewController.xib */,
-				99F77A1A27C91BA1009D7FF7 /* ImageEditorHotspotModeViewModel.swift */,
 			);
 			path = "Hotspot Mode";
 			sourceTree = "<group>";
