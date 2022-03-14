@@ -70,6 +70,7 @@ class ImageEditorViewModeViewController: NSViewController {
     private enum SubscriberKey {
         case accessibilityDescription
         case image
+        case imageEditorHotspots
     }
 
     private var subscribers: [SubscriberKey: AnyCancellable] = [:]
@@ -86,17 +87,19 @@ class ImageEditorViewModeViewController: NSViewController {
 
 
     //MARK: - Hotspots
-    private let layoutEngine = ImageEditorHotspotLayoutEngine()
+    private lazy var layoutEngine: ImageEditorHotspotLayoutEngine = {
+        let layoutEngine = ImageEditorHotspotLayoutEngine()
+        layoutEngine.isEditable = false
+        layoutEngine.delegate = self
+        return layoutEngine
+    }()
 
     private func setupLayoutEngine() {
         self.hotspotView.layoutEngine = self.layoutEngine
-        self.layoutEngine.isEditable = false
 
-        let hissingWoods = ImageEditorRectangleHotspot(shape: .rectangle, rect: CGRect(x: 33, y: 210, width: 30, height: 170), url: nil, imageSize: self.viewModel.image?.size ?? .zero)
-        let tavern = ImageEditorRectangleHotspot(shape: .oval, rect: CGRect(x: 460, y: 390, width: 50, height: 40), url: nil, imageSize: self.viewModel.image?.size ?? .zero)
-        let barracks = ImageEditorRectangleHotspot(shape: .rectangle, rect: CGRect(x: 520, y: 150, width: 40, height: 50), url: nil, imageSize: self.viewModel.image?.size ?? .zero)
-
-        self.layoutEngine.hotspots = [hissingWoods, tavern, barracks]
+        self.subscribers[.imageEditorHotspots] = self.viewModel.hotspotCollection.$imageEditorHotspots.sink { [weak self] hotspots in
+            self?.layoutEngine.hotspots = hotspots
+        }
     }
 }
 
@@ -111,5 +114,11 @@ extension ImageEditorViewModeViewController: PageContentEditor {
             self.view.window?.makeFirstResponder(nil)
         }
         self.updatePlaceholderLabel()
+    }
+}
+
+extension ImageEditorViewModeViewController: ImageEditorHotspotLayoutEngineDelegate {
+    func layoutDidChange(in layoutEngine: ImageEditorHotspotLayoutEngine) {
+        self.hotspotView.layoutEngineDidChange()
     }
 }

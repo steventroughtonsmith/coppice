@@ -32,8 +32,6 @@ class ImageEditorHotspotView: NSView {
 
     var layoutEngine: ImageEditorHotspotLayoutEngine? {
         didSet {
-            oldValue?.delegate = nil
-            self.layoutEngine?.delegate = self
             self.setNeedsDisplay(self.bounds)
         }
     }
@@ -181,16 +179,10 @@ class ImageEditorHotspotView: NSView {
         let newTrackingArea = NSTrackingArea(rect: self.bounds, options: [.mouseMoved, .activeInKeyWindow], owner: self, userInfo: nil)
         self.moveTrackingArea = newTrackingArea
         self.addTrackingArea(newTrackingArea)
-
     }
-}
 
-extension ImageEditorHotspotView: ImageEditorHotspotLayoutEngineDelegate {
-    func layoutDidChange(in layoutEngine: ImageEditorHotspotLayoutEngine) {
+    //MARK: - Layout Notification
+    func layoutEngineDidChange() {
         self.setNeedsDisplay(self.bounds)
-    }
-
-    func didCommitEdit(in layoutEngine: ImageEditorHotspotLayoutEngine) {
-        //TODO
     }
 }

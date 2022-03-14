@@ -173,10 +173,10 @@ class ImageEditorRectangleHotspot: ImageEditorHotspot {
         }
     }
 
-    func upEvent(at point: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int) {
+    func upEvent(at point: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int) -> Bool {
         self.isClicked = false
         guard let dragState = self.currentDragState else {
-            return
+            return false
         }
 
         let delta = point.minus(dragState.initialPoint)
@@ -189,7 +189,11 @@ class ImageEditorRectangleHotspot: ImageEditorHotspot {
                 self.finishCreation(dragState: dragState, delta: delta, modifiers: modifiers)
             }
         }
+        let rectHasChanged = (dragState.initialRect != self.rect)
+
         self.currentDragState = nil
+
+        return rectHasChanged
     }
 
     func movedEvent(at point: CGPoint) {

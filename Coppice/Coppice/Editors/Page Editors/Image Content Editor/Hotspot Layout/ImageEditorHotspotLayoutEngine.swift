@@ -17,12 +17,17 @@ protocol ImageEditorHotspotLayoutEngineDelegate: AnyObject {
     func didCommitEdit(in layoutEngine: ImageEditorHotspotLayoutEngine)
 }
 
+extension ImageEditorHotspotLayoutEngineDelegate {
+    func didCommitEdit(in layoutEngine: ImageEditorHotspotLayoutEngine) {}
+}
+
 class ImageEditorHotspotLayoutEngine {
     weak var delegate: ImageEditorHotspotLayoutEngineDelegate?
 
     var hotspots: [ImageEditorHotspot] = [] {  //Ordered last to first = front to back
         didSet {
             self.hotspots.forEach { $0.layoutEngine = self }
+            self.delegate?.layoutDidChange(in: self)
         }
     }
 
@@ -81,10 +86,17 @@ class ImageEditorHotspotLayoutEngine {
     }
 
     func upEvent(at point: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int) {
-        self.currentHotspotForEvents?.upEvent(at: point, modifiers: modifiers, eventCount: eventCount)
+        guard let currentHotspotForEvents = self.currentHotspotForEvents else {
+            return
+        }
+
+        let hasChanged = currentHotspotForEvents.upEvent(at: point, modifiers: modifiers, eventCount: eventCount)
         self.currentHotspotForEvents = nil
 
         self.delegate?.layoutDidChange(in: self)
+        if self.isEditable, hasChanged {
+            self.delegate?.didCommitEdit(in: self)
+        }
     }
 
     func flagsChanged(at point: CGPoint, modifiers: LayoutEventModifiers) {
@@ -150,7 +162,7 @@ protocol ImageEditorHotspot: AnyObject {
 
     func downEvent(at point: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int)
     func draggedEvent(at point: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int)
-    func upEvent(at point: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int)
+    func upEvent(at point: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int) -> Bool
     func movedEvent(at point: CGPoint)
 }
 

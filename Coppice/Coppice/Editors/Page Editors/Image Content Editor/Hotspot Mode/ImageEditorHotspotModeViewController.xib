@@ -29,14 +29,14 @@
                 <customView horizontalCompressionResistancePriority="251" verticalCompressionResistancePriority="251" placeholderIntrinsicWidth="163" placeholderIntrinsicHeight="96" translatesAutoresizingMaskIntoConstraints="NO" id="Yve-pG-P57" customClass="ImageEditorHotspotView" customModule="Coppice" customModuleProvider="target">
                     <rect key="frame" x="159" y="88" width="163" height="96"/>
                 </customView>
-                <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0gd-lG-A88">
-                    <rect key="frame" x="205" y="29" width="70" height="24"/>
-                    <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="kaH-YR-Pe8">
+                <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0gd-lG-A88" customClass="TranslucentSegmentedControl" customModule="Coppice" customModuleProvider="target">
+                    <rect key="frame" x="159" y="29" width="162" height="24"/>
+                    <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="kaH-YR-Pe8" customClass="TranslucentSegmentedCell" customModule="Coppice" customModuleProvider="target">
                         <font key="font" metaFont="system"/>
                         <segments>
-                            <segment label="R"/>
-                            <segment label="C" selected="YES" tag="1"/>
-                            <segment label="P"/>
+                            <segment toolTip="Rectangle Hotspot" image="HotspotRectangle" width="50" selected="YES"/>
+                            <segment toolTip="Oval Hotspot" image="HotspotOval" width="50" tag="1"/>
+                            <segment toolTip="Polygon Hotspot" image="HotspotPolygon" width="50"/>
                         </segments>
                     </segmentedCell>
                     <connections>
@@ -64,4 +64,9 @@
             <point key="canvasLocation" x="59" y="-19"/>
         </customView>
     </objects>
+    <resources>
+        <image name="HotspotOval" width="22" height="22"/>
+        <image name="HotspotPolygon" width="22" height="22"/>
+        <image name="HotspotRectangle" width="22" height="22"/>
+    </resources>
 </document>

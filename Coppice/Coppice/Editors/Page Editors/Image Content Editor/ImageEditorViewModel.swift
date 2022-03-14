@@ -23,6 +23,7 @@ class ImageEditorViewModel: ViewModel {
     init(imageContent: ImagePageContent, viewMode: PageContentEditorViewMode, documentWindowViewModel: DocumentWindowViewModel) {
         self.imageContent = imageContent
         self.viewMode = viewMode
+        self.hotspotCollection = ImageHotspotCollection(imageContent: imageContent)
         super.init(documentWindowViewModel: documentWindowViewModel)
         self.regenerateCroppedImage()
 
@@ -33,6 +34,8 @@ class ImageEditorViewModel: ViewModel {
             self?.regenerateCroppedImage()
         }
     }
+
+    let hotspotCollection: ImageHotspotCollection
 
     //MARK: - Subscribers
     private enum SubscriberKey {

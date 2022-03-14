@@ -57,6 +57,7 @@ class ImageEditorHotspotModeViewController: NSViewController {
     private enum SubscriberKey {
         case accessibilityDescription
         case image
+        case imageEditorHotspots
     }
 
     private var subscribers: [SubscriberKey: AnyCancellable] = [:]
@@ -64,20 +65,19 @@ class ImageEditorHotspotModeViewController: NSViewController {
 
     //MARK: - Layout Engine
 
-    private let layoutEngine: ImageEditorHotspotLayoutEngine = {
+    private lazy var layoutEngine: ImageEditorHotspotLayoutEngine = {
         let layoutEngine = ImageEditorHotspotLayoutEngine()
         layoutEngine.isEditable = true
+        layoutEngine.delegate = self
         return layoutEngine
     }()
 
     private func setupLayoutEngine() {
         self.hotspotView.layoutEngine = self.layoutEngine
 
-        let hissingWoods = ImageEditorRectangleHotspot(shape: .rectangle, rect: CGRect(x: 33, y: 210, width: 30, height: 170), url: nil, imageSize: self.viewModel.image?.size ?? .zero)
-        let tavern = ImageEditorRectangleHotspot(shape: .oval, rect: CGRect(x: 460, y: 390, width: 50, height: 40), url: nil, imageSize: self.viewModel.image?.size ?? .zero)
-        let barracks = ImageEditorRectangleHotspot(shape: .rectangle, rect: CGRect(x: 520, y: 150, width: 40, height: 50), url: nil, imageSize: self.viewModel.image?.size ?? .zero)
-
-        self.layoutEngine.hotspots = [hissingWoods, tavern, barracks]
+        self.subscribers[.imageEditorHotspots] = self.viewModel.hotspotCollection.$imageEditorHotspots.sink { [weak self] hotspots in
+            self?.layoutEngine.hotspots = hotspots
+        }
     }
 
     //MARK: - Actions
@@ -95,4 +95,14 @@ class ImageEditorHotspotModeViewController: NSViewController {
 extension ImageEditorHotspotModeViewController: PageContentEditor {
     func startEditing(at point: CGPoint) {}
     func stopEditing() {}
+}
+
+extension ImageEditorHotspotModeViewController: ImageEditorHotspotLayoutEngineDelegate {
+    func layoutDidChange(in layoutEngine: ImageEditorHotspotLayoutEngine) {
+        self.hotspotView.layoutEngineDidChange()
+    }
+
+    func didCommitEdit(in layoutEngine: ImageEditorHotspotLayoutEngine) {
+        self.viewModel.imageContent.hotspots = self.layoutEngine.hotspots.compactMap(\.imageHotspot)
+    }
 }
