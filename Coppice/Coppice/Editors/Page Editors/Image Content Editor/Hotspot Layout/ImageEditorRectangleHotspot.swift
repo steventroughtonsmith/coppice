@@ -207,12 +207,11 @@ class ImageEditorRectangleHotspot: ImageEditorHotspot {
         case .creating:
             return .resizeBottomRight
         case .complete:
-            guard self.isEditable else {
-                return nil
-            }
-            for (kind, rect) in self.editingHandleRectsByDragKind(forScale: 1) {
-                if rect.contains(point) {
-                    return kind
+            if self.isEditable {
+                for (kind, rect) in self.editingHandleRectsByDragKind(forScale: 1) {
+                    if rect.contains(point) {
+                        return kind
+                    }
                 }
             }
             if self.rect.contains(point) {
@@ -344,6 +343,11 @@ class ImageEditorRectangleHotspot: ImageEditorHotspot {
 
     private func selectHotspot(dragState: DragState, delta: CGPoint, modifiers: LayoutEventModifiers) {
         guard delta == .zero else {
+            return
+        }
+
+        //Only allow selection in edit mode or with option held
+        guard self.isEditable || modifiers.contains(.option) else {
             return
         }
 
