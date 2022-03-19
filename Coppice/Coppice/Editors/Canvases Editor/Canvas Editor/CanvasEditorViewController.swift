@@ -135,6 +135,8 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
 
     override func viewDidDisappear() {
         super.viewDidDisappear()
+        //Make sure we clear the perform selector from above so we don't hold onto the UI
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.forceFullLayout), object: nil)
 
         self.cleanUpActiveStateObservers()
     }

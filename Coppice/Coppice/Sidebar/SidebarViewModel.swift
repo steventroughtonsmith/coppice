@@ -24,6 +24,10 @@ class SidebarViewModel: ViewModel {
         }
     }
 
+    deinit {
+        self.searchTermObserver?.cancel()
+    }
+
     func updateSidebar() {
         guard let searchString = self.documentWindowViewModel.searchString else {
             self.view?.displaySourceList()

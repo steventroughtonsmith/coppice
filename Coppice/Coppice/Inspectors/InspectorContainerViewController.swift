@@ -40,8 +40,8 @@ class InspectorContainerViewController: NSViewController, SplitViewContainable {
 
     private var inspectorObservation: AnyCancellable?
     private func setupObservation() {
-        self.inspectorObservation = self.viewModel.$inspectors.sink { inspectors in
-            self.inspectorViewControllers = inspectors.compactMap { $0 as? BaseInspectorViewController }
+        self.inspectorObservation = self.viewModel.$inspectors.sink { [weak self] inspectors in
+            self?.inspectorViewControllers = inspectors.compactMap { $0 as? BaseInspectorViewController }
         }
     }
 

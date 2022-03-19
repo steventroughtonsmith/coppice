@@ -20,8 +20,8 @@ class CanvasInspectorViewController: BaseInspectorViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.subscribers[.isProEnabled] = self.viewModel.publisher(for: \.isProEnabled).sink { isProEnabled in
-            self.upsellView.proFeature = isProEnabled ? nil : .canvasAppearance
+        self.subscribers[.isProEnabled] = self.viewModel.publisher(for: \.isProEnabled).sink { [weak self] isProEnabled in
+            self?.upsellView.proFeature = isProEnabled ? nil : .canvasAppearance
         }
     }
 

@@ -33,7 +33,9 @@ class EditorContainerViewModel: ViewModel {
     //MARK: - Observation
     var selectedObjectObservation: AnyCancellable?
     private func setupObservation() {
-        self.selectedObjectObservation = self.documentWindowViewModel.$currentEditor.assign(to: \.currentEditor, on: self)
+        self.selectedObjectObservation = self.documentWindowViewModel.$currentEditor.sink { [weak self] newEditor in
+            self?.currentEditor = newEditor
+        }
     }
 }
 
