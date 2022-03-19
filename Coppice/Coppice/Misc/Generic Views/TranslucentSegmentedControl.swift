@@ -53,12 +53,8 @@ class TranslucentSegmentedCell: NSSegmentedCell {
                 fillFrame.fill()
             }
 
-//            if let image = self.image(forSegment: $0) {
-//                frame = image.size.centred(in: frame)
-//                frame.origin.y = 0
-//                frame.size.height = cellFrame.height
-//            }
-
+            //Shift icons up a bit
+            frame.origin.y -= 1
             self.drawSegment(segment, inFrame: frame, with: controlView)
         }
     }

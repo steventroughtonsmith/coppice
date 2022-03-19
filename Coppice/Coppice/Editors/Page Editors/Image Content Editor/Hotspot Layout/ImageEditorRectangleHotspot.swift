@@ -146,7 +146,7 @@ class ImageEditorRectangleHotspot: ImageEditorHotspot {
 
     private var currentDragState: DragState?
     func downEvent(at point: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int) {
-        self.isClicked = true
+        self.isClicked = (self.isEditable == false)
         guard
             self.currentDragState == nil,
             let handle = self.dragHandle(at: point)
@@ -158,7 +158,7 @@ class ImageEditorRectangleHotspot: ImageEditorHotspot {
     }
 
     func draggedEvent(at point: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int) {
-        self.isClicked = self.rect.contains(point)
+        self.isClicked = self.rect.contains(point) && (self.isEditable == false)
         guard let dragState = self.currentDragState else {
             return
         }
