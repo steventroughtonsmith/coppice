@@ -15,10 +15,12 @@ import CoppiceCore
 protocol ImageEditorHotspotLayoutEngineDelegate: AnyObject {
     func layoutDidChange(in layoutEngine: ImageEditorHotspotLayoutEngine)
     func didCommitEdit(in layoutEngine: ImageEditorHotspotLayoutEngine)
+    func didClickOnHotspot(_ hotspot: ImageEditorHotspot, in layoutEngine: ImageEditorHotspotLayoutEngine)
 }
 
 extension ImageEditorHotspotLayoutEngineDelegate {
     func didCommitEdit(in layoutEngine: ImageEditorHotspotLayoutEngine) {}
+    func didClickOnHotspot(_ hotspot: ImageEditorHotspot, in layoutEngine: ImageEditorHotspotLayoutEngine) {}
 }
 
 class ImageEditorHotspotLayoutEngine {
@@ -96,6 +98,8 @@ class ImageEditorHotspotLayoutEngine {
         self.delegate?.layoutDidChange(in: self)
         if self.isEditable, hasChanged {
             self.delegate?.didCommitEdit(in: self)
+        } else {
+            self.delegate?.didClickOnHotspot(currentHotspotForEvents, in: self)
         }
     }
 
@@ -141,6 +145,8 @@ enum ImageEditorHotspotMode {
 
 protocol ImageEditorHotspot: AnyObject {
     var resizeHandleSize: CGFloat { get }
+
+    var url: URL? { get set }
 
     //MARK: - Drawing/Interaction
     func hotspotPath(forScale scale: CGFloat) -> NSBezierPath

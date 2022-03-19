@@ -149,6 +149,7 @@
 		9973737A2423AD6C000D5F21 /* NoEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997373782423AD6C000D5F21 /* NoEditorViewController.swift */; };
 		9973737B2423AD6C000D5F21 /* NoEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 997373792423AD6C000D5F21 /* NoEditorViewController.xib */; };
 		9973737D2423BAD1000D5F21 /* RootSplitViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9973737C2423BAD1000D5F21 /* RootSplitViewController.xib */; };
+		9973EC5527E6304400E388A0 /* ImageEditorLinkEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9973EC5427E6304400E388A0 /* ImageEditorLinkEditor.swift */; };
 		99771190239A95C300FCC8C7 /* TextLinkFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9977118F239A95C300FCC8C7 /* TextLinkFinder.swift */; };
 		99771194239BF97600FCC8C7 /* NSAttributedString+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99771193239BF97600FCC8C7 /* NSAttributedString+M3Extensions.swift */; };
 		99771196239C530700FCC8C7 /* PageLinkManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99771195239C530700FCC8C7 /* PageLinkManagerTests.swift */; };
@@ -597,6 +598,7 @@
 		997373782423AD6C000D5F21 /* NoEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoEditorViewController.swift; sourceTree = "<group>"; };
 		997373792423AD6C000D5F21 /* NoEditorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoEditorViewController.xib; sourceTree = "<group>"; };
 		9973737C2423BAD1000D5F21 /* RootSplitViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RootSplitViewController.xib; sourceTree = "<group>"; };
+		9973EC5427E6304400E388A0 /* ImageEditorLinkEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorLinkEditor.swift; sourceTree = "<group>"; };
 		9977118F239A95C300FCC8C7 /* TextLinkFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLinkFinder.swift; sourceTree = "<group>"; };
 		99771193239BF97600FCC8C7 /* NSAttributedString+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+M3Extensions.swift"; sourceTree = "<group>"; };
 		99771195239C530700FCC8C7 /* PageLinkManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageLinkManagerTests.swift; sourceTree = "<group>"; };
@@ -1661,6 +1663,7 @@
 				99C8651E2302E256004C7B89 /* ImageEditorViewController.swift */,
 				99C8651F2302E256004C7B89 /* ImageEditorViewController.xib */,
 				99146A2924EEAB6200A2AE48 /* ImageEditorPlaceholderView.swift */,
+				9973EC5427E6304400E388A0 /* ImageEditorLinkEditor.swift */,
 				9918674B27A445B100A1CC3E /* View Mode */,
 				9918674227A4303300A1CC3E /* Crop Mode */,
 				9918674C27A4464800A1CC3E /* Hotspot Mode */,
@@ -2588,6 +2591,7 @@
 				99D03F1B267BA6F600B9CE1B /* LinkEditor.swift in Sources */,
 				99D8E381237EDB890098CF3B /* InspectorContainerViewModel.swift in Sources */,
 				99C9AF1423631348009F909A /* CanvasTextView.swift in Sources */,
+				9973EC5527E6304400E388A0 /* ImageEditorLinkEditor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -30,6 +30,10 @@ class ImageEditorViewController: NSViewController, NSMenuItemValidation, NSToolb
         return ImageEditorInspectorViewController(viewModel: ImageEditorInspectorViewModel(editorViewModel: self.viewModel))
     }()
 
+    private lazy var linkInspectorViewController: LinkInspectorViewController = {
+        return LinkInspectorViewController(viewModel: LinkInspectorViewModel(linkEditor: self.viewModel.linkEditor, page: self.viewModel.imageContent.page, documentWindowViewModel: self.viewModel.documentWindowViewModel))
+    }()
+
 
 	//MARK: - View Lifecycle
     override func viewDidLoad() {
@@ -93,8 +97,10 @@ class ImageEditorViewController: NSViewController, NSMenuItemValidation, NSToolb
 	}
 
 	//MARK: - Linking
+    let linkEditor = ImageEditorLinkEditor()
+
     @IBAction func editLink(_ sender: Any?) {
-        //We need an empty implementation just so validation occurs
+        self.linkInspectorViewController.startEditingLink()
     }
 
 	//MARK: - Valdiation
@@ -121,7 +127,7 @@ extension ImageEditorViewController: PageContentEditor {
         guard self.enabled else {
             return []
         }
-        return [self.imageEditorInspectorViewController]
+        return [self.imageEditorInspectorViewController, self.linkInspectorViewController]
     }
 
     func startEditing(at point: CGPoint) {

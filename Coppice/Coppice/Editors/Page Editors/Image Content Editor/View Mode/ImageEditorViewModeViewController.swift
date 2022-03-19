@@ -8,6 +8,7 @@
 
 import Cocoa
 import Combine
+import CoppiceCore
 
 class ImageEditorViewModeViewController: NSViewController {
     @IBOutlet weak var imageView: NSImageView!
@@ -120,5 +121,18 @@ extension ImageEditorViewModeViewController: PageContentEditor {
 extension ImageEditorViewModeViewController: ImageEditorHotspotLayoutEngineDelegate {
     func layoutDidChange(in layoutEngine: ImageEditorHotspotLayoutEngine) {
         self.hotspotView.layoutEngineDidChange()
+        self.viewModel.linkEditor.updateSelectedLink()
+    }
+
+    func didClickOnHotspot(_ hotspot: ImageEditorHotspot, in layoutEngine: ImageEditorHotspotLayoutEngine) {
+        guard let url = hotspot.url else {
+            return
+        }
+
+        if let pageLink = PageLink(url: url) {
+            self.open(pageLink)
+        } else {
+            NSWorkspace.shared.open(url)
+        }
     }
 }

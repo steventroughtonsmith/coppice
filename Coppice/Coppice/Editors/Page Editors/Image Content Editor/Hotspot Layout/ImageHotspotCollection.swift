@@ -33,6 +33,10 @@ class ImageHotspotCollection {
 
     @Published private(set) var imageEditorHotspots: [ImageEditorHotspot] = []
 
+    var selectedHotspots: [ImageEditorHotspot] {
+        return self.imageEditorHotspots.filter(\.isSelected)
+    }
+
     private func reloadImageEditorHotspots(using hotspots: [ImageHotspot]) {
         self.imageEditorHotspots = hotspots.map { self.imageEditorHotspot(for: $0) }
     }

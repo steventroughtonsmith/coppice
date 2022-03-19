@@ -141,6 +141,14 @@ class ImageEditorViewModel: ViewModel {
     }
 
 
+    //MARK: - Linking
+    lazy var linkEditor: ImageEditorLinkEditor = {
+        let linkEditor = ImageEditorLinkEditor()
+        linkEditor.viewModel = self
+        return linkEditor
+    }()
+
+
 	//mode (.view, .crop, .hotspot)
 
 	//rotate left/right
