@@ -98,7 +98,7 @@ class ImageEditorHotspotLayoutEngine {
         self.delegate?.layoutDidChange(in: self)
         if self.isEditable, hasChanged {
             self.delegate?.didCommitEdit(in: self)
-        } else {
+        } else if modifiers.contains(.option) == false {
             self.delegate?.didClickOnHotspot(currentHotspotForEvents, in: self)
         }
     }

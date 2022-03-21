@@ -51,7 +51,13 @@ public class ImageHotspot: NSObject {
 
         self.kind = kind
         self.points = points
-        self.link = (dictionaryRepresentation["link"] as? URL)
+        if let linkString = dictionaryRepresentation["link"] as? String,
+           let link = URL(string: linkString)
+        {
+            self.link = link
+        } else {
+            self.link = nil
+        }
     }
 
     var dictionaryRepresentation: [String: Any] {
@@ -61,7 +67,7 @@ public class ImageHotspot: NSObject {
         ]
 
         if let link = self.link {
-            dictionaryRepresentation["link"] = link
+            dictionaryRepresentation["link"] = link.absoluteString
         }
 
         return dictionaryRepresentation
