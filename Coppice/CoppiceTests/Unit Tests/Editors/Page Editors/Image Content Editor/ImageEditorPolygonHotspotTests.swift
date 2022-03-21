@@ -64,7 +64,7 @@ class ImageEditorPolygonHotspotTests: XCTestCase {
         XCTAssertTrue(hotspot.hitTest(at: CGPoint(x: 45, y: 80)))
         XCTAssertTrue(hotspot.hitTest(at: CGPoint(x: 150, y: 95)))
 
-        XCTAssertTrue(hotspot.hitTest(at: CGPoint(x: 110, y: 102)))
+        XCTAssertTrue(hotspot.hitTest(at: CGPoint(x: 102, y: 102)))
         XCTAssertTrue(hotspot.hitTest(at: CGPoint(x: 80, y: 152)))
         XCTAssertTrue(hotspot.hitTest(at: CGPoint(x: 80, y: 37)))
         XCTAssertTrue(hotspot.hitTest(at: CGPoint(x: 37, y: 80)))
@@ -89,7 +89,15 @@ class ImageEditorPolygonHotspotTests: XCTestCase {
 
     func test_editingHandleRects_returnsEmptyArrayIfModeIsCreating() throws {
         let hotspot = self.createHotspot(mode: .creating)
-        XCTAssertEqual(hotspot.editingHandleRects(forScale: 1), [])
+        let editingHandleRects = hotspot.editingHandleRects(forScale: 1)
+        let handleSize = CGSize(width: hotspot.resizeHandleSize, height: hotspot.resizeHandleSize)
+        XCTAssertEqual(editingHandleRects, [
+            CGRect(origin: CGPoint(x: 95, y: 95), size: handleSize),
+            CGRect(origin: CGPoint(x: 155, y: 95), size: handleSize),
+            CGRect(origin: CGPoint(x: 75, y: 35), size: handleSize),
+            CGRect(origin: CGPoint(x: 35, y: 75), size: handleSize),
+            CGRect(origin: CGPoint(x: 75, y: 145), size: handleSize),
+        ])
     }
 
     func test_editingHandleRects_returnsRectForEachPointInPolygonIfModeIsComplete() throws {
@@ -197,7 +205,7 @@ class ImageEditorPolygonHotspotTests: XCTestCase {
         XCTAssertEqual(hotspot.points, [
             CGPoint(x: 100, y: 100),
             CGPoint(x: 160, y: 100),
-            CGPoint(x: 200, y: 40),
+            CGPoint(x: 199, y: 40),
             CGPoint(x: 40, y: 80),
             CGPoint(x: 80, y: 150),
         ])
@@ -247,7 +255,7 @@ class ImageEditorPolygonHotspotTests: XCTestCase {
 
     func test_editPoint_draggingPointDownDoesntGoBeyondImageBounds() throws {
         let hotspot = self.createHotspot()
-        hotspot.downEvent(at: CGPoint(x: 80, y: 170), modifiers: [], eventCount: 1)
+        hotspot.downEvent(at: CGPoint(x: 80, y: 150), modifiers: [], eventCount: 1)
         hotspot.draggedEvent(at: CGPoint(x: 80, y: 250), modifiers: [], eventCount: 1)
 
         XCTAssertEqual(hotspot.points, [
@@ -255,7 +263,7 @@ class ImageEditorPolygonHotspotTests: XCTestCase {
             CGPoint(x: 160, y: 100),
             CGPoint(x: 80, y: 40),
             CGPoint(x: 40, y: 80),
-            CGPoint(x: 80, y: 200),
+            CGPoint(x: 80, y: 199),
         ])
     }
 
@@ -269,6 +277,7 @@ class ImageEditorPolygonHotspotTests: XCTestCase {
 
     func test_createHotspot_modifiesPointOnDragAndMouseUp() throws {
         let hotspot = ImageEditorPolygonHotspot(points: [], mode: .creating, imageSize: CGSize(width: 200, height: 200))
+        hotspot.layoutEngine = self.layoutEngine
         hotspot.downEvent(at: CGPoint(x: 30, y: 40), modifiers: [], eventCount: 1)
 
         XCTAssertEqual(hotspot.points, [CGPoint(x: 30, y: 40)])
@@ -279,6 +288,7 @@ class ImageEditorPolygonHotspotTests: XCTestCase {
 
     func test_createHotspot_clickingOnFirstPointCompletes() throws {
         let hotspot = ImageEditorPolygonHotspot(points: [], mode: .creating, imageSize: CGSize(width: 200, height: 200))
+        hotspot.layoutEngine = self.layoutEngine
         hotspot.downEvent(at: CGPoint(x: 30, y: 40), modifiers: [], eventCount: 1)
         hotspot.upEvent(at: CGPoint(x: 30, y: 40), modifiers: [], eventCount: 1)
 
@@ -297,6 +307,7 @@ class ImageEditorPolygonHotspotTests: XCTestCase {
 
     func test_createHotspot_doubleClickingPointCompletes() throws {
         let hotspot = ImageEditorPolygonHotspot(points: [], mode: .creating, imageSize: CGSize(width: 200, height: 200))
+        hotspot.layoutEngine = self.layoutEngine
         hotspot.downEvent(at: CGPoint(x: 30, y: 40), modifiers: [], eventCount: 1)
         hotspot.upEvent(at: CGPoint(x: 30, y: 40), modifiers: [], eventCount: 1)
 
@@ -315,6 +326,7 @@ class ImageEditorPolygonHotspotTests: XCTestCase {
 
     func test_createHotspot_doesntAllowDraggingBeyondLeft() throws {
         let hotspot = ImageEditorPolygonHotspot(points: [], mode: .creating, imageSize: CGSize(width: 200, height: 200))
+        hotspot.layoutEngine = self.layoutEngine
         hotspot.downEvent(at: CGPoint(x: 30, y: 40), modifiers: [], eventCount: 1)
 
         XCTAssertEqual(hotspot.points, [CGPoint(x: 30, y: 40)])
@@ -325,16 +337,18 @@ class ImageEditorPolygonHotspotTests: XCTestCase {
 
     func test_createHotspot_doesntAllowDraggingBeyondRight() throws {
         let hotspot = ImageEditorPolygonHotspot(points: [], mode: .creating, imageSize: CGSize(width: 200, height: 200))
+        hotspot.layoutEngine = self.layoutEngine
         hotspot.downEvent(at: CGPoint(x: 30, y: 40), modifiers: [], eventCount: 1)
 
         XCTAssertEqual(hotspot.points, [CGPoint(x: 30, y: 40)])
 
         hotspot.draggedEvent(at: CGPoint(x: 240, y: 50), modifiers: [], eventCount: 1)
-        XCTAssertEqual(hotspot.points, [CGPoint(x: 200, y: 50)])
+        XCTAssertEqual(hotspot.points, [CGPoint(x: 199, y: 50)])
     }
 
     func test_createHotspot_doesntAllowDraggingBeyondTop() throws {
         let hotspot = ImageEditorPolygonHotspot(points: [], mode: .creating, imageSize: CGSize(width: 200, height: 200))
+        hotspot.layoutEngine = self.layoutEngine
         hotspot.downEvent(at: CGPoint(x: 30, y: 40), modifiers: [], eventCount: 1)
 
         XCTAssertEqual(hotspot.points, [CGPoint(x: 30, y: 40)])
@@ -345,12 +359,13 @@ class ImageEditorPolygonHotspotTests: XCTestCase {
 
     func test_createHotspot_doesntAllowDraggingBeyondBottom() throws {
         let hotspot = ImageEditorPolygonHotspot(points: [], mode: .creating, imageSize: CGSize(width: 200, height: 200))
+        hotspot.layoutEngine = self.layoutEngine
         hotspot.downEvent(at: CGPoint(x: 30, y: 40), modifiers: [], eventCount: 1)
 
         XCTAssertEqual(hotspot.points, [CGPoint(x: 30, y: 40)])
 
         hotspot.draggedEvent(at: CGPoint(x: 40, y: 250), modifiers: [], eventCount: 1)
-        XCTAssertEqual(hotspot.points, [CGPoint(x: 40, y: 200)])
+        XCTAssertEqual(hotspot.points, [CGPoint(x: 40, y: 199)])
     }
 
 
@@ -400,18 +415,18 @@ class ImageEditorPolygonHotspotTests: XCTestCase {
     func test_moving_doesntMoveBeyondRightOfImageBound() throws {
         let hotspot = self.createHotspot()
         hotspot.downEvent(at: CGPoint(x: 85, y: 85), modifiers: [], eventCount: 1)
-        hotspot.draggedEvent(at: CGPoint(x: 85, y: -45), modifiers: [], eventCount: 1)
+        hotspot.draggedEvent(at: CGPoint(x: 250, y: 85), modifiers: [], eventCount: 1)
 
         XCTAssertEqual(hotspot.points, [
-            CGPoint(x: 100, y: 100),
-            CGPoint(x: 160, y: 100),
-            CGPoint(x: 80, y: 40),
-            CGPoint(x: 40, y: 80),
-            CGPoint(x: 80, y: 150),
+            CGPoint(x: 140, y: 100),
+            CGPoint(x: 200, y: 100),
+            CGPoint(x: 120, y: 40),
+            CGPoint(x: 80, y: 80),
+            CGPoint(x: 120, y: 150),
         ])
     }
 
-    func test_moving_doesntMoveBeyondBottomofImageBound() throws {
+    func test_moving_doesntMoveBeyondBottomOfImageBound() throws {
         let hotspot = self.createHotspot()
         hotspot.downEvent(at: CGPoint(x: 85, y: 85), modifiers: [], eventCount: 1)
         hotspot.draggedEvent(at: CGPoint(x: 85, y: 155), modifiers: [], eventCount: 1)
@@ -451,6 +466,7 @@ class ImageEditorPolygonHotspotTests: XCTestCase {
             CGPoint(x: 80, y: 40),
             CGPoint(x: 40, y: 80),
             CGPoint(x: 80, y: 150),
+            CGPoint(x: 75, y: 75) //It should add this point instead
         ])
     }
 
