@@ -101,6 +101,7 @@ class ImageEditorRectangleHotspot: ImageEditorHotspot {
         ]
     }
 
+    //MARK: - State
     var isSelected: Bool = false
     var isHighlighted: Bool = false
     private(set) var isClicked: Bool = false
@@ -127,6 +128,8 @@ class ImageEditorRectangleHotspot: ImageEditorHotspot {
 
     weak var layoutEngine: ImageEditorHotspotLayoutEngine?
 
+
+    //MARK: - Hit Testing
     func hitTest(at point: CGPoint) -> Bool {
         guard self.isEditable else {
             return self.hotspotPath().contains(point)

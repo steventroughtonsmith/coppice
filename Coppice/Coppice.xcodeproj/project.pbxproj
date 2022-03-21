@@ -48,6 +48,7 @@
 		9918675027A4465D00A1CC3E /* ImageEditorHotspotModeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9918674E27A4465D00A1CC3E /* ImageEditorHotspotModeViewController.xib */; };
 		9918675227A4467700A1CC3E /* ImageEditorCropModeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9918675127A4467700A1CC3E /* ImageEditorCropModeViewController.xib */; };
 		9919B93123D09FBB00C7A44D /* TextColourPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9919B93023D09FBB00C7A44D /* TextColourPicker.swift */; };
+		991A779E27E7703A00DA8EEB /* ImageEditorPolygonHotspot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991A779D27E7703A00DA8EEB /* ImageEditorPolygonHotspot.swift */; };
 		991B5F432541E32B002C483C /* HelpViewerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991B5F412541E32B002C483C /* HelpViewerWindowController.swift */; };
 		991B5F442541E32B002C483C /* HelpViewerWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 991B5F422541E32B002C483C /* HelpViewerWindowController.xib */; };
 		991B5F4D2541E36D002C483C /* HelpNavigationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 991B5F4B2541E36D002C483C /* HelpNavigationViewController.xib */; };
@@ -150,6 +151,7 @@
 		9973737B2423AD6C000D5F21 /* NoEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 997373792423AD6C000D5F21 /* NoEditorViewController.xib */; };
 		9973737D2423BAD1000D5F21 /* RootSplitViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9973737C2423BAD1000D5F21 /* RootSplitViewController.xib */; };
 		9973EC5527E6304400E388A0 /* ImageEditorLinkEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9973EC5427E6304400E388A0 /* ImageEditorLinkEditor.swift */; };
+		9973EC5727E659CE00E388A0 /* ImageEditorPolygonHotspotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9973EC5627E659CE00E388A0 /* ImageEditorPolygonHotspotTests.swift */; };
 		99771190239A95C300FCC8C7 /* TextLinkFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9977118F239A95C300FCC8C7 /* TextLinkFinder.swift */; };
 		99771194239BF97600FCC8C7 /* NSAttributedString+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99771193239BF97600FCC8C7 /* NSAttributedString+M3Extensions.swift */; };
 		99771196239C530700FCC8C7 /* PageLinkManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99771195239C530700FCC8C7 /* PageLinkManagerTests.swift */; };
@@ -496,6 +498,7 @@
 		9918674E27A4465D00A1CC3E /* ImageEditorHotspotModeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageEditorHotspotModeViewController.xib; sourceTree = "<group>"; };
 		9918675127A4467700A1CC3E /* ImageEditorCropModeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageEditorCropModeViewController.xib; sourceTree = "<group>"; };
 		9919B93023D09FBB00C7A44D /* TextColourPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextColourPicker.swift; sourceTree = "<group>"; };
+		991A779D27E7703A00DA8EEB /* ImageEditorPolygonHotspot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorPolygonHotspot.swift; sourceTree = "<group>"; };
 		991B5F412541E32B002C483C /* HelpViewerWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpViewerWindowController.swift; sourceTree = "<group>"; };
 		991B5F422541E32B002C483C /* HelpViewerWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HelpViewerWindowController.xib; sourceTree = "<group>"; };
 		991B5F4A2541E36D002C483C /* HelpNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpNavigationViewController.swift; sourceTree = "<group>"; };
@@ -599,6 +602,7 @@
 		997373792423AD6C000D5F21 /* NoEditorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoEditorViewController.xib; sourceTree = "<group>"; };
 		9973737C2423BAD1000D5F21 /* RootSplitViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RootSplitViewController.xib; sourceTree = "<group>"; };
 		9973EC5427E6304400E388A0 /* ImageEditorLinkEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorLinkEditor.swift; sourceTree = "<group>"; };
+		9973EC5627E659CE00E388A0 /* ImageEditorPolygonHotspotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorPolygonHotspotTests.swift; sourceTree = "<group>"; };
 		9977118F239A95C300FCC8C7 /* TextLinkFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLinkFinder.swift; sourceTree = "<group>"; };
 		99771193239BF97600FCC8C7 /* NSAttributedString+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+M3Extensions.swift"; sourceTree = "<group>"; };
 		99771195239C530700FCC8C7 /* PageLinkManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageLinkManagerTests.swift; sourceTree = "<group>"; };
@@ -1882,6 +1886,7 @@
 			children = (
 				99F77A1F27C920CE009D7FF7 /* ImageEditorHotspotLayoutEngineTests.swift */,
 				99F77A2627C94F31009D7FF7 /* ImageEditorRectangleHotspotTests.swift */,
+				9973EC5627E659CE00E388A0 /* ImageEditorPolygonHotspotTests.swift */,
 			);
 			path = "Image Content Editor";
 			sourceTree = "<group>";
@@ -1892,6 +1897,7 @@
 				990B543827D8FE8F004FDA93 /* ImageEditorHotspotView.swift */,
 				99F6BD2227C3EEC800E5AD20 /* ImageEditorHotspotLayoutEngine.swift */,
 				99F77A2427C94D2B009D7FF7 /* ImageEditorRectangleHotspot.swift */,
+				991A779D27E7703A00DA8EEB /* ImageEditorPolygonHotspot.swift */,
 				990B543A27DF87F9004FDA93 /* ImageHotspotCollection.swift */,
 			);
 			path = "Hotspot Layout";
@@ -2418,6 +2424,7 @@
 				99D5073D2502854600670139 /* ProButtonCell.swift in Sources */,
 				99C865202302E256004C7B89 /* ImageEditorViewController.swift in Sources */,
 				996187F8249A6E72007313BD /* UpdatePreferencesViewController.swift in Sources */,
+				991A779E27E7703A00DA8EEB /* ImageEditorPolygonHotspot.swift in Sources */,
 				991B5FAF2541F604002C483C /* HelpBook.swift in Sources */,
 				9926951A24AA34940050DFED /* ImmediateMenuSegmentedControl.swift in Sources */,
 				99C8650923016EB2004C7B89 /* TextEditorViewModel.swift in Sources */,
@@ -2626,6 +2633,7 @@
 				99AA3C3625B719F40050A119 /* MockTextEditorAttributeEditor.swift in Sources */,
 				999EA6EF244E054400BF254E /* SearchResultsViewModelTypesTests.swift in Sources */,
 				999EA6F2244F272E00BF254E /* CanvasPageInspectorViewModelTests.swift in Sources */,
+				9973EC5727E659CE00E388A0 /* ImageEditorPolygonHotspotTests.swift in Sources */,
 				9923B06B22F45F7E0035D8C6 /* TestObjects.swift in Sources */,
 				994253EF244F49A7008272E6 /* CanvasListViewModelTests.swift in Sources */,
 				99DA84EE2457203700F19917 /* Mocking.swift in Sources */,

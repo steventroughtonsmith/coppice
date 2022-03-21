@@ -134,8 +134,6 @@ class ImageEditorHotspotLayoutEngine {
         }
         return false
     }
-
-
 }
 
 enum ImageEditorHotspotMode {

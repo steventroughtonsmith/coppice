@@ -67,7 +67,7 @@ public class ImageHotspot: NSObject {
         return dictionaryRepresentation
     }
 
-    public override func isEqual(_ object: Any?) -> Bool {
+    override public func isEqual(_ object: Any?) -> Bool {
         guard let otherHotspot = object as? ImageHotspot else {
             return false
         }

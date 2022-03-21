@@ -12,21 +12,27 @@ import AppKit
 @testable import CoppiceCore
 
 class MockImageEditorHotspot: ImageEditorHotspot {
-    var editingBoundsPath: NSBezierPath?
+    var url: URL?
 
-    var mode: ImageEditorHotspotMode = .create
+    func hotspotPath(forScale scale: CGFloat) -> NSBezierPath {
+        fatalError()
+    }
+
+    func editingBoundsPaths(forScale scale: CGFloat) -> [(path: NSBezierPath, phase: CGFloat)] {
+        fatalError()
+    }
+
+    func editingHandleRects(forScale scale: CGFloat) -> [CGRect] {
+        fatalError()
+    }
+
+    var mode: ImageEditorHotspotMode = .creating
 
     var imageHotspot: ImageHotspot?
 
-    var hotspotPath: NSBezierPath {
-        fatalError()
-    }
-
-    var editingHandleRects: [CGRect] {
-        fatalError()
-    }
-
     var isSelected: Bool = false
+    var isHighlighted: Bool = false
+    var isClicked: Bool = false
 
     weak var layoutEngine: ImageEditorHotspotLayoutEngine?
 
@@ -45,9 +51,9 @@ class MockImageEditorHotspot: ImageEditorHotspot {
         self.draggedEventMock.called(withArguments: (point, modifiers, eventCount))
     }
 
-    let upEventMock = MockDetails<(CGPoint, LayoutEventModifiers, Int), Void>()
-    func upEvent(at point: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int) {
-        self.upEventMock.called(withArguments: (point, modifiers, eventCount))
+    let upEventMock = MockDetails<(CGPoint, LayoutEventModifiers, Int), Bool>()
+    func upEvent(at point: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int) -> Bool {
+        return self.upEventMock.called(withArguments: (point, modifiers, eventCount)) ?? false
     }
 
     let movedEventMock = MockDetails<CGPoint, Void>()

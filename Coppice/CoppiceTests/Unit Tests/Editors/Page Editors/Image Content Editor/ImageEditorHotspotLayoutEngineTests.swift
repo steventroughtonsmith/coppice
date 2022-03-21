@@ -6,8 +6,8 @@
 //  Copyright © 2022 M Cubed Software. All rights reserved.
 //
 
-import XCTest
 import Carbon.HIToolbox
+import XCTest
 
 @testable import Coppice
 
@@ -133,10 +133,10 @@ class ImageEditorHotspotLayoutEngineTests: XCTestCase {
         XCTAssertFalse(self.mockHotspot1.upEventMock.wasCalled)
     }
 
-    func test_editingHotspot_doesntCallLayoutDidChangeOnDownEvent() throws {
+    func test_editingHotspot_callsLayoutDidChangeOnDownEvent() throws {
         self.layoutEngine.downEvent(at: CGPoint(x: 12, y: 42), modifiers: .command, eventCount: 1)
 
-        XCTAssertFalse(self.delegate.layoutDidChangeMock.wasCalled)
+        XCTAssertTrue(self.delegate.layoutDidChangeMock.wasCalled)
     }
 
     func test_editingHotspot_callsLayoutDidChangeOnDraggedEvent() throws {
@@ -163,7 +163,7 @@ class ImageEditorHotspotLayoutEngineTests: XCTestCase {
         self.mockHotspot1.isSelected = true
         self.mockHotspot3.isSelected = true
 
-        self.layoutEngine.keyUpEvent(with: UInt16(kVK_Delete), modifiers: [])
+        XCTAssertTrue(self.layoutEngine.performKeyEquivalent(with: UInt16(kVK_Delete), modifiers: []))
 
         XCTAssertEqual(self.layoutEngine.hotspots.count, 1)
         XCTAssertTrue(self.layoutEngine.hotspots[0] === self.mockHotspot2)
@@ -173,7 +173,7 @@ class ImageEditorHotspotLayoutEngineTests: XCTestCase {
         self.mockHotspot1.isSelected = true
         self.mockHotspot3.isSelected = true
 
-        self.layoutEngine.keyUpEvent(with: UInt16(kVK_Delete), modifiers: [])
+        XCTAssertTrue(self.layoutEngine.performKeyEquivalent(with: UInt16(kVK_Delete), modifiers: []))
 
         XCTAssertEqual(self.layoutEngine.hotspots.count, 1)
 
@@ -184,7 +184,7 @@ class ImageEditorHotspotLayoutEngineTests: XCTestCase {
         self.mockHotspot1.isSelected = true
         self.mockHotspot3.isSelected = true
 
-        self.layoutEngine.keyUpEvent(with: UInt16(kVK_Delete), modifiers: [])
+        XCTAssertTrue(self.layoutEngine.performKeyEquivalent(with: UInt16(kVK_Delete), modifiers: []))
 
         XCTAssertEqual(self.layoutEngine.hotspots.count, 1)
 

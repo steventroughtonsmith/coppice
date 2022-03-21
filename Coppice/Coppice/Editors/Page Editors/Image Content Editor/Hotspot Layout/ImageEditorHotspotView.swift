@@ -49,7 +49,6 @@ class ImageEditorHotspotView: NSView {
             return
         }
         self.aspectRatioConstraint = self.widthAnchor.constraint(equalTo: self.heightAnchor, multiplier: self.imageSize.width / self.imageSize.height)
-
     }
 
     override var intrinsicContentSize: NSSize {

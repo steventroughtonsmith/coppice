@@ -37,3 +37,7 @@ func XCTAssertDateEquals(_ date: Date, _ year: Int, _ month: Int, _ day: Int, _ 
     }
 }
 
+func XCTAssertRectEqual(_ r1: CGRect, _ r2: CGRect) {
+    XCTAssertEqual(r1.origin, r2.origin)
+    XCTAssertEqual(r1.size, r2.size)
+}

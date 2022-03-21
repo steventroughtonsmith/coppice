@@ -6,6 +6,7 @@
 //
 
 import XCTest
+
 @testable import CoppiceCore
 
 class ImageHotspotTests: XCTestCase {
