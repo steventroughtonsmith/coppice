@@ -101,6 +101,7 @@ extension ImageEditorHotspotModeViewController: PageContentEditor {
 extension ImageEditorHotspotModeViewController: ImageEditorHotspotLayoutEngineDelegate {
     func layoutDidChange(in layoutEngine: ImageEditorHotspotLayoutEngine) {
         self.hotspotView.layoutEngineDidChange()
+        self.viewModel.linkEditor.updateSelectedLink()
     }
 
     func didCommitEdit(in layoutEngine: ImageEditorHotspotLayoutEngine) {

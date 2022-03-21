@@ -117,7 +117,7 @@ class ImageEditorHotspotView: NSView {
         return CGRect(origin: rect.origin.multiplied(by: aspectRatio), size: rect.size.multiplied(by: aspectRatio))
     }
 
-    private func convertPointToImageSpace(_ point: CGPoint) -> CGPoint {
+    func convertPointToImageSpace(_ point: CGPoint) -> CGPoint {
         return point.multiplied(by: self.imageSize.width / self.frame.width)
     }
 

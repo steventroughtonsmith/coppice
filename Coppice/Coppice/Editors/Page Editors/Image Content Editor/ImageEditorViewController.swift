@@ -143,6 +143,14 @@ extension ImageEditorViewController: PageContentEditor {
         viewModel.updateMode(self.viewModel.mode)
         return ImageEditorViewController(viewModel: viewModel)
     }
+
+    func isLink(at point: CGPoint) -> Bool {
+        return self.editorModeViewController?.isLink(at: point) ?? false
+    }
+
+    func openLink(at point: CGPoint) {
+        self.editorModeViewController?.openLink(at: point)
+    }
 }
 
 

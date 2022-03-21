@@ -66,6 +66,12 @@ extension CGPoint {
 
         return sqrt((x * x) + (y * y))
     }
+
+    public func flip(in size: CGSize) -> CGPoint {
+        var newPoint = self
+        newPoint.y = size.height - self.y
+        return newPoint
+    }
 }
 
 

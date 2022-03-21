@@ -60,10 +60,14 @@ class ImageEditorHotspotLayoutEngine {
         self.delegate?.layoutDidChange(in: self)
     }
 
+    func hotspot(at point: CGPoint) -> ImageEditorHotspot? {
+        return self.hotspots.last(where: { $0.hitTest(at: point) })
+    }
+
     private var currentHotspotForEvents: ImageEditorHotspot?
     func downEvent(at point: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int) {
         let hotspotForEvent: ImageEditorHotspot
-        if let hotspot = hotspots.last(where: { $0.hitTest(at: point) }) {
+        if let hotspot = self.hotspots.last(where: { $0.hitTest(at: point) }) {
             hotspotForEvent = hotspot
         } else if self.isEditable {
             if self.hotspotKindForCreation == .oval {
