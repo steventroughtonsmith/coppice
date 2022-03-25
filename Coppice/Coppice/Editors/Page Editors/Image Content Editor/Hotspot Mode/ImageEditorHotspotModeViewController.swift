@@ -26,6 +26,10 @@ class ImageEditorHotspotModeViewController: NSViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    deinit {
+        self.subscribers[.imageEditorHotspots]?.cancel()
+    }
+
     //MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +56,14 @@ class ImageEditorHotspotModeViewController: NSViewController {
                 self.hotspotView.heightAnchor.constraint(equalTo: self.imageView.heightAnchor),
             ])
         }
+    }
+
+    override func viewWillDisappear() {
+        self.subscribers[.accessibilityDescription]?.cancel()
+        self.subscribers[.accessibilityDescription] = nil
+
+        self.subscribers[.image]?.cancel()
+        self.subscribers[.image] = nil
     }
 
     //MARK: - Subscribers
