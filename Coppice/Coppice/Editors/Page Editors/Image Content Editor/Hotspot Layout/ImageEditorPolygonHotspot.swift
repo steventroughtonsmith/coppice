@@ -99,6 +99,7 @@ class ImageEditorPolygonHotspot: ImageEditorHotspot {
     private var currentDragState: DragState?
 
     func downEvent(at point: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int) {
+        self.isClicked = (self.isEditable == false)
         guard
             self.currentDragState == nil,
             let dragHandle = self.dragHandle(at: point)
@@ -114,6 +115,7 @@ class ImageEditorPolygonHotspot: ImageEditorHotspot {
     }
 
     func draggedEvent(at point: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int) {
+        self.isClicked = self.hotspotPath().contains(point) && (self.isEditable == false)
         guard let dragState = self.currentDragState else {
             return
         }
@@ -130,12 +132,21 @@ class ImageEditorPolygonHotspot: ImageEditorHotspot {
     }
 
     func upEvent(at point: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int) -> Bool {
+        self.isClicked = false
         guard let dragState = self.currentDragState else {
             return false
         }
 
+        let delta = point.minus(dragState.downPoint)
+
+        if case .move = dragState.dragHandle {
+            self.selectHotspot(dragState: dragState, delta: delta, modifiers: modifiers)
+        }
+
+        let pointsHaveChanged = (dragState.initialPoints != self.points)
+
         self.currentDragState = nil
-        return false
+        return pointsHaveChanged
     }
 
     func movedEvent(at point: CGPoint) {
@@ -164,7 +175,7 @@ class ImageEditorPolygonHotspot: ImageEditorHotspot {
 
     private func addNewHandle(dragState: DragState, point: CGPoint, modifiers: LayoutEventModifiers, canComplete: Bool = false, eventCount: Int) {
         var newPoints = dragState.initialPoints
-        if canComplete, let firstHandle = self.editingHandleRects().first, firstHandle.contains(point) {
+        if canComplete, self.points.count > 2, let firstHandle = self.editingHandleRects().first, firstHandle.contains(point) {
             self.completeCreation()
         } else if eventCount == 2 {
             self.completeCreation()
@@ -179,13 +190,31 @@ class ImageEditorPolygonHotspot: ImageEditorHotspot {
         self.currentDragState = nil
     }
 
+    private func selectHotspot(dragState: DragState, delta: CGPoint, modifiers: LayoutEventModifiers) {
+        guard delta == .zero, self.mode != .creating else {
+            return
+        }
+
+        //Only allow selection in edit mode or with option held
+        guard self.isEditable || modifiers.contains(.option) else {
+            return
+        }
+
+        if modifiers.contains(.shift) {
+            self.isSelected.toggle()
+        } else {
+            self.layoutEngine?.deselectAll()
+            self.isSelected = true
+        }
+    }
+
     private func moveHandle(at index: Int, dragState: DragState, delta: CGPoint, modifiers: LayoutEventModifiers) {
         guard self.isEditable, let pointToMove = dragState.initialPoints[safe: index] else {
             return
         }
 
         let newPoint = pointToMove.plus(delta).bounded(within: CGRect(origin: .zero, size: self.imageSize))
-        
+
         var newPoints = dragState.initialPoints
         newPoints[index] = newPoint
         self.points = newPoints

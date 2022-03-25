@@ -98,7 +98,7 @@ class ImagePageContentsTests: XCTestCase {
         let modelFile = ModelFile(type: "image", filename: nil, data: nil, metadata: [
             "hotspots": [
                 ["kind": "rectangle", "points": [["X": 24, "Y": 32.1], ["X": 42, "Y": 1.23]]],
-                ["kind": "oval", "points": [["X": 1, "Y": 2.0], ["X": 3, "Y": 4.0]], "link": URL(string: "https://coppiceapp.com")!],
+                ["kind": "oval", "points": [["X": 1, "Y": 2.0], ["X": 3, "Y": 4.0]], "link": "https://coppiceapp.com"],
                 ["kind": "polygon", "points": [["X": -1, "Y": -2.0], ["X": -3, "Y": -4.0]]],
             ],
         ])
@@ -241,7 +241,7 @@ class ImagePageContentsTests: XCTestCase {
         let hotspot2 = try XCTUnwrap(hotspots[safe: 1])
         XCTAssertEqual(hotspot2["kind"] as? String, "oval")
         XCTAssertEqual(hotspot2["points"] as? [[String: Double]], [["X": 1, "Y": 2.0], ["X": 3, "Y": 4.0]])
-        XCTAssertEqual(hotspot2["link"] as? URL, URL(string: "https://coppiceapp.com")!)
+        XCTAssertEqual(hotspot2["link"] as? String, "https://coppiceapp.com")
 
         let hotspot3 = try XCTUnwrap(hotspots[safe: 2])
         XCTAssertEqual(hotspot3["kind"] as? String, "polygon")

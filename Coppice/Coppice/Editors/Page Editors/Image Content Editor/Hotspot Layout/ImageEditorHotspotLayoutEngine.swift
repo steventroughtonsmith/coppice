@@ -64,18 +64,29 @@ class ImageEditorHotspotLayoutEngine {
         return self.hotspots.last(where: { $0.hitTest(at: point) })
     }
 
+    private var hotspotBeingCreated: ImageEditorHotspot? {
+        return self.hotspots.first(where: { $0.mode == .creating })
+    }
+
     private var currentHotspotForEvents: ImageEditorHotspot?
     func downEvent(at point: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int) {
         let hotspotForEvent: ImageEditorHotspot
         if let hotspot = self.hotspots.last(where: { $0.hitTest(at: point) }) {
             hotspotForEvent = hotspot
         } else if self.isEditable {
-            if self.hotspotKindForCreation == .oval {
-                hotspotForEvent = ImageEditorRectangleHotspot(shape: .oval, rect: CGRect(origin: point, size: .zero), url: nil, mode: .creating, imageSize: self.imageSize)
+            if let hotspotBeingCreated = self.hotspotBeingCreated {
+                hotspotForEvent = hotspotBeingCreated
             } else {
-                hotspotForEvent = ImageEditorRectangleHotspot(shape: .rectangle, rect: CGRect(origin: point, size: .zero), url: nil, mode: .creating, imageSize: self.imageSize)
+                switch self.hotspotKindForCreation {
+                case .rectangle:
+                    hotspotForEvent = ImageEditorRectangleHotspot(shape: .rectangle, rect: CGRect(origin: point, size: .zero), url: nil, mode: .creating, imageSize: self.imageSize)
+                case .oval:
+                    hotspotForEvent = ImageEditorRectangleHotspot(shape: .oval, rect: CGRect(origin: point, size: .zero), url: nil, mode: .creating, imageSize: self.imageSize)
+                case .polygon:
+                    hotspotForEvent = ImageEditorPolygonHotspot(points: [point], mode: .creating, imageSize: self.imageSize)
+                }
+                self.hotspots.append(hotspotForEvent)
             }
-            self.hotspots.append(hotspotForEvent)
         } else {
             return
         }
@@ -97,10 +108,11 @@ class ImageEditorHotspotLayoutEngine {
         }
 
         let hasChanged = currentHotspotForEvents.upEvent(at: point, modifiers: modifiers, eventCount: eventCount)
+        let isCreating = (currentHotspotForEvents.mode == .creating)
         self.currentHotspotForEvents = nil
 
         self.delegate?.layoutDidChange(in: self)
-        if self.isEditable, hasChanged {
+        if self.isEditable, hasChanged, isCreating == false {
             self.delegate?.didCommitEdit(in: self)
         } else if modifiers.contains(.option) == false {
             self.delegate?.didClickOnHotspot(currentHotspotForEvents, in: self)

@@ -39,7 +39,7 @@ class ImageHotspotTests: XCTestCase {
         let dictionary: [String: Any] = [
             "kind": "polygon",
             "points": [["X": 42.1, "Y": 60], ["X": 90, "Y": 60], ["X": -12.3, "Y": 1234.5]],
-            "link": URL(string: "https://twitch.tv/pilkycrc"),
+            "link": "https://twitch.tv/pilkycrc",
         ]
 
         let hotspot = try ImageHotspot(dictionaryRepresentation: dictionary)
@@ -111,6 +111,6 @@ class ImageHotspotTests: XCTestCase {
     func test_dictionaryRepresentation_includesLinkIfItIsSet() throws {
         let hotspot = ImageHotspot(kind: .oval, points: [], link: URL(string: "https://coppiceapp.com")!)
 
-        XCTAssertEqual(hotspot.dictionaryRepresentation["link"] as? URL, URL(string: "https://coppiceapp.com")!)
+        XCTAssertEqual(hotspot.dictionaryRepresentation["link"] as? String, "https://coppiceapp.com")
     }
 }

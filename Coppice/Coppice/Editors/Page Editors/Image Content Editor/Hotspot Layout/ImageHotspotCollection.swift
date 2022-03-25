@@ -48,7 +48,7 @@ class ImageHotspotCollection {
         case .oval:
             return ImageEditorRectangleHotspot(shape: .oval, rect: CGRect(points: imageHotspot.points) ?? .zero, url: imageHotspot.link, imageSize: self.imageContent.image?.size ?? .zero)
         case .polygon:
-            fatalError()
+            return ImageEditorPolygonHotspot(points: imageHotspot.points, url: imageHotspot.link, imageSize: self.imageContent.image?.size ?? .zero)
         }
     }
 }
