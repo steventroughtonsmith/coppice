@@ -43,7 +43,15 @@ class ImageEditorPolygonHotspot: ImageEditorHotspot {
     }
 
     func editingBoundsPaths(forScale scale: CGFloat = 1) -> [(path: NSBezierPath, phase: CGFloat)] {
-        return []
+        guard self.isEditable else {
+            return []
+        }
+        
+        var paths: [(path: NSBezierPath, phase: CGFloat)] = (1..<self.points.count).map {
+            return (NSBezierPath(lineFrom: self.points[$0 - 1], to: self.points[$0]), 0)
+        }
+        paths.append((NSBezierPath(lineFrom: self.points[self.points.count - 1], to: self.points[0]), 0))
+        return paths
     }
 
     //MARK: - Handle Rects
