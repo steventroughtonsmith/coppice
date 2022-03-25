@@ -42,6 +42,9 @@ class ImageHotspotCollection {
     }
 
     private func imageEditorHotspot(for imageHotspot: ImageHotspot) -> ImageEditorHotspot {
+        if let existingHotspot = self.imageEditorHotspots.first(where: { $0.imageHotspot == imageHotspot }) {
+            return existingHotspot
+        }
         switch imageHotspot.kind {
         case .rectangle:
             return ImageEditorRectangleHotspot(shape: .rectangle, rect: CGRect(points: imageHotspot.points) ?? .zero, url: imageHotspot.link, imageSize: self.imageContent.image?.size ?? .zero)
