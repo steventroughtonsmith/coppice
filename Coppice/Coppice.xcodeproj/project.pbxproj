@@ -152,6 +152,7 @@
 		9973737D2423BAD1000D5F21 /* RootSplitViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9973737C2423BAD1000D5F21 /* RootSplitViewController.xib */; };
 		9973EC5527E6304400E388A0 /* ImageEditorLinkEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9973EC5427E6304400E388A0 /* ImageEditorLinkEditor.swift */; };
 		9973EC5727E659CE00E388A0 /* ImageEditorPolygonHotspotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9973EC5627E659CE00E388A0 /* ImageEditorPolygonHotspotTests.swift */; };
+		99757C1627EE1FFD005C8A48 /* ImageEditorHotspotModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99757C1527EE1FFD005C8A48 /* ImageEditorHotspotModeView.swift */; };
 		99771190239A95C300FCC8C7 /* TextLinkFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9977118F239A95C300FCC8C7 /* TextLinkFinder.swift */; };
 		99771194239BF97600FCC8C7 /* NSAttributedString+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99771193239BF97600FCC8C7 /* NSAttributedString+M3Extensions.swift */; };
 		99771196239C530700FCC8C7 /* PageLinkManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99771195239C530700FCC8C7 /* PageLinkManagerTests.swift */; };
@@ -603,6 +604,7 @@
 		9973737C2423BAD1000D5F21 /* RootSplitViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RootSplitViewController.xib; sourceTree = "<group>"; };
 		9973EC5427E6304400E388A0 /* ImageEditorLinkEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorLinkEditor.swift; sourceTree = "<group>"; };
 		9973EC5627E659CE00E388A0 /* ImageEditorPolygonHotspotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorPolygonHotspotTests.swift; sourceTree = "<group>"; };
+		99757C1527EE1FFD005C8A48 /* ImageEditorHotspotModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorHotspotModeView.swift; sourceTree = "<group>"; };
 		9977118F239A95C300FCC8C7 /* TextLinkFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLinkFinder.swift; sourceTree = "<group>"; };
 		99771193239BF97600FCC8C7 /* NSAttributedString+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+M3Extensions.swift"; sourceTree = "<group>"; };
 		99771195239C530700FCC8C7 /* PageLinkManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageLinkManagerTests.swift; sourceTree = "<group>"; };
@@ -979,6 +981,7 @@
 		9918674C27A4464800A1CC3E /* Hotspot Mode */ = {
 			isa = PBXGroup;
 			children = (
+				99757C1527EE1FFD005C8A48 /* ImageEditorHotspotModeView.swift */,
 				9918674D27A4465D00A1CC3E /* ImageEditorHotspotModeViewController.swift */,
 				9918674E27A4465D00A1CC3E /* ImageEditorHotspotModeViewController.xib */,
 			);
@@ -2539,6 +2542,7 @@
 				9965FC3D23843143002FE10D /* CanvasPageInspectorViewController.swift in Sources */,
 				9951C26C230AEFAB006CAD4D /* PageSelectorWindowController.swift in Sources */,
 				99A97FD9246DBD4C00CDD95C /* CanvasCell.swift in Sources */,
+				99757C1627EE1FFD005C8A48 /* ImageEditorHotspotModeView.swift in Sources */,
 				9999A25925010F08001F8161 /* HoverView.swift in Sources */,
 				991B5F432541E32B002C483C /* HelpViewerWindowController.swift in Sources */,
 				99868F322396AD55009AC0F7 /* ImageEditorInspectorViewModel.swift in Sources */,

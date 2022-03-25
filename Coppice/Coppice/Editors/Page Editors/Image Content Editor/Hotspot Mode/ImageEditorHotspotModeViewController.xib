@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -15,7 +15,7 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customView id="mRc-p8-x0q" customClass="ImageEditorViewModeView" customModule="Coppice" customModuleProvider="target">
+        <customView id="mRc-p8-x0q" customClass="ImageEditorHotspotModeView" customModule="Coppice" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
@@ -59,7 +59,8 @@
                 <constraint firstItem="0gd-lG-A88" firstAttribute="centerX" secondItem="mRc-p8-x0q" secondAttribute="centerX" id="kVf-AI-Fam"/>
             </constraints>
             <connections>
-                <outlet property="imageView" destination="cdi-Rx-7vC" id="4Py-L8-sNF"/>
+                <outlet property="hotspotView" destination="Yve-pG-P57" id="0vS-BK-ySI"/>
+                <outlet property="segmentedControl" destination="0gd-lG-A88" id="Jj8-Oj-NhW"/>
             </connections>
             <point key="canvasLocation" x="59" y="-19"/>
         </customView>
