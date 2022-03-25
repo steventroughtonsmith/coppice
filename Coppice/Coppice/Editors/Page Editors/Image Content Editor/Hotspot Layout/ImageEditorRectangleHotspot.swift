@@ -345,7 +345,7 @@ class ImageEditorRectangleHotspot: ImageEditorHotspot {
     }
 
     private func selectHotspot(dragState: DragState, delta: CGPoint, modifiers: LayoutEventModifiers) {
-        guard delta == .zero else {
+        guard abs(delta.x) < 0.5, abs(delta.y) < 0.5 else {
             return
         }
 

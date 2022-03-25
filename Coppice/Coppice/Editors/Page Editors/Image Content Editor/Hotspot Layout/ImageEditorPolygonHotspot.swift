@@ -191,7 +191,7 @@ class ImageEditorPolygonHotspot: ImageEditorHotspot {
     }
 
     private func selectHotspot(dragState: DragState, delta: CGPoint, modifiers: LayoutEventModifiers) {
-        guard delta == .zero, self.mode != .creating else {
+        guard abs(delta.x) < 0.5, abs(delta.y) < 0.5, self.mode != .creating else {
             return
         }
 
