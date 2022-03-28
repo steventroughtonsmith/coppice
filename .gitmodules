@@ -1,0 +1,3 @@
+[submodule "Submodules/M3Data"]
+	path = Submodules/M3Data
+	url = git@bitbucket.org:pilky/m3data.git

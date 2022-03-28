@@ -23,6 +23,6 @@
       location = "group:Coppice/Coppice/../../M3Subscriptions/M3Subscriptions.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:../../Frameworks/M3Data/M3Data.xcodeproj">
+      location = "group:Submodules/M3Data/M3Data.xcodeproj">
    </FileRef>
 </Workspace>
