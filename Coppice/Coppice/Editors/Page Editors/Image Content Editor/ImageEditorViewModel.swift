@@ -66,7 +66,7 @@ class ImageEditorViewModel: ViewModel {
         get { self.imageContent.image }
         set {
             self.documentWindowViewModel.registerStartOfEditing()
-            self.imageContent.image = newValue
+            self.imageContent.setImage(newValue, operation: .replace)
             self.regenerateCroppedImage()
         }
     }
@@ -111,13 +111,13 @@ class ImageEditorViewModel: ViewModel {
 	//MARK: - Rotation
 	func rotateLeft() {
 		if let rotatedImage = self.image?.rotate90Degrees(.left) {
-			self.image = rotatedImage
+            self.imageContent.setImage(rotatedImage, operation: .rotate(-Double.pi / 2))
 		}
 	}
 
 	func rotateRight() {
 		if let rotatedImage = self.image?.rotate90Degrees(.right) {
-			self.image = rotatedImage
+            self.imageContent.setImage(rotatedImage, operation: .rotate(Double.pi / 2))
 		}
 	}
 

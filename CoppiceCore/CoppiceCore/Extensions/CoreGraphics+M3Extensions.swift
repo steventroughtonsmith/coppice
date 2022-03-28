@@ -234,4 +234,12 @@ extension CGRect {
     public func multiplied(by factor: CGFloat) -> CGRect {
         return CGRect(origin: self.origin.multiplied(by: factor), size: self.size.multiplied(by: factor))
     }
+
+    public func rotate(byRadians radians: CGFloat, around rotationOrigin: CGPoint) -> CGRect {
+        let translate = CGAffineTransform(translationX: rotationOrigin.x, y: rotationOrigin.y)
+        let rotation = translate.rotated(by: radians)
+        let postTranslate = rotation.translatedBy(x: -rotationOrigin.y, y: -rotationOrigin.x)
+
+        return self.applying(postTranslate)
+    }
 }

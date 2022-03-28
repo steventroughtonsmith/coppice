@@ -12,16 +12,31 @@ import M3Data
 
 public class ImagePageContent: NSObject, PageContent {
     public let contentType = PageContentType.image
-    @objc dynamic public var image: NSImage? {
+    @objc dynamic public private(set) var image: NSImage? {
         didSet {
-            self.undoManager?.beginUndoGrouping()
-            if image != oldValue, let image = self.image {
-                self.cropRect = CGRect(origin: .zero, size: image.size)
-                self.page?.contentSizeDidChange(to: image.size, oldSize: oldValue?.size)
-            }
             self.didChange(\.image, oldValue: oldValue)
-            self.undoManager?.endUndoGrouping()
         }
+    }
+
+    public enum ImageOperation {
+        case replace
+        case rotate(CGFloat)
+    }
+
+    public func setImage(_ newImage: NSImage?, operation: ImageOperation) {
+        self.undoManager?.beginUndoGrouping()
+        let oldValue = self.image
+        if newImage != oldValue, let image = newImage {
+            switch operation {
+            case .replace:
+                self.cropRect = CGRect(origin: .zero, size: image.size)
+            case .rotate(let radians):
+                self.cropRect = self.cropRect.rotate(byRadians: radians, around: image.size.toRect().midPoint)
+            }
+            self.page?.contentSizeDidChange(to: image.size, oldSize: oldValue?.size)
+        }
+        self.image = newImage
+        self.undoManager?.endUndoGrouping()
     }
 
     public var initialContentSize: CGSize? {
