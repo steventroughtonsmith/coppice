@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import M3Data
 
 public class CoppiceModelController: NSObject, ModelController {
     public var allCollections = [ModelType: Any]()

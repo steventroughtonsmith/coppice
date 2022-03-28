@@ -8,6 +8,7 @@
 
 import AppKit
 import Combine
+import M3Data
 
 public class ImagePageContent: NSObject, PageContent {
     public let contentType = PageContentType.image

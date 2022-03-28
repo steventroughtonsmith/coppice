@@ -12,17 +12,11 @@
 		99BC4375256C168000BBB0EA /* CoreGraphics+M3ExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BC4374256C168000BBB0EA /* CoreGraphics+M3ExtensionsTests.swift */; };
 		99BC437B256C22E800BBB0EA /* ModelObjects+Misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BC437A256C22E800BBB0EA /* ModelObjects+Misc.swift */; };
 		99BC438B256C241D00BBB0EA /* ModelObjects+MiscTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BC438A256C241D00BBB0EA /* ModelObjects+MiscTests.swift */; };
+		99CC5B8527F1F28E0084ADFF /* M3Data.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99CC5B8427F1F28E0084ADFF /* M3Data.framework */; };
 		99D0C76024C5DD1E002EEBFA /* CoppiceCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99D0C75624C5DD1E002EEBFA /* CoppiceCore.framework */; };
 		99D0C76724C5DD1E002EEBFA /* CoppiceCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 99D0C75924C5DD1E002EEBFA /* CoppiceCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		99D0C7FC24C5DE79002EEBFA /* CoppiceModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C7DF24C5DE79002EEBFA /* CoppiceModelController.swift */; };
 		99D0C7FD24C5DE79002EEBFA /* ModelPlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C7E024C5DE79002EEBFA /* ModelPlist.swift */; };
-		99D0C7FE24C5DE79002EEBFA /* ModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C7E224C5DE79002EEBFA /* ModelController.swift */; };
-		99D0C7FF24C5DE79002EEBFA /* ModelObservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C7E324C5DE79002EEBFA /* ModelObservation.swift */; };
-		99D0C80024C5DE79002EEBFA /* ModelObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C7E424C5DE79002EEBFA /* ModelObject.swift */; };
-		99D0C80124C5DE79002EEBFA /* ModelCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C7E524C5DE79002EEBFA /* ModelCollection.swift */; };
-		99D0C80224C5DE79002EEBFA /* ModelRelationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C7E624C5DE79002EEBFA /* ModelRelationship.swift */; };
-		99D0C80324C5DE79002EEBFA /* ModelSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C7E724C5DE79002EEBFA /* ModelSettings.swift */; };
-		99D0C80424C5DE79002EEBFA /* ModelID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C7E824C5DE79002EEBFA /* ModelID.swift */; };
 		99D0C80524C5DE79002EEBFA /* ModelReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C7E924C5DE79002EEBFA /* ModelReader.swift */; };
 		99D0C80624C5DE79002EEBFA /* ModelWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C7EA24C5DE79002EEBFA /* ModelWriter.swift */; };
 		99D0C80724C5DE79002EEBFA /* ModelObjects+Searching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C7EC24C5DE79002EEBFA /* ModelObjects+Searching.swift */; };
@@ -127,6 +121,7 @@
 		99BC4374256C168000BBB0EA /* CoreGraphics+M3ExtensionsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CoreGraphics+M3ExtensionsTests.swift"; sourceTree = "<group>"; };
 		99BC437A256C22E800BBB0EA /* ModelObjects+Misc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelObjects+Misc.swift"; sourceTree = "<group>"; };
 		99BC438A256C241D00BBB0EA /* ModelObjects+MiscTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelObjects+MiscTests.swift"; sourceTree = "<group>"; };
+		99CC5B8427F1F28E0084ADFF /* M3Data.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = M3Data.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		99D0C75624C5DD1E002EEBFA /* CoppiceCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CoppiceCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		99D0C75924C5DD1E002EEBFA /* CoppiceCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoppiceCore.h; sourceTree = "<group>"; };
 		99D0C75A24C5DD1E002EEBFA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -134,13 +129,6 @@
 		99D0C76624C5DD1E002EEBFA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		99D0C7DF24C5DE79002EEBFA /* CoppiceModelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoppiceModelController.swift; sourceTree = "<group>"; };
 		99D0C7E024C5DE79002EEBFA /* ModelPlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelPlist.swift; sourceTree = "<group>"; };
-		99D0C7E224C5DE79002EEBFA /* ModelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelController.swift; sourceTree = "<group>"; };
-		99D0C7E324C5DE79002EEBFA /* ModelObservation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelObservation.swift; sourceTree = "<group>"; };
-		99D0C7E424C5DE79002EEBFA /* ModelObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelObject.swift; sourceTree = "<group>"; };
-		99D0C7E524C5DE79002EEBFA /* ModelCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelCollection.swift; sourceTree = "<group>"; };
-		99D0C7E624C5DE79002EEBFA /* ModelRelationship.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelRelationship.swift; sourceTree = "<group>"; };
-		99D0C7E724C5DE79002EEBFA /* ModelSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelSettings.swift; sourceTree = "<group>"; };
-		99D0C7E824C5DE79002EEBFA /* ModelID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelID.swift; sourceTree = "<group>"; };
 		99D0C7E924C5DE79002EEBFA /* ModelReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelReader.swift; sourceTree = "<group>"; };
 		99D0C7EA24C5DE79002EEBFA /* ModelWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelWriter.swift; sourceTree = "<group>"; };
 		99D0C7EC24C5DE79002EEBFA /* ModelObjects+Searching.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ModelObjects+Searching.swift"; sourceTree = "<group>"; };
@@ -235,6 +223,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99CC5B8527F1F28E0084ADFF /* M3Data.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,6 +248,14 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		99CC5B8327F1F28E0084ADFF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				99CC5B8427F1F28E0084ADFF /* M3Data.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		99D0C74C24C5DD1E002EEBFA = {
 			isa = PBXGroup;
 			children = (
@@ -266,6 +263,7 @@
 				99D0C75824C5DD1E002EEBFA /* CoppiceCore */,
 				99D0C76324C5DD1E002EEBFA /* CoppiceCoreTests */,
 				99D0C75724C5DD1E002EEBFA /* Products */,
+				99CC5B8327F1F28E0084ADFF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -313,27 +311,12 @@
 			isa = PBXGroup;
 			children = (
 				99D0C7DF24C5DE79002EEBFA /* CoppiceModelController.swift */,
-				99D0C7E124C5DE79002EEBFA /* Model Infrastructure */,
 				99D0C7EB24C5DE79002EEBFA /* Model Objects */,
 				99D0C7E024C5DE79002EEBFA /* ModelPlist.swift */,
 				99D0C7E924C5DE79002EEBFA /* ModelReader.swift */,
 				99D0C7EA24C5DE79002EEBFA /* ModelWriter.swift */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		99D0C7E124C5DE79002EEBFA /* Model Infrastructure */ = {
-			isa = PBXGroup;
-			children = (
-				99D0C7E224C5DE79002EEBFA /* ModelController.swift */,
-				99D0C7E324C5DE79002EEBFA /* ModelObservation.swift */,
-				99D0C7E424C5DE79002EEBFA /* ModelObject.swift */,
-				99D0C7E524C5DE79002EEBFA /* ModelCollection.swift */,
-				99D0C7E624C5DE79002EEBFA /* ModelRelationship.swift */,
-				99D0C7E724C5DE79002EEBFA /* ModelSettings.swift */,
-				99D0C7E824C5DE79002EEBFA /* ModelID.swift */,
-			);
-			path = "Model Infrastructure";
 			sourceTree = "<group>";
 		};
 		99D0C7EB24C5DE79002EEBFA /* Model Objects */ = {
@@ -651,14 +634,12 @@
 				99D0C81024C5DE79002EEBFA /* PageContent.swift in Sources */,
 				99D0C80524C5DE79002EEBFA /* ModelReader.swift in Sources */,
 				99D0C8DB24C5FBEA002EEBFA /* LayoutEngineEventContextFactory.swift in Sources */,
-				99D0C80324C5DE79002EEBFA /* ModelSettings.swift in Sources */,
 				99D0C8E424C5FBEA002EEBFA /* RemovePageEventContext.swift in Sources */,
 				99D0C81124C5DE79002EEBFA /* CanvasPage.swift in Sources */,
 				99D0C87324C5E0B2002EEBFA /* NSEdgeInsets+M3Extensions.swift in Sources */,
 				99D0C86F24C5E080002EEBFA /* CoppiceUserDefaults.swift in Sources */,
 				99D0C80624C5DE79002EEBFA /* ModelWriter.swift in Sources */,
 				99D0C80B24C5DE79002EEBFA /* Canvas.swift in Sources */,
-				99D0C7FE24C5DE79002EEBFA /* ModelController.swift in Sources */,
 				99D0C80824C5DE79002EEBFA /* PageHierarchy.swift in Sources */,
 				99D0C80F24C5DE79002EEBFA /* ModelObjects+Pasteboard.swift in Sources */,
 				99D0C87524C5E0E1002EEBFA /* Array+M3Extensions.swift in Sources */,
@@ -668,26 +649,21 @@
 				99D0C8DC24C5FBEA002EEBFA /* LayoutEnginePage.swift in Sources */,
 				99D0C8EF24C72494002EEBFA /* LayoutEnginePage+CanvasPage.swift in Sources */,
 				99D0C8DF24C5FBEA002EEBFA /* ArrowLayoutEngine.swift in Sources */,
-				99D0C80224C5DE79002EEBFA /* ModelRelationship.swift in Sources */,
 				99D0C87024C5E080002EEBFA /* NSImage+M3Extensions.swift in Sources */,
 				99D0C80724C5DE79002EEBFA /* ModelObjects+Searching.swift in Sources */,
 				99D0C7FD24C5DE79002EEBFA /* ModelPlist.swift in Sources */,
-				99D0C7FF24C5DE79002EEBFA /* ModelObservation.swift in Sources */,
-				99D0C80024C5DE79002EEBFA /* ModelObject.swift in Sources */,
 				99D0C81424C5DE79002EEBFA /* ImagePageContent.swift in Sources */,
 				99D0C8F124C728C7002EEBFA /* ArrowDrawHelper.swift in Sources */,
 				99D0C8DA24C5FBEA002EEBFA /* CanvasLayoutEngine+Configuration.swift in Sources */,
 				99D0C8DD24C5FBEA002EEBFA /* LayoutEngineArrow.swift in Sources */,
 				99D0C80E24C5DE79002EEBFA /* Canvas+Pages.swift in Sources */,
 				99F6BD1F27C3D21F00E5AD20 /* ImageHotspot.swift in Sources */,
-				99D0C80424C5DE79002EEBFA /* ModelID.swift in Sources */,
 				99D0C86724C5DFBA002EEBFA /* GlobalConstants.swift in Sources */,
 				99D0C7FC24C5DE79002EEBFA /* CoppiceModelController.swift in Sources */,
 				99D0C8E124C5FBEA002EEBFA /* KeyboardMovePageEventContext.swift in Sources */,
 				99D0C8E024C5FBEA002EEBFA /* CanvasSelectionEventContext.swift in Sources */,
 				99D0C81524C5DE79002EEBFA /* ModelObjects+Defaults.swift in Sources */,
 				99D0C81224C5DE79002EEBFA /* Page.swift in Sources */,
-				99D0C80124C5DE79002EEBFA /* ModelCollection.swift in Sources */,
 				99D0C8DE24C5FBEA002EEBFA /* CanvasLayoutEngine.swift in Sources */,
 				99D0C81324C5DE79002EEBFA /* TextPageContent.swift in Sources */,
 				99D0C80A24C5DE79002EEBFA /* FolderContainable.swift in Sources */,

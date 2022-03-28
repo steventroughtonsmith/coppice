@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import M3Data
 
 final public class CanvasPage: NSObject, CollectableModelObject {
     public static let modelType: ModelType = ModelType(rawValue: "CanvasPage")!

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import M3Data
 
 struct ModelPlist {
     let canvases: [ModelID: [String: Any]]

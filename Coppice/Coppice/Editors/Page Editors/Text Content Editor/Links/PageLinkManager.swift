@@ -8,6 +8,7 @@
 
 import Cocoa
 import CoppiceCore
+import M3Data
 
 protocol PageLinkManagerDelegate: AnyObject {
     func willStartParsing(in manager: PageLinkManager)

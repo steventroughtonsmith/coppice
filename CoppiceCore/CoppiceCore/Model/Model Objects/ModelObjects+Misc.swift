@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import M3Data
 
 extension ModelCollection where ModelType == Canvas {
     public var sortedCanvases: [Canvas] {

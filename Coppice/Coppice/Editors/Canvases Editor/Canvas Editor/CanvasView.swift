@@ -8,6 +8,7 @@
 
 import Cocoa
 import CoppiceCore
+import M3Data
 
 protocol CanvasViewDelegate: AnyObject {
     func willStartEditing(_ canvasView: CanvasView)

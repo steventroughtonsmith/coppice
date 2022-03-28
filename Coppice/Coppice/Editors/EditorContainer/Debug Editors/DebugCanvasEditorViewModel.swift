@@ -8,6 +8,7 @@
 
 import Cocoa
 import CoppiceCore
+import M3Data
 
 protocol DebugCanvasEditorView: AnyObject {
     func reloadPage(_ page: CanvasPage)

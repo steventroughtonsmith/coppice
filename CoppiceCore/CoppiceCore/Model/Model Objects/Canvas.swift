@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import M3Data
 
 final public class Canvas: NSObject, CollectableModelObject {
     public enum Theme: String, CaseIterable {

@@ -9,6 +9,7 @@
 import Cocoa
 import Combine
 import CoppiceCore
+import M3Data
 
 class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitViewContainable {
     @IBOutlet weak var scrollView: NSScrollView!

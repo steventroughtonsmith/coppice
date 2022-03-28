@@ -9,6 +9,7 @@
 import Cocoa
 import Combine
 import CoppiceCore
+import M3Data
 
 class SourceListViewController: NSViewController, NSMenuItemValidation {
     @objc dynamic let viewModel: SourceListViewModel

@@ -756,6 +756,7 @@
 		99C9006325794AE700969E92 /* TextEditorParagraphInspectorView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextEditorParagraphInspectorView.xib; sourceTree = "<group>"; };
 		99C9AF1323631348009F909A /* CanvasTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasTextView.swift; sourceTree = "<group>"; };
 		99C9AF1523632349009F909A /* NSView+CanvasLookup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+CanvasLookup.swift"; sourceTree = "<group>"; };
+		99CC5B8227F1F1E00084ADFF /* M3Data.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = M3Data.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		99D03F1A267BA6F600B9CE1B /* LinkEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkEditor.swift; sourceTree = "<group>"; };
 		99D0C6E924C5A606002EEBFA /* CoppiceSpotlight.mdimporter */ = {isa = PBXFileReference; explicitFileType = "wrapper.spotlight-importer"; includeInIndex = 0; path = CoppiceSpotlight.mdimporter; sourceTree = BUILT_PRODUCTS_DIR; };
 		99D0C6EC24C5A606002EEBFA /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = main.c; path = CoppiceSpotlight/main.c; sourceTree = SOURCE_ROOT; };
@@ -1741,6 +1742,7 @@
 				9999A23324F80CAB001F8161 /* libM3Subscriptions.a */,
 				9999A23124F80C8D001F8161 /* libM3Subscriptions.a */,
 				99D0C87D24C5EDB4002EEBFA /* CoppiceCore.framework */,
+				99CC5B8227F1F1E00084ADFF /* M3Data.framework */,
 				99D0C70F24C5CED0002EEBFA /* Quartz.framework */,
 			);
 			name = Frameworks;

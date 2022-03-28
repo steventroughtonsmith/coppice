@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import M3Data
 
 struct Tag {
     let name: String

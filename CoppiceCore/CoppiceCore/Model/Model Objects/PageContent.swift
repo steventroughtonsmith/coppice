@@ -7,6 +7,7 @@
 //
 
 import AppKit
+import M3Data
 
 public enum PageContentType: String, Equatable, CaseIterable {
     case text

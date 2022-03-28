@@ -8,6 +8,7 @@
 
 import Cocoa
 import CoppiceCore
+import M3Data
 
 class ThumbnailController: NSObject {
     let modelController: CoppiceModelController

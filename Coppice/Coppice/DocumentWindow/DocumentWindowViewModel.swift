@@ -9,6 +9,7 @@
 import Combine
 import CoppiceCore
 import Foundation
+import M3Data
 
 protocol DocumentWindow: AnyObject {
     func showAlert(_ alert: Alert, callback: @escaping (Int) -> Void)

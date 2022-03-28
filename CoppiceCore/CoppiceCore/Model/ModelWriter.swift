@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import M3Data
 
 public class ModelWriter: NSObject {
     public let modelController: ModelController

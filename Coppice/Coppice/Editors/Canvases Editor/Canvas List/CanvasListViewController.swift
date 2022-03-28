@@ -9,6 +9,7 @@
 import Cocoa
 import Combine
 import CoppiceCore
+import M3Data
 
 class CanvasListViewController: NSViewController, SplitViewContainable, NSMenuItemValidation {
     @IBOutlet weak var tableView: SpringLoadedTableView!

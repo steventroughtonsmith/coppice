@@ -8,6 +8,7 @@
 
 import CoppiceCore
 import Foundation
+import M3Data
 
 protocol PageInspectorView: AnyObject {}
 

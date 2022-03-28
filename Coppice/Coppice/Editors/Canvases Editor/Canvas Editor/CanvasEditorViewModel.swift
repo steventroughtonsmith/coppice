@@ -9,6 +9,7 @@
 import AppKit
 import Combine
 import CoppiceCore
+import M3Data
 import M3Subscriptions
 
 protocol CanvasEditorView: AnyObject {

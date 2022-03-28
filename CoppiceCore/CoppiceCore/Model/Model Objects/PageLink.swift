@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import M3Data
 
 public struct PageLink: Equatable {
     public static let host = "page"

@@ -8,6 +8,7 @@
 
 import CoppiceCore
 import Foundation
+import M3Data
 
 class CanvasPageInspectorViewModel: BaseInspectorViewModel {
     @objc dynamic let canvasPage: CanvasPage

@@ -7,6 +7,7 @@
 //
 
 import AppKit
+import M3Data
 
 extension Canvas {
     public var pasteboardWriter: NSPasteboardWriting {

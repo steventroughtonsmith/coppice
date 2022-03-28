@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import M3Data
 
 extension Page {
     public struct Match: Comparable {

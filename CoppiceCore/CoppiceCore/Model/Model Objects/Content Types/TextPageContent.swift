@@ -7,6 +7,7 @@
 //
 
 import AppKit
+import M3Data
 
 public class TextPageContent: NSObject, PageContent {
     public let contentType = PageContentType.text

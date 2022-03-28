@@ -9,6 +9,7 @@
 import Cocoa
 import Combine
 import CoppiceCore
+import M3Data
 
 protocol SourceListView: AnyObject {
     func reload()

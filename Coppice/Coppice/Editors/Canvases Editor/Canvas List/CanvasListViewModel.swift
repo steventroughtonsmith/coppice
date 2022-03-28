@@ -9,6 +9,7 @@
 import Cocoa
 import Combine
 import CoppiceCore
+import M3Data
 
 protocol CanvasListView: AnyObject {
     func reload()

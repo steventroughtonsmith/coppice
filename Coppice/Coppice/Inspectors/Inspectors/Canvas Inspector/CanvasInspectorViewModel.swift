@@ -9,6 +9,7 @@
 import Combine
 import CoppiceCore
 import Foundation
+import M3Data
 import M3Subscriptions
 
 protocol CanvasInspectorView: AnyObject {}

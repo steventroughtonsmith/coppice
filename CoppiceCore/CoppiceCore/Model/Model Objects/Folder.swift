@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import M3Data
 
 final public class Folder: NSObject, CollectableModelObject, FolderContainable {
     public static var modelType: ModelType = ModelType(rawValue: "Folder")!

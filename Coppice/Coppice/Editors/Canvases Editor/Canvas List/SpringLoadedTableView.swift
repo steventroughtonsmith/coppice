@@ -8,6 +8,7 @@
 
 import Cocoa
 import CoppiceCore
+import M3Data
 
 protocol SpringLoadedTableViewDelegate: AnyObject {
     func userDidSpringLoad(on row: NSTableRowView, of tableView: SpringLoadedTableView)

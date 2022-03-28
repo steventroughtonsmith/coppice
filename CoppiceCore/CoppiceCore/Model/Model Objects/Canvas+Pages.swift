@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import M3Data
 
 extension Canvas {
     //MARK: - Add New Pages

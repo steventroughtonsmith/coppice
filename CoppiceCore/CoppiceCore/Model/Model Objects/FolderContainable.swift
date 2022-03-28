@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import M3Data
 
 /// An object that can be contained in a folder
 public protocol FolderContainable: ModelObject {
