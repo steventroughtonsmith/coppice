@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19455" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19455"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -36,7 +36,7 @@
                                     </textFieldCell>
                                 </textField>
                                 <imageView horizontalHuggingPriority="252" verticalHuggingPriority="750" placeholderIntrinsicWidth="40" placeholderIntrinsicHeight="20" translatesAutoresizingMaskIntoConstraints="NO" id="zsI-yF-xQR">
-                                    <rect key="frame" x="0.0" y="23" width="40" height="21"/>
+                                    <rect key="frame" x="0.0" y="24" width="40" height="20"/>
                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="Jic-pu-fZx"/>
                                 </imageView>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fcy-LH-vr3">
@@ -63,7 +63,7 @@
                                 <constraint firstItem="juz-ON-NP8" firstAttribute="top" secondItem="hut-ut-pDH" secondAttribute="top" id="T9f-Gz-GOm"/>
                                 <constraint firstItem="zsI-yF-xQR" firstAttribute="leading" secondItem="hut-ut-pDH" secondAttribute="leading" id="qJc-yy-XKR"/>
                                 <constraint firstItem="zsI-yF-xQR" firstAttribute="leading" secondItem="hut-ut-pDH" secondAttribute="leading" id="shx-0I-6Sz"/>
-                                <constraint firstItem="zsI-yF-xQR" firstAttribute="top" secondItem="hut-ut-pDH" secondAttribute="top" constant="1" id="xjK-E7-y8v"/>
+                                <constraint firstItem="zsI-yF-xQR" firstAttribute="top" relation="greaterThanOrEqual" secondItem="hut-ut-pDH" secondAttribute="top" constant="1" id="xjK-E7-y8v"/>
                                 <constraint firstAttribute="trailing" secondItem="fcy-LH-vr3" secondAttribute="trailing" id="yAV-tL-0Sy"/>
                             </constraints>
                         </customView>
