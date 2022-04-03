@@ -79,4 +79,10 @@ public class ImageHotspot: NSObject {
         }
         return (self.kind == otherHotspot.kind) && (self.points == otherHotspot.points) && (self.link == otherHotspot.link)
     }
+
+    func rotated(byRadians radians: CGFloat, around rotationPoint: CGPoint) -> ImageHotspot {
+        return ImageHotspot(kind: self.kind,
+                            points: self.points.map { $0.rotate(byRadians: radians, around: rotationPoint) },
+                            link: self.link)
+    }
 }

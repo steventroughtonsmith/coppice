@@ -72,6 +72,14 @@ extension CGPoint {
         newPoint.y = size.height - self.y
         return newPoint
     }
+
+    public func rotate(byRadians radians: CGFloat, around rotationOrigin: CGPoint) -> CGPoint {
+        let translate = CGAffineTransform(translationX: rotationOrigin.x, y: rotationOrigin.y)
+        let rotation = translate.rotated(by: radians)
+        let postTranslate = rotation.translatedBy(x: -rotationOrigin.y, y: -rotationOrigin.x)
+
+        return self.applying(postTranslate)
+    }
 }
 
 

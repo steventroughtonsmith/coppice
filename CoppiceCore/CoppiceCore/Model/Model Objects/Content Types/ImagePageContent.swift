@@ -30,8 +30,13 @@ public class ImagePageContent: NSObject, PageContent {
             switch operation {
             case .replace:
                 self.cropRect = CGRect(origin: .zero, size: image.size)
+                if image.size != oldValue?.size {
+                    self.hotspots = []
+                }
             case .rotate(let radians):
-                self.cropRect = self.cropRect.rotate(byRadians: radians, around: image.size.toRect().midPoint)
+                let rotationPoint = image.size.toRect().midPoint
+                self.cropRect = self.cropRect.rotate(byRadians: radians, around: rotationPoint)
+                self.hotspots = self.hotspots.map { $0.rotated(byRadians: radians, around: rotationPoint) }
             }
             self.page?.contentSizeDidChange(to: image.size, oldSize: oldValue?.size)
         }
