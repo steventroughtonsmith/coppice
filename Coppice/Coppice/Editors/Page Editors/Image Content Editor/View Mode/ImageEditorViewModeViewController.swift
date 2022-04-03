@@ -45,6 +45,11 @@ class ImageEditorViewModeViewController: NSViewController {
             self?.layoutEngine.imageSize = image?.size ?? .zero
         }
 
+        self.subscribers[.cropRect] = self.viewModel.publisher(for: \.cropRect).sink { [weak self] cropRect in
+            self?.layoutEngine.cropRect = cropRect
+            self?.hotspotView.cropRect = cropRect
+        }
+
         self.hotspotView.maintainsAspectRatio = (self.isInCanvas == false)
 
         if self.isInCanvas {
@@ -65,6 +70,8 @@ class ImageEditorViewModeViewController: NSViewController {
         super.viewDidDisappear()
 
         self.subscribers[.accessibilityDescription]?.cancel()
+        self.subscribers[.image]?.cancel()
+        self.subscribers[.cropRect]?.cancel()
     }
 
     //MARK: - Subscribers
@@ -72,6 +79,7 @@ class ImageEditorViewModeViewController: NSViewController {
         case accessibilityDescription
         case image
         case imageEditorHotspots
+        case cropRect
     }
 
     private var subscribers: [SubscriberKey: AnyCancellable] = [:]

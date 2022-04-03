@@ -24,6 +24,13 @@ class ImageEditorHotspotView: NSView {
         }
     }
 
+    var cropRect: CGRect = .zero {
+        didSet {
+            self.invalidateIntrinsicContentSize()
+            self.updateAspectRatioConstraint()
+        }
+    }
+
     var maintainsAspectRatio: Bool = true {
         didSet {
             self.updateAspectRatioConstraint()
@@ -44,18 +51,18 @@ class ImageEditorHotspotView: NSView {
     }
 
     private func updateAspectRatioConstraint() {
-        guard self.maintainsAspectRatio, self.imageSize.width > 0, self.imageSize.height > 0 else {
+        guard self.maintainsAspectRatio, self.cropRect.width > 0, self.cropRect.height > 0 else {
             self.aspectRatioConstraint = nil
             return
         }
-        self.aspectRatioConstraint = self.widthAnchor.constraint(equalTo: self.heightAnchor, multiplier: self.imageSize.width / self.imageSize.height)
+        self.aspectRatioConstraint = self.widthAnchor.constraint(equalTo: self.heightAnchor, multiplier: self.cropRect.width / self.cropRect.height)
     }
 
     override var intrinsicContentSize: NSSize {
-        guard self.imageSize.width > 0, self.imageSize.height > 0 else {
+        guard self.cropRect.width > 0, self.cropRect.height > 0 else {
             return NSSize(width: NSView.noIntrinsicMetric, height: NSView.noIntrinsicMetric)
         }
-        return self.imageSize
+        return self.cropRect.size
     }
 
 
@@ -65,13 +72,13 @@ class ImageEditorHotspotView: NSView {
             return
         }
 
-        let scale = self.frame.width / self.imageSize.width
+        let scale = self.frame.width / self.cropRect.width
 
         let hotspotFill = NSColor(white: 1, alpha: 0.2)
         let selectedHotspotFill = NSColor.controlAccentColor.withAlphaComponent(0.2)
         let hotspotStroke = NSColor(white: 0, alpha: 0.6)
 
-        for hotspot in layoutEngine.hotspots {
+        for hotspot in layoutEngine.visibleHotspots {
             (hotspot.isSelected ? selectedHotspotFill : hotspotFill).setFill()
             hotspotStroke.setStroke()
 
@@ -113,12 +120,12 @@ class ImageEditorHotspotView: NSView {
 
     //MARK: - Conversion
     private func convertRectFromImageSpace(_ rect: CGRect) -> CGRect {
-        let aspectRatio = self.frame.width / self.imageSize.width
+        let aspectRatio = self.frame.width / self.cropRect.width
         return CGRect(origin: rect.origin.multiplied(by: aspectRatio), size: rect.size.multiplied(by: aspectRatio))
     }
 
     func convertPointToImageSpace(_ point: CGPoint) -> CGPoint {
-        return point.multiplied(by: self.imageSize.width / self.frame.width)
+        return point.multiplied(by: self.cropRect.width / self.frame.width)
     }
 
 

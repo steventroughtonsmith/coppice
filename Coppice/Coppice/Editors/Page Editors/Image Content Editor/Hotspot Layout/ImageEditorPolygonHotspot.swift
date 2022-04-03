@@ -14,6 +14,7 @@ class ImageEditorPolygonHotspot: ImageEditorHotspot {
     var url: URL? = nil
     private(set) var mode: ImageEditorHotspotMode
     let imageSize: CGSize
+    var originOffset: CGPoint = .zero
     init(points: [CGPoint], url: URL? = nil, mode: ImageEditorHotspotMode = .complete, imageSize: CGSize) {
         self.points = points
         self.url = url
@@ -25,16 +26,20 @@ class ImageEditorPolygonHotspot: ImageEditorHotspot {
         return self.layoutEngine?.isEditable ?? false
     }
 
+    private var effectivePoints: [CGPoint] {
+        return self.points.map { $0.minus(self.originOffset) }
+    }
+
     //MARK: - Paths
     func hotspotPath(forScale scale: CGFloat = 1) -> NSBezierPath {
-        guard self.points.count > 1 else {
+        guard self.effectivePoints.count > 1 else {
             return NSBezierPath()
         }
         let path = NSBezierPath()
-        path.move(to: self.points[0].multiplied(by: scale))
+        path.move(to: self.effectivePoints[0].multiplied(by: scale))
 
-        (1..<self.points.count).forEach {
-            path.line(to: self.points[$0].multiplied(by: scale))
+        (1..<self.effectivePoints.count).forEach {
+            path.line(to: self.effectivePoints[$0].multiplied(by: scale))
         }
         if self.mode == .complete {
             path.close()
@@ -46,11 +51,11 @@ class ImageEditorPolygonHotspot: ImageEditorHotspot {
         guard self.isEditable else {
             return []
         }
-        
-        var paths: [(path: NSBezierPath, phase: CGFloat)] = (1..<self.points.count).map {
-            return (NSBezierPath(lineFrom: self.points[$0 - 1], to: self.points[$0]), 0)
+
+        var paths: [(path: NSBezierPath, phase: CGFloat)] = (1..<self.effectivePoints.count).map {
+            return (NSBezierPath(lineFrom: self.effectivePoints[$0 - 1], to: self.effectivePoints[$0]), 0)
         }
-        paths.append((NSBezierPath(lineFrom: self.points[self.points.count - 1], to: self.points[0]), 0))
+        paths.append((NSBezierPath(lineFrom: self.effectivePoints[self.effectivePoints.count - 1], to: self.effectivePoints[0]), 0))
         return paths
     }
 
@@ -60,7 +65,7 @@ class ImageEditorPolygonHotspot: ImageEditorHotspot {
             return []
         }
         var handleRects = [CGRect]()
-        for point in self.points {
+        for point in self.effectivePoints {
             let scaledPoint = point.multiplied(by: scale)
             let size = CGSize(width: self.resizeHandleSize, height: self.resizeHandleSize)
             let offsetPoint = scaledPoint.minus(x: self.resizeHandleSize / 2, y: self.resizeHandleSize / 2)

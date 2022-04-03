@@ -44,8 +44,11 @@ class ImageEditorHotspotModeViewController: NSViewController {
             self?.imageView.setAccessibilityValueDescription(description)
         }
         self.subscribers[.image] = self.viewModel.publisher(for: \.image).sink { [weak self] image in
-            self?.hotspotView.imageSize = image?.size ?? .zero
-            self?.layoutEngine.imageSize = image?.size ?? .zero
+            let imageSize = image?.size ?? .zero
+            self?.hotspotView.imageSize = imageSize
+            self?.layoutEngine.imageSize = imageSize
+            self?.hotspotView.cropRect = imageSize.toRect()
+            self?.layoutEngine.cropRect = imageSize.toRect()
         }
 
         self.hotspotView.maintainsAspectRatio = (self.isInCanvas == false)

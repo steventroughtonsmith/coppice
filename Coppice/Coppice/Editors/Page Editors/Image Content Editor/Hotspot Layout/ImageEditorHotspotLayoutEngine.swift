@@ -28,12 +28,26 @@ class ImageEditorHotspotLayoutEngine {
 
     var hotspots: [ImageEditorHotspot] = [] {  //Ordered last to first = front to back
         didSet {
-            self.hotspots.forEach { $0.layoutEngine = self }
+            self.hotspots.forEach {
+                $0.layoutEngine = self
+                $0.originOffset = self.cropRect.origin
+            }
             self.delegate?.layoutDidChange(in: self)
         }
     }
 
+    var visibleHotspots: [ImageEditorHotspot] {
+        //We want the cropped rect set to a zero origin, this is because the hotspot path will be adjusted
+        let visibleRect = self.cropRect.size.toRect()
+        return self.hotspots.filter { visibleRect.contains($0.hotspotPath(forScale: 1).bounds) }
+    }
+
     var imageSize: CGSize = .zero
+    var cropRect: CGRect = .zero {
+        didSet {
+            self.hotspots.forEach { $0.originOffset = self.cropRect.origin }
+        }
+    }
 
     var hotspotKindForCreation: ImageHotspot.Kind = .rectangle
 
@@ -172,6 +186,7 @@ protocol ImageEditorHotspot: AnyObject {
     var isHighlighted: Bool { get set }
     var isClicked: Bool { get }
     var mode: ImageEditorHotspotMode { get }
+    var originOffset: CGPoint { get set }
 
     //MARK: - Data
     var imageHotspot: ImageHotspot? { get }

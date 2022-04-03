@@ -20,6 +20,7 @@ class ImageEditorRectangleHotspot: ImageEditorHotspot {
     var url: URL? = nil
     private(set) var mode: ImageEditorHotspotMode
     let imageSize: CGSize
+    var originOffset: CGPoint = .zero
     init(shape: Shape, rect: CGRect, url: URL? = nil, mode: ImageEditorHotspotMode = .complete, imageSize: CGSize) {
         self.shape = shape
         self.rect = rect
@@ -28,12 +29,16 @@ class ImageEditorRectangleHotspot: ImageEditorHotspot {
         self.imageSize = imageSize
     }
 
+    private var effectiveRect: CGRect {
+        return self.rect.moved(byX: -self.originOffset.x, y: -self.originOffset.y)
+    }
+
     func hotspotPath(forScale scale: CGFloat = 1) -> NSBezierPath {
         switch self.shape {
         case .oval:
-            return NSBezierPath(ovalIn: self.rect.multiplied(by: scale))
+            return NSBezierPath(ovalIn: self.effectiveRect.multiplied(by: scale))
         case .rectangle:
-            return NSBezierPath(rect: self.rect.multiplied(by: scale))
+            return NSBezierPath(rect: self.effectiveRect.multiplied(by: scale))
         }
     }
 
@@ -56,7 +61,7 @@ class ImageEditorRectangleHotspot: ImageEditorHotspot {
 
         if self.currentDragState?.handle.isBottom == true {
             //We calculate the phase to stop the lines shifting as we move
-            let phase = 8 - self.rect.height.truncatingRemainder(dividingBy: 8)
+            let phase = 8 - self.effectiveRect.height.truncatingRemainder(dividingBy: 8)
             addPath(from: .resizeTopLeft, to: .resizeBottomLeft, phase: phase)
             addPath(from: .resizeTopRight, to: .resizeBottomRight, phase: phase)
         } else { //If top or move or not dragging then fall back to this
@@ -66,7 +71,7 @@ class ImageEditorRectangleHotspot: ImageEditorHotspot {
         }
 
         if self.currentDragState?.handle.isRight == true {
-            let phase = 8 - self.rect.width.truncatingRemainder(dividingBy: 8)
+            let phase = 8 - self.effectiveRect.width.truncatingRemainder(dividingBy: 8)
             addPath(from: .resizeTopLeft, to: .resizeTopRight, phase: phase)
             addPath(from: .resizeBottomLeft, to: .resizeBottomRight, phase: phase)
         } else { //If left or move or not dragging then fall back to this
@@ -92,7 +97,7 @@ class ImageEditorRectangleHotspot: ImageEditorHotspot {
 
     private func editingHandleRectsByDragKind(forScale scale: CGFloat) -> [(handle: DragHandle, frame: CGRect)] {
         let size = self.resizeHandleSize
-        let scaledRect = self.rect.multiplied(by: scale)
+        let scaledRect = self.effectiveRect.multiplied(by: scale)
         return [
             (.resizeBottomRight,  CGRect(x: scaledRect.maxX - (size / 2), y: scaledRect.maxY - (size / 2), width: size, height: size)),
             (.resizeTopRight, CGRect(x: scaledRect.maxX - (size / 2), y: scaledRect.minY - (size / 2), width: size, height: size)),
@@ -134,7 +139,7 @@ class ImageEditorRectangleHotspot: ImageEditorHotspot {
         guard self.isEditable else {
             return self.hotspotPath().contains(point)
         }
-        let editingBoundsPath = NSBezierPath(rect: self.rect)
+        let editingBoundsPath = NSBezierPath(rect: self.effectiveRect)
         self.editingHandleRects().forEach { editingBoundsPath.appendRect($0) }
         return editingBoundsPath.contains(point)
     }
