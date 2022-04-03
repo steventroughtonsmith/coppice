@@ -89,11 +89,14 @@ class ImageEditorPolygonHotspot: ImageEditorHotspot {
 
 	//MARK: - Hit Testing
     func hitTest(at point: CGPoint) -> Bool {
-        let hotspotPath = self.hotspotPath()
         if self.isEditable {
-            self.editingHandleRects().forEach { hotspotPath.appendRect($0) }
+            for handle in self.editingHandleRects() {
+                if handle.contains(point) {
+                    return true
+                }
+            }
         }
-        return hotspotPath.contains(point)
+        return self.hotspotPath().contains(point)
     }
 
 
@@ -113,6 +116,12 @@ class ImageEditorPolygonHotspot: ImageEditorHotspot {
             let dragHandle = self.dragHandle(at: point)
         else {
             return
+        }
+
+        switch dragHandle {
+        case .new: print("new")
+        case .move: print("move")
+        case .resizeHandle(let handle): print("resizeHandle(\(handle))")
         }
 
         let dragState = DragState(downPoint: point, initialPoints: self.points, dragHandle: dragHandle)
