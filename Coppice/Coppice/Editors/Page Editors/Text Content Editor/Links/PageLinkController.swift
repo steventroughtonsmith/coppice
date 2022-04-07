@@ -39,7 +39,13 @@ class PageLinkController {
             return manager
         }
 
-        let newManager = PageLinkManager(pageID: page.id, modelController: self.modelController)
+        let newManager: PageLinkManager
+        switch page.content.contentType {
+        case .text:
+            newManager = TextPageLinkManager(pageID: page.id, modelController: self.modelController)
+        case .image:
+            newManager = ImagePageLinkManager(pageID: page.id, modelController: self.modelController)
+        }
         newManager.isProEnabled = CoppiceSubscriptionManager.shared.activationResponse?.isActive ?? false
         self.pageLinkManagers[page.id] = newManager
         return newManager

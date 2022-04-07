@@ -326,18 +326,22 @@ class TextEditorViewController: NSViewController, NSMenuItemValidation, NSToolba
 
 
     //MARK: - Page Link Manager
-    private var pageLinkManager: PageLinkManager {
+    private var pageLinkManager: TextPageLinkManager? {
         return self.viewModel.pageLinkManager
     }
 
     private func updatePageLinkManager() {
-        guard self.editingText else {
-            self.pageLinkManager.currentTextStorage = nil
-            self.pageLinkManager.delegate = nil
+        guard let pageLinkManager = self.pageLinkManager else {
             return
         }
-        self.pageLinkManager.delegate = self
-        self.pageLinkManager.currentTextStorage = self.editingTextView.textStorage
+
+        guard self.editingText else {
+            pageLinkManager.currentTextStorage = nil
+            pageLinkManager.delegate = nil
+            return
+        }
+        pageLinkManager.delegate = self
+        pageLinkManager.currentTextStorage = self.editingTextView.textStorage
     }
 
 
@@ -441,12 +445,12 @@ extension TextEditorViewController: NSTextDelegate {
 }
 
 
-extension TextEditorViewController: PageLinkManagerDelegate {
-    func shouldChangeText(in ranges: [NSRange], manager: PageLinkManager) -> Bool {
+extension TextEditorViewController: TextPageLinkManagerDelegate {
+    func shouldChangeText(in ranges: [NSRange], manager: TextPageLinkManager) -> Bool {
         return true //Can't use the actual method because the swift compiler is being funny
     }
 
-    func textDidChange(in manager: PageLinkManager) {
+    func textDidChange(in manager: TextPageLinkManager) {
         self.editingTextView.didChangeText()
     }
 }
@@ -455,7 +459,7 @@ extension TextEditorViewController: PageLinkManagerDelegate {
 extension TextEditorViewController: NSTextStorageDelegate {
     func textStorage(_ textStorage: NSTextStorage, didProcessEditing editedMask: NSTextStorageEditActions, range editedRange: NSRange, changeInLength delta: Int) {
         //Both the page link manager and ourselves need this call but only one can be the delegate
-        self.pageLinkManager.textStorage(textStorage, didProcessEditing: editedMask, range: editedRange, changeInLength: delta)
+        self.pageLinkManager?.textStorage(textStorage, didProcessEditing: editedMask, range: editedRange, changeInLength: delta)
 
         if (editedMask.contains(.editedCharacters) && (abs(delta) == 1)) {
             self.textNeedsUpating(singleCharacterChange: true)

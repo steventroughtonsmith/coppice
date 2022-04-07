@@ -14,7 +14,7 @@ class PageLinkManagerTests: XCTestCase {
     var modelController: CoppiceModelController!
     var linkedPage: Page!
     var editingPage: Page!
-    var pageLinkManager: PageLinkManager!
+    var pageLinkManager: TextPageLinkManager!
     var previousDefaultsValue: Bool = false
 
     override func setUp() {
@@ -22,7 +22,7 @@ class PageLinkManagerTests: XCTestCase {
         self.modelController = CoppiceModelController(undoManager: UndoManager())
         self.linkedPage = self.modelController.collection(for: Page.self).newObject() { $0.title = "Hello World" }
         self.editingPage = self.modelController.collection(for: Page.self).newObject() { $0.title = "Editing Page" }
-        self.pageLinkManager = PageLinkManager(pageID: self.editingPage.id,
+        self.pageLinkManager = TextPageLinkManager(pageID: self.editingPage.id,
                                                modelController: self.modelController,
                                                parsingDelay: 0.1)
         self.pageLinkManager.isProEnabled = true
@@ -243,21 +243,21 @@ class PageLinkManagerTests: XCTestCase {
     }
 }
 
-private class MockDelegate: PageLinkManagerDelegate {
-    var shouldChangeText: ([NSRange], PageLinkManager)?
+private class MockDelegate: TextPageLinkManagerDelegate {
+    var shouldChangeText: ([NSRange], TextPageLinkManager)?
     var shouldChangeTextReturn: Bool = true
-    func shouldChangeText(in ranges: [NSRange], manager: PageLinkManager) -> Bool {
+    func shouldChangeText(in ranges: [NSRange], manager: TextPageLinkManager) -> Bool {
         self.shouldChangeText = (ranges, manager)
         return self.shouldChangeTextReturn
     }
 
     var textDidChange = false
-    func textDidChange(in manager: PageLinkManager) {
+    func textDidChange(in manager: TextPageLinkManager) {
         self.textDidChange = true
     }
 
     var expectation: XCTestExpectation?
-    func didFinishParsing(in manager: PageLinkManager) {
+    func didFinishParsing(in manager: TextPageLinkManager) {
         self.expectation?.fulfill()
     }
 }

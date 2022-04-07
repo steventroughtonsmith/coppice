@@ -139,7 +139,10 @@ extension ImageEditorViewController: PageContentEditor {
     }
 
     func contentEditorForFocusMode() -> (NSViewController & PageContentEditor)? {
-        let viewModel = ImageEditorViewModel(imageContent: self.viewModel.imageContent, viewMode: .focus, documentWindowViewModel: self.viewModel.documentWindowViewModel)
+        let viewModel = ImageEditorViewModel(imageContent: self.viewModel.imageContent,
+                                             viewMode: .focus,
+                                             documentWindowViewModel: self.viewModel.documentWindowViewModel,
+                                             pageLinkManager: self.viewModel.pageLinkManager)
         viewModel.updateMode(self.viewModel.mode)
         return ImageEditorViewController(viewModel: viewModel)
     }

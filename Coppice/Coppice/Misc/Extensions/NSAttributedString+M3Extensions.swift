@@ -8,6 +8,12 @@
 
 import Cocoa
 
+extension String {
+    var fullRange: Range<String.Index> {
+        return self.startIndex..<self.endIndex
+    }
+}
+
 extension NSAttributedString {
     var fullRange: NSRange {
         return NSRange(location: 0, length: self.length)

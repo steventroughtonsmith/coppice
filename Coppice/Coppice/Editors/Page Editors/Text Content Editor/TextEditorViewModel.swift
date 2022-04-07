@@ -20,8 +20,8 @@ class TextEditorViewModel: ViewModel {
 
     @objc dynamic let textContent: TextPageContent
     let viewMode: PageContentEditorViewMode
-    let pageLinkManager: PageLinkManager
-    init(textContent: TextPageContent, viewMode: PageContentEditorViewMode, documentWindowViewModel: DocumentWindowViewModel, pageLinkManager: PageLinkManager) {
+    let pageLinkManager: TextPageLinkManager?
+    init(textContent: TextPageContent, viewMode: PageContentEditorViewMode, documentWindowViewModel: DocumentWindowViewModel, pageLinkManager: TextPageLinkManager?) {
         self.textContent = textContent
         self.viewMode = viewMode
         self.pageLinkManager = pageLinkManager

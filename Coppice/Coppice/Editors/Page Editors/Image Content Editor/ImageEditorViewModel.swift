@@ -20,10 +20,12 @@ class ImageEditorViewModel: ViewModel {
 
     @objc dynamic let imageContent: ImagePageContent
     let viewMode: PageContentEditorViewMode
-    init(imageContent: ImagePageContent, viewMode: PageContentEditorViewMode, documentWindowViewModel: DocumentWindowViewModel) {
+    let pageLinkManager: ImagePageLinkManager?
+    init(imageContent: ImagePageContent, viewMode: PageContentEditorViewMode, documentWindowViewModel: DocumentWindowViewModel, pageLinkManager: ImagePageLinkManager?) {
         self.imageContent = imageContent
         self.viewMode = viewMode
         self.hotspotCollection = ImageHotspotCollection(imageContent: imageContent)
+        self.pageLinkManager = pageLinkManager
         super.init(documentWindowViewModel: documentWindowViewModel)
         self.regenerateCroppedImage()
 
@@ -33,6 +35,8 @@ class ImageEditorViewModel: ViewModel {
         self.subscribers[.cropRect] = imageContent.publisher(for: \.cropRect).receive(on: DispatchQueue.main).sink { [weak self] _ in
             self?.regenerateCroppedImage()
         }
+
+        self.pageLinkManager?.setNeedsRescan()
     }
 
     let hotspotCollection: ImageHotspotCollection

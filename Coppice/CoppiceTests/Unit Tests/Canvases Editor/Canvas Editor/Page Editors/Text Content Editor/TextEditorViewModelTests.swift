@@ -31,7 +31,7 @@ class TextEditorViewModelTests: XCTestCase {
         self.viewModel = TextEditorViewModel(textContent: self.textContent,
                                              viewMode: .full,
                                              documentWindowViewModel: self.documentWindowViewModel,
-                                             pageLinkManager: PageLinkManager(pageID: self.page.id, modelController: self.modelController))
+                                             pageLinkManager: TextPageLinkManager(pageID: self.page.id, modelController: self.modelController))
     }
 
     override func tearDown() {

@@ -9,6 +9,7 @@
 import AppKit
 import Combine
 import M3Data
+import Vision
 
 public class ImagePageContent: NSObject, PageContent {
     public let contentType = PageContentType.image
@@ -88,6 +89,15 @@ public class ImagePageContent: NSObject, PageContent {
                 return
             }
             self.didChange(\.hotspots, oldValue: oldValue)
+        }
+    }
+
+    @objc dynamic public var recognizedText: [VNRecognizedText] = [] {
+        didSet {
+            guard self.recognizedText != oldValue else {
+                return
+            }
+            self.didChange(\.recognizedText, oldValue: oldValue)
         }
     }
 
