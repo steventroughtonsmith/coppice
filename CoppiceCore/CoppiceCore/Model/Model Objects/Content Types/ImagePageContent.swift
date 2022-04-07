@@ -21,7 +21,21 @@ public class ImagePageContent: NSObject, PageContent {
 
     public enum ImageOperation {
         case replace
-        case rotate(CGFloat)
+        case rotate(RotationDirection)
+
+        public enum RotationDirection {
+            case left
+            case right
+
+            var radians: CGFloat {
+                switch self {
+                case .left:
+                    return -Double.pi / 2
+                case .right:
+                    return Double.pi / 2
+                }
+            }
+        }
     }
 
     public func setImage(_ newImage: NSImage?, operation: ImageOperation) {
@@ -34,16 +48,24 @@ public class ImagePageContent: NSObject, PageContent {
                 if image.size != oldValue?.size {
                     self.hotspots = []
                 }
-            case .rotate(let radians):
+            case .rotate(let direction):
                 let rotationPoint = image.size.toRect().midPoint
-                self.cropRect = self.cropRect.rotate(byRadians: radians, around: rotationPoint)
-                self.hotspots = self.hotspots.map { $0.rotated(byRadians: radians, around: rotationPoint) }
+                self.cropRect = self.cropRect.rotate(byRadians: direction.radians, around: rotationPoint)
+                self.hotspots = self.hotspots.map { $0.rotated(byRadians: direction.radians, around: rotationPoint) }
+                self.orientation = self.orientation.rotated(by: direction)
             }
             self.page?.contentSizeDidChange(to: image.size, oldSize: oldValue?.size)
         }
         self.image = newImage
         self.undoManager?.endUndoGrouping()
     }
+
+    ///Orientation of the image
+    ///
+    ///This is not pulled from image data as we never get that
+    ///It's also structured weirdly. Up is up and down is down, but left means rotated clockwise and right means rotated anti clockwise
+    ///This seems backwards but it's the only way to get Vision framework to work correctly
+    public var orientation: CGImagePropertyOrientation = .up
 
     public var initialContentSize: CGSize? {
         guard self.image != nil else {
@@ -108,6 +130,7 @@ public class ImagePageContent: NSObject, PageContent {
         case description
         case cropRect
         case hotspots
+        case orientation
     }
 
     public init(data: Data? = nil) {
@@ -140,6 +163,14 @@ public class ImagePageContent: NSObject, PageContent {
                 self.hotspots = []
             }
 
+            if let rawOrientation = metadata[MetadataKeys.orientation.rawValue] as? UInt32,
+                let orientation = CGImagePropertyOrientation(rawValue: rawOrientation)
+            {
+                self.orientation = orientation
+            } else {
+                self.orientation = .up
+            }
+
             let otherKeys = MetadataKeys.allCases.map(\.rawValue)
             self.otherMetadata = metadata.filter { (key, _) in
                 return !otherKeys.contains(key)
@@ -163,6 +194,7 @@ public class ImagePageContent: NSObject, PageContent {
         }
         metadata[MetadataKeys.cropRect.rawValue] = NSStringFromRect(self.cropRect)
         metadata[MetadataKeys.hotspots.rawValue] = self.hotspots.map(\.dictionaryRepresentation)
+        metadata[MetadataKeys.orientation.rawValue] = self.orientation.rawValue
 
         return ModelFile(type: self.contentType.rawValue, filename: filename, data: imageData, metadata: metadata)
     }
@@ -180,5 +212,32 @@ public class ImagePageContent: NSObject, PageContent {
             return currentSize
         }
         return self.cropRect.size
+    }
+}
+
+
+extension CGImagePropertyOrientation {
+    func rotated(by direction: ImagePageContent.ImageOperation.RotationDirection) -> CGImagePropertyOrientation {
+        //Yes right and left are mixed up but apparently that's how directions work in the Vision framework
+        switch direction {
+        case .left:
+            switch self {
+            case .up:       return .right
+            case .down:     return .left
+            case .left:     return .up
+            case .right:    return .down
+            default:
+                return .up
+            }
+        case .right:
+            switch self {
+            case .up:       return .left
+            case .down:     return .right
+            case .left:     return .down
+            case .right:    return .up
+            default:
+                return .up
+            }
+        }
     }
 }

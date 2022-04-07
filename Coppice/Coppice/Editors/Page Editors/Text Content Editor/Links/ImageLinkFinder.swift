@@ -11,14 +11,14 @@ import CoppiceCore
 import Vision
 
 class ImageLinkFinder: LinkFinder {
-    static func updateHotspots(_ hotspots: [ImageHotspot], for recognisedTexts: [VNRecognizedText], using pages: [Page], ignoring ignoredPages: [Page], imageSize: CGSize) -> [ImageHotspot] {
+    static func updateHotspots(_ hotspots: [ImageHotspot], for recognisedTexts: [VNRecognizedText], using pages: [Page], ignoring ignoredPages: [Page], imageSize: CGSize, orientation: CGImagePropertyOrientation) -> [ImageHotspot] {
         let manualHotspots = hotspots.filter { $0.isAutoHotspot == false }
         var autoHotspots = [ImageHotspot]()
 
         let autoLinkPages = self.autoLinkCandidates(from: pages, ignoring: ignoredPages)
         let manualHotspotRects = manualHotspots.compactMap { CGRect(points: $0.points) }
         for recognisedText in recognisedTexts {
-            let hotspots = self.candidateHotspotsForPages(autoLinkPages, in: recognisedText, imageSize: imageSize).filter { hotspot in
+            let hotspots = self.candidateHotspotsForPages(autoLinkPages, in: recognisedText, imageSize: imageSize, orientation: orientation).filter { hotspot in
                 if let autoRect = CGRect(points: hotspot.points) {
                     for manualRect in manualHotspotRects {
                         if manualRect.intersects(autoRect) {
@@ -38,7 +38,7 @@ class ImageLinkFinder: LinkFinder {
 
 
 
-    static func candidateHotspotsForPages(_ autoLinkPages: [Page], in recognisedText: VNRecognizedText, imageSize: CGSize) -> [ImageHotspot] {
+    static func candidateHotspotsForPages(_ autoLinkPages: [Page], in recognisedText: VNRecognizedText, imageSize: CGSize, orientation: CGImagePropertyOrientation) -> [ImageHotspot] {
         var autoLinks = [LinkInfo]()
         for page in autoLinkPages {
             autoLinks.append(contentsOf: self.autoLinks(for: page, in: recognisedText.string))
@@ -55,7 +55,7 @@ class ImageLinkFinder: LinkFinder {
                 guard
                     linkInfo.state == .accepted,
                     let range = Range(linkInfo.range, in: recognisedText.string),
-                    let boundingBox = recognisedText.normalisedBoundingBox(for: range, imageSize: imageSize)?.flipped(in: imageSize.toRect())
+                    let boundingBox = recognisedText.normalisedBoundingBox(for: range, imageSize: imageSize, orientation: orientation)?.flipped(in: imageSize.toRect())
                 else {
                     continue
                 }
@@ -82,13 +82,26 @@ extension ImageHotspot {
 }
 
 extension VNRecognizedText {
-    func normalisedBoundingBox(for range: Range<String.Index>, imageSize: CGSize) -> CGRect? {
-        let width = imageSize.width
-        let height = imageSize.height
+    func normalisedBoundingBox(for range: Range<String.Index>, imageSize: CGSize, orientation: CGImagePropertyOrientation) -> CGRect? {
+        var width = imageSize.width
+        var height = imageSize.height
 
-        guard let boundingBox = try? self.boundingBox(for: range)?.boundingBox else {
+        guard var boundingBox = try? self.boundingBox(for: range)?.boundingBox else {
             return nil
         }
+
+        //We can tell the Vision framework what orientation the image is in, but it's not nice enough to actually rotate the results for us
+        switch orientation {
+        case .down:
+            boundingBox = boundingBox.rotate(byRadians: Double.pi, around: CGPoint(x: 0.5, y: 0.5))
+        case .left:
+            boundingBox = boundingBox.rotate(byRadians: -Double.pi / 2, around: CGPoint(x: 0.5, y: 0.5))
+        case .right:
+            boundingBox = boundingBox.rotate(byRadians: Double.pi / 2, around: CGPoint(x: 0.5, y: 0.5))
+        default:
+            break
+        }
+
         return CGRect(x: boundingBox.minX * width, y: boundingBox.minY * height, width: boundingBox.width * width, height: boundingBox.height * height)
     }
 }

@@ -115,13 +115,13 @@ class ImageEditorViewModel: ViewModel {
 	//MARK: - Rotation
 	func rotateLeft() {
 		if let rotatedImage = self.image?.rotate90Degrees(.left) {
-            self.imageContent.setImage(rotatedImage, operation: .rotate(-Double.pi / 2))
+            self.imageContent.setImage(rotatedImage, operation: .rotate(.left))
 		}
 	}
 
 	func rotateRight() {
 		if let rotatedImage = self.image?.rotate90Degrees(.right) {
-            self.imageContent.setImage(rotatedImage, operation: .rotate(Double.pi / 2))
+            self.imageContent.setImage(rotatedImage, operation: .rotate(.right))
 		}
 	}
 

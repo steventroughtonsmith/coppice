@@ -54,7 +54,8 @@ class ImagePageLinkManager: PageLinkManager {
             return
         }
 
-        let imageRequestHandle = VNImageRequestHandler(cgImage: cgImage, orientation: .up)
+        //Orientation is weird, look at ImagePageContent.orientation for more
+        let imageRequestHandle = VNImageRequestHandler(cgImage: cgImage, orientation: imageContent.orientation)
         let detectionRequest = VNRecognizeTextRequest(completionHandler: { (request, error) in
             DispatchQueue.main.async {
                 self.processResults(from: request)
@@ -80,12 +81,6 @@ class ImagePageLinkManager: PageLinkManager {
                 print("Error performing image request: \(error)")
             }
         }
-
-
-        //Get string without punctunation and whitespace
-        //If confidence 1.0 allow 2+ characters
-        //If confidence is 0.5+ allow 4+ characters
-        //Otherwise ignore
     }
 
     private func processResults(from request: VNRequest) {
@@ -145,19 +140,8 @@ class ImagePageLinkManager: PageLinkManager {
                                                                for: imageContent.recognizedText,
                                                                using: pages,
                                                                ignoring: ignoredPage,
-                                                               imageSize: image.size)
-//
-//        imageContent.hotspots = imageContent.recognizedText.compactMap { recognisedText in
-//            guard let boundingBox = recognisedText.normalisedBoundingBox(for: recognisedText.string.fullRange, in: image)?.flipped(in: image.size.toRect()) else {
-//                return nil
-//            }
-//            return ImageHotspot(kind: .rectangle, points: [
-//                boundingBox.point(atX: .min, y: .min),
-//                boundingBox.point(atX: .max, y: .min),
-//                boundingBox.point(atX: .max, y: .max),
-//                boundingBox.point(atX: .min, y: .max),
-//            ])
-//        }
+                                                               imageSize: image.size,
+                                                               orientation: imageContent.orientation)
     }
 }
 
