@@ -14,6 +14,12 @@ extension String {
     }
 }
 
+extension NSString {
+    var fullRange: NSRange {
+        return NSRange(location: 0, length: self.length)
+    }
+}
+
 extension NSAttributedString {
     var fullRange: NSRange {
         return NSRange(location: 0, length: self.length)

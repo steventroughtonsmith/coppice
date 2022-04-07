@@ -6,7 +6,6 @@
 //  Copyright © 2022 M Cubed Software. All rights reserved.
 //
 
-import Foundation
 import AppKit
 
 class ImageEditorHotspotModeView: NSView {
@@ -25,11 +24,11 @@ class ImageEditorHotspotModeView: NSView {
     }
 
     override func mouseMoved(with event: NSEvent) {
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(switchToHiddenMode), object: nil)
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.switchToHiddenMode), object: nil)
 
         let point = self.convert(event.locationInWindow, from: nil)
-        if hotspotView.frame.contains(point), segmentedControl.frame.contains(point) {
-            self.perform(#selector(switchToHiddenMode), with: nil, afterDelay: 1)
+        if self.hotspotView.frame.contains(point), self.segmentedControl.frame.contains(point) {
+            self.perform(#selector(self.switchToHiddenMode), with: nil, afterDelay: 1)
         }
         self.mode = .normal
     }

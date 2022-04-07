@@ -23,8 +23,8 @@ class PageLinkManagerTests: XCTestCase {
         self.linkedPage = self.modelController.collection(for: Page.self).newObject() { $0.title = "Hello World" }
         self.editingPage = self.modelController.collection(for: Page.self).newObject() { $0.title = "Editing Page" }
         self.pageLinkManager = TextPageLinkManager(pageID: self.editingPage.id,
-                                               modelController: self.modelController,
-                                               parsingDelay: 0.1)
+                                                   modelController: self.modelController,
+                                                   parsingDelay: 0.1)
         self.pageLinkManager.isProEnabled = true
         self.previousDefaultsValue = UserDefaults.standard.bool(forKey: .autoLinkingTextPagesEnabled)
         UserDefaults.standard.set(true, forKey: .autoLinkingTextPagesEnabled)

@@ -137,28 +137,28 @@ class ImagePageLinkManager: PageLinkManager {
             return
         }
 
-        imageContent.hotspots = imageContent.recognizedText.compactMap { recognisedText in
-            guard let boundingBox = recognisedText.normalisedBoundingBox(for: recognisedText.string.fullRange, in: image)?.flipped(in: image.size.toRect()) else {
-                return nil
-            }
-            return ImageHotspot(kind: .rectangle, points: [
-                boundingBox.point(atX: .min, y: .min),
-                boundingBox.point(atX: .max, y: .min),
-                boundingBox.point(atX: .max, y: .max),
-                boundingBox.point(atX: .min, y: .max),
-            ])
-        }
+        let pages = Array(self.modelController.collection(for: Page.self).all)
+        var ignoredPage: [Page] = [page]
+        ignoredPage.append(contentsOf: pages.filter { $0.allowsAutoLinking == false })
+
+        imageContent.hotspots = ImageLinkFinder.updateHotspots(imageContent.hotspots,
+                                                               for: imageContent.recognizedText,
+                                                               using: pages,
+                                                               ignoring: ignoredPage,
+                                                               imageSize: image.size)
+//
+//        imageContent.hotspots = imageContent.recognizedText.compactMap { recognisedText in
+//            guard let boundingBox = recognisedText.normalisedBoundingBox(for: recognisedText.string.fullRange, in: image)?.flipped(in: image.size.toRect()) else {
+//                return nil
+//            }
+//            return ImageHotspot(kind: .rectangle, points: [
+//                boundingBox.point(atX: .min, y: .min),
+//                boundingBox.point(atX: .max, y: .min),
+//                boundingBox.point(atX: .max, y: .max),
+//                boundingBox.point(atX: .min, y: .max),
+//            ])
+//        }
     }
 }
 
-extension VNRecognizedText {
-    func normalisedBoundingBox(for range: Range<String.Index>, in image: NSImage) -> CGRect? {
-        let width = image.size.width
-        let height = image.size.height
 
-        guard let boundingBox = try? self.boundingBox(for: range)?.boundingBox else {
-            return nil
-        }
-        return CGRect(x: boundingBox.minX * width, y: boundingBox.minY * height, width: boundingBox.width * width, height: boundingBox.height * height)
-    }
-}

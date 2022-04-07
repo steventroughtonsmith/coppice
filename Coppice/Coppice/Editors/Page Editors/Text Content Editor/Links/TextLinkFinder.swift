@@ -9,13 +9,13 @@
 import Cocoa
 import CoppiceCore
 
-class TextLinkFinder: NSObject {
-    func findLinkChanges(in attributedString: NSAttributedString, using pages: [Page], ignoring ignoredPages: [Page] = []) -> LinkChanges {
+class TextLinkFinder: LinkFinder {
+    static func findLinkChanges(in attributedString: NSAttributedString, using pages: [Page], ignoring ignoredPages: [Page] = []) -> LinkChanges {
         let existingLinks = self.existingLinks(in: attributedString, pages: pages, ignoredPages: ignoredPages)
         let autoLinkPages = self.autoLinkCandidates(from: pages, ignoring: ignoredPages)
         var autoLinks = [LinkInfo]()
         for page in autoLinkPages {
-            autoLinks.append(contentsOf: self.autoLinks(for: page, in: attributedString))
+            autoLinks.append(contentsOf: self.autoLinks(for: page, in: attributedString.string))
         }
 
         let links = self.combineAndSort(existingLinks: existingLinks, autoLinks: autoLinks)
@@ -47,7 +47,7 @@ class TextLinkFinder: NSObject {
     }
 
     /// Find all existing links inside the string
-    private func existingLinks(in attributedString: NSAttributedString, pages: [Page], ignoredPages: [Page]) -> [LinkInfo] {
+    private static func existingLinks(in attributedString: NSAttributedString, pages: [Page], ignoredPages: [Page]) -> [LinkInfo] {
         let pagesByID = pages.indexed(by: \.id)
 
         var links = [LinkInfo]()
@@ -74,74 +74,13 @@ class TextLinkFinder: NSObject {
         return links
     }
 
-
-    /// Generate a list of all uniquely titled pages we can use for auto linking
-    private func autoLinkCandidates(from pages: [Page], ignoring ignoredPages: [Page]) -> [Page] {
-        var autoLinkCandidates = [Page]()
-        for page in pages {
-            guard
-                page.title != Page.localizedDefaultTitle, //Ignore default
-                ignoredPages.contains(page) == false //Ignore anything we want to ignore (usually the page itself)
-            else {
-                continue
-            }
-            if let index = autoLinkCandidates.firstIndex(where: { $0.title == page.title }) {
-                autoLinkCandidates.remove(at: index)
-                continue
-            }
-            autoLinkCandidates.append(page)
-        }
-        return autoLinkCandidates
-    }
-
-    /// Find all potential links for a page
-    private func autoLinks(for page: Page, in attributedString: NSAttributedString) -> [LinkInfo] {
-        let escapedTitle = NSRegularExpression.escapedPattern(for: self.normaliseQuotes(in: page.title))
-        guard let regex = try? NSRegularExpression(pattern: "((?<=\\W|_)|^)\(escapedTitle)((?=\\W|_)|$)", options: [.caseInsensitive]) else {
-            return []
-        }
-        let matches = regex.matches(in: self.normaliseQuotes(in: attributedString.string), options: [], range: attributedString.fullRange)
-        return matches.map { LinkInfo(range: $0.range, page: page, linkType: .auto, age: .new) }
-    }
-
-    private func normaliseQuotes(in string: String) -> String {
-        return string
-            .replacingOccurrences(of: "(‘|’)", with: "'", options: .regularExpression, range: nil)
-            .replacingOccurrences(of: "(“|”)", with: "\"", options: .regularExpression, range: nil)
-    }
-
-    private func combineAndSort(existingLinks: [LinkInfo], autoLinks: [LinkInfo]) -> [LinkInfo] {
+    private static func combineAndSort(existingLinks: [LinkInfo], autoLinks: [LinkInfo]) -> [LinkInfo] {
         let links = existingLinks + autoLinks
         return links.sorted { $0.range.location < $1.range.location }
     }
 
-    /// Create a scratch pad for testing overlapping links
-    private func createScratchPad(from links: [LinkInfo], currentIndex: inout Int) -> LinkScratchPad {
-        var scratchPadLinks = [LinkInfo]()
-        var currentRange: NSRange? = nil
-        while currentIndex < links.count {
-            let link = links[currentIndex]
-            guard let range = currentRange else {
-                currentRange = link.range
-                scratchPadLinks.append(link)
-                currentIndex += 1
-                continue
-            }
-
-            //If the next link range doesn't overlap with our existing range then break out, as we'll create a new scratch pad for the next links
-            guard link.range.intersection(range) != nil else {
-                break
-            }
-
-            currentIndex += 1
-            currentRange = range.union(link.range)
-            scratchPadLinks.append(link)
-        }
-        return LinkScratchPad(links: scratchPadLinks)
-    }
-
     //Rules
-    private func validateManualLinks(in scratchPad: LinkScratchPad) {
+    private static func validateManualLinks(in scratchPad: LinkScratchPad) {
         let manualLinks = scratchPad.links.filter { $0.linkType == .manual && $0.state != .rejected }
         let autoLinks = scratchPad.links.filter { $0.linkType == .auto }
 
@@ -155,7 +94,7 @@ class TextLinkFinder: NSObject {
         }
     }
 
-    private func validateExternalLinks(in scratchPad: LinkScratchPad) {
+    private static func validateExternalLinks(in scratchPad: LinkScratchPad) {
         let externalLinks = scratchPad.links.filter { $0.linkType == .external && $0.state != .rejected }
         let autoLinks = scratchPad.links.filter { $0.linkType == .auto }
 
@@ -169,44 +108,6 @@ class TextLinkFinder: NSObject {
         }
     }
 
-    private func validateAutoLinks(in scratchPad: LinkScratchPad) {
-        scratchPad.enumerateUnrejectedPoints { (links) in
-            if links.count == 1 {
-                if links[0].state == .unknown {
-                    links[0].state = (links[0].age == .new) ? .accepted : .rejected
-                }
-            } else if links.filter({ $0.state == .accepted }).count > 0 {
-                links.filter { $0.state != .accepted }.forEach { $0.state = .rejected }
-            }
-            //If we ever get to this part then we have multiple links, none of which have been accepted. This means they all start at the same location
-            else {
-                var currentLink: LinkInfo?
-                for link in links {
-                    guard let current = currentLink else {
-                        currentLink = link
-                        continue
-                    }
-
-                    if current.range.length > link.range.length {
-                        link.state = .rejected
-                    } else if current.range.length < link.range.length {
-                        current.state = .rejected
-                        currentLink = link
-                    } else if current.range.length == link.range.length {
-                        if link.age == .new {
-                            link.state = .rejected
-                        } else {
-                            current.state = .rejected
-                            currentLink = link
-                        }
-                    }
-                }
-                currentLink?.state = .accepted
-            }
-        }
-    }
-
-
     struct LinkChanges {
         let linksToRemove: [Link]
         let linksToAdd: [Link]
@@ -215,113 +116,5 @@ class TextLinkFinder: NSObject {
     struct Link: Equatable {
         let range: NSRange
         let url: URL?
-    }
-}
-
-
-private class LinkInfo: Equatable {
-    static func == (lhs: LinkInfo, rhs: LinkInfo) -> Bool {
-        return lhs.age == rhs.age &&
-            lhs.page == rhs.page &&
-            lhs.linkType == rhs.linkType &&
-            lhs.state == rhs.state &&
-            lhs.age == rhs.age
-    }
-
-    enum State: Equatable {
-        case unknown
-        case accepted
-        case rejected
-    }
-
-    enum Age: Equatable {
-        case new
-        case existing
-    }
-
-    enum LinkType: Equatable {
-        case manual
-        case auto
-        case external
-    }
-
-    let range: NSRange
-    let page: Page?
-    let linkType: LinkType
-    var state: State = .unknown
-    var age: Age
-
-    init(range: NSRange, page: Page?, linkType: LinkType, age: Age) {
-        self.range = range
-        self.page = page
-        self.linkType = linkType
-        self.age = age
-        if (linkType != .external) && (page == nil) {
-            self.state = .rejected
-        }
-    }
-
-    var description: String {
-        return "LinkInfo: { range: \(self.range), page: \(self.page?.title ?? "nil"), linkType: \(self.linkType), age: \(self.age), state: \(self.state)}"
-    }
-}
-
-
-private class LinkScratchPad {
-    let links: [LinkInfo]
-    private let unrejectedAutoLinksByPoint: [[LinkInfo]]
-    init(links: [LinkInfo]) {
-        self.links = links
-        self.unrejectedAutoLinksByPoint = LinkScratchPad.groupAutoLinksByPoint(links: links)
-    }
-
-    private static func groupAutoLinksByPoint(links: [LinkInfo]) -> [[LinkInfo]] {
-        guard links.count > 0 else {
-            return []
-        }
-        var fullRange: NSRange!
-        for link in links {
-            guard let range = fullRange else {
-                fullRange = link.range
-                continue
-            }
-            fullRange = range.union(link.range)
-        }
-
-        var groupedLinks = Array(repeating: [LinkInfo](), count: fullRange.length)
-        for link in links {
-            guard link.linkType == .auto else {
-                continue
-            }
-            let startIndex = link.range.location - fullRange.location
-            let endIndex = NSMaxRange(link.range) - fullRange.location
-            (startIndex..<endIndex).forEach { (index) in
-                var group = groupedLinks[index]
-                group.append(link)
-                groupedLinks[index] = group
-            }
-        }
-
-        var currentGroup: [LinkInfo]?
-        var condensedGroupLinks = [[LinkInfo]]()
-        for group in groupedLinks {
-            guard let current = currentGroup else {
-                condensedGroupLinks.append(group)
-                currentGroup = group
-                continue
-            }
-            guard group != current else {
-                continue
-            }
-            condensedGroupLinks.append(group)
-            currentGroup = group
-        }
-        return condensedGroupLinks
-    }
-
-    func enumerateUnrejectedPoints(_ block: ([LinkInfo]) -> Void) {
-        self.unrejectedAutoLinksByPoint.forEach { linkInfo in
-            block(linkInfo.filter { $0.state != .rejected })
-        }
     }
 }

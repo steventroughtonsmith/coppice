@@ -87,6 +87,8 @@
 		9930F4AA267631B000DE8975 /* LinkInspectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9930F4A7267631B000DE8975 /* LinkInspectorViewModel.swift */; };
 		9930F4AB267631B000DE8975 /* LinkInspectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9930F4A8267631B000DE8975 /* LinkInspectorViewController.swift */; };
 		9930F4AC267631B000DE8975 /* LinkInspectorContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9930F4A9267631B000DE8975 /* LinkInspectorContentView.xib */; };
+		9933119927FEF15900099444 /* ImageLinkFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9933119827FEF15900099444 /* ImageLinkFinder.swift */; };
+		9933119B27FEF7F800099444 /* LinkFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9933119A27FEF7F800099444 /* LinkFinder.swift */; };
 		993600E224AE2A81002C86E4 /* ModelObjects+AppKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993600E124AE2A81002C86E4 /* ModelObjects+AppKit.swift */; };
 		993600E924AE5F1F002C86E4 /* TestLayoutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993600E824AE5F1F002C86E4 /* TestLayoutDelegate.swift */; };
 		993C0EE924B3A5C5009993D4 /* SourceListTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993C0EE824B3A5C5009993D4 /* SourceListTableCellView.swift */; };
@@ -540,6 +542,8 @@
 		9930F4A7267631B000DE8975 /* LinkInspectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkInspectorViewModel.swift; sourceTree = "<group>"; };
 		9930F4A8267631B000DE8975 /* LinkInspectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkInspectorViewController.swift; sourceTree = "<group>"; };
 		9930F4A9267631B000DE8975 /* LinkInspectorContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LinkInspectorContentView.xib; sourceTree = "<group>"; };
+		9933119827FEF15900099444 /* ImageLinkFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLinkFinder.swift; sourceTree = "<group>"; };
+		9933119A27FEF7F800099444 /* LinkFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkFinder.swift; sourceTree = "<group>"; };
 		993600E124AE2A81002C86E4 /* ModelObjects+AppKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelObjects+AppKit.swift"; sourceTree = "<group>"; };
 		993600E824AE5F1F002C86E4 /* TestLayoutDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestLayoutDelegate.swift; sourceTree = "<group>"; };
 		993C0EE824B3A5C5009993D4 /* SourceListTableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceListTableCellView.swift; sourceTree = "<group>"; };
@@ -1350,7 +1354,9 @@
 				9960216427F9D84A00B35B1B /* PageLinkManager.swift */,
 				99868F4423995739009AC0F7 /* TextPageLinkManager.swift */,
 				9960216627F9DA1D00B35B1B /* ImagePageLinkManager.swift */,
+				9933119A27FEF7F800099444 /* LinkFinder.swift */,
 				9977118F239A95C300FCC8C7 /* TextLinkFinder.swift */,
+				9933119827FEF15900099444 /* ImageLinkFinder.swift */,
 			);
 			path = Links;
 			sourceTree = "<group>";
@@ -2482,6 +2488,7 @@
 				9918674F27A4465D00A1CC3E /* ImageEditorHotspotModeViewController.swift in Sources */,
 				99171EDC24AA48B200E96DE6 /* MainToolbarDelegate.swift in Sources */,
 				99FDF12C241FD53D00AF1E51 /* CanvasesViewController.swift in Sources */,
+				9933119B27FEF7F800099444 /* LinkFinder.swift in Sources */,
 				998336C3256BFDC900C25EB0 /* CoppiceApplication.swift in Sources */,
 				999007D824CF472100DB5C13 /* TourWelcomeViewController.swift in Sources */,
 				99D329D32522783900E15683 /* ActiveSidebarSize.swift in Sources */,
@@ -2611,6 +2618,7 @@
 				99C88EEA240C2F3F00339880 /* NSWindow+KeyLoopDebug.swift in Sources */,
 				99D03F1B267BA6F600B9CE1B /* LinkEditor.swift in Sources */,
 				99D8E381237EDB890098CF3B /* InspectorContainerViewModel.swift in Sources */,
+				9933119927FEF15900099444 /* ImageLinkFinder.swift in Sources */,
 				99C9AF1423631348009F909A /* CanvasTextView.swift in Sources */,
 				9973EC5527E6304400E388A0 /* ImageEditorLinkEditor.swift in Sources */,
 			);

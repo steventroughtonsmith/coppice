@@ -109,7 +109,7 @@ class TextPageLinkManager: PageLinkManager {
             ignoring.append(page)
         }
         ignoring.append(contentsOf: pages.filter { $0.allowsAutoLinking == false })
-        let links = TextLinkFinder().findLinkChanges(in: storage, using: pages, ignoring: ignoring)
+        let links = TextLinkFinder.findLinkChanges(in: storage, using: pages, ignoring: ignoring)
 
         guard (links.linksToAdd.count > 0) || (links.linksToRemove.count > 0) else {
             return
@@ -144,7 +144,7 @@ class TextPageLinkManager: PageLinkManager {
         let pages = Array(self.modelController.collection(for: Page.self).all)
         var ignoring: [Page] = [page]
         ignoring.append(contentsOf: pages.filter { $0.allowsAutoLinking == false })
-        let links = TextLinkFinder().findLinkChanges(in: textContent.text, using: pages, ignoring: ignoring)
+        let links = TextLinkFinder.findLinkChanges(in: textContent.text, using: pages, ignoring: ignoring)
 
         guard (links.linksToAdd.count > 0) || (links.linksToRemove.count > 0) else {
             return

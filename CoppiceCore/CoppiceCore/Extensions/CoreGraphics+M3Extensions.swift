@@ -216,6 +216,13 @@ extension CGRect {
         return self.point(atX: .mid, y: .mid)
     }
 
+    public var boundingPoints: [CGPoint] {
+        return [self.point(atX: .min, y: .min),
+                self.point(atX: .max, y: .min),
+                self.point(atX: .max, y: .max),
+                self.point(atX: .min, y: .max)]
+    }
+
     public func insetBy(_ edgeInsets: NSEdgeInsets, flipped: Bool = true) -> CGRect {
         var rect = self
         rect.origin.x += edgeInsets.left
