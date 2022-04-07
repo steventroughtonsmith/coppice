@@ -119,6 +119,12 @@ class ImagePageLinkManager: PageLinkManager {
 
     //MARK: - Hotspot Generation
     private func setNeedsHotspotGeneration() {
+        guard
+            UserDefaults.standard.bool(forKey: .autoLinkingTextPagesEnabled),
+            self.isProEnabled
+        else {
+            return
+        }
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.regenerateHotspots), object: nil)
         self.perform(#selector(self.regenerateHotspots), with: nil, afterDelay: 0)
     }
