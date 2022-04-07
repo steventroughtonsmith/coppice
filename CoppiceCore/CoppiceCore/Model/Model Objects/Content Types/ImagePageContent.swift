@@ -167,6 +167,14 @@ public class ImagePageContent: NSObject, PageContent {
         return ModelFile(type: self.contentType.rawValue, filename: filename, data: imageData, metadata: metadata)
     }
 
+    public func firstRangeOf(_ searchTerm: String) -> NSRange {
+        //TODO: COPPICE-344 Implement better solution
+        if self.recognizedText.contains(where: { ($0.string as NSString).range(of: searchTerm, options: [.caseInsensitive, .diacriticInsensitive]).location != NSNotFound }) {
+            return NSRange(location: 0, length: searchTerm.count)
+        }
+        return NSRange(location: NSNotFound, length: 0)
+    }
+
     public func sizeToFitContent(currentSize: CGSize) -> CGSize {
         guard self.image != nil else {
             return currentSize
