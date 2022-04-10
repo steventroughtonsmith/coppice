@@ -98,21 +98,22 @@ class PageSearchResult: SearchResult {
     }
 
     override var body: NSAttributedString? {
-        guard let textContent = self.match.page.content as? TextPageContent else {
-            return nil
-        }
-
-        var baseString = textContent.text.string
-        guard case .content(let contentRange) = self.match.matchType else {
+        guard case .content(let contentMatch) = self.match.matchType else {
+            guard let textContent = self.match.page.content as? TextPageContent else {
+                return nil
+            }
+            var baseString = textContent.text.string
             if let firstLinebreakIndex = baseString.firstIndex(of: "\n") {
                 baseString = String(baseString[baseString.startIndex..<firstLinebreakIndex])
             }
             return NSAttributedString(string: baseString, attributes: SearchResult.standardBodyAttributes)
         }
 
-        var matchRange = contentRange
-        if contentRange.upperBound >= 20 {
-            baseString = "… \((baseString as NSString).substring(from: contentRange.location))"
+        var baseString = contentMatch.string
+
+        var matchRange = contentMatch.range
+        if matchRange.upperBound >= 20 {
+            baseString = "… \((baseString as NSString).substring(from: matchRange.location))"
             matchRange.location = 2
         }
 

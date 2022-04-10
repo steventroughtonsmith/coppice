@@ -8,12 +8,13 @@
 
 import Foundation
 import M3Data
+import Vision
 
 extension Page {
     public struct Match: Comparable {
-        public enum MatchType: Equatable {
+        public enum MatchType {
             case title(NSRange)
-            case content(NSRange)
+            case content(PageContentMatch)
         }
 
         public static func < (lhs: Page.Match, rhs: Page.Match) -> Bool {
@@ -25,15 +26,31 @@ extension Page {
                 case .content:
                     return true
                 }
-            case .content(let lhsRange):
+            case .content(let lhsContent):
                 switch rhs.matchType {
                 case .title:
                     return false
-                case .content(let rhsRange):
-                    return lhsRange.location < rhsRange.location
+                case .content(let rhsContent):
+                    return lhsContent.range.location < rhsContent.range.location
                 }
             }
         }
+
+        public static func == (lhs: Page.Match, rhs: Page.Match) -> Bool {
+            guard lhs.page == rhs.page else {
+                return false
+            }
+
+            switch (lhs.matchType, rhs.matchType) {
+            case (.title(let range1), .title(let range2)):
+                return range1 == range2
+            case (.content(let content1), .content(let content2)):
+                return content1.range == content2.range
+            default:
+                return false
+            }
+        }
+
 
         public let page: Page
         public let matchType: MatchType
@@ -45,9 +62,8 @@ extension Page {
             return Match(page: self, matchType: .title(titleRange))
         }
 
-        let contentRange = self.content.firstRangeOf(searchString)
-        if contentRange.location != NSNotFound {
-            return Match(page: self, matchType: .content(contentRange))
+        if let contentMatch = self.content.firstMatch(forSearchString: searchString) {
+            return Match(page: self, matchType: .content(contentMatch))
         }
 
         return nil
@@ -113,3 +129,11 @@ extension ModelCollection where ModelType == Canvas {
         return self.all.compactMap { $0.match(forSearchString: searchString) }.sorted { $0 < $1 }
     }
 }
+
+
+public protocol PageContentMatch {
+    var range: NSRange { get }
+    var string: String { get }
+}
+
+

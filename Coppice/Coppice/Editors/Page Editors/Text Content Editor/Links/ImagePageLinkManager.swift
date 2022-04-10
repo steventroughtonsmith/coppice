@@ -92,7 +92,7 @@ class ImagePageLinkManager: PageLinkManager {
             return
         }
 
-        imageContent.recognizedText = results.compactMap { result in
+        imageContent.recognizedTexts = results.compactMap { result in
             guard let recognisedText = result.topCandidates(1).first else {
                 return nil
             }
@@ -143,7 +143,7 @@ class ImagePageLinkManager: PageLinkManager {
         ignoredPage.append(contentsOf: pages.filter { $0.allowsAutoLinking == false })
 
         imageContent.hotspots = ImageLinkFinder.updateHotspots(imageContent.hotspots,
-                                                               for: imageContent.recognizedText,
+                                                               for: imageContent.recognizedTexts,
                                                                using: pages,
                                                                ignoring: ignoredPage,
                                                                imageSize: image.size,

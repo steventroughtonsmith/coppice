@@ -95,7 +95,7 @@ public protocol PageContent: AnyObject {
     var maintainAspectRatio: Bool { get }
     var otherMetadata: [String: Any]? { get }
 
-    func firstRangeOf(_ searchString: String) -> NSRange
+    func firstMatch(forSearchString searchString: String) -> PageContentMatch?
 
     var initialContentSize: CGSize? { get }
     var minimumContentSize: CGSize { get }
@@ -122,7 +122,7 @@ extension PageContent {
         }
     }
 
-    public func firstRangeOf(_ searchString: String) -> NSRange {
+    public func firstMatch(forSearchString searchString: String) -> NSRange {
         return NSRange(location: NSNotFound, length: 0)
     }
 }

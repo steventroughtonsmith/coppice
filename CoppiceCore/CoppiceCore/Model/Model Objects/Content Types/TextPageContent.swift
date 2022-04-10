@@ -51,8 +51,12 @@ public class TextPageContent: NSObject, PageContent {
         return ModelFile(type: self.contentType.rawValue, filename: filename, data: textData, metadata: self.otherMetadata)
     }
 
-    public func firstRangeOf(_ searchString: String) -> NSRange {
-        return (self.text.string as NSString).range(of: searchString, options: [.caseInsensitive, .diacriticInsensitive])
+    public func firstMatch(forSearchString searchString: String) -> PageContentMatch? {
+        let range = (self.text.string as NSString).range(of: searchString, options: [.caseInsensitive, .diacriticInsensitive])
+        guard range.location != NSNotFound else {
+            return nil
+        }
+        return Match(range: range, textPageContent: self)
     }
 
 
@@ -81,5 +85,17 @@ public class TextPageContent: NSObject, PageContent {
         contentSize.width = max(adjustedContentSize.width + 10, minimumSize.width)
         contentSize.height = max(adjustedContentSize.height + 20, minimumSize.height)
         return contentSize
+    }
+}
+
+
+extension TextPageContent {
+    public struct Match: PageContentMatch {
+        public var range: NSRange
+        public var textPageContent: TextPageContent
+
+        public var string: String {
+            return self.textPageContent.text.string
+        }
     }
 }

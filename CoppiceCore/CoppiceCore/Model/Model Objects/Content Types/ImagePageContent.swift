@@ -114,12 +114,12 @@ public class ImagePageContent: NSObject, PageContent {
         }
     }
 
-    @objc dynamic public var recognizedText: [VNRecognizedText] = [] {
+    @objc dynamic public var recognizedTexts: [VNRecognizedText] = [] {
         didSet {
-            guard self.recognizedText != oldValue else {
+            guard self.recognizedTexts != oldValue else {
                 return
             }
-            self.didChange(\.recognizedText, oldValue: oldValue)
+            self.didChange(\.recognizedTexts, oldValue: oldValue)
         }
     }
 
@@ -199,12 +199,16 @@ public class ImagePageContent: NSObject, PageContent {
         return ModelFile(type: self.contentType.rawValue, filename: filename, data: imageData, metadata: metadata)
     }
 
-    public func firstRangeOf(_ searchString: String) -> NSRange {
-        //TODO: COPPICE-344 Implement better solution
-        if self.recognizedText.contains(where: { ($0.string as NSString).range(of: searchString, options: [.caseInsensitive, .diacriticInsensitive]).location != NSNotFound }) {
-            return NSRange(location: 0, length: searchString.count)
+    public func firstMatch(forSearchString searchString: String) -> PageContentMatch? {
+        for recognizedText in self.recognizedTexts {
+            let nsString = (recognizedText.string as NSString)
+            let foundRange = nsString.range(of: searchString, options: [.caseInsensitive, .diacriticInsensitive])
+            guard (foundRange.location != NSNotFound) else {
+                continue
+            }
+            return Match(range: foundRange, recognisedText: recognizedText)
         }
-        return NSRange(location: NSNotFound, length: 0)
+        return nil
     }
 
     public func sizeToFitContent(currentSize: CGSize) -> CGSize {
@@ -238,6 +242,18 @@ extension CGImagePropertyOrientation {
             default:
                 return .up
             }
+        }
+    }
+}
+
+
+extension ImagePageContent {
+    public struct Match: PageContentMatch {
+        public var range: NSRange
+        public var recognisedText: VNRecognizedText
+
+        public var string: String {
+            return recognisedText.string
         }
     }
 }
