@@ -101,13 +101,13 @@ class TextEditorViewModelTests: XCTestCase {
 
 
     //MARK: - .highligtedRange
-    func test_highlightedRange_returnsNilIfNoSearchTerm() {
+    func test_highlightedRange_returnsNilIfNoSearchString() {
         self.documentWindowViewModel.searchString = nil
 
         XCTAssertNil(self.viewModel.highlightedRange)
     }
 
-    func test_highlightedRange_returnsNilIfSearchTermNotFound() {
+    func test_highlightedRange_returnsNilIfSearchStringNotFound() {
         self.textContent.text = NSAttributedString(string: "Hello World!")
         self.documentWindowViewModel.searchString = "Foo"
 

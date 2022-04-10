@@ -51,8 +51,8 @@ public class TextPageContent: NSObject, PageContent {
         return ModelFile(type: self.contentType.rawValue, filename: filename, data: textData, metadata: self.otherMetadata)
     }
 
-    public func firstRangeOf(_ searchTerm: String) -> NSRange {
-        return (self.text.string as NSString).range(of: searchTerm, options: [.caseInsensitive, .diacriticInsensitive])
+    public func firstRangeOf(_ searchString: String) -> NSRange {
+        return (self.text.string as NSString).range(of: searchString, options: [.caseInsensitive, .diacriticInsensitive])
     }
 
 

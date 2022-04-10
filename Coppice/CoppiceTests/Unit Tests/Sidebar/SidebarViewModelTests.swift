@@ -53,8 +53,8 @@ class TestSidebarView: SidebarView {
     }
 
     var displaySearchResultsString: String? = nil
-    func displaySearchResults(forSearchTerm searchTerm: String) {
+    func displaySearchResults(forSearchString searchString: String) {
         self.expectation?.fulfill()
-        self.displaySearchResultsString = searchTerm
+        self.displaySearchResultsString = searchString
     }
 }

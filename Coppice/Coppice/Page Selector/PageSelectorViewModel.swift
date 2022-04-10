@@ -57,7 +57,7 @@ class PageSelectorViewModel: NSObject {
 
     //MARK: - Properties
 
-    @objc dynamic var searchTerm: String = "" {
+    @objc dynamic var searchString: String = "" {
         didSet {
             self.updatePages()
         }
@@ -98,8 +98,8 @@ class PageSelectorViewModel: NSObject {
             return $0.title < $1.title
         })
         var newRows: [PageSelectorRow]
-        if self.searchTerm.count > 1 {
-            let filteredPages = sortedPages.filter { $0.title.lowercased().contains(self.searchTerm.lowercased()) }
+        if self.searchString.count > 1 {
+            let filteredPages = sortedPages.filter { $0.title.lowercased().contains(self.searchString.lowercased()) }
             newRows = filteredPages.map { PageSelectorRow(page: $0) }
         } else {
             newRows = sortedPages.map { PageSelectorRow(page: $0) }
@@ -110,19 +110,19 @@ class PageSelectorViewModel: NSObject {
         }
 
         newRows.append(PageSelectorRow(title: NSLocalizedString("Create New…", comment: "Page selector - page creation header"), body: nil, image: nil, rowType: .header))
-        if self.showExternalLinkRow(forSearchTerm: self.searchTerm) {
+        if self.showExternalLinkRow(forSearchString: self.searchString) {
             newRows.append(PageSelectorRow.externalLink)
         }
         newRows.append(contentsOf: PageContentType.allCases.map { PageSelectorRow(contentType: $0) })
         self.rows = newRows
     }
 
-    private func showExternalLinkRow(forSearchTerm searchTerm: String) -> Bool {
+    private func showExternalLinkRow(forSearchString searchString: String) -> Bool {
         guard self.allowsExternalLinks else {
             return false
         }
 
-        return (self.standardisedURL(forSearchTerm: searchTerm) != nil)
+        return (self.standardisedURL(forSearchString: searchString) != nil)
     }
 
     func confirmSelection(of result: PageSelectorRow) {
@@ -131,12 +131,12 @@ class PageSelectorViewModel: NSObject {
             self.selectionBlock(.page(page))
         case .contentType(let contentType):
             let page = self.documentWindowViewModel.modelController.createPage(ofType: contentType, in: self.folderForPageCreation ?? self.documentWindowViewModel.folderForNewPages, below: nil) { page in
-                page.title = self.searchTerm
+                page.title = self.searchString
             }
 
             self.selectionBlock(.page(page))
         case .externalLink:
-            guard let url = self.standardisedURL(forSearchTerm: self.searchTerm) else {
+            guard let url = self.standardisedURL(forSearchString: self.searchString) else {
                 return
             }
             self.selectionBlock(.url(url))
@@ -145,17 +145,17 @@ class PageSelectorViewModel: NSObject {
         }
     }
 
-    private func standardisedURL(forSearchTerm searchTerm: String) -> URL? {
+    private func standardisedURL(forSearchString searchString: String) -> URL? {
         //We have a valid URL with a scheme
-        if let url = URL(string: searchTerm), url.scheme != nil {
+        if let url = URL(string: searchString), url.scheme != nil {
             return url
         }
         //Has a www prefix
-        if searchTerm.hasPrefix("www"), let url = URL(string: "https://\(searchTerm)") {
+        if searchString.hasPrefix("www"), let url = URL(string: "https://\(searchString)") {
             return url
         }
         //We have no page matches and something that might be a domain
-        if searchTerm.contains("."), let url = URL(string: "https://\(searchTerm)") {
+        if searchString.contains("."), let url = URL(string: "https://\(searchString)") {
             return url
         }
         return nil

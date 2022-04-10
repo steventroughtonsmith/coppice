@@ -37,10 +37,10 @@ class SearchResultsViewModelTests: XCTestCase {
     //MARK: - .selectedResults
     func test_selectedResults_updatesDocumentVMSelection() throws {
         let page = self.modelController.collection(for: Page.self).newObject()
-        let result1 = PageSearchResult(match: .init(page: page, matchType: .title(NSRange(location: 0, length: 0))), searchTerm: "")
+        let result1 = PageSearchResult(match: .init(page: page, matchType: .title(NSRange(location: 0, length: 0))), searchString: "")
 
         let canvas = self.modelController.collection(for: Canvas.self).newObject()
-        let result2 = CanvasSearchResult(match: .init(canvas: canvas, matchType: .title(NSRange(location: 0, length: 0))), searchTerm: "")
+        let result2 = CanvasSearchResult(match: .init(canvas: canvas, matchType: .title(NSRange(location: 0, length: 0))), searchString: "")
 
         self.viewModel.selectedResults = [result1, result2]
 
@@ -51,31 +51,31 @@ class SearchResultsViewModelTests: XCTestCase {
     //MARK: - .results
     func test_results_returnsEmptyArrayIfNoResults() throws {
         self.addTestData()
-        self.viewModel.searchTerm = "Possum"
+        self.viewModel.searchString = "Possum"
         XCTAssertEqual(self.viewModel.results, [])
     }
 
     func test_results_returnsCanvasesSearchGroupIfCanvasResults() throws {
         self.addTestData()
-        self.viewModel.searchTerm = "Hello World"
+        self.viewModel.searchString = "Hello World"
         XCTAssertEqual(self.viewModel.results[safe: 0]?.title, "Canvases")
     }
 
     func test_results_addsResultsForAllMatchingCanvasesToCanvasResultsGroup() throws {
         self.addTestData()
-        self.viewModel.searchTerm = "Hello"
+        self.viewModel.searchString = "Hello"
         XCTAssertEqual(self.viewModel.results[safe: 0]?.results.count, 2)
     }
 
     func test_results_returnsPageSearchGroupIfPageResults() throws {
         self.addTestData()
-        self.viewModel.searchTerm = "the"
+        self.viewModel.searchString = "the"
         XCTAssertEqual(self.viewModel.results[safe: 1]?.title, "Pages")
     }
 
     func test_results_addsResultsForAllMatchingPagesToPageResultsGroup() throws {
         self.addTestData()
-        self.viewModel.searchTerm = "hello"
+        self.viewModel.searchString = "hello"
         XCTAssertEqual(self.viewModel.results[safe: 0]?.results.count, 2)
         XCTAssertEqual(self.viewModel.results[safe: 1]?.results.count, 1)
     }

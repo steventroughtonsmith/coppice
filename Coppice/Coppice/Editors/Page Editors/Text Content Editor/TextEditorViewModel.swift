@@ -31,8 +31,8 @@ class TextEditorViewModel: ViewModel {
     var searchStringObserver: AnyCancellable?
     var textObserver: AnyCancellable?
     override func setup() {
-        self.searchStringObserver = self.documentWindowViewModel.publisher(for: \.searchString).sink { [weak self] searchTerm in
-            self?.updateHighlightedRange(with: searchTerm)
+        self.searchStringObserver = self.documentWindowViewModel.publisher(for: \.searchString).sink { [weak self] searchString in
+            self?.updateHighlightedRange(with: searchString)
         }
         self.textObserver = self.textContent.publisher(for: \.text).sink(receiveValue: { [weak self] (text) in
             self?.view?.updateTextView(with: text)
@@ -93,8 +93,8 @@ class TextEditorViewModel: ViewModel {
     //MARK: - Search
     @Published var highlightedRange: NSRange?
 
-    private func updateHighlightedRange(with searchTerm: String?) {
-        guard let term = searchTerm else {
+    private func updateHighlightedRange(with searchString: String?) {
+        guard let term = searchString else {
             self.highlightedRange = nil
             return
         }

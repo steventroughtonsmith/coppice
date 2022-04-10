@@ -86,8 +86,8 @@ extension SidebarViewController: SidebarView {
         self.currentSidebarViewController = self.sourceListViewController
     }
 
-    func displaySearchResults(forSearchTerm searchTerm: String) {
+    func displaySearchResults(forSearchString searchString: String) {
         self.currentSidebarViewController = self.searchResultsViewController
-        self.searchResultsViewController.viewModel.searchTerm = searchTerm
+        self.searchResultsViewController.viewModel.searchString = searchString
     }
 }

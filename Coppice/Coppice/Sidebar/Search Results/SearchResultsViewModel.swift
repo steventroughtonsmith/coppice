@@ -18,7 +18,7 @@ protocol SearchResultsView: AnyObject {
 class SearchResultsViewModel: ViewModel {
     weak var view: SearchResultsView?
 
-    @objc dynamic var searchTerm: String = "" {
+    @objc dynamic var searchString: String = "" {
         didSet {
             self.reload()
         }
@@ -26,7 +26,7 @@ class SearchResultsViewModel: ViewModel {
 
     @objc dynamic var headerText: NSAttributedString {
         let matchesForTemplate = NSLocalizedString("Matches for \"%@\"", comment: "Search Results header template")
-        let actualResults = String(format: matchesForTemplate, self.searchTerm)
+        let actualResults = String(format: matchesForTemplate, self.searchString)
 
         let attributes = NSMutableAttributedString(string: actualResults, attributes: [
             .foregroundColor: NSColor.secondaryLabelColor,
@@ -74,20 +74,20 @@ class SearchResultsViewModel: ViewModel {
     }
 
     private var matchingCanvases: [CanvasSearchResult] {
-        guard self.searchTerm.count > 0 else {
+        guard self.searchString.count > 0 else {
             return []
         }
-        let canvasMatches = self.modelController.canvasCollection.matches(forSearchTerm: self.searchTerm)
-        let sortedCanvases = canvasMatches.map { CanvasSearchResult(match: $0, searchTerm: self.searchTerm) }
+        let canvasMatches = self.modelController.canvasCollection.matches(forSearchString: self.searchString)
+        let sortedCanvases = canvasMatches.map { CanvasSearchResult(match: $0, searchString: self.searchString) }
         return sortedCanvases
     }
 
     private var matchingPages: [PageSearchResult] {
-        guard self.searchTerm.count > 0 else {
+        guard self.searchString.count > 0 else {
             return []
         }
-        let pageMatches = self.modelController.pageCollection.matches(forSearchTerm: self.searchTerm)
-        let sortedPages = pageMatches.map { PageSearchResult(match: $0, searchTerm: self.searchTerm) }
+        let pageMatches = self.modelController.pageCollection.matches(forSearchString: self.searchString)
+        let sortedPages = pageMatches.map { PageSearchResult(match: $0, searchString: self.searchString) }
         return sortedPages
     }
 
@@ -110,7 +110,7 @@ class SearchResultsViewModel: ViewModel {
     override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
         var keyPaths = super.keyPathsForValuesAffectingValue(forKey: key)
         if key == #keyPath(headerText) {
-            keyPaths.insert("searchTerm")
+            keyPaths.insert("searchString")
         }
         return keyPaths
     }

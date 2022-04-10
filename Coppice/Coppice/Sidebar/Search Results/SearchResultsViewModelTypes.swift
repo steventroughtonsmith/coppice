@@ -82,10 +82,10 @@ class SearchResult: NSObject {
 
 class PageSearchResult: SearchResult {
     let match: Page.Match
-    let searchTerm: String
-    init(match: Page.Match, searchTerm: String) {
+    let searchString: String
+    init(match: Page.Match, searchString: String) {
         self.match = match
-        self.searchTerm = searchTerm
+        self.searchString = searchString
         super.init(sidebarItem: .page(match.page.id))
     }
 
@@ -142,10 +142,10 @@ class PageSearchResult: SearchResult {
 
 class CanvasSearchResult: SearchResult {
     let match: Canvas.Match
-    let searchTerm: String
-    init(match: Canvas.Match, searchTerm: String) {
+    let searchString: String
+    init(match: Canvas.Match, searchString: String) {
         self.match = match
-        self.searchTerm = searchTerm
+        self.searchString = searchString
         super.init(sidebarItem: .canvas(match.canvas.id))
     }
 

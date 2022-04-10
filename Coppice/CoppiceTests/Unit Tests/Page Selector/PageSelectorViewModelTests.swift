@@ -55,10 +55,10 @@ class PageSelectorViewModelTests: XCTestCase {
         XCTAssertTrue(matchingPages.contains(.page(self.bananaPage)))
     }
 
-    func test_rows_returnsAllPagesIfSearchTermIsEmptyString() {
+    func test_rows_returnsAllPagesIfSearchStringIsEmptyString() {
         let viewModel = PageSelectorViewModel(title: "", documentWindowViewModel: self.documentWindowViewModel) { (_) in }
-        viewModel.searchTerm = "berry"
-        viewModel.searchTerm = ""
+        viewModel.searchString = "berry"
+        viewModel.searchString = ""
 
         let matchingPages = viewModel.rows.map { $0.rowType }
         XCTAssertTrue(matchingPages.contains(.page(self.applePage)))
@@ -67,10 +67,10 @@ class PageSelectorViewModelTests: XCTestCase {
         XCTAssertTrue(matchingPages.contains(.page(self.bananaPage)))
     }
 
-    func test_rows_returnsAllPagesIfSearchTermHasOneCharacter() {
+    func test_rows_returnsAllPagesIfSearchStringHasOneCharacter() {
         let viewModel = PageSelectorViewModel(title: "", documentWindowViewModel: self.documentWindowViewModel) { (_) in }
-        viewModel.searchTerm = "berry"
-        viewModel.searchTerm = "b"
+        viewModel.searchString = "berry"
+        viewModel.searchString = "b"
 
         let matchingPages = viewModel.rows.map { $0.rowType }
         XCTAssertTrue(matchingPages.contains(.page(self.applePage)))
@@ -93,9 +93,9 @@ class PageSelectorViewModelTests: XCTestCase {
         XCTAssertEqual(matchingPages, expectedPages)
     }
 
-    func test_rows_filtersPagesByTitleIfSearchTermHasMoreThanOneCharacter() {
+    func test_rows_filtersPagesByTitleIfSearchStringHasMoreThanOneCharacter() {
         let viewModel = PageSelectorViewModel(title: "", documentWindowViewModel: self.documentWindowViewModel) { (_) in }
-        viewModel.searchTerm = "be"
+        viewModel.searchString = "be"
 
         let matchingPages = viewModel.rows.map { $0.rowType }
 
@@ -104,36 +104,36 @@ class PageSelectorViewModelTests: XCTestCase {
         XCTAssertEqual(matchingPages.count, 2 + self.expectedAdditionalRows)
     }
 
-    func test_rows_searchTermIsCaseInsensitivelySearched() {
+    func test_rows_searchStringIsCaseInsensitivelySearched() {
         let viewModel = PageSelectorViewModel(title: "", documentWindowViewModel: self.documentWindowViewModel) { (_) in }
-        viewModel.searchTerm = "apple"
+        viewModel.searchString = "apple"
         XCTAssertEqual(viewModel.rows.count, 1 + self.expectedAdditionalRows)
         XCTAssertEqual(viewModel.rows.first?.rowType, .page(self.applePage))
 
-        viewModel.searchTerm = "" // Clear
+        viewModel.searchString = "" // Clear
 
-        viewModel.searchTerm = "Apple"
+        viewModel.searchString = "Apple"
         XCTAssertEqual(viewModel.rows.count, 1 + self.expectedAdditionalRows)
         XCTAssertEqual(viewModel.rows.first?.rowType, .page(self.applePage))
     }
 
     func test_rows_titleIsCaseInsensitivelySearched() {
         let viewModel = PageSelectorViewModel(title: "", documentWindowViewModel: self.documentWindowViewModel) { (_) in }
-        viewModel.searchTerm = "apple"
+        viewModel.searchString = "apple"
         XCTAssertEqual(viewModel.rows.count, 1 + self.expectedAdditionalRows)
         XCTAssertEqual(viewModel.rows.first?.rowType, .page(self.applePage))
 
-        viewModel.searchTerm = "" // Clear
+        viewModel.searchString = "" // Clear
 
         self.applePage.title = "apple"
-        viewModel.searchTerm = "Apple"
+        viewModel.searchString = "Apple"
         XCTAssertEqual(viewModel.rows.count, 1 + self.expectedAdditionalRows)
         XCTAssertEqual(viewModel.rows.first?.rowType, .page(self.applePage))
     }
 
     func test_rows_sortsFilteredPages() {
         let viewModel = PageSelectorViewModel(title: "", documentWindowViewModel: self.documentWindowViewModel) { (_) in }
-        viewModel.searchTerm = "be"
+        viewModel.searchString = "be"
 
         let matchingPages = viewModel.rows[0..<2].map { $0.rowType }
         let expectedPages: [PageSelectorRow.RowType] = [.page(self.raspberryPage), .page(self.strawberryPage)]
@@ -167,7 +167,7 @@ class PageSelectorViewModelTests: XCTestCase {
 
     func test_rows_includesAllContentTypesIfPagesAreFiltered() throws {
         let viewModel = PageSelectorViewModel(title: "", documentWindowViewModel: self.documentWindowViewModel) { (_) in }
-        viewModel.searchTerm = "be"
+        viewModel.searchString = "be"
 
         let contentTypeRows = viewModel.rows.filter { row in
             if case .contentType = row.rowType {
@@ -183,7 +183,7 @@ class PageSelectorViewModelTests: XCTestCase {
 
     func test_rows_includesAllContentTypesIfNoPagesAreVisible() throws {
         let viewModel = PageSelectorViewModel(title: "", documentWindowViewModel: self.documentWindowViewModel) { (_) in }
-        viewModel.searchTerm = "mcubedsw"
+        viewModel.searchString = "mcubedsw"
 
         let contentTypeRows = viewModel.rows.filter { row in
             if case .contentType = row.rowType {
@@ -242,7 +242,7 @@ class PageSelectorViewModelTests: XCTestCase {
                 expectation.fulfill()
             }
 
-            viewModel.searchTerm = "Berry"
+            viewModel.searchString = "Berry"
 
             let pageResult = PageSelectorRow(contentType: .image)
             viewModel.confirmSelection(of: pageResult)

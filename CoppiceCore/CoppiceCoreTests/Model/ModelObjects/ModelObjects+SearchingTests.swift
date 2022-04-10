@@ -50,61 +50,61 @@ class ModelObjects_SearchingTests: XCTestCase {
     }
 
 
-    //MARK: - Page.match(forSearchTerm:)
-    func test_page_matchForSearchTerm_returnsMatchInTitle() {
+    //MARK: - Page.match(forSearchString:)
+    func test_page_matchForSearchString_returnsMatchInTitle() {
         let page = Page()
         page.title = "Foo Bar Baz"
 
-        let match = page.match(forSearchTerm: "Bar")
+        let match = page.match(forSearchString: "Bar")
         XCTAssertEqual(match?.page, page)
         XCTAssertEqual(match?.matchType, .title(NSRange(location: 4, length: 3)))
     }
 
-    func test_page_matchForSearchTerm_ignoresCaseForTitleMatching() {
+    func test_page_matchForSearchString_ignoresCaseForTitleMatching() {
         let page = Page()
         page.title = "Foo Bar Baz"
 
-        let match = page.match(forSearchTerm: "BAR")
+        let match = page.match(forSearchString: "BAR")
         XCTAssertEqual(match?.page, page)
         XCTAssertEqual(match?.matchType, .title(NSRange(location: 4, length: 3)))
     }
 
-    func test_page_matchForSearchTerm_ignroesDiacriticsForTitleMatching() {
+    func test_page_matchForSearchString_ignroesDiacriticsForTitleMatching() {
         let page = Page()
         page.title = "Foo Bár Baz"
 
-        let match = page.match(forSearchTerm: "Bar")
+        let match = page.match(forSearchString: "Bar")
         XCTAssertEqual(match?.page, page)
         XCTAssertEqual(match?.matchType, .title(NSRange(location: 4, length: 3)))
     }
 
-    func test_page_matchForSearchTerm_returnsMatchInTitleEvenIfAlsoMatchInContent() {
+    func test_page_matchForSearchString_returnsMatchInTitleEvenIfAlsoMatchInContent() {
         let mockPageContent = MockPageContent()
         mockPageContent.searchRange = NSRange(location: 4, length: 10)
         let page = Page()
         page.title = "Hello World"
         page.content = mockPageContent
 
-        let match = page.match(forSearchTerm: "World")
+        let match = page.match(forSearchString: "World")
         XCTAssertEqual(match?.page, page)
         XCTAssertEqual(match?.matchType, .title(NSRange(location: 6, length: 5)))
     }
 
-    func test_page_matchForSearchTerm_returnsMatchInContentIfNoneInTitle() {
+    func test_page_matchForSearchString_returnsMatchInContentIfNoneInTitle() {
         let mockPageContent = MockPageContent()
         mockPageContent.searchRange = NSRange(location: 4, length: 10)
         let page = Page()
         page.title = "Hello World"
         page.content = mockPageContent
 
-        let match = page.match(forSearchTerm: "Bar")
+        let match = page.match(forSearchString: "Bar")
         XCTAssertEqual(match?.page, page)
         XCTAssertEqual(match?.matchType, .content(NSRange(location: 4, length: 10)))
     }
 
 
-    //MARK: - ModelCollection<Page>.matches(forSearchTerm)
-    func test_modelCollectionPage_matchesForSearchTerm_returnsPagesThatMatchInOrderOfBestMatch() {
+    //MARK: - ModelCollection<Page>.matches(forSearchString)
+    func test_modelCollectionPage_matchesForSearchString_returnsPagesThatMatchInOrderOfBestMatch() {
         let modelController = CoppiceModelController(undoManager: UndoManager())
         let page1 = Page.create(in: modelController) {
             $0.title = "Foo Bar Baz"
@@ -136,7 +136,7 @@ class ModelObjects_SearchingTests: XCTestCase {
         }
 
 
-        let matches = modelController.collection(for: Page.self).matches(forSearchTerm: "Bar")
+        let matches = modelController.collection(for: Page.self).matches(forSearchString: "Bar")
         let pages = matches.map(\.page)
         XCTAssertEqual(pages, [page4, page1, page5, page3])
     }
@@ -183,35 +183,35 @@ class ModelObjects_SearchingTests: XCTestCase {
     }
 
 
-    //MARK: - Canvas.match(forSearchTerm:)
-    func test_canvas_matchForSearchTerm_returnsMatchInTitle() {
+    //MARK: - Canvas.match(forSearchString:)
+    func test_canvas_matchForSearchString_returnsMatchInTitle() {
         let canvas = Canvas()
         canvas.title = "OMG Possum!"
 
-        let match = canvas.match(forSearchTerm: "Possum")
+        let match = canvas.match(forSearchString: "Possum")
         XCTAssertEqual(match?.canvas, canvas)
         XCTAssertEqual(match?.matchType, .title(NSRange(location: 4, length: 6)))
     }
 
-    func test_canvas_matchForSearchTerm_ignoresCaseForTitleMatching() {
+    func test_canvas_matchForSearchString_ignoresCaseForTitleMatching() {
         let canvas = Canvas()
         canvas.title = "OMG Possum!"
 
-        let match = canvas.match(forSearchTerm: "POSSUM")
+        let match = canvas.match(forSearchString: "POSSUM")
         XCTAssertEqual(match?.canvas, canvas)
         XCTAssertEqual(match?.matchType, .title(NSRange(location: 4, length: 6)))
     }
 
-    func test_canvas_matchForSearchTerm_ignoresDiacriticsForTitleMatching() {
+    func test_canvas_matchForSearchString_ignoresDiacriticsForTitleMatching() {
         let canvas = Canvas()
         canvas.title = "OMG Pössüm!"
 
-        let match = canvas.match(forSearchTerm: "Possum")
+        let match = canvas.match(forSearchString: "Possum")
         XCTAssertEqual(match?.canvas, canvas)
         XCTAssertEqual(match?.matchType, .title(NSRange(location: 4, length: 6)))
     }
 
-    func test_canvas_matchForSearchTerm_returnsMatchInTitleEvenIfAlsoMatchesInPages() {
+    func test_canvas_matchForSearchString_returnsMatchInTitleEvenIfAlsoMatchesInPages() {
         let modelController = CoppiceModelController(undoManager: UndoManager())
         let page = Page.create(in: modelController) { $0.title = "possums" }
         let canvas = Canvas.create(in: modelController) { $0.title = "OMG Possums!" }
@@ -221,12 +221,12 @@ class ModelObjects_SearchingTests: XCTestCase {
         }
         canvas.title = "OMG Possum!"
 
-        let match = canvas.match(forSearchTerm: "Possum")
+        let match = canvas.match(forSearchString: "Possum")
         XCTAssertEqual(match?.canvas, canvas)
         XCTAssertEqual(match?.matchType, .title(NSRange(location: 4, length: 6)))
     }
 
-    func test_canvas_matchForSearchTerm_returnsMatchInPagesIfNoneInTitle() {
+    func test_canvas_matchForSearchString_returnsMatchInPagesIfNoneInTitle() {
         let modelController = CoppiceModelController(undoManager: UndoManager())
         let page = Page.create(in: modelController) { $0.title = "possums" }
         let canvas = Canvas.create(in: modelController) { $0.title = "OMG Possums!" }
@@ -236,13 +236,13 @@ class ModelObjects_SearchingTests: XCTestCase {
         }
         canvas.title = "No Match!"
 
-        let match = canvas.match(forSearchTerm: "Possum")
+        let match = canvas.match(forSearchString: "Possum")
         XCTAssertEqual(match?.canvas, canvas)
         XCTAssertEqual(match?.matchType, .pages(1))
     }
 
-    //MARK: - ModelCollection<Canvas>.matches(forSearchTerm:)
-    func test_modelCollectionCanvas_matchesForSearchTerm_returnsCanvasesThatMatchInOrderOfBestMatch() {
+    //MARK: - ModelCollection<Canvas>.matches(forSearchString:)
+    func test_modelCollectionCanvas_matchesForSearchString_returnsCanvasesThatMatchInOrderOfBestMatch() {
         let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas1 = Canvas.create(in: modelController) { $0.title = "Some Possum content" }
@@ -277,7 +277,7 @@ class ModelObjects_SearchingTests: XCTestCase {
         }
 
 
-        let matches = modelController.collection(for: Canvas.self).matches(forSearchTerm: "possum")
+        let matches = modelController.collection(for: Canvas.self).matches(forSearchString: "possum")
         let canvases = matches.map(\.canvas)
         XCTAssertEqual(canvases, [canvas5, canvas1, canvas4, canvas2])
     }

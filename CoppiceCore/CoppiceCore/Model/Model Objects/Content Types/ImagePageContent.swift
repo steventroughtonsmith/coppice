@@ -199,10 +199,10 @@ public class ImagePageContent: NSObject, PageContent {
         return ModelFile(type: self.contentType.rawValue, filename: filename, data: imageData, metadata: metadata)
     }
 
-    public func firstRangeOf(_ searchTerm: String) -> NSRange {
+    public func firstRangeOf(_ searchString: String) -> NSRange {
         //TODO: COPPICE-344 Implement better solution
-        if self.recognizedText.contains(where: { ($0.string as NSString).range(of: searchTerm, options: [.caseInsensitive, .diacriticInsensitive]).location != NSNotFound }) {
-            return NSRange(location: 0, length: searchTerm.count)
+        if self.recognizedText.contains(where: { ($0.string as NSString).range(of: searchString, options: [.caseInsensitive, .diacriticInsensitive]).location != NSNotFound }) {
+            return NSRange(location: 0, length: searchString.count)
         }
         return NSRange(location: NSNotFound, length: 0)
     }

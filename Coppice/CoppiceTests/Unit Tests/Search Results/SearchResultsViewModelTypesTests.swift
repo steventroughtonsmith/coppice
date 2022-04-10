@@ -15,7 +15,7 @@ class PageSearchResultTests: XCTestCase {
     func test_title_returnsPageTitle() throws {
         let modelController = CoppiceModelController(undoManager: UndoManager())
         let page = modelController.collection(for: Page.self).newObject() { $0.title = "Foo Bar Baz" }
-        let result = PageSearchResult(match: .init(page: page, matchType: .title(NSRange(location: 4, length: 3))), searchTerm: "Bar")
+        let result = PageSearchResult(match: .init(page: page, matchType: .title(NSRange(location: 4, length: 3))), searchString: "Bar")
 
         XCTAssertEqual(result.title?.string, page.title)
     }
@@ -28,7 +28,7 @@ class PageSearchResultTests: XCTestCase {
             $0.title = "Foo Bar Baz"
             $0.content = ImagePageContent()
         }
-        let result = PageSearchResult(match: .init(page: page, matchType: .title(NSRange(location: 4, length: 3))), searchTerm: "Bar")
+        let result = PageSearchResult(match: .init(page: page, matchType: .title(NSRange(location: 4, length: 3))), searchString: "Bar")
 
         XCTAssertNil(result.body)
     }
@@ -41,7 +41,7 @@ class PageSearchResultTests: XCTestCase {
             content.text = NSAttributedString(string: "The quick brown fox jumped over the lazy dog")
             $0.content = content
         }
-        let result = PageSearchResult(match: .init(page: page, matchType: .title(NSRange(location: 4, length: 3))), searchTerm: "Bar")
+        let result = PageSearchResult(match: .init(page: page, matchType: .title(NSRange(location: 4, length: 3))), searchString: "Bar")
 
         XCTAssertEqual(result.body?.string, "The quick brown fox jumped over the lazy dog")
     }
@@ -54,7 +54,7 @@ class PageSearchResultTests: XCTestCase {
             content.text = NSAttributedString(string: "The quick brown fox jumped over the lazy dog")
             $0.content = content
         }
-        let result = PageSearchResult(match: .init(page: page, matchType: .content(NSRange(location: 4, length: 5))), searchTerm: "quick")
+        let result = PageSearchResult(match: .init(page: page, matchType: .content(NSRange(location: 4, length: 5))), searchString: "quick")
 
         XCTAssertEqual(result.body?.string, "The quick brown fox jumped over the lazy dog")
     }
@@ -67,7 +67,7 @@ class PageSearchResultTests: XCTestCase {
             content.text = NSAttributedString(string: "The quick brown fox jumped over the lazy dog")
             $0.content = content
         }
-        let result = PageSearchResult(match: .init(page: page, matchType: .content(NSRange(location: 16, length: 5))), searchTerm: "fox j")
+        let result = PageSearchResult(match: .init(page: page, matchType: .content(NSRange(location: 16, length: 5))), searchString: "fox j")
 
         XCTAssertEqual(result.body?.string, "… fox jumped over the lazy dog")
     }
@@ -79,7 +79,7 @@ class CanvasSearchResultTests: XCTestCase {
     func test_title_returnsCanvasTitle() throws {
         let modelController = CoppiceModelController(undoManager: UndoManager())
         let canvas = modelController.collection(for: Canvas.self).newObject() { $0.title = "Foo Bar Baz" }
-        let result = CanvasSearchResult(match: .init(canvas: canvas, matchType: .title(NSRange(location: 4, length: 3))), searchTerm: "Bar")
+        let result = CanvasSearchResult(match: .init(canvas: canvas, matchType: .title(NSRange(location: 4, length: 3))), searchString: "Bar")
 
         XCTAssertEqual(result.title?.string, canvas.title)
     }
@@ -88,7 +88,7 @@ class CanvasSearchResultTests: XCTestCase {
     func test_body_returnsNilIfTitleMatch() throws {
         let modelController = CoppiceModelController(undoManager: UndoManager())
         let canvas = modelController.collection(for: Canvas.self).newObject() { $0.title = "Foo Bar Baz" }
-        let result = CanvasSearchResult(match: .init(canvas: canvas, matchType: .title(NSRange(location: 4, length: 3))), searchTerm: "Bar")
+        let result = CanvasSearchResult(match: .init(canvas: canvas, matchType: .title(NSRange(location: 4, length: 3))), searchString: "Bar")
 
         XCTAssertNil(result.body)
     }
@@ -96,7 +96,7 @@ class CanvasSearchResultTests: XCTestCase {
     func test_body_returnsNumberOfMatchingPagesIfPageMatch() throws {
         let modelController = CoppiceModelController(undoManager: UndoManager())
         let canvas = modelController.collection(for: Canvas.self).newObject() { $0.title = "Foo Bar Baz" }
-        let result = CanvasSearchResult(match: .init(canvas: canvas, matchType: .pages(4)), searchTerm: "Bar")
+        let result = CanvasSearchResult(match: .init(canvas: canvas, matchType: .pages(4)), searchString: "Bar")
 
         XCTAssertEqual(result.body?.string, "4 matching pages")
     }

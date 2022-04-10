@@ -39,13 +39,13 @@ extension Page {
         public let matchType: MatchType
     }
 
-    public func match(forSearchTerm searchTerm: String) -> Match? {
-        let titleRange = (self.title as NSString).range(of: searchTerm, options: [.caseInsensitive, .diacriticInsensitive])
+    public func match(forSearchString searchString: String) -> Match? {
+        let titleRange = (self.title as NSString).range(of: searchString, options: [.caseInsensitive, .diacriticInsensitive])
         if titleRange.location != NSNotFound {
             return Match(page: self, matchType: .title(titleRange))
         }
 
-        let contentRange = self.content.firstRangeOf(searchTerm)
+        let contentRange = self.content.firstRangeOf(searchString)
         if contentRange.location != NSNotFound {
             return Match(page: self, matchType: .content(contentRange))
         }
@@ -55,8 +55,8 @@ extension Page {
 }
 
 extension ModelCollection where ModelType == Page {
-    public func matches(forSearchTerm searchTerm: String) -> [Page.Match] {
-        return self.all.compactMap { $0.match(forSearchTerm: searchTerm) }.sorted { $0 < $1 }
+    public func matches(forSearchString searchString: String) -> [Page.Match] {
+        return self.all.compactMap { $0.match(forSearchString: searchString) }.sorted { $0 < $1 }
     }
 }
 
@@ -92,13 +92,13 @@ extension Canvas {
         }
     }
 
-    public func match(forSearchTerm searchTerm: String) -> Match? {
-        let titleRange = (self.title as NSString).range(of: searchTerm, options: [.caseInsensitive, .diacriticInsensitive])
+    public func match(forSearchString searchString: String) -> Match? {
+        let titleRange = (self.title as NSString).range(of: searchString, options: [.caseInsensitive, .diacriticInsensitive])
         if titleRange.location != NSNotFound {
             return Match(canvas: self, matchType: .title(titleRange))
         }
 
-        let canvasPages = self.pages.filter { $0.page?.match(forSearchTerm: searchTerm) != nil }
+        let canvasPages = self.pages.filter { $0.page?.match(forSearchString: searchString) != nil }
         if canvasPages.count > 0 {
             return Match(canvas: self, matchType: .pages(canvasPages.count))
         }
@@ -109,7 +109,7 @@ extension Canvas {
 
 
 extension ModelCollection where ModelType == Canvas {
-    public func matches(forSearchTerm searchTerm: String) -> [Canvas.Match] {
-        return self.all.compactMap { $0.match(forSearchTerm: searchTerm) }.sorted { $0 < $1 }
+    public func matches(forSearchString searchString: String) -> [Canvas.Match] {
+        return self.all.compactMap { $0.match(forSearchString: searchString) }.sorted { $0 < $1 }
     }
 }

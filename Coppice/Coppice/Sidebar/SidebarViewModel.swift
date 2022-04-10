@@ -11,21 +11,21 @@ import Combine
 
 protocol SidebarView: AnyObject {
     func displaySourceList()
-    func displaySearchResults(forSearchTerm searchTerm: String)
+    func displaySearchResults(forSearchString searchString: String)
 }
 
 class SidebarViewModel: ViewModel {
     weak var view: SidebarView?
 
-    private var searchTermObserver: AnyCancellable?
+    private var searchStringObserver: AnyCancellable?
     override func setup() {
-        self.searchTermObserver = self.documentWindowViewModel.publisher(for: \.searchString).sink { [weak self] _ in
+        self.searchStringObserver = self.documentWindowViewModel.publisher(for: \.searchString).sink { [weak self] _ in
             self?.updateSidebar()
         }
     }
 
     deinit {
-        self.searchTermObserver?.cancel()
+        self.searchStringObserver?.cancel()
     }
 
     func updateSidebar() {
@@ -33,6 +33,6 @@ class SidebarViewModel: ViewModel {
             self.view?.displaySourceList()
             return
         }
-        self.view?.displaySearchResults(forSearchTerm: searchString)
+        self.view?.displaySearchResults(forSearchString: searchString)
     }
 }

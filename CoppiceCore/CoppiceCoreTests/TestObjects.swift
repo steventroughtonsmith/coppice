@@ -65,7 +65,7 @@ final class TestCollectableModelObject: NSObject, CollectableModelObject {
     }
 
     var isMatch: Bool = false
-    func isMatchForSearch(_ searchTerm: String?) -> Bool {
+    func isMatchForSearch(_ searchString: String?) -> Bool {
         return self.isMatch
     }
 }
