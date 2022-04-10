@@ -191,4 +191,49 @@ class ImageEditorHotspotView: NSView {
     func layoutEngineDidChange() {
         self.setNeedsDisplay(self.bounds)
     }
+
+    //MARK: - Highlight
+    func highlight(_ rect: CGRect) {
+        guard self.highlightView == nil else {
+            return
+        }
+
+        let view = NSView(frame: rect.flipped(in: self.bounds).insetBy(dx: -2, dy: -2))
+        view.wantsLayer = true
+        view.layer?.borderColor = NSColor.findHighlightColor.cgColor
+        view.layer?.borderWidth = 2
+        view.layer?.cornerRadius = 5
+        view.layer?.backgroundColor = NSColor.findHighlightColor.withAlphaComponent(0.3).cgColor
+        self.highlightView = view
+
+        NSAnimationContext.runAnimationGroup { _ in
+            let animation = CAKeyframeAnimation(keyPath: #keyPath(CALayer.transform))
+            var transform = CATransform3DIdentity
+            transform = CATransform3DTranslate(transform, view.bounds.width / 2, view.bounds.height / 2, 0)
+            transform = CATransform3DScale(transform, 1.3, 1.3, 1)
+            transform = CATransform3DTranslate(transform, -view.bounds.width / 2, -view.bounds.height / 2, 0)
+
+            animation.values = [CATransform3DIdentity, transform, CATransform3DIdentity]
+            animation.keyTimes = [0, 0.3, 1]
+            animation.duration = 0.2
+            animation.timingFunctions = [CAMediaTimingFunction(name: .linear), CAMediaTimingFunction(name: .easeOut)]
+
+            view.layer?.add(animation, forKey: "flashAnimation")
+        } completionHandler: {
+            NSView.animate(withDuration: 0.5) {
+                view.alphaValue = 0
+            } completion: {
+                self.highlightView = nil
+            }
+        }
+    }
+
+    private var highlightView: NSView? {
+        didSet {
+            oldValue?.removeFromSuperview()
+            if let newView = highlightView {
+                self.addSubview(newView)
+            }
+        }
+    }
 }

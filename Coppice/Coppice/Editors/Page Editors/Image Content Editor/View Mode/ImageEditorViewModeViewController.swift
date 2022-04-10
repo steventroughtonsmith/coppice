@@ -64,6 +64,8 @@ class ImageEditorViewModeViewController: NSViewController {
         super.viewDidAppear()
         self.updatePlaceholderLabel()
         self.setupLayoutEngine()
+
+        self.highlightIfNecessary()
     }
 
     override func viewDidDisappear() {
@@ -109,6 +111,14 @@ class ImageEditorViewModeViewController: NSViewController {
         self.subscribers[.imageEditorHotspots] = self.viewModel.hotspotCollection.$imageEditorHotspots.sink { [weak self] hotspots in
             self?.layoutEngine.hotspots = hotspots
         }
+    }
+
+    //MARK: - Search
+    private func highlightIfNecessary() {
+        guard let highlightRect = self.viewModel.highlightRect else {
+            return
+        }
+        self.hotspotView.highlight(highlightRect)
     }
 }
 

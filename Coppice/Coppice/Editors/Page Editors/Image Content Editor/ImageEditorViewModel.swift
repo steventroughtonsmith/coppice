@@ -35,6 +35,9 @@ class ImageEditorViewModel: ViewModel {
         self.subscribers[.cropRect] = imageContent.publisher(for: \.cropRect).receive(on: DispatchQueue.main).sink { [weak self] _ in
             self?.regenerateCroppedImage()
         }
+        self.subscribers[.searchString] = documentWindowViewModel.publisher(for: \.searchString).sink { [weak self] searchString in
+            self?.updateHightlightedRect(withSearchString: searchString)
+        }
 
         self.pageLinkManager?.setNeedsRescan()
     }
@@ -45,6 +48,7 @@ class ImageEditorViewModel: ViewModel {
     private enum SubscriberKey {
         case image
         case cropRect
+        case searchString
     }
 
     private var subscribers: [SubscriberKey: AnyCancellable] = [:]
@@ -152,12 +156,21 @@ class ImageEditorViewModel: ViewModel {
         return linkEditor
     }()
 
+    //MARK: - Search
+    var highlightRect: CGRect?
 
-	//mode (.view, .crop, .hotspot)
+    private func updateHightlightedRect(withSearchString searchString: String?) {
+        guard
+            let searchString = searchString,
+            let match = self.imageContent.firstMatch(forSearchString: searchString) as? ImagePageContent.Match,
+            let range = Range(match.range, in: match.string)
+        else {
+            self.highlightRect = nil
+            return
+        }
 
-	//rotate left/right
-	//.cropInsets
-	//.hotspots
-
-	//LinkEditor
+        self.highlightRect = match.recognisedText.normalisedBoundingBox(for: range,
+                                                                        imageSize: self.image?.size ?? .zero,
+                                                                        orientation: self.imageContent.orientation)
+    }
 }
