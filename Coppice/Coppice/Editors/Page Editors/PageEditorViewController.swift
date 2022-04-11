@@ -34,6 +34,9 @@ class PageEditorViewController: NSViewController {
 
     var enabled: Bool = true {
         didSet {
+            guard self.enabled != oldValue else {
+                return
+            }
             self.currentContentEditor?.enabled = self.enabled
             self.inspectorsDidChange()
         }
