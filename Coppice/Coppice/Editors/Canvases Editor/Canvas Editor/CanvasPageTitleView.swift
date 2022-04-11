@@ -160,7 +160,7 @@ class CanvasPageTitleView: NSView {
 
     //MARK: - Title Editability
     override func mouseDown(with event: NSEvent) {
-        let localPoint = self.convert(event.locationInWindow, from: nil)
+        let localPoint = self.titleContainer.convert(event.locationInWindow, from: nil)
         guard self.titleLabel.frame.contains(localPoint) && (event.clickCount == 2) else {
             super.mouseDown(with: event)
             return
