@@ -54,7 +54,8 @@ class PageSearchResultTests: XCTestCase {
             content.text = NSAttributedString(string: "The quick brown fox jumped over the lazy dog")
             $0.content = content
         }
-        let result = PageSearchResult(match: .init(page: page, matchType: .content(NSRange(location: 4, length: 5))), searchString: "quick")
+        let result = PageSearchResult(match: .init(page: page, matchType: .content(MockPageContent.Match(range: NSRange(location: 4, length: 5), string: "The quick brown fox jumped over the lazy dog"))),
+                                      searchString: "quick")
 
         XCTAssertEqual(result.body?.string, "The quick brown fox jumped over the lazy dog")
     }
@@ -67,7 +68,8 @@ class PageSearchResultTests: XCTestCase {
             content.text = NSAttributedString(string: "The quick brown fox jumped over the lazy dog")
             $0.content = content
         }
-        let result = PageSearchResult(match: .init(page: page, matchType: .content(NSRange(location: 16, length: 5))), searchString: "fox j")
+        let result = PageSearchResult(match: .init(page: page, matchType: .content(MockPageContent.Match(range: NSRange(location: 16, length: 5), string: "The quick brown fox jumped over the lazy dog"))),
+                                      searchString: "fox j")
 
         XCTAssertEqual(result.body?.string, "… fox jumped over the lazy dog")
     }

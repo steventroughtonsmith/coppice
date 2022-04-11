@@ -9,6 +9,7 @@
 import AppKit
 @testable import Coppice
 @testable import CoppiceCore
+import M3Data
 
 class MockPageContent: NSObject, PageContent, NSFilePromiseProviderDelegate {
     var minimumContentSize: CGSize {
@@ -41,9 +42,9 @@ class MockPageContent: NSObject, PageContent, NSFilePromiseProviderDelegate {
     }
 
 
-    var searchRange = NSRange(location: NSNotFound, length: 0)
-    func firstMatch(forSearchString:  searchString: String) -> NSRange {
-        self.searchRange
+    var match: Match?
+    func firstMatch(forSearchString searchString: String) -> PageContentMatch? {
+        return self.match
     }
 
     func filePromiseProvider(_ filePromiseProvider: NSFilePromiseProvider, fileNameForType fileType: String) -> String {
@@ -54,3 +55,11 @@ class MockPageContent: NSObject, PageContent, NSFilePromiseProviderDelegate {
         completionHandler(nil)
     }
 }
+
+extension MockPageContent {
+    struct Match: PageContentMatch {
+        var range: NSRange
+        var string: String
+    }
+}
+

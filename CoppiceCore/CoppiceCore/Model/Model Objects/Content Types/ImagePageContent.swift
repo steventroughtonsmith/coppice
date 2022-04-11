@@ -164,7 +164,7 @@ public class ImagePageContent: NSObject, PageContent {
             }
 
             if let rawOrientation = metadata[MetadataKeys.orientation.rawValue] as? UInt32,
-                let orientation = CGImagePropertyOrientation(rawValue: rawOrientation)
+               let orientation = CGImagePropertyOrientation(rawValue: rawOrientation)
             {
                 self.orientation = orientation
             } else {
@@ -253,7 +253,7 @@ extension ImagePageContent {
         public var recognisedText: VNRecognizedText
 
         public var string: String {
-            return recognisedText.string
+            return self.recognisedText.string
         }
     }
 }

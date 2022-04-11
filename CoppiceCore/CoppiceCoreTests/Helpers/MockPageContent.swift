@@ -40,7 +40,6 @@ class MockPageContent: NSObject, PageContent, NSFilePromiseProviderDelegate {
     }
 
 
-    var searchRange = NSRange(location: NSNotFound, length: 0)
     var match: Match?
     func firstMatch(forSearchString searchString: String) -> PageContentMatch? {
         return self.match

@@ -83,8 +83,8 @@ extension ImageHotspot {
 
 extension VNRecognizedText {
     func normalisedBoundingBox(for range: Range<String.Index>, imageSize: CGSize, orientation: CGImagePropertyOrientation) -> CGRect? {
-        var width = imageSize.width
-        var height = imageSize.height
+        let width = imageSize.width
+        let height = imageSize.height
 
         guard var boundingBox = try? self.boundingBox(for: range)?.boundingBox else {
             return nil

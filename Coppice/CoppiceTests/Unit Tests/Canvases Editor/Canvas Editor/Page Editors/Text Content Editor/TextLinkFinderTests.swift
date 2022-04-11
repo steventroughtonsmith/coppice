@@ -15,13 +15,13 @@ class TextLinkFinderTests: XCTestCase {
     func test_emptyInputs_returnsNoChangesIfStringIsEmpty() {
         let page1 = Page()
         page1.title = "Hello"
-        let changes = TextLinkFinder().findLinkChanges(in: NSAttributedString(string: ""), using: [page1])
+        let changes = TextLinkFinder.findLinkChanges(in: NSAttributedString(string: ""), using: [page1])
         XCTAssertEqual(changes.linksToAdd, [])
         XCTAssertEqual(changes.linksToRemove, [])
     }
 
     func test_emptyInputs_returnsNoChangesIfStringHasNoLinksAndNoPagesArePassedIn() {
-        let changes = TextLinkFinder().findLinkChanges(in: NSAttributedString(string: "Hello"), using: [])
+        let changes = TextLinkFinder.findLinkChanges(in: NSAttributedString(string: "Hello"), using: [])
         XCTAssertEqual(changes.linksToAdd, [])
         XCTAssertEqual(changes.linksToRemove, [])
     }
@@ -31,28 +31,28 @@ class TextLinkFinderTests: XCTestCase {
     func test_addingLinks_findsLinkForPageWhenNotPreviouslyLinked() {
         let page1 = Page()
         page1.title = "Hello World"
-        let changes = TextLinkFinder().findLinkChanges(in: NSAttributedString(string: "This is a Hello World test"), using: [page1])
+        let changes = TextLinkFinder.findLinkChanges(in: NSAttributedString(string: "This is a Hello World test"), using: [page1])
         XCTAssertEqual(changes.linksToAdd, [self.linkFor(loc: 10, length: 11, page: page1, isAuto: true)])
     }
 
     func test_addingLinks_findsLinkForPageEvenIfCaseDoesntMatch() {
         let page1 = Page()
         page1.title = "Cool Page"
-        let changes = TextLinkFinder().findLinkChanges(in: NSAttributedString(string: "Wow, a coOl pAGe test"), using: [page1])
+        let changes = TextLinkFinder.findLinkChanges(in: NSAttributedString(string: "Wow, a coOl pAGe test"), using: [page1])
         XCTAssertEqual(changes.linksToAdd, [self.linkFor(loc: 7, length: 9, page: page1, isAuto: true)])
     }
 
     func test_addingLinks_doesntFindLinkIfCharacterBeforePageIsAlphanumeric() {
         let page1 = Page()
         page1.title = "alphanumeric"
-        let changes = TextLinkFinder().findLinkChanges(in: NSAttributedString(string: "here is analphanumeric test"), using: [page1])
+        let changes = TextLinkFinder.findLinkChanges(in: NSAttributedString(string: "here is analphanumeric test"), using: [page1])
         XCTAssertEqual(changes.linksToAdd, [])
     }
 
     func test_addingLinks_doesntFindLinkIfCharacterAfterPageIsAlphanumeric() {
         let page1 = Page()
         page1.title = "alphanumeric"
-        let changes = TextLinkFinder().findLinkChanges(in: NSAttributedString(string: "here is an alphanumerictest"), using: [page1])
+        let changes = TextLinkFinder.findLinkChanges(in: NSAttributedString(string: "here is an alphanumerictest"), using: [page1])
         XCTAssertEqual(changes.linksToAdd, [])
     }
 
@@ -61,7 +61,7 @@ class TextLinkFinderTests: XCTestCase {
         page1.title = "alphanumeric"
         let charactersToTest = ["$", "_", ".", "…", "(", ")", "-", "[", "]", "\"", "'", ";", " ", "\n", "\t"]
         for character in charactersToTest {
-            let changes = TextLinkFinder().findLinkChanges(in: NSAttributedString(string: "here is an\(character)alphanumeric test"), using: [page1])
+            let changes = TextLinkFinder.findLinkChanges(in: NSAttributedString(string: "here is an\(character)alphanumeric test"), using: [page1])
             XCTAssertEqual(changes.linksToAdd, [self.linkFor(loc: 11, length: 12, page: page1, isAuto: true)])
         }
     }
@@ -71,14 +71,14 @@ class TextLinkFinderTests: XCTestCase {
         page1.title = "alphanumeric"
         let charactersToTest = ["$", "_", ".", "…", "(", ")", "-", "[", "]", "\"", "'", ";", " ", "\n", "\t"]
         for character in charactersToTest {
-            let changes = TextLinkFinder().findLinkChanges(in: NSAttributedString(string: "here is an alphanumeric\(character)test"), using: [page1])
+            let changes = TextLinkFinder.findLinkChanges(in: NSAttributedString(string: "here is an alphanumeric\(character)test"), using: [page1])
             XCTAssertEqual(changes.linksToAdd, [self.linkFor(loc: 11, length: 12, page: page1, isAuto: true)])
         }
     }
 
     func test_addingLinks_doesntFindLinkIfPageHasDefaultTitle() {
         let page1 = Page()
-        let changes = TextLinkFinder().findLinkChanges(in: NSAttributedString(string: "The defualt title \(Page.localizedDefaultTitle) should not appear"), using: [page1])
+        let changes = TextLinkFinder.findLinkChanges(in: NSAttributedString(string: "The defualt title \(Page.localizedDefaultTitle) should not appear"), using: [page1])
         XCTAssertEqual(changes.linksToAdd, [])
     }
 
@@ -89,7 +89,7 @@ class TextLinkFinderTests: XCTestCase {
         let page2 = Page()
         page2.title = "Twins"
 
-        let changes = TextLinkFinder().findLinkChanges(in: NSAttributedString(string: "There are Twins here"), using: [page1, page2])
+        let changes = TextLinkFinder.findLinkChanges(in: NSAttributedString(string: "There are Twins here"), using: [page1, page2])
         XCTAssertEqual(changes.linksToAdd, [])
     }
 
@@ -97,7 +97,7 @@ class TextLinkFinderTests: XCTestCase {
         let page1 = Page()
         page1.title = "Double"
 
-        let changes = TextLinkFinder().findLinkChanges(in: NSAttributedString(string: "double trouble on the double!"), using: [page1])
+        let changes = TextLinkFinder.findLinkChanges(in: NSAttributedString(string: "double trouble on the double!"), using: [page1])
         XCTAssertEqual(changes.linksToAdd, [
             self.linkFor(loc: 0, length: 6, page: page1, isAuto: true),
             self.linkFor(loc: 22, length: 6, page: page1, isAuto: true),
@@ -109,7 +109,7 @@ class TextLinkFinderTests: XCTestCase {
         page1.title = "existing link"
         let string = NSMutableAttributedString(string: "This contains an existing link in it")
         string.addAttribute(.link, value: page1.linkToPage(autoGenerated: true).url, range: NSRange(location: 17, length: 13))
-        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1])
+        let changes = TextLinkFinder.findLinkChanges(in: string, using: [page1])
         XCTAssertEqual(changes.linksToAdd, [])
     }
 
@@ -118,7 +118,7 @@ class TextLinkFinderTests: XCTestCase {
         page1.title = "new link"
         let string = NSMutableAttributedString(string: "This isnt a new link. But this new link is")
         string.addAttribute(.link, value: page1.linkToPage(autoGenerated: true).url, range: NSRange(location: 12, length: 8))
-        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1])
+        let changes = TextLinkFinder.findLinkChanges(in: string, using: [page1])
         XCTAssertEqual(changes.linksToAdd, [self.linkFor(loc: 31, length: 8, page: page1, isAuto: true)])
     }
 
@@ -128,7 +128,7 @@ class TextLinkFinderTests: XCTestCase {
         let page2 = Page()
         page2.title = "lazy dog"
         let string = NSMutableAttributedString(string: "The quick brown fox ran over the lazy dog")
-        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1, page2])
+        let changes = TextLinkFinder.findLinkChanges(in: string, using: [page1, page2])
         XCTAssertEqual(changes.linksToAdd, [self.linkFor(loc: 10, length: 9, page: page1, isAuto: true),
                                             self.linkFor(loc: 33, length: 8, page: page2, isAuto: true)])
     }
@@ -139,7 +139,7 @@ class TextLinkFinderTests: XCTestCase {
         let page2 = Page()
         page2.title = "bar"
         let string = NSMutableAttributedString(string: "It's foo bar baz")
-        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1, page2])
+        let changes = TextLinkFinder.findLinkChanges(in: string, using: [page1, page2])
         XCTAssertEqual(changes.linksToAdd, [self.linkFor(loc: 5, length: 7, page: page1, isAuto: true)])
     }
 
@@ -149,7 +149,7 @@ class TextLinkFinderTests: XCTestCase {
         let page2 = Page()
         page2.title = "sun shine"
         let string = NSMutableAttributedString(string: "the sun shine is here")
-        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1, page2])
+        let changes = TextLinkFinder.findLinkChanges(in: string, using: [page1, page2])
         XCTAssertEqual(changes.linksToAdd, [self.linkFor(loc: 4, length: 9, page: page2, isAuto: true)])
     }
 
@@ -159,7 +159,7 @@ class TextLinkFinderTests: XCTestCase {
         let page2 = Page()
         page2.title = "red dog"
         let string = NSMutableAttributedString(string: "the red dog house is outside")
-        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1, page2])
+        let changes = TextLinkFinder.findLinkChanges(in: string, using: [page1, page2])
         XCTAssertEqual(changes.linksToAdd, [self.linkFor(loc: 4, length: 7, page: page2, isAuto: true)])
     }
 
@@ -170,7 +170,7 @@ class TextLinkFinderTests: XCTestCase {
         page2.title = "foobar"
         let string = NSMutableAttributedString(string: "This isnt a manual link auto test")
         string.addAttribute(.link, value: page2.linkToPage(autoGenerated: false).url, range: NSRange(location: 12, length: 11))
-        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1, page2])
+        let changes = TextLinkFinder.findLinkChanges(in: string, using: [page1, page2])
         XCTAssertEqual(changes.linksToAdd, [])
     }
 
@@ -181,7 +181,7 @@ class TextLinkFinderTests: XCTestCase {
         page2.title = "foobar"
         let string = NSMutableAttributedString(string: "This isnt a manual link auto test")
         string.addAttribute(.link, value: page2.linkToPage(autoGenerated: false).url, range: NSRange(location: 12, length: 11))
-        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1, page2])
+        let changes = TextLinkFinder.findLinkChanges(in: string, using: [page1, page2])
         XCTAssertEqual(changes.linksToAdd, [])
     }
 
@@ -192,7 +192,7 @@ class TextLinkFinderTests: XCTestCase {
         page2.title = "foobar"
         let string = NSMutableAttributedString(string: "This isnt a manual link auto test")
         string.addAttribute(.link, value: page2.linkToPage(autoGenerated: false).url, range: NSRange(location: 12, length: 11))
-        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1, page2])
+        let changes = TextLinkFinder.findLinkChanges(in: string, using: [page1, page2])
         XCTAssertEqual(changes.linksToAdd, [])
     }
 
@@ -203,7 +203,7 @@ class TextLinkFinderTests: XCTestCase {
         page2.title = "foo"
         let string = NSMutableAttributedString(string: "Here is an external link auto test")
         string.addAttribute(.link, value: URL(string: "https://mcubedsw.com")!, range: NSRange(location: 11, length: 13))
-        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1, page2])
+        let changes = TextLinkFinder.findLinkChanges(in: string, using: [page1, page2])
         XCTAssertEqual(changes.linksToAdd, [])
     }
 
@@ -214,7 +214,7 @@ class TextLinkFinderTests: XCTestCase {
         page2.title = "foo"
         let string = NSMutableAttributedString(string: "Here is an external link auto test")
         string.addAttribute(.link, value: URL(string: "https://mcubedsw.com")!, range: NSRange(location: 11, length: 13))
-        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1, page2])
+        let changes = TextLinkFinder.findLinkChanges(in: string, using: [page1, page2])
         XCTAssertEqual(changes.linksToAdd, [])
     }
 
@@ -225,7 +225,7 @@ class TextLinkFinderTests: XCTestCase {
         page2.title = "foo"
         let string = NSMutableAttributedString(string: "Here is an external link auto test")
         string.addAttribute(.link, value: URL(string: "https://mcubedsw.com")!, range: NSRange(location: 11, length: 13))
-        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1, page2])
+        let changes = TextLinkFinder.findLinkChanges(in: string, using: [page1, page2])
         XCTAssertEqual(changes.linksToAdd, [])
     }
 
@@ -236,7 +236,7 @@ class TextLinkFinderTests: XCTestCase {
         page2.title = "foo"
         let string = NSMutableAttributedString(string: "Here is an external link auto test")
         string.addAttribute(.link, value: URL(string: "https://mcubedsw.com")!, range: NSRange(location: 11, length: 13))
-        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1, page2])
+        let changes = TextLinkFinder.findLinkChanges(in: string, using: [page1, page2])
         XCTAssertEqual(changes.linksToAdd, [])
     }
 
@@ -247,7 +247,7 @@ class TextLinkFinderTests: XCTestCase {
         page2.title = "foo"
 
         let string = NSMutableAttributedString(string: "Here is an auto test")
-        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1, page2], ignoring: [page1])
+        let changes = TextLinkFinder.findLinkChanges(in: string, using: [page1, page2], ignoring: [page1])
         XCTAssertEqual(changes.linksToAdd, [])
     }
 
@@ -256,7 +256,7 @@ class TextLinkFinderTests: XCTestCase {
         page1.title = "single' quote"
 
         let string = NSMutableAttributedString(string: "Here is a 'single' quote test")
-        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1])
+        let changes = TextLinkFinder.findLinkChanges(in: string, using: [page1])
         XCTAssertEqual(changes.linksToAdd, [self.linkFor(loc: 11, length: 13, page: page1, isAuto: true)])
     }
 
@@ -265,7 +265,7 @@ class TextLinkFinderTests: XCTestCase {
         page1.title = "\"double\" quote"
 
         let string = NSMutableAttributedString(string: "Here is a \"double\" quote test")
-        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1])
+        let changes = TextLinkFinder.findLinkChanges(in: string, using: [page1])
         XCTAssertEqual(changes.linksToAdd, [self.linkFor(loc: 10, length: 14, page: page1, isAuto: true)])
     }
 
@@ -274,7 +274,7 @@ class TextLinkFinderTests: XCTestCase {
         page1.title = "‘smart’ quote"
 
         let string = NSMutableAttributedString(string: "Here is a 'smart' quote test")
-        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1])
+        let changes = TextLinkFinder.findLinkChanges(in: string, using: [page1])
         XCTAssertEqual(changes.linksToAdd, [self.linkFor(loc: 10, length: 13, page: page1, isAuto: true)])
     }
 
@@ -283,7 +283,7 @@ class TextLinkFinderTests: XCTestCase {
         page1.title = "'smart' quote"
 
         let string = NSMutableAttributedString(string: "Here is a ‘smart’ quote test")
-        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1])
+        let changes = TextLinkFinder.findLinkChanges(in: string, using: [page1])
         XCTAssertEqual(changes.linksToAdd, [self.linkFor(loc: 10, length: 13, page: page1, isAuto: true)])
     }
 
@@ -292,7 +292,7 @@ class TextLinkFinderTests: XCTestCase {
         page1.title = "“smart” quote"
 
         let string = NSMutableAttributedString(string: "Here is a \"smart\" quote test")
-        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1])
+        let changes = TextLinkFinder.findLinkChanges(in: string, using: [page1])
         XCTAssertEqual(changes.linksToAdd, [self.linkFor(loc: 10, length: 13, page: page1, isAuto: true)])
     }
 
@@ -301,7 +301,7 @@ class TextLinkFinderTests: XCTestCase {
         page1.title = "\"smart\" quote"
 
         let string = NSMutableAttributedString(string: "Here is a “smart” quote test")
-        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1])
+        let changes = TextLinkFinder.findLinkChanges(in: string, using: [page1])
         XCTAssertEqual(changes.linksToAdd, [self.linkFor(loc: 10, length: 13, page: page1, isAuto: true)])
     }
 
@@ -312,7 +312,7 @@ class TextLinkFinderTests: XCTestCase {
         page1.title = "existing link"
         let string = NSMutableAttributedString(string: "This contains an existing link in it")
         string.addAttribute(.link, value: page1.linkToPage(autoGenerated: true).url, range: NSRange(location: 17, length: 13))
-        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1])
+        let changes = TextLinkFinder.findLinkChanges(in: string, using: [page1])
         XCTAssertEqual(changes.linksToRemove, [])
     }
 
@@ -321,7 +321,7 @@ class TextLinkFinderTests: XCTestCase {
         page1.title = "updated title"
         let string = NSMutableAttributedString(string: "This contains an auto link in it")
         string.addAttribute(.link, value: page1.linkToPage(autoGenerated: true).url, range: NSRange(location: 17, length: 9))
-        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1])
+        let changes = TextLinkFinder.findLinkChanges(in: string, using: [page1])
         XCTAssertEqual(changes.linksToRemove, [self.linkFor(loc: 17, length: 9, page: nil, isAuto: true)])
     }
 
@@ -330,7 +330,7 @@ class TextLinkFinderTests: XCTestCase {
         page1.title = "updated title"
         let string = NSMutableAttributedString(string: "Testing a manual link not being removed")
         string.addAttribute(.link, value: page1.linkToPage(autoGenerated: false).url, range: NSRange(location: 10, length: 11))
-        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1])
+        let changes = TextLinkFinder.findLinkChanges(in: string, using: [page1])
         XCTAssertEqual(changes.linksToRemove, [])
     }
 
@@ -339,7 +339,7 @@ class TextLinkFinderTests: XCTestCase {
         page1.title = "updated title"
         let string = NSMutableAttributedString(string: "Remove an auto link")
         string.addAttribute(.link, value: page1.linkToPage(autoGenerated: true).url, range: NSRange(location: 10, length: 9))
-        let changes = TextLinkFinder().findLinkChanges(in: string, using: [])
+        let changes = TextLinkFinder.findLinkChanges(in: string, using: [])
         XCTAssertEqual(changes.linksToRemove, [self.linkFor(loc: 10, length: 9, page: nil, isAuto: true)])
     }
 
@@ -348,7 +348,7 @@ class TextLinkFinderTests: XCTestCase {
         page1.title = "updated title"
         let string = NSMutableAttributedString(string: "Deleting a manual link thats dead")
         string.addAttribute(.link, value: page1.linkToPage(autoGenerated: false).url, range: NSRange(location: 11, length: 11))
-        let changes = TextLinkFinder().findLinkChanges(in: string, using: [])
+        let changes = TextLinkFinder.findLinkChanges(in: string, using: [])
         XCTAssertEqual(changes.linksToRemove, [self.linkFor(loc: 11, length: 11, page: nil, isAuto: true)])
     }
 
@@ -359,7 +359,7 @@ class TextLinkFinderTests: XCTestCase {
         page2.title = "duplicate"
         let string = NSMutableAttributedString(string: "Check out this duplicate page")
         string.addAttribute(.link, value: page1.linkToPage(autoGenerated: true).url, range: NSRange(location: 15, length: 9))
-        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1, page2])
+        let changes = TextLinkFinder.findLinkChanges(in: string, using: [page1, page2])
         XCTAssertEqual(changes.linksToRemove, [self.linkFor(loc: 15, length: 9, page: nil, isAuto: true)])
     }
 
@@ -370,7 +370,7 @@ class TextLinkFinderTests: XCTestCase {
         page2.title = "duplicate"
         let string = NSMutableAttributedString(string: "Check out this same page")
         string.addAttribute(.link, value: page1.linkToPage(autoGenerated: false).url, range: NSRange(location: 15, length: 4))
-        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1, page2])
+        let changes = TextLinkFinder.findLinkChanges(in: string, using: [page1, page2])
         XCTAssertEqual(changes.linksToRemove, [])
     }
 
@@ -381,7 +381,7 @@ class TextLinkFinderTests: XCTestCase {
         page2.title = "prefix 2"
         let string = NSMutableAttributedString(string: "This is prefix 2 and it should stay that way")
         string.addAttribute(.link, value: page2.linkToPage(autoGenerated: true).url, range: NSRange(location: 8, length: 8))
-        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1, page2])
+        let changes = TextLinkFinder.findLinkChanges(in: string, using: [page1, page2])
         XCTAssertEqual(changes.linksToAdd, [])
         XCTAssertEqual(changes.linksToRemove, [])
     }
@@ -392,7 +392,7 @@ class TextLinkFinderTests: XCTestCase {
         let string = NSMutableAttributedString(string: "This string contains a link to an external site")
         string.addAttribute(.link, value: URL(string: "https://mcubedsw.com")!, range: NSRange(location: 23, length: 4))
 
-        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page])
+        let changes = TextLinkFinder.findLinkChanges(in: string, using: [page])
         XCTAssertEqual(changes.linksToAdd, [])
         XCTAssertEqual(changes.linksToRemove, [])
     }
@@ -402,7 +402,7 @@ class TextLinkFinderTests: XCTestCase {
         page1.title = "auto"
         let string = NSMutableAttributedString(string: "Remove an auto link")
         string.addAttribute(.link, value: page1.linkToPage(autoGenerated: true).url, range: NSRange(location: 10, length: 4))
-        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1], ignoring: [page1])
+        let changes = TextLinkFinder.findLinkChanges(in: string, using: [page1], ignoring: [page1])
         XCTAssertEqual(changes.linksToRemove, [self.linkFor(loc: 10, length: 4, page: nil, isAuto: true)])
     }
 
@@ -413,7 +413,7 @@ class TextLinkFinderTests: XCTestCase {
         page2.title = "auto"
         let string = NSMutableAttributedString(string: "Remove an auto link")
         string.addAttribute(.link, value: page1.linkToPage(autoGenerated: true).url, range: NSRange(location: 10, length: 9))
-        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1, page2], ignoring: [page1])
+        let changes = TextLinkFinder.findLinkChanges(in: string, using: [page1, page2], ignoring: [page1])
         XCTAssertEqual(changes.linksToRemove, [self.linkFor(loc: 10, length: 9, page: nil, isAuto: true)])
         XCTAssertEqual(changes.linksToAdd, [self.linkFor(loc: 10, length: 4, page: page2, isAuto: true)])
     }
@@ -449,7 +449,7 @@ class TextLinkFinderTests: XCTestCase {
         string.addAttribute(.link, value: page3.linkToPage(autoGenerated: true).url, range: NSRange(location: 20, length: 2))
         string.addAttribute(.link, value: page3.linkToPage(autoGenerated: false).url, range: NSRange(location: 27, length: 4))
 
-        let changes = TextLinkFinder().findLinkChanges(in: string, using: [page1, page2, page3, page4, page5, page6, page7, page8, page9])
+        let changes = TextLinkFinder.findLinkChanges(in: string, using: [page1, page2, page3, page4, page5, page6, page7, page8, page9])
         XCTAssertEqual(changes.linksToAdd, [
             self.linkFor(loc: 7, length: 6, page: page5, isAuto: true),
             self.linkFor(loc: 14, length: 5, page: page7, isAuto: true),

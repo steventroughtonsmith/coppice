@@ -9,6 +9,7 @@
 @testable import Coppice
 @testable import CoppiceCore
 import Foundation
+import M3Data
 
 class TestModelObject: ModelObject {
     var plistRepresentation = [String: Any]()

@@ -12,6 +12,8 @@ import AppKit
 @testable import CoppiceCore
 
 class MockImageEditorHotspot: ImageEditorHotspot {
+    var originOffset: CGPoint = .zero
+
     var url: URL?
 
     func hotspotPath(forScale scale: CGFloat) -> NSBezierPath {

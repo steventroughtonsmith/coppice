@@ -83,7 +83,7 @@ class ModelObjects_SearchingTests: XCTestCase {
 
     func test_page_matchForSearchString_returnsMatchInTitleEvenIfAlsoMatchInContent() throws {
         let mockPageContent = MockPageContent()
-        mockPageContent.searchRange = NSRange(location: 4, length: 10)
+        mockPageContent.match = MockPageContent.Match(range: NSRange(location: 4, length: 10), string: "")
         let page = Page()
         page.title = "Hello World"
         page.content = mockPageContent
