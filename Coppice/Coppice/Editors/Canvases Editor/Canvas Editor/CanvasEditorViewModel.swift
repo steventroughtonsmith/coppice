@@ -16,6 +16,7 @@ protocol CanvasEditorView: AnyObject {
     func updateZoomFactor()
     func flash(_ canvasPage: CanvasPage)
     func notifyAccessibilityOfMove(_ canvasPages: [CanvasPage])
+    func themeDidChange()
 }
 
 class CanvasEditorViewModel: ViewModel {
@@ -87,6 +88,9 @@ class CanvasEditorViewModel: ViewModel {
                 self?.updatePages()
                 if change.didUpdate(\.alwaysShowPageTitles) {
                     self?.updateAlwaysShowPageTitles()
+                }
+                if change.didUpdate(\.theme) {
+                    self?.view?.themeDidChange()
                 }
             }
         }

@@ -793,6 +793,10 @@ extension CanvasEditorViewController: CanvasEditorView {
 
         NSAccessibility.post(element: canvasView, notification: .layoutChanged, userInfo: [NSAccessibility.NotificationUserInfoKey.uiElements: views])
     }
+
+    func themeDidChange() {
+        self.forceFullLayout()
+    }
 }
 
 
