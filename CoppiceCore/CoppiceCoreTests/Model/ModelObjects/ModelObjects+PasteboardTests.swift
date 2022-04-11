@@ -7,6 +7,7 @@
 //
 
 @testable import CoppiceCore
+import M3Data
 import XCTest
 
 class ModelObjects_PasteboardTests: XCTestCase {
@@ -187,7 +188,7 @@ class ModelObjects_PasteboardTests: XCTestCase {
         page.title = "Hello World"
         let content = ImagePageContent()
         page.content = content
-        content.image = NSImage(named: "NSAddTemplate")!
+        content.setImage(NSImage(named: "NSAddTemplate")!, operation: .replace)
 
         let provider = content.filePromiseProvider
         let url = URL(fileURLWithPath: "\(NSTemporaryDirectory())/coppicesimagetest.png")
@@ -211,7 +212,7 @@ class ModelObjects_PasteboardTests: XCTestCase {
         page.title = "Hello World"
         let content = ImagePageContent()
         page.content = content
-        content.image = NSImage(named: "NSAddTemplate")!
+        content.setImage(NSImage(named: "NSAddTemplate")!, operation: .replace)
 
         let provider = content.filePromiseProvider
         let url = URL(fileURLWithPath: "\(NSTemporaryDirectory())/coppicesimagetest.png")
@@ -234,7 +235,7 @@ class ModelObjects_PasteboardTests: XCTestCase {
         page.title = "Hello World"
         let content = ImagePageContent()
         page.content = content
-        content.image = NSImage(named: "NSAddTemplate")!
+        content.setImage(NSImage(named: "NSAddTemplate")!, operation: .replace)
 
         let provider = content.filePromiseProvider
         let url = URL(fileURLWithPath: "/System/coppicesimagetest.png")

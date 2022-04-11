@@ -42,11 +42,6 @@
 		99D0C84124C5DEC9002EEBFA /* MockEventContextFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C81D24C5DEC8002EEBFA /* MockEventContextFactory.swift */; };
 		99D0C84224C5DEC9002EEBFA /* Mocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C81E24C5DEC8002EEBFA /* Mocking.swift */; };
 		99D0C84324C5DEC9002EEBFA /* TestObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C81F24C5DEC8002EEBFA /* TestObjects.swift */; };
-		99D0C84624C5DEC9002EEBFA /* ModelControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C82424C5DEC8002EEBFA /* ModelControllerTests.swift */; };
-		99D0C84724C5DEC9002EEBFA /* ModelSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C82524C5DEC8002EEBFA /* ModelSettingsTests.swift */; };
-		99D0C84824C5DEC9002EEBFA /* ModelIDTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C82624C5DEC8002EEBFA /* ModelIDTests.swift */; };
-		99D0C84924C5DEC9002EEBFA /* ModelCollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C82724C5DEC8002EEBFA /* ModelCollectionTests.swift */; };
-		99D0C84A24C5DEC9002EEBFA /* ModelObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C82824C5DEC8002EEBFA /* ModelObjectTests.swift */; };
 		99D0C84C24C5DEC9002EEBFA /* ModelWriterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C82A24C5DEC8002EEBFA /* ModelWriterTests.swift */; };
 		99D0C84E24C5DEC9002EEBFA /* PageHierarchyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C82D24C5DEC8002EEBFA /* PageHierarchyTests.swift */; };
 		99D0C84F24C5DEC9002EEBFA /* PageContentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C82E24C5DEC8002EEBFA /* PageContentTests.swift */; };
@@ -154,11 +149,6 @@
 		99D0C81D24C5DEC8002EEBFA /* MockEventContextFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockEventContextFactory.swift; sourceTree = "<group>"; };
 		99D0C81E24C5DEC8002EEBFA /* Mocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mocking.swift; sourceTree = "<group>"; };
 		99D0C81F24C5DEC8002EEBFA /* TestObjects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestObjects.swift; sourceTree = "<group>"; };
-		99D0C82424C5DEC8002EEBFA /* ModelControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelControllerTests.swift; sourceTree = "<group>"; };
-		99D0C82524C5DEC8002EEBFA /* ModelSettingsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelSettingsTests.swift; sourceTree = "<group>"; };
-		99D0C82624C5DEC8002EEBFA /* ModelIDTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelIDTests.swift; sourceTree = "<group>"; };
-		99D0C82724C5DEC8002EEBFA /* ModelCollectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelCollectionTests.swift; sourceTree = "<group>"; };
-		99D0C82824C5DEC8002EEBFA /* ModelObjectTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelObjectTests.swift; sourceTree = "<group>"; };
 		99D0C82A24C5DEC8002EEBFA /* ModelWriterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelWriterTests.swift; sourceTree = "<group>"; };
 		99D0C82D24C5DEC8002EEBFA /* PageHierarchyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageHierarchyTests.swift; sourceTree = "<group>"; };
 		99D0C82E24C5DEC8002EEBFA /* PageContentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageContentTests.swift; sourceTree = "<group>"; };
@@ -383,11 +373,6 @@
 		99D0C82324C5DEC8002EEBFA /* Model Infrastructure */ = {
 			isa = PBXGroup;
 			children = (
-				99D0C82424C5DEC8002EEBFA /* ModelControllerTests.swift */,
-				99D0C82524C5DEC8002EEBFA /* ModelSettingsTests.swift */,
-				99D0C82624C5DEC8002EEBFA /* ModelIDTests.swift */,
-				99D0C82724C5DEC8002EEBFA /* ModelCollectionTests.swift */,
-				99D0C82824C5DEC8002EEBFA /* ModelObjectTests.swift */,
 			);
 			path = "Model Infrastructure";
 			sourceTree = "<group>";
@@ -690,8 +675,6 @@
 				99D0C8A424C5FB95002EEBFA /* ResizePageEventContextTests.swift in Sources */,
 				99D0C89C24C5FB95002EEBFA /* LayoutEnginePageTests.swift in Sources */,
 				99F6BD2127C3D23F00E5AD20 /* ImageHotspotTests.swift in Sources */,
-				99D0C84724C5DEC9002EEBFA /* ModelSettingsTests.swift in Sources */,
-				99D0C84824C5DEC9002EEBFA /* ModelIDTests.swift in Sources */,
 				99D0C85624C5DEC9002EEBFA /* TextPageContentsTests.swift in Sources */,
 				99983E71278C9D660020759D /* MockLayoutEnginePageView.swift in Sources */,
 				99BC4375256C168000BBB0EA /* CoreGraphics+M3ExtensionsTests.swift in Sources */,
@@ -700,7 +683,6 @@
 				99D0C89F24C5FB95002EEBFA /* ArrowLayoutEngineTests.swift in Sources */,
 				99D0C84124C5DEC9002EEBFA /* MockEventContextFactory.swift in Sources */,
 				99D0C85024C5DEC9002EEBFA /* PageLinkTests.swift in Sources */,
-				99D0C84924C5DEC9002EEBFA /* ModelCollectionTests.swift in Sources */,
 				99D0C85524C5DEC9002EEBFA /* PageTests.swift in Sources */,
 				99D0C85324C5DEC9002EEBFA /* CanvasTests.swift in Sources */,
 				99D0C83B24C5DEC9002EEBFA /* XCTestExtensions.swift in Sources */,
@@ -708,7 +690,6 @@
 				99D0C84C24C5DEC9002EEBFA /* ModelWriterTests.swift in Sources */,
 				99D0C8A624C5FB95002EEBFA /* RemovePageEventContextTests.swift in Sources */,
 				99D0C8A524C5FB95002EEBFA /* SelectAndMoveEventContextTests.swift in Sources */,
-				99D0C84A24C5DEC9002EEBFA /* ModelObjectTests.swift in Sources */,
 				99D0C8A324C5FB95002EEBFA /* KeyboardMovePageEventContextTests.swift in Sources */,
 				99D0C84E24C5DEC9002EEBFA /* PageHierarchyTests.swift in Sources */,
 				99D0C86124C5DF0F002EEBFA /* CoppiceModelControllerTests.swift in Sources */,
@@ -719,7 +700,6 @@
 				99D0C89D24C5FB95002EEBFA /* CanvasLayoutEngineEventContextFactoryTests.swift in Sources */,
 				99D0C8A124C5FB95002EEBFA /* CanvasSelectionEventContextTests.swift in Sources */,
 				99D0C85824C5DEC9002EEBFA /* ModelObjects+SearchingTests.swift in Sources */,
-				99D0C84624C5DEC9002EEBFA /* ModelControllerTests.swift in Sources */,
 				99D0C85724C5DEC9002EEBFA /* ImagePageContentsTests.swift in Sources */,
 				99D0C85124C5DEC9002EEBFA /* FolderTests.swift in Sources */,
 				99D0C84F24C5DEC9002EEBFA /* PageContentTests.swift in Sources */,

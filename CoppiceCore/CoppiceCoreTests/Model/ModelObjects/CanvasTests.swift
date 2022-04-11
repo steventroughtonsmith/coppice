@@ -7,6 +7,7 @@
 //
 
 @testable import CoppiceCore
+import M3Data
 import XCTest
 
 class CanvasTests: XCTestCase {

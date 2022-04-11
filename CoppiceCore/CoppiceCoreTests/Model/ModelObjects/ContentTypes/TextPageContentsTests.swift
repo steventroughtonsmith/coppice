@@ -7,6 +7,7 @@
 //
 
 @testable import CoppiceCore
+import M3Data
 import XCTest
 
 class TextPageContentsTests: XCTestCase {
@@ -163,24 +164,24 @@ class TextPageContentsTests: XCTestCase {
     func test_firstRangeOfSearchString_returnsRangeOfMatchInText() {
         self.content.text = NSAttributedString(string: "Hello World")
 
-        XCTAssertEqual(self.content.firstMatch(forSearchString: : "lo W"), NSRange(location: 3, length: 4))
+        XCTAssertEqual(self.content.firstMatch(forSearchString: "lo W")?.range, NSRange(location: 3, length: 4))
     }
 
     func test_firstRangeOfSearchString_ignoresCaseWhenFindingMatch() {
         self.content.text = NSAttributedString(string: "Hello World")
 
-        XCTAssertEqual(self.content.firstMatch(forSearchString: : "lo w"), NSRange(location: 3, length: 4))
+        XCTAssertEqual(self.content.firstMatch(forSearchString: "lo w")?.range, NSRange(location: 3, length: 4))
     }
 
     func test_firstRangeOfSearchString_ignoresDiacriticsWhenFindingMatch() {
         self.content.text = NSAttributedString(string: "Hellö World")
 
-        XCTAssertEqual(self.content.firstMatch(forSearchString: : "lo W"), NSRange(location: 3, length: 4))
+        XCTAssertEqual(self.content.firstMatch(forSearchString: "lo W")?.range, NSRange(location: 3, length: 4))
     }
 
-    func test_firstRangeOfSearchString_returnsNSNotFoundLocationIfNoMatch() {
+    func test_firstRangeOfSearchString_returnsNilIfNoMatch() {
         self.content.text = NSAttributedString(string: "Hello World")
 
-        XCTAssertEqual(self.content.firstMatch(forSearchString: : "low"), NSRange(location: NSNotFound, length: 0))
+        XCTAssertNil(self.content.firstMatch(forSearchString: "low"))
     }
 }

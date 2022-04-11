@@ -7,6 +7,7 @@
 //
 
 @testable import CoppiceCore
+import M3Data
 import XCTest
 
 class PageTests: XCTestCase {
@@ -69,7 +70,7 @@ class PageTests: XCTestCase {
 
     func test_plistRepresentation_containsContentForImageContent() throws {
         let imageContent = ImagePageContent()
-        imageContent.image = NSImage(named: "NSAddTemplate")
+        imageContent.setImage(NSImage(named: "NSAddTemplate"), operation: .replace)
         imageContent.imageDescription = "Foo Bar Baz"
         let page = Page()
         page.content = imageContent
@@ -360,7 +361,7 @@ class PageTests: XCTestCase {
         let modelController = CoppiceModelController(undoManager: UndoManager())
         let page = modelController.collection(for: Page.self).newObject() {
             let content = ImagePageContent()
-            content.image = NSImage(size: NSSize(width: 50, height: 30))
+            content.setImage(NSImage(size: NSSize(width: 50, height: 30)), operation: .replace)
             $0.content = content
         }
         let canvas1 = modelController.collection(for: Canvas.self).newObject()
@@ -383,7 +384,7 @@ class PageTests: XCTestCase {
         let modelController = CoppiceModelController(undoManager: UndoManager())
         let page = modelController.collection(for: Page.self).newObject() {
             let content = ImagePageContent()
-            content.image = NSImage(size: NSSize(width: 50, height: 30))
+            content.setImage(NSImage(size: NSSize(width: 50, height: 30)), operation: .replace)
             $0.content = content
         }
         let canvas1 = modelController.collection(for: Canvas.self).newObject()

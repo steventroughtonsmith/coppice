@@ -7,6 +7,7 @@
 //
 
 import CoppiceCore
+import M3Data
 import XCTest
 
 class ModelReaderTests: XCTestCase {

@@ -6,7 +6,7 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-@testable import CoppiceCore
+import M3Data
 import Foundation
 
 class TestModelObject: ModelObject {

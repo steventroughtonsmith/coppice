@@ -7,6 +7,7 @@
 //
 
 import CoppiceCore
+import M3Data
 import XCTest
 
 class ModelWriterTests: XCTestCase {
@@ -40,7 +41,7 @@ class ModelWriterTests: XCTestCase {
                 $0.title = "Page 3"
                 let content = ImagePageContent()
                 let image = NSImage(named: "NSAddTemplate")
-                content.image = image
+                content.setImage(image, operation: .replace)
                 $0.content = content
             },
         ]

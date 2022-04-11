@@ -7,6 +7,7 @@
 //
 
 @testable import CoppiceCore
+import M3Data
 import XCTest
 
 class ImagePageContentsTests: XCTestCase {
@@ -149,7 +150,7 @@ class ImagePageContentsTests: XCTestCase {
 
         let content = ImagePageContent()
         content.cropRect = CGRect(x: 100, y: 80, width: 60, height: 40)
-        content.image = image
+        content.setImage(image, operation: .replace)
         XCTAssertEqual(content.cropRect, CGRect(origin: .zero, size: image.size))
     }
 
@@ -159,9 +160,9 @@ class ImagePageContentsTests: XCTestCase {
         let image = NSImage(byReferencing: imageURL)
 
         let content = ImagePageContent()
-        content.image = image
+        content.setImage(image, operation: .replace)
         content.cropRect = CGRect(x: 100, y: 80, width: 60, height: 40)
-        content.image = image
+        content.setImage(image, operation: .replace)
         XCTAssertEqual(content.cropRect, CGRect(x: 100, y: 80, width: 60, height: 40))
     }
 
@@ -190,14 +191,14 @@ class ImagePageContentsTests: XCTestCase {
         let expectedData = image.pngData()
 
         let content = ImagePageContent()
-        content.image = image
+        content.setImage(image, operation: .replace)
 
         XCTAssertEqual(content.modelFile.data, expectedData)
     }
 
     func test_modelFile_dataIsNilIfImageIsNil() {
         let content = ImagePageContent()
-        content.image = nil
+        content.setImage(nil, operation: .replace)
 
         XCTAssertNil(content.modelFile.data)
     }

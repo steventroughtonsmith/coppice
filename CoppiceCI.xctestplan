@@ -46,6 +46,14 @@
         "identifier" : "9984815A248E639C00BC0A8A",
         "name" : "M3SubscriptionsTests"
       }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:M3Data.xcodeproj",
+        "identifier" : "99CC5B6127F1EFE80084ADFF",
+        "name" : "M3DataTests"
+      }
     }
   ],
   "version" : 1
