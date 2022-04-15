@@ -172,6 +172,9 @@ class DocumentWindowController: NSWindowController, NSMenuItemValidation {
         if let target = self.splitViewController.sidebarViewController.supplementalTarget(forAction: action, sender: sender) {
             return target
         }
+		if self.splitViewController.responds(to: action) {
+			return self.splitViewController
+		}
         return super.supplementalTarget(forAction: action, sender: sender)
     }
 
