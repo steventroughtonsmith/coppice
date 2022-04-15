@@ -52,6 +52,10 @@ class ImageEditorViewModeViewController: NSViewController {
 
         self.hotspotView.maintainsAspectRatio = (self.isInCanvas == false)
 
+		self.subscribers[.searchResultsWereClicked] = NotificationCenter.default.publisher(for: .searchResultsWereClickedNotification).sink { [weak self] _ in
+			self?.highlightIfNecessary()
+		}
+
         if self.isInCanvas {
             NSLayoutConstraint.activate([
                 self.hotspotView.widthAnchor.constraint(equalTo: self.imageView.widthAnchor),
@@ -74,6 +78,7 @@ class ImageEditorViewModeViewController: NSViewController {
         self.subscribers[.accessibilityDescription]?.cancel()
         self.subscribers[.image]?.cancel()
         self.subscribers[.cropRect]?.cancel()
+		self.subscribers[.searchResultsWereClicked] = nil
     }
 
     //MARK: - Subscribers
@@ -82,6 +87,7 @@ class ImageEditorViewModeViewController: NSViewController {
         case image
         case imageEditorHotspots
         case cropRect
+		case searchResultsWereClicked
     }
 
     private var subscribers: [SubscriberKey: AnyCancellable] = [:]

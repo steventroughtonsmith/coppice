@@ -35,6 +35,13 @@ class TextEditorViewController: NSViewController, NSMenuItemValidation, NSToolba
         return delegate
     }()
 
+	//MARK: - Subscribers
+	private enum SubscriberKey {
+		case searchResultsWereClicked
+	}
+
+	private var subscribers: [SubscriberKey: AnyCancellable] = [:]
+
     private var selectableBinding: AnyCancellable!
     private var highlightedRangeObserver: AnyCancellable!
     override func viewDidLoad() {
@@ -64,8 +71,20 @@ class TextEditorViewController: NSViewController, NSMenuItemValidation, NSToolba
     override func viewDidAppear() {
         self.highlight(self.viewModel.highlightedRange)
         self.updatePlaceholder()
+
+		self.subscribers[.searchResultsWereClicked] = NotificationCenter.default.publisher(for: .searchResultsWereClickedNotification).sink { [weak self] _ in
+			guard let self = self else {
+				return
+			}
+			self.highlight(self.viewModel.highlightedRange)
+		}
         super.viewDidAppear()
     }
+
+	override func viewDidDisappear() {
+		super.viewDidDisappear()
+		self.subscribers[.searchResultsWereClicked] = nil
+	}
 
     @objc dynamic var enabled: Bool = true {
         didSet {

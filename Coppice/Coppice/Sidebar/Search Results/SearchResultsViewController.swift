@@ -10,6 +10,10 @@ import Cocoa
 import CoppiceCore
 import M3Data
 
+extension Notification.Name {
+	static let searchResultsWereClickedNotification = Notification.Name(rawValue: "M3SearchResultsWereClickedNotification")
+}
+
 class SearchResultsViewController: NSViewController {
     @IBOutlet weak var outlineView: NSOutlineView!
     @IBOutlet weak var matchesLabel: NSTextField!
@@ -46,6 +50,10 @@ class SearchResultsViewController: NSViewController {
     @IBAction func clearSearch(_ sender: Any) {
         self.viewModel.clearSearch()
     }
+
+	@IBAction func clickedSearch(_ sender: Any) {
+		NotificationCenter.default.post(name: .searchResultsWereClickedNotification, object: self)
+	}
 
     //MARK: - Accessibility
     private func setupAccessibility() {
