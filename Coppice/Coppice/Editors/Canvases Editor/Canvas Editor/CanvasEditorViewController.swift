@@ -226,6 +226,10 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
         self.scrollView.contentView.bounds.origin = scrollPoint
     }
 
+	private func scrollToPageViewController(_ pageViewController: CanvasPageViewController) {
+		self.scrollView.contentView.scrollToVisible(pageViewController.view.frame)
+	}
+
     private func updateCanvasViewPort() {
         guard self.performedInitialLayout else {
             return
@@ -782,7 +786,12 @@ extension CanvasEditorViewController: CanvasEditorView {
     }
 
     func flash(_ canvasPage: CanvasPage) {
-        self.pageViewController(for: canvasPage)?.flash()
+		guard let pageViewController = self.pageViewController(for: canvasPage) else {
+			return
+		}
+
+		self.scrollToPageViewController(pageViewController)
+		pageViewController.flash()
     }
 
     func notifyAccessibilityOfMove(_ canvasPages: [CanvasPage]) {
