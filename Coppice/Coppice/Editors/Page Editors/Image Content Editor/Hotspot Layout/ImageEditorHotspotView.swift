@@ -128,6 +128,10 @@ class ImageEditorHotspotView: NSView {
         return point.multiplied(by: self.cropRect.width / self.frame.width)
     }
 
+	//MARK: - Finding hotspots
+	func containsHotspots(at point: CGPoint) -> Bool {
+		return self.layoutEngine?.hotspot(at: point) != nil
+	}
 
     //MARK: - Events
     override func mouseDown(with event: NSEvent) {
