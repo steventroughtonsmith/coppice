@@ -126,7 +126,7 @@ class MainToolbarDelegate: NSObject {
         let linkItem = self.linkToPageItem
         upgradeView.callback = {
             popover.close()
-            if let itemIndex = toolbar.visibleItems?.firstIndex(of: linkItem) {
+            if let itemIndex = toolbar.items.firstIndex(of: linkItem) {
                 toolbar.removeItem(at: itemIndex)
             }
         }
