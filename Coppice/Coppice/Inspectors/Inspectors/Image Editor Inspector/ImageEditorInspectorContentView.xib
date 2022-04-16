@@ -41,9 +41,9 @@
                                             <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="qou-8g-cu4">
                                                 <font key="font" metaFont="system"/>
                                                 <segments>
-                                                    <segment image="ImagePage-Small" width="32"/>
-                                                    <segment image="Crop" width="32" selected="YES" tag="1"/>
-                                                    <segment image="link-small" width="32"/>
+                                                    <segment toolTip="Switch to image mode" image="ImagePage-Small" width="32"/>
+                                                    <segment toolTip="Switch to crop mode" image="Crop" width="32" selected="YES" tag="1"/>
+                                                    <segment toolTip="Switch to hotspot mode" image="link-small" width="32"/>
                                                 </segments>
                                             </segmentedCell>
                                             <connections>
@@ -84,8 +84,8 @@
                                             <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="momentary" id="KR9-GO-Uht">
                                                 <font key="font" metaFont="system"/>
                                                 <segments>
-                                                    <segment image="RotateLeft" width="32"/>
-                                                    <segment image="RotateRight" width="32" tag="1"/>
+                                                    <segment toolTip="Rotate image 90º left" image="RotateLeft" width="32"/>
+                                                    <segment toolTip="Rotate image 90º right" image="RotateRight" width="32" tag="1"/>
                                                 </segments>
                                             </segmentedCell>
                                         </segmentedControl>
