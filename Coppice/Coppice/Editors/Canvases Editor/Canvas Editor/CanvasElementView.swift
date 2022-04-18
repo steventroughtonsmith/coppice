@@ -286,7 +286,7 @@ class CanvasElementView: NSView  {
     }
 
     private func updateAccessibility() {
-        var accessibilityChildren = [Any?]()
+        var accessibilityChildren = [NSAccessibilityElementProtocol?]()
         accessibilityChildren.append(self.topLeftResizeHandleElement)
         if self.showBackground {
             accessibilityChildren = [self.titleView.closeButton, self.titleView.titleLabel]
@@ -296,7 +296,9 @@ class CanvasElementView: NSView  {
 
         accessibilityChildren.append(self.bottomLeftResizeHandleElement)
         accessibilityChildren.append(self.bottomRightResizeHandleElement)
-        self.setAccessibilityChildren(accessibilityChildren.compactMap { $0 })
+		let children = accessibilityChildren.compactMap { $0 }
+        self.setAccessibilityChildren(children)
+		self.setAccessibilityChildrenInNavigationOrder(children)
     }
 
     var topLeftResizeHandleElement: ResizeHandleAccessibilityElement?
@@ -328,9 +330,8 @@ class CanvasElementView: NSView  {
             self[keyPath: keyPath] = handleElement
         }
 
-        //We need to set the frame in both aprent space and in view space.
+        //We need to set the frame in both parent space and in view space.
         let layoutFrame = layoutPage.rectInLayoutFrame(for: component)
-        handleElement.setAccessibilityFrameInParentSpace(layoutFrame)
         handleElement.setAccessibilityFrame(NSAccessibility.screenRect(fromView: self, rect: layoutFrame), callingDelegate: false)
     }
 

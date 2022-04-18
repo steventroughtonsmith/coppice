@@ -13,7 +13,7 @@ protocol ResizeHandleAccessibilityElementDelegate: AnyObject {
     func didMove(_ handle: ResizeHandleAccessibilityElement, byDelta delta: CGPoint) -> CGPoint
 }
 
-class ResizeHandleAccessibilityElement: NSAccessibilityElement {
+class ResizeHandleAccessibilityElement: NSAccessibilityElement, NSAccessibilityElementProtocol {
     private var previousOrigin: CGPoint?
     weak var delegate: ResizeHandleAccessibilityElementDelegate?
 
@@ -39,5 +39,10 @@ class ResizeHandleAccessibilityElement: NSAccessibilityElement {
 
         super.setAccessibilityFrame(frame)
     }
+
+
+	override func accessibilityIdentifier() -> String {
+		return super.accessibilityIdentifier() ?? "ResizeHandle"
+	}
 }
 
