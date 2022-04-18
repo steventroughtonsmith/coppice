@@ -1,5 +1,5 @@
 //
-//  ResizeHandleAccessibilityElement.swift
+//  MovableHandleAccessibilityElement.swift
 //  Coppice
 //
 //  Created by Martin Pilkington on 21/05/2020.
@@ -9,16 +9,15 @@
 import AppKit
 import CoppiceCore
 
-protocol ResizeHandleAccessibilityElementDelegate: AnyObject {
-    func didMove(_ handle: ResizeHandleAccessibilityElement, byDelta delta: CGPoint) -> CGPoint
+protocol MovableHandleAccessibilityElementDelegate: AnyObject {
+    func didMove(_ handle: MovableHandleAccessibilityElement, byDelta delta: CGPoint) -> CGPoint
 }
 
-class ResizeHandleAccessibilityElement: NSAccessibilityElement, NSAccessibilityElementProtocol {
+class MovableHandleAccessibilityElement: NSAccessibilityElement, NSAccessibilityElementProtocol {
     private var previousOrigin: CGPoint?
-    weak var delegate: ResizeHandleAccessibilityElementDelegate?
+    weak var delegate: MovableHandleAccessibilityElementDelegate?
 
-    var pageID: UUID = UUID()
-    var component: LayoutEnginePageComponent = .resizeTopLeft
+	var context: Any?
 
     override func setAccessibilityFrame(_ accessibilityFrame: NSRect) {
         self.setAccessibilityFrame(accessibilityFrame, callingDelegate: true)

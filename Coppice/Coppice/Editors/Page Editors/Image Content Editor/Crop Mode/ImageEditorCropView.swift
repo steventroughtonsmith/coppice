@@ -13,6 +13,22 @@ protocol ImageEditorCropViewDelegate: AnyObject {
 }
 
 class ImageEditorCropView: NSView {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.setupAccessibility()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        self.setupAccessibility()
+    }
+
+    override func viewDidMoveToSuperview() {
+        super.viewDidMoveToSuperview()
+        self.updateAccessibilityHandles()
+    }
+
+    //MARK: - Properties
     override var isFlipped: Bool {
         return true
     }
@@ -23,6 +39,7 @@ class ImageEditorCropView: NSView {
     var cropRect: CGRect = .zero {
         didSet {
             self.setNeedsDisplay(self.bounds)
+            self.updateAccessibilityHandles()
         }
     }
 
@@ -68,6 +85,7 @@ class ImageEditorCropView: NSView {
         }
         self.dragState = nil
         self.stopAutoscrolling()
+        self.updateAccessibilityHandles()
     }
 
     private func adjustCropRect(forDraggedPoint draggedPoint: CGPoint) {
@@ -213,7 +231,78 @@ class ImageEditorCropView: NSView {
         let textRect = textBounds.rounded(.up).size.centred(in: panelRect)
         (dimensionsText as NSString).draw(in: textRect, withAttributes: attributes)
     }
+
+    //MARK: - Accessibility
+    func setupAccessibility() {
+        self.setAccessibilityElement(true)
+        self.setAccessibilityRole(.group)
+        self.updateAccessibilityHandles()
+    }
+
+
+    private var movableHandles: [DragHandle: MovableHandleAccessibilityElement] = [:]
+
+    private func updateAccessibilityHandles() {
+        let dragHandles: [DragHandle] = [.topLeft, .top, .topRight, .left, .right, .bottomLeft, .bottom, .bottomRight]
+
+        var children = [MovableHandleAccessibilityElement]()
+        for dragHandle in dragHandles {
+            guard
+                let handle = accessibilityHandle(for: dragHandle),
+                let frame = dragHandle.interactionBound(for: self.drawingRect)
+            else {
+                continue
+            }
+            handle.setAccessibilityFrame(NSAccessibility.screenRect(fromView: self, rect: frame), callingDelegate: false)
+            children.append(handle)
+        }
+
+        self.setAccessibilityChildren(children)
+        self.setAccessibilityChildrenInNavigationOrder(children)
+    }
+
+    private func accessibilityHandle(for dragHandle: DragHandle) -> MovableHandleAccessibilityElement? {
+        if let handle = self.movableHandles[dragHandle] {
+            return handle
+        }
+
+        guard let frame = dragHandle.interactionBound(for: self.drawingRect) else {
+            return nil
+        }
+
+        let handle = MovableHandleAccessibilityElement.element(withRole: .handle,
+                                                               frame: frame,
+                                                               label: dragHandle.localizedLabel,
+                                                               parent: self) as! MovableHandleAccessibilityElement
+        handle.context = CropHandleContext(dragHandle: dragHandle)
+        handle.delegate = self
+        self.movableHandles[dragHandle] = handle
+        return handle
+    }
+
+    struct CropHandleContext {
+        var dragHandle: DragHandle
+    }
 }
+
+
+
+extension ImageEditorCropView: MovableHandleAccessibilityElementDelegate {
+    func didMove(_ handle: MovableHandleAccessibilityElement, byDelta delta: CGPoint) -> CGPoint {
+        guard let context = handle.context as? CropHandleContext else {
+            return delta
+        }
+        var adjustedDelta = delta.multiplied(by: 0.5)
+        let newCropRect = context.dragHandle.adjustedCropRect(withInitialRect: self.cropRect, delta: adjustedDelta, maxSize: self.imageSize)
+        adjustedDelta.x = newCropRect.width - self.cropRect.width
+        adjustedDelta.y = -(newCropRect.height - self.cropRect.height)
+        let hasMoved = newCropRect != self.cropRect
+        self.cropRect = newCropRect
+        return hasMoved ? adjustedDelta : .zero
+    }
+}
+
+
 
 extension ImageEditorCropView {
     enum DragHandle: CaseIterable {
@@ -413,6 +502,19 @@ extension ImageEditorCropView {
             }
 
             return adjustedRect
+        }
+
+        var localizedLabel: String {
+            switch self {
+            case .topLeft:      return NSLocalizedString("Top Left", comment: "")
+            case .top:          return NSLocalizedString("Top", comment: "")
+            case .topRight:     return NSLocalizedString("Top Right", comment: "")
+            case .right:        return NSLocalizedString("Right", comment: "")
+            case .bottomRight:  return NSLocalizedString("Bottom Right", comment: "")
+            case .bottom:       return NSLocalizedString("Bottom", comment: "")
+            case .bottomLeft:   return NSLocalizedString("Bottom Left", comment: "")
+            case .left:         return NSLocalizedString("Left", comment: "")
+            }
         }
     }
 }

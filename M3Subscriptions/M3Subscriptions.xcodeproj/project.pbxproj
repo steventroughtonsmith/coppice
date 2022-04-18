@@ -140,6 +140,7 @@
 				9984814A248E635600BC0A8A /* Products */,
 			);
 			sourceTree = "<group>";
+			usesTabs = 0;
 		};
 		9984814A248E635600BC0A8A /* Products */ = {
 			isa = PBXGroup;

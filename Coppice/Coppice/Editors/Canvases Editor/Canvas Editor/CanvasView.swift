@@ -503,26 +503,26 @@ class CanvasView: NSView {
     }
 }
 
-//extension CanvasView: NSAccessibilityLayoutArea {
-//    override func accessibilityLabel() -> String {
-//        return super.accessibilityLabel() ?? ""
-//    }
-//
-//    override func accessibilityChildren() -> [Any]? {
-//        return self.pageLayer.subviews
-//    }
-//
-//    override func accessibilitySelectedChildren() -> [Any]? {
-//        let canvasElementViews = self.pageLayer.subviews.compactMap { $0 as? CanvasElementView }
-//        return canvasElementViews.filter(\.selected)
-//    }
-//
-//    override var accessibilityFocusedUIElement: Any {
-//        let canvasElementViews = self.pageLayer.subviews.compactMap { $0 as? CanvasElementView }
-//        let selectedItems = canvasElementViews.filter(\.selected)
-//        return (selectedItems.count == 1) ? selectedItems[0] : self
-//    }
-//}
+extension CanvasView: NSAccessibilityLayoutArea {
+    override func accessibilityLabel() -> String {
+        return super.accessibilityLabel() ?? ""
+    }
+
+    override func accessibilityChildren() -> [Any]? {
+        return self.pageLayer.subviews
+    }
+
+    override func accessibilitySelectedChildren() -> [Any]? {
+        let canvasElementViews = self.pageLayer.subviews.compactMap { $0 as? CanvasElementView }
+        return canvasElementViews.filter(\.selected)
+    }
+
+    override var accessibilityFocusedUIElement: Any {
+        let canvasElementViews = self.pageLayer.subviews.compactMap { $0 as? CanvasElementView }
+        let selectedItems = canvasElementViews.filter(\.selected)
+        return (selectedItems.count == 1) ? selectedItems[0] : self
+    }
+}
 
 
 extension NSEvent {

@@ -122,7 +122,7 @@
 		99581092230D92C600D996C4 /* CanvasPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99581090230D92C600D996C4 /* CanvasPageViewController.swift */; };
 		99581093230D92C600D996C4 /* CanvasPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99581091230D92C600D996C4 /* CanvasPageViewController.xib */; };
 		99581095230D93F700D996C4 /* CanvasPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99581094230D93F700D996C4 /* CanvasPageViewModel.swift */; };
-		99582817247702B300080593 /* ResizeHandleAccessibilityElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99582816247702B300080593 /* ResizeHandleAccessibilityElement.swift */; };
+		99582817247702B300080593 /* MovableHandleAccessibilityElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99582816247702B300080593 /* MovableHandleAccessibilityElement.swift */; };
 		995B4B7E261B390F00F2AD01 /* RenameDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995B4B7C261B390F00F2AD01 /* RenameDeviceViewController.swift */; };
 		995B4B7F261B390F00F2AD01 /* RenameDeviceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 995B4B7D261B390F00F2AD01 /* RenameDeviceViewController.xib */; };
 		995F9305252B5B1B00A753E4 /* ColouredButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995F9304252B5B1B00A753E4 /* ColouredButtonCell.swift */; };
@@ -576,7 +576,7 @@
 		99581090230D92C600D996C4 /* CanvasPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageViewController.swift; sourceTree = "<group>"; };
 		99581091230D92C600D996C4 /* CanvasPageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CanvasPageViewController.xib; sourceTree = "<group>"; };
 		99581094230D93F700D996C4 /* CanvasPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageViewModel.swift; sourceTree = "<group>"; };
-		99582816247702B300080593 /* ResizeHandleAccessibilityElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizeHandleAccessibilityElement.swift; sourceTree = "<group>"; };
+		99582816247702B300080593 /* MovableHandleAccessibilityElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovableHandleAccessibilityElement.swift; sourceTree = "<group>"; };
 		995B4B7C261B390F00F2AD01 /* RenameDeviceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameDeviceViewController.swift; sourceTree = "<group>"; };
 		995B4B7D261B390F00F2AD01 /* RenameDeviceViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RenameDeviceViewController.xib; sourceTree = "<group>"; };
 		995F9304252B5B1B00A753E4 /* ColouredButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColouredButtonCell.swift; sourceTree = "<group>"; };
@@ -940,6 +940,7 @@
 			children = (
 				99FFF9D12354C4F600EF02A0 /* GlobalConstants.swift */,
 				9977119B239E91FD00FCC8C7 /* ViewModel.swift */,
+				99582816247702B300080593 /* MovableHandleAccessibilityElement.swift */,
 				99AD8872237464B5000453E1 /* Generic Types */,
 				998D077E24115D04004ADFF8 /* Generic Views */,
 				992A5C9D22DCCDA20012CCB6 /* Extensions */,
@@ -1218,7 +1219,6 @@
 				9985F4D823F2E13600B96DC7 /* CanvasPageTitleView.swift */,
 				9985F4DA23F44AAD00B96DC7 /* CanvasPageBackgroundView.swift */,
 				99C03F06232A8ED200EB7516 /* CanvasElementView.swift */,
-				99582816247702B300080593 /* ResizeHandleAccessibilityElement.swift */,
 				990D2440235DEFE2001B1FD9 /* PageArrowView.swift */,
 				9958108B230D908200D996C4 /* Test CanvasPage View */,
 			);
@@ -1947,6 +1947,7 @@
 				99FE018E22CD1037004D380D /* Products */,
 			);
 			sourceTree = "<group>";
+			usesTabs = 0;
 		};
 		99FE018E22CD1037004D380D /* Products */ = {
 			isa = PBXGroup;
@@ -2569,7 +2570,7 @@
 				99146A2A24EEAB6200A2AE48 /* ImageEditorPlaceholderView.swift in Sources */,
 				998D0779241137A3004ADFF8 /* RectDrawingView.swift in Sources */,
 				99D8E39323800FB90098CF3B /* BaseInspectorViewModel.swift in Sources */,
-				99582817247702B300080593 /* ResizeHandleAccessibilityElement.swift in Sources */,
+				99582817247702B300080593 /* MovableHandleAccessibilityElement.swift in Sources */,
 				9958107F230D7EEB00D996C4 /* CanvasEditorViewModel.swift in Sources */,
 				9998B4EC25164CA600E2D455 /* ButtonToolbarItem.swift in Sources */,
 				99C88EE42409631800339880 /* PageImageController.swift in Sources */,

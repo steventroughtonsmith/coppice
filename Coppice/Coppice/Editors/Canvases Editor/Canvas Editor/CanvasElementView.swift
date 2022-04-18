@@ -301,10 +301,10 @@ class CanvasElementView: NSView  {
 		self.setAccessibilityChildrenInNavigationOrder(children)
     }
 
-    var topLeftResizeHandleElement: ResizeHandleAccessibilityElement?
-    var topRightResizeHandleElement: ResizeHandleAccessibilityElement?
-    var bottomLeftResizeHandleElement: ResizeHandleAccessibilityElement?
-    var bottomRightResizeHandleElement: ResizeHandleAccessibilityElement?
+    var topLeftResizeHandleElement: MovableHandleAccessibilityElement?
+    var topRightResizeHandleElement: MovableHandleAccessibilityElement?
+    var bottomLeftResizeHandleElement: MovableHandleAccessibilityElement?
+    var bottomRightResizeHandleElement: MovableHandleAccessibilityElement?
 
     private func updateAccessibilityResizeElements(with layoutPage: LayoutEnginePage) {
         guard self.window != nil else {
@@ -317,12 +317,12 @@ class CanvasElementView: NSView  {
         self.updateAccessibility()
     }
 
-    private func updateElement(at keyPath: ReferenceWritableKeyPath<CanvasElementView, ResizeHandleAccessibilityElement?>,
+    private func updateElement(at keyPath: ReferenceWritableKeyPath<CanvasElementView, MovableHandleAccessibilityElement?>,
                                with layoutPage: LayoutEnginePage,
                                component: LayoutEnginePageComponent,
                                label: String)
     {
-        let handleElement: ResizeHandleAccessibilityElement
+        let handleElement: MovableHandleAccessibilityElement
         if let element = self[keyPath: keyPath] {
             handleElement = element
         } else {
@@ -335,27 +335,34 @@ class CanvasElementView: NSView  {
         handleElement.setAccessibilityFrame(NSAccessibility.screenRect(fromView: self, rect: layoutFrame), callingDelegate: false)
     }
 
-    private func createElement(with layoutPage: LayoutEnginePage, component: LayoutEnginePageComponent, label: String) -> ResizeHandleAccessibilityElement {
+    private func createElement(with layoutPage: LayoutEnginePage, component: LayoutEnginePageComponent, label: String) -> MovableHandleAccessibilityElement {
         let layoutFrame = layoutPage.rectInLayoutFrame(for: component)
         let frame = NSAccessibility.screenRect(fromView: self, rect: layoutFrame)
 
-        let element = ResizeHandleAccessibilityElement.element(withRole: .handle,
-                                                               frame: frame,
-                                                               label: label,
-                                                               parent: self) as! ResizeHandleAccessibilityElement
-        element.pageID = layoutPage.id
-        element.component = component
+        let element = MovableHandleAccessibilityElement.element(withRole: .handle,
+                                                                frame: frame,
+                                                                label: label,
+                                                                parent: self) as! MovableHandleAccessibilityElement
+		element.context = ResizeHandleContext(pageID: layoutPage.id, component: component)
         element.delegate = self
         return element
     }
+
+	struct ResizeHandleContext {
+		var pageID: UUID
+		var component: LayoutEnginePageComponent
+	}
 }
 
-extension CanvasElementView: ResizeHandleAccessibilityElementDelegate {
-    func didMove(_ handle: ResizeHandleAccessibilityElement, byDelta delta: CGPoint) -> CGPoint {
-        guard let canvasView = self.canvasView else {
+extension CanvasElementView: MovableHandleAccessibilityElementDelegate {
+    func didMove(_ handle: MovableHandleAccessibilityElement, byDelta delta: CGPoint) -> CGPoint {
+        guard
+			let canvasView = self.canvasView,
+			let resizeContext = handle.context as? ResizeHandleContext
+		else {
             return .zero
         }
-        return canvasView.accessibilityResize(handle.component, ofPageWithID: handle.pageID, by: delta)
+        return canvasView.accessibilityResize(resizeContext.component, ofPageWithID: resizeContext.pageID, by: delta)
     }
 }
 
