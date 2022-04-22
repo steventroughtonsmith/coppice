@@ -99,6 +99,7 @@
 		993D2BFE2412FB1C002E5BAC /* SplitViewContainable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993D2BFD2412FB1C002E5BAC /* SplitViewContainable.swift */; };
 		993D2C0024157196002E5BAC /* SourceListOutlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993D2BFF24157196002E5BAC /* SourceListOutlineView.swift */; };
 		994253EF244F49A7008272E6 /* CanvasListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994253EE244F49A7008272E6 /* CanvasListViewModelTests.swift */; };
+		9946649C2812FB5600A08522 /* ImageEditorHotspotAccessibilityElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9946649B2812FB5600A08522 /* ImageEditorHotspotAccessibilityElement.swift */; };
 		99488A9B23BA392E009954AF /* SmallCanvasCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99488A9A23BA392E009954AF /* SmallCanvasCell.swift */; };
 		99488A9F23BA3954009954AF /* LargeCanvasCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99488A9E23BA3954009954AF /* LargeCanvasCell.swift */; };
 		99488AA323BA3983009954AF /* SmallCanvasCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99488AA223BA3983009954AF /* SmallCanvasCell.xib */; };
@@ -554,6 +555,7 @@
 		993D2BFD2412FB1C002E5BAC /* SplitViewContainable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewContainable.swift; sourceTree = "<group>"; };
 		993D2BFF24157196002E5BAC /* SourceListOutlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceListOutlineView.swift; sourceTree = "<group>"; };
 		994253EE244F49A7008272E6 /* CanvasListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CanvasListViewModelTests.swift; path = "CoppiceTests/Unit Tests/Canvases Editor/Canvas List/CanvasListViewModelTests.swift"; sourceTree = SOURCE_ROOT; };
+		9946649B2812FB5600A08522 /* ImageEditorHotspotAccessibilityElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorHotspotAccessibilityElement.swift; sourceTree = "<group>"; };
 		99488A9A23BA392E009954AF /* SmallCanvasCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallCanvasCell.swift; sourceTree = "<group>"; };
 		99488A9E23BA3954009954AF /* LargeCanvasCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeCanvasCell.swift; sourceTree = "<group>"; };
 		99488AA223BA3983009954AF /* SmallCanvasCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SmallCanvasCell.xib; sourceTree = "<group>"; };
@@ -1912,6 +1914,7 @@
 			isa = PBXGroup;
 			children = (
 				990B543827D8FE8F004FDA93 /* ImageEditorHotspotView.swift */,
+				9946649B2812FB5600A08522 /* ImageEditorHotspotAccessibilityElement.swift */,
 				99F6BD2227C3EEC800E5AD20 /* ImageEditorHotspotLayoutEngine.swift */,
 				99F77A2427C94D2B009D7FF7 /* ImageEditorRectangleHotspot.swift */,
 				991A779D27E7703A00DA8EEB /* ImageEditorPolygonHotspot.swift */,
@@ -2423,6 +2426,7 @@
 				9981E6D624C08F12005AF0EE /* WelcomeWindowController.swift in Sources */,
 				995F9305252B5B1B00A753E4 /* ColouredButtonCell.swift in Sources */,
 				99D5073A250254BF00670139 /* ProUpsellViewController.swift in Sources */,
+				9946649C2812FB5600A08522 /* ImageEditorHotspotAccessibilityElement.swift in Sources */,
 				99DEF28A22F32D350020A7CE /* DebugCanvasViewModelTypes.swift in Sources */,
 				99D329AA252237A000E15683 /* SubscriptionTableCellView.swift in Sources */,
 				99868F352396AD73009AC0F7 /* ImageEditorInspectorViewController.swift in Sources */,

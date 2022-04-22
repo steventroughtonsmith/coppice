@@ -9,6 +9,16 @@
 import Cocoa
 
 class ImageEditorHotspotView: NSView {
+    override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+        self.setupAccessibility()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        self.setupAccessibility()
+    }
+
     override var acceptsFirstResponder: Bool {
         return true
     }
@@ -239,5 +249,12 @@ class ImageEditorHotspotView: NSView {
                 self.addSubview(newView)
             }
         }
+    }
+
+    //MARK: - Accessibility
+    private func setupAccessibility() {
+        self.setAccessibilityElement(true)
+        self.setAccessibilityRole(.group)
+        self.setAccessibilityLabel(NSLocalizedString("Hotspot Editor", comment: "Hotspot Editor accessibility label"))
     }
 }

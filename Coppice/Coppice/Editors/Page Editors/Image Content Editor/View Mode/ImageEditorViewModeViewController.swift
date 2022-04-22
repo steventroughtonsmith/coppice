@@ -126,6 +126,14 @@ class ImageEditorViewModeViewController: NSViewController {
         }
         self.hotspotView.highlight(highlightRect)
     }
+
+    //MARK: - Accessibility
+    private func updateHotspotAccessibilityElements() {
+        let newElements = self.layoutEngine.visibleHotspots.map {
+            ImageEditorHotspotAccessibilityElement(hotspot: $0, hotspotView: self.hotspotView, modelController: self.viewModel.modelController)
+        }
+        self.hotspotView.setAccessibilityChildren(newElements)
+    }
 }
 
 extension ImageEditorViewModeViewController: PageContentEditor {
@@ -159,6 +167,7 @@ extension ImageEditorViewModeViewController: ImageEditorHotspotLayoutEngineDeleg
     func layoutDidChange(in layoutEngine: ImageEditorHotspotLayoutEngine) {
         self.hotspotView.layoutEngineDidChange()
         self.viewModel.linkEditor.updateSelectedLink()
+        self.updateHotspotAccessibilityElements()
     }
 
     func didClickOnHotspot(_ hotspot: ImageEditorHotspot, in layoutEngine: ImageEditorHotspotLayoutEngine) {
