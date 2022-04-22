@@ -32,7 +32,7 @@ class ImageEditorPolygonHotspot: ImageEditorHotspot {
 
     //MARK: - Paths
     func hotspotPath(forScale scale: CGFloat = 1) -> NSBezierPath {
-        guard self.effectivePoints.count > 1 else {
+        guard self.effectivePoints.count >= 1 else {
             return NSBezierPath()
         }
         let path = NSBezierPath()
@@ -165,10 +165,8 @@ class ImageEditorPolygonHotspot: ImageEditorHotspot {
             self.selectHotspot(dragState: dragState, delta: delta, modifiers: modifiers)
         }
 
-        let pointsHaveChanged = (dragState.initialPoints != self.points)
-
         self.currentDragState = nil
-        return pointsHaveChanged
+        return self.mode == .complete
     }
 
     func movedEvent(at point: CGPoint) {
@@ -196,20 +194,24 @@ class ImageEditorPolygonHotspot: ImageEditorHotspot {
     }
 
     private func addNewHandle(dragState: DragState, point: CGPoint, modifiers: LayoutEventModifiers, canComplete: Bool = false, eventCount: Int) {
+        guard self.mode == .creating else {
+            return
+        }
+
         var newPoints = dragState.initialPoints
+        let boundedPoint = point.bounded(within: CGRect(origin: .zero, size: self.imageSize))
         if canComplete, self.points.count > 2, let firstHandle = self.editingHandleRects().first, firstHandle.contains(point) {
             self.completeCreation()
         } else if eventCount == 2 {
             self.completeCreation()
-        } else {
-            newPoints.append(point.bounded(within: CGRect(origin: .zero, size: self.imageSize)))
+        } else if newPoints.contains(boundedPoint) == false {
+            newPoints.append(boundedPoint)
             self.points = newPoints
         }
     }
 
     private func completeCreation() {
         self.mode = .complete
-        self.currentDragState = nil
     }
 
     private func selectHotspot(dragState: DragState, delta: CGPoint, modifiers: LayoutEventModifiers) {
