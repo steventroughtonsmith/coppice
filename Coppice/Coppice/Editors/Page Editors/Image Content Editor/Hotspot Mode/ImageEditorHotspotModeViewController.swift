@@ -34,6 +34,10 @@ class ImageEditorHotspotModeViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupLayoutEngine()
+        self.imageView.cell?.setAccessibilityElement(false)
+        self.view.setAccessibilityElement(true)
+        self.view.setAccessibilityRole(.group)
+        self.view.setAccessibilityLabel("Image Hotspot Editor")
     }
 
     override func viewWillAppear() {
@@ -59,6 +63,11 @@ class ImageEditorHotspotModeViewController: NSViewController {
                 self.hotspotView.heightAnchor.constraint(equalTo: self.imageView.heightAnchor),
             ])
         }
+    }
+
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        self.updateHotspotAccessibilityElements()
     }
 
     override func viewWillDisappear() {
@@ -106,6 +115,22 @@ class ImageEditorHotspotModeViewController: NSViewController {
             self.layoutEngine.hotspotKindForCreation = .polygon
         }
     }
+
+    //MARK: - Accessibility
+    private var accessibilityElements: [ImageEditorHotspotAccessibilityElement] = []
+    private func updateHotspotAccessibilityElements() {
+        let newElements = self.layoutEngine.hotspots.map { hotspot -> ImageEditorHotspotAccessibilityElement in
+            if let existingElement = self.accessibilityElements.first(where: { $0.hotspot.imageHotspot == hotspot.imageHotspot }) {
+                return existingElement
+            }
+            return ImageEditorHotspotAccessibilityElement(hotspot: hotspot, hotspotView: self.hotspotView, modelController: self.viewModel.modelController, isEditable: true)
+        }
+
+        newElements.forEach { $0.refresh() }
+
+        self.accessibilityElements = newElements
+        self.hotspotView.setAccessibilityChildren(newElements)
+    }
 }
 
 extension ImageEditorHotspotModeViewController: PageContentEditor {
@@ -117,6 +142,7 @@ extension ImageEditorHotspotModeViewController: ImageEditorHotspotLayoutEngineDe
     func layoutDidChange(in layoutEngine: ImageEditorHotspotLayoutEngine) {
         self.hotspotView.layoutEngineDidChange()
         self.viewModel.linkEditor.updateSelectedLink()
+        self.updateHotspotAccessibilityElements()
     }
 
     func didCommitEdit(in layoutEngine: ImageEditorHotspotLayoutEngine) {

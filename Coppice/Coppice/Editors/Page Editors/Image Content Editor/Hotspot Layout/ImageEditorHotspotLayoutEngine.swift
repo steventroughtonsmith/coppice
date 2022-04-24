@@ -164,6 +164,13 @@ class ImageEditorHotspotLayoutEngine {
         }
         return false
     }
+
+    //MARK: - Accessibility
+    func accessibilityMoveHandle(atIndex index: Int, of hotspot: ImageEditorHotspot, byDelta delta: CGPoint) -> CGPoint {
+        let delta = hotspot.accessibilityMoveHandle(atIndex: index, byDelta: delta)
+        self.delegate?.layoutDidChange(in: self)
+        return delta
+    }
 }
 
 enum ImageEditorHotspotMode {
@@ -199,6 +206,9 @@ protocol ImageEditorHotspot: AnyObject {
     func draggedEvent(at point: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int)
     func upEvent(at point: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int) -> Bool
     func movedEvent(at point: CGPoint)
+
+    //MARK: - Accessibility
+    func accessibilityMoveHandle(atIndex index: Int, byDelta delta: CGPoint) -> CGPoint
 }
 
 extension ImageEditorHotspot {

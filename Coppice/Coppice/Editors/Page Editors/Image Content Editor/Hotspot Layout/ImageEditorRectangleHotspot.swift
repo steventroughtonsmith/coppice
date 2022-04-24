@@ -208,6 +208,16 @@ class ImageEditorRectangleHotspot: ImageEditorHotspot {
         //TODO: implement
     }
 
+    func accessibilityMoveHandle(atIndex index: Int, byDelta delta: CGPoint) -> CGPoint {
+        let handles = self.editingHandleRectsByDragKind(forScale: 1).sorted { $0.handle.drawingOrder < $1.handle.drawingOrder }
+        guard let (handle, handleRect) = handles[safe: index] else {
+            return .zero
+        }
+        let dragState = DragState(initialPoint: handleRect.midPoint, initialRect: self.rect, handle: handle)
+        self.resizeHotspot(dragState: dragState, delta: delta, modifier: [])
+        return delta
+    }
+
 
     //MARK: - Handle Helpers
     private func dragHandle(at point: CGPoint) -> DragHandle? {

@@ -173,6 +173,15 @@ class ImageEditorPolygonHotspot: ImageEditorHotspot {
         //Implement
     }
 
+    func accessibilityMoveHandle(atIndex index: Int, byDelta delta: CGPoint) -> CGPoint {
+        let handleRects = self.editingHandleRects()
+        guard let handleRect = handleRects[safe: index] else {
+            return .zero
+        }
+        let dragState = DragState(downPoint: handleRect.midPoint, initialPoints: self.points, dragHandle: .resizeHandle(index))
+        return self.moveHandle(at: index, dragState: dragState, delta: delta, modifiers: [])
+    }
+
     //MARK: - Handle Helpers
     private func dragHandle(at point: CGPoint) -> DragHandle? {
         switch self.mode {
@@ -232,9 +241,9 @@ class ImageEditorPolygonHotspot: ImageEditorHotspot {
         }
     }
 
-    private func moveHandle(at index: Int, dragState: DragState, delta: CGPoint, modifiers: LayoutEventModifiers) {
+    @discardableResult private func moveHandle(at index: Int, dragState: DragState, delta: CGPoint, modifiers: LayoutEventModifiers) -> CGPoint {
         guard self.isEditable, let pointToMove = dragState.initialPoints[safe: index] else {
-            return
+            return .zero
         }
 
         let newPoint = pointToMove.plus(delta).bounded(within: CGRect(origin: .zero, size: self.imageSize))
@@ -242,6 +251,7 @@ class ImageEditorPolygonHotspot: ImageEditorHotspot {
         var newPoints = dragState.initialPoints
         newPoints[index] = newPoint
         self.points = newPoints
+        return newPoint.minus(pointToMove)
     }
 
     private func moveHotspot(dragState: DragState, delta: CGPoint, modifiers: LayoutEventModifiers) {

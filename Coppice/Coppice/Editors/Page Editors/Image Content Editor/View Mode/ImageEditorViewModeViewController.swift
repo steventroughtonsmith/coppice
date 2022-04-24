@@ -130,7 +130,7 @@ class ImageEditorViewModeViewController: NSViewController {
     //MARK: - Accessibility
     private func updateHotspotAccessibilityElements() {
         let newElements = self.layoutEngine.visibleHotspots.map {
-            ImageEditorHotspotAccessibilityElement(hotspot: $0, hotspotView: self.hotspotView, modelController: self.viewModel.modelController)
+            ImageEditorHotspotAccessibilityElement(hotspot: $0, hotspotView: self.hotspotView, modelController: self.viewModel.modelController, isEditable: false)
         }
         self.hotspotView.setAccessibilityChildren(newElements)
     }
