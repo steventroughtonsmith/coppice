@@ -8,8 +8,10 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ImageEditorHotspotModeViewController" customModule="Coppice" customModuleProvider="target">
             <connections>
+                <outlet property="hotspotTypeSegmentedControl" destination="0gd-lG-A88" id="Uvr-3W-JLq"/>
                 <outlet property="hotspotView" destination="Yve-pG-P57" id="ftH-iw-bGT"/>
                 <outlet property="imageView" destination="cdi-Rx-7vC" id="mbN-bI-kEk"/>
+                <outlet property="proOverlay" destination="vu4-lg-Ufc" id="oHA-YH-4nK"/>
                 <outlet property="view" destination="mRc-p8-x0q" id="o3C-Zs-w6d"/>
             </connections>
         </customObject>
@@ -43,20 +45,40 @@
                         <action selector="toggleHotspotKind:" target="-2" id="OBR-t9-WCo"/>
                     </connections>
                 </segmentedControl>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="vu4-lg-Ufc" customClass="HotspotTypeProOverlayView" customModule="Coppice" customModuleProvider="target">
+                    <rect key="frame" x="214" y="28" width="108" height="26"/>
+                    <subviews>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sCa-bR-xPk">
+                            <rect key="frame" x="31" y="-2" width="46" height="27"/>
+                            <buttonCell key="cell" type="push" title="Pro" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="arc-aZ-NbV" customClass="ProButtonCell" customModule="Coppice" customModuleProvider="target">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="smallSystem"/>
+                            </buttonCell>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="108" id="6vF-u0-pxj"/>
+                        <constraint firstItem="sCa-bR-xPk" firstAttribute="centerX" secondItem="vu4-lg-Ufc" secondAttribute="centerX" id="mIN-ik-Zs6"/>
+                        <constraint firstItem="sCa-bR-xPk" firstAttribute="centerY" secondItem="vu4-lg-Ufc" secondAttribute="centerY" id="raw-XS-JoP"/>
+                    </constraints>
+                </customView>
             </subviews>
             <constraints>
                 <constraint firstItem="Yve-pG-P57" firstAttribute="centerY" secondItem="mRc-p8-x0q" secondAttribute="centerY" id="2kq-l3-h6z"/>
                 <constraint firstItem="Yve-pG-P57" firstAttribute="top" relation="greaterThanOrEqual" secondItem="mRc-p8-x0q" secondAttribute="top" id="IRu-XZ-RaL"/>
                 <constraint firstItem="cdi-Rx-7vC" firstAttribute="leading" secondItem="mRc-p8-x0q" secondAttribute="leading" id="JL4-OX-YbF"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Yve-pG-P57" secondAttribute="trailing" id="Nfc-F4-4ou"/>
+                <constraint firstItem="vu4-lg-Ufc" firstAttribute="trailing" secondItem="0gd-lG-A88" secondAttribute="trailing" constant="3" id="Tvo-T2-fRh"/>
                 <constraint firstAttribute="bottom" secondItem="0gd-lG-A88" secondAttribute="bottom" constant="30" id="V2a-Aj-jMP"/>
                 <constraint firstItem="Yve-pG-P57" firstAttribute="centerX" secondItem="mRc-p8-x0q" secondAttribute="centerX" id="Wvb-GA-2UT"/>
                 <constraint firstAttribute="bottom" secondItem="cdi-Rx-7vC" secondAttribute="bottom" id="Ykv-1E-ySc"/>
                 <constraint firstItem="Yve-pG-P57" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="mRc-p8-x0q" secondAttribute="leading" id="bsN-TY-wBN"/>
                 <constraint firstAttribute="trailing" secondItem="cdi-Rx-7vC" secondAttribute="trailing" id="eJQ-9l-Nu6"/>
                 <constraint firstItem="cdi-Rx-7vC" firstAttribute="top" secondItem="mRc-p8-x0q" secondAttribute="top" id="efD-Kw-fax"/>
+                <constraint firstItem="vu4-lg-Ufc" firstAttribute="bottom" secondItem="0gd-lG-A88" secondAttribute="bottom" constant="2" id="hlm-wq-4K2"/>
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Yve-pG-P57" secondAttribute="bottom" id="iG0-9r-e6Z"/>
                 <constraint firstItem="0gd-lG-A88" firstAttribute="centerX" secondItem="mRc-p8-x0q" secondAttribute="centerX" id="kVf-AI-Fam"/>
+                <constraint firstItem="vu4-lg-Ufc" firstAttribute="top" secondItem="0gd-lG-A88" secondAttribute="top" constant="-2" id="rjD-yK-wQg"/>
             </constraints>
             <connections>
                 <outlet property="hotspotView" destination="Yve-pG-P57" id="0vS-BK-ySI"/>

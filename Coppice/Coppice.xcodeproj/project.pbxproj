@@ -100,6 +100,7 @@
 		993D2C0024157196002E5BAC /* SourceListOutlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993D2BFF24157196002E5BAC /* SourceListOutlineView.swift */; };
 		994253EF244F49A7008272E6 /* CanvasListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994253EE244F49A7008272E6 /* CanvasListViewModelTests.swift */; };
 		9946649C2812FB5600A08522 /* ImageEditorHotspotAccessibilityElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9946649B2812FB5600A08522 /* ImageEditorHotspotAccessibilityElement.swift */; };
+		9946649E2816C1A100A08522 /* HotspotTypeProOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9946649D2816C1A100A08522 /* HotspotTypeProOverlay.swift */; };
 		99488A9B23BA392E009954AF /* SmallCanvasCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99488A9A23BA392E009954AF /* SmallCanvasCell.swift */; };
 		99488A9F23BA3954009954AF /* LargeCanvasCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99488A9E23BA3954009954AF /* LargeCanvasCell.swift */; };
 		99488AA323BA3983009954AF /* SmallCanvasCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99488AA223BA3983009954AF /* SmallCanvasCell.xib */; };
@@ -556,6 +557,7 @@
 		993D2BFF24157196002E5BAC /* SourceListOutlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceListOutlineView.swift; sourceTree = "<group>"; };
 		994253EE244F49A7008272E6 /* CanvasListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CanvasListViewModelTests.swift; path = "CoppiceTests/Unit Tests/Canvases Editor/Canvas List/CanvasListViewModelTests.swift"; sourceTree = SOURCE_ROOT; };
 		9946649B2812FB5600A08522 /* ImageEditorHotspotAccessibilityElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorHotspotAccessibilityElement.swift; sourceTree = "<group>"; };
+		9946649D2816C1A100A08522 /* HotspotTypeProOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotspotTypeProOverlay.swift; sourceTree = "<group>"; };
 		99488A9A23BA392E009954AF /* SmallCanvasCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallCanvasCell.swift; sourceTree = "<group>"; };
 		99488A9E23BA3954009954AF /* LargeCanvasCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeCanvasCell.swift; sourceTree = "<group>"; };
 		99488AA223BA3983009954AF /* SmallCanvasCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SmallCanvasCell.xib; sourceTree = "<group>"; };
@@ -996,6 +998,7 @@
 				99757C1527EE1FFD005C8A48 /* ImageEditorHotspotModeView.swift */,
 				9918674D27A4465D00A1CC3E /* ImageEditorHotspotModeViewController.swift */,
 				9918674E27A4465D00A1CC3E /* ImageEditorHotspotModeViewController.xib */,
+				9946649D2816C1A100A08522 /* HotspotTypeProOverlay.swift */,
 			);
 			path = "Hotspot Mode";
 			sourceTree = "<group>";
@@ -2414,6 +2417,7 @@
 				99C03F07232A8ED200EB7516 /* CanvasElementView.swift in Sources */,
 				99581082230D7EFB00D996C4 /* CanvasEditorViewController.swift in Sources */,
 				998D077D2411578B004ADFF8 /* NSMenu+M3Extensions.swift in Sources */,
+				9946649E2816C1A100A08522 /* HotspotTypeProOverlay.swift in Sources */,
 				99581092230D92C600D996C4 /* CanvasPageViewController.swift in Sources */,
 				990F61A725222C2D00FA5A27 /* Subscriptions+LocalizedStrings.swift in Sources */,
 				99868746253DA104004B29B0 /* ProFeature.swift in Sources */,

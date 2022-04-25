@@ -13,6 +13,8 @@ import CoppiceCore
 class ImageEditorHotspotModeViewController: NSViewController {
     @IBOutlet weak var imageView: NSImageView!
     @IBOutlet var hotspotView: ImageEditorHotspotView!
+    @IBOutlet var proOverlay: HotspotTypeProOverlayView!
+    @IBOutlet var hotspotTypeSegmentedControl: TranslucentSegmentedControl!
 
     var enabled: Bool = true
 
@@ -39,7 +41,7 @@ class ImageEditorHotspotModeViewController: NSViewController {
         self.view.setAccessibilityElement(true)
         self.view.setAccessibilityRole(.layoutArea)
         self.view.setAccessibilityLabel("Image Hotspot Editor")
-        self.setupCreateHotspotAccessibilityActions()
+        self.setupCreateHotspotAccessibilityActions(isProEnabled: false)
     }
 
     override func viewWillAppear() {
@@ -55,6 +57,15 @@ class ImageEditorHotspotModeViewController: NSViewController {
             self?.layoutEngine.imageSize = imageSize
             self?.hotspotView.cropRect = imageSize.toRect()
             self?.layoutEngine.cropRect = imageSize.toRect()
+        }
+
+        self.subscribers[.proEnabled] = self.viewModel.$isProEnabled.sink { [weak self] isProEnabled in
+            self?.proOverlay.isHidden = isProEnabled
+            if isProEnabled == false {
+                self?.hotspotTypeSegmentedControl.setSelected(true, forSegment: 0)
+                self?.layoutEngine.hotspotKindForCreation = .rectangle
+            }
+            self?.setupCreateHotspotAccessibilityActions(isProEnabled: isProEnabled)
         }
 
         self.hotspotView.maintainsAspectRatio = (self.isInCanvas == false)
@@ -85,6 +96,7 @@ class ImageEditorHotspotModeViewController: NSViewController {
         case accessibilityDescription
         case image
         case imageEditorHotspots
+        case proEnabled
     }
 
     private var subscribers: [SubscriberKey: AnyCancellable] = [:]
@@ -109,6 +121,12 @@ class ImageEditorHotspotModeViewController: NSViewController {
 
     //MARK: - Actions
     @IBAction func toggleHotspotKind(_ sender: NSSegmentedControl) {
+        guard self.viewModel.isProEnabled else {
+            sender.setSelected(true, forSegment: 0)
+            self.layoutEngine.hotspotKindForCreation = .rectangle
+            return
+        }
+
         if sender.selectedSegment == 0 {
             self.layoutEngine.hotspotKindForCreation = .rectangle
         } else if sender.selectedSegment == 1 {
@@ -156,24 +174,26 @@ class ImageEditorHotspotModeViewController: NSViewController {
         self.hotspotView.setAccessibilityChildren(newElements)
     }
 
-    private func setupCreateHotspotAccessibilityActions() {
+    private func setupCreateHotspotAccessibilityActions(isProEnabled: Bool) {
         var customActions = [NSAccessibilityCustomAction]()
         customActions.append(NSAccessibilityCustomAction(name: "Create Rectangle Hotspot") {
             self.createRectangleHotspot()
             return true
         })
 
-        customActions.append(NSAccessibilityCustomAction(name: "Create Oval Hotspot") {
-            self.createOvalHotspot()
-            return true
-        })
-
-        let sides = [5, 6, 8, 10]
-        for side in sides {
-            customActions.append(NSAccessibilityCustomAction(name: "Create \(side)-sided Hotspot") {
-                self.createPolygonHotspot(withSides: side)
+        if isProEnabled {
+            customActions.append(NSAccessibilityCustomAction(name: "Create Oval Hotspot") {
+                self.createOvalHotspot()
                 return true
             })
+
+            let sides = [5, 6, 8, 10]
+            for side in sides {
+                customActions.append(NSAccessibilityCustomAction(name: "Create \(side)-sided Hotspot") {
+                    self.createPolygonHotspot(withSides: side)
+                    return true
+                })
+            }
         }
 
         self.hotspotView.setAccessibilityCustomActions(customActions.reversed())

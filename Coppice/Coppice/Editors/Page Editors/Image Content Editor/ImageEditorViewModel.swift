@@ -39,16 +39,25 @@ class ImageEditorViewModel: ViewModel {
             self?.updateHightlightedRect(withSearchString: searchString)
         }
 
+        self.subscribers[.isProEnabled] = CoppiceSubscriptionManager.shared.$activationResponse
+            .map { $0?.isActive ?? false }
+            .sink { [weak self] newValue in
+                self?.isProEnabled = newValue
+            }
+
         self.pageLinkManager?.setNeedsRescan()
     }
 
     let hotspotCollection: ImageHotspotCollection
+
+    @Published private(set) var isProEnabled = false
 
     //MARK: - Subscribers
     private enum SubscriberKey {
         case image
         case cropRect
         case searchString
+        case isProEnabled
     }
 
     private var subscribers: [SubscriberKey: AnyCancellable] = [:]
