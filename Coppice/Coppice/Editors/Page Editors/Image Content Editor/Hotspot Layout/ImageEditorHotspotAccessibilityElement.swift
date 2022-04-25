@@ -104,6 +104,13 @@ class ImageEditorHotspotAccessibilityElement: NSAccessibilityElement {
     }
 
     override func accessibilityPerformPress() -> Bool {
+        guard self.isEditable else {
+            guard let url = self.hotspot.url else {
+                return false
+            }
+            return NSWorkspace.shared.open(url)
+        }
+
         self.hotspot.layoutEngine?.deselectAll()
         self.hotspot.isSelected = true
         return true

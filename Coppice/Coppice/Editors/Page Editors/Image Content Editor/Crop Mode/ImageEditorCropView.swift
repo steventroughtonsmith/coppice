@@ -295,7 +295,13 @@ extension ImageEditorCropView: MovableHandleAccessibilityElementDelegate {
         var adjustedDelta = delta.multiplied(by: 0.5)
         let newCropRect = context.dragHandle.adjustedCropRect(withInitialRect: self.cropRect, delta: adjustedDelta, maxSize: self.imageSize)
         adjustedDelta.x = newCropRect.width - self.cropRect.width
-        adjustedDelta.y = -(newCropRect.height - self.cropRect.height)
+        if newCropRect.minX != self.cropRect.minX {
+            adjustedDelta.x *= -1
+        }
+        adjustedDelta.y = (newCropRect.height - self.cropRect.height)
+        if newCropRect.minY != self.cropRect.minY {
+            adjustedDelta.y *= -1
+        }
         let hasMoved = newCropRect != self.cropRect
         self.cropRect = newCropRect
         return hasMoved ? adjustedDelta : .zero
