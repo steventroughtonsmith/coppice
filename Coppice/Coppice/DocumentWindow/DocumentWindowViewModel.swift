@@ -41,6 +41,10 @@ class DocumentWindowViewModel: NSObject {
             if page.containingFolder == nil {
                 self.modelController.rootFolder.insert([page])
             }
+            if let imageContent = page.content as? ImagePageContent {
+                //Pre-generate the cropped images if needed
+                modelController.croppedImageCache.croppedImage(for: imageContent)
+            }
         }
 
         self.setupObservation()

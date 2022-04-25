@@ -49,7 +49,7 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                     <connections>
-                        <binding destination="-2" name="hidden" keyPath="self.viewModel.croppedImage" id="Uwe-gu-HOg">
+                        <binding destination="-2" name="hidden" keyPath="self.viewModel.image" id="MWZ-Pf-JrP">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>
@@ -66,6 +66,17 @@
                 <customView horizontalCompressionResistancePriority="251" verticalCompressionResistancePriority="251" placeholderIntrinsicWidth="163" placeholderIntrinsicHeight="96" translatesAutoresizingMaskIntoConstraints="NO" id="NcL-jm-nLM" customClass="ImageEditorHotspotView" customModule="Coppice" customModuleProvider="target">
                     <rect key="frame" x="159" y="88" width="163" height="96"/>
                 </customView>
+                <progressIndicator maxValue="100" indeterminate="YES" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="GcV-Al-egO">
+                    <rect key="frame" x="224" y="120" width="32" height="32"/>
+                    <connections>
+                        <binding destination="-2" name="animate" keyPath="self.viewModel.isLoading" id="VIx-2g-eMc"/>
+                        <binding destination="-2" name="hidden" keyPath="self.viewModel.isLoading" id="W0r-zM-cpC">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </progressIndicator>
             </subviews>
             <constraints>
                 <constraint firstItem="NcL-jm-nLM" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="SxK-8L-6C9" secondAttribute="leading" id="0UF-kB-uaK"/>
@@ -76,12 +87,14 @@
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="NcL-jm-nLM" secondAttribute="trailing" id="ADN-6Y-1aW"/>
                 <constraint firstAttribute="bottom" secondItem="Jrr-vg-V2r" secondAttribute="bottom" id="BIF-za-owf"/>
                 <constraint firstAttribute="trailing" secondItem="Jrr-vg-V2r" secondAttribute="trailing" id="CA3-38-4FP"/>
+                <constraint firstItem="GcV-Al-egO" firstAttribute="centerX" secondItem="SxK-8L-6C9" secondAttribute="centerX" id="EcW-ag-A98"/>
                 <constraint firstAttribute="bottom" secondItem="CyX-gS-Aru" secondAttribute="bottom" priority="999" constant="20" symbolic="YES" id="Hsz-Ix-IX7"/>
                 <constraint firstItem="NcL-jm-nLM" firstAttribute="centerY" secondItem="SxK-8L-6C9" secondAttribute="centerY" id="NMT-tU-YHW"/>
                 <constraint firstItem="CyX-gS-Aru" firstAttribute="leading" secondItem="SxK-8L-6C9" secondAttribute="leading" constant="20" symbolic="YES" id="OKi-XA-L3g"/>
                 <constraint firstItem="NcL-jm-nLM" firstAttribute="top" relation="greaterThanOrEqual" secondItem="SxK-8L-6C9" secondAttribute="top" id="bKW-EC-d8v"/>
                 <constraint firstAttribute="trailing" secondItem="CyX-gS-Aru" secondAttribute="trailing" priority="999" constant="20" symbolic="YES" id="biW-nN-kJk"/>
                 <constraint firstItem="Jrr-vg-V2r" firstAttribute="leading" secondItem="SxK-8L-6C9" secondAttribute="leading" id="oEC-JU-jOi"/>
+                <constraint firstItem="GcV-Al-egO" firstAttribute="centerY" secondItem="SxK-8L-6C9" secondAttribute="centerY" id="pm3-2p-7fv"/>
             </constraints>
             <connections>
                 <outlet property="hotspotView" destination="NcL-jm-nLM" id="u35-m6-3Ed"/>

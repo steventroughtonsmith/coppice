@@ -30,10 +30,10 @@ class ImageEditorViewModel: ViewModel {
         self.regenerateCroppedImage()
 
         self.subscribers[.image] = imageContent.publisher(for: \.image).receive(on: DispatchQueue.main).sink { [weak self] _ in
-            self?.regenerateCroppedImage()
+            self?.needsRegenerateCroppedImage = true
         }
         self.subscribers[.cropRect] = imageContent.publisher(for: \.cropRect).receive(on: DispatchQueue.main).sink { [weak self] _ in
-            self?.regenerateCroppedImage()
+            self?.needsRegenerateCroppedImage = true
         }
         self.subscribers[.searchString] = documentWindowViewModel.publisher(for: \.searchString).sink { [weak self] searchString in
             self?.updateHightlightedRect(withSearchString: searchString)
@@ -75,6 +75,9 @@ class ImageEditorViewModel: ViewModel {
             keyPaths.insert("imageContent.cropRect")
         } else if key == #keyPath(croppedImage) {
             keyPaths.insert("cachedCroppedImage")
+        } else if key == #keyPath(isLoading) {
+            keyPaths.insert("imageContent.image")
+            keyPaths.insert("cachedCroppedImage")
         }
         return keyPaths
     }
@@ -84,7 +87,7 @@ class ImageEditorViewModel: ViewModel {
         set {
             self.documentWindowViewModel.registerStartOfEditing()
             self.imageContent.setImage(newValue, operation: .replace)
-            self.regenerateCroppedImage()
+            self.needsRegenerateCroppedImage = true
         }
     }
 
@@ -92,12 +95,16 @@ class ImageEditorViewModel: ViewModel {
         get { self.imageContent.cropRect }
         set {
             self.imageContent.cropRect = newValue
-            self.regenerateCroppedImage()
+            self.needsRegenerateCroppedImage = true
         }
     }
 
     @objc dynamic var accessibilityDescription: String? {
         return self.imageContent.imageDescription
+    }
+
+    @objc dynamic var isLoading: Bool {
+        return self.image != nil && self.cachedCroppedImage == nil
     }
 
     //MARK: - Cropped Image
@@ -109,21 +116,25 @@ class ImageEditorViewModel: ViewModel {
         }
     }
 
-    private func regenerateCroppedImage() {
-        guard let image = self.image else {
+    private var needsRegenerateCroppedImage: Bool = false {
+        didSet {
+            NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.regenerateCroppedImage), object: nil)
+            if self.needsRegenerateCroppedImage {
+                self.perform(#selector(self.regenerateCroppedImage), with: nil, afterDelay: 0)
+            }
+        }
+    }
+
+    @objc dynamic private func regenerateCroppedImage() {
+        guard self.image != nil else {
             self.cachedCroppedImage = nil
             return
         }
 
-        let croppedImage = NSImage(size: self.cropRect.size)
-        croppedImage.lockFocus()
-        //TODO: iOS don't flip the image
-        image.draw(in: CGRect(origin: .zero, size: self.cropRect.size), from: self.cropRect.flipped(in: CGRect(origin: .zero, size: image.size)), operation: .sourceOver, fraction: 1, respectFlipped: true, hints: nil)
-        croppedImage.unlockFocus()
-
-        self.cachedCroppedImage = croppedImage
+        self.documentWindowViewModel.modelController.croppedImageCache.croppedImage(for: self.imageContent) { [weak self] image in
+            self?.cachedCroppedImage = image
+        }
     }
-
 
 	//MARK: - Rotation
 	func rotateLeft() {

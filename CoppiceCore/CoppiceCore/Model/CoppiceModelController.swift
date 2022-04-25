@@ -12,6 +12,7 @@ import M3Data
 public class CoppiceModelController: NSObject, ModelController {
     public var allCollections = [ModelType: Any]()
     public let settings = ModelSettings()
+    public let croppedImageCache = CroppedImageCache()
 
     public lazy var identifier: UUID = {
         if let identifierString = self.settings.string(for: .documentIdentifier),
