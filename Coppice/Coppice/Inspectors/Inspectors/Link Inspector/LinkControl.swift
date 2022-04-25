@@ -108,6 +108,8 @@ class LinkControl: NSView {
         textField.setContentHuggingPriority(.defaultLow, for: .horizontal)
         textField.font = NSFont.systemFont(ofSize: NSFont.systemFontSize)
         textField.isEditable = true
+        textField.setAccessibilityLabel("Link")
+        textField.setAccessibilityHelp("Type a page title or URL, use the up and down keys to select a completion and the enter key to create the link")
         return textField
     }()
 
@@ -120,6 +122,7 @@ class LinkControl: NSView {
         button.widthAnchor.constraint(equalToConstant: 25).isActive = true
         button.bezelStyle = .shadowlessSquare
         button.showsBorderOnlyWhileMouseInside = true
+        button.setAccessibilityTitle("Clear Link")
         return button
     }()
 

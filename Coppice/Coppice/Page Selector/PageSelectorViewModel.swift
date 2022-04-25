@@ -230,4 +230,15 @@ class PageSelectorRow: NSObject {
         }
         return keyPaths
     }
+
+    var accessibilityTitle: String? {
+        switch self.rowType {
+        case .page, .externalLink:
+            return self.title
+        case .contentType(let contentType):
+            return "Create \(contentType.localizedName)"
+        case .header, .divider:
+            return nil
+        }
+    }
 }

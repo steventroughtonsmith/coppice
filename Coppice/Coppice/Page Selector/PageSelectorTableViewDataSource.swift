@@ -48,6 +48,9 @@ class PageSelectorTableViewDataSource: NSObject {
     private func reloadData() {
         self.tableView?.reloadData()
         self.delegate?.didReloadTable(for: self)
+
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(accessibilityAnnounceCurrentlySelectedItem), object: nil)
+        self.perform(#selector(accessibilityAnnounceCurrentlySelectedItem), with: nil, afterDelay: 2)
     }
 
     func selectNext() {
@@ -64,6 +67,8 @@ class PageSelectorTableViewDataSource: NSObject {
 
         tableView.selectRowIndexes(IndexSet(integer: nextRowIndex), byExtendingSelection: false)
         tableView.scrollRowToVisible(nextRowIndex)
+
+        self.accessibilityAnnounceCurrentlySelectedItem()
     }
 
     func selectPrevious() {
@@ -79,6 +84,8 @@ class PageSelectorTableViewDataSource: NSObject {
         }
         tableView.selectRowIndexes(IndexSet(integer: nextRowIndex), byExtendingSelection: false)
         tableView.scrollRowToVisible(nextRowIndex)
+
+        self.accessibilityAnnounceCurrentlySelectedItem()
     }
 
     func selectRow(at point: NSPoint) {
@@ -96,6 +103,21 @@ class PageSelectorTableViewDataSource: NSObject {
         }
 
         tableView.selectRowIndexes(IndexSet(integer: row), byExtendingSelection: false)
+    }
+
+    //MARK: - Accessibility
+    @objc dynamic func accessibilityAnnounceCurrentlySelectedItem() {
+        guard
+            let tableView = self.tableView,
+            let selectedPageRowTitle = self.viewModel.rows[safe: tableView.selectedRow]?.accessibilityTitle
+        else {
+            return
+        }
+
+        NSAccessibility.post(element: NSApplication.shared.mainWindow as Any, notification: .announcementRequested, userInfo: [
+            .announcement: selectedPageRowTitle,
+            .priority: NSAccessibilityPriorityLevel.high.rawValue,
+        ])
     }
 }
 
