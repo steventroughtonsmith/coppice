@@ -109,6 +109,8 @@ class SystemProfileInfoItemCreator {
         "19,2": "(21.5\", 2019)",
         "20,1": "(27\", 2020)",
         "20,2": "(27\", 2020)",
+        "21,1": "(24\", 2021)",
+        "21,2": "(24\", 2021)",
     ]
 
     private static let iMacProModels = [
@@ -120,6 +122,7 @@ class SystemProfileInfoItemCreator {
         "6,2": "(Late 2012)",
         "7,1": "(Late 2014)",
         "8,1": "(2018)",
+        "9,1": "(2020)",
     ]
 
     private static let macProModels = [
@@ -157,6 +160,11 @@ class SystemProfileInfoItemCreator {
         "16,1": "(16\", 2019)",
         "16,2": "(13\", 2020)",
         "16,3": "(13\", 2020)",
+        "17,1": "(13\", M1, 2020)",
+        "18,1": "(16\", 2021)",
+        "18,2": "(16\", 2021)",
+        "18,3": "(14\", 2021)",
+        "18,4": "(14\", 2021)",
     ]
 
     private static let macBookAirModels = [
@@ -169,6 +177,12 @@ class SystemProfileInfoItemCreator {
         "8,1": "(13\", 2018)",
         "8,2": "(13\", 2019)",
         "9,1": "(13\", 2020)",
+        "10,1": "(2020)",
+    ]
+
+    private static let macStudioModels = [
+        "13,1": "(2022)",
+        "13,2": "(2022)",
     ]
 
     private static func displayModel(for value: Any) -> String? {
@@ -196,6 +210,9 @@ class SystemProfileInfoItemCreator {
         }
         if (modelID.hasPrefix("MacBook")) {
             return self.displayModel(for: modelID, prefix: "MacBook", modelName: "MacBook", models: self.macBookModels)
+        }
+        if (modelID.hasPrefix("Mac")) {
+            return self.displayModel(for: modelID, prefix: "Mac", modelName: "Mac Studio", models: self.macStudioModels)
         }
         return nil
     }
