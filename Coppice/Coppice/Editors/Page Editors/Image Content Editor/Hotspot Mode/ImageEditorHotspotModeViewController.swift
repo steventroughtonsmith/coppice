@@ -8,6 +8,7 @@
 
 import Cocoa
 import Combine
+import CoppiceCore
 
 class ImageEditorHotspotModeViewController: NSViewController {
     @IBOutlet weak var imageView: NSImageView!
@@ -36,8 +37,9 @@ class ImageEditorHotspotModeViewController: NSViewController {
         self.setupLayoutEngine()
         self.imageView.cell?.setAccessibilityElement(false)
         self.view.setAccessibilityElement(true)
-        self.view.setAccessibilityRole(.group)
+        self.view.setAccessibilityRole(.layoutArea)
         self.view.setAccessibilityLabel("Image Hotspot Editor")
+        self.setupCreateHotspotAccessibilityActions()
     }
 
     override func viewWillAppear() {
@@ -116,6 +118,28 @@ class ImageEditorHotspotModeViewController: NSViewController {
         }
     }
 
+    //MARK: - Creation
+    func createRectangleHotspot() {
+        guard let imageSize = self.viewModel.image?.size else {
+            return
+        }
+        self.viewModel.imageContent.hotspots.append(ImageHotspot.rectangle(centredInImageOfSize: imageSize))
+    }
+
+    func createOvalHotspot() {
+        guard let imageSize = self.viewModel.image?.size else {
+            return
+        }
+        self.viewModel.imageContent.hotspots.append(ImageHotspot.oval(centredInImageOfSize: imageSize))
+    }
+
+    func createPolygonHotspot(withSides sides: Int) {
+        guard let imageSize = self.viewModel.image?.size else {
+            return
+        }
+        self.viewModel.imageContent.hotspots.append(ImageHotspot.polygon(withSides: sides, centredInImageOfSize: imageSize))
+    }
+
     //MARK: - Accessibility
     private var accessibilityElements: [ImageEditorHotspotAccessibilityElement] = []
     private func updateHotspotAccessibilityElements() {
@@ -130,6 +154,29 @@ class ImageEditorHotspotModeViewController: NSViewController {
 
         self.accessibilityElements = newElements
         self.hotspotView.setAccessibilityChildren(newElements)
+    }
+
+    private func setupCreateHotspotAccessibilityActions() {
+        var customActions = [NSAccessibilityCustomAction]()
+        customActions.append(NSAccessibilityCustomAction(name: "Create Rectangle Hotspot") {
+            self.createRectangleHotspot()
+            return true
+        })
+
+        customActions.append(NSAccessibilityCustomAction(name: "Create Oval Hotspot") {
+            self.createOvalHotspot()
+            return true
+        })
+
+        let sides = [5, 6, 8, 10]
+        for side in sides {
+            customActions.append(NSAccessibilityCustomAction(name: "Create \(side)-sided Hotspot") {
+                self.createPolygonHotspot(withSides: side)
+                return true
+            })
+        }
+
+        self.hotspotView.setAccessibilityCustomActions(customActions.reversed())
     }
 }
 

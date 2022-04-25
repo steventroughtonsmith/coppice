@@ -86,3 +86,52 @@ public class ImageHotspot: NSObject {
                             link: self.link)
     }
 }
+
+extension ImageHotspot {
+    public static func rectangle(centredInImageOfSize size: CGSize) -> ImageHotspot {
+        return self.hotspot(.rectangle, centredInImageOfSize: size)
+    }
+
+    public static func oval(centredInImageOfSize size: CGSize) -> ImageHotspot {
+        return self.hotspot(.oval, centredInImageOfSize: size)
+    }
+
+    private static func hotspot(_ kind: Kind, centredInImageOfSize size: CGSize) -> ImageHotspot {
+        let hotspotSize = CGSize(width: 50, height: 50)
+        let rect = hotspotSize.centred(in: size.toRect())
+
+        return ImageHotspot(kind: kind, points: [
+            rect.point(atX: .min, y: .min),
+            rect.point(atX: .max, y: .min),
+            rect.point(atX: .max, y: .max),
+            rect.point(atX: .min, y: .max),
+        ])
+    }
+
+    public static func polygon(withSides sides: Int, centredInImageOfSize size: CGSize) -> ImageHotspot {
+        var points = [CGPoint]()
+
+        let centre = CGPoint(x: size.width / 2, y: size.height / 2)
+        let radius: CGFloat = 25
+
+        let initialAngle = -Double.pi / 2
+        let angleStep = (2 * Double.pi) / Double(sides)
+
+        (0..<sides).forEach {
+            let angle = initialAngle + Double($0) * angleStep
+            let x = centre.x + radius * cos(angle)
+            let y = centre.y + radius * sin(angle)
+
+            points.append(CGPoint(x: x.toDecimalPlaces(2), y: y.toDecimalPlaces(2)))
+        }
+
+        return ImageHotspot(kind: .polygon, points: points)
+    }
+}
+
+extension CGFloat {
+    func toDecimalPlaces(_ decimalPlaces: Int) -> CGFloat {
+        let factor = pow(10, CGFloat(decimalPlaces))
+        return (self * factor).rounded() / factor
+    }
+}

@@ -60,7 +60,6 @@ class TranslucentSegmentedCell: NSSegmentedCell {
     }
 
     override func drawSegment(_ segment: Int, inFrame frame: NSRect, with controlView: NSView) {
-        print("frame: \(frame)")
         super.drawSegment(segment, inFrame: frame, with: controlView)
     }
 }

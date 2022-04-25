@@ -123,12 +123,6 @@ class ImageEditorPolygonHotspot: ImageEditorHotspot {
             return
         }
 
-        switch dragHandle {
-        case .new: print("new")
-        case .move: print("move")
-        case .resizeHandle(let handle): print("resizeHandle(\(handle))")
-        }
-
         let dragState = DragState(downPoint: point, initialPoints: self.points, dragHandle: dragHandle)
         self.currentDragState = dragState
         if case .new = dragHandle {
