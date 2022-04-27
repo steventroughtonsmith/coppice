@@ -40,13 +40,13 @@ class ImageEditorInspectorViewController: BaseInspectorViewController {
         self.descriptionScrollViewHeight.constant = max(60, min(height, 150))
     }
 
-	@IBAction func rotateLeft(_ sender: Any) {
-		self.typedViewModel.rotateLeft()
-	}
-
-	@IBAction func rotateRight(_ sender: Any) {
-		self.typedViewModel.rotateRight()
-	}
+    @IBAction func rotate(_ sender: NSSegmentedControl) {
+        if sender.selectedSegment == 0 {
+            self.typedViewModel.rotateLeft()
+        } else {
+            self.typedViewModel.rotateRight()
+        }
+    }
 }
 
 extension ImageEditorInspectorViewController: NSTextViewDelegate {

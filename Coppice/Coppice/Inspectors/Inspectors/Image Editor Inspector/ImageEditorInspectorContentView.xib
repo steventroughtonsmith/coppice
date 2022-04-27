@@ -88,6 +88,9 @@
                                                     <segment toolTip="Rotate image 90º right" image="RotateRight" width="32" tag="1"/>
                                                 </segments>
                                             </segmentedCell>
+                                            <connections>
+                                                <action selector="rotate:" target="-2" id="d6A-SB-AIq"/>
+                                            </connections>
                                         </segmentedControl>
                                     </subviews>
                                     <constraints>

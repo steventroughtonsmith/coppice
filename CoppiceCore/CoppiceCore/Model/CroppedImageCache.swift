@@ -33,7 +33,7 @@ public class CroppedImageCache {
         }
 
         let cropRect = imageContent.cropRect
-        let cropKey = "\(page.id.stringRepresentation)_\(Int(cropRect.minX))_\(Int(cropRect.minY))_\(Int(cropRect.width))x\(Int(cropRect.height)))" as NSString
+        let cropKey = "\(page.id.stringRepresentation)_\(Int(cropRect.minX))_\(Int(cropRect.minY))_\(Int(cropRect.width))x\(Int(cropRect.height)))_\(imageContent.orientation.rawValue)" as NSString
 
         if let cachedImage = self.cache.object(forKey: cropKey) {
             completion?(cachedImage)
