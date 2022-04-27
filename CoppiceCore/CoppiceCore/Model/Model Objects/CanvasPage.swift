@@ -99,7 +99,7 @@ final public class CanvasPage: NSObject, CollectableModelObject {
     //MARK: - Helpers
     func contentSizeDidChange(to newSize: CGSize, oldSize: CGSize?) {
         var newFrame = self.frame
-        if let oldSize = oldSize {
+        if let oldSize = oldSize, oldSize != .zero {
             let scaleFactor = self.frame.width / oldSize.width
             newFrame.size = newSize.multiplied(by: scaleFactor)
         } else {

@@ -41,6 +41,7 @@ public class ImagePageContent: NSObject, PageContent {
     public func setImage(_ newImage: NSImage?, operation: ImageOperation) {
         self.undoManager?.beginUndoGrouping()
         let oldValue = self.image
+        self.image = newImage
         if newImage != oldValue, let image = newImage {
             switch operation {
             case .replace:
@@ -56,7 +57,6 @@ public class ImagePageContent: NSObject, PageContent {
             }
             self.page?.contentSizeDidChange(to: image.size, oldSize: oldValue?.size)
         }
-        self.image = newImage
         self.undoManager?.endUndoGrouping()
     }
 
