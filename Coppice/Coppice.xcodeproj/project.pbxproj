@@ -2830,7 +2830,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2021.2;
+				MARKETING_VERSION = 2022.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG TEST";
@@ -2989,7 +2989,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2021.2;
+				MARKETING_VERSION = 2022.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -3177,7 +3177,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = 2021.2;
+				MARKETING_VERSION = 2022.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice.CoppiceQuickLook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -3201,7 +3201,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = 2021.2;
+				MARKETING_VERSION = 2022.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice.CoppiceQuickLook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -3225,7 +3225,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = 2021.2;
+				MARKETING_VERSION = 2022.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice.CoppiceQuickLook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -3249,7 +3249,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = 2021.2;
+				MARKETING_VERSION = 2022.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice.CoppiceQuickLook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -3404,7 +3404,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2021.2;
+				MARKETING_VERSION = 2022.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -3435,7 +3435,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2021.2;
+				MARKETING_VERSION = 2022.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
