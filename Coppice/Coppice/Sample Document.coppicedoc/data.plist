@@ -33,7 +33,7 @@
 						<key>children</key>
 						<array/>
 						<key>frame</key>
-						<string>{{80.796875, 440.7578125}, {322, 185}}</string>
+						<string>{{81, 441}, {322, 185}}</string>
 						<key>id</key>
 						<string>CanvasPage_C10B3E19-F07F-41C6-BC59-C40FF1D266F6</string>
 						<key>pageID</key>
@@ -58,21 +58,21 @@
 								<key>children</key>
 								<array/>
 								<key>frame</key>
-								<string>{{210.6015625, -1015.296875}, {268, 169}}</string>
-								<key>id</key>
-								<string>CanvasPage_DC183BCE-F55B-4B48-9EA5-44502E50A308</string>
-								<key>pageID</key>
-								<string>Page_954F8308-CC20-439C-BFED-7BDDEF6AFC61</string>
-							</dict>
-							<dict>
-								<key>children</key>
-								<array/>
-								<key>frame</key>
 								<string>{{-11.04296875, -954.19140625}, {177, 106}}</string>
 								<key>id</key>
 								<string>CanvasPage_EDB64EF2-FF97-40C4-9256-EA9B832321D5</string>
 								<key>pageID</key>
 								<string>Page_5A704B52-0452-4039-8918-481366162DA2</string>
+							</dict>
+							<dict>
+								<key>children</key>
+								<array/>
+								<key>frame</key>
+								<string>{{-218.60546875, -969.89453125}, {184, 132}}</string>
+								<key>id</key>
+								<string>CanvasPage_FFAC9BB2-C064-41F2-A6A7-49D06B352EE9</string>
+								<key>pageID</key>
+								<string>Page_32ACD746-4D1E-4E30-BC88-10597069853E</string>
 							</dict>
 							<dict>
 								<key>children</key>
@@ -88,15 +88,15 @@
 								<key>children</key>
 								<array/>
 								<key>frame</key>
-								<string>{{-218.60546875, -969.89453125}, {184, 132}}</string>
+								<string>{{211, -1116}, {268, 270}}</string>
 								<key>id</key>
-								<string>CanvasPage_FFAC9BB2-C064-41F2-A6A7-49D06B352EE9</string>
+								<string>CanvasPage_DC183BCE-F55B-4B48-9EA5-44502E50A308</string>
 								<key>pageID</key>
-								<string>Page_32ACD746-4D1E-4E30-BC88-10597069853E</string>
+								<string>Page_954F8308-CC20-439C-BFED-7BDDEF6AFC61</string>
 							</dict>
 						</array>
 						<key>frame</key>
-						<string>{{-164.2578125, -590.46875}, {338, 200}}</string>
+						<string>{{-217, -574}, {373, 200}}</string>
 						<key>id</key>
 						<string>CanvasPage_C41FA204-087C-40D0-A15A-9F9F17523E05</string>
 						<key>pageID</key>
@@ -118,7 +118,7 @@
 						<key>children</key>
 						<array/>
 						<key>frame</key>
-						<string>{{-457.6953125, 408.453125}, {395, 424}}</string>
+						<string>{{-458, 408}, {380, 412}}</string>
 						<key>id</key>
 						<string>CanvasPage_DF5DAD2B-DDFA-4AF2-B5CF-7FD0307ADB14</string>
 						<key>pageID</key>
@@ -138,6 +138,17 @@
 						<key>pageID</key>
 						<string>Page_5B5199D0-F7D8-4BCE-9F3C-017D48A74A8F</string>
 					</dict>
+					<key>Page_D6B1951C-45AA-42B7-B4E4-B3FA3C2A4676</key>
+					<dict>
+						<key>children</key>
+						<array/>
+						<key>frame</key>
+						<string>{{-1217.45703125, 210.59765625}, {454, 383}}</string>
+						<key>id</key>
+						<string>CanvasPage_B1544FA5-D0EA-4534-82B3-28F7611C24F4</string>
+						<key>pageID</key>
+						<string>Page_D6B1951C-45AA-42B7-B4E4-B3FA3C2A4676</string>
+					</dict>
 				</dict>
 				<key>CanvasPage_9AD950ED-1D78-421B-BC21-44F2E1536AA6</key>
 				<dict>
@@ -146,11 +157,22 @@
 						<key>children</key>
 						<array/>
 						<key>frame</key>
-						<string>{{1115.734375, -97.453125}, {256, 256}}</string>
+						<string>{{1130, -95}, {256, 256}}</string>
 						<key>id</key>
 						<string>CanvasPage_5E1F42E4-795B-48C3-A3BB-A67F0467D0EC</string>
 						<key>pageID</key>
 						<string>Page_9D3F640C-D34B-4199-AAA2-66A50EB73DB3</string>
+					</dict>
+					<key>Page_B1CA31B5-52AF-4385-9FAD-C0A4FB9330E8</key>
+					<dict>
+						<key>children</key>
+						<array/>
+						<key>frame</key>
+						<string>{{1096, 100}, {469, 200}}</string>
+						<key>id</key>
+						<string>CanvasPage_7B1A09D0-93D3-4476-ACB0-D2938D84E238</string>
+						<key>pageID</key>
+						<string>Page_B1CA31B5-52AF-4385-9FAD-C0A4FB9330E8</string>
 					</dict>
 				</dict>
 				<key>CanvasPage_C10B3E19-F07F-41C6-BC59-C40FF1D266F6</key>
@@ -163,7 +185,7 @@
 								<key>children</key>
 								<array/>
 								<key>frame</key>
-								<string>{{653.234375, 899.64453125}, {311.7021276595745, 100}}</string>
+								<string>{{673, 925}, {312, 100}}</string>
 								<key>id</key>
 								<string>CanvasPage_D2F599F2-ED9B-4824-BF33-D5248A2D79A8</string>
 								<key>pageID</key>
@@ -180,9 +202,20 @@
 					<key>Page_AA4DFD1B-E6CB-498B-895B-69992D24571E</key>
 					<dict>
 						<key>children</key>
-						<array/>
+						<array>
+							<dict>
+								<key>children</key>
+								<array/>
+								<key>frame</key>
+								<string>{{1155, 611}, {309, 213}}</string>
+								<key>id</key>
+								<string>CanvasPage_8AE77420-A416-409A-92AF-0F6FEA916D46</string>
+								<key>pageID</key>
+								<string>Page_28E15839-4892-433D-869D-9BA2A58062EB</string>
+							</dict>
+						</array>
 						<key>frame</key>
-						<string>{{565, 527}, {385, 213}}</string>
+						<string>{{661, 599}, {386, 236}}</string>
 						<key>id</key>
 						<string>CanvasPage_79169389-EC6E-4AD8-9E9D-8EFA0BBF495C</string>
 						<key>pageID</key>
@@ -196,7 +229,7 @@
 						<key>children</key>
 						<array/>
 						<key>frame</key>
-						<string>{{320.77734375, -626.71875}, {361, 275}}</string>
+						<string>{{275, -583}, {383, 222}}</string>
 						<key>id</key>
 						<string>CanvasPage_BAEFA6F6-1553-42C9-9A16-492DF93A8C95</string>
 						<key>pageID</key>
@@ -207,7 +240,7 @@
 						<key>children</key>
 						<array/>
 						<key>frame</key>
-						<string>{{-610, -558}, {283, 135}}</string>
+						<string>{{-599, -541}, {283, 135}}</string>
 						<key>id</key>
 						<string>CanvasPage_02E318D1-FDC5-49FC-BB1D-7B87266B96BE</string>
 						<key>pageID</key>
@@ -224,25 +257,25 @@
 								<key>children</key>
 								<array/>
 								<key>frame</key>
-								<string>{{1141, -245}, {209, 129}}</string>
-								<key>id</key>
-								<string>CanvasPage_163220FF-8A14-42AC-86B2-6E12E1B5DCD4</string>
-								<key>pageID</key>
-								<string>Page_B335F5A3-20DA-4950-BCDF-19A3758B453F</string>
-							</dict>
-							<dict>
-								<key>children</key>
-								<array/>
-								<key>frame</key>
-								<string>{{1142, -430}, {207, 160}}</string>
+								<string>{{1134, -491}, {207, 160}}</string>
 								<key>id</key>
 								<string>CanvasPage_2E10377C-79DC-4953-9958-D2A5846937D9</string>
 								<key>pageID</key>
 								<string>Page_2936E0F0-0B47-4234-97C4-042B9930CBC8</string>
 							</dict>
+							<dict>
+								<key>children</key>
+								<array/>
+								<key>frame</key>
+								<string>{{1130, -287}, {209, 129}}</string>
+								<key>id</key>
+								<string>CanvasPage_163220FF-8A14-42AC-86B2-6E12E1B5DCD4</string>
+								<key>pageID</key>
+								<string>Page_B335F5A3-20DA-4950-BCDF-19A3758B453F</string>
+							</dict>
 						</array>
 						<key>frame</key>
-						<string>{{713, -313}, {244, 194}}</string>
+						<string>{{719, -328}, {244, 194}}</string>
 						<key>id</key>
 						<string>CanvasPage_265F4FDA-BE7E-4553-ADE5-8FDF29B673DF</string>
 						<key>pageID</key>
@@ -256,7 +289,7 @@
 								<key>children</key>
 								<array/>
 								<key>frame</key>
-								<string>{{1260.09375, 269.47005208333326}, {150, 123.66666666666666}}</string>
+								<string>{{1225, 298}, {150, 124}}</string>
 								<key>id</key>
 								<string>CanvasPage_B6645949-C620-4BDB-A115-F27DCC578C99</string>
 								<key>pageID</key>
@@ -264,7 +297,7 @@
 							</dict>
 						</array>
 						<key>frame</key>
-						<string>{{751.50390625, 204.16015625}, {356, 234}}</string>
+						<string>{{707, 184}, {356, 337}}</string>
 						<key>id</key>
 						<string>CanvasPage_AFD83EA5-861B-49A3-B06D-17997B413961</string>
 						<key>pageID</key>
@@ -275,7 +308,7 @@
 						<key>children</key>
 						<array/>
 						<key>frame</key>
-						<string>{{723.95703125, -47.6953125}, {223, 155}}</string>
+						<string>{{731, -78}, {232, 205}}</string>
 						<key>id</key>
 						<string>CanvasPage_9AD950ED-1D78-421B-BC21-44F2E1536AA6</string>
 						<key>pageID</key>
@@ -300,7 +333,7 @@
 						<key>children</key>
 						<array/>
 						<key>frame</key>
-						<string>{{-951.734375, 458.51171875}, {335, 230}}</string>
+						<string>{{-951, 459}, {335, 230}}</string>
 						<key>id</key>
 						<string>CanvasPage_569BD1C5-FE48-4114-A899-E8EF1419A2B6</string>
 						<key>pageID</key>
@@ -329,10 +362,19 @@
 			<integer>1</integer>
 			<key>theme</key>
 			<string>dark</string>
+			<key>thumbnail</key>
+			<dict>
+				<key>filename</key>
+				<string>5C45392D-B2B5-4372-92A3-084A047A76AD-thumbnail.png</string>
+				<key>metadata</key>
+				<dict/>
+				<key>type</key>
+				<string>thumbnail</string>
+			</dict>
 			<key>title</key>
 			<string>Welcome</string>
 			<key>viewPort</key>
-			<string>{{-797, -496}, {1565, 1178}}</string>
+			<string>{{-877, -422}, {1769, 1390}}</string>
 			<key>zoomFactor</key>
 			<real>1</real>
 		</dict>
@@ -342,6 +384,7 @@
 		<dict>
 			<key>contents</key>
 			<array>
+				<string>Page_28E15839-4892-433D-869D-9BA2A58062EB</string>
 				<string>Page_534D6ADC-FDC6-4668-9130-5CDBDAB3680A</string>
 				<string>Page_954F8308-CC20-439C-BFED-7BDDEF6AFC61</string>
 				<string>Page_AA4DFD1B-E6CB-498B-895B-69992D24571E</string>
@@ -462,7 +505,35 @@
 			<key>content</key>
 			<dict>
 				<key>filename</key>
+				<string>28E15839-4892-433D-869D-9BA2A58062EB.rtf</string>
+				<key>type</key>
+				<string>text</string>
+			</dict>
+			<key>dateCreated</key>
+			<date>2022-05-02T11:46:57Z</date>
+			<key>dateModified</key>
+			<date>2022-05-02T11:46:57Z</date>
+			<key>id</key>
+			<string>Page_28E15839-4892-433D-869D-9BA2A58062EB</string>
+			<key>title</key>
+			<string>Image Hotspots</string>
+		</dict>
+		<dict>
+			<key>allowsAutoLinking</key>
+			<true/>
+			<key>content</key>
+			<dict>
+				<key>filename</key>
 				<string>2936E0F0-0B47-4234-97C4-042B9930CBC8.png</string>
+				<key>metadata</key>
+				<dict>
+					<key>cropRect</key>
+					<string>{{0, 0}, {207, 160}}</string>
+					<key>hotspots</key>
+					<array/>
+					<key>orientation</key>
+					<integer>1</integer>
+				</dict>
 				<key>type</key>
 				<string>image</string>
 			</dict>
@@ -515,7 +586,7 @@
 		</dict>
 		<dict>
 			<key>allowsAutoLinking</key>
-			<true/>
+			<false/>
 			<key>content</key>
 			<dict>
 				<key>filename</key>
@@ -534,7 +605,7 @@
 		</dict>
 		<dict>
 			<key>allowsAutoLinking</key>
-			<true/>
+			<false/>
 			<key>content</key>
 			<dict>
 				<key>filename</key>
@@ -572,7 +643,7 @@
 		</dict>
 		<dict>
 			<key>allowsAutoLinking</key>
-			<true/>
+			<false/>
 			<key>content</key>
 			<dict>
 				<key>filename</key>
@@ -634,6 +705,15 @@
 			<dict>
 				<key>filename</key>
 				<string>78F65DEE-7100-4223-AE9F-B7A148346791.png</string>
+				<key>metadata</key>
+				<dict>
+					<key>cropRect</key>
+					<string>{{0, 0}, {278, 209}}</string>
+					<key>hotspots</key>
+					<array/>
+					<key>orientation</key>
+					<integer>1</integer>
+				</dict>
 				<key>type</key>
 				<string>image</string>
 			</dict>
@@ -648,7 +728,7 @@
 		</dict>
 		<dict>
 			<key>allowsAutoLinking</key>
-			<true/>
+			<false/>
 			<key>content</key>
 			<dict>
 				<key>filename</key>
@@ -710,6 +790,15 @@
 			<dict>
 				<key>filename</key>
 				<string>9D3F640C-D34B-4199-AAA2-66A50EB73DB3.png</string>
+				<key>metadata</key>
+				<dict>
+					<key>cropRect</key>
+					<string>{{0, 0}, {256, 256}}</string>
+					<key>hotspots</key>
+					<array/>
+					<key>orientation</key>
+					<integer>1</integer>
+				</dict>
 				<key>type</key>
 				<string>image</string>
 			</dict>
@@ -743,7 +832,7 @@
 		</dict>
 		<dict>
 			<key>allowsAutoLinking</key>
-			<true/>
+			<false/>
 			<key>content</key>
 			<dict>
 				<key>filename</key>
@@ -767,6 +856,15 @@
 			<dict>
 				<key>filename</key>
 				<string>B335F5A3-20DA-4950-BCDF-19A3758B453F.png</string>
+				<key>metadata</key>
+				<dict>
+					<key>cropRect</key>
+					<string>{{0, 0}, {209, 129}}</string>
+					<key>hotspots</key>
+					<array/>
+					<key>orientation</key>
+					<integer>1</integer>
+				</dict>
 				<key>type</key>
 				<string>image</string>
 			</dict>
@@ -786,6 +884,15 @@
 			<dict>
 				<key>filename</key>
 				<string>D0D70A91-7263-4DC7-97DF-C39F529BCBBB.png</string>
+				<key>metadata</key>
+				<dict>
+					<key>cropRect</key>
+					<string>{{0, 0}, {586, 188}}</string>
+					<key>hotspots</key>
+					<array/>
+					<key>orientation</key>
+					<integer>1</integer>
+				</dict>
 				<key>type</key>
 				<string>image</string>
 			</dict>
@@ -800,7 +907,7 @@
 		</dict>
 		<dict>
 			<key>allowsAutoLinking</key>
-			<true/>
+			<false/>
 			<key>content</key>
 			<dict>
 				<key>filename</key>
@@ -857,7 +964,7 @@
 		</dict>
 		<dict>
 			<key>allowsAutoLinking</key>
-			<true/>
+			<false/>
 			<key>content</key>
 			<dict>
 				<key>filename</key>
