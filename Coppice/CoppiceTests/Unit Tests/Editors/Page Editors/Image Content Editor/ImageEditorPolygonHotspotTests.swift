@@ -290,19 +290,19 @@ class ImageEditorPolygonHotspotTests: XCTestCase {
         let hotspot = ImageEditorPolygonHotspot(points: [], mode: .creating, imageSize: CGSize(width: 200, height: 200))
         hotspot.layoutEngine = self.layoutEngine
         hotspot.downEvent(at: CGPoint(x: 30, y: 40), modifiers: [], eventCount: 1)
-        XCTAssertTrue(hotspot.upEvent(at: CGPoint(x: 30, y: 40), modifiers: [], eventCount: 1))
+        XCTAssertFalse(hotspot.upEvent(at: CGPoint(x: 30, y: 40), modifiers: [], eventCount: 1))
         XCTAssertEqual(hotspot.mode, .creating)
 
         hotspot.downEvent(at: CGPoint(x: 130, y: 140), modifiers: [], eventCount: 1)
-        XCTAssertTrue(hotspot.upEvent(at: CGPoint(x: 130, y: 140), modifiers: [], eventCount: 1))
+        XCTAssertFalse(hotspot.upEvent(at: CGPoint(x: 130, y: 140), modifiers: [], eventCount: 1))
         XCTAssertEqual(hotspot.mode, .creating)
 
         hotspot.downEvent(at: CGPoint(x: 30, y: 140), modifiers: [], eventCount: 1)
-        XCTAssertTrue(hotspot.upEvent(at: CGPoint(x: 30, y: 140), modifiers: [], eventCount: 1))
+        XCTAssertFalse(hotspot.upEvent(at: CGPoint(x: 30, y: 140), modifiers: [], eventCount: 1))
         XCTAssertEqual(hotspot.mode, .creating)
 
         hotspot.downEvent(at: CGPoint(x: 30, y: 40), modifiers: [], eventCount: 1)
-		XCTAssertFalse(hotspot.upEvent(at: CGPoint(x: 30, y: 40), modifiers: [], eventCount: 1))
+		XCTAssertTrue(hotspot.upEvent(at: CGPoint(x: 30, y: 40), modifiers: [], eventCount: 1))
 
         XCTAssertEqual(hotspot.points, [CGPoint(x: 30, y: 40), CGPoint(x: 130, y: 140), CGPoint(x: 30, y: 140)])
         XCTAssertEqual(hotspot.mode, .complete)
@@ -312,16 +312,16 @@ class ImageEditorPolygonHotspotTests: XCTestCase {
         let hotspot = ImageEditorPolygonHotspot(points: [], mode: .creating, imageSize: CGSize(width: 200, height: 200))
         hotspot.layoutEngine = self.layoutEngine
         hotspot.downEvent(at: CGPoint(x: 30, y: 40), modifiers: [], eventCount: 1)
-        XCTAssertTrue(hotspot.upEvent(at: CGPoint(x: 30, y: 40), modifiers: [], eventCount: 1))
+        XCTAssertFalse(hotspot.upEvent(at: CGPoint(x: 30, y: 40), modifiers: [], eventCount: 1))
 
         hotspot.downEvent(at: CGPoint(x: 130, y: 140), modifiers: [], eventCount: 1)
-        XCTAssertTrue(hotspot.upEvent(at: CGPoint(x: 130, y: 140), modifiers: [], eventCount: 1))
+        XCTAssertFalse(hotspot.upEvent(at: CGPoint(x: 130, y: 140), modifiers: [], eventCount: 1))
 
         hotspot.downEvent(at: CGPoint(x: 30, y: 140), modifiers: [], eventCount: 1)
-        XCTAssertTrue(hotspot.upEvent(at: CGPoint(x: 30, y: 140), modifiers: [], eventCount: 1))
+        XCTAssertFalse(hotspot.upEvent(at: CGPoint(x: 30, y: 140), modifiers: [], eventCount: 1))
 
         hotspot.downEvent(at: CGPoint(x: 30, y: 140), modifiers: [], eventCount: 2)
-        XCTAssertFalse(hotspot.upEvent(at: CGPoint(x: 30, y: 140), modifiers: [], eventCount: 2))
+        XCTAssertTrue(hotspot.upEvent(at: CGPoint(x: 30, y: 140), modifiers: [], eventCount: 2))
 
         XCTAssertEqual(hotspot.points, [CGPoint(x: 30, y: 40), CGPoint(x: 130, y: 140), CGPoint(x: 30, y: 140)])
         XCTAssertEqual(hotspot.mode, .complete)
@@ -478,7 +478,7 @@ class ImageEditorPolygonHotspotTests: XCTestCase {
     func test_selecting_clickingWithoutDraggingSetsIsSelectedToTrue() throws {
         let hotspot = self.createHotspot()
         hotspot.downEvent(at: CGPoint(x: 85, y: 85), modifiers: [], eventCount: 1)
-        XCTAssertFalse(hotspot.upEvent(at: CGPoint(x: 85, y: 85), modifiers: [], eventCount: 1))
+        XCTAssertTrue(hotspot.upEvent(at: CGPoint(x: 85, y: 85), modifiers: [], eventCount: 1))
 
         XCTAssertTrue(hotspot.isSelected)
     }
@@ -486,7 +486,7 @@ class ImageEditorPolygonHotspotTests: XCTestCase {
     func test_selecting_holdingShiftWhileClickingSetsSelectedToTrueIfFalse() throws {
         let hotspot = self.createHotspot()
         hotspot.downEvent(at: CGPoint(x: 85, y: 85), modifiers: .shift, eventCount: 1)
-        XCTAssertFalse(hotspot.upEvent(at: CGPoint(x: 85, y: 85), modifiers: .shift, eventCount: 1))
+        XCTAssertTrue(hotspot.upEvent(at: CGPoint(x: 85, y: 85), modifiers: .shift, eventCount: 1))
 
         XCTAssertTrue(hotspot.isSelected)
     }
@@ -495,7 +495,7 @@ class ImageEditorPolygonHotspotTests: XCTestCase {
         let hotspot = self.createHotspot()
         hotspot.isSelected = true
         hotspot.downEvent(at: CGPoint(x: 85, y: 85), modifiers: .shift, eventCount: 1)
-        XCTAssertFalse(hotspot.upEvent(at: CGPoint(x: 85, y: 85), modifiers: .shift, eventCount: 1))
+        XCTAssertTrue(hotspot.upEvent(at: CGPoint(x: 85, y: 85), modifiers: .shift, eventCount: 1))
 
         XCTAssertFalse(hotspot.isSelected)
     }
@@ -507,7 +507,7 @@ class ImageEditorPolygonHotspotTests: XCTestCase {
         let hotspot = self.createHotspot()
         hotspot.layoutEngine = mockLayoutEngine
         hotspot.downEvent(at: CGPoint(x: 85, y: 85), modifiers: [], eventCount: 1)
-        XCTAssertFalse(hotspot.upEvent(at: CGPoint(x: 85, y: 85), modifiers: [], eventCount: 1))
+        XCTAssertTrue(hotspot.upEvent(at: CGPoint(x: 85, y: 85), modifiers: [], eventCount: 1))
 
         XCTAssertTrue(mockLayoutEngine.deselectAllMock.wasCalled)
     }
@@ -518,7 +518,7 @@ class ImageEditorPolygonHotspotTests: XCTestCase {
 
         let hotspot = self.createHotspot()
         hotspot.downEvent(at: CGPoint(x: 85, y: 85), modifiers: .shift, eventCount: 1)
-        XCTAssertFalse(hotspot.upEvent(at: CGPoint(x: 85, y: 85), modifiers: .shift, eventCount: 1))
+        XCTAssertTrue(hotspot.upEvent(at: CGPoint(x: 85, y: 85), modifiers: .shift, eventCount: 1))
 
         XCTAssertFalse(mockLayoutEngine.deselectAllMock.wasCalled)
     }
@@ -528,7 +528,7 @@ class ImageEditorPolygonHotspotTests: XCTestCase {
 
         let hotspot = self.createHotspot()
         hotspot.downEvent(at: CGPoint(x: 85, y: 85), modifiers: [], eventCount: 1)
-        XCTAssertFalse(hotspot.upEvent(at: CGPoint(x: 85, y: 85), modifiers: [], eventCount: 1))
+        XCTAssertTrue(hotspot.upEvent(at: CGPoint(x: 85, y: 85), modifiers: [], eventCount: 1))
 
         XCTAssertFalse(hotspot.isSelected)
     }
@@ -538,7 +538,7 @@ class ImageEditorPolygonHotspotTests: XCTestCase {
 
         let hotspot = self.createHotspot()
         hotspot.downEvent(at: CGPoint(x: 85, y: 85), modifiers: .option, eventCount: 1)
-        XCTAssertFalse(hotspot.upEvent(at: CGPoint(x: 85, y: 85), modifiers: .option, eventCount: 1))
+        XCTAssertTrue(hotspot.upEvent(at: CGPoint(x: 85, y: 85), modifiers: .option, eventCount: 1))
 
         XCTAssertTrue(hotspot.isSelected)
     }
@@ -546,7 +546,7 @@ class ImageEditorPolygonHotspotTests: XCTestCase {
     func test_selecting_doesNotSelectInCreateMode() throws {
         let hotspot = self.createHotspot(mode: .creating)
         hotspot.downEvent(at: CGPoint(x: 85, y: 85), modifiers: [], eventCount: 1)
-        XCTAssertTrue(hotspot.upEvent(at: CGPoint(x: 85, y: 85), modifiers: [], eventCount: 1))
+        XCTAssertFalse(hotspot.upEvent(at: CGPoint(x: 85, y: 85), modifiers: [], eventCount: 1))
 
         XCTAssertFalse(hotspot.isSelected)
     }

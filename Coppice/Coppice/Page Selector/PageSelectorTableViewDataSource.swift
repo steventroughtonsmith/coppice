@@ -49,8 +49,8 @@ class PageSelectorTableViewDataSource: NSObject {
         self.tableView?.reloadData()
         self.delegate?.didReloadTable(for: self)
 
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(accessibilityAnnounceCurrentlySelectedItem), object: nil)
-        self.perform(#selector(accessibilityAnnounceCurrentlySelectedItem), with: nil, afterDelay: 2)
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.accessibilityAnnounceCurrentlySelectedItem), object: nil)
+        self.perform(#selector(self.accessibilityAnnounceCurrentlySelectedItem), with: nil, afterDelay: 2)
     }
 
     func selectNext() {

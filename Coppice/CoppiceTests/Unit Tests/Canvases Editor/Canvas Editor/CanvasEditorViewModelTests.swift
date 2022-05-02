@@ -436,6 +436,8 @@ class CanvasEditorViewModelTests: XCTestCase {
 
     //MARK: - Helpers
     class TestCanvasEditorView: CanvasEditorView {
+        func themeDidChange() {}
+
         func notifyAccessibilityOfMove(_ canvasPages: [CanvasPage]) {}
 
         var flashedPages = [CanvasPage]()

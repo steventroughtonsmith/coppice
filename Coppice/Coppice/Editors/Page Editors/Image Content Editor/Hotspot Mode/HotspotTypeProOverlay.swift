@@ -6,7 +6,6 @@
 //  Copyright © 2022 M Cubed Software. All rights reserved.
 //
 
-import Foundation
 import AppKit
 
 class HotspotTypeProOverlayView: NSView {

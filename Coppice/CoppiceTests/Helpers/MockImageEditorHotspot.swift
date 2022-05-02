@@ -62,4 +62,8 @@ class MockImageEditorHotspot: ImageEditorHotspot {
     func movedEvent(at point: CGPoint) {
         self.movedEventMock.called(withArguments: point)
     }
+
+    func accessibilityMoveHandle(atIndex index: Int, byDelta delta: CGPoint) -> CGPoint {
+        return delta
+    }
 }

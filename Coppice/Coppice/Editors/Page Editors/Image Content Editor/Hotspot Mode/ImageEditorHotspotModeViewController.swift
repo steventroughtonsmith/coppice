@@ -42,6 +42,8 @@ class ImageEditorHotspotModeViewController: NSViewController {
         self.view.setAccessibilityRole(.layoutArea)
         self.view.setAccessibilityLabel("Image Hotspot Editor")
         self.setupCreateHotspotAccessibilityActions(isProEnabled: false)
+
+        self.hotspotTypeSegmentedControl.appearance = NSAppearance(named: .darkAqua)
     }
 
     override func viewWillAppear() {
