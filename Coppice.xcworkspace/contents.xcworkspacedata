@@ -5,16 +5,16 @@
       location = "group:CoppiceCI.xctestplan">
    </FileRef>
    <FileRef
-      location = "group:Coppice/../.swiftformat">
-   </FileRef>
-   <FileRef
-      location = "group:Coppice/Coppice.xcodeproj">
+      location = "group:CoppiceUI.xctestplan">
    </FileRef>
    <FileRef
       location = "group:Coppice.xctestplan">
    </FileRef>
    <FileRef
-      location = "group:CoppiceUI.xctestplan">
+      location = "group:Coppice/../.swiftformat">
+   </FileRef>
+   <FileRef
+      location = "group:Coppice/Coppice.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:CoppiceCore/CoppiceCore.xcodeproj">

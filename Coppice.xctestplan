@@ -12,6 +12,9 @@
     "commandLineArgumentEntries" : [
       {
         "argument" : "-UnitTestsEnabled YES"
+      },
+      {
+        "argument" : "-M3DebugAPIURL \"https:\/\/dev-mcubedsw-com:8890\/api\""
       }
     ]
   },

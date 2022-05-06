@@ -99,6 +99,10 @@
 		993D2BFE2412FB1C002E5BAC /* SplitViewContainable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993D2BFD2412FB1C002E5BAC /* SplitViewContainable.swift */; };
 		993D2C0024157196002E5BAC /* SourceListOutlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993D2BFF24157196002E5BAC /* SourceListOutlineView.swift */; };
 		994253EF244F49A7008272E6 /* CanvasListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994253EE244F49A7008272E6 /* CanvasListViewModelTests.swift */; };
+		9944F79628201B080012BFAA /* M3Data.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 99CC5B8227F1F1E00084ADFF /* M3Data.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9944F798282021D30012BFAA /* SidebarUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9944F797282021D30012BFAA /* SidebarUITests.swift */; };
+		9944F79A2820240E0012BFAA /* SidebarUITestsDocument.coppicedoc in Resources */ = {isa = PBXBuildFile; fileRef = 9944F7992820240E0012BFAA /* SidebarUITestsDocument.coppicedoc */; };
+		9944F79D282024230012BFAA /* XCTestExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9944F79C282024230012BFAA /* XCTestExtensions.swift */; };
 		9946649C2812FB5600A08522 /* ImageEditorHotspotAccessibilityElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9946649B2812FB5600A08522 /* ImageEditorHotspotAccessibilityElement.swift */; };
 		9946649E2816C1A100A08522 /* HotspotTypeProOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9946649D2816C1A100A08522 /* HotspotTypeProOverlay.swift */; };
 		99488A9B23BA392E009954AF /* SmallCanvasCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99488A9A23BA392E009954AF /* SmallCanvasCell.swift */; };
@@ -434,6 +438,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				9944F79628201B080012BFAA /* M3Data.framework in Copy Frameworks */,
 				999617FF249D0CC300A1AE24 /* Sparkle.framework in Copy Frameworks */,
 				99D0C87F24C5EDB4002EEBFA /* CoppiceCore.framework in Copy Frameworks */,
 			);
@@ -556,6 +561,9 @@
 		993D2BFD2412FB1C002E5BAC /* SplitViewContainable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewContainable.swift; sourceTree = "<group>"; };
 		993D2BFF24157196002E5BAC /* SourceListOutlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceListOutlineView.swift; sourceTree = "<group>"; };
 		994253EE244F49A7008272E6 /* CanvasListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CanvasListViewModelTests.swift; path = "CoppiceTests/Unit Tests/Canvases Editor/Canvas List/CanvasListViewModelTests.swift"; sourceTree = SOURCE_ROOT; };
+		9944F797282021D30012BFAA /* SidebarUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarUITests.swift; sourceTree = "<group>"; };
+		9944F7992820240E0012BFAA /* SidebarUITestsDocument.coppicedoc */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SidebarUITestsDocument.coppicedoc; sourceTree = "<group>"; };
+		9944F79C282024230012BFAA /* XCTestExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestExtensions.swift; sourceTree = "<group>"; };
 		9946649B2812FB5600A08522 /* ImageEditorHotspotAccessibilityElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorHotspotAccessibilityElement.swift; sourceTree = "<group>"; };
 		9946649D2816C1A100A08522 /* HotspotTypeProOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotspotTypeProOverlay.swift; sourceTree = "<group>"; };
 		99488A9A23BA392E009954AF /* SmallCanvasCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallCanvasCell.swift; sourceTree = "<group>"; };
@@ -1180,6 +1188,14 @@
 				994253EE244F49A7008272E6 /* CanvasListViewModelTests.swift */,
 			);
 			path = "Canvas List";
+			sourceTree = "<group>";
+		};
+		9944F79B282024130012BFAA /* Test Documents */ = {
+			isa = PBXGroup;
+			children = (
+				9944F7992820240E0012BFAA /* SidebarUITestsDocument.coppicedoc */,
+			);
+			path = "Test Documents";
 			sourceTree = "<group>";
 		};
 		99488AAC23C37B77009954AF /* Thumbnail Generation */ = {
@@ -2023,10 +2039,13 @@
 		99FE01B022CD1038004D380D /* CoppiceUITests */ = {
 			isa = PBXGroup;
 			children = (
+				9944F79C282024230012BFAA /* XCTestExtensions.swift */,
 				99BF4716256D97140098EB98 /* BaseUITestCase.swift */,
 				99BF4722256D97A60098EB98 /* WelcomeScreenUITests.swift */,
 				99BF473D256EC49E0098EB98 /* TourWindowUITests.swift */,
 				9930A6EA25728CAC00E74AE5 /* HelpViewerUITests.swift */,
+				9944F797282021D30012BFAA /* SidebarUITests.swift */,
+				9944F79B282024130012BFAA /* Test Documents */,
 				99FE01B322CD1038004D380D /* Info.plist */,
 			);
 			path = CoppiceUITests;
@@ -2341,6 +2360,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9944F79A2820240E0012BFAA /* SidebarUITestsDocument.coppicedoc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2675,9 +2695,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9944F798282021D30012BFAA /* SidebarUITests.swift in Sources */,
 				99BF4723256D97A60098EB98 /* WelcomeScreenUITests.swift in Sources */,
 				99BF4717256D97140098EB98 /* BaseUITestCase.swift in Sources */,
 				9930A6EB25728CAC00E74AE5 /* HelpViewerUITests.swift in Sources */,
+				9944F79D282024230012BFAA /* XCTestExtensions.swift in Sources */,
 				99BF473E256EC49E0098EB98 /* TourWindowUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2790,7 +2812,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -2955,7 +2977,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -3307,7 +3329,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -3366,7 +3388,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;

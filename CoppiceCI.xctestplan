@@ -13,7 +13,11 @@
     }
   ],
   "defaultOptions" : {
-
+    "commandLineArgumentEntries" : [
+      {
+        "argument" : "-M3DebugAPIURL \"https:\/\/dev-mcubedsw-com:8890\/api\""
+      }
+    ]
   },
   "testTargets" : [
     {
