@@ -79,6 +79,7 @@ class ImageEditorViewModeViewController: NSViewController {
         self.subscribers[.image]?.cancel()
         self.subscribers[.cropRect]?.cancel()
 		self.subscribers[.searchResultsWereClicked] = nil
+        self.subscribers[.imageEditorHotspots] = nil
     }
 
     //MARK: - Subscribers

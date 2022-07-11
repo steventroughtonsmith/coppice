@@ -36,7 +36,6 @@ class ImageEditorHotspotModeViewController: NSViewController {
     //MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupLayoutEngine()
         self.imageView.cell?.setAccessibilityElement(false)
         self.view.setAccessibilityElement(true)
         self.view.setAccessibilityRole(.layoutArea)
@@ -83,6 +82,7 @@ class ImageEditorHotspotModeViewController: NSViewController {
     override func viewDidAppear() {
         super.viewDidAppear()
         self.updateHotspotAccessibilityElements()
+        self.setupLayoutEngine()
     }
 
     override func viewWillDisappear() {
@@ -91,6 +91,8 @@ class ImageEditorHotspotModeViewController: NSViewController {
 
         self.subscribers[.image]?.cancel()
         self.subscribers[.image] = nil
+
+        self.subscribers[.imageEditorHotspots] = nil
     }
 
     //MARK: - Subscribers
