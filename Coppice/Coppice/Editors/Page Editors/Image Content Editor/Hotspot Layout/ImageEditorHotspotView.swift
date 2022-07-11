@@ -174,8 +174,16 @@ class ImageEditorHotspotView: NSView {
         self.layoutEngine?.flagsChanged(at: pointInImage, modifiers: event.layoutEventModifiers)
     }
 
-    override func performKeyEquivalent(with event: NSEvent) -> Bool {
-        return self.layoutEngine?.performKeyEquivalent(with: event.keyCode, modifiers: event.layoutEventModifiers) ?? false
+    override func keyDown(with event: NSEvent) {
+        if (self.layoutEngine?.handleKeyDown(with: event.keyCode, modifiers: event.layoutEventModifiers) ?? false) == false {
+            super.keyDown(with: event)
+        }
+    }
+
+    override func keyUp(with event: NSEvent) {
+        if (self.layoutEngine?.handleKeyUp(with: event.keyCode, modifiers: event.layoutEventModifiers) ?? false) == false {
+            super.keyUp(with: event)
+        }
     }
 
     //MARK: - Selection
