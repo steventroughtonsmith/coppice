@@ -21,9 +21,9 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cdi-Rx-7vC">
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="251" verticalCompressionResistancePriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cdi-Rx-7vC">
                     <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
-                    <imageCell key="cell" selectable="YES" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="MMl-l6-HVQ"/>
+                    <imageCell key="cell" selectable="YES" alignment="left" imageScaling="proportionallyDown" id="MMl-l6-HVQ"/>
                     <connections>
                         <binding destination="-2" name="value" keyPath="self.viewModel.image" id="SYc-MM-VjV"/>
                     </connections>
