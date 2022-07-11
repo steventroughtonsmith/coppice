@@ -1,6 +1,6 @@
 #!/usr/bin/env xcrun swift
 
-import Foundation
+import Cocoa //import Foundation seems to cause problems
 
 func main() -> Int {
     do {
