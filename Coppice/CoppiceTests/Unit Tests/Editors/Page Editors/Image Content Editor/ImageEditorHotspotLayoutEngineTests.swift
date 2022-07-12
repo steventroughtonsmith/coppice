@@ -163,7 +163,8 @@ class ImageEditorHotspotLayoutEngineTests: XCTestCase {
         self.mockHotspot1.isSelected = true
         self.mockHotspot3.isSelected = true
 
-        XCTAssertTrue(self.layoutEngine.performKeyEquivalent(with: UInt16(kVK_Delete), modifiers: []))
+        XCTAssertTrue(self.layoutEngine.handleKeyDown(with: UInt16(kVK_Delete), modifiers: []))
+        XCTAssertTrue(self.layoutEngine.handleKeyUp(with: UInt16(kVK_Delete), modifiers: []))
 
         XCTAssertEqual(self.layoutEngine.hotspots.count, 1)
         XCTAssertTrue(self.layoutEngine.hotspots[0] === self.mockHotspot2)
@@ -173,7 +174,8 @@ class ImageEditorHotspotLayoutEngineTests: XCTestCase {
         self.mockHotspot1.isSelected = true
         self.mockHotspot3.isSelected = true
 
-        XCTAssertTrue(self.layoutEngine.performKeyEquivalent(with: UInt16(kVK_Delete), modifiers: []))
+        XCTAssertTrue(self.layoutEngine.handleKeyDown(with: UInt16(kVK_Delete), modifiers: []))
+        XCTAssertTrue(self.layoutEngine.handleKeyUp(with: UInt16(kVK_Delete), modifiers: []))
 
         XCTAssertEqual(self.layoutEngine.hotspots.count, 1)
 
@@ -184,7 +186,8 @@ class ImageEditorHotspotLayoutEngineTests: XCTestCase {
         self.mockHotspot1.isSelected = true
         self.mockHotspot3.isSelected = true
 
-        XCTAssertTrue(self.layoutEngine.performKeyEquivalent(with: UInt16(kVK_Delete), modifiers: []))
+        XCTAssertTrue(self.layoutEngine.handleKeyDown(with: UInt16(kVK_Delete), modifiers: []))
+        XCTAssertTrue(self.layoutEngine.handleKeyUp(with: UInt16(kVK_Delete), modifiers: []))
 
         XCTAssertEqual(self.layoutEngine.hotspots.count, 1)
 
