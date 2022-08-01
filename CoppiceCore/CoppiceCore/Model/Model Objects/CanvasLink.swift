@@ -49,7 +49,7 @@ final public class CanvasLink: NSObject, CollectableModelObject {
     }
 
     public func update(fromPlistRepresentation plist: [ModelPlistKey : Any]) throws {
-        guard self.id.stringRepresentation == plist.attribute(withKey: .id) else {
+        guard self.id == plist.attribute(withKey: .id) else {
             throw ModelObjectUpdateErrors.idsDontMatch
         }
 
@@ -69,6 +69,17 @@ final public class CanvasLink: NSObject, CollectableModelObject {
         self.otherProperties = plist.filter { (key, _) -> Bool in
             return plistKeys.contains(key) == false
         }
+    }
+
+    //MARK: - Relationship Setup
+    public func objectWasInserted() {
+        self.$destinationPage.modelController = self.modelController
+        self.$sourcePage.modelController = self.modelController
+    }
+
+    public func objectWasDeleted() {
+        self.$destinationPage.performCleanUp()
+        self.$sourcePage.performCleanUp()
     }
 }
 

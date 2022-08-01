@@ -11,7 +11,7 @@ import M3Data
 import XCTest
 
 class ModelReaderTests: XCTestCase {
-    var testPlist: TestPlists.V2!
+    var testPlist: TestData.Plist.V3!
 
     var plistFileWrapper: FileWrapper!
     var contentFileWrapper: FileWrapper!
@@ -21,7 +21,7 @@ class ModelReaderTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        self.testPlist = TestPlists.V2()
+        self.testPlist = TestData.Plist.V3()
 
         let plistData = try! PropertyListSerialization.data(fromPropertyList: self.testPlist.plist, format: .xml, options: 0)
 
@@ -29,7 +29,7 @@ class ModelReaderTests: XCTestCase {
         self.contentFileWrapper = FileWrapper(directoryWithFileWrappers: self.testPlist.content.mapValues { FileWrapper(regularFileWithContents: $0) })
 
         self.modelController = CoppiceModelController(undoManager: UndoManager())
-        self.modelReader = ModelReader(modelController: self.modelController, plists: [Plist.V2.self])
+        self.modelReader = ModelReader(modelController: self.modelController, plists: [Plist.V2.self, Plist.V3.self])
     }
 
     func test_read_createsAllCanvasesFromPlist() {
@@ -85,6 +85,17 @@ class ModelReaderTests: XCTestCase {
         let ids = folders.map { $0.id }
         XCTAssertTrue(ids.contains(Folder.modelID(with: self.testPlist.folderIDs[0])))
         XCTAssertTrue(ids.contains(Folder.modelID(with: self.testPlist.folderIDs[1])))
+    }
+
+    func test_read_createsAllCanvasLinksFromPlist() {
+        XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper))
+
+        let canvasLinks = self.modelController.collection(for: CanvasLink.self).all
+        XCTAssertEqual(canvasLinks.count, 2)
+
+        let ids = canvasLinks.map { $0.id }
+        XCTAssertTrue(ids.contains(CanvasLink.modelID(with: self.testPlist.canvasLinkIDs[0])))
+        XCTAssertTrue(ids.contains(CanvasLink.modelID(with: self.testPlist.canvasLinkIDs[1])))
     }
 
     func test_read_doesntCreateNewCanvasIfOneAlreadyExistsWithID() {
@@ -150,7 +161,7 @@ class ModelReaderTests: XCTestCase {
         XCTAssertTrue(ids.contains(CanvasPage.modelID(with: self.testPlist.canvasPageIDs[2])))
     }
 
-    func test_read_doesntCreatenewFolderIfOneAlreadyExistsWithID() {
+    func test_read_doesntCreateNewFolderIfOneAlreadyExistsWithID() {
         self.modelController.collection(for: Folder.self).newObject() {
             $0.id = Folder.modelID(with: self.testPlist.folderIDs[0])
         }
@@ -163,6 +174,21 @@ class ModelReaderTests: XCTestCase {
         let ids = folders.map { $0.id }
         XCTAssertTrue(ids.contains(Folder.modelID(with: self.testPlist.folderIDs[0])))
         XCTAssertTrue(ids.contains(Folder.modelID(with: self.testPlist.folderIDs[1])))
+    }
+
+    func test_read_doesntCreateNewCanvasLinkIfOneAlreadyExistsWithID() {
+        self.modelController.collection(for: CanvasLink.self).newObject() {
+            $0.id = CanvasLink.modelID(with: self.testPlist.canvasLinkIDs[0])
+        }
+
+        XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper))
+
+        let canvasLinks = self.modelController.collection(for: CanvasLink.self).all
+        XCTAssertEqual(canvasLinks.count, 2)
+
+        let ids = canvasLinks.map { $0.id }
+        XCTAssertTrue(ids.contains(CanvasLink.modelID(with: self.testPlist.canvasLinkIDs[0])))
+        XCTAssertTrue(ids.contains(CanvasLink.modelID(with: self.testPlist.canvasLinkIDs[1])))
     }
 
     func test_read_removesAllExtraCanvasesFromModelController() {
@@ -221,12 +247,29 @@ class ModelReaderTests: XCTestCase {
         XCTAssertFalse(ids.contains(folderToRemove.id))
     }
 
+    func test_read_removesAllExtraCanvasLinksFromModelController() {
+        let canvasLinkToRemove = self.modelController.collection(for: CanvasLink.self).newObject()
+        XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper))
+
+        let canvasLinks = self.modelController.collection(for: CanvasLink.self).all
+        XCTAssertEqual(canvasLinks.count, 2)
+
+        let ids = canvasLinks.map { $0.id }
+        XCTAssertTrue(ids.contains(CanvasLink.modelID(with: self.testPlist.canvasLinkIDs[0])))
+        XCTAssertTrue(ids.contains(CanvasLink.modelID(with: self.testPlist.canvasLinkIDs[1])))
+        XCTAssertFalse(ids.contains(canvasLinkToRemove.id))
+    }
+
     func test_read_allRelationshipsAreCompleted() throws {
         XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper))
 
         let canvasPage1 = try XCTUnwrap(self.modelController.collection(for: CanvasPage.self).objectWithID(CanvasPage.modelID(with: self.testPlist.canvasPageIDs[0])))
         let canvasPage2 = try XCTUnwrap(self.modelController.collection(for: CanvasPage.self).objectWithID(CanvasPage.modelID(with: self.testPlist.canvasPageIDs[1])))
         let canvasPage3 = try XCTUnwrap(self.modelController.collection(for: CanvasPage.self).objectWithID(CanvasPage.modelID(with: self.testPlist.canvasPageIDs[2])))
+        let canvasPage4 = try XCTUnwrap(self.modelController.collection(for: CanvasPage.self).objectWithID(CanvasPage.modelID(with: self.testPlist.canvasPageIDs[3])))
+
+        let canvasLink1 = try XCTUnwrap(self.modelController.collection(for: CanvasLink.self).objectWithID(CanvasLink.modelID(with: self.testPlist.canvasLinkIDs[0])))
+        let canvasLink2 = try XCTUnwrap(self.modelController.collection(for: CanvasLink.self).objectWithID(CanvasLink.modelID(with: self.testPlist.canvasLinkIDs[1])))
 
         let page1 = try XCTUnwrap(self.modelController.collection(for: Page.self).objectWithID(Page.modelID(with: self.testPlist.pageIDs[0])))
         let page2 = try XCTUnwrap(self.modelController.collection(for: Page.self).objectWithID(Page.modelID(with: self.testPlist.pageIDs[1])))
@@ -241,12 +284,18 @@ class ModelReaderTests: XCTestCase {
         XCTAssertEqual(canvasPage1.page, page1)
         XCTAssertEqual(canvasPage2.page, page2)
         XCTAssertEqual(canvasPage3.page, page2)
+        XCTAssertEqual(canvasPage4.page, page3)
 
         XCTAssertEqual(canvasPage1.canvas, canvas1)
         XCTAssertEqual(canvasPage2.canvas, canvas1)
         XCTAssertEqual(canvasPage3.canvas, canvas2)
+        XCTAssertEqual(canvasPage4.canvas, canvas1)
 
-        XCTAssertEqual(canvasPage2.parent, canvasPage1)
+        XCTAssertEqual(canvasLink1.sourcePage, canvasPage1)
+        XCTAssertEqual(canvasLink2.sourcePage, canvasPage2)
+
+        XCTAssertEqual(canvasLink1.destinationPage, canvasPage2)
+        XCTAssertEqual(canvasLink2.destinationPage, canvasPage4)
 
         XCTAssertEqual(folder1.contents[safe: 0]?.id, page1.id)
         XCTAssertEqual(page1.containingFolder, folder1)
@@ -320,7 +369,8 @@ class ModelReaderTests: XCTestCase {
             "pages": [],
             "canvasPages": [],
             "folders": [],
-            "version": 2,//Plist.allPlists.last!.version,
+            "canvasLinks": [],
+            "version": Plist.allPlists.last!.version,
         ]
         let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
 
@@ -342,7 +392,8 @@ class ModelReaderTests: XCTestCase {
             ],
             "canvasPages": [],
             "folders": [],
-            "version": 2,//Plist.allPlists.last!.version,
+            "canvasLinks": [],
+            "version": Plist.allPlists.last!.version,
         ]
         let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
 
@@ -364,7 +415,8 @@ class ModelReaderTests: XCTestCase {
                 ["id": CanvasPage.modelID(with: UUID()).stringRepresentation],
             ],
             "folders": [],
-            "version": 2,//Plist.allPlists.last!.version,
+            "canvasLinks": [],
+            "version": Plist.allPlists.last!.version,
         ]
         let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
 
@@ -386,7 +438,8 @@ class ModelReaderTests: XCTestCase {
             "folders": [
                 ["id": Folder.modelID(with: UUID()).stringRepresentation],
             ],
-            "version": 2,//Plist.allPlists.last!.version,
+            "canvasLinks": [],
+            "version": Plist.allPlists.last!.version,
         ]
         let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
 
@@ -399,6 +452,8 @@ class ModelReaderTests: XCTestCase {
             XCTFail("Threw incorrect error: \(e)")
         }
     }
+
+    //As of version 3, canvas link updating can't fail as all properties are option
 }
 
 fileprivate class V1Plist: M3Data.ModelPlist {

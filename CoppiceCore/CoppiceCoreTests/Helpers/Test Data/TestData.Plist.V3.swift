@@ -1,18 +1,16 @@
 //
-//  V2Plist.swift
+//  V3Plist.swift
 //  CoppiceCoreTests
 //
-//  Created by Martin Pilkington on 31/07/2022.
+//  Created by Martin Pilkington on 01/08/2022.
 //
 
 import Foundation
 import CoppiceCore
 import AppKit
 
-extension TestPlists {
-    class V2 {
-        let canvasIDs = [UUID(), UUID()]
-
+extension TestData.Plist {
+    class V3: TestData {
         lazy var plistCanvases: [[String: Any]] = [
             [
                 "id": Canvas.modelID(with: self.canvasIDs[0]).stringRepresentation,
@@ -22,6 +20,9 @@ extension TestPlists {
                 "sortIndex": 2,
                 "theme": "auto",
                 "viewPort": NSStringFromRect(CGRect(x: 10, y: 20, width: 30, height: 40)),
+                "alwaysShowPageTitles": 0,
+                "closedPageHierarchies": [String: Any](),
+                "zoomFactor": 1,
             ],
             [
                 "id": Canvas.modelID(with: self.canvasIDs[1]).stringRepresentation,
@@ -30,10 +31,12 @@ extension TestPlists {
                 "dateModified": Date(timeIntervalSinceReferenceDate: 42),
                 "sortIndex": 1,
                 "theme": "light",
+                "alwaysShowPageTitles": 1,
+                "closedPageHierarchies": [String: Any](),
+                "zoomFactor": 1,
             ],
         ]
 
-        let pageIDs = [UUID(), UUID(), UUID()]
         lazy var plistPages: [[String: Any]] = [
             [
                 "id": Page.modelID(with: self.pageIDs[0]).stringRepresentation,
@@ -41,6 +44,7 @@ extension TestPlists {
                 "dateCreated": Date(timeIntervalSinceReferenceDate: 123),
                 "dateModified": Date(timeIntervalSinceReferenceDate: 456),
                 "content": ["type": "text", "filename": "\(self.pageIDs[0].uuidString).rtf"],
+                "allowsAutoLinking": 1,
             ],
             [
                 "id": Page.modelID(with: self.pageIDs[1]).stringRepresentation,
@@ -48,53 +52,70 @@ extension TestPlists {
                 "dateCreated": Date(timeIntervalSinceReferenceDate: 0),
                 "dateModified": Date(timeIntervalSinceReferenceDate: 0),
                 "userPreferredSize": NSStringFromSize(CGSize(width: 1024, height: 768)),
-                "content": ["type": "text"],
+                "content": ["type": "text", "filename": "\(self.pageIDs[1].uuidString).rtf"],
+                "allowsAutoLinking": 1,
             ],
             [
                 "id": Page.modelID(with: self.pageIDs[2]).stringRepresentation,
                 "title": "Page 3",
                 "dateCreated": Date(timeIntervalSinceReferenceDate: 999),
                 "dateModified": Date(timeIntervalSinceReferenceDate: 9999),
-                "content": ["type": "image", "filename": "\(self.pageIDs[2].uuidString).png", "metadata": ["description": "This is an image"]],
+                "content": ["type": "image", "filename": "\(self.pageIDs[2].uuidString).png", "metadata": [
+                    "description": "This is an image",
+                    "cropRect": NSStringFromRect(CGRect(x: 0, y: 0, width: 14, height: 13)),
+                    "hotspots": [Any](),
+                    "orientation": 1
+                ]],
+                "allowsAutoLinking": 1,
             ],
         ]
 
-        let canvasPageIDs = [UUID(), UUID(), UUID(), UUID()]
         lazy var plistCanvasPages: [[String: Any]] = [
             [
                 "id": CanvasPage.modelID(with: self.canvasPageIDs[0]).stringRepresentation,
                 "frame": NSStringFromRect(CGRect(x: 0, y: 1, width: 2, height: 3)),
                 "page": Page.modelID(with: self.pageIDs[0]).stringRepresentation,
                 "canvas": Canvas.modelID(with: self.canvasIDs[0]).stringRepresentation,
+                "zIndex": 0,
             ],
             [
                 "id": CanvasPage.modelID(with: self.canvasPageIDs[1]).stringRepresentation,
                 "frame": NSStringFromRect(CGRect(x: 30, y: 50, width: 200, height: 400)),
                 "page": Page.modelID(with: self.pageIDs[1]).stringRepresentation,
                 "canvas": Canvas.modelID(with: self.canvasIDs[0]).stringRepresentation,
-                "parent": CanvasPage.modelID(with: self.canvasPageIDs[0]).stringRepresentation,
+                "zIndex": 2,
             ],
             [
                 "id": CanvasPage.modelID(with: self.canvasPageIDs[2]).stringRepresentation,
                 "frame": NSStringFromRect(CGRect(x: -30, y: -2, width: 600, height: 40)),
                 "page": Page.modelID(with: self.pageIDs[1]).stringRepresentation,
                 "canvas": Canvas.modelID(with: self.canvasIDs[1]).stringRepresentation,
+                "zIndex": 0,
             ],
             [
                 "id": CanvasPage.modelID(with: self.canvasPageIDs[3]).stringRepresentation,
                 "frame": NSStringFromRect(CGRect(x: 280, y: 50, width: 200, height: 400)),
                 "page": Page.modelID(with: self.pageIDs[2]).stringRepresentation,
                 "canvas": Canvas.modelID(with: self.canvasIDs[0]).stringRepresentation,
-                "parent": CanvasPage.modelID(with: self.canvasPageIDs[1]).stringRepresentation,
+                "zIndex": 1,
             ],
         ]
 
-        lazy var content: [String: Data] = [
-            "\(self.pageIDs[0].uuidString).rtf": try! NSAttributedString(string: "Foo Bar").data(from: NSRange(location: 0, length: 7), documentAttributes: [.documentType: NSAttributedString.DocumentType.rtf]),
-            "\(self.pageIDs[2].uuidString).png": NSImage(named: "NSAddTemplate")!.pngData()!,
+        lazy var plistCanvasLinks: [[String: Any]] = [
+            [
+                "id": CanvasLink.modelID(with: self.canvasLinkIDs[0]).stringRepresentation,
+                "link": PageLink(destination: Page.modelID(with: self.pageIDs[1]), source: Page.modelID(with: self.pageIDs[0]), autoGenerated: false).url.absoluteString,
+                "destinationPage": CanvasPage.modelID(with: self.canvasPageIDs[1]).stringRepresentation,
+                "sourcePage": CanvasPage.modelID(with: self.canvasPageIDs[0]).stringRepresentation,
+            ],
+            [
+                "id": CanvasLink.modelID(with: self.canvasLinkIDs[1]).stringRepresentation,
+                "link": PageLink(destination: Page.modelID(with: self.pageIDs[2]), source: Page.modelID(with: self.pageIDs[1]), autoGenerated: false).url.absoluteString,
+                "destinationPage": CanvasPage.modelID(with: self.canvasPageIDs[3]).stringRepresentation,
+                "sourcePage": CanvasPage.modelID(with: self.canvasPageIDs[1]).stringRepresentation,
+            ],
         ]
 
-        let folderIDs = [UUID(), UUID()]
         lazy var plistFolders: [[String: Any]] = [
             [
                 "id": Folder.modelID(with: self.folderIDs[0]).stringRepresentation,
@@ -117,13 +138,27 @@ extension TestPlists {
         ]
 
 
+        lazy var content: [String: Data] = [
+            "\(self.pageIDs[0].uuidString).rtf": try! NSAttributedString(string: "Foo Bar").data(from: NSRange(location: 0, length: 7), documentAttributes: [.documentType: NSAttributedString.DocumentType.rtf]),
+            "\(self.pageIDs[2].uuidString).png": NSImage(named: "NSAddTemplate")!.pngData()!,
+        ]
+
+
+        let documentID = UUID(uuidString: "66FBC053-53A2-412D-918F-52C088E2F492")!
+        var plistSettings: [String: Any] {
+            return ["documentID": self.documentID.uuidString, "pageGroupExpanded": true]
+        }
+
+
         var plist: [String: Any] {
             return [
                 "canvases": self.plistCanvases,
                 "pages": self.plistPages,
                 "canvasPages": self.plistCanvasPages,
                 "folders": self.plistFolders,
-                "version": 2,
+                "canvasLinks": self.plistCanvasLinks,
+                "settings": self.plistSettings,
+                "version": 3,
             ]
         }
     }

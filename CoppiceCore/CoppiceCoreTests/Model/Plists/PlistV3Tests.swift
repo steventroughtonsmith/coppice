@@ -12,7 +12,7 @@ import M3Data
 
 final class PlistV3Tests: XCTestCase {
     func test_init_loadsTestPlistWithNoError() throws {
-        let plist = TestPlists.V3().plist
+        let plist = TestData.Plist.V3().plist
         XCTAssertNoThrow(try Plist.V3(plist: plist))
     }
 
