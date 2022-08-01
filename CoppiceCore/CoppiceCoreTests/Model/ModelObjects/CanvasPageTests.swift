@@ -23,14 +23,14 @@ class CanvasPageTests: XCTestCase {
     //MARK: - .plistRepresentation
     func test_plistRepresentation_containsID() throws {
         let canvasPage = CanvasPage.create(in: self.modelController)
-        let id = try XCTUnwrap(canvasPage.plistRepresentation["id"] as? String)
+        let id = try XCTUnwrap(canvasPage.plistRepresentation[.id] as? String)
         XCTAssertEqual(id, canvasPage.id.stringRepresentation)
     }
 
     func test_plistRepresentation_containsFrame() throws {
         let canvasPage = CanvasPage.create(in: self.modelController)
         canvasPage.frame = CGRect(x: 20, y: 30, width: 40, height: 50)
-        let frame = try XCTUnwrap(canvasPage.plistRepresentation["frame"] as? String)
+        let frame = try XCTUnwrap(canvasPage.plistRepresentation[.CanvasPage.frame] as? String)
         XCTAssertEqual(frame, NSStringFromRect(CGRect(x: 20, y: 30, width: 40, height: 50)))
     }
 
@@ -38,7 +38,7 @@ class CanvasPageTests: XCTestCase {
         let page = Page.create(in: self.modelController)
         let canvasPage = CanvasPage.create(in: self.modelController)
         canvasPage.page = page
-        let pageID = try XCTUnwrap(canvasPage.plistRepresentation["page"] as? String)
+        let pageID = try XCTUnwrap(canvasPage.plistRepresentation[.CanvasPage.page] as? String)
         XCTAssertEqual(pageID, page.id.stringRepresentation)
     }
 
@@ -46,7 +46,7 @@ class CanvasPageTests: XCTestCase {
         let canvas = Canvas.create(in: self.modelController)
         let canvasPage = CanvasPage.create(in: self.modelController)
         canvasPage.canvas = canvas
-        let canvasID = try XCTUnwrap(canvasPage.plistRepresentation["canvas"] as? String)
+        let canvasID = try XCTUnwrap(canvasPage.plistRepresentation[.CanvasPage.canvas] as? String)
         XCTAssertEqual(canvasID, canvas.id.stringRepresentation)
     }
 
@@ -54,14 +54,14 @@ class CanvasPageTests: XCTestCase {
         let parent = CanvasPage.create(in: self.modelController)
         let canvasPage = CanvasPage.create(in: self.modelController)
         canvasPage.parent = parent
-        let parentID = try XCTUnwrap(canvasPage.plistRepresentation["parent"] as? String)
+        let parentID = try XCTUnwrap(canvasPage.plistRepresentation[.CanvasPage.parent] as? String)
         XCTAssertEqual(parentID, parent.id.stringRepresentation)
     }
 
     func test_plistRepresentation_containsZIndex() throws {
         let canvasPage = CanvasPage.create(in: self.modelController)
         canvasPage.zIndex = 42
-        let zIndex = try XCTUnwrap(canvasPage.plistRepresentation["zIndex"] as? Int)
+        let zIndex = try XCTUnwrap(canvasPage.plistRepresentation[.CanvasPage.zIndex] as? Int)
         XCTAssertEqual(zIndex, canvasPage.zIndex)
     }
 
@@ -69,19 +69,19 @@ class CanvasPageTests: XCTestCase {
         let modelController = CoppiceModelController(undoManager: UndoManager())
         let canvasPage = modelController.collection(for: CanvasPage.self).newObject()
 
-        let plist: [String: Any] = [
-            "id": canvasPage.id.stringRepresentation,
-            "bar": "foo",
-            "frame": NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
-            "zIndex": 31,
-            "point": NSStringFromPoint(CGPoint(x: 15, y: 51)),
+        let plist: [ModelPlistKey: Any] = [
+            .id: canvasPage.id,
+            ModelPlistKey(rawValue: "bar")!: "foo",
+            .CanvasPage.frame: NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
+            .CanvasPage.zIndex: 31,
+            ModelPlistKey(rawValue: "point")!: NSStringFromPoint(CGPoint(x: 15, y: 51)),
         ]
 
         XCTAssertNoThrow(try canvasPage.update(fromPlistRepresentation: plist))
 
         let plistRepresentation = canvasPage.plistRepresentation
-        XCTAssertEqual(plistRepresentation["bar"] as? String, "foo")
-        XCTAssertEqual(plistRepresentation["point"] as? String, NSStringFromPoint(CGPoint(x: 15, y: 51)))
+        XCTAssertEqual(plistRepresentation[ModelPlistKey(rawValue: "bar")!] as? String, "foo")
+        XCTAssertEqual(plistRepresentation[ModelPlistKey(rawValue: "point")!] as? String, NSStringFromPoint(CGPoint(x: 15, y: 51)))
     }
 
 
@@ -101,12 +101,12 @@ class CanvasPageTests: XCTestCase {
         let parent = modelController.collection(for: CanvasPage.self).newObject()
         let canvasPage = modelController.collection(for: CanvasPage.self).newObject()
 
-        let plist: [String: Any] = [
-            "id": "foobar",
-            "frame": NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
-            "page": newPage.id.stringRepresentation,
-            "canvas": newCanvas.id.stringRepresentation,
-            "canvasPage": parent.id.stringRepresentation,
+        let plist: [ModelPlistKey: Any] = [
+            .id: "foobar",
+            .CanvasPage.frame: NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
+            .CanvasPage.page: newPage.id.stringRepresentation,
+            .CanvasPage.canvas: newCanvas.id.stringRepresentation,
+            .CanvasPage.parent: parent.id.stringRepresentation,
         ]
 
         XCTAssertThrowsError(try canvasPage.update(fromPlistRepresentation: plist), "") {
@@ -118,9 +118,9 @@ class CanvasPageTests: XCTestCase {
         let modelController = CoppiceModelController(undoManager: UndoManager())
         let canvasPage = modelController.collection(for: CanvasPage.self).newObject()
 
-        let plist: [String: Any] = [
-            "id": canvasPage.id.stringRepresentation,
-            "frame": NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
+        let plist: [ModelPlistKey: Any] = [
+            .id: canvasPage.id,
+            .CanvasPage.frame: NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
         ]
 
         XCTAssertNoThrow(try canvasPage.update(fromPlistRepresentation: plist))
@@ -132,10 +132,10 @@ class CanvasPageTests: XCTestCase {
         let modelController = CoppiceModelController(undoManager: UndoManager())
         let canvasPage = modelController.collection(for: CanvasPage.self).newObject()
 
-        let plist: [String: Any] = [
-            "id": canvasPage.id.stringRepresentation,
-            "frame": NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
-            "zIndex": 31,
+        let plist: [ModelPlistKey: Any] = [
+            .id: canvasPage.id,
+            .CanvasPage.frame: NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
+            .CanvasPage.zIndex: 31,
         ]
 
         XCTAssertNoThrow(try canvasPage.update(fromPlistRepresentation: plist))
@@ -150,10 +150,10 @@ class CanvasPageTests: XCTestCase {
         let newPage = modelController.collection(for: Page.self).newObject()
         let canvasPage = modelController.collection(for: CanvasPage.self).newObject()
 
-        let plist: [String: Any] = [
-            "id": canvasPage.id.stringRepresentation,
-            "frame": NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
-            "page": newPage.id.stringRepresentation,
+        let plist: [ModelPlistKey: Any] = [
+            .id: canvasPage.id,
+            .CanvasPage.frame: NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
+            .CanvasPage.page: newPage.id.stringRepresentation,
         ]
 
         XCTAssertNoThrow(try canvasPage.update(fromPlistRepresentation: plist))
@@ -168,10 +168,10 @@ class CanvasPageTests: XCTestCase {
         let newCanvas = modelController.collection(for: Canvas.self).newObject()
         let canvasPage = modelController.collection(for: CanvasPage.self).newObject()
 
-        let plist: [String: Any] = [
-            "id": canvasPage.id.stringRepresentation,
-            "frame": NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
-            "canvas": newCanvas.id.stringRepresentation,
+        let plist: [ModelPlistKey: Any] = [
+            .id: canvasPage.id,
+            .CanvasPage.frame: NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
+            .CanvasPage.canvas: newCanvas.id.stringRepresentation,
         ]
 
         XCTAssertNoThrow(try canvasPage.update(fromPlistRepresentation: plist))
@@ -186,10 +186,10 @@ class CanvasPageTests: XCTestCase {
         let parent = modelController.collection(for: CanvasPage.self).newObject()
         let canvasPage = modelController.collection(for: CanvasPage.self).newObject()
 
-        let plist: [String: Any] = [
-            "id": canvasPage.id.stringRepresentation,
-            "frame": NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
-            "parent": parent.id.stringRepresentation,
+        let plist: [ModelPlistKey: Any] = [
+            .id: canvasPage.id,
+            .CanvasPage.frame: NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
+            .CanvasPage.parent: parent.id.stringRepresentation,
         ]
 
         XCTAssertNoThrow(try canvasPage.update(fromPlistRepresentation: plist))
@@ -201,37 +201,37 @@ class CanvasPageTests: XCTestCase {
         let modelController = CoppiceModelController(undoManager: UndoManager())
         let canvasPage = modelController.collection(for: CanvasPage.self).newObject()
 
-        let plist: [String: Any] = [
-            "id": canvasPage.id.stringRepresentation,
-            "bar": "foo",
-            "frame": NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
-            "zIndex": 31,
-            "point": NSStringFromPoint(CGPoint(x: 15, y: 51)),
+        let plist: [ModelPlistKey: Any] = [
+            .id: canvasPage.id,
+            ModelPlistKey(rawValue: "bar")!: "foo",
+            .CanvasPage.frame: NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
+            .CanvasPage.zIndex: 31,
+            ModelPlistKey(rawValue: "point")!: NSStringFromPoint(CGPoint(x: 15, y: 51)),
         ]
 
         XCTAssertNoThrow(try canvasPage.update(fromPlistRepresentation: plist))
 
-        XCTAssertEqual(canvasPage.otherProperties["bar"] as? String, "foo")
-        XCTAssertEqual(canvasPage.otherProperties["point"] as? String, NSStringFromPoint(CGPoint(x: 15, y: 51)))
+        XCTAssertEqual(canvasPage.otherProperties[ModelPlistKey(rawValue: "bar")!] as? String, "foo")
+        XCTAssertEqual(canvasPage.otherProperties[ModelPlistKey(rawValue: "point")!] as? String, NSStringFromPoint(CGPoint(x: 15, y: 51)))
     }
 
     func test_updateFromPlistRepresentation_doesntIncludeAnySupportPlistKeysInOtherProperties() throws {
         let modelController = CoppiceModelController(undoManager: UndoManager())
         let canvasPage = modelController.collection(for: CanvasPage.self).newObject()
 
-        let plist: [String: Any] = [
-            "id": canvasPage.id.stringRepresentation,
-            "bar": "foo",
-            "frame": NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
-            "zIndex": 31,
-            "point": NSStringFromPoint(CGPoint(x: 15, y: 51)),
+        let plist: [ModelPlistKey: Any] = [
+            .id: canvasPage.id,
+            ModelPlistKey(rawValue: "bar")!: "foo",
+            .CanvasPage.frame: NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
+            .CanvasPage.zIndex: 31,
+            ModelPlistKey(rawValue: "point")!: NSStringFromPoint(CGPoint(x: 15, y: 51)),
         ]
 
         XCTAssertNoThrow(try canvasPage.update(fromPlistRepresentation: plist))
 
         XCTAssertEqual(canvasPage.otherProperties.count, 2)
-        for key in CanvasPage.PlistKeys.allCases {
-            XCTAssertNil(canvasPage.otherProperties[key.rawValue])
+        for key in ModelPlistKey.CanvasPage.all {
+            XCTAssertNil(canvasPage.otherProperties[key])
         }
     }
 

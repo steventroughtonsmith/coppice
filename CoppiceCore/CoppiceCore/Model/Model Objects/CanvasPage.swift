@@ -10,22 +10,14 @@ import Cocoa
 import M3Data
 
 final public class CanvasPage: NSObject, CollectableModelObject {
+    //MARK: - ModelObject Definitions
     public static let modelType: ModelType = ModelType(rawValue: "CanvasPage")!
-
     public var id = ModelID(modelType: CanvasPage.modelType)
     public weak var collection: ModelCollection<CanvasPage>?
 
     //MARK: - Attributes
     @objc dynamic public var frame: CGRect = .zero {
         didSet { self.didChange(\.frame, oldValue: oldValue) }
-    }
-
-    override public class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
-        var keyPaths = super.keyPathsForValuesAffectingValue(forKey: key)
-        if key == "title" {
-            keyPaths.insert("self.page.title")
-        }
-        return keyPaths
     }
 
     @objc dynamic public var title: String {
@@ -42,7 +34,7 @@ final public class CanvasPage: NSObject, CollectableModelObject {
 
     public var zIndex: Int = -1
 
-    public private(set) var otherProperties = [String: Any]()
+    public private(set) var otherProperties = [ModelPlistKey: Any]()
 
 
     //MARK: - Relationships
@@ -61,6 +53,25 @@ final public class CanvasPage: NSObject, CollectableModelObject {
         didSet { self.didChangeRelationship(\.canvas, inverseKeyPath: \.pages, oldValue: oldValue) }
     }
 
+    public var linksTo: Set<CanvasLink> {
+        self.relationship(for: \.sourcePage)
+    }
+
+    public var linksFrom: Set<CanvasLink> {
+        self.relationship(for: \.destinationPage)
+    }
+
+
+    //MARK: - KVO
+    override public class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
+        var keyPaths = super.keyPathsForValuesAffectingValue(forKey: key)
+        if key == "title" {
+            keyPaths.insert("self.page.title")
+        }
+        return keyPaths
+    }
+
+    //MARK: - Old Relationships
     @ModelObjectReference @objc dynamic public var parent: CanvasPage? {
         didSet {
             self.willChangeValue(for: \.title)
@@ -83,6 +94,8 @@ final public class CanvasPage: NSObject, CollectableModelObject {
         return nil
     }
 
+
+    //MARK: - Relationship Setup
     public func objectWasInserted() {
         self.$page.modelController = self.modelController
         self.$canvas.modelController = self.modelController
@@ -111,72 +124,71 @@ final public class CanvasPage: NSObject, CollectableModelObject {
 
 
     //MARK: - Plists
-    enum PlistKeys: String, CaseIterable {
-        case id
-        case frame
-        case zIndex
-        case page
-        case canvas
-        case parent
-    }
-
-    public var plistRepresentation: [String: Any] {
+    public var plistRepresentation: [ModelPlistKey: Any] {
         var plist = self.otherProperties
 
-        plist[PlistKeys.id.rawValue] = self.id.stringRepresentation
-        plist[PlistKeys.frame.rawValue] = NSStringFromRect(self.frame)
-        plist[PlistKeys.zIndex.rawValue] = self.zIndex
+        //TODO: Make ModelWriter take ids as ids rather than strings
+        plist[.id] = self.id.stringRepresentation
+        plist[.CanvasPage.frame] = NSStringFromRect(self.frame)
+        plist[.CanvasPage.zIndex] = self.zIndex
 
         if let page = self.page {
-            plist[PlistKeys.page.rawValue] = page.id.stringRepresentation
+            plist[.CanvasPage.page] = page.id.stringRepresentation
         }
         if let canvas = self.canvas {
-            plist[PlistKeys.canvas.rawValue] = canvas.id.stringRepresentation
+            plist[.CanvasPage.canvas] = canvas.id.stringRepresentation
         }
         if let parent = self.parent {
-            plist[PlistKeys.parent.rawValue] = parent.id.stringRepresentation
+            plist[.CanvasPage.parent] = parent.id.stringRepresentation
         }
         return plist
     }
 
-    public func update(fromPlistRepresentation plist: [String: Any]) throws {
+    public func update(fromPlistRepresentation plist: [ModelPlistKey: Any]) throws {
         guard let modelController = self.modelController else {
             throw ModelObjectUpdateErrors.modelControllerNotSet
         }
 
-        guard self.id.stringRepresentation == (plist[PlistKeys.id.rawValue] as? String) else {
+        guard self.id == plist.attribute(withKey: .id) else {
             throw ModelObjectUpdateErrors.idsDontMatch
         }
 
-        let frameString: String = try self.attribute(withKey: PlistKeys.frame.rawValue, from: plist)
+        let frameString: String = try plist.requiredAttribute(withKey: .CanvasPage.frame)
         self.frame = NSRectFromString(frameString)
 
-        if let parentString = plist[PlistKeys.parent.rawValue] as? String, let parentID = ModelID(string: parentString) {
+        if let parentString: String = plist.attribute(withKey: .CanvasPage.parent), let parentID = ModelID(string: parentString) {
             self.parent = modelController.collection(for: CanvasPage.self).objectWithID(parentID)
         }
 
-        if let pageString = plist[PlistKeys.page.rawValue] as? String, let pageID = ModelID(string: pageString) {
+        if let pageString: String = plist.attribute(withKey: .CanvasPage.page), let pageID = ModelID(string: pageString) {
             self.page = modelController.collection(for: Page.self).objectWithID(pageID)
         }
 
-        if let canvasString = plist[PlistKeys.canvas.rawValue] as? String, let canvasID = ModelID(string: canvasString) {
+        if let canvasString: String = plist.attribute(withKey: .CanvasPage.canvas), let canvasID = ModelID(string: canvasString) {
             self.canvas = modelController.collection(for: Canvas.self).objectWithID(canvasID)
         }
 
-        if let zIndex = plist[PlistKeys.zIndex.rawValue] as? Int {
+        if let zIndex: Int = plist.attribute(withKey: .CanvasPage.zIndex) {
             self.zIndex = zIndex
         }
 
-        let plistKeys = PlistKeys.allCases.map(\.rawValue)
+        let plistKeys = ModelPlistKey.CanvasPage.all
         self.otherProperties = plist.filter { (key, _) -> Bool in
             return plistKeys.contains(key) == false
         }
     }
+}
 
-    private func attribute<T>(withKey key: String, from plist: [String: Any]) throws -> T {
-        guard let value = plist[key] as? T else {
-            throw ModelObjectUpdateErrors.attributeNotFound(key)
+extension ModelPlistKey {
+    enum CanvasPage {
+        static let frame = ModelPlistKey(rawValue: "frame")!
+        static let zIndex = ModelPlistKey(rawValue: "zIndex")!
+        static let page = ModelPlistKey(rawValue: "page")!
+        static let canvas = ModelPlistKey(rawValue: "canvas")!
+        static let parent = ModelPlistKey(rawValue: "parent")!
+
+        static var all: [ModelPlistKey] {
+            return [.id, .CanvasPage.frame, .CanvasPage.zIndex, .CanvasPage.page, .CanvasPage.canvas, .CanvasPage.parent]
         }
-        return value
     }
 }

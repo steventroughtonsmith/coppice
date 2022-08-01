@@ -19,11 +19,12 @@ class CoppiceModelControllerTests: XCTestCase {
 
     func test_init_setsUpCollectionsForCanvas_CanvasPage_PageAndFolder() {
         let modelController = CoppiceModelController(undoManager: UndoManager())
-        XCTAssertEqual(modelController.allCollections.count, 4)
+        XCTAssertEqual(modelController.allCollections.count, 5)
         XCTAssertNotNil(modelController.allCollections[Canvas.modelType])
         XCTAssertNotNil(modelController.allCollections[CanvasPage.modelType])
         XCTAssertNotNil(modelController.allCollections[Folder.modelType])
         XCTAssertNotNil(modelController.allCollections[Page.modelType])
+        XCTAssertNotNil(modelController.allCollections[CanvasLink.modelType])
     }
 
 

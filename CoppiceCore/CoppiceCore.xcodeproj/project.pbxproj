@@ -8,6 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		994664A02816EE0300A08522 /* CroppedImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9946649F2816EE0300A08522 /* CroppedImageCache.swift */; };
+		9948C0CF2896B78C00DB754E /* TestPlistsV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9948C0CE2896B78C00DB754E /* TestPlistsV2.swift */; };
+		9948C0D12896B79B00DB754E /* TestPlists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9948C0D02896B79B00DB754E /* TestPlists.swift */; };
+		9948C0D42896BA2F00DB754E /* PlistV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9948C0D32896BA2F00DB754E /* PlistV2.swift */; };
+		9948C0D62896BA6900DB754E /* PlistV3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9948C0D52896BA6900DB754E /* PlistV3.swift */; };
+		9948C0D82896BA8700DB754E /* Plist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9948C0D72896BA8700DB754E /* Plist.swift */; };
+		9948C0DB2897F98E00DB754E /* PlistV2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9948C0DA2897F98E00DB754E /* PlistV2Tests.swift */; };
+		9948C0DD289801D800DB754E /* PlistV3Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9948C0DC289801D800DB754E /* PlistV3Tests.swift */; };
+		9948C0DF2898040A00DB754E /* TestPlistsV3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9948C0DE2898040A00DB754E /* TestPlistsV3.swift */; };
+		997ABC482882E96E00A75722 /* CanvasLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997ABC472882E96E00A75722 /* CanvasLink.swift */; };
 		99983E71278C9D660020759D /* MockLayoutEnginePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99983E70278C9D660020759D /* MockLayoutEnginePageView.swift */; };
 		99BC4352256C15F200BBB0EA /* Array+M3ExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BC4351256C15F200BBB0EA /* Array+M3ExtensionsTests.swift */; };
 		99BC4375256C168000BBB0EA /* CoreGraphics+M3ExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BC4374256C168000BBB0EA /* CoreGraphics+M3ExtensionsTests.swift */; };
@@ -17,8 +26,6 @@
 		99D0C76024C5DD1E002EEBFA /* CoppiceCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99D0C75624C5DD1E002EEBFA /* CoppiceCore.framework */; };
 		99D0C76724C5DD1E002EEBFA /* CoppiceCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 99D0C75924C5DD1E002EEBFA /* CoppiceCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		99D0C7FC24C5DE79002EEBFA /* CoppiceModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C7DF24C5DE79002EEBFA /* CoppiceModelController.swift */; };
-		99D0C7FD24C5DE79002EEBFA /* ModelPlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C7E024C5DE79002EEBFA /* ModelPlist.swift */; };
-		99D0C80524C5DE79002EEBFA /* ModelReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C7E924C5DE79002EEBFA /* ModelReader.swift */; };
 		99D0C80624C5DE79002EEBFA /* ModelWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C7EA24C5DE79002EEBFA /* ModelWriter.swift */; };
 		99D0C80724C5DE79002EEBFA /* ModelObjects+Searching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C7EC24C5DE79002EEBFA /* ModelObjects+Searching.swift */; };
 		99D0C80824C5DE79002EEBFA /* PageHierarchy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C7ED24C5DE79002EEBFA /* PageHierarchy.swift */; };
@@ -113,6 +120,15 @@
 
 /* Begin PBXFileReference section */
 		9946649F2816EE0300A08522 /* CroppedImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CroppedImageCache.swift; sourceTree = "<group>"; };
+		9948C0CE2896B78C00DB754E /* TestPlistsV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestPlistsV2.swift; sourceTree = "<group>"; };
+		9948C0D02896B79B00DB754E /* TestPlists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestPlists.swift; sourceTree = "<group>"; };
+		9948C0D32896BA2F00DB754E /* PlistV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlistV2.swift; sourceTree = "<group>"; };
+		9948C0D52896BA6900DB754E /* PlistV3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlistV3.swift; sourceTree = "<group>"; };
+		9948C0D72896BA8700DB754E /* Plist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plist.swift; sourceTree = "<group>"; };
+		9948C0DA2897F98E00DB754E /* PlistV2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlistV2Tests.swift; sourceTree = "<group>"; };
+		9948C0DC289801D800DB754E /* PlistV3Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlistV3Tests.swift; sourceTree = "<group>"; };
+		9948C0DE2898040A00DB754E /* TestPlistsV3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestPlistsV3.swift; sourceTree = "<group>"; };
+		997ABC472882E96E00A75722 /* CanvasLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasLink.swift; sourceTree = "<group>"; };
 		99983E70278C9D660020759D /* MockLayoutEnginePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLayoutEnginePageView.swift; sourceTree = "<group>"; };
 		99BC4351256C15F200BBB0EA /* Array+M3ExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+M3ExtensionsTests.swift"; sourceTree = "<group>"; };
 		99BC4374256C168000BBB0EA /* CoreGraphics+M3ExtensionsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CoreGraphics+M3ExtensionsTests.swift"; sourceTree = "<group>"; };
@@ -230,6 +246,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9948C0CD2896B78100DB754E /* Plists */ = {
+			isa = PBXGroup;
+			children = (
+				9948C0D02896B79B00DB754E /* TestPlists.swift */,
+				9948C0CE2896B78C00DB754E /* TestPlistsV2.swift */,
+				9948C0DE2898040A00DB754E /* TestPlistsV3.swift */,
+			);
+			path = Plists;
+			sourceTree = "<group>";
+		};
+		9948C0D22896BA2300DB754E /* Plists */ = {
+			isa = PBXGroup;
+			children = (
+				9948C0D72896BA8700DB754E /* Plist.swift */,
+				9948C0D32896BA2F00DB754E /* PlistV2.swift */,
+				9948C0D52896BA6900DB754E /* PlistV3.swift */,
+			);
+			path = Plists;
+			sourceTree = "<group>";
+		};
+		9948C0D92897F95700DB754E /* Plists */ = {
+			isa = PBXGroup;
+			children = (
+				9948C0DA2897F98E00DB754E /* PlistV2Tests.swift */,
+				9948C0DC289801D800DB754E /* PlistV3Tests.swift */,
+			);
+			path = Plists;
+			sourceTree = "<group>";
+		};
 		99BC435A256C160A00BBB0EA /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -307,6 +352,7 @@
 				9946649F2816EE0300A08522 /* CroppedImageCache.swift */,
 				99D0C7EB24C5DE79002EEBFA /* Model Objects */,
 				99D0C7E024C5DE79002EEBFA /* ModelPlist.swift */,
+				9948C0D22896BA2300DB754E /* Plists */,
 				99D0C7E924C5DE79002EEBFA /* ModelReader.swift */,
 				99D0C7EA24C5DE79002EEBFA /* ModelWriter.swift */,
 			);
@@ -324,6 +370,7 @@
 				99D0C7F024C5DE79002EEBFA /* Canvas.swift */,
 				99D0C7ED24C5DE79002EEBFA /* PageHierarchy.swift */,
 				99D0C7F624C5DE79002EEBFA /* CanvasPage.swift */,
+				997ABC472882E96E00A75722 /* CanvasLink.swift */,
 				99D0C7F324C5DE79002EEBFA /* Canvas+Pages.swift */,
 				99D0C7F424C5DE79002EEBFA /* ModelObjects+Pasteboard.swift */,
 				99D0C7EC24C5DE79002EEBFA /* ModelObjects+Searching.swift */,
@@ -354,6 +401,7 @@
 				99D0C81B24C5DEC8002EEBFA /* MockDocumentWindowViewModel.swift */,
 				99D0C81C24C5DEC8002EEBFA /* MockBubblesModelController.swift */,
 				99D0C81D24C5DEC8002EEBFA /* MockEventContextFactory.swift */,
+				9948C0CD2896B78100DB754E /* Plists */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -369,6 +417,7 @@
 				99D0C82324C5DEC8002EEBFA /* Model Infrastructure */,
 				99D0C82A24C5DEC8002EEBFA /* ModelWriterTests.swift */,
 				99D0C82C24C5DEC8002EEBFA /* ModelObjects */,
+				9948C0D92897F95700DB754E /* Plists */,
 				99D0C83924C5DEC8002EEBFA /* ModelReaderTests.swift */,
 			);
 			path = Model;
@@ -618,11 +667,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				997ABC482882E96E00A75722 /* CanvasLink.swift in Sources */,
 				994664A02816EE0300A08522 /* CroppedImageCache.swift in Sources */,
 				99D0C80D24C5DE79002EEBFA /* PageLink.swift in Sources */,
 				99D0C8E524C5FBEA002EEBFA /* ResizePageEventContext.swift in Sources */,
 				99D0C81024C5DE79002EEBFA /* PageContent.swift in Sources */,
-				99D0C80524C5DE79002EEBFA /* ModelReader.swift in Sources */,
 				99D0C8DB24C5FBEA002EEBFA /* LayoutEngineEventContextFactory.swift in Sources */,
 				99D0C8E424C5FBEA002EEBFA /* RemovePageEventContext.swift in Sources */,
 				99D0C81124C5DE79002EEBFA /* CanvasPage.swift in Sources */,
@@ -639,20 +688,22 @@
 				99D0C8DC24C5FBEA002EEBFA /* LayoutEnginePage.swift in Sources */,
 				99D0C8EF24C72494002EEBFA /* LayoutEnginePage+CanvasPage.swift in Sources */,
 				99D0C8DF24C5FBEA002EEBFA /* ArrowLayoutEngine.swift in Sources */,
+				9948C0D62896BA6900DB754E /* PlistV3.swift in Sources */,
 				99D0C87024C5E080002EEBFA /* NSImage+M3Extensions.swift in Sources */,
 				99D0C80724C5DE79002EEBFA /* ModelObjects+Searching.swift in Sources */,
-				99D0C7FD24C5DE79002EEBFA /* ModelPlist.swift in Sources */,
 				99D0C81424C5DE79002EEBFA /* ImagePageContent.swift in Sources */,
 				99D0C8F124C728C7002EEBFA /* ArrowDrawHelper.swift in Sources */,
 				99D0C8DA24C5FBEA002EEBFA /* CanvasLayoutEngine+Configuration.swift in Sources */,
 				99D0C8DD24C5FBEA002EEBFA /* LayoutEngineArrow.swift in Sources */,
 				99D0C80E24C5DE79002EEBFA /* Canvas+Pages.swift in Sources */,
+				9948C0D82896BA8700DB754E /* Plist.swift in Sources */,
 				99F6BD1F27C3D21F00E5AD20 /* ImageHotspot.swift in Sources */,
 				99D0C86724C5DFBA002EEBFA /* GlobalConstants.swift in Sources */,
 				99D0C7FC24C5DE79002EEBFA /* CoppiceModelController.swift in Sources */,
 				99D0C8E124C5FBEA002EEBFA /* KeyboardMovePageEventContext.swift in Sources */,
 				99D0C8E024C5FBEA002EEBFA /* CanvasSelectionEventContext.swift in Sources */,
 				99D0C81524C5DE79002EEBFA /* ModelObjects+Defaults.swift in Sources */,
+				9948C0D42896BA2F00DB754E /* PlistV2.swift in Sources */,
 				99D0C81224C5DE79002EEBFA /* Page.swift in Sources */,
 				99D0C8DE24C5FBEA002EEBFA /* CanvasLayoutEngine.swift in Sources */,
 				99D0C81324C5DE79002EEBFA /* TextPageContent.swift in Sources */,
@@ -672,6 +723,7 @@
 				99D0C85424C5DEC9002EEBFA /* CanvasPageTests.swift in Sources */,
 				99D0C85224C5DEC9002EEBFA /* ModelObjects+PasteboardTests.swift in Sources */,
 				99D0C89E24C5FB95002EEBFA /* CanvasLayoutEngineTests.swift in Sources */,
+				9948C0DD289801D800DB754E /* PlistV3Tests.swift in Sources */,
 				99D0C86024C5DF0F002EEBFA /* CoppiceModelControllerPageTests.swift in Sources */,
 				99D0C84324C5DEC9002EEBFA /* TestObjects.swift in Sources */,
 				99D0C8A224C5FB95002EEBFA /* EventContextTestBase.swift in Sources */,
@@ -680,11 +732,13 @@
 				99D0C8A424C5FB95002EEBFA /* ResizePageEventContextTests.swift in Sources */,
 				99D0C89C24C5FB95002EEBFA /* LayoutEnginePageTests.swift in Sources */,
 				99F6BD2127C3D23F00E5AD20 /* ImageHotspotTests.swift in Sources */,
+				9948C0DB2897F98E00DB754E /* PlistV2Tests.swift in Sources */,
 				99D0C85624C5DEC9002EEBFA /* TextPageContentsTests.swift in Sources */,
 				99983E71278C9D660020759D /* MockLayoutEnginePageView.swift in Sources */,
 				99BC4375256C168000BBB0EA /* CoreGraphics+M3ExtensionsTests.swift in Sources */,
 				99D0C86324C5DF0F002EEBFA /* CoppiceModelControllerCanvasTests.swift in Sources */,
 				99D0C85924C5DEC9002EEBFA /* ModelReaderTests.swift in Sources */,
+				9948C0CF2896B78C00DB754E /* TestPlistsV2.swift in Sources */,
 				99D0C89F24C5FB95002EEBFA /* ArrowLayoutEngineTests.swift in Sources */,
 				99D0C84124C5DEC9002EEBFA /* MockEventContextFactory.swift in Sources */,
 				99D0C85024C5DEC9002EEBFA /* PageLinkTests.swift in Sources */,
@@ -700,8 +754,10 @@
 				99D0C86124C5DF0F002EEBFA /* CoppiceModelControllerTests.swift in Sources */,
 				99D0C84224C5DEC9002EEBFA /* Mocking.swift in Sources */,
 				99BC438B256C241D00BBB0EA /* ModelObjects+MiscTests.swift in Sources */,
+				9948C0DF2898040A00DB754E /* TestPlistsV3.swift in Sources */,
 				99D0C86424C5DF0F002EEBFA /* CoppiceModelControllerCanvasPageTests.swift in Sources */,
 				99E47E2C274BF8DC007D180F /* NSRange+M3ExtensionsTests.swift in Sources */,
+				9948C0D12896B79B00DB754E /* TestPlists.swift in Sources */,
 				99D0C89D24C5FB95002EEBFA /* CanvasLayoutEngineEventContextFactoryTests.swift in Sources */,
 				99D0C8A124C5FB95002EEBFA /* CanvasSelectionEventContextTests.swift in Sources */,
 				99D0C85824C5DEC9002EEBFA /* ModelObjects+SearchingTests.swift in Sources */,

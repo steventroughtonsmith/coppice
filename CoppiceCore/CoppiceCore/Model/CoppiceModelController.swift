@@ -10,7 +10,7 @@ import Cocoa
 import M3Data
 
 public class CoppiceModelController: NSObject, ModelController {
-    public var allCollections = [ModelType: Any]()
+    public var allCollections = [ModelType: AnyModelCollection]()
     public let settings = ModelSettings()
     public let croppedImageCache = CroppedImageCache()
 
@@ -35,24 +35,8 @@ public class CoppiceModelController: NSObject, ModelController {
         self.addModelCollection(for: CanvasPage.self)
         self.addModelCollection(for: Page.self)
         self.addModelCollection(for: Folder.self)
+        self.addModelCollection(for: CanvasLink.self)
     }
-
-    public func object(with id: ModelID) -> ModelObject? {
-        switch id.modelType {
-        case Canvas.modelType:
-            return self.collection(for: Canvas.self).objectWithID(id)
-        case Page.modelType:
-            return self.collection(for: Page.self).objectWithID(id)
-        case CanvasPage.modelType:
-            return self.collection(for: CanvasPage.self).objectWithID(id)
-        case Folder.modelType:
-            return self.collection(for: Folder.self).objectWithID(id)
-        default:
-            assertionFailure("Model type '\(id.modelType)' does not exist")
-            return nil
-        }
-    }
-
 
     //MARK: - Page
     public var pageCollection: ModelCollection<Page> {
@@ -102,11 +86,11 @@ public class CoppiceModelController: NSObject, ModelController {
         let duplicatedPages = pages.map { page -> Page in
             let duplicatedPage = Page.create(in: self) {
                 var plist = page.plistRepresentation
-                plist[Page.PlistKeys.id.rawValue] = $0.id.stringRepresentation
+                plist[.id] = $0.id
 
                 let newDateCreated = Date()
-                plist[Page.PlistKeys.dateCreated.rawValue] = newDateCreated
-                plist[Page.PlistKeys.dateModified.rawValue] = newDateCreated
+                plist[.Page.dateCreated] = newDateCreated
+                plist[.Page.dateModified] = newDateCreated
 
                 try? $0.update(fromPlistRepresentation: plist)
             }
@@ -289,6 +273,11 @@ public class CoppiceModelController: NSObject, ModelController {
         canvas.close(canvasPage)
         self.undoManager.setActionName(NSLocalizedString("Close Pages", comment: "Close Pages From Canvas Undo Action Name"))
         self.popChangeGroup()
+    }
+
+    //MARK: - Canvas Link
+    public var canvasLinkCollection: ModelCollection<CanvasLink> {
+        return self.collection(for: CanvasLink.self)
     }
 }
 

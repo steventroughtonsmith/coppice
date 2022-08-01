@@ -51,11 +51,13 @@ public class ModelReader: NSObject {
         self.createAndDeleteObjects(ofType: Canvas.self, using: plist.canvases)
         self.createAndDeleteObjects(ofType: Page.self, using: plist.pages)
         self.createAndDeleteObjects(ofType: Folder.self, using: plist.folders)
+        self.createAndDeleteObjects(ofType: CanvasLink.self, using: plist.canvasLinks)
 
         try self.updateObjects(ofType: Page.self, using: plist.pages, content: contentWrappers)
         try self.updateObjects(ofType: Canvas.self, using: plist.canvases, content: contentWrappers)
         try self.updateObjects(ofType: CanvasPage.self, using: plist.canvasPages, content: contentWrappers)
         try self.updateObjects(ofType: Folder.self, using: plist.folders, content: contentWrappers)
+        try self.updateObjects(ofType: CanvasLink.self, using: plist.canvasLinks, content: contentWrappers)
     }
 
     private func createAndDeleteObjects<T: CollectableModelObject>(ofType type: T.Type, using plistItems: [ModelID: [String: Any]]) {
@@ -82,33 +84,33 @@ public class ModelReader: NSObject {
     private func updateObjects<T: CollectableModelObject>(ofType type: T.Type, using plist: [ModelID: [String: Any]], content: [String: FileWrapper]) throws {
         let collection = self.modelController.collection(for: type)
 
-        try collection.disableUndo {
-            for (id, plistItem) in plist {
-                guard let item = collection.objectWithID(id) else {
-                    return
-                }
-
-                var plistItemWithModelFiles = plistItem
-                for modelFileProperty in type.modelFileProperties {
-                    let modelFilePlist = plistItemWithModelFiles[modelFileProperty] as? [String: Any]
-                    guard let type = modelFilePlist?["type"] as? String else {
-                        continue
-                    }
-
-                    let metadata = modelFilePlist?["metadata"] as? [String: Any]
-                    let modelFile: ModelFile
-                    if let filename = modelFilePlist?["filename"] as? String {
-                        let data = content[filename]?.regularFileContents
-                        modelFile = ModelFile(type: type, filename: filename, data: data, metadata: metadata)
-                    } else {
-                        modelFile = ModelFile(type: type, filename: nil, data: nil, metadata: metadata)
-                    }
-
-                    plistItemWithModelFiles[modelFileProperty] = modelFile
-                }
-                try item.update(fromPlistRepresentation: plistItemWithModelFiles)
-            }
-        }
+//        try collection.disableUndo {
+//            for (id, plistItem) in plist {
+//                guard let item = collection.objectWithID(id) else {
+//                    return
+//                }
+//
+//                var plistItemWithModelFiles = plistItem
+//                for modelFileProperty in type.modelFileProperties {
+//                    let modelFilePlist = plistItemWithModelFiles[modelFileProperty] as? [String: Any]
+//                    guard let type = modelFilePlist?["type"] as? String else {
+//                        continue
+//                    }
+//
+//                    let metadata = modelFilePlist?["metadata"] as? [String: Any]
+//                    let modelFile: ModelFile
+//                    if let filename = modelFilePlist?["filename"] as? String {
+//                        let data = content[filename]?.regularFileContents
+//                        modelFile = ModelFile(type: type, filename: filename, data: data, metadata: metadata)
+//                    } else {
+//                        modelFile = ModelFile(type: type, filename: nil, data: nil, metadata: metadata)
+//                    }
+//
+//                    plistItemWithModelFiles[modelFileProperty] = modelFile
+//                }
+//                try item.update(fromPlistRepresentation: plistItemWithModelFiles)
+//            }
+//        }
     }
 }
 

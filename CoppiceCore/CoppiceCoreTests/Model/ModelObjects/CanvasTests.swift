@@ -29,7 +29,7 @@ class CanvasTests: XCTestCase {
     func test_plistRepresentation_containsID() throws {
         let canvas = Canvas()
         let plist = canvas.plistRepresentation
-        let id = try XCTUnwrap(plist["id"] as? String)
+        let id = try XCTUnwrap(plist[.id] as? String)
         XCTAssertEqual(id, canvas.id.stringRepresentation)
     }
 
@@ -37,7 +37,7 @@ class CanvasTests: XCTestCase {
         let canvas = Canvas()
         canvas.title = "Hello World"
         let plist = canvas.plistRepresentation
-        let title = try XCTUnwrap(plist["title"] as? String)
+        let title = try XCTUnwrap(plist[.Canvas.title] as? String)
         XCTAssertEqual(title, "Hello World")
     }
 
@@ -45,7 +45,7 @@ class CanvasTests: XCTestCase {
         let canvas = Canvas()
         canvas.dateCreated = Date(timeIntervalSinceReferenceDate: 1000)
         let plist = canvas.plistRepresentation
-        let date = try XCTUnwrap(plist["dateCreated"] as? Date)
+        let date = try XCTUnwrap(plist[.Canvas.dateCreated] as? Date)
         XCTAssertEqual(date, Date(timeIntervalSinceReferenceDate: 1000))
     }
 
@@ -53,7 +53,7 @@ class CanvasTests: XCTestCase {
         let canvas = Canvas()
         canvas.dateModified = Date(timeIntervalSinceReferenceDate: 42)
         let plist = canvas.plistRepresentation
-        let date = try XCTUnwrap(plist["dateModified"] as? Date)
+        let date = try XCTUnwrap(plist[.Canvas.dateModified] as? Date)
         XCTAssertEqual(date, Date(timeIntervalSinceReferenceDate: 42))
     }
 
@@ -61,7 +61,7 @@ class CanvasTests: XCTestCase {
         let canvas = Canvas()
         canvas.sortIndex = 4
         let plist = canvas.plistRepresentation
-        let sortIndex = try XCTUnwrap(plist["sortIndex"] as? Int)
+        let sortIndex = try XCTUnwrap(plist[.Canvas.sortIndex] as? Int)
         XCTAssertEqual(sortIndex, 4)
     }
 
@@ -69,7 +69,7 @@ class CanvasTests: XCTestCase {
         let canvas = Canvas()
         canvas.theme = .dark
         let plist = canvas.plistRepresentation
-        let theme = try XCTUnwrap(plist["theme"] as? String)
+        let theme = try XCTUnwrap(plist[.Canvas.theme] as? String)
         XCTAssertEqual(theme, Canvas.Theme.dark.rawValue)
     }
 
@@ -77,7 +77,7 @@ class CanvasTests: XCTestCase {
         let canvas = Canvas()
         canvas.viewPort = CGRect(x: 1, y: 2, width: 30, height: 40)
         let plist = canvas.plistRepresentation
-        let viewPort = try XCTUnwrap(plist["viewPort"] as? String)
+        let viewPort = try XCTUnwrap(plist[.Canvas.viewPort] as? String)
         XCTAssertEqual(viewPort, NSStringFromRect(CGRect(x: 1, y: 2, width: 30, height: 40)))
     }
 
@@ -85,14 +85,14 @@ class CanvasTests: XCTestCase {
         let canvas = Canvas()
         canvas.viewPort = nil
         let plist = canvas.plistRepresentation
-        XCTAssertNil(plist["viewPort"])
+        XCTAssertNil(plist[.Canvas.viewPort])
     }
 
     func test_plistRepresentation_containsThumbnailIfSet() throws {
         let canvas = Canvas()
         canvas.thumbnail = NSImage(named: "NSAddTemplate")!
         let plist = canvas.plistRepresentation
-        let thumbnail = try XCTUnwrap(plist["thumbnail"] as? ModelFile)
+        let thumbnail = try XCTUnwrap(plist[.Canvas.thumbnail] as? ModelFile)
         XCTAssertEqual(thumbnail.type, "thumbnail")
         XCTAssertEqual(thumbnail.filename, "\(canvas.id.uuid.uuidString)-thumbnail.png")
         XCTAssertNotNil(thumbnail.data)
@@ -102,7 +102,7 @@ class CanvasTests: XCTestCase {
         let canvas = Canvas()
         canvas.thumbnail = nil
         let plist = canvas.plistRepresentation
-        XCTAssertNil(plist["thumbnail"])
+        XCTAssertNil(plist[.Canvas.thumbnail])
     }
 
     func test_plistRepresentation_containsClosedPageHierarchies() throws {
@@ -131,7 +131,7 @@ class CanvasTests: XCTestCase {
         canvas.closedPageHierarchies = pageHierarchies
 
         let plist = canvas.plistRepresentation
-        let hierarchies = try XCTUnwrap(plist["closedPageHierarchies"] as? [String: [String: Any]])
+        let hierarchies = try XCTUnwrap(plist[.Canvas.closedPageHierarchies] as? [String: [String: Any]])
         let firstHierarchy = try XCTUnwrap(hierarchies[canvasPageID1.stringRepresentation])
         let secondHierarchy = try XCTUnwrap(hierarchies[canvasPageID2.stringRepresentation])
 
@@ -144,7 +144,7 @@ class CanvasTests: XCTestCase {
         let canvas = Canvas()
         canvas.zoomFactor = 0.25
         let plist = canvas.plistRepresentation
-        let sortIndex = try XCTUnwrap(plist["zoomFactor"] as? CGFloat)
+        let sortIndex = try XCTUnwrap(plist[.Canvas.zoomFactor] as? CGFloat)
         XCTAssertEqual(sortIndex, 0.25)
     }
 
@@ -152,7 +152,7 @@ class CanvasTests: XCTestCase {
         let canvas = Canvas()
         canvas.alwaysShowPageTitles = true
         let plist = canvas.plistRepresentation
-        let alwaysShowPageTitles = try XCTUnwrap(plist["alwaysShowPageTitles"] as? Bool)
+        let alwaysShowPageTitles = try XCTUnwrap(plist[.Canvas.alwaysShowPageTitles] as? Bool)
         XCTAssertTrue(alwaysShowPageTitles)
     }
 
@@ -160,36 +160,36 @@ class CanvasTests: XCTestCase {
         let canvas = Canvas()
 
         let expectedImageData = NSImage(named: "NSAddTemplate")!.pngData()!
-        let plist: [String: Any] = [
-            "id": canvas.id.stringRepresentation,
-            "title": "Hello Bar",
-            "foo": "bar",
-            "dateCreated": Date(timeIntervalSinceReferenceDate: 32),
-            "dateModified": Date(timeIntervalSinceReferenceDate: 1455),
-            "sortIndex": 1,
-            "theme": "auto",
-            "thumbnail": ModelFile(type: "thumbnail", filename: nil, data: expectedImageData, metadata: [:]),
-            "testingAttribute": 12345,
+        let plist: [ModelPlistKey: Any] = [
+            .id: canvas.id,
+            .Canvas.title: "Hello Bar",
+            ModelPlistKey(rawValue: "foo")!: "bar",
+            .Canvas.dateCreated: Date(timeIntervalSinceReferenceDate: 32),
+            .Canvas.dateModified: Date(timeIntervalSinceReferenceDate: 1455),
+            .Canvas.sortIndex: 1,
+            .Canvas.theme: "auto",
+            .Canvas.thumbnail: ModelFile(type: "thumbnail", filename: nil, data: expectedImageData, metadata: [:]),
+            ModelPlistKey(rawValue: "testingAttribute")!: 12345,
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: plist))
 
         let plistRepresentation = canvas.plistRepresentation
-        XCTAssertEqual(plistRepresentation["foo"] as? String, "bar")
-        XCTAssertEqual(plistRepresentation["testingAttribute"] as? Int, 12345)
-        XCTAssertEqual(plistRepresentation["id"] as? String, canvas.id.stringRepresentation)
+        XCTAssertEqual(plistRepresentation[ModelPlistKey(rawValue: "foo")!] as? String, "bar")
+        XCTAssertEqual(plistRepresentation[ModelPlistKey(rawValue: "testingAttribute")!] as? Int, 12345)
+        XCTAssertEqual(plistRepresentation[.id] as? String, canvas.id.stringRepresentation)
     }
 
 
     //MARK: - update(fromPlistRepresentation:)
     func test_updateFromPlistRepresentation_doesntUpdateIfIDsDontMatch() {
         let canvas = Canvas()
-        let plist: [String: Any] = [
-            "id": "baz",
-            "title": "Hello Bar",
-            "dateCreated": Date(timeIntervalSinceReferenceDate: 30),
-            "dateModified": Date(timeIntervalSinceReferenceDate: 1453),
-            "sortIndex": 5,
+        let plist: [ModelPlistKey: Any] = [
+            .id: "baz",
+            .Canvas.title: "Hello Bar",
+            .Canvas.dateCreated: Date(timeIntervalSinceReferenceDate: 30),
+            .Canvas.dateModified: Date(timeIntervalSinceReferenceDate: 1453),
+            .Canvas.sortIndex: 5,
         ]
 
         XCTAssertThrowsError(try canvas.update(fromPlistRepresentation: plist), "") {
@@ -199,13 +199,13 @@ class CanvasTests: XCTestCase {
 
     func test_updateFromPlistRepresentation_updatesTitle() {
         let canvas = Canvas()
-        let plist: [String: Any] = [
-            "id": canvas.id.stringRepresentation,
-            "title": "Hello Bar",
-            "dateCreated": Date(timeIntervalSinceReferenceDate: 31),
-            "dateModified": Date(timeIntervalSinceReferenceDate: 1454),
-            "sortIndex": 4,
-            "theme": "auto",
+        let plist: [ModelPlistKey: Any] = [
+            .id: canvas.id,
+            .Canvas.title: "Hello Bar",
+            .Canvas.dateCreated: Date(timeIntervalSinceReferenceDate: 31),
+            .Canvas.dateModified: Date(timeIntervalSinceReferenceDate: 1454),
+            .Canvas.sortIndex: 4,
+            .Canvas.theme: "auto",
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: plist))
@@ -215,12 +215,12 @@ class CanvasTests: XCTestCase {
 
     func test_updateFromPlistRepresentation_throwsIfTitleMissing() {
         let canvas = Canvas()
-        let plist: [String: Any] = [
-            "id": canvas.id.stringRepresentation,
-            "dateCreated": Date(timeIntervalSinceReferenceDate: 30),
-            "dateModified": Date(timeIntervalSinceReferenceDate: 1453),
-            "sortIndex": 5,
-            "theme": "auto",
+        let plist: [ModelPlistKey: Any] = [
+            .id: canvas.id,
+            .Canvas.dateCreated: Date(timeIntervalSinceReferenceDate: 30),
+            .Canvas.dateModified: Date(timeIntervalSinceReferenceDate: 1453),
+            .Canvas.sortIndex: 5,
+            .Canvas.theme: "auto",
         ]
 
         XCTAssertThrowsError(try canvas.update(fromPlistRepresentation: plist), "") {
@@ -230,13 +230,13 @@ class CanvasTests: XCTestCase {
 
     func test_updateFromPlistRepresentation_updatesDateCreated() {
         let canvas = Canvas()
-        let plist: [String: Any] = [
-            "id": canvas.id.stringRepresentation,
-            "title": "Hello Bar",
-            "dateCreated": Date(timeIntervalSinceReferenceDate: 32),
-            "dateModified": Date(timeIntervalSinceReferenceDate: 1455),
-            "sortIndex": 3,
-            "theme": "auto",
+        let plist: [ModelPlistKey: Any] = [
+            .id: canvas.id,
+            .Canvas.title: "Hello Bar",
+            .Canvas.dateCreated: Date(timeIntervalSinceReferenceDate: 32),
+            .Canvas.dateModified: Date(timeIntervalSinceReferenceDate: 1455),
+            .Canvas.sortIndex: 3,
+            .Canvas.theme: "auto",
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: plist))
@@ -246,12 +246,12 @@ class CanvasTests: XCTestCase {
 
     func test_updateFromPlistRepresentation_throwsIfDateCreatedMissing() {
         let canvas = Canvas()
-        let plist: [String: Any] = [
-            "id": canvas.id.stringRepresentation,
-            "title": "Hello Bar",
-            "dateModified": Date(timeIntervalSinceReferenceDate: 1453),
-            "sortIndex": 5,
-            "theme": "auto",
+        let plist: [ModelPlistKey: Any] = [
+            .id: canvas.id,
+            .Canvas.title: "Hello Bar",
+            .Canvas.dateModified: Date(timeIntervalSinceReferenceDate: 1453),
+            .Canvas.sortIndex: 5,
+            .Canvas.theme: "auto",
         ]
 
         XCTAssertThrowsError(try canvas.update(fromPlistRepresentation: plist), "") {
@@ -261,13 +261,13 @@ class CanvasTests: XCTestCase {
 
     func test_updateFromPlistRepresentation_updatesDateModified() {
         let canvas = Canvas()
-        let plist: [String: Any] = [
-            "id": canvas.id.stringRepresentation,
-            "title": "Hello Bar",
-            "dateCreated": Date(timeIntervalSinceReferenceDate: 33),
-            "dateModified": Date(timeIntervalSinceReferenceDate: 1456),
-            "sortIndex": 2,
-            "theme": "auto",
+        let plist: [ModelPlistKey: Any] = [
+            .id: canvas.id,
+            .Canvas.title: "Hello Bar",
+            .Canvas.dateCreated: Date(timeIntervalSinceReferenceDate: 33),
+            .Canvas.dateModified: Date(timeIntervalSinceReferenceDate: 1456),
+            .Canvas.sortIndex: 2,
+            .Canvas.theme: "auto",
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: plist))
@@ -277,12 +277,12 @@ class CanvasTests: XCTestCase {
 
     func test_updateFromPlistRepresentation_throwsIfDateModifiedMissing() {
         let canvas = Canvas()
-        let plist: [String: Any] = [
-            "id": canvas.id.stringRepresentation,
-            "title": "Hello Bar",
-            "dateCreated": Date(timeIntervalSinceReferenceDate: 30),
-            "sortIndex": 5,
-            "theme": "auto",
+        let plist: [ModelPlistKey: Any] = [
+            .id: canvas.id,
+            .Canvas.title: "Hello Bar",
+            .Canvas.dateCreated: Date(timeIntervalSinceReferenceDate: 30),
+            .Canvas.sortIndex: 5,
+            .Canvas.theme: "auto",
         ]
 
         XCTAssertThrowsError(try canvas.update(fromPlistRepresentation: plist), "") {
@@ -292,13 +292,13 @@ class CanvasTests: XCTestCase {
 
     func test_updateFromPlistRepresentation_updatesSortIndex() {
         let canvas = Canvas()
-        let plist: [String: Any] = [
-            "id": canvas.id.stringRepresentation,
-            "title": "Hello Bar",
-            "dateCreated": Date(timeIntervalSinceReferenceDate: 32),
-            "dateModified": Date(timeIntervalSinceReferenceDate: 1455),
-            "sortIndex": 1,
-            "theme": "auto",
+        let plist: [ModelPlistKey: Any] = [
+            .id: canvas.id,
+            .Canvas.title: "Hello Bar",
+            .Canvas.dateCreated: Date(timeIntervalSinceReferenceDate: 32),
+            .Canvas.dateModified: Date(timeIntervalSinceReferenceDate: 1455),
+            .Canvas.sortIndex: 1,
+            .Canvas.theme: "auto",
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: plist))
@@ -308,12 +308,12 @@ class CanvasTests: XCTestCase {
 
     func test_updateFromPlistRepresentation_throwsIfSortIndexMissing() {
         let canvas = Canvas()
-        let plist: [String: Any] = [
-            "id": canvas.id.stringRepresentation,
-            "title": "Hello Bar",
-            "dateCreated": Date(timeIntervalSinceReferenceDate: 30),
-            "dateModified": Date(timeIntervalSinceReferenceDate: 1453),
-            "theme": "auto",
+        let plist: [ModelPlistKey: Any] = [
+            .id: canvas.id,
+            .Canvas.title: "Hello Bar",
+            .Canvas.dateCreated: Date(timeIntervalSinceReferenceDate: 30),
+            .Canvas.dateModified: Date(timeIntervalSinceReferenceDate: 1453),
+            .Canvas.theme: "auto",
         ]
 
         XCTAssertThrowsError(try canvas.update(fromPlistRepresentation: plist), "") {
@@ -323,13 +323,13 @@ class CanvasTests: XCTestCase {
 
     func test_updateFromPlistRepresentation_updatesTheme() {
         let canvas = Canvas()
-        let plist: [String: Any] = [
-            "id": canvas.id.stringRepresentation,
-            "title": "Hello Bar",
-            "dateCreated": Date(timeIntervalSinceReferenceDate: 29),
-            "dateModified": Date(timeIntervalSinceReferenceDate: 1452),
-            "sortIndex": 1,
-            "theme": "dark",
+        let plist: [ModelPlistKey: Any] = [
+            .id: canvas.id,
+            .Canvas.title: "Hello Bar",
+            .Canvas.dateCreated: Date(timeIntervalSinceReferenceDate: 29),
+            .Canvas.dateModified: Date(timeIntervalSinceReferenceDate: 1452),
+            .Canvas.sortIndex: 1,
+            .Canvas.theme: "dark",
         ]
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: plist))
         XCTAssertEqual(canvas.theme, .dark)
@@ -337,12 +337,12 @@ class CanvasTests: XCTestCase {
 
     func test_updateFromPlistRepresentation_throwsIfThemeMissing() {
         let canvas = Canvas()
-        let plist: [String: Any] = [
-            "id": canvas.id.stringRepresentation,
-            "title": "Hello Bar",
-            "dateCreated": Date(timeIntervalSinceReferenceDate: 29),
-            "dateModified": Date(timeIntervalSinceReferenceDate: 1452),
-            "sortIndex": 1,
+        let plist: [ModelPlistKey: Any] = [
+            .id: canvas.id,
+            .Canvas.title: "Hello Bar",
+            .Canvas.dateCreated: Date(timeIntervalSinceReferenceDate: 29),
+            .Canvas.dateModified: Date(timeIntervalSinceReferenceDate: 1452),
+            .Canvas.sortIndex: 1,
         ]
         XCTAssertThrowsError(try canvas.update(fromPlistRepresentation: plist), "") {
             XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .attributeNotFound("theme"))
@@ -351,13 +351,13 @@ class CanvasTests: XCTestCase {
 
     func test_updateFromPlistRepresentation_throwsIfThemeDoesntMatch() {
         let canvas = Canvas()
-        let plist: [String: Any] = [
-            "id": canvas.id.stringRepresentation,
-            "title": "Hello Bar",
-            "dateCreated": Date(timeIntervalSinceReferenceDate: 29),
-            "dateModified": Date(timeIntervalSinceReferenceDate: 1452),
-            "sortIndex": 1,
-            "theme": "possum",
+        let plist: [ModelPlistKey: Any] = [
+            .id: canvas.id,
+            .Canvas.title: "Hello Bar",
+            .Canvas.dateCreated: Date(timeIntervalSinceReferenceDate: 29),
+            .Canvas.dateModified: Date(timeIntervalSinceReferenceDate: 1452),
+            .Canvas.sortIndex: 1,
+            .Canvas.theme: "possum",
         ]
         XCTAssertThrowsError(try canvas.update(fromPlistRepresentation: plist), "") {
             XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .attributeNotFound("theme"))
@@ -366,14 +366,14 @@ class CanvasTests: XCTestCase {
 
     func test_updateFromPlistRepresentation_updatesViewPortIfInPlist() {
         let canvas = Canvas()
-        let plist: [String: Any] = [
-            "id": canvas.id.stringRepresentation,
-            "title": "Hello Bar",
-            "dateCreated": Date(timeIntervalSinceReferenceDate: 32),
-            "dateModified": Date(timeIntervalSinceReferenceDate: 1455),
-            "sortIndex": 1,
-            "theme": "auto",
-            "viewPort": NSStringFromRect(CGRect(x: 9, y: 8, width: 7, height: 6)),
+        let plist: [ModelPlistKey: Any] = [
+            .id: canvas.id,
+            .Canvas.title: "Hello Bar",
+            .Canvas.dateCreated: Date(timeIntervalSinceReferenceDate: 32),
+            .Canvas.dateModified: Date(timeIntervalSinceReferenceDate: 1455),
+            .Canvas.sortIndex: 1,
+            .Canvas.theme: "auto",
+            .Canvas.viewPort: NSStringFromRect(CGRect(x: 9, y: 8, width: 7, height: 6)),
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: plist))
@@ -384,13 +384,13 @@ class CanvasTests: XCTestCase {
     func test_updateFromPlistRepresentation_setsViewPortToNilIfNotInPlist() {
         let canvas = Canvas()
         canvas.viewPort = CGRect(x: 99, y: 88, width: 77, height: 66)
-        let plist: [String: Any] = [
-            "id": canvas.id.stringRepresentation,
-            "title": "Hello Bar",
-            "dateCreated": Date(timeIntervalSinceReferenceDate: 32),
-            "dateModified": Date(timeIntervalSinceReferenceDate: 1455),
-            "sortIndex": 1,
-            "theme": "auto",
+        let plist: [ModelPlistKey: Any] = [
+            .id: canvas.id,
+            .Canvas.title: "Hello Bar",
+            .Canvas.dateCreated: Date(timeIntervalSinceReferenceDate: 32),
+            .Canvas.dateModified: Date(timeIntervalSinceReferenceDate: 1455),
+            .Canvas.sortIndex: 1,
+            .Canvas.theme: "auto",
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: plist))
@@ -403,14 +403,14 @@ class CanvasTests: XCTestCase {
         canvas.thumbnail = NSImage(named: "NSRemoveTemplate")!
 
         let expectedImageData = NSImage(named: "NSAddTemplate")!.pngData()!
-        let plist: [String: Any] = [
-            "id": canvas.id.stringRepresentation,
-            "title": "Hello Bar",
-            "dateCreated": Date(timeIntervalSinceReferenceDate: 32),
-            "dateModified": Date(timeIntervalSinceReferenceDate: 1455),
-            "sortIndex": 1,
-            "theme": "auto",
-            "thumbnail": ModelFile(type: "thumbnail", filename: nil, data: expectedImageData, metadata: [:]),
+        let plist: [ModelPlistKey: Any] = [
+            .id: canvas.id,
+            .Canvas.title: "Hello Bar",
+            .Canvas.dateCreated: Date(timeIntervalSinceReferenceDate: 32),
+            .Canvas.dateModified: Date(timeIntervalSinceReferenceDate: 1455),
+            .Canvas.sortIndex: 1,
+            .Canvas.theme: "auto",
+            .Canvas.thumbnail: ModelFile(type: "thumbnail", filename: nil, data: expectedImageData, metadata: [:]),
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: plist))
@@ -421,13 +421,13 @@ class CanvasTests: XCTestCase {
     func test_updateFromPlistRepresentation_setsThumbnailToNilIfNotInPlist() {
         let canvas = Canvas()
         canvas.thumbnail = NSImage(named: "NSRemoveTemplate")!
-        let plist: [String: Any] = [
-            "id": canvas.id.stringRepresentation,
-            "title": "Hello Bar",
-            "dateCreated": Date(timeIntervalSinceReferenceDate: 32),
-            "dateModified": Date(timeIntervalSinceReferenceDate: 1455),
-            "sortIndex": 1,
-            "theme": "auto",
+        let plist: [ModelPlistKey: Any] = [
+            .id: canvas.id,
+            .Canvas.title: "Hello Bar",
+            .Canvas.dateCreated: Date(timeIntervalSinceReferenceDate: 32),
+            .Canvas.dateModified: Date(timeIntervalSinceReferenceDate: 1455),
+            .Canvas.sortIndex: 1,
+            .Canvas.theme: "auto",
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: plist))
@@ -446,14 +446,14 @@ class CanvasTests: XCTestCase {
         let hierarchyPlist = PageHierarchy(canvasPage: canvasPage)!.plistRepresentation
         let hierarchyDict = [canvasPageID.stringRepresentation: [pageID.stringRepresentation: hierarchyPlist]]
 
-        let plist: [String: Any] = [
-            "id": canvas.id.stringRepresentation,
-            "title": "Hello Bar",
-            "dateCreated": Date(timeIntervalSinceReferenceDate: 32),
-            "dateModified": Date(timeIntervalSinceReferenceDate: 1455),
-            "sortIndex": 1,
-            "theme": "auto",
-            "closedPageHierarchies": hierarchyDict,
+        let plist: [ModelPlistKey: Any] = [
+            .id: canvas.id,
+            .Canvas.title: "Hello Bar",
+            .Canvas.dateCreated: Date(timeIntervalSinceReferenceDate: 32),
+            .Canvas.dateModified: Date(timeIntervalSinceReferenceDate: 1455),
+            .Canvas.sortIndex: 1,
+            .Canvas.theme: "auto",
+            .Canvas.closedPageHierarchies: hierarchyDict,
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: plist))
@@ -474,13 +474,13 @@ class CanvasTests: XCTestCase {
 
         canvas.closedPageHierarchies = [canvasPageID: [pageID: pageHierarchy]]
 
-        let plist: [String: Any] = [
-            "id": canvas.id.stringRepresentation,
-            "title": "Hello Bar",
-            "dateCreated": Date(timeIntervalSinceReferenceDate: 32),
-            "dateModified": Date(timeIntervalSinceReferenceDate: 1455),
-            "sortIndex": 1,
-            "theme": "auto",
+        let plist: [ModelPlistKey: Any] = [
+            .id: canvas.id,
+            .Canvas.title: "Hello Bar",
+            .Canvas.dateCreated: Date(timeIntervalSinceReferenceDate: 32),
+            .Canvas.dateModified: Date(timeIntervalSinceReferenceDate: 1455),
+            .Canvas.sortIndex: 1,
+            .Canvas.theme: "auto",
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: plist))
@@ -492,15 +492,15 @@ class CanvasTests: XCTestCase {
         canvas.thumbnail = NSImage(named: "NSRemoveTemplate")!
 
         let expectedImageData = NSImage(named: "NSAddTemplate")!.pngData()!
-        let plist: [String: Any] = [
-            "id": canvas.id.stringRepresentation,
-            "title": "Hello Bar",
-            "dateCreated": Date(timeIntervalSinceReferenceDate: 32),
-            "dateModified": Date(timeIntervalSinceReferenceDate: 1455),
-            "sortIndex": 1,
-            "theme": "auto",
-            "thumbnail": ModelFile(type: "thumbnail", filename: nil, data: expectedImageData, metadata: [:]),
-            "zoomFactor": CGFloat(0.75),
+        let plist: [ModelPlistKey: Any] = [
+            .id: canvas.id,
+            .Canvas.title: "Hello Bar",
+            .Canvas.dateCreated: Date(timeIntervalSinceReferenceDate: 32),
+            .Canvas.dateModified: Date(timeIntervalSinceReferenceDate: 1455),
+            .Canvas.sortIndex: 1,
+            .Canvas.theme: "auto",
+            .Canvas.thumbnail: ModelFile(type: "thumbnail", filename: nil, data: expectedImageData, metadata: [:]),
+            .Canvas.zoomFactor: CGFloat(0.75),
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: plist))
@@ -512,14 +512,14 @@ class CanvasTests: XCTestCase {
         let canvas = Canvas()
 
         let expectedImageData = NSImage(named: "NSAddTemplate")!.pngData()!
-        let plist: [String: Any] = [
-            "id": canvas.id.stringRepresentation,
-            "title": "Hello Bar",
-            "dateCreated": Date(timeIntervalSinceReferenceDate: 32),
-            "dateModified": Date(timeIntervalSinceReferenceDate: 1455),
-            "sortIndex": 1,
-            "theme": "auto",
-            "thumbnail": ModelFile(type: "thumbnail", filename: nil, data: expectedImageData, metadata: [:]),
+        let plist: [ModelPlistKey: Any] = [
+            .id: canvas.id,
+            .Canvas.title: "Hello Bar",
+            .Canvas.dateCreated: Date(timeIntervalSinceReferenceDate: 32),
+            .Canvas.dateModified: Date(timeIntervalSinceReferenceDate: 1455),
+            .Canvas.sortIndex: 1,
+            .Canvas.theme: "auto",
+            .Canvas.thumbnail: ModelFile(type: "thumbnail", filename: nil, data: expectedImageData, metadata: [:]),
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: plist))
@@ -531,15 +531,15 @@ class CanvasTests: XCTestCase {
         let canvas = Canvas()
 
         let expectedImageData = NSImage(named: "NSAddTemplate")!.pngData()!
-        let plist: [String: Any] = [
-            "id": canvas.id.stringRepresentation,
-            "title": "Hello Bar",
-            "dateCreated": Date(timeIntervalSinceReferenceDate: 32),
-            "dateModified": Date(timeIntervalSinceReferenceDate: 1455),
-            "sortIndex": 1,
-            "theme": "auto",
-            "thumbnail": ModelFile(type: "thumbnail", filename: nil, data: expectedImageData, metadata: [:]),
-            "alwaysShowPageTitles": true,
+        let plist: [ModelPlistKey: Any] = [
+            .id: canvas.id,
+            .Canvas.title: "Hello Bar",
+            .Canvas.dateCreated: Date(timeIntervalSinceReferenceDate: 32),
+            .Canvas.dateModified: Date(timeIntervalSinceReferenceDate: 1455),
+            .Canvas.sortIndex: 1,
+            .Canvas.theme: "auto",
+            .Canvas.thumbnail: ModelFile(type: "thumbnail", filename: nil, data: expectedImageData, metadata: [:]),
+            .Canvas.alwaysShowPageTitles: true,
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: plist))
@@ -551,44 +551,44 @@ class CanvasTests: XCTestCase {
         let canvas = Canvas()
 
         let expectedImageData = NSImage(named: "NSAddTemplate")!.pngData()!
-        let plist: [String: Any] = [
-            "id": canvas.id.stringRepresentation,
-            "title": "Hello Bar",
-            "foo": "bar",
-            "dateCreated": Date(timeIntervalSinceReferenceDate: 32),
-            "dateModified": Date(timeIntervalSinceReferenceDate: 1455),
-            "sortIndex": 1,
-            "theme": "auto",
-            "thumbnail": ModelFile(type: "thumbnail", filename: nil, data: expectedImageData, metadata: [:]),
-            "testingAttribute": 12345,
+        let plist: [ModelPlistKey: Any] = [
+            .id: canvas.id,
+            .Canvas.title: "Hello Bar",
+            ModelPlistKey(rawValue: "foo")!: "bar",
+            .Canvas.dateCreated: Date(timeIntervalSinceReferenceDate: 32),
+            .Canvas.dateModified: Date(timeIntervalSinceReferenceDate: 1455),
+            .Canvas.sortIndex: 1,
+            .Canvas.theme: "auto",
+            .Canvas.thumbnail: ModelFile(type: "thumbnail", filename: nil, data: expectedImageData, metadata: [:]),
+            ModelPlistKey(rawValue: "testingAttribute")!: 12345,
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: plist))
-        XCTAssertEqual(canvas.otherProperties["foo"] as? String, "bar")
-        XCTAssertEqual(canvas.otherProperties["testingAttribute"] as? Int, 12345)
+        XCTAssertEqual(canvas.otherProperties[ModelPlistKey(rawValue: "foo")!] as? String, "bar")
+        XCTAssertEqual(canvas.otherProperties[ModelPlistKey(rawValue: "testingAttribute")!] as? Int, 12345)
     }
 
     func test_updateFromPlistRepresentation_doesntIncludeAnySupportPlistKeysInOtherProperties() throws {
         let canvas = Canvas()
 
         let expectedImageData = NSImage(named: "NSAddTemplate")!.pngData()!
-        let plist: [String: Any] = [
-            "id": canvas.id.stringRepresentation,
-            "title": "Hello Bar",
-            "foo": "bar",
-            "dateCreated": Date(timeIntervalSinceReferenceDate: 32),
-            "dateModified": Date(timeIntervalSinceReferenceDate: 1455),
-            "sortIndex": 1,
-            "theme": "auto",
-            "thumbnail": ModelFile(type: "thumbnail", filename: nil, data: expectedImageData, metadata: [:]),
-            "testingAttribute": 12345,
+        let plist: [ModelPlistKey: Any] = [
+            .id: canvas.id,
+            .Canvas.title: "Hello Bar",
+            ModelPlistKey(rawValue: "foo")!: "bar",
+            .Canvas.dateCreated: Date(timeIntervalSinceReferenceDate: 32),
+            .Canvas.dateModified: Date(timeIntervalSinceReferenceDate: 1455),
+            .Canvas.sortIndex: 1,
+            .Canvas.theme: "auto",
+            .Canvas.thumbnail: ModelFile(type: "thumbnail", filename: nil, data: expectedImageData, metadata: [:]),
+            ModelPlistKey(rawValue: "testingAttribute")!: 12345,
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: plist))
 
         XCTAssertEqual(canvas.otherProperties.count, 2)
-        for key in Canvas.PlistKeys.allCases {
-            XCTAssertNil(canvas.otherProperties[key.rawValue])
+        for key in ModelPlistKey.Canvas.all {
+            XCTAssertNil(canvas.otherProperties[key])
         }
     }
 

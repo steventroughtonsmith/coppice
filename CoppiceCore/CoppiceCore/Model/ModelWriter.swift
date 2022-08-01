@@ -38,6 +38,10 @@ public class ModelWriter: NSObject {
         plist["folders"] = folders
         content.append(contentsOf: folderContent)
 
+        let (canvasLinks, canvasLinkContent) = self.generateData(for: CanvasLink.self)
+        plist["canvasLinks"] = canvasLinks
+        content.append(contentsOf: canvasLinkContent)
+
         plist["settings"] = self.modelController.settings.plistRepresentation
 
         plist["version"] = self.documentVersion

@@ -10,12 +10,16 @@ import Foundation
 import M3Data
 
 final public class Folder: NSObject, CollectableModelObject, FolderContainable {
-    public static var modelType: ModelType = ModelType(rawValue: "Folder")!
     public static let rootFolderTitle = "__ROOT__FOLDER__"
 
+
+    //MARK: - ModelObject Definitions
+    public static var modelType: ModelType = ModelType(rawValue: "Folder")!
     public var id: ModelID = ModelID(modelType: Folder.modelType)
     public weak var collection: ModelCollection<Folder>?
 
+
+    //MARK: - Persisted Attributes
     @objc dynamic public var title: String = "New Folder" {
         didSet { self.didChange(\.title, oldValue: oldValue) }
     }
@@ -43,8 +47,10 @@ final public class Folder: NSObject, CollectableModelObject, FolderContainable {
         return "0Folder"
     }
 
-    public private(set) var otherProperties = [String: Any]()
+    public private(set) var otherProperties = [ModelPlistKey: Any]()
 
+
+    //MARK: - Folder Management
     public func insert(_ objects: [FolderContainable], below item: FolderContainable? = nil) {
         self.modelController?.pushChangeGroup()
         var contents: [FolderContainable?] = self.contents
@@ -115,6 +121,7 @@ final public class Folder: NSObject, CollectableModelObject, FolderContainable {
         self.contents = self.contents.sorted(by: method.compare)
     }
 
+
     //MARK: - Path
     public var pathString: String? {
         guard self.title != Folder.rootFolderTitle else {
@@ -133,44 +140,30 @@ final public class Folder: NSObject, CollectableModelObject, FolderContainable {
 
 
     //MARK: - Plist
-    enum PlistKeys: String, CaseIterable {
-        case id
-        case title
-        case contents
-        case dateCreated
-    }
-
-    public var plistRepresentation: [String: Any] {
+    public var plistRepresentation: [ModelPlistKey: Any] {
         var plist = self.otherProperties
 
-        plist[PlistKeys.id.rawValue] = self.id.stringRepresentation
-        plist[PlistKeys.title.rawValue] = self.title
-        plist[PlistKeys.contents.rawValue] = self.contents.map { $0.id.stringRepresentation }
-        plist[PlistKeys.dateCreated.rawValue] = self.dateCreated
+        plist[.id] = self.id.stringRepresentation
+        plist[.Folder.title] = self.title
+        plist[.Folder.contents] = self.contents.map { $0.id.stringRepresentation }
+        plist[.Folder.dateCreated] = self.dateCreated
 
         return plist
     }
 
-    public func update(fromPlistRepresentation plist: [String: Any]) throws {
-        guard self.id.stringRepresentation == (plist[PlistKeys.id.rawValue] as? String) else {
+    public func update(fromPlistRepresentation plist: [ModelPlistKey: Any]) throws {
+        guard self.id == plist.attribute(withKey: .id) else {
             throw ModelObjectUpdateErrors.idsDontMatch
         }
 
-        guard let title = plist[PlistKeys.title.rawValue] as? String else {
-            throw ModelObjectUpdateErrors.attributeNotFound(PlistKeys.title.rawValue)
-        }
-        guard let dateCreated = plist[PlistKeys.dateCreated.rawValue] as? Date else {
-            throw ModelObjectUpdateErrors.attributeNotFound(PlistKeys.dateCreated.rawValue)
-        }
-
-        guard let contentsStrings = plist[PlistKeys.contents.rawValue] as? [String] else {
-            throw ModelObjectUpdateErrors.attributeNotFound(PlistKeys.contents.rawValue)
-        }
+        let title: String = try plist.requiredAttribute(withKey: .Folder.title)
+        let dateCreated: Date = try plist.requiredAttribute(withKey: .Folder.dateCreated)
+        let contentsStrings: [String] = try plist.requiredAttribute(withKey: .Folder.contents)
 
         let contentsIDs = contentsStrings.compactMap { ModelID(string: $0) }
         let contents = contentsIDs.compactMap { self.modelController?.object(with: $0) as? FolderContainable }
         guard contentsStrings.count == contents.count else {
-            throw ModelObjectUpdateErrors.attributeNotFound(PlistKeys.contents.rawValue)
+            throw ModelObjectUpdateErrors.attributeNotFound(ModelPlistKey.Folder.contents.rawValue)
         }
         contents.forEach { $0.containingFolder = self }
 
@@ -178,9 +171,22 @@ final public class Folder: NSObject, CollectableModelObject, FolderContainable {
         self.dateCreated = dateCreated
         self.contents = contents
 
-        let plistKeys = PlistKeys.allCases.map(\.rawValue)
+        let plistKeys = ModelPlistKey.Folder.all
         self.otherProperties = plist.filter { (key, _) -> Bool in
             return plistKeys.contains(key) == false
+        }
+    }
+}
+
+
+extension ModelPlistKey {
+    enum Folder {
+        static let title = ModelPlistKey(rawValue: "title")!
+        static let dateCreated = ModelPlistKey(rawValue: "dateCreated")!
+        static let contents = ModelPlistKey(rawValue: "contents")!
+
+        static var all: [ModelPlistKey] {
+            return [.id, .Folder.title, .Folder.dateCreated, .Folder.contents]
         }
     }
 }

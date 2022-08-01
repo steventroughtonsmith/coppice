@@ -389,14 +389,14 @@ class FolderTests: XCTestCase {
     //MARK: - .plistRepresentation
     func test_plistRepresentation_containsID() throws {
         let folder = Folder()
-        let id = try XCTUnwrap(folder.plistRepresentation["id"] as? String)
+        let id = try XCTUnwrap(folder.plistRepresentation[.id] as? String)
         XCTAssertEqual(id, folder.id.stringRepresentation)
     }
 
     func test_plistRepresentation_containsTitle() throws {
         let folder = Folder()
         folder.title = "Possum!"
-        let title = try XCTUnwrap(folder.plistRepresentation["title"] as? String)
+        let title = try XCTUnwrap(folder.plistRepresentation[.Folder.title] as? String)
         XCTAssertEqual(title, "Possum!")
     }
 
@@ -407,7 +407,7 @@ class FolderTests: XCTestCase {
         let object3 = Folder()
         folder.contents = [object1, object2, object3] as [FolderContainable]
 
-        let contents = try XCTUnwrap(folder.plistRepresentation["contents"] as? [String])
+        let contents = try XCTUnwrap(folder.plistRepresentation[.Folder.contents] as? [String])
         XCTAssertEqual(contents[0], object1.id.stringRepresentation)
         XCTAssertEqual(contents[1], object2.id.stringRepresentation)
         XCTAssertEqual(contents[2], object3.id.stringRepresentation)
@@ -417,20 +417,20 @@ class FolderTests: XCTestCase {
         let folder = self.foldersCollection.newObject()
         let object1 = self.pagesCollection.newObject()
         let object2 = self.foldersCollection.newObject()
-        let plist: [String: Any] = [
-            "id": folder.id.stringRepresentation,
-            "title": "Cool Pages",
-            "dateCreated": Date(timeIntervalSinceReferenceDate: 3106),
-            "foo": "bar",
-            "contents": [object1.id.stringRepresentation, object2.id.stringRepresentation],
-            "baz": ["hello": "world"],
+        let plist: [ModelPlistKey: Any] = [
+            .id: folder.id,
+            .Folder.title: "Cool Pages",
+            .Folder.dateCreated: Date(timeIntervalSinceReferenceDate: 3106),
+            ModelPlistKey(rawValue:"foo")!: "bar",
+            .Folder.contents: [object1.id.stringRepresentation, object2.id.stringRepresentation],
+            ModelPlistKey(rawValue:"baz")!: ["hello": "world"],
         ]
 
         XCTAssertNoThrow(try folder.update(fromPlistRepresentation: plist))
 
         let plistRepresentation = folder.plistRepresentation
-        XCTAssertEqual(plistRepresentation["foo"] as? String, "bar")
-        XCTAssertEqual(plistRepresentation["baz"] as? [String: String], ["hello": "world"])
+        XCTAssertEqual(plistRepresentation[ModelPlistKey(rawValue:"foo")!] as? String, "bar")
+        XCTAssertEqual(plistRepresentation[ModelPlistKey(rawValue:"baz")!] as? [String: String], ["hello": "world"])
     }
 
 
@@ -439,10 +439,10 @@ class FolderTests: XCTestCase {
         let folder = self.foldersCollection.newObject()
         let object1 = self.pagesCollection.newObject()
         let object2 = self.foldersCollection.newObject()
-        let plist: [String: Any] = [
-            "id": "unknown-folder",
-            "title": "Cool Pages",
-            "contents": [object1.id.stringRepresentation, object2.id.stringRepresentation],
+        let plist: [ModelPlistKey: Any] = [
+            .id: "unknown-folder",
+            .Folder.title: "Cool Pages",
+            .Folder.contents: [object1.id.stringRepresentation, object2.id.stringRepresentation],
         ]
 
         XCTAssertThrowsError(try folder.update(fromPlistRepresentation: plist)) {
@@ -454,11 +454,11 @@ class FolderTests: XCTestCase {
         let folder = self.foldersCollection.newObject()
         let object1 = self.pagesCollection.newObject()
         let object2 = self.foldersCollection.newObject()
-        let plist: [String: Any] = [
-            "id": folder.id.stringRepresentation,
-            "title": "Cool Pages",
-            "dateCreated": Date(timeIntervalSinceReferenceDate: 3106),
-            "contents": [object1.id.stringRepresentation, object2.id.stringRepresentation],
+        let plist: [ModelPlistKey: Any] = [
+            .id: folder.id,
+            .Folder.title: "Cool Pages",
+            .Folder.dateCreated: Date(timeIntervalSinceReferenceDate: 3106),
+            .Folder.contents: [object1.id.stringRepresentation, object2.id.stringRepresentation],
         ]
 
         XCTAssertNoThrow(try folder.update(fromPlistRepresentation: plist))
@@ -470,9 +470,9 @@ class FolderTests: XCTestCase {
         let folder = self.foldersCollection.newObject()
         let object1 = self.pagesCollection.newObject()
         let object2 = self.foldersCollection.newObject()
-        let plist: [String: Any] = [
-            "id": folder.id.stringRepresentation,
-            "contents": [object1.id.stringRepresentation, object2.id.stringRepresentation],
+        let plist: [ModelPlistKey: Any] = [
+            .id: folder.id,
+            .Folder.contents: [object1.id.stringRepresentation, object2.id.stringRepresentation],
         ]
 
         XCTAssertThrowsError(try folder.update(fromPlistRepresentation: plist)) {
@@ -484,11 +484,11 @@ class FolderTests: XCTestCase {
         let folder = self.foldersCollection.newObject()
         let object1 = self.pagesCollection.newObject()
         let object2 = self.foldersCollection.newObject()
-        let plist: [String: Any] = [
-            "id": folder.id.stringRepresentation,
-            "title": "Cool Pages",
-            "dateCreated": Date(timeIntervalSinceReferenceDate: 3100),
-            "contents": [object1.id.stringRepresentation, object2.id.stringRepresentation],
+        let plist: [ModelPlistKey: Any] = [
+            .id: folder.id,
+            .Folder.title: "Cool Pages",
+            .Folder.dateCreated: Date(timeIntervalSinceReferenceDate: 3100),
+            .Folder.contents: [object1.id.stringRepresentation, object2.id.stringRepresentation],
         ]
 
         XCTAssertNoThrow(try folder.update(fromPlistRepresentation: plist))
@@ -500,10 +500,10 @@ class FolderTests: XCTestCase {
     func test_updatesFromPlistRepresentation_throwsIfContentsMissing() {
         let folder = Folder()
 
-        let plist: [String: Any] = [
-            "id": folder.id.stringRepresentation,
-            "dateCreated": Date(timeIntervalSinceReferenceDate: 3101),
-            "title": "Cool Pages",
+        let plist: [ModelPlistKey: Any] = [
+            .id: folder.id,
+            .Folder.dateCreated: Date(timeIntervalSinceReferenceDate: 3101),
+            .Folder.title: "Cool Pages",
         ]
 
         XCTAssertThrowsError(try folder.update(fromPlistRepresentation: plist)) {
@@ -513,11 +513,11 @@ class FolderTests: XCTestCase {
 
     func test_updatesFromPlistRepresentation_throwsIfContentsNotArrayOfStrings() {
         let folder = Folder()
-        let plist: [String: Any] = [
-            "id": folder.id.stringRepresentation,
-            "title": "Cool Pages",
-            "dateCreated": Date(timeIntervalSinceReferenceDate: 3101),
-            "contents": [1, 4, "5"],
+        let plist: [ModelPlistKey: Any] = [
+            .id: folder.id,
+            .Folder.title: "Cool Pages",
+            .Folder.dateCreated: Date(timeIntervalSinceReferenceDate: 3101),
+            .Folder.contents: [1, 4, "5"],
         ]
 
         XCTAssertThrowsError(try folder.update(fromPlistRepresentation: plist)) {
@@ -529,11 +529,11 @@ class FolderTests: XCTestCase {
         let folder = self.foldersCollection.newObject()
         let object1 = self.pagesCollection.newObject()
         let object2 = self.foldersCollection.newObject()
-        let plist: [String: Any] = [
-            "id": folder.id.stringRepresentation,
-            "title": "Cool Pages",
-            "dateCreated": Date(timeIntervalSinceReferenceDate: 3102),
-            "contents": [object1.id.stringRepresentation, "baz", object2.id.stringRepresentation],
+        let plist: [ModelPlistKey: Any] = [
+            .id: folder.id,
+            .Folder.title: "Cool Pages",
+            .Folder.dateCreated: Date(timeIntervalSinceReferenceDate: 3102),
+            .Folder.contents: [object1.id.stringRepresentation, "baz", object2.id.stringRepresentation],
         ]
 
         XCTAssertThrowsError(try folder.update(fromPlistRepresentation: plist)) {
@@ -545,11 +545,11 @@ class FolderTests: XCTestCase {
         let folder = self.foldersCollection.newObject()
         let object1 = self.pagesCollection.newObject()
         let object2 = self.foldersCollection.newObject()
-        let plist: [String: Any] = [
-            "id": folder.id.stringRepresentation,
-            "title": "Cool Pages",
-            "dateCreated": Date(timeIntervalSinceReferenceDate: 3106),
-            "contents": [object1.id.stringRepresentation, object2.id.stringRepresentation],
+        let plist: [ModelPlistKey: Any] = [
+            .id: folder.id,
+            .Folder.title: "Cool Pages",
+            .Folder.dateCreated: Date(timeIntervalSinceReferenceDate: 3106),
+            .Folder.contents: [object1.id.stringRepresentation, object2.id.stringRepresentation],
         ]
 
         XCTAssertNoThrow(try folder.update(fromPlistRepresentation: plist))
@@ -561,10 +561,10 @@ class FolderTests: XCTestCase {
         let folder = self.foldersCollection.newObject()
         let object1 = self.pagesCollection.newObject()
         let object2 = self.foldersCollection.newObject()
-        let plist: [String: Any] = [
-            "id": folder.id.stringRepresentation,
-            "title": "Cool Pages",
-            "contents": [object1.id.stringRepresentation, object2.id.stringRepresentation],
+        let plist: [ModelPlistKey: Any] = [
+            .id: folder.id,
+            .Folder.title: "Cool Pages",
+            .Folder.contents: [object1.id.stringRepresentation, object2.id.stringRepresentation],
         ]
 
         XCTAssertThrowsError(try folder.update(fromPlistRepresentation: plist)) {
@@ -576,38 +576,38 @@ class FolderTests: XCTestCase {
         let folder = self.foldersCollection.newObject()
         let object1 = self.pagesCollection.newObject()
         let object2 = self.foldersCollection.newObject()
-        let plist: [String: Any] = [
-            "id": folder.id.stringRepresentation,
-            "title": "Cool Pages",
-            "dateCreated": Date(timeIntervalSinceReferenceDate: 3106),
-            "foo": "bar",
-            "contents": [object1.id.stringRepresentation, object2.id.stringRepresentation],
-            "baz": ["hello": "world"],
+        let plist: [ModelPlistKey: Any] = [
+            .id: folder.id,
+            .Folder.title: "Cool Pages",
+            .Folder.dateCreated: Date(timeIntervalSinceReferenceDate: 3106),
+            ModelPlistKey(rawValue:"foo")!: "bar",
+            .Folder.contents: [object1.id.stringRepresentation, object2.id.stringRepresentation],
+            ModelPlistKey(rawValue:"baz")!: ["hello": "world"],
         ]
 
         XCTAssertNoThrow(try folder.update(fromPlistRepresentation: plist))
 
-        XCTAssertEqual(folder.otherProperties["foo"] as? String, "bar")
-        XCTAssertEqual(folder.otherProperties["baz"] as? [String: String], ["hello": "world"])
+        XCTAssertEqual(folder.otherProperties[ModelPlistKey(rawValue:"foo")!] as? String, "bar")
+        XCTAssertEqual(folder.otherProperties[ModelPlistKey(rawValue:"baz")!] as? [String: String], ["hello": "world"])
     }
 
     func test_updateFromPlistRepresentation_doesntIncludeAnySupportPlistKeysInOtherProperties() throws {
         let folder = self.foldersCollection.newObject()
         let object1 = self.pagesCollection.newObject()
         let object2 = self.foldersCollection.newObject()
-        let plist: [String: Any] = [
-            "id": folder.id.stringRepresentation,
-            "title": "Cool Pages",
-            "dateCreated": Date(timeIntervalSinceReferenceDate: 3106),
-            "foo": "bar",
-            "contents": [object1.id.stringRepresentation, object2.id.stringRepresentation],
-            "baz": ["hello": "world"],
+        let plist: [ModelPlistKey: Any] = [
+            .id: folder.id,
+            .Folder.title: "Cool Pages",
+            .Folder.dateCreated: Date(timeIntervalSinceReferenceDate: 3106),
+            ModelPlistKey(rawValue:"foo")!: "bar",
+            .Folder.contents: [object1.id.stringRepresentation, object2.id.stringRepresentation],
+            ModelPlistKey(rawValue:"baz")!: ["hello": "world"],
         ]
 
         XCTAssertNoThrow(try folder.update(fromPlistRepresentation: plist))
         XCTAssertEqual(folder.otherProperties.count, 2)
-        for key in Folder.PlistKeys.allCases {
-            XCTAssertNil(folder.otherProperties[key.rawValue])
+        for key in ModelPlistKey.Folder.all {
+            XCTAssertNil(folder.otherProperties[key])
         }
     }
 }

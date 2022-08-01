@@ -25,9 +25,8 @@ final public class Canvas: NSObject, CollectableModelObject {
     }
 
 
-
+    //MARK: - ModelObject Definitions
     public static let modelType: ModelType = ModelType(rawValue: "Canvas")!
-
     public var id = ModelID(modelType: Canvas.modelType)
     public weak var collection: ModelCollection<Canvas>?
 
@@ -74,7 +73,7 @@ final public class Canvas: NSObject, CollectableModelObject {
         didSet { self.didChange(\.alwaysShowPageTitles, oldValue: oldValue) }
     }
 
-    public private(set) var otherProperties = [String: Any]()
+    public private(set) var otherProperties = [ModelPlistKey: Any]()
 
 
     //MARK: - Relationships
@@ -88,41 +87,27 @@ final public class Canvas: NSObject, CollectableModelObject {
 
 
     //MARK: - Plists
-    public static var modelFileProperties: [String] {
-        return ["thumbnail"]
+    public static var modelFileProperties: [ModelPlistKey] {
+        return [.Canvas.thumbnail]
     }
 
-    enum PlistKeys: String, CaseIterable {
-        case id
-        case title
-        case dateCreated
-        case dateModified
-        case sortIndex
-        case theme
-        case zoomFactor
-        case thumbnail
-        case viewPort
-        case closedPageHierarchies
-        case alwaysShowPageTitles ///Added 2021.2
-    }
-
-    public var plistRepresentation: [String: Any] {
+    public var plistRepresentation: [ModelPlistKey: Any] {
         var plist = self.otherProperties
 
-        plist[PlistKeys.id.rawValue] = self.id.stringRepresentation
-        plist[PlistKeys.title.rawValue] = self.title
-        plist[PlistKeys.dateCreated.rawValue] = self.dateCreated
-        plist[PlistKeys.dateModified.rawValue] = self.dateModified
-        plist[PlistKeys.sortIndex.rawValue] = self.sortIndex
-        plist[PlistKeys.theme.rawValue] = self.theme.rawValue
-        plist[PlistKeys.zoomFactor.rawValue] = self.zoomFactor
-        plist[PlistKeys.alwaysShowPageTitles.rawValue] = self.alwaysShowPageTitles
+        plist[.id] = self.id.stringRepresentation
+        plist[.Canvas.title] = self.title
+        plist[.Canvas.dateCreated] = self.dateCreated
+        plist[.Canvas.dateModified] = self.dateModified
+        plist[.Canvas.sortIndex] = self.sortIndex
+        plist[.Canvas.theme] = self.theme.rawValue
+        plist[.Canvas.zoomFactor] = self.zoomFactor
+        plist[.Canvas.alwaysShowPageTitles] = self.alwaysShowPageTitles
 
         if let thumbnailData = self.thumbnail?.pngData() {
-            plist[PlistKeys.thumbnail.rawValue] = ModelFile(type: "thumbnail", filename: "\(self.id.uuid.uuidString)-thumbnail.png", data: thumbnailData, metadata: [:])
+            plist[.Canvas.thumbnail] = ModelFile(type: "thumbnail", filename: "\(self.id.uuid.uuidString)-thumbnail.png", data: thumbnailData, metadata: [:])
         }
         if let viewPort = self.viewPort  {
-            plist[PlistKeys.viewPort.rawValue] = NSStringFromRect(viewPort)
+            plist[.Canvas.viewPort] = NSStringFromRect(viewPort)
         }
 
 
@@ -131,24 +116,24 @@ final public class Canvas: NSObject, CollectableModelObject {
                 return (key.stringRepresentation, value.plistRepresentation)
             }))
         })
-        plist[PlistKeys.closedPageHierarchies.rawValue] = plistableHierarchy
+        plist[.Canvas.closedPageHierarchies] = plistableHierarchy
 
         return plist
     }
 
-    public func update(fromPlistRepresentation plist: [String: Any]) throws {
-        guard self.id.stringRepresentation == (plist["id"] as? String) else {
+    public func update(fromPlistRepresentation plist: [ModelPlistKey: Any]) throws {
+        guard self.id == plist.attribute(withKey: .id) else {
             throw ModelObjectUpdateErrors.idsDontMatch
         }
 
-        let title: String = try self.attribute(withKey: PlistKeys.title.rawValue, from: plist)
-        let dateCreated: Date = try self.attribute(withKey: PlistKeys.dateCreated.rawValue, from: plist)
-        let dateModified: Date = try self.attribute(withKey: PlistKeys.dateModified.rawValue, from: plist)
-        let sortIndex: Int = try self.attribute(withKey: PlistKeys.sortIndex.rawValue, from: plist)
+        let title: String = try plist.requiredAttribute(withKey: .Canvas.title)
+        let dateCreated: Date = try plist.requiredAttribute(withKey: .Canvas.dateCreated)
+        let dateModified: Date = try plist.requiredAttribute(withKey: .Canvas.dateModified)
+        let sortIndex: Int = try plist.requiredAttribute(withKey: .Canvas.sortIndex)
 
-        let rawTheme: String = try self.attribute(withKey: PlistKeys.theme.rawValue, from: plist)
+        let rawTheme: String = try plist.requiredAttribute(withKey: .Canvas.theme)
         guard let theme = Theme(rawValue: rawTheme) else {
-            throw ModelObjectUpdateErrors.attributeNotFound(PlistKeys.theme.rawValue)
+            throw ModelObjectUpdateErrors.attributeNotFound(ModelPlistKey.Canvas.theme.rawValue)
         }
 
         self.title = title
@@ -157,13 +142,13 @@ final public class Canvas: NSObject, CollectableModelObject {
         self.sortIndex = sortIndex
         self.theme = theme
 
-        if let viewPortString = plist[PlistKeys.viewPort.rawValue] as? String {
+        if let viewPortString: String = plist.attribute(withKey: .Canvas.viewPort){
             self.viewPort = NSRectFromString(viewPortString)
         } else {
             self.viewPort = nil
         }
 
-        if let thumbnail = plist[PlistKeys.thumbnail.rawValue] as? ModelFile {
+        if let thumbnail: ModelFile = plist.attribute(withKey: .Canvas.thumbnail) {
             if let data = thumbnail.data {
                 self.thumbnail = NSImage(data: data)
             }
@@ -171,13 +156,13 @@ final public class Canvas: NSObject, CollectableModelObject {
             self.thumbnail = nil
         }
 
-        if let zoomFactor = plist[PlistKeys.zoomFactor.rawValue] as? CGFloat {
+        if let zoomFactor: CGFloat = plist.attribute(withKey: .Canvas.zoomFactor) {
             self.zoomFactor = zoomFactor
         } else {
             self.zoomFactor = 1
         }
 
-        if let plistableHierarchy = plist[PlistKeys.closedPageHierarchies.rawValue] as? [String: [String: [String: Any]]] {
+        if let plistableHierarchy: [String: [String: [String: Any]]] = plist.attribute(withKey: .Canvas.closedPageHierarchies) {
             let hierarchy = plistableHierarchy.compactMap { key, value -> (ModelID, [ModelID: PageHierarchy])? in
                 guard let canvasPageID = ModelID(string: key) else {
                     return nil
@@ -195,20 +180,34 @@ final public class Canvas: NSObject, CollectableModelObject {
             self.closedPageHierarchies = [:]
         }
 
-        if let alwaysShowPageTitles = plist[PlistKeys.alwaysShowPageTitles.rawValue] as? Bool {
+        if let alwaysShowPageTitles: Bool = plist.attribute(withKey: .Canvas.alwaysShowPageTitles) {
             self.alwaysShowPageTitles = alwaysShowPageTitles
         }
 
-        let plistKeys = PlistKeys.allCases.map(\.rawValue)
+        let plistKeys = ModelPlistKey.Canvas.all
         self.otherProperties = plist.filter { (key, _) -> Bool in
             return plistKeys.contains(key) == false
         }
     }
+}
 
-    private func attribute<T>(withKey key: String, from plist: [String: Any]) throws -> T {
-        guard let value = plist[key] as? T else {
-            throw ModelObjectUpdateErrors.attributeNotFound(key)
+
+extension ModelPlistKey {
+    enum Canvas {
+        static let title = ModelPlistKey(rawValue: "title")!
+        static let dateCreated = ModelPlistKey(rawValue: "dateCreated")!
+        static let dateModified = ModelPlistKey(rawValue: "dateModified")!
+        static let sortIndex = ModelPlistKey(rawValue: "sortIndex")!
+        static let theme = ModelPlistKey(rawValue: "theme")!
+        static let zoomFactor = ModelPlistKey(rawValue: "zoomFactor")!
+        static let thumbnail = ModelPlistKey(rawValue: "thumbnail")!
+        static let viewPort = ModelPlistKey(rawValue: "viewPort")!
+        static let closedPageHierarchies = ModelPlistKey(rawValue: "closedPageHierarchies")!
+        static let alwaysShowPageTitles = ModelPlistKey(rawValue: "alwaysShowPageTitles")! ///Added 2021.2
+
+        static var all: [ModelPlistKey] {
+            return [.id, .Canvas.title, .Canvas.dateCreated, .Canvas.dateModified, .Canvas.sortIndex, .Canvas.theme, .Canvas.zoomFactor, .Canvas.thumbnail, .Canvas.viewPort, .Canvas.closedPageHierarchies, .Canvas.alwaysShowPageTitles]
         }
-        return value
+
     }
 }
