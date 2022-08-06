@@ -29,20 +29,27 @@ final public class CanvasLink: NSObject, CollectableModelObject {
     }
 
     //MARK: - Plist
+    public static var propertyConversions: [ModelPlistKey : ModelPropertyConversion] {
+        return [
+            .CanvasLink.sourcePage: .modelID,
+            .CanvasLink.destinationPage: .modelID,
+        ]
+    }
+
     public var plistRepresentation: [ModelPlistKey: Any] {
         var plist = self.otherProperties
-        plist[.id] = self.id.stringRepresentation
+        plist[.id] = self.id
 
         if let link = self.link {
             plist[.CanvasLink.link] = link.url.absoluteString
         }
 
         if let destinationPage = self.destinationPage {
-            plist[.CanvasLink.destinationPage] = destinationPage.id.stringRepresentation
+            plist[.CanvasLink.destinationPage] = destinationPage.id
         }
 
         if let sourcePage = self.sourcePage {
-            plist[.CanvasLink.sourcePage] = sourcePage.id.stringRepresentation
+            plist[.CanvasLink.sourcePage] = sourcePage.id
         }
 
         return plist
@@ -57,11 +64,11 @@ final public class CanvasLink: NSObject, CollectableModelObject {
             self.link = link
         }
 
-        if let destinationString: String = plist.attribute(withKey: .CanvasLink.destinationPage), let destinationID = ModelID(string: destinationString) {
+        if let destinationID: ModelID = plist.attribute(withKey: .CanvasLink.destinationPage) {
             self.$destinationPage.modelID = destinationID
         }
 
-        if let sourceString: String = plist.attribute(withKey: .CanvasLink.sourcePage), let sourceID = ModelID(string: sourceString) {
+        if let sourceID: ModelID = plist.attribute(withKey: .CanvasLink.sourcePage) {
             self.$sourcePage.modelID = sourceID
         }
 

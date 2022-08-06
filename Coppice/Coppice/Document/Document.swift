@@ -8,13 +8,12 @@
 
 import Cocoa
 import CoppiceCore
+import M3Data
 
 class Document: NSDocument {
     lazy var modelController: CoppiceModelController = {
         CoppiceModelController(undoManager: self.undoManager!)
     }()
-
-    static let documentVersion = GlobalConstants.documentVersion
 
     override class var autosavesInPlace: Bool {
         return true
@@ -56,27 +55,32 @@ class Document: NSDocument {
     }
 
     override func read(from fileWrapper: FileWrapper, ofType typeName: String) throws {
-        let modelReader = ModelReader(modelController: self.modelController, documentVersion: Document.documentVersion)
+        let modelReader = ModelReader(modelController: self.modelController, plists: Plist.allPlists)
+
+        guard
+            let plistWrapper = fileWrapper.fileWrappers?[GlobalConstants.DocumentContents.dataPlist],
+            let contentWrapper = fileWrapper.fileWrappers?[GlobalConstants.DocumentContents.contentFolder]
+        else {
+            throw NSError.Coppice.Document.readingFailed()
+        }
+
         do {
-            try modelReader.read(fileWrapper)
+            try modelReader.read(plistWrapper: plistWrapper, contentWrapper: contentWrapper)
             self.isBrandNewDocument = false
-        } catch ModelReader.Errors.versionTooNew {
-            throw NSError(domain: GlobalConstants.appErrorDomain,
-                          code: GlobalConstants.ErrorCodes.readingDocumentFailed.rawValue,
-                          userInfo: [
-                              NSLocalizedFailureReasonErrorKey: NSLocalizedString("This document was saved by a newer version of Coppice", comment: "Document version too new error reason"),
-                              NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString("Please download the latest version of Coppice to open this Document", comment: "Document version too new error recovery suggestion"),
-                          ])
+        } catch ModelReader.Errors.versionNotSupported {
+            throw NSError.Coppice.Document.documentTooNew()
         } catch {
-            throw NSError(domain: GlobalConstants.appErrorDomain,
-                          code: GlobalConstants.ErrorCodes.readingDocumentFailed.rawValue,
-                          userInfo: [NSLocalizedFailureReasonErrorKey: NSLocalizedString("The document appears to be corrupted. Please contact support for help.", comment: "Document opening failure")])
+            throw NSError.Coppice.Document.readingFailed()
         }
     }
 
     override func fileWrapper(ofType typeName: String) throws -> FileWrapper {
-        let modelWriter = ModelWriter(modelController: self.modelController, documentVersion: Document.documentVersion)
-        return try modelWriter.generateFileWrapper()
+        let modelWriter = ModelWriter(modelController: self.modelController, plist: Plist.allPlists.last!)
+        let (plistWrapper, contentWrapper) = try modelWriter.generateFileWrappers()
+        return FileWrapper(directoryWithFileWrappers: [
+            GlobalConstants.DocumentContents.dataPlist: plistWrapper,
+            GlobalConstants.DocumentContents.contentFolder: contentWrapper
+        ])
     }
 
     override func close() {

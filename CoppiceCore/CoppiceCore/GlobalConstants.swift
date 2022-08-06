@@ -39,7 +39,10 @@ public struct GlobalConstants {
 
     public static var maxCanvasThumbnailSize = CGSize(width: 240, height: 120)
 
-    public static let documentVersion = 2
+    public struct DocumentContents {
+        public static var dataPlist = "data.plist"
+        public static var contentFolder = "content"
+    }
 }
 
 public struct Symbols {
@@ -128,5 +131,26 @@ public struct Symbols {
             return "xmark.circle.fill"
         }
         return "NSStopProgressFreestandingTemplate"
+    }
+}
+
+extension NSError {
+    public struct Coppice {
+        public struct Document {
+            public static func documentTooNew() -> NSError {
+                return NSError(domain: GlobalConstants.appErrorDomain,
+                               code: GlobalConstants.ErrorCodes.documentTooNew.rawValue,
+                               userInfo: [
+                                NSLocalizedFailureReasonErrorKey: NSLocalizedString("This document was saved by a newer version of Coppice", comment: "Document version too new error reason"),
+                                NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString("Please download the latest version of Coppice to open this Document", comment: "Document version too new error recovery suggestion"),
+                               ])
+            }
+
+            public static func readingFailed() -> NSError {
+                return NSError(domain: GlobalConstants.appErrorDomain,
+                               code: GlobalConstants.ErrorCodes.readingDocumentFailed.rawValue,
+                               userInfo: [NSLocalizedFailureReasonErrorKey: NSLocalizedString("The document appears to be corrupted. Please contact support for help.", comment: "Document opening failure")])
+            }
+        }
     }
 }

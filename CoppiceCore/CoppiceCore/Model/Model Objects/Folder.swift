@@ -140,12 +140,16 @@ final public class Folder: NSObject, CollectableModelObject, FolderContainable {
 
 
     //MARK: - Plist
+    public static var propertyConversions: [ModelPlistKey : ModelPropertyConversion] {
+        return [.Folder.contents: .modelIDArray]
+    }
+
     public var plistRepresentation: [ModelPlistKey: Any] {
         var plist = self.otherProperties
 
-        plist[.id] = self.id.stringRepresentation
+        plist[.id] = self.id
         plist[.Folder.title] = self.title
-        plist[.Folder.contents] = self.contents.map { $0.id.stringRepresentation }
+        plist[.Folder.contents] = self.contents.map(\.id)
         plist[.Folder.dateCreated] = self.dateCreated
 
         return plist
@@ -158,11 +162,10 @@ final public class Folder: NSObject, CollectableModelObject, FolderContainable {
 
         let title: String = try plist.requiredAttribute(withKey: .Folder.title)
         let dateCreated: Date = try plist.requiredAttribute(withKey: .Folder.dateCreated)
-        let contentsStrings: [String] = try plist.requiredAttribute(withKey: .Folder.contents)
 
-        let contentsIDs = contentsStrings.compactMap { ModelID(string: $0) }
+        let contentsIDs: [ModelID] = try plist.requiredAttribute(withKey: .Folder.contents)
         let contents = contentsIDs.compactMap { self.modelController?.object(with: $0) as? FolderContainable }
-        guard contentsStrings.count == contents.count else {
+        guard contentsIDs.count == contents.count else {
             throw ModelObjectUpdateErrors.attributeNotFound(ModelPlistKey.Folder.contents.rawValue)
         }
         contents.forEach { $0.containingFolder = self }

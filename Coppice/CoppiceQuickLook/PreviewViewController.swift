@@ -8,6 +8,7 @@
 
 import Cocoa
 import CoppiceCore
+import M3Data
 import Quartz
 
 class PreviewViewController: NSViewController, QLPreviewingController {
@@ -38,10 +39,16 @@ class PreviewViewController: NSViewController, QLPreviewingController {
     let layoutEngine = CanvasLayoutEngine(configuration: .init(page: .mac, contentBorder: 100, arrow: .standard))
 
     func preparePreviewOfFile(at url: URL, completionHandler handler: @escaping (Error?) -> Void) {
-        let modelReader = ModelReader(modelController: self.modelController, documentVersion: GlobalConstants.documentVersion)
+        let modelReader = ModelReader(modelController: self.modelController, plists: Plist.allPlists)
         do {
             let fileWrapper = try FileWrapper(url: url, options: [])
-            try modelReader.read(fileWrapper)
+            guard
+                let plistWrapper = fileWrapper.fileWrappers?[GlobalConstants.DocumentContents.dataPlist],
+                let contentWrapper = fileWrapper.fileWrappers?[GlobalConstants.DocumentContents.contentFolder]
+            else {
+                throw NSError.Coppice.Document.readingFailed()
+            }
+            try modelReader.read(plistWrapper: plistWrapper, contentWrapper: contentWrapper)
         } catch let e {
             handler(e)
             return

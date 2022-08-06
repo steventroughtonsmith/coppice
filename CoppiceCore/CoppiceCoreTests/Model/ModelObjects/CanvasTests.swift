@@ -29,8 +29,8 @@ class CanvasTests: XCTestCase {
     func test_plistRepresentation_containsID() throws {
         let canvas = Canvas()
         let plist = canvas.plistRepresentation
-        let id = try XCTUnwrap(plist[.id] as? String)
-        XCTAssertEqual(id, canvas.id.stringRepresentation)
+        let id = try XCTUnwrap(plist[.id] as? ModelID)
+        XCTAssertEqual(id, canvas.id)
     }
 
     func test_plistRepresentation_containsTitle() throws {
@@ -177,7 +177,7 @@ class CanvasTests: XCTestCase {
         let plistRepresentation = canvas.plistRepresentation
         XCTAssertEqual(plistRepresentation[ModelPlistKey(rawValue: "foo")!] as? String, "bar")
         XCTAssertEqual(plistRepresentation[ModelPlistKey(rawValue: "testingAttribute")!] as? Int, 12345)
-        XCTAssertEqual(plistRepresentation[.id] as? String, canvas.id.stringRepresentation)
+        XCTAssertEqual(plistRepresentation[.id] as? ModelID, canvas.id)
     }
 
 

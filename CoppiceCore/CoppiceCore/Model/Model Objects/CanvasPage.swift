@@ -124,22 +124,25 @@ final public class CanvasPage: NSObject, CollectableModelObject {
 
 
     //MARK: - Plists
+    public static var propertyConversions: [ModelPlistKey : ModelPropertyConversion] {
+        return [
+            .CanvasPage.page: .modelID,
+            .CanvasPage.canvas: .modelID
+        ]
+    }
+
     public var plistRepresentation: [ModelPlistKey: Any] {
         var plist = self.otherProperties
 
-        //TODO: Make ModelWriter take ids as ids rather than strings
-        plist[.id] = self.id.stringRepresentation
+        plist[.id] = self.id
         plist[.CanvasPage.frame] = NSStringFromRect(self.frame)
         plist[.CanvasPage.zIndex] = self.zIndex
 
         if let page = self.page {
-            plist[.CanvasPage.page] = page.id.stringRepresentation
+            plist[.CanvasPage.page] = page.id
         }
         if let canvas = self.canvas {
-            plist[.CanvasPage.canvas] = canvas.id.stringRepresentation
-        }
-        if let parent = self.parent {
-            plist[.CanvasPage.parent] = parent.id.stringRepresentation
+            plist[.CanvasPage.canvas] = canvas.id
         }
         return plist
     }
@@ -156,15 +159,11 @@ final public class CanvasPage: NSObject, CollectableModelObject {
         let frameString: String = try plist.requiredAttribute(withKey: .CanvasPage.frame)
         self.frame = NSRectFromString(frameString)
 
-        if let parentString: String = plist.attribute(withKey: .CanvasPage.parent), let parentID = ModelID(string: parentString) {
-            self.parent = modelController.collection(for: CanvasPage.self).objectWithID(parentID)
-        }
-
-        if let pageString: String = plist.attribute(withKey: .CanvasPage.page), let pageID = ModelID(string: pageString) {
+        if let pageID: ModelID = plist.attribute(withKey: .CanvasPage.page) {
             self.page = modelController.collection(for: Page.self).objectWithID(pageID)
         }
 
-        if let canvasString: String = plist.attribute(withKey: .CanvasPage.canvas), let canvasID = ModelID(string: canvasString) {
+        if let canvasID: ModelID = plist.attribute(withKey: .CanvasPage.canvas) {
             self.canvas = modelController.collection(for: Canvas.self).objectWithID(canvasID)
         }
 

@@ -87,14 +87,14 @@ final public class Canvas: NSObject, CollectableModelObject {
 
 
     //MARK: - Plists
-    public static var modelFileProperties: [ModelPlistKey] {
-        return [.Canvas.thumbnail]
+    public static var propertyConversions: [ModelPlistKey : ModelPropertyConversion] {
+        return [.Canvas.thumbnail: .modelFile]
     }
 
     public var plistRepresentation: [ModelPlistKey: Any] {
         var plist = self.otherProperties
 
-        plist[.id] = self.id.stringRepresentation
+        plist[.id] = self.id
         plist[.Canvas.title] = self.title
         plist[.Canvas.dateCreated] = self.dateCreated
         plist[.Canvas.dateModified] = self.dateModified
