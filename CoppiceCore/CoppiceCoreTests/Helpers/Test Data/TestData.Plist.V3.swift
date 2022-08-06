@@ -5,9 +5,9 @@
 //  Created by Martin Pilkington on 01/08/2022.
 //
 
-import Foundation
+import Cocoa
+
 import CoppiceCore
-import AppKit
 
 extension TestData.Plist {
     class V3: TestData {
@@ -64,7 +64,7 @@ extension TestData.Plist {
                     "description": "This is an image",
                     "cropRect": NSStringFromRect(CGRect(x: 0, y: 0, width: 14, height: 13)),
                     "hotspots": [Any](),
-                    "orientation": 1
+                    "orientation": 1,
                 ]],
                 "allowsAutoLinking": 1,
             ],

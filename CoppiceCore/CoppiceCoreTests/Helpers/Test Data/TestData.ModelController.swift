@@ -5,9 +5,9 @@
 //  Created by Martin Pilkington on 01/08/2022.
 //
 
-import Foundation
+import Cocoa
+
 import CoppiceCore
-import AppKit
 
 extension TestData {
     class Model: TestData {
@@ -76,7 +76,7 @@ extension TestData {
                     $0.sortIndex = 1
                     $0.theme = .light
                     $0.alwaysShowPageTitles = true
-                }
+                },
             ]
         }()
 
@@ -109,7 +109,7 @@ extension TestData {
                     $0.page = self.pages[2]
                     $0.canvas = self.canvases[0]
                     $0.zIndex = 1
-                }
+                },
             ]
         }()
 

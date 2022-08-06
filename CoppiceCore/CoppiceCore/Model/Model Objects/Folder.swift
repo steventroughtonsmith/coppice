@@ -140,7 +140,7 @@ final public class Folder: NSObject, CollectableModelObject, FolderContainable {
 
 
     //MARK: - Plist
-    public static var propertyConversions: [ModelPlistKey : ModelPropertyConversion] {
+    public static var propertyConversions: [ModelPlistKey: ModelPropertyConversion] {
         return [.Folder.contents: .modelIDArray]
     }
 

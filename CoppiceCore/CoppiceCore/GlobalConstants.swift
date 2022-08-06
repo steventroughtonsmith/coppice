@@ -141,8 +141,8 @@ extension NSError {
                 return NSError(domain: GlobalConstants.appErrorDomain,
                                code: GlobalConstants.ErrorCodes.documentTooNew.rawValue,
                                userInfo: [
-                                NSLocalizedFailureReasonErrorKey: NSLocalizedString("This document was saved by a newer version of Coppice", comment: "Document version too new error reason"),
-                                NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString("Please download the latest version of Coppice to open this Document", comment: "Document version too new error recovery suggestion"),
+                                   NSLocalizedFailureReasonErrorKey: NSLocalizedString("This document was saved by a newer version of Coppice", comment: "Document version too new error reason"),
+                                   NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString("Please download the latest version of Coppice to open this Document", comment: "Document version too new error recovery suggestion"),
                                ])
             }
 

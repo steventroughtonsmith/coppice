@@ -5,9 +5,9 @@
 //  Created by Martin Pilkington on 31/07/2022.
 //
 
-import Foundation
+import Cocoa
+
 import CoppiceCore
-import AppKit
 
 extension TestData.Plist {
     class V2: TestData {

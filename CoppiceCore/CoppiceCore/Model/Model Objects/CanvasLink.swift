@@ -29,7 +29,7 @@ final public class CanvasLink: NSObject, CollectableModelObject {
     }
 
     //MARK: - Plist
-    public static var propertyConversions: [ModelPlistKey : ModelPropertyConversion] {
+    public static var propertyConversions: [ModelPlistKey: ModelPropertyConversion] {
         return [
             .CanvasLink.sourcePage: .modelID,
             .CanvasLink.destinationPage: .modelID,
@@ -55,7 +55,7 @@ final public class CanvasLink: NSObject, CollectableModelObject {
         return plist
     }
 
-    public func update(fromPlistRepresentation plist: [ModelPlistKey : Any]) throws {
+    public func update(fromPlistRepresentation plist: [ModelPlistKey: Any]) throws {
         guard self.id == plist.attribute(withKey: .id) else {
             throw ModelObjectUpdateErrors.idsDontMatch
         }

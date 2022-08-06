@@ -421,16 +421,16 @@ class FolderTests: XCTestCase {
             .id: folder.id,
             .Folder.title: "Cool Pages",
             .Folder.dateCreated: Date(timeIntervalSinceReferenceDate: 3106),
-            ModelPlistKey(rawValue:"foo")!: "bar",
+            ModelPlistKey(rawValue: "foo")!: "bar",
             .Folder.contents: [object1.id, object2.id],
-            ModelPlistKey(rawValue:"baz")!: ["hello": "world"],
+            ModelPlistKey(rawValue: "baz")!: ["hello": "world"],
         ]
 
         XCTAssertNoThrow(try folder.update(fromPlistRepresentation: plist))
 
         let plistRepresentation = folder.plistRepresentation
-        XCTAssertEqual(plistRepresentation[ModelPlistKey(rawValue:"foo")!] as? String, "bar")
-        XCTAssertEqual(plistRepresentation[ModelPlistKey(rawValue:"baz")!] as? [String: String], ["hello": "world"])
+        XCTAssertEqual(plistRepresentation[ModelPlistKey(rawValue: "foo")!] as? String, "bar")
+        XCTAssertEqual(plistRepresentation[ModelPlistKey(rawValue: "baz")!] as? [String: String], ["hello": "world"])
     }
 
 
@@ -580,15 +580,15 @@ class FolderTests: XCTestCase {
             .id: folder.id,
             .Folder.title: "Cool Pages",
             .Folder.dateCreated: Date(timeIntervalSinceReferenceDate: 3106),
-            ModelPlistKey(rawValue:"foo")!: "bar",
+            ModelPlistKey(rawValue: "foo")!: "bar",
             .Folder.contents: [object1.id, object2.id],
-            ModelPlistKey(rawValue:"baz")!: ["hello": "world"],
+            ModelPlistKey(rawValue: "baz")!: ["hello": "world"],
         ]
 
         XCTAssertNoThrow(try folder.update(fromPlistRepresentation: plist))
 
-        XCTAssertEqual(folder.otherProperties[ModelPlistKey(rawValue:"foo")!] as? String, "bar")
-        XCTAssertEqual(folder.otherProperties[ModelPlistKey(rawValue:"baz")!] as? [String: String], ["hello": "world"])
+        XCTAssertEqual(folder.otherProperties[ModelPlistKey(rawValue: "foo")!] as? String, "bar")
+        XCTAssertEqual(folder.otherProperties[ModelPlistKey(rawValue: "baz")!] as? [String: String], ["hello": "world"])
     }
 
     func test_updateFromPlistRepresentation_doesntIncludeAnySupportPlistKeysInOtherProperties() throws {
@@ -599,9 +599,9 @@ class FolderTests: XCTestCase {
             .id: folder.id,
             .Folder.title: "Cool Pages",
             .Folder.dateCreated: Date(timeIntervalSinceReferenceDate: 3106),
-            ModelPlistKey(rawValue:"foo")!: "bar",
+            ModelPlistKey(rawValue: "foo")!: "bar",
             .Folder.contents: [object1.id, object2.id],
-            ModelPlistKey(rawValue:"baz")!: ["hello": "world"],
+            ModelPlistKey(rawValue: "baz")!: ["hello": "world"],
         ]
 
         XCTAssertNoThrow(try folder.update(fromPlistRepresentation: plist))

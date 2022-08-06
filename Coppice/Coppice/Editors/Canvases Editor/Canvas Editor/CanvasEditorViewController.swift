@@ -656,7 +656,7 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
             return self.viewModel.canZoomTo100
         }
         if menuItem.action == #selector(self.selectAll(_:)) ||
-            menuItem.action == #selector(self.deselectAll(_:))
+           menuItem.action == #selector(self.deselectAll(_:))
         {
             return true
         }

@@ -456,7 +456,7 @@ class ModelReaderTests: XCTestCase {
     //As of version 3, canvas link updating can't fail as all properties are option
 }
 
-fileprivate class V1Plist: M3Data.ModelPlist {
+private class V1Plist: M3Data.ModelPlist {
     override class var version: Int {
         return 1
     }

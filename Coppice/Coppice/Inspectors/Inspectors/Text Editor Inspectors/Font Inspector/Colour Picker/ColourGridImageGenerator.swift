@@ -25,7 +25,7 @@ class ColourGridImageGenerator {
             return true
         }
 
-        cache.setObject(image, forKey: colour)
+        self.cache.setObject(image, forKey: colour)
 
         return image
     }

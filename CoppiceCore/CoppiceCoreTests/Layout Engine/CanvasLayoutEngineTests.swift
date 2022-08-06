@@ -1152,7 +1152,7 @@ class CanvasLayoutEngineTests: XCTestCase {
 
     func test_startEditingPage_tellsPageToStartEditingAtSuppliedPoint() throws {
         let mockView = MockLayoutEnginePageView()
-        page3.view = mockView
+        self.page3.view = mockView
 
         self.layoutEngine.startEditing(self.page3, atContentPoint: CGPoint(x: 40, y: 50))
 
@@ -1164,7 +1164,7 @@ class CanvasLayoutEngineTests: XCTestCase {
         self.layoutEngine.startEditing(self.page2, atContentPoint: CGPoint(x: 40, y: 50))
 
         let mockView = MockLayoutEnginePageView()
-        page2.view = mockView
+        self.page2.view = mockView
 
         self.layoutEngine.startEditing(self.page3, atContentPoint: CGPoint(x: 40, y: 50))
 
@@ -1186,7 +1186,7 @@ class CanvasLayoutEngineTests: XCTestCase {
     func test_stopEditingPage_tellsPageBeingEditedToStopEditing() throws {
         self.layoutEngine.startEditing(self.page2, atContentPoint: CGPoint(x: 40, y: 50))
         let mockView = MockLayoutEnginePageView()
-        page2.view = mockView
+        self.page2.view = mockView
 
         self.layoutEngine.stopEditingPages()
 

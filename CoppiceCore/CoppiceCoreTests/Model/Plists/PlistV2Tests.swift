@@ -206,12 +206,12 @@ final class PlistV2Tests: XCTestCase {
         XCTAssertEqual(newCanvasLinks.count, 2)
 
         let firstLinkSourceID = CanvasPage.modelID(with: testPlist.canvasPageIDs[0]).stringRepresentation
-        let firstLink = try XCTUnwrap(newCanvasLinks.first(where: { ($0["sourcePage"] as? String) == firstLinkSourceID}))
+        let firstLink = try XCTUnwrap(newCanvasLinks.first(where: { ($0["sourcePage"] as? String) == firstLinkSourceID }))
         let firstLinkDestinationID = CanvasPage.modelID(with: testPlist.canvasPageIDs[1]).stringRepresentation
         XCTAssertEqual(firstLink["destinationPage"] as? String, firstLinkDestinationID)
 
         let secondLinkSourceID = CanvasPage.modelID(with: testPlist.canvasPageIDs[1]).stringRepresentation
-        let secondLink = try XCTUnwrap(newCanvasLinks.first(where: { ($0["sourcePage"] as? String) == secondLinkSourceID}))
+        let secondLink = try XCTUnwrap(newCanvasLinks.first(where: { ($0["sourcePage"] as? String) == secondLinkSourceID }))
         let secondLinkDestinationID = CanvasPage.modelID(with: testPlist.canvasPageIDs[3]).stringRepresentation
         XCTAssertEqual(secondLink["destinationPage"] as? String, secondLinkDestinationID)
     }
@@ -224,13 +224,13 @@ final class PlistV2Tests: XCTestCase {
         XCTAssertEqual(newCanvasLinks.count, 2)
 
         let firstLinkSourceID = CanvasPage.modelID(with: testPlist.canvasPageIDs[0]).stringRepresentation
-        let firstLink = try XCTUnwrap(newCanvasLinks.first(where: { ($0["sourcePage"] as? String) == firstLinkSourceID}))
+        let firstLink = try XCTUnwrap(newCanvasLinks.first(where: { ($0["sourcePage"] as? String) == firstLinkSourceID }))
         let expectedFirstPageLink = PageLink(destination: Page.modelID(with: testPlist.pageIDs[1]),
                                              source: Page.modelID(with: testPlist.pageIDs[0]))
         XCTAssertEqual(firstLink["link"] as? String, expectedFirstPageLink.url.absoluteString)
 
         let secondLinkSourceID = CanvasPage.modelID(with: testPlist.canvasPageIDs[1]).stringRepresentation
-        let secondLink = try XCTUnwrap(newCanvasLinks.first(where: { ($0["sourcePage"] as? String) == secondLinkSourceID}))
+        let secondLink = try XCTUnwrap(newCanvasLinks.first(where: { ($0["sourcePage"] as? String) == secondLinkSourceID }))
         let expectedSecondPageLink = PageLink(destination: Page.modelID(with: testPlist.pageIDs[2]),
                                               source: Page.modelID(with: testPlist.pageIDs[1]))
         XCTAssertEqual(secondLink["link"] as? String, expectedSecondPageLink.url.absoluteString)
@@ -245,5 +245,4 @@ final class PlistV2Tests: XCTestCase {
 
         XCTAssertEqual(migratedCanvasPages, targetPlist.plistCanvasPages as [NSDictionary])
     }
-
 }

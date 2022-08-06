@@ -47,6 +47,7 @@ extension Canvas {
 
 
     //MARK: - Open & Close Pages
+
     @discardableResult public func open(_ page: Page, linkedFrom sourcePage: CanvasPage) -> [CanvasPage] {
         guard let collection = self.modelController?.collection(for: CanvasPage.self) else {
             preconditionFailure("Could not find canvas page collection")

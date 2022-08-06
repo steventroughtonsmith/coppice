@@ -13,7 +13,7 @@ extension Plist {
         override class var version: Int {
             return 3
         }
-        
+
         override class var supportedTypes: [M3Data.ModelPlist.PersistenceTypes] {
             return [
                 PersistenceTypes(modelType: Page.modelType, persistenceName: "pages"),
@@ -23,8 +23,8 @@ extension Plist {
                 PersistenceTypes(modelType: CanvasLink.modelType, persistenceName: "canvasLinks"),
             ]
         }
-        
-        override func migrateToNextVersion() throws -> [String : Any] {
+
+        override func migrateToNextVersion() throws -> [String: Any] {
             throw ModelPlist.Errors.migrationNotAvailable
         }
     }

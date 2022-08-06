@@ -115,7 +115,7 @@ final public class Page: NSObject, CollectableModelObject, FolderContainable {
 
 
     //MARK: - Plists
-    public static var propertyConversions: [ModelPlistKey : ModelPropertyConversion] {
+    public static var propertyConversions: [ModelPlistKey: ModelPropertyConversion] {
         return [.Page.content: .modelFile]
     }
 

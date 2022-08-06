@@ -79,7 +79,7 @@ class Document: NSDocument {
         let (plistWrapper, contentWrapper) = try modelWriter.generateFileWrappers()
         return FileWrapper(directoryWithFileWrappers: [
             GlobalConstants.DocumentContents.dataPlist: plistWrapper,
-            GlobalConstants.DocumentContents.contentFolder: contentWrapper
+            GlobalConstants.DocumentContents.contentFolder: contentWrapper,
         ])
     }
 

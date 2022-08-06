@@ -5,8 +5,8 @@
 //  Created by Martin Pilkington on 21/02/2022.
 //
 
-import Foundation
 import CoreGraphics
+import Foundation
 
 enum ImageHotspotErrors: Error, Equatable {
     case attributeNotFound(String)

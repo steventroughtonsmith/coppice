@@ -87,7 +87,7 @@ final public class Canvas: NSObject, CollectableModelObject {
 
 
     //MARK: - Plists
-    public static var propertyConversions: [ModelPlistKey : ModelPropertyConversion] {
+    public static var propertyConversions: [ModelPlistKey: ModelPropertyConversion] {
         return [.Canvas.thumbnail: .modelFile]
     }
 
@@ -142,7 +142,7 @@ final public class Canvas: NSObject, CollectableModelObject {
         self.sortIndex = sortIndex
         self.theme = theme
 
-        if let viewPortString: String = plist.attribute(withKey: .Canvas.viewPort){
+        if let viewPortString: String = plist.attribute(withKey: .Canvas.viewPort) {
             self.viewPort = NSRectFromString(viewPortString)
         } else {
             self.viewPort = nil
@@ -208,6 +208,5 @@ extension ModelPlistKey {
         static var all: [ModelPlistKey] {
             return [.id, .Canvas.title, .Canvas.dateCreated, .Canvas.dateModified, .Canvas.sortIndex, .Canvas.theme, .Canvas.zoomFactor, .Canvas.thumbnail, .Canvas.viewPort, .Canvas.closedPageHierarchies, .Canvas.alwaysShowPageTitles]
         }
-
     }
 }

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -321,7 +321,7 @@
 		99D0C71024C5CED0002EEBFA /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99D0C70F24C5CED0002EEBFA /* Quartz.framework */; };
 		99D0C71324C5CED0002EEBFA /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C71224C5CED0002EEBFA /* PreviewViewController.swift */; };
 		99D0C71624C5CED0002EEBFA /* PreviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99D0C71424C5CED0002EEBFA /* PreviewViewController.xib */; };
-		99D0C71C24C5CED0002EEBFA /* CoppiceQuickLook.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 99D0C70D24C5CED0002EEBFA /* CoppiceQuickLook.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		99D0C71C24C5CED0002EEBFA /* CoppiceQuickLook.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 99D0C70D24C5CED0002EEBFA /* CoppiceQuickLook.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		99D0C87E24C5EDB4002EEBFA /* CoppiceCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99D0C87D24C5EDB4002EEBFA /* CoppiceCore.framework */; };
 		99D0C87F24C5EDB4002EEBFA /* CoppiceCore.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 99D0C87D24C5EDB4002EEBFA /* CoppiceCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		99D0C88A24C5F33D002EEBFA /* test-image.png in Resources */ = {isa = PBXBuildFile; fileRef = 99D0C88724C5F33D002EEBFA /* test-image.png */; };
@@ -469,15 +469,15 @@
 			name = "Copy Spotlight";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		99D0C71B24C5CED0002EEBFA /* Embed App Extensions */ = {
+		99D0C71B24C5CED0002EEBFA /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				99D0C71C24C5CED0002EEBFA /* CoppiceQuickLook.appex in Embed App Extensions */,
+				99D0C71C24C5CED0002EEBFA /* CoppiceQuickLook.appex in Embed Foundation Extensions */,
 			);
-			name = "Embed App Extensions";
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -2121,7 +2121,7 @@
 				999617EA249D06D400A1AE24 /* Copy Frameworks */,
 				999617F4249D0B0800A1AE24 /* Copy XPC */,
 				99D0C6FF24C5B6C1002EEBFA /* Copy Spotlight */,
-				99D0C71B24C5CED0002EEBFA /* Embed App Extensions */,
+				99D0C71B24C5CED0002EEBFA /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
@@ -2178,7 +2178,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1200;
-				LastUpgradeCheck = 1300;
+				LastUpgradeCheck = 1400;
 				ORGANIZATIONNAME = "M Cubed Software";
 				TargetAttributes = {
 					999EA6912433973A00BF254E = {
@@ -2388,6 +2388,7 @@
 		};
 		99E533122607B4300017DC5D /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -2401,7 +2402,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftformat >/dev/null; then\n  swiftformat --lint --lenient .\nelse\n  echo \"warning: SwiftFormat not installed, download from https://github.com/nicklockwood/SwiftFormat\"\nfi\n";
+			shellScript = "PATH=${PATH}:/opt/homebrew/bin/\nif which swiftformat >/dev/null; then\n  swiftformat --lint --lenient .\nelse\n  echo \"warning: SwiftFormat not installed, download from https://github.com/nicklockwood/SwiftFormat\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2798,6 +2799,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -2832,6 +2834,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = K3K39KWKBV;
 				ENABLE_HARDENED_RUNTIME = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2868,6 +2871,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = K3K39KWKBV;
 				INFOPLIST_FILE = CoppiceTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2888,6 +2892,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = K3K39KWKBV;
 				INFOPLIST_FILE = CoppiceUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2906,6 +2911,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = Z699XFM6P2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -2915,6 +2921,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = Z699XFM6P2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -2924,6 +2931,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = Z699XFM6P2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -2965,6 +2973,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -2996,6 +3005,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = K3K39KWKBV;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3026,6 +3036,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = K3K39KWKBV;
 				INFOPLIST_FILE = CoppiceTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3046,6 +3057,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = K3K39KWKBV;
 				INFOPLIST_FILE = CoppiceUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3064,6 +3076,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = Z699XFM6P2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -3077,6 +3090,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = K3K39KWKBV;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -3108,6 +3122,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = K3K39KWKBV;
 				INFOPLIST_FILE = CoppiceSpotlight/Info.plist;
 				INSTALL_PATH = "@executable_path/../Contents/Library/Spotlight";
@@ -3135,6 +3150,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = K3K39KWKBV;
 				INFOPLIST_FILE = CoppiceSpotlight/Info.plist;
 				INSTALL_PATH = "@executable_path/../Contents/Library/Spotlight";
@@ -3161,6 +3177,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = K3K39KWKBV;
 				INFOPLIST_FILE = CoppiceSpotlight/Info.plist;
 				INSTALL_PATH = "@executable_path/../Contents/Library/Spotlight";
@@ -3185,6 +3202,7 @@
 				CODE_SIGN_ENTITLEMENTS = CoppiceQuickLook/CoppiceQuickLook.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = K3K39KWKBV;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -3213,6 +3231,7 @@
 				CODE_SIGN_ENTITLEMENTS = CoppiceQuickLook/CoppiceQuickLook.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = K3K39KWKBV;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = CoppiceQuickLook/Info.plist;
@@ -3237,6 +3256,7 @@
 				CODE_SIGN_ENTITLEMENTS = CoppiceQuickLook/CoppiceQuickLook.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = K3K39KWKBV;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = CoppiceQuickLook/Info.plist;
@@ -3261,6 +3281,7 @@
 				CODE_SIGN_ENTITLEMENTS = CoppiceQuickLook/CoppiceQuickLook.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = K3K39KWKBV;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = CoppiceQuickLook/Info.plist;
@@ -3315,6 +3336,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -3376,6 +3398,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3407,6 +3430,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = K3K39KWKBV;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3442,6 +3466,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = K3K39KWKBV;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3472,6 +3497,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = K3K39KWKBV;
 				INFOPLIST_FILE = CoppiceTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3494,6 +3520,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = K3K39KWKBV;
 				INFOPLIST_FILE = CoppiceTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3514,6 +3541,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = K3K39KWKBV;
 				INFOPLIST_FILE = CoppiceUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3534,6 +3562,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = K3K39KWKBV;
 				INFOPLIST_FILE = CoppiceUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

@@ -351,7 +351,7 @@ class DocumentWindowViewModel: NSObject {
 
     //MARK: - Navigating Pages
 
-    /// Either opens the page or adds it to the canvas, depending on what is selected in the sidebar
+    /// Opens the page
     /// - Parameter pageLink: The PageLink to handle
     /// - Returns: True if the page link was handled, false if it wasn't
     @discardableResult func openPage(at pageLink: PageLink) -> Bool {

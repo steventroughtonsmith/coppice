@@ -124,10 +124,10 @@ final public class CanvasPage: NSObject, CollectableModelObject {
 
 
     //MARK: - Plists
-    public static var propertyConversions: [ModelPlistKey : ModelPropertyConversion] {
+    public static var propertyConversions: [ModelPlistKey: ModelPropertyConversion] {
         return [
             .CanvasPage.page: .modelID,
-            .CanvasPage.canvas: .modelID
+            .CanvasPage.canvas: .modelID,
         ]
     }
 
