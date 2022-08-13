@@ -10,7 +10,7 @@ import AppKit
 import CoppiceCore
 
 class PageArrowView: NSView {
-    var arrow: LayoutEngineArrow? {
+    var arrow: LayoutEngineLink? {
         didSet {
             self.setNeedsDisplay(self.bounds)
         }
@@ -41,6 +41,15 @@ class PageArrowView: NSView {
     override func draw(_ dirtyRect: NSRect) {
         guard let arrow = self.arrow else {
             return
+        }
+
+        if (UserDefaults.standard.bool(forKey: .debugShowArrowBounds)) {
+            NSColor.blue.withAlphaComponent(0.3).set()
+            self.bounds.fill()
+
+            NSColor.cyan.set()
+            NSBezierPath(lineFrom: self.bounds.point(atX: .min, y: .mid), to: self.bounds.point(atX: .max, y: .mid)).stroke()
+            NSBezierPath(lineFrom: self.bounds.point(atX: .mid, y: .min), to: self.bounds.point(atX: .mid, y: .max)).stroke()
         }
 
         self.drawHelper.draw(arrow, with: self.lineColour)

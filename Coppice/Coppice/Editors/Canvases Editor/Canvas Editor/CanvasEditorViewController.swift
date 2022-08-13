@@ -352,8 +352,8 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
 
     private func updateArrows() {
         var existingViews = self.arrowViews
-        var newArrows = [LayoutEngineArrow]()
-        for arrow in self.layoutEngine.arrows {
+        var newArrows = [LayoutEngineLink]()
+        for arrow in self.layoutEngine.links {
             let arrowView = self.arrowView(for: arrow)
             arrowView.arrow = arrow
             arrowView.frame = arrow.layoutFrame
@@ -474,7 +474,7 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
         return self.canvasView.arrowLayer.subviews.compactMap { $0 as? PageArrowView }
     }
 
-    private func arrowView(for arrow: LayoutEngineArrow) -> PageArrowView {
+    private func arrowView(for arrow: LayoutEngineLink) -> PageArrowView {
         if let arrowView = self.arrowViews.first(where: { $0.arrow?.betweenSamePages(as: arrow) ?? false }) {
             return arrowView
         }

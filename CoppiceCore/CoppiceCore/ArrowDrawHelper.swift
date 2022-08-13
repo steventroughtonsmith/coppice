@@ -13,14 +13,14 @@ public class ArrowDrawHelper {
         self.config = config
     }
 
-    public func draw(_ arrow: LayoutEngineArrow, with colour: NSColor) {
+    public func draw(_ arrow: LayoutEngineLink, with colour: NSColor) {
         self.drawLine(for: arrow, with: colour)
         self.drawArrowHead(for: arrow, with: colour)
     }
 
-    private func drawLine(for arrow: LayoutEngineArrow, with lineColour: NSColor) {
+    private func drawLine(for arrow: LayoutEngineLink, with lineColour: NSColor) {
         let path: NSBezierPath
-        switch arrow.startPoint.edge {
+        switch arrow.sourcePoint.edge {
         case .top, .bottom:
             path = self.pathForVerticalLine(from: arrow.startPointInLayoutFrame, to: arrow.endPointInLayoutFrame)
         case .left, .right:
@@ -32,7 +32,7 @@ public class ArrowDrawHelper {
         path.stroke()
     }
 
-    private func drawArrowHead(for arrow: LayoutEngineArrow, with lineColour: NSColor) {
+    private func drawArrowHead(for arrow: LayoutEngineLink, with lineColour: NSColor) {
         let endPoint = arrow.endPointInLayoutFrame
 
         var arrowStart = endPoint.point

@@ -48,19 +48,10 @@ extension Canvas {
 
     //MARK: - Open & Close Pages
 
-    @discardableResult public func open(_ page: Page, linkedFrom sourcePage: CanvasPage) -> [CanvasPage] {
-        guard let collection = self.modelController?.collection(for: CanvasPage.self) else {
-            preconditionFailure("Could not find canvas page collection")
-        }
-
+    #warning("COPPICE-416: Update to support single instance opening")
+    @discardableResult public func open(_ page: Page, linkedFrom sourcePage: CanvasPage, with pageLink: PageLink) -> [CanvasPage] {
         guard let existingHierarchy = self.closedPageHierarchies[sourcePage.id]?[page.id] else {
-            let frame = self.frame(for: page, linkedFrom: sourcePage)
-            let canvasPage = collection.newObject() {
-                $0.page = page
-                $0.parent = sourcePage
-                $0.canvas = self
-                $0.frame = frame
-            }
+            let canvasPage = self.createLinkedCanvasPage(for: page, linkedFrom: sourcePage, with: pageLink)
             return [canvasPage]
         }
 
@@ -68,13 +59,41 @@ extension Canvas {
         return self.open(existingHierarchy, linkedFrom: sourcePage)
     }
 
+    private func createLinkedCanvasPage(for page: Page, linkedFrom sourcePage: CanvasPage, with pageLink: PageLink) -> CanvasPage {
+        guard let modelController = self.modelController else {
+            preconditionFailure("No Model Controller Set")
+        }
+        let canvasPageCollection = modelController.collection(for: CanvasPage.self)
+        let canvasLinkCollection = modelController.collection(for: CanvasLink.self)
+
+        let frame = self.frame(for: page, linkedFrom: sourcePage)
+        modelController.pushChangeGroup()
+        let canvasPage = canvasPageCollection.newObject() {
+            $0.page = page
+            $0.canvas = self
+            $0.frame = frame
+        }
+
+        canvasLinkCollection.newObject() {
+            $0.link = pageLink
+            $0.sourcePage = sourcePage
+            $0.destinationPage = canvasPage
+            $0.canvas = self
+        }
+
+        modelController.popChangeGroup()
+        return canvasPage
+    }
+
     private func open(_ hierarchy: PageHierarchy, linkedFrom sourcePage: CanvasPage) -> [CanvasPage] {
-        guard let canvasPageCollection = self.modelController?.collection(for: CanvasPage.self),
+        guard
+            let canvasPageCollection = self.modelController?.collection(for: CanvasPage.self),
             let pageCollection = self.modelController?.collection(for: Page.self)
         else {
                 preconditionFailure("Could not find canvas page collection")
         }
 
+        #warning("Create canvas links as well as pages")
         var canvasPages = [CanvasPage]()
 
         let pageForHierarchy = canvasPageCollection.newObject() {
@@ -93,6 +112,7 @@ extension Canvas {
     }
 
     public func close(_ canvasPage: CanvasPage) {
+        #warning("Update hierarchies to use canvas link")
         if let parent = canvasPage.parent, let page = canvasPage.page, let hierarchy = PageHierarchy(canvasPage: canvasPage) {
             var hierarchies = self.closedPageHierarchies[parent.id] ?? [ModelID: PageHierarchy]()
             hierarchies[page.id] = hierarchy

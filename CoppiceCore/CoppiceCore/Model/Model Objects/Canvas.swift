@@ -85,6 +85,10 @@ final public class Canvas: NSObject, CollectableModelObject {
         return self.pages.sorted { $0.zIndex < $1.zIndex }
     }
 
+    public var links: Set<CanvasLink> {
+        return self.relationship(for: \.canvas)
+    }
+
 
     //MARK: - Plists
     public static var propertyConversions: [ModelPlistKey: ModelPropertyConversion] {

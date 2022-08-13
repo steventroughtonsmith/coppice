@@ -11,56 +11,73 @@ import Foundation
 public struct ArrowPoint: Equatable {
     public var point: CGPoint
     public var edge: LayoutEnginePage.Edge
-    public var pageID: UUID
 
-    public init(point: CGPoint, edge: LayoutEnginePage.Edge, pageID: UUID) {
+    public init(point: CGPoint, edge: LayoutEnginePage.Edge) {
         self.point = point
         self.edge = edge
-        self.pageID = pageID
+    }
+
+    func adjusted(by adjustment: CGPoint) -> ArrowPoint {
+        return ArrowPoint(point: self.point.plus(adjustment), edge: self.edge)
     }
 }
 
-public class LayoutEngineArrow: Equatable {
-    public let startPoint: ArrowPoint
-    public let endPoint: ArrowPoint
+public class LayoutEngineLink: Equatable {
+    public let id: UUID
+    public let sourcePageID: UUID
+    public let destinationPageID: UUID
+    public var selected: Bool = false
 
-    public weak var layoutEngine: CanvasLayoutEngine?
+    public var sourcePoint: ArrowPoint = .init(point: .zero, edge: .left)
+    public var destinationPoint: ArrowPoint = .init(point: .zero, edge: .right)
 
-    public init(startPoint: ArrowPoint, endPoint: ArrowPoint, layoutEngine: CanvasLayoutEngine? = nil) {
-        self.startPoint = startPoint
-        self.endPoint = endPoint
-        self.layoutEngine = layoutEngine
+    public weak var canvasLayoutEngine: CanvasLayoutEngine?
+
+    public init(id: UUID, sourcePageID: UUID, destinationPageID: UUID, canvasLayoutEngine: CanvasLayoutEngine? = nil) {
+        self.id = id
+        self.sourcePageID = sourcePageID
+        self.destinationPageID = destinationPageID
+        self.canvasLayoutEngine = canvasLayoutEngine
     }
-
 
     //MARK: - Comparison
-    public static func == (lhs: LayoutEngineArrow, rhs: LayoutEngineArrow) -> Bool {
-        return (lhs.startPoint == rhs.startPoint) && (lhs.endPoint == rhs.endPoint)
+    public static func == (lhs: LayoutEngineLink, rhs: LayoutEngineLink) -> Bool {
+        return lhs.id == rhs.id
     }
 
-    public func betweenSamePages(as otherArrow: LayoutEngineArrow) -> Bool {
-        return (otherArrow.startPoint.pageID == self.startPoint.pageID) && (otherArrow.endPoint.pageID == self.endPoint.pageID)
+    public func betweenSamePages(as otherArrow: LayoutEngineLink) -> Bool {
+        return (otherArrow.sourcePageID == self.sourcePageID) && (otherArrow.destinationPageID == self.destinationPageID)
     }
 
 
     //MARK: - Pages
-    public var startPage: LayoutEnginePage? {
-        return self.layoutEngine?.page(withID: self.startPoint.pageID)
+    public var sourcePage: LayoutEnginePage? {
+        return self.canvasLayoutEngine?.page(withID: self.sourcePageID)
     }
 
-    public var endPage: LayoutEnginePage? {
-        return self.layoutEngine?.page(withID: self.endPoint.pageID)
+    public var destinationPage: LayoutEnginePage? {
+        return self.canvasLayoutEngine?.page(withID: self.destinationPageID)
+    }
+
+    func opposite(of page: LayoutEnginePage) -> LayoutEnginePage? {
+        if self.sourcePage == page {
+            return self.destinationPage
+        }
+        if self.destinationPage == page {
+            return self.sourcePage
+        }
+        return nil
     }
 
 
     //MARK: - Frames
 
     public var layoutFrame: CGRect {
-        guard let basicFrame = CGRect(points: [self.startPoint.point, self.endPoint.point]) else {
+        guard let basicFrame = CGRect(points: [self.sourcePoint.point, self.destinationPoint.point]) else {
             return .zero
         }
 
-        guard let config = layoutEngine?.configuration else {
+        guard let config = canvasLayoutEngine?.configuration else {
             return basicFrame
         }
 
@@ -70,7 +87,7 @@ public class LayoutEngineArrow: Equatable {
 
         var xInset: CGFloat = 0
         var yInset: CGFloat = 0
-        switch self.startPoint.edge {
+        switch self.sourcePoint.edge {
         case .top, .bottom:
             xInset = -(arrowConfig.arrowHeadSize / 2) - arrowConfig.lineWidth
             yInset = -(invertedArrowOffset / 2) - arrowConfig.lineWidth - config.page.titleHeight
@@ -83,22 +100,22 @@ public class LayoutEngineArrow: Equatable {
     }
 
     public var startPointInLayoutFrame: ArrowPoint {
-        var startPoint = self.startPoint
+        var startPoint = self.sourcePoint
         startPoint.point = startPoint.point.minus(self.layoutFrame.origin)
         return startPoint
     }
 
     public var endPointInLayoutFrame: ArrowPoint {
-        var endPoint = self.endPoint
+        var endPoint = self.destinationPoint
         endPoint.point = endPoint.point.minus(self.layoutFrame.origin)
 
-        guard let config = self.layoutEngine?.configuration else {
+        guard let config = self.canvasLayoutEngine?.configuration else {
             return endPoint
         }
 
         let lineWidth = config.arrow.lineWidth
 
-        let backgroundVisible = self.endPage?.showBackground ?? false
+        let backgroundVisible = self.destinationPage?.showBackground ?? false
         //Reduce to account for line width and border visibility
         switch endPoint.edge {
         case .left:

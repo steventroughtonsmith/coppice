@@ -71,13 +71,13 @@ class CanvasImageGenerator {
         guard let arrowColour = color else {
             return
         }
-        for arrow in self.canvasLayoutEngine.arrows {
+        for arrow in self.canvasLayoutEngine.links {
             let image = self.image(for: arrow, colour: arrowColour)
             image.draw(in: arrow.layoutFrame)
         }
     }
 
-    private func image(for arrow: LayoutEngineArrow, colour: NSColor) -> NSImage {
+    private func image(for arrow: LayoutEngineLink, colour: NSColor) -> NSImage {
         let image = NSImage(size: arrow.layoutFrame.size)
         image.lockFocusFlipped(true)
         self.arrowDrawHelper.draw(arrow, with: colour)

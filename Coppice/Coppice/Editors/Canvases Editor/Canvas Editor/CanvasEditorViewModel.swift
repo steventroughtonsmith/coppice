@@ -81,11 +81,13 @@ class CanvasEditorViewModel: ViewModel {
     //MARK: - Observation
     var canvasObserver: ModelCollection<Canvas>.Observation?
     var canvasPageObserver: ModelCollection<CanvasPage>.Observation?
+    var canvasLinkObserver: ModelCollection<CanvasLink>.Observation?
 
     private func setupObservation() {
-        self.canvasObserver = self.modelController.collection(for: Canvas.self).addObserver(filterBy: [self.canvas.id]) { [weak self] change in
+        self.canvasObserver = self.modelController.canvasCollection.addObserver(filterBy: [self.canvas.id]) { [weak self] change in
             if change.changeType == .update, !change.didUpdate(\.thumbnail) {
                 self?.updatePages()
+                self?.updateLinks()
                 if change.didUpdate(\.alwaysShowPageTitles) {
                     self?.updateAlwaysShowPageTitles()
                 }
@@ -94,8 +96,12 @@ class CanvasEditorViewModel: ViewModel {
                 }
             }
         }
-        self.canvasPageObserver = self.modelController.collection(for: CanvasPage.self).addObserver() { [weak self] _ in
+        self.canvasPageObserver = self.modelController.canvasPageCollection.addObserver() { [weak self] _ in
             self?.updatePages()
+        }
+
+        self.canvasLinkObserver = self.modelController.canvasLinkCollection.addObserver() { [weak self] _ in
+            self?.updateLinks()
         }
     }
 
@@ -165,31 +171,18 @@ class CanvasEditorViewModel: ViewModel {
         }
 
         let newPages = canvasPages
-            .map { LayoutEnginePage(id: $0.id.uuid, contentFrame: $0.frame, maintainAspectRatio: $0.maintainAspectRatio, minimumContentSize: $0.minimumContentSize, zIndex: $0.zIndex) }
+            .map { LayoutEnginePage(canvasPage: $0) }
             .sorted { $0.zIndex < $1.zIndex }
-        let newPagesByID = newPages.indexed(by: \.id)
-
-        for canvasPage in canvasPages {
-            guard let parentID = canvasPage.parent?.id.uuid else {
-                continue
-            }
-            guard let parentPage = newPagesByID[parentID] ?? self.layoutEngine.page(withID: parentID) else {
-                assertionFailure("Parent (\(parentID)) did not exist in newly created pages or layout engine")
-                continue
-            }
-
-            guard let page = newPagesByID[canvasPage.id.uuid] else {
-                assertionFailure("WTF?! You should have literally just added this page (\(canvasPage.id.uuid)). Where has it gone?")
-                continue
-            }
-            parentPage.addChild(page)
-        }
 
         self.layoutEngine.add(newPages)
     }
 
     private func removePages(_ canvasPages: Set<CanvasPage>) {
-        let idsToRemove = canvasPages.map { $0.id.uuid }
+        guard canvasPages.count > 0 else {
+            return
+        }
+
+        let idsToRemove = canvasPages.map(\.id.uuid)
         let layoutPagesToRemove = self.layoutEngine.pages.filter { idsToRemove.contains($0.id) }
         self.layoutEngine.remove(layoutPagesToRemove)
     }
@@ -209,9 +202,7 @@ class CanvasEditorViewModel: ViewModel {
         self.updatesDisable = true
 
         let newPages = self.canvas.pages
-        let addedPages = newPages.subtracting(self.canvasPages)
-        let removedPages = self.canvasPages.subtracting(newPages)
-        let remainingPages = newPages.subtracting(addedPages)
+        let (addedPages, removedPages, remainingPages) = self.canvasPages.differencesFrom(newPages)
 
         self.canvasPages = newPages
 
@@ -265,6 +256,48 @@ class CanvasEditorViewModel: ViewModel {
 
     func dragImageForPage(with id: ModelID) -> NSImage? {
         return self.documentWindowViewModel.pageImageController.imageForPage(with: id)
+    }
+
+
+    //MARK: - Links
+    private(set) var canvasLinks: Set<CanvasLink> = []
+
+    private func addLinks(_ links: Set<CanvasLink>) {
+        guard links.count > 0 else {
+            return
+        }
+
+        let newLinks = links.compactMap { LayoutEngineLink(canvasLink: $0) }
+        self.layoutEngine.add(newLinks)
+    }
+
+    private func removeLinks(_ links: Set<CanvasLink>) {
+        guard links.count > 0 else {
+            return
+        }
+
+        let idsToRemove = self.canvasLinks.map(\.id.uuid)
+        let layoutLinksToRemove = self.layoutEngine.links.filter { idsToRemove.contains($0.id) }
+        self.layoutEngine.remove(layoutLinksToRemove)
+    }
+
+    private func updateLinks() {
+        guard !self.updatesDisable else {
+            return
+        }
+
+        //We need to temporarily disable updates in case our changes cause updates themselves
+        self.updatesDisable = true
+
+        let newLinks = self.canvas.links
+        let (addedLinks, removedLinks, _) = self.canvasLinks.differencesFrom(newLinks)
+
+        self.canvasLinks = newLinks
+
+        self.addLinks(addedLinks)
+        self.removeLinks(removedLinks)
+
+        self.updatesDisable = false
     }
 
 

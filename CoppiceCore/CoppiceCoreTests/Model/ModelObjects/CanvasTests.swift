@@ -9,7 +9,6 @@
 @testable import CoppiceCore
 import M3Data
 import XCTest
-
 class CanvasTests: XCTestCase {
     //MARK: .zoomFactor
     func test_zoomFactor_capsMaximumValueTo1() throws {
@@ -602,7 +601,7 @@ class CanvasTests: XCTestCase {
         XCTAssertEqual(canvasCollection.newObject().sortIndex, 4)
     }
 
-
+    #warning("Update all these tests to support links")
     //MARK: - open(_:linkedFrom:)
     func test_openPageLinkedFrom_createsNewCanvasPageWithSuppliedPageAndSetsParentAsSource() throws {
         let modelController = CoppiceModelController(undoManager: UndoManager())

@@ -250,7 +250,8 @@ public class CoppiceModelController: NSObject, ModelController {
 
         let undoActionName = NSLocalizedString("Open Page Link", comment: "Open Page Link Undo Action Name")
 
-        guard let source = link.source,
+        guard
+            let source = link.source,
             let sourcePage = self.canvasPageCollection.objectWithID(source)
         else {
                 self.undoManager.setActionName(undoActionName)
@@ -262,7 +263,7 @@ public class CoppiceModelController: NSObject, ModelController {
         }
 
         self.undoManager.setActionName(undoActionName)
-        return canvas.open(page, linkedFrom: sourcePage)
+        return canvas.open(page, linkedFrom: sourcePage, with: link)
     }
 
     public func close(_ canvasPage: CanvasPage) {

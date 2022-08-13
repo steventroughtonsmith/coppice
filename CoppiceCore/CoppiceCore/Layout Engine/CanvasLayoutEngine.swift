@@ -86,12 +86,12 @@ public class CanvasLayoutEngine: NSObject, LayoutEngine {
         let offsetChange = newOffset.minus(self.pageSpaceOffset)
         self.pageSpaceOffset = newOffset
 
+        self.linkLayoutEngine.updateLinks(forOffsetChange: offsetChange)
+
         let canvasChanged = (self.canvasSize != contentFrame.size)
         self.canvasSize = contentFrame.size
 
-        self.updateArrows()
-
-        return LayoutContext(sizeChanged: canvasChanged, pageOffsetChange: offsetChange)
+        return LayoutContext(sizeChanged: canvasChanged, pageOffsetChange: offsetChange, linksChanged: (offsetChange != .zero))
     }
 
 
@@ -174,7 +174,7 @@ public class CanvasLayoutEngine: NSObject, LayoutEngine {
     }
 
     public func modified(_ pages: [LayoutEnginePage]) {
-        self.updateArrows()
+        self.linkLayoutEngine.updateLinks(forModifiedPages: pages)
     }
 
     public func finishedModifying(_ pages: [LayoutEnginePage]) {
@@ -304,12 +304,27 @@ public class CanvasLayoutEngine: NSObject, LayoutEngine {
     }
 
 
-    //MARK: - Manage Arrows
-    public private(set) var arrows = [LayoutEngineArrow]()
+    //MARK: - Manage Links
+    public var links: [LayoutEngineLink] {
+        return self.linkLayoutEngine.links
+    }
+    
+    private lazy var linkLayoutEngine: LinkLayoutEngine = {
+        let engine = LinkLayoutEngine()
+        engine.canvasLayoutEngine = self
+        return engine
+    }()
 
-    public func updateArrows() {
-        let engine = ArrowLayoutEngine(pages: self.pages, layoutEngine: self)
-        self.arrows = engine.calculateArrows()
+    public func add(_ links: [LayoutEngineLink]) {
+        self.linkLayoutEngine.add(links)
+    }
+
+    public func remove(_ links: [LayoutEngineLink]) {
+        self.linkLayoutEngine.remove(links)
+    }
+
+    func linksChanged() {
+        self.informOfLayoutChange(with: LayoutContext(linksChanged: true))
     }
 
 
@@ -426,19 +441,22 @@ extension CanvasLayoutEngine {
         public var pageOffsetChange: CGPoint?
         public var selectionChanged = false
         public var backgroundVisibilityChanged = false
+        public var linksChanged = false
 
         public func merged(with context: LayoutContext) -> LayoutContext {
             return LayoutContext(sizeChanged: self.sizeChanged || context.sizeChanged,
                                  pageOffsetChange: self.pageOffsetChange ?? context.pageOffsetChange,
                                  selectionChanged: self.selectionChanged || context.selectionChanged,
-                                 backgroundVisibilityChanged: self.backgroundVisibilityChanged || context.backgroundVisibilityChanged)
+                                 backgroundVisibilityChanged: self.backgroundVisibilityChanged || context.backgroundVisibilityChanged,
+                                 linksChanged: self.linksChanged || context.linksChanged)
         }
 
-        public init(sizeChanged: Bool = false, pageOffsetChange: CGPoint? = nil, selectionChanged: Bool = false, backgroundVisibilityChanged: Bool = false) {
+        public init(sizeChanged: Bool = false, pageOffsetChange: CGPoint? = nil, selectionChanged: Bool = false, backgroundVisibilityChanged: Bool = false, linksChanged: Bool = false) {
             self.sizeChanged = sizeChanged
             self.pageOffsetChange = pageOffsetChange
             self.selectionChanged = selectionChanged
             self.backgroundVisibilityChanged = backgroundVisibilityChanged
+            self.linksChanged = linksChanged
         }
     }
 }

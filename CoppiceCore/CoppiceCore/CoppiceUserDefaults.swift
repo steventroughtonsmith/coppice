@@ -11,6 +11,7 @@ import Foundation
 
 public enum UserDefaultsKeys: String {
     case debugShowCanvasOrigin
+    case debugShowArrowBounds
 
     case useSmallCanvasCells = "M3UseSmallCanvasCells"
 

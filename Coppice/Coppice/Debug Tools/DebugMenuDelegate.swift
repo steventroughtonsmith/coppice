@@ -17,6 +17,12 @@ class DebugMenuBuilder: NSObject {
         return menuItem
     }()
 
+    let debugCanvasArrows: NSMenuItem = {
+        let menuItem = NSMenuItem(title: "Show Arrow Bounds", action: nil, keyEquivalent: "")
+        menuItem.bind(.value, to: NSUserDefaultsController.shared, withKeyPath: "values.debugShowArrowBounds", options: [:])
+        return menuItem
+    }()
+
     let showKeyLoopItem = NSMenuItem(title: "Show Key Loop", action: #selector(NSWindow.showKeyLoop(_:)), keyEquivalent: "")
 
     let showPreviewGenerationItem = NSMenuItem(title: "Show Preview Generation…", action: #selector(DocumentWindowController.showPreviewGenerationWindow(_:)), keyEquivalent: "")
@@ -57,6 +63,7 @@ class DebugMenuBuilder: NSObject {
     func buildMenu() -> NSMenu {
         let menu = NSMenu(title: "**DEBUG**")
         menu.addItem(self.debugCanvasOriginItem)
+        menu.addItem(self.debugCanvasArrows)
         menu.addItem(self.showKeyLoopItem)
         menu.addItem(self.showPreviewGenerationItem)
         menu.addItem(NSMenuItem.separator())

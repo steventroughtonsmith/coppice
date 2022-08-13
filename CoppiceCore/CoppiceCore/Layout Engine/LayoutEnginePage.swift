@@ -24,7 +24,7 @@ public protocol LayoutEnginePageView: AnyObject {
 ///     - Visual Page (`visualPageFrame`): the page as drawn on screen
 ///     - Title Bar (`titleBarFrame`): The title bar for moving
 ///     - Content (`contentContainerFrame`): The actual page content
-public class LayoutEnginePage: Equatable {
+public class LayoutEnginePage: Equatable, Hashable {
     public let id: UUID
     public var selected: Bool = false
     public var showBackground: Bool {
@@ -48,11 +48,7 @@ public class LayoutEnginePage: Equatable {
 
     public var zIndex = -1
 
-    public weak var layoutEngine: CanvasLayoutEngine? {
-        didSet {
-            self.recalculateEdgeFromParent()
-        }
-    }
+    public weak var layoutEngine: CanvasLayoutEngine?
 
     public weak var view: LayoutEnginePageView?
 
@@ -82,8 +78,6 @@ public class LayoutEnginePage: Equatable {
     public var contentFrame: CGRect {
         didSet {
             self.validateSize()
-            self.recalculateEdgeFromParent()
-            self.children.forEach { $0.recalculateEdgeFromParent() }
         }
     }
 
@@ -94,11 +88,7 @@ public class LayoutEnginePage: Equatable {
 
 
     //MARK: - Relationships
-    public private(set) weak var parent: LayoutEnginePage? {
-        didSet {
-            self.recalculateEdgeFromParent()
-        }
-    }
+    public private(set) weak var parent: LayoutEnginePage?
 
     public private(set) var edgeFromParent: Edge?
 
@@ -122,62 +112,53 @@ public class LayoutEnginePage: Equatable {
         child.parent = self
     }
 
-    private func recalculateEdgeFromParent() {
-        guard let parentFrame = self.parent?.layoutFrame else {
-            self.edgeFromParent = nil
-            return
-        }
-
+    func edge(toSourcePage sourcePage: LayoutEnginePage) -> Edge? {
+        let sourcePageFrame = sourcePage.layoutFrame
         let midPoint = self.layoutFrame.midPoint
         //Check if inside
-        guard parentFrame.contains(midPoint) == false else {
-            self.edgeFromParent = (midPoint.x < parentFrame.midX) ? .left : .right
-            return
+        guard sourcePageFrame.contains(midPoint) == false else {
+            return (midPoint.x < sourcePageFrame.midX) ? .right : .left
         }
 
         //Check if directly to side
-        if (midPoint.y >= parentFrame.minY) && (midPoint.y <= parentFrame.maxY) {
-            self.edgeFromParent = (midPoint.x > parentFrame.maxX) ? .right : .left
-            return
+        if (midPoint.y >= sourcePageFrame.minY) && (midPoint.y <= sourcePageFrame.maxY) {
+            return (midPoint.x > sourcePageFrame.maxX) ? .left : .right
         }
 
         //Check if directly above or below
-        if (midPoint.x >= parentFrame.minX) && (midPoint.x <= parentFrame.maxX) {
-            self.edgeFromParent = (midPoint.y > parentFrame.maxY) ? .bottom : .top
-            return
+        if (midPoint.x >= sourcePageFrame.minX) && (midPoint.x <= sourcePageFrame.maxX) {
+            return (midPoint.y > sourcePageFrame.maxY) ? .top : .bottom
         }
 
         //Check Top Left
-        if (midPoint.x < parentFrame.minX) && (midPoint.y < parentFrame.minY) {
+        if (midPoint.x < sourcePageFrame.minX) && (midPoint.y < sourcePageFrame.minY) {
             //y = x + (-p.x + p.y)
-            let expectedY = midPoint.x + (-parentFrame.minX + parentFrame.minY)
-            self.edgeFromParent = (expectedY <= midPoint.y) ? .left : .top
-            return
+            let expectedY = midPoint.x + (-sourcePageFrame.minX + sourcePageFrame.minY)
+            return (expectedY <= midPoint.y) ? .right : .bottom
         }
 
         //Check Top Right
-        if (midPoint.x > parentFrame.minX) && (midPoint.y < parentFrame.minY) {
+        if (midPoint.x > sourcePageFrame.minX) && (midPoint.y < sourcePageFrame.minY) {
             //y = -x + (p.x + p.y)
-            let expectedY = -midPoint.x + (parentFrame.maxX + parentFrame.minY)
-            self.edgeFromParent = (expectedY >= midPoint.y) ? .top : .right
-            return
+            let expectedY = -midPoint.x + (sourcePageFrame.maxX + sourcePageFrame.minY)
+            return (expectedY >= midPoint.y) ? .bottom : .left
         }
 
         //Check Bottom Right
-        if (midPoint.x > parentFrame.minX) && (midPoint.y > parentFrame.maxY) {
+        if (midPoint.x > sourcePageFrame.minX) && (midPoint.y > sourcePageFrame.maxY) {
             //y = x + (-p.x + p.y)
-            let expectedY = midPoint.x + (-parentFrame.maxX + parentFrame.maxY)
-            self.edgeFromParent = (expectedY >= midPoint.y) ? .right : .bottom
-            return
+            let expectedY = midPoint.x + (-sourcePageFrame.maxX + sourcePageFrame.maxY)
+            return (expectedY >= midPoint.y) ? .left : .top
         }
 
         //Check Bottom Left
-        if (midPoint.x < parentFrame.minX) && (midPoint.y > parentFrame.minY) {
+        if (midPoint.x < sourcePageFrame.minX) && (midPoint.y > sourcePageFrame.minY) {
             //y = x + (-p.x + p.y)
-            let expectedY = -midPoint.x + (parentFrame.minX + parentFrame.maxY)
-            self.edgeFromParent = (expectedY <= midPoint.y) ? .bottom : .left
-            return
+            let expectedY = -midPoint.x + (sourcePageFrame.minX + sourcePageFrame.maxY)
+            return (expectedY <= midPoint.y) ? .top : .right
         }
+
+        return nil
     }
 
     public func removeChild(_ child: LayoutEnginePage) {
@@ -277,6 +258,10 @@ public class LayoutEnginePage: Equatable {
 
     public static func == (lhs: LayoutEnginePage, rhs: LayoutEnginePage) -> Bool {
         return lhs.id == rhs.id
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.id)
     }
 
     private func validateSize() {

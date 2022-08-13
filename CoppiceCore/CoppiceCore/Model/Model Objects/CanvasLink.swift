@@ -28,11 +28,16 @@ final public class CanvasLink: NSObject, CollectableModelObject {
         didSet { self.didChangeRelationship(\.sourcePage, inverseKeyPath: \.linksTo, oldValue: oldValue) }
     }
 
+    @ModelObjectReference public var canvas: Canvas? {
+        didSet { self.didChangeRelationship(\.canvas, inverseKeyPath: \.links, oldValue: oldValue) }
+    }
+
     //MARK: - Plist
     public static var propertyConversions: [ModelPlistKey: ModelPropertyConversion] {
         return [
             .CanvasLink.sourcePage: .modelID,
             .CanvasLink.destinationPage: .modelID,
+            .CanvasLink.canvas: .modelID,
         ]
     }
 
@@ -50,6 +55,10 @@ final public class CanvasLink: NSObject, CollectableModelObject {
 
         if let sourcePage = self.sourcePage {
             plist[.CanvasLink.sourcePage] = sourcePage.id
+        }
+
+        if let canvas = self.canvas {
+            plist[.CanvasLink.canvas] = canvas.id
         }
 
         return plist
@@ -72,6 +81,10 @@ final public class CanvasLink: NSObject, CollectableModelObject {
             self.$sourcePage.modelID = sourceID
         }
 
+        if let canvasID: ModelID = plist.attribute(withKey: .CanvasLink.canvas) {
+            self.$canvas.modelID = canvasID
+        }
+
         let plistKeys = ModelPlistKey.CanvasLink.all
         self.otherProperties = plist.filter { (key, _) -> Bool in
             return plistKeys.contains(key) == false
@@ -82,11 +95,13 @@ final public class CanvasLink: NSObject, CollectableModelObject {
     public func objectWasInserted() {
         self.$destinationPage.modelController = self.modelController
         self.$sourcePage.modelController = self.modelController
+        self.$canvas.modelController = self.modelController
     }
 
     public func objectWasDeleted() {
         self.$destinationPage.performCleanUp()
         self.$sourcePage.performCleanUp()
+        self.$canvas.performCleanUp()
     }
 }
 
@@ -96,9 +111,10 @@ extension ModelPlistKey {
         static let link = ModelPlistKey(rawValue: "link")!
         static let destinationPage = ModelPlistKey(rawValue: "destinationPage")!
         static let sourcePage = ModelPlistKey(rawValue: "sourcePage")!
+        static let canvas = ModelPlistKey(rawValue: "canvas")!
 
         static var all: [ModelPlistKey] {
-            return [.id, .CanvasLink.link, .CanvasLink.destinationPage, .CanvasLink.sourcePage]
+            return [.id, .CanvasLink.link, .CanvasLink.destinationPage, .CanvasLink.sourcePage, .CanvasLink.canvas]
         }
     }
 }
