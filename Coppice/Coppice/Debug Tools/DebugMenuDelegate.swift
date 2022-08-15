@@ -60,6 +60,12 @@ class DebugMenuBuilder: NSObject {
         return menuItem
     }()
 
+    let createDebugDocumentItem: NSMenuItem = {
+        let menuItem = NSMenuItem(title: "Create Debug Document", action: #selector(DebugDocumentBuilder.createNewDebugDocument(_:)), keyEquivalent: "")
+        menuItem.target = DebugDocumentBuilder.shared
+        return menuItem
+    }()
+
     func buildMenu() -> NSMenu {
         let menu = NSMenu(title: "**DEBUG**")
         menu.addItem(self.debugCanvasOriginItem)
@@ -74,6 +80,8 @@ class DebugMenuBuilder: NSObject {
         menu.addItem(self.subscriptionDebugMenuItem)
         menu.addItem(NSMenuItem.separator())
         menu.addItem(self.windowSizeMenuItem)
+        menu.addItem(NSMenuItem.separator())
+        menu.addItem(self.createDebugDocumentItem)
         return menu
     }
 }

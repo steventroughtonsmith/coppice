@@ -21,11 +21,11 @@ final public class CanvasLink: NSObject, CollectableModelObject {
 
     //MARK: - Relationships
     @ModelObjectReference public var destinationPage: CanvasPage? {
-        didSet { self.didChangeRelationship(\.destinationPage, inverseKeyPath: \.linksFrom, oldValue: oldValue) }
+        didSet { self.didChangeRelationship(\.destinationPage, inverseKeyPath: \.linksIn, oldValue: oldValue) }
     }
 
     @ModelObjectReference public var sourcePage: CanvasPage? {
-        didSet { self.didChangeRelationship(\.sourcePage, inverseKeyPath: \.linksTo, oldValue: oldValue) }
+        didSet { self.didChangeRelationship(\.sourcePage, inverseKeyPath: \.linksOut, oldValue: oldValue) }
     }
 
     @ModelObjectReference public var canvas: Canvas? {

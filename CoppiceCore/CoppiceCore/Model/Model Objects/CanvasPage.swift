@@ -53,12 +53,28 @@ final public class CanvasPage: NSObject, CollectableModelObject {
         didSet { self.didChangeRelationship(\.canvas, inverseKeyPath: \.pages, oldValue: oldValue) }
     }
 
-    public var linksTo: Set<CanvasLink> {
+    public var linksOut: Set<CanvasLink> {
         self.relationship(for: \.sourcePage)
     }
 
-    public var linksFrom: Set<CanvasLink> {
+    public var linksIn: Set<CanvasLink> {
         self.relationship(for: \.destinationPage)
+    }
+
+    public func doesLink(to canvasPage: CanvasPage) -> Bool {
+        if canvasPage == self {
+            return false
+        }
+        let pagesLinkedTo = self.linksOut.compactMap(\.destinationPage)
+        if pagesLinkedTo.contains(canvasPage) {
+            return true
+        }
+        for pageLinkedTo in pagesLinkedTo {
+            if pageLinkedTo.doesLink(to: canvasPage) {
+                return true
+            }
+        }
+        return false
     }
 
 

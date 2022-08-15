@@ -114,6 +114,7 @@ public class CanvasLayoutEngine: NSObject, LayoutEngine {
         }
 
         self.updateZIndexes()
+        self.linkLayoutEngine.updateLinks(forModifiedPages: pages)
 
         self.informOfLayoutChange(with: self.recalculateCanvasSize())
     }

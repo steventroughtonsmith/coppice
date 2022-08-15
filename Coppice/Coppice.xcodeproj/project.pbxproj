@@ -241,6 +241,7 @@
 		999A316525C81C0B00FF60E5 /* WhatsNewWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 999A316325C81C0B00FF60E5 /* WhatsNewWindow.xib */; };
 		999A317125C83CF700FF60E5 /* VersionNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999A317025C83CF700FF60E5 /* VersionNumber.swift */; };
 		999DAACA23CCC5D80013EC36 /* SidebarHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999DAAC923CCC5D80013EC36 /* SidebarHeaderView.swift */; };
+		999E219428A9131900DE6D5E /* DebugDocumentBuild.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999E219328A9131900DE6D5E /* DebugDocumentBuild.swift */; };
 		999EA68D2433913A00BF254E /* Info.plist.prefix in Resources */ = {isa = PBXBuildFile; fileRef = 999EA68C2433913A00BF254E /* Info.plist.prefix */; };
 		999EA6B32436097500BF254E /* SidebarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999EA6B02436097500BF254E /* SidebarViewModel.swift */; };
 		999EA6B42436097500BF254E /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999EA6B12436097500BF254E /* SidebarViewController.swift */; };
@@ -702,6 +703,7 @@
 		999A316325C81C0B00FF60E5 /* WhatsNewWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WhatsNewWindow.xib; sourceTree = "<group>"; };
 		999A317025C83CF700FF60E5 /* VersionNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionNumber.swift; sourceTree = "<group>"; };
 		999DAAC923CCC5D80013EC36 /* SidebarHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarHeaderView.swift; sourceTree = "<group>"; };
+		999E219328A9131900DE6D5E /* DebugDocumentBuild.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugDocumentBuild.swift; sourceTree = "<group>"; };
 		999EA68C2433913A00BF254E /* Info.plist.prefix */ = {isa = PBXFileReference; lastKnownFileType = text; path = Info.plist.prefix; sourceTree = "<group>"; };
 		999EA68F243392B600BF254E /* prepare_infoplist_prefix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = prepare_infoplist_prefix.swift; sourceTree = "<group>"; };
 		999EA69924339A8400BF254E /* .build_number */ = {isa = PBXFileReference; lastKnownFileType = text; path = .build_number; sourceTree = "<group>"; };
@@ -1888,6 +1890,7 @@
 			isa = PBXGroup;
 			children = (
 				99B65D0825642202001DE408 /* DebugMenuDelegate.swift */,
+				999E219328A9131900DE6D5E /* DebugDocumentBuild.swift */,
 				99C88EE9240C2F3F00339880 /* NSWindow+KeyLoopDebug.swift */,
 				99F0CD73246AF196006DE18E /* Preview Generator */,
 			);
@@ -2461,6 +2464,7 @@
 				9999A23D24F937B6001F8161 /* ActivatedSubscriptionViewController.swift in Sources */,
 				991B60AF25432140002C483C /* NavigationStack.swift in Sources */,
 				993D2C0024157196002E5BAC /* SourceListOutlineView.swift in Sources */,
+				999E219428A9131900DE6D5E /* DebugDocumentBuild.swift in Sources */,
 				9986874E253F079B004B29B0 /* DocumentWindowController+TouchBar.swift in Sources */,
 				991B6087254311BC002C483C /* HelpContentViewController.swift in Sources */,
 				991B60C6254334F2002C483C /* HelpSearchResultTableCellView.swift in Sources */,

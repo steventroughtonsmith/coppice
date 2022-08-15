@@ -34,6 +34,7 @@ class CanvasEditorViewModel: ViewModel {
         self.setupObservation()
         self.setupProObservation()
         self.updatePages()
+        self.updateLinks()
 
         self.layoutEngine.delegate = self
     }
@@ -86,8 +87,7 @@ class CanvasEditorViewModel: ViewModel {
     private func setupObservation() {
         self.canvasObserver = self.modelController.canvasCollection.addObserver(filterBy: [self.canvas.id]) { [weak self] change in
             if change.changeType == .update, !change.didUpdate(\.thumbnail) {
-                self?.updatePages()
-                self?.updateLinks()
+                self?.update()
                 if change.didUpdate(\.alwaysShowPageTitles) {
                     self?.updateAlwaysShowPageTitles()
                 }
@@ -97,11 +97,11 @@ class CanvasEditorViewModel: ViewModel {
             }
         }
         self.canvasPageObserver = self.modelController.canvasPageCollection.addObserver() { [weak self] _ in
-            self?.updatePages()
+            self?.wantsUpdate = true
         }
 
         self.canvasLinkObserver = self.modelController.canvasLinkCollection.addObserver() { [weak self] _ in
-            self?.updateLinks()
+            self?.wantsUpdate = true
         }
     }
 
@@ -132,6 +132,22 @@ class CanvasEditorViewModel: ViewModel {
             newViewPort.origin = newViewPort.origin.multiplied(by: -1)
             self.canvas.viewPort = newViewPort
         }
+    }
+
+    //MARK: - Updating
+    private var wantsUpdate: Bool = false {
+        didSet {
+            NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(update), object: nil)
+            if self.wantsUpdate {
+                self.perform(#selector(update), with: nil, afterDelay: 0)
+            }
+        }
+    }
+
+    @objc dynamic private func update() {
+        self.updatePages()
+        self.updateLinks()
+        self.wantsUpdate = false
     }
 
 
@@ -276,7 +292,7 @@ class CanvasEditorViewModel: ViewModel {
             return
         }
 
-        let idsToRemove = self.canvasLinks.map(\.id.uuid)
+        let idsToRemove = links.map(\.id.uuid)
         let layoutLinksToRemove = self.layoutEngine.links.filter { idsToRemove.contains($0.id) }
         self.layoutEngine.remove(layoutLinksToRemove)
     }

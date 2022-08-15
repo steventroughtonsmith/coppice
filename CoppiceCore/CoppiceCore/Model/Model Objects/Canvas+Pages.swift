@@ -10,7 +10,7 @@ import Foundation
 import M3Data
 
 extension Canvas {
-    //MARK: - Add New Pages
+    //MARK: - Add New Pages & Links
     @discardableResult public func addPages(_ pages: [Page], centredOn point: CGPoint? = nil) -> [CanvasPage] {
         guard let collection = self.modelController?.collection(for: CanvasPage.self) else {
             preconditionFailure("Could not find canvas page collection")
@@ -43,6 +43,18 @@ extension Canvas {
         }
 
         return canvasPages
+    }
+
+    @discardableResult public func addLink(_ link: PageLink? = nil, between page1: CanvasPage, and page2: CanvasPage) -> CanvasLink {
+        guard let collection = self.modelController?.collection(for: CanvasLink.self) else {
+            preconditionFailure("Could not find canvas link collection")
+        }
+        return collection.newObject() {
+            $0.link = link
+            $0.sourcePage = page1
+            $0.destinationPage = page2
+            $0.canvas = self
+        }
     }
 
 
@@ -112,22 +124,31 @@ extension Canvas {
     }
 
     public func close(_ canvasPage: CanvasPage) {
-        #warning("Update hierarchies to use canvas link")
-        if let parent = canvasPage.parent, let page = canvasPage.page, let hierarchy = PageHierarchy(canvasPage: canvasPage) {
-            var hierarchies = self.closedPageHierarchies[parent.id] ?? [ModelID: PageHierarchy]()
-            hierarchies[page.id] = hierarchy
-            self.closedPageHierarchies[parent.id] = hierarchies
-        }
+//        if let parent = canvasPage.parent, let page = canvasPage.page, let hierarchy = PageHierarchy(canvasPage: canvasPage) {
+//            var hierarchies = self.closedPageHierarchies[parent.id] ?? [ModelID: PageHierarchy]()
+//            hierarchies[page.id] = hierarchy
+//            self.closedPageHierarchies[parent.id] = hierarchies
+//        }
 
-        self.removeCanvasPages(startingFrom: canvasPage)
+        let linksIn = canvasPage.linksIn
+        self.removePageAndLinks(canvasPage)
+        //Delete all links into the page being deleted (as we always want to delete that page)
+        //This has to happen after removing the page as we need these to exist to determine if there's a cycle
+        linksIn.forEach { $0.delete() }
     }
 
-    private func removeCanvasPages(startingFrom canvasPage: CanvasPage) {
-        for child in canvasPage.children {
-            self.removeCanvasPages(startingFrom: child)
+    private func removePageAndLinks(_ canvasPage: CanvasPage) {
+        //Go through all pages linking out from supplied page
+        for linkOut in canvasPage.linksOut {
+            let page = linkOut.destinationPage
+            linkOut.delete()
+            //If a destination page has no more links in and was not part of a cycle involving the supplied page, then remove it and children
+            if let page, (page.linksIn.count == 0) && (page.doesLink(to: canvasPage) == false) {
+                self.removePageAndLinks(page)
+            }
         }
-        canvasPage.parent = nil
-        canvasPage.collection?.delete(canvasPage)
+        //Remove the page
+        canvasPage.delete()
     }
 
 
