@@ -55,7 +55,9 @@ class GeneralPreferencesViewController: PreferencesViewController {
 
     override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
         var keyPaths = super.keyPathsForValuesAffectingValue(forKey: key)
-        if (key == #keyPath(autoLinkingTextPagesEnabled) || key == #keyPath(selectedThemeIndex)) {
+        if (key == #keyPath(autoLinkingTextPagesEnabled) ||
+            key == #keyPath(selectedThemeIndex) ||
+            key == #keyPath(linkToExistingPagesByDefault)) {
             keyPaths.insert(#keyPath(isProEnabled))
         }
         return keyPaths
@@ -73,6 +75,21 @@ class GeneralPreferencesViewController: PreferencesViewController {
                 return
             }
             UserDefaults.standard.set(newValue, forKey: .autoLinkingTextPagesEnabled)
+        }
+    }
+
+    @objc dynamic var linkToExistingPagesByDefault: Bool {
+        get {
+            guard self.isProEnabled else {
+                return false
+            }
+            return UserDefaults.standard.bool(forKey: .linkToExistingPagesByDefault)
+        }
+        set {
+            guard self.isProEnabled else {
+                return
+            }
+            UserDefaults.standard.set(newValue, forKey: .linkToExistingPagesByDefault)
         }
     }
 
@@ -103,6 +120,13 @@ class GeneralPreferencesViewController: PreferencesViewController {
             return
         }
         self.subscriptionManager.showProPopover(for: .textAutoLinking, from: control, preferredEdge: .maxX)
+    }
+
+    @IBAction func showExistingPageLinkingProUpsell(_ sender: Any) {
+        guard let control = sender as? NSView else {
+            return
+        }
+        self.subscriptionManager.showProPopover(for: .linkToExistingPages, from: control, preferredEdge: .maxX)
     }
 
     @IBAction func showThemeProUpsell(_ sender: Any) {

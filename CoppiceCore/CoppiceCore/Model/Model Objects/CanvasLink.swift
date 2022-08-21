@@ -118,3 +118,9 @@ extension ModelPlistKey {
         }
     }
 }
+
+extension ModelCollection where ModelType == CanvasLink {
+    public func canvasLink(with pageLink: PageLink) -> CanvasLink? {
+        return self.all.first(where: { $0.link == pageLink })
+    }
+}

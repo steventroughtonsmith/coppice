@@ -23,6 +23,7 @@ public enum UserDefaultsKeys: String {
     case defaultCanvasTheme = "M3DefaultCanvasTheme"
 
     case autoLinkingTextPagesEnabled = "M3AutoLinkingTextPagesEnabled"
+    case linkToExistingPagesByDefault = "M3LinkToExistingPagesByDefault"
 
     case showWelcomeScreenOnLaunch = "M3ShowWelcomeScreenOnLaunch"
 

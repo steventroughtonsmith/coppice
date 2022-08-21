@@ -247,8 +247,16 @@ class CanvasEditorViewModel: ViewModel {
         }
     }
 
-    func addPage(at link: PageLink, centredOn point: CGPoint? = nil) {
-        for canvasPage in self.modelController.openPage(at: link, on: self.canvas) {
+    func addPage(at link: PageLink, centredOn point: CGPoint? = nil, useAlternate: Bool) {
+        let linkToExistingByDefault = UserDefaults.standard.bool(forKey: .linkToExistingPagesByDefault) && self.isProEnabled
+        let mode: Canvas.OpenPageMode
+        if useAlternate {
+            mode = linkToExistingByDefault ? .new : .existing
+        } else {
+            mode = linkToExistingByDefault ? .existing : .new
+        }
+
+        for canvasPage in self.modelController.openPage(at: link, on: self.canvas, mode: mode) {
             self.view?.flash(canvasPage)
         }
     }

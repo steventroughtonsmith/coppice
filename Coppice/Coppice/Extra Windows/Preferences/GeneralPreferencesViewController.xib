@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17503.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21219" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17503.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21219"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -19,13 +19,13 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="ysk-Cz-HVE">
-                    <rect key="frame" x="47" y="53" width="407" height="169"/>
+                    <rect key="frame" x="47" y="31" width="407" height="191"/>
                     <subviews>
                         <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="f6T-iD-mB3">
                             <rect key="frame" x="0.0" y="100" width="407" height="5"/>
                         </box>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kEj-uB-PyX">
-                            <rect key="frame" x="40" y="123" width="52" height="16"/>
+                            <rect key="frame" x="40" y="145" width="52" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="Linking:" id="Hsk-0I-Y6u">
                                 <font key="font" usesAppearanceFont="YES"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -33,7 +33,7 @@
                             </textFieldCell>
                         </textField>
                         <textField toolTip="The default font for new text pages" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yIC-WZ-NQH">
-                            <rect key="frame" x="98" y="149" width="220" height="19"/>
+                            <rect key="frame" x="98" y="171" width="220" height="19"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="220" id="U4o-ux-tPr"/>
                             </constraints>
@@ -47,7 +47,7 @@
                             </connections>
                         </textField>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DOi-Xn-Uvk">
-                            <rect key="frame" x="12" y="151" width="80" height="16"/>
+                            <rect key="frame" x="12" y="173" width="80" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="Default font:" id="oVt-Gb-hax">
                                 <font key="font" usesAppearanceFont="YES"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -74,7 +74,7 @@
                             </connections>
                         </popUpButton>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VMf-4O-Eja">
-                            <rect key="frame" x="322" y="141" width="91" height="32"/>
+                            <rect key="frame" x="322" y="163" width="91" height="32"/>
                             <buttonCell key="cell" type="push" title="Change…" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gbe-Zs-meT">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -92,7 +92,7 @@
                             </textFieldCell>
                         </textField>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wqu-lg-fdq">
-                            <rect key="frame" x="96" y="122" width="167" height="18"/>
+                            <rect key="frame" x="96" y="144" width="167" height="18"/>
                             <buttonCell key="cell" type="check" title="Auto-detect page titles" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="ls0-BT-G1x">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -103,7 +103,7 @@
                             </connections>
                         </button>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xs4-tP-7bg">
-                            <rect key="frame" x="265" y="115" width="52" height="27"/>
+                            <rect key="frame" x="265" y="138" width="52" height="27"/>
                             <buttonCell key="cell" type="push" title="PRO" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="W3E-ar-ypD" customClass="ProButtonCell" customModule="Coppice" customModuleProvider="target">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="smallSystemBold"/>
@@ -114,7 +114,7 @@
                             </connections>
                         </button>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jYn-dC-guV">
-                            <rect key="frame" x="171" y="57" width="52" height="27"/>
+                            <rect key="frame" x="171" y="56" width="52" height="27"/>
                             <buttonCell key="cell" type="push" title="PRO" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="cCu-Er-1Br" customClass="ProButtonCell" customModule="Coppice" customModuleProvider="target">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="smallSystemBold"/>
@@ -153,11 +153,33 @@
                                 <binding destination="-2" name="selectedObject" keyPath="self.selectedSidebarSize" id="ogp-bK-OQx"/>
                             </connections>
                         </popUpButton>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mH8-Wt-DkP">
+                            <rect key="frame" x="96" y="122" width="222" height="18"/>
+                            <buttonCell key="cell" type="check" title="Link to existing pages by default" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="cl9-HQ-3Bb">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <binding destination="-2" name="enabled" keyPath="self.isProEnabled" id="FuJ-5Q-7R1"/>
+                                <binding destination="-2" name="value" keyPath="self.linkToExistingPagesByDefault" id="h3y-qE-CKf"/>
+                            </connections>
+                        </button>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nAJ-Ly-IC5">
+                            <rect key="frame" x="320" y="116" width="52" height="27"/>
+                            <buttonCell key="cell" type="push" title="PRO" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ILN-iZ-z6C" customClass="ProButtonCell" customModule="Coppice" customModuleProvider="target">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="smallSystemBold"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="showExistingPageLinkingProUpsell:" target="-2" id="ot5-Z7-7wg"/>
+                                <binding destination="-2" name="hidden" keyPath="self.isProEnabled" id="etU-OS-ijF"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <constraints>
+                        <constraint firstItem="nAJ-Ly-IC5" firstAttribute="leading" secondItem="mH8-Wt-DkP" secondAttribute="trailing" constant="8" symbolic="YES" id="0p9-9i-75Z"/>
                         <constraint firstItem="kEj-uB-PyX" firstAttribute="trailing" secondItem="DOi-Xn-Uvk" secondAttribute="trailing" id="27K-jc-oCp"/>
-                        <constraint firstItem="f6T-iD-mB3" firstAttribute="top" secondItem="wqu-lg-fdq" secondAttribute="bottom" constant="20" id="410-ee-8F0"/>
-                        <constraint firstItem="xs4-tP-7bg" firstAttribute="firstBaseline" secondItem="wqu-lg-fdq" secondAttribute="firstBaseline" id="5CS-Ig-TTB"/>
+                        <constraint firstItem="xs4-tP-7bg" firstAttribute="centerY" secondItem="wqu-lg-fdq" secondAttribute="centerY" id="4de-GT-YWE"/>
                         <constraint firstAttribute="trailing" secondItem="VMf-4O-Eja" secondAttribute="trailing" constant="1" id="859-rO-oge"/>
                         <constraint firstAttribute="trailing" secondItem="QYa-0z-38W" secondAttribute="trailing" id="9R9-9C-TiH"/>
                         <constraint firstItem="wqu-lg-fdq" firstAttribute="top" secondItem="yIC-WZ-NQH" secondAttribute="bottom" constant="10" id="9up-Nr-WFl"/>
@@ -167,20 +189,24 @@
                         <constraint firstItem="jYn-dC-guV" firstAttribute="leading" secondItem="siU-4B-lDe" secondAttribute="trailing" constant="8" symbolic="YES" id="Jxt-lu-YAn"/>
                         <constraint firstItem="kcR-fg-nqZ" firstAttribute="leading" secondItem="siU-4B-lDe" secondAttribute="leading" id="KRn-yG-tr4"/>
                         <constraint firstItem="yIC-WZ-NQH" firstAttribute="leading" secondItem="wqu-lg-fdq" secondAttribute="leading" id="KhM-H1-Uf8"/>
+                        <constraint firstItem="f6T-iD-mB3" firstAttribute="top" secondItem="mH8-Wt-DkP" secondAttribute="bottom" constant="20" id="LIa-0K-Yz5"/>
                         <constraint firstItem="jYn-dC-guV" firstAttribute="firstBaseline" secondItem="siU-4B-lDe" secondAttribute="firstBaseline" id="LWm-LF-ZGt"/>
                         <constraint firstItem="siU-4B-lDe" firstAttribute="firstBaseline" secondItem="KK4-b4-s2e" secondAttribute="firstBaseline" id="PWs-M6-XkR"/>
                         <constraint firstItem="VMf-4O-Eja" firstAttribute="leading" secondItem="yIC-WZ-NQH" secondAttribute="trailing" constant="11" id="TZn-in-qvT"/>
                         <constraint firstItem="VMf-4O-Eja" firstAttribute="top" secondItem="ysk-Cz-HVE" secondAttribute="top" constant="1" id="Vag-ze-cHG"/>
+                        <constraint firstItem="mH8-Wt-DkP" firstAttribute="top" secondItem="wqu-lg-fdq" secondAttribute="bottom" constant="6" symbolic="YES" id="XUG-er-ZpJ"/>
                         <constraint firstItem="siU-4B-lDe" firstAttribute="top" secondItem="f6T-iD-mB3" secondAttribute="bottom" constant="20" id="XcG-pS-lyq"/>
                         <constraint firstItem="xs4-tP-7bg" firstAttribute="leading" secondItem="wqu-lg-fdq" secondAttribute="trailing" constant="8" symbolic="YES" id="ZYv-dp-d6Y"/>
                         <constraint firstItem="siU-4B-lDe" firstAttribute="leading" secondItem="wqu-lg-fdq" secondAttribute="leading" id="Zlh-U9-Psz"/>
                         <constraint firstItem="VMf-4O-Eja" firstAttribute="firstBaseline" secondItem="yIC-WZ-NQH" secondAttribute="firstBaseline" id="cNa-Sm-Pwr"/>
+                        <constraint firstItem="mH8-Wt-DkP" firstAttribute="leading" secondItem="wqu-lg-fdq" secondAttribute="leading" id="cwY-Ne-2Rw"/>
                         <constraint firstItem="kEj-uB-PyX" firstAttribute="firstBaseline" secondItem="wqu-lg-fdq" secondAttribute="firstBaseline" id="fqG-ZE-ApR"/>
                         <constraint firstItem="kcR-fg-nqZ" firstAttribute="leading" secondItem="Jq4-Pf-ldz" secondAttribute="trailing" constant="8" symbolic="YES" id="gVY-nF-0Kx"/>
                         <constraint firstAttribute="trailing" secondItem="f6T-iD-mB3" secondAttribute="trailing" id="hc2-IK-pcn"/>
                         <constraint firstItem="f6T-iD-mB3" firstAttribute="leading" secondItem="ysk-Cz-HVE" secondAttribute="leading" id="izB-XP-mm9"/>
                         <constraint firstAttribute="bottom" secondItem="kcR-fg-nqZ" secondAttribute="bottom" constant="1" id="laz-pC-lhb"/>
                         <constraint firstItem="yIC-WZ-NQH" firstAttribute="leading" secondItem="DOi-Xn-Uvk" secondAttribute="trailing" constant="8" id="oly-vx-pmy"/>
+                        <constraint firstItem="nAJ-Ly-IC5" firstAttribute="centerY" secondItem="mH8-Wt-DkP" secondAttribute="centerY" id="qAy-Vm-NiW"/>
                         <constraint firstItem="kcR-fg-nqZ" firstAttribute="top" secondItem="QYa-0z-38W" secondAttribute="bottom" constant="20" id="v3v-5v-i1M"/>
                         <constraint firstItem="QYa-0z-38W" firstAttribute="top" secondItem="siU-4B-lDe" secondAttribute="bottom" constant="20" id="vKd-uU-lDv"/>
                         <constraint firstItem="Jq4-Pf-ldz" firstAttribute="firstBaseline" secondItem="kcR-fg-nqZ" secondAttribute="firstBaseline" id="wld-Dg-yx8"/>

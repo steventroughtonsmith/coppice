@@ -244,7 +244,7 @@ public class CoppiceModelController: NSObject, ModelController {
         return []
     }
 
-    @discardableResult public func openPage(at link: PageLink, on canvas: Canvas) -> [CanvasPage] {
+    @discardableResult public func openPage(at link: PageLink, on canvas: Canvas, mode: Canvas.OpenPageMode) -> [CanvasPage] {
         guard let page = self.pageCollection.objectWithID(link.destination) else {
             return []
         }
@@ -264,7 +264,7 @@ public class CoppiceModelController: NSObject, ModelController {
         }
 
         self.undoManager.setActionName(undoActionName)
-        return canvas.open(page, linkedFrom: sourcePage, with: link)
+        return canvas.open(page, linkedFrom: sourcePage, with: link, mode: mode)
     }
 
     public func close(_ canvasPage: CanvasPage) {

@@ -754,7 +754,8 @@ extension CanvasEditorViewController: Editor {
     }
 
     func open(_ link: PageLink) {
-        self.viewModel.addPage(at: link)
+        self.viewModel.addPage(at: link,
+                               useAlternate: NSApplication.shared.currentEvent?.modifierFlags.contains(.command) == true)
     }
 }
 

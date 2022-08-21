@@ -10,6 +10,12 @@ import Foundation
 import M3Data
 
 extension Canvas {
+    //MARK: - Page Helpers
+    public func existingCanvasPage(for page: Page) -> CanvasPage? {
+        return self.pages.first(where: { $0.page?.id == page.id })
+    }
+
+
     //MARK: - Add New Pages & Links
     @discardableResult public func addPages(_ pages: [Page], centredOn point: CGPoint? = nil) -> [CanvasPage] {
         guard let collection = self.modelController?.collection(for: CanvasPage.self) else {
@@ -45,10 +51,15 @@ extension Canvas {
         return canvasPages
     }
 
-    @discardableResult public func addLink(_ link: PageLink? = nil, between page1: CanvasPage, and page2: CanvasPage) -> CanvasLink {
+    @discardableResult public func addLink(_ link: PageLink, between page1: CanvasPage, and page2: CanvasPage) -> CanvasLink {
         guard let collection = self.modelController?.collection(for: CanvasLink.self) else {
             preconditionFailure("Could not find canvas link collection")
         }
+
+        if let existingLink = collection.canvasLink(with: link) {
+            return existingLink
+        }
+        
         return collection.newObject() {
             $0.link = link
             $0.sourcePage = page1
@@ -59,14 +70,23 @@ extension Canvas {
 
 
     //MARK: - Open & Close Pages
+    public enum OpenPageMode: Equatable {
+        case new
+        case existing
+    }
 
-    @discardableResult public func open(_ page: Page, linkedFrom sourcePage: CanvasPage, with pageLink: PageLink) -> [CanvasPage] {
-        guard let hierarchy = self.pageHierarchies.first(where: { $0.entryPoints.contains(where: { $0.pageLink == pageLink })}) else {
-            let canvasPage = self.createLinkedCanvasPage(for: page, linkedFrom: sourcePage, with: pageLink)
-            return [canvasPage]
+    @discardableResult public func open(_ page: Page, linkedFrom sourcePage: CanvasPage, with pageLink: PageLink, mode: OpenPageMode = .new) -> [CanvasPage] {
+        if mode == .existing, let existingPage = self.existingCanvasPage(for: page) {
+            self.addLink(pageLink, between: sourcePage, and: existingPage)
+            return [existingPage]
         }
 
-        return self.hierarchyRestorer.restore(hierarchy, from: sourcePage, for: pageLink)
+        if let hierarchy = self.pageHierarchies.first(where: { $0.entryPoints.contains(where: { $0.pageLink == pageLink })}) {
+            return self.hierarchyRestorer.restore(hierarchy, from: sourcePage, for: pageLink)
+        }
+
+        let canvasPage = self.createLinkedCanvasPage(for: page, linkedFrom: sourcePage, with: pageLink)
+        return [canvasPage]
     }
 
     private func createLinkedCanvasPage(for page: Page, linkedFrom sourcePage: CanvasPage, with pageLink: PageLink) -> CanvasPage {
