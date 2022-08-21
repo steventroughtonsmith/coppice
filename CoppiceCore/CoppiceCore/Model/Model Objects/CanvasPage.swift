@@ -196,11 +196,11 @@ final public class CanvasPage: NSObject, CollectableModelObject {
 
 extension ModelPlistKey {
     enum CanvasPage {
-        static let frame = ModelPlistKey(rawValue: "frame")!
-        static let zIndex = ModelPlistKey(rawValue: "zIndex")!
-        static let page = ModelPlistKey(rawValue: "page")!
-        static let canvas = ModelPlistKey(rawValue: "canvas")!
-        static let parent = ModelPlistKey(rawValue: "parent")!
+        static let frame = ModelPlistKey(rawValue: "frame")
+        static let zIndex = ModelPlistKey(rawValue: "zIndex")
+        static let page = ModelPlistKey(rawValue: "page")
+        static let canvas = ModelPlistKey(rawValue: "canvas")
+        static let parent = ModelPlistKey(rawValue: "parent")
 
         static var all: [ModelPlistKey] {
             return [.id, .CanvasPage.frame, .CanvasPage.zIndex, .CanvasPage.page, .CanvasPage.canvas, .CanvasPage.parent]

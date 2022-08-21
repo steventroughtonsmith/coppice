@@ -66,7 +66,11 @@ final public class Canvas: NSObject, CollectableModelObject {
         didSet { self.didChange(\.thumbnail, oldValue: oldValue) }
     }
 
-    public var closedPageHierarchies: [ModelID: [ModelID: PageHierarchy]] = [:]
+    public var closedPageHierarchies: [ModelID: [ModelID: LegacyPageHierarchy]] = [:]
+
+    lazy var hierarchyRestorer: PageHierarchyRestorer = {
+        return PageHierarchyRestorer(canvas: self)
+    }()
 
     ///Added 2021.2
     public var alwaysShowPageTitles: Bool = false {
@@ -86,6 +90,10 @@ final public class Canvas: NSObject, CollectableModelObject {
     }
 
     public var links: Set<CanvasLink> {
+        return self.relationship(for: \.canvas)
+    }
+
+    public var pageHierarchies: Set<PageHierarchy> {
         return self.relationship(for: \.canvas)
     }
 
@@ -167,12 +175,12 @@ final public class Canvas: NSObject, CollectableModelObject {
         }
 
         if let plistableHierarchy: [String: [String: [String: Any]]] = plist.attribute(withKey: .Canvas.closedPageHierarchies) {
-            let hierarchy = plistableHierarchy.compactMap { key, value -> (ModelID, [ModelID: PageHierarchy])? in
+            let hierarchy = plistableHierarchy.compactMap { key, value -> (ModelID, [ModelID: LegacyPageHierarchy])? in
                 guard let canvasPageID = ModelID(string: key) else {
                     return nil
                 }
-                let pageList = value.compactMap { key, value -> (ModelID, PageHierarchy)? in
-                    guard let pageID = ModelID(string: key), let pageHierarchy = PageHierarchy(plistRepresentation: value) else {
+                let pageList = value.compactMap { key, value -> (ModelID, LegacyPageHierarchy)? in
+                    guard let pageID = ModelID(string: key), let pageHierarchy = LegacyPageHierarchy(plistRepresentation: value) else {
                         return nil
                     }
                     return (pageID, pageHierarchy)
@@ -198,16 +206,16 @@ final public class Canvas: NSObject, CollectableModelObject {
 
 extension ModelPlistKey {
     enum Canvas {
-        static let title = ModelPlistKey(rawValue: "title")!
-        static let dateCreated = ModelPlistKey(rawValue: "dateCreated")!
-        static let dateModified = ModelPlistKey(rawValue: "dateModified")!
-        static let sortIndex = ModelPlistKey(rawValue: "sortIndex")!
-        static let theme = ModelPlistKey(rawValue: "theme")!
-        static let zoomFactor = ModelPlistKey(rawValue: "zoomFactor")!
-        static let thumbnail = ModelPlistKey(rawValue: "thumbnail")!
-        static let viewPort = ModelPlistKey(rawValue: "viewPort")!
-        static let closedPageHierarchies = ModelPlistKey(rawValue: "closedPageHierarchies")!
-        static let alwaysShowPageTitles = ModelPlistKey(rawValue: "alwaysShowPageTitles")! ///Added 2021.2
+        static let title = ModelPlistKey(rawValue: "title")
+        static let dateCreated = ModelPlistKey(rawValue: "dateCreated")
+        static let dateModified = ModelPlistKey(rawValue: "dateModified")
+        static let sortIndex = ModelPlistKey(rawValue: "sortIndex")
+        static let theme = ModelPlistKey(rawValue: "theme")
+        static let zoomFactor = ModelPlistKey(rawValue: "zoomFactor")
+        static let thumbnail = ModelPlistKey(rawValue: "thumbnail")
+        static let viewPort = ModelPlistKey(rawValue: "viewPort")
+        static let closedPageHierarchies = ModelPlistKey(rawValue: "closedPageHierarchies")
+        static let alwaysShowPageTitles = ModelPlistKey(rawValue: "alwaysShowPageTitles") ///Added 2021.2
 
         static var all: [ModelPlistKey] {
             return [.id, .Canvas.title, .Canvas.dateCreated, .Canvas.dateModified, .Canvas.sortIndex, .Canvas.theme, .Canvas.zoomFactor, .Canvas.thumbnail, .Canvas.viewPort, .Canvas.closedPageHierarchies, .Canvas.alwaysShowPageTitles]

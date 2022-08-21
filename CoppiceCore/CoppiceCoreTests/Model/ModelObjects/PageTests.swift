@@ -96,16 +96,16 @@ class PageTests: XCTestCase {
             .Page.dateCreated: Date(timeIntervalSinceReferenceDate: 1238),
             .Page.dateModified: Date(timeIntervalSinceReferenceDate: 9872),
             .Page.content: ModelFile(type: "text", filename: nil, data: nil, metadata: nil),
-            ModelPlistKey(rawValue: "foo")!: "bar",
-            ModelPlistKey(rawValue: "testing")!: Date(timeIntervalSinceReferenceDate: 11),
+            ModelPlistKey(rawValue: "foo"): "bar",
+            ModelPlistKey(rawValue: "testing"): Date(timeIntervalSinceReferenceDate: 11),
         ]
 
         XCTAssertNoThrow(try page.update(fromPlistRepresentation: plist))
 
         let plistRepresentation = page.plistRepresentation
 
-        XCTAssertEqual(plistRepresentation[ModelPlistKey(rawValue: "foo")!] as? String, "bar")
-        XCTAssertEqual(plistRepresentation[ModelPlistKey(rawValue: "testing")!] as? Date, Date(timeIntervalSinceReferenceDate: 11))
+        XCTAssertEqual(plistRepresentation[ModelPlistKey(rawValue: "foo")] as? String, "bar")
+        XCTAssertEqual(plistRepresentation[ModelPlistKey(rawValue: "testing")] as? Date, Date(timeIntervalSinceReferenceDate: 11))
     }
 
 
@@ -320,18 +320,18 @@ class PageTests: XCTestCase {
         page.contentSize = CGSize(width: 3, height: 4)
         let plist: [ModelPlistKey: Any] = [
             .id: page.id,
-            ModelPlistKey(rawValue: "testing")!: Date(timeIntervalSinceReferenceDate: 11),
+            ModelPlistKey(rawValue: "testing"): Date(timeIntervalSinceReferenceDate: 11),
             .Page.title: "Lorem Ipsum",
             .Page.dateCreated: Date(timeIntervalSinceReferenceDate: 1238),
             .Page.dateModified: Date(timeIntervalSinceReferenceDate: 9872),
             .Page.content: ModelFile(type: "text", filename: nil, data: nil, metadata: nil),
-            ModelPlistKey(rawValue: "foo")!: "bar",
+            ModelPlistKey(rawValue: "foo"): "bar",
         ]
 
         XCTAssertNoThrow(try page.update(fromPlistRepresentation: plist))
 
-        XCTAssertEqual(page.otherProperties[ModelPlistKey(rawValue: "foo")!] as? String, "bar")
-        XCTAssertEqual(page.otherProperties[ModelPlistKey(rawValue: "testing")!] as? Date, Date(timeIntervalSinceReferenceDate: 11))
+        XCTAssertEqual(page.otherProperties[ModelPlistKey(rawValue: "foo")] as? String, "bar")
+        XCTAssertEqual(page.otherProperties[ModelPlistKey(rawValue: "testing")] as? Date, Date(timeIntervalSinceReferenceDate: 11))
     }
 
     func test_updateFromPlistRepresentation_doesntIncludeAnySupportPlistKeysInOtherProperties() throws {
@@ -339,12 +339,12 @@ class PageTests: XCTestCase {
         page.contentSize = CGSize(width: 3, height: 4)
         let plist: [ModelPlistKey: Any] = [
             .id: page.id,
-            ModelPlistKey(rawValue: "testing")!: Date(timeIntervalSinceReferenceDate: 11),
+            ModelPlistKey(rawValue: "testing"): Date(timeIntervalSinceReferenceDate: 11),
             .Page.title: "Lorem Ipsum",
             .Page.dateCreated: Date(timeIntervalSinceReferenceDate: 1238),
             .Page.dateModified: Date(timeIntervalSinceReferenceDate: 9872),
             .Page.content: ModelFile(type: "text", filename: nil, data: nil, metadata: nil),
-            ModelPlistKey(rawValue: "foo")!: "bar",
+            ModelPlistKey(rawValue: "foo"): "bar",
         ]
 
         XCTAssertNoThrow(try page.update(fromPlistRepresentation: plist))

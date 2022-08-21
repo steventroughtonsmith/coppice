@@ -141,7 +141,7 @@ final public class Folder: NSObject, CollectableModelObject, FolderContainable {
 
     //MARK: - Plist
     public static var propertyConversions: [ModelPlistKey: ModelPropertyConversion] {
-        return [.Folder.contents: .modelIDArray]
+        return [.Folder.contents: .array(.modelID)]
     }
 
     public var plistRepresentation: [ModelPlistKey: Any] {
@@ -184,9 +184,9 @@ final public class Folder: NSObject, CollectableModelObject, FolderContainable {
 
 extension ModelPlistKey {
     enum Folder {
-        static let title = ModelPlistKey(rawValue: "title")!
-        static let dateCreated = ModelPlistKey(rawValue: "dateCreated")!
-        static let contents = ModelPlistKey(rawValue: "contents")!
+        static let title = ModelPlistKey(rawValue: "title")
+        static let dateCreated = ModelPlistKey(rawValue: "dateCreated")
+        static let contents = ModelPlistKey(rawValue: "contents")
 
         static var all: [ModelPlistKey] {
             return [.id, .Folder.title, .Folder.dateCreated, .Folder.contents]

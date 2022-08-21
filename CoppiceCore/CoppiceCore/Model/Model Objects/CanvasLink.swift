@@ -108,10 +108,10 @@ final public class CanvasLink: NSObject, CollectableModelObject {
 
 extension ModelPlistKey {
     enum CanvasLink {
-        static let link = ModelPlistKey(rawValue: "link")!
-        static let destinationPage = ModelPlistKey(rawValue: "destinationPage")!
-        static let sourcePage = ModelPlistKey(rawValue: "sourcePage")!
-        static let canvas = ModelPlistKey(rawValue: "canvas")!
+        static let link = ModelPlistKey(rawValue: "link")
+        static let destinationPage = ModelPlistKey(rawValue: "destinationPage")
+        static let sourcePage = ModelPlistKey(rawValue: "sourcePage")
+        static let canvas = ModelPlistKey(rawValue: "canvas")
 
         static var all: [ModelPlistKey] {
             return [.id, .CanvasLink.link, .CanvasLink.destinationPage, .CanvasLink.sourcePage, .CanvasLink.canvas]

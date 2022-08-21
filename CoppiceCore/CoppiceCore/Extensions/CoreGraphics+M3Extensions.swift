@@ -80,6 +80,14 @@ extension CGPoint {
 
         return self.applying(postTranslate)
     }
+
+    init(string: String) {
+        self = NSPointFromString(string)
+    }
+
+    var stringRepresentation: String {
+        return NSStringFromPoint(self)
+    }
 }
 
 
@@ -150,6 +158,14 @@ extension CGSize {
         newRect.origin.x = rect.midX - (self.width / 2)
         newRect.origin.y = rect.midY - (self.height / 2)
         return newRect
+    }
+
+    init(string: String) {
+        self = NSSizeFromString(string)
+    }
+
+    var stringRepresentation: String {
+        return NSStringFromSize(self)
     }
 }
 
@@ -256,5 +272,13 @@ extension CGRect {
         let postTranslate = rotation.translatedBy(x: -rotationOrigin.y, y: -rotationOrigin.x)
 
         return self.applying(postTranslate)
+    }
+
+    init(string: String) {
+        self = NSRectFromString(string)
+    }
+
+    var stringRepresentation: String {
+        return NSStringFromRect(self)
     }
 }

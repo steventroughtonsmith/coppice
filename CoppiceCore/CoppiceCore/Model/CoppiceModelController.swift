@@ -36,6 +36,7 @@ public class CoppiceModelController: NSObject, ModelController {
         self.addModelCollection(for: Page.self)
         self.addModelCollection(for: Folder.self)
         self.addModelCollection(for: CanvasLink.self)
+        self.addModelCollection(for: PageHierarchy.self)
     }
 
     //MARK: - Page
@@ -279,6 +280,11 @@ public class CoppiceModelController: NSObject, ModelController {
     //MARK: - Canvas Link
     public var canvasLinkCollection: ModelCollection<CanvasLink> {
         return self.collection(for: CanvasLink.self)
+    }
+
+    //MARK: - Page Hierarchy
+    public var pageHierarchyCollection: ModelCollection<PageHierarchy> {
+        return self.collection(for: PageHierarchy.self)
     }
 }
 

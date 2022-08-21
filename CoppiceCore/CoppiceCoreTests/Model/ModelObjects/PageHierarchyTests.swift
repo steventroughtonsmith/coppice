@@ -44,11 +44,11 @@ class PageHierarchyTests: XCTestCase {
     //MARK: - init(canvasPage:)
     func test_initCanvasPage_returnsNilIfPageIsNotSet() {
         self.parentPage.page = nil
-        XCTAssertNil(PageHierarchy(canvasPage: self.parentPage))
+        XCTAssertNil(LegacyPageHierarchy(canvasPage: self.parentPage))
     }
 
     func test_initCanvasPage_convertsChildrenToPageHierarchies() throws {
-        let hierarchy = try XCTUnwrap(PageHierarchy(canvasPage: self.parentPage))
+        let hierarchy = try XCTUnwrap(LegacyPageHierarchy(canvasPage: self.parentPage))
         XCTAssertEqual(hierarchy.children.count, 2)
 
         XCTAssertTrue(hierarchy.children.contains(where: {
@@ -60,7 +60,7 @@ class PageHierarchyTests: XCTestCase {
     }
 
     func test_initCanvasPage_setsID_PageIDAndFrame() throws {
-        let hierarchy = try XCTUnwrap(PageHierarchy(canvasPage: self.parentPage))
+        let hierarchy = try XCTUnwrap(LegacyPageHierarchy(canvasPage: self.parentPage))
         XCTAssertEqual(hierarchy.id, self.parentPage.id)
         XCTAssertEqual(hierarchy.pageID, self.parentPage.page!.id)
         XCTAssertEqual(hierarchy.frame, self.parentPage.frame)
@@ -69,7 +69,7 @@ class PageHierarchyTests: XCTestCase {
 
     //MARK: - init(plistRepresentation:)
     func test_initPlistRepresentation_returnsNilIfIDNotInPlist() {
-        XCTAssertNil(PageHierarchy(plistRepresentation: [
+        XCTAssertNil(LegacyPageHierarchy(plistRepresentation: [
             "pageID": Page.modelID(with: UUID()).stringRepresentation,
             "frame": NSStringFromRect(.zero),
             "children": [],
@@ -77,7 +77,7 @@ class PageHierarchyTests: XCTestCase {
     }
 
     func test_initPlistRepresentation_returnsNilIfPageIDNotInPlist() {
-        XCTAssertNil(PageHierarchy(plistRepresentation: [
+        XCTAssertNil(LegacyPageHierarchy(plistRepresentation: [
             "id": CanvasPage.modelID(with: UUID()).stringRepresentation,
             "frame": NSStringFromRect(.zero),
             "children": [],
@@ -85,7 +85,7 @@ class PageHierarchyTests: XCTestCase {
     }
 
     func test_initPlistRepresentation_returnsNilIfFrameNotInPlist() {
-        XCTAssertNil(PageHierarchy(plistRepresentation: [
+        XCTAssertNil(LegacyPageHierarchy(plistRepresentation: [
             "id": CanvasPage.modelID(with: UUID()).stringRepresentation,
             "pageID": Page.modelID(with: UUID()).stringRepresentation,
             "children": [],
@@ -93,7 +93,7 @@ class PageHierarchyTests: XCTestCase {
     }
 
     func test_initPlistRepresentation_returnsNilIfChildrenNotInPlist() {
-        XCTAssertNil(PageHierarchy(plistRepresentation: [
+        XCTAssertNil(LegacyPageHierarchy(plistRepresentation: [
             "id": CanvasPage.modelID(with: UUID()).stringRepresentation,
             "pageID": Page.modelID(with: UUID()).stringRepresentation,
             "frame": NSStringFromRect(.zero),
@@ -104,7 +104,7 @@ class PageHierarchyTests: XCTestCase {
         let expectedID = CanvasPage.modelID(with: UUID())
         let expectedPageID = Page.modelID(with: UUID())
         let expectedFrame = CGRect(x: 10, y: 15, width: 20, height: 25)
-        let hierarchy = try XCTUnwrap(PageHierarchy(plistRepresentation: [
+        let hierarchy = try XCTUnwrap(LegacyPageHierarchy(plistRepresentation: [
             "id": expectedID.stringRepresentation,
             "pageID": expectedPageID.stringRepresentation,
             "frame": NSStringFromRect(expectedFrame),
@@ -120,7 +120,7 @@ class PageHierarchyTests: XCTestCase {
         let expectedID = CanvasPage.modelID(with: UUID())
         let expectedPageID = Page.modelID(with: UUID())
         let expectedFrame = CGRect(x: 10, y: 15, width: 20, height: 25)
-        let hierarchy = try XCTUnwrap(PageHierarchy(plistRepresentation: [
+        let hierarchy = try XCTUnwrap(LegacyPageHierarchy(plistRepresentation: [
             "id": CanvasPage.modelID(with: UUID()).stringRepresentation,
             "pageID": Page.modelID(with: UUID()).stringRepresentation,
             "frame": NSStringFromRect(.zero),
@@ -143,22 +143,22 @@ class PageHierarchyTests: XCTestCase {
 
     //MARK: - .plistRepresentation
     func test_plistRepresentation_addsIDStringRepresentation() throws {
-        let hierarchy = try XCTUnwrap(PageHierarchy(canvasPage: self.parentPage))
+        let hierarchy = try XCTUnwrap(LegacyPageHierarchy(canvasPage: self.parentPage))
         XCTAssertEqual(hierarchy.plistRepresentation["id"] as? String, self.parentPage.id.stringRepresentation)
     }
 
     func test_plistRepresentation_addsPageIDStringRepresentation() throws {
-        let hierarchy = try XCTUnwrap(PageHierarchy(canvasPage: self.parentPage))
+        let hierarchy = try XCTUnwrap(LegacyPageHierarchy(canvasPage: self.parentPage))
         XCTAssertEqual(hierarchy.plistRepresentation["pageID"] as? String, self.parentPage.page!.id.stringRepresentation)
     }
 
     func test_plistRepresentation_addsFrameStringRepresentation() throws {
-        let hierarchy = try XCTUnwrap(PageHierarchy(canvasPage: self.parentPage))
+        let hierarchy = try XCTUnwrap(LegacyPageHierarchy(canvasPage: self.parentPage))
         XCTAssertEqual(hierarchy.plistRepresentation["frame"] as? String, NSStringFromRect(self.parentPage.frame))
     }
 
     func test_plistRepresentation_convertsChildrenToPlistAndAddsThem() throws {
-        let hierarchy = try XCTUnwrap(PageHierarchy(canvasPage: self.parentPage))
+        let hierarchy = try XCTUnwrap(LegacyPageHierarchy(canvasPage: self.parentPage))
         let children = try XCTUnwrap(hierarchy.plistRepresentation["children"] as? [[String: Any]])
         XCTAssertEqual(children.count, 2)
 

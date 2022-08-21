@@ -63,17 +63,17 @@ class CanvasPageTests: XCTestCase {
 
         let plist: [ModelPlistKey: Any] = [
             .id: canvasPage.id,
-            ModelPlistKey(rawValue: "bar")!: "foo",
+            ModelPlistKey(rawValue: "bar"): "foo",
             .CanvasPage.frame: NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
             .CanvasPage.zIndex: 31,
-            ModelPlistKey(rawValue: "point")!: NSStringFromPoint(CGPoint(x: 15, y: 51)),
+            ModelPlistKey(rawValue: "point"): NSStringFromPoint(CGPoint(x: 15, y: 51)),
         ]
 
         XCTAssertNoThrow(try canvasPage.update(fromPlistRepresentation: plist))
 
         let plistRepresentation = canvasPage.plistRepresentation
-        XCTAssertEqual(plistRepresentation[ModelPlistKey(rawValue: "bar")!] as? String, "foo")
-        XCTAssertEqual(plistRepresentation[ModelPlistKey(rawValue: "point")!] as? String, NSStringFromPoint(CGPoint(x: 15, y: 51)))
+        XCTAssertEqual(plistRepresentation[ModelPlistKey(rawValue: "bar")] as? String, "foo")
+        XCTAssertEqual(plistRepresentation[ModelPlistKey(rawValue: "point")] as? String, NSStringFromPoint(CGPoint(x: 15, y: 51)))
     }
 
 
@@ -177,16 +177,16 @@ class CanvasPageTests: XCTestCase {
 
         let plist: [ModelPlistKey: Any] = [
             .id: canvasPage.id,
-            ModelPlistKey(rawValue: "bar")!: "foo",
+            ModelPlistKey(rawValue: "bar"): "foo",
             .CanvasPage.frame: NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
             .CanvasPage.zIndex: 31,
-            ModelPlistKey(rawValue: "point")!: NSStringFromPoint(CGPoint(x: 15, y: 51)),
+            ModelPlistKey(rawValue: "point"): NSStringFromPoint(CGPoint(x: 15, y: 51)),
         ]
 
         XCTAssertNoThrow(try canvasPage.update(fromPlistRepresentation: plist))
 
-        XCTAssertEqual(canvasPage.otherProperties[ModelPlistKey(rawValue: "bar")!] as? String, "foo")
-        XCTAssertEqual(canvasPage.otherProperties[ModelPlistKey(rawValue: "point")!] as? String, NSStringFromPoint(CGPoint(x: 15, y: 51)))
+        XCTAssertEqual(canvasPage.otherProperties[ModelPlistKey(rawValue: "bar")] as? String, "foo")
+        XCTAssertEqual(canvasPage.otherProperties[ModelPlistKey(rawValue: "point")] as? String, NSStringFromPoint(CGPoint(x: 15, y: 51)))
     }
 
     func test_updateFromPlistRepresentation_doesntIncludeAnySupportPlistKeysInOtherProperties() throws {
@@ -195,10 +195,10 @@ class CanvasPageTests: XCTestCase {
 
         let plist: [ModelPlistKey: Any] = [
             .id: canvasPage.id,
-            ModelPlistKey(rawValue: "bar")!: "foo",
+            ModelPlistKey(rawValue: "bar"): "foo",
             .CanvasPage.frame: NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
             .CanvasPage.zIndex: 31,
-            ModelPlistKey(rawValue: "point")!: NSStringFromPoint(CGPoint(x: 15, y: 51)),
+            ModelPlistKey(rawValue: "point"): NSStringFromPoint(CGPoint(x: 15, y: 51)),
         ]
 
         XCTAssertNoThrow(try canvasPage.update(fromPlistRepresentation: plist))

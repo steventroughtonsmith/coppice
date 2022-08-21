@@ -12,6 +12,21 @@ import CoppiceCore
 class DebugDocumentBuilder: NSObject {
     static let shared = DebugDocumentBuilder()
 
+    private func addLinks(from sourcePage: CanvasPage, to destinationPages: [CanvasPage], on canvas: Canvas) {
+        let textContent = TextPageContent()
+        let attributedString = NSMutableAttributedString()
+        for destinationPage in destinationPages {
+            let pageLink = PageLink(destination: destinationPage.page!.id, source: sourcePage.id)
+            attributedString.append(NSAttributedString(string: destinationPage.title, attributes: [
+                .link: pageLink.url
+            ]))
+            attributedString.append(NSAttributedString(string: "\n"))
+            canvas.addLink(pageLink, between: sourcePage, and: destinationPage)
+        }
+        textContent.text = attributedString
+        sourcePage.page!.content = textContent
+    }
+
     @objc func createNewDebugDocument(_ sender: Any) {
         guard
             let docController = (NSApplication.shared.delegate as? AppDelegate)?.documentController,
@@ -21,7 +36,6 @@ class DebugDocumentBuilder: NSObject {
         }
 
         let mc = document.modelController
-
         let a = mc.createPage(in: mc.rootFolder) { $0.title = "A"; $0.contentSize = Page.defaultMinimumContentSize }
         let b = mc.createPage(in: mc.rootFolder) { $0.title = "B"; $0.contentSize = Page.defaultMinimumContentSize }
         let c = mc.createPage(in: mc.rootFolder) { $0.title = "C"; $0.contentSize = Page.defaultMinimumContentSize }
@@ -56,18 +70,17 @@ class DebugDocumentBuilder: NSObject {
         let cpB = canvas.addPages([b], centredOn: CGPoint(x: 1 * grid, y: 0 * grid))[0]
         let cpC = canvas.addPages([c], centredOn: CGPoint(x: 2 * grid, y: 0 * grid))[0]
         let cpD = canvas.addPages([d], centredOn: CGPoint(x: 2 * grid, y: 1 * grid))[0]
-        canvas.addLink(between: cpA, and: cpB)
-        canvas.addLink(between: cpB, and: cpC)
-        canvas.addLink(between: cpB, and: cpD)
+        self.addLinks(from: cpA, to: [cpB], on: canvas)
+        self.addLinks(from: cpB, to: [cpC, cpD], on: canvas)
 
         let cpE = canvas.addPages([e], centredOn: CGPoint(x: 0 * grid, y: 2 * grid))[0]
         let cpF = canvas.addPages([f], centredOn: CGPoint(x: 1 * grid, y: 2 * grid))[0]
         let cpG = canvas.addPages([g], centredOn: CGPoint(x: 1 * grid, y: 3 * grid))[0]
         let cpH = canvas.addPages([h], centredOn: CGPoint(x: 0 * grid, y: 3 * grid))[0]
-        canvas.addLink(between: cpE, and: cpF)
-        canvas.addLink(between: cpF, and: cpG)
-        canvas.addLink(between: cpG, and: cpH)
-        canvas.addLink(between: cpH, and: cpE)
+        self.addLinks(from: cpE, to: [cpF], on: canvas)
+        self.addLinks(from: cpF, to: [cpG], on: canvas)
+        self.addLinks(from: cpG, to: [cpH], on: canvas)
+        self.addLinks(from: cpH, to: [cpE], on: canvas)
 
         let cpI = canvas.addPages([i], centredOn: CGPoint(x: 0 * grid, y: 4 * grid))[0]
         let cpJ = canvas.addPages([j], centredOn: CGPoint(x: 1 * grid, y: 4 * grid))[0]
@@ -75,31 +88,28 @@ class DebugDocumentBuilder: NSObject {
         let cpL = canvas.addPages([l], centredOn: CGPoint(x: 2 * grid, y: 5 * grid))[0]
         let cpM = canvas.addPages([m], centredOn: CGPoint(x: 3 * grid, y: 4 * grid))[0]
         let cpN = canvas.addPages([n], centredOn: CGPoint(x: 3 * grid, y: 5 * grid))[0]
-        canvas.addLink(between: cpI, and: cpJ)
-        canvas.addLink(between: cpJ, and: cpK)
-        canvas.addLink(between: cpJ, and: cpL)
-        canvas.addLink(between: cpK, and: cpM)
-        canvas.addLink(between: cpL, and: cpN)
-        canvas.addLink(between: cpN, and: cpM)
+        self.addLinks(from: cpI, to: [cpJ], on: canvas)
+        self.addLinks(from: cpJ, to: [cpK, cpL], on: canvas)
+        self.addLinks(from: cpK, to: [cpM], on: canvas)
+        self.addLinks(from: cpL, to: [cpN], on: canvas)
+        self.addLinks(from: cpN, to: [cpM], on: canvas)
 
         let cpO = canvas.addPages([o], centredOn: CGPoint(x: 4 * grid, y: 0 * grid))[0]
         let cpP = canvas.addPages([p], centredOn: CGPoint(x: 5 * grid, y: 0 * grid))[0]
         let cpQ = canvas.addPages([q], centredOn: CGPoint(x: 6 * grid, y: 0 * grid))[0]
         let cpR = canvas.addPages([r], centredOn: CGPoint(x: 5 * grid, y: 1 * grid))[0]
         let cpS = canvas.addPages([s], centredOn: CGPoint(x: 6 * grid, y: 1 * grid))[0]
-        canvas.addLink(between: cpO, and: cpP)
-        canvas.addLink(between: cpP, and: cpQ)
-        canvas.addLink(between: cpP, and: cpS)
-        canvas.addLink(between: cpR, and: cpS)
+        self.addLinks(from: cpO, to: [cpP], on: canvas)
+        self.addLinks(from: cpP, to: [cpQ, cpS], on: canvas)
+        self.addLinks(from: cpR, to: [cpS], on: canvas)
 
         let cpT = canvas.addPages([t], centredOn: CGPoint(x: 5 * grid, y: 2 * grid))[0]
         let cpU = canvas.addPages([u], centredOn: CGPoint(x: 6 * grid, y: 2 * grid))[0]
         let cpV = canvas.addPages([v], centredOn: CGPoint(x: 5 * grid, y: 3 * grid))[0]
         let cpW = canvas.addPages([w], centredOn: CGPoint(x: 6 * grid, y: 3 * grid))[0]
-        canvas.addLink(between: cpT, and: cpU)
-        canvas.addLink(between: cpU, and: cpV)
-        canvas.addLink(between: cpV, and: cpT)
-        canvas.addLink(between: cpU, and: cpW)
+        self.addLinks(from: cpT, to: [cpU], on: canvas)
+        self.addLinks(from: cpU, to: [cpV, cpW], on: canvas)
+        self.addLinks(from: cpV, to: [cpT], on: canvas)
 
         print("links: \(canvas.links)")
     }

@@ -60,15 +60,13 @@ extension Canvas {
 
     //MARK: - Open & Close Pages
 
-    #warning("COPPICE-416: Update to support single instance opening")
     @discardableResult public func open(_ page: Page, linkedFrom sourcePage: CanvasPage, with pageLink: PageLink) -> [CanvasPage] {
-        guard let existingHierarchy = self.closedPageHierarchies[sourcePage.id]?[page.id] else {
+        guard let hierarchy = self.pageHierarchies.first(where: { $0.entryPoints.contains(where: { $0.pageLink == pageLink })}) else {
             let canvasPage = self.createLinkedCanvasPage(for: page, linkedFrom: sourcePage, with: pageLink)
             return [canvasPage]
         }
 
-        self.closedPageHierarchies[sourcePage.id]?[page.id] = nil
-        return self.open(existingHierarchy, linkedFrom: sourcePage)
+        return self.hierarchyRestorer.restore(hierarchy, from: sourcePage, for: pageLink)
     }
 
     private func createLinkedCanvasPage(for page: Page, linkedFrom sourcePage: CanvasPage, with pageLink: PageLink) -> CanvasPage {
@@ -97,7 +95,7 @@ extension Canvas {
         return canvasPage
     }
 
-    private func open(_ hierarchy: PageHierarchy, linkedFrom sourcePage: CanvasPage) -> [CanvasPage] {
+    private func open(_ hierarchy: LegacyPageHierarchy, linkedFrom sourcePage: CanvasPage) -> [CanvasPage] {
         guard
             let canvasPageCollection = self.modelController?.collection(for: CanvasPage.self),
             let pageCollection = self.modelController?.collection(for: Page.self)
@@ -124,27 +122,30 @@ extension Canvas {
     }
 
     public func close(_ canvasPage: CanvasPage) {
-//        if let parent = canvasPage.parent, let page = canvasPage.page, let hierarchy = PageHierarchy(canvasPage: canvasPage) {
-//            var hierarchies = self.closedPageHierarchies[parent.id] ?? [ModelID: PageHierarchy]()
-//            hierarchies[page.id] = hierarchy
-//            self.closedPageHierarchies[parent.id] = hierarchies
-//        }
+        let builder = PageHierarchyBuilder(rootPage: canvasPage)
 
         let linksIn = canvasPage.linksIn
-        self.removePageAndLinks(canvasPage)
+        self.removePageAndLinks(canvasPage, pageHierarchyBuilder: builder)
         //Delete all links into the page being deleted (as we always want to delete that page)
         //This has to happen after removing the page as we need these to exist to determine if there's a cycle
         linksIn.forEach { $0.delete() }
+
+        if let modelController = self.modelController as? CoppiceModelController {
+            let hierarchy = builder.buildHierarchy(in: modelController)
+            hierarchy.canvas = self
+            print("pages: \(hierarchy.pages.count) links: \(hierarchy.links.count) entry points: \(hierarchy.entryPoints.count)")
+        }
     }
 
-    private func removePageAndLinks(_ canvasPage: CanvasPage) {
+    private func removePageAndLinks(_ canvasPage: CanvasPage, pageHierarchyBuilder: PageHierarchyBuilder) {
+        pageHierarchyBuilder.add(canvasPage)
         //Go through all pages linking out from supplied page
         for linkOut in canvasPage.linksOut {
             let page = linkOut.destinationPage
             linkOut.delete()
             //If a destination page has no more links in and was not part of a cycle involving the supplied page, then remove it and children
             if let page, (page.linksIn.count == 0) && (page.doesLink(to: canvasPage) == false) {
-                self.removePageAndLinks(page)
+                self.removePageAndLinks(page, pageHierarchyBuilder: pageHierarchyBuilder)
             }
         }
         //Remove the page

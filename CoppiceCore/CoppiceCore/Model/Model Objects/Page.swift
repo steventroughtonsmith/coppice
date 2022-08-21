@@ -210,12 +210,12 @@ extension ModelCollection where ModelType == Page {
 
 extension ModelPlistKey {
     enum Page {
-        static let title = ModelPlistKey(rawValue: "title")!
-        static let dateCreated = ModelPlistKey(rawValue: "dateCreated")!
-        static let dateModified = ModelPlistKey(rawValue: "dateModified")!
-        static let content = ModelPlistKey(rawValue: "content")!
-        static let userPreferredSize = ModelPlistKey(rawValue: "userPreferredSize")!
-        static let allowsAutoLinking = ModelPlistKey(rawValue: "allowsAutoLinking")! //Added 2021.2
+        static let title = ModelPlistKey(rawValue: "title")
+        static let dateCreated = ModelPlistKey(rawValue: "dateCreated")
+        static let dateModified = ModelPlistKey(rawValue: "dateModified")
+        static let content = ModelPlistKey(rawValue: "content")
+        static let userPreferredSize = ModelPlistKey(rawValue: "userPreferredSize")
+        static let allowsAutoLinking = ModelPlistKey(rawValue: "allowsAutoLinking") //Added 2021.2
 
         static var all: [ModelPlistKey] {
             return [.id, .Page.title, .Page.dateCreated, .Page.dateModified, .Page.content, .Page.userPreferredSize, .Page.allowsAutoLinking]
