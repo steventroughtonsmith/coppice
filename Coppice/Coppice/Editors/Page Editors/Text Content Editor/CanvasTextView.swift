@@ -88,4 +88,40 @@ class CanvasTextView: NSTextView {
             super.frame = newFrame
         }
     }
+
+    //MARK: - Highlighted characters
+    var highlightedCharacterRanges: [NSRange] = [] {
+        didSet {
+            self.updateHighlightedCharacters()
+        }
+    }
+
+    private var highlightedCharacterViews: [HighlightedCharacterView] = [] {
+        didSet {
+            oldValue.forEach { $0.removeFromSuperview() }
+            highlightedCharacterViews.forEach { self.addSubview($0) }
+        }
+    }
+
+    private func updateHighlightedCharacters() {
+        guard
+            let layoutManager = self.layoutManager,
+            let textContainer = self.textContainer,
+            let textStorage = self.textStorage
+        else {
+            return
+        }
+
+        var newViews = [HighlightedCharacterView]()
+        for range in self.highlightedCharacterRanges {
+            let string = textStorage.attributedSubstring(from: range)
+            let glyphRange = layoutManager.glyphRange(forCharacterRange: range, actualCharacterRange: nil)
+            let boundingRect = layoutManager.boundingRect(forGlyphRange: glyphRange, in: textContainer)
+            let view = HighlightedCharacterView()
+            view.attributedString = string
+            view.frame = boundingRect.insetBy(dx: -3, dy: 0)
+            newViews.append(view)
+        }
+        self.highlightedCharacterViews = newViews
+    }
 }

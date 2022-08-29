@@ -9,6 +9,8 @@
 import Cocoa
 import Combine
 
+import CoppiceCore
+
 class ImageEditorViewController: NSViewController, NSMenuItemValidation, NSToolbarItemValidation {
     @IBOutlet weak var imageView: NSImageView!
 	@IBOutlet var placeholderView: ImageEditorPlaceholderView!
@@ -147,12 +149,20 @@ extension ImageEditorViewController: PageContentEditor {
         return ImageEditorViewController(viewModel: viewModel)
     }
 
-    func isLink(at point: CGPoint) -> Bool {
-        return self.editorModeViewController?.isLink(at: point) ?? false
+    func link(at point: CGPoint) -> URL? {
+        return self.editorModeViewController?.link(at: point)
     }
 
     func openLink(at point: CGPoint) {
         self.editorModeViewController?.openLink(at: point)
+    }
+
+    func highlightLinks(matching pageLink: PageLink) {
+        self.editorModeViewController?.highlightLinks(matching: pageLink)
+    }
+
+    func unhighlightLinks() {
+        self.editorModeViewController?.unhighlightLinks()
     }
 }
 

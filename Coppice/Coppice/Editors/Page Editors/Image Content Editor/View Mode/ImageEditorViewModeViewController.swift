@@ -150,9 +150,9 @@ extension ImageEditorViewModeViewController: PageContentEditor {
         self.updatePlaceholderLabel()
     }
 
-    func isLink(at point: CGPoint) -> Bool {
+    func link(at point: CGPoint) -> URL? {
         let imageSize = self.hotspotView.frame.size
-        return self.layoutEngine.hotspot(at: self.hotspotView.convertPointToImageSpace(point.flip(in: imageSize))) != nil
+        return self.layoutEngine.hotspot(at: self.hotspotView.convertPointToImageSpace(point.flip(in: imageSize)))?.url
     }
 
     func openLink(at point: CGPoint) {
@@ -161,6 +161,14 @@ extension ImageEditorViewModeViewController: PageContentEditor {
             return
         }
         self.didClickOnHotspot(hotspot, in: self.layoutEngine)
+    }
+
+    func highlightLinks(matching pageLink: PageLink) {
+        
+    }
+
+    func unhighlightLinks() {
+
     }
 }
 

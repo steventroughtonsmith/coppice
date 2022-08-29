@@ -309,7 +309,7 @@ public class CanvasLayoutEngine: NSObject, LayoutEngine {
     public var links: [LayoutEngineLink] {
         return self.linkLayoutEngine.links
     }
-    
+
     private lazy var linkLayoutEngine: LinkLayoutEngine = {
         let engine = LinkLayoutEngine()
         engine.canvasLayoutEngine = self
@@ -326,6 +326,16 @@ public class CanvasLayoutEngine: NSObject, LayoutEngine {
 
     func linksChanged() {
         self.informOfLayoutChange(with: LayoutContext(linksChanged: true))
+    }
+
+    func link(atCanvasPoint canvasPoint: CGPoint) -> LayoutEngineLink? {
+        for link in self.links where link.layoutFrame.contains(canvasPoint) {
+            let convertedPoint = canvasPoint.minus(link.layoutFrame.origin)
+            if link.interactionPath.contains(convertedPoint) {
+                return link
+            }
+        }
+        return nil
     }
 
 
@@ -353,24 +363,94 @@ public class CanvasLayoutEngine: NSObject, LayoutEngine {
     }
 
     public func moveEvent(at location: CGPoint, modifiers: LayoutEventModifiers = []) {
-        self.currentlyHoveredPage = self.page(atCanvasPoint: location)
+        self.updateItemUnderMouse(with: location)
     }
 
 
     //MARK: - Hovering
-    public var currentlyHoveredPage: LayoutEnginePage? {
-        didSet {
-            guard oldValue != self.currentlyHoveredPage else {
-                return
-            }
-            if oldValue?.selected == true {
-                return
-            }
+    public enum LayoutEngineItem: Equatable {
+        case nothing
+        case page(LayoutEnginePage, PageLink?)
+        case link(LayoutEngineLink)
 
-            if self.currentlyHoveredPage?.selected == true {
+        var page: LayoutEnginePage? {
+            if case .page(let page, _) = self {
+                return page
+            }
+            return nil
+        }
+    }
+
+    public private(set) var itemUnderMouse: LayoutEngineItem = .nothing {
+        didSet {
+            guard self.itemUnderMouse != oldValue else {
                 return
             }
-            self.informOfLayoutChange(with: LayoutContext(backgroundVisibilityChanged: true))
+            self.notifyOfBackgroundChange(forHoveredPage: self.itemUnderMouse.page, oldValue: oldValue.page)
+            self.updateHighlightedLinks()
+        }
+    }
+
+    private func updateItemUnderMouse(with location: CGPoint) {
+        if let page = self.page(atCanvasPoint: location) {
+            if let url = page.view?.link(atContentPoint: page.convertPointToContentSpace(location)) {
+                self.itemUnderMouse = .page(page, PageLink(url: url))
+            } else {
+                self.itemUnderMouse = .page(page, nil)
+            }
+        } else if let link = self.link(atCanvasPoint: location) {
+            self.itemUnderMouse = .link(link)
+        } else {
+            self.itemUnderMouse = .nothing
+        }
+    }
+
+    private func notifyOfBackgroundChange(forHoveredPage page: LayoutEnginePage?, oldValue: LayoutEnginePage?) {
+        guard oldValue != page else {
+            return
+        }
+
+        if (oldValue?.selected == true) || (page?.selected == true) {
+            return
+        }
+        self.informOfLayoutChange(with: LayoutContext(backgroundVisibilityChanged: true))
+    }
+
+
+    //MARK: - Link Highlighting
+    private var highlightedLinks: [LayoutEngineLink] = [] {
+        didSet {
+            guard self.highlightedLinks != oldValue else {
+                return
+            }
+            oldValue.forEach { $0.highlighted = false }
+            self.highlightedLinks.forEach { $0.highlighted = true }
+            self.informOfLayoutChange(with: LayoutContext(linksChanged: true))
+        }
+    }
+
+    private var highlightedPage: LayoutEnginePage? {
+        didSet {
+            guard self.highlightedPage != oldValue else {
+                return
+            }
+            oldValue?.view?.unhighlightLinks()
+        }
+    }
+
+    private func updateHighlightedLinks() {
+        switch self.itemUnderMouse {
+        case .nothing, .page(_, nil):
+            self.highlightedLinks = []
+            self.highlightedPage = nil
+        case .page(let page, let link):
+            self.highlightedLinks = self.links.filter { $0.sourcePageID == page.id && $0.pageLink.destination == link?.destination }
+            self.highlightedPage = page
+        case .link(let link):
+            self.highlightedLinks = [link]
+            let page = self.page(withID: link.sourcePageID)
+            page?.view?.highlightLinks(matching: link.pageLink)
+            self.highlightedPage = page
         }
     }
 

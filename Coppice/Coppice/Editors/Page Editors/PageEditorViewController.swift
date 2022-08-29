@@ -91,11 +91,11 @@ extension PageEditorViewController: LayoutEnginePageView {
         self.currentContentEditor?.stopEditing()
     }
 
-    func isLink(atContentPoint point: CGPoint) -> Bool {
+    func link(atContentPoint point: CGPoint) -> URL? {
         //We need to flip the point from the canvas view
         var flippedPoint = point
         flippedPoint.y = self.view.frame.height - flippedPoint.y
-        return self.currentContentEditor?.isLink(at: flippedPoint) ?? false
+        return self.currentContentEditor?.link(at: flippedPoint)
     }
 
     func openLink(atContentPoint point: CGPoint) {
@@ -103,5 +103,15 @@ extension PageEditorViewController: LayoutEnginePageView {
         var flippedPoint = point
         flippedPoint.y = self.view.frame.height - flippedPoint.y
         self.currentContentEditor?.openLink(at: flippedPoint)
+    }
+
+    func highlightLinks(matching pageLink: PageLink) {
+        print("highlight: \(pageLink)")
+        self.currentContentEditor?.highlightLinks(matching: pageLink)
+    }
+
+    func unhighlightLinks() {
+        print("unhighlight links")
+        self.currentContentEditor?.unhighlightLinks()
     }
 }

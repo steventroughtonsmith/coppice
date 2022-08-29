@@ -20,7 +20,7 @@ class MockLayoutEnginePageView: LayoutEnginePageView {
     }
 
     let isLinkMock = MockDetails<CGPoint, Bool>()
-    func isLink(atContentPoint point: CGPoint) -> Bool {
+    func link(atContentPoint point: CGPoint) -> Bool {
         return self.isLinkMock.called(withArguments: point) ?? false
     }
 

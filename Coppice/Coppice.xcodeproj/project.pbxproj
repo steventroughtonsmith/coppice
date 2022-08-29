@@ -265,6 +265,7 @@
 		99A0B85C238D72F0005FCF25 /* TextEditorAttributesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B85B238D72F0005FCF25 /* TextEditorAttributesTests.swift */; };
 		99A0B85E238D730E005FCF25 /* TextEditorInspectorTypesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B85D238D730E005FCF25 /* TextEditorInspectorTypesTests.swift */; };
 		99A0B860238D732F005FCF25 /* TextEditorFontInspectorViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B85F238D732F005FCF25 /* TextEditorFontInspectorViewModelTests.swift */; };
+		99A41FA228BCF07800C95F68 /* HighlightedCharacterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A41FA128BCF07800C95F68 /* HighlightedCharacterView.swift */; };
 		99A97FD9246DBD4C00CDD95C /* CanvasCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A97FD8246DBD4C00CDD95C /* CanvasCell.swift */; };
 		99A97FF72476ABD500CDD95C /* SearchResultTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A97FF62476ABD500CDD95C /* SearchResultTableCellView.swift */; };
 		99AA3C3625B719F40050A119 /* MockTextEditorAttributeEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AA3C3525B719F40050A119 /* MockTextEditorAttributeEditor.swift */; };
@@ -650,7 +651,7 @@
 		99868F372397F005009AC0F7 /* FileDropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileDropView.swift; sourceTree = "<group>"; };
 		99868F4423995739009AC0F7 /* TextPageLinkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextPageLinkManager.swift; sourceTree = "<group>"; };
 		99868F4623995B4F009AC0F7 /* TextLinkFinderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLinkFinderTests.swift; sourceTree = "<group>"; };
-		998CF0FB24ACF6A800EA26A6 /* NSBezierPath+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSBezierPath+M3Extensions.swift"; sourceTree = "<group>"; };
+		998CF0FB24ACF6A800EA26A6 /* NSBezierPath+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "NSBezierPath+M3Extensions.swift"; path = "../../../../CoppiceCore/CoppiceCore/Extensions/NSBezierPath+M3Extensions.swift"; sourceTree = "<group>"; };
 		998D0778241137A3004ADFF8 /* RectDrawingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectDrawingView.swift; sourceTree = "<group>"; };
 		998D077A2411513F004ADFF8 /* NewPageMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPageMenuDelegate.swift; sourceTree = "<group>"; };
 		998D077C2411578B004ADFF8 /* NSMenu+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMenu+M3Extensions.swift"; sourceTree = "<group>"; };
@@ -730,6 +731,7 @@
 		99A0B85B238D72F0005FCF25 /* TextEditorAttributesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorAttributesTests.swift; sourceTree = "<group>"; };
 		99A0B85D238D730E005FCF25 /* TextEditorInspectorTypesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorInspectorTypesTests.swift; sourceTree = "<group>"; };
 		99A0B85F238D732F005FCF25 /* TextEditorFontInspectorViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorFontInspectorViewModelTests.swift; sourceTree = "<group>"; };
+		99A41FA128BCF07800C95F68 /* HighlightedCharacterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightedCharacterView.swift; sourceTree = "<group>"; };
 		99A97FD8246DBD4C00CDD95C /* CanvasCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasCell.swift; sourceTree = "<group>"; };
 		99A97FF62476ABD500CDD95C /* SearchResultTableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultTableCellView.swift; sourceTree = "<group>"; };
 		99AA3C3525B719F40050A119 /* MockTextEditorAttributeEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTextEditorAttributeEditor.swift; sourceTree = "<group>"; };
@@ -1694,6 +1696,7 @@
 				998F98BB25B5E5FD00A1134A /* Attributes */,
 				99C8650C23016EE5004C7B89 /* TextEditorViewController.xib */,
 				99C9AF1323631348009F909A /* CanvasTextView.swift */,
+				99A41FA128BCF07800C95F68 /* HighlightedCharacterView.swift */,
 				9977118E239A952900FCC8C7 /* Links */,
 			);
 			path = "Text Content Editor";
@@ -2584,6 +2587,7 @@
 				9999A23924F93796001F8161 /* CoppiceProViewController.swift in Sources */,
 				9998B4EA251643D700E2D455 /* HelpTipPresenter.swift in Sources */,
 				99B3474C2465846900B96B71 /* PixelPerfectTableView.swift in Sources */,
+				99A41FA228BCF07800C95F68 /* HighlightedCharacterView.swift in Sources */,
 				99D8E378237EDB890098CF3B /* PageInspectorViewController.swift in Sources */,
 				99F0CD76246AF1C4006DE18E /* PreviewGenerationDebugWindow.swift in Sources */,
 				99868F382397F005009AC0F7 /* FileDropView.swift in Sources */,

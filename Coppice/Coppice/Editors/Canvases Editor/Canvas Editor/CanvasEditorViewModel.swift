@@ -137,9 +137,9 @@ class CanvasEditorViewModel: ViewModel {
     //MARK: - Updating
     private var wantsUpdate: Bool = false {
         didSet {
-            NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(update), object: nil)
+            NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.update), object: nil)
             if self.wantsUpdate {
-                self.perform(#selector(update), with: nil, afterDelay: 0)
+                self.perform(#selector(self.update), with: nil, afterDelay: 0)
             }
         }
     }

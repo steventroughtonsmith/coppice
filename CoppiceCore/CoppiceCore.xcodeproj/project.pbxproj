@@ -17,6 +17,7 @@
 		9948C0DD289801D800DB754E /* PlistV3Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9948C0DC289801D800DB754E /* PlistV3Tests.swift */; };
 		9948C0DF2898040A00DB754E /* TestData.Plist.V3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9948C0DE2898040A00DB754E /* TestData.Plist.V3.swift */; };
 		9948C0E12898298600DB754E /* TestData.ModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9948C0E02898298600DB754E /* TestData.ModelController.swift */; };
+		9955BD3528BA65E40040FEE9 /* NSBezierPath+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9955BD3428BA65E30040FEE9 /* NSBezierPath+M3Extensions.swift */; };
 		997ABC482882E96E00A75722 /* CanvasLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997ABC472882E96E00A75722 /* CanvasLink.swift */; };
 		99983E71278C9D660020759D /* MockLayoutEnginePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99983E70278C9D660020759D /* MockLayoutEnginePageView.swift */; };
 		9999788928AA8699002930FD /* PageHierarchy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9999788828AA8699002930FD /* PageHierarchy.swift */; };
@@ -134,6 +135,7 @@
 		9948C0DC289801D800DB754E /* PlistV3Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlistV3Tests.swift; sourceTree = "<group>"; };
 		9948C0DE2898040A00DB754E /* TestData.Plist.V3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.Plist.V3.swift; sourceTree = "<group>"; };
 		9948C0E02898298600DB754E /* TestData.ModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.ModelController.swift; sourceTree = "<group>"; };
+		9955BD3428BA65E30040FEE9 /* NSBezierPath+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSBezierPath+M3Extensions.swift"; sourceTree = "<group>"; };
 		997ABC472882E96E00A75722 /* CanvasLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasLink.swift; sourceTree = "<group>"; };
 		99983E70278C9D660020759D /* MockLayoutEnginePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLayoutEnginePageView.swift; sourceTree = "<group>"; };
 		9999788828AA8699002930FD /* PageHierarchy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageHierarchy.swift; sourceTree = "<group>"; };
@@ -478,6 +480,7 @@
 			children = (
 				99D0C87424C5E0E1002EEBFA /* Array+M3Extensions.swift */,
 				99D0C87224C5E0B2002EEBFA /* NSEdgeInsets+M3Extensions.swift */,
+				9955BD3428BA65E30040FEE9 /* NSBezierPath+M3Extensions.swift */,
 				99D0C86D24C5E080002EEBFA /* NSImage+M3Extensions.swift */,
 				99D0C86E24C5E080002EEBFA /* CoreGraphics+M3Extensions.swift */,
 				99F0D5FB267D30D70020D37C /* NSRange+M3Extensions.swift */,
@@ -733,6 +736,7 @@
 				99D0C87124C5E080002EEBFA /* CoreGraphics+M3Extensions.swift in Sources */,
 				99D0C80924C5DE79002EEBFA /* Folder.swift in Sources */,
 				99C88C7D28A1419C006791CB /* LayoutEngineLink+CanvasLink.swift in Sources */,
+				9955BD3528BA65E40040FEE9 /* NSBezierPath+M3Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

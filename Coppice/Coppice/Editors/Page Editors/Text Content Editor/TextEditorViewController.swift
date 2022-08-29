@@ -409,7 +409,7 @@ extension TextEditorViewController: PageContentEditor {
         }
     }
 
-    func isLink(at point: CGPoint) -> Bool {
+    func link(at point: CGPoint) -> URL? {
         let textViewPoint = self.editingTextView.convert(point, from: self.view)
         //We want to make sure the click is inside the bounds of the text
         guard
@@ -418,28 +418,57 @@ extension TextEditorViewController: PageContentEditor {
             let layoutManager = self.editingTextView.layoutManager,
             layoutManager.usedRect(for: textContainer).contains(textViewPoint)
         else {
-            return false
+            return nil
         }
-        let insertionPoint = self.editingTextView.characterIndexForInsertion(at: textViewPoint)
-        guard (self.editingTextView.textStorage?.length ?? 0) > insertionPoint else {
-            return false
+        let characterIndex = layoutManager.characterIndex(for: textViewPoint, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+        guard (self.editingTextView.textStorage?.length ?? 0) > characterIndex else {
+            return nil
         }
-        guard let attributes = self.editingTextView.textStorage?.attributes(at: insertionPoint, effectiveRange: nil) else {
-            return false
+        guard let attributes = self.editingTextView.textStorage?.attributes(at: characterIndex, effectiveRange: nil) else {
+            return nil
         }
-        return attributes[.link] != nil
+        return attributes[.link] as? URL
     }
 
     func openLink(at point: CGPoint) {
-        let textViewPoint = self.editingTextView.convert(point, from: self.view)
-        let insertionPoint = self.editingTextView.characterIndexForInsertion(at: textViewPoint)
         guard
-            let attributes = self.editingTextView.textStorage?.attributes(at: insertionPoint, effectiveRange: nil),
+            let textContainer = self.editingTextView.textContainer,
+            let layoutManager = self.editingTextView.layoutManager
+        else {
+            return
+        }
+        let textViewPoint = self.editingTextView.convert(point, from: self.view)
+        let characterIndex = layoutManager.characterIndex(for: textViewPoint, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+        guard
+            let attributes = self.editingTextView.textStorage?.attributes(at: characterIndex, effectiveRange: nil),
             let link = attributes[.link]
         else {
             return
         }
-        self.editingTextView.clicked(onLink: link, at: insertionPoint)
+        self.editingTextView.clicked(onLink: link, at: characterIndex)
+    }
+
+    func highlightLinks(matching pageLink: PageLink) {
+        guard let textStorage = self.editingTextView.textStorage else {
+            return
+        }
+
+        var characterRanges: [NSRange] = []
+        textStorage.enumerateAttribute(.link, in: textStorage.string.fullRange) { value, range, _ in
+            guard
+                let url = value as? URL,
+                let foundPageLink = PageLink(url: url),
+                foundPageLink.destination == pageLink.destination
+            else {
+                return
+            }
+            characterRanges.append(range)
+        }
+        self.editingTextView.highlightedCharacterRanges = characterRanges
+    }
+    
+    func unhighlightLinks() {
+        self.editingTextView.highlightedCharacterRanges = []
     }
 }
 

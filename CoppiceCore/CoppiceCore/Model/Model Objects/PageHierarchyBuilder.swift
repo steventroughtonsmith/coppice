@@ -41,7 +41,7 @@ class PageHierarchyBuilder {
         var relativeFrame = canvasPage.frame
         relativeFrame.origin = relativeFrame.origin.minus(self.hierarchyOrigin)
 
-        pageRefs.append(PageHierarchy.PageRef(canvasPageID: canvasPage.id, pageID: pageID, relativeContentFrame: relativeFrame))
+        self.pageRefs.append(PageHierarchy.PageRef(canvasPageID: canvasPage.id, pageID: pageID, relativeContentFrame: relativeFrame))
 
         for linkOut in canvasPage.linksOut {
             guard
@@ -51,7 +51,7 @@ class PageHierarchyBuilder {
             else {
                 continue
             }
-            linkRefs.append(PageHierarchy.LinkRef(sourceID: sourceID, destinationID: destinationID, link: pageLink))
+            self.linkRefs.append(PageHierarchy.LinkRef(sourceID: sourceID, destinationID: destinationID, link: pageLink))
         }
     }
 

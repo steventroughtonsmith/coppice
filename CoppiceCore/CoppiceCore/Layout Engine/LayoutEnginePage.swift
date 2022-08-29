@@ -8,11 +8,17 @@
 
 import Foundation
 
+//Return URL from isLink
+//Hightlight instances of link
+//Stop highlighting
+
 public protocol LayoutEnginePageView: AnyObject {
     func startEditing(atContentPoint point: CGPoint)
     func stopEditing()
-    func isLink(atContentPoint point: CGPoint) -> Bool
+    func link(atContentPoint point: CGPoint) -> URL?
     func openLink(atContentPoint point: CGPoint)
+    func highlightLinks(matching pageLink: PageLink)
+    func unhighlightLinks()
 }
 
 /// A class representing the layout information for a page inside the LayoutEngine
@@ -32,7 +38,7 @@ public class LayoutEnginePage: Equatable, Hashable {
             if layoutEngine.alwaysShowPageTitles == true {
                 return true
             }
-            if layoutEngine.currentlyHoveredPage == self {
+            if layoutEngine.itemUnderMouse.page == self {
                 return true
             }
         }

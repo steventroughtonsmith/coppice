@@ -44,6 +44,35 @@ extension NSColor {
         }
     }
 
+    var relativeLuminance: CGFloat {
+        guard let rgbColor = self.usingColorSpace(.genericRGB) else {
+            return -1
+        }
+
+        let red = rgbColor.redComponent
+        let green = rgbColor.greenComponent
+        let blue = rgbColor.blueComponent
+
+        let limit = 0.03928
+        let linearRed = (red > limit) ? pow(((red + 0.055) / 1.055), 2.4) : (red / 12.92)
+        let linearGreen = (green > limit) ? pow(((green + 0.055) / 1.055), 2.4) : (green / 12.92)
+        let linearBlue = (blue > limit) ? pow(((blue + 0.055) / 1.055), 2.4) : (blue / 12.92)
+
+        return 0.2126 * linearRed
+             + 0.7152 * linearGreen
+             + 0.0722 * linearBlue
+    }
+
+    func contrastRatio(to otherColor: NSColor) -> CGFloat {
+        let selfLuminance = self.relativeLuminance
+        let otherLuminance = otherColor.relativeLuminance
+
+        if (selfLuminance > otherLuminance) {
+            return (selfLuminance + 0.05) / (otherLuminance + 0.05)
+        }
+        return (otherLuminance + 0.05) / (selfLuminance + 0.05)
+    }
+
     convenience init?(hexString: String) {
         var string = hexString
         if (string.hasPrefix("#")) {

@@ -13,26 +13,25 @@ public class ArrowDrawHelper {
         self.config = config
     }
 
-    public func draw(_ arrow: LayoutEngineLink, with colour: NSColor) {
-        self.drawLine(for: arrow, with: colour)
-        self.drawArrowHead(for: arrow, with: colour)
-    }
-
-    private func drawLine(for arrow: LayoutEngineLink, with lineColour: NSColor) {
-        let path: NSBezierPath
-        switch arrow.sourcePoint.edge {
-        case .top, .bottom:
-            path = self.pathForVerticalLine(from: arrow.startPointInLayoutFrame, to: arrow.endPointInLayoutFrame)
-        case .left, .right:
-            path = self.pathForHorizontalLine(from: arrow.startPointInLayoutFrame, to: arrow.endPointInLayoutFrame)
+    public func draw(_ arrow: LayoutEngineLink, with colour: NSColor, borderColor: NSColor?) {
+        let lineWidth = self.config.lineWidth
+        if let borderColor {
+            self.drawLine(for: arrow, with: borderColor, lineWidth: lineWidth + 3)
+            self.drawArrowHead(for: arrow, with: borderColor, lineWidth: lineWidth + 3)
         }
 
+        self.drawLine(for: arrow, with: colour, lineWidth: lineWidth)
+        self.drawArrowHead(for: arrow, with: colour, lineWidth: lineWidth)
+    }
+
+    private func drawLine(for arrow: LayoutEngineLink, with lineColour: NSColor, lineWidth: CGFloat) {
+        let path = arrow.linePath
         lineColour.set()
-        path.lineWidth = self.config.lineWidth
+        path.lineWidth = lineWidth
         path.stroke()
     }
 
-    private func drawArrowHead(for arrow: LayoutEngineLink, with lineColour: NSColor) {
+    private func drawArrowHead(for arrow: LayoutEngineLink, with lineColour: NSColor, lineWidth: CGFloat) {
         let endPoint = arrow.endPointInLayoutFrame
 
         var arrowStart = endPoint.point
@@ -68,87 +67,9 @@ public class ArrowDrawHelper {
         path.line(to: arrowEnd)
 
         lineColour.set()
-        path.lineWidth = self.config.lineWidth
+        path.lineWidth = lineWidth
         path.lineJoinStyle = .round
         path.lineCapStyle = .round
         path.stroke()
-    }
-
-    private func pathForVerticalLine(from startPoint: ArrowPoint, to endPoint: ArrowPoint) -> NSBezierPath {
-        let topToBottom = (startPoint.edge == .bottom) //A top to bottom arrow goes from the bottom of the top item)
-
-        let path = NSBezierPath()
-
-        let lineStart = startPoint.point
-        var startStraight = lineStart
-        startStraight.y += topToBottom ? self.config.endLength : -self.config.endLength
-
-
-        let lineEnd = endPoint.point
-        var endStraight = lineEnd
-        endStraight.y += topToBottom ? -self.config.endLength : self.config.endLength
-
-        let startControl: CGPoint
-        let endControl: CGPoint
-
-        let halfY = (startStraight.y + endStraight.y) / 2
-        if topToBottom {
-            let minStartY = startStraight.y + self.config.cornerSize
-            startControl = CGPoint(x: startStraight.x, y: max(halfY, minStartY))
-
-            let maxEndY = endStraight.y - self.config.cornerSize
-            endControl = CGPoint(x: endStraight.x, y: min(halfY, maxEndY))
-        } else {
-            let maxStartY = startStraight.y - self.config.cornerSize
-            startControl = CGPoint(x: startStraight.x, y: min(halfY, maxStartY))
-
-            let minEndY = endStraight.y + self.config.cornerSize
-            endControl = CGPoint(x: endStraight.x, y: max(halfY, minEndY))
-        }
-
-        path.move(to: lineStart)
-        path.line(to: startStraight)
-        path.curve(to: endStraight, controlPoint1: startControl, controlPoint2: endControl)
-        path.line(to: lineEnd)
-        return path
-    }
-
-    private func pathForHorizontalLine(from startPoint: ArrowPoint, to endPoint: ArrowPoint) -> NSBezierPath {
-        let leftToRight = (startPoint.edge == .right) //A left to right arrow goes from the right of the left item)
-
-        let path = NSBezierPath()
-
-        let lineStart = startPoint.point
-        var startStraight = lineStart
-        startStraight.x += leftToRight ? self.config.endLength : -self.config.endLength
-
-
-        let lineEnd = endPoint.point
-        var endStraight = lineEnd
-        endStraight.x += leftToRight ? -self.config.endLength : self.config.endLength
-
-        let startControl: CGPoint
-        let endControl: CGPoint
-
-        let halfX = (startStraight.x + endStraight.x) / 2
-        if leftToRight {
-            let minStartX = startStraight.x + self.config.cornerSize
-            startControl = CGPoint(x: max(halfX, minStartX), y: startStraight.y)
-
-            let maxEndX = endStraight.x - self.config.cornerSize
-            endControl = CGPoint(x: min(halfX, maxEndX), y: endStraight.y)
-        } else {
-            let maxStartX = startStraight.x - self.config.cornerSize
-            startControl = CGPoint(x: min(halfX, maxStartX), y: startStraight.y)
-
-            let minEndX = endStraight.x + self.config.cornerSize
-            endControl = CGPoint(x: max(halfX, minEndX), y: endStraight.y)
-        }
-
-        path.move(to: lineStart)
-        path.line(to: startStraight)
-        path.curve(to: endStraight, controlPoint1: startControl, controlPoint2: endControl)
-        path.line(to: lineEnd)
-        return path
     }
 }

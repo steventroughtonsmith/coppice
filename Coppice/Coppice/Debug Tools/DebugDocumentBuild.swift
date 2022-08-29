@@ -18,7 +18,7 @@ class DebugDocumentBuilder: NSObject {
         for destinationPage in destinationPages {
             let pageLink = PageLink(destination: destinationPage.page!.id, source: sourcePage.id)
             attributedString.append(NSAttributedString(string: destinationPage.title, attributes: [
-                .link: pageLink.url
+                .link: pageLink.url,
             ]))
             attributedString.append(NSAttributedString(string: "\n"))
             canvas.addLink(pageLink, between: sourcePage, and: destinationPage)
@@ -63,7 +63,7 @@ class DebugDocumentBuilder: NSObject {
         _ = mc.createPage(in: mc.rootFolder) { $0.title = "Y"; $0.contentSize = Page.defaultMinimumContentSize }
         _ = mc.createPage(in: mc.rootFolder) { $0.title = "Z"; $0.contentSize = Page.defaultMinimumContentSize }
 
-        let grid: CGFloat = 200;
+        let grid: CGFloat = 200
 
         let canvas = mc.createCanvas() { $0.alwaysShowPageTitles = true }
         let cpA = canvas.addPages([a], centredOn: CGPoint(x: 0, y: 0))[0]

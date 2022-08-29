@@ -21,16 +21,16 @@ final public class PageHierarchy: NSObject, CollectableModelObject {
     public var pages: [PageRef] = []
     public var links: [LinkRef] = []
 
-    public static var propertyConversions: [ModelPlistKey : ModelPropertyConversion] {
+    public static var propertyConversions: [ModelPlistKey: ModelPropertyConversion] {
         return [
             .PageHiearchy.rootPageID: .modelID,
             .PageHiearchy.pages: .array(.dictionary([
                 .PageHiearchy.PageRef.canvasPageID: .modelID,
-                .PageHiearchy.PageRef.pageID: .modelID
+                .PageHiearchy.PageRef.pageID: .modelID,
             ])),
             .PageHiearchy.links: .array(.dictionary([
                 .PageHiearchy.LinkRef.sourceID: .modelID,
-                .PageHiearchy.LinkRef.destinationID: .modelID
+                .PageHiearchy.LinkRef.destinationID: .modelID,
             ])),
         ]
     }
@@ -55,7 +55,7 @@ final public class PageHierarchy: NSObject, CollectableModelObject {
         return plist
     }
 
-    public func update(fromPlistRepresentation plist: [ModelPlistKey : Any]) throws {
+    public func update(fromPlistRepresentation plist: [ModelPlistKey: Any]) throws {
         guard self.id == plist.attribute(withKey: .id) else {
             throw ModelObjectUpdateErrors.idsDontMatch
         }
@@ -132,7 +132,7 @@ extension PageHierarchy {
         var plistRepresentation: [ModelPlistKey: Any] {
             return [
                 .PageHiearchy.EntryPoint.pageLink: self.pageLink.url.absoluteString,
-                .PageHiearchy.EntryPoint.relativePosition: self.relativePosition.stringRepresentation
+                .PageHiearchy.EntryPoint.relativePosition: self.relativePosition.stringRepresentation,
             ]
         }
     }
@@ -168,7 +168,7 @@ extension PageHierarchy {
             return [
                 .PageHiearchy.PageRef.canvasPageID: self.canvasPageID,
                 .PageHiearchy.PageRef.pageID: self.pageID,
-                .PageHiearchy.PageRef.relativeContentFrame: self.relativeContentFrame.stringRepresentation
+                .PageHiearchy.PageRef.relativeContentFrame: self.relativeContentFrame.stringRepresentation,
             ]
         }
     }
@@ -204,7 +204,7 @@ extension PageHierarchy {
             return [
                 .PageHiearchy.LinkRef.sourceID: self.sourceID,
                 .PageHiearchy.LinkRef.destinationID: self.destinationID,
-                .PageHiearchy.LinkRef.link: self.link.url.absoluteString
+                .PageHiearchy.LinkRef.link: self.link.url.absoluteString,
             ]
         }
     }

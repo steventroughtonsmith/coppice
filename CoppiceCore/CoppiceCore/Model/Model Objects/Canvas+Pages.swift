@@ -59,7 +59,7 @@ extension Canvas {
         if let existingLink = collection.canvasLink(with: link) {
             return existingLink
         }
-        
+
         return collection.newObject() {
             $0.link = link
             $0.sourcePage = page1
@@ -81,7 +81,7 @@ extension Canvas {
             return [existingPage]
         }
 
-        if let hierarchy = self.pageHierarchies.first(where: { $0.entryPoints.contains(where: { $0.pageLink == pageLink })}) {
+        if let hierarchy = self.pageHierarchies.first(where: { $0.entryPoints.contains(where: { $0.pageLink == pageLink }) }) {
             return self.hierarchyRestorer.restore(hierarchy, from: sourcePage, for: pageLink)
         }
 
@@ -113,32 +113,6 @@ extension Canvas {
 
         modelController.popChangeGroup()
         return canvasPage
-    }
-
-    private func open(_ hierarchy: LegacyPageHierarchy, linkedFrom sourcePage: CanvasPage) -> [CanvasPage] {
-        guard
-            let canvasPageCollection = self.modelController?.collection(for: CanvasPage.self),
-            let pageCollection = self.modelController?.collection(for: Page.self)
-        else {
-                preconditionFailure("Could not find canvas page collection")
-        }
-
-        #warning("Create canvas links as well as pages")
-        var canvasPages = [CanvasPage]()
-
-        let pageForHierarchy = canvasPageCollection.newObject() {
-            $0.id = hierarchy.id
-            $0.page = pageCollection.objectWithID(hierarchy.pageID)
-            $0.frame = hierarchy.frame
-            $0.canvas = self
-            $0.parent = sourcePage
-        }
-        canvasPages.append(pageForHierarchy)
-        for child in hierarchy.children {
-            canvasPages.append(contentsOf: self.open(child, linkedFrom: pageForHierarchy))
-        }
-
-        return canvasPages
     }
 
     public func close(_ canvasPage: CanvasPage) {

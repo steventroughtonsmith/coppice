@@ -108,4 +108,54 @@ extension NSBezierPath {
         move(to: point1)
         line(to: point2)
     }
+
+
+    convenience init(cgPath: CGPath) {
+        self.init()
+        cgPath.applyWithBlock { elementPointer in
+            let element = elementPointer.pointee
+            let points = element.points
+            switch element.type {
+            case .moveToPoint:
+                self.move(to: points[0])
+            case .addLineToPoint:
+                self.line(to: points[0])
+            case .addQuadCurveToPoint:
+                preconditionFailure("In your hubris you said 'I'll never need this'")
+            case .addCurveToPoint:
+                self.curve(to: points[2], controlPoint1: points[0], controlPoint2: points[1])
+            case .closeSubpath:
+                self.close()
+            @unknown default:
+                break
+            }
+        }
+    }
+
+    var cgPath: CGPath {
+        let mutablePath = CGMutablePath()
+        for elementIndex in 0..<self.elementCount {
+            let pointArray = NSPointArray.allocate(capacity: 3)
+            let element = self.element(at: elementIndex, associatedPoints: pointArray)
+            switch element {
+            case .moveTo:
+                mutablePath.move(to: pointArray[0])
+            case .lineTo:
+                mutablePath.addLine(to: pointArray[0])
+            case .curveTo:
+                mutablePath.addCurve(to: pointArray[2], control1: pointArray[0], control2: pointArray[1])
+            case .closePath:
+                mutablePath.closeSubpath()
+            @unknown default:
+                preconditionFailure()
+            }
+        }
+        return mutablePath
+    }
+
+    func bezierPath(strokedWithWidth lineWidth: CGFloat) -> NSBezierPath {
+        let cgPath = self.cgPath
+        let strokedPath = cgPath.copy(strokingWithWidth: lineWidth, lineCap: .butt, lineJoin: .round, miterLimit: 1)
+        return NSBezierPath(cgPath: strokedPath)
+    }
 }

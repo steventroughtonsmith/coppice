@@ -176,7 +176,7 @@ extension LayoutEnginePage {
 
 extension Array where Element == LayoutEngineLink {
     func links(for edge: LayoutEnginePage.Edge, of page: LayoutEnginePage) -> [Element] {
-        return self.filter { (($0.sourcePageID == page.id) && ($0.sourcePoint.edge == edge)) || (($0.destinationPageID == page.id) && ($0.destinationPoint.edge == edge))}
+        return self.filter { (($0.sourcePageID == page.id) && ($0.sourcePoint.edge == edge)) || (($0.destinationPageID == page.id) && ($0.destinationPoint.edge == edge)) }
     }
 }
 

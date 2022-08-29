@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import AppKit
 
 public struct ArrowPoint: Equatable {
     public var point: CGPoint
@@ -24,17 +25,20 @@ public struct ArrowPoint: Equatable {
 
 public class LayoutEngineLink: Equatable {
     public let id: UUID
+    public let pageLink: PageLink
     public let sourcePageID: UUID
     public let destinationPageID: UUID
     public var selected: Bool = false
+    public var highlighted: Bool = false
 
     public var sourcePoint: ArrowPoint = .init(point: .zero, edge: .left)
     public var destinationPoint: ArrowPoint = .init(point: .zero, edge: .right)
 
     public weak var canvasLayoutEngine: CanvasLayoutEngine?
 
-    public init(id: UUID, sourcePageID: UUID, destinationPageID: UUID, canvasLayoutEngine: CanvasLayoutEngine? = nil) {
+    public init(id: UUID, pageLink: PageLink, sourcePageID: UUID, destinationPageID: UUID, canvasLayoutEngine: CanvasLayoutEngine? = nil) {
         self.id = id
+        self.pageLink = pageLink
         self.sourcePageID = sourcePageID
         self.destinationPageID = destinationPageID
         self.canvasLayoutEngine = canvasLayoutEngine
@@ -140,5 +144,78 @@ public class LayoutEngineLink: Equatable {
             }
         }
         return endPoint
+    }
+
+    public var linePath: NSBezierPath {
+        switch self.sourcePoint.edge {
+        case .top, .bottom:
+            return self.verticalPath
+        case .left, .right:
+            return self.horizontalPath
+        }
+    }
+
+    public var interactionPath: NSBezierPath {
+        guard let config = self.canvasLayoutEngine?.configuration.arrow else {
+            return self.linePath
+        }
+        return self.linePath.bezierPath(strokedWithWidth: config.arrowHeadSize)
+    }
+
+    private var verticalPath: NSBezierPath {
+        let path = NSBezierPath()
+
+        guard let config = self.canvasLayoutEngine?.configuration.arrow else {
+            return path
+        }
+
+        let topToBottom = (self.sourcePoint.edge == .bottom)
+
+        let topPoint = topToBottom ? self.startPointInLayoutFrame.point : self.endPointInLayoutFrame.point
+        let bottomPoint = topToBottom ? self.endPointInLayoutFrame.point : self.startPointInLayoutFrame.point
+        let topStraightPoint = topPoint.plus(y: config.endLength)
+        let bottomStraightPoint = bottomPoint.minus(y: config.endLength)
+
+        let halfY = (topStraightPoint.y + bottomStraightPoint.y) / 2
+        let minY = topStraightPoint.y + config.cornerSize
+        let topControl = CGPoint(x: topStraightPoint.x, y: max(halfY, minY))
+
+        let maxY = bottomStraightPoint.y - config.cornerSize
+        let bottomControl = CGPoint(x: bottomStraightPoint.x, y: min(halfY, maxY))
+
+        path.move(to: topPoint)
+        path.line(to: topStraightPoint)
+        path.curve(to: bottomStraightPoint, controlPoint1: topControl, controlPoint2: bottomControl)
+        path.line(to: bottomPoint)
+
+        return path
+    }
+
+    private var horizontalPath: NSBezierPath {
+        let path = NSBezierPath()
+        guard let config = self.canvasLayoutEngine?.configuration.arrow else {
+            return path
+        }
+
+        let leftToRight = (self.sourcePoint.edge == .right)
+
+        let leftPoint = leftToRight ? self.startPointInLayoutFrame.point : self.endPointInLayoutFrame.point
+        let rightPoint = leftToRight ? self.endPointInLayoutFrame.point : self.startPointInLayoutFrame.point
+        let leftStraightPoint = leftPoint.plus(x: config.endLength)
+        let rightStraightPoint = rightPoint.minus(x: config.endLength)
+
+        let halfX = (leftStraightPoint.x + rightStraightPoint.x) / 2
+        let minX = leftStraightPoint.x + config.cornerSize
+        let leftControl = CGPoint(x: max(halfX, minX), y: leftStraightPoint.y)
+
+        let maxX = rightStraightPoint.x - config.cornerSize
+        let rightControl = CGPoint(x: min(halfX, maxX), y: rightStraightPoint.y)
+
+        path.move(to: leftPoint)
+        path.line(to: leftStraightPoint)
+        path.curve(to: rightStraightPoint, controlPoint1: leftControl, controlPoint2: rightControl)
+        path.line(to: rightPoint)
+
+        return path
     }
 }

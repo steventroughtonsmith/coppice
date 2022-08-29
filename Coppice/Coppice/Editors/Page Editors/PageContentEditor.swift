@@ -9,6 +9,8 @@
 import AppKit
 import Foundation
 
+import CoppiceCore
+
 enum PageContentEditorViewMode: Equatable {
     case full
     case canvas
@@ -18,8 +20,11 @@ enum PageContentEditorViewMode: Equatable {
 protocol PageContentEditor: Editor {
     func startEditing(at point: CGPoint)
     func stopEditing()
-    func isLink(at point: CGPoint) -> Bool
+
+    func link(at point: CGPoint) -> URL?
     func openLink(at point: CGPoint)
+    func highlightLinks(matching pageLink: PageLink)
+    func unhighlightLinks()
 
     func enterFocusMode()
     func exitFocusMode()
@@ -27,11 +32,14 @@ protocol PageContentEditor: Editor {
 }
 
 extension PageContentEditor {
-    func isLink(at point: CGPoint) -> Bool {
-        return false
+    func link(at point: CGPoint) -> URL? {
+        return nil
     }
 
     func openLink(at point: CGPoint) {}
+
+    func highlightLinks(matching pageLink: PageLink) {}
+    func unhighlightLinks() {}
 
     var pageEditorViewController: PageEditorViewController? {
         var currentParent = self.parentEditor

@@ -80,7 +80,7 @@ class CanvasImageGenerator {
     private func image(for arrow: LayoutEngineLink, colour: NSColor) -> NSImage {
         let image = NSImage(size: arrow.layoutFrame.size)
         image.lockFocusFlipped(true)
-        self.arrowDrawHelper.draw(arrow, with: colour)
+        self.arrowDrawHelper.draw(arrow, with: colour, borderColor: nil)
         image.unlockFocus()
         return image
     }
