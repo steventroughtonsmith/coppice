@@ -106,12 +106,10 @@ extension PageEditorViewController: LayoutEnginePageView {
     }
 
     func highlightLinks(matching pageLink: PageLink) {
-        print("highlight: \(pageLink)")
         self.currentContentEditor?.highlightLinks(matching: pageLink)
     }
 
     func unhighlightLinks() {
-        print("unhighlight links")
         self.currentContentEditor?.unhighlightLinks()
     }
 }

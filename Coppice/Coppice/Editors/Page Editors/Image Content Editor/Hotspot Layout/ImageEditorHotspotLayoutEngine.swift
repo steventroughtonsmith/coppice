@@ -53,13 +53,40 @@ class ImageEditorHotspotLayoutEngine {
 
     var isEditable = true
 
-    private(set) var highlightedHotspot: ImageEditorHotspot? {
+    private(set) var hoveredHotspot: ImageEditorHotspot? {
         didSet {
-            if self.highlightedHotspot === oldValue {
+            if self.hoveredHotspot === oldValue {
                 return
             }
-            oldValue?.isHighlighted = false
-            self.highlightedHotspot?.isHighlighted = true
+            oldValue?.isHovered = false
+            self.hoveredHotspot?.isHovered = true
+            self.delegate?.layoutDidChange(in: self)
+        }
+    }
+
+    var highlightedPageLink: PageLink? {
+        didSet {
+            guard oldValue != self.highlightedPageLink else {
+                return
+            }
+
+            guard let pageLink = self.highlightedPageLink else {
+                self.hotspots.forEach { $0.isHighlighted = false }
+                self.delegate?.layoutDidChange(in: self)
+                return
+            }
+
+            for hotspot in self.hotspots {
+                guard
+                    let url = hotspot.url,
+                    let pageLink = PageLink(url: url)
+                else {
+                    hotspot.isHighlighted = false
+                    continue
+                }
+
+                hotspot.isHighlighted = (pageLink.destination == self.highlightedPageLink?.destination)
+            }
             self.delegate?.layoutDidChange(in: self)
         }
     }
@@ -148,11 +175,11 @@ class ImageEditorHotspotLayoutEngine {
             self.isEditable == false,
             let hotspot = hotspots.last(where: { $0.hitTest(at: point) })
         else {
-            self.highlightedHotspot = nil
+            self.hoveredHotspot = nil
             return
         }
 
-        self.highlightedHotspot = hotspot
+        self.hoveredHotspot = hotspot
     }
 
     func handleKeyDown(with keyCode: UInt16, modifiers: LayoutEventModifiers) -> Bool {
@@ -194,6 +221,7 @@ protocol ImageEditorHotspot: AnyObject {
 
     //MARK: - State
     var isSelected: Bool { get set }
+    var isHovered: Bool { get set }
     var isHighlighted: Bool { get set }
     var isClicked: Bool { get }
     var mode: ImageEditorHotspotMode { get }

@@ -108,6 +108,7 @@ class ImageEditorRectangleHotspot: ImageEditorHotspot {
 
     //MARK: - State
     var isSelected: Bool = false
+    var isHovered: Bool = false
     var isHighlighted: Bool = false
     private(set) var isClicked: Bool = false
 

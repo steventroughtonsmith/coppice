@@ -240,10 +240,6 @@ public class CoppiceModelController: NSObject, ModelController {
         return self.collection(for: CanvasPage.self)
     }
 
-    @discardableResult public func addPages(_ pages: [Page], to canvas: Canvas, centredOn point: CGPoint? = nil) -> [CanvasPage] {
-        return []
-    }
-
     @discardableResult public func openPage(at link: PageLink, on canvas: Canvas, mode: Canvas.OpenPageMode) -> [CanvasPage] {
         guard let page = self.pageCollection.objectWithID(link.destination) else {
             return []

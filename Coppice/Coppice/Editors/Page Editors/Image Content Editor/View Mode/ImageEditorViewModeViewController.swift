@@ -164,11 +164,11 @@ extension ImageEditorViewModeViewController: PageContentEditor {
     }
 
     func highlightLinks(matching pageLink: PageLink) {
-        
+        self.layoutEngine.highlightedPageLink = pageLink
     }
 
     func unhighlightLinks() {
-
+        self.layoutEngine.highlightedPageLink = nil
     }
 }
 

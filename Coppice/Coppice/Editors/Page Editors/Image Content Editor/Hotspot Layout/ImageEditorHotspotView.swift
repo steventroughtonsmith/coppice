@@ -90,7 +90,11 @@ class ImageEditorHotspotView: NSView {
 
         for hotspot in layoutEngine.visibleHotspots {
             (hotspot.isSelected ? selectedHotspotFill : hotspotFill).setFill()
-            hotspotStroke.setStroke()
+            if hotspot.isHighlighted {
+                NSColor.systemBlue.setStroke()
+            } else {
+                hotspotStroke.setStroke()
+            }
 
             let hotspotPath = hotspot.hotspotPath(forScale: scale)
             hotspotPath.lineWidth = 2
@@ -100,7 +104,7 @@ class ImageEditorHotspotView: NSView {
             if hotspot.isClicked {
                 NSColor(white: 0, alpha: 0.15).setFill()
                 hotspotPath.fill()
-            } else if hotspot.isHighlighted {
+            } else if hotspot.isHovered || hotspot.isHighlighted {
                 NSColor(white: 1, alpha: 0.15).setFill()
                 hotspotPath.fill()
             }
@@ -108,7 +112,11 @@ class ImageEditorHotspotView: NSView {
             hotspot.editingBoundsPaths(forScale: scale).forEach { self.strokeEditingPath($0) }
 
             NSColor.white.setFill()
-            hotspotStroke.setStroke()
+            if hotspot.isHighlighted {
+                NSColor.systemBlue.setStroke()
+            } else {
+                hotspotStroke.setStroke()
+            }
             hotspot.editingHandleRects(forScale: scale).forEach {
                 let bezierPath = NSBezierPath(ovalIn: $0)
                 bezierPath.fill()

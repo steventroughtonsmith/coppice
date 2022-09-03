@@ -36,36 +36,46 @@ class DebugDocumentBuilder: NSObject {
         }
 
         let mc = document.modelController
-        let a = mc.createPage(in: mc.rootFolder) { $0.title = "A"; $0.contentSize = Page.defaultMinimumContentSize }
-        let b = mc.createPage(in: mc.rootFolder) { $0.title = "B"; $0.contentSize = Page.defaultMinimumContentSize }
-        let c = mc.createPage(in: mc.rootFolder) { $0.title = "C"; $0.contentSize = Page.defaultMinimumContentSize }
-        let d = mc.createPage(in: mc.rootFolder) { $0.title = "D"; $0.contentSize = Page.defaultMinimumContentSize }
-        let e = mc.createPage(in: mc.rootFolder) { $0.title = "E"; $0.contentSize = Page.defaultMinimumContentSize }
-        let f = mc.createPage(in: mc.rootFolder) { $0.title = "F"; $0.contentSize = Page.defaultMinimumContentSize }
-        let g = mc.createPage(in: mc.rootFolder) { $0.title = "G"; $0.contentSize = Page.defaultMinimumContentSize }
-        let h = mc.createPage(in: mc.rootFolder) { $0.title = "H"; $0.contentSize = Page.defaultMinimumContentSize }
-        let i = mc.createPage(in: mc.rootFolder) { $0.title = "I"; $0.contentSize = Page.defaultMinimumContentSize }
-        let j = mc.createPage(in: mc.rootFolder) { $0.title = "J"; $0.contentSize = Page.defaultMinimumContentSize }
-        let k = mc.createPage(in: mc.rootFolder) { $0.title = "K"; $0.contentSize = Page.defaultMinimumContentSize }
-        let l = mc.createPage(in: mc.rootFolder) { $0.title = "L"; $0.contentSize = Page.defaultMinimumContentSize }
-        let m = mc.createPage(in: mc.rootFolder) { $0.title = "M"; $0.contentSize = Page.defaultMinimumContentSize }
-        let n = mc.createPage(in: mc.rootFolder) { $0.title = "N"; $0.contentSize = Page.defaultMinimumContentSize }
-        let o = mc.createPage(in: mc.rootFolder) { $0.title = "O"; $0.contentSize = Page.defaultMinimumContentSize }
-        let p = mc.createPage(in: mc.rootFolder) { $0.title = "P"; $0.contentSize = Page.defaultMinimumContentSize }
-        let q = mc.createPage(in: mc.rootFolder) { $0.title = "Q"; $0.contentSize = Page.defaultMinimumContentSize }
-        let r = mc.createPage(in: mc.rootFolder) { $0.title = "R"; $0.contentSize = Page.defaultMinimumContentSize }
-        let s = mc.createPage(in: mc.rootFolder) { $0.title = "S"; $0.contentSize = Page.defaultMinimumContentSize }
-        let t = mc.createPage(in: mc.rootFolder) { $0.title = "T"; $0.contentSize = Page.defaultMinimumContentSize }
-        let u = mc.createPage(in: mc.rootFolder) { $0.title = "U"; $0.contentSize = Page.defaultMinimumContentSize }
-        let v = mc.createPage(in: mc.rootFolder) { $0.title = "V"; $0.contentSize = Page.defaultMinimumContentSize }
-        let w = mc.createPage(in: mc.rootFolder) { $0.title = "W"; $0.contentSize = Page.defaultMinimumContentSize }
-        _ = mc.createPage(in: mc.rootFolder) { $0.title = "X"; $0.contentSize = Page.defaultMinimumContentSize }
-        _ = mc.createPage(in: mc.rootFolder) { $0.title = "Y"; $0.contentSize = Page.defaultMinimumContentSize }
-        _ = mc.createPage(in: mc.rootFolder) { $0.title = "Z"; $0.contentSize = Page.defaultMinimumContentSize }
+        self.createLinkTypesCanvas(using: mc)
+        self.createImageLinkCanvas(using: mc)
+    }
+
+    private func createLinkTypesCanvas(using mc: CoppiceModelController) {
+        let folder = mc.createFolder(in: mc.rootFolder) { $0.title = "Canvas Link Types"}
+
+        let a = mc.createPage(in: folder) { $0.title = "A"; $0.contentSize = Page.defaultMinimumContentSize }
+        let b = mc.createPage(in: folder) { $0.title = "B"; $0.contentSize = Page.defaultMinimumContentSize }
+        let c = mc.createPage(in: folder) { $0.title = "C"; $0.contentSize = Page.defaultMinimumContentSize }
+        let d = mc.createPage(in: folder) { $0.title = "D"; $0.contentSize = Page.defaultMinimumContentSize }
+        let e = mc.createPage(in: folder) { $0.title = "E"; $0.contentSize = Page.defaultMinimumContentSize }
+        let f = mc.createPage(in: folder) { $0.title = "F"; $0.contentSize = Page.defaultMinimumContentSize }
+        let g = mc.createPage(in: folder) { $0.title = "G"; $0.contentSize = Page.defaultMinimumContentSize }
+        let h = mc.createPage(in: folder) { $0.title = "H"; $0.contentSize = Page.defaultMinimumContentSize }
+        let i = mc.createPage(in: folder) { $0.title = "I"; $0.contentSize = Page.defaultMinimumContentSize }
+        let j = mc.createPage(in: folder) { $0.title = "J"; $0.contentSize = Page.defaultMinimumContentSize }
+        let k = mc.createPage(in: folder) { $0.title = "K"; $0.contentSize = Page.defaultMinimumContentSize }
+        let l = mc.createPage(in: folder) { $0.title = "L"; $0.contentSize = Page.defaultMinimumContentSize }
+        let m = mc.createPage(in: folder) { $0.title = "M"; $0.contentSize = Page.defaultMinimumContentSize }
+        let n = mc.createPage(in: folder) { $0.title = "N"; $0.contentSize = Page.defaultMinimumContentSize }
+        let o = mc.createPage(in: folder) { $0.title = "O"; $0.contentSize = Page.defaultMinimumContentSize }
+        let p = mc.createPage(in: folder) { $0.title = "P"; $0.contentSize = Page.defaultMinimumContentSize }
+        let q = mc.createPage(in: folder) { $0.title = "Q"; $0.contentSize = Page.defaultMinimumContentSize }
+        let r = mc.createPage(in: folder) { $0.title = "R"; $0.contentSize = Page.defaultMinimumContentSize }
+        let s = mc.createPage(in: folder) { $0.title = "S"; $0.contentSize = Page.defaultMinimumContentSize }
+        let t = mc.createPage(in: folder) { $0.title = "T"; $0.contentSize = Page.defaultMinimumContentSize }
+        let u = mc.createPage(in: folder) { $0.title = "U"; $0.contentSize = Page.defaultMinimumContentSize }
+        let v = mc.createPage(in: folder) { $0.title = "V"; $0.contentSize = Page.defaultMinimumContentSize }
+        let w = mc.createPage(in: folder) { $0.title = "W"; $0.contentSize = Page.defaultMinimumContentSize }
+        _ = mc.createPage(in: folder) { $0.title = "X"; $0.contentSize = Page.defaultMinimumContentSize }
+        _ = mc.createPage(in: folder) { $0.title = "Y"; $0.contentSize = Page.defaultMinimumContentSize }
+        _ = mc.createPage(in: folder) { $0.title = "Z"; $0.contentSize = Page.defaultMinimumContentSize }
 
         let grid: CGFloat = 200
 
-        let canvas = mc.createCanvas() { $0.alwaysShowPageTitles = true }
+        let canvas = mc.createCanvas() {
+            $0.alwaysShowPageTitles = true
+            $0.title = "Canvas Link Types"
+        }
         let cpA = canvas.addPages([a], centredOn: CGPoint(x: 0, y: 0))[0]
         let cpB = canvas.addPages([b], centredOn: CGPoint(x: 1 * grid, y: 0 * grid))[0]
         let cpC = canvas.addPages([c], centredOn: CGPoint(x: 2 * grid, y: 0 * grid))[0]
@@ -111,6 +121,108 @@ class DebugDocumentBuilder: NSObject {
         self.addLinks(from: cpU, to: [cpV, cpW], on: canvas)
         self.addLinks(from: cpV, to: [cpT], on: canvas)
 
-        print("links: \(canvas.links)")
+    }
+
+    private func createImageLinkCanvas(using mc: CoppiceModelController) {
+        let folder = mc.createFolder(in: mc.rootFolder) { $0.title = "Image Links" }
+
+        let textPage = mc.createPage(ofType: .text, in: folder) {
+            $0.title = "Text To Image Link"
+            $0.contentSize = Page.defaultMinimumContentSize
+        }
+
+
+        let appIcon = NSImage(named: "AppIcon")!
+        for representation in appIcon.representations {
+            if representation.size != CGSize(width: 128, height: 128) {
+                appIcon.removeRepresentation(representation)
+            }
+        }
+
+        let ovalImagePage = mc.createPage(ofType: .image, in: folder) {
+            $0.title = "Oval Image Link"
+            if let imageContent = $0.content as? ImagePageContent {
+                imageContent.setImage(appIcon, operation: .replace)
+
+                imageContent.hotspots = [
+                    ImageHotspot(kind: .oval, points: [
+                        CGPoint(x: 32, y: 32),
+                        CGPoint(x: 96, y: 32),
+                        CGPoint(x: 96, y: 96),
+                        CGPoint(x: 32, y: 96),
+                    ], link: textPage.linkToPage().url)
+                ]
+            }
+        }
+
+        let polygonImagePage = mc.createPage(ofType: .image, in: folder) {
+            $0.title = "Polygon Image Link"
+            if let imageContent = $0.content as? ImagePageContent {
+                imageContent.setImage(appIcon, operation: .replace)
+
+                imageContent.hotspots = [
+                    ImageHotspot(kind: .polygon, points: [
+                        CGPoint(x: 20, y: 20),
+                        CGPoint(x: 100, y: 20),
+                        CGPoint(x: 80, y: 80),
+                        CGPoint(x: 50, y: 110),
+                        CGPoint(x: 30, y: 80),
+                    ], link: textPage.linkToPage().url)
+                ]
+            }
+        }
+
+
+        let rectangleImagePage = mc.createPage(ofType: .image, in: folder) {
+            $0.title = "Rectangle Image Link"
+
+            if let imageContent = $0.content as? ImagePageContent {
+                imageContent.setImage(appIcon, operation: .replace)
+
+                imageContent.hotspots = [
+                    ImageHotspot(kind: .rectangle, points: [
+                        CGPoint(x: 20, y: 20),
+                        CGPoint(x: 40, y: 20),
+                        CGPoint(x: 40, y: 40),
+                        CGPoint(x: 20, y: 40),
+                    ], link: textPage.linkToPage().url),
+                    ImageHotspot(kind: .rectangle, points: [
+                        CGPoint(x: 20, y: 60),
+                        CGPoint(x: 40, y: 60),
+                        CGPoint(x: 40, y: 80),
+                        CGPoint(x: 20, y: 80),
+                    ], link: ovalImagePage.linkToPage().url),
+                    ImageHotspot(kind: .rectangle, points: [
+                        CGPoint(x: 60, y: 60),
+                        CGPoint(x: 80, y: 60),
+                        CGPoint(x: 80, y: 80),
+                        CGPoint(x: 60, y: 80),
+                    ], link: textPage.linkToPage().url),
+                    ImageHotspot(kind: .rectangle, points: [
+                        CGPoint(x: 60, y: 20),
+                        CGPoint(x: 80, y: 20),
+                        CGPoint(x: 80, y: 40),
+                        CGPoint(x: 60, y: 20),
+                    ], link: polygonImagePage.linkToPage().url)
+                ]
+            }
+        }
+
+
+        let grid: CGFloat = 200
+
+        let canvas = mc.createCanvas() { $0.title = "Image Links"; $0.alwaysShowPageTitles = true }
+
+        let textCP = canvas.addPages([textPage], centredOn: CGPoint(x: -1 * grid, y: -1 * grid))[0]
+        let rectangleCP = canvas.addPages([rectangleImagePage], centredOn: CGPoint(x: grid, y: -1 * grid))[0]
+        let ovalCP = canvas.addPages([ovalImagePage], centredOn: CGPoint(x: -1 * grid, y: grid))[0]
+        let polygonCP = canvas.addPages([polygonImagePage], centredOn: CGPoint(x: grid, y: grid))[0]
+
+        self.addLinks(from: textCP, to: [rectangleCP], on: canvas)
+
+        //Text page to image page link
+        //rectangle image link
+        //oval image link
+        //polygon image link
     }
 }
