@@ -62,15 +62,15 @@ class SelectAndMoveEventContext: CanvasMouseEventContext {
             return
         }
         let delta = location.minus(lastLocation)
-        for page in layout.selectedPages {
+        for page in layout.selectedItems {
             page.layoutFrame.origin = page.layoutFrame.origin.plus(delta)
         }
         self.lastLocation = location
-        layout.modified(layout.selectedPages)
+        layout.modified(layout.selectedItems)
     }
 
     func upEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: LayoutEngine) {
-        let movedPages = layout.selectedPages
+        let movedPages = layout.selectedItems
         //If the user clicks on a page in a multiple selection we want to reduce selection to just that page
         if (movedPages.count > 1) && (self.lastLocation == self.initialLocation) && !self.didShiftSelect && !self.didDoubleClick {
             layout.select([self.page], extendingSelection: false)

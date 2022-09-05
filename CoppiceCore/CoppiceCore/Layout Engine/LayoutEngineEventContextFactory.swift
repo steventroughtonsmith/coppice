@@ -19,10 +19,19 @@ public class CanvasLayoutEngineEventContextFactory: LayoutEngineEventContextFact
 
     public func createMouseEventContext(for location: CGPoint, in layoutEngine: LayoutEngine) -> CanvasMouseEventContext? {
         //Canvas click
-        guard let page = layoutEngine.page(atCanvasPoint: location) else {
+        guard let item = layoutEngine.item(atCanvasPoint: location) else {
             return CanvasSelectionEventContext()
         }
 
+        if let page = item as? LayoutEnginePage {
+            return self.createMouseEventContext(for: page, location: location, in: layoutEngine)
+        } else if let link = item as? LayoutEngineLink {
+            return self.createMouseEventContext(for: link, location: location, in: layoutEngine)
+        }
+        return nil
+    }
+
+    private func createMouseEventContext(for page: LayoutEnginePage, location: CGPoint, in layoutEngine: LayoutEngine) -> CanvasMouseEventContext? {
         if layoutEngine.editable {
             layoutEngine.movePageToFront(page)
         }
@@ -41,19 +50,27 @@ public class CanvasLayoutEngineEventContextFactory: LayoutEngineEventContextFact
         }
     }
 
+    private func createMouseEventContext(for link: LayoutEngineLink, location: CGPoint, in layoutEngine: LayoutEngine) -> CanvasMouseEventContext? {
+        return SelectLinkEventContext(link: link, editable: layoutEngine.editable)
+    }
+
     public func createKeyEventContext(for keyCode: UInt16, in layoutEngine: LayoutEngine) -> CanvasKeyEventContext? {
         guard layoutEngine.editable else {
             return nil
         }
-        let selectedPages = layoutEngine.selectedPages
-        guard selectedPages.count > 0 else {
+        let selectedItems = layoutEngine.selectedItems
+        guard selectedItems.count > 0 else {
             return nil
         }
 
         if KeyboardMovePageEventContext.acceptedKeyCodes.contains(keyCode) {
-            return KeyboardMovePageEventContext(pages: selectedPages)
-        } else if RemovePageEventContext.acceptedKeyCodes.contains(keyCode) {
-            return RemovePageEventContext(pages: selectedPages)
+            let pages = selectedItems.pages
+            guard pages.count > 0 else {
+                return nil
+            }
+            return KeyboardMovePageEventContext(pages: pages)
+        } else if RemoveItemEventContext.acceptedKeyCodes.contains(keyCode) {
+            return RemoveItemEventContext(items: selectedItems)
         }
         return nil
     }

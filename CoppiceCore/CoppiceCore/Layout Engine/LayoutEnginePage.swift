@@ -30,11 +30,9 @@ public protocol LayoutEnginePageView: AnyObject {
 ///     - Visual Page (`visualPageFrame`): the page as drawn on screen
 ///     - Title Bar (`titleBarFrame`): The title bar for moving
 ///     - Content (`contentContainerFrame`): The actual page content
-public class LayoutEnginePage: Equatable, Hashable {
-    public let id: UUID
-    public var selected: Bool = false
+public class LayoutEnginePage: LayoutEngineItem, Hashable {
     public var showBackground: Bool {
-        if let layoutEngine = self.layoutEngine {
+        if let layoutEngine = self.canvasLayoutEngine {
             if layoutEngine.alwaysShowPageTitles == true {
                 return true
             }
@@ -47,19 +45,17 @@ public class LayoutEnginePage: Equatable, Hashable {
 
     /// Enabled pages can be edited
     public var enabled: Bool {
-        return (self.layoutEngine?.enabledPage == self)
+        return (self.canvasLayoutEngine?.enabledPage == self)
     }
 
     public var isEditing: Bool = false
 
     public var zIndex = -1
 
-    public weak var layoutEngine: CanvasLayoutEngine?
-
     public weak var view: LayoutEnginePageView?
 
     public var configuration: CanvasLayoutEngine.Configuration? {
-        return self.layoutEngine?.configuration
+        return self.canvasLayoutEngine?.configuration
     }
 
     public init(id: UUID,
@@ -68,11 +64,11 @@ public class LayoutEnginePage: Equatable, Hashable {
                 minimumContentSize: CGSize = Page.defaultMinimumContentSize,
                 zIndex: Int = -1)
     {
-        self.id = id
         self.contentFrame = contentFrame
         self.maintainAspectRatio = maintainAspectRatio
         self.minimumContentSize = minimumContentSize
         self.zIndex = zIndex
+        super.init(id: id)
 
         self.validateSize()
     }
@@ -177,7 +173,7 @@ public class LayoutEnginePage: Equatable, Hashable {
 
     //MARK: - Layout Frames
     public func convertPointToContentSpace(_ point: CGPoint) -> CGPoint {
-        guard let layoutEngine = self.layoutEngine else {
+        guard let layoutEngine = self.canvasLayoutEngine else {
             return point
         }
         let contentOrigin = layoutEngine.convertPointToCanvasSpace(self.contentFrame.origin)
@@ -197,9 +193,9 @@ public class LayoutEnginePage: Equatable, Hashable {
         return CGRect(origin: .zero, size: self.minimumContentSize).grow(by: margins).size
     }
 
-    public var layoutFrame: CGRect {
+    public override var layoutFrame: CGRect {
         get {
-            let canvasOrigin = self.layoutEngine?.convertPointToCanvasSpace(self.contentFrame.origin) ?? self.contentFrame.origin
+            let canvasOrigin = self.canvasLayoutEngine?.convertPointToCanvasSpace(self.contentFrame.origin) ?? self.contentFrame.origin
             let canvasFrame = CGRect(origin: canvasOrigin, size: self.contentFrame.size)
             guard let config = self.configuration else {
                 return canvasFrame
@@ -208,7 +204,7 @@ public class LayoutEnginePage: Equatable, Hashable {
             return canvasFrame.grow(by: margins)
         }
         set {
-            let pageOrigin = self.layoutEngine?.convertPointToPageSpace(newValue.origin) ?? newValue.origin
+            let pageOrigin = self.canvasLayoutEngine?.convertPointToPageSpace(newValue.origin) ?? newValue.origin
             let contentFrame = CGRect(origin: pageOrigin, size: newValue.size)
             guard let config = self.configuration else {
                 self.contentFrame = contentFrame
@@ -220,7 +216,7 @@ public class LayoutEnginePage: Equatable, Hashable {
     }
 
     public var layoutFrameInPageSpace: CGRect {
-        let pageOrigin = self.layoutEngine?.convertPointToPageSpace(self.layoutFrame.origin) ?? self.layoutFrame.origin
+        let pageOrigin = self.canvasLayoutEngine?.convertPointToPageSpace(self.layoutFrame.origin) ?? self.layoutFrame.origin
         return CGRect(origin: pageOrigin, size: self.layoutFrame.size)
     }
 

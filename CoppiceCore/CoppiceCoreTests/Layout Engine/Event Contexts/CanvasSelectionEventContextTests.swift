@@ -33,7 +33,7 @@ class CanvasSelectionEventContextTests: EventContextTestBase {
 
     //MARK: - Simple Select
     func test_simpleSelect_deselectsAllOnDownEvent() throws {
-        self.mockLayoutEngine.selectedPages = [self.page1, self.page3]
+        self.mockLayoutEngine.selectedItems = [self.page1, self.page3]
         let eventContext = CanvasSelectionEventContext()
 
         eventContext.downEvent(at: CGPoint(x: 100, y: 100), modifiers: [], eventCount: 1, in: self.mockLayoutEngine)
@@ -42,7 +42,7 @@ class CanvasSelectionEventContextTests: EventContextTestBase {
     }
 
     func test_simpleSelect_draggingSelectionRectOverPagesTellsLayoutToSelectPagesInRect() throws {
-        self.mockLayoutEngine.selectedPages = [self.page2]
+        self.mockLayoutEngine.selectedItems = [self.page2]
 
         let eventContext = CanvasSelectionEventContext()
         eventContext.downEvent(at: self.page1.titlePoint.minus(x: 10, y: 10), modifiers: [], eventCount: 1, in: self.mockLayoutEngine)
@@ -57,7 +57,7 @@ class CanvasSelectionEventContextTests: EventContextTestBase {
     }
 
     func test_simpleSelect_draggingSelectionRectOffPageTellsLayoutToSelectJustPagesUnderRect() throws {
-        self.mockLayoutEngine.selectedPages = [self.page2]
+        self.mockLayoutEngine.selectedItems = [self.page2]
 
         let eventContext = CanvasSelectionEventContext()
         eventContext.downEvent(at: self.page1.titlePoint.minus(x: 10, y: 10), modifiers: [], eventCount: 1, in: self.mockLayoutEngine)
@@ -76,7 +76,7 @@ class CanvasSelectionEventContextTests: EventContextTestBase {
 
     //MARK: - Shift Select
     func test_shiftSelect_doesntDeselectAllOnDownEvent() throws {
-        self.mockLayoutEngine.selectedPages = [self.page1, self.page3]
+        self.mockLayoutEngine.selectedItems = [self.page1, self.page3]
         let eventContext = CanvasSelectionEventContext()
 
         eventContext.downEvent(at: CGPoint(x: 100, y: 100), modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
@@ -85,7 +85,7 @@ class CanvasSelectionEventContextTests: EventContextTestBase {
     }
 
     func test_shiftSelect_draggingSelectionRectOverUnselectedPagesTellsLayoutToSelectPagesInRectPlusAnyExistingSelectedPagesOutside() throws {
-        self.mockLayoutEngine.selectedPages = [self.page3]
+        self.mockLayoutEngine.selectedItems = [self.page3]
 
         let eventContext = CanvasSelectionEventContext()
         eventContext.downEvent(at: self.page1.titlePoint.minus(x: 10, y: 10), modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
@@ -100,7 +100,7 @@ class CanvasSelectionEventContextTests: EventContextTestBase {
     }
 
     func test_shiftSelect_draggingSelectionRectOffPreviouslyUnselectedPageTellsLayoutToSelectOnlyPagesInRectPlusAnyExistingSelectedPagesOutside() throws {
-        self.mockLayoutEngine.selectedPages = [self.page3]
+        self.mockLayoutEngine.selectedItems = [self.page3]
 
         let eventContext = CanvasSelectionEventContext()
         eventContext.downEvent(at: self.page1.titlePoint.minus(x: 10, y: 10), modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
@@ -117,7 +117,7 @@ class CanvasSelectionEventContextTests: EventContextTestBase {
     }
 
     func test_shiftSelect_draggingSelectionRectOverAlreadySelectedPageDoesntIncludePageInSelection() throws {
-        self.mockLayoutEngine.selectedPages = [self.page2, self.page3]
+        self.mockLayoutEngine.selectedItems = [self.page2, self.page3]
 
         let eventContext = CanvasSelectionEventContext()
         eventContext.downEvent(at: self.page1.titlePoint.minus(x: 10, y: 10), modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
@@ -132,7 +132,7 @@ class CanvasSelectionEventContextTests: EventContextTestBase {
     }
 
     func test_shiftSelect_draggingSelectionRectOffPreviouslySelectedPageIncludesPageInSelection() throws {
-        self.mockLayoutEngine.selectedPages = [self.page2, self.page3]
+        self.mockLayoutEngine.selectedItems = [self.page2, self.page3]
 
         let eventContext = CanvasSelectionEventContext()
         eventContext.downEvent(at: self.page1.titlePoint.minus(x: 10, y: 10), modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
@@ -149,7 +149,7 @@ class CanvasSelectionEventContextTests: EventContextTestBase {
     }
 
     func test_shiftSelect_dragOverMultiplePagesAtOnceInvertsSelection() throws {
-        self.mockLayoutEngine.selectedPages = [self.page2]
+        self.mockLayoutEngine.selectedItems = [self.page2]
 
         let eventContext = CanvasSelectionEventContext()
         eventContext.downEvent(at: self.page1.titlePoint.minus(x: 0, y: 10), modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
@@ -164,7 +164,7 @@ class CanvasSelectionEventContextTests: EventContextTestBase {
     }
 
     func test_shiftSelect_dragOffMultiplePagesAtOnceRestoresInitialSelection() throws {
-        self.mockLayoutEngine.selectedPages = [self.page2]
+        self.mockLayoutEngine.selectedItems = [self.page2]
 
         let eventContext = CanvasSelectionEventContext()
         eventContext.downEvent(at: self.page1.titlePoint.minus(x: 0, y: 10), modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)

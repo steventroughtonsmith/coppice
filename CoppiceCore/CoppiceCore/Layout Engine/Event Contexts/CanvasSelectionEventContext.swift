@@ -11,14 +11,14 @@ import Cocoa
 class CanvasSelectionEventContext: CanvasMouseEventContext {
     var startPoint: CGPoint = .zero
 
-    private var originalSelection = [LayoutEnginePage]()
+    private var originalSelection = [LayoutEngineItem]()
 
     func downEvent(at location: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int, in layout: LayoutEngine) {
         self.startPoint = location
         if !modifiers.contains(.shift) {
             layout.deselectAll()
         }
-        self.originalSelection = layout.selectedPages
+        self.originalSelection = layout.selectedItems
         layout.stopEditingPages()
     }
 
@@ -35,7 +35,7 @@ class CanvasSelectionEventContext: CanvasMouseEventContext {
 
         layout.selectionRect = selectionRect
 
-        var pagesToSelect = layout.pages(inCanvasRect: selectionRect)
+        var pagesToSelect = layout.items(inCanvasRect: selectionRect)
         if (modifiers.contains(.shift)) {
             for page in self.originalSelection {
                 guard let index = pagesToSelect.firstIndex(of: page) else {

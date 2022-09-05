@@ -55,8 +55,19 @@ class PageArrowView: NSView {
             arrow.interactionPath.fill()
         }
 
-        self.drawHelper.draw(arrow,
-                             with: arrow.highlighted ? .systemBlue : self.lineColour,
-                             borderColor: arrow.highlighted ? .white : nil)
+        let arrowColor: NSColor
+        let borderColor: NSColor?
+        if arrow.highlighted {
+            arrowColor = .systemBlue
+            borderColor = .white
+        } else if arrow.selected {
+            arrowColor = .controlAccentColor
+            borderColor = .white.withAlphaComponent(0.6)
+        } else {
+            arrowColor = self.lineColour
+            borderColor = nil
+        }
+
+        self.drawHelper.draw(arrow, with: arrowColor, borderColor: borderColor)
     }
 }

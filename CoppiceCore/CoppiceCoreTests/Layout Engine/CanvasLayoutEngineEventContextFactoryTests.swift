@@ -167,7 +167,7 @@ class CanvasLayoutEngineEventContextFactoryTests: XCTestCase {
         self.mockLayoutEngine.editable = false
         let page1 = TestLayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 30, height: 30))
         let page2 = TestLayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 120, y: 120, width: 30, height: 30))
-        self.mockLayoutEngine.selectedPages = [page1, page2]
+        self.mockLayoutEngine.selectedItems = [page1, page2]
 
         let context = self.factory.createKeyEventContext(for: UInt16(kVK_LeftArrow), in: self.mockLayoutEngine)
         XCTAssertNil(context)
@@ -181,7 +181,7 @@ class CanvasLayoutEngineEventContextFactoryTests: XCTestCase {
     func test_createKeyEventContext_returnsKeyboardMovePageContextIfLeftArrowSupplied() throws {
         let page1 = TestLayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 30, height: 30))
         let page2 = TestLayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 120, y: 120, width: 30, height: 30))
-        self.mockLayoutEngine.selectedPages = [page1, page2]
+        self.mockLayoutEngine.selectedItems = [page1, page2]
 
         let context = self.factory.createKeyEventContext(for: UInt16(kVK_LeftArrow), in: self.mockLayoutEngine)
         let typedContext = try XCTUnwrap(context as? KeyboardMovePageEventContext)
@@ -191,7 +191,7 @@ class CanvasLayoutEngineEventContextFactoryTests: XCTestCase {
     func test_createKeyEventContext_returnsKeyboardMovePageContextIfRightArrowSupplied() throws {
         let page1 = TestLayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 30, height: 30))
         let page2 = TestLayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 120, y: 120, width: 30, height: 30))
-        self.mockLayoutEngine.selectedPages = [page1, page2]
+        self.mockLayoutEngine.selectedItems = [page1, page2]
 
         let context = self.factory.createKeyEventContext(for: UInt16(kVK_RightArrow), in: self.mockLayoutEngine)
         let typedContext = try XCTUnwrap(context as? KeyboardMovePageEventContext)
@@ -201,7 +201,7 @@ class CanvasLayoutEngineEventContextFactoryTests: XCTestCase {
     func test_createKeyEventContext_returnsKeyboardMovePageContextIfUpArrowSupplied() throws {
         let page1 = TestLayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 30, height: 30))
         let page2 = TestLayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 120, y: 120, width: 30, height: 30))
-        self.mockLayoutEngine.selectedPages = [page1, page2]
+        self.mockLayoutEngine.selectedItems = [page1, page2]
 
         let context = self.factory.createKeyEventContext(for: UInt16(kVK_UpArrow), in: self.mockLayoutEngine)
         let typedContext = try XCTUnwrap(context as? KeyboardMovePageEventContext)
@@ -211,7 +211,7 @@ class CanvasLayoutEngineEventContextFactoryTests: XCTestCase {
     func test_createKeyEventContext_returnsKeyboardMovePageContextIfDownArrowSupplied() throws {
         let page1 = TestLayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 30, height: 30))
         let page2 = TestLayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 120, y: 120, width: 30, height: 30))
-        self.mockLayoutEngine.selectedPages = [page1, page2]
+        self.mockLayoutEngine.selectedItems = [page1, page2]
 
         let context = self.factory.createKeyEventContext(for: UInt16(kVK_DownArrow), in: self.mockLayoutEngine)
         let typedContext = try XCTUnwrap(context as? KeyboardMovePageEventContext)
@@ -221,27 +221,27 @@ class CanvasLayoutEngineEventContextFactoryTests: XCTestCase {
     func test_createKeyEventContext_returnsRemovePageContextIfDeleteKeySupplied() throws {
         let page1 = TestLayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 30, height: 30))
         let page2 = TestLayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 120, y: 120, width: 30, height: 30))
-        self.mockLayoutEngine.selectedPages = [page1, page2]
+        self.mockLayoutEngine.selectedItems = [page1, page2]
 
         let context = self.factory.createKeyEventContext(for: UInt16(kVK_Delete), in: self.mockLayoutEngine)
-        let typedContext = try XCTUnwrap(context as? RemovePageEventContext)
+        let typedContext = try XCTUnwrap(context as? RemoveItemEventContext)
         XCTAssertEqual(typedContext.pages, [page1, page2])
     }
 
     func test_createKeyEventContext_returnsRemovePageContextIfForwardDeleteKeySupplied() throws {
         let page1 = TestLayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 30, height: 30))
         let page2 = TestLayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 120, y: 120, width: 30, height: 30))
-        self.mockLayoutEngine.selectedPages = [page1, page2]
+        self.mockLayoutEngine.selectedItems = [page1, page2]
 
         let context = self.factory.createKeyEventContext(for: UInt16(kVK_ForwardDelete), in: self.mockLayoutEngine)
-        let typedContext = try XCTUnwrap(context as? RemovePageEventContext)
+        let typedContext = try XCTUnwrap(context as? RemoveItemEventContext)
         XCTAssertEqual(typedContext.pages, [page1, page2])
     }
 
     func test_createKeyEventContext_returnsNilIfOtherKeySupplied() throws {
         let page1 = TestLayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 30, height: 30))
         let page2 = TestLayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 120, y: 120, width: 30, height: 30))
-        self.mockLayoutEngine.selectedPages = [page1, page2]
+        self.mockLayoutEngine.selectedItems = [page1, page2]
 
         let context = self.factory.createKeyEventContext(for: UInt16(kVK_Space), in: self.mockLayoutEngine)
         XCTAssertNil(context)

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import AppKit
 
 public struct LayoutEventModifiers: OptionSet {
     public let rawValue: UInt
@@ -30,7 +31,7 @@ public protocol CanvasLayoutView: AnyObject {
 
 public protocol CanvasLayoutEngineDelegate: AnyObject {
     func moved(pages: [LayoutEnginePage], in layout: CanvasLayoutEngine)
-    func remove(pages: [LayoutEnginePage], from layout: CanvasLayoutEngine)
+    func remove(items: [LayoutEngineItem], from layout: CanvasLayoutEngine)
     func reordered(pages: [LayoutEnginePage], in layout: CanvasLayoutEngine)
 }
 
@@ -108,7 +109,7 @@ public class CanvasLayoutEngine: NSObject, LayoutEngine {
                 assertionFailure("Adding a page to the layout engine twice: \(page.id)")
                 continue
             }
-            page.layoutEngine = self
+            page.canvasLayoutEngine = self
             self.pages.append(page)
             self.pagesByUUID[page.id] = page
         }
@@ -155,37 +156,53 @@ public class CanvasLayoutEngine: NSObject, LayoutEngine {
         return self.pagesByUUID[uuid]
     }
 
-    public func page(atCanvasPoint canvasPoint: CGPoint) -> LayoutEnginePage? {
+    public func item(atCanvasPoint canvasPoint: CGPoint) -> LayoutEngineItem? {
         for page in self.pages.reversed() {
             if page.layoutFrame.contains(canvasPoint) {
                 return page
             }
         }
+        for link in self.links where link.layoutFrame.contains(canvasPoint) {
+            let convertedPoint = canvasPoint.minus(link.layoutFrame.origin)
+            if link.interactionPath.contains(convertedPoint) {
+                return link
+            }
+        }
         return nil
     }
 
-    public func pages(inCanvasRect canvasRect: CGRect) -> [LayoutEnginePage] {
-        var pagesInRect = [LayoutEnginePage]()
-        for page in self.pages {
-            if page.layoutFrame.intersects(canvasRect) {
-                pagesInRect.append(page)
+    public func items(inCanvasRect canvasRect: CGRect) -> [LayoutEngineItem] {
+        var itemsInRect = [LayoutEngineItem]()
+        for page in self.pages where page.layoutFrame.intersects(canvasRect) {
+            itemsInRect.append(page)
+        }
+        for link in self.links where link.layoutFrame.intersects(canvasRect) {
+            let canvasRectPath = NSBezierPath(rect: canvasRect.offsetBy(dx: -link.layoutFrame.origin.x, dy: -link.layoutFrame.origin.y))
+            if link.interactionPath.intersects(with: canvasRectPath) {
+                itemsInRect.append(link)
             }
         }
-        return pagesInRect
+        return itemsInRect
     }
 
-    public func modified(_ pages: [LayoutEnginePage]) {
-        self.linkLayoutEngine.updateLinks(forModifiedPages: pages)
+    public func modified(_ items: [LayoutEngineItem]) {
+        let pages = items.pages
+        if pages.count > 0 {
+            self.linkLayoutEngine.updateLinks(forModifiedPages: pages)
+        }
     }
 
-    public func finishedModifying(_ pages: [LayoutEnginePage]) {
-        self.updateEnabledPage()
-        self.normaliseFrames(of: pages)
-        self.delegate?.moved(pages: pages, in: self)
+    public func finishedModifying(_ items: [LayoutEngineItem]) {
+        let pages = items.pages
+        if pages.count > 0 {
+            self.updateEnabledPage()
+            self.normaliseFrames(of: pages)
+            self.delegate?.moved(pages: pages, in: self)
+        }
     }
 
-    public func tellDelegateToRemove(_ pages: [LayoutEnginePage]) {
-        self.delegate?.remove(pages: pages, from: self)
+    public func tellDelegateToRemove(_ items: [LayoutEngineItem]) {
+        self.delegate?.remove(items: items, from: self)
     }
 
 
@@ -215,8 +232,10 @@ public class CanvasLayoutEngine: NSObject, LayoutEngine {
 
 
     //MARK: - Selection
-    public var selectedPages: [LayoutEnginePage] {
-        return self.pages.filter { $0.selected }
+    public var selectedItems: [LayoutEngineItem] {
+        var items: [LayoutEngineItem] = self.pages.filter(\.selected)
+        items.append(contentsOf: self.links.filter(\.selected))
+        return items
     }
 
     public var selectionRect: CGRect?
@@ -226,20 +245,20 @@ public class CanvasLayoutEngine: NSObject, LayoutEngine {
     }
 
     public func deselectAll() {
-        self.deselect(self.selectedPages)
+        self.deselect(self.selectedItems)
     }
 
-    public func select(_ pages: [LayoutEnginePage], extendingSelection: Bool = false) {
+    public func select(_ pages: [LayoutEngineItem], extendingSelection: Bool = false) {
         if extendingSelection {
             pages.forEach { $0.selected = true }
         } else {
-            self.selectedPages.forEach { $0.selected = false }
+            self.selectedItems.forEach { $0.selected = false }
             pages.forEach { $0.selected = true }
         }
         self.notifyOfSelectionUpdatedIfNeeded()
     }
 
-    public func deselect(_ pages: [LayoutEnginePage]) {
+    public func deselect(_ pages: [LayoutEngineItem]) {
         pages.forEach { $0.selected = false }
         self.notifyOfSelectionUpdatedIfNeeded()
     }
@@ -262,7 +281,7 @@ public class CanvasLayoutEngine: NSObject, LayoutEngine {
 
     private var previousSelectionIDs = Set<UUID>()
     private func hasSelectionChanged() -> Bool {
-        let newSelectionIDs = Set(self.selectedPages.map { $0.id })
+        let newSelectionIDs = Set(self.selectedItems.map { $0.id })
         let selectionChanged = (self.previousSelectionIDs != newSelectionIDs)
         self.previousSelectionIDs = newSelectionIDs
         return selectionChanged
@@ -271,7 +290,7 @@ public class CanvasLayoutEngine: NSObject, LayoutEngine {
     //MARK: - Editability
     public weak var enabledPage: LayoutEnginePage?
     private func updateEnabledPage() {
-        guard self.editable, self.selectedPages.count == 1, let page = self.selectedPages.first else {
+        guard self.editable, self.selectedItems.pages.count == 1, let page = self.selectedItems.firstPage else {
             self.enabledPage = nil
             return
         }
@@ -328,16 +347,6 @@ public class CanvasLayoutEngine: NSObject, LayoutEngine {
         self.informOfLayoutChange(with: LayoutContext(linksChanged: true))
     }
 
-    func link(atCanvasPoint canvasPoint: CGPoint) -> LayoutEngineLink? {
-        for link in self.links where link.layoutFrame.contains(canvasPoint) {
-            let convertedPoint = canvasPoint.minus(link.layoutFrame.origin)
-            if link.interactionPath.contains(convertedPoint) {
-                return link
-            }
-        }
-        return nil
-    }
-
 
     //MARK: - Manage Mouse Events
     private var currentMouseEventContext: CanvasMouseEventContext?
@@ -368,7 +377,7 @@ public class CanvasLayoutEngine: NSObject, LayoutEngine {
 
 
     //MARK: - Hovering
-    public enum LayoutEngineItem: Equatable {
+    public enum HoverState: Equatable {
         case nothing
         case page(LayoutEnginePage, PageLink?)
         case link(LayoutEngineLink)
@@ -381,7 +390,7 @@ public class CanvasLayoutEngine: NSObject, LayoutEngine {
         }
     }
 
-    public private(set) var itemUnderMouse: LayoutEngineItem = .nothing {
+    public private(set) var itemUnderMouse: HoverState = .nothing {
         didSet {
             guard self.itemUnderMouse != oldValue else {
                 return
@@ -392,13 +401,15 @@ public class CanvasLayoutEngine: NSObject, LayoutEngine {
     }
 
     private func updateItemUnderMouse(with location: CGPoint) {
-        if let page = self.page(atCanvasPoint: location) {
+        let item = self.item(atCanvasPoint: location)
+
+        if let page = item as? LayoutEnginePage {
             if let url = page.view?.link(atContentPoint: page.convertPointToContentSpace(location)) {
                 self.itemUnderMouse = .page(page, PageLink(url: url))
             } else {
                 self.itemUnderMouse = .page(page, nil)
             }
-        } else if let link = self.link(atCanvasPoint: location) {
+        } else if let link = item as? LayoutEngineLink {
             self.itemUnderMouse = .link(link)
         } else {
             self.itemUnderMouse = .nothing

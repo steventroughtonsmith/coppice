@@ -32,24 +32,70 @@ extension CanvasKeyEventContext {
 }
 
 
+public class LayoutEngineItem: Equatable {
+    public let id: UUID
+    public init(id: UUID) {
+        self.id = id
+    }
+
+    public var selected: Bool = false
+    public weak var canvasLayoutEngine: CanvasLayoutEngine?
+
+    public var layoutFrame: CGRect = .zero
+
+    public static func == (lhs: LayoutEngineItem, rhs: LayoutEngineItem) -> Bool {
+        return lhs.id == rhs.id
+    }
+}
+
+
 public protocol LayoutEngine: AnyObject {
     var editable: Bool { get }
-    var selectedPages: [LayoutEnginePage] { get }
+    var selectedItems: [LayoutEngineItem] { get }
     var canvasSize: CGSize { get }
     var selectionRect: CGRect? { get set }
 
-    func select(_ pages: [LayoutEnginePage], extendingSelection: Bool)
-    func deselect(_ pages: [LayoutEnginePage])
+    func select(_ item: [LayoutEngineItem], extendingSelection: Bool)
+    func deselect(_ items: [LayoutEngineItem])
     func deselectAll()
 
-    func pages(inCanvasRect rect: CGRect) -> [LayoutEnginePage]
-    func page(atCanvasPoint point: CGPoint) -> LayoutEnginePage?
-    func movePageToFront(_ page: LayoutEnginePage)
+    func items(inCanvasRect rect: CGRect) -> [LayoutEngineItem]
+    func item(atCanvasPoint point: CGPoint) -> LayoutEngineItem?
 
-    func modified(_ pages: [LayoutEnginePage])
-    func finishedModifying(_ pages: [LayoutEnginePage])
-    func tellDelegateToRemove(_ pages: [LayoutEnginePage])
+    func modified(_ items: [LayoutEngineItem])
+    func finishedModifying(_ items: [LayoutEngineItem])
+    func tellDelegateToRemove(_ items: [LayoutEngineItem])
 
     func startEditing(_ page: LayoutEnginePage, atContentPoint point: CGPoint)
     func stopEditingPages()
+    func movePageToFront(_ page: LayoutEnginePage)
+}
+
+
+extension Array where Element == LayoutEngineItem {
+    public var pages: [LayoutEnginePage] {
+        return self.compactMap { $0 as? LayoutEnginePage }
+    }
+
+    public var links: [LayoutEngineLink] {
+        return self.compactMap { $0 as? LayoutEngineLink }
+    }
+
+    var firstPage: LayoutEnginePage? {
+        for item in self {
+            if let page = item as? LayoutEnginePage {
+                return page
+            }
+        }
+        return nil
+    }
+
+    var firstLink: LayoutEngineLink? {
+        for item in self {
+            if let link = item as? LayoutEngineLink {
+                return link
+            }
+        }
+        return nil
+    }
 }

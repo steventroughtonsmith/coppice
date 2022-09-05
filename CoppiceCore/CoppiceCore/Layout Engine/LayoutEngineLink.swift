@@ -23,24 +23,20 @@ public struct ArrowPoint: Equatable {
     }
 }
 
-public class LayoutEngineLink: Equatable {
-    public let id: UUID
+public class LayoutEngineLink: LayoutEngineItem {
     public let pageLink: PageLink
     public let sourcePageID: UUID
     public let destinationPageID: UUID
-    public var selected: Bool = false
     public var highlighted: Bool = false
 
     public var sourcePoint: ArrowPoint = .init(point: .zero, edge: .left)
     public var destinationPoint: ArrowPoint = .init(point: .zero, edge: .right)
 
-    public weak var canvasLayoutEngine: CanvasLayoutEngine?
-
     public init(id: UUID, pageLink: PageLink, sourcePageID: UUID, destinationPageID: UUID, canvasLayoutEngine: CanvasLayoutEngine? = nil) {
-        self.id = id
         self.pageLink = pageLink
         self.sourcePageID = sourcePageID
         self.destinationPageID = destinationPageID
+        super.init(id: id)
         self.canvasLayoutEngine = canvasLayoutEngine
     }
 
@@ -76,31 +72,34 @@ public class LayoutEngineLink: Equatable {
 
     //MARK: - Frames
 
-    public var layoutFrame: CGRect {
-        guard let basicFrame = CGRect(points: [self.sourcePoint.point, self.destinationPoint.point]) else {
-            return .zero
+    public override var layoutFrame: CGRect {
+        get {
+            guard let basicFrame = CGRect(points: [self.sourcePoint.point, self.destinationPoint.point]) else {
+                return .zero
+            }
+
+            guard let config = canvasLayoutEngine?.configuration else {
+                return basicFrame
+            }
+
+            let arrowConfig = config.arrow
+
+            let invertedArrowOffset = arrowConfig.endLength + arrowConfig.cornerSize
+
+            var xInset: CGFloat = 0
+            var yInset: CGFloat = 0
+            switch self.sourcePoint.edge {
+            case .top, .bottom:
+                xInset = -(arrowConfig.arrowHeadSize / 2) - arrowConfig.lineWidth
+                yInset = -(invertedArrowOffset / 2) - arrowConfig.lineWidth - config.page.titleHeight
+            case .left, .right:
+                xInset = -(invertedArrowOffset / 2) - arrowConfig.lineWidth
+                yInset = -(arrowConfig.arrowHeadSize / 2) - arrowConfig.lineWidth
+            }
+
+            return basicFrame.insetBy(dx: xInset, dy: yInset)
         }
-
-        guard let config = canvasLayoutEngine?.configuration else {
-            return basicFrame
-        }
-
-        let arrowConfig = config.arrow
-
-        let invertedArrowOffset = arrowConfig.endLength + arrowConfig.cornerSize
-
-        var xInset: CGFloat = 0
-        var yInset: CGFloat = 0
-        switch self.sourcePoint.edge {
-        case .top, .bottom:
-            xInset = -(arrowConfig.arrowHeadSize / 2) - arrowConfig.lineWidth
-            yInset = -(invertedArrowOffset / 2) - arrowConfig.lineWidth - config.page.titleHeight
-        case .left, .right:
-            xInset = -(invertedArrowOffset / 2) - arrowConfig.lineWidth
-            yInset = -(arrowConfig.arrowHeadSize / 2) - arrowConfig.lineWidth
-        }
-
-        return basicFrame.insetBy(dx: xInset, dy: yInset)
+        set {}
     }
 
     public var startPointInLayoutFrame: ArrowPoint {

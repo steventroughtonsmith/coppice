@@ -155,7 +155,7 @@ class CanvasEditorViewModel: ViewModel {
     private(set) var canvasPages = Set<CanvasPage>()
 
     var selectedCanvasPages: Set<CanvasPage> {
-        let selectedPageIDs = self.layoutEngine.selectedPages.map { $0.id }
+        let selectedPageIDs = self.layoutEngine.selectedItems.map { $0.id }
         return self.canvasPages.filter { selectedPageIDs.contains($0.id.uuid) }
     }
 
@@ -286,6 +286,10 @@ class CanvasEditorViewModel: ViewModel {
     //MARK: - Links
     private(set) var canvasLinks: Set<CanvasLink> = []
 
+    private func canvasLink(with uuid: UUID) -> CanvasLink? {
+        return self.canvasLinks.first(where: { $0.id.uuid == uuid })
+    }
+
     private func addLinks(_ links: Set<CanvasLink>) {
         guard links.count > 0 else {
             return
@@ -397,12 +401,18 @@ class CanvasEditorViewModel: ViewModel {
 }
 
 extension CanvasEditorViewModel: CanvasLayoutEngineDelegate {
-    func remove(pages: [LayoutEnginePage], from layout: CanvasLayoutEngine) {
-        for page in pages {
+    func remove(items: [LayoutEngineItem], from layout: CanvasLayoutEngine) {
+        for page in items.pages {
             guard let canvasPage = self.canvasPage(with: page.id) else {
                 continue
             }
             self.close(canvasPage)
+        }
+        for link in items.links {
+            guard let link = self.canvasLink(with: link.id) else {
+                continue
+            }
+            self.modelController.canvasLinkCollection.delete(link)
         }
     }
 

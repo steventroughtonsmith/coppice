@@ -158,4 +158,67 @@ extension NSBezierPath {
         let strokedPath = cgPath.copy(strokingWithWidth: lineWidth, lineCap: .butt, lineJoin: .round, miterLimit: 1)
         return NSBezierPath(cgPath: strokedPath)
     }
+
+    func intersects(with otherPath: NSBezierPath) -> Bool {
+        if self.bounds.intersects(otherPath.bounds) == false {
+            return false
+        }
+
+        let colourSpace = CGColorSpaceCreateDeviceGray()
+        let width = Int(self.bounds.maxX)
+        let height = Int(self.bounds.maxY)
+        guard
+            let graphicsContext = Self.createGreyscaleContext(of: CGSize(width: width, height: height)),
+            let testContext = Self.testContext
+        else {
+            return false
+        }
+        graphicsContext.setFillColorSpace(colourSpace)
+        graphicsContext.setStrokeColorSpace(colourSpace)
+
+        graphicsContext.saveGState()
+        graphicsContext.clear(CGRect(origin: .zero, size: CGSize(width: width, height: height)))
+        graphicsContext.addPath(self.cgPath)
+        graphicsContext.clip()
+        graphicsContext.setFillColor(.white)
+        graphicsContext.addPath(otherPath.cgPath)
+        graphicsContext.fillPath()
+        graphicsContext.restoreGState()
+
+        guard let image = graphicsContext.makeImage() else {
+            return false
+        }
+        testContext.clear(CGRect(origin: .zero, size: Self.testSize))
+        testContext.draw(image, in: CGRect(origin: .zero, size: Self.testSize))
+
+        guard let data = testContext.data else {
+            return false
+        }
+        for offset in 0..<Int(Self.testSize.width * Self.testSize.height) {
+            let value = data.load(fromByteOffset: offset, as: UInt8.self)
+            if value != 0 {
+                return true
+            }
+        }
+        return false
+    }
+
+    private static var testSize = CGSize(width: 2, height: 2)
+    private static var testContext: CGContext? = {
+        return NSBezierPath.createGreyscaleContext(of: NSBezierPath.testSize)
+    }()
+
+    private static func createGreyscaleContext(of size: CGSize) -> CGContext? {
+        let colourSpace = CGColorSpaceCreateDeviceGray()
+        let graphicsContext = CGContext(data: nil,
+                                        width: Int(size.width),
+                                        height: Int(size.height),
+                                        bitsPerComponent: 16,
+                                        bytesPerRow: 2 * Int(size.width),
+                                        space: colourSpace,
+                                        bitmapInfo: 0)
+        graphicsContext?.setFillColorSpace(colourSpace)
+        graphicsContext?.setStrokeColorSpace(colourSpace)
+        return graphicsContext
+    }
 }

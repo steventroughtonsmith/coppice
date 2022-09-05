@@ -95,7 +95,7 @@ class CanvasLayoutEngineTests: XCTestCase {
                                     contentFrame: CGRect(x: 0, y: 1, width: 2, height: 3),
                                     minimumContentSize: CGSize(width: 4, height: 5))
         self.layoutEngine.add([page])
-        XCTAssertTrue(page.layoutEngine === self.layoutEngine)
+        XCTAssertTrue(page.canvasLayoutEngine === self.layoutEngine)
     }
 
     func test_removePages_removesSuppliedPagesFromPagesArray() throws {
@@ -215,7 +215,7 @@ class CanvasLayoutEngineTests: XCTestCase {
     }
 
     func test_selectAll_updatesTheEnabledPage() throws {
-        XCTAssertEqual(self.layoutEngine.selectedPages.count, 0)
+        XCTAssertEqual(self.layoutEngine.selectedItems.count, 0)
 
         self.layoutEngine.select([self.page3])
         XCTAssertTrue(self.layoutEngine.enabledPage === self.page3)
@@ -264,7 +264,7 @@ class CanvasLayoutEngineTests: XCTestCase {
     }
 
     func test_deselectAll_updatesTheEnabledPage() throws {
-        XCTAssertEqual(self.layoutEngine.selectedPages.count, 0)
+        XCTAssertEqual(self.layoutEngine.selectedItems.count, 0)
 
         self.layoutEngine.select([self.page3])
         XCTAssertTrue(self.layoutEngine.enabledPage === self.page3)
@@ -319,12 +319,12 @@ class CanvasLayoutEngineTests: XCTestCase {
     }
 
 
-    //MARK: - .selectedPages
+    //MARK: - .selectedItems
     func test_selectedPages_returnsAllPagesWithSelectedTrue() throws {
         self.page1.selected = true
         self.page2.selected = true
 
-        let selectedPages = self.layoutEngine.selectedPages
+        let selectedPages = self.layoutEngine.selectedItems
         XCTAssertTrue(try XCTUnwrap(selectedPages[safe: 0]) === self.page1)
         XCTAssertTrue(try XCTUnwrap(selectedPages[safe: 1]) === self.page2)
     }
@@ -333,20 +333,20 @@ class CanvasLayoutEngineTests: XCTestCase {
     //MARK: - select(_:extendingSelection:)
     func test_selectPages_addsPagesToSelectionIfExtendingSelectionIsTrue() throws {
         self.page1.selected = true
-        XCTAssertEqual(self.layoutEngine.selectedPages.count, 1)
+        XCTAssertEqual(self.layoutEngine.selectedItems.count, 1)
 
         self.layoutEngine.select([self.page2, self.page3], extendingSelection: true)
 
-        XCTAssertEqual(self.layoutEngine.selectedPages, [self.page1, self.page2, self.page3])
+        XCTAssertEqual(self.layoutEngine.selectedItems, [self.page1, self.page2, self.page3])
     }
 
     func test_selectPages_deselectsAllOtherPagesIfExtendingSelectionIsNotTrue() throws {
         self.page2.selected = true
-        XCTAssertEqual(self.layoutEngine.selectedPages.count, 1)
+        XCTAssertEqual(self.layoutEngine.selectedItems.count, 1)
 
         self.layoutEngine.select([self.page1, self.page3], extendingSelection: false)
 
-        XCTAssertEqual(self.layoutEngine.selectedPages, [self.page1, self.page3])
+        XCTAssertEqual(self.layoutEngine.selectedItems, [self.page1, self.page3])
     }
 
     func test_selectPages_updatesEnabledPage() throws {
@@ -375,7 +375,7 @@ class CanvasLayoutEngineTests: XCTestCase {
         self.page2.selected = true
         self.page3.selected = true
         self.layoutEngine.deselect([self.page1, self.page3])
-        XCTAssertEqual(self.layoutEngine.selectedPages, [self.page2])
+        XCTAssertEqual(self.layoutEngine.selectedItems, [self.page2])
     }
 
     func test_deselectPages_updatesEnabledPage() throws {
@@ -857,11 +857,11 @@ class CanvasLayoutEngineTests: XCTestCase {
     }
 
     func test_pageBackground_pagesShowBackgroundIfSelected() throws {
-        XCTAssertEqual(self.layoutEngine.selectedPages.count, 0)
+        XCTAssertEqual(self.layoutEngine.selectedItems.count, 0)
 
         self.layoutEngine.select([self.page1, self.page3])
 
-        XCTAssertEqual(self.layoutEngine.selectedPages.count, 2)
+        XCTAssertEqual(self.layoutEngine.selectedItems.count, 2)
 
         XCTAssertTrue(self.page1.showBackground)
         XCTAssertFalse(self.page2.showBackground)
@@ -880,7 +880,7 @@ class CanvasLayoutEngineTests: XCTestCase {
     }
 
     func test_pageBackground_pageStillShowsBackgroundIfSelectedAndMouseMovesOff() throws {
-        XCTAssertEqual(self.layoutEngine.selectedPages.count, 0)
+        XCTAssertEqual(self.layoutEngine.selectedItems.count, 0)
 
         self.layoutEngine.select([self.page3])
 
@@ -892,11 +892,11 @@ class CanvasLayoutEngineTests: XCTestCase {
     }
 
     func test_pageBackground_allSelectedPagesAndTheHoveredPageShowBackground() throws {
-        XCTAssertEqual(self.layoutEngine.selectedPages.count, 0)
+        XCTAssertEqual(self.layoutEngine.selectedItems.count, 0)
 
         self.layoutEngine.select([self.page1, self.page3])
 
-        XCTAssertEqual(self.layoutEngine.selectedPages.count, 2)
+        XCTAssertEqual(self.layoutEngine.selectedItems.count, 2)
 
         self.layoutEngine.moveEvent(at: self.page2.layoutFrame.midPoint)
 
@@ -906,11 +906,11 @@ class CanvasLayoutEngineTests: XCTestCase {
     }
 
     func test_pageBackground_onlySelectedPagesShowBackgroundAfterMouseMovesOffHoveredPage() throws {
-        XCTAssertEqual(self.layoutEngine.selectedPages.count, 0)
+        XCTAssertEqual(self.layoutEngine.selectedItems.count, 0)
 
         self.layoutEngine.select([self.page1, self.page3])
 
-        XCTAssertEqual(self.layoutEngine.selectedPages.count, 2)
+        XCTAssertEqual(self.layoutEngine.selectedItems.count, 2)
 
         self.layoutEngine.moveEvent(at: self.page2.layoutFrame.midPoint)
         self.layoutEngine.moveEvent(at: self.page2.layoutFrame.origin.minus(x: 10, y: 10))
@@ -1101,21 +1101,21 @@ class CanvasLayoutEngineTests: XCTestCase {
     //MARK: - pages(inCanvasRect:)
     func test_pagesInCanvasRect_returnsAllPagesIfRectCoversWholeCanvas() throws {
         let rect = CGRect(origin: .zero, size: self.layoutEngine.canvasSize)
-        let pages = self.layoutEngine.pages(inCanvasRect: rect)
+        let pages = self.layoutEngine.items(inCanvasRect: rect)
 
         XCTAssertEqual(pages, [self.page1, self.page2, self.page3])
     }
 
     func test_pagesInCanvasRect_returnsNoPagesIfRectCoversNoPages() throws {
         let rect = CGRect(origin: .zero, size: CGSize(width: 5, height: 5))
-        let pages = self.layoutEngine.pages(inCanvasRect: rect)
+        let pages = self.layoutEngine.items(inCanvasRect: rect)
 
         XCTAssertEqual(pages, [])
     }
 
     func test_pagesInCanvasRect_returnsOnlyPagesCoveredByRect() throws {
         let rect = try XCTUnwrap(CGRect(points: [self.page3.layoutFrame.midPoint, self.page2.layoutFrame.midPoint]))
-        let pages = self.layoutEngine.pages(inCanvasRect: rect)
+        let pages = self.layoutEngine.items(inCanvasRect: rect)
 
         XCTAssertEqual(pages, [self.page2, self.page3])
     }

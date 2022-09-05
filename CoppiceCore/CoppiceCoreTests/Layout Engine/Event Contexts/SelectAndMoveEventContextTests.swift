@@ -36,7 +36,7 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
     }
 
     func test_singleSelection_clickingOnSelectedPagesTitleTellsLayoutToSelectJustThatPageOnUpEvent() throws {
-        self.mockLayoutEngine.selectedPages = [self.page1, self.page3]
+        self.mockLayoutEngine.selectedItems = [self.page1, self.page3]
         let eventContext = SelectAndMoveEventContext(page: self.page3, editable: true, component: .titleBar)
 
         let clickPoint = self.page3.titlePoint
@@ -50,7 +50,7 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
     }
 
     func test_singleSelection_clickingOnSelectedPagesContentTellsLayoutToSelectJustThatPageOnUpEvent() throws {
-        self.mockLayoutEngine.selectedPages = [self.page1, self.page3]
+        self.mockLayoutEngine.selectedItems = [self.page1, self.page3]
         let eventContext = SelectAndMoveEventContext(page: self.page3, editable: true, component: .content)
 
         let clickPoint = self.page3.contentPoint
@@ -187,7 +187,7 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
     //MARK: - Move
     func test_moving_draggingByPageTitleMovesThatPage() {
         let page1Point = self.page1.layoutFrame.origin
-        self.mockLayoutEngine.selectedPages = [self.page1]
+        self.mockLayoutEngine.selectedItems = [self.page1]
 
         let offset = CGPoint(x: 5, y: 3)
 
@@ -204,7 +204,7 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
 
     func test_moving_draggingByPageContentMovesThatPage() {
         let page1Point = self.page1.layoutFrame.origin
-        self.mockLayoutEngine.selectedPages = [self.page1]
+        self.mockLayoutEngine.selectedItems = [self.page1]
 
         let offset = CGPoint(x: 5, y: 3)
 
@@ -220,7 +220,7 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
     }
 
     func test_moving_draggingByPageTitleMovesAllSelectedPages() {
-        self.mockLayoutEngine.selectedPages = [self.page2, self.page3]
+        self.mockLayoutEngine.selectedItems = [self.page2, self.page3]
         let page2Point = self.page2.layoutFrame.origin
         let page3Point = self.page3.layoutFrame.origin
 
@@ -240,7 +240,7 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
     }
 
     func test_moving_draggingByPageContentMovesAllSelectedPages() {
-        self.mockLayoutEngine.selectedPages = [self.page2, self.page3]
+        self.mockLayoutEngine.selectedItems = [self.page2, self.page3]
         let page2Point = self.page2.layoutFrame.origin
         let page3Point = self.page3.layoutFrame.origin
 
@@ -262,7 +262,7 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
 
     //MARK: - Modifying
     func test_modifyEvents_draggingTellsLayoutSelectedPagesWereModified() throws {
-        self.mockLayoutEngine.selectedPages = [self.page2, self.page3]
+        self.mockLayoutEngine.selectedItems = [self.page2, self.page3]
 
         let offset = CGPoint(x: 7, y: 8)
 
@@ -278,7 +278,7 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
     }
 
     func test_modifyingEvents_upEventTellsLayoutSelectedPagesWereFinishedModifying() throws {
-        self.mockLayoutEngine.selectedPages = [self.page2, self.page3]
+        self.mockLayoutEngine.selectedItems = [self.page2, self.page3]
 
         let offset = CGPoint(x: 7, y: 8)
 

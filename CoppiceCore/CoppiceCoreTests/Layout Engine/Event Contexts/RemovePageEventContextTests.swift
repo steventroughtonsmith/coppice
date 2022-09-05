@@ -12,7 +12,7 @@ import XCTest
 
 class RemovePageEventContextTests: XCTestCase {
     func test_keyUp_pressingBackspaceWithNothingSelectedDoesNothing() {
-        let event = RemovePageEventContext(pages: [])
+        let event = RemoveItemEventContext(pages: [])
         let mockEngine = MockLayoutEngine()
 
         event.keyDown(withCode: UInt16(kVK_Delete), modifiers: [], isARepeat: false, in: mockEngine)
@@ -25,7 +25,7 @@ class RemovePageEventContextTests: XCTestCase {
         let page1 = LayoutEnginePage(id: UUID(), contentFrame: .zero)
         let page2 = LayoutEnginePage(id: UUID(), contentFrame: .zero)
 
-        let event = RemovePageEventContext(pages: [page1, page2])
+        let event = RemoveItemEventContext(pages: [page1, page2])
         let mockEngine = MockLayoutEngine()
 
         event.keyDown(withCode: UInt16(kVK_Delete), modifiers: [], isARepeat: false, in: mockEngine)
@@ -35,7 +35,7 @@ class RemovePageEventContextTests: XCTestCase {
     }
 
     func test_keyUp_pressingDeleteWithNothingSelectedDoesNothing() {
-        let event = RemovePageEventContext(pages: [])
+        let event = RemoveItemEventContext(pages: [])
         let mockEngine = MockLayoutEngine()
 
         event.keyDown(withCode: UInt16(kVK_ForwardDelete), modifiers: [], isARepeat: false, in: mockEngine)
@@ -48,7 +48,7 @@ class RemovePageEventContextTests: XCTestCase {
         let page1 = LayoutEnginePage(id: UUID(), contentFrame: .zero)
         let page2 = LayoutEnginePage(id: UUID(), contentFrame: .zero)
 
-        let event = RemovePageEventContext(pages: [page1, page2])
+        let event = RemoveItemEventContext(pages: [page1, page2])
         let mockEngine = MockLayoutEngine()
 
         event.keyDown(withCode: UInt16(kVK_ForwardDelete), modifiers: [], isARepeat: false, in: mockEngine)
@@ -61,7 +61,7 @@ class RemovePageEventContextTests: XCTestCase {
         let page1 = LayoutEnginePage(id: UUID(), contentFrame: .zero)
         let page2 = LayoutEnginePage(id: UUID(), contentFrame: .zero)
 
-        let event = RemovePageEventContext(pages: [page1, page2])
+        let event = RemoveItemEventContext(pages: [page1, page2])
         let mockEngine = MockLayoutEngine()
 
         event.keyDown(withCode: UInt16(kVK_Space), modifiers: [], isARepeat: false, in: mockEngine)

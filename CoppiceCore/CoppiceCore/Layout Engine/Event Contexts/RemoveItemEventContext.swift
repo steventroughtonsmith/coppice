@@ -9,19 +9,19 @@
 import Carbon.HIToolbox
 import Foundation
 
-class RemovePageEventContext: CanvasKeyEventContext {
+class RemoveItemEventContext: CanvasKeyEventContext {
     static var acceptedKeyCodes = [UInt16(kVK_Delete), UInt16(kVK_ForwardDelete)]
 
-    let pages: [LayoutEnginePage]
-    init(pages: [LayoutEnginePage]) {
-        self.pages = pages
+    let items: [LayoutEngineItem]
+    init(items: [LayoutEngineItem]) {
+        self.items = items
     }
 
     func keyUp(withCode keyCode: UInt16, modifiers: LayoutEventModifiers, in layout: LayoutEngine) {
-        guard RemovePageEventContext.acceptedKeyCodes.contains(keyCode), self.pages.count > 0 else {
+        guard RemoveItemEventContext.acceptedKeyCodes.contains(keyCode), self.items.count > 0 else {
             return
         }
 
-        layout.tellDelegateToRemove(self.pages)
+        layout.tellDelegateToRemove(self.items)
     }
 }

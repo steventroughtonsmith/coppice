@@ -596,7 +596,7 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
     @IBAction func editPage(_ sender: Any) {
         guard
             let clickedLocation = self.canvasView.currentClickLocation,
-            let page = self.layoutEngine.page(atCanvasPoint: clickedLocation)
+            let page = self.layoutEngine.item(atCanvasPoint: clickedLocation) as? LayoutEnginePage
         else {
             return
         }
