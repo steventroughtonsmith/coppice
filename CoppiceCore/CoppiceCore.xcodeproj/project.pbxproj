@@ -17,6 +17,7 @@
 		9948C0DD289801D800DB754E /* PlistV3Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9948C0DC289801D800DB754E /* PlistV3Tests.swift */; };
 		9948C0DF2898040A00DB754E /* TestData.Plist.V3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9948C0DE2898040A00DB754E /* TestData.Plist.V3.swift */; };
 		9948C0E12898298600DB754E /* TestData.ModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9948C0E02898298600DB754E /* TestData.ModelController.swift */; };
+		994E570428D74E7F0063E1D6 /* StandardHoverEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994E570328D74E7F0063E1D6 /* StandardHoverEventContext.swift */; };
 		9955BD3528BA65E40040FEE9 /* NSBezierPath+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9955BD3428BA65E30040FEE9 /* NSBezierPath+M3Extensions.swift */; };
 		997ABC482882E96E00A75722 /* CanvasLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997ABC472882E96E00A75722 /* CanvasLink.swift */; };
 		9991FE2628C4E20200946746 /* SelectLinkEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9991FE2528C4E20200946746 /* SelectLinkEventContext.swift */; };
@@ -136,6 +137,7 @@
 		9948C0DC289801D800DB754E /* PlistV3Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlistV3Tests.swift; sourceTree = "<group>"; };
 		9948C0DE2898040A00DB754E /* TestData.Plist.V3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.Plist.V3.swift; sourceTree = "<group>"; };
 		9948C0E02898298600DB754E /* TestData.ModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.ModelController.swift; sourceTree = "<group>"; };
+		994E570328D74E7F0063E1D6 /* StandardHoverEventContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardHoverEventContext.swift; sourceTree = "<group>"; };
 		9955BD3428BA65E30040FEE9 /* NSBezierPath+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSBezierPath+M3Extensions.swift"; sourceTree = "<group>"; };
 		997ABC472882E96E00A75722 /* CanvasLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasLink.swift; sourceTree = "<group>"; };
 		9991FE2528C4E20200946746 /* SelectLinkEventContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLinkEventContext.swift; sourceTree = "<group>"; };
@@ -553,6 +555,7 @@
 				99D0C8D824C5FBEA002EEBFA /* RemoveItemEventContext.swift */,
 				9991FE2528C4E20200946746 /* SelectLinkEventContext.swift */,
 				99D0C8D924C5FBEA002EEBFA /* ResizePageEventContext.swift */,
+				994E570328D74E7F0063E1D6 /* StandardHoverEventContext.swift */,
 			);
 			path = "Event Contexts";
 			sourceTree = "<group>";
@@ -726,6 +729,7 @@
 				9948C0D82896BA8700DB754E /* Plist.swift in Sources */,
 				99F6BD1F27C3D21F00E5AD20 /* ImageHotspot.swift in Sources */,
 				99D0C86724C5DFBA002EEBFA /* GlobalConstants.swift in Sources */,
+				994E570428D74E7F0063E1D6 /* StandardHoverEventContext.swift in Sources */,
 				99D0C7FC24C5DE79002EEBFA /* CoppiceModelController.swift in Sources */,
 				99D0C8E124C5FBEA002EEBFA /* KeyboardMovePageEventContext.swift in Sources */,
 				99D0C8E024C5FBEA002EEBFA /* CanvasSelectionEventContext.swift in Sources */,

@@ -36,7 +36,7 @@ public class LayoutEnginePage: LayoutEngineItem, Hashable {
             if layoutEngine.alwaysShowPageTitles == true {
                 return true
             }
-            if layoutEngine.itemUnderMouse.page == self {
+            if layoutEngine.pageUnderMouse == self {
                 return true
             }
         }
