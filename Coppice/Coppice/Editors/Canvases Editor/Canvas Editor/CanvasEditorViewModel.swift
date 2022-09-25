@@ -329,6 +329,34 @@ class CanvasEditorViewModel: ViewModel {
     }
 
 
+    //MARK: - Creating Links
+    private var linkingEditor: PageContentEditor?
+    func startLinking(from editor: PageContentEditor) {
+        self.linkingEditor = editor
+        self.layoutEngine.startLinking()
+    }
+
+    func finishLinking(toDestination page: LayoutEnginePage?) {
+        guard
+            let page,
+            let sourceCanvasPage = self.linkingEditor?.canvasPageViewController?.viewModel.canvasPage,
+            let sourcePage = sourceCanvasPage.page,
+            let destinationCanvasPage = self.canvasPage(with: page.id),
+            let destinationPage = destinationCanvasPage.page
+        else {
+            self.linkingEditor = nil
+            return
+        }
+        self.linkingEditor?.createLink(to: destinationPage)
+
+
+
+        self.canvas.addLink(PageLink(destination: destinationPage.id, source: sourcePage.id), between: sourceCanvasPage, and: destinationCanvasPage)
+
+        self.linkingEditor = nil
+    }
+
+
     //MARK: - Zooming
     @objc dynamic var zoomFactor: CGFloat {
         get { return self.canvas.zoomFactor }
@@ -446,5 +474,9 @@ extension CanvasEditorViewModel: CanvasLayoutEngineDelegate {
             }
         }
         self.updatesDisable = false
+    }
+
+    func finishLinking(withDestination page: LayoutEnginePage?, in layout: CanvasLayoutEngine) {
+        self.finishLinking(toDestination: page)
     }
 }

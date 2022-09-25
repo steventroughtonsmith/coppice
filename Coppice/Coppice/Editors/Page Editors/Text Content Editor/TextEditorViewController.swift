@@ -111,6 +111,10 @@ class TextEditorViewController: NSViewController, NSMenuItemValidation, NSToolba
         self.viewModel.createNewLinkedPage(ofType: type, from: selectedRange, updatingSelection: updatingSelection)
     }
 
+    @IBAction func linkToCanvasPage(_ sender: Any) {
+        self.canvasEditorViewController?.linkToPage(from: self)
+    }
+
     @IBAction func editLink(_ sender: Any?) {
         self.linkInspectorViewController.startEditingLink()
     }
@@ -263,6 +267,9 @@ class TextEditorViewController: NSViewController, NSMenuItemValidation, NSToolba
                 menuItem.isHidden = !isSingleLink
             }
             return isSingleLink
+        }
+        if menuItem.action == #selector(self.linkToCanvasPage(_:)) {
+            return self.isInCanvas && (self.attributeEditor.selectedLink != .noSelection)
         }
         return true
     }
@@ -469,6 +476,10 @@ extension TextEditorViewController: PageContentEditor {
     
     func unhighlightLinks() {
         self.editingTextView.highlightedCharacterRanges = []
+    }
+
+    func createLink(to page: Page) {
+        self.attributeEditor.updateSelection(with: .pageLink(page.linkToPage(from: self.viewModel.textContent.page)))
     }
 }
 

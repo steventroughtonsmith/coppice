@@ -715,6 +715,12 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
     }
 
 
+    //MARK: - Linking
+    func linkToPage(from editor: PageContentEditor) {
+        self.viewModel.startLinking(from: editor)
+    }
+
+
     //MARK: - Accessibility
     private func setupAccessibility() {
         guard

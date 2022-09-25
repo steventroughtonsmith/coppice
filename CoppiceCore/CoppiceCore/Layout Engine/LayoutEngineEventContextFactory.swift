@@ -18,6 +18,10 @@ public class CanvasLayoutEngineEventContextFactory: LayoutEngineEventContextFact
     public init() {}
 
     public func createMouseEventContext(for location: CGPoint, in layoutEngine: LayoutEngine) -> CanvasMouseEventContext? {
+        if layoutEngine.isLinking {
+            return CreateLinkMouseEventContext(page: layoutEngine.item(atCanvasPoint: location) as? LayoutEnginePage)
+        }
+
         //Canvas click
         guard let item = layoutEngine.item(atCanvasPoint: location) else {
             return CanvasSelectionEventContext()

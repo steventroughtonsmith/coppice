@@ -115,7 +115,10 @@ public class LayoutEnginePage: LayoutEngineItem, Hashable {
     }
 
     func edge(toSourcePage sourcePage: LayoutEnginePage) -> Edge? {
-        let sourcePageFrame = sourcePage.layoutFrame
+        return self.edge(to: sourcePage.layoutFrame)
+    }
+
+    func edge(to sourcePageFrame: CGRect) -> Edge? {
         let midPoint = self.layoutFrame.midPoint
         //Check if inside
         guard sourcePageFrame.contains(midPoint) == false else {

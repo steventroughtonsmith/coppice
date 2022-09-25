@@ -132,7 +132,7 @@
                                         </textFieldCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
-                                    <tableColumn identifier="parent" width="223.5" minWidth="10" maxWidth="3.4028234663852886e+38" id="lhX-A8-mCc">
+                                    <tableColumn identifier="parent" width="194.5" minWidth="10" maxWidth="3.4028234663852886e+38" id="lhX-A8-mCc">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Parent">
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

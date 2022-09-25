@@ -31,8 +31,9 @@ extension CanvasKeyEventContext {
     func keyUp(withCode: UInt16, modifiers: LayoutEventModifiers, in layout: LayoutEngine) {}
 }
 
-public protocol CanvasHoverEventContext {
+public protocol CanvasHoverEventContext: AnyObject {
     func cursorMoved(to location: CGPoint, modifiers: LayoutEventModifiers, in layout: LayoutEngine)
+    func cleanUp(in layoutEngine: LayoutEngine)
 }
 
 
@@ -59,10 +60,14 @@ public protocol LayoutEngine: AnyObject {
     var canvasSize: CGSize { get }
     var selectionRect: CGRect? { get set }
     var pageUnderMouse: LayoutEnginePage? { get set }
+    var cursorPage: LayoutEnginePage? { get set }
 
     var pages: [LayoutEnginePage] { get }
     func page(withID: UUID) -> LayoutEnginePage?
+
     var links: [LayoutEngineLink] { get }
+    func add(_ links: [LayoutEngineLink])
+    func remove(_ links: [LayoutEngineLink])
 
     func select(_ item: [LayoutEngineItem], extendingSelection: Bool)
     func deselect(_ items: [LayoutEngineItem])
@@ -75,6 +80,9 @@ public protocol LayoutEngine: AnyObject {
     func finishedModifying(_ items: [LayoutEngineItem])
     func tellDelegateToRemove(_ items: [LayoutEngineItem])
 
+    var isLinking: Bool { get }
+    func startLinking()
+    func finishLinking(withDestination page: LayoutEnginePage?)
     func linksChanged()
 
     func startEditing(_ page: LayoutEnginePage, atContentPoint point: CGPoint)

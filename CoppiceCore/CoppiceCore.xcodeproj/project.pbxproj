@@ -19,6 +19,8 @@
 		9948C0E12898298600DB754E /* TestData.ModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9948C0E02898298600DB754E /* TestData.ModelController.swift */; };
 		994E570428D74E7F0063E1D6 /* StandardHoverEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994E570328D74E7F0063E1D6 /* StandardHoverEventContext.swift */; };
 		9955BD3528BA65E40040FEE9 /* NSBezierPath+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9955BD3428BA65E30040FEE9 /* NSBezierPath+M3Extensions.swift */; };
+		9969905928D88C6D002A7372 /* CreateLinkHoverEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9969905828D88C6D002A7372 /* CreateLinkHoverEventContext.swift */; };
+		9969905B28D8B5FF002A7372 /* CreateLinkMouseEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9969905A28D8B5FF002A7372 /* CreateLinkMouseEventContext.swift */; };
 		997ABC482882E96E00A75722 /* CanvasLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997ABC472882E96E00A75722 /* CanvasLink.swift */; };
 		9991FE2628C4E20200946746 /* SelectLinkEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9991FE2528C4E20200946746 /* SelectLinkEventContext.swift */; };
 		99983E71278C9D660020759D /* MockLayoutEnginePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99983E70278C9D660020759D /* MockLayoutEnginePageView.swift */; };
@@ -139,6 +141,8 @@
 		9948C0E02898298600DB754E /* TestData.ModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.ModelController.swift; sourceTree = "<group>"; };
 		994E570328D74E7F0063E1D6 /* StandardHoverEventContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardHoverEventContext.swift; sourceTree = "<group>"; };
 		9955BD3428BA65E30040FEE9 /* NSBezierPath+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSBezierPath+M3Extensions.swift"; sourceTree = "<group>"; };
+		9969905828D88C6D002A7372 /* CreateLinkHoverEventContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateLinkHoverEventContext.swift; sourceTree = "<group>"; };
+		9969905A28D8B5FF002A7372 /* CreateLinkMouseEventContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateLinkMouseEventContext.swift; sourceTree = "<group>"; };
 		997ABC472882E96E00A75722 /* CanvasLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasLink.swift; sourceTree = "<group>"; };
 		9991FE2528C4E20200946746 /* SelectLinkEventContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLinkEventContext.swift; sourceTree = "<group>"; };
 		99983E70278C9D660020759D /* MockLayoutEnginePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLayoutEnginePageView.swift; sourceTree = "<group>"; };
@@ -548,14 +552,16 @@
 		99D0C8D324C5FBEA002EEBFA /* Event Contexts */ = {
 			isa = PBXGroup;
 			children = (
+				99D0C8D624C5FBEA002EEBFA /* CanvasEventContext.swift */,
 				99D0C8D424C5FBEA002EEBFA /* CanvasSelectionEventContext.swift */,
 				99D0C8D524C5FBEA002EEBFA /* KeyboardMovePageEventContext.swift */,
-				99D0C8D624C5FBEA002EEBFA /* CanvasEventContext.swift */,
 				99D0C8D724C5FBEA002EEBFA /* SelectAndMoveEventContext.swift */,
 				99D0C8D824C5FBEA002EEBFA /* RemoveItemEventContext.swift */,
 				9991FE2528C4E20200946746 /* SelectLinkEventContext.swift */,
 				99D0C8D924C5FBEA002EEBFA /* ResizePageEventContext.swift */,
 				994E570328D74E7F0063E1D6 /* StandardHoverEventContext.swift */,
+				9969905828D88C6D002A7372 /* CreateLinkHoverEventContext.swift */,
+				9969905A28D8B5FF002A7372 /* CreateLinkMouseEventContext.swift */,
 			);
 			path = "Event Contexts";
 			sourceTree = "<group>";
@@ -705,6 +711,7 @@
 				99D0C87324C5E0B2002EEBFA /* NSEdgeInsets+M3Extensions.swift in Sources */,
 				99D0C86F24C5E080002EEBFA /* CoppiceUserDefaults.swift in Sources */,
 				99D0C80B24C5DE79002EEBFA /* Canvas.swift in Sources */,
+				9969905928D88C6D002A7372 /* CreateLinkHoverEventContext.swift in Sources */,
 				99D0C80824C5DE79002EEBFA /* LegacyPageHierarchy.swift in Sources */,
 				99D0C80F24C5DE79002EEBFA /* ModelObjects+Pasteboard.swift in Sources */,
 				99D0C87524C5E0E1002EEBFA /* Array+M3Extensions.swift in Sources */,
@@ -724,6 +731,7 @@
 				99C88C7B28A13B68006791CB /* Set+M3Extensions.swift in Sources */,
 				99D0C8F124C728C7002EEBFA /* ArrowDrawHelper.swift in Sources */,
 				99D0C8DA24C5FBEA002EEBFA /* CanvasLayoutEngine+Configuration.swift in Sources */,
+				9969905B28D8B5FF002A7372 /* CreateLinkMouseEventContext.swift in Sources */,
 				99D0C8DD24C5FBEA002EEBFA /* LayoutEngineLink.swift in Sources */,
 				99D0C80E24C5DE79002EEBFA /* Canvas+Pages.swift in Sources */,
 				9948C0D82896BA8700DB754E /* Plist.swift in Sources */,

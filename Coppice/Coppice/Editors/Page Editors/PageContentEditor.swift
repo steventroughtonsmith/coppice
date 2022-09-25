@@ -10,6 +10,7 @@ import AppKit
 import Foundation
 
 import CoppiceCore
+import M3Data
 
 enum PageContentEditorViewMode: Equatable {
     case full
@@ -25,6 +26,7 @@ protocol PageContentEditor: Editor {
     func openLink(at point: CGPoint)
     func highlightLinks(matching pageLink: PageLink)
     func unhighlightLinks()
+    func createLink(to page: Page)
 
     func enterFocusMode()
     func exitFocusMode()
@@ -40,12 +42,24 @@ extension PageContentEditor {
 
     func highlightLinks(matching pageLink: PageLink) {}
     func unhighlightLinks() {}
+    func createLink(to page: Page) {}
 
     var pageEditorViewController: PageEditorViewController? {
         var currentParent = self.parentEditor
         while currentParent != nil {
             if let pageEditorViewController = currentParent as? PageEditorViewController {
                 return pageEditorViewController
+            }
+            currentParent = currentParent?.parentEditor
+        }
+        return nil
+    }
+
+    var canvasPageViewController: CanvasPageViewController? {
+        var currentParent = self.parentEditor
+        while currentParent != nil {
+            if let canvasPageViewController = currentParent as? CanvasPageViewController {
+                return canvasPageViewController
             }
             currentParent = currentParent?.parentEditor
         }

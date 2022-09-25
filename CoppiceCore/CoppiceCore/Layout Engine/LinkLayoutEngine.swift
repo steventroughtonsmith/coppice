@@ -23,6 +23,7 @@ public class LinkLayoutEngine {
                 assertionFailure("Adding a link to the layout engine twice: \(link.id)")
                 continue
             }
+            link.linkLayoutEngine = self
             link.canvasLayoutEngine = self.canvasLayoutEngine
             self.links.append(link)
             self.linksByUUID[link.id] = link
@@ -36,6 +37,7 @@ public class LinkLayoutEngine {
         }
         self.links = self.links.filter { !links.contains($0) }
         for link in links {
+            link.linkLayoutEngine = nil
             self.linksByUUID.removeValue(forKey: link.id)
         }
 

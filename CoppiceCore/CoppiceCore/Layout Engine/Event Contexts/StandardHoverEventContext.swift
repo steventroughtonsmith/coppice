@@ -61,12 +61,14 @@ class StandardHoverEventContext: CanvasHoverEventContext {
             highlightedLinks = []
             highlightedPage = nil
         case .page(let page, let link):
-            highlightedLinks = layout.links.filter { $0.sourcePageID == page.id && $0.pageLink.destination == link?.destination }
+            highlightedLinks = layout.links.filter { $0.sourcePageID == page.id && $0.pageLink?.destination == link?.destination }
             highlightedPage = page
         case .link(let link):
             highlightedLinks = [link]
             let page = layout.page(withID: link.sourcePageID)
-            page?.view?.highlightLinks(matching: link.pageLink)
+            if let pageLink = link.pageLink {
+                page?.view?.highlightLinks(matching: pageLink)
+            }
             highlightedPage = page
         }
 
@@ -82,4 +84,6 @@ class StandardHoverEventContext: CanvasHoverEventContext {
             layout.linksChanged()
         }
     }
+
+    func cleanUp(in layoutEngine: LayoutEngine) {}
 }

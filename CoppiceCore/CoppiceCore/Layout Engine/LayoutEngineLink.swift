@@ -24,15 +24,17 @@ public struct ArrowPoint: Equatable {
 }
 
 public class LayoutEngineLink: LayoutEngineItem {
-    public let pageLink: PageLink
+    public let pageLink: PageLink?
     public let sourcePageID: UUID
     public let destinationPageID: UUID
     public var highlighted: Bool = false
 
+    weak var linkLayoutEngine: LinkLayoutEngine?
+
     public var sourcePoint: ArrowPoint = .init(point: .zero, edge: .left)
     public var destinationPoint: ArrowPoint = .init(point: .zero, edge: .right)
 
-    public init(id: UUID, pageLink: PageLink, sourcePageID: UUID, destinationPageID: UUID, canvasLayoutEngine: CanvasLayoutEngine? = nil) {
+    public init(id: UUID, pageLink: PageLink?, sourcePageID: UUID, destinationPageID: UUID, canvasLayoutEngine: CanvasLayoutEngine? = nil) {
         self.pageLink = pageLink
         self.sourcePageID = sourcePageID
         self.destinationPageID = destinationPageID

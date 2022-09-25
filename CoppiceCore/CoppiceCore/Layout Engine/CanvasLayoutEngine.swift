@@ -33,6 +33,7 @@ public protocol CanvasLayoutEngineDelegate: AnyObject {
     func moved(pages: [LayoutEnginePage], in layout: CanvasLayoutEngine)
     func remove(items: [LayoutEngineItem], from layout: CanvasLayoutEngine)
     func reordered(pages: [LayoutEnginePage], in layout: CanvasLayoutEngine)
+    func finishLinking(withDestination: LayoutEnginePage?, in layout: CanvasLayoutEngine)
 }
 
 
@@ -150,9 +151,13 @@ public class CanvasLayoutEngine: NSObject, LayoutEngine {
         }
     }
 
+    public var cursorPage: LayoutEnginePage?
 
     //MARK: - Retrieving Pages
     public func page(withID uuid: UUID) -> LayoutEnginePage? {
+        if cursorPage?.id == uuid {
+            return cursorPage
+        }
         return self.pagesByUUID[uuid]
     }
 
@@ -297,7 +302,7 @@ public class CanvasLayoutEngine: NSObject, LayoutEngine {
         self.enabledPage = page
     }
 
-    private(set) var pageBeingEdited: LayoutEnginePage? {
+    public private(set) var pageBeingEdited: LayoutEnginePage? {
         didSet {
             guard self.pageBeingEdited != oldValue else {
                 return
@@ -348,10 +353,22 @@ public class CanvasLayoutEngine: NSObject, LayoutEngine {
     }
 
     //MARK: - Link Creation
+
+    public var isLinking: Bool {
+        return self.currentHoverEventContext is CreateLinkHoverEventContext
+    }
+
     public func startLinking() {
-        //Create link hover event context
-        //On mouse down on valid page create link mouse event context
-        //On mouse up tell page to create link to page with selected content
+        guard let editingPage = self.pageBeingEdited else {
+            return
+        }
+
+        self.currentHoverEventContext = CreateLinkHoverEventContext(page: editingPage)
+    }
+
+    public func finishLinking(withDestination page: LayoutEnginePage?) {
+        self.delegate?.finishLinking(withDestination: page, in: self)
+        self.currentHoverEventContext = StandardHoverEventContext()
     }
 
 
@@ -392,10 +409,17 @@ public class CanvasLayoutEngine: NSObject, LayoutEngine {
             self.informOfLayoutChange(with: LayoutContext(backgroundVisibilityChanged: true))
         }
     }
-    private(set) var currentHoverEventContext: CanvasHoverEventContext = StandardHoverEventContext()
+
+    private(set) var currentHoverEventContext: CanvasHoverEventContext = StandardHoverEventContext() {
+        didSet {
+            guard self.currentHoverEventContext !== oldValue else {
+                return
+            }
+            oldValue.cleanUp(in: self)
+        }
+    }
 
     public func moveEvent(at location: CGPoint, modifiers: LayoutEventModifiers = []) {
-//        self.updateItemUnderMouse(with: location)
         self.currentHoverEventContext.cursorMoved(to: location, modifiers: modifiers, in: self)
     }
 
