@@ -67,7 +67,11 @@ public class CanvasLayoutEngineEventContextFactory: LayoutEngineEventContextFact
             return nil
         }
 
-        if KeyboardMovePageEventContext.acceptedKeyCodes.contains(keyCode) {
+        if layoutEngine.isLinking {
+            if CreateLinkKeyEventContext.acceptedKeyCodes.contains(keyCode) {
+                return CreateLinkKeyEventContext(layoutEngine: layoutEngine)
+            }
+        } else if KeyboardMovePageEventContext.acceptedKeyCodes.contains(keyCode) {
             let pages = selectedItems.pages
             guard pages.count > 0 else {
                 return nil

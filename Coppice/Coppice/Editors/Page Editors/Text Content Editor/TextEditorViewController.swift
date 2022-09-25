@@ -598,6 +598,14 @@ extension TextEditorViewController: NSTextViewDelegate {
     func textShouldEndEditing(_ textObject: NSText) -> Bool {
         return true
     }
+
+    func textView(_ textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
+        if self.canvasEditorViewController?.layoutEngine.isLinking == true, commandSelector == #selector(cancelOperation(_:)) {
+            self.canvasEditorViewController?.layoutEngine.finishLinking(withDestination: nil)
+            return true
+        }
+        return false
+    }
 }
 
 
