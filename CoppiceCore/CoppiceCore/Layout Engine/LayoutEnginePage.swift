@@ -196,7 +196,7 @@ public class LayoutEnginePage: LayoutEngineItem, Hashable {
         return CGRect(origin: .zero, size: self.minimumContentSize).grow(by: margins).size
     }
 
-    public override var layoutFrame: CGRect {
+    override public var layoutFrame: CGRect {
         get {
             let canvasOrigin = self.canvasLayoutEngine?.convertPointToCanvasSpace(self.contentFrame.origin) ?? self.contentFrame.origin
             let canvasFrame = CGRect(origin: canvasOrigin, size: self.contentFrame.size)

@@ -6,8 +6,8 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import Foundation
 import AppKit
+import Foundation
 
 public struct ArrowPoint: Equatable {
     public var point: CGPoint
@@ -73,8 +73,7 @@ public class LayoutEngineLink: LayoutEngineItem {
 
 
     //MARK: - Frames
-
-    public override var layoutFrame: CGRect {
+    override public var layoutFrame: CGRect {
         get {
             guard let basicFrame = CGRect(points: [self.sourcePoint.point, self.destinationPoint.point]) else {
                 return .zero

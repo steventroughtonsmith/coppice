@@ -6,8 +6,8 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import Foundation
 import AppKit
+import Foundation
 
 public struct LayoutEventModifiers: OptionSet {
     public let rawValue: UInt
@@ -155,8 +155,8 @@ public class CanvasLayoutEngine: NSObject, LayoutEngine {
 
     //MARK: - Retrieving Pages
     public func page(withID uuid: UUID) -> LayoutEnginePage? {
-        if cursorPage?.id == uuid {
-            return cursorPage
+        if self.cursorPage?.id == uuid {
+            return self.cursorPage
         }
         return self.pagesByUUID[uuid]
     }
@@ -422,12 +422,6 @@ public class CanvasLayoutEngine: NSObject, LayoutEngine {
     public func moveEvent(at location: CGPoint, modifiers: LayoutEventModifiers = []) {
         self.currentHoverEventContext.cursorMoved(to: location, modifiers: modifiers, in: self)
     }
-
-
-    //MARK: - Hovering
-
-    
-
 
     //MARK: - Manage Key Events
     private var keyEvents = [UInt16: CanvasKeyEventContext]()

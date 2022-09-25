@@ -170,6 +170,10 @@ extension ImageEditorViewModeViewController: PageContentEditor {
     func unhighlightLinks() {
         self.layoutEngine.highlightedPageLink = nil
     }
+
+    func createLink(to page: Page) {
+        self.viewModel.linkEditor.updateSelection(with: .pageLink(page.linkToPage(from: self.viewModel.imageContent.page)))
+    }
 }
 
 extension ImageEditorViewModeViewController: ImageEditorHotspotLayoutEngineDelegate {

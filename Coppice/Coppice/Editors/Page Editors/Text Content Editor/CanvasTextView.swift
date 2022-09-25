@@ -99,7 +99,7 @@ class CanvasTextView: NSTextView {
     private var highlightedCharacterViews: [HighlightedCharacterView] = [] {
         didSet {
             oldValue.forEach { $0.removeFromSuperview() }
-            highlightedCharacterViews.forEach { self.addSubview($0) }
+            self.highlightedCharacterViews.forEach { self.addSubview($0) }
         }
     }
 

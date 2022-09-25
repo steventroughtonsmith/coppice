@@ -38,5 +38,4 @@ class SelectLinkEventContext: CanvasMouseEventContext {
             layout.select([self.link], extendingSelection: false)
         }
     }
-
 }

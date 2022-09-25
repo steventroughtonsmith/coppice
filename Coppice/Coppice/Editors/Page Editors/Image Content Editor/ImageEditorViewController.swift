@@ -105,6 +105,10 @@ class ImageEditorViewController: NSViewController, NSMenuItemValidation, NSToolb
         self.linkInspectorViewController.startEditingLink()
     }
 
+    @IBAction func linkToCanvasPage(_ sender: Any) {
+        self.canvasEditorViewController?.linkToPage(from: self)
+    }
+
 	//MARK: - Valdiation
     func validateToolbarItem(_ item: NSToolbarItem) -> Bool {
         if item.action == #selector(self.editLink(_:)) {
@@ -118,6 +122,9 @@ class ImageEditorViewController: NSViewController, NSMenuItemValidation, NSToolb
         if menuItem.action == #selector(self.editLink(_:)) {
             menuItem.toolTip = NSLocalizedString("Image Pages don't current support links", comment: "Image Pages link to page disabled tooltip")
             return false
+        }
+        if menuItem.action == #selector(self.linkToCanvasPage(_:)) {
+            return self.isInCanvas && self.viewModel.linkEditor.selectedLink != .noSelection
         }
         return true
     }
@@ -163,6 +170,10 @@ extension ImageEditorViewController: PageContentEditor {
 
     func unhighlightLinks() {
         self.editorModeViewController?.unhighlightLinks()
+    }
+
+    func createLink(to page: Page) {
+        self.editorModeViewController?.createLink(to: page)
     }
 }
 

@@ -473,7 +473,7 @@ extension TextEditorViewController: PageContentEditor {
         }
         self.editingTextView.highlightedCharacterRanges = characterRanges
     }
-    
+
     func unhighlightLinks() {
         self.editingTextView.highlightedCharacterRanges = []
     }

@@ -41,7 +41,7 @@ class DebugDocumentBuilder: NSObject {
     }
 
     private func createLinkTypesCanvas(using mc: CoppiceModelController) {
-        let folder = mc.createFolder(in: mc.rootFolder) { $0.title = "Canvas Link Types"}
+        let folder = mc.createFolder(in: mc.rootFolder) { $0.title = "Canvas Link Types" }
 
         let a = mc.createPage(in: folder) { $0.title = "A"; $0.contentSize = Page.defaultMinimumContentSize }
         let b = mc.createPage(in: folder) { $0.title = "B"; $0.contentSize = Page.defaultMinimumContentSize }
@@ -120,7 +120,6 @@ class DebugDocumentBuilder: NSObject {
         self.addLinks(from: cpT, to: [cpU], on: canvas)
         self.addLinks(from: cpU, to: [cpV, cpW], on: canvas)
         self.addLinks(from: cpV, to: [cpT], on: canvas)
-
     }
 
     private func createImageLinkCanvas(using mc: CoppiceModelController) {
@@ -150,7 +149,7 @@ class DebugDocumentBuilder: NSObject {
                         CGPoint(x: 96, y: 32),
                         CGPoint(x: 96, y: 96),
                         CGPoint(x: 32, y: 96),
-                    ], link: textPage.linkToPage().url)
+                    ], link: textPage.linkToPage().url),
                 ]
             }
         }
@@ -167,7 +166,7 @@ class DebugDocumentBuilder: NSObject {
                         CGPoint(x: 80, y: 80),
                         CGPoint(x: 50, y: 110),
                         CGPoint(x: 30, y: 80),
-                    ], link: textPage.linkToPage().url)
+                    ], link: textPage.linkToPage().url),
                 ]
             }
         }
@@ -203,7 +202,7 @@ class DebugDocumentBuilder: NSObject {
                         CGPoint(x: 80, y: 20),
                         CGPoint(x: 80, y: 40),
                         CGPoint(x: 60, y: 20),
-                    ], link: polygonImagePage.linkToPage().url)
+                    ], link: polygonImagePage.linkToPage().url),
                 ]
             }
         }
@@ -215,8 +214,8 @@ class DebugDocumentBuilder: NSObject {
 
         let textCP = canvas.addPages([textPage], centredOn: CGPoint(x: -1 * grid, y: -1 * grid))[0]
         let rectangleCP = canvas.addPages([rectangleImagePage], centredOn: CGPoint(x: grid, y: -1 * grid))[0]
-        let ovalCP = canvas.addPages([ovalImagePage], centredOn: CGPoint(x: -1 * grid, y: grid))[0]
-        let polygonCP = canvas.addPages([polygonImagePage], centredOn: CGPoint(x: grid, y: grid))[0]
+//        let ovalCP = canvas.addPages([ovalImagePage], centredOn: CGPoint(x: -1 * grid, y: grid))[0]
+//        let polygonCP = canvas.addPages([polygonImagePage], centredOn: CGPoint(x: grid, y: grid))[0]
 
         self.addLinks(from: textCP, to: [rectangleCP], on: canvas)
 

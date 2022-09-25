@@ -70,7 +70,7 @@ class ImageEditorHotspotLayoutEngine {
                 return
             }
 
-            guard let pageLink = self.highlightedPageLink else {
+            guard let highlightedPageLink = self.highlightedPageLink else {
                 self.hotspots.forEach { $0.isHighlighted = false }
                 self.delegate?.layoutDidChange(in: self)
                 return
@@ -85,7 +85,7 @@ class ImageEditorHotspotLayoutEngine {
                     continue
                 }
 
-                hotspot.isHighlighted = (pageLink.destination == self.highlightedPageLink?.destination)
+                hotspot.isHighlighted = (pageLink.destination == highlightedPageLink.destination)
             }
             self.delegate?.layoutDidChange(in: self)
         }

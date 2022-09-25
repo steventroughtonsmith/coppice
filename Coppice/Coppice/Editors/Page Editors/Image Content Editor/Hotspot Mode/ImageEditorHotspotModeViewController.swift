@@ -207,6 +207,10 @@ class ImageEditorHotspotModeViewController: NSViewController {
 extension ImageEditorHotspotModeViewController: PageContentEditor {
     func startEditing(at point: CGPoint) {}
     func stopEditing() {}
+
+    func createLink(to page: Page) {
+        self.viewModel.linkEditor.updateSelection(with: .pageLink(page.linkToPage(from: self.viewModel.imageContent.page)))
+    }
 }
 
 extension ImageEditorHotspotModeViewController: ImageEditorHotspotLayoutEngineDelegate {
