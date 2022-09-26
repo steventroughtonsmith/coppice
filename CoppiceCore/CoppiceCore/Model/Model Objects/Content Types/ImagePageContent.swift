@@ -110,6 +110,7 @@ public class ImagePageContent: NSObject, PageContent {
             guard self.hotspots != oldValue else {
                 return
             }
+            self.findAllLinks()
             self.didChange(\.hotspots, oldValue: oldValue)
         }
     }
@@ -140,6 +141,8 @@ public class ImagePageContent: NSObject, PageContent {
         } else {
             self.cropRect = .zero
         }
+        super.init()
+        self.findAllLinks()
     }
 
     public init(modelFile: ModelFile) throws {
@@ -183,6 +186,9 @@ public class ImagePageContent: NSObject, PageContent {
         if self.cropRect == .zero, let image = self.image {
             self.cropRect = CGRect(origin: .zero, size: image.size)
         }
+
+        super.init()
+        self.findAllLinks()
     }
 
     public var modelFile: ModelFile {
@@ -216,6 +222,24 @@ public class ImagePageContent: NSObject, PageContent {
             return currentSize
         }
         return self.cropRect.size
+    }
+
+
+    //MARK: - Link
+    public private(set) var pageLinks: Set<PageLink> = []
+
+    private func findAllLinks() {
+        var newLinks = Set<PageLink>()
+        for hotspot in self.hotspots {
+            if let link = hotspot.link, let pageLink = PageLink(url: link) {
+                newLinks.insert(pageLink)
+            }
+        }
+
+        if self.pageLinks != newLinks {
+            self.pageLinks = newLinks
+            NotificationCenter.default.post(name: .pageContentLinkDidChange, object: self)
+        }
     }
 }
 

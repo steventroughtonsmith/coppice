@@ -9,7 +9,7 @@
 import Cocoa
 import M3Data
 
-public struct PageLink: Equatable {
+public struct PageLink: Equatable, Hashable {
     public static let host = "page"
     public static let querySourceName = "source"
     public static let queryAutoName = "auto"

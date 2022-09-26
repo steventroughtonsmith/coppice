@@ -49,6 +49,13 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
 
     //MARK: - Observation
 
+    //MARK: - Subscribers
+    private enum SubscriberKey {
+        case pageContentDidChange
+    }
+
+    private var subscribers: [SubscriberKey: AnyCancellable] = [:]
+
     var defaultsObserver: NSObjectProtocol?
 
     private func setupObservers() {
@@ -72,6 +79,17 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
         self.windowResignKeyObserver = NotificationCenter.default.addObserver(forName: NSWindow.didResignKeyNotification, object: self.view.window, queue: .main, using: { [weak self] (_) in
             self?.updateActivateState(with: self?.view.window?.firstResponder)
         })
+
+        self.subscribers[.pageContentDidChange] = NotificationCenter.default.publisher(for: .pageContentLinkDidChange).sink { [weak self] notification in
+            guard let self, let content = notification.object as? PageContent else {
+                return
+            }
+            if content.page?.canvasPages.map(\.canvas).contains(self.viewModel.canvas) == true {
+                DispatchQueue.main.async {
+                    self.forceFullLayout()
+                }
+            }
+        }
     }
 
     private func cleanUpActiveStateObservers() {
@@ -356,6 +374,7 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
         for arrow in self.layoutEngine.links {
             let arrowView = self.arrowView(for: arrow)
             arrowView.arrow = arrow
+            arrowView.sourcePage = self.viewModel.sourcePage(for: arrow)
             arrowView.frame = arrow.layoutFrame
 
             newArrows.append(arrow)

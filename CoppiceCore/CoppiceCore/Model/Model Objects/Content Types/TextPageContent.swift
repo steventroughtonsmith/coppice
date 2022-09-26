@@ -11,11 +11,12 @@ import M3Data
 
 public class TextPageContent: NSObject, PageContent {
     public let contentType = PageContentType.text
-    @objc dynamic public  var text: NSAttributedString = NSAttributedString(string: "", attributes: [.font: Page.defaultFont]) {
+    @objc dynamic public var text: NSAttributedString = NSAttributedString(string: "", attributes: [.font: Page.defaultFont]) {
         didSet {
             guard self.text != oldValue else {
                 return
             }
+            self.findAllLinks()
             self.didChange(\.text, oldValue: oldValue)
         }
     }
@@ -34,6 +35,8 @@ public class TextPageContent: NSObject, PageContent {
             self.text = text
         }
         self.otherMetadata = modelFile.metadata
+        super.init()
+        self.findAllLinks()
     }
 
     public init(data: Data? = nil) {
@@ -42,6 +45,8 @@ public class TextPageContent: NSObject, PageContent {
         {
             self.text = text
         }
+        super.init()
+        self.findAllLinks()
     }
 
     public var modelFile: ModelFile {
@@ -85,6 +90,27 @@ public class TextPageContent: NSObject, PageContent {
         contentSize.width = max(adjustedContentSize.width + 10, minimumSize.width)
         contentSize.height = max(adjustedContentSize.height + 20, minimumSize.height)
         return contentSize
+    }
+
+    //MARK: - Links
+    public private(set) var pageLinks: Set<PageLink> = []
+
+    private func findAllLinks() {
+        var newLinks = Set<PageLink>()
+        self.text.enumerateAttribute(.link, in: self.text.fullRange) { value, _, _ in
+            guard let url = value as? URL else {
+                return
+            }
+
+            if let pageLink = PageLink(url: url) {
+                newLinks.insert(pageLink)
+            }
+        }
+
+        if self.pageLinks != newLinks {
+            self.pageLinks = newLinks
+            NotificationCenter.default.post(name: .pageContentLinkDidChange, object: self)
+        }
     }
 }
 

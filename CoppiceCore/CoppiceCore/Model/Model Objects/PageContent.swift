@@ -94,6 +94,8 @@ public protocol PageContent: AnyObject {
     var modelFile: ModelFile { get }
     var maintainAspectRatio: Bool { get }
     var otherMetadata: [String: Any]? { get }
+    var pageLinks: Set<PageLink> { get }
+
 
     func firstMatch(forSearchString searchString: String) -> PageContentMatch?
 
@@ -125,5 +127,9 @@ extension PageContent {
     public func firstMatch(forSearchString searchString: String) -> NSRange {
         return NSRange(location: NSNotFound, length: 0)
     }
+}
+
+extension Notification.Name {
+    public static let pageContentLinkDidChange = Notification.Name("M3PageContentLinkDidChangeNotification")
 }
 

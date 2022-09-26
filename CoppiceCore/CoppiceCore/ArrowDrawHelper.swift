@@ -13,21 +13,24 @@ public class ArrowDrawHelper {
         self.config = config
     }
 
-    public func draw(_ arrow: LayoutEngineLink, with colour: NSColor, borderColor: NSColor?) {
+    public func draw(_ arrow: LayoutEngineLink, with colour: NSColor, borderColor: NSColor?, isConcrete: Bool) {
         let lineWidth = self.config.lineWidth
         if let borderColor {
-            self.drawLine(for: arrow, with: borderColor, lineWidth: lineWidth + 3)
+            self.drawLine(for: arrow, with: borderColor, lineWidth: lineWidth + 3, isConcrete: true)
             self.drawArrowHead(for: arrow, with: borderColor, lineWidth: lineWidth + 3)
         }
 
-        self.drawLine(for: arrow, with: colour, lineWidth: lineWidth)
+        self.drawLine(for: arrow, with: colour, lineWidth: lineWidth, isConcrete: isConcrete)
         self.drawArrowHead(for: arrow, with: colour, lineWidth: lineWidth)
     }
 
-    private func drawLine(for arrow: LayoutEngineLink, with lineColour: NSColor, lineWidth: CGFloat) {
+    private func drawLine(for arrow: LayoutEngineLink, with lineColour: NSColor, lineWidth: CGFloat, isConcrete: Bool) {
         let path = arrow.linePath
         lineColour.set()
         path.lineWidth = lineWidth
+        if !isConcrete {
+            path.setLineDash([10.0, 10.0], count: 2, phase: 10.0)
+        }
         path.stroke()
     }
 

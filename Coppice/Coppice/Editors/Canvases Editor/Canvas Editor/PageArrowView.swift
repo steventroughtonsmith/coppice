@@ -22,6 +22,12 @@ class PageArrowView: NSView {
         }
     }
 
+    var sourcePage: Page? {
+        didSet {
+            self.setNeedsDisplay(self.bounds)
+        }
+    }
+
     let config: CanvasLayoutEngine.Configuration.Arrow
     private let drawHelper: ArrowDrawHelper
     init(config: CanvasLayoutEngine.Configuration.Arrow) {
@@ -68,6 +74,11 @@ class PageArrowView: NSView {
             borderColor = nil
         }
 
-        self.drawHelper.draw(arrow, with: arrowColor, borderColor: borderColor)
+        var isConcrete = false
+        if let pageLink = self.arrow?.pageLink, let sourcePage = self.sourcePage {
+            isConcrete = sourcePage.content.pageLinks.contains(where: { $0.destination == pageLink.destination })
+        }
+
+        self.drawHelper.draw(arrow, with: arrowColor, borderColor: borderColor, isConcrete: isConcrete)
     }
 }

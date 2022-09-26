@@ -73,6 +73,7 @@ class CanvasElementView: NSView  {
         self.updateSubviews(with: layoutPage)
         self.updateResizeRects(with: layoutPage)
         self.updateAccessibilityResizeElements(with: layoutPage)
+        self.updateMessageView(with: layoutPage.message)
         self.showBackground = layoutPage.showBackground
         self.titleView.enabled = layoutPage.showBackground
         self.backgroundView.selected = layoutPage.selected
@@ -124,6 +125,36 @@ class CanvasElementView: NSView  {
         return view
     }()
 
+    private lazy var messageView: NSBox = {
+        let box = NSBox()
+        box.boxType = .custom
+        box.borderWidth = 3
+        box.cornerRadius = self.cornerSize - 2
+
+        if let contentView = box.contentView {
+            contentView.addSubview(self.messageLabel)
+            NSLayoutConstraint.activate([
+                self.messageLabel.leadingAnchor.constraint(greaterThanOrEqualTo: contentView.leadingAnchor, constant: 5),
+                self.messageLabel.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: 5),
+                contentView.bottomAnchor.constraint(greaterThanOrEqualTo: self.messageLabel.bottomAnchor, constant: 5),
+                contentView.trailingAnchor.constraint(greaterThanOrEqualTo: self.messageLabel.trailingAnchor, constant: 5),
+                self.messageLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+                self.messageLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            ])
+        }
+        return box
+    }()
+
+    private lazy var messageLabel: NSTextField = {
+        let messageLabel = NSTextField(labelWithString: "")
+        messageLabel.translatesAutoresizingMaskIntoConstraints = false
+        messageLabel.font = NSFont.boldSystemFont(ofSize: 15)
+        messageLabel.alignment = .center
+        messageLabel.lineBreakMode = .byTruncatingTail
+        messageLabel.maximumNumberOfLines = 0
+        return messageLabel
+    }()
+
     private func setupSubviews() {
         self.wantsLayer = true
         self.addSubview(self.backgroundView, withInsets: self.shadowInsets)
@@ -131,11 +162,13 @@ class CanvasElementView: NSView  {
         self.addSubview(self.titleView)
         self.addSubview(self.contentContainerShadow)
         self.addSubview(self.contentContainer)
+        self.addSubview(self.messageView)
         //        self.addSubview(self.debugView)
         self.debugView.frame = self.bounds
 
 
         self.updateBackgroundVisibility(animated: false)
+        self.updateMessageView(with: nil)
         self.setupAccessibility()
     }
 
@@ -146,6 +179,7 @@ class CanvasElementView: NSView  {
         self.contentContainer.frame = layoutPage.contentContainerFrame
         self.contentContainerShadow.frame = layoutPage.contentContainerFrame.insetBy(dx: -1, dy: -1)
         self.disabledContentMouseStealer.frame = layoutPage.contentContainerFrame
+        self.messageView.frame = layoutPage.contentContainerFrame
     }
 
     override func updateLayer() {
@@ -195,6 +229,23 @@ class CanvasElementView: NSView  {
         })
     }
 
+
+    //MARK: - Message
+    private func updateMessageView(with message: LayoutEnginePage.Message?) {
+        guard let message else {
+            self.messageView.isHidden = true
+            return
+        }
+        self.messageView.isHidden = false
+        self.messageView.borderColor = message.color
+        self.messageView.fillColor = message.color.withAlphaComponent(0.85)
+        self.messageLabel.stringValue = message.message
+        if message.color.contrastRatio(to: .white) >= 4.5 {
+            self.messageLabel.textColor = .white
+        } else {
+            self.messageLabel.textColor = .black
+        }
+    }
 
     //MARK: - Mouse Stealer
     private func updateMouseStealerVisibility() {

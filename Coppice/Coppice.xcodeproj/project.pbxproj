@@ -164,7 +164,6 @@
 		9973EC5727E659CE00E388A0 /* ImageEditorPolygonHotspotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9973EC5627E659CE00E388A0 /* ImageEditorPolygonHotspotTests.swift */; };
 		99757C1627EE1FFD005C8A48 /* ImageEditorHotspotModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99757C1527EE1FFD005C8A48 /* ImageEditorHotspotModeView.swift */; };
 		99771190239A95C300FCC8C7 /* TextLinkFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9977118F239A95C300FCC8C7 /* TextLinkFinder.swift */; };
-		99771194239BF97600FCC8C7 /* NSAttributedString+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99771193239BF97600FCC8C7 /* NSAttributedString+M3Extensions.swift */; };
 		99771196239C530700FCC8C7 /* PageLinkManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99771195239C530700FCC8C7 /* PageLinkManagerTests.swift */; };
 		9977119A239E89B200FCC8C7 /* DocumentWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FE01E222D4CC8A004D380D /* DocumentWindowController.swift */; };
 		9977119C239E91FD00FCC8C7 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9977119B239E91FD00FCC8C7 /* ViewModel.swift */; };
@@ -628,7 +627,6 @@
 		9973EC5627E659CE00E388A0 /* ImageEditorPolygonHotspotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorPolygonHotspotTests.swift; sourceTree = "<group>"; };
 		99757C1527EE1FFD005C8A48 /* ImageEditorHotspotModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorHotspotModeView.swift; sourceTree = "<group>"; };
 		9977118F239A95C300FCC8C7 /* TextLinkFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLinkFinder.swift; sourceTree = "<group>"; };
-		99771193239BF97600FCC8C7 /* NSAttributedString+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+M3Extensions.swift"; sourceTree = "<group>"; };
 		99771195239C530700FCC8C7 /* PageLinkManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageLinkManagerTests.swift; sourceTree = "<group>"; };
 		9977119B239E91FD00FCC8C7 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		997711C9239E9AF400FCC8C7 /* MockDocumentWindowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDocumentWindowViewModel.swift; sourceTree = "<group>"; };
@@ -1102,7 +1100,6 @@
 				9902F4A823882ADA00AF646F /* NSSegmentedControl+M3Extensions.swift */,
 				99A0B852238961BF005FCF25 /* NSColor+M3Extensions.swift */,
 				99A0B856238D6F74005FCF25 /* NSTextView+M3Extensions.swift */,
-				99771193239BF97600FCC8C7 /* NSAttributedString+M3Extensions.swift */,
 				998D077C2411578B004ADFF8 /* NSMenu+M3Extensions.swift */,
 				99B3474B2465846900B96B71 /* PixelPerfectTableView.swift */,
 				998CF0FB24ACF6A800EA26A6 /* NSBezierPath+M3Extensions.swift */,
@@ -2621,7 +2618,6 @@
 				992A5C9F22DCCDB30012CCB6 /* NSView+M3Extensions.swift in Sources */,
 				99868F4523995739009AC0F7 /* TextPageLinkManager.swift in Sources */,
 				99C4FBE126C94F11009D035D /* PageSelectorDividerTableCellView.swift in Sources */,
-				99771194239BF97600FCC8C7 /* NSAttributedString+M3Extensions.swift in Sources */,
 				99771190239A95C300FCC8C7 /* TextLinkFinder.swift in Sources */,
 				9985F4DB23F44AAD00B96DC7 /* CanvasPageBackgroundView.swift in Sources */,
 				990B81A4272308CB00628E0B /* VersionMigrator.swift in Sources */,

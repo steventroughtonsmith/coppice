@@ -9,19 +9,19 @@
 import Cocoa
 
 extension String {
-    var fullRange: Range<String.Index> {
+    public var fullRange: Range<String.Index> {
         return self.startIndex..<self.endIndex
     }
 }
 
 extension NSString {
-    var fullRange: NSRange {
+    public var fullRange: NSRange {
         return NSRange(location: 0, length: self.length)
     }
 }
 
 extension NSAttributedString {
-    var fullRange: NSRange {
+    public var fullRange: NSRange {
         return NSRange(location: 0, length: self.length)
     }
 }

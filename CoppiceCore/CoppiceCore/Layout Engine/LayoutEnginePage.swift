@@ -6,6 +6,7 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
+import AppKit
 import Foundation
 
 //Return URL from isLink
@@ -87,6 +88,8 @@ public class LayoutEnginePage: LayoutEngineItem, Hashable {
     public var aspectRatio: CGFloat {
         return self.contentFrame.width / self.contentFrame.height
     }
+
+    public var message: Message?
 
 
     //MARK: - Relationships
@@ -358,6 +361,11 @@ public class LayoutEnginePage: LayoutEngineItem, Hashable {
                 return .top
             }
         }
+    }
+
+    public struct Message {
+        public var message: String
+        public var color: NSColor
     }
 }
 

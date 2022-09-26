@@ -7,6 +7,7 @@
 //
 
 import AppKit
+import CoppiceCore
 
 class HighlightedCharacterView: NSView {
     lazy var background: NSBox = {

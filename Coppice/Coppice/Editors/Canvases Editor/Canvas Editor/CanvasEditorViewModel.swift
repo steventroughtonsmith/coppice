@@ -282,6 +282,10 @@ class CanvasEditorViewModel: ViewModel {
         return self.documentWindowViewModel.pageImageController.imageForPage(with: id)
     }
 
+    func sourcePage(for link: LayoutEngineLink) -> Page? {
+        return self.canvasPage(with: link.sourcePageID)?.page
+    }
+
 
     //MARK: - Links
     private(set) var canvasLinks: Set<CanvasLink> = []

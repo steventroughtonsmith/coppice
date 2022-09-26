@@ -13,7 +13,16 @@ class CreateLinkHoverEventContext: CanvasHoverEventContext {
         self.page = page
     }
 
-    private var currentTargetPage: LayoutEnginePage?
+    private var currentTargetPage: LayoutEnginePage? {
+        didSet {
+            guard currentTargetPage != oldValue else {
+                return
+            }
+            oldValue?.message = nil
+            self.currentTargetPage?.message = LayoutEnginePage.Message(message: "Link to Page", color: .linkColor)
+        }
+    }
+    
     private var currentLink: LayoutEngineLink?
 
     func cursorMoved(to location: CGPoint, modifiers: LayoutEventModifiers, in layout: LayoutEngine) {
@@ -30,13 +39,13 @@ class CreateLinkHoverEventContext: CanvasHoverEventContext {
                                         pageLink: nil,
                                         sourcePageID: self.page.id,
                                         destinationPageID: pageUnderCursor.id)
+                self.currentTargetPage = pageUnderCursor
             } else {
                 link = self.cursorLink(in: layout)
+                self.currentTargetPage = nil
             }
             layout.add([link])
             self.currentLink = link
-
-            self.currentTargetPage = pageUnderCursor
         }
 
         let cursorPage = self.cursorPage(in: layout)
@@ -52,6 +61,7 @@ class CreateLinkHoverEventContext: CanvasHoverEventContext {
         if let currentLink = self.currentLink, currentLink.linkLayoutEngine != nil {
             layoutEngine.remove([currentLink])
         }
+        self.currentTargetPage?.message = nil
         layoutEngine.cursorPage = nil
     }
 
