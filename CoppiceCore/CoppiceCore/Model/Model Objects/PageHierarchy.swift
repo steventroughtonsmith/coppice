@@ -14,7 +14,6 @@ final public class PageHierarchy: NSObject, CollectableModelObject {
     public var id = ModelID(modelType: PageHierarchy.modelType)
     public weak var collection: ModelCollection<PageHierarchy>?
 
-
     //MARK: - Attributes
     public var rootPageID: ModelID?
     public var entryPoints: [EntryPoint] = []
