@@ -225,7 +225,7 @@ class CanvasLayoutEngineEventContextFactoryTests: XCTestCase {
 
         let context = self.factory.createKeyEventContext(for: UInt16(kVK_Delete), in: self.mockLayoutEngine)
         let typedContext = try XCTUnwrap(context as? RemoveItemEventContext)
-        XCTAssertEqual(typedContext.pages, [page1, page2])
+        XCTAssertEqual(typedContext.items, [page1, page2])
     }
 
     func test_createKeyEventContext_returnsRemovePageContextIfForwardDeleteKeySupplied() throws {
@@ -235,7 +235,7 @@ class CanvasLayoutEngineEventContextFactoryTests: XCTestCase {
 
         let context = self.factory.createKeyEventContext(for: UInt16(kVK_ForwardDelete), in: self.mockLayoutEngine)
         let typedContext = try XCTUnwrap(context as? RemoveItemEventContext)
-        XCTAssertEqual(typedContext.pages, [page1, page2])
+        XCTAssertEqual(typedContext.items, [page1, page2])
     }
 
     func test_createKeyEventContext_returnsNilIfOtherKeySupplied() throws {

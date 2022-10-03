@@ -17,8 +17,12 @@ class TestLayoutDelegate: CanvasLayoutEngineDelegate {
         self.movedPages = pages
     }
 
-    var removePages: [LayoutEnginePage]?
-    func remove(pages: [LayoutEnginePage], from layout: CanvasLayoutEngine) {
-        self.removePages = pages
+    var removePages: [LayoutEngineItem]?
+    func remove(items: [LayoutEngineItem], from layout: CanvasLayoutEngine) {
+        self.removePages = items
+    }
+
+    func finishLinking(withDestination: LayoutEnginePage?, in layout: CanvasLayoutEngine) {
+
     }
 }

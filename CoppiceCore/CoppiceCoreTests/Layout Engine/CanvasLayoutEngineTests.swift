@@ -10,6 +10,9 @@ import Carbon.HIToolbox
 @testable import CoppiceCore
 import XCTest
 
+//TODO: Create test for hover context
+//TODO: Create tests for linking mode
+
 let testLayoutASCII = """
           |
           |       ____
@@ -471,7 +474,7 @@ class CanvasLayoutEngineTests: XCTestCase {
         self.layoutEngine.delegate = delegate
         self.layoutEngine.tellDelegateToRemove([self.page1, self.page3])
 
-        let (pages, _) = try XCTUnwrap(delegate.removePagesMock.arguments.first)
+        let (pages, _) = try XCTUnwrap(delegate.removeItemsMock.arguments.first)
         XCTAssertEqual(pages, [self.page1, self.page3])
     }
 
@@ -1231,13 +1234,16 @@ private class MockCanvasLayoutEngineDelegate: CanvasLayoutEngineDelegate {
         self.movedPagesMock.called(withArguments: (pages, layout))
     }
 
-    let removePagesMock = MockDetails<([LayoutEnginePage], CanvasLayoutEngine), Void>()
-    func remove(pages: [LayoutEnginePage], from layout: CanvasLayoutEngine) {
-        self.removePagesMock.called(withArguments: (pages, layout))
+    let removeItemsMock = MockDetails<([LayoutEngineItem], CanvasLayoutEngine), Void>()
+    func remove(items: [LayoutEngineItem], from layout: CanvasLayoutEngine) {
+        self.removeItemsMock.called(withArguments: (items, layout))
     }
 
     let reorderedPagesMock = MockDetails<([LayoutEnginePage], CanvasLayoutEngine), Void>()
     func reordered(pages: [LayoutEnginePage], in layout: CanvasLayoutEngine) {
         self.reorderedPagesMock.called(withArguments: (pages, layout))
+    }
+
+    func finishLinking(withDestination: LayoutEnginePage?, in layout: CanvasLayoutEngine) {
     }
 }

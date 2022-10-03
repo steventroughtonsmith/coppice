@@ -9,6 +9,8 @@
 @testable import CoppiceCore
 import XCTest
 
+//TODO: Add tests for opening existing page
+//TODO: Update tests to use links to connect to canvases
 class CoppiceModelControllerCanvasPageTests: XCTestCase {
     var undoManager: UndoManager!
     var modelController: CoppiceModelController!
@@ -33,7 +35,7 @@ class CoppiceModelControllerCanvasPageTests: XCTestCase {
     //MARK: - openPage(at:on:)
     func test_openPageAtLink_returnsEmptyArrayIfDestinationNotFound() throws {
         let link = PageLink(destination: Page.modelID(with: UUID()))
-        let openedPages = self.modelController.openPage(at: link, on: self.canvas)
+        let openedPages = self.modelController.openPage(at: link, on: self.canvas, mode: .new)
         XCTAssertEqual(openedPages, [])
     }
 
@@ -41,7 +43,7 @@ class CoppiceModelControllerCanvasPageTests: XCTestCase {
         let linkedPage = Page.create(in: self.modelController)
         let link = linkedPage.linkToPage()
 
-        let openedPages = self.modelController.openPage(at: link, on: self.canvas)
+        let openedPages = self.modelController.openPage(at: link, on: self.canvas, mode: .new)
         XCTAssertEqual(openedPages.count, 1)
 
         let canvasPage = try XCTUnwrap(openedPages.first)
@@ -55,7 +57,7 @@ class CoppiceModelControllerCanvasPageTests: XCTestCase {
         let linkedPage = Page.create(in: self.modelController)
         let link = linkedPage.linkToPage().withSource(CanvasPage.modelID(with: UUID()))
 
-        let openedPages = self.modelController.openPage(at: link, on: self.canvas)
+        let openedPages = self.modelController.openPage(at: link, on: self.canvas, mode: .new)
         XCTAssertEqual(openedPages.count, 1)
 
         let canvasPage = try XCTUnwrap(openedPages.first)
@@ -72,7 +74,7 @@ class CoppiceModelControllerCanvasPageTests: XCTestCase {
         let expectedCanvasPage = try XCTUnwrap(self.canvas.addPages([linkedPage]).first)
         expectedCanvasPage.parent = self.canvasPage
 
-        let openedPages = self.modelController.openPage(at: link, on: self.canvas)
+        let openedPages = self.modelController.openPage(at: link, on: self.canvas, mode: .new)
         XCTAssertEqual(openedPages.count, 1)
 
         let canvasPage = try XCTUnwrap(openedPages.first)
@@ -83,7 +85,7 @@ class CoppiceModelControllerCanvasPageTests: XCTestCase {
         let linkedPage = Page.create(in: self.modelController)
         let link = linkedPage.linkToPage().withSource(self.canvasPage.id)
 
-        let openedPages = self.modelController.openPage(at: link, on: self.canvas)
+        let openedPages = self.modelController.openPage(at: link, on: self.canvas, mode: .new)
         XCTAssertEqual(openedPages.count, 1)
 
         let canvasPage = try XCTUnwrap(openedPages.first)
@@ -98,7 +100,7 @@ class CoppiceModelControllerCanvasPageTests: XCTestCase {
         let link = linkedPage.linkToPage()
         self.undoManager.removeAllActions()
 
-        let openedPages = self.modelController.openPage(at: link, on: self.canvas)
+        let openedPages = self.modelController.openPage(at: link, on: self.canvas, mode: .new)
         let canvasPage = try XCTUnwrap(openedPages.first)
 
         self.undoManager.undo()
@@ -113,7 +115,7 @@ class CoppiceModelControllerCanvasPageTests: XCTestCase {
         let link = linkedPage.linkToPage().withSource(self.canvasPage.id)
         self.undoManager.removeAllActions()
 
-        let openedPages = self.modelController.openPage(at: link, on: self.canvas)
+        let openedPages = self.modelController.openPage(at: link, on: self.canvas, mode: .new)
         let canvasPage = try XCTUnwrap(openedPages.first)
 
         self.undoManager.undo()
@@ -128,7 +130,7 @@ class CoppiceModelControllerCanvasPageTests: XCTestCase {
         let link = linkedPage.linkToPage()
         self.undoManager.removeAllActions()
 
-        let openedPages = self.modelController.openPage(at: link, on: self.canvas)
+        let openedPages = self.modelController.openPage(at: link, on: self.canvas, mode: .new)
         let canvasPage = try XCTUnwrap(openedPages.first)
         canvasPage.frame = CGRect(x: 90, y: -40, width: 300, height: 300)
 
@@ -149,7 +151,7 @@ class CoppiceModelControllerCanvasPageTests: XCTestCase {
         let link = linkedPage.linkToPage().withSource(self.canvasPage.id)
         self.undoManager.removeAllActions()
 
-        let openedPages = self.modelController.openPage(at: link, on: self.canvas)
+        let openedPages = self.modelController.openPage(at: link, on: self.canvas, mode: .new)
         let canvasPage = try XCTUnwrap(openedPages.first)
         canvasPage.frame = CGRect(x: 90, y: -40, width: 300, height: 300)
 

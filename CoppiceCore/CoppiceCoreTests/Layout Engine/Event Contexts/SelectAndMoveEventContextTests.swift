@@ -93,7 +93,7 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
     //MARK: - Invoke Link
     func test_invokeLink_tellsPageToOpenLinkIfDownLocationIsLinkAndPageIsEditable() throws {
         let mockView = MockLayoutEnginePageView()
-        mockView.isLinkMock.returnValue = true
+        mockView.isLinkMock.returnValue = URL(string: "https://coppiceapp.com")
         self.page1.view = mockView
 
         let eventContext = SelectAndMoveEventContext(page: self.page1, editable: true, component: .content)
@@ -105,7 +105,7 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
 
     func test_invokeLink_doesntTellPageToOpenLinkIfDownLocationIsLinkButPageIsNotEditable() throws {
         let mockView = MockLayoutEnginePageView()
-        mockView.isLinkMock.returnValue = true
+        mockView.isLinkMock.returnValue = URL(string: "https://coppiceapp.com")
         self.page1.view = mockView
 
         let eventContext = SelectAndMoveEventContext(page: self.page1, editable: false, component: .content)

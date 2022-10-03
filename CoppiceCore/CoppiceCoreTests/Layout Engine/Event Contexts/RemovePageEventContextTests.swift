@@ -10,9 +10,12 @@ import Carbon.HIToolbox
 @testable import CoppiceCore
 import XCTest
 
+//TODO: Rename
+//TODO: Add tests for removing links
+
 class RemovePageEventContextTests: XCTestCase {
     func test_keyUp_pressingBackspaceWithNothingSelectedDoesNothing() {
-        let event = RemoveItemEventContext(pages: [])
+        let event = RemoveItemEventContext(items: [])
         let mockEngine = MockLayoutEngine()
 
         event.keyDown(withCode: UInt16(kVK_Delete), modifiers: [], isARepeat: false, in: mockEngine)
@@ -25,7 +28,7 @@ class RemovePageEventContextTests: XCTestCase {
         let page1 = LayoutEnginePage(id: UUID(), contentFrame: .zero)
         let page2 = LayoutEnginePage(id: UUID(), contentFrame: .zero)
 
-        let event = RemoveItemEventContext(pages: [page1, page2])
+        let event = RemoveItemEventContext(items: [page1, page2])
         let mockEngine = MockLayoutEngine()
 
         event.keyDown(withCode: UInt16(kVK_Delete), modifiers: [], isARepeat: false, in: mockEngine)
@@ -35,7 +38,7 @@ class RemovePageEventContextTests: XCTestCase {
     }
 
     func test_keyUp_pressingDeleteWithNothingSelectedDoesNothing() {
-        let event = RemoveItemEventContext(pages: [])
+        let event = RemoveItemEventContext(items: [])
         let mockEngine = MockLayoutEngine()
 
         event.keyDown(withCode: UInt16(kVK_ForwardDelete), modifiers: [], isARepeat: false, in: mockEngine)
@@ -48,7 +51,7 @@ class RemovePageEventContextTests: XCTestCase {
         let page1 = LayoutEnginePage(id: UUID(), contentFrame: .zero)
         let page2 = LayoutEnginePage(id: UUID(), contentFrame: .zero)
 
-        let event = RemoveItemEventContext(pages: [page1, page2])
+        let event = RemoveItemEventContext(items: [page1, page2])
         let mockEngine = MockLayoutEngine()
 
         event.keyDown(withCode: UInt16(kVK_ForwardDelete), modifiers: [], isARepeat: false, in: mockEngine)
@@ -61,7 +64,7 @@ class RemovePageEventContextTests: XCTestCase {
         let page1 = LayoutEnginePage(id: UUID(), contentFrame: .zero)
         let page2 = LayoutEnginePage(id: UUID(), contentFrame: .zero)
 
-        let event = RemoveItemEventContext(pages: [page1, page2])
+        let event = RemoveItemEventContext(items: [page1, page2])
         let mockEngine = MockLayoutEngine()
 
         event.keyDown(withCode: UInt16(kVK_Space), modifiers: [], isARepeat: false, in: mockEngine)

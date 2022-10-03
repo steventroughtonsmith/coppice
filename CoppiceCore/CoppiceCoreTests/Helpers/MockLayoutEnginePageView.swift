@@ -19,13 +19,23 @@ class MockLayoutEnginePageView: LayoutEnginePageView {
         self.stopEditingMock.called()
     }
 
-    let isLinkMock = MockDetails<CGPoint, Bool>()
-    func link(atContentPoint point: CGPoint) -> Bool {
-        return self.isLinkMock.called(withArguments: point) ?? false
+    let isLinkMock = MockDetails<CGPoint, URL>()
+    func link(atContentPoint point: CGPoint) -> URL? {
+        return self.isLinkMock.called(withArguments: point) ?? nil
     }
 
     let openLinkMock = MockDetails<CGPoint, Void>()
     func openLink(atContentPoint point: CGPoint) {
         self.openLinkMock.called(withArguments: point)
+    }
+
+    let highlightLinksMock = MockDetails<PageLink, Void>()
+    func highlightLinks(matching pageLink: PageLink) {
+        self.highlightLinksMock.called(withArguments: pageLink)
+    }
+
+    let unhighlightLinksMock = MockDetails<Void, Void>()
+    func unhighlightLinks() {
+        self.unhighlightLinksMock.called()
     }
 }

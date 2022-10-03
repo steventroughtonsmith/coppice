@@ -73,12 +73,12 @@ class MockCoppiceModelController: CoppiceModelController {
 
 
     //MARK: - Canavs Pages
-    let openPageMock = MockDetails<(PageLink, Canvas), [CanvasPage]>()
-    @discardableResult override func openPage(at link: PageLink, on canvas: Canvas) -> [CanvasPage] {
-        if let returnValue = self.openPageMock.called(withArguments: (link, canvas)) {
+    let openPageMock = MockDetails<(PageLink, Canvas, Canvas.OpenPageMode), [CanvasPage]>()
+    @discardableResult override func openPage(at link: PageLink, on canvas: Canvas, mode: Canvas.OpenPageMode) -> [CanvasPage] {
+        if let returnValue = self.openPageMock.called(withArguments: (link, canvas, mode)) {
             return returnValue
         }
-        return super.openPage(at: link, on: canvas)
+        return super.openPage(at: link, on: canvas, mode: mode)
     }
 
     let closeCanvasPageMock = MockDetails<(CanvasPage), Void>()

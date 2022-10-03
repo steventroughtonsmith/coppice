@@ -9,6 +9,8 @@
 import CoppiceCore
 import XCTest
 
+//TODO: Add tests for link methods
+
 class LayoutEnginePageTests: XCTestCase {
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -272,7 +274,7 @@ class LayoutEnginePageTests: XCTestCase {
                                     minimumContentSize: CGSize(width: 50, height: 60))
         layoutEngine.add([page])
 
-        layoutEngine.currentlyHoveredPage = page
+        layoutEngine.pageUnderMouse = page
 
         page.selected = false
         layoutEngine.alwaysShowPageTitles = false
