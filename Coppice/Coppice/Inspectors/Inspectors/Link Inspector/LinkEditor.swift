@@ -46,6 +46,9 @@ enum LinkEditorValue: Equatable {
             guard let page = modelController.pageCollection.objectWithID(pageLink.destination) else {
                 return NSLocalizedString("Invalid Link", comment: "Link field: invalid link")
             }
+            guard page.title.count > 0 else {
+                return Page.localizedDefaultTitle
+            }
             return page.title
         case .url(let url):
             return url.absoluteString
