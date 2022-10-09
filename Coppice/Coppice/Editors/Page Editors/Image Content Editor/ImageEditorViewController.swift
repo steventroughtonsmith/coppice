@@ -111,18 +111,10 @@ class ImageEditorViewController: NSViewController, NSMenuItemValidation, NSToolb
 
 	//MARK: - Valdiation
     func validateToolbarItem(_ item: NSToolbarItem) -> Bool {
-        if item.action == #selector(self.editLink(_:)) {
-            item.toolTip = NSLocalizedString("Image Pages don't current support links", comment: "Image Page link to page disabled tooltip")
-            return false
-        }
         return true
     }
 
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
-        if menuItem.action == #selector(self.editLink(_:)) {
-            menuItem.toolTip = NSLocalizedString("Image Pages don't current support links", comment: "Image Pages link to page disabled tooltip")
-            return false
-        }
         if menuItem.action == #selector(self.linkToCanvasPage(_:)) {
             let proEnabled = (CoppiceSubscriptionManager.shared.activationResponse?.isActive ?? false)
             menuItem.image = proEnabled ? nil : CoppiceSubscriptionManager.shared.proImage

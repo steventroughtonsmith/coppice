@@ -148,7 +148,7 @@ class ImageEditorHotspotView: NSView {
 
 	//MARK: - Finding hotspots
 	func containsHotspots(at point: CGPoint) -> Bool {
-		return self.layoutEngine?.hotspot(at: point) != nil
+        return self.layoutEngine?.hotspot(at: self.convertPointToImageSpace(point)) != nil
 	}
 
     //MARK: - Events
