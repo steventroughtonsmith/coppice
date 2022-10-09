@@ -145,6 +145,31 @@ class CanvasLayoutEngineTests: XCTestCase {
         XCTAssertNil(view.context)
     }
 
+    //MARK: - Add/remove links
+    func test_addLinks_addsSuppliedLinksToLinksArray() throws {
+        XCTFail()
+    }
+
+    func test_removeLinks_removesSuppliedLinksToLinksArray() throws {
+        XCTFail()
+    }
+
+    //MARK: - Link Creation
+    func test_startLinking_doesntChangeHoverEventContextIfPageNotBeingEdited() throws {
+        XCTFail()
+    }
+
+    func test_startLinking_makesNewCreateLinkHoverEventContextIfPageBeingEdited() throws {
+        XCTFail()
+    }
+
+    func test_finishLinkingWithDestination_tellsDelegateToFinishLinking() throws {
+        XCTFail()
+    }
+
+    func test_finishLinkingWithDestination_resetsHoverEventContextToStandardContext() throws {
+        XCTFail()
+    }
 
     //MARK: - Point Conversion
     func test_pointConversion_convertsPointFromPageSpaceToCanvasSpaceForEmptyEngine() throws {
@@ -1244,6 +1269,5 @@ private class MockCanvasLayoutEngineDelegate: CanvasLayoutEngineDelegate {
         self.reorderedPagesMock.called(withArguments: (pages, layout))
     }
 
-    func finishLinking(withDestination: LayoutEnginePage?, in layout: CanvasLayoutEngine) {
-    }
+    func finishLinking(withDestination: LayoutEnginePage?, in layout: CanvasLayoutEngine) {}
 }

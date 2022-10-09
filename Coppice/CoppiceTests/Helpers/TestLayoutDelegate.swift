@@ -13,13 +13,17 @@ import Foundation
 class TestLayoutDelegate: CanvasLayoutEngineDelegate {
     func reordered(pages: [LayoutEnginePage], in layout: CanvasLayoutEngine) {}
 
-    var movedPages: [LayoutEnginePage]?
+    var movedPages: [LayoutEngineItem]?
     func moved(pages: [LayoutEnginePage], in layout: CanvasLayoutEngine) {
         self.movedPages = pages
     }
 
-    var removePages: [LayoutEnginePage]?
-    func remove(pages: [LayoutEnginePage], from layout: CanvasLayoutEngine) {
-        self.removePages = pages
+    var removePages: [LayoutEngineItem]?
+    func remove(items: [LayoutEngineItem], from layout: CanvasLayoutEngine) {
+        self.removePages = items
+    }
+
+    func finishLinking(withDestination: LayoutEnginePage?, in layout: CanvasLayoutEngine) {
+        //TODO: Implement
     }
 }

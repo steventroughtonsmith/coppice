@@ -155,7 +155,7 @@ class CanvasEditorViewModelTests: XCTestCase {
         let pageLink = PageLink(destination: Page.modelID(with: UUID()))
         self.viewModel.addPage(at: pageLink)
 
-        let (link, canvas) = try XCTUnwrap(self.modelController.openPageMock.arguments.first)
+        let (link, canvas, _) = try XCTUnwrap(self.modelController.openPageMock.arguments.first)
         XCTAssertEqual(link, pageLink)
         XCTAssertEqual(canvas, self.canvas)
     }
@@ -400,7 +400,7 @@ class CanvasEditorViewModelTests: XCTestCase {
     //MARK: - remove(pages:from:)
     func test_removePagesFromLayout_closesSuppliedPages() throws {
         let page = LayoutEnginePage(id: self.canvasPage1.id.uuid, contentFrame: .zero)
-        self.viewModel.remove(pages: [page], from: self.viewModel.layoutEngine)
+        self.viewModel.remove(items: [page], from: self.viewModel.layoutEngine)
 
         XCTAssertNil(self.canvasPage1.canvas)
         XCTAssertFalse(self.canvas.pages.contains(self.canvasPage1))
@@ -408,7 +408,7 @@ class CanvasEditorViewModelTests: XCTestCase {
 
     func test_removePagesFromLayout_doesntTouchOtherPageHierarchies() throws {
         let page = LayoutEnginePage(id: self.canvasPage1.id.uuid, contentFrame: .zero)
-        self.viewModel.remove(pages: [page], from: self.viewModel.layoutEngine)
+        self.viewModel.remove(items: [page], from: self.viewModel.layoutEngine)
 
         XCTAssertEqual(self.canvasPage2.canvas, self.canvas)
         XCTAssertTrue(self.canvas.pages.contains(self.canvasPage2))

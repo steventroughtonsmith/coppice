@@ -9,8 +9,6 @@
 @testable import CoppiceCore
 import XCTest
 
-//TODO: Add tests for opening existing page
-//TODO: Update tests to use links to connect to canvases
 class CoppiceModelControllerCanvasPageTests: XCTestCase {
     var undoManager: UndoManager!
     var modelController: CoppiceModelController!
@@ -67,18 +65,8 @@ class CoppiceModelControllerCanvasPageTests: XCTestCase {
         XCTAssertNil(canvasPage.parent)
     }
 
-    func test_openPageAtLink_returnsExistingPageIfOneExistsOnSourcePage() throws {
-        let linkedPage = Page.create(in: self.modelController)
-        let link = linkedPage.linkToPage().withSource(self.canvasPage.id)
-
-        let expectedCanvasPage = try XCTUnwrap(self.canvas.addPages([linkedPage]).first)
-        expectedCanvasPage.parent = self.canvasPage
-
-        let openedPages = self.modelController.openPage(at: link, on: self.canvas, mode: .new)
-        XCTAssertEqual(openedPages.count, 1)
-
-        let canvasPage = try XCTUnwrap(openedPages.first)
-        XCTAssertEqual(canvasPage, expectedCanvasPage)
+    func test_openPageAtLink_tellsCanvasToOpenPageFromSourceWithSuppliedMode() throws {
+        XCTFail("Not implemented")
     }
 
     func test_openPageAtLink_opensPageOnCanvasIfDoesntExistOnSource() throws {

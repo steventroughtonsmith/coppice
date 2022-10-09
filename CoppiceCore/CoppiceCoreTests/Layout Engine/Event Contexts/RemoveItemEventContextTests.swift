@@ -11,9 +11,8 @@ import Carbon.HIToolbox
 import XCTest
 
 //TODO: Rename
-//TODO: Add tests for removing links
 
-class RemovePageEventContextTests: XCTestCase {
+class RemoveItemEventContextTests: XCTestCase {
     func test_keyUp_pressingBackspaceWithNothingSelectedDoesNothing() {
         let event = RemoveItemEventContext(items: [])
         let mockEngine = MockLayoutEngine()
@@ -24,17 +23,18 @@ class RemovePageEventContextTests: XCTestCase {
         XCTAssertFalse(mockEngine.tellDelegateToRemoveMock.wasCalled)
     }
 
-    func test_keyUp_pressingBackspaceRemovesSelectedPages() {
+    func test_keyUp_pressingBackspaceRemovesSelectedLinksPages() {
         let page1 = LayoutEnginePage(id: UUID(), contentFrame: .zero)
         let page2 = LayoutEnginePage(id: UUID(), contentFrame: .zero)
+        let link = LayoutEngineLink(id: UUID(), pageLink: nil, sourcePageID: UUID(), destinationPageID: UUID())
 
-        let event = RemoveItemEventContext(items: [page1, page2])
+        let event = RemoveItemEventContext(items: [page1, page2, link])
         let mockEngine = MockLayoutEngine()
 
         event.keyDown(withCode: UInt16(kVK_Delete), modifiers: [], isARepeat: false, in: mockEngine)
         event.keyUp(withCode: UInt16(kVK_Delete), modifiers: [], in: mockEngine)
 
-        XCTAssertEqual(mockEngine.tellDelegateToRemoveMock.arguments.first, [page1, page2])
+        XCTAssertEqual(mockEngine.tellDelegateToRemoveMock.arguments.first, [page1, page2, link])
     }
 
     func test_keyUp_pressingDeleteWithNothingSelectedDoesNothing() {
@@ -47,17 +47,18 @@ class RemovePageEventContextTests: XCTestCase {
         XCTAssertFalse(mockEngine.tellDelegateToRemoveMock.wasCalled)
     }
 
-    func test_keyUp_pressingDeleteRemovesSelectedPages() {
+    func test_keyUp_pressingDeleteRemovesSelectedLinksAndPages() {
         let page1 = LayoutEnginePage(id: UUID(), contentFrame: .zero)
         let page2 = LayoutEnginePage(id: UUID(), contentFrame: .zero)
+        let link = LayoutEngineLink(id: UUID(), pageLink: nil, sourcePageID: UUID(), destinationPageID: UUID())
 
-        let event = RemoveItemEventContext(items: [page1, page2])
+        let event = RemoveItemEventContext(items: [page1, page2, link])
         let mockEngine = MockLayoutEngine()
 
         event.keyDown(withCode: UInt16(kVK_ForwardDelete), modifiers: [], isARepeat: false, in: mockEngine)
         event.keyUp(withCode: UInt16(kVK_ForwardDelete), modifiers: [], in: mockEngine)
 
-        XCTAssertEqual(mockEngine.tellDelegateToRemoveMock.arguments.first, [page1, page2])
+        XCTAssertEqual(mockEngine.tellDelegateToRemoveMock.arguments.first, [page1, page2, link])
     }
 
     func test_keyUp_pressingAnotherKeyDoesNothing() {

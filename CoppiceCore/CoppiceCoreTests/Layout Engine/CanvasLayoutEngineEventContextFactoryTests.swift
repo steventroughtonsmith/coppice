@@ -22,6 +22,15 @@ class CanvasLayoutEngineEventContextFactoryTests: XCTestCase {
     }
 
     //MARK: - createMouseEventContext(for:in:)
+    func test_createMouseEventContext_returnsCreateLinkMouseEventContextIfLayoutEngineIsLinking() throws {
+        self.mockLayoutEngine.isLinking = true
+        let page = LayoutEnginePage(id: UUID(), contentFrame: .zero)
+        self.mockLayoutEngine.pageAtCanvasPointMock.returnValue = page
+        let context = self.factory.createMouseEventContext(for: CGPoint(x: 20, y: 30), in: self.mockLayoutEngine)
+        let typedContext = try XCTUnwrap(context as? CreateLinkMouseEventContext)
+        XCTAssertEqual(typedContext.page, page)
+    }
+
     func test_createMouseEventContext_returnsCanvasSelectionContextIfNoPageAtSuppliedLocation() throws {
         let context = self.factory.createMouseEventContext(for: CGPoint(x: 20, y: 30), in: self.mockLayoutEngine)
         XCTAssertTrue(context is CanvasSelectionEventContext)
@@ -176,6 +185,15 @@ class CanvasLayoutEngineEventContextFactoryTests: XCTestCase {
     func test_createKeyEventContext_returnsNilIfNoPagesAreSelected() throws {
         let context = self.factory.createKeyEventContext(for: UInt16(kVK_LeftArrow), in: self.mockLayoutEngine)
         XCTAssertNil(context)
+    }
+
+    func test_createKeyEventContext_returnsCreateLinkKeyEventContextIfLayoutEngineIsLinking() throws {
+        let page1 = TestLayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 30, height: 30))
+        self.mockLayoutEngine.selectedItems = [page1]
+
+        self.mockLayoutEngine.isLinking = true
+        let context = self.factory.createKeyEventContext(for: UInt16(kVK_Escape), in: self.mockLayoutEngine)
+        XCTAssertTrue(context is CreateLinkKeyEventContext)
     }
 
     func test_createKeyEventContext_returnsKeyboardMovePageContextIfLeftArrowSupplied() throws {

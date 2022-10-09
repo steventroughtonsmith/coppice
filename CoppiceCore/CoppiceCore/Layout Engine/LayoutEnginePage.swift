@@ -108,10 +108,6 @@ public class LayoutEnginePage: LayoutEngineItem, Hashable {
         return pages
     }
 
-    public func children(for edge: Edge) -> [LayoutEnginePage] {
-        return self.children.filter { $0.edgeFromParent == edge }
-    }
-
     public func addChild(_ child: LayoutEnginePage) {
         self.children.append(child)
         child.parent = self

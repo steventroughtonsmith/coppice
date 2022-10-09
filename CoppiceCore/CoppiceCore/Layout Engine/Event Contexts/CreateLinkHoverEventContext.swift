@@ -15,14 +15,14 @@ class CreateLinkHoverEventContext: CanvasHoverEventContext {
 
     private var currentTargetPage: LayoutEnginePage? {
         didSet {
-            guard currentTargetPage != oldValue else {
+            guard self.currentTargetPage != oldValue else {
                 return
             }
             oldValue?.message = nil
             self.currentTargetPage?.message = LayoutEnginePage.Message(message: "Link to Page", color: .linkColor)
         }
     }
-    
+
     private var currentLink: LayoutEngineLink?
 
     func cursorMoved(to location: CGPoint, modifiers: LayoutEventModifiers, in layout: LayoutEngine) {

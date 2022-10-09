@@ -247,7 +247,7 @@ class CanvasEditorViewModel: ViewModel {
         }
     }
 
-    func addPage(at link: PageLink, centredOn point: CGPoint? = nil, useAlternate: Bool) {
+    func addPage(at link: PageLink, centredOn point: CGPoint? = nil, useAlternate: Bool = false) {
         let linkToExistingByDefault = UserDefaults.standard.bool(forKey: .linkToExistingPagesByDefault) && self.isProEnabled
         let mode: Canvas.OpenPageMode
         if useAlternate {

@@ -12,6 +12,8 @@ import AppKit
 @testable import CoppiceCore
 
 class MockImageEditorHotspot: ImageEditorHotspot {
+    var isHovered: Bool = false
+
     var originOffset: CGPoint = .zero
 
     var url: URL?
