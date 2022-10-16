@@ -78,7 +78,7 @@ class CreateLinkHoverEventContext: CanvasHoverEventContext {
 
     //MARK: - Links
     private var cursorLink: LayoutEngineLink?
-    func cursorLink(in layout: LayoutEngine) -> LayoutEngineLink {
+    private func cursorLink(in layout: LayoutEngine) -> LayoutEngineLink {
         if let cursorLink {
             return cursorLink
         }

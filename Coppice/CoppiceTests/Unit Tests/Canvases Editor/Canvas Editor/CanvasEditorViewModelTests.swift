@@ -44,49 +44,10 @@ class CanvasEditorViewModelTests: XCTestCase {
 
 
     //MARK: - close(_:)
-    func test_closeCanvasPage_removesPageFromCanvas() {
+    func test_closeCanvasPage_tellsModelControllerToCloseCanvasPage() {
         self.viewModel.close(self.canvasPage1)
-        XCTAssertNil(self.canvasPage1.canvas)
-        XCTAssertFalse(self.canvas.pages.contains(self.canvasPage1))
-    }
-
-    func test_closeCanvasPage_deleteCanvasPage() {
-        self.viewModel.close(self.canvasPage2)
-        XCTAssertNil(self.modelController.collection(for: CanvasPage.self).objectWithID(self.canvasPage2.id))
-    }
-
-    func test_closeCanvasPage_removesChildPagesFromCanvas() {
-        let canvasPageCollection = self.modelController.collection(for: CanvasPage.self)
-        let child1 = canvasPageCollection.newObject() {
-            $0.canvas = self.canvas
-            $0.parent = self.canvasPage1
-        }
-        let child2 = canvasPageCollection.newObject() {
-            $0.canvas = self.canvas
-            $0.parent = self.canvasPage1
-        }
-
-        self.viewModel.close(self.canvasPage1)
-        XCTAssertNil(child1.canvas)
-        XCTAssertFalse(self.canvas.pages.contains(child1))
-        XCTAssertNil(child2.canvas)
-        XCTAssertFalse(self.canvas.pages.contains(child2))
-    }
-
-    func test_closeCanvasPage_deletesChildCanvasPages() {
-        let canvasPageCollection = self.modelController.collection(for: CanvasPage.self)
-        let child1 = canvasPageCollection.newObject() {
-            $0.canvas = self.canvas
-            $0.parent = self.canvasPage1
-        }
-        let child2 = canvasPageCollection.newObject() {
-            $0.canvas = self.canvas
-            $0.parent = self.canvasPage1
-        }
-
-        self.viewModel.close(self.canvasPage1)
-        XCTAssertNil(canvasPageCollection.objectWithID(child1.id))
-        XCTAssertNil(canvasPageCollection.objectWithID(child2.id))
+        XCTAssertTrue(self.modelController.closeCanvasPageMock.wasCalled)
+        XCTAssertEqual(self.modelController.closeCanvasPageMock.arguments, [(self.canvasPage1)])
     }
 
 
@@ -125,6 +86,7 @@ class CanvasEditorViewModelTests: XCTestCase {
 
     func test_updatingPages_removingPagesFromCanvasUpdatesCanvasPages() {
         self.modelController.collection(for: CanvasPage.self).delete(self.canvasPage1)
+        self.viewModel.updateIfNeeded()
 
         let canvasPages = self.viewModel.canvasPages
         XCTAssertEqual(canvasPages.count, 1)
@@ -133,6 +95,7 @@ class CanvasEditorViewModelTests: XCTestCase {
 
     func test_updatingPages_removingPagesFromCanvasRemovesThosePagesFromLayoutEngine() {
         self.modelController.collection(for: CanvasPage.self).delete(self.canvasPage2)
+        self.viewModel.updateIfNeeded()
 
         let layoutPages = self.viewModel.layoutEngine.pages
         XCTAssertEqual(layoutPages.count, 1)

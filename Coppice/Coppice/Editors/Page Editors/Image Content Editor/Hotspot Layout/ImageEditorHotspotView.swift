@@ -203,7 +203,6 @@ class ImageEditorHotspotView: NSView {
         self.layoutEngine?.deselectAll()
     }
 
-
     //MARK: - Tracking Areas
     private var moveTrackingArea: NSTrackingArea?
     override func updateTrackingAreas() {

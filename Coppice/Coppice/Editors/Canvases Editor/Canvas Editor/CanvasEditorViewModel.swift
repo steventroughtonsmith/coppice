@@ -87,7 +87,8 @@ class CanvasEditorViewModel: ViewModel {
     private func setupObservation() {
         self.canvasObserver = self.modelController.canvasCollection.addObserver(filterBy: [self.canvas.id]) { [weak self] change in
             if change.changeType == .update, !change.didUpdate(\.thumbnail) {
-                self?.update()
+                self?.wantsUpdate = true
+                self?.updateIfNeeded()
                 if change.didUpdate(\.alwaysShowPageTitles) {
                     self?.updateAlwaysShowPageTitles()
                 }
@@ -137,14 +138,17 @@ class CanvasEditorViewModel: ViewModel {
     //MARK: - Updating
     private var wantsUpdate: Bool = false {
         didSet {
-            NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.update), object: nil)
+            NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.updateIfNeeded), object: nil)
             if self.wantsUpdate {
-                self.perform(#selector(self.update), with: nil, afterDelay: 0)
+                self.perform(#selector(self.updateIfNeeded), with: nil, afterDelay: 0)
             }
         }
     }
 
-    @objc dynamic private func update() {
+    @objc dynamic func updateIfNeeded() {
+        guard self.wantsUpdate else {
+            return
+        }
         self.updatePages()
         self.updateLinks()
         self.wantsUpdate = false

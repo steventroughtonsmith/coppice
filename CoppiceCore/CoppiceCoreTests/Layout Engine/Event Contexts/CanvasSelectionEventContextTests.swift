@@ -46,12 +46,12 @@ class CanvasSelectionEventContextTests: EventContextTestBase {
 
         let eventContext = CanvasSelectionEventContext()
         eventContext.downEvent(at: self.page1.titlePoint.minus(x: 10, y: 10), modifiers: [], eventCount: 1, in: self.mockLayoutEngine)
-        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = []
+        self.mockLayoutEngine.itemsInCanvasRectMock.returnValue = []
         eventContext.draggedEvent(at: self.page1.titlePoint.minus(x: 5, y: 5), modifiers: [], eventCount: 1, in: self.mockLayoutEngine)
-        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = [self.page1, self.page2]
+        self.mockLayoutEngine.itemsInCanvasRectMock.returnValue = [self.page1, self.page2]
         eventContext.draggedEvent(at: self.page2.contentPoint, modifiers: [], eventCount: 1, in: self.mockLayoutEngine)
 
-        let (pages, expand) = try XCTUnwrap(self.mockLayoutEngine.selectPagesMock.arguments.last)
+        let (pages, expand) = try XCTUnwrap(self.mockLayoutEngine.selectItemsMock.arguments.last)
         XCTAssertEqual(pages, [self.page1, self.page2])
         XCTAssertFalse(expand)
     }
@@ -61,14 +61,14 @@ class CanvasSelectionEventContextTests: EventContextTestBase {
 
         let eventContext = CanvasSelectionEventContext()
         eventContext.downEvent(at: self.page1.titlePoint.minus(x: 10, y: 10), modifiers: [], eventCount: 1, in: self.mockLayoutEngine)
-        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = []
+        self.mockLayoutEngine.itemsInCanvasRectMock.returnValue = []
         eventContext.draggedEvent(at: self.page1.titlePoint.minus(x: 5, y: 5), modifiers: [], eventCount: 1, in: self.mockLayoutEngine)
-        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = [self.page1, self.page2]
+        self.mockLayoutEngine.itemsInCanvasRectMock.returnValue = [self.page1, self.page2]
         eventContext.draggedEvent(at: self.page2.contentPoint, modifiers: [], eventCount: 1, in: self.mockLayoutEngine)
-        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = [self.page1]
+        self.mockLayoutEngine.itemsInCanvasRectMock.returnValue = [self.page1]
         eventContext.draggedEvent(at: self.page1.contentPoint, modifiers: [], eventCount: 1, in: self.mockLayoutEngine)
 
-        let (pages, expand) = try XCTUnwrap(self.mockLayoutEngine.selectPagesMock.arguments.last)
+        let (pages, expand) = try XCTUnwrap(self.mockLayoutEngine.selectItemsMock.arguments.last)
         XCTAssertEqual(pages, [self.page1])
         XCTAssertFalse(expand)
     }
@@ -89,12 +89,12 @@ class CanvasSelectionEventContextTests: EventContextTestBase {
 
         let eventContext = CanvasSelectionEventContext()
         eventContext.downEvent(at: self.page1.titlePoint.minus(x: 10, y: 10), modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
-        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = []
+        self.mockLayoutEngine.itemsInCanvasRectMock.returnValue = []
         eventContext.draggedEvent(at: self.page1.titlePoint.minus(x: 5, y: 5), modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
-        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = [self.page1, self.page2]
+        self.mockLayoutEngine.itemsInCanvasRectMock.returnValue = [self.page1, self.page2]
         eventContext.draggedEvent(at: self.page2.contentPoint, modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
 
-        let (pages, expand) = try XCTUnwrap(self.mockLayoutEngine.selectPagesMock.arguments.last)
+        let (pages, expand) = try XCTUnwrap(self.mockLayoutEngine.selectItemsMock.arguments.last)
         XCTAssertEqual(pages, [self.page1, self.page2, self.page3])
         XCTAssertFalse(expand)
     }
@@ -104,14 +104,14 @@ class CanvasSelectionEventContextTests: EventContextTestBase {
 
         let eventContext = CanvasSelectionEventContext()
         eventContext.downEvent(at: self.page1.titlePoint.minus(x: 10, y: 10), modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
-        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = []
+        self.mockLayoutEngine.itemsInCanvasRectMock.returnValue = []
         eventContext.draggedEvent(at: self.page1.titlePoint.minus(x: 5, y: 5), modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
-        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = [self.page1, self.page2]
+        self.mockLayoutEngine.itemsInCanvasRectMock.returnValue = [self.page1, self.page2]
         eventContext.draggedEvent(at: self.page2.contentPoint, modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
-        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = [self.page1]
+        self.mockLayoutEngine.itemsInCanvasRectMock.returnValue = [self.page1]
         eventContext.draggedEvent(at: self.page1.contentPoint, modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
 
-        let (pages, expand) = try XCTUnwrap(self.mockLayoutEngine.selectPagesMock.arguments.last)
+        let (pages, expand) = try XCTUnwrap(self.mockLayoutEngine.selectItemsMock.arguments.last)
         XCTAssertEqual(pages, [self.page1, self.page3])
         XCTAssertFalse(expand)
     }
@@ -121,12 +121,12 @@ class CanvasSelectionEventContextTests: EventContextTestBase {
 
         let eventContext = CanvasSelectionEventContext()
         eventContext.downEvent(at: self.page1.titlePoint.minus(x: 10, y: 10), modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
-        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = []
+        self.mockLayoutEngine.itemsInCanvasRectMock.returnValue = []
         eventContext.draggedEvent(at: self.page1.titlePoint.minus(x: 5, y: 5), modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
-        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = [self.page1, self.page2]
+        self.mockLayoutEngine.itemsInCanvasRectMock.returnValue = [self.page1, self.page2]
         eventContext.draggedEvent(at: self.page2.contentPoint, modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
 
-        let (pages, expand) = try XCTUnwrap(self.mockLayoutEngine.selectPagesMock.arguments.last)
+        let (pages, expand) = try XCTUnwrap(self.mockLayoutEngine.selectItemsMock.arguments.last)
         XCTAssertEqual(pages, [self.page1, self.page3])
         XCTAssertFalse(expand)
     }
@@ -136,14 +136,14 @@ class CanvasSelectionEventContextTests: EventContextTestBase {
 
         let eventContext = CanvasSelectionEventContext()
         eventContext.downEvent(at: self.page1.titlePoint.minus(x: 10, y: 10), modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
-        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = []
+        self.mockLayoutEngine.itemsInCanvasRectMock.returnValue = []
         eventContext.draggedEvent(at: self.page1.titlePoint.minus(x: 5, y: 5), modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
-        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = [self.page1, self.page2]
+        self.mockLayoutEngine.itemsInCanvasRectMock.returnValue = [self.page1, self.page2]
         eventContext.draggedEvent(at: self.page2.contentPoint, modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
-        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = [self.page1]
+        self.mockLayoutEngine.itemsInCanvasRectMock.returnValue = [self.page1]
         eventContext.draggedEvent(at: self.page1.contentPoint, modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
 
-        let (pages, expand) = try XCTUnwrap(self.mockLayoutEngine.selectPagesMock.arguments.last)
+        let (pages, expand) = try XCTUnwrap(self.mockLayoutEngine.selectItemsMock.arguments.last)
         XCTAssertEqual(pages, [self.page1, self.page2, self.page3])
         XCTAssertFalse(expand)
     }
@@ -153,12 +153,12 @@ class CanvasSelectionEventContextTests: EventContextTestBase {
 
         let eventContext = CanvasSelectionEventContext()
         eventContext.downEvent(at: self.page1.titlePoint.minus(x: 0, y: 10), modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
-        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = []
+        self.mockLayoutEngine.itemsInCanvasRectMock.returnValue = []
         eventContext.draggedEvent(at: self.page3.titlePoint.minus(x: 0, y: 10), modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
-        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = [self.page1, self.page2, self.page3]
+        self.mockLayoutEngine.itemsInCanvasRectMock.returnValue = [self.page1, self.page2, self.page3]
         eventContext.draggedEvent(at: self.page3.contentPoint, modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
 
-        let (pages, expand) = try XCTUnwrap(self.mockLayoutEngine.selectPagesMock.arguments.last)
+        let (pages, expand) = try XCTUnwrap(self.mockLayoutEngine.selectItemsMock.arguments.last)
         XCTAssertEqual(pages, [self.page1, self.page3])
         XCTAssertFalse(expand)
     }
@@ -168,14 +168,14 @@ class CanvasSelectionEventContextTests: EventContextTestBase {
 
         let eventContext = CanvasSelectionEventContext()
         eventContext.downEvent(at: self.page1.titlePoint.minus(x: 0, y: 10), modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
-        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = []
+        self.mockLayoutEngine.itemsInCanvasRectMock.returnValue = []
         eventContext.draggedEvent(at: self.page3.titlePoint.minus(x: 0, y: 10), modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
-        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = [self.page1, self.page2, self.page3]
+        self.mockLayoutEngine.itemsInCanvasRectMock.returnValue = [self.page1, self.page2, self.page3]
         eventContext.draggedEvent(at: self.page3.contentPoint, modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
-        self.mockLayoutEngine.pagesInCanvasRectMock.returnValue = []
+        self.mockLayoutEngine.itemsInCanvasRectMock.returnValue = []
         eventContext.draggedEvent(at: self.page3.titlePoint.minus(x: 0, y: 10), modifiers: .shift, eventCount: 1, in: self.mockLayoutEngine)
 
-        let (pages, expand) = try XCTUnwrap(self.mockLayoutEngine.selectPagesMock.arguments.last)
+        let (pages, expand) = try XCTUnwrap(self.mockLayoutEngine.selectItemsMock.arguments.last)
         XCTAssertEqual(pages, [self.page2])
         XCTAssertFalse(expand)
     }

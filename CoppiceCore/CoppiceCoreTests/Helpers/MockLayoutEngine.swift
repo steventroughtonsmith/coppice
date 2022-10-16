@@ -18,71 +18,16 @@ class MockLayoutEngine: LayoutEngine {
         }
     }
 
-    var pageUnderMouse: LayoutEnginePage?
-    var cursorPage: LayoutEnginePage?
-    var pages: [LayoutEnginePage] = []
-
     var canvasSize: CGSize = .zero
     var selectionRect: CGRect?
+    var pageUnderMouse: LayoutEnginePage?
+    var cursorPage: LayoutEnginePage?
+
+    var pages: [LayoutEnginePage] = []
 
     let pageWithIDMock = MockDetails<UUID, LayoutEnginePage>()
     func page(withID id: UUID) -> LayoutEnginePage? {
         return self.pageWithIDMock.called(withArguments: id)
-    }
-
-    let selectPagesMock = MockDetails<([LayoutEngineItem], Bool), Void>()
-    func select(_ items: [LayoutEngineItem], extendingSelection: Bool) {
-        self.selectPagesMock.called(withArguments: (items, extendingSelection))
-    }
-
-    let deselectPagesMock = MockDetails<[LayoutEngineItem], Void>()
-    func deselect(_ items: [LayoutEngineItem]) {
-        self.deselectPagesMock.called(withArguments: items)
-    }
-
-    let deselectAllMock = MockDetails<Void, Void>()
-    func deselectAll() {
-        self.deselectAllMock.called()
-    }
-
-    let pagesInCanvasRectMock = MockDetails<CGRect, [LayoutEngineItem]>()
-    func items(inCanvasRect rect: CGRect) -> [LayoutEngineItem] {
-        return self.pagesInCanvasRectMock.called(withArguments: rect) ?? []
-    }
-
-    let pageAtCanvasPointMock = MockDetails<CGPoint, LayoutEngineItem?>()
-    func item(atCanvasPoint point: CGPoint) -> LayoutEngineItem? {
-        return self.pageAtCanvasPointMock.called(withArguments: point) ?? nil
-    }
-
-    let movePageToFrontMock = MockDetails<LayoutEnginePage, Void>()
-    func movePageToFront(_ page: LayoutEnginePage) {
-        self.movePageToFrontMock.called(withArguments: page)
-    }
-
-    let modifiedPagesMock = MockDetails<[LayoutEngineItem], Void>()
-    func modified(_ items: [LayoutEngineItem]) {
-        self.modifiedPagesMock.called(withArguments: items)
-    }
-
-    let finishedModifyingMock = MockDetails<[LayoutEngineItem], Void>()
-    func finishedModifying(_ items: [LayoutEngineItem]) {
-        self.finishedModifyingMock.called(withArguments: items)
-    }
-
-    let tellDelegateToRemoveMock = MockDetails<[LayoutEngineItem], Void>()
-    func tellDelegateToRemove(_ items: [LayoutEngineItem]) {
-        self.tellDelegateToRemoveMock.called(withArguments: items)
-    }
-
-    let startEditingMock = MockDetails<(LayoutEnginePage, CGPoint), Void>()
-    func startEditing(_ page: LayoutEnginePage, atContentPoint point: CGPoint) {
-        self.startEditingMock.called(withArguments: (page, point))
-    }
-
-    let stopEditingPagesMock = MockDetails<Void, Void>()
-    func stopEditingPages() {
-        self.stopEditingPagesMock.called()
     }
 
 
@@ -96,6 +41,49 @@ class MockLayoutEngine: LayoutEngine {
     func remove(_ links: [LayoutEngineLink]) {
         self.removeLinksMock.called(withArguments: links)
     }
+
+
+    let selectItemsMock = MockDetails<([LayoutEngineItem], Bool), Void>()
+    func select(_ items: [LayoutEngineItem], extendingSelection: Bool) {
+        self.selectItemsMock.called(withArguments: (items, extendingSelection))
+    }
+
+    let deselectItemMock = MockDetails<[LayoutEngineItem], Void>()
+    func deselect(_ items: [LayoutEngineItem]) {
+        self.deselectItemMock.called(withArguments: items)
+    }
+
+    let deselectAllMock = MockDetails<Void, Void>()
+    func deselectAll() {
+        self.deselectAllMock.called()
+    }
+
+    let itemsInCanvasRectMock = MockDetails<CGRect, [LayoutEngineItem]>()
+    func items(inCanvasRect rect: CGRect) -> [LayoutEngineItem] {
+        return self.itemsInCanvasRectMock.called(withArguments: rect) ?? []
+    }
+
+    let itemAtCanvasPointMock = MockDetails<CGPoint, LayoutEngineItem?>()
+    func item(atCanvasPoint point: CGPoint) -> LayoutEngineItem? {
+        return self.itemAtCanvasPointMock.called(withArguments: point) ?? nil
+    }
+
+
+    let modifiedItemsMock = MockDetails<[LayoutEngineItem], Void>()
+    func modified(_ items: [LayoutEngineItem]) {
+        self.modifiedItemsMock.called(withArguments: items)
+    }
+
+    let finishedModifyingMock = MockDetails<[LayoutEngineItem], Void>()
+    func finishedModifying(_ items: [LayoutEngineItem]) {
+        self.finishedModifyingMock.called(withArguments: items)
+    }
+
+    let tellDelegateToRemoveMock = MockDetails<[LayoutEngineItem], Void>()
+    func tellDelegateToRemove(_ items: [LayoutEngineItem]) {
+        self.tellDelegateToRemoveMock.called(withArguments: items)
+    }
+
 
     var isLinking: Bool = false
     let startLinkingMock = MockDetails<Void, Void>()
@@ -111,5 +99,21 @@ class MockLayoutEngine: LayoutEngine {
     let linksChangedMock = MockDetails<Void, Void>()
     func linksChanged() {
         self.linksChangedMock.called()
+    }
+
+
+    let startEditingMock = MockDetails<(LayoutEnginePage, CGPoint), Void>()
+    func startEditing(_ page: LayoutEnginePage, atContentPoint point: CGPoint) {
+        self.startEditingMock.called(withArguments: (page, point))
+    }
+
+    let stopEditingPagesMock = MockDetails<Void, Void>()
+    func stopEditingPages() {
+        self.stopEditingPagesMock.called()
+    }
+
+    let movePageToFrontMock = MockDetails<LayoutEnginePage, Void>()
+    func movePageToFront(_ page: LayoutEnginePage) {
+        self.movePageToFrontMock.called(withArguments: page)
     }
 }

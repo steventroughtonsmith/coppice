@@ -19,9 +19,9 @@ class MockLayoutEnginePageView: LayoutEnginePageView {
         self.stopEditingMock.called()
     }
 
-    let isLinkMock = MockDetails<CGPoint, URL>()
+    let linkAtContentPointMock = MockDetails<CGPoint, URL>()
     func link(atContentPoint point: CGPoint) -> URL? {
-        return self.isLinkMock.called(withArguments: point) ?? nil
+        return self.linkAtContentPointMock.called(withArguments: point) ?? nil
     }
 
     let openLinkMock = MockDetails<CGPoint, Void>()

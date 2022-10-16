@@ -32,6 +32,20 @@
         "identifier" : "99D0C75E24C5DD1E002EEBFA",
         "name" : "CoppiceCoreTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/Submodules\/M3Data\/M3Data.xcodeproj",
+        "identifier" : "99CC5B6127F1EFE80084ADFF",
+        "name" : "M3DataTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/M3Subscriptions\/M3Subscriptions.xcodeproj",
+        "identifier" : "9984815A248E639C00BC0A8A",
+        "name" : "M3SubscriptionsTests"
+      }
     }
   ],
   "version" : 1

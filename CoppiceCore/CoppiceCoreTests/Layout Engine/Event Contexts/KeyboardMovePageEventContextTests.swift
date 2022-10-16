@@ -237,8 +237,8 @@ class KeyboardMovePageEventContextTests: EventContextTestBase {
         self.page3.selected = false
         _ = self.performKeyboardMoveTest(keyCode: kVK_UpArrow, downEventCount: 1)
 
-        XCTAssertEqual(self.mockLayoutEngine.modifiedPagesMock.arguments.count, 1)
-        XCTAssertEqual(self.mockLayoutEngine.modifiedPagesMock.arguments.first, [self.page1])
+        XCTAssertEqual(self.mockLayoutEngine.modifiedItemsMock.arguments.count, 1)
+        XCTAssertEqual(self.mockLayoutEngine.modifiedItemsMock.arguments.first, [self.page1])
     }
 
     func test_keyDownCallsModified_downArrow() throws {
@@ -247,8 +247,8 @@ class KeyboardMovePageEventContextTests: EventContextTestBase {
         self.page3.selected = false
         _ = self.performKeyboardMoveTest(keyCode: kVK_DownArrow, downEventCount: 1)
 
-        XCTAssertEqual(self.mockLayoutEngine.modifiedPagesMock.arguments.count, 1)
-        XCTAssertEqual(self.mockLayoutEngine.modifiedPagesMock.arguments.first, [self.page1, self.page2])
+        XCTAssertEqual(self.mockLayoutEngine.modifiedItemsMock.arguments.count, 1)
+        XCTAssertEqual(self.mockLayoutEngine.modifiedItemsMock.arguments.first, [self.page1, self.page2])
     }
 
     func test_keyDownCallsModified_leftArrow() throws {
@@ -257,8 +257,8 @@ class KeyboardMovePageEventContextTests: EventContextTestBase {
         self.page3.selected = false
         _ = self.performKeyboardMoveTest(keyCode: kVK_LeftArrow, downEventCount: 1)
 
-        XCTAssertEqual(self.mockLayoutEngine.modifiedPagesMock.arguments.count, 1)
-        XCTAssertEqual(self.mockLayoutEngine.modifiedPagesMock.arguments.first, [self.page2])
+        XCTAssertEqual(self.mockLayoutEngine.modifiedItemsMock.arguments.count, 1)
+        XCTAssertEqual(self.mockLayoutEngine.modifiedItemsMock.arguments.first, [self.page2])
     }
 
     func test_keyDownCallsModified_rightArrow() throws {
@@ -267,8 +267,8 @@ class KeyboardMovePageEventContextTests: EventContextTestBase {
         self.page3.selected = true
         _ = self.performKeyboardMoveTest(keyCode: kVK_RightArrow, downEventCount: 1)
 
-        XCTAssertEqual(self.mockLayoutEngine.modifiedPagesMock.arguments.count, 1)
-        XCTAssertEqual(self.mockLayoutEngine.modifiedPagesMock.arguments.first, [self.page1, self.page3])
+        XCTAssertEqual(self.mockLayoutEngine.modifiedItemsMock.arguments.count, 1)
+        XCTAssertEqual(self.mockLayoutEngine.modifiedItemsMock.arguments.first, [self.page1, self.page3])
     }
 
     func test_keyDownCallsModified_doesntCallForOtherKey() throws {
@@ -277,7 +277,7 @@ class KeyboardMovePageEventContextTests: EventContextTestBase {
         self.page3.selected = false
         _ = self.performKeyboardMoveTest(keyCode: kVK_Space, downEventCount: 1)
 
-        XCTAssertFalse(self.mockLayoutEngine.modifiedPagesMock.wasCalled)
+        XCTAssertFalse(self.mockLayoutEngine.modifiedItemsMock.wasCalled)
     }
 
 
@@ -288,9 +288,9 @@ class KeyboardMovePageEventContextTests: EventContextTestBase {
         self.page3.selected = false
         _ = self.performKeyboardMoveTest(keyCode: kVK_UpArrow, downEventCount: 5)
 
-        XCTAssertEqual(self.mockLayoutEngine.modifiedPagesMock.arguments.count, 5)
-        XCTAssertEqual(self.mockLayoutEngine.modifiedPagesMock.arguments.first, [self.page1])
-        XCTAssertEqual(self.mockLayoutEngine.modifiedPagesMock.arguments.last, [self.page1])
+        XCTAssertEqual(self.mockLayoutEngine.modifiedItemsMock.arguments.count, 5)
+        XCTAssertEqual(self.mockLayoutEngine.modifiedItemsMock.arguments.first, [self.page1])
+        XCTAssertEqual(self.mockLayoutEngine.modifiedItemsMock.arguments.last, [self.page1])
     }
 
     func test_keyDownCallsModifiedMultipleTimes_holdingDownArrow() throws {
@@ -299,9 +299,9 @@ class KeyboardMovePageEventContextTests: EventContextTestBase {
         self.page3.selected = false
         _ = self.performKeyboardMoveTest(keyCode: kVK_DownArrow, downEventCount: 4)
 
-        XCTAssertEqual(self.mockLayoutEngine.modifiedPagesMock.arguments.count, 4)
-        XCTAssertEqual(self.mockLayoutEngine.modifiedPagesMock.arguments.first, [self.page1, self.page2])
-        XCTAssertEqual(self.mockLayoutEngine.modifiedPagesMock.arguments.last, [self.page1, self.page2])
+        XCTAssertEqual(self.mockLayoutEngine.modifiedItemsMock.arguments.count, 4)
+        XCTAssertEqual(self.mockLayoutEngine.modifiedItemsMock.arguments.first, [self.page1, self.page2])
+        XCTAssertEqual(self.mockLayoutEngine.modifiedItemsMock.arguments.last, [self.page1, self.page2])
     }
 
     func test_keyDownCallsModifiedMultipleTimes_holdingLeftArrow() throws {
@@ -310,9 +310,9 @@ class KeyboardMovePageEventContextTests: EventContextTestBase {
         self.page3.selected = true
         _ = self.performKeyboardMoveTest(keyCode: kVK_LeftArrow, downEventCount: 8)
 
-        XCTAssertEqual(self.mockLayoutEngine.modifiedPagesMock.arguments.count, 8)
-        XCTAssertEqual(self.mockLayoutEngine.modifiedPagesMock.arguments.first, [self.page2, self.page3])
-        XCTAssertEqual(self.mockLayoutEngine.modifiedPagesMock.arguments.last, [self.page2, self.page3])
+        XCTAssertEqual(self.mockLayoutEngine.modifiedItemsMock.arguments.count, 8)
+        XCTAssertEqual(self.mockLayoutEngine.modifiedItemsMock.arguments.first, [self.page2, self.page3])
+        XCTAssertEqual(self.mockLayoutEngine.modifiedItemsMock.arguments.last, [self.page2, self.page3])
     }
 
     func test_keyDownCallsModifiedMultipleTimes_holdingRightArrow() throws {
@@ -321,9 +321,9 @@ class KeyboardMovePageEventContextTests: EventContextTestBase {
         self.page3.selected = true
         _ = self.performKeyboardMoveTest(keyCode: kVK_RightArrow, downEventCount: 12)
 
-        XCTAssertEqual(self.mockLayoutEngine.modifiedPagesMock.arguments.count, 12)
-        XCTAssertEqual(self.mockLayoutEngine.modifiedPagesMock.arguments.first, [self.page1, self.page2, self.page3])
-        XCTAssertEqual(self.mockLayoutEngine.modifiedPagesMock.arguments.last, [self.page1, self.page2, self.page3])
+        XCTAssertEqual(self.mockLayoutEngine.modifiedItemsMock.arguments.count, 12)
+        XCTAssertEqual(self.mockLayoutEngine.modifiedItemsMock.arguments.first, [self.page1, self.page2, self.page3])
+        XCTAssertEqual(self.mockLayoutEngine.modifiedItemsMock.arguments.last, [self.page1, self.page2, self.page3])
     }
 
 

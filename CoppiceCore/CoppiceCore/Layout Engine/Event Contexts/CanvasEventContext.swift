@@ -60,6 +60,7 @@ public protocol LayoutEngine: AnyObject {
     var canvasSize: CGSize { get }
     var selectionRect: CGRect? { get set }
     var pageUnderMouse: LayoutEnginePage? { get set }
+    ///Page representing the cursor during edit operations
     var cursorPage: LayoutEnginePage? { get set }
 
     var pages: [LayoutEnginePage] { get }

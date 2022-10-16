@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		99399D0B28F45AA800B0E080 /* MockPageHierarchyRestorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99399D0A28F45AA800B0E080 /* MockPageHierarchyRestorer.swift */; };
 		994664A02816EE0300A08522 /* CroppedImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9946649F2816EE0300A08522 /* CroppedImageCache.swift */; };
 		9948C0CF2896B78C00DB754E /* TestData.Plist.V2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9948C0CE2896B78C00DB754E /* TestData.Plist.V2.swift */; };
 		9948C0D12896B79B00DB754E /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9948C0D02896B79B00DB754E /* TestData.swift */; };
@@ -28,7 +29,7 @@
 		99983E71278C9D660020759D /* MockLayoutEnginePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99983E70278C9D660020759D /* MockLayoutEnginePageView.swift */; };
 		9999788928AA8699002930FD /* PageHierarchy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9999788828AA8699002930FD /* PageHierarchy.swift */; };
 		99B04A0E28F1CEFC00B657DE /* StandardHoverEventContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B04A0D28F1CEFC00B657DE /* StandardHoverEventContextTests.swift */; };
-		99B04A1028F1E3F800B657DE /* CreateLinkHoverEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B04A0F28F1E3F800B657DE /* CreateLinkHoverEventContext.swift */; };
+		99B04A1028F1E3F800B657DE /* CreateLinkHoverEventContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B04A0F28F1E3F800B657DE /* CreateLinkHoverEventContextTests.swift */; };
 		99B04A1228F1E60300B657DE /* PageHierarchyBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B04A1128F1E60300B657DE /* PageHierarchyBuilderTests.swift */; };
 		99B04A1428F1E61C00B657DE /* PageHierarchyRestorerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B04A1328F1E61C00B657DE /* PageHierarchyRestorerTests.swift */; };
 		99BC4352256C15F200BBB0EA /* Array+M3ExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BC4351256C15F200BBB0EA /* Array+M3ExtensionsTests.swift */; };
@@ -135,6 +136,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		99399D0A28F45AA800B0E080 /* MockPageHierarchyRestorer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPageHierarchyRestorer.swift; sourceTree = "<group>"; };
 		9946649F2816EE0300A08522 /* CroppedImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CroppedImageCache.swift; sourceTree = "<group>"; };
 		9948C0CE2896B78C00DB754E /* TestData.Plist.V2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.Plist.V2.swift; sourceTree = "<group>"; };
 		9948C0D02896B79B00DB754E /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
@@ -156,7 +158,7 @@
 		99983E70278C9D660020759D /* MockLayoutEnginePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLayoutEnginePageView.swift; sourceTree = "<group>"; };
 		9999788828AA8699002930FD /* PageHierarchy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageHierarchy.swift; sourceTree = "<group>"; };
 		99B04A0D28F1CEFC00B657DE /* StandardHoverEventContextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardHoverEventContextTests.swift; sourceTree = "<group>"; };
-		99B04A0F28F1E3F800B657DE /* CreateLinkHoverEventContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateLinkHoverEventContext.swift; sourceTree = "<group>"; };
+		99B04A0F28F1E3F800B657DE /* CreateLinkHoverEventContextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateLinkHoverEventContextTests.swift; sourceTree = "<group>"; };
 		99B04A1128F1E60300B657DE /* PageHierarchyBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageHierarchyBuilderTests.swift; sourceTree = "<group>"; };
 		99B04A1328F1E61C00B657DE /* PageHierarchyRestorerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageHierarchyRestorerTests.swift; sourceTree = "<group>"; };
 		99BC4351256C15F200BBB0EA /* Array+M3ExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+M3ExtensionsTests.swift"; sourceTree = "<group>"; };
@@ -439,6 +441,7 @@
 				99D0C81C24C5DEC8002EEBFA /* MockBubblesModelController.swift */,
 				99D0C81D24C5DEC8002EEBFA /* MockEventContextFactory.swift */,
 				9948C0CD2896B78100DB754E /* Test Data */,
+				99399D0A28F45AA800B0E080 /* MockPageHierarchyRestorer.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -545,7 +548,7 @@
 				99D0C89A24C5FB95002EEBFA /* SelectAndMoveEventContextTests.swift */,
 				99D0C89B24C5FB95002EEBFA /* RemoveItemEventContextTests.swift */,
 				99B04A0D28F1CEFC00B657DE /* StandardHoverEventContextTests.swift */,
-				99B04A0F28F1E3F800B657DE /* CreateLinkHoverEventContext.swift */,
+				99B04A0F28F1E3F800B657DE /* CreateLinkHoverEventContextTests.swift */,
 			);
 			path = "Event Contexts";
 			sourceTree = "<group>";
@@ -792,7 +795,7 @@
 				99D0C8A224C5FB95002EEBFA /* EventContextTestBase.swift in Sources */,
 				99D0C83D24C5DEC9002EEBFA /* TestLayoutDelegate.swift in Sources */,
 				99D0C8A024C5FB95002EEBFA /* LayoutEngineArrowTests.swift in Sources */,
-				99B04A1028F1E3F800B657DE /* CreateLinkHoverEventContext.swift in Sources */,
+				99B04A1028F1E3F800B657DE /* CreateLinkHoverEventContextTests.swift in Sources */,
 				99D0C8A424C5FB95002EEBFA /* ResizePageEventContextTests.swift in Sources */,
 				99D0C89C24C5FB95002EEBFA /* LayoutEnginePageTests.swift in Sources */,
 				99F6BD2127C3D23F00E5AD20 /* ImageHotspotTests.swift in Sources */,
@@ -822,6 +825,7 @@
 				99BC438B256C241D00BBB0EA /* ModelObjects+MiscTests.swift in Sources */,
 				9948C0DF2898040A00DB754E /* TestData.Plist.V3.swift in Sources */,
 				99D0C86424C5DF0F002EEBFA /* CoppiceModelControllerCanvasPageTests.swift in Sources */,
+				99399D0B28F45AA800B0E080 /* MockPageHierarchyRestorer.swift in Sources */,
 				9948C0E12898298600DB754E /* TestData.ModelController.swift in Sources */,
 				99E47E2C274BF8DC007D180F /* NSRange+M3ExtensionsTests.swift in Sources */,
 				9948C0D12896B79B00DB754E /* TestData.swift in Sources */,

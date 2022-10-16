@@ -65,10 +65,6 @@ class CoppiceModelControllerCanvasPageTests: XCTestCase {
         XCTAssertNil(canvasPage.parent)
     }
 
-    func test_openPageAtLink_tellsCanvasToOpenPageFromSourceWithSuppliedMode() throws {
-        XCTFail("Not implemented")
-    }
-
     func test_openPageAtLink_opensPageOnCanvasIfDoesntExistOnSource() throws {
         let linkedPage = Page.create(in: self.modelController)
         let link = linkedPage.linkToPage().withSource(self.canvasPage.id)
@@ -80,7 +76,7 @@ class CoppiceModelControllerCanvasPageTests: XCTestCase {
 
         XCTAssertEqual(canvasPage.page, linkedPage)
         XCTAssertEqual(canvasPage.canvas, self.canvas)
-        XCTAssertEqual(canvasPage.parent, self.canvasPage)
+        XCTAssertEqual(canvasPage.linksIn.first?.sourcePage, self.canvasPage)
     }
 
     func test_openPageAtLink_undoingOpeningLinkWithNoSourceRemovesPageFromCanvas() throws {
@@ -153,7 +149,7 @@ class CoppiceModelControllerCanvasPageTests: XCTestCase {
         XCTAssertEqual(redoneCanvas.canvas, self.canvas)
         XCTAssertEqual(redoneCanvas.page, linkedPage)
         XCTAssertEqual(redoneCanvas.frame, canvasPage.frame)
-        XCTAssertEqual(redoneCanvas.parent, self.canvasPage)
+        XCTAssertEqual(redoneCanvas.linksIn.first?.sourcePage, self.canvasPage)
     }
 
 
@@ -172,33 +168,51 @@ class CoppiceModelControllerCanvasPageTests: XCTestCase {
     func test_closeCanvasPage_removesAllChildPagesFromCanvas() {
         let child1 = self.modelController.canvasPageCollection.newObject() {
             $0.canvas = self.canvas
-            $0.parent = self.canvasPage
         }
         let child2 = self.modelController.canvasPageCollection.newObject() {
             $0.canvas = self.canvas
-            $0.parent = self.canvasPage
+        }
+        let linkToChild1 = self.modelController.canvasLinkCollection.newObject() {
+            $0.canvas = self.canvas
+            $0.sourcePage = self.canvasPage
+            $0.destinationPage = child1
+        }
+        let linkToChild2 = self.modelController.canvasLinkCollection.newObject() {
+            $0.canvas = self.canvas
+            $0.sourcePage = self.canvasPage
+            $0.destinationPage = child2
         }
 
         self.modelController.close(self.canvasPage)
-        XCTAssertNil(child1.canvas)
         XCTAssertFalse(self.canvas.pages.contains(child1))
-        XCTAssertNil(child2.canvas)
         XCTAssertFalse(self.canvas.pages.contains(child2))
+        XCTAssertFalse(self.canvas.links.contains(linkToChild1))
+        XCTAssertFalse(self.canvas.links.contains(linkToChild2))
     }
 
-    func test_closeCanvasPage_deletesChildCanvasPages() {
+    func test_closeCanvasPage_deletesChildCanvasPagesAndLinks() {
         let child1 = self.modelController.canvasPageCollection.newObject() {
             $0.canvas = self.canvas
-            $0.parent = self.canvasPage
         }
         let child2 = self.modelController.canvasPageCollection.newObject() {
             $0.canvas = self.canvas
-            $0.parent = self.canvasPage
+        }
+        let linkToChild1 = self.modelController.canvasLinkCollection.newObject() {
+            $0.canvas = self.canvas
+            $0.sourcePage = self.canvasPage
+            $0.destinationPage = child1
+        }
+        let linkToChild2 = self.modelController.canvasLinkCollection.newObject() {
+            $0.canvas = self.canvas
+            $0.sourcePage = self.canvasPage
+            $0.destinationPage = child2
         }
 
         self.modelController.close(self.canvasPage)
         XCTAssertNil(self.modelController.canvasPageCollection.objectWithID(child1.id))
         XCTAssertNil(self.modelController.canvasPageCollection.objectWithID(child2.id))
+        XCTAssertNil(self.modelController.canvasLinkCollection.objectWithID(linkToChild1.id))
+        XCTAssertNil(self.modelController.canvasLinkCollection.objectWithID(linkToChild2.id))
     }
 
     func test_closeCanvasPage_undoingRecreatesCanvasPageWithSameIDAndProperties() throws {
@@ -230,17 +244,27 @@ class CoppiceModelControllerCanvasPageTests: XCTestCase {
     func test_closeCanvasPage_undoingRecreatesAllChildPagesWithSameIDsAndProperties() throws {
         let child1 = self.modelController.canvasPageCollection.newObject() {
             $0.canvas = self.canvas
-            $0.parent = self.canvasPage
             $0.frame = CGRect(x: 5, y: 4, width: 3, height: 2)
         }
         let child2 = self.modelController.canvasPageCollection.newObject() {
             $0.canvas = self.canvas
-            $0.parent = self.canvasPage
             $0.frame = CGRect(x: 99, y: 100, width: 101, height: 102)
+        }
+        self.modelController.canvasLinkCollection.newObject() {
+            $0.canvas = self.canvas
+            $0.sourcePage = self.canvasPage
+            $0.destinationPage = child1
+        }
+        self.modelController.canvasLinkCollection.newObject() {
+            $0.canvas = self.canvas
+            $0.sourcePage = self.canvasPage
+            $0.destinationPage = child2
         }
         self.undoManager.removeAllActions()
 
         self.modelController.close(self.canvasPage)
+        XCTAssertEqual(self.modelController.canvasPageCollection.all.count, 0)
+        XCTAssertEqual(self.modelController.canvasLinkCollection.all.count, 0)
 
         self.undoManager.undo()
 
@@ -253,15 +277,25 @@ class CoppiceModelControllerCanvasPageTests: XCTestCase {
     func test_closeCanvasPage_undoingAddsAllChildPagesBacktoCanvas() throws {
         let child1 = self.modelController.canvasPageCollection.newObject() {
             $0.canvas = self.canvas
-            $0.parent = self.canvasPage
         }
         let child2 = self.modelController.canvasPageCollection.newObject() {
             $0.canvas = self.canvas
-            $0.parent = self.canvasPage
+        }
+        self.modelController.canvasLinkCollection.newObject() {
+            $0.canvas = self.canvas
+            $0.sourcePage = self.canvasPage
+            $0.destinationPage = child1
+        }
+        self.modelController.canvasLinkCollection.newObject() {
+            $0.canvas = self.canvas
+            $0.sourcePage = self.canvasPage
+            $0.destinationPage = child2
         }
         self.undoManager.removeAllActions()
 
         self.modelController.close(self.canvasPage)
+        XCTAssertEqual(self.modelController.canvasPageCollection.all.count, 0)
+        XCTAssertEqual(self.modelController.canvasLinkCollection.all.count, 0)
 
         self.undoManager.undo()
 
@@ -271,40 +305,63 @@ class CoppiceModelControllerCanvasPageTests: XCTestCase {
         XCTAssertEqual(undoneChild2.canvas, self.canvas)
     }
 
-    func test_closeCanvasPage_undoingCorrectlyConnectsAllParentChildRelationships() throws {
+    func test_closeCanvasPage_undoingAddsAllLinksBacktoCanvas() throws {
         let child1 = self.modelController.canvasPageCollection.newObject() {
             $0.canvas = self.canvas
-            $0.parent = self.canvasPage
         }
         let child2 = self.modelController.canvasPageCollection.newObject() {
             $0.canvas = self.canvas
-            $0.parent = self.canvasPage
+        }
+        let linkToChild1 = self.modelController.canvasLinkCollection.newObject() {
+            $0.canvas = self.canvas
+            $0.sourcePage = self.canvasPage
+            $0.destinationPage = child1
+        }
+        let linkToChild2 = self.modelController.canvasLinkCollection.newObject() {
+            $0.canvas = self.canvas
+            $0.sourcePage = self.canvasPage
+            $0.destinationPage = child2
         }
         self.undoManager.removeAllActions()
 
         self.modelController.close(self.canvasPage)
+        XCTAssertEqual(self.modelController.canvasPageCollection.all.count, 0)
+        XCTAssertEqual(self.modelController.canvasLinkCollection.all.count, 0)
 
         self.undoManager.undo()
 
-        let undonePage = try XCTUnwrap(self.modelController.canvasPageCollection.objectWithID(self.canvasPage.id))
-        let undoneChild1 = try XCTUnwrap(self.modelController.canvasPageCollection.objectWithID(child1.id))
-        XCTAssertEqual(undoneChild1.parent, undonePage)
-        let undoneChild2 = try XCTUnwrap(self.modelController.canvasPageCollection.objectWithID(child2.id))
-        XCTAssertEqual(undoneChild2.parent, undonePage)
+        let undoneLink1 = try XCTUnwrap(self.modelController.canvasLinkCollection.objectWithID(linkToChild1.id))
+        XCTAssertEqual(undoneLink1.canvas, self.canvas)
+        XCTAssertEqual(undoneLink1.sourcePage?.id, self.canvasPage.id)
+        XCTAssertEqual(undoneLink1.destinationPage?.id, child1.id)
+        let undoneLink2 = try XCTUnwrap(self.modelController.canvasLinkCollection.objectWithID(linkToChild2.id))
+        XCTAssertEqual(undoneLink2.canvas, self.canvas)
+        XCTAssertEqual(undoneLink2.sourcePage?.id, self.canvasPage.id)
+        XCTAssertEqual(undoneLink2.destinationPage?.id, child2.id)
     }
 
     func test_closeCanvasPage_redoingRemovesAndDeletesAllCanvasPagesAgain() {
         let child1 = self.modelController.canvasPageCollection.newObject() {
             $0.canvas = self.canvas
-            $0.parent = self.canvasPage
         }
         let child2 = self.modelController.canvasPageCollection.newObject() {
             $0.canvas = self.canvas
-            $0.parent = self.canvasPage
+        }
+        let linkToChild1 = self.modelController.canvasLinkCollection.newObject() {
+            $0.canvas = self.canvas
+            $0.sourcePage = self.canvasPage
+            $0.destinationPage = child1
+        }
+        let linkToChild2 = self.modelController.canvasLinkCollection.newObject() {
+            $0.canvas = self.canvas
+            $0.sourcePage = self.canvasPage
+            $0.destinationPage = child2
         }
         self.undoManager.removeAllActions()
 
         self.modelController.close(self.canvasPage)
+        XCTAssertEqual(self.modelController.canvasPageCollection.all.count, 0)
+        XCTAssertEqual(self.modelController.canvasLinkCollection.all.count, 0)
 
         self.undoManager.undo()
         self.undoManager.redo()
@@ -312,5 +369,7 @@ class CoppiceModelControllerCanvasPageTests: XCTestCase {
         XCTAssertNil(self.modelController.canvasPageCollection.objectWithID(self.canvasPage.id))
         XCTAssertNil(self.modelController.canvasPageCollection.objectWithID(child1.id))
         XCTAssertNil(self.modelController.canvasPageCollection.objectWithID(child2.id))
+        XCTAssertNil(self.modelController.canvasLinkCollection.objectWithID(linkToChild1.id))
+        XCTAssertNil(self.modelController.canvasLinkCollection.objectWithID(linkToChild2.id))
     }
 }

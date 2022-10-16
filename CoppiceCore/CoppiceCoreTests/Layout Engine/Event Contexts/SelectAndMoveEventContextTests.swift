@@ -17,8 +17,8 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
         let clickPoint = self.page3.titlePoint
         eventContext.downEvent(at: clickPoint, modifiers: [], eventCount: 0, in: self.mockLayoutEngine)
 
-        XCTAssertTrue(self.mockLayoutEngine.selectPagesMock.wasCalled)
-        let (pages, extending) = try XCTUnwrap(self.mockLayoutEngine.selectPagesMock.arguments.first)
+        XCTAssertTrue(self.mockLayoutEngine.selectItemsMock.wasCalled)
+        let (pages, extending) = try XCTUnwrap(self.mockLayoutEngine.selectItemsMock.arguments.first)
         XCTAssertEqual(pages, [self.page3])
         XCTAssertFalse(extending)
     }
@@ -29,8 +29,8 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
         let clickPoint = self.page3.contentPoint
         eventContext.downEvent(at: clickPoint, modifiers: [], eventCount: 0, in: self.mockLayoutEngine)
 
-        XCTAssertTrue(self.mockLayoutEngine.selectPagesMock.wasCalled)
-        let (pages, extending) = try XCTUnwrap(self.mockLayoutEngine.selectPagesMock.arguments.first)
+        XCTAssertTrue(self.mockLayoutEngine.selectItemsMock.wasCalled)
+        let (pages, extending) = try XCTUnwrap(self.mockLayoutEngine.selectItemsMock.arguments.first)
         XCTAssertEqual(pages, [self.page3])
         XCTAssertFalse(extending)
     }
@@ -41,10 +41,10 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
 
         let clickPoint = self.page3.titlePoint
         eventContext.downEvent(at: clickPoint, modifiers: [], eventCount: 0, in: self.mockLayoutEngine)
-        XCTAssertFalse(self.mockLayoutEngine.selectPagesMock.wasCalled)
+        XCTAssertFalse(self.mockLayoutEngine.selectItemsMock.wasCalled)
 
         eventContext.upEvent(at: clickPoint, modifiers: [], eventCount: 0, in: self.mockLayoutEngine)
-        let (pages, extending) = try XCTUnwrap(self.mockLayoutEngine.selectPagesMock.arguments.first)
+        let (pages, extending) = try XCTUnwrap(self.mockLayoutEngine.selectItemsMock.arguments.first)
         XCTAssertEqual(pages, [self.page3])
         XCTAssertFalse(extending)
     }
@@ -55,10 +55,10 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
 
         let clickPoint = self.page3.contentPoint
         eventContext.downEvent(at: clickPoint, modifiers: [], eventCount: 0, in: self.mockLayoutEngine)
-        XCTAssertFalse(self.mockLayoutEngine.selectPagesMock.wasCalled)
+        XCTAssertFalse(self.mockLayoutEngine.selectItemsMock.wasCalled)
 
         eventContext.upEvent(at: clickPoint, modifiers: [], eventCount: 0, in: self.mockLayoutEngine)
-        let (pages, extending) = try XCTUnwrap(self.mockLayoutEngine.selectPagesMock.arguments.first)
+        let (pages, extending) = try XCTUnwrap(self.mockLayoutEngine.selectItemsMock.arguments.first)
         XCTAssertEqual(pages, [self.page3])
         XCTAssertFalse(extending)
     }
@@ -70,10 +70,10 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
 
         let clickPoint = self.page3.titlePoint
         eventContext.downEvent(at: clickPoint, modifiers: [], eventCount: 0, in: self.mockLayoutEngine)
-        XCTAssertFalse(self.mockLayoutEngine.selectPagesMock.wasCalled)
+        XCTAssertFalse(self.mockLayoutEngine.selectItemsMock.wasCalled)
 
         eventContext.upEvent(at: clickPoint.plus(.identity), modifiers: [], eventCount: 0, in: self.mockLayoutEngine)
-        XCTAssertFalse(self.mockLayoutEngine.selectPagesMock.wasCalled)
+        XCTAssertFalse(self.mockLayoutEngine.selectItemsMock.wasCalled)
     }
 
     func test_singleSelection_clickingOnSelectedPagesContentDoesntTellLayoutToSelectPagesIfUpEventLocationDifferent() throws {
@@ -83,17 +83,17 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
 
         let clickPoint = self.page3.contentPoint
         eventContext.downEvent(at: clickPoint, modifiers: [], eventCount: 0, in: self.mockLayoutEngine)
-        XCTAssertFalse(self.mockLayoutEngine.selectPagesMock.wasCalled)
+        XCTAssertFalse(self.mockLayoutEngine.selectItemsMock.wasCalled)
 
         eventContext.upEvent(at: clickPoint.plus(.identity), modifiers: [], eventCount: 0, in: self.mockLayoutEngine)
-        XCTAssertFalse(self.mockLayoutEngine.selectPagesMock.wasCalled)
+        XCTAssertFalse(self.mockLayoutEngine.selectItemsMock.wasCalled)
     }
 
 
     //MARK: - Invoke Link
     func test_invokeLink_tellsPageToOpenLinkIfDownLocationIsLinkAndPageIsEditable() throws {
         let mockView = MockLayoutEnginePageView()
-        mockView.isLinkMock.returnValue = URL(string: "https://coppiceapp.com")
+        mockView.linkAtContentPointMock.returnValue = URL(string: "https://coppiceapp.com")
         self.page1.view = mockView
 
         let eventContext = SelectAndMoveEventContext(page: self.page1, editable: true, component: .content)
@@ -105,7 +105,7 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
 
     func test_invokeLink_doesntTellPageToOpenLinkIfDownLocationIsLinkButPageIsNotEditable() throws {
         let mockView = MockLayoutEnginePageView()
-        mockView.isLinkMock.returnValue = URL(string: "https://coppiceapp.com")
+        mockView.linkAtContentPointMock.returnValue = URL(string: "https://coppiceapp.com")
         self.page1.view = mockView
 
         let eventContext = SelectAndMoveEventContext(page: self.page1, editable: false, component: .content)
@@ -122,8 +122,8 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
         let eventContext = SelectAndMoveEventContext(page: self.page1, editable: true, component: .titleBar)
         eventContext.downEvent(at: clickPoint, modifiers: .shift, eventCount: 0, in: self.mockLayoutEngine)
 
-        XCTAssertTrue(self.mockLayoutEngine.selectPagesMock.wasCalled)
-        let (pages, extending) = try XCTUnwrap(self.mockLayoutEngine.selectPagesMock.arguments.first)
+        XCTAssertTrue(self.mockLayoutEngine.selectItemsMock.wasCalled)
+        let (pages, extending) = try XCTUnwrap(self.mockLayoutEngine.selectItemsMock.arguments.first)
         XCTAssertEqual(pages, [self.page1])
         XCTAssertTrue(extending)
     }
@@ -133,8 +133,8 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
         let eventContext = SelectAndMoveEventContext(page: self.page1, editable: true, component: .content)
         eventContext.downEvent(at: clickPoint, modifiers: .shift, eventCount: 0, in: self.mockLayoutEngine)
 
-        XCTAssertTrue(self.mockLayoutEngine.selectPagesMock.wasCalled)
-        let (pages, extending) = try XCTUnwrap(self.mockLayoutEngine.selectPagesMock.arguments.first)
+        XCTAssertTrue(self.mockLayoutEngine.selectItemsMock.wasCalled)
+        let (pages, extending) = try XCTUnwrap(self.mockLayoutEngine.selectItemsMock.arguments.first)
         XCTAssertEqual(pages, [self.page1])
         XCTAssertTrue(extending)
     }
@@ -145,8 +145,8 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
         let eventContext = SelectAndMoveEventContext(page: self.page1, editable: true, component: .titleBar)
         eventContext.downEvent(at: clickPoint, modifiers: .shift, eventCount: 0, in: self.mockLayoutEngine)
 
-        XCTAssertTrue(self.mockLayoutEngine.deselectPagesMock.wasCalled)
-        let pages = try XCTUnwrap(self.mockLayoutEngine.deselectPagesMock.arguments.first)
+        XCTAssertTrue(self.mockLayoutEngine.deselectItemMock.wasCalled)
+        let pages = try XCTUnwrap(self.mockLayoutEngine.deselectItemMock.arguments.first)
         XCTAssertEqual(pages, [self.page1])
     }
 
@@ -156,8 +156,8 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
         let eventContext = SelectAndMoveEventContext(page: self.page1, editable: true, component: .content)
         eventContext.downEvent(at: clickPoint, modifiers: .shift, eventCount: 0, in: self.mockLayoutEngine)
 
-        XCTAssertTrue(self.mockLayoutEngine.deselectPagesMock.wasCalled)
-        let pages = try XCTUnwrap(self.mockLayoutEngine.deselectPagesMock.arguments.first)
+        XCTAssertTrue(self.mockLayoutEngine.deselectItemMock.wasCalled)
+        let pages = try XCTUnwrap(self.mockLayoutEngine.deselectItemMock.arguments.first)
         XCTAssertEqual(pages, [self.page1])
     }
 
@@ -166,10 +166,10 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
         let eventContext = SelectAndMoveEventContext(page: self.page1, editable: true, component: .titleBar)
 
         eventContext.downEvent(at: clickPoint, modifiers: .shift, eventCount: 0, in: self.mockLayoutEngine)
-        let selectCallCount = self.mockLayoutEngine.selectPagesMock.arguments.count
+        let selectCallCount = self.mockLayoutEngine.selectItemsMock.arguments.count
 
         eventContext.upEvent(at: clickPoint, modifiers: .shift, eventCount: 0, in: self.mockLayoutEngine)
-        XCTAssertEqual(self.mockLayoutEngine.selectPagesMock.arguments.count, selectCallCount)
+        XCTAssertEqual(self.mockLayoutEngine.selectItemsMock.arguments.count, selectCallCount)
     }
 
     func test_shiftSelection_clickingOnPagesContentTellsDoesntTellLayoutToSelectOnUpEvent() throws {
@@ -177,10 +177,10 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
         let eventContext = SelectAndMoveEventContext(page: self.page1, editable: true, component: .content)
 
         eventContext.downEvent(at: clickPoint, modifiers: .shift, eventCount: 0, in: self.mockLayoutEngine)
-        let selectCallCount = self.mockLayoutEngine.selectPagesMock.arguments.count
+        let selectCallCount = self.mockLayoutEngine.selectItemsMock.arguments.count
 
         eventContext.upEvent(at: clickPoint, modifiers: .shift, eventCount: 0, in: self.mockLayoutEngine)
-        XCTAssertEqual(self.mockLayoutEngine.selectPagesMock.arguments.count, selectCallCount)
+        XCTAssertEqual(self.mockLayoutEngine.selectItemsMock.arguments.count, selectCallCount)
     }
 
 
@@ -273,8 +273,8 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
         eventContext.draggedEvent(at: startPoint.plus(offset.multiplied(by: 0.5)), modifiers: [], eventCount: 0, in: self.mockLayoutEngine)
         eventContext.draggedEvent(at: startPoint.plus(offset), modifiers: [], eventCount: 0, in: self.mockLayoutEngine)
 
-        XCTAssertEqual(self.mockLayoutEngine.modifiedPagesMock.arguments.count, 2)
-        XCTAssertEqual(self.mockLayoutEngine.modifiedPagesMock.arguments.first, [self.page2, self.page3])
+        XCTAssertEqual(self.mockLayoutEngine.modifiedItemsMock.arguments.count, 2)
+        XCTAssertEqual(self.mockLayoutEngine.modifiedItemsMock.arguments.first, [self.page2, self.page3])
     }
 
     func test_modifyingEvents_upEventTellsLayoutSelectedPagesWereFinishedModifying() throws {
@@ -309,7 +309,7 @@ class SelectAndMoveEventContextTests: EventContextTestBase {
         let eventContext = SelectAndMoveEventContext(page: self.page1, editable: true, component: .titleBar)
         eventContext.downEvent(at: self.page1.titlePoint, modifiers: [], eventCount: 2, in: self.mockLayoutEngine)
 
-        let (pages, extend) = try XCTUnwrap(self.mockLayoutEngine.selectPagesMock.arguments.first)
+        let (pages, extend) = try XCTUnwrap(self.mockLayoutEngine.selectItemsMock.arguments.first)
         XCTAssertEqual(pages, [self.page1, child1, child2])
         XCTAssertFalse(extend)
     }

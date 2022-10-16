@@ -25,7 +25,7 @@ class CanvasLayoutEngineEventContextFactoryTests: XCTestCase {
     func test_createMouseEventContext_returnsCreateLinkMouseEventContextIfLayoutEngineIsLinking() throws {
         self.mockLayoutEngine.isLinking = true
         let page = LayoutEnginePage(id: UUID(), contentFrame: .zero)
-        self.mockLayoutEngine.pageAtCanvasPointMock.returnValue = page
+        self.mockLayoutEngine.itemAtCanvasPointMock.returnValue = page
         let context = self.factory.createMouseEventContext(for: CGPoint(x: 20, y: 30), in: self.mockLayoutEngine)
         let typedContext = try XCTUnwrap(context as? CreateLinkMouseEventContext)
         XCTAssertEqual(typedContext.page, page)
@@ -38,7 +38,7 @@ class CanvasLayoutEngineEventContextFactoryTests: XCTestCase {
 
     func test_createMouseEventContext_movesPageAtSuppliedLocationToFront() throws {
         let page = LayoutEnginePage(id: UUID(), contentFrame: .zero)
-        self.mockLayoutEngine.pageAtCanvasPointMock.returnValue = page
+        self.mockLayoutEngine.itemAtCanvasPointMock.returnValue = page
         _ = self.factory.createMouseEventContext(for: CGPoint(x: 20, y: 30), in: self.mockLayoutEngine)
         XCTAssertTrue(self.mockLayoutEngine.movePageToFrontMock.wasCalled)
         XCTAssertEqual(self.mockLayoutEngine.movePageToFrontMock.arguments.first, page)
@@ -46,7 +46,7 @@ class CanvasLayoutEngineEventContextFactoryTests: XCTestCase {
 
     func test_createMouseEventContext_returnsNilIfNoComponentFoundForpage() throws {
         let page = TestLayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 30, height: 30))
-        self.mockLayoutEngine.pageAtCanvasPointMock.returnValue = page
+        self.mockLayoutEngine.itemAtCanvasPointMock.returnValue = page
 
         let context = self.factory.createMouseEventContext(for: CGPoint(x: 0, y: 0), in: self.mockLayoutEngine)
         XCTAssertNil(context)
@@ -56,7 +56,7 @@ class CanvasLayoutEngineEventContextFactoryTests: XCTestCase {
         let page = TestLayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 30, height: 30))
         page.testComponent = .titleBar
 
-        self.mockLayoutEngine.pageAtCanvasPointMock.returnValue = page
+        self.mockLayoutEngine.itemAtCanvasPointMock.returnValue = page
 
         let context = self.factory.createMouseEventContext(for: CGPoint(x: 20, y: 30), in: self.mockLayoutEngine)
         let typedContext = try XCTUnwrap(context as? SelectAndMoveEventContext)
@@ -67,7 +67,7 @@ class CanvasLayoutEngineEventContextFactoryTests: XCTestCase {
         let page = TestLayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 30, height: 30))
         page.testComponent = .content
 
-        self.mockLayoutEngine.pageAtCanvasPointMock.returnValue = page
+        self.mockLayoutEngine.itemAtCanvasPointMock.returnValue = page
 
         let context = self.factory.createMouseEventContext(for: CGPoint(x: 20, y: 30), in: self.mockLayoutEngine)
         let typedContext = try XCTUnwrap(context as? SelectAndMoveEventContext)
@@ -78,7 +78,7 @@ class CanvasLayoutEngineEventContextFactoryTests: XCTestCase {
         let page = TestLayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 30, height: 30))
         page.testComponent = .resizeLeft
 
-        self.mockLayoutEngine.pageAtCanvasPointMock.returnValue = page
+        self.mockLayoutEngine.itemAtCanvasPointMock.returnValue = page
 
         let context = self.factory.createMouseEventContext(for: CGPoint(x: 20, y: 30), in: self.mockLayoutEngine)
         let typedContext = try XCTUnwrap(context as? ResizePageEventContext)
@@ -90,7 +90,7 @@ class CanvasLayoutEngineEventContextFactoryTests: XCTestCase {
         let page = TestLayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 30, height: 30))
         page.testComponent = .resizeTop
 
-        self.mockLayoutEngine.pageAtCanvasPointMock.returnValue = page
+        self.mockLayoutEngine.itemAtCanvasPointMock.returnValue = page
 
         let context = self.factory.createMouseEventContext(for: CGPoint(x: 20, y: 30), in: self.mockLayoutEngine)
         let typedContext = try XCTUnwrap(context as? ResizePageEventContext)
@@ -102,7 +102,7 @@ class CanvasLayoutEngineEventContextFactoryTests: XCTestCase {
         let page = TestLayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 30, height: 30))
         page.testComponent = .resizeRight
 
-        self.mockLayoutEngine.pageAtCanvasPointMock.returnValue = page
+        self.mockLayoutEngine.itemAtCanvasPointMock.returnValue = page
 
         let context = self.factory.createMouseEventContext(for: CGPoint(x: 20, y: 30), in: self.mockLayoutEngine)
         let typedContext = try XCTUnwrap(context as? ResizePageEventContext)
@@ -114,7 +114,7 @@ class CanvasLayoutEngineEventContextFactoryTests: XCTestCase {
         let page = TestLayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 30, height: 30))
         page.testComponent = .resizeBottom
 
-        self.mockLayoutEngine.pageAtCanvasPointMock.returnValue = page
+        self.mockLayoutEngine.itemAtCanvasPointMock.returnValue = page
 
         let context = self.factory.createMouseEventContext(for: CGPoint(x: 20, y: 30), in: self.mockLayoutEngine)
         let typedContext = try XCTUnwrap(context as? ResizePageEventContext)
@@ -126,7 +126,7 @@ class CanvasLayoutEngineEventContextFactoryTests: XCTestCase {
         let page = TestLayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 30, height: 30))
         page.testComponent = .resizeTopLeft
 
-        self.mockLayoutEngine.pageAtCanvasPointMock.returnValue = page
+        self.mockLayoutEngine.itemAtCanvasPointMock.returnValue = page
 
         let context = self.factory.createMouseEventContext(for: CGPoint(x: 20, y: 30), in: self.mockLayoutEngine)
         let typedContext = try XCTUnwrap(context as? ResizePageEventContext)
@@ -138,7 +138,7 @@ class CanvasLayoutEngineEventContextFactoryTests: XCTestCase {
         let page = TestLayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 30, height: 30))
         page.testComponent = .resizeTopRight
 
-        self.mockLayoutEngine.pageAtCanvasPointMock.returnValue = page
+        self.mockLayoutEngine.itemAtCanvasPointMock.returnValue = page
 
         let context = self.factory.createMouseEventContext(for: CGPoint(x: 20, y: 30), in: self.mockLayoutEngine)
         let typedContext = try XCTUnwrap(context as? ResizePageEventContext)
@@ -150,7 +150,7 @@ class CanvasLayoutEngineEventContextFactoryTests: XCTestCase {
         let page = TestLayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 30, height: 30))
         page.testComponent = .resizeBottomRight
 
-        self.mockLayoutEngine.pageAtCanvasPointMock.returnValue = page
+        self.mockLayoutEngine.itemAtCanvasPointMock.returnValue = page
 
         let context = self.factory.createMouseEventContext(for: CGPoint(x: 20, y: 30), in: self.mockLayoutEngine)
         let typedContext = try XCTUnwrap(context as? ResizePageEventContext)
@@ -162,7 +162,7 @@ class CanvasLayoutEngineEventContextFactoryTests: XCTestCase {
         let page = TestLayoutEnginePage(id: UUID(), contentFrame: CGRect(x: 20, y: 20, width: 30, height: 30))
         page.testComponent = .resizeBottomLeft
 
-        self.mockLayoutEngine.pageAtCanvasPointMock.returnValue = page
+        self.mockLayoutEngine.itemAtCanvasPointMock.returnValue = page
 
         let context = self.factory.createMouseEventContext(for: CGPoint(x: 20, y: 30), in: self.mockLayoutEngine)
         let typedContext = try XCTUnwrap(context as? ResizePageEventContext)
