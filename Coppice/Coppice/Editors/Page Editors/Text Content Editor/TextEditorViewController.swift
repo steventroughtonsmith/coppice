@@ -377,7 +377,7 @@ class TextEditorViewController: NSViewController, NSMenuItemValidation, NSToolba
     //MARK: - Search
     private func highlight(_ range: NSRange?) {
         guard let highlightRange = range else {
-            self.editingTextView.showFindIndicator(for: NSRange(location: NSNotFound, length: 0))
+            self.editingTextView.showFindIndicator(for: NSRange(location: 0, length: 0))
             return
         }
         self.editingTextView.showFindIndicator(for: highlightRange)
