@@ -318,7 +318,7 @@ class ModelReaderTests: XCTestCase {
         let imagePage = self.modelController.collection(for: Page.self).objectWithID(Page.modelID(with: self.testPlist.pageIDs[2]))
         XCTAssertEqual(imagePage?.content.contentType, .image)
         //We need to convert to data and back to ensure the resulting pngData is always equal
-        let imageData = NSImage(named: "NSAddTemplate")!.pngData()!
+        let imageData = NSImage(named: NSImage.applicationIconName)!.pngData()!
         let image = NSImage(data: imageData)!
         XCTAssertEqual((imagePage?.content as? ImagePageContent)?.image?.pngData(), image.pngData())
         XCTAssertEqual((imagePage?.content as? ImagePageContent)?.imageDescription, "This is an image")

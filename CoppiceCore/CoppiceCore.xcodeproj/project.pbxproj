@@ -28,6 +28,7 @@
 		9991FE2628C4E20200946746 /* SelectLinkEventContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9991FE2528C4E20200946746 /* SelectLinkEventContext.swift */; };
 		99983E71278C9D660020759D /* MockLayoutEnginePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99983E70278C9D660020759D /* MockLayoutEnginePageView.swift */; };
 		9999788928AA8699002930FD /* PageHierarchy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9999788828AA8699002930FD /* PageHierarchy.swift */; };
+		99AB31532906BDB900BD0C74 /* MockPageHierarchyBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AB31522906BDB900BD0C74 /* MockPageHierarchyBuilder.swift */; };
 		99B04A0E28F1CEFC00B657DE /* StandardHoverEventContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B04A0D28F1CEFC00B657DE /* StandardHoverEventContextTests.swift */; };
 		99B04A1028F1E3F800B657DE /* CreateLinkHoverEventContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B04A0F28F1E3F800B657DE /* CreateLinkHoverEventContextTests.swift */; };
 		99B04A1228F1E60300B657DE /* PageHierarchyBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B04A1128F1E60300B657DE /* PageHierarchyBuilderTests.swift */; };
@@ -157,6 +158,7 @@
 		9991FE2528C4E20200946746 /* SelectLinkEventContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLinkEventContext.swift; sourceTree = "<group>"; };
 		99983E70278C9D660020759D /* MockLayoutEnginePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLayoutEnginePageView.swift; sourceTree = "<group>"; };
 		9999788828AA8699002930FD /* PageHierarchy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageHierarchy.swift; sourceTree = "<group>"; };
+		99AB31522906BDB900BD0C74 /* MockPageHierarchyBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPageHierarchyBuilder.swift; sourceTree = "<group>"; };
 		99B04A0D28F1CEFC00B657DE /* StandardHoverEventContextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardHoverEventContextTests.swift; sourceTree = "<group>"; };
 		99B04A0F28F1E3F800B657DE /* CreateLinkHoverEventContextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateLinkHoverEventContextTests.swift; sourceTree = "<group>"; };
 		99B04A1128F1E60300B657DE /* PageHierarchyBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageHierarchyBuilderTests.swift; sourceTree = "<group>"; };
@@ -442,6 +444,7 @@
 				99D0C81D24C5DEC8002EEBFA /* MockEventContextFactory.swift */,
 				9948C0CD2896B78100DB754E /* Test Data */,
 				99399D0A28F45AA800B0E080 /* MockPageHierarchyRestorer.swift */,
+				99AB31522906BDB900BD0C74 /* MockPageHierarchyBuilder.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -805,6 +808,7 @@
 				99BC4375256C168000BBB0EA /* CoreGraphics+M3ExtensionsTests.swift in Sources */,
 				99D0C86324C5DF0F002EEBFA /* CoppiceModelControllerCanvasTests.swift in Sources */,
 				99D0C85924C5DEC9002EEBFA /* ModelReaderTests.swift in Sources */,
+				99AB31532906BDB900BD0C74 /* MockPageHierarchyBuilder.swift in Sources */,
 				9948C0CF2896B78C00DB754E /* TestData.Plist.V2.swift in Sources */,
 				99D0C89F24C5FB95002EEBFA /* ArrowLayoutEngineTests.swift in Sources */,
 				99D0C84124C5DEC9002EEBFA /* MockEventContextFactory.swift in Sources */,

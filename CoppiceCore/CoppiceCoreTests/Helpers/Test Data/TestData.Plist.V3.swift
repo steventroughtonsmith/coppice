@@ -62,7 +62,7 @@ extension TestData.Plist {
                 "dateModified": Date(timeIntervalSinceReferenceDate: 9999),
                 "content": ["type": "image", "filename": "\(self.pageIDs[2].uuidString).png", "metadata": [
                     "description": "This is an image",
-                    "cropRect": NSStringFromRect(CGRect(x: 0, y: 0, width: 14, height: 13)),
+                    "cropRect": NSStringFromRect(CGRect(x: 0, y: 0, width: 128, height: 128)),
                     "hotspots": [Any](),
                     "orientation": 1,
                 ]],
@@ -140,7 +140,7 @@ extension TestData.Plist {
 
         lazy var content: [String: Data] = [
             "\(self.pageIDs[0].uuidString).rtf": try! NSAttributedString(string: "Foo Bar").data(from: NSRange(location: 0, length: 7), documentAttributes: [.documentType: NSAttributedString.DocumentType.rtf]),
-            "\(self.pageIDs[2].uuidString).png": NSImage(named: "NSAddTemplate")!.pngData()!,
+            "\(self.pageIDs[2].uuidString).png": NSImage(named: NSImage.applicationIconName)!.pngData()!,
         ]
 
 

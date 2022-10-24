@@ -10,6 +10,12 @@
 import M3Data
 import XCTest
 class CanvasTests: XCTestCase {
+
+    override func tearDownWithError() throws {
+        try super.tearDownWithError()
+        CanvasPage.overrideBuilder = nil
+    }
+    
     //MARK: .zoomFactor
     func test_zoomFactor_capsMaximumValueTo1() throws {
         let canvas = Canvas()
@@ -1204,72 +1210,142 @@ class CanvasTests: XCTestCase {
 
 
     //MARK: - close(_:)
-    func test_closeCanvasPage_createsHierarchyForClosedPage() throws {
+    func test_closeCanvasPage_tellBuilderToBuildHierarchyInModelController() throws {
         let modelController = CoppiceModelController(undoManager: UndoManager())
         let canvas = Canvas.create(in: modelController)
-        let parentPage = CanvasPage.create(in: modelController) {
-            $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
-            $0.canvas = canvas
-        }
-        let page = Page.create(in: modelController)
-        let canvasPage = CanvasPage.create(in: modelController) {
-            $0.page = page
-            $0.canvas = canvas
-            $0.parent = parentPage
-            $0.frame = CGRect(x: 40, y: 50, width: 60, height: 70)
-        }
+        let (root, _) = self.createCloseCanvasPageHierarchy(in: canvas, modelController: modelController)
 
-        canvas.close(canvasPage)
+        let mockBuilder = MockPageHierarchyBuilder(rootPage: root)
+        CanvasPage.overrideBuilder = mockBuilder
+        canvas.close(root)
 
-        let hierarchiesForParent = try XCTUnwrap(canvas.closedPageHierarchies[parentPage.id])
-        let hierarchy = try XCTUnwrap(hierarchiesForParent[page.id])
-
-        XCTAssertEqual(hierarchy.id, canvasPage.id)
-        XCTAssertEqual(hierarchy.pageID, page.id)
-        XCTAssertEqual(hierarchy.frame, canvasPage.frame)
-        XCTAssertEqual(hierarchy.children.count, 0)
+        XCTAssertEqual(mockBuilder.mockBuildHierarchy.arguments.first, modelController)
     }
 
-    func test_closeCanvasPage_includesAllChildPagesInCreatedHierarchy() throws {
+    func test_closeCanvasPage_setsCanvasOnReturnedPageHiearchy() throws {
         let modelController = CoppiceModelController(undoManager: UndoManager())
         let canvas = Canvas.create(in: modelController)
-        let parentPage = CanvasPage.create(in: modelController) {
-            $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
-            $0.canvas = canvas
-        }
-        let page = Page.create(in: modelController)
-        let canvasPage = CanvasPage.create(in: modelController) {
-            $0.page = page
-            $0.canvas = canvas
-            $0.parent = parentPage
-            $0.frame = CGRect(x: 40, y: 50, width: 60, height: 70)
-        }
+        let (root, _) = self.createCloseCanvasPageHierarchy(in: canvas, modelController: modelController)
 
-        let page2 = Page.create(in: modelController)
-        let childPage1 = CanvasPage.create(in: modelController) {
-            $0.page = page2
-            $0.canvas = canvas
-            $0.parent = canvasPage
-            $0.frame = CGRect(x: 80, y: 90, width: 100, height: 110)
-        }
+        let mockBuilder = MockPageHierarchyBuilder(rootPage: root)
+        let pageHierarchy = PageHierarchy.create(in: modelController)
+        mockBuilder.mockBuildHierarchy.returnValue = pageHierarchy
+        CanvasPage.overrideBuilder = mockBuilder
+        canvas.close(root)
 
-        let page3 = Page.create(in: modelController)
-        let childPage2 = CanvasPage.create(in: modelController) {
-            $0.page = page3
-            $0.canvas = canvas
-            $0.parent = canvasPage
-            $0.frame = CGRect(x: 120, y: 130, width: 140, height: 150)
-        }
-
-        canvas.close(canvasPage)
-
-        let hierarchiesForParent = try XCTUnwrap(canvas.closedPageHierarchies[parentPage.id])
-        let hierarchy = try XCTUnwrap(hierarchiesForParent[page.id])
-        XCTAssertEqual(hierarchy.children.count, 2)
-        XCTAssertTrue(hierarchy.children.contains(where: { $0.id == childPage1.id }))
-        XCTAssertTrue(hierarchy.children.contains(where: { $0.id == childPage2.id }))
+        XCTAssertEqual(pageHierarchy.canvas, canvas)
     }
 
+    func test_closeCanvasPage_addsArgumentPagePlusAllLinkedToPagesToHierarchy() throws {
+        let modelController = CoppiceModelController(undoManager: UndoManager())
+        let canvas = Canvas.create(in: modelController)
+        let (root, children) = self.createCloseCanvasPageHierarchy(in: canvas, modelController: modelController)
+
+        let mockBuilder = MockPageHierarchyBuilder(rootPage: root)
+        CanvasPage.overrideBuilder = mockBuilder
+        canvas.close(root)
+
+        XCTAssertEqual(mockBuilder.mockAddPage.arguments.count, 4)
+        XCTAssertTrue(mockBuilder.mockAddPage.arguments.contains(root))
+        XCTAssertTrue(mockBuilder.mockAddPage.arguments.contains(children[0]))
+        XCTAssertTrue(mockBuilder.mockAddPage.arguments.contains(children[1]))
+        XCTAssertTrue(mockBuilder.mockAddPage.arguments.contains(children[2]))
+    }
+
+    func test_closeCanvasPage_closesArgumentPagePlusAllLinkedToPages() throws {
+        let modelController = CoppiceModelController(undoManager: UndoManager())
+        let canvas = Canvas.create(in: modelController)
+        let (root, _) = self.createCloseCanvasPageHierarchy(in: canvas, modelController: modelController)
+
+        XCTAssertEqual(modelController.canvasPageCollection.all.count, 6)
+        canvas.close(root)
+        XCTAssertEqual(modelController.canvasPageCollection.all.count, 2)
+    }
+
+    func test_closeCanvasPage_removesAllLinksBetweenClosedPagesAndToArgumentPage() throws {
+        let modelController = CoppiceModelController(undoManager: UndoManager())
+        let canvas = Canvas.create(in: modelController)
+        let (root, _) = self.createCloseCanvasPageHierarchy(in: canvas, modelController: modelController)
+
+        XCTAssertEqual(modelController.canvasLinkCollection.all.count, 5)
+        canvas.close(root)
+        XCTAssertEqual(modelController.canvasLinkCollection.all.count, 0)
+    }
+
+    func test_closeCanvasPage_doesntRemoveLinkedToPagesThatFormedCycle() throws {
+        let modelController = CoppiceModelController(undoManager: UndoManager())
+        let canvas = Canvas.create(in: modelController)
+        let (root, children) = self.createCloseCanvasPageHierarchy(in: canvas, modelController: modelController)
+
+        CanvasLink.create(in: modelController) {
+            $0.canvas = canvas
+            $0.sourcePage = children[2]
+            $0.destinationPage = root
+        }
+
+        canvas.close(root)
+
+        XCTAssertFalse(modelController.canvasPageCollection.contains(root))
+        XCTAssertFalse(modelController.canvasPageCollection.contains(children[1]))
+        XCTAssertTrue(modelController.canvasPageCollection.contains(children[0]))
+        XCTAssertTrue(modelController.canvasPageCollection.contains(children[2]))
+    }
+
+    private func createCloseCanvasPageHierarchy(in canvas: Canvas, modelController: ModelController) -> (CanvasPage, [CanvasPage]) {
+        let linkInPage1 = CanvasPage.create(in: modelController) {
+            $0.canvas = canvas
+        }
+
+        let linkInPage2 = CanvasPage.create(in: modelController) {
+            $0.canvas = canvas
+        }
+
+        let rootPage = CanvasPage.create(in: modelController) {
+            $0.canvas = canvas
+        }
+
+        let child1 = CanvasPage.create(in: modelController) {
+            $0.canvas = canvas
+        }
+        let child2 = CanvasPage.create(in: modelController) {
+            $0.canvas = canvas
+        }
+        let grandChild1 = CanvasPage.create(in: modelController) {
+            $0.canvas = canvas
+        }
+
+        CanvasLink.create(in: modelController) {
+            $0.canvas = canvas
+            $0.sourcePage = linkInPage1
+            $0.destinationPage = rootPage
+        }
+
+        CanvasLink.create(in: modelController) {
+            $0.canvas = canvas
+            $0.sourcePage = linkInPage2
+            $0.destinationPage = rootPage
+        }
+
+        CanvasLink.create(in: modelController) {
+            $0.canvas = canvas
+            $0.sourcePage = rootPage
+            $0.destinationPage = child1
+        }
+
+        CanvasLink.create(in: modelController) {
+            $0.canvas = canvas
+            $0.sourcePage = rootPage
+            $0.destinationPage = child2
+        }
+
+        CanvasLink.create(in: modelController) {
+            $0.canvas = canvas
+            $0.sourcePage = child1
+            $0.destinationPage = grandChild1
+        }
+
+        return (rootPage, [child1, child2, grandChild1])
+    }
 
     //MARK: - addPages(_:centredOn:)
     func test_addPagesCentredOn_createsNewCanvasPageForEachSuppliedPage() throws {

@@ -132,7 +132,7 @@ class CanvasLayoutEngineTests: XCTestCase {
         self.layoutEngine.view = view
         self.layoutEngine.updateContentFrame(CGRect(x: -20, y: -10, width: 20, height: 40), ofPageWithID: self.page2.id)
 
-        let expectedContext = CanvasLayoutEngine.LayoutContext(sizeChanged: true, pageOffsetChange: CGPoint(x: -10, y: 0))
+        let expectedContext = CanvasLayoutEngine.LayoutContext(sizeChanged: true, pageOffsetChange: CGPoint(x: -10, y: 0), linksChanged: true)
         XCTAssertEqual(view.context, expectedContext)
     }
 
@@ -147,28 +147,73 @@ class CanvasLayoutEngineTests: XCTestCase {
 
     //MARK: - Add/remove links
     func test_addLinks_addsSuppliedLinksToLinksArray() throws {
-        XCTFail()
+        let link1 = LayoutEngineLink(id: UUID(), pageLink: nil, sourcePageID: UUID(), destinationPageID: UUID())
+        let link2 = LayoutEngineLink(id: UUID(), pageLink: nil, sourcePageID: UUID(), destinationPageID: UUID())
+        let link3 = LayoutEngineLink(id: UUID(), pageLink: nil, sourcePageID: UUID(), destinationPageID: UUID())
+
+        self.layoutEngine.add([link1, link2, link3])
+
+        XCTAssertTrue(self.layoutEngine.links.contains(link1))
+        XCTAssertTrue(self.layoutEngine.links.contains(link2))
+        XCTAssertTrue(self.layoutEngine.links.contains(link3))
     }
 
     func test_removeLinks_removesSuppliedLinksToLinksArray() throws {
-        XCTFail()
+        let link1 = LayoutEngineLink(id: UUID(), pageLink: nil, sourcePageID: UUID(), destinationPageID: UUID())
+        let link2 = LayoutEngineLink(id: UUID(), pageLink: nil, sourcePageID: UUID(), destinationPageID: UUID())
+        let link3 = LayoutEngineLink(id: UUID(), pageLink: nil, sourcePageID: UUID(), destinationPageID: UUID())
+
+        self.layoutEngine.add([link1, link2, link3])
+
+        self.layoutEngine.remove([link1, link3])
+
+        XCTAssertFalse(self.layoutEngine.links.contains(link1))
+        XCTAssertTrue(self.layoutEngine.links.contains(link2))
+        XCTAssertFalse(self.layoutEngine.links.contains(link3))
     }
 
     //MARK: - Link Creation
     func test_startLinking_doesntChangeHoverEventContextIfPageNotBeingEdited() throws {
-        XCTFail()
+        //Ensure no page is being edited
+        self.layoutEngine.stopEditingPages()
+        XCTAssertNil(self.layoutEngine.pageBeingEdited)
+
+        self.layoutEngine.startLinking()
+
+        XCTAssertTrue(self.layoutEngine.currentHoverEventContext is StandardHoverEventContext)
     }
 
     func test_startLinking_makesNewCreateLinkHoverEventContextIfPageBeingEdited() throws {
-        XCTFail()
+        self.layoutEngine.startEditing(self.page2, atContentPoint: .zero)
+        XCTAssertEqual(self.layoutEngine.pageBeingEdited, self.page2)
+
+        self.layoutEngine.startLinking()
+
+        XCTAssertEqual((self.layoutEngine.currentHoverEventContext as? CreateLinkHoverEventContext)?.page, self.page2)
     }
 
     func test_finishLinkingWithDestination_tellsDelegateToFinishLinking() throws {
-        XCTFail()
+        let mockDelegate = MockCanvasLayoutEngineDelegate()
+        self.layoutEngine.delegate = mockDelegate
+
+        self.layoutEngine.finishLinking(withDestination: self.page3)
+
+        let (page, layout) = try XCTUnwrap(mockDelegate.finishLinkingMock.arguments.first)
+        XCTAssertEqual(page, self.page3)
+        XCTAssertEqual(layout, self.layoutEngine)
     }
 
     func test_finishLinkingWithDestination_resetsHoverEventContextToStandardContext() throws {
-        XCTFail()
+        self.layoutEngine.startEditing(self.page2, atContentPoint: .zero)
+        XCTAssertEqual(self.layoutEngine.pageBeingEdited, self.page2)
+
+        self.layoutEngine.startLinking()
+
+        XCTAssertFalse(self.layoutEngine.currentHoverEventContext is StandardHoverEventContext)
+
+        self.layoutEngine.finishLinking(withDestination: nil)
+
+        XCTAssertTrue(self.layoutEngine.currentHoverEventContext is StandardHoverEventContext)
     }
 
     //MARK: - Point Conversion
@@ -315,14 +360,14 @@ class CanvasLayoutEngineTests: XCTestCase {
 
     //MARK: - Enabled Page
     func test_enabledPage_isNilWhenNoPageSelected() throws {
-        self.layoutEngine.finishedModifying([])
+        self.layoutEngine.finishedModifying([self.page2])
 
         XCTAssertNil(self.layoutEngine.enabledPage)
     }
 
     func test_enabledPage_isSetToSelectedPageIfSinglePageSelected() throws {
         self.page2.selected = true
-        self.layoutEngine.finishedModifying([])
+        self.layoutEngine.finishedModifying([self.page2])
 
         XCTAssertEqual(self.layoutEngine.enabledPage, self.page2)
     }
@@ -330,7 +375,7 @@ class CanvasLayoutEngineTests: XCTestCase {
     func test_enabledPage_isNilIfMultiplePagesSelected() throws {
         self.page2.selected = true
         self.page3.selected = true
-        self.layoutEngine.finishedModifying([])
+        self.layoutEngine.finishedModifying([self.page2, self.page3])
 
         XCTAssertNil(self.layoutEngine.enabledPage)
     }
@@ -338,11 +383,11 @@ class CanvasLayoutEngineTests: XCTestCase {
     func test_enabledPage_isSetToSelectedPageIfAllOtherPagesAreDeselected() throws {
         self.page2.selected = true
         self.page3.selected = true
-        self.layoutEngine.finishedModifying([])
+        self.layoutEngine.finishedModifying([self.page2, self.page3])
         XCTAssertNil(self.layoutEngine.enabledPage)
 
         self.page2.selected = false
-        self.layoutEngine.finishedModifying([])
+        self.layoutEngine.finishedModifying([self.page2])
         XCTAssertEqual(self.layoutEngine.enabledPage, self.page3)
     }
 
@@ -1269,5 +1314,8 @@ private class MockCanvasLayoutEngineDelegate: CanvasLayoutEngineDelegate {
         self.reorderedPagesMock.called(withArguments: (pages, layout))
     }
 
-    func finishLinking(withDestination: LayoutEnginePage?, in layout: CanvasLayoutEngine) {}
+    let finishLinkingMock = MockDetails<(LayoutEnginePage?, CanvasLayoutEngine), Void>()
+    func finishLinking(withDestination destination: LayoutEnginePage?, in layout: CanvasLayoutEngine) {
+        self.finishLinkingMock.called(withArguments: (destination, layout))
+    }
 }

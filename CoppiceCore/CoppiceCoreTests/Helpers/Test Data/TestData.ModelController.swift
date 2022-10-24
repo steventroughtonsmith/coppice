@@ -50,7 +50,7 @@ extension TestData {
                     $0.dateCreated = Date(timeIntervalSinceReferenceDate: 999)
                     $0.dateModified = Date(timeIntervalSinceReferenceDate: 9999)
                     let content = ImagePageContent()
-                    content.setImage(NSImage(named: "NSAddTemplate")!, operation: .replace)
+                    content.setImage(NSImage(named: NSImage.applicationIconName)!, operation: .replace)
                     content.imageDescription = "This is an image"
                     $0.content = content
                 },

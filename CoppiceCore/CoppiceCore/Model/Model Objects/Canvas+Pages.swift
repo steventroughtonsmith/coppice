@@ -116,7 +116,7 @@ extension Canvas {
     }
 
     public func close(_ canvasPage: CanvasPage) {
-        let builder = PageHierarchyBuilder(rootPage: canvasPage)
+        let builder = canvasPage.createHierarchyBuilder()
 
         let linksIn = canvasPage.linksIn
         self.removePageAndLinks(canvasPage, pageHierarchyBuilder: builder)
@@ -306,5 +306,20 @@ extension Canvas {
             let point = CGPoint(x: x, y: y).rounded()
             return CGRect(origin: point, size: size)
         }
+    }
+}
+
+extension CanvasPage {
+    #if TEST
+    static var overrideBuilder: PageHierarchyBuilder?
+    #endif
+    //MARK: - Page Hierarchies
+    func createHierarchyBuilder() -> PageHierarchyBuilder {
+        #if TEST
+        if let overrideBuilder = Self.overrideBuilder {
+            return overrideBuilder
+        }
+        #endif
+        return PageHierarchyBuilder(rootPage: self)
     }
 }
