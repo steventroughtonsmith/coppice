@@ -21,7 +21,6 @@ extension TestData.Plist {
                 "theme": "auto",
                 "viewPort": NSStringFromRect(CGRect(x: 10, y: 20, width: 30, height: 40)),
                 "alwaysShowPageTitles": 0,
-                "closedPageHierarchies": [String: Any](),
                 "zoomFactor": 1,
             ],
             [
@@ -32,7 +31,6 @@ extension TestData.Plist {
                 "sortIndex": 1,
                 "theme": "light",
                 "alwaysShowPageTitles": 1,
-                "closedPageHierarchies": [String: Any](),
                 "zoomFactor": 1,
             ],
         ]

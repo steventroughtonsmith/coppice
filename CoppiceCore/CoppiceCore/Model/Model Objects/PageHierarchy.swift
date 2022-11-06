@@ -22,14 +22,14 @@ final public class PageHierarchy: NSObject, CollectableModelObject {
 
     public static var propertyConversions: [ModelPlistKey: ModelPropertyConversion] {
         return [
-            .PageHiearchy.rootPageID: .modelID,
-            .PageHiearchy.pages: .array(.dictionary([
-                .PageHiearchy.PageRef.canvasPageID: .modelID,
-                .PageHiearchy.PageRef.pageID: .modelID,
+            .PageHierarchy.rootPageID: .modelID,
+            .PageHierarchy.pages: .array(.dictionary([
+                .PageHierarchy.PageRef.canvasPageID: .modelID,
+                .PageHierarchy.PageRef.pageID: .modelID,
             ])),
-            .PageHiearchy.links: .array(.dictionary([
-                .PageHiearchy.LinkRef.sourceID: .modelID,
-                .PageHiearchy.LinkRef.destinationID: .modelID,
+            .PageHierarchy.links: .array(.dictionary([
+                .PageHierarchy.LinkRef.sourceID: .modelID,
+                .PageHierarchy.LinkRef.destinationID: .modelID,
             ])),
         ]
     }
@@ -47,10 +47,10 @@ final public class PageHierarchy: NSObject, CollectableModelObject {
     public var plistRepresentation: [ModelPlistKey: Any] {
         var plist = self.otherProperties
         plist[.id] = self.id
-        plist[.PageHiearchy.rootPageID] = self.rootPageID
-        plist[.PageHiearchy.entryPoints] = self.entryPoints.map(\.plistRepresentation)
-        plist[.PageHiearchy.pages] = self.pages.map(\.plistRepresentation)
-        plist[.PageHiearchy.links] = self.links.map(\.plistRepresentation)
+        plist[.PageHierarchy.rootPageID] = self.rootPageID
+        plist[.PageHierarchy.entryPoints] = self.entryPoints.map(\.plistRepresentation)
+        plist[.PageHierarchy.pages] = self.pages.map(\.plistRepresentation)
+        plist[.PageHierarchy.links] = self.links.map(\.plistRepresentation)
         return plist
     }
 
@@ -59,10 +59,10 @@ final public class PageHierarchy: NSObject, CollectableModelObject {
             throw ModelObjectUpdateErrors.idsDontMatch
         }
 
-        let rootPageID: ModelID? = plist.attribute(withKey: .PageHiearchy.rootPageID)
-        let rawEntryPoints: [[ModelPlistKey: Any]] = try plist.requiredAttribute(withKey: .PageHiearchy.entryPoints)
-        let rawPages: [[ModelPlistKey: Any]] = try plist.requiredAttribute(withKey: .PageHiearchy.pages)
-        let rawLinks: [[ModelPlistKey: Any]] = try plist.requiredAttribute(withKey: .PageHiearchy.links)
+        let rootPageID: ModelID? = plist.attribute(withKey: .PageHierarchy.rootPageID)
+        let rawEntryPoints: [[ModelPlistKey: Any]] = try plist.requiredAttribute(withKey: .PageHierarchy.entryPoints)
+        let rawPages: [[ModelPlistKey: Any]] = try plist.requiredAttribute(withKey: .PageHierarchy.pages)
+        let rawLinks: [[ModelPlistKey: Any]] = try plist.requiredAttribute(withKey: .PageHierarchy.links)
 
         var entryPoints: [EntryPoint] = []
         for rawEntryPoint in rawEntryPoints {
@@ -116,10 +116,10 @@ extension PageHierarchy {
 
         init?(plist: [ModelPlistKey: Any]) {
             guard
-                let pageLinkString: String = try? plist.requiredAttribute(withKey: .PageHiearchy.EntryPoint.pageLink),
+                let pageLinkString: String = try? plist.requiredAttribute(withKey: .PageHierarchy.EntryPoint.pageLink),
                 let url = URL(string: pageLinkString),
                 let pageLink = PageLink(url: url),
-                let relativePositionString: String = try? plist.requiredAttribute(withKey: .PageHiearchy.EntryPoint.relativePosition)
+                let relativePositionString: String = try? plist.requiredAttribute(withKey: .PageHierarchy.EntryPoint.relativePosition)
             else {
                 return nil
             }
@@ -130,8 +130,8 @@ extension PageHierarchy {
 
         var plistRepresentation: [ModelPlistKey: Any] {
             return [
-                .PageHiearchy.EntryPoint.pageLink: self.pageLink.url.absoluteString,
-                .PageHiearchy.EntryPoint.relativePosition: self.relativePosition.stringRepresentation,
+                .PageHierarchy.EntryPoint.pageLink: self.pageLink.url.absoluteString,
+                .PageHierarchy.EntryPoint.relativePosition: self.relativePosition.stringRepresentation,
             ]
         }
     }
@@ -151,9 +151,9 @@ extension PageHierarchy {
 
         init?(plist: [ModelPlistKey: Any]) {
             guard
-                let canvasPageID: ModelID = try? plist.requiredAttribute(withKey: .PageHiearchy.PageRef.canvasPageID),
-                let pageID: ModelID = try? plist.requiredAttribute(withKey: .PageHiearchy.PageRef.pageID),
-                let relativeFrameString: String = try? plist.requiredAttribute(withKey: .PageHiearchy.PageRef.relativeContentFrame)
+                let canvasPageID: ModelID = try? plist.requiredAttribute(withKey: .PageHierarchy.PageRef.canvasPageID),
+                let pageID: ModelID = try? plist.requiredAttribute(withKey: .PageHierarchy.PageRef.pageID),
+                let relativeFrameString: String = try? plist.requiredAttribute(withKey: .PageHierarchy.PageRef.relativeContentFrame)
             else {
                 return nil
             }
@@ -165,9 +165,9 @@ extension PageHierarchy {
 
         var plistRepresentation: [ModelPlistKey: Any] {
             return [
-                .PageHiearchy.PageRef.canvasPageID: self.canvasPageID,
-                .PageHiearchy.PageRef.pageID: self.pageID,
-                .PageHiearchy.PageRef.relativeContentFrame: self.relativeContentFrame.stringRepresentation,
+                .PageHierarchy.PageRef.canvasPageID: self.canvasPageID,
+                .PageHierarchy.PageRef.pageID: self.pageID,
+                .PageHierarchy.PageRef.relativeContentFrame: self.relativeContentFrame.stringRepresentation,
             ]
         }
     }
@@ -185,9 +185,9 @@ extension PageHierarchy {
 
         init?(plist: [ModelPlistKey: Any]) {
             guard
-                let sourceID: ModelID = try? plist.requiredAttribute(withKey: .PageHiearchy.LinkRef.sourceID),
-                let destinationID: ModelID = try? plist.requiredAttribute(withKey: .PageHiearchy.LinkRef.destinationID),
-                let linkString: String = try? plist.requiredAttribute(withKey: .PageHiearchy.LinkRef.link),
+                let sourceID: ModelID = try? plist.requiredAttribute(withKey: .PageHierarchy.LinkRef.sourceID),
+                let destinationID: ModelID = try? plist.requiredAttribute(withKey: .PageHierarchy.LinkRef.destinationID),
+                let linkString: String = try? plist.requiredAttribute(withKey: .PageHierarchy.LinkRef.link),
                 let url = URL(string: linkString),
                 let pageLink = PageLink(url: url)
             else {
@@ -201,16 +201,16 @@ extension PageHierarchy {
 
         var plistRepresentation: [ModelPlistKey: Any] {
             return [
-                .PageHiearchy.LinkRef.sourceID: self.sourceID,
-                .PageHiearchy.LinkRef.destinationID: self.destinationID,
-                .PageHiearchy.LinkRef.link: self.link.url.absoluteString,
+                .PageHierarchy.LinkRef.sourceID: self.sourceID,
+                .PageHierarchy.LinkRef.destinationID: self.destinationID,
+                .PageHierarchy.LinkRef.link: self.link.url.absoluteString,
             ]
         }
     }
 }
 
 extension ModelPlistKey {
-    enum PageHiearchy {
+    enum PageHierarchy {
         static let rootPageID = ModelPlistKey(rawValue: "rootPageID")
         static let entryPoints = ModelPlistKey(rawValue: "entryPoints")
         static let pages = ModelPlistKey(rawValue: "pages")

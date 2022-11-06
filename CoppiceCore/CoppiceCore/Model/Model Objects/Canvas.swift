@@ -66,8 +66,6 @@ final public class Canvas: NSObject, CollectableModelObject {
         didSet { self.didChange(\.thumbnail, oldValue: oldValue) }
     }
 
-    public var closedPageHierarchies: [ModelID: [ModelID: LegacyPageHierarchy]] = [:]
-
     lazy var hierarchyRestorer: PageHierarchyRestorer = {
         return PageHierarchyRestorer(canvas: self)
     }()
@@ -122,14 +120,6 @@ final public class Canvas: NSObject, CollectableModelObject {
             plist[.Canvas.viewPort] = NSStringFromRect(viewPort)
         }
 
-
-        let plistableHierarchy = Dictionary(uniqueKeysWithValues: self.closedPageHierarchies.map { key, value in
-            return (key.stringRepresentation, Dictionary(uniqueKeysWithValues: value.map { key, value in
-                return (key.stringRepresentation, value.plistRepresentation)
-            }))
-        })
-        plist[.Canvas.closedPageHierarchies] = plistableHierarchy
-
         return plist
     }
 
@@ -174,24 +164,6 @@ final public class Canvas: NSObject, CollectableModelObject {
             self.zoomFactor = 1
         }
 
-        if let plistableHierarchy: [String: [String: [String: Any]]] = plist.attribute(withKey: .Canvas.closedPageHierarchies) {
-            let hierarchy = plistableHierarchy.compactMap { key, value -> (ModelID, [ModelID: LegacyPageHierarchy])? in
-                guard let canvasPageID = ModelID(string: key) else {
-                    return nil
-                }
-                let pageList = value.compactMap { key, value -> (ModelID, LegacyPageHierarchy)? in
-                    guard let pageID = ModelID(string: key), let pageHierarchy = LegacyPageHierarchy(plistRepresentation: value) else {
-                        return nil
-                    }
-                    return (pageID, pageHierarchy)
-                }
-                return (canvasPageID, Dictionary(uniqueKeysWithValues: pageList))
-            }
-            self.closedPageHierarchies = Dictionary(uniqueKeysWithValues: hierarchy)
-        } else {
-            self.closedPageHierarchies = [:]
-        }
-
         if let alwaysShowPageTitles: Bool = plist.attribute(withKey: .Canvas.alwaysShowPageTitles) {
             self.alwaysShowPageTitles = alwaysShowPageTitles
         }
@@ -214,11 +186,10 @@ extension ModelPlistKey {
         static let zoomFactor = ModelPlistKey(rawValue: "zoomFactor")
         static let thumbnail = ModelPlistKey(rawValue: "thumbnail")
         static let viewPort = ModelPlistKey(rawValue: "viewPort")
-        static let closedPageHierarchies = ModelPlistKey(rawValue: "closedPageHierarchies")
         static let alwaysShowPageTitles = ModelPlistKey(rawValue: "alwaysShowPageTitles") ///Added 2021.2
 
         static var all: [ModelPlistKey] {
-            return [.id, .Canvas.title, .Canvas.dateCreated, .Canvas.dateModified, .Canvas.sortIndex, .Canvas.theme, .Canvas.zoomFactor, .Canvas.thumbnail, .Canvas.viewPort, .Canvas.closedPageHierarchies, .Canvas.alwaysShowPageTitles]
+            return [.id, .Canvas.title, .Canvas.dateCreated, .Canvas.dateModified, .Canvas.sortIndex, .Canvas.theme, .Canvas.zoomFactor, .Canvas.thumbnail, .Canvas.viewPort, .Canvas.alwaysShowPageTitles]
         }
     }
 }

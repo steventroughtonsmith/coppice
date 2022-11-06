@@ -15,15 +15,7 @@ public class LegacyPageHierarchy {
     public let frame: CGRect
     public let children: [LegacyPageHierarchy]
 
-    public convenience init?(canvasPage: CanvasPage) {
-        guard let page = canvasPage.page else {
-            return nil
-        }
-        let children = canvasPage.children.compactMap { LegacyPageHierarchy(canvasPage: $0) }
-        self.init(id: canvasPage.id, pageID: page.id, frame: canvasPage.frame, children: children)
-    }
-
-    public init(id: ModelID, pageID: ModelID, frame: CGRect, children: [LegacyPageHierarchy]) {
+    init(id: ModelID, pageID: ModelID, frame: CGRect, children: [LegacyPageHierarchy]) {
         self.id = id
         self.pageID = pageID
         self.frame = frame
@@ -48,18 +40,48 @@ public class LegacyPageHierarchy {
             return nil
         }
         let children = childrenPlists.compactMap { LegacyPageHierarchy(plistRepresentation: $0) }
+
         self.init(id: id, pageID: pageID, frame: frame, children: children)
     }
 
-    public var plistRepresentation: [String: Any] {
-        //Changing this will require a bump to the document
-        let childPlists = self.children.map(\.plistRepresentation)
+    public func pageHierarchyPlistRepresentation(withSourceCanvasPageID sourceID: ModelID, andFrame sourceFrame: CGRect) -> [ModelPlistKey: Any] {
+        let (legacyPages, links) = self.flattenedHierarchyAndLinks()
+
+        let pages = legacyPages.map { legacyPage -> [ModelPlistKey: Any] in
+            return [
+                .PageHierarchy.PageRef.canvasPageID: legacyPage.id,
+                .PageHierarchy.PageRef.pageID: legacyPage.pageID,
+                .PageHierarchy.PageRef.relativeContentFrame: legacyPage.frame.moved(byX: -self.frame.origin.x, y: -self.frame.origin.y)
+            ]
+        }
+
 
         return [
-            "id": self.id.stringRepresentation,
-            "pageID": self.pageID.stringRepresentation,
-            "frame": NSStringFromRect(self.frame),
-            "children": childPlists,
+            .PageHierarchy.rootPageID: self.id,
+            .PageHierarchy.entryPoints: [[
+                ModelPlistKey.PageHierarchy.EntryPoint.pageLink: PageLink(destination: self.pageID).url,
+                ModelPlistKey.PageHierarchy.EntryPoint.relativePosition: self.frame.origin.minus(sourceFrame.origin)
+            ]],
+            .PageHierarchy.pages: pages,
+            .PageHierarchy.links: links,
         ]
+    }
+
+    private func flattenedHierarchyAndLinks() -> (pages: [LegacyPageHierarchy], links: [[ModelPlistKey: Any]]) {
+        var pages = [self]
+        var links = [[ModelPlistKey: Any]]()
+        for child in self.children {
+            let (childPages, childLinks) = child.flattenedHierarchyAndLinks()
+            pages.append(contentsOf: childPages)
+            links.append(contentsOf: childLinks)
+
+            links.append([
+                .PageHierarchy.LinkRef.sourceID: self.id,
+                .PageHierarchy.LinkRef.destinationID: child.id,
+                .PageHierarchy.LinkRef.link: PageLink(destination: child.pageID, source: self.pageID).url,
+            ])
+        }
+
+        return (pages, links)
     }
 }

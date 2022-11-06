@@ -11,62 +11,6 @@ import M3Data
 import XCTest
 
 class PageHierarchyTests: XCTestCase {
-    var modelController: CoppiceModelController!
-    var parentPage: CanvasPage!
-    var childPage1: CanvasPage!
-    var childPage2: CanvasPage!
-
-    override func setUp() {
-        super.setUp()
-        self.modelController = CoppiceModelController(undoManager: UndoManager())
-        let pageCollection = self.modelController.collection(for: Page.self)
-        let page1 = pageCollection.newObject()
-        let page2 = pageCollection.newObject()
-        let page3 = pageCollection.newObject()
-        let canvasPageCollection = self.modelController.collection(for: CanvasPage.self)
-        self.parentPage = canvasPageCollection.newObject() {
-            $0.page = page1
-            $0.frame = CGRect(x: 10, y: 20, width: 30, height: 40)
-        }
-        self.childPage1 = canvasPageCollection.newObject() {
-            $0.page = page2
-            $0.frame = CGRect(x: -20, y: -10, width: 30, height: 40)
-            $0.parent = self.parentPage
-        }
-        self.childPage2 = canvasPageCollection.newObject() {
-            $0.page = page3
-            $0.frame = CGRect(x: 90, y: 80, width: 70, height: 60)
-            $0.parent = self.parentPage
-        }
-    }
-
-
-    //MARK: - init(canvasPage:)
-    func test_initCanvasPage_returnsNilIfPageIsNotSet() {
-        self.parentPage.page = nil
-        XCTAssertNil(LegacyPageHierarchy(canvasPage: self.parentPage))
-    }
-
-    func test_initCanvasPage_convertsChildrenToPageHierarchies() throws {
-        let hierarchy = try XCTUnwrap(LegacyPageHierarchy(canvasPage: self.parentPage))
-        XCTAssertEqual(hierarchy.children.count, 2)
-
-        XCTAssertTrue(hierarchy.children.contains(where: {
-            ($0.id == self.childPage1.id) && ($0.pageID == self.childPage1.page!.id) && ($0.frame == self.childPage1.frame)
-        }))
-        XCTAssertTrue(hierarchy.children.contains(where: {
-            ($0.id == self.childPage2.id) && ($0.pageID == self.childPage2.page!.id) && ($0.frame == self.childPage2.frame)
-        }))
-    }
-
-    func test_initCanvasPage_setsID_PageIDAndFrame() throws {
-        let hierarchy = try XCTUnwrap(LegacyPageHierarchy(canvasPage: self.parentPage))
-        XCTAssertEqual(hierarchy.id, self.parentPage.id)
-        XCTAssertEqual(hierarchy.pageID, self.parentPage.page!.id)
-        XCTAssertEqual(hierarchy.frame, self.parentPage.frame)
-    }
-
-
     //MARK: - init(plistRepresentation:)
     func test_initPlistRepresentation_returnsNilIfIDNotInPlist() {
         XCTAssertNil(LegacyPageHierarchy(plistRepresentation: [
@@ -140,37 +84,137 @@ class PageHierarchyTests: XCTestCase {
         XCTAssertEqual(child.frame, expectedFrame)
     }
 
+    //MARK: - pageHierarchyPlistRepresentation(withSourceCanvasPageID:andFrame:)
+    func test_pageHierarchyPlistRepresentation_rootPageIDIsIDOfTopOfLegacyHierarchy() throws {
+        let hierarchy = self.createLegacyHierarchy()
 
-    //MARK: - .plistRepresentation
-    func test_plistRepresentation_addsIDStringRepresentation() throws {
-        let hierarchy = try XCTUnwrap(LegacyPageHierarchy(canvasPage: self.parentPage))
-        XCTAssertEqual(hierarchy.plistRepresentation["id"] as? String, self.parentPage.id.stringRepresentation)
+        let sourceID = ModelID(modelType: CanvasPage.modelType)
+        let plist = hierarchy.pageHierarchyPlistRepresentation(withSourceCanvasPageID: sourceID, andFrame: CGRect(x: -30, y: -150, width: 60, height: 100))
+        XCTAssertEqual(plist[.PageHierarchy.rootPageID] as? ModelID, hierarchy.id)
     }
 
-    func test_plistRepresentation_addsPageIDStringRepresentation() throws {
-        let hierarchy = try XCTUnwrap(LegacyPageHierarchy(canvasPage: self.parentPage))
-        XCTAssertEqual(hierarchy.plistRepresentation["pageID"] as? String, self.parentPage.page!.id.stringRepresentation)
+    func test_pageHierarchyPlistRepresentation_hasSingleEntryPointFromSuppliedSourceToTopOfLegacyHierarchy() throws {
+        let hierarchy = self.createLegacyHierarchy()
+
+        let sourceID = ModelID(modelType: CanvasPage.modelType)
+        let plist = hierarchy.pageHierarchyPlistRepresentation(withSourceCanvasPageID: sourceID, andFrame: CGRect(x: -30, y: -150, width: 60, height: 100))
+        let entryPoints = try XCTUnwrap(plist[.PageHierarchy.entryPoints] as? [[ModelPlistKey: Any]])
+        XCTAssertEqual(entryPoints.count, 1)
+        XCTAssertEqual(entryPoints.first?[.PageHierarchy.EntryPoint.pageLink] as? URL, PageLink(destination: hierarchy.pageID).url)
     }
 
-    func test_plistRepresentation_addsFrameStringRepresentation() throws {
-        let hierarchy = try XCTUnwrap(LegacyPageHierarchy(canvasPage: self.parentPage))
-        XCTAssertEqual(hierarchy.plistRepresentation["frame"] as? String, NSStringFromRect(self.parentPage.frame))
+    func test_pageHierarchyPlistRepresentation_entryPointHasRelativePositionBetweenLegacyRootFrameAndSourceFrame() throws {
+        let hierarchy = self.createLegacyHierarchy()
+
+        let sourceID = ModelID(modelType: CanvasPage.modelType)
+        let plist = hierarchy.pageHierarchyPlistRepresentation(withSourceCanvasPageID: sourceID, andFrame: CGRect(x: -30, y: -150, width: 60, height: 100))
+        let entryPoints = try XCTUnwrap(plist[.PageHierarchy.entryPoints] as? [[ModelPlistKey: Any]])
+        XCTAssertEqual(entryPoints.count, 1)
+        XCTAssertEqual(entryPoints.first?[.PageHierarchy.EntryPoint.relativePosition] as? CGPoint, CGPoint(x: 0, y: 160))
     }
 
-    func test_plistRepresentation_convertsChildrenToPlistAndAddsThem() throws {
-        let hierarchy = try XCTUnwrap(LegacyPageHierarchy(canvasPage: self.parentPage))
-        let children = try XCTUnwrap(hierarchy.plistRepresentation["children"] as? [[String: Any]])
-        XCTAssertEqual(children.count, 2)
+    func test_pageHierarchyPlistRepresentation_pageRefsContainsLegacyRootWithZeroFrame() throws {
+        let hierarchy = self.createLegacyHierarchy()
 
-        XCTAssertTrue(children.contains(where: {
-            (($0["id"] as? String) == self.childPage1.id.stringRepresentation) &&
-                (($0["pageID"] as? String) == self.childPage1.page!.id.stringRepresentation) &&
-                (($0["frame"] as? String) == NSStringFromRect(self.childPage1.frame))
-        }))
-        XCTAssertTrue(children.contains(where: {
-            (($0["id"] as? String) == self.childPage2.id.stringRepresentation) &&
-                (($0["pageID"] as? String) == self.childPage2.page!.id.stringRepresentation) &&
-                (($0["frame"] as? String) == NSStringFromRect(self.childPage2.frame))
-        }))
+        let sourceID = ModelID(modelType: CanvasPage.modelType)
+        let plist = hierarchy.pageHierarchyPlistRepresentation(withSourceCanvasPageID: sourceID, andFrame: CGRect(x: -30, y: -150, width: 60, height: 100))
+        let pageRefs = try XCTUnwrap(plist[.PageHierarchy.pages] as? [[ModelPlistKey: Any]])
+        let rootPage = try XCTUnwrap(pageRefs.first(where: { ($0[.PageHierarchy.PageRef.canvasPageID] as? ModelID) == hierarchy.id }))
+        XCTAssertEqual(rootPage[.PageHierarchy.PageRef.pageID] as? ModelID, hierarchy.pageID)
+        XCTAssertEqual(rootPage[.PageHierarchy.PageRef.relativeContentFrame] as? CGRect, CGRect(x: 0, y: 0, width: 40, height: 30))
     }
+
+    func test_pageHierarchyPlistRepresentation_pageRefsContainsAllChildHierarchyPagesWithRelativeFrames() throws {
+        let hierarchy = self.createLegacyHierarchy()
+
+        let sourceID = ModelID(modelType: CanvasPage.modelType)
+        let plist = hierarchy.pageHierarchyPlistRepresentation(withSourceCanvasPageID: sourceID, andFrame: CGRect(x: -30, y: -150, width: 60, height: 100))
+        let pageRefs = try XCTUnwrap(plist[.PageHierarchy.pages] as? [[ModelPlistKey: Any]])
+
+        let child1 = try XCTUnwrap(pageRefs.first(where: { ($0[.PageHierarchy.PageRef.canvasPageID] as? ModelID) == hierarchy.children[0].id }))
+        XCTAssertEqual(child1[.PageHierarchy.PageRef.pageID] as? ModelID, hierarchy.children[0].pageID)
+        XCTAssertEqual(child1[.PageHierarchy.PageRef.relativeContentFrame] as? CGRect, CGRect(x: 70, y: 40, width: 100, height: 150))
+
+        let child2 = try XCTUnwrap(pageRefs.first(where: { ($0[.PageHierarchy.PageRef.canvasPageID] as? ModelID) == hierarchy.children[1].id }))
+        XCTAssertEqual(child2[.PageHierarchy.PageRef.pageID] as? ModelID, hierarchy.children[1].pageID)
+        XCTAssertEqual(child2[.PageHierarchy.PageRef.relativeContentFrame] as? CGRect, CGRect(x: -110, y: -160, width: 82, height: 65))
+
+        let grandchild1 = try XCTUnwrap(pageRefs.first(where: { ($0[.PageHierarchy.PageRef.canvasPageID] as? ModelID) == hierarchy.children[0].children[0].id }))
+        XCTAssertEqual(grandchild1[.PageHierarchy.PageRef.pageID] as? ModelID, hierarchy.children[0].children[0].pageID)
+        XCTAssertEqual(grandchild1[.PageHierarchy.PageRef.relativeContentFrame] as? CGRect, CGRect(x: 92, y: 240, width: 510, height: 210))
+
+        let grandchild2 = try XCTUnwrap(pageRefs.first(where: { ($0[.PageHierarchy.PageRef.canvasPageID] as? ModelID) == hierarchy.children[0].children[1].id }))
+        XCTAssertEqual(grandchild2[.PageHierarchy.PageRef.pageID] as? ModelID, hierarchy.children[0].children[1].pageID)
+        XCTAssertEqual(grandchild2[.PageHierarchy.PageRef.relativeContentFrame] as? CGRect, CGRect(x: 50, y: -170, width: 100, height: 150))
+    }
+
+    func test_pageHierarchyPlistRepresentation_createLinksBetweenEachPageAndItsChildren() throws {
+        let hierarchy = self.createLegacyHierarchy()
+
+        let sourceID = ModelID(modelType: CanvasPage.modelType)
+        let plist = hierarchy.pageHierarchyPlistRepresentation(withSourceCanvasPageID: sourceID, andFrame: CGRect(x: -30, y: -150, width: 60, height: 100))
+        let linkRefs = try XCTUnwrap(plist[.PageHierarchy.links] as? [[ModelPlistKey: Any]])
+
+        let rootID = hierarchy.id
+        let child1ID = hierarchy.children[0].id
+        let child2ID = hierarchy.children[1].id
+        let grandchild1ID = hierarchy.children[0].children[0].id
+        let grandchild2ID = hierarchy.children[0].children[1].id
+
+        let link1 = try XCTUnwrap(linkRefs.first(where: { ($0[.PageHierarchy.LinkRef.sourceID] as? ModelID) == rootID && ($0[.PageHierarchy.LinkRef.destinationID] as? ModelID) == child1ID }))
+        XCTAssertEqual(link1[.PageHierarchy.LinkRef.link] as? URL, PageLink(destination: hierarchy.children[0].pageID, source: hierarchy.pageID).url)
+        let link2 = try XCTUnwrap(linkRefs.first(where: { ($0[.PageHierarchy.LinkRef.sourceID] as? ModelID) == rootID && ($0[.PageHierarchy.LinkRef.destinationID] as? ModelID) == child2ID }))
+        XCTAssertEqual(link2[.PageHierarchy.LinkRef.link] as? URL, PageLink(destination: hierarchy.children[1].pageID, source: hierarchy.pageID).url)
+        let link3 = try XCTUnwrap(linkRefs.first(where: { ($0[.PageHierarchy.LinkRef.sourceID] as? ModelID) == child1ID && ($0[.PageHierarchy.LinkRef.destinationID] as? ModelID) == grandchild1ID }))
+        XCTAssertEqual(link3[.PageHierarchy.LinkRef.link] as? URL, PageLink(destination: hierarchy.children[0].children[0].pageID, source: hierarchy.children[0].pageID).url)
+        let link4 = try XCTUnwrap(linkRefs.first(where: { ($0[.PageHierarchy.LinkRef.sourceID] as? ModelID) == child1ID && ($0[.PageHierarchy.LinkRef.destinationID] as? ModelID) == grandchild2ID }))
+        XCTAssertEqual(link4[.PageHierarchy.LinkRef.link] as? URL, PageLink(destination: hierarchy.children[0].children[1].pageID, source: hierarchy.children[0].pageID).url)
+    }
+
+    //MARK: - Helpers
+    func createLegacyHierarchy() -> LegacyPageHierarchy {
+        let grandchild1 = LegacyPageHierarchy(id: ModelID(modelType: CanvasPage.modelType),
+                                              pageID: ModelID(modelType: Page.modelType),
+                                              frame: CGRect(x: 62, y: 250, width: 510, height: 210),
+                                              children: [])
+
+        let grandchild2 = LegacyPageHierarchy(id: ModelID(modelType: CanvasPage.modelType),
+                                              pageID: ModelID(modelType: Page.modelType),
+                                              frame: CGRect(x: 20, y: -160, width: 100, height: 150),
+                                              children: [])
+
+        let child1 = LegacyPageHierarchy(id: ModelID(modelType: CanvasPage.modelType),
+                                         pageID: ModelID(modelType: Page.modelType),
+                                         frame: CGRect(x: 40, y: 50, width: 100, height: 150),
+                                         children: [grandchild1, grandchild2])
+
+        let child2 = LegacyPageHierarchy(id: ModelID(modelType: CanvasPage.modelType),
+                                         pageID: ModelID(modelType: Page.modelType),
+                                         frame: CGRect(x: -140, y: -150, width: 82, height: 65),
+                                         children: [])
+
+        return LegacyPageHierarchy(id: ModelID(modelType: CanvasPage.modelType),
+                                   pageID: ModelID(modelType: Page.modelType),
+                                   frame: CGRect(x: -30, y: 10, width: 40, height: 30),
+                                   children: [child1, child2])
+    }
+
+    /*
+     Canvas
+     .closePageHierarchies
+     [CanvasPageID(1):
+     [PageID(2):[
+     id - CanvasPageID (3)
+     pageID - PageID (4)
+     frame - absolute rect (5)
+     children - [Hierarchies] (6)
+
+
+     PageHierarchy
+     rootPageID (3)
+     EntryPoints [PageLink (1, 3), RelativePosition (5 & pulled from code)]
+     PageRefs    [CanvasPageID(3), PageID(4), relative frame(5 - (root page's 5))]
+     LinkRefs    [SourceID (3), DestinationID (6.3), PageLink (6.3, 3)]
+     */
+
 }
