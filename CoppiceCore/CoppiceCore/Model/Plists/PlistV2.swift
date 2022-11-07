@@ -27,7 +27,6 @@ extension Plist {
             var migratedPlist = [String: Any]()
             migratedPlist["pages"] = self.plistRepresentations(of: Page.modelType).map(\.toPersistanceRepresentation)
             migratedPlist["folders"] = self.plistRepresentations(of: Folder.modelType).map(\.toPersistanceRepresentation)
-            migratedPlist["canvases"] = self.plistRepresentations(of: Canvas.modelType).map(\.toPersistanceRepresentation)
 
             migratedPlist["settings"] = self.settings
             migratedPlist["version"] = V3.version
@@ -41,6 +40,42 @@ extension Plist {
                 }
                 canvasPagesByID[idString] = existingCanvasPage
             }
+
+            let existingCanvases = self.plistRepresentations(of: Canvas.modelType)
+            var createdPageHierarchies = [[ModelPlistKey: Any]]()
+            for canvas in existingCanvases {
+                guard let closedHierarchies = canvas[.Canvas.closedPageHierarchies] as? [String: [String: [String: Any]]] else {
+                    continue
+                }
+
+                guard let canvasID = canvas[.id] as? ModelID else {
+                    throw ModelPlist.Errors.migrationFailed("Invalid canvas found")
+                }
+
+                for (canvasPageID, hierarchies) in closedHierarchies {
+                    guard
+                        let canvasPageModelID = ModelID(string: canvasPageID),
+                        let pageIDString = canvasPagesByID[canvasPageID]?[.CanvasPage.page] as? String,
+                        let pageID = ModelID(string: pageIDString),
+                        let frameString = canvasPagesByID[canvasPageID]?[.CanvasPage.frame] as? String
+                    else {
+                        throw ModelPlist.Errors.migrationFailed("Invalid canvas page found in closed hierarchy")
+                    }
+                    for (_, rawLegacyHierarchy) in hierarchies {
+                        guard let legacyHierarchy = LegacyPageHierarchy(plistRepresentation: rawLegacyHierarchy) else {
+                            throw ModelPlist.Errors.migrationFailed("Invalid page hierarchy found")
+                        }
+
+                        var pageHierarchyPlist = legacyHierarchy.pageHierarchyPersistenceRepresentation(withSourceCanvasPageID: canvasPageModelID, sourcePageID: pageID, andFrame: NSRectFromString(frameString))
+                        pageHierarchyPlist[.id] = ModelID(modelType: PageHierarchy.modelType)
+                        pageHierarchyPlist[.PageHierarchy.canvas] = canvasID.stringRepresentation
+                        createdPageHierarchies.append(pageHierarchyPlist)
+                    }
+                }
+            }
+
+            migratedPlist["pageHierarchies"] = createdPageHierarchies.map(\.toPersistanceRepresentation)
+            migratedPlist["canvases"] = existingCanvases.map(\.toPersistanceRepresentation)
 
 
             var createdCanvasLinks = [[ModelPlistKey: Any]]()

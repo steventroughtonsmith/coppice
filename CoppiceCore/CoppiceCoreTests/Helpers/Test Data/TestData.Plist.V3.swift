@@ -135,6 +135,106 @@ extension TestData.Plist {
             ],
         ]
 
+        lazy var pageHierarchies: [[String: Any]] = [
+            [
+                "id": PageHierarchy.modelID(with: self.pageHierarchyIDs[0]).stringRepresentation,
+                "canvas": Canvas.modelID(with: self.canvasIDs[0]).stringRepresentation,
+                "rootPageID": CanvasPage.modelID(with: self.closedCanvasPageIDs[0]).stringRepresentation,
+                "entryPoints": [
+                    [
+                        "pageLink": PageLink(destination: Page.modelID(with: self.pageIDs[1]), source: Page.modelID(with: self.pageIDs[0])).url.absoluteString,
+                        "relativePosition": NSStringFromPoint(CGPoint(x: 70, y: 59)),
+                    ]
+                ],
+                "pages": [
+                    [
+                        "canvasPageID": CanvasPage.modelID(with: self.closedCanvasPageIDs[0]).stringRepresentation,
+                        "pageID": Page.modelID(with: self.pageIDs[1]).stringRepresentation,
+                        "relativeContentFrame": NSStringFromRect(CGRect(x: 0, y: 0, width: 10, height: 10)),
+                    ],
+                    [
+                        "canvasPageID": CanvasPage.modelID(with: self.closedCanvasPageIDs[1]).stringRepresentation,
+                        "pageID": Page.modelID(with: self.pageIDs[2]).stringRepresentation,
+                        "relativeContentFrame": NSStringFromRect(CGRect(x: 0, y: 40, width: 10, height: 40)),
+                    ],
+                    [
+                        "canvasPageID": CanvasPage.modelID(with: self.closedCanvasPageIDs[2]).stringRepresentation,
+                        "pageID": Page.modelID(with: self.pageIDs[0]).stringRepresentation,
+                        "relativeContentFrame": NSStringFromRect(CGRect(x: 100, y: 40, width: 10, height: 40)),
+                    ],
+                ],
+                "links": [
+                    [
+                        "sourceID": CanvasPage.modelID(with: self.closedCanvasPageIDs[0]).stringRepresentation,
+                        "destinationID": CanvasPage.modelID(with: self.closedCanvasPageIDs[1]).stringRepresentation,
+                        "link": PageLink(destination: Page.modelID(with: self.pageIDs[2]), source: Page.modelID(with: self.pageIDs[1])).url.absoluteString,
+                    ],
+                    [
+                        "sourceID": CanvasPage.modelID(with: self.closedCanvasPageIDs[0]).stringRepresentation,
+                        "destinationID": CanvasPage.modelID(with: self.closedCanvasPageIDs[2]).stringRepresentation,
+                        "link": PageLink(destination: Page.modelID(with: self.pageIDs[0]), source: Page.modelID(with: self.pageIDs[1])).url.absoluteString,
+                    ],
+                ]
+            ],
+            [
+                "id": PageHierarchy.modelID(with: self.pageHierarchyIDs[1]).stringRepresentation,
+                "canvas": Canvas.modelID(with: self.canvasIDs[0]).stringRepresentation,
+                "rootPageID": CanvasPage.modelID(with: self.closedCanvasPageIDs[3]).stringRepresentation,
+                "entryPoints": [
+                    [
+                        "pageLink": PageLink(destination: Page.modelID(with: self.pageIDs[2]), source: Page.modelID(with: self.pageIDs[0])).url.absoluteString,
+                        "relativePosition": NSStringFromPoint(CGPoint(x: -70, y: -61)),
+                    ]
+                ],
+                "pages": [
+                    [
+                        "canvasPageID": CanvasPage.modelID(with: self.closedCanvasPageIDs[3]).stringRepresentation,
+                        "pageID": Page.modelID(with: self.pageIDs[2]).stringRepresentation,
+                        "relativeContentFrame": NSStringFromRect(CGRect(x: 0, y: 0, width: 10, height: 10)),
+                    ],
+                ],
+                "links": [],
+            ],
+            [
+                "id": PageHierarchy.modelID(with: self.pageHierarchyIDs[2]).stringRepresentation,
+                "canvas": Canvas.modelID(with: self.canvasIDs[0]).stringRepresentation,
+                "rootPageID": CanvasPage.modelID(with: self.closedCanvasPageIDs[4]).stringRepresentation,
+                "entryPoints": [
+                    [
+                        "pageLink": PageLink(destination: Page.modelID(with: self.pageIDs[0]), source: Page.modelID(with: self.pageIDs[1])).url.absoluteString,
+                        "relativePosition": NSStringFromPoint(CGPoint(x: 20, y: 20))
+                    ]
+                ],
+                "pages": [
+                    [
+                        "canvasPageID": CanvasPage.modelID(with: self.closedCanvasPageIDs[4]).stringRepresentation,
+                        "pageID": Page.modelID(with: self.pageIDs[0]).stringRepresentation,
+                        "relativeContentFrame": NSStringFromRect(CGRect(x: 0, y: 0, width: 10, height: 10)),
+                    ],
+                ],
+                "links": [],
+            ],
+            [
+                "id": PageHierarchy.modelID(with: self.pageHierarchyIDs[3]).stringRepresentation,
+                "canvas": Canvas.modelID(with: self.canvasIDs[1]).stringRepresentation,
+                "rootPageID": CanvasPage.modelID(with: self.closedCanvasPageIDs[5]).stringRepresentation,
+                "entryPoints": [
+                    [
+                        "pageLink": PageLink(destination: Page.modelID(with: self.pageIDs[0]), source: Page.modelID(with: self.pageIDs[1])).url.absoluteString,
+                        "relativePosition": NSStringFromPoint(CGPoint(x: 80, y: 72)),
+                    ]
+                ],
+                "pages": [
+                    [
+                        "canvasPageID": CanvasPage.modelID(with: self.closedCanvasPageIDs[5]).stringRepresentation,
+                        "pageID": Page.modelID(with: self.pageIDs[0]).stringRepresentation,
+                        "relativeContentFrame": NSStringFromRect(CGRect(x: 0, y: 0, width: 10, height: 10)),
+                    ],
+                ],
+                "links": [],
+            ]
+        ]
+
 
         lazy var content: [String: Data] = [
             "\(self.pageIDs[0].uuidString).rtf": try! NSAttributedString(string: "Foo Bar").data(from: NSRange(location: 0, length: 7), documentAttributes: [.documentType: NSAttributedString.DocumentType.rtf]),
@@ -155,6 +255,7 @@ extension TestData.Plist {
                 "canvasPages": self.plistCanvasPages,
                 "folders": self.plistFolders,
                 "canvasLinks": self.plistCanvasLinks,
+                "pageHierarchies": self.pageHierarchies,
                 "settings": self.plistSettings,
                 "version": 3,
             ]

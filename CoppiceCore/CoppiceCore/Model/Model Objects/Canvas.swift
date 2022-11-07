@@ -187,6 +187,7 @@ extension ModelPlistKey {
         static let thumbnail = ModelPlistKey(rawValue: "thumbnail")
         static let viewPort = ModelPlistKey(rawValue: "viewPort")
         static let alwaysShowPageTitles = ModelPlistKey(rawValue: "alwaysShowPageTitles") ///Added 2021.2
+        static let closedPageHierarchies = ModelPlistKey(rawValue: "closedPageHierarchies") ///Removed in 2022.2
 
         static var all: [ModelPlistKey] {
             return [.id, .Canvas.title, .Canvas.dateCreated, .Canvas.dateModified, .Canvas.sortIndex, .Canvas.theme, .Canvas.zoomFactor, .Canvas.thumbnail, .Canvas.viewPort, .Canvas.alwaysShowPageTitles]

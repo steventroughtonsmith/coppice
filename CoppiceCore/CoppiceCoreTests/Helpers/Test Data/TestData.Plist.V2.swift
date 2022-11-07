@@ -21,7 +21,43 @@ extension TestData.Plist {
                 "theme": "auto",
                 "viewPort": NSStringFromRect(CGRect(x: 10, y: 20, width: 30, height: 40)),
                 "alwaysShowPageTitles": 0,
-                "closedPageHierarchies": [String: Any](),
+                "closedPageHierarchies": [
+                    CanvasPage.modelID(with: self.canvasPageIDs[0]).stringRepresentation: [
+                        Page.modelID(with: self.pageIDs[1]).stringRepresentation: [
+                            "id": CanvasPage.modelID(with: self.closedCanvasPageIDs[0]).stringRepresentation,
+                            "pageID": Page.modelID(with: self.pageIDs[1]).stringRepresentation,
+                            "frame": NSStringFromRect(CGRect(x: 70, y: 60, width: 10, height: 10)),
+                            "children": [
+                                [
+                                    "id": CanvasPage.modelID(with: self.closedCanvasPageIDs[1]).stringRepresentation,
+                                    "pageID": Page.modelID(with: self.pageIDs[2]).stringRepresentation,
+                                    "frame": NSStringFromRect(CGRect(x: 70, y: 100, width: 10, height: 40)),
+                                    "children": [[String: Any]]()
+                                ],
+                                [
+                                    "id": CanvasPage.modelID(with: self.closedCanvasPageIDs[2]).stringRepresentation,
+                                    "pageID": Page.modelID(with: self.pageIDs[0]).stringRepresentation,
+                                    "frame": NSStringFromRect(CGRect(x: 170, y: 100, width: 10, height: 40)),
+                                    "children": [[String: Any]]()
+                                ]
+                            ],
+                        ],
+                        Page.modelID(with: self.pageIDs[2]).stringRepresentation: [
+                            "id": CanvasPage.modelID(with: self.closedCanvasPageIDs[3]).stringRepresentation,
+                            "pageID": Page.modelID(with: self.pageIDs[2]).stringRepresentation,
+                            "frame": NSStringFromRect(CGRect(x: -70, y: -60, width: 10, height: 10)),
+                            "children": [[String: Any]]()
+                        ],
+                    ],
+                    CanvasPage.modelID(with: self.canvasPageIDs[1]).stringRepresentation: [
+                        Page.modelID(with: self.pageIDs[0]).stringRepresentation: [
+                            "id": CanvasPage.modelID(with: self.closedCanvasPageIDs[4]).stringRepresentation,
+                            "pageID": Page.modelID(with: self.pageIDs[0]).stringRepresentation,
+                            "frame": NSStringFromRect(CGRect(x: 50, y: 70, width: 10, height: 10)),
+                            "children": [[String: Any]]()
+                        ]
+                    ]
+                ],
                 "zoomFactor": 1,
             ],
             [
@@ -32,7 +68,16 @@ extension TestData.Plist {
                 "sortIndex": 1,
                 "theme": "light",
                 "alwaysShowPageTitles": 1,
-                "closedPageHierarchies": [String: Any](),
+                "closedPageHierarchies": [
+                    CanvasPage.modelID(with: self.canvasPageIDs[2]).stringRepresentation: [
+                        Page.modelID(with: self.pageIDs[0]).stringRepresentation: [
+                            "id": CanvasPage.modelID(with: self.closedCanvasPageIDs[5]).stringRepresentation,
+                            "pageID": Page.modelID(with: self.pageIDs[0]).stringRepresentation,
+                            "frame": NSStringFromRect(CGRect(x: 50, y: 70, width: 10, height: 10)),
+                            "children": [[String: Any]]()
+                        ]
+                    ]
+                ],
                 "zoomFactor": 1,
             ],
         ]

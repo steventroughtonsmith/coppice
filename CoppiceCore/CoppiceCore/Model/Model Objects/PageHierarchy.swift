@@ -51,6 +51,7 @@ final public class PageHierarchy: NSObject, CollectableModelObject {
         plist[.PageHierarchy.entryPoints] = self.entryPoints.map(\.plistRepresentation)
         plist[.PageHierarchy.pages] = self.pages.map(\.plistRepresentation)
         plist[.PageHierarchy.links] = self.links.map(\.plistRepresentation)
+        plist[.PageHierarchy.canvas] = self.$canvas.modelID?.stringRepresentation
         return plist
     }
 
@@ -215,6 +216,7 @@ extension ModelPlistKey {
         static let entryPoints = ModelPlistKey(rawValue: "entryPoints")
         static let pages = ModelPlistKey(rawValue: "pages")
         static let links = ModelPlistKey(rawValue: "links")
+        static let canvas = ModelPlistKey(rawValue: "canvas")
 
         enum EntryPoint {
             static let pageLink = ModelPlistKey(rawValue: "pageLink")

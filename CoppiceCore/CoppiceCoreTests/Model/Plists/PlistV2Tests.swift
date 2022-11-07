@@ -245,4 +245,29 @@ final class PlistV2Tests: XCTestCase {
 
         XCTAssertEqual(migratedCanvasPages, targetPlist.plistCanvasPages as [NSDictionary])
     }
+
+    func test_migrateToNextVersion_createsPageHierarchiesForAllLegacyHierarchiesInEachCanvas() throws {
+        let testPlist = TestData.Plist.V2()
+        let migratedPlist = try Plist.V2(plist: testPlist.plist).migrateToNextVersion()
+        let targetPlist = TestData.Plist.V3()
+        var strippedTargetHierarchies = [NSDictionary]()
+        for hierarchy in targetPlist.pageHierarchies {
+            var strippedHierarchy = hierarchy
+            strippedHierarchy["id"] = nil
+            strippedTargetHierarchies.append(strippedHierarchy as NSDictionary)
+        }
+
+        let migratedPageHierarchies = try XCTUnwrap(migratedPlist["pageHierarchies"] as? [[String: Any]])
+        var strippedHierarchies = [NSDictionary]()
+        for hierarchy in migratedPageHierarchies {
+            let idString = try XCTUnwrap(hierarchy["id"] as? String)
+            let id = try XCTUnwrap(ModelID(string: idString))
+            XCTAssertEqual(id.modelType, PageHierarchy.modelType)
+            var strippedHierarchy = hierarchy
+            strippedHierarchy["id"] = nil
+            strippedHierarchies.append(strippedHierarchy as NSDictionary)
+        }
+
+        XCTAssertEqual(Set(strippedHierarchies), Set(strippedTargetHierarchies))
+    }
 }

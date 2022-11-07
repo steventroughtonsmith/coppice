@@ -44,26 +44,27 @@ public class LegacyPageHierarchy {
         self.init(id: id, pageID: pageID, frame: frame, children: children)
     }
 
-    public func pageHierarchyPlistRepresentation(withSourceCanvasPageID sourceID: ModelID, andFrame sourceFrame: CGRect) -> [ModelPlistKey: Any] {
+    public func pageHierarchyPersistenceRepresentation(withSourceCanvasPageID sourceID: ModelID, sourcePageID: ModelID, andFrame sourceFrame: CGRect) -> [ModelPlistKey: Any] {
         let (legacyPages, links) = self.flattenedHierarchyAndLinks()
 
         let pages = legacyPages.map { legacyPage -> [ModelPlistKey: Any] in
             return [
-                .PageHierarchy.PageRef.canvasPageID: legacyPage.id,
-                .PageHierarchy.PageRef.pageID: legacyPage.pageID,
-                .PageHierarchy.PageRef.relativeContentFrame: legacyPage.frame.moved(byX: -self.frame.origin.x, y: -self.frame.origin.y)
+                .PageHierarchy.PageRef.canvasPageID: legacyPage.id.stringRepresentation,
+                .PageHierarchy.PageRef.pageID: legacyPage.pageID.stringRepresentation,
+                .PageHierarchy.PageRef.relativeContentFrame: NSStringFromRect(legacyPage.frame.moved(byX: -self.frame.origin.x, y: -self.frame.origin.y)),
             ]
         }
 
+        let entryPoints: [ModelPlistKey: Any] = [
+            .PageHierarchy.EntryPoint.pageLink: PageLink(destination: self.pageID, source: sourcePageID).url.absoluteString,
+            .PageHierarchy.EntryPoint.relativePosition: NSStringFromPoint(self.frame.origin.minus(sourceFrame.origin)),
+        ]
 
         return [
-            .PageHierarchy.rootPageID: self.id,
-            .PageHierarchy.entryPoints: [[
-                ModelPlistKey.PageHierarchy.EntryPoint.pageLink: PageLink(destination: self.pageID).url,
-                ModelPlistKey.PageHierarchy.EntryPoint.relativePosition: self.frame.origin.minus(sourceFrame.origin)
-            ]],
-            .PageHierarchy.pages: pages,
-            .PageHierarchy.links: links,
+            .PageHierarchy.rootPageID: self.id.stringRepresentation,
+            .PageHierarchy.entryPoints: [entryPoints.toPersistanceRepresentation],
+            .PageHierarchy.pages: pages.map(\.toPersistanceRepresentation),
+            .PageHierarchy.links: links.map(\.toPersistanceRepresentation),
         ]
     }
 
@@ -76,9 +77,9 @@ public class LegacyPageHierarchy {
             links.append(contentsOf: childLinks)
 
             links.append([
-                .PageHierarchy.LinkRef.sourceID: self.id,
-                .PageHierarchy.LinkRef.destinationID: child.id,
-                .PageHierarchy.LinkRef.link: PageLink(destination: child.pageID, source: self.pageID).url,
+                .PageHierarchy.LinkRef.sourceID: self.id.stringRepresentation,
+                .PageHierarchy.LinkRef.destinationID: child.id.stringRepresentation,
+                .PageHierarchy.LinkRef.link: PageLink(destination: child.pageID, source: self.pageID).url.absoluteString,
             ])
         }
 
