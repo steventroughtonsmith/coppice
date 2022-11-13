@@ -15,6 +15,7 @@ public struct GlobalConstants {
     public enum ErrorCodes: Int {
         case readingDocumentFailed = 1
         case documentTooNew = 2
+        case documentMigrationFailed = 3
     }
 
     public static let linkedPageOffset: CGFloat = 50.0
@@ -143,6 +144,16 @@ extension NSError {
                                userInfo: [
                                    NSLocalizedFailureReasonErrorKey: NSLocalizedString("This document was saved by a newer version of Coppice", comment: "Document version too new error reason"),
                                    NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString("Please download the latest version of Coppice to open this Document", comment: "Document version too new error recovery suggestion"),
+                               ])
+            }
+
+            public static func migrationFailed(baseError: NSError) -> NSError {
+                return NSError(domain: GlobalConstants.appErrorDomain,
+                               code: GlobalConstants.ErrorCodes.documentMigrationFailed.rawValue,
+                               userInfo: [
+                                    NSLocalizedFailureReasonErrorKey: NSLocalizedString("Migrating document to latest version failed", comment: "Document migration failed"),
+                                    NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString("Something went wrong migrating document to the latest version. If you keep getting problems please contact support for help.", comment: "Document migration failed description"),
+                                    NSUnderlyingErrorKey: baseError
                                ])
             }
 

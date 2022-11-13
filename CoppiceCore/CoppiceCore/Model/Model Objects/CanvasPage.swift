@@ -100,16 +100,6 @@ final public class CanvasPage: NSObject, CollectableModelObject {
         self.relationship(for: \.parent)
     }
 
-    public func existingCanvasPage(for page: Page) -> CanvasPage? {
-        if self.page?.id == page.id {
-            return self
-        }
-        if let child = self.children.first(where: { $0.page?.id == page.id }) {
-            return child
-        }
-        return nil
-    }
-
 
     //MARK: - Relationship Setup
     public func objectWasInserted() {

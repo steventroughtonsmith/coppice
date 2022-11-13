@@ -255,7 +255,7 @@ public class CoppiceModelController: NSObject, ModelController {
                 return canvas.addPages([page])
         }
 
-        if let existingPage = sourcePage.existingCanvasPage(for: page) {
+        if let existingPage = canvas.existingCanvasPage(for: page) {
             return [existingPage]
         }
 

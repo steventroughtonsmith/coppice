@@ -21,6 +21,7 @@ extension Plist {
                 PersistenceTypes(modelType: Canvas.modelType, persistenceName: "canvases"),
                 PersistenceTypes(modelType: CanvasPage.modelType, persistenceName: "canvasPages"),
                 PersistenceTypes(modelType: CanvasLink.modelType, persistenceName: "canvasLinks"),
+                PersistenceTypes(modelType: PageHierarchy.modelType, persistenceName: "pageHierarchies"),
             ]
         }
 

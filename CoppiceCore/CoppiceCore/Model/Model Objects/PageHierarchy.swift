@@ -31,6 +31,8 @@ final public class PageHierarchy: NSObject, CollectableModelObject {
                 .PageHierarchy.LinkRef.sourceID: .modelID,
                 .PageHierarchy.LinkRef.destinationID: .modelID,
             ])),
+            .PageHierarchy.entryPoints: .array(.dictionary([:])),
+            .PageHierarchy.canvas: .modelID,
         ]
     }
 
@@ -56,6 +58,10 @@ final public class PageHierarchy: NSObject, CollectableModelObject {
     }
 
     public func update(fromPlistRepresentation plist: [ModelPlistKey: Any]) throws {
+        guard let modelController = self.modelController else {
+            throw ModelObjectUpdateErrors.modelControllerNotSet
+        }
+        
         guard self.id == plist.attribute(withKey: .id) else {
             throw ModelObjectUpdateErrors.idsDontMatch
         }
@@ -93,6 +99,10 @@ final public class PageHierarchy: NSObject, CollectableModelObject {
         self.entryPoints = entryPoints
         self.pages = pages
         self.links = links
+
+        if let canvasID: ModelID = plist.attribute(withKey: .PageHierarchy.canvas) {
+            self.canvas = modelController.collection(for: Canvas.self).objectWithID(canvasID)
+        }
     }
 
     //MARK: - Relationship Setup

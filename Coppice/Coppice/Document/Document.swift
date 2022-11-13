@@ -69,6 +69,8 @@ class Document: NSDocument {
             self.isBrandNewDocument = false
         } catch ModelReader.Errors.versionNotSupported {
             throw NSError.Coppice.Document.documentTooNew()
+        } catch ModelPlist.Errors.migrationFailed(let reason) {
+            throw NSError.Coppice.Document.migrationFailed(baseError: ModelPlist.Errors.migrationFailed(reason) as NSError)
         } catch {
             throw NSError.Coppice.Document.readingFailed()
         }

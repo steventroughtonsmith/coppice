@@ -68,7 +68,7 @@ public class LegacyPageHierarchy {
         ]
     }
 
-    private func flattenedHierarchyAndLinks() -> (pages: [LegacyPageHierarchy], links: [[ModelPlistKey: Any]]) {
+    func flattenedHierarchyAndLinks() -> (pages: [LegacyPageHierarchy], links: [[ModelPlistKey: Any]]) {
         var pages = [self]
         var links = [[ModelPlistKey: Any]]()
         for child in self.children {
