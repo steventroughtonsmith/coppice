@@ -222,5 +222,4 @@ class PageHierarchyTests: XCTestCase {
      PageRefs    [CanvasPageID(3), PageID(4), relative frame(5 - (root page's 5))]
      LinkRefs    [SourceID (3), DestinationID (6.3), PageLink (6.3, 3)]
      */
-
 }

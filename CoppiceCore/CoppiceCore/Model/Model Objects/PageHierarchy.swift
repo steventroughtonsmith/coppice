@@ -61,7 +61,7 @@ final public class PageHierarchy: NSObject, CollectableModelObject {
         guard let modelController = self.modelController else {
             throw ModelObjectUpdateErrors.modelControllerNotSet
         }
-        
+
         guard self.id == plist.attribute(withKey: .id) else {
             throw ModelObjectUpdateErrors.idsDontMatch
         }

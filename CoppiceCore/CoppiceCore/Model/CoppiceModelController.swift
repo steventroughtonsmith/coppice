@@ -251,11 +251,11 @@ public class CoppiceModelController: NSObject, ModelController {
             let source = link.source,
             let sourcePage = self.canvasPageCollection.objectWithID(source)
         else {
-                self.undoManager.setActionName(undoActionName)
-                return canvas.addPages([page])
+            self.undoManager.setActionName(undoActionName)
+            return canvas.addPages([page])
         }
 
-        if let existingPage = canvas.existingCanvasPage(for: page) {
+        if let existingPage = sourcePage.existingLinkedCanvasPage(for: page) {
             return [existingPage]
         }
 

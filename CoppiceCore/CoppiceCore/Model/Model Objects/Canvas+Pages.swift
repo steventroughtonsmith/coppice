@@ -81,6 +81,7 @@ extension Canvas {
             return [existingPage]
         }
 
+        #warning("Page Link Equality")
         if let hierarchy = self.pageHierarchies.first(where: { $0.entryPoints.contains(where: { $0.pageLink == pageLink }) }) {
             return self.hierarchyRestorer.restore(hierarchy, from: sourcePage, for: pageLink)
         }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+
 @testable import CoppiceCore
 
 class MockPageHierarchyBuilder: PageHierarchyBuilder {

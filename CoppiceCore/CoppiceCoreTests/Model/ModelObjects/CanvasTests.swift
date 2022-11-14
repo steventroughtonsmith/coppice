@@ -10,12 +10,11 @@
 import M3Data
 import XCTest
 class CanvasTests: XCTestCase {
-
     override func tearDownWithError() throws {
         try super.tearDownWithError()
         CanvasPage.overrideBuilder = nil
     }
-    
+
     //MARK: .zoomFactor
     func test_zoomFactor_capsMaximumValueTo1() throws {
         let canvas = Canvas()

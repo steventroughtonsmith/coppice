@@ -93,7 +93,7 @@ extension Plist {
         }
 
 
-        fileprivate func migratePageHierarchies(canvases: [[ModelPlistKey : Any]], openCanvasPages: [String : [ModelPlistKey : Any]]) throws -> [[ModelPlistKey: Any]] {
+        fileprivate func migratePageHierarchies(canvases: [[ModelPlistKey: Any]], openCanvasPages: [String: [ModelPlistKey: Any]]) throws -> [[ModelPlistKey: Any]] {
             struct HierarchyCanvasPage {
                 var pageID: ModelID
                 var frame: CGRect

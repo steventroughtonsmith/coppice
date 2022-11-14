@@ -354,7 +354,7 @@ class DocumentWindowViewModel: NSObject {
     /// Opens the page
     /// - Parameter pageLink: The PageLink to handle
     /// - Returns: True if the page link was handled, false if it wasn't
-    @discardableResult func openPage(at pageLink: PageLink) -> Bool {
+    @discardableResult func   openPage(at pageLink: PageLink) -> Bool {
         guard self.modelController.object(with: pageLink.destination) != nil else {
             return false
         }

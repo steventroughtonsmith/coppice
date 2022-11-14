@@ -144,7 +144,7 @@ extension TestData.Plist {
                     [
                         "pageLink": PageLink(destination: Page.modelID(with: self.pageIDs[1]), source: Page.modelID(with: self.pageIDs[0])).url.absoluteString,
                         "relativePosition": NSStringFromPoint(CGPoint(x: 70, y: 59)),
-                    ]
+                    ],
                 ],
                 "pages": [
                     [
@@ -174,7 +174,7 @@ extension TestData.Plist {
                         "destinationID": CanvasPage.modelID(with: self.closedCanvasPageIDs[2]).stringRepresentation,
                         "link": PageLink(destination: Page.modelID(with: self.pageIDs[0]), source: Page.modelID(with: self.pageIDs[1])).url.absoluteString,
                     ],
-                ]
+                ],
             ],
             [
                 "id": PageHierarchy.modelID(with: self.pageHierarchyIDs[1]).stringRepresentation,
@@ -184,7 +184,7 @@ extension TestData.Plist {
                     [
                         "pageLink": PageLink(destination: Page.modelID(with: self.pageIDs[2]), source: Page.modelID(with: self.pageIDs[0])).url.absoluteString,
                         "relativePosition": NSStringFromPoint(CGPoint(x: -70, y: -61)),
-                    ]
+                    ],
                 ],
                 "pages": [
                     [
@@ -202,8 +202,8 @@ extension TestData.Plist {
                 "entryPoints": [
                     [
                         "pageLink": PageLink(destination: Page.modelID(with: self.pageIDs[0]), source: Page.modelID(with: self.pageIDs[1])).url.absoluteString,
-                        "relativePosition": NSStringFromPoint(CGPoint(x: 20, y: 20))
-                    ]
+                        "relativePosition": NSStringFromPoint(CGPoint(x: 20, y: 20)),
+                    ],
                 ],
                 "pages": [
                     [
@@ -222,7 +222,7 @@ extension TestData.Plist {
                     [
                         "pageLink": PageLink(destination: Page.modelID(with: self.pageIDs[0]), source: Page.modelID(with: self.pageIDs[1])).url.absoluteString,
                         "relativePosition": NSStringFromPoint(CGPoint(x: 80, y: 72)),
-                    ]
+                    ],
                 ],
                 "pages": [
                     [
@@ -232,7 +232,7 @@ extension TestData.Plist {
                     ],
                 ],
                 "links": [],
-            ]
+            ],
         ]
 
 

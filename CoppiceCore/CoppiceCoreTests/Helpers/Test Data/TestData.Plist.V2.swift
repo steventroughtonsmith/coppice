@@ -32,21 +32,21 @@ extension TestData.Plist {
                                     "id": CanvasPage.modelID(with: self.closedCanvasPageIDs[1]).stringRepresentation,
                                     "pageID": Page.modelID(with: self.pageIDs[2]).stringRepresentation,
                                     "frame": NSStringFromRect(CGRect(x: 70, y: 100, width: 10, height: 40)),
-                                    "children": [[String: Any]]()
+                                    "children": [[String: Any]](),
                                 ],
                                 [
                                     "id": CanvasPage.modelID(with: self.closedCanvasPageIDs[2]).stringRepresentation,
                                     "pageID": Page.modelID(with: self.pageIDs[0]).stringRepresentation,
                                     "frame": NSStringFromRect(CGRect(x: 170, y: 100, width: 10, height: 40)),
-                                    "children": [[String: Any]]()
-                                ]
+                                    "children": [[String: Any]](),
+                                ],
                             ],
                         ],
                         Page.modelID(with: self.pageIDs[2]).stringRepresentation: [
                             "id": CanvasPage.modelID(with: self.closedCanvasPageIDs[3]).stringRepresentation,
                             "pageID": Page.modelID(with: self.pageIDs[2]).stringRepresentation,
                             "frame": NSStringFromRect(CGRect(x: -70, y: -60, width: 10, height: 10)),
-                            "children": [[String: Any]]()
+                            "children": [[String: Any]](),
                         ],
                     ],
                     CanvasPage.modelID(with: self.canvasPageIDs[1]).stringRepresentation: [
@@ -54,9 +54,9 @@ extension TestData.Plist {
                             "id": CanvasPage.modelID(with: self.closedCanvasPageIDs[4]).stringRepresentation,
                             "pageID": Page.modelID(with: self.pageIDs[0]).stringRepresentation,
                             "frame": NSStringFromRect(CGRect(x: 50, y: 70, width: 10, height: 10)),
-                            "children": [[String: Any]]()
-                        ]
-                    ]
+                            "children": [[String: Any]](),
+                        ],
+                    ],
                 ],
                 "zoomFactor": 1,
             ],
@@ -74,9 +74,9 @@ extension TestData.Plist {
                             "id": CanvasPage.modelID(with: self.closedCanvasPageIDs[5]).stringRepresentation,
                             "pageID": Page.modelID(with: self.pageIDs[0]).stringRepresentation,
                             "frame": NSStringFromRect(CGRect(x: 50, y: 70, width: 10, height: 10)),
-                            "children": [[String: Any]]()
-                        ]
-                    ]
+                            "children": [[String: Any]](),
+                        ],
+                    ],
                 ],
                 "zoomFactor": 1,
             ],

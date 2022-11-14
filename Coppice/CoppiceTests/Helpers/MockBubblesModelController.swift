@@ -72,7 +72,7 @@ class MockCoppiceModelController: CoppiceModelController {
         super.delete(canvas)
     }
 
-    
+
     //MARK: - Canavs Pages
     let openPageMock = MockDetails<(PageLink, Canvas, Canvas.OpenPageMode), [CanvasPage]>()
     @discardableResult override func openPage(at link: PageLink, on canvas: Canvas, mode: Canvas.OpenPageMode) -> [CanvasPage] {

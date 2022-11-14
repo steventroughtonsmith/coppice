@@ -151,9 +151,9 @@ extension NSError {
                 return NSError(domain: GlobalConstants.appErrorDomain,
                                code: GlobalConstants.ErrorCodes.documentMigrationFailed.rawValue,
                                userInfo: [
-                                    NSLocalizedFailureReasonErrorKey: NSLocalizedString("Migrating document to latest version failed", comment: "Document migration failed"),
-                                    NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString("Something went wrong migrating document to the latest version. If you keep getting problems please contact support for help.", comment: "Document migration failed description"),
-                                    NSUnderlyingErrorKey: baseError
+                                   NSLocalizedFailureReasonErrorKey: NSLocalizedString("Migrating document to latest version failed", comment: "Document migration failed"),
+                                   NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString("Something went wrong migrating document to the latest version. If you keep getting problems please contact support for help.", comment: "Document migration failed description"),
+                                   NSUnderlyingErrorKey: baseError,
                                ])
             }
 

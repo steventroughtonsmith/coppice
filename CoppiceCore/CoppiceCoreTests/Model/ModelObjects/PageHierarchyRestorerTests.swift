@@ -6,11 +6,11 @@
 //
 
 import XCTest
+
 @testable import CoppiceCore
 import M3Data
 
 final class PageHierarchyRestorerTests: XCTestCase {
-
     var modelController: CoppiceModelController!
     var canvas: Canvas!
 
@@ -150,14 +150,14 @@ final class PageHierarchyRestorerTests: XCTestCase {
         let hierarchy = PageHierarchy.create(in: self.modelController)
         hierarchy.entryPoints = [
             .init(pageLink: PageLink(destination: self.canvasPage1ID, source: self.linkInPage1.id), relativePosition: CGPoint(x: 30, y: -15)),
-            .init(pageLink: PageLink(destination: self.canvasPage1ID, source: self.linkInPage1.id), relativePosition: CGPoint(x: 40, y: 45))
+            .init(pageLink: PageLink(destination: self.canvasPage1ID, source: self.linkInPage1.id), relativePosition: CGPoint(x: 40, y: 45)),
         ]
 
         hierarchy.pages = [
             .init(canvasPageID: self.canvasPage1ID, pageID: self.page1.id, relativeContentFrame: CGRect(x: 0, y: 0, width: 10, height: 10)),
             .init(canvasPageID: self.canvasPage2ID, pageID: self.page2.id, relativeContentFrame: CGRect(x: 20, y: 35, width: 50, height: 60)),
             .init(canvasPageID: self.canvasPage3ID, pageID: self.page3.id, relativeContentFrame: CGRect(x: 10, y: -25, width: 10, height: 10)),
-            .init(canvasPageID: self.canvasPage4ID, pageID: self.page4.id, relativeContentFrame: CGRect(x: 90, y: 95, width: 42, height: 1337))
+            .init(canvasPageID: self.canvasPage4ID, pageID: self.page4.id, relativeContentFrame: CGRect(x: 90, y: 95, width: 42, height: 1337)),
         ]
 
         hierarchy.links = [

@@ -100,6 +100,10 @@ final public class CanvasPage: NSObject, CollectableModelObject {
         self.relationship(for: \.parent)
     }
 
+    public func existingLinkedCanvasPage(for page: Page) -> CanvasPage? {
+        return self.linksOut.first(where: { $0.link?.destination == page.id })?.destinationPage
+    }
+
 
     //MARK: - Relationship Setup
     public func objectWasInserted() {
