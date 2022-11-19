@@ -20,8 +20,14 @@ class Document: NSDocument {
     }
 
     var isBrandNewDocument = true
+    var migrationCancelled = false
 
     override func makeWindowControllers() {
+        guard self.migrationCancelled == false else {
+            self.close()
+            return
+        }
+        
         let documentViewModel = DocumentWindowViewModel(modelController: self.modelController)
         documentViewModel.document = self
 
@@ -65,15 +71,39 @@ class Document: NSDocument {
         }
 
         do {
-            try modelReader.read(plistWrapper: plistWrapper, contentWrapper: contentWrapper)
+            try modelReader.read(plistWrapper: plistWrapper, contentWrapper: contentWrapper, shouldMigrate: {
+                return self.askUserToContinueMigration()
+            })
             self.isBrandNewDocument = false
         } catch ModelReader.Errors.versionNotSupported {
             throw NSError.Coppice.Document.documentTooNew()
         } catch ModelPlist.Errors.migrationFailed(let reason) {
             throw NSError.Coppice.Document.migrationFailed(baseError: ModelPlist.Errors.migrationFailed(reason) as NSError)
+        } catch ModelReader.Errors.migrationCancelled {
+            self.migrationCancelled = true
+            return
         } catch {
             throw NSError.Coppice.Document.readingFailed()
         }
+
+        if self.postLoadSaveRequired {
+            self.save(nil)
+        }
+    }
+
+    private var postLoadSaveRequired = false
+    private func askUserToContinueMigration() -> Bool {
+        self.postLoadSaveRequired = true
+
+        let alert = NSAlert()
+        alert.messageText = "Upgrade document before opening?"
+        alert.informativeText = "This document was made with an older version of Coppice. To use it with this version Coppice needs to upgrade it."
+
+        alert.addButton(withTitle: "Migrate")
+        alert.addButton(withTitle: "Cancel")
+
+        alert.showsSuppressionButton = true
+        return alert.runModal() == .alertFirstButtonReturn
     }
 
     override func fileWrapper(ofType typeName: String) throws -> FileWrapper {

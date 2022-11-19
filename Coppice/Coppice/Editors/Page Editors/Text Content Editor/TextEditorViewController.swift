@@ -482,7 +482,7 @@ extension TextEditorViewController: PageContentEditor {
     }
 
     func createLink(to page: Page) {
-        self.attributeEditor.updateSelection(with: .pageLink(page.linkToPage(from: self.viewModel.textContent.page)))
+        self.attributeEditor.updateSelection(with: .pageLink(page.linkToPage()))
     }
 }
 

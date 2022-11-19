@@ -102,7 +102,7 @@ class PageHierarchyTests: XCTestCase {
         let plist = hierarchy.pageHierarchyPersistenceRepresentation(withSourceCanvasPageID: sourceID, sourcePageID: sourcePageID, andFrame: CGRect(x: -30, y: -150, width: 60, height: 100))
         let entryPoints = try XCTUnwrap(plist[.PageHierarchy.entryPoints] as? [[String: Any]])
         XCTAssertEqual(entryPoints.count, 1)
-        XCTAssertEqual(entryPoints.first?["pageLink"] as? String, PageLink(destination: hierarchy.pageID, source: sourcePageID).url.absoluteString)
+        XCTAssertEqual(entryPoints.first?["pageLink"] as? String, PageLink(destination: hierarchy.pageID, source: sourceID).url.absoluteString)
     }
 
     func test_pageHierarchyPlistRepresentation_entryPointHasRelativePositionBetweenLegacyRootFrameAndSourceFrame() throws {

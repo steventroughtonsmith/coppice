@@ -172,7 +172,7 @@ extension ImageEditorViewModeViewController: PageContentEditor {
     }
 
     func createLink(to page: Page) {
-        self.viewModel.linkEditor.updateSelection(with: .pageLink(page.linkToPage(from: self.viewModel.imageContent.page)))
+        self.viewModel.linkEditor.updateSelection(with: .pageLink(page.linkToPage()))
     }
 }
 

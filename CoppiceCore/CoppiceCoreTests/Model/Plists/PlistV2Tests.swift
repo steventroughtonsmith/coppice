@@ -226,13 +226,13 @@ final class PlistV2Tests: XCTestCase {
         let firstLinkSourceID = CanvasPage.modelID(with: testPlist.canvasPageIDs[0]).stringRepresentation
         let firstLink = try XCTUnwrap(newCanvasLinks.first(where: { ($0["sourcePage"] as? String) == firstLinkSourceID }))
         let expectedFirstPageLink = PageLink(destination: Page.modelID(with: testPlist.pageIDs[1]),
-                                             source: Page.modelID(with: testPlist.pageIDs[0]))
+                                             source: CanvasPage.modelID(with: testPlist.canvasPageIDs[0]))
         XCTAssertEqual(firstLink["link"] as? String, expectedFirstPageLink.url.absoluteString)
 
         let secondLinkSourceID = CanvasPage.modelID(with: testPlist.canvasPageIDs[1]).stringRepresentation
         let secondLink = try XCTUnwrap(newCanvasLinks.first(where: { ($0["sourcePage"] as? String) == secondLinkSourceID }))
         let expectedSecondPageLink = PageLink(destination: Page.modelID(with: testPlist.pageIDs[2]),
-                                              source: Page.modelID(with: testPlist.pageIDs[1]))
+                                              source: CanvasPage.modelID(with: testPlist.canvasPageIDs[1]))
         XCTAssertEqual(secondLink["link"] as? String, expectedSecondPageLink.url.absoluteString)
     }
 

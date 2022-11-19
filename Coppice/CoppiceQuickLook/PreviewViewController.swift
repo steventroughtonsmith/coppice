@@ -48,7 +48,9 @@ class PreviewViewController: NSViewController, QLPreviewingController {
             else {
                 throw NSError.Coppice.Document.readingFailed()
             }
-            try modelReader.read(plistWrapper: plistWrapper, contentWrapper: contentWrapper)
+            try modelReader.read(plistWrapper: plistWrapper, contentWrapper: contentWrapper, shouldMigrate: {
+                return false
+            })
         } catch let e {
             handler(e)
             return

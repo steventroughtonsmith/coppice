@@ -14,7 +14,6 @@ class PageHierarchyRestorer {
     }
 
     func restore(_ pageHierarchy: PageHierarchy, from source: CanvasPage, for link: PageLink) -> [CanvasPage] {
-        #warning("Page link equality")
         guard
             let modelController = self.canvas.modelController as? CoppiceModelController,
             let entryPoint = pageHierarchy.entryPoints.first(where: { $0.pageLink == link })

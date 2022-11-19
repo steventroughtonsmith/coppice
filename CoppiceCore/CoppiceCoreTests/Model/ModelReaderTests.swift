@@ -370,6 +370,7 @@ class ModelReaderTests: XCTestCase {
             "canvasPages": [],
             "folders": [],
             "canvasLinks": [],
+            "pageHierarchies": [],
             "version": Plist.allPlists.last!.version,
         ]
         let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
@@ -393,6 +394,7 @@ class ModelReaderTests: XCTestCase {
             "canvasPages": [],
             "folders": [],
             "canvasLinks": [],
+            "pageHierarchies": [],
             "version": Plist.allPlists.last!.version,
         ]
         let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
@@ -416,6 +418,7 @@ class ModelReaderTests: XCTestCase {
             ],
             "folders": [],
             "canvasLinks": [],
+            "pageHierarchies": [],
             "version": Plist.allPlists.last!.version,
         ]
         let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
@@ -439,6 +442,7 @@ class ModelReaderTests: XCTestCase {
                 ["id": Folder.modelID(with: UUID()).stringRepresentation],
             ],
             "canvasLinks": [],
+            "pageHierarchies": [],
             "version": Plist.allPlists.last!.version,
         ]
         let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)

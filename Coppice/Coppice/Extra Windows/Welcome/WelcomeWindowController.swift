@@ -8,6 +8,7 @@
 
 import Cocoa
 import CoppiceCore
+import M3Data
 
 class WelcomeWindowController: NSWindowController {
     @IBOutlet weak var buttonStackView: NSStackView!
@@ -62,9 +63,12 @@ class WelcomeWindowController: NSWindowController {
         }
 
         let url = urls[row]
-        CoppiceDocumentController.shared.openDocument(withContentsOf: url, display: true) { (_, _, error) in
+        CoppiceDocumentController.shared.openDocument(withContentsOf: url, display: true) { (document, _, error) in
             if let error = error {
                 NSApp.presentError(error)
+                return
+            }
+            if (document as? Document)?.migrationCancelled == true {
                 return
             }
             self.window?.close()

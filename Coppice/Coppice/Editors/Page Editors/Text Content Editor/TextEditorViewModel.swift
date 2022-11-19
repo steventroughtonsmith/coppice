@@ -83,7 +83,7 @@ class TextEditorViewModel: ViewModel {
     }
 
     func link(to page: Page, for range: NSRange) {
-        self.view?.addLink(with: page.linkToPage(from: self.textContent.page).url, to: range)
+        self.view?.addLink(with: page.linkToPage().url, to: range)
     }
 
     var undoManager: UndoManager {

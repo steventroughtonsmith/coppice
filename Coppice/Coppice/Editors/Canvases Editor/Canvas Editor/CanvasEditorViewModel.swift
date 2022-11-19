@@ -348,7 +348,6 @@ class CanvasEditorViewModel: ViewModel {
         guard
             let page,
             let sourceCanvasPage = self.linkingEditor?.canvasPageViewController?.viewModel.canvasPage,
-            let sourcePage = sourceCanvasPage.page,
             let destinationCanvasPage = self.canvasPage(with: page.id),
             let destinationPage = destinationCanvasPage.page
         else {
@@ -359,7 +358,7 @@ class CanvasEditorViewModel: ViewModel {
 
 
 
-        self.canvas.addLink(PageLink(destination: destinationPage.id, source: sourcePage.id), between: sourceCanvasPage, and: destinationCanvasPage)
+        self.canvas.addLink(PageLink(destinationPage: destinationPage, sourceCanvasPage: sourceCanvasPage), between: sourceCanvasPage, and: destinationCanvasPage)
 
         self.linkingEditor = nil
     }

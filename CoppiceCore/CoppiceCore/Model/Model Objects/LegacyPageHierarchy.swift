@@ -56,7 +56,7 @@ public class LegacyPageHierarchy {
         }
 
         let entryPoints: [ModelPlistKey: Any] = [
-            .PageHierarchy.EntryPoint.pageLink: PageLink(destination: self.pageID, source: sourcePageID).url.absoluteString,
+            .PageHierarchy.EntryPoint.pageLink: PageLink(destination: self.pageID, source: sourceID).url.absoluteString,
             .PageHierarchy.EntryPoint.relativePosition: NSStringFromPoint(self.frame.origin.minus(sourceFrame.origin)),
         ]
 
@@ -79,7 +79,7 @@ public class LegacyPageHierarchy {
             links.append([
                 .PageHierarchy.LinkRef.sourceID: self.id.stringRepresentation,
                 .PageHierarchy.LinkRef.destinationID: child.id.stringRepresentation,
-                .PageHierarchy.LinkRef.link: PageLink(destination: child.pageID, source: self.pageID).url.absoluteString,
+                .PageHierarchy.LinkRef.link: PageLink(destination: child.pageID, source: self.id).url.absoluteString,
             ])
         }
 

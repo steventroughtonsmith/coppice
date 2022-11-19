@@ -101,6 +101,9 @@ final public class CanvasPage: NSObject, CollectableModelObject {
     }
 
     public func existingLinkedCanvasPage(for page: Page) -> CanvasPage? {
+        if page == self.page {
+            return self
+        }
         return self.linksOut.first(where: { $0.link?.destination == page.id })?.destinationPage
     }
 
