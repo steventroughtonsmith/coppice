@@ -47,6 +47,8 @@ class PageHierarchyRestorer {
             self.canvas.addLink(linkRef.link, between: sourcePage, and: destinationPage)
         }
 
+        modelController.pageHierarchyCollection.delete(pageHierarchy)
+
         return canvasPages
     }
 }
