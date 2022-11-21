@@ -187,6 +187,10 @@ class ImageEditorHotspotLayoutEngine {
     }
 
     func handleKeyUp(with keyCode: UInt16, modifiers: LayoutEventModifiers) -> Bool {
+        guard self.isEditable else {
+            return true
+        }
+
         if keyCode == UInt16(kVK_Delete) {
             self.hotspots = self.hotspots.filter { $0.isSelected == false }
             self.delegate?.layoutDidChange(in: self)
