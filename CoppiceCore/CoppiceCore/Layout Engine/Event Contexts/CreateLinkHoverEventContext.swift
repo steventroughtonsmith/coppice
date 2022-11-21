@@ -24,6 +24,7 @@ class CreateLinkHoverEventContext: CanvasHoverEventContext {
     }
 
     private var currentLink: LayoutEngineLink?
+    private var highlightedLink: LayoutEngineLink?
 
     func cursorMoved(to location: CGPoint, modifiers: LayoutEventModifiers, in layout: LayoutEngine) {
         let pageUnderCursor = layout.item(atCanvasPoint: location) as? LayoutEnginePage
@@ -35,12 +36,23 @@ class CreateLinkHoverEventContext: CanvasHoverEventContext {
 
             let link: LayoutEngineLink
             if let pageUnderCursor, pageUnderCursor.id != self.page.id {
+                self.currentTargetPage = pageUnderCursor
+
+                //If a link already exists between pages we don't want to add a second one, just highlight it
+                if let existingLink = layout.linkBetween(source: self.page, andDestination: pageUnderCursor) {
+                    existingLink.highlighted = true
+                    self.highlightedLink = existingLink
+                    return
+                }
+
+                self.cleanUpHighlightedLink()
+
                 link = LayoutEngineLink(id: UUID(),
                                         pageLink: nil,
                                         sourcePageID: self.page.id,
                                         destinationPageID: pageUnderCursor.id)
-                self.currentTargetPage = pageUnderCursor
             } else {
+                self.cleanUpHighlightedLink()
                 link = self.cursorLink(in: layout)
                 self.currentTargetPage = nil
             }
@@ -54,6 +66,13 @@ class CreateLinkHoverEventContext: CanvasHoverEventContext {
             layout.modified([cursorPage, pageUnderCursor])
         } else {
             layout.modified([cursorPage])
+        }
+    }
+
+    private func cleanUpHighlightedLink() {
+        if let highlightedLink = self.highlightedLink {
+            highlightedLink.highlighted = false
+            self.highlightedLink = nil
         }
     }
 

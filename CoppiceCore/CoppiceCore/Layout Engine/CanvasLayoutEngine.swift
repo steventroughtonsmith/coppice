@@ -334,6 +334,10 @@ public class CanvasLayoutEngine: NSObject, LayoutEngine {
         return self.linkLayoutEngine.links
     }
 
+    public func linkBetween(source: LayoutEnginePage, andDestination destination: LayoutEnginePage) -> LayoutEngineLink? {
+        return self.links.first(where: { ($0.sourcePageID == source.id) && ($0.destinationPageID == destination.id) })
+    }
+
     private lazy var linkLayoutEngine: LinkLayoutEngine = {
         let engine = LinkLayoutEngine()
         engine.canvasLayoutEngine = self

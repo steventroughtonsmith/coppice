@@ -67,6 +67,7 @@ public protocol LayoutEngine: AnyObject {
     func page(withID: UUID) -> LayoutEnginePage?
 
     var links: [LayoutEngineLink] { get }
+    func linkBetween(source: LayoutEnginePage, andDestination destination: LayoutEnginePage) -> LayoutEngineLink?
     func add(_ links: [LayoutEngineLink])
     func remove(_ links: [LayoutEngineLink])
 
