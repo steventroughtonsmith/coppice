@@ -33,7 +33,7 @@ class ModelReaderTests: XCTestCase {
     }
 
     func test_read_createsAllCanvasesFromPlist() {
-        XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper))
+        XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper, shouldMigrate: { true }))
 
         let canvases = self.modelController.collection(for: Canvas.self).all
         XCTAssertEqual(canvases.count, 2)
@@ -48,7 +48,7 @@ class ModelReaderTests: XCTestCase {
     }
 
     func test_read_createsAllPagesFromPlist() {
-        XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper))
+        XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper, shouldMigrate: { true }))
 
         let pages = self.modelController.collection(for: Page.self).all
         XCTAssertEqual(pages.count, 3)
@@ -65,7 +65,7 @@ class ModelReaderTests: XCTestCase {
     }
 
     func test_read_createsAllCanvasPagesFromPlist() {
-        XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper))
+        XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper, shouldMigrate: { true }))
 
         let canvasPages = self.modelController.collection(for: CanvasPage.self).all
         XCTAssertEqual(canvasPages.count, 4)
@@ -77,7 +77,7 @@ class ModelReaderTests: XCTestCase {
     }
 
     func test_read_createsAllFoldersFromPlist() {
-        XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper))
+        XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper, shouldMigrate: { true }))
 
         let folders = self.modelController.collection(for: Folder.self).all
         XCTAssertEqual(folders.count, 2)
@@ -88,7 +88,7 @@ class ModelReaderTests: XCTestCase {
     }
 
     func test_read_createsAllCanvasLinksFromPlist() {
-        XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper))
+        XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper, shouldMigrate: { true }))
 
         let canvasLinks = self.modelController.collection(for: CanvasLink.self).all
         XCTAssertEqual(canvasLinks.count, 2)
@@ -104,7 +104,7 @@ class ModelReaderTests: XCTestCase {
             $0.title = "Foo Bar Baz"
         }
 
-        XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper))
+        XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper, shouldMigrate: { true }))
 
         let canvases = self.modelController.collection(for: Canvas.self).all
         XCTAssertEqual(canvases.count, 2)
@@ -129,7 +129,7 @@ class ModelReaderTests: XCTestCase {
             $0.title = "World"
         }
 
-        XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper))
+        XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper, shouldMigrate: { true }))
 
         let pages = self.modelController.collection(for: Page.self).all
         XCTAssertEqual(pages.count, 3)
@@ -150,7 +150,7 @@ class ModelReaderTests: XCTestCase {
             $0.id = CanvasPage.modelID(with: self.testPlist.canvasPageIDs[1])
         }
 
-        XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper))
+        XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper, shouldMigrate: { true }))
 
         let canvasPages = self.modelController.collection(for: CanvasPage.self).all
         XCTAssertEqual(canvasPages.count, 4)
@@ -166,7 +166,7 @@ class ModelReaderTests: XCTestCase {
             $0.id = Folder.modelID(with: self.testPlist.folderIDs[0])
         }
 
-        XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper))
+        XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper, shouldMigrate: { true }))
 
         let folders = self.modelController.collection(for: Folder.self).all
         XCTAssertEqual(folders.count, 2)
@@ -181,7 +181,7 @@ class ModelReaderTests: XCTestCase {
             $0.id = CanvasLink.modelID(with: self.testPlist.canvasLinkIDs[0])
         }
 
-        XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper))
+        XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper, shouldMigrate: { true }))
 
         let canvasLinks = self.modelController.collection(for: CanvasLink.self).all
         XCTAssertEqual(canvasLinks.count, 2)
@@ -194,7 +194,7 @@ class ModelReaderTests: XCTestCase {
     func test_read_removesAllExtraCanvasesFromModelController() {
         let canvasToRemove = self.modelController.collection(for: Canvas.self).newObject()
 
-        XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper))
+        XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper, shouldMigrate: { true }))
 
         let canvases = self.modelController.collection(for: Canvas.self).all
         XCTAssertEqual(canvases.count, 2)
@@ -208,7 +208,7 @@ class ModelReaderTests: XCTestCase {
     func test_read_removesAllExtraPagesFromModelController() {
         let pageToRemove = self.modelController.collection(for: Page.self).newObject()
 
-        XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper))
+        XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper, shouldMigrate: { true }))
 
         let pages = self.modelController.collection(for: Page.self).all
         XCTAssertEqual(pages.count, 3)
@@ -222,7 +222,7 @@ class ModelReaderTests: XCTestCase {
 
     func test_read_removesAllExtraCanvasPagesFromModelController() {
         let canvasPageToRemove = self.modelController.collection(for: CanvasPage.self).newObject()
-        XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper))
+        XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper, shouldMigrate: { true }))
 
         let canvasPages = self.modelController.collection(for: CanvasPage.self).all
         XCTAssertEqual(canvasPages.count, 4)
@@ -236,7 +236,7 @@ class ModelReaderTests: XCTestCase {
 
     func test_read_removesAllExtraFoldersFromModelController() {
         let folderToRemove = self.modelController.collection(for: Folder.self).newObject()
-        XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper))
+        XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper, shouldMigrate: { true }))
 
         let folders = self.modelController.collection(for: Folder.self).all
         XCTAssertEqual(folders.count, 2)
@@ -249,7 +249,7 @@ class ModelReaderTests: XCTestCase {
 
     func test_read_removesAllExtraCanvasLinksFromModelController() {
         let canvasLinkToRemove = self.modelController.collection(for: CanvasLink.self).newObject()
-        XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper))
+        XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper, shouldMigrate: { true }))
 
         let canvasLinks = self.modelController.collection(for: CanvasLink.self).all
         XCTAssertEqual(canvasLinks.count, 2)
@@ -261,7 +261,7 @@ class ModelReaderTests: XCTestCase {
     }
 
     func test_read_allRelationshipsAreCompleted() throws {
-        XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper))
+        XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper, shouldMigrate: { true }))
 
         let canvasPage1 = try XCTUnwrap(self.modelController.collection(for: CanvasPage.self).objectWithID(CanvasPage.modelID(with: self.testPlist.canvasPageIDs[0])))
         let canvasPage2 = try XCTUnwrap(self.modelController.collection(for: CanvasPage.self).objectWithID(CanvasPage.modelID(with: self.testPlist.canvasPageIDs[1])))
@@ -309,7 +309,7 @@ class ModelReaderTests: XCTestCase {
     }
 
     func test_read_allContentIsReadFromDisk() {
-        XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper))
+        XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper, shouldMigrate: { true }))
 
         let textPage = self.modelController.collection(for: Page.self).objectWithID(Page.modelID(with: self.testPlist.pageIDs[0]))
         XCTAssertEqual(textPage?.content.contentType, .text)
@@ -329,7 +329,8 @@ class ModelReaderTests: XCTestCase {
     func test_errors_throwsCorruptDataErrorIfDataPlistExistsButIsEmpty() {
         do {
             try self.modelReader.read(plistWrapper: FileWrapper(regularFileWithContents: Data()),
-                                      contentWrapper: FileWrapper(directoryWithFileWrappers: [:]))
+                                      contentWrapper: FileWrapper(directoryWithFileWrappers: [:]),
+                                      shouldMigrate: { true })
             XCTFail("Error not thrown")
         } catch ModelReader.Errors.invalidPlist {
             //Correct
@@ -341,7 +342,8 @@ class ModelReaderTests: XCTestCase {
     func test_errors_throwsCorruptDataErrorIfPlistCannotBeDecoded() {
         do {
             try self.modelReader.read(plistWrapper: FileWrapper(regularFileWithContents: "abcdefgh".data(using: .utf8)!),
-                                      contentWrapper: FileWrapper(directoryWithFileWrappers: [:]))
+                                      contentWrapper: FileWrapper(directoryWithFileWrappers: [:]),
+                                      shouldMigrate: { true })
             XCTFail("Error not thrown")
         } catch ModelReader.Errors.invalidPlist {
             //Correct
@@ -353,7 +355,7 @@ class ModelReaderTests: XCTestCase {
     func test_errors_throwsVersionTooNewErrorIfPlistVersionIsGreaterThanDocumentVersion() throws {
         let modelReader = ModelReader(modelController: modelController, plists: [V1Plist.self])
         do {
-            try modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper)
+            try modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper, shouldMigrate: { true })
         } catch ModelReader.Errors.versionNotSupported {
             //Correct
         } catch let e {
@@ -376,7 +378,7 @@ class ModelReaderTests: XCTestCase {
         let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
 
         do {
-            try self.modelReader.read(plistWrapper: FileWrapper(regularFileWithContents: plistData), contentWrapper: FileWrapper(directoryWithFileWrappers: [:]))
+            try self.modelReader.read(plistWrapper: FileWrapper(regularFileWithContents: plistData), contentWrapper: FileWrapper(directoryWithFileWrappers: [:]), shouldMigrate: { true })
             XCTFail("Error not thrown")
         } catch ModelObjectUpdateErrors.attributeNotFound {
             //Passes
@@ -400,7 +402,7 @@ class ModelReaderTests: XCTestCase {
         let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
 
         do {
-            try self.modelReader.read(plistWrapper: FileWrapper(regularFileWithContents: plistData), contentWrapper: FileWrapper(directoryWithFileWrappers: [:]))
+            try self.modelReader.read(plistWrapper: FileWrapper(regularFileWithContents: plistData), contentWrapper: FileWrapper(directoryWithFileWrappers: [:]), shouldMigrate: { true })
             XCTFail("Error not thrown")
         } catch ModelObjectUpdateErrors.attributeNotFound {
             //Passes
@@ -424,7 +426,7 @@ class ModelReaderTests: XCTestCase {
         let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
 
         do {
-            try self.modelReader.read(plistWrapper: FileWrapper(regularFileWithContents: plistData), contentWrapper: FileWrapper(directoryWithFileWrappers: [:]))
+            try self.modelReader.read(plistWrapper: FileWrapper(regularFileWithContents: plistData), contentWrapper: FileWrapper(directoryWithFileWrappers: [:]), shouldMigrate: { true })
             XCTFail("Error not thrown")
         } catch ModelObjectUpdateErrors.attributeNotFound {
             //Passes
@@ -448,7 +450,7 @@ class ModelReaderTests: XCTestCase {
         let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
 
         do {
-            try self.modelReader.read(plistWrapper: FileWrapper(regularFileWithContents: plistData), contentWrapper: FileWrapper(directoryWithFileWrappers: [:]))
+            try self.modelReader.read(plistWrapper: FileWrapper(regularFileWithContents: plistData), contentWrapper: FileWrapper(directoryWithFileWrappers: [:]), shouldMigrate: { true })
             XCTFail("Error not thrown")
         } catch ModelObjectUpdateErrors.attributeNotFound {
             //Passes
