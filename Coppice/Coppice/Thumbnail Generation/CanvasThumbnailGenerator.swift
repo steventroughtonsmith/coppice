@@ -43,7 +43,6 @@ class CanvasThumbnailGenerator: NSObject {
             return
         }
         var pageRectsByID = [ModelID: CGRect]()
-        var rootCanvasPages = [CanvasPage]()
         let insetImageSize = size.minus(width: self.imageInset * 2, height: self.imageInset * 2)
         let (xScale, yScale) = self.scaleFactor(fromCanvasSize: canvasSize, toImageSize: insetImageSize)
         let scaledOffset = self.offset(forCanvasSize: canvasSize, inImageOfSize: insetImageSize, xScale: xScale, yScale: yScale)
@@ -55,14 +54,11 @@ class CanvasThumbnailGenerator: NSObject {
             }
             let pageRect = self.draw(page, with: frame, context: layoutContext)
             pageRectsByID[canvasPage.id] = pageRect
-            if canvasPage.parent == nil {
-                rootCanvasPages.append(canvasPage)
-            }
         }
 
         let drawContext = Context(xScale: xScale, yScale: yScale, dryRun: false, scaledOffset: scaledOffset)
-        for canvasPage in rootCanvasPages {
-            self.drawArrows(from: canvasPage, pageRects: pageRectsByID, context: drawContext)
+        for link in self.canvas.links {
+            self.drawArrow(for: link, pageRects: pageRectsByID, context: drawContext)
         }
 
         for (canvasPage, frame) in pageFrames {
@@ -270,66 +266,61 @@ class CanvasThumbnailGenerator: NSObject {
 
 
     //MARK: - Arrows
-    private func drawArrows(from rootPage: CanvasPage, pageRects: [ModelID: CGRect], context: Context) {
-        NSColor.white.set()
-        guard let rootRect = pageRects[rootPage.id] else {
+    private func drawArrow(for link: CanvasLink, pageRects: [ModelID: CGRect], context: Context) {
+        guard
+            let sourcePage = link.sourcePage,
+            let destinationPage = link.destinationPage,
+            let sourceRect = pageRects[sourcePage.id],
+            let destinationRect = pageRects[destinationPage.id]
+        else {
             return
         }
+        NSColor.white.set()
 
-        for childPage in rootPage.children {
-            guard let childRect = pageRects[childPage.id] else {
-                continue
+        var startPoint: CGPoint = sourceRect.midPoint.rounded()
+        var endPoint: CGPoint = destinationRect.midPoint.rounded()
+
+        let deltaY = startPoint.y - endPoint.y
+        let deltaX = startPoint.x - endPoint.x
+
+        let control1: CGPoint
+        let control2: CGPoint
+
+        //Horizontal
+        if (abs(deltaY) < abs(deltaX)) {
+            //Start to right
+            if (deltaX) > 0 {
+                startPoint.x = sourceRect.minX
+                endPoint.x = destinationRect.maxX
             }
-
-            var startPoint: CGPoint = rootRect.midPoint.rounded()
-            var endPoint: CGPoint = childRect.midPoint.rounded()
-
-            let deltaY = startPoint.y - endPoint.y
-            let deltaX = startPoint.x - endPoint.x
-
-            let control1: CGPoint
-            let control2: CGPoint
-
-            //Horizontal
-            if (abs(deltaY) < abs(deltaX)) {
-                //Start to right
-                if (deltaX) > 0 {
-                    startPoint.x = rootRect.minX
-                    endPoint.x = childRect.maxX
-                }
-                //Start to left
-                else {
-                    startPoint.x = rootRect.maxX
-                    endPoint.x = childRect.minX
-                }
-                control1 = CGPoint(x: (startPoint.x + endPoint.x) / 2, y: startPoint.y)
-                control2 = CGPoint(x: (startPoint.x + endPoint.x) / 2, y: endPoint.y)
-            }
-            //Vertical
+            //Start to left
             else {
-                //Start above
-                if (deltaY) > 0 {
-                    startPoint.y = rootRect.minY
-                    endPoint.y = childRect.maxY
-                }
-                //Start below
-                else {
-                    startPoint.y = rootRect.maxY
-                    endPoint.y = childRect.minY
-                }
-                control1 = CGPoint(x: startPoint.x, y: (startPoint.y + endPoint.y) / 2)
-                control2 = CGPoint(x: endPoint.x, y: (startPoint.y + endPoint.y) / 2)
+                startPoint.x = sourceRect.maxX
+                endPoint.x = destinationRect.minX
             }
-
-            let bezierPath = NSBezierPath()
-            bezierPath.move(to: startPoint)
-            bezierPath.curve(to: endPoint, controlPoint1: control1, controlPoint2: control2)
-            bezierPath.lineWidth = (context.xScale < 0.1) ? 1 : 2
-            bezierPath.stroke()
-
-            if childPage.children.count > 0 {
-                self.drawArrows(from: childPage, pageRects: pageRects, context: context)
-            }
+            control1 = CGPoint(x: (startPoint.x + endPoint.x) / 2, y: startPoint.y)
+            control2 = CGPoint(x: (startPoint.x + endPoint.x) / 2, y: endPoint.y)
         }
+        //Vertical
+        else {
+            //Start above
+            if (deltaY) > 0 {
+                startPoint.y = sourceRect.minY
+                endPoint.y = destinationRect.maxY
+            }
+            //Start below
+            else {
+                startPoint.y = sourceRect.maxY
+                endPoint.y = destinationRect.minY
+            }
+            control1 = CGPoint(x: startPoint.x, y: (startPoint.y + endPoint.y) / 2)
+            control2 = CGPoint(x: endPoint.x, y: (startPoint.y + endPoint.y) / 2)
+        }
+
+        let bezierPath = NSBezierPath()
+        bezierPath.move(to: startPoint)
+        bezierPath.curve(to: endPoint, controlPoint1: control1, controlPoint2: control2)
+        bezierPath.lineWidth = (context.xScale < 0.1) ? 1 : 2
+        bezierPath.stroke()
     }
 }
