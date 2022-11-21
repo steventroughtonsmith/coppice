@@ -145,11 +145,18 @@ class ImageEditorHotspotLayoutEngine {
 
     func upEvent(at point: CGPoint, modifiers: LayoutEventModifiers, eventCount: Int) {
         guard let currentHotspotForEvents = self.currentHotspotForEvents else {
+            self.deselectAll()
             return
         }
 
         let hasChanged = currentHotspotForEvents.upEvent(at: point, modifiers: modifiers, eventCount: eventCount)
         let isCreating = (currentHotspotForEvents.mode == .creating)
+        if currentHotspotForEvents.hotspotPath(forScale: 1).bounds.size == .zero,
+           let index = self.hotspots.firstIndex(where: { $0 === currentHotspotForEvents }) {
+            self.hotspots.remove(at: index)
+            self.deselectAll()
+        }
+
         self.currentHotspotForEvents = nil
 
         self.delegate?.layoutDidChange(in: self)
