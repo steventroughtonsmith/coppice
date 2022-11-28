@@ -142,6 +142,7 @@ public class CanvasLayoutEngine: NSObject, LayoutEngine {
             return
         }
         page.contentFrame = frame
+        self.linkLayoutEngine.updateLinks(forModifiedPages: [page])
         self.informOfLayoutChange(with: self.recalculateCanvasSize())
     }
 
