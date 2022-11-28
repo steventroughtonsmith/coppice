@@ -16,6 +16,9 @@ class PageArrowView: NSView {
         }
     }
 
+    var canvasLink: CanvasLink?
+    weak var canvasEditorViewController: CanvasEditorViewController?
+
     var lineColour: NSColor = .black {
         didSet {
             self.setNeedsDisplay(self.bounds)
@@ -34,6 +37,8 @@ class PageArrowView: NSView {
         self.config = config
         self.drawHelper = ArrowDrawHelper(config: config)
         super.init(frame: .zero)
+
+        self.setupAccessibility()
     }
 
     required init?(coder: NSCoder) {
@@ -80,5 +85,28 @@ class PageArrowView: NSView {
         }
 
         self.drawHelper.draw(arrow, with: arrowColor, borderColor: borderColor, isConcrete: isConcrete)
+    }
+
+    //MARK: - Accessibility
+    private func setupAccessibility() {
+        self.setAccessibilityElement(true)
+        self.setAccessibilityRole(.layoutItem)
+    }
+
+    override func accessibilityTitle() -> String? {
+        guard
+            let canvasLink = self.canvasLink,
+            let sourcePage = canvasLink.sourcePage,
+            let destinationPage = canvasLink.destinationPage
+        else {
+            return nil
+        }
+        return "Link from \(sourcePage.displayTitle) to \(destinationPage.displayTitle)"
+    }
+}
+
+extension PageArrowView: CanvasEditorItem {
+    var representedObject: Any? {
+        return self.canvasLink
     }
 }

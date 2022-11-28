@@ -374,6 +374,8 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
         for arrow in self.layoutEngine.links {
             let arrowView = self.arrowView(for: arrow)
             arrowView.arrow = arrow
+            arrowView.canvasLink = self.viewModel.canvasLink(with: arrow.id)
+            arrowView.canvasEditorViewController = self
             arrowView.sourcePage = self.viewModel.sourcePage(for: arrow)
             arrowView.frame = arrow.layoutFrame
 
@@ -459,7 +461,7 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
         viewController.removeFromParent()
     }
 
-    private func pageViewController(for canvasPage: CanvasPage) -> CanvasPageViewController? {
+    func pageViewController(for canvasPage: CanvasPage) -> CanvasPageViewController? {
         return self.pageViewControllers.first { $0.viewModel.canvasPage.id == canvasPage.id }
     }
 
@@ -502,6 +504,10 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
         newArrowView.lineColour = self.viewModel.theme.arrowColour
         self.canvasView.arrowLayer.addSubview(newArrowView)
         return newArrowView
+    }
+
+    func arrowView(for canvasLink: CanvasLink) -> PageArrowView? {
+        return self.arrowViews.first(where: { $0.canvasLink == canvasLink })
     }
 
 
@@ -754,6 +760,11 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
         self.view.setAccessibilityRole(.group)
         self.view.setAccessibilityLabel(NSLocalizedString("Canvas Editor", comment: "Canvas List accessibility label"))
         self.view.setAccessibilityChildren([scrollView, toggleButton, zoomControl])
+
+        self.canvasView.customRotors = [
+            CanvasPagesAccessibilityRotor(canvas: self.viewModel.canvas, canvasEditor: self),
+            CanvasLinksAccessibilityRotor(canvas: self.viewModel.canvas, canvasEditor: self)
+        ]
     }
 
 

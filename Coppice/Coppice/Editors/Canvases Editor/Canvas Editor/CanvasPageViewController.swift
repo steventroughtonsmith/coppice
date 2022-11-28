@@ -73,6 +73,7 @@ class CanvasPageViewController: NSViewController, CanvasPageView {
         }
 
         self.typedView.titleView.delegate = self
+        self.typedView.canvasPage = self.viewModel.canvasPage
         self.setupAccessibility()
     }
 

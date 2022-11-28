@@ -24,6 +24,13 @@ final public class CanvasPage: NSObject, CollectableModelObject {
         return self.page?.title ?? ""
     }
 
+    public var displayTitle: String {
+        guard title.count > 0 else {
+            return Page.localizedDefaultTitle
+        }
+        return title
+    }
+
     public var maintainAspectRatio: Bool {
         return self.page?.content.maintainAspectRatio ?? false
     }

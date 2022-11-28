@@ -176,6 +176,10 @@
 		9981E6D724C08F12005AF0EE /* WelcomeWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9981E6D524C08F12005AF0EE /* WelcomeWindow.xib */; };
 		9981E6D924C0AE1F005AF0EE /* RecentDocumentTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9981E6D824C0AE1F005AF0EE /* RecentDocumentTableCellView.swift */; };
 		998336C3256BFDC900C25EB0 /* CoppiceApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998336C2256BFDC900C25EB0 /* CoppiceApplication.swift */; };
+		99837D122933B0E4001A2AC7 /* CanvasPagesAccessibilityRotor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99837D112933B0E4001A2AC7 /* CanvasPagesAccessibilityRotor.swift */; };
+		99837D142933B158001A2AC7 /* CanvasLinksAccessibilityRotor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99837D132933B158001A2AC7 /* CanvasLinksAccessibilityRotor.swift */; };
+		99837D1C2933B274001A2AC7 /* CanvasAccessibilityRotor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99837D1B2933B274001A2AC7 /* CanvasAccessibilityRotor.swift */; };
+		99837D222934F893001A2AC7 /* CanvasEditorItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99837D212934F893001A2AC7 /* CanvasEditorItem.swift */; };
 		9985F4D923F2E13600B96DC7 /* CanvasPageTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9985F4D823F2E13600B96DC7 /* CanvasPageTitleView.swift */; };
 		9985F4DB23F44AAD00B96DC7 /* CanvasPageBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9985F4DA23F44AAD00B96DC7 /* CanvasPageBackgroundView.swift */; };
 		99868730253C719D004B29B0 /* ZoomMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9986872F253C719D004B29B0 /* ZoomMenuDelegate.swift */; };
@@ -638,6 +642,10 @@
 		9981E6D524C08F12005AF0EE /* WelcomeWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WelcomeWindow.xib; sourceTree = "<group>"; };
 		9981E6D824C0AE1F005AF0EE /* RecentDocumentTableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentDocumentTableCellView.swift; sourceTree = "<group>"; };
 		998336C2256BFDC900C25EB0 /* CoppiceApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoppiceApplication.swift; sourceTree = "<group>"; };
+		99837D112933B0E4001A2AC7 /* CanvasPagesAccessibilityRotor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPagesAccessibilityRotor.swift; sourceTree = "<group>"; };
+		99837D132933B158001A2AC7 /* CanvasLinksAccessibilityRotor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasLinksAccessibilityRotor.swift; sourceTree = "<group>"; };
+		99837D1B2933B274001A2AC7 /* CanvasAccessibilityRotor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasAccessibilityRotor.swift; sourceTree = "<group>"; };
+		99837D212934F893001A2AC7 /* CanvasEditorItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasEditorItem.swift; sourceTree = "<group>"; };
 		9985F4D823F2E13600B96DC7 /* CanvasPageTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageTitleView.swift; sourceTree = "<group>"; };
 		9985F4DA23F44AAD00B96DC7 /* CanvasPageBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageBackgroundView.swift; sourceTree = "<group>"; };
 		9986872F253C719D004B29B0 /* ZoomMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomMenuDelegate.swift; sourceTree = "<group>"; };
@@ -1240,8 +1248,10 @@
 				99581091230D92C600D996C4 /* CanvasPageViewController.xib */,
 				9985F4D823F2E13600B96DC7 /* CanvasPageTitleView.swift */,
 				9985F4DA23F44AAD00B96DC7 /* CanvasPageBackgroundView.swift */,
+				99837D212934F893001A2AC7 /* CanvasEditorItem.swift */,
 				99C03F06232A8ED200EB7516 /* CanvasElementView.swift */,
 				990D2440235DEFE2001B1FD9 /* PageArrowView.swift */,
+				99837D102933B0CD001A2AC7 /* AccessibilityRotors */,
 				9958108B230D908200D996C4 /* Test CanvasPage View */,
 			);
 			path = "Canvas Editor";
@@ -1415,6 +1425,16 @@
 				9981E6D824C0AE1F005AF0EE /* RecentDocumentTableCellView.swift */,
 			);
 			path = Welcome;
+			sourceTree = "<group>";
+		};
+		99837D102933B0CD001A2AC7 /* AccessibilityRotors */ = {
+			isa = PBXGroup;
+			children = (
+				99837D1B2933B274001A2AC7 /* CanvasAccessibilityRotor.swift */,
+				99837D112933B0E4001A2AC7 /* CanvasPagesAccessibilityRotor.swift */,
+				99837D132933B158001A2AC7 /* CanvasLinksAccessibilityRotor.swift */,
+			);
+			path = AccessibilityRotors;
 			sourceTree = "<group>";
 		};
 		99868F302396AD24009AC0F7 /* Image Editor Inspector */ = {
@@ -2460,11 +2480,14 @@
 				99868F352396AD73009AC0F7 /* ImageEditorInspectorViewController.swift in Sources */,
 				996010F724F14FFA008B8F98 /* SpringLoadedTableRowView.swift in Sources */,
 				9981E6D924C0AE1F005AF0EE /* RecentDocumentTableCellView.swift in Sources */,
+				99837D122933B0E4001A2AC7 /* CanvasPagesAccessibilityRotor.swift in Sources */,
 				99C9006425794AE700969E92 /* TextEditorParagraphInspectorViewModel.swift in Sources */,
 				9999A23D24F937B6001F8161 /* ActivatedSubscriptionViewController.swift in Sources */,
+				99837D222934F893001A2AC7 /* CanvasEditorItem.swift in Sources */,
 				991B60AF25432140002C483C /* NavigationStack.swift in Sources */,
 				993D2C0024157196002E5BAC /* SourceListOutlineView.swift in Sources */,
 				999E219428A9131900DE6D5E /* DebugDocumentBuild.swift in Sources */,
+				99837D142933B158001A2AC7 /* CanvasLinksAccessibilityRotor.swift in Sources */,
 				9986874E253F079B004B29B0 /* DocumentWindowController+TouchBar.swift in Sources */,
 				991B6087254311BC002C483C /* HelpContentViewController.swift in Sources */,
 				991B60C6254334F2002C483C /* HelpSearchResultTableCellView.swift in Sources */,
@@ -2497,6 +2520,7 @@
 				99488AB023C37BB7009954AF /* ThumbnailController.swift in Sources */,
 				99D8E38B237F58FA0098CF3B /* NIBInstantiable.swift in Sources */,
 				99AD88A5237B1700000453E1 /* DocumentWindowViewModel.swift in Sources */,
+				99837D1C2933B274001A2AC7 /* CanvasAccessibilityRotor.swift in Sources */,
 				99488AAE23C37B98009954AF /* CanvasThumbnailGenerator.swift in Sources */,
 				995B4B7E261B390F00F2AD01 /* RenameDeviceViewController.swift in Sources */,
 				99F0A73125D16CEB00C9D2C4 /* CanvasImageGenerator.swift in Sources */,

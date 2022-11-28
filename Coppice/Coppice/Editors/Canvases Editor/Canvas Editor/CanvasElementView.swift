@@ -69,6 +69,8 @@ class CanvasElementView: NSView  {
         }
     }
 
+    var canvasPage: CanvasPage?
+
     func apply(_ layoutPage: LayoutEnginePage) {
         self.updateSubviews(with: layoutPage)
         self.updateResizeRects(with: layoutPage)
@@ -403,6 +405,12 @@ class CanvasElementView: NSView  {
 		var pageID: UUID
 		var component: LayoutEnginePageComponent
 	}
+
+    var customRotors: [CanvasAccessibilityRotor] = []
+
+    override func accessibilityCustomRotors() -> [NSAccessibilityCustomRotor] {
+        return self.customRotors.map(\.rotor)
+    }
 }
 
 extension CanvasElementView: MovableHandleAccessibilityElementDelegate {
@@ -414,6 +422,12 @@ extension CanvasElementView: MovableHandleAccessibilityElementDelegate {
             return .zero
         }
         return canvasView.accessibilityResize(resizeContext.component, ofPageWithID: resizeContext.pageID, by: delta)
+    }
+}
+
+extension CanvasElementView: CanvasEditorItem {
+    var representedObject: Any? {
+        return self.canvasPage
     }
 }
 

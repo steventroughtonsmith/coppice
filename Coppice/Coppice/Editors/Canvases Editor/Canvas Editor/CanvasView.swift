@@ -25,6 +25,7 @@ class CanvasView: NSView {
 
     weak var delegate: CanvasViewDelegate?
     var layoutEngine: CanvasLayoutEngine?
+    var customRotors: [CanvasAccessibilityRotor] = []
 
     let pageLayer = FlippedView()
     let selectionLayer = FlippedView()
@@ -509,18 +510,39 @@ extension CanvasView: NSAccessibilityLayoutArea {
     }
 
     override func accessibilityChildren() -> [Any]? {
-        return self.pageLayer.subviews
+        return self.pageLayer.subviews + self.arrowLayer.subviews
     }
 
     override func accessibilitySelectedChildren() -> [Any]? {
-        let canvasElementViews = self.pageLayer.subviews.compactMap { $0 as? CanvasElementView }
-        return canvasElementViews.filter(\.selected)
+        let canvasElementViews = self.pageLayer.subviews.filter { ($0 as? CanvasElementView)?.selected == true }
+        let arrowViews = self.arrowLayer.subviews.filter { ($0 as? PageArrowView)?.arrow?.selected == true }
+        return canvasElementViews + arrowViews
     }
 
     override var accessibilityFocusedUIElement: Any {
         let canvasElementViews = self.pageLayer.subviews.compactMap { $0 as? CanvasElementView }
         let selectedItems = canvasElementViews.filter(\.selected)
         return (selectedItems.count == 1) ? selectedItems[0] : self
+    }
+
+    override func accessibilityCustomRotors() -> [NSAccessibilityCustomRotor] {
+        return self.customRotors.map(\.rotor)
+    }
+}
+
+extension CanvasView: NSAccessibilityCustomRotorItemSearchDelegate {
+    func rotor(_ rotor: NSAccessibilityCustomRotor, resultFor searchParameters: NSAccessibilityCustomRotor.SearchParameters) -> NSAccessibilityCustomRotor.ItemResult? {
+        let items = self.pageLayer.subviews.compactMap { $0 as? CanvasElementView }
+        guard let currentItem = searchParameters.currentItem?.targetElement as? CanvasElementView else {
+            if let item = items.first {
+                return NSAccessibilityCustomRotor.ItemResult(targetElement: item)
+            }
+            return nil
+        }
+        guard let index = items.firstIndex(of: currentItem), (index + 1) < items.count else {
+            return nil
+        }
+        return NSAccessibilityCustomRotor.ItemResult(targetElement: items[index + 1])
     }
 }
 

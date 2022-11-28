@@ -294,7 +294,7 @@ class CanvasEditorViewModel: ViewModel {
     //MARK: - Links
     private(set) var canvasLinks: Set<CanvasLink> = []
 
-    private func canvasLink(with uuid: UUID) -> CanvasLink? {
+    func canvasLink(with uuid: UUID) -> CanvasLink? {
         return self.canvasLinks.first(where: { $0.id.uuid == uuid })
     }
 
