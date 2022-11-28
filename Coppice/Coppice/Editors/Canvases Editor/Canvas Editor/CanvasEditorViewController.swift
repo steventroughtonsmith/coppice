@@ -541,11 +541,25 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
     }()
 
     private func updateZoomControl() {
-        self.zoomControl.menu?.delegate = self.zoomMenuDelegate
+        self.zoomMenuDelegate.zoomLevels = self.viewModel.zoomLevels
         self.zoomContextMenu.delegate = self.zoomMenuDelegate
 
         self.zoomMenuDelegate.selectedLevel = self.viewModel.selectedZoomLevel
+
+        guard let menu = self.zoomControl.menu else {
+            return
+        }
+        self.zoomControl.removeAllItems()
+        for index in 0..<self.zoomMenuDelegate.numberOfItems(in: menu) {
+            let menuItem = NSMenuItem()
+            if self.zoomMenuDelegate.menu(menu, update: menuItem, at: index, shouldCancel: false) {
+                menu.addItem(menuItem)
+            }
+        }
+
         self.zoomControl.selectItem(at: self.viewModel.selectedZoomLevel)
+
+        self.zoomControl.synchronizeTitleAndSelectedItem()
     }
 
     @IBAction func zoomControlChanged(_ sender: NSMenuItem?) {
