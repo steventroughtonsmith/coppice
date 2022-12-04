@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,12 +20,12 @@
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
             <value key="minSize" type="size" width="635" height="459"/>
             <value key="maxSize" type="size" width="635" height="459"/>
-            <view key="contentView" id="afW-n8-ee7">
-                <rect key="frame" x="0.0" y="0.0" width="639" height="459"/>
+            <view key="contentView" misplaced="YES" id="afW-n8-ee7">
+                <rect key="frame" x="0.0" y="0.0" width="635" height="459"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <button focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="e6r-OC-apO" customClass="ColouredButton" customModule="Coppice" customModuleProvider="target">
-                        <rect key="frame" x="260" y="20" width="119" height="30"/>
+                        <rect key="frame" x="263" y="20" width="119" height="30"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="Rks-Xc-CSH"/>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="119" id="be3-4w-RIR"/>
@@ -46,15 +46,15 @@
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="d6M-hy-OYl">
-                        <rect key="frame" x="118" y="396" width="403" height="33"/>
-                        <textFieldCell key="cell" lineBreakMode="clipping" title="What's New in Coppice 2022.1" id="2FY-pf-pE1">
+                        <rect key="frame" x="118" y="396" width="408" height="33"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" title="What's New in Coppice 2022.2" id="2FY-pf-pE1">
                             <font key="font" metaFont="systemBold" size="28"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Chh-ue-hvQ">
-                        <rect key="frame" x="236" y="77" width="168" height="16"/>
+                        <rect key="frame" x="238" y="77" width="168" height="16"/>
                         <buttonCell key="cell" type="square" title="See the full release notes…" bezelStyle="shadowlessSquare" alignment="center" imageScaling="proportionallyDown" inset="2" id="L1e-9x-Jyj">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -65,38 +65,35 @@
                         </connections>
                     </button>
                     <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="30" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="999" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DBs-1b-ken">
-                        <rect key="frame" x="120" y="126" width="399" height="235"/>
+                        <rect key="frame" x="120" y="126" width="404" height="235"/>
                         <subviews>
                             <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalHuggingPriority="750" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RrI-Ub-0y2">
-                                <rect key="frame" x="0.0" y="150" width="399" height="85"/>
+                                <rect key="frame" x="0.0" y="166" width="404" height="69"/>
                                 <subviews>
                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sIO-ni-JZc">
-                                        <rect key="frame" x="0.0" y="53" width="32" height="32"/>
+                                        <rect key="frame" x="0.0" y="37" width="32" height="32"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="32" id="1zx-h0-V7a"/>
                                             <constraint firstAttribute="width" secondItem="sIO-ni-JZc" secondAttribute="height" multiplier="1:1" id="eyQ-1L-XM2"/>
                                         </constraints>
-                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="WhatsNewImageLinking" id="9i6-rU-hEo"/>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="WhatsNewMultipleLinks" id="9i6-rU-hEo"/>
                                         <color key="contentTintColor" name="CoppiceGreen"/>
                                     </imageView>
                                     <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="2" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalHuggingPriority="750" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="USL-Wl-REX">
-                                        <rect key="frame" x="48" y="0.0" width="351" height="85"/>
+                                        <rect key="frame" x="48" y="0.0" width="356" height="69"/>
                                         <subviews>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7l5-xe-4MY">
-                                                <rect key="frame" x="-2" y="66" width="110" height="19"/>
-                                                <textFieldCell key="cell" lineBreakMode="clipping" title="Image Linking" id="Ica-2m-bHM">
+                                                <rect key="frame" x="-2" y="50" width="273" height="19"/>
+                                                <textFieldCell key="cell" lineBreakMode="clipping" title="Multiple Links to Pages on a Canvas" id="Ica-2m-bHM">
                                                     <font key="font" metaFont="systemSemibold" size="16"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="400" translatesAutoresizingMaskIntoConstraints="NO" id="fnf-yX-BGS">
-                                                <rect key="frame" x="-2" y="0.0" width="355" height="64"/>
-                                                <textFieldCell key="cell" id="m1y-Y0-8VC">
+                                                <rect key="frame" x="-2" y="0.0" width="360" height="48"/>
+                                                <textFieldCell key="cell" title="You can now have multiple links going to the same page on a canvas. Just hold ⌘ while clicking a link to an already open page." id="m1y-Y0-8VC">
                                                     <font key="font" metaFont="system"/>
-                                                    <string key="title">Add hotspots to images to create links to other pages or to websites. 
-
-Upgrade to Pro for additional hotspot options</string>
                                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
@@ -122,31 +119,31 @@ Upgrade to Pro for additional hotspot options</string>
                                 </customSpacing>
                             </stackView>
                             <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalHuggingPriority="750" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KWx-fn-EZW">
-                                <rect key="frame" x="0.0" y="83" width="399" height="37"/>
+                                <rect key="frame" x="0.0" y="83" width="404" height="53"/>
                                 <subviews>
                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bfb-2G-PLx">
-                                        <rect key="frame" x="0.0" y="3" width="32" height="32"/>
+                                        <rect key="frame" x="0.0" y="11" width="32" height="32"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="32" id="CKJ-yu-54H"/>
                                             <constraint firstAttribute="width" secondItem="bfb-2G-PLx" secondAttribute="height" multiplier="1:1" id="aqf-al-4hI"/>
                                         </constraints>
-                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="WhatsNewCropAndRotate" id="8IR-aw-nvp"/>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="WhatsNewLinkHighlighting" id="8IR-aw-nvp"/>
                                         <color key="contentTintColor" name="CoppiceGreen"/>
                                     </imageView>
                                     <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="2" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalHuggingPriority="750" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BRf-0B-CqB">
-                                        <rect key="frame" x="48" y="0.0" width="351" height="37"/>
+                                        <rect key="frame" x="48" y="0.0" width="356" height="53"/>
                                         <subviews>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Juv-LM-yPG">
-                                                <rect key="frame" x="-2" y="18" width="158" height="19"/>
-                                                <textFieldCell key="cell" lineBreakMode="clipping" title="Cropping &amp; Rotating" id="gVc-aW-ZWC">
+                                                <rect key="frame" x="-2" y="34" width="132" height="19"/>
+                                                <textFieldCell key="cell" lineBreakMode="clipping" title="Link Highlighting" id="gVc-aW-ZWC">
                                                     <font key="font" metaFont="systemSemibold" size="16"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="400" translatesAutoresizingMaskIntoConstraints="NO" id="rWn-VY-gMj">
-                                                <rect key="frame" x="-2" y="0.0" width="305" height="16"/>
-                                                <textFieldCell key="cell" title="Crop and rotate image pages from within Coppice" id="xa9-iJ-khM">
+                                                <rect key="frame" x="-2" y="0.0" width="360" height="32"/>
+                                                <textFieldCell key="cell" title="Hover over any Page Link to highlight all related Canvas Links and vice versa." id="xa9-iJ-khM">
                                                     <font key="font" metaFont="system"/>
                                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -173,7 +170,7 @@ Upgrade to Pro for additional hotspot options</string>
                                 </customSpacing>
                             </stackView>
                             <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalHuggingPriority="750" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vrH-1X-Rlh">
-                                <rect key="frame" x="0.0" y="0.0" width="399" height="53"/>
+                                <rect key="frame" x="0.0" y="0.0" width="404" height="53"/>
                                 <subviews>
                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fQt-Bu-rP0">
                                         <rect key="frame" x="0.0" y="11" width="32" height="32"/>
@@ -185,19 +182,19 @@ Upgrade to Pro for additional hotspot options</string>
                                         <color key="contentTintColor" name="CoppiceGreen"/>
                                     </imageView>
                                     <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="2" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalHuggingPriority="750" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c3P-sB-Ax7">
-                                        <rect key="frame" x="48" y="0.0" width="351" height="53"/>
+                                        <rect key="frame" x="48" y="0.0" width="356" height="53"/>
                                         <subviews>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tLG-28-8Bp">
-                                                <rect key="frame" x="-2" y="34" width="215" height="19"/>
-                                                <textFieldCell key="cell" lineBreakMode="clipping" title="Auto-Linking Text in Images" id="QTG-58-OHU">
+                                                <rect key="frame" x="-2" y="34" width="158" height="19"/>
+                                                <textFieldCell key="cell" lineBreakMode="clipping" title="Create Canvas Links" id="QTG-58-OHU">
                                                     <font key="font" metaFont="systemSemibold" size="16"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="400" translatesAutoresizingMaskIntoConstraints="NO" id="w36-Z8-ZY5">
-                                                <rect key="frame" x="-2" y="0.0" width="355" height="32"/>
-                                                <textFieldCell key="cell" title="Coppice will find text inside your images and auto-link to any matching pages" id="ubA-mc-SDJ">
+                                                <rect key="frame" x="-2" y="0.0" width="360" height="32"/>
+                                                <textFieldCell key="cell" title="You can now create links between already open pages on a canvas." id="ubA-mc-SDJ">
                                                     <font key="font" metaFont="system"/>
                                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -241,7 +238,7 @@ Upgrade to Pro for additional hotspot options</string>
                         </customSpacing>
                     </stackView>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qf2-UL-l6N">
-                        <rect key="frame" x="381" y="155" width="52" height="27"/>
+                        <rect key="frame" x="324" y="155" width="52" height="27"/>
                         <buttonCell key="cell" type="push" title="PRO" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Cy0-s4-bIW" customClass="ProButtonCell" customModule="Coppice" customModuleProvider="target">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="smallSystemBold"/>
@@ -274,11 +271,11 @@ Upgrade to Pro for additional hotspot options</string>
         </window>
     </objects>
     <resources>
-        <image name="WhatsNewCropAndRotate" width="32" height="32"/>
-        <image name="WhatsNewImageLinking" width="32" height="32"/>
+        <image name="WhatsNewLinkHighlighting" width="32" height="32"/>
+        <image name="WhatsNewMultipleLinks" width="32" height="32"/>
         <image name="whats-new-link-inspector" width="32" height="32"/>
         <namedColor name="CoppiceGreen">
-            <color red="0.13300000131130219" green="0.56499999761581421" blue="0.086000002920627594" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.093999996781349182" green="0.52499997615814209" blue="0.063000001013278961" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>
