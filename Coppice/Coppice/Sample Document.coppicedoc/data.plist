@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>canvasLinks</key>
+	<array/>
 	<key>canvasPages</key>
 	<array>
 		<dict>
@@ -374,7 +376,7 @@
 			<key>title</key>
 			<string>Welcome</string>
 			<key>viewPort</key>
-			<string>{{-877, -422}, {1769, 1390}}</string>
+			<string>{{-948, -562}, {1829, 1302}}</string>
 			<key>zoomFactor</key>
 			<real>1</real>
 		</dict>
@@ -386,6 +388,8 @@
 			<array>
 				<string>Page_28E15839-4892-433D-869D-9BA2A58062EB</string>
 				<string>Page_534D6ADC-FDC6-4668-9130-5CDBDAB3680A</string>
+				<string>Page_81D52598-481A-4C24-9017-3CCEBB4C8DE1</string>
+				<string>Page_F082F6AC-29BC-4F3E-A152-13E21007BF15</string>
 				<string>Page_954F8308-CC20-439C-BFED-7BDDEF6AFC61</string>
 				<string>Page_AA4DFD1B-E6CB-498B-895B-69992D24571E</string>
 				<string>Page_D0D70A91-7263-4DC7-97DF-C39F529BCBBB</string>
@@ -476,6 +480,775 @@
 			<string>Folder_FD2341D9-2A22-45E3-AE35-459A6399A2E7</string>
 			<key>title</key>
 			<string>Coppice Pro</string>
+		</dict>
+	</array>
+	<key>pageHierarchies</key>
+	<array>
+		<dict>
+			<key>canvas</key>
+			<string>Canvas_5C45392D-B2B5-4372-92A3-084A047A76AD</string>
+			<key>entryPoints</key>
+			<array>
+				<dict>
+					<key>pageLink</key>
+					<string>coppice://page/F6C58FD9-EB52-47FD-9329-5C154D80606C?source=D5615854-CFCC-40AE-A053-EE604AFEAB0E</string>
+					<key>relativePosition</key>
+					<string>{423, 13}</string>
+				</dict>
+			</array>
+			<key>id</key>
+			<string>PageHierarchy_079BCB2F-0FE4-40E3-A8C7-FDB46E556602</string>
+			<key>links</key>
+			<array>
+				<dict>
+					<key>destinationID</key>
+					<string>CanvasPage_5E1F42E4-795B-48C3-A3BB-A67F0467D0EC</string>
+					<key>link</key>
+					<string>coppice://page/9D3F640C-D34B-4199-AAA2-66A50EB73DB3?source=9AD950ED-1D78-421B-BC21-44F2E1536AA6</string>
+					<key>sourceID</key>
+					<string>CanvasPage_9AD950ED-1D78-421B-BC21-44F2E1536AA6</string>
+				</dict>
+			</array>
+			<key>pages</key>
+			<array>
+				<dict>
+					<key>canvasPageID</key>
+					<string>CanvasPage_9AD950ED-1D78-421B-BC21-44F2E1536AA6</string>
+					<key>pageID</key>
+					<string>Page_F6C58FD9-EB52-47FD-9329-5C154D80606C</string>
+					<key>relativeContentFrame</key>
+					<string>{{0, 0}, {232, 205}}</string>
+				</dict>
+				<dict>
+					<key>canvasPageID</key>
+					<string>CanvasPage_5E1F42E4-795B-48C3-A3BB-A67F0467D0EC</string>
+					<key>pageID</key>
+					<string>Page_9D3F640C-D34B-4199-AAA2-66A50EB73DB3</string>
+					<key>relativeContentFrame</key>
+					<string>{{375, -25}, {256, 256}}</string>
+				</dict>
+			</array>
+			<key>rootPageID</key>
+			<string>CanvasPage_9AD950ED-1D78-421B-BC21-44F2E1536AA6</string>
+		</dict>
+		<dict>
+			<key>canvas</key>
+			<string>Canvas_5C45392D-B2B5-4372-92A3-084A047A76AD</string>
+			<key>entryPoints</key>
+			<array>
+				<dict>
+					<key>pageLink</key>
+					<string>coppice://page/81D52598-481A-4C24-9017-3CCEBB4C8DE1?source=C10B3E19-F07F-41C6-BC59-C40FF1D266F6</string>
+					<key>relativePosition</key>
+					<string>{652, 239}</string>
+				</dict>
+			</array>
+			<key>id</key>
+			<string>PageHierarchy_0BF139ED-54D1-4786-9A4F-00EC3CC00343</string>
+			<key>links</key>
+			<array/>
+			<key>pages</key>
+			<array>
+				<dict>
+					<key>canvasPageID</key>
+					<string>CanvasPage_A95877E2-A427-437D-874A-24BFE0EEAFC3</string>
+					<key>pageID</key>
+					<string>Page_81D52598-481A-4C24-9017-3CCEBB4C8DE1</string>
+					<key>relativeContentFrame</key>
+					<string>{{0, 0}, {384, 326}}</string>
+				</dict>
+			</array>
+			<key>rootPageID</key>
+			<string>CanvasPage_A95877E2-A427-437D-874A-24BFE0EEAFC3</string>
+		</dict>
+		<dict>
+			<key>canvas</key>
+			<string>Canvas_5C45392D-B2B5-4372-92A3-084A047A76AD</string>
+			<key>entryPoints</key>
+			<array>
+				<dict>
+					<key>pageLink</key>
+					<string>coppice://page/954F8308-CC20-439C-BFED-7BDDEF6AFC61?source=C10B3E19-F07F-41C6-BC59-C40FF1D266F6</string>
+					<key>relativePosition</key>
+					<string>{221, 377}</string>
+				</dict>
+			</array>
+			<key>id</key>
+			<string>PageHierarchy_19C4DEAD-FDDA-4513-89C7-F0FBAADDE280</string>
+			<key>links</key>
+			<array>
+				<dict>
+					<key>destinationID</key>
+					<string>CanvasPage_D2F599F2-ED9B-4824-BF33-D5248A2D79A8</string>
+					<key>link</key>
+					<string>coppice://page/D0D70A91-7263-4DC7-97DF-C39F529BCBBB?source=05863806-62C1-494F-BB8C-B6021A540DF2</string>
+					<key>sourceID</key>
+					<string>CanvasPage_05863806-62C1-494F-BB8C-B6021A540DF2</string>
+				</dict>
+			</array>
+			<key>pages</key>
+			<array>
+				<dict>
+					<key>canvasPageID</key>
+					<string>CanvasPage_05863806-62C1-494F-BB8C-B6021A540DF2</string>
+					<key>pageID</key>
+					<string>Page_954F8308-CC20-439C-BFED-7BDDEF6AFC61</string>
+					<key>relativeContentFrame</key>
+					<string>{{0, 0}, {300, 250}}</string>
+				</dict>
+				<dict>
+					<key>canvasPageID</key>
+					<string>CanvasPage_D2F599F2-ED9B-4824-BF33-D5248A2D79A8</string>
+					<key>pageID</key>
+					<string>Page_D0D70A91-7263-4DC7-97DF-C39F529BCBBB</string>
+					<key>relativeContentFrame</key>
+					<string>{{-6, 329}, {312, 100}}</string>
+				</dict>
+			</array>
+			<key>rootPageID</key>
+			<string>CanvasPage_05863806-62C1-494F-BB8C-B6021A540DF2</string>
+		</dict>
+		<dict>
+			<key>canvas</key>
+			<string>Canvas_5C45392D-B2B5-4372-92A3-084A047A76AD</string>
+			<key>entryPoints</key>
+			<array>
+				<dict>
+					<key>pageLink</key>
+					<string>coppice://page/DFF837A0-E8E4-421E-8B45-8F227A677930?source=C41FA204-087C-40D0-A15A-9F9F17523E05</string>
+					<key>relativePosition</key>
+					<string>{-382, 33}</string>
+				</dict>
+			</array>
+			<key>id</key>
+			<string>PageHierarchy_1A675D86-F41F-40C5-9CF2-E8204EA3D2E5</string>
+			<key>links</key>
+			<array/>
+			<key>pages</key>
+			<array>
+				<dict>
+					<key>canvasPageID</key>
+					<string>CanvasPage_02E318D1-FDC5-49FC-BB1D-7B87266B96BE</string>
+					<key>pageID</key>
+					<string>Page_DFF837A0-E8E4-421E-8B45-8F227A677930</string>
+					<key>relativeContentFrame</key>
+					<string>{{0, 0}, {283, 135}}</string>
+				</dict>
+			</array>
+			<key>rootPageID</key>
+			<string>CanvasPage_02E318D1-FDC5-49FC-BB1D-7B87266B96BE</string>
+		</dict>
+		<dict>
+			<key>canvas</key>
+			<string>Canvas_5C45392D-B2B5-4372-92A3-084A047A76AD</string>
+			<key>entryPoints</key>
+			<array>
+				<dict>
+					<key>pageLink</key>
+					<string>coppice://page/8873E427-613D-41C2-B45B-96F5A1AF7CE2?source=328D44A1-9D21-4EDB-A1F1-B97DFA63ACE6</string>
+					<key>relativePosition</key>
+					<string>{-36, -463}</string>
+				</dict>
+			</array>
+			<key>id</key>
+			<string>PageHierarchy_1CA58099-450D-4F0D-B7E6-F6CEB398308D</string>
+			<key>links</key>
+			<array>
+				<dict>
+					<key>destinationID</key>
+					<string>CanvasPage_FFAC9BB2-C064-41F2-A6A7-49D06B352EE9</string>
+					<key>link</key>
+					<string>coppice://page/32ACD746-4D1E-4E30-BC88-10597069853E?source=C41FA204-087C-40D0-A15A-9F9F17523E05</string>
+					<key>sourceID</key>
+					<string>CanvasPage_C41FA204-087C-40D0-A15A-9F9F17523E05</string>
+				</dict>
+				<dict>
+					<key>destinationID</key>
+					<string>CanvasPage_DC183BCE-F55B-4B48-9EA5-44502E50A308</string>
+					<key>link</key>
+					<string>coppice://page/954F8308-CC20-439C-BFED-7BDDEF6AFC61?source=C41FA204-087C-40D0-A15A-9F9F17523E05</string>
+					<key>sourceID</key>
+					<string>CanvasPage_C41FA204-087C-40D0-A15A-9F9F17523E05</string>
+				</dict>
+				<dict>
+					<key>destinationID</key>
+					<string>CanvasPage_DD9FF71F-710A-4DBE-A5D6-6B094AEC1476</string>
+					<key>link</key>
+					<string>coppice://page/9C42EA88-4436-44F5-B7FB-EAA804763F95?source=C41FA204-087C-40D0-A15A-9F9F17523E05</string>
+					<key>sourceID</key>
+					<string>CanvasPage_C41FA204-087C-40D0-A15A-9F9F17523E05</string>
+				</dict>
+				<dict>
+					<key>destinationID</key>
+					<string>CanvasPage_EDB64EF2-FF97-40C4-9256-EA9B832321D5</string>
+					<key>link</key>
+					<string>coppice://page/5A704B52-0452-4039-8918-481366162DA2?source=C41FA204-087C-40D0-A15A-9F9F17523E05</string>
+					<key>sourceID</key>
+					<string>CanvasPage_C41FA204-087C-40D0-A15A-9F9F17523E05</string>
+				</dict>
+			</array>
+			<key>pages</key>
+			<array>
+				<dict>
+					<key>canvasPageID</key>
+					<string>CanvasPage_C41FA204-087C-40D0-A15A-9F9F17523E05</string>
+					<key>pageID</key>
+					<string>Page_8873E427-613D-41C2-B45B-96F5A1AF7CE2</string>
+					<key>relativeContentFrame</key>
+					<string>{{0, 0}, {373, 200}}</string>
+				</dict>
+				<dict>
+					<key>canvasPageID</key>
+					<string>CanvasPage_FFAC9BB2-C064-41F2-A6A7-49D06B352EE9</string>
+					<key>pageID</key>
+					<string>Page_32ACD746-4D1E-4E30-BC88-10597069853E</string>
+					<key>relativeContentFrame</key>
+					<string>{{-1.60546875, -395.89453125}, {184, 132}}</string>
+				</dict>
+				<dict>
+					<key>canvasPageID</key>
+					<string>CanvasPage_DC183BCE-F55B-4B48-9EA5-44502E50A308</string>
+					<key>pageID</key>
+					<string>Page_954F8308-CC20-439C-BFED-7BDDEF6AFC61</string>
+					<key>relativeContentFrame</key>
+					<string>{{428, -542}, {268, 270}}</string>
+				</dict>
+				<dict>
+					<key>canvasPageID</key>
+					<string>CanvasPage_DD9FF71F-710A-4DBE-A5D6-6B094AEC1476</string>
+					<key>pageID</key>
+					<string>Page_9C42EA88-4436-44F5-B7FB-EAA804763F95</string>
+					<key>relativeContentFrame</key>
+					<string>{{-256.89453125, -396.94921875}, {219, 142}}</string>
+				</dict>
+				<dict>
+					<key>canvasPageID</key>
+					<string>CanvasPage_EDB64EF2-FF97-40C4-9256-EA9B832321D5</string>
+					<key>pageID</key>
+					<string>Page_5A704B52-0452-4039-8918-481366162DA2</string>
+					<key>relativeContentFrame</key>
+					<string>{{205.95703125, -380.19140625}, {177, 106}}</string>
+				</dict>
+			</array>
+			<key>rootPageID</key>
+			<string>CanvasPage_C41FA204-087C-40D0-A15A-9F9F17523E05</string>
+		</dict>
+		<dict>
+			<key>canvas</key>
+			<string>Canvas_5C45392D-B2B5-4372-92A3-084A047A76AD</string>
+			<key>entryPoints</key>
+			<array>
+				<dict>
+					<key>pageLink</key>
+					<string>coppice://page/57FD0C73-85A5-45E1-A8F5-8CF89D804CD6?source=DF5DAD2B-DDFA-4AF2-B5CF-7FD0307ADB14</string>
+					<key>relativePosition</key>
+					<string>{-493, 51}</string>
+				</dict>
+			</array>
+			<key>id</key>
+			<string>PageHierarchy_203A47E7-5219-4087-A18B-32C1DB617C88</string>
+			<key>links</key>
+			<array/>
+			<key>pages</key>
+			<array>
+				<dict>
+					<key>canvasPageID</key>
+					<string>CanvasPage_569BD1C5-FE48-4114-A899-E8EF1419A2B6</string>
+					<key>pageID</key>
+					<string>Page_57FD0C73-85A5-45E1-A8F5-8CF89D804CD6</string>
+					<key>relativeContentFrame</key>
+					<string>{{0, 0}, {335, 230}}</string>
+				</dict>
+			</array>
+			<key>rootPageID</key>
+			<string>CanvasPage_569BD1C5-FE48-4114-A899-E8EF1419A2B6</string>
+		</dict>
+		<dict>
+			<key>canvas</key>
+			<string>Canvas_5C45392D-B2B5-4372-92A3-084A047A76AD</string>
+			<key>entryPoints</key>
+			<array>
+				<dict>
+					<key>pageLink</key>
+					<string>coppice://page/AA4DFD1B-E6CB-498B-895B-69992D24571E?source=C10B3E19-F07F-41C6-BC59-C40FF1D266F6</string>
+					<key>relativePosition</key>
+					<string>{658, -96}</string>
+				</dict>
+			</array>
+			<key>id</key>
+			<string>PageHierarchy_32578596-3BCD-42AA-A09C-F2F4C1692E46</string>
+			<key>links</key>
+			<array/>
+			<key>pages</key>
+			<array>
+				<dict>
+					<key>canvasPageID</key>
+					<string>CanvasPage_79169389-EC6E-4AD8-9E9D-8EFA0BBF495C</string>
+					<key>pageID</key>
+					<string>Page_AA4DFD1B-E6CB-498B-895B-69992D24571E</string>
+					<key>relativeContentFrame</key>
+					<string>{{0, 0}, {386, 243}}</string>
+				</dict>
+			</array>
+			<key>rootPageID</key>
+			<string>CanvasPage_79169389-EC6E-4AD8-9E9D-8EFA0BBF495C</string>
+		</dict>
+		<dict>
+			<key>canvas</key>
+			<string>Canvas_5C45392D-B2B5-4372-92A3-084A047A76AD</string>
+			<key>entryPoints</key>
+			<array>
+				<dict>
+					<key>pageLink</key>
+					<string>coppice://page/B1CA31B5-52AF-4385-9FAD-C0A4FB9330E8?source=328D44A1-9D21-4EDB-A1F1-B97DFA63ACE6</string>
+					<key>relativePosition</key>
+					<string>{551, -110}</string>
+				</dict>
+			</array>
+			<key>id</key>
+			<string>PageHierarchy_596A2B33-6394-4C25-A5E1-99D217CF2704</string>
+			<key>links</key>
+			<array/>
+			<key>pages</key>
+			<array>
+				<dict>
+					<key>canvasPageID</key>
+					<string>CanvasPage_D5615854-CFCC-40AE-A053-EE604AFEAB0E</string>
+					<key>pageID</key>
+					<string>Page_B1CA31B5-52AF-4385-9FAD-C0A4FB9330E8</string>
+					<key>relativeContentFrame</key>
+					<string>{{0, 0}, {300, 230}}</string>
+				</dict>
+			</array>
+			<key>rootPageID</key>
+			<string>CanvasPage_D5615854-CFCC-40AE-A053-EE604AFEAB0E</string>
+		</dict>
+		<dict>
+			<key>canvas</key>
+			<string>Canvas_5C45392D-B2B5-4372-92A3-084A047A76AD</string>
+			<key>entryPoints</key>
+			<array>
+				<dict>
+					<key>pageLink</key>
+					<string>coppice://page/F082F6AC-29BC-4F3E-A152-13E21007BF15?source=C10B3E19-F07F-41C6-BC59-C40FF1D266F6</string>
+					<key>relativePosition</key>
+					<string>{-150, 353}</string>
+				</dict>
+			</array>
+			<key>id</key>
+			<string>PageHierarchy_6715AF0E-CDAD-44ED-9ECD-46DCE4DD4679</string>
+			<key>links</key>
+			<array/>
+			<key>pages</key>
+			<array>
+				<dict>
+					<key>canvasPageID</key>
+					<string>CanvasPage_6A60F5A7-ADDD-4332-8768-851572429DFB</string>
+					<key>pageID</key>
+					<string>Page_F082F6AC-29BC-4F3E-A152-13E21007BF15</string>
+					<key>relativeContentFrame</key>
+					<string>{{0, 0}, {300, 187}}</string>
+				</dict>
+			</array>
+			<key>rootPageID</key>
+			<string>CanvasPage_6A60F5A7-ADDD-4332-8768-851572429DFB</string>
+		</dict>
+		<dict>
+			<key>canvas</key>
+			<string>Canvas_5C45392D-B2B5-4372-92A3-084A047A76AD</string>
+			<key>entryPoints</key>
+			<array>
+				<dict>
+					<key>pageLink</key>
+					<string>coppice://page/54811B65-62E0-481D-9C54-30AE0A2540C6?source=328D44A1-9D21-4EDB-A1F1-B97DFA63ACE6</string>
+					<key>relativePosition</key>
+					<string>{-486, 40}</string>
+				</dict>
+			</array>
+			<key>id</key>
+			<string>PageHierarchy_8886B9B5-F2C2-4E3F-A64C-C44D4F472B8F</string>
+			<key>links</key>
+			<array>
+				<dict>
+					<key>destinationID</key>
+					<string>CanvasPage_EDA82A6A-30D8-493F-B528-3BE0D8352498</string>
+					<key>link</key>
+					<string>coppice://page/5B5199D0-F7D8-4BCE-9F3C-017D48A74A8F?source=6325569A-EC06-41D4-9412-032CEF5D68F7</string>
+					<key>sourceID</key>
+					<string>CanvasPage_6325569A-EC06-41D4-9412-032CEF5D68F7</string>
+				</dict>
+			</array>
+			<key>pages</key>
+			<array>
+				<dict>
+					<key>canvasPageID</key>
+					<string>CanvasPage_6325569A-EC06-41D4-9412-032CEF5D68F7</string>
+					<key>pageID</key>
+					<string>Page_54811B65-62E0-481D-9C54-30AE0A2540C6</string>
+					<key>relativeContentFrame</key>
+					<string>{{0, 0}, {332, 215}}</string>
+				</dict>
+				<dict>
+					<key>canvasPageID</key>
+					<string>CanvasPage_EDA82A6A-30D8-493F-B528-3BE0D8352498</string>
+					<key>pageID</key>
+					<string>Page_5B5199D0-F7D8-4BCE-9F3C-017D48A74A8F</string>
+					<key>relativeContentFrame</key>
+					<string>{{-406.45703125, -17.40234375}, {310, 249}}</string>
+				</dict>
+			</array>
+			<key>rootPageID</key>
+			<string>CanvasPage_6325569A-EC06-41D4-9412-032CEF5D68F7</string>
+		</dict>
+		<dict>
+			<key>canvas</key>
+			<string>Canvas_5C45392D-B2B5-4372-92A3-084A047A76AD</string>
+			<key>entryPoints</key>
+			<array>
+				<dict>
+					<key>pageLink</key>
+					<string>coppice://page/32ACD746-4D1E-4E30-BC88-10597069853E?source=DF5DAD2B-DDFA-4AF2-B5CF-7FD0307ADB14</string>
+					<key>relativePosition</key>
+					<string>{-437.4609375, 46.92578125}</string>
+				</dict>
+			</array>
+			<key>id</key>
+			<string>PageHierarchy_A38AA927-AC44-4E45-B709-309996E5AC01</string>
+			<key>links</key>
+			<array/>
+			<key>pages</key>
+			<array>
+				<dict>
+					<key>canvasPageID</key>
+					<string>CanvasPage_6493082A-9D01-4B67-8D42-59B9D2449AD4</string>
+					<key>pageID</key>
+					<string>Page_32ACD746-4D1E-4E30-BC88-10597069853E</string>
+					<key>relativeContentFrame</key>
+					<string>{{0, 0}, {300, 200}}</string>
+				</dict>
+			</array>
+			<key>rootPageID</key>
+			<string>CanvasPage_6493082A-9D01-4B67-8D42-59B9D2449AD4</string>
+		</dict>
+		<dict>
+			<key>canvas</key>
+			<string>Canvas_5C45392D-B2B5-4372-92A3-084A047A76AD</string>
+			<key>entryPoints</key>
+			<array>
+				<dict>
+					<key>pageLink</key>
+					<string>coppice://page/1936587F-75AA-48EB-B37E-CCF64BEAC684?source=D5615854-CFCC-40AE-A053-EE604AFEAB0E</string>
+					<key>relativePosition</key>
+					<string>{410, -254}</string>
+				</dict>
+			</array>
+			<key>id</key>
+			<string>PageHierarchy_A44C896F-8003-484D-8554-5A7109B60815</string>
+			<key>links</key>
+			<array>
+				<dict>
+					<key>destinationID</key>
+					<string>CanvasPage_163220FF-8A14-42AC-86B2-6E12E1B5DCD4</string>
+					<key>link</key>
+					<string>coppice://page/B335F5A3-20DA-4950-BCDF-19A3758B453F?source=265F4FDA-BE7E-4553-ADE5-8FDF29B673DF</string>
+					<key>sourceID</key>
+					<string>CanvasPage_265F4FDA-BE7E-4553-ADE5-8FDF29B673DF</string>
+				</dict>
+				<dict>
+					<key>destinationID</key>
+					<string>CanvasPage_2E10377C-79DC-4953-9958-D2A5846937D9</string>
+					<key>link</key>
+					<string>coppice://page/2936E0F0-0B47-4234-97C4-042B9930CBC8?source=265F4FDA-BE7E-4553-ADE5-8FDF29B673DF</string>
+					<key>sourceID</key>
+					<string>CanvasPage_265F4FDA-BE7E-4553-ADE5-8FDF29B673DF</string>
+				</dict>
+			</array>
+			<key>pages</key>
+			<array>
+				<dict>
+					<key>canvasPageID</key>
+					<string>CanvasPage_265F4FDA-BE7E-4553-ADE5-8FDF29B673DF</string>
+					<key>pageID</key>
+					<string>Page_1936587F-75AA-48EB-B37E-CCF64BEAC684</string>
+					<key>relativeContentFrame</key>
+					<string>{{0, 0}, {244, 194}}</string>
+				</dict>
+				<dict>
+					<key>canvasPageID</key>
+					<string>CanvasPage_163220FF-8A14-42AC-86B2-6E12E1B5DCD4</string>
+					<key>pageID</key>
+					<string>Page_B335F5A3-20DA-4950-BCDF-19A3758B453F</string>
+					<key>relativeContentFrame</key>
+					<string>{{411, 41}, {209, 129}}</string>
+				</dict>
+				<dict>
+					<key>canvasPageID</key>
+					<string>CanvasPage_2E10377C-79DC-4953-9958-D2A5846937D9</string>
+					<key>pageID</key>
+					<string>Page_2936E0F0-0B47-4234-97C4-042B9930CBC8</string>
+					<key>relativeContentFrame</key>
+					<string>{{415, -163}, {207, 160}}</string>
+				</dict>
+			</array>
+			<key>rootPageID</key>
+			<string>CanvasPage_265F4FDA-BE7E-4553-ADE5-8FDF29B673DF</string>
+		</dict>
+		<dict>
+			<key>canvas</key>
+			<string>Canvas_5C45392D-B2B5-4372-92A3-084A047A76AD</string>
+			<key>entryPoints</key>
+			<array>
+				<dict>
+					<key>pageLink</key>
+					<string>coppice://page/30FF5DE7-2CBF-45D3-A80D-BDD7315989D7?source=C41FA204-087C-40D0-A15A-9F9F17523E05</string>
+					<key>relativePosition</key>
+					<string>{552, -104}</string>
+				</dict>
+			</array>
+			<key>id</key>
+			<string>PageHierarchy_ABC78A47-B7CD-49F2-B7C6-07F26DEBD538</string>
+			<key>links</key>
+			<array/>
+			<key>pages</key>
+			<array>
+				<dict>
+					<key>canvasPageID</key>
+					<string>CanvasPage_BAEFA6F6-1553-42C9-9A16-492DF93A8C95</string>
+					<key>pageID</key>
+					<string>Page_30FF5DE7-2CBF-45D3-A80D-BDD7315989D7</string>
+					<key>relativeContentFrame</key>
+					<string>{{0, 0}, {383, 222}}</string>
+				</dict>
+			</array>
+			<key>rootPageID</key>
+			<string>CanvasPage_BAEFA6F6-1553-42C9-9A16-492DF93A8C95</string>
+		</dict>
+		<dict>
+			<key>canvas</key>
+			<string>Canvas_5C45392D-B2B5-4372-92A3-084A047A76AD</string>
+			<key>entryPoints</key>
+			<array>
+				<dict>
+					<key>pageLink</key>
+					<string>coppice://page/61E4F38E-6721-440F-AB8E-E9DEBC234D75?source=D5615854-CFCC-40AE-A053-EE604AFEAB0E</string>
+					<key>relativePosition</key>
+					<string>{398, 258}</string>
+				</dict>
+			</array>
+			<key>id</key>
+			<string>PageHierarchy_AF767F97-C8A8-4B4E-84F0-4CDF8E264802</string>
+			<key>links</key>
+			<array>
+				<dict>
+					<key>destinationID</key>
+					<string>CanvasPage_B6645949-C620-4BDB-A115-F27DCC578C99</string>
+					<key>link</key>
+					<string>coppice://page/78F65DEE-7100-4223-AE9F-B7A148346791?source=AFD83EA5-861B-49A3-B06D-17997B413961</string>
+					<key>sourceID</key>
+					<string>CanvasPage_AFD83EA5-861B-49A3-B06D-17997B413961</string>
+				</dict>
+			</array>
+			<key>pages</key>
+			<array>
+				<dict>
+					<key>canvasPageID</key>
+					<string>CanvasPage_AFD83EA5-861B-49A3-B06D-17997B413961</string>
+					<key>pageID</key>
+					<string>Page_61E4F38E-6721-440F-AB8E-E9DEBC234D75</string>
+					<key>relativeContentFrame</key>
+					<string>{{0, 0}, {356, 354}}</string>
+				</dict>
+				<dict>
+					<key>canvasPageID</key>
+					<string>CanvasPage_B6645949-C620-4BDB-A115-F27DCC578C99</string>
+					<key>pageID</key>
+					<string>Page_78F65DEE-7100-4223-AE9F-B7A148346791</string>
+					<key>relativeContentFrame</key>
+					<string>{{417, 115}, {150, 124}}</string>
+				</dict>
+			</array>
+			<key>rootPageID</key>
+			<string>CanvasPage_AFD83EA5-861B-49A3-B06D-17997B413961</string>
+		</dict>
+		<dict>
+			<key>canvas</key>
+			<string>Canvas_5C45392D-B2B5-4372-92A3-084A047A76AD</string>
+			<key>entryPoints</key>
+			<array>
+				<dict>
+					<key>pageLink</key>
+					<string>coppice://page/B1CA31B5-52AF-4385-9FAD-C0A4FB9330E8?source=9AD950ED-1D78-421B-BC21-44F2E1536AA6</string>
+					<key>relativePosition</key>
+					<string>{365, 178}</string>
+				</dict>
+			</array>
+			<key>id</key>
+			<string>PageHierarchy_B7CE95A3-CE2C-4D72-A985-8733C9BA1329</string>
+			<key>links</key>
+			<array/>
+			<key>pages</key>
+			<array>
+				<dict>
+					<key>canvasPageID</key>
+					<string>CanvasPage_7B1A09D0-93D3-4476-ACB0-D2938D84E238</string>
+					<key>pageID</key>
+					<string>Page_B1CA31B5-52AF-4385-9FAD-C0A4FB9330E8</string>
+					<key>relativeContentFrame</key>
+					<string>{{0, 0}, {469, 200}}</string>
+				</dict>
+			</array>
+			<key>rootPageID</key>
+			<string>CanvasPage_7B1A09D0-93D3-4476-ACB0-D2938D84E238</string>
+		</dict>
+		<dict>
+			<key>canvas</key>
+			<string>Canvas_5C45392D-B2B5-4372-92A3-084A047A76AD</string>
+			<key>entryPoints</key>
+			<array>
+				<dict>
+					<key>pageLink</key>
+					<string>coppice://page/D6B1951C-45AA-42B7-B4E4-B3FA3C2A4676?source=6325569A-EC06-41D4-9412-032CEF5D68F7</string>
+					<key>relativePosition</key>
+					<string>{-550.41015625, 281.6015625}</string>
+				</dict>
+			</array>
+			<key>id</key>
+			<string>PageHierarchy_E9C066AF-C4F4-43F2-BE97-5A83E1CCDEE0</string>
+			<key>links</key>
+			<array/>
+			<key>pages</key>
+			<array>
+				<dict>
+					<key>canvasPageID</key>
+					<string>CanvasPage_B1544FA5-D0EA-4534-82B3-28F7611C24F4</string>
+					<key>pageID</key>
+					<string>Page_D6B1951C-45AA-42B7-B4E4-B3FA3C2A4676</string>
+					<key>relativeContentFrame</key>
+					<string>{{0, 0}, {454, 383}}</string>
+				</dict>
+			</array>
+			<key>rootPageID</key>
+			<string>CanvasPage_B1544FA5-D0EA-4534-82B3-28F7611C24F4</string>
+		</dict>
+		<dict>
+			<key>canvas</key>
+			<string>Canvas_5C45392D-B2B5-4372-92A3-084A047A76AD</string>
+			<key>entryPoints</key>
+			<array>
+				<dict>
+					<key>pageLink</key>
+					<string>coppice://page/F22967AD-A7F6-42B0-96DE-D8981A35083B?source=328D44A1-9D21-4EDB-A1F1-B97DFA63ACE6</string>
+					<key>relativePosition</key>
+					<string>{-277, 519}</string>
+				</dict>
+			</array>
+			<key>id</key>
+			<string>PageHierarchy_EAF92F88-5DE8-40C0-B341-22838B67F1FB</string>
+			<key>links</key>
+			<array/>
+			<key>pages</key>
+			<array>
+				<dict>
+					<key>canvasPageID</key>
+					<string>CanvasPage_DF5DAD2B-DDFA-4AF2-B5CF-7FD0307ADB14</string>
+					<key>pageID</key>
+					<string>Page_F22967AD-A7F6-42B0-96DE-D8981A35083B</string>
+					<key>relativeContentFrame</key>
+					<string>{{0, 0}, {380, 412}}</string>
+				</dict>
+			</array>
+			<key>rootPageID</key>
+			<string>CanvasPage_DF5DAD2B-DDFA-4AF2-B5CF-7FD0307ADB14</string>
+		</dict>
+		<dict>
+			<key>canvas</key>
+			<string>Canvas_5C45392D-B2B5-4372-92A3-084A047A76AD</string>
+			<key>entryPoints</key>
+			<array>
+				<dict>
+					<key>pageLink</key>
+					<string>coppice://page/534D6ADC-FDC6-4668-9130-5CDBDAB3680A?source=328D44A1-9D21-4EDB-A1F1-B97DFA63ACE6</string>
+					<key>relativePosition</key>
+					<string>{297, 633}</string>
+				</dict>
+			</array>
+			<key>id</key>
+			<string>PageHierarchy_F072BA7F-58CE-4834-A3CB-A2570F6B1DD7</string>
+			<key>links</key>
+			<array/>
+			<key>pages</key>
+			<array>
+				<dict>
+					<key>canvasPageID</key>
+					<string>CanvasPage_C10B3E19-F07F-41C6-BC59-C40FF1D266F6</string>
+					<key>pageID</key>
+					<string>Page_534D6ADC-FDC6-4668-9130-5CDBDAB3680A</string>
+					<key>relativeContentFrame</key>
+					<string>{{0, 0}, {322, 215}}</string>
+				</dict>
+			</array>
+			<key>rootPageID</key>
+			<string>CanvasPage_C10B3E19-F07F-41C6-BC59-C40FF1D266F6</string>
+		</dict>
+		<dict>
+			<key>canvas</key>
+			<string>Canvas_5C45392D-B2B5-4372-92A3-084A047A76AD</string>
+			<key>entryPoints</key>
+			<array>
+				<dict>
+					<key>pageLink</key>
+					<string>coppice://page/28E15839-4892-433D-869D-9BA2A58062EB?source=79169389-EC6E-4AD8-9E9D-8EFA0BBF495C</string>
+					<key>relativePosition</key>
+					<string>{494, 12}</string>
+				</dict>
+			</array>
+			<key>id</key>
+			<string>PageHierarchy_F255E4E9-C7FB-4FBB-A0D7-18F8340BA225</string>
+			<key>links</key>
+			<array/>
+			<key>pages</key>
+			<array>
+				<dict>
+					<key>canvasPageID</key>
+					<string>CanvasPage_8AE77420-A416-409A-92AF-0F6FEA916D46</string>
+					<key>pageID</key>
+					<string>Page_28E15839-4892-433D-869D-9BA2A58062EB</string>
+					<key>relativeContentFrame</key>
+					<string>{{0, 0}, {309, 213}}</string>
+				</dict>
+			</array>
+			<key>rootPageID</key>
+			<string>CanvasPage_8AE77420-A416-409A-92AF-0F6FEA916D46</string>
+		</dict>
+		<dict>
+			<key>canvas</key>
+			<string>Canvas_5C45392D-B2B5-4372-92A3-084A047A76AD</string>
+			<key>entryPoints</key>
+			<array>
+				<dict>
+					<key>pageLink</key>
+					<string>coppice://page/EAA47FAD-4096-43A4-A18B-75F550A520B0?source=DF5DAD2B-DDFA-4AF2-B5CF-7FD0307ADB14</string>
+					<key>relativePosition</key>
+					<string>{-456, 346}</string>
+				</dict>
+			</array>
+			<key>id</key>
+			<string>PageHierarchy_F7175979-67B3-47EC-9095-E3B2B5D4B6E4</string>
+			<key>links</key>
+			<array/>
+			<key>pages</key>
+			<array>
+				<dict>
+					<key>canvasPageID</key>
+					<string>CanvasPage_B912E92B-27A7-4755-8EE8-3753C296C49A</string>
+					<key>pageID</key>
+					<string>Page_EAA47FAD-4096-43A4-A18B-75F550A520B0</string>
+					<key>relativeContentFrame</key>
+					<string>{{0, 0}, {300, 214}}</string>
+				</dict>
+			</array>
+			<key>rootPageID</key>
+			<string>CanvasPage_B912E92B-27A7-4755-8EE8-3753C296C49A</string>
 		</dict>
 	</array>
 	<key>pages</key>
@@ -728,6 +1501,25 @@
 		</dict>
 		<dict>
 			<key>allowsAutoLinking</key>
+			<true/>
+			<key>content</key>
+			<dict>
+				<key>filename</key>
+				<string>81D52598-481A-4C24-9017-3CCEBB4C8DE1.rtf</string>
+				<key>type</key>
+				<string>text</string>
+			</dict>
+			<key>dateCreated</key>
+			<date>2022-12-05T12:35:57Z</date>
+			<key>dateModified</key>
+			<date>2022-12-05T12:35:57Z</date>
+			<key>id</key>
+			<string>Page_81D52598-481A-4C24-9017-3CCEBB4C8DE1</string>
+			<key>title</key>
+			<string>Creating a Canvas Link</string>
+		</dict>
+		<dict>
+			<key>allowsAutoLinking</key>
 			<false/>
 			<key>content</key>
 			<dict>
@@ -793,7 +1585,7 @@
 				<key>metadata</key>
 				<dict>
 					<key>cropRect</key>
-					<string>{{0, 0}, {256, 256}}</string>
+					<string>{{0, 0}, {512, 512}}</string>
 					<key>hotspots</key>
 					<array/>
 					<key>orientation</key>
@@ -828,7 +1620,7 @@
 			<key>id</key>
 			<string>Page_AA4DFD1B-E6CB-498B-895B-69992D24571E</string>
 			<key>title</key>
-			<string>Creating a Link</string>
+			<string>Creating a Page Link</string>
 		</dict>
 		<dict>
 			<key>allowsAutoLinking</key>
@@ -964,6 +1756,25 @@
 		</dict>
 		<dict>
 			<key>allowsAutoLinking</key>
+			<true/>
+			<key>content</key>
+			<dict>
+				<key>filename</key>
+				<string>F082F6AC-29BC-4F3E-A152-13E21007BF15.rtf</string>
+				<key>type</key>
+				<string>text</string>
+			</dict>
+			<key>dateCreated</key>
+			<date>2022-12-05T12:30:13Z</date>
+			<key>dateModified</key>
+			<date>2022-12-05T12:30:13Z</date>
+			<key>id</key>
+			<string>Page_F082F6AC-29BC-4F3E-A152-13E21007BF15</string>
+			<key>title</key>
+			<string>Page Link vs Canvas Link</string>
+		</dict>
+		<dict>
+			<key>allowsAutoLinking</key>
 			<false/>
 			<key>content</key>
 			<dict>
@@ -1011,6 +1822,6 @@
 		<string>Folder_57122DE1-7179-4496-BD0D-877C2C9FE9A3</string>
 	</dict>
 	<key>version</key>
-	<integer>2</integer>
+	<integer>3</integer>
 </dict>
 </plist>
