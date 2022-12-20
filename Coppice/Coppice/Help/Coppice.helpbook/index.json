@@ -9,7 +9,8 @@
                 "open_or_close_documents",
                 "customise_the_toolbar",
                 "customise_the_sidebar_size",
-                "searching"
+                "searching",
+                "glossary"
             ]
         },
         {
@@ -35,7 +36,7 @@
         },
         {
             "id": "creating_links",
-            "title": "Linking Pages",
+            "title": "Linking",
             "topics": [
                 "add_a_link_to_a_page",
                 "add_a_link_to_a_new_page",
@@ -43,7 +44,9 @@
                 "removing_a_link",
                 "add_an_external_link",
                 "image_hotspots",
-                "automatically_find_links_on_pages"
+                "automatically_find_links_on_pages",
+                "add_a_canvas_link",
+                "remove_a_canvas_link"
             ]
         },
         {
@@ -519,7 +522,7 @@
             "id": "add_a_page_to_a_canvas",
             "title": "Add a Page to a Canvas",
             "dateCreated": "2020-11-10T16:50:00+0000",
-            "dateUpdated": "2020-11-16T14:08:45+0000",
+            "dateUpdated": "2022-12-03T13:38:57+0000",
             "tags": [
                 "add",
                 "page",
@@ -560,6 +563,24 @@
             ],
             "appVersion": "2020.1",
             "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/change_the_default_font_for_text_pages?draft=1"
+        },
+        {
+            "id": "glossary",
+            "title": "Glossary",
+            "dateCreated": "2022-12-03T13:35:50+0000",
+            "dateUpdated": "2022-12-03T13:35:50+0000",
+            "tags": [
+                "glossary",
+                "canvas",
+                "page",
+                "link",
+                "folder",
+                "sidebar",
+                "inspector",
+                "hotspot"
+            ],
+            "appVersion": "2022.2",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/glossary?draft=1"
         },
         {
             "id": "select_pages",
@@ -613,6 +634,20 @@
             "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/automatically_find_links_on_pages?draft=1"
         },
         {
+            "id": "add_a_canvas_link",
+            "title": "Add a Canvas Link",
+            "dateCreated": "2022-12-03T13:51:30+0000",
+            "dateUpdated": "2022-12-03T13:51:30+0000",
+            "tags": [
+                "canvas",
+                "link",
+                "add",
+                "create"
+            ],
+            "appVersion": "2022.2",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/add_a_canvas_link?draft=1"
+        },
+        {
             "id": "add_an_image_description",
             "title": "Add an Image Description",
             "dateCreated": "2020-11-09T16:32:17+0000",
@@ -657,6 +692,20 @@
             ],
             "appVersion": "2022.1",
             "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/rotating_an_image?draft=1"
+        },
+        {
+            "id": "remove_a_canvas_link",
+            "title": "Remove a Canvas Link",
+            "dateCreated": "2022-12-03T13:52:49+0000",
+            "dateUpdated": "2022-12-03T13:52:49+0000",
+            "tags": [
+                "canvas",
+                "link",
+                "remove",
+                "delete"
+            ],
+            "appVersion": "2022.1.2",
+            "contentURL": "https:\/\/coppiceapp.com\/support\/manualAPI\/remove_a_canvas_link?draft=1"
         },
         {
             "id": "remove_pages_from_a_canvas",
