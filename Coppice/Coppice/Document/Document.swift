@@ -27,7 +27,7 @@ class Document: NSDocument {
             self.close()
             return
         }
-        
+
         let documentViewModel = DocumentWindowViewModel(modelController: self.modelController)
         documentViewModel.document = self
 

@@ -777,7 +777,7 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
 
         self.canvasView.customRotors = [
             CanvasPagesAccessibilityRotor(canvas: self.viewModel.canvas, canvasEditor: self),
-            CanvasLinksAccessibilityRotor(canvas: self.viewModel.canvas, canvasEditor: self)
+            CanvasLinksAccessibilityRotor(canvas: self.viewModel.canvas, canvasEditor: self),
         ]
     }
 
