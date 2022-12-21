@@ -18,8 +18,9 @@ class MockImageEditorHotspot: ImageEditorHotspot {
 
     var url: URL?
 
+    let hotspotPathMock = MockDetails<CGFloat, NSBezierPath>()
     func hotspotPath(forScale scale: CGFloat) -> NSBezierPath {
-        fatalError()
+        return self.hotspotPathMock.called(withArguments: scale) ?? NSBezierPath(rect: .zero)
     }
 
     func editingBoundsPaths(forScale scale: CGFloat) -> [(path: NSBezierPath, phase: CGFloat)] {

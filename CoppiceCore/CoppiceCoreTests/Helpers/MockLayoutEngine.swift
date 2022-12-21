@@ -10,6 +10,10 @@
 import Foundation
 
 class MockLayoutEngine: LayoutEngine {
+    func linkBetween(source: CoppiceCore.LayoutEnginePage, andDestination destination: CoppiceCore.LayoutEnginePage) -> CoppiceCore.LayoutEngineLink? {
+        return nil
+    }
+
     var editable: Bool = true
 
     var selectedItems: [LayoutEngineItem] = [] {

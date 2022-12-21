@@ -95,6 +95,7 @@ class ImageEditorHotspotLayoutEngineTests: XCTestCase {
     func test_editingHotspot_passesDraggedAndUpEventsToHotspotThatWasHitWithDownEvent() throws {
         self.mockHotspot1.hitTestMock.returnValue = true
         self.mockHotspot3.hitTestMock.returnValue = true
+        self.mockHotspot3.hotspotPathMock.returnValue = NSBezierPath(rect: CGRect(x: 10, y: 40, width: 20, height: 20))
 
         self.layoutEngine.downEvent(at: CGPoint(x: 12, y: 42), modifiers: .command, eventCount: 1)
         self.layoutEngine.draggedEvent(at: CGPoint(x: 14, y: 41), modifiers: .command, eventCount: 1)
@@ -123,6 +124,7 @@ class ImageEditorHotspotLayoutEngineTests: XCTestCase {
     func test_editingHotspot_doesntPassDraggedAndUpEventsToOtherHotspots() throws {
         self.mockHotspot1.hitTestMock.returnValue = true
         self.mockHotspot3.hitTestMock.returnValue = true
+        self.mockHotspot3.hotspotPathMock.returnValue = NSBezierPath(rect: CGRect(x: 10, y: 40, width: 20, height: 20))
 
         self.layoutEngine.downEvent(at: CGPoint(x: 12, y: 42), modifiers: .command, eventCount: 1)
         self.layoutEngine.draggedEvent(at: CGPoint(x: 14, y: 41), modifiers: .command, eventCount: 1)
@@ -147,6 +149,7 @@ class ImageEditorHotspotLayoutEngineTests: XCTestCase {
     }
 
     func test_editingHotspot_callsLayoutDidChangeOnUpEvent() throws {
+        self.mockHotspot3.hotspotPathMock.returnValue = NSBezierPath(rect: CGRect(x: 10, y: 40, width: 20, height: 20))
         self.layoutEngine.downEvent(at: CGPoint(x: 12, y: 42), modifiers: .command, eventCount: 1)
         self.layoutEngine.upEvent(at: CGPoint(x: 18, y: 39), modifiers: .command, eventCount: 1)
 

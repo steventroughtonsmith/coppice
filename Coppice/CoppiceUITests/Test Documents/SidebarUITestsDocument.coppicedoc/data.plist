@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>canvasLinks</key>
+	<array/>
 	<key>canvasPages</key>
 	<array>
 		<dict>
@@ -82,6 +84,8 @@
 			<string>__ROOT__FOLDER__</string>
 		</dict>
 	</array>
+	<key>pageHierarchies</key>
+	<array/>
 	<key>pages</key>
 	<array>
 		<dict>
@@ -199,6 +203,6 @@
 		<string>Folder_F9D395D0-7864-41A0-AD30-95F8B97D4257</string>
 	</dict>
 	<key>version</key>
-	<integer>2</integer>
+	<integer>3</integer>
 </dict>
 </plist>

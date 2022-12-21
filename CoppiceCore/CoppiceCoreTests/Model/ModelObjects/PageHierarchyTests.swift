@@ -168,13 +168,13 @@ class PageHierarchyTests: XCTestCase {
         let grandchild2ID = hierarchy.children[0].children[1].id
 
         let link1 = try XCTUnwrap(linkRefs.first(where: { ($0["sourceID"] as? String) == rootID.stringRepresentation && ($0["destinationID"] as? String) == child1ID.stringRepresentation }))
-        XCTAssertEqual(link1["link"] as? String, PageLink(destination: hierarchy.children[0].pageID, source: hierarchy.pageID).url.absoluteString)
+        XCTAssertEqual(link1["link"] as? String, PageLink(destination: hierarchy.children[0].pageID, source: hierarchy.id).url.absoluteString)
         let link2 = try XCTUnwrap(linkRefs.first(where: { ($0["sourceID"] as? String) == rootID.stringRepresentation && ($0["destinationID"] as? String) == child2ID.stringRepresentation }))
-        XCTAssertEqual(link2["link"] as? String, PageLink(destination: hierarchy.children[1].pageID, source: hierarchy.pageID).url.absoluteString)
+        XCTAssertEqual(link2["link"] as? String, PageLink(destination: hierarchy.children[1].pageID, source: hierarchy.id).url.absoluteString)
         let link3 = try XCTUnwrap(linkRefs.first(where: { ($0["sourceID"] as? String) == child1ID.stringRepresentation && ($0["destinationID"] as? String) == grandchild1ID.stringRepresentation }))
-        XCTAssertEqual(link3["link"] as? String, PageLink(destination: hierarchy.children[0].children[0].pageID, source: hierarchy.children[0].pageID).url.absoluteString)
+        XCTAssertEqual(link3["link"] as? String, PageLink(destination: hierarchy.children[0].children[0].pageID, source: hierarchy.children[0].id).url.absoluteString)
         let link4 = try XCTUnwrap(linkRefs.first(where: { ($0["sourceID"] as? String) == child1ID.stringRepresentation && ($0["destinationID"] as? String) == grandchild2ID.stringRepresentation }))
-        XCTAssertEqual(link4["link"] as? String, PageLink(destination: hierarchy.children[0].children[1].pageID, source: hierarchy.children[0].pageID).url.absoluteString)
+        XCTAssertEqual(link4["link"] as? String, PageLink(destination: hierarchy.children[0].children[1].pageID, source: hierarchy.children[0].id).url.absoluteString)
     }
 
     //MARK: - Helpers

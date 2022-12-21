@@ -147,7 +147,7 @@ extension Plist {
                         let canvasPageModelID = ModelID(string: canvasPageID),
                         let page = allPages[canvasPageModelID]
                     else {
-                        throw ModelPlist.Errors.migrationFailed("Invalid canvas page found in closed hierarchy")
+                        continue
                     }
                     for (_, rawLegacyHierarchy) in hierarchies {
                         guard let legacyHierarchy = LegacyPageHierarchy(plistRepresentation: rawLegacyHierarchy) else {

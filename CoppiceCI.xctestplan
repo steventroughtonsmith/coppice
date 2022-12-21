@@ -52,6 +52,7 @@
       }
     },
     {
+      "enabled" : false,
       "parallelizable" : true,
       "target" : {
         "containerPath" : "container:M3Data.xcodeproj",
