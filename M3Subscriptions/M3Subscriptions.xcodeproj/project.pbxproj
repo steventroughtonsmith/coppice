@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9910B2C7296471F000459493 /* Configs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9910B2C6296471F000459493 /* Configs.swift */; };
 		99848160248E639C00BC0A8A /* libM3Subscriptions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99848149248E635600BC0A8A /* libM3Subscriptions.a */; };
 		9984816F248E648300BC0A8A /* ResultExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99848166248E648300BC0A8A /* ResultExtension.swift */; };
 		99848170248E648300BC0A8A /* NetworkAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99848167248E648300BC0A8A /* NetworkAdapter.swift */; };
@@ -63,6 +64,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9910B2C6296471F000459493 /* Configs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configs.swift; sourceTree = "<group>"; };
 		99848149248E635600BC0A8A /* libM3Subscriptions.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libM3Subscriptions.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9984815B248E639C00BC0A8A /* M3SubscriptionsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = M3SubscriptionsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9984815F248E639C00BC0A8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 				99848168248E648300BC0A8A /* SubscriptionController.swift */,
 				998481AB2492789400BC0A8A /* SubscriptionErrors.swift */,
 				998481CC2496640A00BC0A8A /* TestOverrides.swift */,
+				9910B2C6296471F000459493 /* Configs.swift */,
 				9998B4DC251118F300E2D455 /* APIDebugManager.swift */,
 				99848184248E68EC00BC0A8A /* Types */,
 				99848169248E648300BC0A8A /* API */,
@@ -472,6 +475,7 @@
 				998481AC2492789400BC0A8A /* SubscriptionErrors.swift in Sources */,
 				99848170248E648300BC0A8A /* NetworkAdapter.swift in Sources */,
 				9984816F248E648300BC0A8A /* ResultExtension.swift in Sources */,
+				9910B2C7296471F000459493 /* Configs.swift in Sources */,
 				9998B4DD251118F300E2D455 /* APIDebugManager.swift in Sources */,
 				99848175248E648300BC0A8A /* ActivateAPI.swift in Sources */,
 				99848178248E651A00BC0A8A /* ActivationRequest.swift in Sources */,

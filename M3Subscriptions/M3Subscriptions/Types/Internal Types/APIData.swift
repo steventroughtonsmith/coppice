@@ -123,14 +123,11 @@ struct APIData {
             return key
         }
         #endif
-        return """
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqZdbp6XV0sxInPFl7K5O
-9aGRQkjdmspuV7bbDplLzznueAHJP25zbsiGKKKsTypKa5Zf5vJtMGNhe6D/kKiO
-JkkCiTJJ8KgzP1DaJeXMCCrXmG+iivIPgXv6XJuO55+iVVI9RCOp247Z0oXjOBl6
-m/PU7irVPng9wCWDELsgI8nKUZM/+RKc1PJ3bb3MW2GbDMxAWPnGRvvjx/Y9M+hW
-VaYLykTPu5f6islSJKllN7XVfBgWMxt8+RNnYoVcoRGbtlRvZ0LOyjMHzwoU6NDM
-0QnIJeuNvirS1wlIrdfhNLkfa6nIWsePa4aaXBPRuMx1To/gi57TTMMIqGPSsp5y
-BQIDAQAB
-"""
+
+        #if DEBUG
+        return APIDebugManager.shared.activeConfig.publicKey
+        #else
+        return Config.production.publicKey
+        #endif
     }
 }

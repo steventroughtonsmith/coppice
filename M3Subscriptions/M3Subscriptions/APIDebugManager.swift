@@ -11,7 +11,7 @@ import Cocoa
 public class APIDebugManager: NSObject {
     public static var shared = APIDebugManager()
 
-    public func buildMenu() -> NSMenu {
+    public func buildResponsesMenu() -> NSMenu {
         let menu = NSMenu()
         let activateMenuItem = NSMenuItem(title: "Activation Errors", action: nil, keyEquivalent: "")
         activateMenuItem.submenu = self.buildActivateMenu()
@@ -27,15 +27,51 @@ public class APIDebugManager: NSObject {
         return menu
     }
 
-    private func updateState(of menu: NSMenu?, value: String?) {
+    private func updateState<T: Equatable>(of menu: NSMenu?, value: T?) {
         guard let menu = menu else {
             return
         }
 
         for item in menu.items {
-            let representedString = item.representedObject as? String
+            let representedString = item.representedObject as? T
             item.state = (representedString == value) ? .on : .off
         }
+    }
+
+    //MARK: - Active Config
+    var activeConfig: Config {
+        get {
+            guard
+                let rawConfig = UserDefaults.standard.string(forKey: "M3APIActiveConfig"),
+                let config = Config(rawValue: rawConfig)
+            else {
+                return .production
+            }
+            return config
+        }
+        set {
+            UserDefaults.standard.set(newValue.rawValue, forKey: "M3APIActiveConfig")
+        }
+    }
+
+    public func buildConfigMenu() -> NSMenu {
+        let menu = NSMenu()
+        for config in Config.allCases {
+            let menuItem = NSMenuItem(title: config.displayName, action: #selector(self.updateActiveConfig(_:)), keyEquivalent: "")
+            menuItem.representedObject = config
+            menuItem.target = self
+            menu.addItem(menuItem)
+        }
+        self.updateState(of: menu, value: self.activeConfig)
+        return menu
+    }
+
+    @IBAction func updateActiveConfig(_ sender: NSMenuItem) {
+        guard let config = sender.representedObject as? Config else {
+            return
+        }
+        self.activeConfig = config
+        self.updateState(of: sender.menu, value: config)
     }
 
     //MARK: - Activate

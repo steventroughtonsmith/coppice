@@ -30,14 +30,10 @@ class URLSessionNetworkAdapter: NetworkAdapter {
         #endif
 
         #if DEBUG
-        if
-            let apiURLString = UserDefaults.standard.string(forKey: "M3DebugAPIURL"),
-            let apiURL = URL(string: apiURLString)
-        {
-            return apiURL
-        }
+        return APIDebugManager.shared.activeConfig.baseURL
+        #else
+        return Config.production.baseURL
         #endif
-        return URL(string: "https://mcubedsw.com/api")!
     }
 
     var version: String {

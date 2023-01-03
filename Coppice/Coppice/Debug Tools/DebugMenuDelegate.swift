@@ -35,7 +35,13 @@ class DebugMenuBuilder: NSObject {
 
     let subscriptionDebugMenuItem: NSMenuItem = {
         let menuItem = NSMenuItem(title: "Subscriptions", action: nil, keyEquivalent: "")
-        menuItem.submenu = APIDebugManager.shared.buildMenu()
+        menuItem.submenu = APIDebugManager.shared.buildResponsesMenu()
+        return menuItem
+    }()
+
+    let activeAPIConfigMenuItem: NSMenuItem = {
+        let menuItem = NSMenuItem(title: "Active Config", action: nil, keyEquivalent: "")
+        menuItem.submenu = APIDebugManager.shared.buildConfigMenu()
         return menuItem
     }()
 
@@ -76,6 +82,7 @@ class DebugMenuBuilder: NSObject {
         menu.addItem(self.logResponderChainItem)
         menu.addItem(NSMenuItem.separator())
         menu.addItem(self.proDisabledMenuItem)
+        menu.addItem(self.activeAPIConfigMenuItem)
         menu.addItem(self.checkSubscriptionMenuItem)
         menu.addItem(self.subscriptionDebugMenuItem)
         menu.addItem(NSMenuItem.separator())
