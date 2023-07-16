@@ -22,6 +22,10 @@ class AboutWindowController: NSWindowController {
 
     override func windowDidLoad() {
         super.windowDidLoad()
+
+        self.window?.standardWindowButton(.miniaturizeButton)?.isHidden = true
+        self.window?.standardWindowButton(.zoomButton)?.isHidden = true
+
         guard
             let copyright = Bundle.main.object(forInfoDictionaryKey: "NSHumanReadableCopyright") as? String,
             let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String,
@@ -35,13 +39,8 @@ class AboutWindowController: NSWindowController {
         let localizedVersion = NSLocalizedString("Version %@ (%@)", comment: "Version string")
         let versionString = String(format: localizedVersion, version, build)
         self.versionLabel.stringValue = versionString
-    }
 
 
-    //MARK: - Acknowledgements
-    @IBOutlet var acknowledgementsWindow: NSWindow!
-    @IBOutlet var acknowledgementsTextView: NSTextView!
-    @IBAction func showAcknowledgements(_ sender: Any) {
         guard
             let acknowledgementsURL = Bundle.main.url(forResource: "Acknowledgements", withExtension: "rtf"),
             let text = try? NSAttributedString(url: acknowledgementsURL, options: [:], documentAttributes: nil)
@@ -49,11 +48,9 @@ class AboutWindowController: NSWindowController {
             return
         }
         self.acknowledgementsTextView.textStorage?.setAttributedString(text)
-
-        self.window?.beginSheet(self.acknowledgementsWindow, completionHandler: nil)
     }
 
-    @IBAction func closeAcknowledgements(_ sender: Any) {
-        self.window?.endSheet(self.acknowledgementsWindow)
-    }
+
+    //MARK: - Acknowledgements
+    @IBOutlet var acknowledgementsTextView: NSTextView!
 }

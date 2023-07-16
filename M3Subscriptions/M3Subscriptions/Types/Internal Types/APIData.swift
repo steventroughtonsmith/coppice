@@ -120,7 +120,7 @@ struct APIData {
     static func publicKey() -> String {
         #if TEST
         if let key = TEST_OVERRIDES.publicKey {
-            return key
+            return key  
         }
         #endif
 

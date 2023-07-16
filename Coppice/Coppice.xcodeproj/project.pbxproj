@@ -114,6 +114,7 @@
 		99488ACE23C78087009954AF /* EditableLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99488ACD23C78087009954AF /* EditableLabelCell.swift */; };
 		99488AF023C8C327009954AF /* CanvasPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99488AEF23C8C327009954AF /* CanvasPreviewView.swift */; };
 		99488AF123C8D5B0009954AF /* Colours.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99FE019722CD1038004D380D /* Colours.xcassets */; };
+		994C2CA52A6425D500BF2F24 /* CoppiceGreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994C2CA42A6425D500BF2F24 /* CoppiceGreenView.swift */; };
 		9951C26C230AEFAB006CAD4D /* PageSelectorWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9951C26B230AEFAB006CAD4D /* PageSelectorWindowController.swift */; };
 		9951C26E230AF011006CAD4D /* PageSelectorWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9951C26D230AF011006CAD4D /* PageSelectorWindow.swift */; };
 		9957B088239FD3D800BA3C0B /* DocumentWindowViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9957B087239FD3D800BA3C0B /* DocumentWindowViewModelTests.swift */; };
@@ -327,7 +328,6 @@
 		99D0C71324C5CED0002EEBFA /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C71224C5CED0002EEBFA /* PreviewViewController.swift */; };
 		99D0C71624C5CED0002EEBFA /* PreviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99D0C71424C5CED0002EEBFA /* PreviewViewController.xib */; };
 		99D0C71C24C5CED0002EEBFA /* CoppiceQuickLook.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 99D0C70D24C5CED0002EEBFA /* CoppiceQuickLook.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		99D0C87E24C5EDB4002EEBFA /* CoppiceCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99D0C87D24C5EDB4002EEBFA /* CoppiceCore.framework */; };
 		99D0C87F24C5EDB4002EEBFA /* CoppiceCore.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 99D0C87D24C5EDB4002EEBFA /* CoppiceCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		99D0C88A24C5F33D002EEBFA /* test-image.png in Resources */ = {isa = PBXBuildFile; fileRef = 99D0C88724C5F33D002EEBFA /* test-image.png */; };
 		99D0C88B24C5F33D002EEBFA /* test-rtf.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 99D0C88824C5F33D002EEBFA /* test-rtf.rtf */; };
@@ -376,6 +376,8 @@
 		99ECA0B526496F6E00480C19 /* PageSelectorHeaderTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99ECA0B426496F6E00480C19 /* PageSelectorHeaderTableCellView.swift */; };
 		99ECA0B726496F7D00480C19 /* PageSelectorContentTableCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99ECA0B626496F7D00480C19 /* PageSelectorContentTableCellView.xib */; };
 		99ECA0B926496F8A00480C19 /* PageSelectorHeaderTableCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99ECA0B826496F8A00480C19 /* PageSelectorHeaderTableCellView.xib */; };
+		99ED9FD62A64364500BF7A84 /* CoppiceCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99D0C87D24C5EDB4002EEBFA /* CoppiceCore.framework */; };
+		99ED9FD82A643F4700BF7A84 /* RoundButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99ED9FD72A643F4700BF7A84 /* RoundButton.swift */; };
 		99F0A73125D16CEB00C9D2C4 /* CanvasImageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C8E924C7022D002EEBFA /* CanvasImageGenerator.swift */; };
 		99F0CD76246AF1C4006DE18E /* PreviewGenerationDebugWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F0CD74246AF1C4006DE18E /* PreviewGenerationDebugWindow.swift */; };
 		99F0CD77246AF1C4006DE18E /* PreviewGenerationDebugWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99F0CD75246AF1C4006DE18E /* PreviewGenerationDebugWindow.xib */; };
@@ -579,6 +581,7 @@
 		99488AAF23C37BB7009954AF /* ThumbnailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailController.swift; sourceTree = "<group>"; };
 		99488ACD23C78087009954AF /* EditableLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableLabelCell.swift; sourceTree = "<group>"; };
 		99488AEF23C8C327009954AF /* CanvasPreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasPreviewView.swift; sourceTree = "<group>"; };
+		994C2CA42A6425D500BF2F24 /* CoppiceGreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoppiceGreenView.swift; sourceTree = "<group>"; };
 		9951C26B230AEFAB006CAD4D /* PageSelectorWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageSelectorWindowController.swift; sourceTree = "<group>"; };
 		9951C26D230AF011006CAD4D /* PageSelectorWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageSelectorWindow.swift; sourceTree = "<group>"; };
 		9957B087239FD3D800BA3C0B /* DocumentWindowViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentWindowViewModelTests.swift; sourceTree = "<group>"; };
@@ -849,6 +852,7 @@
 		99ECA0B426496F6E00480C19 /* PageSelectorHeaderTableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageSelectorHeaderTableCellView.swift; sourceTree = "<group>"; };
 		99ECA0B626496F7D00480C19 /* PageSelectorContentTableCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PageSelectorContentTableCellView.xib; sourceTree = "<group>"; };
 		99ECA0B826496F8A00480C19 /* PageSelectorHeaderTableCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PageSelectorHeaderTableCellView.xib; sourceTree = "<group>"; };
+		99ED9FD72A643F4700BF7A84 /* RoundButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundButton.swift; sourceTree = "<group>"; };
 		99F0CD74246AF1C4006DE18E /* PreviewGenerationDebugWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewGenerationDebugWindow.swift; sourceTree = "<group>"; };
 		99F0CD75246AF1C4006DE18E /* PreviewGenerationDebugWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreviewGenerationDebugWindow.xib; sourceTree = "<group>"; };
 		99F6BD2227C3EEC800E5AD20 /* ImageEditorHotspotLayoutEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorHotspotLayoutEngine.swift; sourceTree = "<group>"; };
@@ -903,7 +907,7 @@
 				9999A23424F80CAB001F8161 /* libM3Subscriptions.a in Frameworks */,
 				999617FE249D0CBA00A1AE24 /* Sparkle.framework in Frameworks */,
 				99062DE02519117C009D3317 /* AVKit.framework in Frameworks */,
-				99D0C87E24C5EDB4002EEBFA /* CoppiceCore.framework in Frameworks */,
+				99ED9FD62A64364500BF7A84 /* CoppiceCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1472,6 +1476,8 @@
 				9991803F2510E2B400C931A7 /* IconPopUpButtonCell.swift */,
 				995F9304252B5B1B00A753E4 /* ColouredButtonCell.swift */,
 				990B543C27DF9E1B004FDA93 /* TranslucentSegmentedControl.swift */,
+				99ED9FD72A643F4700BF7A84 /* RoundButton.swift */,
+				994C2CA42A6425D500BF2F24 /* CoppiceGreenView.swift */,
 			);
 			path = "Generic Views";
 			sourceTree = "<group>";
@@ -2609,6 +2615,7 @@
 				9998B4EA251643D700E2D455 /* HelpTipPresenter.swift in Sources */,
 				99B3474C2465846900B96B71 /* PixelPerfectTableView.swift in Sources */,
 				99A41FA228BCF07800C95F68 /* HighlightedCharacterView.swift in Sources */,
+				99ED9FD82A643F4700BF7A84 /* RoundButton.swift in Sources */,
 				99D8E378237EDB890098CF3B /* PageInspectorViewController.swift in Sources */,
 				99F0CD76246AF1C4006DE18E /* PreviewGenerationDebugWindow.swift in Sources */,
 				99868F382397F005009AC0F7 /* FileDropView.swift in Sources */,
@@ -2622,6 +2629,7 @@
 				9999A25925010F08001F8161 /* HoverView.swift in Sources */,
 				991B5F432541E32B002C483C /* HelpViewerWindowController.swift in Sources */,
 				99868F322396AD55009AC0F7 /* ImageEditorInspectorViewModel.swift in Sources */,
+				994C2CA52A6425D500BF2F24 /* CoppiceGreenView.swift in Sources */,
 				99488ACE23C78087009954AF /* EditableLabelCell.swift in Sources */,
 				999007EC24CF475900DB5C13 /* TourGetStartedViewController.swift in Sources */,
 				9998B4E525163FAB00E2D455 /* HelpTipViewController.swift in Sources */,
@@ -2883,6 +2891,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 2022.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3049,6 +3058,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 2022.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3478,6 +3488,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 2022.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3510,6 +3521,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 2022.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice;
 				PRODUCT_NAME = "$(TARGET_NAME)";
