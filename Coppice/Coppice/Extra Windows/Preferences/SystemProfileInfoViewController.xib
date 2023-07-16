@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17147" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17147"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -27,14 +27,14 @@
 
 If you opt-in to send us your anonymous system info, Coppice will send us details about your system once a week. These are stored anonymously on our servers and are not linked to your M Cubed Account.
 
-We like to be transparent about what data we collect, so the table below shows what will be sent to our server. You can switch between the raw data that is sent to our server, and a more human readable version using the tabs below. Clicking a question mark will give you more info about why we collect that particular pieces of data and how it helps us.
+We like to be transparent about what data we collect, so the table below shows what will be sent to our server. You can switch between the raw data that is sent to our server, and a more human readable version using the tabs below. Clicking a question mark will give you more info about why we collect that particular piece of data and how it helps us.
 </mutableString>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eok-xh-MaR">
-                    <rect key="frame" x="18" y="66" width="444" height="42"/>
+                    <rect key="frame" x="18" y="65" width="444" height="42"/>
                     <textFieldCell key="cell" controlSize="small" selectable="YES" id="DHS-2H-lwm">
                         <font key="font" metaFont="menu" size="11"/>
                         <string key="title">Note: This data reflects the current state of your system. If this changes (e.g. upgrading your OS) between now and when we next collect your system info, that updated data will be sent</string>
@@ -43,13 +43,13 @@ We like to be transparent about what data we collect, so the table below shows w
                     </textFieldCell>
                 </textField>
                 <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Bv-mf-0Np">
-                    <rect key="frame" x="20" y="116" width="440" height="179"/>
+                    <rect key="frame" x="20" y="115" width="440" height="179"/>
                     <clipView key="contentView" id="HGm-yC-pUc">
-                        <rect key="frame" x="1" y="0.0" width="438" height="178"/>
+                        <rect key="frame" x="1" y="1" width="438" height="177"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="eoT-F7-Zrj" viewBased="YES" id="NGQ-At-dmh">
-                                <rect key="frame" x="0.0" y="0.0" width="438" height="153"/>
+                                <rect key="frame" x="0.0" y="0.0" width="438" height="152"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -68,11 +68,11 @@ We like to be transparent about what data we collect, so the table below shows w
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         <prototypeCellViews>
                                             <tableCellView identifier="KeyCell" id="f3w-Yw-JXy" customClass="SystemProfileInfoTableCell" customModule="Coppice" customModuleProvider="target">
-                                                <rect key="frame" x="1" y="1" width="239" height="17"/>
+                                                <rect key="frame" x="1" y="1" width="244" height="17"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qep-m5-YAl">
-                                                        <rect key="frame" x="0.0" y="0.0" width="239" height="17"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="244" height="17"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="wun-BC-6wz">
                                                             <font key="font" metaFont="system"/>
@@ -99,7 +99,7 @@ We like to be transparent about what data we collect, so the table below shows w
                                             </tableCellView>
                                         </prototypeCellViews>
                                     </tableColumn>
-                                    <tableColumn identifier="value" width="193" minWidth="40" maxWidth="1000" id="p6c-UK-svK">
+                                    <tableColumn identifier="value" width="184" minWidth="40" maxWidth="1000" id="p6c-UK-svK">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Value">
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -112,11 +112,11 @@ We like to be transparent about what data we collect, so the table below shows w
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         <prototypeCellViews>
                                             <tableCellView identifier="ValueCell" id="Drf-Le-UUr" customClass="SystemProfileInfoTableCell" customModule="Coppice" customModuleProvider="target">
-                                                <rect key="frame" x="243" y="1" width="193" height="17"/>
+                                                <rect key="frame" x="248" y="1" width="188" height="17"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ged-7E-GLp">
-                                                        <rect key="frame" x="0.0" y="0.0" width="193" height="17"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="188" height="17"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="cVK-E5-fiK">
                                                             <font key="font" metaFont="system"/>
@@ -150,13 +150,13 @@ We like to be transparent about what data we collect, so the table below shows w
                         <rect key="frame" x="224" y="17" width="15" height="102"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
-                    <tableHeaderView key="headerView" id="eoT-F7-Zrj">
+                    <tableHeaderView key="headerView" wantsLayer="YES" id="eoT-F7-Zrj">
                         <rect key="frame" x="0.0" y="0.0" width="438" height="25"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </tableHeaderView>
                 </scrollView>
                 <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Zmh-KI-hN6">
-                    <rect key="frame" x="111" y="301" width="258" height="24"/>
+                    <rect key="frame" x="120" y="301" width="240" height="24"/>
                     <segmentedCell key="cell" borderStyle="border" alignment="left" segmentDistribution="fillEqually" style="rounded" trackingMode="selectOne" id="DkF-Nl-0i2">
                         <font key="font" metaFont="system"/>
                         <segments>
@@ -189,7 +189,7 @@ We like to be transparent about what data we collect, so the table below shows w
                     </connections>
                 </textField>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SjA-Cf-XFZ">
-                    <rect key="frame" x="394" y="13" width="72" height="32"/>
+                    <rect key="frame" x="393" y="13" width="74" height="32"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="riE-Ah-e8o"/>
                     </constraints>
