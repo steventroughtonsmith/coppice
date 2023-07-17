@@ -335,7 +335,7 @@ class CoppiceSubscriptionManager: NSObject {
     }
 
     func openProPage() {
-        NSWorkspace.shared.open(URL(string: "https://coppiceapp.com/pro")!)
+        NSWorkspace.shared.open(URL(string: "https://mcubedsw.com/coppice#pro")!)
     }
 
 

@@ -21,7 +21,8 @@ class RoundButton: NSButton {
 
 class RoundButtonCell: NSButtonCell {
     override func drawBezel(withFrame cellFrame: NSRect, in controlView: NSView) {
-        let pathFrame = cellFrame.insetBy(NSEdgeInsets(top: 2, left: 8, bottom: 4, right: 8))
+        let horizontalInset: CGFloat = (self.imagePosition == .noImage) ? 6 : 8
+        let pathFrame = cellFrame.insetBy(NSEdgeInsets(top: 2, left: horizontalInset, bottom: 4, right: horizontalInset))
 
         if self.isHighlighted {
             NSColor.highlightColor.withAlphaComponent(0.3).setFill()

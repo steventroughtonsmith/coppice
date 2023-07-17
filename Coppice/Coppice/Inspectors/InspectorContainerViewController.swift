@@ -78,10 +78,12 @@ class InspectorContainerViewController: NSViewController, SplitViewContainable {
 
 
     //MARK: - Pro
-    @IBOutlet var proImageView: NSImageView! {
+    @IBOutlet weak var showProInfoButton: RoundButton! {
         didSet {
-            let image = CoppiceSubscriptionManager.shared.proImage
-            self.proImageView.image = image
+            self.showProInfoButton.attributedTitle = NSAttributedString(string: "Find Out More…", attributes: [
+                .font: NSFont.systemFont(ofSize: NSFont.smallSystemFontSize),
+                .foregroundColor: NSColor.white.withAlphaComponent(0.75)
+            ])
         }
     }
 
@@ -95,6 +97,12 @@ class InspectorContainerViewController: NSViewController, SplitViewContainable {
         }
         set {
             UserDefaults.standard.set(newValue, forKey: .showProFeaturesInInspector)
+        }
+    }
+
+    @IBOutlet weak var proGreenView: CoppiceGreenView! {
+        didSet {
+            self.proGreenView.shape = .curveBottom
         }
     }
 }
