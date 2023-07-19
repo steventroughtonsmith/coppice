@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="22138.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22138.1"/>
+        <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="WelcomeDocumentCollectionViewItem" customModule="Coppice" customModuleProvider="target">
+            <connections>
+                <outlet property="label" destination="SL2-yn-kL9" id="BKS-pG-sM4"/>
+                <outlet property="labelSelectionBackground" destination="gLH-LZ-Q0b" id="pdM-kT-RAP"/>
+                <outlet property="previewContainerView" destination="ftC-J9-BWW" id="8iZ-0k-oPk"/>
+                <outlet property="previewImageView" destination="T1H-8R-xDS" id="AOe-kd-wA3"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="172" height="179"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <customView clipsToBounds="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4pQ-uf-zqU">
+                    <rect key="frame" x="0.0" y="32" width="172" height="147"/>
+                    <subviews>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="ftC-J9-BWW">
+                            <rect key="frame" x="61" y="49" width="50" height="50"/>
+                            <subviews>
+                                <imageView wantsLayer="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="400" placeholderIntrinsicWidth="50" placeholderIntrinsicHeight="50" translatesAutoresizingMaskIntoConstraints="NO" id="T1H-8R-xDS">
+                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" id="RKu-gd-N95"/>
+                                </imageView>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="T1H-8R-xDS" firstAttribute="top" secondItem="ftC-J9-BWW" secondAttribute="top" id="3Oc-dG-bF3"/>
+                                <constraint firstAttribute="bottom" secondItem="T1H-8R-xDS" secondAttribute="bottom" id="LdP-gT-N4V"/>
+                                <constraint firstAttribute="trailing" secondItem="T1H-8R-xDS" secondAttribute="trailing" id="Sfx-Vf-gDL"/>
+                                <constraint firstItem="T1H-8R-xDS" firstAttribute="leading" secondItem="ftC-J9-BWW" secondAttribute="leading" id="yjH-W0-Yuc"/>
+                            </constraints>
+                        </customView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ftC-J9-BWW" secondAttribute="bottom" id="HLR-cw-yzQ"/>
+                        <constraint firstItem="ftC-J9-BWW" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="4pQ-uf-zqU" secondAttribute="leading" id="PTI-ug-0m4"/>
+                        <constraint firstItem="ftC-J9-BWW" firstAttribute="centerY" secondItem="4pQ-uf-zqU" secondAttribute="centerY" id="Wx4-gX-xS7"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ftC-J9-BWW" secondAttribute="trailing" id="cNP-tT-ogu"/>
+                        <constraint firstItem="ftC-J9-BWW" firstAttribute="centerX" secondItem="4pQ-uf-zqU" secondAttribute="centerX" id="ii1-OQ-QM4"/>
+                        <constraint firstItem="ftC-J9-BWW" firstAttribute="top" relation="greaterThanOrEqual" secondItem="4pQ-uf-zqU" secondAttribute="top" id="x2t-XO-E0J"/>
+                    </constraints>
+                </customView>
+                <box boxType="custom" borderType="none" cornerRadius="8" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="gLH-LZ-Q0b">
+                    <rect key="frame" x="60" y="7" width="53" height="18"/>
+                    <view key="contentView" id="Ouq-bn-0hJ">
+                        <rect key="frame" x="0.0" y="0.0" width="53" height="18"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="SL2-yn-kL9">
+                                <rect key="frame" x="6" y="1" width="41" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Label" id="3va-av-MSc">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="SL2-yn-kL9" secondAttribute="trailing" constant="8" id="FJ9-dG-ebr"/>
+                            <constraint firstAttribute="bottom" secondItem="SL2-yn-kL9" secondAttribute="bottom" constant="1" id="Kwg-Az-qzz"/>
+                            <constraint firstItem="SL2-yn-kL9" firstAttribute="top" secondItem="Ouq-bn-0hJ" secondAttribute="top" constant="1" id="YHS-iX-Eid"/>
+                            <constraint firstItem="SL2-yn-kL9" firstAttribute="leading" secondItem="Ouq-bn-0hJ" secondAttribute="leading" constant="8" id="w0q-dE-dNt"/>
+                        </constraints>
+                    </view>
+                    <color key="fillColor" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                </box>
+            </subviews>
+            <constraints>
+                <constraint firstItem="SL2-yn-kL9" firstAttribute="top" secondItem="4pQ-uf-zqU" secondAttribute="bottom" constant="8" symbolic="YES" id="51R-pb-lXJ"/>
+                <constraint firstItem="4pQ-uf-zqU" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="9zk-zq-gza"/>
+                <constraint firstItem="gLH-LZ-Q0b" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="LYW-VE-ooR"/>
+                <constraint firstItem="4pQ-uf-zqU" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="MKh-JP-eEe"/>
+                <constraint firstAttribute="bottom" secondItem="SL2-yn-kL9" secondAttribute="bottom" constant="8" id="SbG-r6-1vq"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="gLH-LZ-Q0b" secondAttribute="trailing" id="Yuk-50-Apm"/>
+                <constraint firstAttribute="trailing" secondItem="4pQ-uf-zqU" secondAttribute="trailing" id="q6D-vw-W1S"/>
+                <constraint firstItem="gLH-LZ-Q0b" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="uzd-L9-07b"/>
+            </constraints>
+            <connections>
+                <outlet property="menu" destination="Ysj-6e-fWb" id="Bla-eq-cVh"/>
+            </connections>
+            <point key="canvasLocation" x="50" y="127.5"/>
+        </customView>
+        <menu id="Ysj-6e-fWb">
+            <items>
+                <menuItem title="Reveal in Finder" id="TTQ-TL-Nn3">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="revealInFinder:" target="-2" id="nV9-99-tug"/>
+                    </connections>
+                </menuItem>
+            </items>
+            <point key="canvasLocation" x="44" y="402"/>
+        </menu>
+    </objects>
+</document>

@@ -82,7 +82,7 @@ class InspectorContainerViewController: NSViewController, SplitViewContainable {
         didSet {
             self.showProInfoButton.attributedTitle = NSAttributedString(string: "Find Out More…", attributes: [
                 .font: NSFont.systemFont(ofSize: NSFont.smallSystemFontSize),
-                .foregroundColor: NSColor.white.withAlphaComponent(0.75)
+                .foregroundColor: NSColor.white.withAlphaComponent(0.75),
             ])
         }
     }

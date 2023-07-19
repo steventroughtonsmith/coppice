@@ -20,4 +20,8 @@ extension NSEdgeInsets {
     public var inverted: NSEdgeInsets {
         return NSEdgeInsets(top: -self.top, left: -self.left, bottom: -self.bottom, right: -self.right)
     }
+
+    public static var zero: NSEdgeInsets {
+        return NSEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    }
 }

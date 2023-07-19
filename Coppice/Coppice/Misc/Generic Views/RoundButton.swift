@@ -21,11 +21,15 @@ class RoundButton: NSButton {
 
 class RoundButtonCell: NSButtonCell {
     override func drawBezel(withFrame cellFrame: NSRect, in controlView: NSView) {
-        let horizontalInset: CGFloat = (self.imagePosition == .noImage) ? 6 : 8
+        let horizontalInset: CGFloat = (self.imagePosition == .noImage) ? 6 : 6
         let pathFrame = cellFrame.insetBy(NSEdgeInsets(top: 2, left: horizontalInset, bottom: 4, right: horizontalInset))
 
         if self.isHighlighted {
-            NSColor.highlightColor.withAlphaComponent(0.3).setFill()
+            if controlView.effectiveAppearance.isDarkMode {
+                NSColor.white.withAlphaComponent(0.3).setFill()
+            } else {
+                NSColor.black.withAlphaComponent(0.15).setFill()
+            }
             NSBezierPath(roundedRect: pathFrame, xRadius: pathFrame.height / 2, yRadius: pathFrame.height / 2).fill()
         }
 

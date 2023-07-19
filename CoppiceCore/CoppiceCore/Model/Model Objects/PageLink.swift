@@ -83,4 +83,9 @@ public struct PageLink: Equatable, Hashable {
     public static func == (lhs: PageLink, rhs: PageLink) -> Bool {
         return lhs.destination == rhs.destination && lhs.source == rhs.source
     }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.destination)
+        hasher.combine(self.source)
+    }
 }

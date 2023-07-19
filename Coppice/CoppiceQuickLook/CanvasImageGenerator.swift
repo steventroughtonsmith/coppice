@@ -37,14 +37,14 @@ class CanvasImageGenerator {
         let color: NSColor?
         switch self.canvas.theme {
         case .light:
-            color = NSColor(named: "CanvasBackgroundLight")
+            color = NSColor(named: "CanvasBackgroundLight") ?? .lightGray
         case .dark:
-            color = NSColor(named: "CanvasBackgroundDark")
+            color = NSColor(named: "CanvasBackgroundDark") ?? .darkGray
         case .auto:
             if (NSAppearance.current.name == .darkAqua) {
-                color = NSColor(named: "CanvasBackgroundDark")
+                color = NSColor(named: "CanvasBackgroundDark") ?? .darkGray
             } else {
-                color = NSColor(named: "CanvasBackgroundLight")
+                color = NSColor(named: "CanvasBackgroundLight") ?? .lightGray
             }
         }
 
@@ -58,14 +58,14 @@ class CanvasImageGenerator {
         let color: NSColor?
         switch self.canvas.theme {
         case .light:
-            color = NSColor(named: "ArrowColourLight")
+            color = NSColor(named: "ArrowColourLight") ?? .darkGray
         case .dark:
-            color = NSColor(named: "ArrowColourDark")
+            color = NSColor(named: "ArrowColourDark") ?? .white
         case .auto:
             if (NSAppearance.current.name == .darkAqua) {
-                color = NSColor(named: "ArrowColourDark")
+                color = NSColor(named: "ArrowColourDark") ?? .white
             } else {
-                color = NSColor(named: "ArrowColourLight")
+                color = NSColor(named: "ArrowColourLight") ?? .darkGray
             }
         }
         guard let arrowColour = color else {
