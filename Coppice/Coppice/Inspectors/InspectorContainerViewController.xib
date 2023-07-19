@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="22138.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22138.1"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -31,7 +31,7 @@
                                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="JS2-e6-9rY" customClass="CoppiceGreenView" customModule="Coppice" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="-15" width="280" height="180"/>
                                     <subviews>
-                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="jQP-ts-nji">
+                                        <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="jQP-ts-nji">
                                             <rect key="frame" x="71" y="95" width="201" height="32"/>
                                             <textFieldCell key="cell" selectable="YES" alignment="right" id="Xat-AV-pqT">
                                                 <font key="font" metaFont="system"/>
@@ -64,7 +64,7 @@ by upgrading to Coppice Pro</string>
                                                 <action selector="showProInfo:" target="-2" id="6gf-Af-oho"/>
                                             </connections>
                                         </button>
-                                        <textField horizontalHuggingPriority="252" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="PqX-KW-HWJ">
+                                        <textField focusRingType="none" horizontalHuggingPriority="252" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="PqX-KW-HWJ">
                                             <rect key="frame" x="58" y="135" width="214" height="35"/>
                                             <textFieldCell key="cell" selectable="YES" alignment="right" title="Upgrade to Pro" id="voT-Yn-n2w">
                                                 <font key="font" metaFont="systemBold" size="30"/>
@@ -112,6 +112,9 @@ by upgrading to Coppice Pro</string>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="boolean" keyPath="clipsToBounds" value="NO"/>
                             </userDefinedRuntimeAttributes>
+                            <connections>
+                                <binding destination="-2" name="hidden" keyPath="self.viewModel.isProEnabled" id="679-F1-0T4"/>
+                            </connections>
                         </customView>
                         <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zkb-NC-iT9">
                             <rect key="frame" x="0.0" y="0.0" width="280" height="723"/>
