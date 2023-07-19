@@ -102,8 +102,6 @@ public class TextPageContent: NSObject, PageContent {
                 return
             }
 
-            print("New Links: \(newLinks.count)")
-
             if let pageLink = PageLink(url: url) {
                 newLinks.insert(pageLink)
             }

@@ -27,7 +27,8 @@ class ThumbnailProvider: QLThumbnailProvider {
                 return false
             }
 
-            image.draw(in: CGRect(origin: .zero, size: imageDrawSize),
+            let drawRect = CGRect(origin: .zero, size: imageDrawSize.rounded())
+            image.draw(in: drawRect,
                        from: CGRect(origin: .zero, size: image.size),
                        operation: .sourceOver,
                        fraction: 1)

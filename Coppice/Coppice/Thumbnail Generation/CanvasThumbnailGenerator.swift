@@ -34,7 +34,6 @@ class CanvasThumbnailGenerator: NSObject {
         let scaledOffset: CGPoint
     }
 
-
     private let imageInset: CGFloat = 5
 
     private func drawPageRects(forImageOfSize size: CGSize) {
