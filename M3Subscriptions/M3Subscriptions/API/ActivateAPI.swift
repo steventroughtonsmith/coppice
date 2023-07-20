@@ -9,8 +9,6 @@
 import Foundation
 
 struct ActivateAPI {
-    typealias APIResult = Result<ActivationResponse, Failure>
-
     let networkAdapter: NetworkAdapter
     let request: ActivationRequest
     let device: Device
@@ -25,7 +23,7 @@ struct ActivateAPI {
         case generic(Error?)
     }
 
-    func run(_ completion: @escaping (APIResult) -> Void) {
+    func run() async throws -> ActivationResponse {
         var body: [String: String] = [
             "email": self.request.email,
             "password": self.request.password,
@@ -36,8 +34,7 @@ struct ActivateAPI {
         ]
 
         guard let deviceName = self.device.name else {
-            completion(.failure(.invalidRequest))
-            return
+            throw Failure.invalidRequest
         }
 
         body["deviceName"] = deviceName
@@ -56,46 +53,46 @@ struct ActivateAPI {
         }
         #endif
 
-        self.networkAdapter.callAPI(endpoint: "activate", method: "POST", body: body) { result in
-            switch result {
-            case .success(let apiData):
-                completion(self.parse(apiData))
-            case .failure(let error):
-                completion(.failure(.generic(error)))
-            }
+        let data: APIData
+        do {
+            data = try await self.networkAdapter.callAPI(endpoint: "activate", method: "POST", body: body)
+        } catch {
+            throw Failure.generic(error)
         }
+
+        return try self.parse(data)
     }
 
-    private func parse(_ data: APIData) -> APIResult {
+    private func parse(_ data: APIData) throws -> ActivationResponse {
         switch data.response {
         case .active:
             guard let response = ActivationResponse(data: data) else {
-                return .failure(.generic(nil))
+                throw Failure.generic(nil)
             }
-            return .success(response)
+            return response
         case .expired:
             guard let jsonSubscription = data.payload["subscription"] as? [String: Any] else {
-                return .failure(.generic(nil))
+                throw Failure.generic(nil)
             }
-            return .failure(.subscriptionExpired(Subscription(payload: jsonSubscription, hasExpired: true)))
+            throw Failure.subscriptionExpired(Subscription(payload: jsonSubscription, hasExpired: true))
         case .loginFailed:
-            return .failure(.loginFailed)
+            throw Failure.loginFailed
         case .noSubscriptionFound:
-            return .failure(.noSubscriptionFound)
+            throw Failure.noSubscriptionFound
         case .multipleSubscriptions:
             guard let jsonSubscriptions = data.payload["subscriptions"] as? [[String: Any]] else {
-                return .failure(.generic(nil))
+                throw Failure.generic(nil)
             }
             let subscriptions = jsonSubscriptions.compactMap { Subscription(payload: $0, hasExpired: false) }
-            return .failure(.multipleSubscriptions(subscriptions))
+            throw Failure.multipleSubscriptions(subscriptions)
         case .tooManyDevices:
             guard let jsonDevices = data.payload["devices"] as? [[String: Any]] else {
-                return .failure(.generic(nil))
+                throw Failure.generic(nil)
             }
             let devices = jsonDevices.compactMap { SubscriptionDevice(payload: $0) }
-            return .failure(.tooManyDevices(devices))
+            throw Failure.tooManyDevices(devices)
         default:
-            return .failure(.generic(nil))
+            throw Failure.generic(nil)
         }
     }
 }

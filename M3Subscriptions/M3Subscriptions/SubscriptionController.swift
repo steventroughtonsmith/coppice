@@ -29,8 +29,7 @@ public class SubscriptionController {
     }
     #endif
 
-    public typealias SubscriptionCompletion = (Result<ActivationResponse, NSError>) -> Void
-    public func activate(withEmail email: String, password: String, subscription: Subscription? = nil, deactivatingDevice: SubscriptionDevice? = nil, completion: @escaping SubscriptionCompletion) {
+    public func activate(withEmail email: String, password: String, subscription: Subscription? = nil, deactivatingDevice: SubscriptionDevice? = nil) async throws -> ActivationResponse {
         #if TEST
         let bundleID = TEST_OVERRIDES.bundleID ?? Bundle.main.bundleIdentifier ?? "com.mcubedsw.unknown"
         #else
@@ -42,64 +41,56 @@ public class SubscriptionController {
                                         subscriptionID: subscription?.id,
                                         deviceDeactivationToken: deactivatingDevice?.deactivationToken)
         let device = Device(name: Host.current().localizedName)
-        self.subscriptionAPI.activate(request, device: device) { (result) in
-            switch result {
-            case .success(let response):
-                self.complete(with: response, completion: completion)
-            case .failure(let failure):
-                let error = SubscriptionErrorFactory.error(for: failure)
-                completion(.failure(error))
-            }
+
+
+        do {
+            let response = try await self.subscriptionAPI.activate(request, device: device)
+            response.write(to: self.licenceURL)
+            return response
+        } catch {
+            throw SubscriptionErrorFactory.error(for: error)
         }
     }
 
-    public func checkSubscription(updatingDeviceName deviceName: String? = nil, completion:  @escaping SubscriptionCompletion) {
+    public func checkSubscription(updatingDeviceName deviceName: String? = nil) async throws -> ActivationResponse {
         guard
             let localResponse = ActivationResponse(url: self.licenceURL),
             let token = localResponse.token
         else {
-            completion(.failure(SubscriptionErrorFactory.notActivatedError()))
-            return
+            throw SubscriptionErrorFactory.notActivatedError()
         }
 
-        self.subscriptionAPI.check(Device(name: deviceName), token: token) { (result) in
-            switch result {
-            case .success(var response):
-                response.previousSubscription = localResponse.subscription
-                self.complete(with: response, completion: completion)
-            case .failure(let failure):
-                switch failure {
-                case .generic(let error as NSError) where (error.domain == NSURLErrorDomain) && (deviceName == nil):
-                    self.attemptLocalValidation(with: localResponse, dueTo: failure, completion: completion)
-                default:
-                    let error = SubscriptionErrorFactory.error(for: failure)
-                    completion(.failure(error))
-                }
+        do {
+            var response = try await self.subscriptionAPI.check(Device(name: deviceName), token: token)
+            response.previousSubscription = localResponse.subscription
+            response.write(to: self.licenceURL)
+            return response
+        } catch {
+            switch error {
+            case CheckAPI.Failure.generic(let error as NSError) where (error.domain == NSURLErrorDomain) && (deviceName == nil):
+                return try self.attemptLocalValidation(with: localResponse, dueTo: error)
+            default:
+                throw SubscriptionErrorFactory.error(for: error)
             }
         }
-        //Set next timer
     }
 
-    public func deactivate(completion: @escaping SubscriptionCompletion) {
+    public func deactivate() async throws -> ActivationResponse {
         guard
             let response = ActivationResponse(url: self.licenceURL),
             let token = response.token
         else {
-            completion(.success(ActivationResponse.deactivated()))
-            return
+            return ActivationResponse.deactivated()
         }
 
-        self.subscriptionAPI.deactivate(Device(), token: token) { (result) in
-            switch result {
-            case .success(let response):
-                self.deleteLicence()
-                completion(.success(response))
-                self.recheckTimer?.invalidate()
-                self.recheckTimer = nil
-            case .failure(let failure):
-                let error = SubscriptionErrorFactory.error(for: failure)
-                completion(.failure(error))
-            }
+        do {
+            let response = try await self.subscriptionAPI.deactivate(Device(), token: token)
+            self.deleteLicence()
+            self.recheckTimer?.invalidate()
+            self.recheckTimer = nil
+            return response
+        } catch {
+            throw SubscriptionErrorFactory.error(for: error)
         }
     }
 
@@ -107,21 +98,14 @@ public class SubscriptionController {
         try? FileManager.default.removeItem(at: self.licenceURL)
     }
 
-    private func attemptLocalValidation(with response: ActivationResponse, dueTo failure: CheckAPI.Failure, completion: SubscriptionCompletion) {
+    private func attemptLocalValidation(with response: ActivationResponse, dueTo failure: Error) throws -> ActivationResponse {
         guard response.subscription != nil else {
-            let error = SubscriptionErrorFactory.error(for: failure)
-            completion(.failure(error))
-            return
+            throw SubscriptionErrorFactory.error(for: failure)
         }
 
         var modifiedResponse = response
         modifiedResponse.previousSubscription = modifiedResponse.subscription
         modifiedResponse.reevaluateSubscription()
-        self.complete(with: modifiedResponse, writeToFile: false, completion: completion)
-    }
-
-    private func complete(with response: ActivationResponse, writeToFile: Bool = true, completion: SubscriptionCompletion) {
-        response.write(to: self.licenceURL)
-        completion(.success(response))
+        return modifiedResponse
     }
 }

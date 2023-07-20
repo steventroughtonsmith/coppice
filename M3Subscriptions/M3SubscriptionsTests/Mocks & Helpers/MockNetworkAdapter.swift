@@ -22,11 +22,21 @@ class MockNetworkAdapter: NetworkAdapter {
         return "v1"
     }
 
-    var resultToReturn: Result<APIData, Error>?
-    func callAPI(endpoint: String, method: String = "POST", body: [String: String], completion: @escaping (Result<APIData, Error>) -> Void) {
+    var returnValue: APIData?
+    var apiError: Error?
+    func callAPI(endpoint: String, method: String = "POST", body: [String: String]) throws -> APIData {
         self.calledEndpoint = endpoint
         self.calledMethod = method
         self.calledBody = body
-        completion(self.resultToReturn ?? .failure(NSError(domain: "com.mcubedsw.testing", code: -1234, userInfo: nil)))
+
+        if let apiError {
+            throw apiError
+        }
+
+        guard let returnValue else {
+            throw NSError(domain: "com.mcubedsw.testing", code: -1234, userInfo: nil)
+        }
+
+        return returnValue
     }
 }

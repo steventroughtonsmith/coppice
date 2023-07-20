@@ -9,7 +9,6 @@
 import Foundation
 
 struct DeactivateAPI {
-    typealias APIResult = Result<ActivationResponse, Failure>
     let networkAdapter: NetworkAdapter
     let device: Device
     let token: String
@@ -19,7 +18,7 @@ struct DeactivateAPI {
         case generic(Error?)
     }
 
-    func run(_ completion: @escaping (APIResult) -> Void) {
+    func run() async throws -> ActivationResponse {
         #if DEBUG
         var body = [
             "deviceID": self.device.id,
@@ -35,27 +34,27 @@ struct DeactivateAPI {
         ]
         #endif
 
-        self.networkAdapter.callAPI(endpoint: "deactivate", method: "POST", body: body) { result in
-            switch result {
-            case .success(let apiData):
-                completion(self.parse(apiData))
-            case .failure(let error):
-                completion(.failure(.generic(error)))
-            }
+        let data: APIData
+        do {
+             data = try await self.networkAdapter.callAPI(endpoint: "deactivate", method: "POST", body: body)
+        } catch {
+            throw Failure.generic(error)
         }
+
+        return try self.parse(data)
 }
 
-    private func parse(_ data: APIData) -> APIResult {
+    private func parse(_ data: APIData) throws -> ActivationResponse {
         switch data.response {
         case .deactivated:
             guard let info = ActivationResponse(data: data) else {
-                return .failure(.generic(nil))
+                throw Failure.generic(nil)
             }
-            return .success(info)
+            return info
         case .noDeviceFound:
-            return .success(ActivationResponse.deactivated()) //If no device is found then we don't want to be activated anyway
+            return ActivationResponse.deactivated() //If no device is found then we don't want to be activated anyway
         default:
-            return .failure(.generic(nil))
+            throw Failure.generic(nil)
         }
     }
 }

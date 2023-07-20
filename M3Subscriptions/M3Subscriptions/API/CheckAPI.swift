@@ -9,8 +9,6 @@
 import Foundation
 
 struct CheckAPI {
-    typealias APIResult = Result<ActivationResponse, Failure>
-
     let networkAdapter: NetworkAdapter
     let device: Device
     let token: String
@@ -22,7 +20,7 @@ struct CheckAPI {
         case generic(Error?)
     }
 
-    func run(_ completion: @escaping (APIResult) -> Void) {
+    func run() async throws -> ActivationResponse {
         var body = [
             "token": self.token,
             "deviceType": self.device.type.rawValue,
@@ -39,29 +37,29 @@ struct CheckAPI {
         }
         #endif
 
-        self.networkAdapter.callAPI(endpoint: "check", method: "POST", body: body) { result in
-            switch result {
-            case .success(let apiData):
-                completion(self.parse(apiData))
-            case .failure(let error):
-                completion(.failure(.generic(error)))
-            }
+        let data: APIData
+        do {
+            data = try await self.networkAdapter.callAPI(endpoint: "check", method: "POST", body: body)
+        } catch {
+            throw Failure.generic(error)
         }
+
+        return try self.parse(data)
     }
 
-    private func parse(_ data: APIData) -> APIResult {
+    private func parse(_ data: APIData) throws -> ActivationResponse {
         switch data.response {
         case .active, .expired:
             guard let response = ActivationResponse(data: data) else {
-                return .failure(.generic(nil))
+                throw Failure.generic(nil)
             }
-            return .success(response)
+            return response
         case .noDeviceFound:
-            return .failure(.noDeviceFound)
+            throw Failure.noDeviceFound
         case .noSubscriptionFound:
-            return .failure(.noSubscriptionFound)
+            throw Failure.noSubscriptionFound
         default:
-            return .failure(.generic(nil))
+            throw Failure.generic(nil)
         }
     }
 }

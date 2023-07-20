@@ -15,32 +15,55 @@ class MockSubscriptionAPI: SubscriptionAPI {
     var deviceArgument: Device?
     var tokenArgument: String?
 
-    var activateResponse: ActivateAPI.APIResult?
-    var checkResponse: CheckAPI.APIResult?
-    var deactivateResponse: DeactivateAPI.APIResult?
-
-    func activate(_ request: ActivationRequest, device: Device, completion: @escaping (ActivateAPI.APIResult) -> Void) {
+    var activateReturnValue: ActivationResponse?
+    var activateError: ActivateAPI.Failure?
+    func activate(_ request: ActivationRequest, device: Device) async throws -> ActivationResponse {
         self.calledMethod = "activate"
         self.requestArgument = request
         self.deviceArgument = device
-        let response = self.activateResponse ?? .failure(.generic(nil))
-        completion(response)
+        if let activateError {
+            throw activateError
+        }
+
+        guard let activateReturnValue else {
+            throw NSError(domain: "com.mcubedsw.testing", code: -1234, userInfo: nil)
+        }
+
+        return activateReturnValue
     }
 
-    func check(_ device: Device, token: String, completion: @escaping (CheckAPI.APIResult) -> Void) {
+    var checkReturnValue: ActivationResponse?
+    var checkError: CheckAPI.Failure?
+    func check(_ device: Device, token: String) async throws -> ActivationResponse {
         self.calledMethod = "check"
         self.deviceArgument = device
         self.tokenArgument = token
-        let response = self.checkResponse ?? .failure(.generic(nil))
-        completion(response)
+        if let checkError {
+            throw checkError
+        }
+
+        guard let checkReturnValue else {
+            throw NSError(domain: "com.mcubedsw.testing", code: -1234, userInfo: nil)
+        }
+
+        return checkReturnValue
     }
 
-    func deactivate(_ device: Device, token: String, completion: @escaping (DeactivateAPI.APIResult) -> Void) {
+    var deactivateReturnValue: ActivationResponse?
+    var deactivateError: DeactivateAPI.Failure?
+    func deactivate(_ device: Device, token: String) async throws -> ActivationResponse {
         self.calledMethod = "deactivate"
         self.deviceArgument = device
         self.tokenArgument = token
-        let response = self.deactivateResponse ?? .failure(.generic(nil))
-        completion(response)
+        if let deactivateError {
+            throw deactivateError
+        }
+
+        guard let deactivateReturnValue else {
+            throw NSError(domain: "com.mcubedsw.testing", code: -1234, userInfo: nil)
+        }
+
+        return deactivateReturnValue
     }
 
     func reset() {
@@ -49,8 +72,11 @@ class MockSubscriptionAPI: SubscriptionAPI {
         self.deviceArgument = nil
         self.tokenArgument = nil
 
-        self.activateResponse = nil
-        self.checkResponse = nil
-        self.deactivateResponse = nil
+        self.activateReturnValue = nil
+        self.activateError = nil
+        self.checkReturnValue = nil
+        self.checkError = nil
+        self.deactivateReturnValue = nil
+        self.deactivateError = nil
     }
 }

@@ -9,9 +9,9 @@
 import Foundation
 
 protocol SubscriptionAPI {
-    func activate(_ request: ActivationRequest, device: Device, completion: @escaping (ActivateAPI.APIResult) -> Void)
-    func check(_ device: Device, token: String, completion: @escaping (CheckAPI.APIResult) -> Void)
-    func deactivate(_ device: Device, token: String, completion: @escaping (DeactivateAPI.APIResult) -> Void)
+    func activate(_ request: ActivationRequest, device: Device) async throws -> ActivationResponse
+    func check(_ device: Device, token: String) async throws -> ActivationResponse
+    func deactivate(_ device: Device, token: String) async throws -> ActivationResponse
 }
 
 class OnlineSubscriptionAPI: SubscriptionAPI {
@@ -20,18 +20,21 @@ class OnlineSubscriptionAPI: SubscriptionAPI {
         self.networkAdapter = networkAdapter
     }
 
-    func activate(_ request: ActivationRequest, device: Device, completion: @escaping (ActivateAPI.APIResult) -> Void) {
+    //TODO: Make Async
+    func activate(_ request: ActivationRequest, device: Device) async throws -> ActivationResponse {
         let activation = ActivateAPI(networkAdapter: self.networkAdapter, request: request, device: device)
-        activation.run(completion)
+        return try await activation.run()
     }
 
-    func check(_ device: Device, token: String, completion: @escaping (CheckAPI.APIResult) -> Void) {
+    //TODO: Make Async
+    func check(_ device: Device, token: String) async throws -> ActivationResponse {
         let check = CheckAPI(networkAdapter: self.networkAdapter, device: device, token: token)
-        check.run(completion)
+        return try await check.run()
     }
 
-    func deactivate(_ device: Device, token: String, completion: @escaping (DeactivateAPI.APIResult) -> Void) {
+    //TODO: Make Async
+    func deactivate(_ device: Device, token: String) async throws -> ActivationResponse {
         let deactivate = DeactivateAPI(networkAdapter: self.networkAdapter, device: device, token: token)
-        deactivate.run(completion)
+        return try await deactivate.run()
     }
 }

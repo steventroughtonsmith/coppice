@@ -10,39 +10,27 @@
 import XCTest
 
 class CheckAPITests: APITestCase {
-    func test_run_calling_requestsCheckAPIEndpoint() throws {
+    func test_run_calling_requestsCheckAPIEndpoint() async throws {
         let mockAdapter = MockNetworkAdapter()
         let api = CheckAPI(networkAdapter: mockAdapter, device: Device(), token: "tucan42")
-        self.performAndWaitFor("Call API") { (expectation) in
-            api.run { _ in
-                expectation.fulfill()
-            }
-        }
+        _ = try? await api.run()
 
         XCTAssertEqual(mockAdapter.calledEndpoint, "check")
     }
 
-    func test_run_calling_usesPostMethod() throws {
+    func test_run_calling_usesPostMethod() async throws {
         let mockAdapter = MockNetworkAdapter()
         let api = CheckAPI(networkAdapter: mockAdapter, device: Device(), token: "tucan42")
-        self.performAndWaitFor("Call API") { (expectation) in
-            api.run { _ in
-                expectation.fulfill()
-            }
-        }
+        _ = try? await api.run()
 
         XCTAssertEqual(mockAdapter.calledMethod, "POST")
     }
 
-    func test_run_calling_setsToken_Version_DeviceTypeAndDeviceIDJSONAsBody() throws {
+    func test_run_calling_setsToken_Version_DeviceTypeAndDeviceIDJSONAsBody() async throws {
         let mockAdapter = MockNetworkAdapter()
         let device = Device()
         let api = CheckAPI(networkAdapter: mockAdapter, device: device, token: "tucan42")
-        self.performAndWaitFor("Call API") { (expectation) in
-            api.run { _ in
-                expectation.fulfill()
-            }
-        }
+        _ = try? await api.run()
 
         let calledBody = try XCTUnwrap(mockAdapter.calledBody)
         XCTAssertEqual(calledBody["deviceID"], device.id)
@@ -50,29 +38,21 @@ class CheckAPITests: APITestCase {
         XCTAssertEqual(calledBody["token"], "tucan42")
     }
 
-    func test_run_calling_setsDeviceNameInBodyJSONIfSetOnDevice() throws {
+    func test_run_calling_setsDeviceNameInBodyJSONIfSetOnDevice() async throws {
         let mockAdapter = MockNetworkAdapter()
         let device = Device(name: "POSSUMZ!!1!")
         let api = CheckAPI(networkAdapter: mockAdapter, device: device, token: "tucan42")
-        self.performAndWaitFor("Call API") { (expectation) in
-            api.run { _ in
-                expectation.fulfill()
-            }
-        }
+        _ = try? await api.run()
 
         let calledBody = try XCTUnwrap(mockAdapter.calledBody)
         XCTAssertEqual(calledBody["deviceName"], "POSSUMZ!!1!")
     }
 
-    func test_run_calling_doesntSetDeviceNameInBodyJSONIfNotSetOnDevice() throws {
+    func test_run_calling_doesntSetDeviceNameInBodyJSONIfNotSetOnDevice() async throws {
         let mockAdapter = MockNetworkAdapter()
         let device = Device()
         let api = CheckAPI(networkAdapter: mockAdapter, device: device, token: "tucan42")
-        self.performAndWaitFor("Call API") { (expectation) in
-            api.run { _ in
-                expectation.fulfill()
-            }
-        }
+        _ = try? await api.run()
 
         let calledBody = try XCTUnwrap(mockAdapter.calledBody)
         XCTAssertNil(calledBody["deviceName"])
@@ -80,95 +60,67 @@ class CheckAPITests: APITestCase {
 
 
     //MARK: - Error Handling
-    func test_run_errorHandling_returnsFailureIfErrorIsSupplied() throws {
+    func test_run_errorHandling_returnsFailureIfErrorIsSupplied() async throws {
         let expectedError = NSError(domain: "com.mcubedsw.test", code: -42, userInfo: nil)
 
         let mockAdapter = MockNetworkAdapter()
-        mockAdapter.resultToReturn = .failure(expectedError)
+        mockAdapter.apiError = expectedError
 
         let device = Device()
         let api = CheckAPI(networkAdapter: mockAdapter, device: device, token: "tucan42")
 
-        var actualResult: Result<ActivationResponse, CheckAPI.Failure>?
-        self.performAndWaitFor("Call API") { (expectation) in
-            api.run { result in
-                actualResult = result
-                expectation.fulfill()
-            }
-        }
-
-        guard
-            case .failure(let failure) = try XCTUnwrap(actualResult),
-            case .generic(let error) = failure
-        else {
-                XCTFail("Result is not a generic error")
+        await XCTAssertThrowsErrorAsync(try await api.run()) { error in
+            guard case CheckAPI.Failure.generic(let genericError) = error else {
+                XCTFail("Result is not an generic error")
                 return
+            }
+            XCTAssertEqual(genericError as NSError?, expectedError)
         }
-
-        XCTAssertEqual(error as NSError?, expectedError)
     }
 
-    func test_run_errorHandling_returnsFailureIfReceived_no_device_found_Response() throws {
+    func test_run_errorHandling_returnsFailureIfReceived_no_device_found_Response() async throws {
         let payload = ["response": "no_device_found"]
         let signature = try self.signature(forPayload: payload)
         let json: [String: Any] = ["payload": payload, "signature": signature]
         let apiData = try XCTUnwrap(APIData(json: json))
 
         let mockAdapter = MockNetworkAdapter()
-        mockAdapter.resultToReturn = .success(apiData)
+        mockAdapter.returnValue = apiData
 
         let device = Device()
         let api = CheckAPI(networkAdapter: mockAdapter, device: device, token: "tucan42")
 
-        var actualResult: Result<ActivationResponse, CheckAPI.Failure>?
-        self.performAndWaitFor("Call API") { (expectation) in
-            api.run { result in
-                actualResult = result
-                expectation.fulfill()
-            }
-        }
-
-        guard
-            case .failure(let failure) = try XCTUnwrap(actualResult),
-            case .noDeviceFound = failure
-        else {
-                XCTFail("Result is not a noDeviceFound failure")
+        await XCTAssertThrowsErrorAsync(try await api.run()) { error in
+            guard case CheckAPI.Failure.noDeviceFound = error else {
+                XCTFail("Result is not an noDeviceFound error")
                 return
+            }
         }
     }
 
-    func test_run_errorHandling_returnsFailureIfReceived_no_subscription_found_Response() throws {
+    func test_run_errorHandling_returnsFailureIfReceived_no_subscription_found_Response() async throws {
         let payload = ["response": "no_subscription_found"]
         let signature = try self.signature(forPayload: payload)
         let json: [String: Any] = ["payload": payload, "signature": signature]
         let apiData = try XCTUnwrap(APIData(json: json))
 
         let mockAdapter = MockNetworkAdapter()
-        mockAdapter.resultToReturn = .success(apiData)
+        mockAdapter.returnValue = apiData
 
         let device = Device()
         let api = CheckAPI(networkAdapter: mockAdapter, device: device, token: "tucan42")
 
-        var actualResult: Result<ActivationResponse, CheckAPI.Failure>?
-        self.performAndWaitFor("Call API") { (expectation) in
-            api.run { result in
-                actualResult = result
-                expectation.fulfill()
-            }
-        }
-
-        guard
-            case .failure(let failure) = try XCTUnwrap(actualResult),
-            case .noSubscriptionFound = failure
-        else {
-                XCTFail("Result is not a noSubscriptionFound failure")
+        await XCTAssertThrowsErrorAsync(try await api.run()) { error in
+            guard case CheckAPI.Failure.noSubscriptionFound = error else {
+                XCTFail("Result is not an noDeviceFound error")
                 return
+            }
         }
     }
 
 
     //MARK: - Success
-    private func runSuccessfulActivationReponseTest(isExpired: Bool = false, renewalStatus: Subscription.RenewalStatus) throws {
+    private func runSuccessfulActivationReponseTest(isExpired: Bool = false, renewalStatus: Subscription.RenewalStatus) async throws {
         var payload: [String: Any] = [
             "response": (isExpired ? "subscription_expired" : "active"),
             "subscription": [
@@ -188,23 +140,12 @@ class CheckAPITests: APITestCase {
         let apiData = try XCTUnwrap(APIData(json: json))
 
         let mockAdapter = MockNetworkAdapter()
-        mockAdapter.resultToReturn = .success(apiData)
+        mockAdapter.returnValue = apiData
 
         let device = Device()
         let api = CheckAPI(networkAdapter: mockAdapter, device: device, token: "tucan42")
 
-        var actualResult: Result<ActivationResponse, CheckAPI.Failure>?
-        self.performAndWaitFor("Call API") { (expectation) in
-            api.run { result in
-                actualResult = result
-                expectation.fulfill()
-            }
-        }
-
-        guard case .success(let response) = try XCTUnwrap(actualResult) else {
-            XCTFail("Result is not a success")
-            return
-        }
+        let response = try await api.run()
 
         XCTAssertEqual(response.isActive, !isExpired)
         XCTAssertTrue(response.deviceIsActivated) //Note this line is different from the activate test as even though the subscription expired the device will still be activated on a check
@@ -218,19 +159,19 @@ class CheckAPITests: APITestCase {
         XCTAssertEqual(subscription.hasExpired, isExpired)
     }
 
-    func test_run_returnsActivationResponseWithSubscriptionAndDeviceNameIfReceived_active_Response() throws {
-        try self.runSuccessfulActivationReponseTest(renewalStatus: .renew)
+    func test_run_returnsActivationResponseWithSubscriptionAndDeviceNameIfReceived_active_Response() async throws {
+        try await self.runSuccessfulActivationReponseTest(renewalStatus: .renew)
     }
 
-    func test_run_returnsActivationResponseWithSubscriptionAndDeviceNameIfReceived_active_ResponseAndRenewStatusIsFailed() throws {
-        try self.runSuccessfulActivationReponseTest(renewalStatus: .failed)
+    func test_run_returnsActivationResponseWithSubscriptionAndDeviceNameIfReceived_active_ResponseAndRenewStatusIsFailed() async throws {
+        try await self.runSuccessfulActivationReponseTest(renewalStatus: .failed)
     }
 
-    func test_run_returnsActivationResponseWithSubscriptionAndDeviceNameIfReceived_active_ResponseAndRenewStatusIsCancelled() throws {
-        try self.runSuccessfulActivationReponseTest(renewalStatus: .cancelled)
+    func test_run_returnsActivationResponseWithSubscriptionAndDeviceNameIfReceived_active_ResponseAndRenewStatusIsCancelled() async throws {
+        try await self.runSuccessfulActivationReponseTest(renewalStatus: .cancelled)
     }
 
-    func test_run_returnsActivationResponseWithSubscriptionAndDeviceNameIfReceived_expired_Response() throws {
-        try self.runSuccessfulActivationReponseTest(isExpired: false, renewalStatus: .cancelled)
+    func test_run_returnsActivationResponseWithSubscriptionAndDeviceNameIfReceived_expired_Response() async throws {
+        try await self.runSuccessfulActivationReponseTest(isExpired: false, renewalStatus: .cancelled)
     }
 }

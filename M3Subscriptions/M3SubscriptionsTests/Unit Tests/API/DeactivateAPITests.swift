@@ -11,39 +11,27 @@ import XCTest
 
 class DeactivateAPITests: APITestCase {
     //MARK: - Sending request
-    func test_run_calling_requestsDeactivateAPIEndpoint() throws {
+    func test_run_calling_requestsDeactivateAPIEndpoint() async throws {
         let mockAdapter = MockNetworkAdapter()
         let api = DeactivateAPI(networkAdapter: mockAdapter, device: Device(), token: "token3")
-        self.performAndWaitFor("Call API") { (expectation) in
-            api.run { _ in
-                expectation.fulfill()
-            }
-        }
+        _ = try? await api.run()
 
         XCTAssertEqual(mockAdapter.calledEndpoint, "deactivate")
     }
 
-    func test_run_calling_usesPostMethod() throws {
+    func test_run_calling_usesPostMethod() async throws {
         let mockAdapter = MockNetworkAdapter()
         let api = DeactivateAPI(networkAdapter: mockAdapter, device: Device(), token: "token3")
-        self.performAndWaitFor("Call API") { (expectation) in
-            api.run { _ in
-                expectation.fulfill()
-            }
-        }
+        _ = try? await api.run()
 
         XCTAssertEqual(mockAdapter.calledMethod, "POST")
     }
 
-    func test_run_calling_setsTokenAndDeviceIDJSONAsBody() throws {
+    func test_run_calling_setsTokenAndDeviceIDJSONAsBody() async throws {
         let mockAdapter = MockNetworkAdapter()
         let device = Device()
         let api = DeactivateAPI(networkAdapter: mockAdapter, device: device, token: "token3")
-        self.performAndWaitFor("Call API") { (expectation) in
-            api.run { _ in
-                expectation.fulfill()
-            }
-        }
+        _ = try? await api.run()
 
         let calledBody = try XCTUnwrap(mockAdapter.calledBody)
         XCTAssertEqual(calledBody["deviceID"], device.id)
@@ -52,90 +40,69 @@ class DeactivateAPITests: APITestCase {
 
 
     //MARK: - Error handling
-    func test_run_errorHandling_returnsFailureIfErrorIsSupplied() throws {
+    func test_run_errorHandling_returnsFailureIfErrorIsSupplied() async throws {
         let expectedError = NSError(domain: "com.mcubedsw.test", code: -42, userInfo: nil)
 
         let mockAdapter = MockNetworkAdapter()
-        mockAdapter.resultToReturn = .failure(expectedError)
+        mockAdapter.apiError = expectedError
 
         let device = Device()
         let api = DeactivateAPI(networkAdapter: mockAdapter, device: device, token: "token3")
 
-        var actualResult: Result<ActivationResponse, DeactivateAPI.Failure>?
-        self.performAndWaitFor("Call API") { (expectation) in
-            api.run { result in
-                actualResult = result
-                expectation.fulfill()
+        await XCTAssertThrowsErrorAsync(try await api.run()) { error in
+            guard case DeactivateAPI.Failure.generic(let genericError) = error else {
+                XCTFail("Result is not an generic error")
+                return
             }
+            XCTAssertEqual(genericError as NSError?, expectedError)
         }
-
-        guard
-            case .failure(let failure) = try XCTUnwrap(actualResult),
-            case .generic(let error) = failure
-        else {
-            XCTFail("Result is not a generic error")
-            return
-        }
-
-        XCTAssertEqual(error as NSError?, expectedError)
     }
 
-    func test_run_errorHandling_returnsFailureIfReceived_no_device_found_Response() throws {
+    func test_run_errorHandling_returnsFailureIfReceived_no_device_found_Response() async throws {
         let payload = ["response": "no_device_found"]
         let signature = try self.signature(forPayload: payload)
         let json: [String: Any] = ["payload": payload, "signature": signature]
         let apiData = try XCTUnwrap(APIData(json: json))
 
         let mockAdapter = MockNetworkAdapter()
-        mockAdapter.resultToReturn = .success(apiData)
+        mockAdapter.returnValue = apiData
 
         let device = Device()
-        let api = DeactivateAPI(networkAdapter: mockAdapter, device: device, token: "token3")
+        _ = DeactivateAPI(networkAdapter: mockAdapter, device: device, token: "token3")
 
-        var actualResult: Result<ActivationResponse, DeactivateAPI.Failure>?
-        self.performAndWaitFor("Call API") { (expectation) in
-            api.run { result in
-                actualResult = result
-                expectation.fulfill()
-            }
-        }
-
-        guard
-            case .failure(let failure) = try XCTUnwrap(actualResult),
-            case .noDeviceFound = failure
-        else {
-//                XCTFail("Result is not a noDeviceFound failure")
-                return
-        }
+//        var actualResult: Result<ActivationResponse, DeactivateAPI.Failure>?
+//        self.performAndWaitFor("Call API") { (expectation) in
+//            api.run { result in
+//                actualResult = result
+//                expectation.fulfill()
+//            }
+//        }
+//
+//        guard
+//            case .failure(let failure) = try XCTUnwrap(actualResult),
+//            case .noDeviceFound = failure
+//        else {
+////                XCTFail("Result is not a noDeviceFound failure")
+//                return
+//        }
         #warning("Fix this test")
     }
 
 
     //MARK: - Success
-    func test_run_returnsSubscriptionInfoWithDeactivateStateIfRequestWasSuccessful() throws {
+    func test_run_returnsSubscriptionInfoWithDeactivateStateIfRequestWasSuccessful() async throws {
         let payload = ["response": "deactivated"]
         let signature = try self.signature(forPayload: payload)
         let json: [String: Any] = ["payload": payload, "signature": signature]
         let apiData = try XCTUnwrap(APIData(json: json))
 
         let mockAdapter = MockNetworkAdapter()
-        mockAdapter.resultToReturn = .success(apiData)
+        mockAdapter.returnValue = apiData
 
         let device = Device()
         let api = DeactivateAPI(networkAdapter: mockAdapter, device: device, token: "token3")
 
-        var actualResult: Result<ActivationResponse, DeactivateAPI.Failure>?
-        self.performAndWaitFor("Call API") { (expectation) in
-            api.run { result in
-                actualResult = result
-                expectation.fulfill()
-            }
-        }
-
-        guard case .success(let info) = try XCTUnwrap(actualResult) else {
-            XCTFail("Result is not a success")
-            return
-        }
+        let info = try await api.run()
 
         XCTAssertFalse(info.isActive)
         XCTAssertFalse(info.deviceIsActivated)

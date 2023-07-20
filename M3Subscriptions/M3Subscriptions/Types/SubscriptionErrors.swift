@@ -41,6 +41,17 @@ public class SubscriptionErrorFactory {
         case deactivate
     }
 
+    static func error(for failure: Error) -> NSError {
+        if let activationFailure = failure as? ActivateAPI.Failure {
+            return self.error(for: activationFailure)
+        } else if let checkFailure = failure as? CheckAPI.Failure {
+            return self.error(for: checkFailure)
+        } else if let deactivateFailure = failure as? DeactivateAPI.Failure {
+            return self.error(for: deactivateFailure)
+        }
+        return failure as NSError
+    }
+
     static func error(for failure: ActivateAPI.Failure) -> NSError {
         switch failure {
         case .generic(let error as NSError) where error.domain == NSURLErrorDomain:

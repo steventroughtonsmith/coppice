@@ -21,6 +21,15 @@ extension XCTestCase {
 }
 
 
+func XCTAssertThrowsErrorAsync<T>(_ expression: @autoclosure () async throws -> T, _ errorHandler: (Error) -> Void = { _ in }) async {
+    do {
+        _ = try await expression()
+        XCTFail("Should have thrown error")
+    } catch {
+        errorHandler(error)
+    }
+}
+
 func XCTAssertDateEquals(_ date: Date, _ year: Int, _ month: Int, _ day: Int, _ hour: Int, _ minute: Int, _ second: Int, _ calendarIdentifier: NSCalendar.Identifier = .ISO8601) {
     do {
         let calendar = try XCTUnwrap(NSCalendar(calendarIdentifier: calendarIdentifier))

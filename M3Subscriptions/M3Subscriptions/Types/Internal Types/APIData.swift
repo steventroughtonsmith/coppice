@@ -72,6 +72,11 @@ struct APIData {
         self.response = Response.response(from: response)
     }
 
+    #if TEST
+
+
+    #endif
+
     static func verify(payload: [String: Any], signature: String) -> String? {
         guard let payloadData = try? JSONSerialization.data(withJSONObject: payload, options: .sortedKeys) else {
             return nil

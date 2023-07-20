@@ -11,7 +11,7 @@ import Foundation
 protocol NetworkAdapter {
     var baseURL: URL { get }
     var version: String { get }
-    func callAPI(endpoint: String, method: String, body: [String: String], completion: @escaping (Result<APIData, Error>) -> Void)
+    func callAPI(endpoint: String, method: String, body: [String: String]) async throws -> APIData
 }
 
 class URLSessionNetworkAdapter: NetworkAdapter {
@@ -50,46 +50,34 @@ class URLSessionNetworkAdapter: NetworkAdapter {
         self.session = session
     }
 
-    func callAPI(endpoint: String, method: String = "POST", body: [String: String], completion: @escaping (Result<APIData, Error>) -> Void) {
+    //TODO: Make Async
+    func callAPI(endpoint: String, method: String = "POST", body: [String: String]) async throws -> APIData {
         let request = self.request(forEndpoint: endpoint, method: method, body: body)
-        self.callAPI(with: request, completion: completion)
+        return try await self.callAPI(with: request)
     }
 
-    private func callAPI(with request: URLRequest, completion: @escaping (Result<APIData, Error>) -> Void) {
-        let task = self.session.dataTask(with: request) { (data, response, error) in
-            guard let jsonData = data else {
-                completion(.failure(error ?? Errors.genericError))
-                return
-            }
+    //TODO: Make Async
+    private func callAPI(with request: URLRequest) async throws -> APIData {
+        let (data, response) = try await self.session.data(for: request)
 
-            guard let httpResponse = response as? HTTPURLResponse else {
-                completion(.failure(Errors.genericError))
-                return
-            }
-
-            guard httpResponse.statusCode == 200 || httpResponse.statusCode == 422 else {
-                completion(.failure(Errors.invalidResponse(httpResponse)))
-                return
-            }
-
-            do {
-                let json = try JSONSerialization.jsonObject(with: jsonData, options: [])
-                guard let jsonDictionary = json as? [String: Any] else {
-                    completion(.failure(Errors.invalidJSON))
-                    return
-                }
-
-                guard let apiData = APIData(json: jsonDictionary) else {
-                    completion(.failure(Errors.invalidData))
-                    return
-                }
-
-                completion(.success(apiData))
-            } catch let e {
-                completion(.failure(e))
-            }
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw Errors.genericError
         }
-        task.resume()
+
+        guard httpResponse.statusCode == 200 || httpResponse.statusCode == 422 else {
+            throw Errors.invalidResponse(httpResponse)
+        }
+
+        let json = try JSONSerialization.jsonObject(with: data, options: [])
+        guard let jsonDictionary = json as? [String: Any] else {
+            throw Errors.invalidJSON
+        }
+
+        guard let apiData = APIData(json: jsonDictionary) else {
+            throw Errors.invalidData
+        }
+
+        return apiData
     }
 
     private func request(forEndpoint endpoint: String, method: String, body: [String: String]) -> URLRequest {

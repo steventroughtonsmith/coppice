@@ -15,6 +15,32 @@ protocol CoppiceSubscriptionManagerDelegate: AnyObject {
     func showInfoAlert(_ infoAlert: InfoAlert, for subscriptionManager: CoppiceSubscriptionManager)
 }
 
+/*FLOWS
+
+# Login
+ User: enters login details
+    call /login
+    on success call /listSubscriptions
+    on multiple: show subscriptions
+    on single or sub select: call /activate
+
+    on too many devices show alert and then deactivate one
+
+# Licence
+    call /activate
+
+    on too many devices show alert and then deactivate one
+
+# Check
+    call /check (with login token or licence)
+
+# Rename
+    call /rename
+
+# Deactivate
+    call /deactivate (with login token or licence)
+*/
+
 class CoppiceSubscriptionManager: NSObject {
     let subscriptionController: SubscriptionController?
     weak var delegate: CoppiceSubscriptionManagerDelegate?
@@ -56,12 +82,12 @@ class CoppiceSubscriptionManager: NSObject {
         guard let controller = self.subscriptionController else {
             return
         }
-        controller.activate(withEmail: activationContext.email, password: activationContext.password, subscription: activationContext.subscription, deactivatingDevice: activationContext.deviceToDeactivate) { (result) in
-            switch result {
-            case .success(let response):
+        Task {
+            do {
+                let response = try await controller.activate(withEmail: activationContext.email, password: activationContext.password, subscription: activationContext.subscription, deactivatingDevice: activationContext.deviceToDeactivate)
                 self.activationResponse = response
                 self.currentCheckError = nil
-            case .failure(let error):
+            } catch let error as NSError {
                 guard error.domain == SubscriptionErrorFactory.domain else {
                     self.handle(error, on: window, with: errorHandler)
                     return
@@ -89,29 +115,32 @@ class CoppiceSubscriptionManager: NSObject {
         guard let controller = self.subscriptionController else {
             return
         }
-        controller.deactivate { (result) in
-            switch result {
-            case .success(let response):
+
+        Task {
+            do {
+                let response = try await controller.deactivate()
                 self.activationResponse = response
                 self.currentCheckError = nil
-            case .failure(let error):
-                self.handle(error, on: window, with: errorHandler)
+            } catch {
+                self.handle(error as NSError, on: window, with: errorHandler)
             }
             self.completeCheck()
         }
     }
 
+    //TODO: Make Async Throws
     func updateDeviceName(deviceName: String, completion: @escaping (Result<ActivationResponse, Error>) -> Void) {
         guard let controller = self.subscriptionController else {
             return
         }
-        controller.checkSubscription(updatingDeviceName: deviceName) { (result) in
-            switch result {
-            case .success(let response):
+
+        Task {
+            do {
+                let response = try await controller.checkSubscription(updatingDeviceName: deviceName)
                 self.activationResponse = response
                 self.currentCheckError = nil
                 completion(.success(response))
-            case .failure(let error):
+            } catch {
                 completion(.failure(error))
             }
             self.completeCheck()
@@ -192,16 +221,21 @@ class CoppiceSubscriptionManager: NSObject {
     }
 
     func checkSubscription() {
-        self.subscriptionController?.checkSubscription(completion: { (result) in
-            switch result {
-            case .success(let response):
+        guard let controller = self.subscriptionController else {
+            return
+        }
+
+        Task {
+            do {
+                let response = try await controller.checkSubscription()
                 self.activationResponse = response
                 self.currentCheckError = nil
-            case .failure(let error):
-                self.handleCheckError(error)
+            } catch {
+                self.handleCheckError(error as NSError
+                )
             }
             self.completeCheck()
-        })
+        }
     }
 
     private func handleCheckError(_ error: NSError) {
