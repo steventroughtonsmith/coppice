@@ -133,6 +133,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		992DDC942A6936C9002FCEC2 /* Debugging */ = {
+			isa = PBXGroup;
+			children = (
+				998481CC2496640A00BC0A8A /* TestOverrides.swift */,
+				9998B4DC251118F300E2D455 /* APIDebugManager.swift */,
+			);
+			path = Debugging;
+			sourceTree = "<group>";
+		};
+		992DDC952A6936D9002FCEC2 /* Extensions & Adapters */ = {
+			isa = PBXGroup;
+			children = (
+				99848167248E648300BC0A8A /* NetworkAdapter.swift */,
+				99848166248E648300BC0A8A /* ResultExtension.swift */,
+			);
+			path = "Extensions & Adapters";
+			sourceTree = "<group>";
+		};
 		99848140248E635600BC0A8A = {
 			isa = PBXGroup;
 			children = (
@@ -157,13 +175,10 @@
 		9984814B248E635600BC0A8A /* M3Subscriptions */ = {
 			isa = PBXGroup;
 			children = (
-				99848167248E648300BC0A8A /* NetworkAdapter.swift */,
-				99848166248E648300BC0A8A /* ResultExtension.swift */,
 				99848168248E648300BC0A8A /* SubscriptionController.swift */,
-				998481AB2492789400BC0A8A /* SubscriptionErrors.swift */,
-				998481CC2496640A00BC0A8A /* TestOverrides.swift */,
 				9910B2C6296471F000459493 /* Configs.swift */,
-				9998B4DC251118F300E2D455 /* APIDebugManager.swift */,
+				992DDC952A6936D9002FCEC2 /* Extensions & Adapters */,
+				992DDC942A6936C9002FCEC2 /* Debugging */,
 				99848184248E68EC00BC0A8A /* Types */,
 				99848169248E648300BC0A8A /* API */,
 			);
@@ -226,6 +241,7 @@
 		99848184248E68EC00BC0A8A /* Types */ = {
 			isa = PBXGroup;
 			children = (
+				998481AB2492789400BC0A8A /* SubscriptionErrors.swift */,
 				99848188248E696700BC0A8A /* Public Types */,
 				99848187248E691300BC0A8A /* Internal Types */,
 			);
