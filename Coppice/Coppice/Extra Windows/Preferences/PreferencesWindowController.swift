@@ -11,10 +11,8 @@ import Sparkle
 
 class PreferencesWindowController: NSWindowController {
     let updaterController: SPUStandardUpdaterController
-    let subscriptionManager: CoppiceSubscriptionManager
-    init(updaterController: SPUStandardUpdaterController, subscriptionManager: CoppiceSubscriptionManager) {
+    init(updaterController: SPUStandardUpdaterController) {
         self.updaterController = updaterController
-        self.subscriptionManager = subscriptionManager
         super.init(window: nil)
     }
 
@@ -39,7 +37,7 @@ class PreferencesWindowController: NSWindowController {
 
         self.tabController.delegate = self
 
-        let generalPrefs = GeneralPreferencesViewController(subscriptionManager: self.subscriptionManager)
+        let generalPrefs = GeneralPreferencesViewController()
         if let generalItem = generalPrefs.tabViewItem {
             self.tabController.addTabViewItem(generalItem)
         }
@@ -48,7 +46,7 @@ class PreferencesWindowController: NSWindowController {
             self.tabController.addTabViewItem(updatePrefs)
         }
 
-        if let coppicePro = CoppiceProViewController(subscriptionManager: self.subscriptionManager).tabViewItem {
+        if let coppicePro = CoppiceProPreferencesViewController().tabViewItem {
             self.tabController.addTabViewItem(coppicePro)
         }
 

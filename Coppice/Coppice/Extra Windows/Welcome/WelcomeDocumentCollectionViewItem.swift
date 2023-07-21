@@ -71,7 +71,7 @@ class WelcomeDocumentCollectionViewItem: NSCollectionViewItem {
         super.viewDidLoad()
         self.reloadData()
 
-        let clickRecogniser = NSClickGestureRecognizer(target: self, action: #selector(doubleClick(_:)))
+        let clickRecogniser = NSClickGestureRecognizer(target: self, action: #selector(self.doubleClick(_:)))
         clickRecogniser.numberOfClicksRequired = 2
         self.view.addGestureRecognizer(clickRecogniser)
     }
@@ -101,6 +101,8 @@ class WelcomeDocumentCollectionViewItem: NSCollectionViewItem {
         }
         NSWorkspace.shared.selectFile(document.url.path, inFileViewerRootedAtPath: "")
     }
+
+
 
 
     //MARK: - Selection

@@ -13,7 +13,7 @@ import CoppiceCore
 
 class ImageEditorViewController: NSViewController, NSMenuItemValidation, NSToolbarItemValidation {
     @IBOutlet weak var imageView: NSImageView!
-	@IBOutlet var placeholderView: ImageEditorPlaceholderView!
+	@IBOutlet var placeholderView: DropablePlaceholderView!
 
     @objc dynamic let viewModel: ImageEditorViewModel
     init(viewModel: ImageEditorViewModel) {

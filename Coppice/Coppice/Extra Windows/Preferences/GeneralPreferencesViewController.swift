@@ -12,16 +12,14 @@ import CoppiceCore
 import M3Subscriptions
 
 class GeneralPreferencesViewController: PreferencesViewController {
-    let subscriptionManager: CoppiceSubscriptionManager
-    init(subscriptionManager: CoppiceSubscriptionManager) {
-        self.subscriptionManager = subscriptionManager
+    init() {
         super.init(nibName: "GeneralPreferencesViewController", bundle: nil)
         self.startObservation()
     }
 
     var activationObservation: AnyCancellable?
     private func startObservation() {
-        self.activationObservation = self.subscriptionManager.$activationResponse
+        self.activationObservation = CoppiceSubscriptionManager.shared.$activationResponse
             .map { $0?.isActive ?? false }
             .assign(to: \.isProEnabled, on: self)
     }
@@ -119,21 +117,21 @@ class GeneralPreferencesViewController: PreferencesViewController {
         guard let control = sender as? NSView else {
             return
         }
-        self.subscriptionManager.showProPopover(for: .textAutoLinking, from: control, preferredEdge: .maxX)
+        CoppiceSubscriptionManager.shared.showProPopover(for: .textAutoLinking, from: control, preferredEdge: .maxX)
     }
 
     @IBAction func showExistingPageLinkingProUpsell(_ sender: Any) {
         guard let control = sender as? NSView else {
             return
         }
-        self.subscriptionManager.showProPopover(for: .linkToExistingPages, from: control, preferredEdge: .maxX)
+        CoppiceSubscriptionManager.shared.showProPopover(for: .linkToExistingPages, from: control, preferredEdge: .maxX)
     }
 
     @IBAction func showThemeProUpsell(_ sender: Any) {
         guard let control = sender as? NSView else {
             return
         }
-        self.subscriptionManager.showProPopover(for: .canvasAppearance, from: control, preferredEdge: .maxX)
+        CoppiceSubscriptionManager.shared.showProPopover(for: .canvasAppearance, from: control, preferredEdge: .maxX)
     }
 
     //MARK: - Sidebar Size

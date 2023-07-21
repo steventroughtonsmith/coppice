@@ -17,8 +17,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var newLinkedPageMenuDelegate: NewPageMenuDelegate!
     @IBOutlet weak var updaterController: SPUStandardUpdaterController!
 
-    let subscriptionManager = CoppiceSubscriptionManager.shared
-
     lazy var documentController = CoppiceDocumentController()
 
     override init() {
@@ -53,7 +51,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.newLinkedPageMenuDelegate.action = #selector(TextEditorViewController.createNewLinkedPage(_:))
         self.newLinkedPageMenuDelegate.includeKeyEquivalents = false
 
-        self.subscriptionManager.delegate = self
+        CoppiceSubscriptionManager.shared.delegate = self
 
         UserDefaults.standard.set(true, forKey: "NSTextViewAvoidLayoutWhileDrawing")
         NSApplication.shared.registerUserInterfaceItemSearchHandler(HelpController.shared)
@@ -108,7 +106,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     //MARK: - Preferences
     lazy var preferencesWindow: PreferencesWindowController = {
-        return PreferencesWindowController(updaterController: self.updaterController, subscriptionManager: self.subscriptionManager)
+        return PreferencesWindowController(updaterController: self.updaterController)
     }()
 
     @IBAction func showPreferences(_ sender: Any?) {
@@ -156,12 +154,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     #if DEBUG
     @IBAction func checkSubscription(_ sender: Any?) {
-        self.subscriptionManager.checkSubscription()
+        CoppiceSubscriptionManager.shared.checkSubscription()
     }
 
     @IBAction func toggleProDisabled(_ sender: NSMenuItem) {
-        self.subscriptionManager.proDisabled.toggle()
-        sender.state = (self.subscriptionManager.proDisabled ? .on : .off)
+        CoppiceSubscriptionManager.shared.proDisabled.toggle()
+        sender.state = (CoppiceSubscriptionManager.shared.proDisabled ? .on : .off)
     }
     #endif
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21219" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="22138.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21219"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22138.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -24,7 +24,7 @@
                         <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="f6T-iD-mB3">
                             <rect key="frame" x="0.0" y="100" width="407" height="5"/>
                         </box>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kEj-uB-PyX">
+                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kEj-uB-PyX">
                             <rect key="frame" x="40" y="145" width="52" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="Linking:" id="Hsk-0I-Y6u">
                                 <font key="font" usesAppearanceFont="YES"/>
@@ -32,7 +32,7 @@
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField toolTip="The default font for new text pages" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yIC-WZ-NQH">
+                        <textField toolTip="The default font for new text pages" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yIC-WZ-NQH">
                             <rect key="frame" x="98" y="171" width="220" height="19"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="220" id="U4o-ux-tPr"/>
@@ -46,7 +46,7 @@
                                 <binding destination="-2" name="value" keyPath="self.fontString" id="79a-rp-VKv"/>
                             </connections>
                         </textField>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DOi-Xn-Uvk">
+                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DOi-Xn-Uvk">
                             <rect key="frame" x="12" y="173" width="80" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="Default font:" id="oVt-Gb-hax">
                                 <font key="font" usesAppearanceFont="YES"/>
@@ -83,7 +83,7 @@
                                 <action selector="showFontPanel:" target="-2" id="WtZ-Mn-VTQ"/>
                             </connections>
                         </button>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KK4-b4-s2e">
+                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KK4-b4-s2e">
                             <rect key="frame" x="-2" y="65" width="94" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="Default theme:" id="Tki-da-WNU">
                                 <font key="font" usesAppearanceFont="YES"/>
@@ -114,7 +114,7 @@
                             </connections>
                         </button>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jYn-dC-guV">
-                            <rect key="frame" x="171" y="56" width="52" height="27"/>
+                            <rect key="frame" x="171" y="57" width="52" height="27"/>
                             <buttonCell key="cell" type="push" title="PRO" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="cCu-Er-1Br" customClass="ProButtonCell" customModule="Coppice" customModuleProvider="target">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="smallSystemBold"/>
@@ -127,7 +127,7 @@
                         <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="QYa-0z-38W">
                             <rect key="frame" x="0.0" y="39" width="407" height="5"/>
                         </box>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Jq4-Pf-ldz">
+                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Jq4-Pf-ldz">
                             <rect key="frame" x="10" y="4" width="82" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="Sidebar size:" id="hDk-UZ-iMX">
                                 <font key="font" usesAppearanceFont="YES"/>

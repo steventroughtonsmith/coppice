@@ -12,7 +12,7 @@ import CoppiceCore
 
 class ImageEditorViewModeViewController: NSViewController {
     @IBOutlet weak var imageView: NSImageView!
-    @IBOutlet var placeholderView: ImageEditorPlaceholderView!
+    @IBOutlet var placeholderView: DropablePlaceholderView!
     @IBOutlet var hotspotView: ImageEditorHotspotView!
 
     @objc dynamic let viewModel: ImageEditorViewModel

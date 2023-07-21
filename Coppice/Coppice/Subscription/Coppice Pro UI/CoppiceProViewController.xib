@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="22138.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22138.1"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="CoppiceProViewController" customModule="Coppice" customModuleProvider="target">
+            <connections>
+                <outlet property="contentContainerView" destination="9eI-s1-xxy" id="LzQ-vP-CRY"/>
+                <outlet property="headerBackground" destination="Qor-tl-5dM" id="Cy4-S1-5AJ"/>
+                <outlet property="leftButton" destination="qm6-zH-S5L" id="ev2-Lw-Nwv"/>
+                <outlet property="rightButton" destination="ENJ-t7-iLp" id="OuO-7p-wOO"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="577" height="532"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="Qor-tl-5dM" customClass="CoppiceGreenView" customModule="Coppice" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="264" width="577" height="268"/>
+                    <subviews>
+                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1bh-EM-mK6">
+                            <rect key="frame" x="227" y="131" width="133" height="117"/>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" image="Pro-Tree-Large" id="8ee-Pv-I8F"/>
+                        </imageView>
+                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Fa8-3g-M2u">
+                            <rect key="frame" x="185" y="75" width="208" height="43"/>
+                            <textFieldCell key="cell" lineBreakMode="clipping" title="Coppice Pro" id="oWh-0l-i8K">
+                                <font key="font" metaFont="systemBold" size="36"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <imageView wantsLayer="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" alphaValue="0.40000000000000002" translatesAutoresizingMaskIntoConstraints="NO" id="rhj-Jx-2eT">
+                            <rect key="frame" x="-10" y="57" width="92" height="179"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="179" id="86Q-s6-Dte"/>
+                            </constraints>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="top" image="Arrow-Tree-Pro-Left" id="xfg-r5-WTs"/>
+                        </imageView>
+                        <imageView wantsLayer="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" alphaValue="0.40000000000000002" translatesAutoresizingMaskIntoConstraints="NO" id="Inh-91-mdQ">
+                            <rect key="frame" x="496" y="58" width="103" height="90"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="90" id="OMo-eU-qaV"/>
+                            </constraints>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="top" image="Arrow-Tree-Pro-Right" id="Enk-Rb-fih"/>
+                        </imageView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="Inh-91-mdQ" secondAttribute="trailing" constant="-22" id="69Z-HU-qzM"/>
+                        <constraint firstItem="1bh-EM-mK6" firstAttribute="centerX" secondItem="Qor-tl-5dM" secondAttribute="centerX" constant="5" id="CQK-ec-TXA"/>
+                        <constraint firstItem="rhj-Jx-2eT" firstAttribute="leading" secondItem="Qor-tl-5dM" secondAttribute="leading" constant="-10" id="DqJ-77-pDQ"/>
+                        <constraint firstItem="Fa8-3g-M2u" firstAttribute="centerX" secondItem="Qor-tl-5dM" secondAttribute="centerX" id="HE0-73-v08"/>
+                        <constraint firstItem="Inh-91-mdQ" firstAttribute="top" secondItem="Qor-tl-5dM" secondAttribute="top" constant="120" id="KIw-sc-VeC"/>
+                        <constraint firstItem="Fa8-3g-M2u" firstAttribute="top" secondItem="1bh-EM-mK6" secondAttribute="bottom" constant="13" id="c7a-7a-HPn"/>
+                        <constraint firstAttribute="height" constant="268" id="kG4-gH-bSE"/>
+                        <constraint firstItem="1bh-EM-mK6" firstAttribute="top" secondItem="Qor-tl-5dM" secondAttribute="top" constant="20" id="qQw-L4-NwD"/>
+                        <constraint firstItem="rhj-Jx-2eT" firstAttribute="top" secondItem="Qor-tl-5dM" secondAttribute="top" constant="32" id="tt7-O0-k7g"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="curveAmount">
+                            <real key="value" value="0.215"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </customView>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="kXH-DM-Odj">
+                    <rect key="frame" x="0.0" y="0.0" width="577" height="50"/>
+                    <subviews>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qm6-zH-S5L" customClass="RoundButton" customModule="Coppice" customModuleProvider="target">
+                            <rect key="frame" x="8" y="8" width="112" height="32"/>
+                            <buttonCell key="cell" type="push" title="Button A" bezelStyle="rounded" imagePosition="leading" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mr5-6G-diD" customClass="RoundButtonCell" customModule="Coppice" customModuleProvider="target">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                                <imageReference key="image" image="folder.fill" catalog="system" symbolScale="large"/>
+                            </buttonCell>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="color" keyPath="borderColour">
+                                    <color key="value" name="RoundButton"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="leftButtonClicked:" target="-2" id="592-9a-DH6"/>
+                            </connections>
+                        </button>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ENJ-t7-iLp" customClass="RoundButton" customModule="Coppice" customModuleProvider="target">
+                            <rect key="frame" x="457" y="8" width="112" height="32"/>
+                            <buttonCell key="cell" type="push" title="Button B" bezelStyle="rounded" imagePosition="left" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Zda-xi-2z4" customClass="RoundButtonCell" customModule="Coppice" customModuleProvider="target">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                                <imageReference key="image" image="folder.fill" catalog="system" symbolScale="large"/>
+                            </buttonCell>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="color" keyPath="borderColour">
+                                    <color key="value" name="RoundButton"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="rightButtonClicked:" target="-2" id="Pu1-dW-2Qe"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="qm6-zH-S5L" firstAttribute="top" secondItem="kXH-DM-Odj" secondAttribute="top" constant="15" id="AkF-k8-kz1"/>
+                        <constraint firstAttribute="trailing" secondItem="ENJ-t7-iLp" secondAttribute="trailing" constant="15" id="G3J-rc-Hpv"/>
+                        <constraint firstItem="qm6-zH-S5L" firstAttribute="leading" secondItem="kXH-DM-Odj" secondAttribute="leading" constant="15" id="UdO-Vy-ZEa"/>
+                        <constraint firstItem="ENJ-t7-iLp" firstAttribute="centerY" secondItem="kXH-DM-Odj" secondAttribute="centerY" id="XLD-ri-aCQ"/>
+                        <constraint firstItem="qm6-zH-S5L" firstAttribute="centerY" secondItem="kXH-DM-Odj" secondAttribute="centerY" id="a2n-7m-wCH"/>
+                        <constraint firstAttribute="bottom" secondItem="qm6-zH-S5L" secondAttribute="bottom" constant="15" id="svI-z9-ljE"/>
+                    </constraints>
+                </customView>
+                <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="Bkf-DO-dFf">
+                    <rect key="frame" x="0.0" y="48" width="577" height="5"/>
+                </box>
+                <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalHuggingPriority="750" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sb2-uK-BwU">
+                    <rect key="frame" x="174" y="71" width="213" height="23"/>
+                    <subviews>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LoS-9s-WWx">
+                            <rect key="frame" x="0.0" y="4" width="103" height="19"/>
+                            <buttonCell key="cell" type="recessed" title="Terms of Service" bezelStyle="recessed" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Q0k-cS-8nm">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                                <font key="font" metaFont="smallSystem"/>
+                            </buttonCell>
+                            <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
+                            <connections>
+                                <action selector="openTerms:" target="-2" id="Emo-sZ-hOu"/>
+                            </connections>
+                        </button>
+                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Eh9-A0-ZRp">
+                            <rect key="frame" x="109" y="7" width="11" height="16"/>
+                            <textFieldCell key="cell" lineBreakMode="clipping" title="•" id="9iX-j2-OPZ">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ltb-s9-vs4">
+                            <rect key="frame" x="126" y="4" width="87" height="19"/>
+                            <buttonCell key="cell" type="recessed" title="Privacy Policy" bezelStyle="recessed" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="g3s-3H-BRU">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                                <font key="font" metaFont="smallSystem"/>
+                            </buttonCell>
+                            <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
+                            <connections>
+                                <action selector="openPrivacyPolicy:" target="-2" id="j4s-qL-NUD"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <visibilityPriorities>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                    </visibilityPriorities>
+                    <customSpacing>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                    </customSpacing>
+                </stackView>
+                <customView placeholderIntrinsicWidth="163" placeholderIntrinsicHeight="300" translatesAutoresizingMaskIntoConstraints="NO" id="9eI-s1-xxy">
+                    <rect key="frame" x="207" y="114" width="163" height="150"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="150" id="BBh-al-VVZ"/>
+                    </constraints>
+                </customView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="kXH-DM-Odj" firstAttribute="top" secondItem="Bkf-DO-dFf" secondAttribute="bottom" id="0IR-po-00l"/>
+                <constraint firstItem="Eh9-A0-ZRp" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="8nU-Kh-I86"/>
+                <constraint firstItem="Sb2-uK-BwU" firstAttribute="top" secondItem="9eI-s1-xxy" secondAttribute="bottom" constant="20" id="GS4-l5-YId"/>
+                <constraint firstAttribute="trailing" secondItem="Bkf-DO-dFf" secondAttribute="trailing" id="IXa-hC-pnV"/>
+                <constraint firstItem="Qor-tl-5dM" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="N8B-ds-VE8"/>
+                <constraint firstAttribute="trailing" secondItem="Qor-tl-5dM" secondAttribute="trailing" id="PeQ-Hx-7fj"/>
+                <constraint firstItem="Bkf-DO-dFf" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="Qmm-9L-AUH"/>
+                <constraint firstItem="9eI-s1-xxy" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="T0S-9o-dgT"/>
+                <constraint firstItem="Qor-tl-5dM" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="Z0U-AG-mAc"/>
+                <constraint firstAttribute="bottom" secondItem="kXH-DM-Odj" secondAttribute="bottom" id="a51-pD-WmR"/>
+                <constraint firstAttribute="trailing" secondItem="kXH-DM-Odj" secondAttribute="trailing" id="gOp-S9-5wm"/>
+                <constraint firstItem="Bkf-DO-dFf" firstAttribute="top" secondItem="Sb2-uK-BwU" secondAttribute="bottom" constant="20" id="jdo-A3-ZG5"/>
+                <constraint firstItem="kXH-DM-Odj" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="lmw-hg-itS"/>
+                <constraint firstItem="9eI-s1-xxy" firstAttribute="top" secondItem="Qor-tl-5dM" secondAttribute="bottom" id="wXT-pS-R9D"/>
+            </constraints>
+            <point key="canvasLocation" x="168.5" y="99"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="Arrow-Tree-Pro-Left" width="92" height="200.5"/>
+        <image name="Arrow-Tree-Pro-Right" width="101.5" height="100.5"/>
+        <image name="Pro-Tree-Large" width="132.5" height="117.5"/>
+        <image name="folder.fill" catalog="system" width="23" height="18"/>
+        <namedColor name="RoundButton">
+            <color red="0.0" green="0.0" blue="0.0" alpha="0.15000000596046448" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

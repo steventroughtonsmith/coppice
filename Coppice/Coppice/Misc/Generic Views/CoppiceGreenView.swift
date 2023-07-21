@@ -96,7 +96,20 @@ class CoppiceGreenView: NSView {
             path.line(to: insetBounds.point(atX: .max, y: .min))
             path.close()
         case .hillsBottom:
-            fallthrough
+            path.move(to: insetBounds.point(atX: .max, y: .max))
+            path.line(to: insetBounds.point(atX: .min, y: .max))
+
+            let hillTopY = self.bounds.height * self.curveAmount
+            path.line(to: insetBounds.point(atX: .min, y: .min).plus(y: hillTopY))
+
+            let controlPointInset = insetBounds.width * 0.05
+            let midPoint = insetBounds.point(atX: .mid, y: .min)
+            let leftControlPoint = midPoint.plus(y: hillTopY).minus(x: controlPointInset)
+            let rightControlPoint = midPoint.plus(y: hillTopY).plus(x: controlPointInset)
+
+            path.curve(to: midPoint, controlPoint1: leftControlPoint, controlPoint2: midPoint)
+            path.curve(to: insetBounds.point(atX: .max, y: .min).plus(y: hillTopY), controlPoint1: midPoint, controlPoint2: rightControlPoint)
+            path.close()
         case .rectangle:
             path.appendRect(insetBounds)
         }

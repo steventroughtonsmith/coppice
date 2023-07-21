@@ -14,7 +14,7 @@ class AboutWindowController: NSWindowController {
     }
 
     @IBAction func showPrivacyPolicy(_ sender: Any) {
-        NSWorkspace.shared.open(URL(string: "https://mcubedsw.com/privacy")!)
+        NSWorkspace.shared.open(.privacyPolicy)
     }
 
     @IBOutlet weak var versionLabel: NSTextField!

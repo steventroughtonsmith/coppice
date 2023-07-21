@@ -36,7 +36,7 @@
 		9910EA4F2700828F003741D8 /* LinkControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9910EA4E2700828F003741D8 /* LinkControl.swift */; };
 		99115DC5249E304D008942DF /* SystemProfileInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99115DC3249E304D008942DF /* SystemProfileInfoViewController.swift */; };
 		99115DC6249E304D008942DF /* SystemProfileInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99115DC4249E304D008942DF /* SystemProfileInfoViewController.xib */; };
-		99146A2A24EEAB6200A2AE48 /* ImageEditorPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99146A2924EEAB6200A2AE48 /* ImageEditorPlaceholderView.swift */; };
+		99146A2A24EEAB6200A2AE48 /* DropablePlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99146A2924EEAB6200A2AE48 /* DropablePlaceholderView.swift */; };
 		99146A2E24F016DC00A2AE48 /* SpringLoadedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99146A2D24F016DC00A2AE48 /* SpringLoadedTableView.swift */; };
 		9914C8E5271097E400654689 /* NSShadow+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9914C8E4271097E400654689 /* NSShadow+M3Extensions.swift */; };
 		99171EDC24AA48B200E96DE6 /* MainToolbarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99171EDB24AA48B200E96DE6 /* MainToolbarDelegate.swift */; };
@@ -83,6 +83,15 @@
 		992A5CAF22DDF50F0012CCB6 /* DebugPageEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 992A5CAD22DDF50F0012CCB6 /* DebugPageEditor.xib */; };
 		992A5CB122DDF5210012CCB6 /* DebugCanvasEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992A5CB022DDF5210012CCB6 /* DebugCanvasEditorViewModel.swift */; };
 		992A5CB322DDF53C0012CCB6 /* DebugPageEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992A5CB222DDF53C0012CCB6 /* DebugPageEditorViewModel.swift */; };
+		992DDC982A698AF9002FCEC2 /* CoppiceProPreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992DDC972A698AF9002FCEC2 /* CoppiceProPreferencesViewController.swift */; };
+		992DDC9B2A698C6D002FCEC2 /* CoppiceProViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992DDC992A698C6D002FCEC2 /* CoppiceProViewController.swift */; };
+		992DDC9C2A698C6D002FCEC2 /* CoppiceProViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 992DDC9A2A698C6D002FCEC2 /* CoppiceProViewController.xib */; };
+		992DDCA02A69A6A0002FCEC2 /* LoginCoppiceProContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992DDC9E2A69A6A0002FCEC2 /* LoginCoppiceProContentViewController.swift */; };
+		992DDCA12A69A6A0002FCEC2 /* LoginCoppiceProContentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 992DDC9F2A69A6A0002FCEC2 /* LoginCoppiceProContentViewController.xib */; };
+		992DDCA42A69A6AF002FCEC2 /* LicenceCoppiceProContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992DDCA22A69A6AF002FCEC2 /* LicenceCoppiceProContentViewController.swift */; };
+		992DDCA52A69A6AF002FCEC2 /* LicenceCoppiceProContentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 992DDCA32A69A6AF002FCEC2 /* LicenceCoppiceProContentViewController.xib */; };
+		992DDCA82A69A6BE002FCEC2 /* ActivatedCoppiceProContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992DDCA62A69A6BE002FCEC2 /* ActivatedCoppiceProContentViewController.swift */; };
+		992DDCA92A69A6BE002FCEC2 /* ActivatedCoppiceProContentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 992DDCA72A69A6BE002FCEC2 /* ActivatedCoppiceProContentViewController.xib */; };
 		9930A6EB25728CAC00E74AE5 /* HelpViewerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9930A6EA25728CAC00E74AE5 /* HelpViewerUITests.swift */; };
 		9930F4AA267631B000DE8975 /* LinkInspectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9930F4A7267631B000DE8975 /* LinkInspectorViewModel.swift */; };
 		9930F4AB267631B000DE8975 /* LinkInspectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9930F4A8267631B000DE8975 /* LinkInspectorViewController.swift */; };
@@ -130,8 +139,6 @@
 		99581093230D92C600D996C4 /* CanvasPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99581091230D92C600D996C4 /* CanvasPageViewController.xib */; };
 		99581095230D93F700D996C4 /* CanvasPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99581094230D93F700D996C4 /* CanvasPageViewModel.swift */; };
 		99582817247702B300080593 /* MovableHandleAccessibilityElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99582816247702B300080593 /* MovableHandleAccessibilityElement.swift */; };
-		995B4B7E261B390F00F2AD01 /* RenameDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995B4B7C261B390F00F2AD01 /* RenameDeviceViewController.swift */; };
-		995B4B7F261B390F00F2AD01 /* RenameDeviceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 995B4B7D261B390F00F2AD01 /* RenameDeviceViewController.xib */; };
 		995F9305252B5B1B00A753E4 /* ColouredButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995F9304252B5B1B00A753E4 /* ColouredButtonCell.swift */; };
 		995F931D252B654A00A753E4 /* Sample Document.coppicedoc in Resources */ = {isa = PBXBuildFile; fileRef = 995F931C252B654A00A753E4 /* Sample Document.coppicedoc */; };
 		995F9324252B695400A753E4 /* ImageEditorViewModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995F9323252B695400A753E4 /* ImageEditorViewModeView.swift */; };
@@ -246,12 +253,6 @@
 		9998B4EC25164CA600E2D455 /* ButtonToolbarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9998B4EB25164CA600E2D455 /* ButtonToolbarItem.swift */; };
 		9999A23424F80CAB001F8161 /* libM3Subscriptions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9999A23324F80CAB001F8161 /* libM3Subscriptions.a */; };
 		9999A23624F93052001F8161 /* CoppiceSubscriptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9999A23524F93052001F8161 /* CoppiceSubscriptionManager.swift */; };
-		9999A23924F93796001F8161 /* CoppiceProViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9999A23724F93796001F8161 /* CoppiceProViewController.swift */; };
-		9999A23A24F93796001F8161 /* CoppiceProViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9999A23824F93796001F8161 /* CoppiceProViewController.xib */; };
-		9999A23D24F937B6001F8161 /* ActivatedSubscriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9999A23B24F937B6001F8161 /* ActivatedSubscriptionViewController.swift */; };
-		9999A23E24F937B6001F8161 /* ActivatedSubscriptionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9999A23C24F937B6001F8161 /* ActivatedSubscriptionViewController.xib */; };
-		9999A24124F950E7001F8161 /* DeactivatedSubscriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9999A23F24F950E7001F8161 /* DeactivatedSubscriptionViewController.swift */; };
-		9999A24224F950E7001F8161 /* DeactivatedSubscriptionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9999A24024F950E7001F8161 /* DeactivatedSubscriptionViewController.xib */; };
 		9999A25925010F08001F8161 /* HoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9999A25825010F08001F8161 /* HoverView.swift */; };
 		999A316425C81C0B00FF60E5 /* WhatsNewWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999A316225C81C0B00FF60E5 /* WhatsNewWindowController.swift */; };
 		999A316525C81C0B00FF60E5 /* WhatsNewWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 999A316325C81C0B00FF60E5 /* WhatsNewWindow.xib */; };
@@ -525,7 +526,7 @@
 		9910EA4E2700828F003741D8 /* LinkControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkControl.swift; sourceTree = "<group>"; };
 		99115DC3249E304D008942DF /* SystemProfileInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemProfileInfoViewController.swift; sourceTree = "<group>"; };
 		99115DC4249E304D008942DF /* SystemProfileInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SystemProfileInfoViewController.xib; sourceTree = "<group>"; };
-		99146A2924EEAB6200A2AE48 /* ImageEditorPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorPlaceholderView.swift; sourceTree = "<group>"; };
+		99146A2924EEAB6200A2AE48 /* DropablePlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropablePlaceholderView.swift; sourceTree = "<group>"; };
 		99146A2D24F016DC00A2AE48 /* SpringLoadedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpringLoadedTableView.swift; sourceTree = "<group>"; };
 		9914C8E4271097E400654689 /* NSShadow+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSShadow+M3Extensions.swift"; sourceTree = "<group>"; };
 		99171EDB24AA48B200E96DE6 /* MainToolbarDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainToolbarDelegate.swift; sourceTree = "<group>"; };
@@ -572,6 +573,15 @@
 		992A5CAD22DDF50F0012CCB6 /* DebugPageEditor.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DebugPageEditor.xib; sourceTree = "<group>"; };
 		992A5CB022DDF5210012CCB6 /* DebugCanvasEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugCanvasEditorViewModel.swift; sourceTree = "<group>"; };
 		992A5CB222DDF53C0012CCB6 /* DebugPageEditorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugPageEditorViewModel.swift; sourceTree = "<group>"; };
+		992DDC972A698AF9002FCEC2 /* CoppiceProPreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoppiceProPreferencesViewController.swift; sourceTree = "<group>"; };
+		992DDC992A698C6D002FCEC2 /* CoppiceProViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoppiceProViewController.swift; sourceTree = "<group>"; };
+		992DDC9A2A698C6D002FCEC2 /* CoppiceProViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CoppiceProViewController.xib; sourceTree = "<group>"; };
+		992DDC9E2A69A6A0002FCEC2 /* LoginCoppiceProContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoppiceProContentViewController.swift; sourceTree = "<group>"; };
+		992DDC9F2A69A6A0002FCEC2 /* LoginCoppiceProContentViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginCoppiceProContentViewController.xib; sourceTree = "<group>"; };
+		992DDCA22A69A6AF002FCEC2 /* LicenceCoppiceProContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenceCoppiceProContentViewController.swift; sourceTree = "<group>"; };
+		992DDCA32A69A6AF002FCEC2 /* LicenceCoppiceProContentViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LicenceCoppiceProContentViewController.xib; sourceTree = "<group>"; };
+		992DDCA62A69A6BE002FCEC2 /* ActivatedCoppiceProContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivatedCoppiceProContentViewController.swift; sourceTree = "<group>"; };
+		992DDCA72A69A6BE002FCEC2 /* ActivatedCoppiceProContentViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActivatedCoppiceProContentViewController.xib; sourceTree = "<group>"; };
 		9930A6EA25728CAC00E74AE5 /* HelpViewerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpViewerUITests.swift; sourceTree = "<group>"; };
 		9930F4A7267631B000DE8975 /* LinkInspectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkInspectorViewModel.swift; sourceTree = "<group>"; };
 		9930F4A8267631B000DE8975 /* LinkInspectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkInspectorViewController.swift; sourceTree = "<group>"; };
@@ -617,8 +627,6 @@
 		99581091230D92C600D996C4 /* CanvasPageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CanvasPageViewController.xib; sourceTree = "<group>"; };
 		99581094230D93F700D996C4 /* CanvasPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasPageViewModel.swift; sourceTree = "<group>"; };
 		99582816247702B300080593 /* MovableHandleAccessibilityElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovableHandleAccessibilityElement.swift; sourceTree = "<group>"; };
-		995B4B7C261B390F00F2AD01 /* RenameDeviceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameDeviceViewController.swift; sourceTree = "<group>"; };
-		995B4B7D261B390F00F2AD01 /* RenameDeviceViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RenameDeviceViewController.xib; sourceTree = "<group>"; };
 		995F9304252B5B1B00A753E4 /* ColouredButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColouredButtonCell.swift; sourceTree = "<group>"; };
 		995F931C252B654A00A753E4 /* Sample Document.coppicedoc */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "Sample Document.coppicedoc"; sourceTree = "<group>"; };
 		995F9323252B695400A753E4 /* ImageEditorViewModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorViewModeView.swift; sourceTree = "<group>"; };
@@ -670,7 +678,7 @@
 		9982FEC72A67DF3B00970283 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9982FEC82A67DF3B00970283 /* QuickLookThumbnail.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QuickLookThumbnail.entitlements; sourceTree = "<group>"; };
 		9982FED12A67DFBD00970283 /* QuickLookPreviewGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookPreviewGenerator.swift; sourceTree = "<group>"; };
-		9982FED52A681F2100970283 /* Info.plist.prefix */ = {isa = PBXFileReference; lastKnownFileType = file; name = Info.plist.prefix; path = CoppiceQuickLook/Info.plist.prefix; sourceTree = SOURCE_ROOT; };
+		9982FED52A681F2100970283 /* Info.plist.prefix */ = {isa = PBXFileReference; lastKnownFileType = text; name = Info.plist.prefix; path = CoppiceQuickLook/Info.plist.prefix; sourceTree = SOURCE_ROOT; };
 		9982FEDB2A68390100970283 /* RecentDocumentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentDocumentController.swift; sourceTree = "<group>"; };
 		9983294F2A659EAC006FC478 /* WelcomeDocumentCollectionViewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeDocumentCollectionViewItem.swift; sourceTree = "<group>"; };
 		998329502A659EAC006FC478 /* WelcomeDocumentCollectionViewItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WelcomeDocumentCollectionViewItem.xib; sourceTree = "<group>"; };
@@ -733,12 +741,6 @@
 		9999A23124F80C8D001F8161 /* libM3Subscriptions.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libM3Subscriptions.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9999A23324F80CAB001F8161 /* libM3Subscriptions.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libM3Subscriptions.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9999A23524F93052001F8161 /* CoppiceSubscriptionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoppiceSubscriptionManager.swift; sourceTree = "<group>"; };
-		9999A23724F93796001F8161 /* CoppiceProViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoppiceProViewController.swift; sourceTree = "<group>"; };
-		9999A23824F93796001F8161 /* CoppiceProViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CoppiceProViewController.xib; sourceTree = "<group>"; };
-		9999A23B24F937B6001F8161 /* ActivatedSubscriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivatedSubscriptionViewController.swift; sourceTree = "<group>"; };
-		9999A23C24F937B6001F8161 /* ActivatedSubscriptionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActivatedSubscriptionViewController.xib; sourceTree = "<group>"; };
-		9999A23F24F950E7001F8161 /* DeactivatedSubscriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeactivatedSubscriptionViewController.swift; sourceTree = "<group>"; };
-		9999A24024F950E7001F8161 /* DeactivatedSubscriptionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeactivatedSubscriptionViewController.xib; sourceTree = "<group>"; };
 		9999A25825010F08001F8161 /* HoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoverView.swift; sourceTree = "<group>"; };
 		999A316225C81C0B00FF60E5 /* WhatsNewWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewWindowController.swift; sourceTree = "<group>"; };
 		999A316325C81C0B00FF60E5 /* WhatsNewWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WhatsNewWindow.xib; sourceTree = "<group>"; };
@@ -1189,6 +1191,29 @@
 			path = "Debug Editors";
 			sourceTree = "<group>";
 		};
+		992DDC962A698AA7002FCEC2 /* Coppice Pro UI */ = {
+			isa = PBXGroup;
+			children = (
+				992DDC992A698C6D002FCEC2 /* CoppiceProViewController.swift */,
+				992DDC9A2A698C6D002FCEC2 /* CoppiceProViewController.xib */,
+				992DDC9D2A69A680002FCEC2 /* Content View Controllers */,
+			);
+			path = "Coppice Pro UI";
+			sourceTree = "<group>";
+		};
+		992DDC9D2A69A680002FCEC2 /* Content View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				992DDC9E2A69A6A0002FCEC2 /* LoginCoppiceProContentViewController.swift */,
+				992DDC9F2A69A6A0002FCEC2 /* LoginCoppiceProContentViewController.xib */,
+				992DDCA22A69A6AF002FCEC2 /* LicenceCoppiceProContentViewController.swift */,
+				992DDCA32A69A6AF002FCEC2 /* LicenceCoppiceProContentViewController.xib */,
+				992DDCA62A69A6BE002FCEC2 /* ActivatedCoppiceProContentViewController.swift */,
+				992DDCA72A69A6BE002FCEC2 /* ActivatedCoppiceProContentViewController.xib */,
+			);
+			path = "Content View Controllers";
+			sourceTree = "<group>";
+		};
 		9930F4A62676318900DE8975 /* Link Inspector */ = {
 			isa = PBXGroup;
 			children = (
@@ -1337,6 +1362,7 @@
 				99115DC3249E304D008942DF /* SystemProfileInfoViewController.swift */,
 				99115DC4249E304D008942DF /* SystemProfileInfoViewController.xib */,
 				999453EA24ED5BF10043C542 /* SystemProfileInfoTableCell.swift */,
+				992DDC972A698AF9002FCEC2 /* CoppiceProPreferencesViewController.swift */,
 			);
 			path = Preferences;
 			sourceTree = "<group>";
@@ -1344,14 +1370,7 @@
 		996187FE249BB61D007313BD /* Subscription */ = {
 			isa = PBXGroup;
 			children = (
-				9999A23724F93796001F8161 /* CoppiceProViewController.swift */,
-				9999A23824F93796001F8161 /* CoppiceProViewController.xib */,
-				9999A23F24F950E7001F8161 /* DeactivatedSubscriptionViewController.swift */,
-				9999A24024F950E7001F8161 /* DeactivatedSubscriptionViewController.xib */,
-				9999A23B24F937B6001F8161 /* ActivatedSubscriptionViewController.swift */,
-				9999A23C24F937B6001F8161 /* ActivatedSubscriptionViewController.xib */,
-				995B4B7C261B390F00F2AD01 /* RenameDeviceViewController.swift */,
-				995B4B7D261B390F00F2AD01 /* RenameDeviceViewController.xib */,
+				992DDC962A698AA7002FCEC2 /* Coppice Pro UI */,
 				9999A23524F93052001F8161 /* CoppiceSubscriptionManager.swift */,
 				990F61A625222C2D00FA5A27 /* Subscriptions+LocalizedStrings.swift */,
 				99D329B725224B0200E15683 /* Too Many Devices */,
@@ -1786,7 +1805,7 @@
 				99C865222302E267004C7B89 /* ImageEditorViewModel.swift */,
 				99C8651E2302E256004C7B89 /* ImageEditorViewController.swift */,
 				99C8651F2302E256004C7B89 /* ImageEditorViewController.xib */,
-				99146A2924EEAB6200A2AE48 /* ImageEditorPlaceholderView.swift */,
+				99146A2924EEAB6200A2AE48 /* DropablePlaceholderView.swift */,
 				9973EC5427E6304400E388A0 /* ImageEditorLinkEditor.swift */,
 				9918674B27A445B100A1CC3E /* View Mode */,
 				9918674227A4303300A1CC3E /* Crop Mode */,
@@ -2380,7 +2399,6 @@
 				990B81A82724182000628E0B /* LinkUpgradeViewController.xib in Resources */,
 				99C8650D23016EE5004C7B89 /* TextEditorViewController.xib in Resources */,
 				99D8E382237EDB890098CF3B /* InspectorContainerViewController.xib in Resources */,
-				9999A23A24F93796001F8161 /* CoppiceProViewController.xib in Resources */,
 				99C865212302E256004C7B89 /* ImageEditorViewController.xib in Resources */,
 				992A5CA622DDF4C50012CCB6 /* EditorContainerViewController.xib in Resources */,
 				991B5F442541E32B002C483C /* HelpViewerWindowController.xib in Resources */,
@@ -2388,20 +2406,20 @@
 				999007E524CF474300DB5C13 /* TourLinksView.xib in Resources */,
 				99FDF12D241FD53D00AF1E51 /* CanvasesView.xib in Resources */,
 				992A5CAF22DDF50F0012CCB6 /* DebugPageEditor.xib in Resources */,
-				9999A24224F950E7001F8161 /* DeactivatedSubscriptionViewController.xib in Resources */,
 				99D507352501538E00670139 /* ErrorPopoverViewController.xib in Resources */,
 				996187F9249A6E72007313BD /* UpdatePreferencesViewController.xib in Resources */,
 				99D329BB25224B1800E15683 /* TooManyDevicesView.xib in Resources */,
 				999007F324D06C7000DB5C13 /* TourBranches.mp4 in Resources */,
 				999007D524CF458900DB5C13 /* TourWindow.xib in Resources */,
-				9999A23E24F937B6001F8161 /* ActivatedSubscriptionViewController.xib in Resources */,
 				9958108F230D909900D996C4 /* TestCanvasPageViewController.xib in Resources */,
 				99BC4320250935B70032D7A3 /* sparkle_dsa_pub.pem in Resources */,
 				999453F124ED698D0043C542 /* SimpleLabelPopoverViewController.xib in Resources */,
 				99868F362396AD73009AC0F7 /* ImageEditorInspectorContentView.xib in Resources */,
 				999EA6B52436097500BF254E /* SidebarView.xib in Resources */,
+				992DDC9C2A698C6D002FCEC2 /* CoppiceProViewController.xib in Resources */,
 				992A5CAB22DDF5000012CCB6 /* DebugCanvasEditor.xib in Resources */,
 				992A5C9622DCB7790012CCB6 /* SourceListView.xib in Resources */,
+				992DDCA92A69A6BE002FCEC2 /* ActivatedCoppiceProContentViewController.xib in Resources */,
 				999007D924CF472100DB5C13 /* TourWelcomeView.xib in Resources */,
 				991B5F562541E37E002C483C /* HelpTopicViewController.xib in Resources */,
 				99D8E37C237EDB890098CF3B /* CanvasInspectorContentView.xib in Resources */,
@@ -2426,6 +2444,7 @@
 				995F931D252B654A00A753E4 /* Sample Document.coppicedoc in Resources */,
 				999007F124D0607C00DB5C13 /* Tour.xcassets in Resources */,
 				999EA68D2433913A00BF254E /* Info.plist.prefix in Resources */,
+				992DDCA12A69A6A0002FCEC2 /* LoginCoppiceProContentViewController.xib in Resources */,
 				999EA6C1243628E500BF254E /* SearchResultTableCellView.xib in Resources */,
 				99C03F09232A99F400EB7516 /* Cursors.xcassets in Resources */,
 				99B65D022562C1B8001DE408 /* Coppice.helpbook in Resources */,
@@ -2446,8 +2465,8 @@
 				99FE019B22CD1038004D380D /* MainMenu.xib in Resources */,
 				9981E6D024C05811005AF0EE /* AboutWindow.xib in Resources */,
 				9970977623B93A5800CD189B /* Icons.xcassets in Resources */,
+				992DDCA52A69A6AF002FCEC2 /* LicenceCoppiceProContentViewController.xib in Resources */,
 				99ECA0B726496F7D00480C19 /* PageSelectorContentTableCellView.xib in Resources */,
-				995B4B7F261B390F00F2AD01 /* RenameDeviceViewController.xib in Resources */,
 				99488AF123C8D5B0009954AF /* Colours.xcassets in Resources */,
 				9918674A27A445AD00A1CC3E /* ImageEditorViewModeViewController.xib in Resources */,
 				9998B4E8251642D900E2D455 /* LinksHelp.mp4 in Resources */,
@@ -2563,6 +2582,7 @@
 			files = (
 				9914C8E5271097E400654689 /* NSShadow+M3Extensions.swift in Sources */,
 				990B543927D8FE8F004FDA93 /* ImageEditorHotspotView.swift in Sources */,
+				992DDCA82A69A6BE002FCEC2 /* ActivatedCoppiceProContentViewController.swift in Sources */,
 				9981E6CF24C05811005AF0EE /* AboutWindowController.swift in Sources */,
 				992A5CAA22DDF5000012CCB6 /* DebugCanvasEditor.swift in Sources */,
 				99C865292306D141004C7B89 /* PageSelectorViewController.swift in Sources */,
@@ -2590,7 +2610,6 @@
 				9981E6D924C0AE1F005AF0EE /* RecentDocumentTableCellView.swift in Sources */,
 				99837D122933B0E4001A2AC7 /* CanvasPagesAccessibilityRotor.swift in Sources */,
 				99C9006425794AE700969E92 /* TextEditorParagraphInspectorViewModel.swift in Sources */,
-				9999A23D24F937B6001F8161 /* ActivatedSubscriptionViewController.swift in Sources */,
 				99837D222934F893001A2AC7 /* CanvasEditorItem.swift in Sources */,
 				991B60AF25432140002C483C /* NavigationStack.swift in Sources */,
 				993D2C0024157196002E5BAC /* SourceListOutlineView.swift in Sources */,
@@ -2598,6 +2617,7 @@
 				99837D142933B158001A2AC7 /* CanvasLinksAccessibilityRotor.swift in Sources */,
 				9986874E253F079B004B29B0 /* DocumentWindowController+TouchBar.swift in Sources */,
 				991B6087254311BC002C483C /* HelpContentViewController.swift in Sources */,
+				992DDC9B2A698C6D002FCEC2 /* CoppiceProViewController.swift in Sources */,
 				991B60C6254334F2002C483C /* HelpSearchResultTableCellView.swift in Sources */,
 				998D077B2411513F004ADFF8 /* NewPageMenuDelegate.swift in Sources */,
 				99F77A2527C94D2B009D7FF7 /* ImageEditorRectangleHotspot.swift in Sources */,
@@ -2631,7 +2651,6 @@
 				99AD88A5237B1700000453E1 /* DocumentWindowViewModel.swift in Sources */,
 				99837D1C2933B274001A2AC7 /* CanvasAccessibilityRotor.swift in Sources */,
 				99488AAE23C37B98009954AF /* CanvasThumbnailGenerator.swift in Sources */,
-				995B4B7E261B390F00F2AD01 /* RenameDeviceViewController.swift in Sources */,
 				99F0A73125D16CEB00C9D2C4 /* CanvasImageGenerator.swift in Sources */,
 				993D2BF92412B053002E5BAC /* NestableSplitView.swift in Sources */,
 				99E93E2923D32F15004CF4BB /* ColourGridView.swift in Sources */,
@@ -2663,7 +2682,6 @@
 				993D2BFE2412FB1C002E5BAC /* SplitViewContainable.swift in Sources */,
 				990B81A72724181F00628E0B /* LinkUpgradeViewController.swift in Sources */,
 				99A97FF72476ABD500CDD95C /* SearchResultTableCellView.swift in Sources */,
-				9999A24124F950E7001F8161 /* DeactivatedSubscriptionViewController.swift in Sources */,
 				992A5CAE22DDF50F0012CCB6 /* DebugPageEditor.swift in Sources */,
 				99D8E37D237EDB890098CF3B /* CanvasInspectorViewController.swift in Sources */,
 				99D329BA25224B1800E15683 /* TooManyDevicesViewController.swift in Sources */,
@@ -2710,11 +2728,11 @@
 				991B60B72543320C002C483C /* HelpSearchResultsViewController.swift in Sources */,
 				9985F4D923F2E13600B96DC7 /* CanvasPageTitleView.swift in Sources */,
 				99F6BD2327C3EEC800E5AD20 /* ImageEditorHotspotLayoutEngine.swift in Sources */,
+				992DDCA02A69A6A0002FCEC2 /* LoginCoppiceProContentViewController.swift in Sources */,
 				99FE019122CD1037004D380D /* AppDelegate.swift in Sources */,
 				9960216727F9DA1D00B35B1B /* ImagePageLinkManager.swift in Sources */,
 				992710C424D1A29200C7C61A /* TourInterfaceView.swift in Sources */,
 				99A0B857238D6F74005FCF25 /* NSTextView+M3Extensions.swift in Sources */,
-				9999A23924F93796001F8161 /* CoppiceProViewController.swift in Sources */,
 				9998B4EA251643D700E2D455 /* HelpTipPresenter.swift in Sources */,
 				99B3474C2465846900B96B71 /* PixelPerfectTableView.swift in Sources */,
 				99A41FA228BCF07800C95F68 /* HighlightedCharacterView.swift in Sources */,
@@ -2736,7 +2754,7 @@
 				99488ACE23C78087009954AF /* EditableLabelCell.swift in Sources */,
 				999007EC24CF475900DB5C13 /* TourGetStartedViewController.swift in Sources */,
 				9998B4E525163FAB00E2D455 /* HelpTipViewController.swift in Sources */,
-				99146A2A24EEAB6200A2AE48 /* ImageEditorPlaceholderView.swift in Sources */,
+				99146A2A24EEAB6200A2AE48 /* DropablePlaceholderView.swift in Sources */,
 				998D0779241137A3004ADFF8 /* RectDrawingView.swift in Sources */,
 				99D8E39323800FB90098CF3B /* BaseInspectorViewModel.swift in Sources */,
 				99582817247702B300080593 /* MovableHandleAccessibilityElement.swift in Sources */,
@@ -2753,6 +2771,7 @@
 				99146A2E24F016DC00A2AE48 /* SpringLoadedTableView.swift in Sources */,
 				992A5C9F22DCCDB30012CCB6 /* NSView+M3Extensions.swift in Sources */,
 				99868F4523995739009AC0F7 /* TextPageLinkManager.swift in Sources */,
+				992DDCA42A69A6AF002FCEC2 /* LicenceCoppiceProContentViewController.swift in Sources */,
 				99C4FBE126C94F11009D035D /* PageSelectorDividerTableCellView.swift in Sources */,
 				99771190239A95C300FCC8C7 /* TextLinkFinder.swift in Sources */,
 				9985F4DB23F44AAD00B96DC7 /* CanvasPageBackgroundView.swift in Sources */,
@@ -2764,6 +2783,7 @@
 				99D8E385237EDCD50098CF3B /* Inspector.swift in Sources */,
 				99868730253C719D004B29B0 /* ZoomMenuDelegate.swift in Sources */,
 				99D8E37E237EDB890098CF3B /* CanvasInspectorViewModel.swift in Sources */,
+				992DDC982A698AF9002FCEC2 /* CoppiceProPreferencesViewController.swift in Sources */,
 				99A061D6264953A20050CC25 /* PageSelectorTableViewDataSource.swift in Sources */,
 				99902260241FDD52009A8446 /* NoCanvasViewController.swift in Sources */,
 				992A5CA222DDF4B60012CCB6 /* EditorContainerViewModel.swift in Sources */,

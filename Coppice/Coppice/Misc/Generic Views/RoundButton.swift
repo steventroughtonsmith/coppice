@@ -10,6 +10,7 @@ import AppKit
 
 class RoundButton: NSButton {
     @IBInspectable var borderColour: NSColor = .white.withAlphaComponent(0.5)
+    @IBInspectable var fillColour: NSColor = .clear
 
     override class var cellClass: AnyClass? {
         get {
@@ -21,8 +22,18 @@ class RoundButton: NSButton {
 
 class RoundButtonCell: NSButtonCell {
     override func drawBezel(withFrame cellFrame: NSRect, in controlView: NSView) {
+        guard let roundButton = controlView as? RoundButton else {
+            return
+        }
+
         let horizontalInset: CGFloat = (self.imagePosition == .noImage) ? 6 : 6
         let pathFrame = cellFrame.insetBy(NSEdgeInsets(top: 2, left: horizontalInset, bottom: 4, right: horizontalInset))
+
+        let fillPath = NSBezierPath(roundedRect: pathFrame, xRadius: pathFrame.height / 2, yRadius: pathFrame.height / 2)
+        if roundButton.fillColour != .clear {
+            roundButton.fillColour.setFill()
+            fillPath.fill()
+        }
 
         if self.isHighlighted {
             if controlView.effectiveAppearance.isDarkMode {
@@ -30,10 +41,10 @@ class RoundButtonCell: NSButtonCell {
             } else {
                 NSColor.black.withAlphaComponent(0.15).setFill()
             }
-            NSBezierPath(roundedRect: pathFrame, xRadius: pathFrame.height / 2, yRadius: pathFrame.height / 2).fill()
+            fillPath.fill()
         }
 
-        let colour = (controlView as? RoundButton)?.borderColour ?? NSColor.controlColor
+        let colour = roundButton.borderColour
         colour.setStroke()
         let path = NSBezierPath(roundedRect: pathFrame.insetBy(dx: 0.5, dy: 0.5), xRadius: pathFrame.height / 2, yRadius: pathFrame.height / 2)
         path.lineWidth = 1

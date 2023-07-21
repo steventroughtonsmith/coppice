@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="22138.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22138.1"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="LoginCoppiceProContentViewController" customModule="Coppice" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="250" height="158"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="k2g-Bi-iPz">
+                    <rect key="frame" x="0.0" y="66" width="250" height="92"/>
+                    <subviews>
+                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nqk-WD-tIJ">
+                            <rect key="frame" x="-2" y="76" width="39" height="16"/>
+                            <textFieldCell key="cell" lineBreakMode="clipping" title="Email" id="Vii-B4-LuF">
+                                <font key="font" metaFont="systemSemibold" size="13"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pCT-lS-Cyn">
+                            <rect key="frame" x="-2" y="26" width="66" height="16"/>
+                            <textFieldCell key="cell" lineBreakMode="clipping" title="Password" id="PrY-Ai-EsP">
+                                <font key="font" metaFont="systemSemibold" size="13"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CkH-uj-oWG">
+                            <rect key="frame" x="0.0" y="50" width="250" height="22"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" bezelStyle="round" id="5ok-Uh-6S4">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <secureTextField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wVk-iW-s06">
+                            <rect key="frame" x="0.0" y="0.0" width="250" height="22"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="250" id="A50-eB-aKh"/>
+                            </constraints>
+                            <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" usesSingleLineMode="YES" bezelStyle="round" id="5E5-3S-bQP">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                <allowedInputSourceLocales>
+                                    <string>NSAllRomanInputSourcesLocaleIdentifier</string>
+                                </allowedInputSourceLocales>
+                            </secureTextFieldCell>
+                        </secureTextField>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="CkH-uj-oWG" firstAttribute="leading" secondItem="k2g-Bi-iPz" secondAttribute="leading" id="3r0-lF-KAd"/>
+                        <constraint firstItem="CkH-uj-oWG" firstAttribute="top" secondItem="nqk-WD-tIJ" secondAttribute="bottom" constant="4" id="44D-65-2RH"/>
+                        <constraint firstAttribute="trailing" secondItem="CkH-uj-oWG" secondAttribute="trailing" id="82J-TC-iYb"/>
+                        <constraint firstItem="wVk-iW-s06" firstAttribute="leading" secondItem="k2g-Bi-iPz" secondAttribute="leading" id="Af1-ZM-BPu"/>
+                        <constraint firstItem="nqk-WD-tIJ" firstAttribute="top" secondItem="k2g-Bi-iPz" secondAttribute="top" id="LhS-5U-StF"/>
+                        <constraint firstItem="wVk-iW-s06" firstAttribute="top" secondItem="pCT-lS-Cyn" secondAttribute="bottom" constant="4" id="TbY-Da-r7F"/>
+                        <constraint firstItem="pCT-lS-Cyn" firstAttribute="leading" secondItem="k2g-Bi-iPz" secondAttribute="leading" id="bAv-Oh-x83"/>
+                        <constraint firstItem="pCT-lS-Cyn" firstAttribute="top" secondItem="CkH-uj-oWG" secondAttribute="bottom" constant="8" id="bny-xN-4FP"/>
+                        <constraint firstAttribute="trailing" secondItem="wVk-iW-s06" secondAttribute="trailing" id="dfl-jU-sRi"/>
+                        <constraint firstItem="nqk-WD-tIJ" firstAttribute="leading" secondItem="k2g-Bi-iPz" secondAttribute="leading" id="r7p-tX-D71"/>
+                        <constraint firstAttribute="bottom" secondItem="wVk-iW-s06" secondAttribute="bottom" id="wa1-g9-mCn"/>
+                    </constraints>
+                </customView>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Loe-W3-dnh" customClass="RoundButton" customModule="Coppice" customModuleProvider="target">
+                    <rect key="frame" x="59" y="19" width="133" height="32"/>
+                    <buttonCell key="cell" type="push" title="Activate Device" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="iiw-uG-63W" customClass="RoundButtonCell" customModule="Coppice" customModuleProvider="target">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="systemSemibold" size="13"/>
+                    </buttonCell>
+                    <color key="bezelColor" name="CoppiceGreen"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="color" keyPath="borderColour">
+                            <color key="value" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="fillColour">
+                            <color key="value" name="CoppiceGreen"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstItem="k2g-Bi-iPz" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="UjR-f5-dz9"/>
+                <constraint firstItem="Loe-W3-dnh" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="ZXx-vG-qSK"/>
+                <constraint firstItem="Loe-W3-dnh" firstAttribute="top" secondItem="k2g-Bi-iPz" secondAttribute="bottom" constant="20" id="beh-ut-TwM"/>
+                <constraint firstAttribute="trailing" secondItem="k2g-Bi-iPz" secondAttribute="trailing" id="dov-cK-M6e"/>
+                <constraint firstItem="k2g-Bi-iPz" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="fvl-Ww-6VX"/>
+                <constraint firstItem="k2g-Bi-iPz" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="vBe-4v-wUf"/>
+            </constraints>
+            <point key="canvasLocation" x="49" y="97"/>
+        </customView>
+    </objects>
+    <resources>
+        <namedColor name="CoppiceGreen">
+            <color red="0.094117647058823528" green="0.52549019607843139" blue="0.062745098039215685" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

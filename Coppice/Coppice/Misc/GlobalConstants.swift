@@ -28,6 +28,13 @@ extension NSColor {
     static let pageEditorBackground = NSColor(named: "PageEditorBackground") ?? .windowBackgroundColor
 }
 
+extension URL {
+    static let termsAndConditions = URL(string: "https://mcubedsw.com/terms")!
+    static let privacyPolicy = URL(string: "https://mcubedsw.com/privacy")!
+    static let coppicePro = URL(string: "https://mcubedsw.com/coppice#pro")!
+    static let mcubedAccount = URL(string: "https://mcubedsw.com/account")!
+}
+
 
 
 enum SidebarSize: String, CaseIterable {
