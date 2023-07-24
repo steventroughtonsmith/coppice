@@ -1,5 +1,5 @@
 //
-//  ActivateAPI.swift
+//  ActivateAPIV1.swift
 //  M3Subscriptions
 //
 //  Created by Martin Pilkington on 07/06/2020.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ActivateAPI {
+struct ActivateAPIV1 {
     let networkAdapter: NetworkAdapter
     let request: ActivationRequest
     let device: Device

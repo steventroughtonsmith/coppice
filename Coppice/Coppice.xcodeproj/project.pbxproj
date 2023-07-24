@@ -30,6 +30,7 @@
 		990B81A72724181F00628E0B /* LinkUpgradeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990B81A52724181F00628E0B /* LinkUpgradeViewController.swift */; };
 		990B81A82724182000628E0B /* LinkUpgradeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 990B81A62724181F00628E0B /* LinkUpgradeViewController.xib */; };
 		990D2441235DEFE2001B1FD9 /* PageArrowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990D2440235DEFE2001B1FD9 /* PageArrowView.swift */; };
+		990ED5CF2A6D5C99008A741B /* CoppiceProViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990ED5CE2A6D5C99008A741B /* CoppiceProViewModel.swift */; };
 		990F61A425222A3E00FA5A27 /* MultipleSubscriptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F61A225222A3E00FA5A27 /* MultipleSubscriptionsViewController.swift */; };
 		990F61A525222A3E00FA5A27 /* MultipleSubscriptionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 990F61A325222A3E00FA5A27 /* MultipleSubscriptionsView.xib */; };
 		990F61A725222C2D00FA5A27 /* Subscriptions+LocalizedStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F61A625222C2D00FA5A27 /* Subscriptions+LocalizedStrings.swift */; };
@@ -520,6 +521,7 @@
 		990B81A52724181F00628E0B /* LinkUpgradeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkUpgradeViewController.swift; sourceTree = "<group>"; };
 		990B81A62724181F00628E0B /* LinkUpgradeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LinkUpgradeViewController.xib; sourceTree = "<group>"; };
 		990D2440235DEFE2001B1FD9 /* PageArrowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageArrowView.swift; sourceTree = "<group>"; };
+		990ED5CE2A6D5C99008A741B /* CoppiceProViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoppiceProViewModel.swift; sourceTree = "<group>"; };
 		990F61A225222A3E00FA5A27 /* MultipleSubscriptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleSubscriptionsViewController.swift; sourceTree = "<group>"; };
 		990F61A325222A3E00FA5A27 /* MultipleSubscriptionsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MultipleSubscriptionsView.xib; sourceTree = "<group>"; };
 		990F61A625222C2D00FA5A27 /* Subscriptions+LocalizedStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Subscriptions+LocalizedStrings.swift"; sourceTree = "<group>"; };
@@ -1194,6 +1196,7 @@
 		992DDC962A698AA7002FCEC2 /* Coppice Pro UI */ = {
 			isa = PBXGroup;
 			children = (
+				990ED5CE2A6D5C99008A741B /* CoppiceProViewModel.swift */,
 				992DDC992A698C6D002FCEC2 /* CoppiceProViewController.swift */,
 				992DDC9A2A698C6D002FCEC2 /* CoppiceProViewController.xib */,
 				992DDC9D2A69A680002FCEC2 /* Content View Controllers */,
@@ -2800,6 +2803,7 @@
 				993D2BD824127E29002E5BAC /* CanvasListViewController.swift in Sources */,
 				999EA6BA243619E700BF254E /* SearchResultsViewModel.swift in Sources */,
 				99C8650F23017222004C7B89 /* TextEditorViewController.swift in Sources */,
+				990ED5CF2A6D5C99008A741B /* CoppiceProViewModel.swift in Sources */,
 				992A5CB122DDF5210012CCB6 /* DebugCanvasEditorViewModel.swift in Sources */,
 				990B543D27DF9E1B004FDA93 /* TranslucentSegmentedControl.swift in Sources */,
 				992A5C9C22DCC6090012CCB6 /* SourceListViewModel.swift in Sources */,

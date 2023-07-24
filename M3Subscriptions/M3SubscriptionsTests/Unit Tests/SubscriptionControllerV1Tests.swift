@@ -1,5 +1,5 @@
 //
-//  SubscriptionController.swift
+//  SubscriptionControllerV1Tests.swift
 //  M3SubscriptionsTests
 //
 //  Created by Martin Pilkington on 11/06/2020.
@@ -9,17 +9,17 @@
 @testable import M3Subscriptions
 import XCTest
 
-class SubscriptionControllerTests: APITestCase {
+class SubscriptionControllerV1Tests: APITestCase {
     var licenceURL: URL!
-    var mockAPI: MockSubscriptionAPI!
-    var controller: SubscriptionController!
+    var mockAPI: MockSubscriptionAPIV1!
+    var controller: SubscriptionController.V1!
 
     override func setUpWithError() throws {
         try super.setUpWithError()
         self.licenceURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("com.mcubedsw.subscriptions").appendingPathComponent("licence.txt")
         try FileManager.default.createDirectory(at: self.licenceURL.deletingLastPathComponent(), withIntermediateDirectories: true, attributes: nil)
-        self.mockAPI = MockSubscriptionAPI()
-        self.controller = SubscriptionController(licenceURL: self.licenceURL, subscriptionAPI: self.mockAPI)
+        self.mockAPI = MockSubscriptionAPIV1()
+        self.controller = SubscriptionController.V1(activationDetailsURL: self.licenceURL, subscriptionAPI: self.mockAPI)
     }
 
     override func tearDownWithError() throws {

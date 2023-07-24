@@ -9,6 +9,16 @@
 import Cocoa
 
 class LicenceCoppiceProContentViewController: NSViewController {
+    let viewModel: CoppiceProViewModel
+    init(viewModel: CoppiceProViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: "LicenceCoppiceProContentViewController", bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     @IBOutlet weak var placeholderView: DropablePlaceholderView! {
         didSet {
             self.placeholderView.delegate = self
@@ -21,19 +31,15 @@ class LicenceCoppiceProContentViewController: NSViewController {
         // Do view setup here.
     }
 
-    //TODO
-    //- On drop, check licence
-    //- Send to server to activate
-    //- On Success
-        //Activate
-    //- On network or server failure
-        //Use licence
-    //- On too many devices
-        //fetch device list
-        //on cancel don't activate
-        //on select
-            //deactivate selected device
-            //activate
+    private func activate(with url: URL) {
+        Task {
+            do {
+                try await self.viewModel.activate(withLicenceAtURL: url)
+            } catch {
+                //TODO: Handle errors
+            }
+        }
+    }
 }
 
 extension LicenceCoppiceProContentViewController: DropablePlaceholderViewDelegate {
@@ -52,14 +58,18 @@ extension LicenceCoppiceProContentViewController: DropablePlaceholderViewDelegat
             .compactMap { URL(dataRepresentation: $0, relativeTo: nil) }
             .filter { $0.pathExtension == "coppicelicence" }
 
-        print("URL: \(urls.first)")
+        guard urls.count == 1 else {
+            return false
+        }
+
+        self.activate(with: urls[0])
         return true
     }
 }
 
 extension LicenceCoppiceProContentViewController: CoppiceProContentView {
     var leftActionTitle: String {
-        return "Deactivate Device"
+        return "Use M Cubed Account"
     }
 
     var leftActionIcon: NSImage {
@@ -67,7 +77,7 @@ extension LicenceCoppiceProContentViewController: CoppiceProContentView {
     }
 
     func performLeftAction(in viewController: CoppiceProViewController) {
-        viewController.currentContentView = .login
+        self.viewModel.switchToLogin()
     }
 
     var rightActionTitle: String {

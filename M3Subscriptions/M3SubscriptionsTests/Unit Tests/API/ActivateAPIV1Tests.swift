@@ -1,5 +1,5 @@
 //
-//  ActivateAPITests.swift
+//  ActivateAPIV1Tests.swift
 //  M3SubscriptionsTests
 //
 //  Created by Martin Pilkington on 08/06/2020.
@@ -9,11 +9,11 @@
 @testable import M3Subscriptions
 import XCTest
 
-class ActivateAPITests: APITestCase {
-    func test_run_calling_requestsActivateAPIEndpoint() async throws {
+class ActivateAPIV1Tests: APITestCase {
+    func test_run_calling_requestsActivateAPIV1Endpoint() async throws {
         let mockAdapter = MockNetworkAdapter()
         let request = ActivationRequest(email: "foo@bar.com", password: "123456", bundleID: "com.mcubedsw.Coppice")
-        let api = ActivateAPI(networkAdapter: mockAdapter, request: request, device: Device(name: "Foobar"))
+        let api = ActivateAPIV1(networkAdapter: mockAdapter, request: request, device: Device(name: "Foobar"))
         _ = try? await api.run()
 
         XCTAssertEqual(mockAdapter.calledEndpoint, "activate")
@@ -22,7 +22,7 @@ class ActivateAPITests: APITestCase {
     func test_run_calling_usesPOSTMethod() async throws {
         let mockAdapter = MockNetworkAdapter()
         let request = ActivationRequest(email: "foo@bar.com", password: "123456", bundleID: "com.mcubedsw.Coppice")
-        let api = ActivateAPI(networkAdapter: mockAdapter, request: request, device: Device(name: "Foobar"))
+        let api = ActivateAPIV1(networkAdapter: mockAdapter, request: request, device: Device(name: "Foobar"))
         _ = try? await api.run()
 
         XCTAssertEqual(mockAdapter.calledMethod, "POST")
@@ -31,7 +31,7 @@ class ActivateAPITests: APITestCase {
     func test_run_calling_setsEmail_PasswordAndBundleIDJSONOnBody() async throws {
         let mockAdapter = MockNetworkAdapter()
         let request = ActivationRequest(email: "foo@bar.com", password: "123456", bundleID: "com.mcubedsw.Coppice")
-        let api = ActivateAPI(networkAdapter: mockAdapter, request: request, device: Device(name: "Foobar"))
+        let api = ActivateAPIV1(networkAdapter: mockAdapter, request: request, device: Device(name: "Foobar"))
         _ = try? await api.run()
 
         let calledBody = try XCTUnwrap(mockAdapter.calledBody)
@@ -44,7 +44,7 @@ class ActivateAPITests: APITestCase {
         let mockAdapter = MockNetworkAdapter()
         let request = ActivationRequest(email: "foo@bar.com", password: "123456", bundleID: "com.mcubedsw.Coppice")
         let device = Device(name: "Foo Bar Baz")
-        let api = ActivateAPI(networkAdapter: mockAdapter, request: request, device: device)
+        let api = ActivateAPIV1(networkAdapter: mockAdapter, request: request, device: device)
         _ = try? await api.run()
 
         let calledBody = try XCTUnwrap(mockAdapter.calledBody)
@@ -57,7 +57,7 @@ class ActivateAPITests: APITestCase {
     func test_run_calling_setsSubscriptionIDJSONOnBodyIfSetInActivationRequest() async throws {
         let mockAdapter = MockNetworkAdapter()
         let request = ActivationRequest(email: "foo@bar.com", password: "123456", bundleID: "com.mcubedsw.Coppice", subscriptionID: "Sub123")
-        let api = ActivateAPI(networkAdapter: mockAdapter, request: request, device: Device(name: "Foobar"))
+        let api = ActivateAPIV1(networkAdapter: mockAdapter, request: request, device: Device(name: "Foobar"))
         _ = try? await api.run()
 
         let calledBody = try XCTUnwrap(mockAdapter.calledBody)
@@ -67,7 +67,7 @@ class ActivateAPITests: APITestCase {
     func test_run_calling_doesntSetSubscriptionIDJSONOnBodyIfNotSetOnActivationRequest() async throws {
         let mockAdapter = MockNetworkAdapter()
         let request = ActivationRequest(email: "foo@bar.com", password: "123456", bundleID: "com.mcubedsw.Coppice")
-        let api = ActivateAPI(networkAdapter: mockAdapter, request: request, device: Device(name: "Foobar"))
+        let api = ActivateAPIV1(networkAdapter: mockAdapter, request: request, device: Device(name: "Foobar"))
         _ = try? await api.run()
 
         let calledBody = try XCTUnwrap(mockAdapter.calledBody)
@@ -77,7 +77,7 @@ class ActivateAPITests: APITestCase {
     func test_run_calling_setsDeviceDeactivationTokenJSONOnBodyIfSetInActivationRequest() async throws {
         let mockAdapter = MockNetworkAdapter()
         let request = ActivationRequest(email: "foo@bar.com", password: "123456", bundleID: "com.mcubedsw.Coppice", deviceDeactivationToken: "Deactivate987")
-        let api = ActivateAPI(networkAdapter: mockAdapter, request: request, device: Device(name: "Foobar"))
+        let api = ActivateAPIV1(networkAdapter: mockAdapter, request: request, device: Device(name: "Foobar"))
         _ = try? await api.run()
 
         let calledBody = try XCTUnwrap(mockAdapter.calledBody)
@@ -87,7 +87,7 @@ class ActivateAPITests: APITestCase {
     func test_run_calling_doesntSetDeviceDeactivationTokenJSONOnBodyIfNotSetOnActivationRequest() async throws {
         let mockAdapter = MockNetworkAdapter()
         let request = ActivationRequest(email: "foo@bar.com", password: "123456", bundleID: "com.mcubedsw.Coppice")
-        let api = ActivateAPI(networkAdapter: mockAdapter, request: request, device: Device(name: "Foobar"))
+        let api = ActivateAPIV1(networkAdapter: mockAdapter, request: request, device: Device(name: "Foobar"))
         _ = try? await api.run()
 
         let calledBody = try XCTUnwrap(mockAdapter.calledBody)
@@ -104,10 +104,10 @@ class ActivateAPITests: APITestCase {
 
         let request = ActivationRequest(email: "foo@bar.com", password: "123456", bundleID: "com.mcubedsw.Coppice")
         let device = Device()
-        let api = ActivateAPI(networkAdapter: mockAdapter, request: request, device: device)
+        let api = ActivateAPIV1(networkAdapter: mockAdapter, request: request, device: device)
 
         await XCTAssertThrowsErrorAsync(try await api.run()) { error in
-            guard case ActivateAPI.Failure.invalidRequest = error else {
+            guard case ActivateAPIV1.Failure.invalidRequest = error else {
                 XCTFail("Result is not an invalidRequest error")
                 return
             }
@@ -122,10 +122,10 @@ class ActivateAPITests: APITestCase {
 
         let request = ActivationRequest(email: "foo@bar.com", password: "123456", bundleID: "com.mcubedsw.Coppice")
         let device = Device(name: "Foobar")
-        let api = ActivateAPI(networkAdapter: mockAdapter, request: request, device: device)
+        let api = ActivateAPIV1(networkAdapter: mockAdapter, request: request, device: device)
 
         await XCTAssertThrowsErrorAsync(try await api.run()) { error in
-            guard case ActivateAPI.Failure.generic(let genericError) = error else {
+            guard case ActivateAPIV1.Failure.generic(let genericError) = error else {
                 XCTFail("Result is not an generic error")
                 return
             }
@@ -144,10 +144,10 @@ class ActivateAPITests: APITestCase {
 
         let request = ActivationRequest(email: "foo@bar.com", password: "123456", bundleID: "com.mcubedsw.Coppice")
         let device = Device(name: "Foobar")
-        let api = ActivateAPI(networkAdapter: mockAdapter, request: request, device: device)
+        let api = ActivateAPIV1(networkAdapter: mockAdapter, request: request, device: device)
 
         await XCTAssertThrowsErrorAsync(try await api.run()) { error in
-            guard case ActivateAPI.Failure.loginFailed = error else {
+            guard case ActivateAPIV1.Failure.loginFailed = error else {
                 XCTFail("Result is not an loginFailed error")
                 return
             }
@@ -167,11 +167,11 @@ class ActivateAPITests: APITestCase {
 
         let request = ActivationRequest(email: "foo@bar.com", password: "123456", bundleID: "com.mcubedsw.Coppice")
         let device = Device(name: "Foobar")
-        let api = ActivateAPI(networkAdapter: mockAdapter, request: request, device: device)
+        let api = ActivateAPIV1(networkAdapter: mockAdapter, request: request, device: device)
 
         var subscriptions: [Subscription] = []
         await XCTAssertThrowsErrorAsync(try await api.run()) { error in
-            guard case ActivateAPI.Failure.multipleSubscriptions(let subs) = error else {
+            guard case ActivateAPIV1.Failure.multipleSubscriptions(let subs) = error else {
                 XCTFail("Result is not an multipleSubscriptions error")
                 return
             }
@@ -204,10 +204,10 @@ class ActivateAPITests: APITestCase {
 
         let request = ActivationRequest(email: "foo@bar.com", password: "123456", bundleID: "com.mcubedsw.Coppice")
         let device = Device(name: "Foobar")
-        let api = ActivateAPI(networkAdapter: mockAdapter, request: request, device: device)
+        let api = ActivateAPIV1(networkAdapter: mockAdapter, request: request, device: device)
 
         await XCTAssertThrowsErrorAsync(try await api.run()) { error in
-            guard case ActivateAPI.Failure.noSubscriptionFound = error else {
+            guard case ActivateAPIV1.Failure.noSubscriptionFound = error else {
                 XCTFail("Result is not an noSubscriptionFound error")
                 return
             }
@@ -228,11 +228,11 @@ class ActivateAPITests: APITestCase {
 
         let request = ActivationRequest(email: "foo@bar.com", password: "123456", bundleID: "com.mcubedsw.Coppice")
         let device = Device(name: "Foobar")
-        let api = ActivateAPI(networkAdapter: mockAdapter, request: request, device: device)
+        let api = ActivateAPIV1(networkAdapter: mockAdapter, request: request, device: device)
 
         var subscription: Subscription?
         await XCTAssertThrowsErrorAsync(try await api.run()) { error in
-            guard case ActivateAPI.Failure.subscriptionExpired(let sub) = error else {
+            guard case ActivateAPIV1.Failure.subscriptionExpired(let sub) = error else {
                 XCTFail("Result is not an subscriptionExpired error")
                 return
             }
@@ -259,11 +259,11 @@ class ActivateAPITests: APITestCase {
 
         let request = ActivationRequest(email: "foo@bar.com", password: "123456", bundleID: "com.mcubedsw.Coppice")
         let device = Device(name: "Foobar")
-        let api = ActivateAPI(networkAdapter: mockAdapter, request: request, device: device)
+        let api = ActivateAPIV1(networkAdapter: mockAdapter, request: request, device: device)
 
         var devices: [SubscriptionDevice] = []
         await XCTAssertThrowsErrorAsync(try await api.run()) { error in
-            guard case ActivateAPI.Failure.tooManyDevices(let device) = error else {
+            guard case ActivateAPIV1.Failure.tooManyDevices(let device) = error else {
                 XCTFail("Result is not an tooManyDevices error")
                 return
             }
@@ -308,7 +308,7 @@ class ActivateAPITests: APITestCase {
 
         let request = ActivationRequest(email: "foo@bar.com", password: "123456", bundleID: "com.mcubedsw.Coppice")
         let device = Device(name: "Foobar")
-        let api = ActivateAPI(networkAdapter: mockAdapter, request: request, device: device)
+        let api = ActivateAPIV1(networkAdapter: mockAdapter, request: request, device: device)
 
         let response = try await api.run()
 

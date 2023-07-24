@@ -9,6 +9,16 @@
 import Foundation
 
 public struct Subscription: Equatable {
+    public init(id: String? = nil, name: String, expirationDate: Date, hasExpired: Bool, renewalStatus: Subscription.RenewalStatus, maxDeviceCount: Int? = nil, currentDeviceCount: Int? = nil) {
+        self.id = id
+        self.name = name
+        self.expirationDate = expirationDate
+        self.hasExpired = hasExpired
+        self.renewalStatus = renewalStatus
+        self.maxDeviceCount = maxDeviceCount
+        self.currentDeviceCount = currentDeviceCount
+    }
+    
     public enum RenewalStatus: String {
         case unknown
         case renew
@@ -46,4 +56,6 @@ public struct Subscription: Equatable {
         self.maxDeviceCount = payload["maxDeviceCount"] as? Int
         self.currentDeviceCount = payload["currentDeviceCount"] as? Int
     }
+
+
 }

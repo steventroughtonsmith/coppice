@@ -9,6 +9,12 @@
 import Foundation
 
 public struct SubscriptionDevice: Equatable {
+    public init(deactivationToken: String, name: String, activationDate: Date) {
+        self.deactivationToken = deactivationToken
+        self.name = name
+        self.activationDate = activationDate
+    }
+    
     public var deactivationToken: String
     public var name: String
     public var activationDate: Date

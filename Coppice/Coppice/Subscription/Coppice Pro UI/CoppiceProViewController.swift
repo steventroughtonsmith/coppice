@@ -7,6 +7,8 @@
 //
 
 import Cocoa
+import Combine
+import M3Subscriptions
 
 protocol CoppiceProContentView: AnyObject {
     var leftActionTitle: String { get }
@@ -19,6 +21,20 @@ protocol CoppiceProContentView: AnyObject {
 }
 
 class CoppiceProViewController: NSViewController {
+    let viewModel: CoppiceProViewModel
+    init(viewModel: CoppiceProViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: "CoppiceProViewController", bundle: nil)
+        self.viewModel.view = self
+
+        self.setupSubscribers()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+
     @IBOutlet weak var headerBackground: CoppiceGreenView! {
         didSet {
             self.headerBackground.shape = .hillsBottom
@@ -28,21 +44,11 @@ class CoppiceProViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.currentContentViewController = self.currentContentView.viewController
+        self.currentContentViewController = self.viewModel.currentContentView.viewController(with: self.viewModel)
     }
 
 
     @IBOutlet weak var contentContainerView: NSView!
-
-    var currentContentView: ContentView = .activated {
-        didSet {
-            guard self.currentContentView != oldValue else {
-                return
-            }
-
-            self.currentContentViewController = self.currentContentView.viewController
-        }
-    }
 
     private var currentContentViewController: (NSViewController & CoppiceProContentView)? {
         didSet {
@@ -99,23 +105,71 @@ class CoppiceProViewController: NSViewController {
         self.rightButton.title = contentView.rightActionTitle
         self.rightButton.image = contentView.rightActionIcon
     }
+
+    //MARK: - Subscribers
+    private enum SubscriberKey {
+        case currentContentView
+    }
+
+    private var subscribers: [SubscriberKey: AnyCancellable] = [:]
+
+    private func setupSubscribers() {
+        self.subscribers[.currentContentView] = self.viewModel.$currentContentView.sink { [weak self] newContentView in
+            guard
+                let self,
+                newContentView != self.viewModel.currentContentView
+            else {
+                return
+            }
+
+            DispatchQueue.main.async {
+                self.currentContentViewController = newContentView.viewController(with: self.viewModel)
+            }
+        }
+    }
 }
 
-extension CoppiceProViewController {
-    enum ContentView {
-        case login
-        case licence
-        case activated
-
-        var viewController: (NSViewController & CoppiceProContentView) {
-            switch self {
-            case .login:
-                return LoginCoppiceProContentViewController()
-            case .licence:
-                return LicenceCoppiceProContentViewController()
-            case .activated:
-                return ActivatedCoppiceProContentViewController()
+extension CoppiceProViewController: CoppiceProView {
+    func selectSubscription(from subscriptions: [M3Subscriptions.Subscription]) async throws -> M3Subscriptions.Subscription {
+        return try await withCheckedThrowingContinuation { continuation in
+            Task { @MainActor in
+                let subscriptionVC = MultipleSubscriptionsViewController(subscriptions: subscriptions) { selectedSubscription in
+                    guard let selectedSubscription else {
+                        continuation.resume(throwing: CoppiceProViewModel.Error.userCancelled)
+                        return
+                    }
+                    continuation.resume(returning: selectedSubscription)
+                }
+                self.presentAsSheet(subscriptionVC)
             }
+        }
+    }
+
+    func deactivateDevice(from devices: [SubscriptionDevice]) async throws -> SubscriptionDevice {
+        return try await withCheckedThrowingContinuation { continuation in
+            Task { @MainActor in
+                let devicesVC = TooManyDevicesViewController(devices: devices) { selectedDevice in
+                    guard let selectedDevice else {
+                        continuation.resume(throwing: CoppiceProViewModel.Error.userCancelled)
+                        return
+                    }
+                    continuation.resume(returning: selectedDevice)
+                }
+                self.presentAsSheet(devicesVC)
+            }
+        }
+    }
+}
+
+extension CoppiceProViewModel.ContentView {
+    func viewController(with viewModel: CoppiceProViewModel) -> (NSViewController & CoppiceProContentView) {
+        switch self {
+        case .login:
+            return LoginCoppiceProContentViewController(viewModel: viewModel)
+        case .licence:
+            return LicenceCoppiceProContentViewController(viewModel: viewModel)
+        case .activated:
+            return ActivatedCoppiceProContentViewController(viewModel: viewModel)
         }
     }
 }

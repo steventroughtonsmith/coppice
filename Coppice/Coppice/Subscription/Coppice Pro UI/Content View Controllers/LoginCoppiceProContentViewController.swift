@@ -9,32 +9,46 @@
 import Cocoa
 
 class LoginCoppiceProContentViewController: NSViewController {
+    let viewModel: CoppiceProViewModel
+    init(viewModel: CoppiceProViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: "LoginCoppiceProContentViewController", bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
     }
 
-    //TODO
-    //- On activate
-        //login
-        //on fail
-            //Show errors
-        //on success, get subscription list
-        //on fail
-            //show errors
-        //on >1 sub
-            //Show subs
-            //let user select
-            //on cancel, log out
-        //on success, activate
-        //on fail
-            //show errors
-        //on too many devices
-            //fetch device list
-            //on cancel, log out
-            //on selection, deactivate device
-            //attempt activation again
-        //on success finish activation
+    //MARK: - Properties
+    @objc dynamic var email: String = ""
+    @objc dynamic var password: String = ""
+
+    @objc class func keyPathsForValuesAffectingActivateEnabled() -> Set<String> {
+        return [#keyPath(email), #keyPath(password)]
+    }
+
+    @objc dynamic var activateEnabled: Bool {
+        return !self.email.isEmpty && !self.password.isEmpty
+    }
+
+    //MARK: - Actions
+    @IBAction func activate(_ sender: NSButton) {
+        Task {
+            do {
+                try await self.viewModel.activateWithLogin(email: self.email, password: self.password)
+            } catch {
+                //TODO: Handle errors
+            }
+        }
+    }
+
+   
 }
 
 extension LoginCoppiceProContentViewController: CoppiceProContentView {
@@ -47,7 +61,7 @@ extension LoginCoppiceProContentViewController: CoppiceProContentView {
     }
 
     func performLeftAction(in viewController: CoppiceProViewController) {
-        viewController.currentContentView = .licence
+        self.viewModel.switchToLicence()
     }
 
     var rightActionTitle: String {

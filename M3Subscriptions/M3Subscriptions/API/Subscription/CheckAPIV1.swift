@@ -1,5 +1,5 @@
 //
-//  DeactivateAPI.swift
+//  CheckAPIV1.swift
 //  M3Subscriptions
 //
 //  Created by Martin Pilkington on 07/06/2020.
@@ -8,51 +8,56 @@
 
 import Foundation
 
-struct DeactivateAPI {
+struct CheckAPIV1 {
     let networkAdapter: NetworkAdapter
     let device: Device
     let token: String
 
     enum Failure: Error {
         case noDeviceFound
+        case noSubscriptionFound
+        case subscriptionExpired(Subscription?)
         case generic(Error?)
     }
 
     func run() async throws -> ActivationResponse {
-        #if DEBUG
         var body = [
-            "deviceID": self.device.id,
             "token": self.token,
+            "deviceType": self.device.type.rawValue,
+            "deviceID": self.device.id,
+            "version": self.device.appVersion,
         ]
-        if let debugString = APIDebugManager.shared.deactivateDebugString {
+        if let deviceName = self.device.name {
+            body["deviceName"] = deviceName
+        }
+
+        #if DEBUG
+        if let debugString = APIDebugManager.shared.checkDebugString {
             body["debug"] = debugString
         }
-        #else
-        let body = [
-            "deviceID": self.device.id,
-            "token": self.token,
-        ]
         #endif
 
         let data: APIData
         do {
-             data = try await self.networkAdapter.callAPI(endpoint: "deactivate", method: "POST", body: body)
+            data = try await self.networkAdapter.callAPI(endpoint: "check", method: "POST", body: body)
         } catch {
             throw Failure.generic(error)
         }
 
         return try self.parse(data)
-}
+    }
 
     private func parse(_ data: APIData) throws -> ActivationResponse {
         switch data.response {
-        case .deactivated:
-            guard let info = ActivationResponse(data: data) else {
+        case .active, .expired:
+            guard let response = ActivationResponse(data: data) else {
                 throw Failure.generic(nil)
             }
-            return info
+            return response
         case .noDeviceFound:
-            return ActivationResponse.deactivated() //If no device is found then we don't want to be activated anyway
+            throw Failure.noDeviceFound
+        case .noSubscriptionFound:
+            throw Failure.noSubscriptionFound
         default:
             throw Failure.generic(nil)
         }

@@ -42,17 +42,17 @@ public class SubscriptionErrorFactory {
     }
 
     static func error(for failure: Error) -> NSError {
-        if let activationFailure = failure as? ActivateAPI.Failure {
+        if let activationFailure = failure as? ActivateAPIV1.Failure {
             return self.error(for: activationFailure)
-        } else if let checkFailure = failure as? CheckAPI.Failure {
+        } else if let checkFailure = failure as? CheckAPIV1.Failure {
             return self.error(for: checkFailure)
-        } else if let deactivateFailure = failure as? DeactivateAPI.Failure {
+        } else if let deactivateFailure = failure as? DeactivateAPIV1.Failure {
             return self.error(for: deactivateFailure)
         }
         return failure as NSError
     }
 
-    static func error(for failure: ActivateAPI.Failure) -> NSError {
+    static func error(for failure: ActivateAPIV1.Failure) -> NSError {
         switch failure {
         case .generic(let error as NSError) where error.domain == NSURLErrorDomain:
             return self.createError(code: .couldNotConnectToServer, context: .activate, additionalOptions: [NSUnderlyingErrorKey: error])
@@ -86,7 +86,7 @@ public class SubscriptionErrorFactory {
         }
     }
 
-    static func error(for failure: CheckAPI.Failure) -> NSError {
+    static func error(for failure: CheckAPIV1.Failure) -> NSError {
         switch failure {
         case .generic(let error as NSError) where error.domain == NSURLErrorDomain:
             return self.createError(code: .couldNotConnectToServer, context: .check, additionalOptions: [NSUnderlyingErrorKey: error])
@@ -101,7 +101,7 @@ public class SubscriptionErrorFactory {
         }
     }
 
-    static func error(for failure: DeactivateAPI.Failure) -> NSError {
+    static func error(for failure: DeactivateAPIV1.Failure) -> NSError {
         switch failure {
         case .noDeviceFound:
             return self.createError(code: .noDeviceFound, context: .deactivate)

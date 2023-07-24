@@ -7,18 +7,58 @@
 //
 
 import Cocoa
+import Combine
 
 class ActivatedCoppiceProContentViewController: NSViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do view setup here.
+    let viewModel: CoppiceProViewModel
+    init(viewModel: CoppiceProViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: "ActivatedCoppiceProContentViewController", bundle: nil)
+
+        self.subscribers[.activation] = self.viewModel.$activation.receive(on: DispatchQueue.main).sink { [weak self] _ in
+            self?.reloadData()
+        }
     }
 
-    //Setup
-        //Show activation details
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
-    //on deactivate
-        //Call deactivate
+    @IBOutlet weak var planLabel: NSTextField!
+    @IBOutlet weak var statusLabel: NSTextField!
+    @IBOutlet weak var deviceLabel: NSTextField!
+    @IBOutlet weak var deviceRow: NSGridRow!
+    //TODO: Testing
+    private func reloadData() {
+        guard self.isViewLoaded, let activation = self.viewModel.activation else {
+            return
+        }
+        self.planLabel.stringValue = activation.planName
+        self.statusLabel.stringValue = activation.status
+        if let deviceName = activation.deviceName {
+            self.deviceLabel.stringValue = deviceName
+            self.deviceRow.isHidden = false
+        } else {
+            self.deviceRow.isHidden = true
+        }
+    }
+
+    private func deactivate() {
+        Task {
+            do {
+                try await self.viewModel.deactivate()
+            } catch {
+                //TODO: Handle error
+            }
+        }
+    }
+
+    //MARK: - Subscribers
+    private enum SubscriberKey {
+        case activation
+    }
+
+    private var subscribers: [SubscriberKey: AnyCancellable] = [:]
 }
 
 extension ActivatedCoppiceProContentViewController: CoppiceProContentView {
@@ -31,7 +71,7 @@ extension ActivatedCoppiceProContentViewController: CoppiceProContentView {
     }
 
     func performLeftAction(in viewController: CoppiceProViewController) {
-        viewController.currentContentView = .login
+        self.deactivate()
     }
 
     var rightActionTitle: String {

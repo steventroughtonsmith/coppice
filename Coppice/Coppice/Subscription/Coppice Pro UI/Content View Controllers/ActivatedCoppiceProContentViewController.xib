@@ -8,6 +8,10 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ActivatedCoppiceProContentViewController" customModule="Coppice" customModuleProvider="target">
             <connections>
+                <outlet property="deviceLabel" destination="njp-NA-48K" id="P7k-Tb-og6"/>
+                <outlet property="deviceRow" destination="eOV-xF-zhJ" id="LoX-lg-72N"/>
+                <outlet property="planLabel" destination="7NT-EJ-ffC" id="pri-sy-Hgp"/>
+                <outlet property="statusLabel" destination="ZER-6L-haq" id="p2M-Gi-gV2"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
         </customObject>
@@ -18,7 +22,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <box boxType="custom" cornerRadius="15" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="8Gy-W7-EbX">
-                    <rect key="frame" x="0.0" y="172" width="480" height="100"/>
+                    <rect key="frame" x="0.0" y="152" width="480" height="100"/>
                     <view key="contentView" id="XKN-0u-1ff">
                         <rect key="frame" x="1" y="1" width="478" height="98"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -128,7 +132,7 @@
                 </box>
             </subviews>
             <constraints>
-                <constraint firstItem="8Gy-W7-EbX" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="1Ek-pr-hBU"/>
+                <constraint firstItem="8Gy-W7-EbX" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="20" id="1Ek-pr-hBU"/>
                 <constraint firstItem="8Gy-W7-EbX" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="pCv-CS-Cql"/>
                 <constraint firstItem="8Gy-W7-EbX" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="rrR-nT-Kim"/>
                 <constraint firstAttribute="trailing" secondItem="8Gy-W7-EbX" secondAttribute="trailing" id="shj-r4-NK2"/>

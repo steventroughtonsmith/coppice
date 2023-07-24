@@ -1,5 +1,5 @@
 //
-//  DeactivateAPITests.swift
+//  DeactivateAPIV1Tests.swift
 //  M3SubscriptionsTests
 //
 //  Created by Martin Pilkington on 08/06/2020.
@@ -9,11 +9,11 @@
 @testable import M3Subscriptions
 import XCTest
 
-class DeactivateAPITests: APITestCase {
+class DeactivateAPIV1Tests: APITestCase {
     //MARK: - Sending request
-    func test_run_calling_requestsDeactivateAPIEndpoint() async throws {
+    func test_run_calling_requestsDeactivateAPIV1Endpoint() async throws {
         let mockAdapter = MockNetworkAdapter()
-        let api = DeactivateAPI(networkAdapter: mockAdapter, device: Device(), token: "token3")
+        let api = DeactivateAPIV1(networkAdapter: mockAdapter, device: Device(), token: "token3")
         _ = try? await api.run()
 
         XCTAssertEqual(mockAdapter.calledEndpoint, "deactivate")
@@ -21,7 +21,7 @@ class DeactivateAPITests: APITestCase {
 
     func test_run_calling_usesPostMethod() async throws {
         let mockAdapter = MockNetworkAdapter()
-        let api = DeactivateAPI(networkAdapter: mockAdapter, device: Device(), token: "token3")
+        let api = DeactivateAPIV1(networkAdapter: mockAdapter, device: Device(), token: "token3")
         _ = try? await api.run()
 
         XCTAssertEqual(mockAdapter.calledMethod, "POST")
@@ -30,7 +30,7 @@ class DeactivateAPITests: APITestCase {
     func test_run_calling_setsTokenAndDeviceIDJSONAsBody() async throws {
         let mockAdapter = MockNetworkAdapter()
         let device = Device()
-        let api = DeactivateAPI(networkAdapter: mockAdapter, device: device, token: "token3")
+        let api = DeactivateAPIV1(networkAdapter: mockAdapter, device: device, token: "token3")
         _ = try? await api.run()
 
         let calledBody = try XCTUnwrap(mockAdapter.calledBody)
@@ -47,10 +47,10 @@ class DeactivateAPITests: APITestCase {
         mockAdapter.apiError = expectedError
 
         let device = Device()
-        let api = DeactivateAPI(networkAdapter: mockAdapter, device: device, token: "token3")
+        let api = DeactivateAPIV1(networkAdapter: mockAdapter, device: device, token: "token3")
 
         await XCTAssertThrowsErrorAsync(try await api.run()) { error in
-            guard case DeactivateAPI.Failure.generic(let genericError) = error else {
+            guard case DeactivateAPIV1.Failure.generic(let genericError) = error else {
                 XCTFail("Result is not an generic error")
                 return
             }
@@ -68,9 +68,9 @@ class DeactivateAPITests: APITestCase {
         mockAdapter.returnValue = apiData
 
         let device = Device()
-        _ = DeactivateAPI(networkAdapter: mockAdapter, device: device, token: "token3")
+        _ = DeactivateAPIV1(networkAdapter: mockAdapter, device: device, token: "token3")
 
-//        var actualResult: Result<ActivationResponse, DeactivateAPI.Failure>?
+//        var actualResult: Result<ActivationResponse, DeactivateAPIV1.Failure>?
 //        self.performAndWaitFor("Call API") { (expectation) in
 //            api.run { result in
 //                actualResult = result
@@ -100,7 +100,7 @@ class DeactivateAPITests: APITestCase {
         mockAdapter.returnValue = apiData
 
         let device = Device()
-        let api = DeactivateAPI(networkAdapter: mockAdapter, device: device, token: "token3")
+        let api = DeactivateAPIV1(networkAdapter: mockAdapter, device: device, token: "token3")
 
         let info = try await api.run()
 

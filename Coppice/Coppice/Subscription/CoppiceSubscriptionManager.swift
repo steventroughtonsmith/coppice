@@ -42,7 +42,7 @@ protocol CoppiceSubscriptionManagerDelegate: AnyObject {
 */
 
 class CoppiceSubscriptionManager: NSObject {
-    let subscriptionController: SubscriptionController?
+    let subscriptionController: SubscriptionController.V1?
     weak var delegate: CoppiceSubscriptionManagerDelegate?
 
     @Published var activationResponse: ActivationResponse? {
@@ -58,7 +58,7 @@ class CoppiceSubscriptionManager: NSObject {
     override init() {
         if let appSupportURL = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first {
             let licenceURL = appSupportURL.appendingPathComponent("licence")
-            self.subscriptionController = SubscriptionController(licenceURL: licenceURL)
+            self.subscriptionController = SubscriptionController.V1(activationDetailsURL: licenceURL)
         } else {
             self.subscriptionController = nil
         }
@@ -249,7 +249,7 @@ class CoppiceSubscriptionManager: NSObject {
             self.currentCheckError = nil
             self.activationResponse = ActivationResponse.deactivated()
             self.delegate?.showCoppicePro(with: error, for: self)
-            self.subscriptionController?.deleteLicence()
+            self.subscriptionController?.deleteActivation()
         default:
             self.currentCheckError = error
         }

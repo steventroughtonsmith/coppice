@@ -44,6 +44,13 @@
                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
+                            <connections>
+                                <binding destination="-2" name="value" keyPath="self.email" id="ypN-WL-uGA">
+                                    <dictionary key="options">
+                                        <bool key="NSContinuouslyUpdatesValue" value="YES"/>
+                                    </dictionary>
+                                </binding>
+                            </connections>
                         </textField>
                         <secureTextField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wVk-iW-s06">
                             <rect key="frame" x="0.0" y="0.0" width="250" height="22"/>
@@ -58,6 +65,13 @@
                                     <string>NSAllRomanInputSourcesLocaleIdentifier</string>
                                 </allowedInputSourceLocales>
                             </secureTextFieldCell>
+                            <connections>
+                                <binding destination="-2" name="value" keyPath="self.password" id="U85-AS-ozW">
+                                    <dictionary key="options">
+                                        <bool key="NSContinuouslyUpdatesValue" value="YES"/>
+                                    </dictionary>
+                                </binding>
+                            </connections>
                         </secureTextField>
                     </subviews>
                     <constraints>
@@ -89,6 +103,10 @@
                             <color key="value" name="CoppiceGreen"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="activate:" target="-2" id="1v4-dt-vd0"/>
+                        <binding destination="-2" name="enabled" keyPath="self.activateEnabled" id="67o-Fg-lJp"/>
+                    </connections>
                 </button>
             </subviews>
             <constraints>

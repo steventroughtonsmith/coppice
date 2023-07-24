@@ -1,5 +1,5 @@
 //
-//  MockSubscriptionAPI.swift
+//  MockSubscriptionAPIV1.swift
 //  M3SubscriptionsTests
 //
 //  Created by Martin Pilkington on 11/06/2020.
@@ -9,14 +9,14 @@
 import Foundation
 @testable import M3Subscriptions
 
-class MockSubscriptionAPI: SubscriptionAPI {
+class MockSubscriptionAPIV1: SubscriptionAPIV1 {
     var calledMethod: String?
     var requestArgument: ActivationRequest?
     var deviceArgument: Device?
     var tokenArgument: String?
 
     var activateReturnValue: ActivationResponse?
-    var activateError: ActivateAPI.Failure?
+    var activateError: ActivateAPIV1.Failure?
     func activate(_ request: ActivationRequest, device: Device) async throws -> ActivationResponse {
         self.calledMethod = "activate"
         self.requestArgument = request
@@ -33,7 +33,7 @@ class MockSubscriptionAPI: SubscriptionAPI {
     }
 
     var checkReturnValue: ActivationResponse?
-    var checkError: CheckAPI.Failure?
+    var checkError: CheckAPIV1.Failure?
     func check(_ device: Device, token: String) async throws -> ActivationResponse {
         self.calledMethod = "check"
         self.deviceArgument = device
@@ -50,7 +50,7 @@ class MockSubscriptionAPI: SubscriptionAPI {
     }
 
     var deactivateReturnValue: ActivationResponse?
-    var deactivateError: DeactivateAPI.Failure?
+    var deactivateError: DeactivateAPIV1.Failure?
     func deactivate(_ device: Device, token: String) async throws -> ActivationResponse {
         self.calledMethod = "deactivate"
         self.deviceArgument = device
