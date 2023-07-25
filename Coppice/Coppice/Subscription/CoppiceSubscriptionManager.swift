@@ -15,37 +15,15 @@ protocol CoppiceSubscriptionManagerDelegate: AnyObject {
     func showInfoAlert(_ infoAlert: InfoAlert, for subscriptionManager: CoppiceSubscriptionManager)
 }
 
-/*FLOWS
-
-# Login
- User: enters login details
-    call /login
-    on success call /listSubscriptions
-    on multiple: show subscriptions
-    on single or sub select: call /activate
-
-    on too many devices show alert and then deactivate one
-
-# Licence
-    call /activate
-
-    on too many devices show alert and then deactivate one
-
-# Check
-    call /check (with login token or licence)
-
-# Rename
-    call /rename
-
-# Deactivate
-    call /deactivate (with login token or licence)
-*/
-
+//TODO: Remove actions except for check
+//TODO: Add check for V1 for check and deactivate
+//TODO: Otherwise use check for V2
+//TODO: Add migration check
 class CoppiceSubscriptionManager: NSObject {
-    let subscriptionController: SubscriptionController.V1?
+    let subscriptionController: API.V1.SubscriptionController?
     weak var delegate: CoppiceSubscriptionManagerDelegate?
 
-    @Published var activationResponse: ActivationResponse? {
+    @Published var activationResponse: API.V1.ActivationResponse? {
         didSet {
             self.notifyOfChanges()
         }
@@ -58,7 +36,7 @@ class CoppiceSubscriptionManager: NSObject {
     override init() {
         if let appSupportURL = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first {
             let licenceURL = appSupportURL.appendingPathComponent("licence")
-            self.subscriptionController = SubscriptionController.V1(activationDetailsURL: licenceURL)
+            self.subscriptionController = API.V1.SubscriptionController(activationDetailsURL: licenceURL)
         } else {
             self.subscriptionController = nil
         }
@@ -75,123 +53,16 @@ class CoppiceSubscriptionManager: NSObject {
     //MARK: - User Initiated actions
     typealias ErrorHandler = (NSError) -> Bool
     func activate(withEmail email: String, password: String, on window: NSWindow, errorHandler: @escaping ErrorHandler) {
-        self.activate(with: ActivationContext(email: email, password: password), on: window, errorHandler: errorHandler)
-    }
-
-    private func activate(with activationContext: ActivationContext, on window: NSWindow, errorHandler: @escaping ErrorHandler) {
-        guard let controller = self.subscriptionController else {
-            return
-        }
-        Task {
-            do {
-                let response = try await controller.activate(withEmail: activationContext.email, password: activationContext.password, subscription: activationContext.subscription, deactivatingDevice: activationContext.deviceToDeactivate)
-                self.activationResponse = response
-                self.currentCheckError = nil
-            } catch let error as NSError {
-                guard error.domain == SubscriptionErrorFactory.domain else {
-                    self.handle(error, on: window, with: errorHandler)
-                    return
-                }
-                if (error.code == SubscriptionErrorCodes.multipleSubscriptionsFound.rawValue) {
-                    self.showMultipleSubscriptionsSheet(with: activationContext, for: error, on: window, errorHandler: errorHandler)
-                } else if (error.code == SubscriptionErrorCodes.tooManyDevices.rawValue) {
-                    self.showTooManyDevicesSubscriptionSheet(with: activationContext, for: error, on: window, errorHandler: errorHandler)
-                } else {
-                    self.handle(error, on: window, with: errorHandler)
-                }
-            }
-            self.completeCheck()
-        }
-    }
-
-    struct ActivationContext {
-        var email: String
-        var password: String
-        var subscription: M3Subscriptions.Subscription? = nil
-        var deviceToDeactivate: M3Subscriptions.SubscriptionDevice? = nil
     }
 
     func deactivate(on window: NSWindow, errorHandler: @escaping ErrorHandler) {
-        guard let controller = self.subscriptionController else {
-            return
-        }
 
-        Task {
-            do {
-                let response = try await controller.deactivate()
-                self.activationResponse = response
-                self.currentCheckError = nil
-            } catch {
-                self.handle(error as NSError, on: window, with: errorHandler)
-            }
-            self.completeCheck()
-        }
     }
 
     //TODO: Make Async Throws
-    func updateDeviceName(deviceName: String, completion: @escaping (Result<ActivationResponse, Error>) -> Void) {
-        guard let controller = self.subscriptionController else {
-            return
-        }
+    func updateDeviceName(deviceName: String, completion: @escaping (Result<API.V1.ActivationResponse, Error>) -> Void) {
 
-        Task {
-            do {
-                let response = try await controller.checkSubscription(updatingDeviceName: deviceName)
-                self.activationResponse = response
-                self.currentCheckError = nil
-                completion(.success(response))
-            } catch {
-                completion(.failure(error))
-            }
-            self.completeCheck()
-        }
     }
-
-
-    //MARK: - Error Handling
-    private func handle(_ error: NSError, on window: NSWindow, with errorHandler: ErrorHandler) {
-        if errorHandler(error) == false {
-            self.show(basicError: error, on: window)
-        }
-    }
-
-    private func showMultipleSubscriptionsSheet(with activationContext: ActivationContext, for error: NSError, on window: NSWindow, errorHandler: @escaping ErrorHandler) {
-        guard let subscriptions = error.userInfo[SubscriptionErrorFactory.InfoKeys.subscriptionPlans] as? [M3Subscriptions.Subscription] else {
-            return
-        }
-        let sheet = MultipleSubscriptionsViewController(subscriptions: subscriptions) { subscription in
-            guard let subscription = subscription else {
-                return
-            }
-            var context = activationContext
-            context.subscription = subscription
-            self.activate(with: context, on: window, errorHandler: errorHandler)
-        }
-        window.contentViewController?.presentAsSheet(sheet)
-    }
-
-    private func showTooManyDevicesSubscriptionSheet(with activationContext: ActivationContext, for error: NSError, on window: NSWindow, errorHandler: @escaping ErrorHandler) {
-        guard let devices = error.userInfo[SubscriptionErrorFactory.InfoKeys.devices] as? [M3Subscriptions.SubscriptionDevice] else {
-            return
-        }
-        let sheet = TooManyDevicesViewController(devices: devices) { device in
-            guard let device = device else {
-                return
-            }
-            var context = activationContext
-            context.deviceToDeactivate = device
-            self.activate(with: context, on: window, errorHandler: errorHandler)
-        }
-        window.contentViewController?.presentAsSheet(sheet)
-    }
-
-    private func show(basicError error: NSError, on window: NSWindow) {
-        let alert = NSAlert(error: error)
-        alert.beginSheetModal(for: window) { (response) in
-            print("response: \(response)")
-        }
-    }
-
 
     //MARK: - Automatic actions
     private(set) var recheckTimer: Timer?
@@ -239,20 +110,7 @@ class CoppiceSubscriptionManager: NSObject {
     }
 
     private func handleCheckError(_ error: NSError) {
-        guard let errorCode = SubscriptionErrorCodes(rawValue: error.code) else {
-            self.currentCheckError = error
-            return
-        }
 
-        switch errorCode {
-        case .noDeviceFound:
-            self.currentCheckError = nil
-            self.activationResponse = ActivationResponse.deactivated()
-            self.delegate?.showCoppicePro(with: error, for: self)
-            self.subscriptionController?.deleteActivation()
-        default:
-            self.currentCheckError = error
-        }
     }
 
     private func completeCheck() {
@@ -375,21 +233,21 @@ class CoppiceSubscriptionManager: NSObject {
 
     //MARK: - Debug
     #if DEBUG
-    private var previousActivationResponse: ActivationResponse?
+//    private var previousActivationResponse: ActivationResponse?
 
     var proDisabled = false {
         didSet {
-            guard self.proDisabled != oldValue else {
-                return
-            }
-
-            if self.proDisabled {
-                self.previousActivationResponse = self.activationResponse
-                self.activationResponse = nil
-            } else {
-                self.activationResponse = self.previousActivationResponse
-                self.previousActivationResponse = nil
-            }
+//            guard self.proDisabled != oldValue else {
+//                return
+//            }
+//
+//            if self.proDisabled {
+//                self.previousActivationResponse = self.activationResponse
+//                self.activationResponse = nil
+//            } else {
+//                self.activationResponse = self.previousActivationResponse
+//                self.previousActivationResponse = nil
+//            }
         }
     }
     #endif

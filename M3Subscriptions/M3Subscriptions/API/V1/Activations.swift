@@ -1,5 +1,5 @@
 //
-//  SubscriptionAPI.swift
+//  Activations.swift
 //  M3Subscriptions
 //
 //  Created by Martin Pilkington on 08/06/2020.
@@ -9,30 +9,30 @@
 import Foundation
 
 protocol SubscriptionAPIV1 {
-    func activate(_ request: ActivationRequest, device: Device) async throws -> ActivationResponse
-    func check(_ device: Device, token: String) async throws -> ActivationResponse
-    func deactivate(_ device: Device, token: String) async throws -> ActivationResponse
+    func activate(_ request: API.V1.ActivationRequest, device: Device) async throws -> API.V1.ActivationResponse
+    func check(_ device: Device, token: String) async throws -> API.V1.ActivationResponse
+    func deactivate(_ device: Device, token: String) async throws -> API.V1.ActivationResponse
 }
 
-extension API.Subscription {
-    class V1: SubscriptionAPIV1 {
+extension API.V1 {
+    class Activations: SubscriptionAPIV1 {
         let networkAdapter: NetworkAdapter
         init(networkAdapter: NetworkAdapter) {
             self.networkAdapter = networkAdapter
         }
 
         func activate(_ request: ActivationRequest, device: Device) async throws -> ActivationResponse {
-            let activation = ActivateAPIV1(networkAdapter: self.networkAdapter, request: request, device: device)
+            let activation = ActivateAPI(networkAdapter: self.networkAdapter, request: request, device: device)
             return try await activation.run()
         }
 
         func check(_ device: Device, token: String) async throws -> ActivationResponse {
-            let check = CheckAPIV1(networkAdapter: self.networkAdapter, device: device, token: token)
+            let check = CheckAPI(networkAdapter: self.networkAdapter, device: device, token: token)
             return try await check.run()
         }
-         
+
         func deactivate(_ device: Device, token: String) async throws -> ActivationResponse {
-            let deactivate = DeactivateAPIV1(networkAdapter: self.networkAdapter, device: device, token: token)
+            let deactivate = DeactivateAPI(networkAdapter: self.networkAdapter, device: device, token: token)
             return try await deactivate.run()
         }
     }

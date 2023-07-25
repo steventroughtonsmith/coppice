@@ -1,5 +1,5 @@
 //
-//  SubscriptionController.swift
+//  Controller.swift
 //  M3Subscriptions
 //
 //  Created by Martin Pilkington on 07/06/2020.
@@ -8,25 +8,25 @@
 
 import Foundation
 
-extension SubscriptionController {
-    public class V2 {
+extension API.V2 {
+    public class Controller {
         //MARK: - Authentication
-        public func login(email: String, password: String, deviceName: String) async throws {
+        public func login(email: String, password: String) async throws {
             
         }
-        
-        public func logout() async throws {
-            
+
+        public func logout() throws {
+
         }
-        
-        public func saveLicence() {
-            
+
+        public func saveLicence(_ licence: Any) throws {
+
         }
-        
-        
+
+
         //MARK: - Activation
-        public func activate(deviceName: String, subscriptionID: String? = nil) async throws {
-            //version, deviceID, deviceType
+        public func activate(subscriptionID: String? = nil) async throws {
+            //version, deviceID, deviceType, deviceName
         }
         
         public func check() async throws {
@@ -38,7 +38,7 @@ extension SubscriptionController {
             return []
         }
         
-        public func listDevices(subscriptionID: String) async throws -> [SubscriptionDevice] {
+        public func listDevices(subscriptionID: String) async throws -> [ActivatedDevice] {
             //deviceID: String, deviceType: String
             return []
         }
@@ -47,8 +47,8 @@ extension SubscriptionController {
             //activationID, device name
         }
         
-        public func deactivate() async throws {
-            
+        public func deactivate(activationID: String? = nil) async throws {
+
         }
         
         

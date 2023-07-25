@@ -288,6 +288,7 @@
 		99A97FF72476ABD500CDD95C /* SearchResultTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A97FF62476ABD500CDD95C /* SearchResultTableCellView.swift */; };
 		99AA3C3625B719F40050A119 /* MockTextEditorAttributeEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AA3C3525B719F40050A119 /* MockTextEditorAttributeEditor.swift */; };
 		99AA3C3F25B71D3B0050A119 /* TextEditorParagraphInspectorViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AA3C3E25B71D3B0050A119 /* TextEditorParagraphInspectorViewModelTests.swift */; };
+		99AC84782A706A6900CBF18A /* CoppiceProUpsell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AC84772A706A6900CBF18A /* CoppiceProUpsell.swift */; };
 		99AD8874237464C4000453E1 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AD8873237464C4000453E1 /* Alert.swift */; };
 		99AD88762374665D000453E1 /* Alert+AppKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AD88752374665D000453E1 /* Alert+AppKit.swift */; };
 		99AD88A5237B1700000453E1 /* DocumentWindowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AD88A4237B1700000453E1 /* DocumentWindowViewModel.swift */; };
@@ -780,6 +781,7 @@
 		99A97FF62476ABD500CDD95C /* SearchResultTableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultTableCellView.swift; sourceTree = "<group>"; };
 		99AA3C3525B719F40050A119 /* MockTextEditorAttributeEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTextEditorAttributeEditor.swift; sourceTree = "<group>"; };
 		99AA3C3E25B71D3B0050A119 /* TextEditorParagraphInspectorViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorParagraphInspectorViewModelTests.swift; sourceTree = "<group>"; };
+		99AC84772A706A6900CBF18A /* CoppiceProUpsell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoppiceProUpsell.swift; sourceTree = "<group>"; };
 		99AD8873237464C4000453E1 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		99AD88752374665D000453E1 /* Alert+AppKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alert+AppKit.swift"; sourceTree = "<group>"; };
 		99AD88A4237B1700000453E1 /* DocumentWindowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentWindowViewModel.swift; sourceTree = "<group>"; };
@@ -1375,6 +1377,7 @@
 			children = (
 				992DDC962A698AA7002FCEC2 /* Coppice Pro UI */,
 				9999A23524F93052001F8161 /* CoppiceSubscriptionManager.swift */,
+				99AC84772A706A6900CBF18A /* CoppiceProUpsell.swift */,
 				990F61A625222C2D00FA5A27 /* Subscriptions+LocalizedStrings.swift */,
 				99D329B725224B0200E15683 /* Too Many Devices */,
 				990F61A82522327000FA5A27 /* Multiple Subscriptions */,
@@ -2601,6 +2604,7 @@
 				99B04ED8271DCA8600C42E46 /* InspectorUpsellView.swift in Sources */,
 				999453F024ED698D0043C542 /* SimpleLabelPopoverViewController.swift in Sources */,
 				9977119C239E91FD00FCC8C7 /* ViewModel.swift in Sources */,
+				99AC84782A706A6900CBF18A /* CoppiceProUpsell.swift in Sources */,
 				992A5CB322DDF53C0012CCB6 /* DebugPageEditorViewModel.swift in Sources */,
 				9981E6D624C08F12005AF0EE /* WelcomeWindowController.swift in Sources */,
 				995F9305252B5B1B00A753E4 /* ColouredButtonCell.swift in Sources */,

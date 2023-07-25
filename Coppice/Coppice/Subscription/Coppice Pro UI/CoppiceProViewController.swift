@@ -20,6 +20,7 @@ protocol CoppiceProContentView: AnyObject {
     func performRightAction(in viewController: CoppiceProViewController)
 }
 
+//TODO: Add upgrade screen
 class CoppiceProViewController: NSViewController {
     let viewModel: CoppiceProViewModel
     init(viewModel: CoppiceProViewModel) {

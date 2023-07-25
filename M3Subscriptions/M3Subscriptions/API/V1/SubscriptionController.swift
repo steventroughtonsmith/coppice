@@ -8,10 +8,10 @@
 
 import Foundation
 
-extension SubscriptionController {
-    public class V1 {
+extension API.V1 {
+    public class SubscriptionController {
         public convenience init(activationDetailsURL: URL) {
-            self.init(activationDetailsURL: activationDetailsURL, subscriptionAPI: API.Subscription.V1(networkAdapter: URLSessionNetworkAdapter()))
+            self.init(activationDetailsURL: activationDetailsURL, subscriptionAPI: Activations(networkAdapter: URLSessionNetworkAdapter()))
         }
 
         let activationDetailsURL: URL
@@ -60,7 +60,7 @@ extension SubscriptionController {
                 return response
             } catch {
                 switch error {
-                case CheckAPIV1.Failure.generic(let error as NSError) where (error.domain == NSURLErrorDomain) && (deviceName == nil):
+                case CheckAPI.Failure.generic(let error as NSError) where (error.domain == NSURLErrorDomain) && (deviceName == nil):
                     return try self.attemptLocalValidation(with: localResponse, dueTo: error)
                 default:
                     throw SubscriptionErrorFactory.error(for: error)

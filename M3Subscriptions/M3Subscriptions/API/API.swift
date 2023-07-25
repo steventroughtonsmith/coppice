@@ -8,8 +8,8 @@
 
 import Foundation
 
-enum API {
-    enum Subscription {
-        //Define namespace
-    }
+public enum API {
+    //Define namespace
+    public enum V1 {}
+    public enum V2 {}
 }

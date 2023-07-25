@@ -19,6 +19,8 @@ struct APIData {
         case noDeviceFound
         case tooManyDevices
         case expired
+        case invalidLicence
+        case success
         case other(String)
 
         static func response(from string: String) -> Response {
@@ -45,6 +47,12 @@ struct APIData {
             }
             if (string == "subscription_expired") {
                 return .expired
+            }
+            if (string == "invalid_licence") {
+                return .invalidLicence
+            }
+            if (string == "success") {
+                return .success
             }
             return .other(string)
         }
@@ -120,6 +128,12 @@ struct APIData {
                                         return nil
         }
         return signature
+    }
+
+    func write(to fileURL: URL) throws {
+        let json: [String: Any] = ["payload": self.payload, "signature": self.signature]
+        let data = try JSONSerialization.data(withJSONObject: json, options: .sortedKeys)
+        try data.write(to: fileURL)
     }
 
     static func publicKey() -> String {

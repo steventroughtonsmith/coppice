@@ -7,25 +7,31 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		990D290D2A6EA44900C3583A /* SubscriptionController.V1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990D290C2A6EA44900C3583A /* SubscriptionController.V1.swift */; };
-		990D290F2A6EA45900C3583A /* SubscriptionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990D290E2A6EA45900C3583A /* SubscriptionController.swift */; };
+		990D290D2A6EA44900C3583A /* SubscriptionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990D290C2A6EA44900C3583A /* SubscriptionController.swift */; };
 		990D29122A6EA7BD00C3583A /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990D29112A6EA7BD00C3583A /* API.swift */; };
+		990D29142A6EB6E000C3583A /* Licence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990D29132A6EB6E000C3583A /* Licence.swift */; };
+		990D29162A6EBA3700C3583A /* ActivatedDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990D29152A6EBA3700C3583A /* ActivatedDevice.swift */; };
+		990D291A2A6EC25800C3583A /* V2.Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990D29192A6EC25800C3583A /* V2.Subscription.swift */; };
+		990D291C2A6EC42700C3583A /* Activation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990D291B2A6EC42700C3583A /* Activation.swift */; };
+		990D291E2A6ECA6500C3583A /* Adapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990D291D2A6ECA6500C3583A /* Adapter.swift */; };
+		990D29202A6ECB0400C3583A /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990D291F2A6ECB0400C3583A /* Authentication.swift */; };
+		990D29222A6ECE7C00C3583A /* V2.Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990D29212A6ECE7C00C3583A /* V2.Errors.swift */; };
 		9910B2C7296471F000459493 /* Configs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9910B2C6296471F000459493 /* Configs.swift */; };
 		99848160248E639C00BC0A8A /* libM3Subscriptions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99848149248E635600BC0A8A /* libM3Subscriptions.a */; };
 		9984816F248E648300BC0A8A /* ResultExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99848166248E648300BC0A8A /* ResultExtension.swift */; };
 		99848170248E648300BC0A8A /* NetworkAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99848167248E648300BC0A8A /* NetworkAdapter.swift */; };
-		99848171248E648300BC0A8A /* SubscriptionController.V2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99848168248E648300BC0A8A /* SubscriptionController.V2.swift */; };
-		99848172248E648300BC0A8A /* SubscriptionInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984816A248E648300BC0A8A /* SubscriptionInterface.swift */; };
-		99848173248E648300BC0A8A /* DeactivateAPIV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984816B248E648300BC0A8A /* DeactivateAPIV1.swift */; };
-		99848174248E648300BC0A8A /* CheckAPIV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984816C248E648300BC0A8A /* CheckAPIV1.swift */; };
-		99848175248E648300BC0A8A /* ActivateAPIV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984816D248E648300BC0A8A /* ActivateAPIV1.swift */; };
+		99848171248E648300BC0A8A /* Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99848168248E648300BC0A8A /* Controller.swift */; };
+		99848172248E648300BC0A8A /* Activations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984816A248E648300BC0A8A /* Activations.swift */; };
+		99848173248E648300BC0A8A /* DeactivateAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984816B248E648300BC0A8A /* DeactivateAPI.swift */; };
+		99848174248E648300BC0A8A /* CheckAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984816C248E648300BC0A8A /* CheckAPI.swift */; };
+		99848175248E648300BC0A8A /* ActivateAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984816D248E648300BC0A8A /* ActivateAPI.swift */; };
 		99848178248E651A00BC0A8A /* ActivationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99848177248E651A00BC0A8A /* ActivationRequest.swift */; };
 		9984817D248E68A600BC0A8A /* DeactivateAPIV1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984817C248E68A600BC0A8A /* DeactivateAPIV1Tests.swift */; };
 		9984817F248E68B600BC0A8A /* ActivateAPIV1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984817E248E68B600BC0A8A /* ActivateAPIV1Tests.swift */; };
 		99848181248E68C500BC0A8A /* CheckAPIV1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99848180248E68C500BC0A8A /* CheckAPIV1Tests.swift */; };
 		99848183248E68DF00BC0A8A /* MockNetworkAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99848182248E68DF00BC0A8A /* MockNetworkAdapter.swift */; };
 		99848186248E68FA00BC0A8A /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99848185248E68FA00BC0A8A /* Device.swift */; };
-		9984818C248E698500BC0A8A /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984818B248E698500BC0A8A /* Subscription.swift */; };
+		9984818C248E698500BC0A8A /* V1.Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984818B248E698500BC0A8A /* V1.Subscription.swift */; };
 		9984818E248E698D00BC0A8A /* SubscriptionDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984818D248E698D00BC0A8A /* SubscriptionDevice.swift */; };
 		99848190248E699800BC0A8A /* ActivationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984818F248E699800BC0A8A /* ActivationResponse.swift */; };
 		99848192248E69E000BC0A8A /* APIData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99848191248E69E000BC0A8A /* APIData.swift */; };
@@ -36,7 +42,7 @@
 		998481A5248FB37F00BC0A8A /* ActivationResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481A4248FB37F00BC0A8A /* ActivationResponseTests.swift */; };
 		998481A7248FDE5E00BC0A8A /* XCTestExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481A6248FDE5E00BC0A8A /* XCTestExtensions.swift */; };
 		998481AA24924A3600BC0A8A /* SubscriptionControllerV1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481A924924A3600BC0A8A /* SubscriptionControllerV1Tests.swift */; };
-		998481AC2492789400BC0A8A /* SubscriptionErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481AB2492789400BC0A8A /* SubscriptionErrors.swift */; };
+		998481AC2492789400BC0A8A /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481AB2492789400BC0A8A /* Errors.swift */; };
 		998481AE24927EA600BC0A8A /* MockSubscriptionAPIV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481AD24927EA600BC0A8A /* MockSubscriptionAPIV1.swift */; };
 		998481CD2496640A00BC0A8A /* TestOverrides.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481CC2496640A00BC0A8A /* TestOverrides.swift */; };
 		998481D52496768100BC0A8A /* M3SubscriptionsStageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481D42496768100BC0A8A /* M3SubscriptionsStageTests.swift */; };
@@ -67,27 +73,33 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		990D290C2A6EA44900C3583A /* SubscriptionController.V1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionController.V1.swift; sourceTree = "<group>"; };
-		990D290E2A6EA45900C3583A /* SubscriptionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionController.swift; sourceTree = "<group>"; };
+		990D290C2A6EA44900C3583A /* SubscriptionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionController.swift; sourceTree = "<group>"; };
 		990D29112A6EA7BD00C3583A /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		990D29132A6EB6E000C3583A /* Licence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Licence.swift; sourceTree = "<group>"; };
+		990D29152A6EBA3700C3583A /* ActivatedDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivatedDevice.swift; sourceTree = "<group>"; };
+		990D29192A6EC25800C3583A /* V2.Subscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V2.Subscription.swift; sourceTree = "<group>"; };
+		990D291B2A6EC42700C3583A /* Activation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activation.swift; sourceTree = "<group>"; };
+		990D291D2A6ECA6500C3583A /* Adapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Adapter.swift; sourceTree = "<group>"; };
+		990D291F2A6ECB0400C3583A /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
+		990D29212A6ECE7C00C3583A /* V2.Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V2.Errors.swift; sourceTree = "<group>"; };
 		9910B2C6296471F000459493 /* Configs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configs.swift; sourceTree = "<group>"; };
 		99848149248E635600BC0A8A /* libM3Subscriptions.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libM3Subscriptions.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9984815B248E639C00BC0A8A /* M3SubscriptionsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = M3SubscriptionsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9984815F248E639C00BC0A8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		99848166248E648300BC0A8A /* ResultExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultExtension.swift; sourceTree = "<group>"; };
 		99848167248E648300BC0A8A /* NetworkAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkAdapter.swift; sourceTree = "<group>"; };
-		99848168248E648300BC0A8A /* SubscriptionController.V2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionController.V2.swift; sourceTree = "<group>"; };
-		9984816A248E648300BC0A8A /* SubscriptionInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionInterface.swift; sourceTree = "<group>"; };
-		9984816B248E648300BC0A8A /* DeactivateAPIV1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeactivateAPIV1.swift; sourceTree = "<group>"; };
-		9984816C248E648300BC0A8A /* CheckAPIV1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckAPIV1.swift; sourceTree = "<group>"; };
-		9984816D248E648300BC0A8A /* ActivateAPIV1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivateAPIV1.swift; sourceTree = "<group>"; };
+		99848168248E648300BC0A8A /* Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Controller.swift; sourceTree = "<group>"; };
+		9984816A248E648300BC0A8A /* Activations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Activations.swift; sourceTree = "<group>"; };
+		9984816B248E648300BC0A8A /* DeactivateAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeactivateAPI.swift; sourceTree = "<group>"; };
+		9984816C248E648300BC0A8A /* CheckAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckAPI.swift; sourceTree = "<group>"; };
+		9984816D248E648300BC0A8A /* ActivateAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivateAPI.swift; sourceTree = "<group>"; };
 		99848177248E651A00BC0A8A /* ActivationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivationRequest.swift; sourceTree = "<group>"; };
 		9984817C248E68A600BC0A8A /* DeactivateAPIV1Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeactivateAPIV1Tests.swift; sourceTree = "<group>"; };
 		9984817E248E68B600BC0A8A /* ActivateAPIV1Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivateAPIV1Tests.swift; sourceTree = "<group>"; };
 		99848180248E68C500BC0A8A /* CheckAPIV1Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckAPIV1Tests.swift; sourceTree = "<group>"; };
 		99848182248E68DF00BC0A8A /* MockNetworkAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkAdapter.swift; sourceTree = "<group>"; };
 		99848185248E68FA00BC0A8A /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
-		9984818B248E698500BC0A8A /* Subscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subscription.swift; sourceTree = "<group>"; };
+		9984818B248E698500BC0A8A /* V1.Subscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V1.Subscription.swift; sourceTree = "<group>"; };
 		9984818D248E698D00BC0A8A /* SubscriptionDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionDevice.swift; sourceTree = "<group>"; };
 		9984818F248E699800BC0A8A /* ActivationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivationResponse.swift; sourceTree = "<group>"; };
 		99848191248E69E000BC0A8A /* APIData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIData.swift; sourceTree = "<group>"; };
@@ -98,7 +110,7 @@
 		998481A4248FB37F00BC0A8A /* ActivationResponseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivationResponseTests.swift; sourceTree = "<group>"; };
 		998481A6248FDE5E00BC0A8A /* XCTestExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XCTestExtensions.swift; path = ../../Coppice/CoppiceTests/XCTestExtensions.swift; sourceTree = "<group>"; };
 		998481A924924A3600BC0A8A /* SubscriptionControllerV1Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionControllerV1Tests.swift; sourceTree = "<group>"; };
-		998481AB2492789400BC0A8A /* SubscriptionErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionErrors.swift; sourceTree = "<group>"; };
+		998481AB2492789400BC0A8A /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		998481AD24927EA600BC0A8A /* MockSubscriptionAPIV1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSubscriptionAPIV1.swift; sourceTree = "<group>"; };
 		998481CC2496640A00BC0A8A /* TestOverrides.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestOverrides.swift; sourceTree = "<group>"; };
 		998481D22496768100BC0A8A /* M3SubscriptionsStageTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = M3SubscriptionsStageTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -139,25 +151,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		990D290B2A6EA42A00C3583A /* SubscriptionControllers */ = {
+		990D29102A6EA79D00C3583A /* V1 */ = {
 			isa = PBXGroup;
 			children = (
-				99848168248E648300BC0A8A /* SubscriptionController.V2.swift */,
-				990D290C2A6EA44900C3583A /* SubscriptionController.V1.swift */,
-				990D290E2A6EA45900C3583A /* SubscriptionController.swift */,
+				998481AB2492789400BC0A8A /* Errors.swift */,
+				990D290C2A6EA44900C3583A /* SubscriptionController.swift */,
+				99848188248E696700BC0A8A /* Types */,
+				9984816A248E648300BC0A8A /* Activations.swift */,
+				9984816D248E648300BC0A8A /* ActivateAPI.swift */,
+				9984816C248E648300BC0A8A /* CheckAPI.swift */,
+				9984816B248E648300BC0A8A /* DeactivateAPI.swift */,
 			);
-			path = SubscriptionControllers;
+			path = V1;
 			sourceTree = "<group>";
 		};
-		990D29102A6EA79D00C3583A /* Subscription */ = {
+		990D29172A6EC11600C3583A /* V2 */ = {
 			isa = PBXGroup;
 			children = (
-				9984816A248E648300BC0A8A /* SubscriptionInterface.swift */,
-				9984816D248E648300BC0A8A /* ActivateAPIV1.swift */,
-				9984816C248E648300BC0A8A /* CheckAPIV1.swift */,
-				9984816B248E648300BC0A8A /* DeactivateAPIV1.swift */,
+				99848168248E648300BC0A8A /* Controller.swift */,
+				990D291D2A6ECA6500C3583A /* Adapter.swift */,
+				990D29212A6ECE7C00C3583A /* V2.Errors.swift */,
+				990D29182A6EC1CF00C3583A /* Types */,
 			);
-			path = Subscription;
+			path = V2;
+			sourceTree = "<group>";
+		};
+		990D29182A6EC1CF00C3583A /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				990D29152A6EBA3700C3583A /* ActivatedDevice.swift */,
+				990D29132A6EB6E000C3583A /* Licence.swift */,
+				990D29192A6EC25800C3583A /* V2.Subscription.swift */,
+				990D291B2A6EC42700C3583A /* Activation.swift */,
+				990D291F2A6ECB0400C3583A /* Authentication.swift */,
+			);
+			path = Types;
 			sourceTree = "<group>";
 		};
 		992DDC942A6936C9002FCEC2 /* Debugging */ = {
@@ -202,11 +230,11 @@
 		9984814B248E635600BC0A8A /* M3Subscriptions */ = {
 			isa = PBXGroup;
 			children = (
-				990D290B2A6EA42A00C3583A /* SubscriptionControllers */,
 				9910B2C6296471F000459493 /* Configs.swift */,
 				992DDC952A6936D9002FCEC2 /* Extensions & Adapters */,
 				992DDC942A6936C9002FCEC2 /* Debugging */,
-				99848184248E68EC00BC0A8A /* Types */,
+				99848185248E68FA00BC0A8A /* Device.swift */,
+				99848191248E69E000BC0A8A /* APIData.swift */,
 				99848169248E648300BC0A8A /* API */,
 			);
 			path = M3Subscriptions;
@@ -228,7 +256,8 @@
 			isa = PBXGroup;
 			children = (
 				990D29112A6EA7BD00C3583A /* API.swift */,
-				990D29102A6EA79D00C3583A /* Subscription */,
+				990D29172A6EC11600C3583A /* V2 */,
+				990D29102A6EA79D00C3583A /* V1 */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -263,34 +292,15 @@
 			path = API;
 			sourceTree = "<group>";
 		};
-		99848184248E68EC00BC0A8A /* Types */ = {
+		99848188248E696700BC0A8A /* Types */ = {
 			isa = PBXGroup;
 			children = (
-				998481AB2492789400BC0A8A /* SubscriptionErrors.swift */,
-				99848188248E696700BC0A8A /* Public Types */,
-				99848187248E691300BC0A8A /* Internal Types */,
-			);
-			path = Types;
-			sourceTree = "<group>";
-		};
-		99848187248E691300BC0A8A /* Internal Types */ = {
-			isa = PBXGroup;
-			children = (
-				99848185248E68FA00BC0A8A /* Device.swift */,
-				99848177248E651A00BC0A8A /* ActivationRequest.swift */,
-				99848191248E69E000BC0A8A /* APIData.swift */,
-			);
-			path = "Internal Types";
-			sourceTree = "<group>";
-		};
-		99848188248E696700BC0A8A /* Public Types */ = {
-			isa = PBXGroup;
-			children = (
-				9984818B248E698500BC0A8A /* Subscription.swift */,
+				9984818B248E698500BC0A8A /* V1.Subscription.swift */,
 				9984818D248E698D00BC0A8A /* SubscriptionDevice.swift */,
 				9984818F248E699800BC0A8A /* ActivationResponse.swift */,
+				99848177248E651A00BC0A8A /* ActivationRequest.swift */,
 			);
-			path = "Public Types";
+			path = Types;
 			sourceTree = "<group>";
 		};
 		99848193248E6A2700BC0A8A /* Types */ = {
@@ -504,24 +514,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				99848171248E648300BC0A8A /* SubscriptionController.V2.swift in Sources */,
+				99848171248E648300BC0A8A /* Controller.swift in Sources */,
 				998481CD2496640A00BC0A8A /* TestOverrides.swift in Sources */,
-				99848172248E648300BC0A8A /* SubscriptionInterface.swift in Sources */,
-				990D290F2A6EA45900C3583A /* SubscriptionController.swift in Sources */,
+				99848172248E648300BC0A8A /* Activations.swift in Sources */,
+				990D29222A6ECE7C00C3583A /* V2.Errors.swift in Sources */,
+				990D291A2A6EC25800C3583A /* V2.Subscription.swift in Sources */,
+				990D29142A6EB6E000C3583A /* Licence.swift in Sources */,
 				9984818E248E698D00BC0A8A /* SubscriptionDevice.swift in Sources */,
-				99848174248E648300BC0A8A /* CheckAPIV1.swift in Sources */,
+				99848174248E648300BC0A8A /* CheckAPI.swift in Sources */,
 				99848190248E699800BC0A8A /* ActivationResponse.swift in Sources */,
-				9984818C248E698500BC0A8A /* Subscription.swift in Sources */,
-				99848173248E648300BC0A8A /* DeactivateAPIV1.swift in Sources */,
-				990D290D2A6EA44900C3583A /* SubscriptionController.V1.swift in Sources */,
+				9984818C248E698500BC0A8A /* V1.Subscription.swift in Sources */,
+				990D291E2A6ECA6500C3583A /* Adapter.swift in Sources */,
+				990D29162A6EBA3700C3583A /* ActivatedDevice.swift in Sources */,
+				99848173248E648300BC0A8A /* DeactivateAPI.swift in Sources */,
+				990D290D2A6EA44900C3583A /* SubscriptionController.swift in Sources */,
+				990D29202A6ECB0400C3583A /* Authentication.swift in Sources */,
+				990D291C2A6EC42700C3583A /* Activation.swift in Sources */,
 				99848192248E69E000BC0A8A /* APIData.swift in Sources */,
-				998481AC2492789400BC0A8A /* SubscriptionErrors.swift in Sources */,
+				998481AC2492789400BC0A8A /* Errors.swift in Sources */,
 				99848170248E648300BC0A8A /* NetworkAdapter.swift in Sources */,
 				9984816F248E648300BC0A8A /* ResultExtension.swift in Sources */,
 				990D29122A6EA7BD00C3583A /* API.swift in Sources */,
 				9910B2C7296471F000459493 /* Configs.swift in Sources */,
 				9998B4DD251118F300E2D455 /* APIDebugManager.swift in Sources */,
-				99848175248E648300BC0A8A /* ActivateAPIV1.swift in Sources */,
+				99848175248E648300BC0A8A /* ActivateAPI.swift in Sources */,
 				99848178248E651A00BC0A8A /* ActivationRequest.swift in Sources */,
 				99848186248E68FA00BC0A8A /* Device.swift in Sources */,
 			);

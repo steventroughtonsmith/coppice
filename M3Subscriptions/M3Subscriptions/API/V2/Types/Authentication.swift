@@ -1,5 +1,5 @@
 //
-//  SubscriptionController.swift
+//  Authentication.swift
 //  M3Subscriptions
 //
 //  Created by Martin Pilkington on 24/07/2023.
@@ -8,6 +8,9 @@
 
 import Foundation
 
-public enum SubscriptionController {
-    //Define namepsace
+extension API.V2 {
+    enum Authentication {
+        case token(String)
+        case licence(Licence)
+    }
 }

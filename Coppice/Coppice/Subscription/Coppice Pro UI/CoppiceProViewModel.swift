@@ -10,14 +10,21 @@ import Foundation
 import M3Subscriptions
 
 protocol CoppiceProView: AnyObject {
-    func selectSubscription(from subscriptions: [Subscription]) async throws -> Subscription
-    func deactivateDevice(from devices: [SubscriptionDevice]) async throws -> SubscriptionDevice
+    func selectSubscription(from subscriptions: [API.V2.Subscription]) async throws -> API.V2.Subscription
+    func deactivateDevice(from devices: [API.V2.ActivatedDevice]) async throws -> API.V2.ActivatedDevice
 }
 
 class CoppiceProViewModel {
     weak var view: CoppiceProView?
 
+    let subscriptionController: API.V2.Controller
+    init(subscriptionController: API.V2.Controller) {
+        self.subscriptionController = subscriptionController
+    }
+
+
     @Published private(set) var activation: Activation?
+
 
     //MARK: - Content View
     @Published private(set) var currentContentView: ContentView = .activated
@@ -37,93 +44,81 @@ class CoppiceProViewModel {
     }
 
 
-
     //MARK: - Activation Actions
     func activateWithLogin(email: String, password: String) async throws {
+        do {
+            try await self.subscriptionController.login(email: email, password: password)
+            let subscriptions = try await self.subscriptionController.listSubscriptions()
 
-        //Login
-        //Get subscription list
-        //if > 1
-            //show subs
-        //activate
-            //on too many devices
-                //fetch list
-                //activate again
-        //Finish activation
+            let selectedSubscription: API.V2.Subscription
+            if subscriptions.count > 1, let view = self.view {
+                selectedSubscription = try await view.selectSubscription(from: subscriptions)
+            } else if subscriptions.count == 1 {
+                selectedSubscription = subscriptions[0]
+            } else {
+                fatalError()
+            }
 
-        if let view = self.view {
-            _ = try await view.selectSubscription(from: [
-                .init(id: UUID().uuidString,
-                      name: "Coppice Pro (Annual Subscription)",
-                      expirationDate: Date(timeIntervalSinceNow: 900000),
-                      hasExpired: false,
-                      renewalStatus: .renew),
-                .init(id: UUID().uuidString,
-                      name: "Coppice Pro (Free Trial)",
-                      expirationDate: Date(timeIntervalSinceNow: 90000),
-                      hasExpired: false,
-                      renewalStatus: .renew)
-            ])
+            try await self.activate(subscription: selectedSubscription)
+            self.currentContentView = .activated
+        } catch {
+            try self.subscriptionController.logout()
+            //TODO: Handle error
         }
-
-        self.activation = Activation(planName: "Coppice Pro (Annual Subscription)",
-                                     status: "Billing Failed (will expire on 6 August 2023)",
-                                     deviceName: "Martin's Mac Studio")
-
-        self.currentContentView = .activated
     }
 
     func activate(withLicenceAtURL url: URL) async throws {
-        //Create licence
-        //activate
-            //on too many devices
-                //fetch list
-                //activate again
-            //
-
-        self.activation = Activation(planName: "Coppice Pro (Free Trial)",
-                                     status: "Active (will expire on 6 August 2024)",
-                                     deviceName: nil)
-
-        if let view = self.view {
-            _ = try await view.deactivateDevice(from: [
-                .init(deactivationToken: UUID().uuidString,
-                      name: "Martin's Mac Studio",
-                      activationDate: Date(timeIntervalSinceNow: -500000)),
-                .init(deactivationToken: UUID().uuidString,
-                      name: "Martin's iMac",
-                      activationDate: Date(timeIntervalSinceNow: -90000)),
-                .init(deactivationToken: UUID().uuidString,
-                      name: "Bob's MacBook Pro",
-                      activationDate: Date(timeIntervalSinceNow: -1500000))
-            ])
+        let licence = API.V2.Licence(url: url)
+        do {
+            try self.subscriptionController.saveLicence(licence)
+        } catch {
+            //TODO: Handle Error
         }
-        self.currentContentView = .activated
-        //Determine if url is activation url or file url
 
-//- On drop, check licence
-    //- Send to server to activate
-    //- On Success
-        //Activate
-    //- On network or server failure
-        //Use licence
-    //- On too many devices
-        //fetch device list
-        //on cancel don't activate
-        //on select
-            //deactivate selected device
-            //activate
+        do {
+            try await self.activate(subscription: licence.subscription)
+            self.currentContentView = .activated
+        } catch let error as API.V2.Error {
+            guard case .couldNotConnectToServer(let nsError) = error else {
+                throw error
+            }
+            //TODO: Activate with licence
+            print("error: \(nsError)")
+        }
+    }
+
+    private func activate(subscription: API.V2.Subscription) async throws {
+        let devices = try await self.subscriptionController.listDevices(subscriptionID: subscription.id)
+        if (devices.count) >= subscription.maxDeviceCount! {
+            guard let view = self.view else {
+                fatalError()
+            }
+            let deviceToDeactivate = try await view.deactivateDevice(from: devices)
+            try await self.subscriptionController.deactivate(activationID: deviceToDeactivate.id)
+        }
+
+        try await self.subscriptionController.activate(subscriptionID: subscription.id)
     }
 
     func deactivate() async throws {
+        do {
+            //TODO: Handle V1 deactivation
+            try await self.subscriptionController.deactivate()
+            self.currentContentView = .login
+        } catch {
+            //TODO: Handle error
+        }
     //on deactivate
         //Call deactivate
         //If logged in, log out
-        self.currentContentView = .login
     }
 
     func rename(to newName: String) async throws {
-
+        do {
+            try await self.subscriptionController.renameDevice(to: newName)
+        } catch {
+            //TODO: Handle Error
+        }
     }
 }
 
