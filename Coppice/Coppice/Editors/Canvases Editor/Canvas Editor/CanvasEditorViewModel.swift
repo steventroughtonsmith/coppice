@@ -58,14 +58,14 @@ class CanvasEditorViewModel: ViewModel {
 
     var activationObserver: AnyCancellable?
     private func setupProObservation() {
-        self.activationObserver = CoppiceSubscriptionManager.shared.$activationResponse.sink { [weak self] response in
-            self?.updateLockedStatus(for: response)
+        self.activationObserver = CoppiceSubscriptionManager.shared.$state.sink { [weak self] state in
+            self?.updateLockedStatus(for: state)
         }
     }
 
-    private func updateLockedStatus(for activationResponse: ActivationResponse?) {
-        self.isProEnabled = activationResponse?.isActive == true
-        if activationResponse?.isActive == true {
+    private func updateLockedStatus(for state: CoppiceSubscriptionManager.State) {
+        self.isProEnabled = (state == .enabled)
+        if self.isProEnabled {
             self.isLocked = false
             return
         }
@@ -422,7 +422,7 @@ class CanvasEditorViewModel: ViewModel {
 
     //MARK: - Theming
     var theme: Canvas.Theme {
-        guard CoppiceSubscriptionManager.shared.activationResponse?.isActive == true else {
+        guard CoppiceSubscriptionManager.shared.state == .enabled else {
             return .auto
         }
         return self.canvas.theme

@@ -116,9 +116,9 @@ class ImageEditorViewController: NSViewController, NSMenuItemValidation, NSToolb
 
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         if menuItem.action == #selector(self.linkToCanvasPage(_:)) {
-            let proEnabled = (CoppiceSubscriptionManager.shared.activationResponse?.isActive ?? false)
-            menuItem.image = proEnabled ? nil : CoppiceSubscriptionManager.shared.proImage
-            menuItem.toolTip = proEnabled ? nil : CoppiceSubscriptionManager.shared.proTooltip
+            let proEnabled = (CoppiceSubscriptionManager.shared.state == .enabled)
+            menuItem.image = proEnabled ? nil : CoppiceProUpsell.shared.proImage
+            menuItem.toolTip = proEnabled ? nil : CoppiceProUpsell.shared.proTooltip
             return proEnabled && self.isInCanvas && self.viewModel.linkEditor.selectedLink != .noSelection
         }
         return true

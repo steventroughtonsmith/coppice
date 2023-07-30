@@ -13,7 +13,7 @@ extension API.V1 {
         let networkAdapter: NetworkAdapter
         let request: ActivationRequest
         let device: Device
-        
+
         enum Failure: Error {
             case invalidRequest
             case loginFailed
@@ -23,7 +23,7 @@ extension API.V1 {
             case tooManyDevices([SubscriptionDevice])
             case generic(Error?)
         }
-        
+
         func run() async throws -> ActivationResponse {
             var body: [String: String] = [
                 "email": self.request.email,
@@ -33,37 +33,37 @@ extension API.V1 {
                 "deviceType": self.device.type.rawValue,
                 "version": self.device.appVersion,
             ]
-            
+
             guard let deviceName = self.device.name else {
                 throw Failure.invalidRequest
             }
-            
+
             body["deviceName"] = deviceName
-            
+
             if let subscriptionID = self.request.subscriptionID {
                 body["subscriptionID"] = subscriptionID
             }
-            
+
             if let deviceDeactivationToken = self.request.deviceDeactivationToken {
                 body["deactivatingDeviceToken"] = deviceDeactivationToken
             }
-            
+
 #if DEBUG
             if let debugString = APIDebugManager.shared.activateDebugString {
                 body["debug"] = debugString
             }
 #endif
-            
+
             let data: APIData
             do {
                 data = try await self.networkAdapter.callAPI(endpoint: "activate", method: "POST", body: body)
             } catch {
                 throw Failure.generic(error)
             }
-            
+
             return try self.parse(data)
         }
-        
+
         private func parse(_ data: APIData) throws -> ActivationResponse {
             switch data.response {
             case .active:

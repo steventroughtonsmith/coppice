@@ -11,7 +11,9 @@
                 <outlet property="deviceLabel" destination="njp-NA-48K" id="P7k-Tb-og6"/>
                 <outlet property="deviceRow" destination="eOV-xF-zhJ" id="LoX-lg-72N"/>
                 <outlet property="planLabel" destination="7NT-EJ-ffC" id="pri-sy-Hgp"/>
-                <outlet property="statusLabel" destination="ZER-6L-haq" id="p2M-Gi-gV2"/>
+                <outlet property="renameButton" destination="Vhd-EI-dX9" id="qUn-oD-qNC"/>
+                <outlet property="statusDetailsLabel" destination="PCM-yk-Nom" id="FsJ-qD-Zx3"/>
+                <outlet property="statusLabel" destination="vAF-hc-Phe" id="4Ug-Ly-fmP"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
         </customObject>
@@ -70,14 +72,35 @@
                                         </textField>
                                     </gridCell>
                                     <gridCell row="3fV-1e-dZP" column="9iN-Pr-ebe" id="28n-1b-Pr9">
-                                        <textField key="contentView" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZER-6L-haq">
-                                            <rect key="frame" x="52" y="26" width="37" height="16"/>
-                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="yMj-M7-fwY">
-                                                <font key="font" usesAppearanceFont="YES"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
+                                        <stackView key="contentView" distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mHx-cA-5dS">
+                                            <rect key="frame" x="54" y="26" width="77" height="16"/>
+                                            <subviews>
+                                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vAF-hc-Phe">
+                                                    <rect key="frame" x="-2" y="0.0" width="40" height="16"/>
+                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="Z18-h1-4DI">
+                                                        <font key="font" metaFont="systemBold"/>
+                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PCM-yk-Nom">
+                                                    <rect key="frame" x="42" y="0.0" width="37" height="16"/>
+                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="dna-NW-8PU">
+                                                        <font key="font" usesAppearanceFont="YES"/>
+                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                            </subviews>
+                                            <visibilityPriorities>
+                                                <integer value="1000"/>
+                                                <integer value="1000"/>
+                                            </visibilityPriorities>
+                                            <customSpacing>
+                                                <real value="3.4028234663852886e+38"/>
+                                                <real value="3.4028234663852886e+38"/>
+                                            </customSpacing>
+                                        </stackView>
                                     </gridCell>
                                     <gridCell row="eOV-xF-zhJ" column="ds5-87-ySy" xPlacement="trailing" id="Pjq-0e-NLL">
                                         <textField key="contentView" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P7L-l3-29S">

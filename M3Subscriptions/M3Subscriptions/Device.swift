@@ -9,12 +9,18 @@
 import Foundation
 
 struct Device {
+    static let shared = Device()
+    
     enum DeviceType: String {
         case mac
         case ipad
     }
 
     var name: String?
+
+    var defaultName: String {
+        return Host.current().localizedName ?? "Unknown Mac"
+    }
 
     var type: DeviceType {
         #if TEST

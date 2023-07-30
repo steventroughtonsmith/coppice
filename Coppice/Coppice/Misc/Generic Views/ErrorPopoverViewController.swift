@@ -42,20 +42,22 @@ class ErrorPopoverViewController: NSViewController {
         self.bodyLabel.stringValue = self.error.localizedFailureReason ?? self.error.localizedRecoverySuggestion ?? ""
         self.bodyLabel.isHidden = self.bodyLabel.stringValue.count == 0
 
-        if
-            let errorLabel = self.error.userInfo[SubscriptionErrorFactory.InfoKeys.moreInfoTitle] as? String,
-            (self.error.userInfo[SubscriptionErrorFactory.InfoKeys.moreInfoURL] != nil)
-        {
-            self.findOutMoreButton.title = errorLabel
-            self.findOutMoreContainer.isHidden = false
-        } else {
-            self.findOutMoreContainer.isHidden = true
-        }
+        //TODO: Re-enable
+//        if
+//            let errorLabel = self.error.userInfo[SubscriptionErrorFactory.InfoKeys.moreInfoTitle] as? String,
+//            (self.error.userInfo[SubscriptionErrorFactory.InfoKeys.moreInfoURL] != nil)
+//        {
+//            self.findOutMoreButton.title = errorLabel
+//            self.findOutMoreContainer.isHidden = false
+//        } else {
+//            self.findOutMoreContainer.isHidden = true
+//        }
     }
 
     @IBAction func findOutMore(_ sender: Any) {
-        if let errorURL = self.error.userInfo[SubscriptionErrorFactory.InfoKeys.moreInfoURL] as? URL {
-            NSWorkspace.shared.open(errorURL)
-        }
+        //TODO: Re-enable
+//        if let errorURL = self.error.userInfo[SubscriptionErrorFactory.InfoKeys.moreInfoURL] as? URL {
+//            NSWorkspace.shared.open(errorURL)
+//        }
     }
 }

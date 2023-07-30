@@ -21,6 +21,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     override init() {
         super.init()
+        do {
+            try CoppiceSubscriptionManager.initializeManager()
+        } catch {
+            let alert = NSAlert()
+            alert.messageText = "Coppice encountered a problem"
+            alert.informativeText = "Coppice was unable to correctly start as it couldn't access vital files. Please check your disk permissions. If the problem persists contact M Cubed Support"
+            alert.runModal()
+            NSApplication.shared.terminate(self)
+        }
         self.setupDefaults()
     }
 

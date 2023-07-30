@@ -6,6 +6,7 @@
 //  Copyright © 2023 M Cubed Software. All rights reserved.
 //
 
+import Combine
 import Foundation
 import M3Subscriptions
 
@@ -17,17 +18,68 @@ protocol CoppiceProView: AnyObject {
 class CoppiceProViewModel {
     weak var view: CoppiceProView?
 
-    let subscriptionController: API.V2.Controller
-    init(subscriptionController: API.V2.Controller) {
-        self.subscriptionController = subscriptionController
+    let subscriptionManager: CoppiceSubscriptionManager
+    init(subscriptionManager: CoppiceSubscriptionManager = .shared) {
+        self.subscriptionManager = subscriptionManager
+
+        self.subscribers[.coppiceProState] = subscriptionManager.$state.sink { [weak self] newValue in
+            self?.handleStateChange(newValue: newValue)
+            self?.updateNeedsLicenceUpgrade()
+        }
+        self.updateNeedsLicenceUpgrade()
     }
 
 
     @Published private(set) var activation: Activation?
 
+    private func handleStateChange(newValue: CoppiceSubscriptionManager.State) {
+        guard newValue == .enabled else {
+            self.currentContentView = .licence
+            self.activation = nil
+            return
+        }
+
+        defer {
+            self.currentContentView = (self.activation != nil) ? .activated : .licence
+        }
+
+        switch self.subscriptionManager.activeAPIVersion {
+        case .v1:
+            guard
+                let activationResponse = self.subscriptionManager.v1Controller?.lastResponse,
+                let subscription = activationResponse.subscription
+            else {
+                self.activation = nil
+                return
+            }
+            self.activation = Activation(planName: subscription.name,
+                                         expirationTimestamp: subscription.expirationDate.timeIntervalSince1970,
+                                         renewalStatus: subscription.renewalStatus,
+                                         deviceName: activationResponse.deviceName)
+        case .v2:
+            let subscription: API.V2.Subscription
+            let deviceName: String?
+            switch self.subscriptionManager.v2Controller.activationSource {
+            case .none:
+                self.activation = nil
+                return
+            case .licence(let licence):
+                subscription = licence.subscription
+                deviceName = nil
+            case .website(let activation):
+                subscription = activation.subscription
+                deviceName = activation.deviceName
+            }
+            self.activation = Activation(planName: subscription.name,
+                                         expirationTimestamp: subscription.expirationTimestamp,
+                                         renewalStatus: subscription.renewalStatus,
+                                         deviceName: deviceName)
+        }
+    }
+
 
     //MARK: - Content View
-    @Published private(set) var currentContentView: ContentView = .activated
+    @Published private(set) var currentContentView: ContentView = .login
 
     func switchToLogin() {
         guard self.currentContentView == .licence else {
@@ -47,8 +99,8 @@ class CoppiceProViewModel {
     //MARK: - Activation Actions
     func activateWithLogin(email: String, password: String) async throws {
         do {
-            try await self.subscriptionController.login(email: email, password: password)
-            let subscriptions = try await self.subscriptionController.listSubscriptions()
+            try await self.subscriptionManager.v2Controller.login(email: email, password: password)
+            let subscriptions = try await self.subscriptionManager.v2Controller.listSubscriptions()
 
             let selectedSubscription: API.V2.Subscription
             if subscriptions.count > 1, let view = self.view {
@@ -62,15 +114,15 @@ class CoppiceProViewModel {
             try await self.activate(subscription: selectedSubscription)
             self.currentContentView = .activated
         } catch {
-            try self.subscriptionController.logout()
+            try await self.subscriptionManager.v2Controller.logout()
             //TODO: Handle error
         }
     }
 
     func activate(withLicenceAtURL url: URL) async throws {
-        let licence = API.V2.Licence(url: url)
+        let licence = try API.V2.Licence(url: url)
         do {
-            try self.subscriptionController.saveLicence(licence)
+            try self.subscriptionManager.v2Controller.saveLicence(licence)
         } catch {
             //TODO: Handle Error
         }
@@ -88,37 +140,115 @@ class CoppiceProViewModel {
     }
 
     private func activate(subscription: API.V2.Subscription) async throws {
-        let devices = try await self.subscriptionController.listDevices(subscriptionID: subscription.id)
+        let devices = try await self.subscriptionManager.v2Controller.listDevices(subscriptionID: subscription.id)
         if (devices.count) >= subscription.maxDeviceCount! {
             guard let view = self.view else {
                 fatalError()
             }
             let deviceToDeactivate = try await view.deactivateDevice(from: devices)
-            try await self.subscriptionController.deactivate(activationID: deviceToDeactivate.id)
+            try await self.subscriptionManager.v2Controller.deactivate(activationID: deviceToDeactivate.id)
         }
 
-        try await self.subscriptionController.activate(subscriptionID: subscription.id)
+        try await self.subscriptionManager.v2Controller.activate(subscriptionID: subscription.id)
     }
 
     func deactivate() async throws {
         do {
-            //TODO: Handle V1 deactivation
-            try await self.subscriptionController.deactivate()
+            switch self.subscriptionManager.activeAPIVersion {
+            case .v1:
+                _ = try await self.subscriptionManager.v1Controller?.deactivate()
+            case .v2:
+                try await self.subscriptionManager.v2Controller.deactivate()
+                try await self.subscriptionManager.v2Controller.logout()
+            }
             self.currentContentView = .login
         } catch {
             //TODO: Handle error
+            print("Error deactivating: \(error)")
         }
-    //on deactivate
-        //Call deactivate
-        //If logged in, log out
+    }
+
+    var canRename: Bool {
+        guard
+            self.subscriptionManager.state == .enabled,
+            self.subscriptionManager.activeAPIVersion == .v2,
+            case .website = self.subscriptionManager.v2Controller.activationSource
+        else {
+            return false
+        }
+        return true
     }
 
     func rename(to newName: String) async throws {
         do {
-            try await self.subscriptionController.renameDevice(to: newName)
+            guard self.canRename else {
+                return
+            }
+            try await self.subscriptionManager.v2Controller.renameDevice(to: newName)
         } catch {
             //TODO: Handle Error
         }
+    }
+
+    //MARK: - Licence Upgrade
+    @Published var needsLicenceUpgrade: Bool = false
+
+    private func updateNeedsLicenceUpgrade() {
+        guard
+            self.subscriptionManager.state == .enabled,
+            self.subscriptionManager.activeAPIVersion == .v1
+        else {
+            self.needsLicenceUpgrade = false
+            return
+        }
+        self.needsLicenceUpgrade = true
+    }
+
+    func startLicenceUpgrade() {
+        self.currentContentView = .login
+    }
+
+
+    //MARK: - Subscribers
+    private enum SubscriberKey {
+        case coppiceProState
+    }
+
+    private var subscribers: [SubscriberKey: AnyCancellable] = [:]
+
+    //MARK: - Status Helper Functions
+    static func localizedStatus(expirationTimestamp: TimeInterval, renewalStatus: RenewalStatus) -> String {
+        if expirationTimestamp < Date().timeIntervalSince1970 {
+            return NSLocalizedString("Expired", comment: "Expired subscription state")
+        }
+        if renewalStatus == .failed {
+            return NSLocalizedString("Billing Failed", comment: "Billing Failed subscription state")
+        }
+
+        return NSLocalizedString("Active", comment: "Active subscription state")
+    }
+
+    static func localizedStatusDetails(expirationTimestamp: TimeInterval, renewalStatus: RenewalStatus) -> String {
+        let format: String
+        if expirationTimestamp < Date().timeIntervalSince1970 {
+            format = NSLocalizedString("(expired on %@)", comment: "'expired on <date>' expired subscription info label")
+        } else {
+            switch renewalStatus {
+            case .renew:
+                format = NSLocalizedString("(will renew on %@)", comment: "'will renew on <date>' active subscription info label")
+            case .cancelled, .failed:
+                format = NSLocalizedString("(will expire on %@)", comment: "'will expire on <date>' active subscription that will expire (due to billing failure or the user cancelling) info label")
+            default:
+                return ""
+            }
+        }
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .long
+        dateFormatter.timeStyle = .none
+
+        let date = Date(timeIntervalSince1970: expirationTimestamp)
+        return String(format: format, dateFormatter.string(from: date))
     }
 }
 
@@ -135,7 +265,8 @@ extension CoppiceProViewModel {
 
     struct Activation {
         var planName: String
-        var status: String
+        var expirationTimestamp: TimeInterval
+        var renewalStatus: RenewalStatus
         var deviceName: String?
     }
 }

@@ -88,7 +88,7 @@ class InspectorContainerViewController: NSViewController, SplitViewContainable {
     }
 
     @IBAction func showProInfo(_ sender: Any) {
-        CoppiceSubscriptionManager.shared.openProPage()
+        CoppiceProUpsell.shared.openProPage()
     }
 
     @objc dynamic var showProFeatures: Bool {

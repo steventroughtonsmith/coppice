@@ -9,14 +9,7 @@
 import Foundation
 
 extension API.V2 {
-    public struct Subscription {
-        public enum RenewalStatus: String {
-            case unknown
-            case renew
-            case cancelled
-            case failed
-        }
-
+    public struct Subscription: Equatable {
         internal init(id: String, expirationTimestamp: TimeInterval, name: String, renewalStatus: RenewalStatus, maxDeviceCount: Int? = nil, currentDeviceCount: Int? = nil) {
             self.id = id
             self.expirationTimestamp = expirationTimestamp
@@ -25,7 +18,26 @@ extension API.V2 {
             self.maxDeviceCount = maxDeviceCount
             self.currentDeviceCount = currentDeviceCount
         }
-        
+
+        init(apiSubscription: [String: Any]) throws {
+            guard
+                let id = apiSubscription["id"] as? String,
+                let name = apiSubscription["name"] as? String,
+                let expirationTimestamp = apiSubscription["expirationTimestamp"] as? TimeInterval,
+                let rawRenewalStatus = apiSubscription["renewalStatus"] as? String
+            else {
+                throw Error.invalidResponse
+            }
+
+            self.id = id
+            self.expirationTimestamp = expirationTimestamp
+            self.name = name
+            self.renewalStatus = RenewalStatus(rawValue: rawRenewalStatus) ?? .unknown
+
+            self.maxDeviceCount = apiSubscription["maxDeviceCount"] as? Int
+            self.currentDeviceCount = apiSubscription["currentDeviceCount"] as? Int
+        }
+
         public var id: String
         public var expirationTimestamp: TimeInterval
         public var name: String

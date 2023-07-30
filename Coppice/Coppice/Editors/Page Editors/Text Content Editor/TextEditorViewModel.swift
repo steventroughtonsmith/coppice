@@ -66,7 +66,7 @@ class TextEditorViewModel: ViewModel {
         self.modelController.undoManager.beginUndoGrouping()
 
         let folder: Folder
-        if CoppiceSubscriptionManager.shared.activationResponse?.isActive == true {
+        if CoppiceSubscriptionManager.shared.state == .enabled {
             folder = self.textContent.page?.containingFolder ?? self.documentWindowViewModel.folderForNewPages
         } else {
             folder = self.documentWindowViewModel.folderForNewPages

@@ -30,7 +30,7 @@ class ProUpsellViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.proIcon.image = CoppiceSubscriptionManager.shared.proImage
+        self.proIcon.image = CoppiceProUpsell.shared.proImage
         self.reloadData()
     }
 
@@ -45,6 +45,6 @@ class ProUpsellViewController: NSViewController {
     }
 
     @IBAction func findOutMore(_ sender: Any) {
-        CoppiceSubscriptionManager.shared.openProPage()
+        CoppiceProUpsell.shared.openProPage()
     }
 }

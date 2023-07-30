@@ -10,11 +10,11 @@ import Cocoa
 import M3Subscriptions
 
 class MultipleSubscriptionsViewController: NSViewController {
-    typealias Completion = (M3Subscriptions.Subscription?) -> Void
+    typealias Completion = (API.V2.Subscription?) -> Void
 
-    let subscriptions: [M3Subscriptions.Subscription]
+    let subscriptions: [API.V2.Subscription]
     let completion: Completion
-    init(subscriptions: [M3Subscriptions.Subscription], completion: @escaping Completion) {
+    init(subscriptions: [API.V2.Subscription], completion: @escaping Completion) {
         self.subscriptions = subscriptions
         self.completion = completion
         super.init(nibName: "MultipleSubscriptionsView", bundle: nil)
@@ -43,7 +43,7 @@ class MultipleSubscriptionsViewController: NSViewController {
         self.presentingViewController?.dismiss(self)
     }
 
-    var selectedSubscription: M3Subscriptions.Subscription? {
+    var selectedSubscription: API.V2.Subscription? {
         didSet {
             self.reloadData()
         }

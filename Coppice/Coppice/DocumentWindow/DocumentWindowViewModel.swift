@@ -70,7 +70,7 @@ class DocumentWindowViewModel: NSObject {
     var proEnabled: Bool = true
     #else
     var proEnabled: Bool {
-        return CoppiceSubscriptionManager.shared.activationResponse?.isActive == true
+        return CoppiceSubscriptionManager.shared.state == .enabled
     }
     #endif
 

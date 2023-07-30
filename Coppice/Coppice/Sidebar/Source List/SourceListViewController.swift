@@ -226,18 +226,17 @@ class SourceListViewController: NSViewController, NSMenuItemValidation {
             return true
         }
 
-        let subManager = CoppiceSubscriptionManager.shared
-        let proEnabled = (subManager.activationResponse?.isActive ?? false)
+        let proEnabled = (CoppiceSubscriptionManager.shared.state == .enabled)
 
         if menuItem.action == #selector(self.newFolder(_:)) {
-            menuItem.image = proEnabled ? nil : subManager.proImage
-            menuItem.toolTip = proEnabled ? nil  : subManager.proTooltip
+            menuItem.image = proEnabled ? nil : CoppiceProUpsell.shared.proImage
+            menuItem.toolTip = proEnabled ? nil  : CoppiceProUpsell.shared.proTooltip
             return proEnabled
         }
 
         if menuItem.action == #selector(self.newFolderFromSelection(_:)) {
-            menuItem.image = proEnabled ? nil : subManager.proImage
-            menuItem.toolTip = proEnabled ? nil  : subManager.proTooltip
+            menuItem.image = proEnabled ? nil : CoppiceProUpsell.shared.proImage
+            menuItem.toolTip = proEnabled ? nil  : CoppiceProUpsell.shared.proTooltip
 
             let selection = self.nodesForAction
             guard selection.count > 0 else {

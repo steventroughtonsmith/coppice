@@ -15,11 +15,11 @@ extension API.V1 {
             self.name = name
             self.activationDate = activationDate
         }
-        
+
         public var deactivationToken: String
         public var name: String
         public var activationDate: Date
-        
+
         init?(payload: [String: Any]) {
             guard
                 let deactivationToken = payload["deactivationToken"] as? String,
@@ -28,12 +28,12 @@ extension API.V1 {
             else {
                 return nil
             }
-            
+
             let formatter = ISO8601DateFormatter()
             guard let activationDate = formatter.date(from: activationDateString) else {
                 return nil
             }
-            
+
             self.deactivationToken = deactivationToken
             self.name = name
             self.activationDate = activationDate

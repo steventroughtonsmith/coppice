@@ -63,7 +63,7 @@ class InspectorUpsellView: NSView {
         guard let proFeature = self.proFeature else {
             return
         }
-        self.popover = CoppiceSubscriptionManager.shared.createProPopover(for: proFeature, userAction: .hover)
+        self.popover = CoppiceProUpsell.shared.createProPopover(for: proFeature, userAction: .hover)
     }
 
     override func mouseExited(with event: NSEvent) {

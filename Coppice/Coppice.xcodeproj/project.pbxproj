@@ -33,7 +33,6 @@
 		990ED5CF2A6D5C99008A741B /* CoppiceProViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990ED5CE2A6D5C99008A741B /* CoppiceProViewModel.swift */; };
 		990F61A425222A3E00FA5A27 /* MultipleSubscriptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F61A225222A3E00FA5A27 /* MultipleSubscriptionsViewController.swift */; };
 		990F61A525222A3E00FA5A27 /* MultipleSubscriptionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 990F61A325222A3E00FA5A27 /* MultipleSubscriptionsView.xib */; };
-		990F61A725222C2D00FA5A27 /* Subscriptions+LocalizedStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F61A625222C2D00FA5A27 /* Subscriptions+LocalizedStrings.swift */; };
 		9910EA4F2700828F003741D8 /* LinkControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9910EA4E2700828F003741D8 /* LinkControl.swift */; };
 		99115DC5249E304D008942DF /* SystemProfileInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99115DC3249E304D008942DF /* SystemProfileInfoViewController.swift */; };
 		99115DC6249E304D008942DF /* SystemProfileInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99115DC4249E304D008942DF /* SystemProfileInfoViewController.xib */; };
@@ -525,7 +524,6 @@
 		990ED5CE2A6D5C99008A741B /* CoppiceProViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoppiceProViewModel.swift; sourceTree = "<group>"; };
 		990F61A225222A3E00FA5A27 /* MultipleSubscriptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleSubscriptionsViewController.swift; sourceTree = "<group>"; };
 		990F61A325222A3E00FA5A27 /* MultipleSubscriptionsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MultipleSubscriptionsView.xib; sourceTree = "<group>"; };
-		990F61A625222C2D00FA5A27 /* Subscriptions+LocalizedStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Subscriptions+LocalizedStrings.swift"; sourceTree = "<group>"; };
 		9910EA4E2700828F003741D8 /* LinkControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkControl.swift; sourceTree = "<group>"; };
 		99115DC3249E304D008942DF /* SystemProfileInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemProfileInfoViewController.swift; sourceTree = "<group>"; };
 		99115DC4249E304D008942DF /* SystemProfileInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SystemProfileInfoViewController.xib; sourceTree = "<group>"; };
@@ -1378,7 +1376,6 @@
 				992DDC962A698AA7002FCEC2 /* Coppice Pro UI */,
 				9999A23524F93052001F8161 /* CoppiceSubscriptionManager.swift */,
 				99AC84772A706A6900CBF18A /* CoppiceProUpsell.swift */,
-				990F61A625222C2D00FA5A27 /* Subscriptions+LocalizedStrings.swift */,
 				99D329B725224B0200E15683 /* Too Many Devices */,
 				990F61A82522327000FA5A27 /* Multiple Subscriptions */,
 				99D50738250254BF00670139 /* ProUpsellViewController.swift */,
@@ -2597,7 +2594,6 @@
 				998D077D2411578B004ADFF8 /* NSMenu+M3Extensions.swift in Sources */,
 				9946649E2816C1A100A08522 /* HotspotTypeProOverlay.swift in Sources */,
 				99581092230D92C600D996C4 /* CanvasPageViewController.swift in Sources */,
-				990F61A725222C2D00FA5A27 /* Subscriptions+LocalizedStrings.swift in Sources */,
 				99868746253DA104004B29B0 /* ProFeature.swift in Sources */,
 				9965FC4623844910002FE10D /* TextEditorFontInspectorViewController.swift in Sources */,
 				99ECA0B526496F6E00480C19 /* PageSelectorHeaderTableCellView.swift in Sources */,

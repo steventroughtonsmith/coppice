@@ -276,7 +276,7 @@ class SourceListViewModel: ViewModel {
     }
 
     private func validate(ids: [ModelID], and folder: Folder, mode: DropMode) -> Bool {
-        guard (CoppiceSubscriptionManager.shared.activationResponse?.isActive == true) || folder == self.modelController.rootFolder else {
+        guard (CoppiceSubscriptionManager.shared.state == .enabled) || folder == self.modelController.rootFolder else {
             return false
         }
 
@@ -365,7 +365,7 @@ class SourceListViewModel: ViewModel {
         let actualType = type ?? self.documentWindowViewModel.lastCreatePageType
         let lastNode = collection.nodes.last
         let folder: Folder
-        if CoppiceSubscriptionManager.shared.activationResponse?.isActive == true {
+        if CoppiceSubscriptionManager.shared.state == .enabled {
             folder = lastNode?.folderForCreation ?? self.documentWindowViewModel.folderForNewPages
         } else {
             folder = self.documentWindowViewModel.folderForNewPages

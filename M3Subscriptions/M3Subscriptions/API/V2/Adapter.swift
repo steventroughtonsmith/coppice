@@ -11,7 +11,7 @@ import Foundation
 protocol APIAdapterV2 {
     func login(email: String, password: String, deviceName: String) async throws -> APIData
 
-    func withAuthentication(authentication: API.V2.Authentication) -> APIAdapterV2
+    func withAuthentication(_ authentication: API.V2.Authentication) -> APIAdapterV2
 
     func logout() async throws -> APIData
 
@@ -21,6 +21,7 @@ protocol APIAdapterV2 {
 
     func renameDevice(activationID: String, deviceName: String) async throws -> APIData
     func listSubscriptions(bundleID: String) async throws -> APIData
+    func listDevices(subscriptionID: String, device: Device) async throws -> APIData
 }
 
 
@@ -32,7 +33,7 @@ extension API.V2 {
         }
 
         private var currentAuthentication: Authentication?
-        func withAuthentication(authentication: API.V2.Authentication) -> APIAdapterV2 {
+        func withAuthentication(_ authentication: API.V2.Authentication) -> APIAdapterV2 {
             self.currentAuthentication = authentication
             return self
         }
@@ -62,6 +63,10 @@ extension API.V2 {
         }
 
         func listSubscriptions(bundleID: String) async throws -> APIData {
+            fatalError()
+        }
+
+        func listDevices(subscriptionID: String, device: Device) async throws -> APIData {
             fatalError()
         }
     }

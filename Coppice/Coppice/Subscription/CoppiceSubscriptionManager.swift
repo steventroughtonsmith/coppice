@@ -15,53 +15,94 @@ protocol CoppiceSubscriptionManagerDelegate: AnyObject {
     func showInfoAlert(_ infoAlert: InfoAlert, for subscriptionManager: CoppiceSubscriptionManager)
 }
 
-//TODO: Remove actions except for check
-//TODO: Add check for V1 for check and deactivate
-//TODO: Otherwise use check for V2
-//TODO: Add migration check
 class CoppiceSubscriptionManager: NSObject {
-    let subscriptionController: API.V1.SubscriptionController?
-    weak var delegate: CoppiceSubscriptionManagerDelegate?
-
-    @Published var activationResponse: API.V1.ActivationResponse? {
-        didSet {
-            self.notifyOfChanges()
-        }
+    private(set) static var shared: CoppiceSubscriptionManager!
+    static func initializeManager() throws {
+        let url = try CoppiceApplication.appSupportDirectory
+        CoppiceSubscriptionManager.shared = CoppiceSubscriptionManager(appSupportURL: url)
     }
 
-    @Published var currentCheckError: NSError?
+    //MARK: - Init
+    let v1Controller: API.V1.SubscriptionController?
+    let v2Controller: API.V2.Controller
+    init(appSupportURL: URL) {
+        let licenceURL = appSupportURL.appendingPathComponent("Licence.coppicelicence")
+        let activationURL = appSupportURL.appendingPathComponent("Activation")
+        self.v2Controller = API.V2.Controller(licenceURL: licenceURL, activationURL: activationURL)
 
-    static var shared = CoppiceSubscriptionManager()
-
-    override init() {
-        if let appSupportURL = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first {
-            let licenceURL = appSupportURL.appendingPathComponent("licence")
-            self.subscriptionController = API.V1.SubscriptionController(activationDetailsURL: licenceURL)
+        //Activation details were never put in the /Coppice directory
+        let v1ActivationDetails = appSupportURL.deletingLastPathComponent().appendingPathComponent("licence")
+        if case .none = self.v2Controller.activationSource, FileManager.default.fileExists(atPath: v1ActivationDetails.path) {
+            self.v1Controller = API.V1.SubscriptionController(activationDetailsURL: v1ActivationDetails)
         } else {
-            self.subscriptionController = nil
+            self.v1Controller = nil
         }
+
+
 
         super.init()
 
+        if let controller = self.v1Controller {
+            self.subscribers[.v1SubscriberResponse] = controller.$lastResponse.sink { [weak self] response in
+                if response?.isActive == false {
+                    self?.state = .unknown
+                }
+            }
+        }
+
         self.checkSubscriptionIfNeeded()
+        DispatchQueue.main.async {
+            self.notifyOfAPIUpgradeIfNeeded()
+        }
     }
 
     deinit {
         print("deinit subscription manager")
     }
 
-    //MARK: - User Initiated actions
-    typealias ErrorHandler = (NSError) -> Bool
-    func activate(withEmail email: String, password: String, on window: NSWindow, errorHandler: @escaping ErrorHandler) {
+    //MARK: - Delegate
+    weak var delegate: CoppiceSubscriptionManagerDelegate?
+
+    //MARK: - State
+    @Published var currentCheckError: NSError?
+
+    enum State {
+        case unknown
+        case enabled
     }
 
-    func deactivate(on window: NSWindow, errorHandler: @escaping ErrorHandler) {
+    @Published private(set) var state: State = .unknown
 
+    //MARK: - API Version
+    enum APIVersion {
+        case v1
+        case v2
     }
 
-    //TODO: Make Async Throws
-    func updateDeviceName(deviceName: String, completion: @escaping (Result<API.V1.ActivationResponse, Error>) -> Void) {
+    var activeAPIVersion: APIVersion {
+        if case .none = self.v2Controller.activationSource, self.v1Controller != nil {
+            return .v1
+        }
+        return .v2
+    }
 
+    private var hasNotifiedSinceLaunch: Bool = false
+    private func notifyOfAPIUpgradeIfNeeded() {
+        guard
+            self.hasNotifiedSinceLaunch == false,
+            self.activeAPIVersion == .v1
+        else {
+            return
+        }
+
+
+        let alert = InfoAlert(id: "apiUpgrade",
+                              level: .warning,
+                              title: "Coppice has updated its licence system",
+                              message: "Go to Coppice > Settings… > Coppice Pro to upgrade and get access to the latest features",
+                              autodismiss: false)
+        self.delegate?.showInfoAlert(alert, for: self)
+        self.hasNotifiedSinceLaunch = true
     }
 
     //MARK: - Automatic actions
@@ -72,9 +113,8 @@ class CoppiceSubscriptionManager: NSObject {
         var checkInterval: TimeInterval = 86400
         //Increase the times we check if billing has failed to 4 times a day
         if
-            let response = self.activationResponse,
-            response.deviceIsActivated,
-            (response.subscription?.renewalStatus == .failed)
+            case .website(let activation) = self.v2Controller.activationSource,
+            (activation.subscription.renewalStatus == .failed)
         {
             checkInterval /= 4
         }
@@ -92,32 +132,31 @@ class CoppiceSubscriptionManager: NSObject {
     }
 
     func checkSubscription() {
-        guard let controller = self.subscriptionController else {
-            return
-        }
-
         Task {
             do {
-                let response = try await controller.checkSubscription()
-                self.activationResponse = response
+                if self.activeAPIVersion == .v1, let controller = self.v1Controller {
+                    let activationResponse = try await controller.checkSubscription()
+                    self.state = activationResponse.isActive ? .enabled : .unknown
+                } else {
+                    try await self.v2Controller.check()
+                    self.state = self.v2Controller.activationSource.activated ? .enabled : .unknown
+                }
                 self.currentCheckError = nil
             } catch {
-                self.handleCheckError(error as NSError
-                )
+                self.handleCheckError(error as NSError)
             }
-            self.completeCheck()
+            Task { @MainActor in
+                self.completeCheck()
+            }
         }
     }
 
     private func handleCheckError(_ error: NSError) {
-
+        //TODO: Figure out what to do
     }
 
     private func completeCheck() {
-        guard
-            let response = self.activationResponse,
-            response.deviceIsActivated
-        else {
+        guard self.state == .enabled else {
             self.recheckTimer?.invalidate()
             self.recheckTimer = nil
             return
@@ -136,118 +175,60 @@ class CoppiceSubscriptionManager: NSObject {
 
     //MARK: - Notify of changes
     func notifyOfChanges() {
-        guard let response = self.activationResponse else {
-            return
-        }
-
         guard
-            let currentSubscription = response.subscription,
-            let previousSubscription = response.previousSubscription
+            case .website(let activation) = self.v2Controller.activationSource,
+            let delegate = self.delegate
         else {
             return
         }
 
-        //Just expired
-        if (currentSubscription.hasExpired && !previousSubscription.hasExpired) {
-            self.delegate?.showInfoAlert(InfoAlert(id: "test", level: .warning, title: "Your Coppice Pro subscription has expired.", message: "You can always upgrade again through our website.", autodismiss: false),
-                                         for: self)
+        let infoAlert: InfoAlert
+        switch activation.secondaryState {
+        case .justExpired:
+            infoAlert = InfoAlert(id: "justExpired",
+                                  level: .warning,
+                                  title: "Your Coppice Pro subscription has expired.",
+                                  message: "You can always upgrade again through our website.",
+                                  autodismiss: false)
+        case .justRenewed:
+            infoAlert = InfoAlert(id: "justRenewed", level: .info, title: "Thank you for renewing your subscription!")
+        case .billingFailed:
+            infoAlert = InfoAlert(id: "billingFailed",
+                                  level: .error,
+                                  title: "We were unable to renew your Coppice Pro subscription.",
+                                  message: "Please log into your M Cubed Account and update your billing info.",
+                                  autodismiss: false)
+        case .none:
             return
         }
-        //Just renewed
-        if (currentSubscription.hasExpired == false) && (currentSubscription.expirationDate > previousSubscription.expirationDate) {
-            self.delegate?.showInfoAlert(InfoAlert(id: "test", level: .info, title: "Thank you for renewing your subscription!"),
-                                         for: self)
-            return
-        }
-        //Billing failed
-        if (currentSubscription.hasExpired == false) && (currentSubscription.renewalStatus == .failed) {
-            self.delegate?.showInfoAlert(InfoAlert(id: "test", level: .error, title: "We were unable to renew your Coppice Pro subscription.", message: "Please log into your M Cubed Account and update your billing info.", autodismiss: false),
-                                         for: self)
-            return
-        }
+
+        delegate.showInfoAlert(infoAlert, for: self)
     }
 
-
-    //MARK: - Pro Upsell
-    enum ProPopoverUserAction {
-        case hover
-        case click
+    //MARK: - Subscribers
+    private enum SubscriberKey {
+        case v1SubscriberResponse
     }
 
-    func createProPopover(for feature: ProFeature, userAction: ProPopoverUserAction) -> NSPopover {
-        let upsellVC = ProUpsellViewController()
-        upsellVC.currentFeature = feature
-        let popover = NSPopover()
-        popover.contentViewController = upsellVC
-        switch userAction {
-        case .hover:
-            popover.behavior = .applicationDefined
-            upsellVC.showFindOutMore = false
-        case .click:
-            popover.behavior = .transient
-            upsellVC.showFindOutMore = true
-        }
-        return popover
-    }
-
-    func showProPopover(for feature: ProFeature, from view: NSView, preferredEdge: NSRectEdge) {
-        let popover = self.createProPopover(for: feature, userAction: .click)
-        popover.show(relativeTo: view.bounds, of: view, preferredEdge: preferredEdge)
-    }
-
-    lazy var proImage: NSImage = {
-        let localizedPro = NSLocalizedString("PRO", comment: "Coppice Pro short name")
-        let attributedPro = NSAttributedString(string: localizedPro, attributes: [
-            .foregroundColor: NSColor.white,
-            .font: NSFont.boldSystemFont(ofSize: 11),
-        ])
-
-        let bounds = attributedPro.boundingRect(with: CGSize(width: 100, height: 100), options: .usesLineFragmentOrigin)
-
-        let verticalPadding: CGFloat = 1
-        let horizontalPadding: CGFloat = 8
-        let imageSize = bounds.rounded().size.plus(width: horizontalPadding * 2, height: verticalPadding * 2)
-
-        let image = NSImage(size: imageSize, flipped: false) { (rect) -> Bool in
-            let path = NSBezierPath(roundedRect: rect, xRadius: 4, yRadius: 4)
-            NSColor(named: "CoppiceGreen")?.setFill()
-            path.fill()
-
-
-            attributedPro.draw(at: CGPoint(x: horizontalPadding, y: verticalPadding))
-
-            return true
-        }
-        image.accessibilityDescription = localizedPro
-        return image
-    }()
-
-    var proTooltip: String {
-        return NSLocalizedString("This feature requires a Coppice Pro subscription", comment: "")
-    }
-
-    func openProPage() {
-        NSWorkspace.shared.open(URL(string: "https://mcubedsw.com/coppice#pro")!)
-    }
+    private var subscribers: [SubscriberKey: AnyCancellable] = [:]
 
 
     //MARK: - Debug
     #if DEBUG
-//    private var previousActivationResponse: ActivationResponse?
+    private var previousState: State?
 
     var proDisabled = false {
         didSet {
-//            guard self.proDisabled != oldValue else {
-//                return
-//            }
-//
-//            if self.proDisabled {
-//                self.previousActivationResponse = self.activationResponse
-//                self.activationResponse = nil
-//            } else {
-//                self.activationResponse = self.previousActivationResponse
-//                self.previousActivationResponse = nil
-//            }
+            guard self.proDisabled != oldValue else {
+                return
+            }
+
+            if self.proDisabled {
+                self.previousState = self.state
+                self.state = .unknown
+            } else if let previousState = self.previousState {
+                self.state = previousState
+            }
         }
     }
     #endif

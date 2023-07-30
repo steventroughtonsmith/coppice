@@ -2,7 +2,7 @@
 //  Authentication.swift
 //  M3Subscriptions
 //
-//  Created by Martin Pilkington on 24/07/2023.
+//  Created by Martin Pilkington on 28/07/2023.
 //  Copyright © 2023 M Cubed Software. All rights reserved.
 //
 

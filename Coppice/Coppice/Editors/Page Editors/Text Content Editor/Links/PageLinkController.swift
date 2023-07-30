@@ -22,14 +22,14 @@ class PageLinkController {
 
     var activationObservation: AnyCancellable?
     private func setupObservation() {
-        self.activationObservation = CoppiceSubscriptionManager.shared.$activationResponse.sink { [weak self] (response) in
-            self?.updateManagers(with: response)
+        self.activationObservation = CoppiceSubscriptionManager.shared.$state.sink { [weak self] (state) in
+            self?.updateManagers(with: state)
         }
     }
 
-    private func updateManagers(with activationResponse: ActivationResponse?) {
+    private func updateManagers(with state: CoppiceSubscriptionManager.State) {
         self.pageLinkManagers.values.forEach {
-            $0.isProEnabled = (activationResponse?.isActive ?? false)
+            $0.isProEnabled = (state == .enabled)
         }
     }
 
@@ -46,7 +46,7 @@ class PageLinkController {
         case .image:
             newManager = ImagePageLinkManager(pageID: page.id, modelController: self.modelController)
         }
-        newManager.isProEnabled = CoppiceSubscriptionManager.shared.activationResponse?.isActive ?? false
+        newManager.isProEnabled = CoppiceSubscriptionManager.shared.state == .enabled
         self.pageLinkManagers[page.id] = newManager
         return newManager
     }

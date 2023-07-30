@@ -21,6 +21,8 @@ extension API.V1 {
             self.subscriptionAPI = subscriptionAPI
         }
 
+        @Published public var lastResponse: ActivationResponse?
+
         //MARK: - Version 1
         public func activate(withEmail email: String, password: String, subscription: Subscription? = nil, deactivatingDevice: SubscriptionDevice? = nil) async throws -> ActivationResponse {
 #if TEST
@@ -39,6 +41,7 @@ extension API.V1 {
             do {
                 let response = try await self.subscriptionAPI.activate(request, device: device)
                 response.write(to: self.activationDetailsURL)
+                self.lastResponse = response
                 return response
             } catch {
                 throw SubscriptionErrorFactory.error(for: error)
@@ -57,11 +60,14 @@ extension API.V1 {
                 var response = try await self.subscriptionAPI.check(Device(name: deviceName), token: token)
                 response.previousSubscription = localResponse.subscription
                 response.write(to: self.activationDetailsURL)
+                self.lastResponse = response
                 return response
             } catch {
                 switch error {
                 case CheckAPI.Failure.generic(let error as NSError) where (error.domain == NSURLErrorDomain) && (deviceName == nil):
-                    return try self.attemptLocalValidation(with: localResponse, dueTo: error)
+                    let response = try self.attemptLocalValidation(with: localResponse, dueTo: error)
+                    self.lastResponse = response
+                    return response
                 default:
                     throw SubscriptionErrorFactory.error(for: error)
                 }
@@ -79,6 +85,7 @@ extension API.V1 {
             do {
                 let response = try await self.subscriptionAPI.deactivate(Device(), token: token)
                 self.deleteActivation()
+                self.lastResponse = response
                 return response
             } catch {
                 throw SubscriptionErrorFactory.error(for: error)

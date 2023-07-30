@@ -39,10 +39,9 @@ class ImageEditorViewModel: ViewModel {
             self?.updateHightlightedRect(withSearchString: searchString)
         }
 
-        self.subscribers[.isProEnabled] = CoppiceSubscriptionManager.shared.$activationResponse
-            .map { $0?.isActive ?? false }
+        self.subscribers[.isProEnabled] = CoppiceSubscriptionManager.shared.$state
             .sink { [weak self] newValue in
-                self?.isProEnabled = newValue
+                self?.isProEnabled = (newValue == .enabled)
             }
 
         self.pageLinkManager?.setNeedsRescan()

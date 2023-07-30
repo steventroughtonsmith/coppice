@@ -182,7 +182,7 @@ class DocumentWindowController: NSWindowController, NSMenuItemValidation {
     //MARK: - Actions
 
     private var canCreateCanvases: Bool {
-        let proEnabled = CoppiceSubscriptionManager.shared.activationResponse?.isActive == true
+        let proEnabled = CoppiceSubscriptionManager.shared.state == .enabled
         let hasCanvases = self.viewModel.modelController.canvasCollection.all.count > 0
         return proEnabled || !hasCanvases
     }
@@ -197,10 +197,9 @@ class DocumentWindowController: NSWindowController, NSMenuItemValidation {
 
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         if (menuItem.action == #selector(self.newCanvas(_:))) {
-            let subManager = CoppiceSubscriptionManager.shared
-            let proEnabled = (subManager.activationResponse?.isActive == true)
+            let proEnabled = CoppiceSubscriptionManager.shared.state == .enabled
 
-            menuItem.image = proEnabled ? nil : subManager.proImage
+            menuItem.image = proEnabled ? nil : CoppiceProUpsell.shared.proImage
             menuItem.toolTip = self.canCreateCanvases ? nil : NSLocalizedString("Creating more than 1 canvas requires a Coppice Pro subscription", comment: "Canvas creation Coppice Pro subscription")
 
             return self.canCreateCanvases
@@ -213,7 +212,7 @@ class DocumentWindowController: NSWindowController, NSMenuItemValidation {
             return
         }
 
-        CoppiceSubscriptionManager.shared.showProPopover(for: .unlimitedCanvases, from: view, preferredEdge: .maxY)
+        CoppiceProUpsell.shared.showProPopover(for: .unlimitedCanvases, from: view, preferredEdge: .maxY)
     }
 
 

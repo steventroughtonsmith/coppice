@@ -18,7 +18,7 @@ extension API.V1 {
             ]
             XCTAssertNil(SubscriptionDevice(payload: payload))
         }
-        
+
         func test_init_returnsNilIfDeactivationTokenIsNotString() throws {
             let payload: [String: Any] = [
                 "deactivationToken": 54,
@@ -27,7 +27,7 @@ extension API.V1 {
             ]
             XCTAssertNil(SubscriptionDevice(payload: payload))
         }
-        
+
         func test_init_returnsNilIfNameIsMissing() throws {
             let payload: [String: Any] = [
                 "deactivationToken": "token-to-deactivate",
@@ -35,7 +35,7 @@ extension API.V1 {
             ]
             XCTAssertNil(SubscriptionDevice(payload: payload))
         }
-        
+
         func test_init_returnsNilIfNameIsNotString() throws {
             let payload: [String: Any] = [
                 "deactivationToken": "token-to-deactivate",
@@ -44,7 +44,7 @@ extension API.V1 {
             ]
             XCTAssertNil(SubscriptionDevice(payload: payload))
         }
-        
+
         func test_init_returnsNilIfActivationDateIsMissing() throws {
             let payload: [String: Any] = [
                 "deactivationToken": "token-to-deactivate",
@@ -52,7 +52,7 @@ extension API.V1 {
             ]
             XCTAssertNil(SubscriptionDevice(payload: payload))
         }
-        
+
         func test_init_returnsNilIfActivationDateIsNotString() throws {
             let payload: [String: Any] = [
                 "deactivationToken": "token-to-deactivate",
@@ -61,7 +61,7 @@ extension API.V1 {
             ]
             XCTAssertNil(SubscriptionDevice(payload: payload))
         }
-        
+
         func test_init_returnsNilIfActivationDateIsNotISO8601() throws {
             let payload: [String: Any] = [
                 "deactivationToken": "token-to-deactivate",
@@ -70,7 +70,7 @@ extension API.V1 {
             ]
             XCTAssertNil(SubscriptionDevice(payload: payload))
         }
-        
+
         func test_init_createSubscriptionDeviceWithCorrectProperties() throws {
             let payload: [String: Any] = [
                 "deactivationToken": "token-to-deactivate",
@@ -80,7 +80,7 @@ extension API.V1 {
             let device = try XCTUnwrap(SubscriptionDevice(payload: payload))
             XCTAssertEqual(device.deactivationToken, "token-to-deactivate")
             XCTAssertEqual(device.name, "My Favourite Mac")
-            
+
             XCTAssertDateEquals(device.activationDate, 1999, 8, 7, 6, 5, 4)
         }
     }

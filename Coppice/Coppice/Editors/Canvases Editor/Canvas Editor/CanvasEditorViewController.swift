@@ -787,7 +787,7 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
     @IBAction func proUpSell(_ sender: Any) {}
 
     private func setupPro() {
-        self.proImageView.image = CoppiceSubscriptionManager.shared.proImage
+        self.proImageView.image = CoppiceProUpsell.shared.proImage
     }
 }
 

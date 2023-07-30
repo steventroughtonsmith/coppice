@@ -35,10 +35,9 @@ class InspectorContainerViewModel: ViewModel {
 
     var activationObserver: AnyCancellable?
     private func setupProObservation() {
-        self.activationObserver = CoppiceSubscriptionManager.shared.$activationResponse
-            .map { $0?.isActive ?? false }
+        self.activationObserver = CoppiceSubscriptionManager.shared.$state
             .sink { [weak self] newValue in
-                self?.isProEnabled = newValue
+                self?.isProEnabled = (newValue == .enabled)
             }
     }
 }

@@ -12,14 +12,14 @@ extension API.V1 {
         let networkAdapter: NetworkAdapter
         let device: Device
         let token: String
-        
+
         enum Failure: Error {
             case noDeviceFound
             case noSubscriptionFound
             case subscriptionExpired(Subscription?)
             case generic(Error?)
         }
-        
+
         func run() async throws -> ActivationResponse {
             var body = [
                 "token": self.token,
@@ -30,23 +30,23 @@ extension API.V1 {
             if let deviceName = self.device.name {
                 body["deviceName"] = deviceName
             }
-            
+
 #if DEBUG
             if let debugString = APIDebugManager.shared.checkDebugString {
                 body["debug"] = debugString
             }
 #endif
-            
+
             let data: APIData
             do {
                 data = try await self.networkAdapter.callAPI(endpoint: "check", method: "POST", body: body)
             } catch {
                 throw Failure.generic(error)
             }
-            
+
             return try self.parse(data)
         }
-        
+
         private func parse(_ data: APIData) throws -> ActivationResponse {
             switch data.response {
             case .active, .expired:

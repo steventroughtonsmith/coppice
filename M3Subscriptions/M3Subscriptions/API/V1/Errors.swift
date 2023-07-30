@@ -21,10 +21,10 @@ extension API.V1 {
         case notActivated
         case couldNotConnectToServer
     }
-    
+
     public class SubscriptionErrorFactory {
         public static let domain = "com.mcubedsw.Subscriptions"
-        
+
         public struct InfoKeys {
             public static let subscription = "M3SubscriptionErrorSubscriptionKey"
             public static let subscriptionPlans = "M3SubscriptionErrorSubscriptionPlansKey"
@@ -33,13 +33,13 @@ extension API.V1 {
             public static let moreInfoTitle = "M3SubscriptionErrorMoreInfoTitleKey"
             public static let moreInfoURL = "M3SubscriptionErrorMoreInfoURLKey"
         }
-        
+
         public enum ErrorContext: String {
             case activate
             case check
             case deactivate
         }
-        
+
         static func error(for failure: Error) -> NSError {
             if let activationFailure = failure as? API.V1.ActivateAPI.Failure {
                 return self.error(for: activationFailure)
@@ -50,7 +50,7 @@ extension API.V1 {
             }
             return failure as NSError
         }
-        
+
         static func error(for failure: API.V1.ActivateAPI.Failure) -> NSError {
             switch failure {
             case .generic(let error as NSError) where error.domain == NSURLErrorDomain:
@@ -84,7 +84,7 @@ extension API.V1 {
                 return self.createError(code: .multipleSubscriptionsFound, context: .activate, additionalOptions: [InfoKeys.subscriptionPlans: plans])
             }
         }
-        
+
         static func error(for failure: API.V1.CheckAPI.Failure) -> NSError {
             switch failure {
             case .generic(let error as NSError) where error.domain == NSURLErrorDomain:
@@ -99,7 +99,7 @@ extension API.V1 {
                 return self.createError(code: .subscriptionExpired, context: .check, additionalOptions: (subscription != nil) ? [InfoKeys.subscription: subscription!] : nil)
             }
         }
-        
+
         static func error(for failure: API.V1.DeactivateAPI.Failure) -> NSError {
             switch failure {
             case .noDeviceFound:
@@ -110,11 +110,11 @@ extension API.V1 {
                 return self.createError(code: .other, context: .deactivate, additionalOptions: (error != nil) ? [NSUnderlyingErrorKey: error!] : nil)
             }
         }
-        
+
         static func notActivatedError() -> NSError {
             return self.createError(code: .notActivated, context: .activate)
         }
-        
+
         private static func createError(code: SubscriptionErrorCodes, context: ErrorContext, additionalOptions: [String: Any]? = nil) -> NSError {
             var userInfo: [String: Any] = [
                 NSLocalizedDescriptionKey: code.localizedDescription(for: context),
@@ -127,15 +127,15 @@ extension API.V1 {
             return NSError(domain: self.domain, code: code.rawValue, userInfo: userInfo)
         }
     }
-    
+
     struct SubscriptionStrings {
         static let unknownDescription = NSLocalizedString("Oops. Something went wrong.", comment: "Unknown Error Description")
         static let unknownRecovery = NSLocalizedString("Please try again. If the problem persists please contact M Cubed Support.", comment: "Unknown Error Recovery")
-        
+
         struct Deactivation {
             static let genericDescription = NSLocalizedString("Deactivation Failed", comment: "Generic Deactivation Error Description")
             static let genericRecovery = NSLocalizedString("Please check your internet connection and try again. If the problem persists please contact M Cubed Support.", comment: "Generic Deactivation Error Description")
-            
+
             static let noDeviceFoundDescription = NSLocalizedString("Your Device Was Already Deactivated", comment: "No Device Found Deactivation Error Description")
             static let noDeviceFoundRecovery = NSLocalizedString("If you think this is a mistake, please log into your M Cubed Account and try deactivating from there", comment: "No Device Found Deactivation Error Description")
         }

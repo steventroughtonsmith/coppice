@@ -10,11 +10,11 @@ import Cocoa
 import M3Subscriptions
 
 class TooManyDevicesViewController: NSViewController {
-    typealias Completion = (M3Subscriptions.SubscriptionDevice?) -> Void
+    typealias Completion = (API.V2.ActivatedDevice?) -> Void
 
-    let devices: [M3Subscriptions.SubscriptionDevice]
+    let devices: [API.V2.ActivatedDevice]
     let completion: Completion
-    init(devices: [M3Subscriptions.SubscriptionDevice], completion: @escaping Completion) {
+    init(devices: [API.V2.ActivatedDevice], completion: @escaping Completion) {
         self.devices = devices
         self.completion = completion
         super.init(nibName: "TooManyDevicesView", bundle: nil)
@@ -43,7 +43,7 @@ class TooManyDevicesViewController: NSViewController {
         self.presentingViewController?.dismiss(self)
     }
 
-    var selectedDevice: M3Subscriptions.SubscriptionDevice? {
+    var selectedDevice: API.V2.ActivatedDevice? {
         didSet {
             self.reloadData()
         }

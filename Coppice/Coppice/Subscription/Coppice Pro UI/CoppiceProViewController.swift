@@ -20,17 +20,15 @@ protocol CoppiceProContentView: AnyObject {
     func performRightAction(in viewController: CoppiceProViewController)
 }
 
-//TODO: Add upgrade screen
 class CoppiceProViewController: NSViewController {
     let viewModel: CoppiceProViewModel
     init(viewModel: CoppiceProViewModel) {
         self.viewModel = viewModel
         super.init(nibName: "CoppiceProViewController", bundle: nil)
         self.viewModel.view = self
-
-        self.setupSubscribers()
     }
-    
+
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -46,6 +44,8 @@ class CoppiceProViewController: NSViewController {
         super.viewDidLoad()
 
         self.currentContentViewController = self.viewModel.currentContentView.viewController(with: self.viewModel)
+        self.updateLicenceUpgradeAlert()
+        self.setupSubscribers()
     }
 
 
@@ -107,9 +107,21 @@ class CoppiceProViewController: NSViewController {
         self.rightButton.image = contentView.rightActionIcon
     }
 
+    //MARK: - Upgrading
+    @IBOutlet weak var licenceUpgradeAlert: NSBox!
+
+    private func updateLicenceUpgradeAlert() {
+        self.licenceUpgradeAlert.isHidden = !self.viewModel.needsLicenceUpgrade
+    }
+
+    @IBAction func upgradeLicence(_ sender: Any) {
+        self.viewModel.startLicenceUpgrade()
+    }
+
     //MARK: - Subscribers
     private enum SubscriberKey {
         case currentContentView
+        case needsLicenceUpgrade
     }
 
     private var subscribers: [SubscriberKey: AnyCancellable] = [:]
@@ -127,11 +139,14 @@ class CoppiceProViewController: NSViewController {
                 self.currentContentViewController = newContentView.viewController(with: self.viewModel)
             }
         }
+        self.subscribers[.needsLicenceUpgrade] = self.viewModel.$needsLicenceUpgrade
+            .map { !$0 }
+            .assign(to: \.isHidden, on: self.licenceUpgradeAlert)
     }
 }
 
 extension CoppiceProViewController: CoppiceProView {
-    func selectSubscription(from subscriptions: [M3Subscriptions.Subscription]) async throws -> M3Subscriptions.Subscription {
+    func selectSubscription(from subscriptions: [API.V2.Subscription]) async throws -> API.V2.Subscription {
         return try await withCheckedThrowingContinuation { continuation in
             Task { @MainActor in
                 let subscriptionVC = MultipleSubscriptionsViewController(subscriptions: subscriptions) { selectedSubscription in
@@ -146,7 +161,7 @@ extension CoppiceProViewController: CoppiceProView {
         }
     }
 
-    func deactivateDevice(from devices: [SubscriptionDevice]) async throws -> SubscriptionDevice {
+    func deactivateDevice(from devices: [API.V2.ActivatedDevice]) async throws -> API.V2.ActivatedDevice {
         return try await withCheckedThrowingContinuation { continuation in
             Task { @MainActor in
                 let devicesVC = TooManyDevicesViewController(devices: devices) { selectedDevice in

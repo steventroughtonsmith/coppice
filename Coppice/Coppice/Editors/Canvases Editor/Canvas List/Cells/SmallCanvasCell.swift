@@ -21,7 +21,7 @@ class SmallCanvasCell: EditableLabelCell, CanvasCell {
                 return
             }
             var theme = canvas.theme
-            if CoppiceSubscriptionManager.shared.activationResponse?.isActive != true {
+            if CoppiceSubscriptionManager.shared.state == .enabled {
                 theme = .auto
             }
             self.thumbnailBackground.fillColor = theme.canvasBackgroundColor

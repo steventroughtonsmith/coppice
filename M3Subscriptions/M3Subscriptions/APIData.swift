@@ -21,6 +21,8 @@ struct APIData {
         case expired
         case invalidLicence
         case success
+        case loggedIn
+        case loggedOut
         case other(String)
 
         static func response(from string: String) -> Response {
@@ -54,11 +56,16 @@ struct APIData {
             if (string == "success") {
                 return .success
             }
+            if (string == "logged_in") {
+                return .loggedIn
+            }
+            if (string == "logged_out") {
+                return .loggedOut
+            }
             return .other(string)
         }
     }
 
-    //TODO: Need to expose reponse at the top level and return nil if no response found in payload
     var payload: [String: Any]
     var signature: String
     var response: Response
@@ -79,11 +86,6 @@ struct APIData {
         self.signature = signature
         self.response = Response.response(from: response)
     }
-
-    #if TEST
-
-
-    #endif
 
     static func verify(payload: [String: Any], signature: String) -> String? {
         guard let payloadData = try? JSONSerialization.data(withJSONObject: payload, options: .sortedKeys) else {

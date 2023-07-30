@@ -27,7 +27,7 @@ class SubscriptionTableCellView: NSTableCellView, TableCell {
 
     @IBOutlet weak var radioButton: NSButton!
 
-    var subscription: M3Subscriptions.Subscription? {
+    var subscription: API.V2.Subscription? {
         didSet {
             self.reloadData()
         }
@@ -43,8 +43,10 @@ class SubscriptionTableCellView: NSTableCellView, TableCell {
             return
         }
         self.nameLabel.stringValue = subscription.name
-        self.stateLabel.stringValue = subscription.localizedState
-        self.infoLabel.stringValue = subscription.localizedInfo
+        self.stateLabel.stringValue = CoppiceProViewModel.localizedStatus(expirationTimestamp: subscription.expirationTimestamp,
+                                                                          renewalStatus: subscription.renewalStatus)
+        self.infoLabel.stringValue = CoppiceProViewModel.localizedStatusDetails(expirationTimestamp: subscription.expirationTimestamp,
+                                                                                renewalStatus: subscription.renewalStatus)
         if let currentCount = subscription.currentDeviceCount, let maxDeviceCount = subscription.maxDeviceCount {
             self.activationsLabel.stringValue = "\(currentCount)/\(maxDeviceCount)"
         }

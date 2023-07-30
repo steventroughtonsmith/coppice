@@ -20,6 +20,7 @@ extension API.V2 {
         case noDeviceFound //D, C, R
         case notActivated //C
         case couldNotConnectToServer(NSError) //All
+        case invalidResponse
     }
 }
 
@@ -40,13 +41,14 @@ extension API.V2.Error: CustomNSError {
         case .noDeviceFound:                return 8
         case .notActivated:                 return 9
         case .couldNotConnectToServer:      return 10
+        case .invalidResponse:                 return 11
         }
     }
 
-    public var errorUserInfo: [String : Any] {
+    public var errorUserInfo: [String: Any] {
         var userInfo: [String: Any] = [
             NSLocalizedDescriptionKey: self.errorDescription ?? "Something went wrong",
-            NSLocalizedRecoverySuggestionErrorKey: self.recoverySuggestion ?? ""
+            NSLocalizedRecoverySuggestionErrorKey: self.recoverySuggestion ?? "",
         ]
         switch self {
         case .generic(let error as NSError):
@@ -83,6 +85,8 @@ extension API.V2.Error: LocalizedError {
             return NSLocalizedString("Your Device Is Not Activated", comment: "Device Not Activated Error Description")
         case .couldNotConnectToServer:
             return NSLocalizedString("Could Not Contact M Cubed's Servers", comment: "Could Not Connect To Server Error Description")
+        case .invalidResponse:
+            return NSLocalizedString("Oops. Something went wrong", comment: "Action failed Error Description")
         }
     }
 
@@ -108,6 +112,8 @@ extension API.V2.Error: LocalizedError {
             return NSLocalizedString("Please try activating again. If the problem persists please contact M Cubed Support", comment: "Not Activated Error Recovery")
         case .couldNotConnectToServer:
             return NSLocalizedString("Please check your internet connection and try again. If the problem persists please contact M Cubed Support", comment: "Could Not Connect To Server Error Recovery")
+        case .invalidResponse:
+            return NSLocalizedString("Coppice got bad data back from the server. Please try again.", comment: "Action failed Error Description")
         }
     }
 }

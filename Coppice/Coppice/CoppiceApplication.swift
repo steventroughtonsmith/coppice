@@ -25,4 +25,24 @@ import AppKit
         #endif
         return super.restoreWindow(withIdentifier: identifier, state: state, completionHandler: completionHandler)
     }
+
+    static var appSupportDirectory: URL {
+        get throws {
+            guard let baseAppSupportURL = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {
+                throw AppURLError.appSupportMissing
+            }
+
+            let appSupportURL = baseAppSupportURL.appendingPathComponent("Coppice")
+            if (FileManager.default.fileExists(atPath: appSupportURL.path) == false) {
+                try FileManager.default.createDirectory(at: appSupportURL, withIntermediateDirectories: true)
+            }
+
+            return appSupportURL
+        }
+    }
+}
+
+//MARK: - App URLs
+enum AppURLError: Swift.Error {
+    case appSupportMissing
 }

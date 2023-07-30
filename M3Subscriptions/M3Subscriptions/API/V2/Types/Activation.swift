@@ -13,5 +13,38 @@ extension API.V2 {
         public var activationID: String
         public var subscription: Subscription
         public var deviceName: String
+        public var secondaryState: SecondaryState = .none
+        var apiData: APIData
+
+        init(apiData: APIData) throws {
+            let payload = apiData.payload
+            guard
+                let activationID = payload["activationID"] as? String,
+                let device = payload["device"] as? [String: String],
+                let deviceName = device["name"],
+                let apiSubscription = payload["subscription"] as? [String: Any]
+            else {
+                throw Error.invalidResponse
+            }
+
+            let subscription = try Subscription(apiSubscription: apiSubscription)
+            self.subscription = subscription
+            self.activationID = activationID
+            self.deviceName = deviceName
+            self.apiData = apiData
+        }
+
+        func write(to url: URL) throws {
+            try self.apiData.write(to: url)
+        }
+    }
+}
+
+extension API.V2.Activation {
+    public enum SecondaryState {
+        case none
+        case justExpired
+        case justRenewed
+        case billingFailed
     }
 }

@@ -14,7 +14,6 @@
 		990D291A2A6EC25800C3583A /* V2.Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990D29192A6EC25800C3583A /* V2.Subscription.swift */; };
 		990D291C2A6EC42700C3583A /* Activation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990D291B2A6EC42700C3583A /* Activation.swift */; };
 		990D291E2A6ECA6500C3583A /* Adapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990D291D2A6ECA6500C3583A /* Adapter.swift */; };
-		990D29202A6ECB0400C3583A /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990D291F2A6ECB0400C3583A /* Authentication.swift */; };
 		990D29222A6ECE7C00C3583A /* V2.Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990D29212A6ECE7C00C3583A /* V2.Errors.swift */; };
 		9910B2C7296471F000459493 /* Configs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9910B2C6296471F000459493 /* Configs.swift */; };
 		99848160248E639C00BC0A8A /* libM3Subscriptions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99848149248E635600BC0A8A /* libM3Subscriptions.a */; };
@@ -48,11 +47,14 @@
 		998481D52496768100BC0A8A /* M3SubscriptionsStageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481D42496768100BC0A8A /* M3SubscriptionsStageTests.swift */; };
 		998481D72496768100BC0A8A /* libM3Subscriptions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99848149248E635600BC0A8A /* libM3Subscriptions.a */; };
 		998481DF24967A1700BC0A8A /* XCTestExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481DE24967A1700BC0A8A /* XCTestExtensions.swift */; };
+		998AB6ED2A7415880013513E /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998AB6EC2A7415880013513E /* Keychain.swift */; };
+		998AB6EF2A743A8F0013513E /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998AB6EE2A743A8F0013513E /* Authentication.swift */; };
 		9998B4DD251118F300E2D455 /* APIDebugManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9998B4DC251118F300E2D455 /* APIDebugManager.swift */; };
 		9999A24D24FD454B001F8161 /* APITestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9999A24C24FD454B001F8161 /* APITestCase.swift */; };
 		9999A25424FD4EA4001F8161 /* test_private_key.pem in Resources */ = {isa = PBXBuildFile; fileRef = 9999A25224FD4EA4001F8161 /* test_private_key.pem */; };
 		9999A25524FD4EA4001F8161 /* test_public_key.pem in Resources */ = {isa = PBXBuildFile; fileRef = 9999A25324FD4EA4001F8161 /* test_public_key.pem */; };
 		9999A25724FD5A29001F8161 /* test_private_key.p12 in Resources */ = {isa = PBXBuildFile; fileRef = 9999A25624FD5783001F8161 /* test_private_key.p12 */; };
+		99A9223B2A72CE8200CCA87F /* RenewalStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A9223A2A72CE8200CCA87F /* RenewalStatus.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,7 +82,6 @@
 		990D29192A6EC25800C3583A /* V2.Subscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V2.Subscription.swift; sourceTree = "<group>"; };
 		990D291B2A6EC42700C3583A /* Activation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activation.swift; sourceTree = "<group>"; };
 		990D291D2A6ECA6500C3583A /* Adapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Adapter.swift; sourceTree = "<group>"; };
-		990D291F2A6ECB0400C3583A /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
 		990D29212A6ECE7C00C3583A /* V2.Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V2.Errors.swift; sourceTree = "<group>"; };
 		9910B2C6296471F000459493 /* Configs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configs.swift; sourceTree = "<group>"; };
 		99848149248E635600BC0A8A /* libM3Subscriptions.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libM3Subscriptions.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -117,11 +118,14 @@
 		998481D42496768100BC0A8A /* M3SubscriptionsStageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M3SubscriptionsStageTests.swift; sourceTree = "<group>"; };
 		998481D62496768100BC0A8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		998481DE24967A1700BC0A8A /* XCTestExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestExtensions.swift; sourceTree = "<group>"; };
+		998AB6EC2A7415880013513E /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
+		998AB6EE2A743A8F0013513E /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
 		9998B4DC251118F300E2D455 /* APIDebugManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIDebugManager.swift; sourceTree = "<group>"; };
 		9999A24C24FD454B001F8161 /* APITestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITestCase.swift; sourceTree = "<group>"; };
 		9999A25224FD4EA4001F8161 /* test_private_key.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test_private_key.pem; sourceTree = "<group>"; };
 		9999A25324FD4EA4001F8161 /* test_public_key.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test_public_key.pem; sourceTree = "<group>"; };
 		9999A25624FD5783001F8161 /* test_private_key.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_private_key.p12; sourceTree = "<group>"; };
+		99A9223A2A72CE8200CCA87F /* RenewalStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenewalStatus.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,7 +187,7 @@
 				990D29132A6EB6E000C3583A /* Licence.swift */,
 				990D29192A6EC25800C3583A /* V2.Subscription.swift */,
 				990D291B2A6EC42700C3583A /* Activation.swift */,
-				990D291F2A6ECB0400C3583A /* Authentication.swift */,
+				998AB6EE2A743A8F0013513E /* Authentication.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -235,6 +239,7 @@
 				992DDC942A6936C9002FCEC2 /* Debugging */,
 				99848185248E68FA00BC0A8A /* Device.swift */,
 				99848191248E69E000BC0A8A /* APIData.swift */,
+				998AB6EC2A7415880013513E /* Keychain.swift */,
 				99848169248E648300BC0A8A /* API */,
 			);
 			path = M3Subscriptions;
@@ -256,6 +261,7 @@
 			isa = PBXGroup;
 			children = (
 				990D29112A6EA7BD00C3583A /* API.swift */,
+				99A922392A72CE7100CCA87F /* Shared Types */,
 				990D29172A6EC11600C3583A /* V2 */,
 				990D29102A6EA79D00C3583A /* V1 */,
 			);
@@ -351,6 +357,14 @@
 			name = Resources;
 			path = M3SubscriptionsTests/Resources;
 			sourceTree = SOURCE_ROOT;
+		};
+		99A922392A72CE7100CCA87F /* Shared Types */ = {
+			isa = PBXGroup;
+			children = (
+				99A9223A2A72CE8200CCA87F /* RenewalStatus.swift */,
+			);
+			path = "Shared Types";
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -521,16 +535,18 @@
 				990D291A2A6EC25800C3583A /* V2.Subscription.swift in Sources */,
 				990D29142A6EB6E000C3583A /* Licence.swift in Sources */,
 				9984818E248E698D00BC0A8A /* SubscriptionDevice.swift in Sources */,
+				998AB6EF2A743A8F0013513E /* Authentication.swift in Sources */,
 				99848174248E648300BC0A8A /* CheckAPI.swift in Sources */,
 				99848190248E699800BC0A8A /* ActivationResponse.swift in Sources */,
 				9984818C248E698500BC0A8A /* V1.Subscription.swift in Sources */,
 				990D291E2A6ECA6500C3583A /* Adapter.swift in Sources */,
 				990D29162A6EBA3700C3583A /* ActivatedDevice.swift in Sources */,
 				99848173248E648300BC0A8A /* DeactivateAPI.swift in Sources */,
+				998AB6ED2A7415880013513E /* Keychain.swift in Sources */,
 				990D290D2A6EA44900C3583A /* SubscriptionController.swift in Sources */,
-				990D29202A6ECB0400C3583A /* Authentication.swift in Sources */,
 				990D291C2A6EC42700C3583A /* Activation.swift in Sources */,
 				99848192248E69E000BC0A8A /* APIData.swift in Sources */,
+				99A9223B2A72CE8200CCA87F /* RenewalStatus.swift in Sources */,
 				998481AC2492789400BC0A8A /* Errors.swift in Sources */,
 				99848170248E648300BC0A8A /* NetworkAdapter.swift in Sources */,
 				9984816F248E648300BC0A8A /* ResultExtension.swift in Sources */,

@@ -14,14 +14,17 @@ protocol NetworkAdapter {
     func callAPI(endpoint: String, method: String, body: [String: String]) async throws -> APIData
 }
 
-class URLSessionNetworkAdapter: NetworkAdapter {
-    enum Errors: Error {
-        case genericError
-        case invalidJSON
-        case invalidResponse(HTTPURLResponse)
-        case invalidData
-    }
+enum NetworkAdapterError: Error {
+    case noInternetConnection
+    case urlError(NSError)
+    case unknownResponse
+    case invalidResponse(HTTPURLResponse)
+    case invalidJSON
+    case invalidData
+    case genericError(Error)
+}
 
+class URLSessionNetworkAdapter: NetworkAdapter {
     var baseURL: URL {
         #if TEST
         if let baseURL = TEST_OVERRIDES.baseURL {
@@ -50,31 +53,43 @@ class URLSessionNetworkAdapter: NetworkAdapter {
         self.session = session
     }
 
-    //TODO: Make Async
     func callAPI(endpoint: String, method: String = "POST", body: [String: String]) async throws -> APIData {
         let request = self.request(forEndpoint: endpoint, method: method, body: body)
         return try await self.callAPI(with: request)
     }
 
-    //TODO: Make Async
     private func callAPI(with request: URLRequest) async throws -> APIData {
-        let (data, response) = try await self.session.data(for: request)
+        let data: Data
+        let response: URLResponse
+        do {
+            (data, response) = try await self.session.data(for: request)
+        } catch {
+            let nsError = error as NSError
+            guard nsError.domain == NSURLErrorDomain else {
+                throw NetworkAdapterError.genericError(error)
+            }
+
+            if nsError.code == NSURLErrorNotConnectedToInternet {
+                throw NetworkAdapterError.noInternetConnection
+            }
+            throw NetworkAdapterError.urlError(nsError)
+        }
 
         guard let httpResponse = response as? HTTPURLResponse else {
-            throw Errors.genericError
+            throw NetworkAdapterError.unknownResponse
         }
 
         guard httpResponse.statusCode == 200 || httpResponse.statusCode == 422 else {
-            throw Errors.invalidResponse(httpResponse)
+            throw NetworkAdapterError.invalidResponse(httpResponse)
         }
 
         let json = try JSONSerialization.jsonObject(with: data, options: [])
         guard let jsonDictionary = json as? [String: Any] else {
-            throw Errors.invalidJSON
+            throw NetworkAdapterError.invalidJSON
         }
 
         guard let apiData = APIData(json: jsonDictionary) else {
-            throw Errors.invalidData
+            throw NetworkAdapterError.invalidData
         }
 
         return apiData

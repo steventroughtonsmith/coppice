@@ -9,6 +9,8 @@
 import Cocoa
 
 class CoppiceProUpsell {
+    static let shared = CoppiceProUpsell()
+
     enum ProPopoverUserAction {
         case hover
         case click

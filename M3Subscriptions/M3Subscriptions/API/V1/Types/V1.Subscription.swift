@@ -10,7 +10,7 @@ import Foundation
 
 extension API.V1 {
     public struct Subscription: Equatable {
-        public init(id: String? = nil, name: String, expirationDate: Date, hasExpired: Bool, renewalStatus: Subscription.RenewalStatus, maxDeviceCount: Int? = nil, currentDeviceCount: Int? = nil) {
+        public init(id: String? = nil, name: String, expirationDate: Date, hasExpired: Bool, renewalStatus: RenewalStatus, maxDeviceCount: Int? = nil, currentDeviceCount: Int? = nil) {
             self.id = id
             self.name = name
             self.expirationDate = expirationDate
@@ -20,13 +20,6 @@ extension API.V1 {
             self.currentDeviceCount = currentDeviceCount
         }
 
-        public enum RenewalStatus: String {
-            case unknown
-            case renew
-            case cancelled
-            case failed
-        }
-
         public var id: String?
         public var name: String
         public var expirationDate: Date
@@ -34,7 +27,7 @@ extension API.V1 {
         public var renewalStatus: RenewalStatus
         public var maxDeviceCount: Int?
         public var currentDeviceCount: Int?
-         
+
         init?(payload: [String: Any], hasExpired: Bool) {
             guard
                 let name = payload["name"] as? String,
@@ -43,12 +36,12 @@ extension API.V1 {
             else {
                 return nil
             }
-            
+
             let formatter = ISO8601DateFormatter()
             guard let expirationDate = formatter.date(from: expirationDateString) else {
                 return nil
             }
-            
+
             self.id = payload["id"] as? String
             self.name = name
             self.expirationDate = expirationDate

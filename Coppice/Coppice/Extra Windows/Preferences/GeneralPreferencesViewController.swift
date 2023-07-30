@@ -19,8 +19,8 @@ class GeneralPreferencesViewController: PreferencesViewController {
 
     var activationObservation: AnyCancellable?
     private func startObservation() {
-        self.activationObservation = CoppiceSubscriptionManager.shared.$activationResponse
-            .map { $0?.isActive ?? false }
+        self.activationObservation = CoppiceSubscriptionManager.shared.$state
+            .map { $0 == .enabled }
             .assign(to: \.isProEnabled, on: self)
     }
 
@@ -117,21 +117,21 @@ class GeneralPreferencesViewController: PreferencesViewController {
         guard let control = sender as? NSView else {
             return
         }
-        CoppiceSubscriptionManager.shared.showProPopover(for: .textAutoLinking, from: control, preferredEdge: .maxX)
+        CoppiceProUpsell.shared.showProPopover(for: .textAutoLinking, from: control, preferredEdge: .maxX)
     }
 
     @IBAction func showExistingPageLinkingProUpsell(_ sender: Any) {
         guard let control = sender as? NSView else {
             return
         }
-        CoppiceSubscriptionManager.shared.showProPopover(for: .linkToExistingPages, from: control, preferredEdge: .maxX)
+        CoppiceProUpsell.shared.showProPopover(for: .linkToExistingPages, from: control, preferredEdge: .maxX)
     }
 
     @IBAction func showThemeProUpsell(_ sender: Any) {
         guard let control = sender as? NSView else {
             return
         }
-        CoppiceSubscriptionManager.shared.showProPopover(for: .canvasAppearance, from: control, preferredEdge: .maxX)
+        CoppiceProUpsell.shared.showProPopover(for: .canvasAppearance, from: control, preferredEdge: .maxX)
     }
 
     //MARK: - Sidebar Size

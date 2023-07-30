@@ -20,27 +20,34 @@ class ActivatedCoppiceProContentViewController: NSViewController {
         }
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     @IBOutlet weak var planLabel: NSTextField!
     @IBOutlet weak var statusLabel: NSTextField!
+    @IBOutlet weak var statusDetailsLabel: NSTextField!
     @IBOutlet weak var deviceLabel: NSTextField!
     @IBOutlet weak var deviceRow: NSGridRow!
-    //TODO: Testing
+    @IBOutlet weak var renameButton: NSButton!
+
     private func reloadData() {
         guard self.isViewLoaded, let activation = self.viewModel.activation else {
             return
         }
         self.planLabel.stringValue = activation.planName
-        self.statusLabel.stringValue = activation.status
+        self.statusLabel.stringValue = CoppiceProViewModel.localizedStatus(expirationTimestamp: activation.expirationTimestamp,
+                                                                           renewalStatus: activation.renewalStatus)
+        self.statusDetailsLabel.stringValue = CoppiceProViewModel.localizedStatusDetails(expirationTimestamp: activation.expirationTimestamp,
+                                                                                         renewalStatus: activation.renewalStatus)
         if let deviceName = activation.deviceName {
             self.deviceLabel.stringValue = deviceName
             self.deviceRow.isHidden = false
         } else {
             self.deviceRow.isHidden = true
         }
+        self.renameButton.isHidden = (self.viewModel.canRename == false)
     }
 
     private func deactivate() {

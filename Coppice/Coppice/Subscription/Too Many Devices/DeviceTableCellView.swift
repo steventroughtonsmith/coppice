@@ -25,7 +25,7 @@ class DeviceTableCellView: NSTableCellView, TableCell {
 
     @IBOutlet weak var radioButton: NSButton!
 
-    var device: M3Subscriptions.SubscriptionDevice? {
+    var device: API.V2.ActivatedDevice? {
         didSet {
             self.reloadData()
         }
@@ -37,14 +37,16 @@ class DeviceTableCellView: NSTableCellView, TableCell {
     }
 
     private func reloadData() {
-        guard let device = self.device else {
+        guard let activatedDevice = self.device else {
             return
         }
-        self.nameLabel.stringValue = device.name
+        self.nameLabel.stringValue = activatedDevice.deviceName ?? ""
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .short
-        self.activationDateLabel.stringValue = dateFormatter.string(from: device.activationDate)
+
+        let date = Date(timeIntervalSince1970: activatedDevice.timestamp)
+        self.activationDateLabel.stringValue = dateFormatter.string(from: date)
     }
 
     @IBAction func radioClicked(_ sender: Any) {

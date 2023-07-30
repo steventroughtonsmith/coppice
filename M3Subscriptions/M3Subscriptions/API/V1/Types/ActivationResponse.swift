@@ -17,28 +17,28 @@ extension API.V1 {
         public var payload: [String: Any]
         public var signature: String
         private var response: APIData.Response
-        
-        
+
+
         /// Has the device being activated on a subscription
         public var deviceIsActivated: Bool {
             return (self.token != nil)
         }
-        
+
         /// Is the user's subscription active and therefore should all functionality be unlocked
         public var isActive: Bool {
             return (self.response == .active) && self.deviceIsActivated && (self.subscription?.hasExpired == false)
         }
-        
+
         public static func deactivated() -> Self {
             return ActivationResponse()
         }
-        
+
         private init() {
             self.response = .deactivated
             self.payload = ["response": "deactivated"]
             self.signature = ""
         }
-        
+
         init?(url: URL) {
             guard
                 let data = try? Data(contentsOf: url),
@@ -47,13 +47,13 @@ extension API.V1 {
             else {
                 return nil
             }
-            
+
             self.init(data: apiData)
         }
-        
+
         init?(data: APIData) {
             self.response = data.response
-            
+
             var subscription: Subscription? = nil
             if let subscriptionPayload = data.payload["subscription"] as? [String: Any] {
                 subscription = Subscription(payload: subscriptionPayload, hasExpired: (data.response == .expired))
@@ -62,14 +62,14 @@ extension API.V1 {
             if (data.response == .active || data.response == .expired) && (subscription == nil) {
                 return nil
             }
-            
+
             self.token = data.payload["token"] as? String
             self.subscription = subscription
             self.deviceName = (data.payload["device"] as? [String: Any])?["name"] as? String
             self.payload = data.payload
             self.signature = data.signature
         }
-        
+
         func write(to url: URL) {
             let json: [String: Any] = ["payload": self.payload, "signature": self.signature]
             guard let data = try? JSONSerialization.data(withJSONObject: json, options: .sortedKeys) else {
@@ -77,7 +77,7 @@ extension API.V1 {
             }
             try? data.write(to: url)
         }
-        
+
         mutating func reevaluateSubscription() {
             guard var subscription = self.subscription else {
                 return

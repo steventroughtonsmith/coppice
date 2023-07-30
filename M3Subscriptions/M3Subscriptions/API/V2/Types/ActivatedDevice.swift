@@ -9,12 +9,27 @@
 import Foundation
 
 extension API.V2 {
-    public struct ActivatedDevice {
+    public struct ActivatedDevice: Equatable {
         internal init(id: String, timestamp: TimeInterval, isCurrent: Bool, deviceName: String? = nil) {
             self.id = id
             self.timestamp = timestamp
             self.isCurrent = isCurrent
             self.deviceName = deviceName
+        }
+
+        init(apiDevice: [String: Any]) throws {
+            guard
+                let id = apiDevice["activationID"] as? String,
+                let timestamp = apiDevice["activationTimestamp"] as? TimeInterval
+            else {
+                throw Error.invalidResponse
+            }
+
+            let isCurrent = (apiDevice["isCurrent"] as? Bool) ?? false
+            self.id = id
+            self.timestamp = timestamp
+            self.isCurrent = isCurrent
+            self.deviceName = apiDevice["name"] as? String
         }
 
         public var id: String
