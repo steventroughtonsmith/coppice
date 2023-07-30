@@ -10,7 +10,7 @@ import Foundation
 
 struct Device {
     static let shared = Device()
-    
+
     enum DeviceType: String {
         case mac
         case ipad

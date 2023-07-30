@@ -18,9 +18,9 @@ extension API.V2 {
         public init(url: URL) throws {
             let data: Data
             if url.scheme == "coppice" {
-                data = try Self.data(fromFile: url)
-            } else if url.isFileURL {
                 data = try Self.data(fromURL: url)
+            } else if url.isFileURL {
+                data = try Self.data(fromFile: url)
             } else {
                 throw API.V2.Error.invalidLicence
             }
@@ -39,7 +39,7 @@ extension API.V2 {
                 let subscriber = payload["subscriber"] as? String,
                 let subscriptionID = payload["subscriptionID"] as? String,
                 let subscriptionName = payload["subscriptionName"] as? String,
-                let expirationTimestamp = payload["expirationTimestamp"] as? TimeInterval
+                let expirationTimestamp = payload["expirationTimestamp"] as? Int
             else {
                 throw API.V2.Error.invalidLicence
             }
@@ -47,7 +47,7 @@ extension API.V2 {
 
             self.licenceID = licenceID
             self.subscription = Subscription(id: subscriptionID,
-                                             expirationTimestamp: expirationTimestamp,
+                                             expirationTimestamp: TimeInterval(expirationTimestamp),
                                              name: subscriptionName,
                                              renewalStatus: .unknown)
             self.subscriber = subscriber

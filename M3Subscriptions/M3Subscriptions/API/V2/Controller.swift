@@ -33,7 +33,7 @@ extension API.V2 {
         }
 
         //MARK: - Authentication
-        
+
         /// Login to the API using an M Cubed Account ``logout()``
         /// - Parameters:
         ///   - email: The email to login with
@@ -50,7 +50,7 @@ extension API.V2 {
 
             try Keychain.default.addToken(token)
         }
-        
+
         /// Logs out the user, deleting from the keychain
         public func logout() async throws {
             let apiData = try await self.adapter.logout()
@@ -59,7 +59,7 @@ extension API.V2 {
             }
             try Keychain.default.removeToken()
         }
-        
+
         /// Save licence to disk
         /// - Parameter licence: The licence to save
         public func saveLicence(_ licence: Licence) throws {
@@ -85,7 +85,7 @@ extension API.V2 {
 
             self.activationSource = .website(activation)
         }
-        
+
         /// Check the current activation status
         public func check() async throws {
             guard case .website(let activation) = self.activationSource else {
@@ -104,7 +104,7 @@ extension API.V2 {
             try newActivation.write(to: self.activationURL)
             self.activationSource = .website(newActivation)
         }
-        
+
         /// Return a list of subscriptions for the currently authenticated user for this app
         /// - Returns: A list of active subscriptions
         public func listSubscriptions() async throws -> [Subscription] {
@@ -125,7 +125,7 @@ extension API.V2 {
 
             return try apiSubscriptions.map { try Subscription(apiSubscription: $0) }
         }
-        
+
         /// Return the list of activated devices for the supplied subscription
         ///
         /// **Note:** If the activation source is not a user account, device names will not be included
@@ -145,7 +145,7 @@ extension API.V2 {
 
             return try apiDevices.map { try ActivatedDevice(apiDevice: $0) }
         }
-        
+
         /// Rename the currently activated device with the service
         /// - Parameter name: The new name of the device
         public func renameDevice(to name: String) async throws {
@@ -169,7 +169,7 @@ extension API.V2 {
             try newActivation.write(to: self.activationURL)
             self.activationSource = .website(newActivation)
         }
-        
+
         /// Deactivate a device, removing any local activation files
         /// - Parameter activationID: The activation ID of the device to deactivate, or nil to deactivate the current device
         public func deactivate(activationID: String? = nil) async throws {

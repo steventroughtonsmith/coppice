@@ -36,7 +36,7 @@
 		99848192248E69E000BC0A8A /* APIData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99848191248E69E000BC0A8A /* APIData.swift */; };
 		99848197248E6FC500BC0A8A /* APIDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99848196248E6FC500BC0A8A /* APIDataTests.swift */; };
 		9984819D248E94E200BC0A8A /* Mac-DeviceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984819C248E94E200BC0A8A /* Mac-DeviceTests.swift */; };
-		998481A1248E99CE00BC0A8A /* SubscriptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481A0248E99CE00BC0A8A /* SubscriptionTests.swift */; };
+		998481A1248E99CE00BC0A8A /* V1SubscriptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481A0248E99CE00BC0A8A /* V1SubscriptionTests.swift */; };
 		998481A3248FA3BD00BC0A8A /* SubscriptionDeviceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481A2248FA3BD00BC0A8A /* SubscriptionDeviceTests.swift */; };
 		998481A5248FB37F00BC0A8A /* ActivationResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481A4248FB37F00BC0A8A /* ActivationResponseTests.swift */; };
 		998481A7248FDE5E00BC0A8A /* XCTestExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998481A6248FDE5E00BC0A8A /* XCTestExtensions.swift */; };
@@ -55,6 +55,10 @@
 		9999A25524FD4EA4001F8161 /* test_public_key.pem in Resources */ = {isa = PBXBuildFile; fileRef = 9999A25324FD4EA4001F8161 /* test_public_key.pem */; };
 		9999A25724FD5A29001F8161 /* test_private_key.p12 in Resources */ = {isa = PBXBuildFile; fileRef = 9999A25624FD5783001F8161 /* test_private_key.p12 */; };
 		99A9223B2A72CE8200CCA87F /* RenewalStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A9223A2A72CE8200CCA87F /* RenewalStatus.swift */; };
+		99D328BB2A7694B800DA16EF /* V2ControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D328BA2A7694B800DA16EF /* V2ControllerTests.swift */; };
+		99D328BD2A7694CC00DA16EF /* V2AdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D328BC2A7694CC00DA16EF /* V2AdapterTests.swift */; };
+		99D328C02A76950B00DA16EF /* LicenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D328BF2A76950B00DA16EF /* LicenceTests.swift */; };
+		99D328C22A76953300DA16EF /* ActivationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D328C12A76953300DA16EF /* ActivationTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,7 +110,7 @@
 		99848191248E69E000BC0A8A /* APIData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIData.swift; sourceTree = "<group>"; };
 		99848196248E6FC500BC0A8A /* APIDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIDataTests.swift; sourceTree = "<group>"; };
 		9984819C248E94E200BC0A8A /* Mac-DeviceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Mac-DeviceTests.swift"; sourceTree = "<group>"; };
-		998481A0248E99CE00BC0A8A /* SubscriptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionTests.swift; sourceTree = "<group>"; };
+		998481A0248E99CE00BC0A8A /* V1SubscriptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V1SubscriptionTests.swift; sourceTree = "<group>"; };
 		998481A2248FA3BD00BC0A8A /* SubscriptionDeviceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionDeviceTests.swift; sourceTree = "<group>"; };
 		998481A4248FB37F00BC0A8A /* ActivationResponseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivationResponseTests.swift; sourceTree = "<group>"; };
 		998481A6248FDE5E00BC0A8A /* XCTestExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XCTestExtensions.swift; path = ../../Coppice/CoppiceTests/XCTestExtensions.swift; sourceTree = "<group>"; };
@@ -126,6 +130,10 @@
 		9999A25324FD4EA4001F8161 /* test_public_key.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test_public_key.pem; sourceTree = "<group>"; };
 		9999A25624FD5783001F8161 /* test_private_key.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_private_key.p12; sourceTree = "<group>"; };
 		99A9223A2A72CE8200CCA87F /* RenewalStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenewalStatus.swift; sourceTree = "<group>"; };
+		99D328BA2A7694B800DA16EF /* V2ControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V2ControllerTests.swift; sourceTree = "<group>"; };
+		99D328BC2A7694CC00DA16EF /* V2AdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V2AdapterTests.swift; sourceTree = "<group>"; };
+		99D328BF2A76950B00DA16EF /* LicenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenceTests.swift; sourceTree = "<group>"; };
+		99D328C12A76953300DA16EF /* ActivationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivationTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -281,9 +289,9 @@
 		9984817A248E687800BC0A8A /* Unit Tests */ = {
 			isa = PBXGroup;
 			children = (
-				99848193248E6A2700BC0A8A /* Types */,
+				99848196248E6FC500BC0A8A /* APIDataTests.swift */,
+				9984819C248E94E200BC0A8A /* Mac-DeviceTests.swift */,
 				9984817B248E688400BC0A8A /* API */,
-				998481A924924A3600BC0A8A /* SubscriptionControllerV1Tests.swift */,
 			);
 			path = "Unit Tests";
 			sourceTree = "<group>";
@@ -291,9 +299,8 @@
 		9984817B248E688400BC0A8A /* API */ = {
 			isa = PBXGroup;
 			children = (
-				9984817C248E68A600BC0A8A /* DeactivateAPIV1Tests.swift */,
-				99848180248E68C500BC0A8A /* CheckAPIV1Tests.swift */,
-				9984817E248E68B600BC0A8A /* ActivateAPIV1Tests.swift */,
+				99D328B92A76941400DA16EF /* V2 */,
+				99D328B72A7692DE00DA16EF /* V1 */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -307,34 +314,6 @@
 				99848177248E651A00BC0A8A /* ActivationRequest.swift */,
 			);
 			path = Types;
-			sourceTree = "<group>";
-		};
-		99848193248E6A2700BC0A8A /* Types */ = {
-			isa = PBXGroup;
-			children = (
-				99848194248E6A2D00BC0A8A /* Public Types */,
-				99848195248E6A3700BC0A8A /* Internal Types */,
-			);
-			path = Types;
-			sourceTree = "<group>";
-		};
-		99848194248E6A2D00BC0A8A /* Public Types */ = {
-			isa = PBXGroup;
-			children = (
-				998481A0248E99CE00BC0A8A /* SubscriptionTests.swift */,
-				998481A2248FA3BD00BC0A8A /* SubscriptionDeviceTests.swift */,
-				998481A4248FB37F00BC0A8A /* ActivationResponseTests.swift */,
-			);
-			path = "Public Types";
-			sourceTree = "<group>";
-		};
-		99848195248E6A3700BC0A8A /* Internal Types */ = {
-			isa = PBXGroup;
-			children = (
-				99848196248E6FC500BC0A8A /* APIDataTests.swift */,
-				9984819C248E94E200BC0A8A /* Mac-DeviceTests.swift */,
-			);
-			path = "Internal Types";
 			sourceTree = "<group>";
 		};
 		998481D32496768100BC0A8A /* M3SubscriptionsStageTests */ = {
@@ -364,6 +343,47 @@
 				99A9223A2A72CE8200CCA87F /* RenewalStatus.swift */,
 			);
 			path = "Shared Types";
+			sourceTree = "<group>";
+		};
+		99D328B72A7692DE00DA16EF /* V1 */ = {
+			isa = PBXGroup;
+			children = (
+				998481A924924A3600BC0A8A /* SubscriptionControllerV1Tests.swift */,
+				99D328B82A7692EA00DA16EF /* Types */,
+				9984817C248E68A600BC0A8A /* DeactivateAPIV1Tests.swift */,
+				99848180248E68C500BC0A8A /* CheckAPIV1Tests.swift */,
+				9984817E248E68B600BC0A8A /* ActivateAPIV1Tests.swift */,
+			);
+			path = V1;
+			sourceTree = "<group>";
+		};
+		99D328B82A7692EA00DA16EF /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				998481A0248E99CE00BC0A8A /* V1SubscriptionTests.swift */,
+				998481A2248FA3BD00BC0A8A /* SubscriptionDeviceTests.swift */,
+				998481A4248FB37F00BC0A8A /* ActivationResponseTests.swift */,
+			);
+			path = Types;
+			sourceTree = "<group>";
+		};
+		99D328B92A76941400DA16EF /* V2 */ = {
+			isa = PBXGroup;
+			children = (
+				99D328BA2A7694B800DA16EF /* V2ControllerTests.swift */,
+				99D328BC2A7694CC00DA16EF /* V2AdapterTests.swift */,
+				99D328BE2A7694D500DA16EF /* Types */,
+			);
+			path = V2;
+			sourceTree = "<group>";
+		};
+		99D328BE2A7694D500DA16EF /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				99D328BF2A76950B00DA16EF /* LicenceTests.swift */,
+				99D328C12A76953300DA16EF /* ActivationTests.swift */,
+			);
+			path = Types;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -565,13 +585,17 @@
 			files = (
 				998481AA24924A3600BC0A8A /* SubscriptionControllerV1Tests.swift in Sources */,
 				99848197248E6FC500BC0A8A /* APIDataTests.swift in Sources */,
-				998481A1248E99CE00BC0A8A /* SubscriptionTests.swift in Sources */,
+				998481A1248E99CE00BC0A8A /* V1SubscriptionTests.swift in Sources */,
+				99D328C02A76950B00DA16EF /* LicenceTests.swift in Sources */,
 				998481A5248FB37F00BC0A8A /* ActivationResponseTests.swift in Sources */,
+				99D328C22A76953300DA16EF /* ActivationTests.swift in Sources */,
 				9999A24D24FD454B001F8161 /* APITestCase.swift in Sources */,
 				99848183248E68DF00BC0A8A /* MockNetworkAdapter.swift in Sources */,
 				99848181248E68C500BC0A8A /* CheckAPIV1Tests.swift in Sources */,
 				9984817D248E68A600BC0A8A /* DeactivateAPIV1Tests.swift in Sources */,
+				99D328BD2A7694CC00DA16EF /* V2AdapterTests.swift in Sources */,
 				998481AE24927EA600BC0A8A /* MockSubscriptionAPIV1.swift in Sources */,
+				99D328BB2A7694B800DA16EF /* V2ControllerTests.swift in Sources */,
 				9984817F248E68B600BC0A8A /* ActivateAPIV1Tests.swift in Sources */,
 				998481A7248FDE5E00BC0A8A /* XCTestExtensions.swift in Sources */,
 				9984819D248E94E200BC0A8A /* Mac-DeviceTests.swift in Sources */,

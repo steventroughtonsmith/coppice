@@ -23,14 +23,14 @@ extension API.V2 {
             guard
                 let id = apiSubscription["id"] as? String,
                 let name = apiSubscription["name"] as? String,
-                let expirationTimestamp = apiSubscription["expirationTimestamp"] as? TimeInterval,
+                let expirationTimestamp = apiSubscription["expirationTimestamp"] as? Int,
                 let rawRenewalStatus = apiSubscription["renewalStatus"] as? String
             else {
                 throw Error.invalidResponse
             }
 
             self.id = id
-            self.expirationTimestamp = expirationTimestamp
+            self.expirationTimestamp = TimeInterval(expirationTimestamp)
             self.name = name
             self.renewalStatus = RenewalStatus(rawValue: rawRenewalStatus) ?? .unknown
 

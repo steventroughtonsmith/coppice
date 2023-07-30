@@ -8,6 +8,7 @@
 
 import Foundation
 
+//TODO: This class is no longer needed so delete
 extension API.V1 {
     struct ActivateAPI {
         let networkAdapter: NetworkAdapter

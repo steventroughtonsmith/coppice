@@ -14,12 +14,12 @@ class Keychain {
     private let server = "mcubedsw.com"
 
     func addToken(_ token: String) throws {
-        var query: [String: Any] = [
+        let query: [String: Any] = [
             kSecClass as String: kSecClassInternetPassword,
             kSecAttrServer as String: self.server,
-            kSecValueData as String: token
+            kSecValueData as String: token,
         ]
-        
+
         let status = SecItemAdd(query as CFDictionary, nil)
         guard status == errSecSuccess else {
             throw Error.unhandledError(status: status)
@@ -29,7 +29,7 @@ class Keychain {
     func removeToken() throws {
         let query: [String: Any] = [
             kSecClass as String: kSecClassInternetPassword,
-            kSecAttrServer as String: self.server
+            kSecAttrServer as String: self.server,
         ]
 
         let status = SecItemDelete(query as CFDictionary)
@@ -44,7 +44,7 @@ class Keychain {
             kSecAttrServer as String: self.server,
             kSecMatchLimit as String: kSecMatchLimitOne,
             kSecReturnAttributes as String: true,
-            kSecReturnData as String: true
+            kSecReturnData as String: true,
         ]
 
         var item: CFTypeRef?
@@ -66,7 +66,6 @@ class Keychain {
 
         return token
     }
-
 }
 
 extension Keychain {

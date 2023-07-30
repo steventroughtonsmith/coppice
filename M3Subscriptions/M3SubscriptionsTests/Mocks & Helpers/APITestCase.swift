@@ -16,6 +16,19 @@ class APITestCase: XCTestCase {
         case signingError
     }
 
+    private var createdTestDirectory = false
+
+    var temporaryTestDirectory: URL {
+        get throws {
+            let url = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("M3Subscription-Tests")
+            if createdTestDirectory == false, FileManager.default.fileExists(atPath: url.path) == false {
+                try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
+                self.createdTestDirectory = true
+            }
+            return url
+        }
+    }
+
     override func setUpWithError() throws {
         try super.setUpWithError()
         //set public key
@@ -29,6 +42,10 @@ class APITestCase: XCTestCase {
 
     override func tearDownWithError() throws {
         TEST_OVERRIDES.publicKey = nil
+        if self.createdTestDirectory {
+            try FileManager.default.removeItem(at: try self.temporaryTestDirectory)
+            self.createdTestDirectory = false
+        }
         try super.tearDownWithError()
     }
 
