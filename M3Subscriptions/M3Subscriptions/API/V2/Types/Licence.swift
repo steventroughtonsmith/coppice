@@ -9,7 +9,7 @@
 import Foundation
 
 extension API.V2 {
-    public struct Licence {
+    public struct Licence: Equatable {
         public var licenceID: String
         public var subscription: Subscription
         public var subscriber: String
@@ -55,17 +55,22 @@ extension API.V2 {
         }
 
         func write(to file: URL) throws {
-            let payload: [String: Any] = [
-                "licenceID": self.licenceID,
-                "subscriber": self.subscriber,
-                "subscriptionID": self.subscription.id,
-                "subscriptionName": self.subscription.name,
-                "expirationTimestamp": self.subscription.expirationTimestamp,
-            ]
+            try self.jsonData.write(to: file, options: .atomic)
+        }
 
-            let json: [String: Any] = ["payload": payload, "signature": self.signature]
-            let data = try JSONSerialization.data(withJSONObject: json, options: .sortedKeys)
-            try data.write(to: file, options: .atomic)
+        var jsonData: Data {
+            get throws {
+                let payload: [String: Any] = [
+                    "licenceID": self.licenceID,
+                    "subscriber": self.subscriber,
+                    "subscriptionID": self.subscription.id,
+                    "subscriptionName": self.subscription.name,
+                    "expirationTimestamp": self.subscription.expirationTimestamp,
+                ]
+
+                let json: [String: Any] = ["payload": payload, "signature": self.signature]
+                return try JSONSerialization.data(withJSONObject: json, options: .sortedKeys)
+            }
         }
 
         private static func data(fromFile url: URL) throws -> Data {

@@ -12,6 +12,7 @@ import XCTest
 class MockDetails<Arguments, Return> {
     var expectation: XCTestExpectation?
     var arguments = [Arguments]()
+    var error: Error?
     var returnValue: Return?
     var method: ((Arguments) -> Return)?
 
@@ -26,12 +27,34 @@ class MockDetails<Arguments, Return> {
         }
         return self.returnValue
     }
+
+    @discardableResult func throwingCalled(withArguments arguments: Arguments) throws -> Return? {
+        self.arguments.append(arguments)
+        self.wasCalled = true
+        self.expectation?.fulfill()
+        if let error = self.error {
+            throw error
+        }
+        if let method = self.method {
+            return method(arguments)
+        }
+        return self.returnValue
+    }
 }
 
 extension MockDetails where Arguments == Void {
     @discardableResult func called() -> Return? {
         self.expectation?.fulfill()
         self.wasCalled = true
+        return self.returnValue
+    }
+
+    @discardableResult func throwingCalled() throws -> Return? {
+        self.expectation?.fulfill()
+        self.wasCalled = true
+        if let error = self.error {
+            throw error
+        }
         return self.returnValue
     }
 }

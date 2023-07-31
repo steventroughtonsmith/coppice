@@ -11,7 +11,7 @@ import Foundation
 protocol NetworkAdapter {
     var baseURL: URL { get }
     var version: String { get }
-    func callAPI(endpoint: String, method: String, body: [String: String]) async throws -> APIData
+    func callAPI(endpoint: String, method: String, body: [String: String], headers: [String: String]?) async throws -> APIData
 }
 
 enum NetworkAdapterError: Error {
@@ -39,13 +39,20 @@ class URLSessionNetworkAdapter: NetworkAdapter {
         #endif
     }
 
+    enum SupportedVersion: String {
+        case v2
+        case v1
+    }
+
+    var activeVersion: SupportedVersion = .v2
+
     var version: String {
         #if TEST
         if let version = TEST_OVERRIDES.apiVersion {
             return version
         }
         #endif
-        return "v1"
+        return self.activeVersion.rawValue
     }
 
     let session: URLSession
@@ -53,8 +60,8 @@ class URLSessionNetworkAdapter: NetworkAdapter {
         self.session = session
     }
 
-    func callAPI(endpoint: String, method: String = "POST", body: [String: String]) async throws -> APIData {
-        let request = self.request(forEndpoint: endpoint, method: method, body: body)
+    func callAPI(endpoint: String, method: String = "POST", body: [String: String], headers: [String: String]?) async throws -> APIData {
+        let request = self.request(forEndpoint: endpoint, method: method, body: body, headers: headers)
         return try await self.callAPI(with: request)
     }
 
@@ -95,12 +102,13 @@ class URLSessionNetworkAdapter: NetworkAdapter {
         return apiData
     }
 
-    private func request(forEndpoint endpoint: String, method: String, body: [String: String]) -> URLRequest {
+    private func request(forEndpoint endpoint: String, method: String, body: [String: String], headers: [String: String]? = nil) -> URLRequest {
         let url = self.baseURL.appendingPathComponent(self.version).appendingPathComponent(endpoint)
 
         var request = URLRequest(url: url)
         request.httpMethod = method
         request.httpBody = self.queryString(for: body).data(using: .utf8)
+        request.allHTTPHeaderFields = headers
         return request
     }
 

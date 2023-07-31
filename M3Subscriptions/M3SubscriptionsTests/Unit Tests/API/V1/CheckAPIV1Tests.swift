@@ -82,7 +82,7 @@ class CheckAPIV1Tests: APITestCase {
 
     func test_run_errorHandling_returnsFailureIfReceived_no_device_found_Response() async throws {
         let payload = ["response": "no_device_found"]
-        let signature = try self.signature(forPayload: payload)
+        let signature = try Self.signature(forPayload: payload)
         let json: [String: Any] = ["payload": payload, "signature": signature]
         let apiData = try XCTUnwrap(APIData(json: json))
 
@@ -102,7 +102,7 @@ class CheckAPIV1Tests: APITestCase {
 
     func test_run_errorHandling_returnsFailureIfReceived_no_subscription_found_Response() async throws {
         let payload = ["response": "no_subscription_found"]
-        let signature = try self.signature(forPayload: payload)
+        let signature = try Self.signature(forPayload: payload)
         let json: [String: Any] = ["payload": payload, "signature": signature]
         let apiData = try XCTUnwrap(APIData(json: json))
 
@@ -137,7 +137,7 @@ class CheckAPIV1Tests: APITestCase {
         if (!isExpired) {
             payload["token"] = "tucan43"
         }
-        let signature = try self.signature(forPayload: payload)
+        let signature = try Self.signature(forPayload: payload)
         let json: [String: Any] = ["payload": payload, "signature": signature]
         let apiData = try XCTUnwrap(APIData(json: json))
 

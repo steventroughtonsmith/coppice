@@ -70,6 +70,16 @@ struct APIData {
     var signature: String
     var response: Response
 
+    static var empty: APIData {
+        return self.init()
+    }
+
+    private init() {
+        self.payload = [:]
+        self.signature = ""
+        self.response = .deactivated
+    }
+
     init?(json: [String: Any]) {
         guard let payload = json["payload"] as? [String: Any],
             let response = payload["response"] as? String,

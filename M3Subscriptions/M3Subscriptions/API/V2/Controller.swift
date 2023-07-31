@@ -18,18 +18,50 @@ extension API.V2 {
 
         public private(set) var activationSource: ActivationSource = .none
 
+        #if DEBUG
+        func setActivationSource(_ source: ActivationSource) {
+            self.activationSource = source
+        }
+        #endif
+
         let licenceURL: URL
         let activationURL: URL
         private let adapter: APIAdapterV2
+        private let keychain: Keychain
         public convenience init(licenceURL: URL, activationURL: URL) {
-            let adapter = Adapter(networkAdapter: URLSessionNetworkAdapter())
-            self.init(licenceURL: licenceURL, activationURL: activationURL, adapter: adapter)
+            let networkAdapter = URLSessionNetworkAdapter()
+            networkAdapter.activeVersion = .v2
+            let adapter = Adapter(networkAdapter: networkAdapter)
+            self.init(licenceURL: licenceURL, activationURL: activationURL, adapter: adapter, keychain: DefaultKeychain())
         }
 
-        init(licenceURL: URL, activationURL: URL, adapter: APIAdapterV2) {
+        init(licenceURL: URL, activationURL: URL, adapter: APIAdapterV2, keychain: Keychain) {
             self.licenceURL = licenceURL
             self.activationURL = activationURL
             self.adapter = adapter
+            self.keychain = keychain
+
+            do {
+                let data = try Data(contentsOf: self.activationURL)
+
+                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+                   let apiData = APIData(json: json) {
+                    let activation = try Activation(apiData: apiData)
+                    self.activationSource = .website(activation)
+                    return
+                }
+            } catch {
+//                print("No valid local activation")
+            }
+
+            do {
+                let licence = try Licence(url: self.licenceURL)
+                self.activationSource = .licence(licence)
+                return
+            } catch {
+//                print("No valid licence")
+            }
+            self.activationSource = .none
         }
 
         //MARK: - Authentication
@@ -48,7 +80,7 @@ extension API.V2 {
                 throw Error.loginFailed
             }
 
-            try Keychain.default.addToken(token)
+            try self.keychain.addToken(token)
         }
 
         /// Logs out the user, deleting from the keychain
@@ -57,7 +89,7 @@ extension API.V2 {
             guard apiData.response == .loggedOut else {
                 throw Error.invalidResponse
             }
-            try Keychain.default.removeToken()
+            try self.keychain.removeToken()
         }
 
         /// Save licence to disk
@@ -161,8 +193,8 @@ extension API.V2 {
                 .withAuthentication(try self.authenticationType(from: [.token]))
                 .renameDevice(activationID: activation.activationID, deviceName: name)
 
-            guard apiData.response == .success else {
-                throw Error.invalidResponse
+            guard apiData.response == .active else {
+                throw Error.notActivated
             }
 
             let newActivation = try Activation(apiData: apiData)
@@ -188,8 +220,13 @@ extension API.V2 {
                 throw Error.invalidResponse
             }
 
-            try FileManager.default.removeItem(at: self.licenceURL)
-            try FileManager.default.removeItem(at: self.activationURL)
+            if FileManager.default.fileExists(atPath: self.licenceURL.path) {
+                try FileManager.default.removeItem(at: self.licenceURL)
+            }
+            if FileManager.default.fileExists(atPath: self.activationURL.path) {
+                try FileManager.default.removeItem(at: self.activationURL)
+            }
+            self.activationSource = .none
         }
 
         enum AuthenticationType {
@@ -198,8 +235,8 @@ extension API.V2 {
         }
 
         private func authenticationType(from allowedTypes: [AuthenticationType] = [.token, .licence]) throws -> API.V2.Authentication {
-            if allowedTypes.contains(.token) {
-                let token = try Keychain.default.fetchToken()
+            if allowedTypes.contains(.token),
+               let token = try? self.keychain.fetchToken() {
                 return .token(token)
             }
             if allowedTypes.contains(.licence) {

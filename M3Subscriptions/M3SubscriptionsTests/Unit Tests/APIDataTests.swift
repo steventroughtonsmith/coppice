@@ -83,7 +83,7 @@ class APIDataTests: APITestCase {
 
     func test_init_returnsInitialisedDataWithPayloadResponseAndSignatureIfSignatureIsValid() throws {
         let payload: [String: Any] = ["response": "possum", "foo": "bar", "baz": 42, "test": ["c": 3, "p": 0, "bb": 8, "r": 2, "d": 2]]
-        let signature = try self.signature(forPayload: payload)
+        let signature = try Self.signature(forPayload: payload)
         let json: [String: Any] = [
             "payload": payload,
             "signature": signature,

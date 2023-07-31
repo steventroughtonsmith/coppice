@@ -140,7 +140,7 @@ class ActivateAPIV1Tests: APITestCase {
 
     func test_run_errorHandling_returnsFailureIfReceived_login_failed_Response() async throws {
         let payload = ["response": "login_failed"]
-        let signature = try self.signature(forPayload: payload)
+        let signature = try Self.signature(forPayload: payload)
         let json: [String: Any] = ["payload": payload, "signature": signature]
         let apiData = try XCTUnwrap(APIData(json: json))
 
@@ -163,7 +163,7 @@ class ActivateAPIV1Tests: APITestCase {
         let plan1: [String: Any] = ["id": "plan1", "name": "Plan A", "expirationDate": "2022-01-01T01:01:01Z", "maxDeviceCount": 5, "currentDeviceCount": 4, "renewalStatus": "renew"]
         let plan2: [String: Any] = ["id": "plan2", "name": "Plan B", "expirationDate": "2021-12-21T12:21:12Z", "maxDeviceCount": 3, "currentDeviceCount": 3, "renewalStatus": "cancelled"]
         let payload: [String: Any] = ["response": "multiple_subscriptions", "subscriptions": [plan1, plan2]]
-        let signature = try self.signature(forPayload: payload)
+        let signature = try Self.signature(forPayload: payload)
         let json: [String: Any] = ["payload": payload, "signature": signature]
         let apiData = try XCTUnwrap(APIData(json: json))
 
@@ -200,7 +200,7 @@ class ActivateAPIV1Tests: APITestCase {
 
     func test_run_errorHandling_returnsFailureIfReceived_no_subscription_found_Response() async throws {
         let payload = ["response": "no_subscription_found"]
-        let signature = try self.signature(forPayload: payload)
+        let signature = try Self.signature(forPayload: payload)
         let json: [String: Any] = ["payload": payload, "signature": signature]
         let apiData = try XCTUnwrap(APIData(json: json))
 
@@ -224,7 +224,7 @@ class ActivateAPIV1Tests: APITestCase {
             "response": "subscription_expired",
             "subscription": ["name": "Plan C", "expirationDate": "2020-01-02T03:04:05Z", "renewalStatus": "cancelled"],
         ]
-        let signature = try self.signature(forPayload: payload)
+        let signature = try Self.signature(forPayload: payload)
         let json: [String: Any] = ["payload": payload, "signature": signature]
         let apiData = try XCTUnwrap(APIData(json: json))
 
@@ -255,7 +255,7 @@ class ActivateAPIV1Tests: APITestCase {
         let device1: [String: Any] = ["name": "My iMac", "deactivationToken": "tokeniMac", "activationDate": "2022-10-10T10:10:10Z"]
         let device2: [String: Any] = ["name": "My Mac Pro", "deactivationToken": "mactokenpro", "activationDate": "2031-03-31T03:31:03Z"]
         let payload: [String: Any] = ["response": "too_many_devices", "devices": [device1, device2]]
-        let signature = try self.signature(forPayload: payload)
+        let signature = try Self.signature(forPayload: payload)
         let json: [String: Any] = ["payload": payload, "signature": signature]
         let apiData = try XCTUnwrap(APIData(json: json))
 
@@ -304,7 +304,7 @@ class ActivateAPIV1Tests: APITestCase {
             payload["token"] = "tucan43"
         }
 
-        let signature = try self.signature(forPayload: payload)
+        let signature = try Self.signature(forPayload: payload)
         let json: [String: Any] = ["payload": payload, "signature": signature]
         let apiData = try XCTUnwrap(APIData(json: json))
 

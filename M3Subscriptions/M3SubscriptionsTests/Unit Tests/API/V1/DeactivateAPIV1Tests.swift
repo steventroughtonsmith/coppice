@@ -62,7 +62,7 @@ class DeactivateAPIV1Tests: APITestCase {
 
     func test_run_errorHandling_returnsFailureIfReceived_no_device_found_Response() async throws {
         let payload = ["response": "no_device_found"]
-        let signature = try self.signature(forPayload: payload)
+        let signature = try Self.signature(forPayload: payload)
         let json: [String: Any] = ["payload": payload, "signature": signature]
         let apiData = try XCTUnwrap(APIData(json: json))
 
@@ -94,7 +94,7 @@ class DeactivateAPIV1Tests: APITestCase {
     //MARK: - Success
     func test_run_returnsSubscriptionInfoWithDeactivateStateIfRequestWasSuccessful() async throws {
         let payload = ["response": "deactivated"]
-        let signature = try self.signature(forPayload: payload)
+        let signature = try Self.signature(forPayload: payload)
         let json: [String: Any] = ["payload": payload, "signature": signature]
         let apiData = try XCTUnwrap(APIData(json: json))
 

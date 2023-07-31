@@ -20,14 +20,14 @@ extension API.V2 {
         init(apiDevice: [String: Any]) throws {
             guard
                 let id = apiDevice["activationID"] as? String,
-                let timestamp = apiDevice["activationTimestamp"] as? TimeInterval
+                let timestamp = apiDevice["activationTimestamp"] as? Int
             else {
                 throw Error.invalidResponse
             }
 
             let isCurrent = (apiDevice["isCurrent"] as? Bool) ?? false
             self.id = id
-            self.timestamp = timestamp
+            self.timestamp = TimeInterval(timestamp)
             self.isCurrent = isCurrent
             self.deviceName = apiDevice["name"] as? String
         }

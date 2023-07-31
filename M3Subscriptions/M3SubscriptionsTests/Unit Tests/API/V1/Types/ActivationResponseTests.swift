@@ -16,7 +16,7 @@ class ActivationResponseTests: APITestCase {
         let payload: [String: Any] = [
             "response": "active",
         ]
-        let signature = try self.signature(forPayload: payload)
+        let signature = try Self.signature(forPayload: payload)
         let data = try XCTUnwrap(APIData(json: ["payload": payload, "signature": signature]))
         XCTAssertNil(ActivationResponse(data: data))
     }
@@ -34,7 +34,7 @@ class ActivationResponseTests: APITestCase {
             ],
             "token": "tokenX",
         ]
-        let signature = try self.signature(forPayload: payload)
+        let signature = try Self.signature(forPayload: payload)
         let data = try XCTUnwrap(APIData(json: ["payload": payload, "signature": signature]))
         let response = try XCTUnwrap(ActivationResponse(data: data))
         XCTAssertTrue(response.isActive)
@@ -67,7 +67,7 @@ class ActivationResponseTests: APITestCase {
             "device": ["name": "My Shiny New Mac"],
             "token": "tokenX",
         ]
-        let signature = try self.signature(forPayload: payload)
+        let signature = try Self.signature(forPayload: payload)
         let data = try XCTUnwrap(APIData(json: ["payload": payload, "signature": signature]))
         let activationResponse = try XCTUnwrap(ActivationResponse(data: data))
         return activationResponse.isActive
@@ -111,7 +111,7 @@ class ActivationResponseTests: APITestCase {
             "subscription": ["name": "X", "expirationDate": "2005-10-15T20:15:10Z", "renewalStatus": "renew"],
             "device": ["name": "My Shiny New Mac"],
         ]
-        let signature = try self.signature(forPayload: payload)
+        let signature = try Self.signature(forPayload: payload)
         let data = try XCTUnwrap(APIData(json: ["payload": payload, "signature": signature]))
         let response = try XCTUnwrap(ActivationResponse(data: data))
         XCTAssertFalse(response.isActive)
@@ -123,7 +123,7 @@ class ActivationResponseTests: APITestCase {
             "subscription": ["name": "X", "expirationDate": "2005-10-15T20:15:10Z", "renewalStatus": "renew"],
             "device": ["name": "My Shiny New Mac"],
         ]
-        let signature = try self.signature(forPayload: payload)
+        let signature = try Self.signature(forPayload: payload)
         let data = try XCTUnwrap(APIData(json: ["payload": payload, "signature": signature]))
         var response = try XCTUnwrap(ActivationResponse(data: data))
         response.reevaluateSubscription()
@@ -137,7 +137,7 @@ class ActivationResponseTests: APITestCase {
             "device": ["name": "My Shiny New Mac"],
             "token": "tokenX",
         ]
-        let signature = try self.signature(forPayload: payload)
+        let signature = try Self.signature(forPayload: payload)
         let data = try XCTUnwrap(APIData(json: ["payload": payload, "signature": signature]))
         let response = try XCTUnwrap(ActivationResponse(data: data))
         XCTAssertTrue(response.isActive)

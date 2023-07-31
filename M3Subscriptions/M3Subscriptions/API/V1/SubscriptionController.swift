@@ -11,7 +11,9 @@ import Foundation
 extension API.V1 {
     public class SubscriptionController {
         public convenience init(activationDetailsURL: URL) {
-            self.init(activationDetailsURL: activationDetailsURL, subscriptionAPI: Activations(networkAdapter: URLSessionNetworkAdapter()))
+            let networkAdapter = URLSessionNetworkAdapter()
+            networkAdapter.activeVersion = .v1
+            self.init(activationDetailsURL: activationDetailsURL, subscriptionAPI: Activations(networkAdapter: networkAdapter))
         }
 
         let activationDetailsURL: URL

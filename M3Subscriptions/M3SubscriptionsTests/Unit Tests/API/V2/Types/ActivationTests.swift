@@ -112,7 +112,7 @@ final class ActivationTests: APITestCase {
     private func runInvalidResponseTest(activationID: String?,
                                         device: [String: String]?,
                                         subscription: [String: Any]?) {
-        XCTAssertThrowsError(try createActivation(activationID: activationID, device: device, subscription: subscription)) { error in
+        XCTAssertThrowsError(try self.createActivation(activationID: activationID, device: device, subscription: subscription)) { error in
             guard
                 let v2Error = error as? API.V2.Error,
                 case .invalidResponse = v2Error
@@ -139,7 +139,7 @@ final class ActivationTests: APITestCase {
 
         let apiData = try XCTUnwrap(APIData(json: [
             "payload": payload,
-            "signature": try self.signature(forPayload: payload),
+            "signature": try Self.signature(forPayload: payload),
         ]))
         return try API.V2.Activation(apiData: apiData)
     }

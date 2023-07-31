@@ -178,7 +178,7 @@ class SubscriptionControllerV1Tests: APITestCase {
             "subscription": ["name": "Plan B", "expirationDate": "2036-01-01T01:01:01Z", "renewalStatus": renewalStatus.rawValue],
             "device": ["name": "My iMac"],
         ]
-        let signature = try self.signature(forPayload: payload)
+        let signature = try Self.signature(forPayload: payload)
         let expectedJSON: [String: Any] = ["payload": payload, "signature": signature]
         let apiData = try XCTUnwrap(APIData(json: expectedJSON))
         let expectedResponse = try XCTUnwrap(ActivationResponse(data: apiData))
@@ -212,7 +212,7 @@ class SubscriptionControllerV1Tests: APITestCase {
             "subscription": ["name": "Plan B", "expirationDate": "2036-01-01T01:01:01Z", "renewalStatus": "renew"],
             "device": ["name": "My iMac"],
         ]
-        let signature = try self.signature(forPayload: payload)
+        let signature = try Self.signature(forPayload: payload)
         let expectedJSON: [String: Any] = ["payload": payload, "signature": signature]
         let apiData = try XCTUnwrap(APIData(json: expectedJSON))
         let expectedResponse = try XCTUnwrap(ActivationResponse(data: apiData))
@@ -232,7 +232,7 @@ class SubscriptionControllerV1Tests: APITestCase {
 
     //    func test_activate_setsTimerToFireInAnHour() throws {
     //        let payload: [String: Any] = ["response": "active", "token": "updated-token", "subscriptionName": "Plan B", "expirationDate": "2036-01-01T01:01:01Z"]
-    //        let signature = try self.signature(forPayload: payload)
+    //        let signature = try Self.signature(forPayload: payload)
     //        let expectedJSON: [String: Any] = ["payload": payload, "signature": signature]
     //        let apiData = try XCTUnwrap(APIData(json: expectedJSON))
     //        let expectedResponse = try XCTUnwrap(ActivationResponse(data: apiData))
@@ -252,7 +252,7 @@ class SubscriptionControllerV1Tests: APITestCase {
     //
     //    func test_activate_setsLastCheckDate() throws {
     //        let payload: [String: Any] = ["response": "active", "token": "updated-token", "subscriptionName": "Plan B", "expirationDate": "2036-01-01T01:01:01Z"]
-    //        let signature = try self.signature(forPayload: payload)
+    //        let signature = try Self.signature(forPayload: payload)
     //        let expectedJSON: [String: Any] = ["payload": payload, "signature": signature]
     //        let apiData = try XCTUnwrap(APIData(json: expectedJSON))
     //        let expectedResponse = try XCTUnwrap(ActivationResponse(data: apiData))
@@ -268,7 +268,7 @@ class SubscriptionControllerV1Tests: APITestCase {
     //
     //    func test_activate_callsCheckSubscriptionAgainIfTimerFiresAfterLastCheckDatePlus24Hours() throws {
     //        let payload: [String: Any] = ["response": "active", "token": "updated-token", "subscriptionName": "Plan B", "expirationDate": "2036-01-01T01:01:01Z"]
-    //        let signature = try self.signature(forPayload: payload)
+    //        let signature = try Self.signature(forPayload: payload)
     //        let expectedJSON: [String: Any] = ["payload": payload, "signature": signature]
     //        let apiData = try XCTUnwrap(APIData(json: expectedJSON))
     //        let expectedResponse = try XCTUnwrap(ActivationResponse(data: apiData))
@@ -295,7 +295,7 @@ class SubscriptionControllerV1Tests: APITestCase {
             "subscription": ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"],
             "device": ["name": "My iMac"],
         ]
-        let storedSignature = try self.signature(forPayload: storedPayload)
+        let storedSignature = try Self.signature(forPayload: storedPayload)
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
 
         _ = try? await self.controller.checkSubscription()
@@ -318,7 +318,7 @@ class SubscriptionControllerV1Tests: APITestCase {
             "subscription": ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"],
             "device": ["name": "My iMac"],
         ]
-        let storedSignature = try self.signature(forPayload: storedPayload)
+        let storedSignature = try Self.signature(forPayload: storedPayload)
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
 
         _ = try? await self.controller.checkSubscription(updatingDeviceName: "Foo Bar Baz")
@@ -345,7 +345,7 @@ class SubscriptionControllerV1Tests: APITestCase {
             "subscription": ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"],
             "device": ["name": "My iMac"],
         ]
-        let storedSignature = try self.signature(forPayload: storedPayload)
+        let storedSignature = try Self.signature(forPayload: storedPayload)
         storedPayload["token"] = "invalid-token"
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
         let expectedError = NSError(domain: NSURLErrorDomain, code: 31, userInfo: nil)
@@ -365,7 +365,7 @@ class SubscriptionControllerV1Tests: APITestCase {
             "subscription": ["name": "Plan B", "expirationDate": "2015-01-01T00:00:00Z", "renewalStatus": "renew"],
             "device": ["name": "My iMac"],
         ]
-        let storedSignature = try self.signature(forPayload: storedPayload)
+        let storedSignature = try Self.signature(forPayload: storedPayload)
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
 
         let expectedSubscription = Subscription(payload: ["name": "Plan B", "expirationDate": "2015-01-01T00:00:00Z", "renewalStatus": "renew"], hasExpired: true)
@@ -389,7 +389,7 @@ class SubscriptionControllerV1Tests: APITestCase {
             "subscription": ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"],
             "device": ["name": "My iMac"],
         ]
-        let storedSignature = try self.signature(forPayload: storedPayload)
+        let storedSignature = try Self.signature(forPayload: storedPayload)
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
         let expectedSubscription = Subscription(payload: ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"], hasExpired: false)
         let expectedError = NSError(domain: NSURLErrorDomain, code: 31, userInfo: nil)
@@ -411,7 +411,7 @@ class SubscriptionControllerV1Tests: APITestCase {
             "subscription": ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"],
             "device": ["name": "My iMac"],
         ]
-        let storedSignature = try self.signature(forPayload: storedPayload)
+        let storedSignature = try Self.signature(forPayload: storedPayload)
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
         self.mockAPI.checkError = .noDeviceFound
 
@@ -429,7 +429,7 @@ class SubscriptionControllerV1Tests: APITestCase {
             "subscription": ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"],
             "device": ["name": "My iMac"],
         ]
-        let storedSignature = try self.signature(forPayload: storedPayload)
+        let storedSignature = try Self.signature(forPayload: storedPayload)
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
         self.mockAPI.checkError = .noSubscriptionFound
 
@@ -447,7 +447,7 @@ class SubscriptionControllerV1Tests: APITestCase {
             "subscription": ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"],
             "device": ["name": "My iMac"],
         ]
-        let storedSignature = try self.signature(forPayload: storedPayload)
+        let storedSignature = try Self.signature(forPayload: storedPayload)
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
 
         let payload: [String: Any] = [
@@ -456,7 +456,7 @@ class SubscriptionControllerV1Tests: APITestCase {
             "subscription": ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"],
             "device": ["name": "My iMac"],
         ]
-        let signature = try self.signature(forPayload: payload)
+        let signature = try Self.signature(forPayload: payload)
         let expectedJSON: [String: Any] = ["payload": payload, "signature": signature]
         let expectedSubscription = Subscription(payload: ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"], hasExpired: true)
 
@@ -479,7 +479,7 @@ class SubscriptionControllerV1Tests: APITestCase {
             "subscription": ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": renewalStatus.rawValue],
             "device": ["name": "My iMac"],
         ]
-        let storedSignature = try self.signature(forPayload: storedPayload)
+        let storedSignature = try Self.signature(forPayload: storedPayload)
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
 
         let payload: [String: Any] = [
@@ -488,7 +488,7 @@ class SubscriptionControllerV1Tests: APITestCase {
             "subscription": ["name": "Plan B", "expirationDate": "2036-01-01T01:01:01Z", "renewalStatus": renewalStatus.rawValue],
             "device": ["name": "My iMac"],
         ]
-        let signature = try self.signature(forPayload: payload)
+        let signature = try Self.signature(forPayload: payload)
         let expectedJSON: [String: Any] = ["payload": payload, "signature": signature]
         let expectedSubscription = Subscription(payload: ["name": "Plan B", "expirationDate": "2036-01-01T01:01:01Z", "renewalStatus": renewalStatus.rawValue], hasExpired: false)
 
@@ -522,7 +522,7 @@ class SubscriptionControllerV1Tests: APITestCase {
             "subscription": ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"],
             "device": ["name": "My iMac"],
         ]
-        let storedSignature = try self.signature(forPayload: storedPayload)
+        let storedSignature = try Self.signature(forPayload: storedPayload)
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
 
         let payload: [String: Any] = [
@@ -531,7 +531,7 @@ class SubscriptionControllerV1Tests: APITestCase {
             "subscription": ["name": "Plan B", "expirationDate": "2036-01-01T01:01:01Z", "renewalStatus": "renew"],
             "device": ["name": "My iMac"],
         ]
-        let signature = try self.signature(forPayload: payload)
+        let signature = try Self.signature(forPayload: payload)
         let expectedJSON: [String: Any] = ["payload": payload, "signature": signature]
 
         let apiData = try XCTUnwrap(APIData(json: expectedJSON))
@@ -558,7 +558,7 @@ class SubscriptionControllerV1Tests: APITestCase {
             "subscription": ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"],
             "device": ["name": "My iMac"],
         ]
-        let storedSignature = try self.signature(forPayload: storedPayload)
+        let storedSignature = try Self.signature(forPayload: storedPayload)
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
 
         let payload: [String: Any] = [
@@ -567,7 +567,7 @@ class SubscriptionControllerV1Tests: APITestCase {
             "subscription": ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "cancelled"],
             "device": ["name": "My iMac"],
         ]
-        let signature = try self.signature(forPayload: payload)
+        let signature = try Self.signature(forPayload: payload)
         let expectedJSON: [String: Any] = ["payload": payload, "signature": signature]
 
         let apiData = try XCTUnwrap(APIData(json: expectedJSON))
@@ -589,11 +589,11 @@ class SubscriptionControllerV1Tests: APITestCase {
 
     //    func test_checkSubscription_setsTimerToFireInAnHour() throws {
     //        let payload: [String: Any] = ["response": "active", "token": "abctoken123", "subscriptionName": "Plan B", "expirationDate": "2035-01-01T00:00:00Z"]
-    //        let signature = try self.signature(forPayload: payload)
+    //        let signature = try Self.signature(forPayload: payload)
     //        try self.writeLicence(["payload": payload, "signature": signature])
     //
     //        let payload: [String: Any] = ["response": "active", "token": "updated-token", "subscriptionName": "Plan B", "expirationDate": "2036-01-01T01:01:01Z"]
-    //        let signature = try self.signature(forPayload: payload)
+    //        let signature = try Self.signature(forPayload: payload)
     //        let expectedJSON: [String: Any] = ["payload": payload, "signature": signature]
     //
     //        let apiData = try XCTUnwrap(APIData(json: expectedJSON))
@@ -609,11 +609,11 @@ class SubscriptionControllerV1Tests: APITestCase {
     //
     //    func test_checkSubscription_setsLastCheckDate() throws {
     //        let payload: [String: Any] = ["response": "active", "token": "abctoken123", "subscriptionName": "Plan B", "expirationDate": "2035-01-01T00:00:00Z"]
-    //        let signature = try self.signature(forPayload: payload)
+    //        let signature = try Self.signature(forPayload: payload)
     //        try self.writeLicence(["payload": payload, "signature": signature])
     //
     //        let payload: [String: Any] = ["response": "active", "token": "updated-token", "subscriptionName": "Plan B", "expirationDate": "2036-01-01T01:01:01Z"]
-    //        let signature = try self.signature(forPayload: payload)
+    //        let signature = try Self.signature(forPayload: payload)
     //        let expectedJSON: [String: Any] = ["payload": payload, "signature": signature]
     //
     //        let apiData = try XCTUnwrap(APIData(json: expectedJSON))
@@ -629,11 +629,11 @@ class SubscriptionControllerV1Tests: APITestCase {
     //
     //    func test_checkSubscription_callsCheckSubscriptionAgainIfTimerFiresAfterLastCheckDatePlus24Hours() throws {
     //        let payload: [String: Any] = ["response": "active", "token": "abctoken123", "subscriptionName": "Plan B", "expirationDate": "2035-01-01T00:00:00Z"]
-    //        let signature = try self.signature(forPayload: payload)
+    //        let signature = try Self.signature(forPayload: payload)
     //        try self.writeLicence(["payload": payload, "signature": signature])
     //
     //        let payload: [String: Any] = ["response": "active", "token": "updated-token", "subscriptionName": "Plan B", "expirationDate": "2036-01-01T01:01:01Z"]
-    //        let signature = try self.signature(forPayload: payload)
+    //        let signature = try Self.signature(forPayload: payload)
     //        let expectedJSON: [String: Any] = ["payload": payload, "signature": signature]
     //
     //        let apiData = try XCTUnwrap(APIData(json: expectedJSON))
@@ -662,7 +662,7 @@ class SubscriptionControllerV1Tests: APITestCase {
 
     func test_deactivate_immediatelyReturnsDeactivatedIfLicenceIsAlreadyDeactivated() async throws {
         let payload: [String: Any] = ["response": "deactivated"]
-        let signature = try self.signature(forPayload: payload)
+        let signature = try Self.signature(forPayload: payload)
         try self.writeLicence(["payload": payload, "signature": signature])
 
         let response = try await self.controller.deactivate()
@@ -678,7 +678,7 @@ class SubscriptionControllerV1Tests: APITestCase {
             "subscription": ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"],
             "device": ["name": "My iMac"],
         ]
-        let storedSignature = try self.signature(forPayload: storedPayload)
+        let storedSignature = try Self.signature(forPayload: storedPayload)
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
 
         _ = try? await self.controller.deactivate()
@@ -697,7 +697,7 @@ class SubscriptionControllerV1Tests: APITestCase {
             "subscription": ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"],
             "device": ["name": "My iMac"],
         ]
-        let storedSignature = try self.signature(forPayload: storedPayload)
+        let storedSignature = try Self.signature(forPayload: storedPayload)
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
 
         self.mockAPI.deactivateError = .noDeviceFound
@@ -716,7 +716,7 @@ class SubscriptionControllerV1Tests: APITestCase {
             "subscription": ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"],
             "device": ["name": "My iMac"],
         ]
-        let storedSignature = try self.signature(forPayload: storedPayload)
+        let storedSignature = try Self.signature(forPayload: storedPayload)
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
 
         let expectedError = NSError(domain: "test domain", code: 42, userInfo: nil)
@@ -737,7 +737,7 @@ class SubscriptionControllerV1Tests: APITestCase {
             "subscription": ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"],
             "device": ["name": "My iMac"],
         ]
-        let storedSignature = try self.signature(forPayload: storedPayload)
+        let storedSignature = try Self.signature(forPayload: storedPayload)
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
 
         self.mockAPI.deactivateError = .generic(nil)
@@ -755,7 +755,7 @@ class SubscriptionControllerV1Tests: APITestCase {
             "subscription": ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"],
             "device": ["name": "My iMac"],
         ]
-        let storedSignature = try self.signature(forPayload: storedPayload)
+        let storedSignature = try Self.signature(forPayload: storedPayload)
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
 
         self.mockAPI.deactivateReturnValue = ActivationResponse.deactivated()
@@ -767,7 +767,7 @@ class SubscriptionControllerV1Tests: APITestCase {
 
     func test_deactivate_returnsDeactivated() async throws {
         let payload: [String: Any] = ["response": "active", "token": "abctoken123", "subscriptionName": "Plan B", "expirationDate": "2035-01-01T00:00:00Z"]
-        let signature = try self.signature(forPayload: payload)
+        let signature = try Self.signature(forPayload: payload)
         try self.writeLicence(["payload": payload, "signature": signature])
 
         self.mockAPI.deactivateReturnValue = ActivationResponse.deactivated()
@@ -778,11 +778,11 @@ class SubscriptionControllerV1Tests: APITestCase {
 
     //    func test_deactivate_clearsTimer() throws {
     //        let payload: [String: Any] = ["response": "active", "token": "abctoken123", "subscriptionName": "Plan B", "expirationDate": "2035-01-01T00:00:00Z"]
-    //        let signature = try self.signature(forPayload: payload)
+    //        let signature = try Self.signature(forPayload: payload)
     //        try self.writeLicence(["payload": payload, "signature": signature])
     //
     //        let payload: [String: Any] = ["response": "active", "token": "updated-token", "subscriptionName": "Plan B", "expirationDate": "2036-01-01T01:01:01Z"]
-    //        let signature = try self.signature(forPayload: payload)
+    //        let signature = try Self.signature(forPayload: payload)
     //        let expectedJSON: [String: Any] = ["payload": payload, "signature": signature]
     //
     //        let apiData = try XCTUnwrap(APIData(json: expectedJSON))

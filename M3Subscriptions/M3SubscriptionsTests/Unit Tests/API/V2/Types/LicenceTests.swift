@@ -24,10 +24,10 @@ final class LicenceTests: APITestCase {
 
         let data = try JSONSerialization.data(withJSONObject: [
             "payload": licencePayload,
-            "signature": try self.signature(forPayload: licencePayload),
+            "signature": try Self.signature(forPayload: licencePayload),
         ])
 
-        let licenceURL = try self.temporaryTestDirectory.appendingPathComponent("test.coppicelicence")
+        let licenceURL = try self.temporaryTestDirectory().appendingPathComponent("test.coppicelicence")
         try data.write(to: licenceURL)
 
 
@@ -60,7 +60,7 @@ final class LicenceTests: APITestCase {
 
         let data = try JSONSerialization.data(withJSONObject: [
             "payload": licencePayload,
-            "signature": try self.signature(forPayload: licencePayload),
+            "signature": try Self.signature(forPayload: licencePayload),
         ])
 
         let licenceString = data.base64EncodedString()
@@ -88,7 +88,7 @@ final class LicenceTests: APITestCase {
         ]
 
         let data = try JSONSerialization.data(withJSONObject: [
-            "signature": try self.signature(forPayload: licencePayload),
+            "signature": try Self.signature(forPayload: licencePayload),
         ])
 
         let licenceString = data.base64EncodedString()
@@ -171,13 +171,13 @@ final class LicenceTests: APITestCase {
 
         let data = try JSONSerialization.data(withJSONObject: [
             "payload": licencePayload,
-            "signature": try self.signature(forPayload: licencePayload),
+            "signature": try Self.signature(forPayload: licencePayload),
         ])
 
         let licenceString = data.base64EncodedString()
         let licence = try Licence(url: URL(string: "coppice://activate?licence=\(licenceString)")!)
 
-        let licenceURL = try self.temporaryTestDirectory.appendingPathComponent("test.coppicelicence")
+        let licenceURL = try self.temporaryTestDirectory().appendingPathComponent("test.coppicelicence")
         try licence.write(to: licenceURL)
 
         XCTAssertTrue(FileManager.default.fileExists(atPath: licenceURL.path))
@@ -194,29 +194,29 @@ final class LicenceTests: APITestCase {
 
         let data = try JSONSerialization.data(withJSONObject: [
             "payload": licencePayload,
-            "signature": try self.signature(forPayload: licencePayload),
+            "signature": try Self.signature(forPayload: licencePayload),
         ])
 
         let licenceString = data.base64EncodedString()
         let licence = try Licence(url: URL(string: "coppice://activate?licence=\(licenceString)")!)
 
-        let licenceURL = try self.temporaryTestDirectory.appendingPathComponent("test.coppicelicence")
+        let licenceURL = try self.temporaryTestDirectory().appendingPathComponent("test.coppicelicence")
         try licence.write(to: licenceURL)
 
         let reloadedLicence = try Licence(url: licenceURL)
 
-        XCTAssertEqual(licence.licenceID, "1234567890")
-        XCTAssertEqual(licence.subscription.id, "abcdefghijklm")
-        XCTAssertEqual(licence.subscription.name, "Annual Subscription")
-        XCTAssertEqual(licence.subscription.expirationTimestamp, 876_543_210)
-        XCTAssertEqual(licence.subscriber, "Pilky")
+        XCTAssertEqual(reloadedLicence.licenceID, "1234567890")
+        XCTAssertEqual(reloadedLicence.subscription.id, "abcdefghijklm")
+        XCTAssertEqual(reloadedLicence.subscription.name, "Annual Subscription")
+        XCTAssertEqual(reloadedLicence.subscription.expirationTimestamp, 876_543_210)
+        XCTAssertEqual(reloadedLicence.subscriber, "Pilky")
     }
 
     //MARK: - Helper
     private func runMissingPayloadLicenceURLTest(payload: [String: Any]) throws {
         let data = try JSONSerialization.data(withJSONObject: [
             "payload": payload,
-            "signature": try self.signature(forPayload: payload),
+            "signature": try Self.signature(forPayload: payload),
         ])
 
         let licenceString = data.base64EncodedString()

@@ -59,6 +59,9 @@
 		99D328BD2A7694CC00DA16EF /* V2AdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D328BC2A7694CC00DA16EF /* V2AdapterTests.swift */; };
 		99D328C02A76950B00DA16EF /* LicenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D328BF2A76950B00DA16EF /* LicenceTests.swift */; };
 		99D328C22A76953300DA16EF /* ActivationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D328C12A76953300DA16EF /* ActivationTests.swift */; };
+		99D328C62A76AAC700DA16EF /* MockAPIAdapterV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D328C52A76AAC700DA16EF /* MockAPIAdapterV2.swift */; };
+		99D328C82A76AAFE00DA16EF /* Mocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D328C72A76AAFE00DA16EF /* Mocking.swift */; };
+		99D328CA2A76B0DC00DA16EF /* FakeKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D328C92A76B0DC00DA16EF /* FakeKeychain.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -134,6 +137,9 @@
 		99D328BC2A7694CC00DA16EF /* V2AdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V2AdapterTests.swift; sourceTree = "<group>"; };
 		99D328BF2A76950B00DA16EF /* LicenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenceTests.swift; sourceTree = "<group>"; };
 		99D328C12A76953300DA16EF /* ActivationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivationTests.swift; sourceTree = "<group>"; };
+		99D328C52A76AAC700DA16EF /* MockAPIAdapterV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAPIAdapterV2.swift; sourceTree = "<group>"; };
+		99D328C72A76AAFE00DA16EF /* Mocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Mocking.swift; path = ../../../Coppice/CoppiceTests/Mocking.swift; sourceTree = "<group>"; };
+		99D328C92A76B0DC00DA16EF /* FakeKeychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeKeychain.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -279,8 +285,11 @@
 		99848179248E685900BC0A8A /* Mocks & Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				99D328C72A76AAFE00DA16EF /* Mocking.swift */,
 				99848182248E68DF00BC0A8A /* MockNetworkAdapter.swift */,
 				998481AD24927EA600BC0A8A /* MockSubscriptionAPIV1.swift */,
+				99D328C52A76AAC700DA16EF /* MockAPIAdapterV2.swift */,
+				99D328C92A76B0DC00DA16EF /* FakeKeychain.swift */,
 				9999A24C24FD454B001F8161 /* APITestCase.swift */,
 			);
 			path = "Mocks & Helpers";
@@ -589,6 +598,7 @@
 				99D328C02A76950B00DA16EF /* LicenceTests.swift in Sources */,
 				998481A5248FB37F00BC0A8A /* ActivationResponseTests.swift in Sources */,
 				99D328C22A76953300DA16EF /* ActivationTests.swift in Sources */,
+				99D328C62A76AAC700DA16EF /* MockAPIAdapterV2.swift in Sources */,
 				9999A24D24FD454B001F8161 /* APITestCase.swift in Sources */,
 				99848183248E68DF00BC0A8A /* MockNetworkAdapter.swift in Sources */,
 				99848181248E68C500BC0A8A /* CheckAPIV1Tests.swift in Sources */,
@@ -598,6 +608,8 @@
 				99D328BB2A7694B800DA16EF /* V2ControllerTests.swift in Sources */,
 				9984817F248E68B600BC0A8A /* ActivateAPIV1Tests.swift in Sources */,
 				998481A7248FDE5E00BC0A8A /* XCTestExtensions.swift in Sources */,
+				99D328CA2A76B0DC00DA16EF /* FakeKeychain.swift in Sources */,
+				99D328C82A76AAFE00DA16EF /* Mocking.swift in Sources */,
 				9984819D248E94E200BC0A8A /* Mac-DeviceTests.swift in Sources */,
 				998481A3248FA3BD00BC0A8A /* SubscriptionDeviceTests.swift in Sources */,
 			);

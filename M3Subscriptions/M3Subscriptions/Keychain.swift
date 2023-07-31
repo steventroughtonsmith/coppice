@@ -8,9 +8,13 @@
 
 import Foundation
 
-class Keychain {
-    static let `default` = Keychain()
+protocol Keychain {
+    func addToken(_ token: String) throws
+    func removeToken() throws
+    func fetchToken() throws -> String
+}
 
+class DefaultKeychain: Keychain {
     private let server = "mcubedsw.com"
 
     func addToken(_ token: String) throws {
@@ -22,7 +26,7 @@ class Keychain {
 
         let status = SecItemAdd(query as CFDictionary, nil)
         guard status == errSecSuccess else {
-            throw Error.unhandledError(status: status)
+            throw KeychainError.unhandledError(status: status)
         }
     }
 
@@ -34,7 +38,7 @@ class Keychain {
 
         let status = SecItemDelete(query as CFDictionary)
         guard status == errSecSuccess || status == errSecItemNotFound else {
-            throw Error.unhandledError(status: status)
+            throw KeychainError.unhandledError(status: status)
         }
     }
 
@@ -50,10 +54,10 @@ class Keychain {
         var item: CFTypeRef?
         let status = SecItemCopyMatching(query as CFDictionary, &item)
         guard status != errSecItemNotFound else {
-            throw Error.noPassword
+            throw KeychainError.noPassword
         }
         guard status == errSecSuccess else {
-            throw Error.unhandledError(status: status)
+            throw KeychainError.unhandledError(status: status)
         }
 
         guard
@@ -61,17 +65,16 @@ class Keychain {
             let tokenData = existingItem[kSecValueData as String] as? Data,
             let token = String(data: tokenData, encoding: .utf8)
         else {
-            throw Error.unexpectedPasswordData
+            throw KeychainError.unexpectedPasswordData
         }
 
         return token
     }
 }
 
-extension Keychain {
-    enum Error: Swift.Error {
-        case noPassword
-        case unexpectedPasswordData
-        case unhandledError(status: OSStatus)
-    }
+enum KeychainError: Swift.Error {
+    case noPassword
+    case unexpectedPasswordData
+    case unhandledError(status: OSStatus)
 }
+

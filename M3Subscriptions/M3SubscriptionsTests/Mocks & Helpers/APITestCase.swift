@@ -16,17 +16,12 @@ class APITestCase: XCTestCase {
         case signingError
     }
 
-    private var createdTestDirectory = false
-
-    var temporaryTestDirectory: URL {
-        get throws {
-            let url = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("M3Subscription-Tests")
-            if createdTestDirectory == false, FileManager.default.fileExists(atPath: url.path) == false {
-                try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
-                self.createdTestDirectory = true
-            }
-            return url
+    func temporaryTestDirectory(createIfNeeded: Bool = true) throws -> URL {
+        let url = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("M3Subscription-Tests")
+        if createIfNeeded, FileManager.default.fileExists(atPath: url.path) == false {
+            try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
         }
+        return url
     }
 
     override func setUpWithError() throws {
@@ -42,15 +37,15 @@ class APITestCase: XCTestCase {
 
     override func tearDownWithError() throws {
         TEST_OVERRIDES.publicKey = nil
-        if self.createdTestDirectory {
-            try FileManager.default.removeItem(at: try self.temporaryTestDirectory)
-            self.createdTestDirectory = false
+        let testDirectoryPath = try self.temporaryTestDirectory(createIfNeeded: false)
+        if FileManager.default.fileExists(atPath: testDirectoryPath.path) {
+            try FileManager.default.removeItem(at: testDirectoryPath)
         }
         try super.tearDownWithError()
     }
 
-    func signature(forPayload payload: [String: Any]) throws -> String {
-        let privateKeyURL = try XCTUnwrap(self.testBundle.url(forResource: "test_private_key", withExtension: "p12"))
+    static func signature(forPayload payload: [String: Any]) throws -> String {
+        let privateKeyURL = try XCTUnwrap(Self.testBundle.url(forResource: "test_private_key", withExtension: "p12"))
         let p12Data = try Data(contentsOf: privateKeyURL)
 
 
