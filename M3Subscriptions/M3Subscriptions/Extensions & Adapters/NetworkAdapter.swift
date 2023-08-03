@@ -11,13 +11,19 @@ import Foundation
 protocol NetworkAdapter {
     var baseURL: URL { get }
     var version: String { get }
-    func callAPI(endpoint: String, method: String, body: [String: String], headers: [String: String]?) async throws -> APIData
+    func callAPI(endpoint: String, method: HTTPMethod, body: [String: String], headers: [String: String]?) async throws -> APIData
+}
+
+enum HTTPMethod: String {
+    case get = "GET"
+    case post = "POST"
 }
 
 enum NetworkAdapterError: Error {
     case noInternetConnection
     case urlError(NSError)
     case unknownResponse
+    case unauthorized
     case invalidResponse(HTTPURLResponse)
     case invalidJSON
     case invalidData
@@ -60,7 +66,7 @@ class URLSessionNetworkAdapter: NetworkAdapter {
         self.session = session
     }
 
-    func callAPI(endpoint: String, method: String = "POST", body: [String: String], headers: [String: String]?) async throws -> APIData {
+    func callAPI(endpoint: String, method: HTTPMethod = .post, body: [String: String], headers: [String: String]?) async throws -> APIData {
         let request = self.request(forEndpoint: endpoint, method: method, body: body, headers: headers)
         return try await self.callAPI(with: request)
     }
@@ -87,6 +93,9 @@ class URLSessionNetworkAdapter: NetworkAdapter {
         }
 
         guard httpResponse.statusCode == 200 || httpResponse.statusCode == 422 else {
+            if httpResponse.statusCode == 401 {
+                throw NetworkAdapterError.unauthorized
+            }
             throw NetworkAdapterError.invalidResponse(httpResponse)
         }
 
@@ -102,19 +111,30 @@ class URLSessionNetworkAdapter: NetworkAdapter {
         return apiData
     }
 
-    private func request(forEndpoint endpoint: String, method: String, body: [String: String], headers: [String: String]? = nil) -> URLRequest {
-        let url = self.baseURL.appendingPathComponent(self.version).appendingPathComponent(endpoint)
+    //TODO: Make method enum
+    //TODO: If method .get then append to url as query
+    private func request(forEndpoint endpoint: String, method: HTTPMethod, body: [String: String], headers: [String: String]? = nil) -> URLRequest {
+        var url = self.baseURL.appendingPathComponent(self.version).appendingPathComponent(endpoint)
+
+        if method == .get, var components = URLComponents(url: url, resolvingAgainstBaseURL: false) {
+            components.query = self.queryString(for: body)
+            if let newURL = components.url {
+                url = newURL
+            }
+        }
 
         var request = URLRequest(url: url)
-        request.httpMethod = method
-        request.httpBody = self.queryString(for: body).data(using: .utf8)
+        request.httpMethod = method.rawValue
+        if method == .post {
+            request.httpBody = self.queryString(for: body).data(using: .utf8)
+        }
         request.allHTTPHeaderFields = headers
         return request
     }
 
     private func queryString(for body: [String: String]) -> String {
         var characterSet = CharacterSet.urlPathAllowed
-        characterSet.remove(charactersIn: "&")
+        characterSet.remove(charactersIn: "&+")
         let queryComponents = body.compactMap { "\($0)=\($1)".addingPercentEncoding(withAllowedCharacters: characterSet) }
         return queryComponents.joined(separator: "&")
     }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="22138.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="22146" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22138.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22146"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -114,7 +114,7 @@
                                     </gridCell>
                                     <gridCell row="eOV-xF-zhJ" column="9iN-Pr-ebe" rowAlignment="none" id="NY5-FZ-bD3">
                                         <customView key="contentView" translatesAutoresizingMaskIntoConstraints="NO" id="9R4-Ei-Df3">
-                                            <rect key="frame" x="54" y="0.0" width="105" height="16"/>
+                                            <rect key="frame" x="54" y="0.0" width="100" height="16"/>
                                             <subviews>
                                                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="njp-NA-48K">
                                                     <rect key="frame" x="-2" y="0.0" width="37" height="16"/>
@@ -123,13 +123,19 @@
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
+                                                    <connections>
+                                                        <action selector="finishRenaming:" target="-2" id="Zld-JG-Y1a"/>
+                                                    </connections>
                                                 </textField>
                                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vhd-EI-dX9">
-                                                    <rect key="frame" x="41" y="-2" width="64" height="18"/>
-                                                    <buttonCell key="cell" type="inline" title="Rename…" bezelStyle="inline" alignment="center" borderStyle="border" inset="2" id="u2t-1H-bcf">
+                                                    <rect key="frame" x="41" y="-2" width="54" height="18"/>
+                                                    <buttonCell key="cell" type="inline" title="Rename" bezelStyle="inline" alignment="center" borderStyle="border" inset="2" id="u2t-1H-bcf">
                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                         <font key="font" metaFont="smallSystemBold"/>
                                                     </buttonCell>
+                                                    <connections>
+                                                        <action selector="renameDevice:" target="-2" id="wTp-QY-CIE"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>

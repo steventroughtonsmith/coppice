@@ -49,7 +49,8 @@ extension API.V2 {
             self.subscription = Subscription(id: subscriptionID,
                                              expirationTimestamp: TimeInterval(expirationTimestamp),
                                              name: subscriptionName,
-                                             renewalStatus: .unknown)
+                                             renewalStatus: .unknown,
+                                             maxDeviceCount: 0)
             self.subscriber = subscriber
             self.signature = signature
         }

@@ -38,8 +38,6 @@ class CoppiceSubscriptionManager: NSObject {
             self.v1Controller = nil
         }
 
-
-
         super.init()
 
         if let controller = self.v1Controller {
@@ -48,6 +46,10 @@ class CoppiceSubscriptionManager: NSObject {
                     self?.state = .unknown
                 }
             }
+        }
+
+        self.subscribers[.v2ActivationSource] = self.v2Controller.$activationSource.receive(on: DispatchQueue.main).sink { [weak self] source in
+            self?.state = (source.activated) ? .enabled : .unknown
         }
 
         self.checkSubscriptionIfNeeded()
@@ -208,6 +210,7 @@ class CoppiceSubscriptionManager: NSObject {
     //MARK: - Subscribers
     private enum SubscriberKey {
         case v1SubscriberResponse
+        case v2ActivationSource
     }
 
     private var subscribers: [SubscriberKey: AnyCancellable] = [:]

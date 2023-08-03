@@ -18,10 +18,26 @@ class DefaultKeychain: Keychain {
     private let server = "mcubedsw.com"
 
     func addToken(_ token: String) throws {
+        do {
+            //Check if token exists
+            let existingToken = try self.fetchToken()
+            guard token != existingToken else {
+                return
+            }
+            try self.updateToken(token)
+        } catch KeychainError.noPassword {
+            try self.insertToken(token)
+        } catch {
+            throw error
+        }
+    }
+
+    private func insertToken(_ token: String) throws {
         let query: [String: Any] = [
-            kSecClass as String: kSecClassInternetPassword,
-            kSecAttrServer as String: self.server,
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrLabel as String: "M Cubed Account Login",
             kSecValueData as String: token,
+            kSecAttrAccount as String: "M Cubed Account",
         ]
 
         let status = SecItemAdd(query as CFDictionary, nil)
@@ -30,10 +46,31 @@ class DefaultKeychain: Keychain {
         }
     }
 
+    private func updateToken(_ token: String) throws {
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrLabel as String: "M Cubed Account Login",
+            kSecAttrAccount as String: "M Cubed Account",
+        ]
+
+        let attributes: [String: Any] = [
+            kSecValueData as String: token,
+        ]
+
+        let status = SecItemUpdate(query as CFDictionary, attributes as CFDictionary)
+        guard status != errSecItemNotFound else {
+            throw KeychainError.noPassword
+        }
+        guard status == errSecSuccess else {
+            throw KeychainError.unhandledError(status: status)
+        }
+    }
+
     func removeToken() throws {
         let query: [String: Any] = [
-            kSecClass as String: kSecClassInternetPassword,
-            kSecAttrServer as String: self.server,
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrLabel as String: "M Cubed Account Login",
+            kSecAttrAccount as String: "M Cubed Account",
         ]
 
         let status = SecItemDelete(query as CFDictionary)
@@ -44,8 +81,8 @@ class DefaultKeychain: Keychain {
 
     func fetchToken() throws -> String {
         let query: [String: Any] = [
-            kSecClass as String: kSecClassInternetPassword,
-            kSecAttrServer as String: self.server,
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrLabel as String: "M Cubed Account Login",
             kSecMatchLimit as String: kSecMatchLimitOne,
             kSecReturnAttributes as String: true,
             kSecReturnData as String: true,

@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import OSLog
 
 class LoginCoppiceProContentViewController: NSViewController {
     let viewModel: CoppiceProViewModel
@@ -45,6 +46,7 @@ class LoginCoppiceProContentViewController: NSViewController {
                 try await self.viewModel.activateWithLogin(email: self.email, password: self.password)
             } catch {
                 //TODO: Handle errors
+                Logger().log(level: .error, "Error: \(error)")
             }
         }
     }

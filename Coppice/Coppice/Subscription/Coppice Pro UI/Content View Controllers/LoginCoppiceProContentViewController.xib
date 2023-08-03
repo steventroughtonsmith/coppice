@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="22138.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="22146" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22138.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22146"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -50,6 +50,7 @@
                                         <bool key="NSContinuouslyUpdatesValue" value="YES"/>
                                     </dictionary>
                                 </binding>
+                                <outlet property="nextKeyView" destination="wVk-iW-s06" id="hGb-6c-rnl"/>
                             </connections>
                         </textField>
                         <secureTextField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wVk-iW-s06">
@@ -71,6 +72,7 @@
                                         <bool key="NSContinuouslyUpdatesValue" value="YES"/>
                                     </dictionary>
                                 </binding>
+                                <outlet property="nextKeyView" destination="Loe-W3-dnh" id="xw7-jn-tqM"/>
                             </connections>
                         </secureTextField>
                     </subviews>
@@ -93,6 +95,9 @@
                     <buttonCell key="cell" type="push" title="Activate Device" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="iiw-uG-63W" customClass="RoundButtonCell" customModule="Coppice" customModuleProvider="target">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="systemSemibold" size="13"/>
+                        <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
                     </buttonCell>
                     <color key="bezelColor" name="CoppiceGreen"/>
                     <userDefinedRuntimeAttributes>

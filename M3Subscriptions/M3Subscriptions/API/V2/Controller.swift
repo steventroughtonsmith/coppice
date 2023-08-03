@@ -16,7 +16,7 @@ extension API.V2 {
             case website(Activation)
         }
 
-        public private(set) var activationSource: ActivationSource = .none
+        @Published public private(set) var activationSource: ActivationSource = .none
 
         #if DEBUG
         func setActivationSource(_ source: ActivationSource) {
@@ -80,12 +80,22 @@ extension API.V2 {
                 throw Error.loginFailed
             }
 
-            try self.keychain.addToken(token)
+            do {
+                try self.keychain.addToken(token)
+            } catch KeychainError.unhandledError(-50) {
+                //A -50 error is usually caused by the token still being in the keychain, so try clearing it out first
+                try self.keychain.removeToken()
+                try self.keychain.addToken(token)
+            } catch {
+                throw error
+            }
         }
 
         /// Logs out the user, deleting from the keychain
         public func logout() async throws {
-            let apiData = try await self.adapter.logout()
+            let apiData = try await self.adapter
+                .withAuthentication(try self.authenticationType(from: [.token]))
+                .logout()
             guard apiData.response == .loggedOut else {
                 throw Error.invalidResponse
             }
@@ -146,7 +156,7 @@ extension API.V2 {
 
             let apiData = try await self.adapter
                 .withAuthentication(try self.authenticationType(from: [.token]))
-                .listSubscriptions(bundleID: bundleIdentifier)
+                .listSubscriptions(bundleID: bundleIdentifier, deviceType: Device.shared.type)
 
             guard
                 apiData.response == .success,
@@ -163,19 +173,21 @@ extension API.V2 {
         /// **Note:** If the activation source is not a user account, device names will not be included
         /// - Parameter subscriptionID: The ID of the subscription to fetch the devices for
         /// - Returns: A list of activated devices
-        public func listDevices(subscriptionID: String) async throws -> [ActivatedDevice] {
+        public func listDevices(subscriptionID: String) async throws -> (maxDeviceCount: Int, devices: [ActivatedDevice]) {
             let apiData = try await self.adapter
                 .withAuthentication(try self.authenticationType())
                 .listDevices(subscriptionID: subscriptionID, device: .shared)
 
             guard
                 apiData.response == .success,
-                let apiDevices = apiData.payload["devices"] as? [[String: Any]]
+                let apiDevices = apiData.payload["devices"] as? [[String: Any]],
+                let maxDeviceCount = apiData.payload["maxDeviceCount"] as? Int
             else {
                 throw Error.invalidResponse
             }
 
-            return try apiDevices.map { try ActivatedDevice(apiDevice: $0) }
+            let activatedDevices = try apiDevices.map { try ActivatedDevice(apiDevice: $0) }
+            return (maxDeviceCount, activatedDevices)
         }
 
         /// Rename the currently activated device with the service
@@ -207,10 +219,15 @@ extension API.V2 {
         public func deactivate(activationID: String? = nil) async throws {
             var idToDeactivate = activationID
             if idToDeactivate == nil {
-                guard case .website(let activation) = self.activationSource else {
+                switch self.activationSource {
+                case .none:
                     throw Error.notActivated
+                case .licence:
+                    try self.cleanUpDeactivation()
+                    return
+                case .website(let activation):
+                    idToDeactivate = activation.activationID
                 }
-                idToDeactivate = activation.activationID
             }
             let apiData = try await self.adapter
                 .withAuthentication(try self.authenticationType())
@@ -220,6 +237,10 @@ extension API.V2 {
                 throw Error.invalidResponse
             }
 
+            try self.cleanUpDeactivation()
+        }
+
+        private func cleanUpDeactivation() throws {
             if FileManager.default.fileExists(atPath: self.licenceURL.path) {
                 try FileManager.default.removeItem(at: self.licenceURL)
             }

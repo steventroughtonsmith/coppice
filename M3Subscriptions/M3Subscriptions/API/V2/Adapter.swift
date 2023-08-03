@@ -20,7 +20,7 @@ protocol APIAdapterV2 {
     func deactivate(activationID: String) async throws -> APIData
 
     func renameDevice(activationID: String, deviceName: String) async throws -> APIData
-    func listSubscriptions(bundleID: String) async throws -> APIData
+    func listSubscriptions(bundleID: String, deviceType: Device.DeviceType) async throws -> APIData
     func listDevices(subscriptionID: String, device: Device) async throws -> APIData
 }
 
@@ -39,7 +39,7 @@ extension API.V2 {
         }
 
         func login(email: String, password: String, deviceName: String) async throws -> APIData {
-            return try await self.networkAdapter.callAPI(endpoint: "login", method: "POST", body: [
+            return try await self.networkAdapter.callAPI(endpoint: "login", method: .post, body: [
                 "email": email,
                 "password": password,
                 "deviceName": deviceName,
@@ -47,7 +47,7 @@ extension API.V2 {
         }
 
         func logout() async throws -> APIData {
-            return try await self.networkAdapter.callAPI(endpoint: "logout", method: "POST", body: [:], headers: nil)
+            return try await self.authenticatedAPICall(endpoint: "logout", method: .post, body: [:])
         }
 
         func activate(device: Device, subscriptionID: String?) async throws -> APIData {
@@ -61,11 +61,11 @@ extension API.V2 {
             if let subscriptionID {
                 body["subscriptionID"] = subscriptionID
             }
-            return try await self.authenticatedAPICall(endpoint: "activate", method: "POST", body: body)
+            return try await self.authenticatedAPICall(endpoint: "activate", method: .post, body: body)
         }
 
         func check(activationID: String, device: Device) async throws -> APIData {
-            return try await self.authenticatedAPICall(endpoint: "check", method: "POST", body: [
+            return try await self.authenticatedAPICall(endpoint: "check", method: .post, body: [
                 "version": device.appVersion,
                 "deviceID": device.id,
                 "activationID": activationID,
@@ -73,33 +73,34 @@ extension API.V2 {
         }
 
         func deactivate(activationID: String) async throws -> APIData {
-            return try await self.authenticatedAPICall(endpoint: "deactivate", method: "POST", body: [
+            return try await self.authenticatedAPICall(endpoint: "deactivate", method: .post, body: [
                 "activationID": activationID,
             ])
         }
 
         func renameDevice(activationID: String, deviceName: String) async throws -> APIData {
-            return try await self.authenticatedAPICall(endpoint: "activate", method: "POST", body: [
+            return try await self.authenticatedAPICall(endpoint: "rename", method: .post, body: [
                 "deviceName": deviceName,
                 "activationID": activationID,
             ])
         }
 
-        func listSubscriptions(bundleID: String) async throws -> APIData {
-            return try await self.authenticatedAPICall(endpoint: "activate", method: "GET", body: [
+        func listSubscriptions(bundleID: String, deviceType: Device.DeviceType) async throws -> APIData {
+            return try await self.authenticatedAPICall(endpoint: "subscriptions", method: .get, body: [
                 "bundleID": bundleID,
+                "deviceType": deviceType.rawValue,
             ])
         }
 
         func listDevices(subscriptionID: String, device: Device) async throws -> APIData {
-            return try await self.authenticatedAPICall(endpoint: "check", method: "POST", body: [
+            return try await self.authenticatedAPICall(endpoint: "devices", method: .get, body: [
                 "deviceType": device.type.rawValue,
                 "deviceID": device.id,
                 "subscriptionID": subscriptionID,
             ])
         }
 
-        private func authenticatedAPICall(endpoint: String, method: String, body: [String: String]) async throws -> APIData {
+        private func authenticatedAPICall(endpoint: String, method: HTTPMethod, body: [String: String]) async throws -> APIData {
             var modifiedBody = body
             let headers: [String: String]?
             switch self.currentAuthentication {

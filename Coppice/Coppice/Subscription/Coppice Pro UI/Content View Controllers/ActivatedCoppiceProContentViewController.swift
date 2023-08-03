@@ -32,6 +32,11 @@ class ActivatedCoppiceProContentViewController: NSViewController {
     @IBOutlet weak var deviceRow: NSGridRow!
     @IBOutlet weak var renameButton: NSButton!
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.reloadData()
+    }
+
     private func reloadData() {
         guard self.isViewLoaded, let activation = self.viewModel.activation else {
             return
@@ -56,6 +61,35 @@ class ActivatedCoppiceProContentViewController: NSViewController {
                 try await self.viewModel.deactivate()
             } catch {
                 //TODO: Handle error
+            }
+        }
+    }
+
+    //MARK: - Rename
+    @IBAction func renameDevice(_ sender: Any) {
+        self.deviceLabel.isEditable = true
+        self.deviceLabel.isSelectable = true
+        self.view.window?.makeFirstResponder(self.deviceLabel)
+        self.renameButton.action = #selector(finishRenaming(_:))
+    }
+
+    @IBAction func finishRenaming(_ sender: Any) {
+        guard self.deviceLabel.stringValue.count > 0 else {
+            NSSound.beep()
+            return
+        }
+
+        self.deviceLabel.isEditable = false
+        self.deviceLabel.isSelectable = false
+        self.deviceLabel.resignFirstResponder()
+        self.renameButton.action = #selector(renameDevice(_:))
+
+        Task {
+            do {
+                try await self.viewModel.rename(to: self.deviceLabel.stringValue)
+            } catch {
+                //TODO: handle error
+                print("Error renaming: \(error)")
             }
         }
     }

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17503.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="22146" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17503.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22146"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="MultipleSubscriptionsViewController" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="MultipleSubscriptionsViewController" customModule="Coppice" customModuleProvider="target">
             <connections>
                 <outlet property="activateButton" destination="dex-4q-LgI" id="r1c-7O-r4U"/>
                 <outlet property="tableView" destination="W4X-Ja-YCp" id="ESg-lJ-QjF"/>
@@ -16,11 +16,11 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="Hz6-mo-xeY">
-            <rect key="frame" x="0.0" y="0.0" width="491" height="276"/>
+            <rect key="frame" x="0.0" y="0.0" width="491" height="275"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gyY-mW-aD8">
-                    <rect key="frame" x="18" y="240" width="238" height="16"/>
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gyY-mW-aD8">
+                    <rect key="frame" x="18" y="239" width="237" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="Multiple Active Subscriptions Found" id="hOF-ri-QMv">
                         <font key="font" metaFont="systemBold"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -28,7 +28,7 @@
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dex-4q-LgI">
-                    <rect key="frame" x="386" y="13" width="90" height="32"/>
+                    <rect key="frame" x="393" y="13" width="84" height="32"/>
                     <buttonCell key="cell" type="push" title="Activate" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="OIQ-YG-1Q9">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -41,7 +41,7 @@ DQ
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YWX-pl-9Yv">
-                    <rect key="frame" x="304" y="13" width="82" height="32"/>
+                    <rect key="frame" x="319" y="13" width="76" height="32"/>
                     <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="I7j-ex-xJ4">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -53,8 +53,8 @@ Gw
                         <action selector="cancel:" target="-2" id="V4z-gX-hNl"/>
                     </connections>
                 </button>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ji2-ke-gCU">
-                    <rect key="frame" x="18" y="214" width="349" height="16"/>
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ji2-ke-gCU">
+                    <rect key="frame" x="18" y="213" width="349" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="Please select which subscription to active this device on:" id="E4f-Je-Heg">
                         <font key="font" usesAppearanceFont="YES"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -62,7 +62,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <scrollView autohidesScrollers="YES" horizontalLineScroll="61" horizontalPageScroll="10" verticalLineScroll="61" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J4k-Qs-whV">
-                    <rect key="frame" x="20" y="61" width="451" height="145"/>
+                    <rect key="frame" x="20" y="60" width="451" height="145"/>
                     <clipView key="contentView" id="XIt-GB-IvX">
                         <rect key="frame" x="1" y="1" width="449" height="143"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -74,7 +74,7 @@ Gw
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
-                                    <tableColumn width="446" minWidth="40" maxWidth="1000" id="zPa-oz-Axm">
+                                    <tableColumn width="437" minWidth="40" maxWidth="1000" id="zPa-oz-Axm">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -90,24 +90,24 @@ Gw
                                                 <rect key="frame" x="1" y="1" width="446" height="57"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
-                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="dCT-s9-ztZ">
-                                                        <rect key="frame" x="37" y="30" width="298" height="19"/>
+                                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="dCT-s9-ztZ">
+                                                        <rect key="frame" x="32" y="30" width="303" height="19"/>
                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="Doi-GX-6B6">
                                                             <font key="font" metaFont="systemSemibold" size="16"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                     </textField>
-                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="HJf-v6-EGw">
-                                                        <rect key="frame" x="37" y="8" width="87" height="14"/>
+                                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="HJf-v6-EGw">
+                                                        <rect key="frame" x="32" y="8" width="87" height="14"/>
                                                         <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="TZa-LP-eaO">
                                                             <font key="font" metaFont="systemSemibold" size="11"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                     </textField>
-                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="HWn-md-VnO">
-                                                        <rect key="frame" x="126" y="8" width="84" height="14"/>
+                                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="HWn-md-VnO">
+                                                        <rect key="frame" x="121" y="8" width="84" height="14"/>
                                                         <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="PvL-Nh-bVu">
                                                             <font key="font" metaFont="smallSystem"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -115,7 +115,7 @@ Gw
                                                         </textFieldCell>
                                                     </textField>
                                                     <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3BV-wC-Fsd">
-                                                        <rect key="frame" x="9" y="20" width="22" height="18"/>
+                                                        <rect key="frame" x="8" y="20" width="18" height="18"/>
                                                         <buttonCell key="cell" type="radio" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="Muh-wM-oth">
                                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                             <font key="font" metaFont="system"/>
@@ -124,7 +124,7 @@ Gw
                                                             <action selector="radioClicked:" target="vJn-EB-YYg" id="MsT-Y6-JiE"/>
                                                         </connections>
                                                     </button>
-                                                    <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="65y-uc-P5Q">
+                                                    <textField focusRingType="none" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="65y-uc-P5Q">
                                                         <rect key="frame" x="415" y="33" width="23" height="14"/>
                                                         <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title=" x/y" id="r0d-gZ-Z8C">
                                                             <font key="font" metaFont="smallSystem"/>
@@ -132,7 +132,7 @@ Gw
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                     </textField>
-                                                    <textField horizontalHuggingPriority="749" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Q8p-A0-hm9">
+                                                    <textField focusRingType="none" horizontalHuggingPriority="749" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Q8p-A0-hm9">
                                                         <rect key="frame" x="351" y="33" width="66" height="14"/>
                                                         <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Activations:" id="Ze9-sE-yFf">
                                                             <font key="font" metaFont="smallSystem"/>

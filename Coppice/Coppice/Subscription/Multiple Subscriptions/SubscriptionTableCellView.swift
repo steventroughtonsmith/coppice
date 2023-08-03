@@ -47,8 +47,8 @@ class SubscriptionTableCellView: NSTableCellView, TableCell {
                                                                           renewalStatus: subscription.renewalStatus)
         self.infoLabel.stringValue = CoppiceProViewModel.localizedStatusDetails(expirationTimestamp: subscription.expirationTimestamp,
                                                                                 renewalStatus: subscription.renewalStatus)
-        if let currentCount = subscription.currentDeviceCount, let maxDeviceCount = subscription.maxDeviceCount {
-            self.activationsLabel.stringValue = "\(currentCount)/\(maxDeviceCount)"
+        if let currentCount = subscription.currentDeviceCount {
+            self.activationsLabel.stringValue = "\(currentCount)/\(subscription.maxDeviceCount)"
         }
     }
 

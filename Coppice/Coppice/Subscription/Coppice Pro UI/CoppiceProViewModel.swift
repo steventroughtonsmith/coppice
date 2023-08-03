@@ -22,7 +22,7 @@ class CoppiceProViewModel {
     init(subscriptionManager: CoppiceSubscriptionManager = .shared) {
         self.subscriptionManager = subscriptionManager
 
-        self.subscribers[.coppiceProState] = subscriptionManager.$state.sink { [weak self] newValue in
+        self.subscribers[.coppiceProState] = subscriptionManager.$state.receive(on: DispatchQueue.main).sink { [weak self] newValue in
             self?.handleStateChange(newValue: newValue)
             self?.updateNeedsLicenceUpgrade()
         }
@@ -116,6 +116,7 @@ class CoppiceProViewModel {
         } catch {
             try await self.subscriptionManager.v2Controller.logout()
             //TODO: Handle error
+            print("Activation failed: \(error)")
         }
     }
 
@@ -134,14 +135,14 @@ class CoppiceProViewModel {
             guard case .couldNotConnectToServer(let nsError) = error else {
                 throw error
             }
-            //TODO: Activate with licence
             print("error: \(nsError)")
         }
     }
 
     private func activate(subscription: API.V2.Subscription) async throws {
-        let devices = try await self.subscriptionManager.v2Controller.listDevices(subscriptionID: subscription.id)
-        if (devices.count) >= subscription.maxDeviceCount! {
+        let (maxDeviceCount, devices) = try await self.subscriptionManager.v2Controller.listDevices(subscriptionID: subscription.id)
+        //If we're over the limit and our current device is not one of the listed devices then ask to deactivate one
+        if (devices.count) >= maxDeviceCount, devices.contains(where: { $0.isCurrent == true }) == false {
             guard let view = self.view else {
                 fatalError()
             }

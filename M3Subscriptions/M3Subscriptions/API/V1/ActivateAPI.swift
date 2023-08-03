@@ -57,7 +57,7 @@ extension API.V1 {
 
             let data: APIData
             do {
-                data = try await self.networkAdapter.callAPI(endpoint: "activate", method: "POST", body: body, headers: nil)
+                data = try await self.networkAdapter.callAPI(endpoint: "activate", method: .post, body: body, headers: nil)
             } catch {
                 throw Failure.generic(error)
             }

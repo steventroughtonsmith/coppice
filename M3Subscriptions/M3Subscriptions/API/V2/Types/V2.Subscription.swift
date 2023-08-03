@@ -10,7 +10,7 @@ import Foundation
 
 extension API.V2 {
     public struct Subscription: Equatable {
-        internal init(id: String, expirationTimestamp: TimeInterval, name: String, renewalStatus: RenewalStatus, maxDeviceCount: Int? = nil, currentDeviceCount: Int? = nil) {
+        internal init(id: String, expirationTimestamp: TimeInterval, name: String, renewalStatus: RenewalStatus, maxDeviceCount: Int, currentDeviceCount: Int? = nil) {
             self.id = id
             self.expirationTimestamp = expirationTimestamp
             self.name = name
@@ -24,7 +24,8 @@ extension API.V2 {
                 let id = apiSubscription["id"] as? String,
                 let name = apiSubscription["name"] as? String,
                 let expirationTimestamp = apiSubscription["expirationTimestamp"] as? Int,
-                let rawRenewalStatus = apiSubscription["renewalStatus"] as? String
+                let rawRenewalStatus = apiSubscription["renewalStatus"] as? String,
+                let maxDeviceCount = apiSubscription["maxDeviceCount"] as? Int
             else {
                 throw Error.invalidResponse
             }
@@ -33,8 +34,8 @@ extension API.V2 {
             self.expirationTimestamp = TimeInterval(expirationTimestamp)
             self.name = name
             self.renewalStatus = RenewalStatus(rawValue: rawRenewalStatus) ?? .unknown
+            self.maxDeviceCount = maxDeviceCount
 
-            self.maxDeviceCount = apiSubscription["maxDeviceCount"] as? Int
             self.currentDeviceCount = apiSubscription["currentDeviceCount"] as? Int
         }
 
@@ -42,8 +43,8 @@ extension API.V2 {
         public var expirationTimestamp: TimeInterval
         public var name: String
         public var renewalStatus: RenewalStatus
+        public var maxDeviceCount: Int
 
-        public var maxDeviceCount: Int?
         public var currentDeviceCount: Int?
     }
 }
