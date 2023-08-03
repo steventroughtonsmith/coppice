@@ -46,9 +46,9 @@ class MockAPIAdapterV2: APIAdapterV2 {
         return try self.renameDeviceMock.throwingCalled(withArguments: (activationID, deviceName)) ?? .empty
     }
 
-    var listSubscriptionsMock = MockDetails<String, APIData>()
-    func listSubscriptions(bundleID: String) async throws -> APIData {
-        return try self.listSubscriptionsMock.throwingCalled(withArguments: bundleID) ?? .empty
+    var listSubscriptionsMock = MockDetails<(String, Device.DeviceType), APIData>()
+    func listSubscriptions(bundleID: String, deviceType: Device.DeviceType) async throws -> APIData {
+        return try self.listSubscriptionsMock.throwingCalled(withArguments: (bundleID, deviceType)) ?? .empty
     }
 
     var listDevicesMock = MockDetails<(String, Device), APIData>()

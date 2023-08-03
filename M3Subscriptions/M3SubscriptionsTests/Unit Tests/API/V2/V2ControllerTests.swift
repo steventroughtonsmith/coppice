@@ -292,7 +292,7 @@ final class V2ControllerTests: APITestCase {
     func test_activate_tellsAdapterToCallActivateWithSharedDeviceAndSuppliedSubscription() async throws {
         self.fakeKeychain.token = "mytoken123"
         let activateMock = self.mockAdapter.activateMock
-        activateMock.returnValue = APIData.active(activationID: "", deviceName: "", subscription: ("", 0, "", ""))
+        activateMock.returnValue = APIData.active(activationID: "", deviceName: "", subscription: ("", 0, "", "", 0))
         try await self.controller.activate(subscriptionID: "foobarbaz")
 
         XCTAssertTrue(activateMock.wasCalled)
@@ -391,7 +391,7 @@ final class V2ControllerTests: APITestCase {
 
         self.mockAdapter.checkMock.returnValue = APIData.active(activationID: "123456",
                                                                 deviceName: "My New Machine",
-                                                                subscription: ("abcdef", 976_543_210, "Annual Subscription", "cancelled"))
+                                                                subscription: ("abcdef", 976_543_210, "Annual Subscription", "cancelled", 3))
 
         try await self.controller.check()
 
@@ -405,6 +405,7 @@ final class V2ControllerTests: APITestCase {
         XCTAssertEqual(activation.subscription.expirationTimestamp, 976_543_210)
         XCTAssertEqual(activation.subscription.name, "Annual Subscription")
         XCTAssertEqual(activation.subscription.renewalStatus, .cancelled)
+        XCTAssertEqual(activation.subscription.maxDeviceCount, 3)
     }
 
     func test_check_setsActivationSourceToWebsiteWithUpdatedActivation() async throws {
@@ -412,7 +413,7 @@ final class V2ControllerTests: APITestCase {
 
         self.mockAdapter.checkMock.returnValue = APIData.active(activationID: "123456",
                                                                 deviceName: "My New Machine",
-                                                                subscription: ("abcdef", 976_543_210, "Annual Subscription", "cancelled"))
+                                                                subscription: ("abcdef", 976_543_210, "Annual Subscription", "cancelled", 4))
 
         try await self.controller.check()
 
@@ -427,6 +428,7 @@ final class V2ControllerTests: APITestCase {
         XCTAssertEqual(activation.subscription.expirationTimestamp, 976_543_210)
         XCTAssertEqual(activation.subscription.name, "Annual Subscription")
         XCTAssertEqual(activation.subscription.renewalStatus, .cancelled)
+        XCTAssertEqual(activation.subscription.maxDeviceCount, 4)
     }
 
 
@@ -457,7 +459,7 @@ final class V2ControllerTests: APITestCase {
 
         XCTAssertTrue(self.mockAdapter.listSubscriptionsMock.wasCalled)
 
-        XCTAssertEqual(self.mockAdapter.listSubscriptionsMock.arguments.first, Bundle.main.bundleIdentifier)
+        XCTAssertEqual(self.mockAdapter.listSubscriptionsMock.arguments.first?.0, Bundle.main.bundleIdentifier)
     }
 
     func test_listSubscriptions_throwsInvalidResponseIfResponseIsNotSuccess() async throws {
@@ -505,7 +507,7 @@ final class V2ControllerTests: APITestCase {
     //MARK: - listDevices(subscriptionID:)
     func test_listDevices_tellsAdapterToUseTokenAuthentication() async throws {
         self.controller.setActivationSource(.website(try self.standardActivation()))
-        self.mockAdapter.listDevicesMock.returnValue = APIData.devices([])
+        self.mockAdapter.listDevicesMock.returnValue = APIData.devices(maxDeviceCount: 0, devices: [])
         _ = try await self.controller.listDevices(subscriptionID: "Sub1")
 
         try self.validateTokenAuthentication()
@@ -515,7 +517,7 @@ final class V2ControllerTests: APITestCase {
         self.fakeKeychain.token = nil
         let licence = try self.saveLicence()
         self.controller.setActivationSource(.website(try self.standardActivation()))
-        self.mockAdapter.listDevicesMock.returnValue = APIData.devices([])
+        self.mockAdapter.listDevicesMock.returnValue = APIData.devices(maxDeviceCount: 0, devices: [])
         _ = try await self.controller.listDevices(subscriptionID: "Sub1")
 
         try self.validateLicenceAuthentication(licence)
@@ -523,7 +525,7 @@ final class V2ControllerTests: APITestCase {
 
 	func test_listDevices_tellsAdapterToCallListDevicesWithSharedDeviceAndSubscription() async throws {
         self.controller.setActivationSource(.website(try self.standardActivation()))
-        self.mockAdapter.listDevicesMock.returnValue = APIData.devices([])
+        self.mockAdapter.listDevicesMock.returnValue = APIData.devices(maxDeviceCount: 0, devices: [])
         _ = try await self.controller.listDevices(subscriptionID: "SubABC")
 
         XCTAssertTrue(self.mockAdapter.listDevicesMock.wasCalled)
@@ -543,9 +545,17 @@ final class V2ControllerTests: APITestCase {
         }
     }
 
+    func test_listDevices_throwsInvalidResponseIfPayloadMissingMaxDeviceCount() async throws {
+        self.controller.setActivationSource(.website(try self.standardActivation()))
+        self.mockAdapter.listDevicesMock.returnValue = APIData.devices(maxDeviceCount: nil, devices: [])
+        await XCTAssertThrowsErrorAsync(try await self.controller.listDevices(subscriptionID: "Sub1")) { error in
+            XCTAssertEqualsV2Error(error, .invalidResponse)
+        }
+    }
+
     func test_listDevices_throwsInvalidResponseIfPayloadMissingDevices() async throws {
         self.controller.setActivationSource(.website(try self.standardActivation()))
-        self.mockAdapter.listDevicesMock.returnValue = APIData.devices(nil)
+        self.mockAdapter.listDevicesMock.returnValue = APIData.devices(maxDeviceCount: 0, devices: nil)
         await XCTAssertThrowsErrorAsync(try await self.controller.listDevices(subscriptionID: "Sub1")) { error in
             XCTAssertEqualsV2Error(error, .invalidResponse)
         }
@@ -553,11 +563,12 @@ final class V2ControllerTests: APITestCase {
 
     func test_listDevices_returnsActivatedDeviceObjects() async throws {
         self.controller.setActivationSource(.website(try self.standardActivation()))
-        self.mockAdapter.listDevicesMock.returnValue = APIData.devices([
+        self.mockAdapter.listDevicesMock.returnValue = APIData.devices(maxDeviceCount: 4, devices: [
             ("device1", 987_654, "My Machine", false),
             ("device2", 187_654_312, "My New Machine", true),
         ])
-        let devices = try await self.controller.listDevices(subscriptionID: "Sub1")
+        let (maxCount, devices) = try await self.controller.listDevices(subscriptionID: "Sub1")
+        XCTAssertEqual(maxCount, 4)
         XCTAssertEqual(devices.count, 2)
 
         let device1 = try XCTUnwrap(devices.first)
@@ -628,7 +639,7 @@ final class V2ControllerTests: APITestCase {
 
         self.mockAdapter.renameDeviceMock.returnValue = APIData.active(activationID: "123456",
                                                                        deviceName: "My Awesome Device",
-                                                                       subscription: ("abcdef", 976_543_210, "Annual Subscription", "cancelled"))
+                                                                       subscription: ("abcdef", 976_543_210, "Annual Subscription", "cancelled", 5))
 
         try await self.controller.renameDevice(to: "My Awesome Device")
 
@@ -642,6 +653,7 @@ final class V2ControllerTests: APITestCase {
         XCTAssertEqual(activation.subscription.expirationTimestamp, 976_543_210)
         XCTAssertEqual(activation.subscription.name, "Annual Subscription")
         XCTAssertEqual(activation.subscription.renewalStatus, .cancelled)
+        XCTAssertEqual(activation.subscription.maxDeviceCount, 5)
     }
 
     func test_rename_setsActivationSourceToWebsiteWithUpdatedActivation() async throws {
@@ -649,7 +661,7 @@ final class V2ControllerTests: APITestCase {
 
         self.mockAdapter.renameDeviceMock.returnValue = APIData.active(activationID: "123456",
                                                                        deviceName: "My Awesome Device",
-                                                                       subscription: ("abcdef", 976_543_210, "Annual Subscription", "cancelled"))
+                                                                       subscription: ("abcdef", 976_543_210, "Annual Subscription", "cancelled", 6))
 
         try await self.controller.renameDevice(to: "My Awesome Device")
 
@@ -664,6 +676,7 @@ final class V2ControllerTests: APITestCase {
         XCTAssertEqual(activation.subscription.expirationTimestamp, 976_543_210)
         XCTAssertEqual(activation.subscription.name, "Annual Subscription")
         XCTAssertEqual(activation.subscription.renewalStatus, .cancelled)
+        XCTAssertEqual(activation.subscription.maxDeviceCount, 6)
     }
 
 
@@ -778,7 +791,7 @@ final class V2ControllerTests: APITestCase {
     private func standardActivationData() -> APIData {
         return APIData.active(activationID: "123456",
                               deviceName: "My Machine",
-                              subscription: ("abcdef", 876_543_210, "Annual Subscription", "renew"))
+                              subscription: ("abcdef", 876_543_210, "Annual Subscription", "renew", 3))
     }
 
     private func standardActivation() throws -> API.V2.Activation {
@@ -874,7 +887,7 @@ extension APIData {
         return data
     }
 
-    typealias ActivateSubscription = (id: String?, timestamp: Int?, name: String?, renewalStatus: String?)
+    typealias ActivateSubscription = (id: String?, timestamp: Int?, name: String?, renewalStatus: String?, maxDeviceCount: Int?)
     static func active(activationID: String?, deviceName: String?, subscription: ActivateSubscription?) -> APIData {
         var data = APIData.empty
         data.response = .active
@@ -898,6 +911,9 @@ extension APIData {
             }
             if let renewalStatus = subscription.renewalStatus {
                 sub["renewalStatus"] = renewalStatus
+            }
+            if let maxDeviceCount = subscription.maxDeviceCount {
+                sub["maxDeviceCount"] = maxDeviceCount
             }
             payload["subscription"] = sub
         }
@@ -950,7 +966,7 @@ extension APIData {
     }
 
     typealias ListedDevice = (id: String?, timestamp: Int?, name: String?, isCurrent: Bool?)
-    static func devices(_ devices: [ListedDevice]?) -> APIData {
+    static func devices(maxDeviceCount: Int?, devices: [ListedDevice]?) -> APIData {
         var data = APIData.empty
         data.response = .success
         var payload: [String: Any] = ["response": "success"]
@@ -974,6 +990,9 @@ extension APIData {
             }
 
             payload["devices"] = devicesArray
+        }
+        if let maxDeviceCount {
+            payload["maxDeviceCount"] = maxDeviceCount
         }
         data.payload = payload
         data.signature = (try? APITestCase.signature(forPayload: payload)) ?? ""

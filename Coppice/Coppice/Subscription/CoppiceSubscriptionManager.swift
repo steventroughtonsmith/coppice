@@ -74,6 +74,12 @@ class CoppiceSubscriptionManager: NSObject {
     }
 
     @Published private(set) var state: State = .unknown
+    #if DEBUG
+    func debug_updateState(_ state: State) {
+        self.state = state
+    }
+    #endif
+
 
     //MARK: - API Version
     enum APIVersion {

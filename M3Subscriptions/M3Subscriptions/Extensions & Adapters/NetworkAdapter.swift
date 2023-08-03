@@ -111,8 +111,6 @@ class URLSessionNetworkAdapter: NetworkAdapter {
         return apiData
     }
 
-    //TODO: Make method enum
-    //TODO: If method .get then append to url as query
     private func request(forEndpoint endpoint: String, method: HTTPMethod, body: [String: String], headers: [String: String]? = nil) -> URLRequest {
         var url = self.baseURL.appendingPathComponent(self.version).appendingPathComponent(endpoint)
 

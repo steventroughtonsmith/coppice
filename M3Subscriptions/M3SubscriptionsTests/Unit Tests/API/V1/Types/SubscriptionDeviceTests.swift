@@ -10,6 +10,7 @@
 import XCTest
 
 class SubscriptionDeviceTests: XCTestCase {
+    typealias SubscriptionDevice = API.V1.SubscriptionDevice
     func test_init_returnsNilIfDeactivationTokenIsMissing() throws {
         let payload: [String: Any] = [
             "name": "My Favourite Mac",

@@ -24,9 +24,9 @@ class MockNetworkAdapter: NetworkAdapter {
 
     var returnValue: APIData?
     var apiError: Error?
-    func callAPI(endpoint: String, method: String = "POST", body: [String: String], headers: [String: String]?) throws -> APIData {
+    func callAPI(endpoint: String, method: HTTPMethod = .post, body: [String: String], headers: [String: String]?) throws -> APIData {
         self.calledEndpoint = endpoint
-        self.calledMethod = method
+        self.calledMethod = method.rawValue
         self.calledBody = body
 
         if let apiError {

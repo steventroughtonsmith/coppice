@@ -13,31 +13,19 @@ import XCTest
 @testable import M3Subscriptions
 
 class BaseTestCase: XCTestCase {
-    private var previousResponse: ActivationResponse?
+    private var previousState: CoppiceSubscriptionManager.State?
 
     func configureForPro() throws {
-        guard let url = self.testBundle.url(forResource: "test-api-response-success", withExtension: "json") else {
-            XCTFail("Couldn't find api json")
-            return
+        if self.previousState == nil {
+            self.previousState = CoppiceSubscriptionManager.shared.state
         }
-        let apiResponseData = try Data(contentsOf: url)
-        guard
-            let json = try JSONSerialization.jsonObject(with: apiResponseData, options: []) as? [String: Any],
-            let apiData = APIData(json: json)
-        else {
-            XCTFail("Couldn't convert to json dictionary")
-            return
-        }
-        if self.previousResponse == nil {
-            self.previousResponse = CoppiceSubscriptionManager.shared.activationResponse
-        }
-        CoppiceSubscriptionManager.shared.activationResponse = ActivationResponse(data: apiData)
+        CoppiceSubscriptionManager.shared.debug_updateState(.enabled)
     }
 
     override func tearDownWithError() throws {
         try super.tearDownWithError()
-        if let previousResponse = self.previousResponse {
-            CoppiceSubscriptionManager.shared.activationResponse = previousResponse
+        if let previousState = self.previousState {
+            CoppiceSubscriptionManager.shared.debug_updateState(previousState)
         }
     }
 }

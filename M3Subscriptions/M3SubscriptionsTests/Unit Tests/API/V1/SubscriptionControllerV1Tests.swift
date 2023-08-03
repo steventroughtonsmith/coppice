@@ -46,247 +46,6 @@ class SubscriptionControllerV1Tests: APITestCase {
     }
 
 
-
-    //MARK: - activate(withEmail:password:subscription:deactivatingDevice:)
-    func test_activate_tellsSubscriptionAPIToActivateWithRequestAndDevice() async throws {
-        _ = try? await self.controller.activate(withEmail: "foo@bar.com", password: "123456")
-
-        XCTAssertEqual(self.mockAPI.calledMethod, "activate")
-        let actualRequest = try XCTUnwrap(self.mockAPI.requestArgument)
-        let actualDevice = try XCTUnwrap(self.mockAPI.deviceArgument)
-
-        XCTAssertEqual(actualRequest.email, "foo@bar.com")
-        XCTAssertEqual(actualRequest.password, "123456")
-
-        let device = Device()
-        XCTAssertEqual(actualDevice.id, device.id)
-        XCTAssertEqual(actualDevice.name, Host.current().localizedName)
-    }
-
-    func test_activate_tellsSubscriptionAPIToActivateWithSubscriptionPlanIfSupplied() async throws {
-        let plan = try XCTUnwrap(Subscription(payload: ["id": "foobar", "name": "Plan 3", "maxDeviceCount": 3, "currentDeviceCount": 2, "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"], hasExpired: false))
-        _ = try? await self.controller.activate(withEmail: "baz@possum.com", password: "abcdef", subscription: plan)
-
-        XCTAssertEqual(self.mockAPI.calledMethod, "activate")
-        let actualRequest = try XCTUnwrap(self.mockAPI.requestArgument)
-
-        XCTAssertEqual(actualRequest.email, "baz@possum.com")
-        XCTAssertEqual(actualRequest.password, "abcdef")
-        XCTAssertEqual(actualRequest.subscriptionID, "foobar")
-    }
-
-    func test_activate_tellsSubscriptionAPIToActivateWhileDeactivatingDeviceIfSupplied() async throws {
-        let device = try XCTUnwrap(SubscriptionDevice(payload: ["deactivationToken": "deleteimac", "name": "My iMac", "activationDate": "2035-01-01T00:00:00Z"]))
-        _ = try? await self.controller.activate(withEmail: "baz@possum.com", password: "abcdef", deactivatingDevice: device)
-
-        XCTAssertEqual(self.mockAPI.calledMethod, "activate")
-        let actualRequest = try XCTUnwrap(self.mockAPI.requestArgument)
-
-        XCTAssertEqual(actualRequest.email, "baz@possum.com")
-        XCTAssertEqual(actualRequest.password, "abcdef")
-        XCTAssertEqual(actualRequest.deviceDeactivationToken, "deleteimac")
-    }
-
-    func test_activate_returnsServerConnectionErrorIfConnectionFailed() async throws {
-        let expectedError = NSError(domain: NSURLErrorDomain, code: 31, userInfo: nil)
-        self.mockAPI.activateError = .generic(expectedError)
-
-        await XCTAssertThrowsErrorAsync(try await self.controller.activate(withEmail: "baz@possum.com", password: "abcdef")) { error in
-            let actualError = error as NSError
-            XCTAssertEqual(actualError.domain, SubscriptionErrorFactory.domain)
-            XCTAssertEqual(actualError.code, SubscriptionErrorCodes.couldNotConnectToServer.rawValue)
-            XCTAssertEqual(actualError.userInfo[NSUnderlyingErrorKey] as? NSError, expectedError)
-        }
-    }
-
-    func test_activate_returnsLoginFailedError() async throws {
-        self.mockAPI.activateError = .loginFailed
-
-        await XCTAssertThrowsErrorAsync(try await self.controller.activate(withEmail: "baz@possum.com", password: "abcdef")) { error in
-            let actualError = error as NSError
-            XCTAssertEqual(actualError.domain, SubscriptionErrorFactory.domain)
-            XCTAssertEqual(actualError.code, SubscriptionErrorCodes.loginFailed.rawValue)
-        }
-    }
-
-    //    func test_activate_returnsSubscriptionExpirationError() throws {
-    //        let expectedSubscription = try XCTUnwrap(Subscription(payload: ["subscriptionName": "Plan B", "expirationDate":"2035-01-01T00:00:00Z", "renewalStatus": "cancelled"], hasExpired: true))
-    //        self.mockAPI.activateResponse = .failure(.subscriptionExpired(expectedSubscription))
-    //
-    //        let expectation = self.expectation(description: "Activate Completed")
-    //        var actualError: NSError? = nil
-    //        self.controller.activate(withEmail: "baz@possum.com", password: "abcdef")  { result in
-    //            if case .failure(let error) = result {
-    //                actualError = error
-    //            }
-    //            expectation.fulfill()
-    //        }
-    //        self.waitForExpectations(timeout: 1)
-    //
-    //        XCTAssertEqual(actualError?.domain, SubscriptionErrorFactory.domain)
-    //        XCTAssertEqual(actualError?.code, SubscriptionErrorCodes.subscriptionExpired.rawValue)
-    //        XCTAssertEqual(actualError?.userInfo[SubscriptionErrorFactory.InfoKeys.subscription] as? Subscription, expectedSubscription)
-    //        XCTFail()
-    //    }
-
-    func test_activate_returnsNoSubscriptionFoundError() async throws {
-        self.mockAPI.activateError = .noSubscriptionFound
-
-        await XCTAssertThrowsErrorAsync(try await self.controller.activate(withEmail: "baz@possum.com", password: "abcdef")) { error in
-            let actualError = error as NSError
-            XCTAssertEqual(actualError.domain, SubscriptionErrorFactory.domain)
-            XCTAssertEqual(actualError.code, SubscriptionErrorCodes.noSubscriptionFound.rawValue)
-        }
-    }
-
-    func test_activate_returnsMultipleSubscriptionsErrorWithSubscriptionPlans() async throws {
-        let plans = [
-            try XCTUnwrap(Subscription(payload: ["id": "plan1", "name": "Plan A", "expirationDate": "2034-02-05T00:00:00Z", "maxDeviceCount": 5, "currentDeviceCount": 3, "renewalStatus": "renew"], hasExpired: false)),
-            try XCTUnwrap(Subscription(payload: ["id": "foobar", "name": "Plan 3", "maxDeviceCount": 3, "currentDeviceCount": 2, "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"], hasExpired: false)),
-        ]
-
-        self.mockAPI.activateError = .multipleSubscriptions(plans)
-
-        await XCTAssertThrowsErrorAsync(try await self.controller.activate(withEmail: "baz@possum.com", password: "abcdef")) { error in
-            let actualError = error as NSError
-            XCTAssertEqual(actualError.domain, SubscriptionErrorFactory.domain)
-            XCTAssertEqual(actualError.code, SubscriptionErrorCodes.multipleSubscriptionsFound.rawValue)
-            XCTAssertEqual(actualError.userInfo[SubscriptionErrorFactory.InfoKeys.subscriptionPlans] as? [Subscription], plans)
-        }
-    }
-
-    func test_activate_returnsTooManyDevicesErrorWithDevices() async throws {
-        let devices = [
-            try XCTUnwrap(SubscriptionDevice(payload: ["deactivationToken": "deleteimac", "name": "My iMac", "activationDate": "2035-01-01T00:00:00Z"])),
-            try XCTUnwrap(SubscriptionDevice(payload: ["deactivationToken": "macpro", "name": "A Mac Pro", "activationDate": "2031-09-21T00:16:00Z"])),
-        ]
-
-        self.mockAPI.activateError = .tooManyDevices(devices)
-
-        await XCTAssertThrowsErrorAsync(try await self.controller.activate(withEmail: "baz@possum.com", password: "abcdef")) { error in
-            let actualError = error as NSError
-            XCTAssertEqual(actualError.domain, SubscriptionErrorFactory.domain)
-            XCTAssertEqual(actualError.code, SubscriptionErrorCodes.tooManyDevices.rawValue)
-            XCTAssertEqual(actualError.userInfo[SubscriptionErrorFactory.InfoKeys.devices] as? [SubscriptionDevice], devices)
-        }
-    }
-
-    private func run_activate_successfullyActivatedTest(with renewalStatus: RenewalStatus) async throws {
-        let payload: [String: Any] = [
-            "response": "active",
-            "token": "updated-token",
-            "subscription": ["name": "Plan B", "expirationDate": "2036-01-01T01:01:01Z", "renewalStatus": renewalStatus.rawValue],
-            "device": ["name": "My iMac"],
-        ]
-        let signature = try Self.signature(forPayload: payload)
-        let expectedJSON: [String: Any] = ["payload": payload, "signature": signature]
-        let apiData = try XCTUnwrap(APIData(json: expectedJSON))
-        let expectedResponse = try XCTUnwrap(ActivationResponse(data: apiData))
-        self.mockAPI.activateReturnValue = expectedResponse
-
-        let expectedSubscription = try XCTUnwrap(Subscription(payload: ["name": "Plan B", "expirationDate": "2036-01-01T01:01:01Z", "renewalStatus": renewalStatus.rawValue], hasExpired: false))
-        let response = try await self.controller.activate(withEmail: "baz@possum.com", password: "abcdef")
-
-        XCTAssertTrue(response.isActive)
-        XCTAssertTrue(response.deviceIsActivated)
-        XCTAssertEqual(response.token, "updated-token")
-        XCTAssertEqual(response.subscription, expectedSubscription)
-    }
-
-    func test_activate_returnsActiveResponseIfSuccessfullyActivated() async throws {
-        try await self.run_activate_successfullyActivatedTest(with: .renew)
-    }
-
-    func test_activate_returnsActiveResponseIfSuccessfullyActivatedWithFailedRenewStatus() async throws {
-        try await self.run_activate_successfullyActivatedTest(with: .failed)
-    }
-
-    func test_activate_returnsActiveResponseIfSuccessfullyActivatedWithCancelledRenewStatus() async throws {
-        try await self.run_activate_successfullyActivatedTest(with: .cancelled)
-    }
-
-    func test_activate_storesSuccessfulActivationToDiskIfActive() async throws {
-        let payload: [String: Any] = [
-            "response": "active",
-            "token": "updated-token",
-            "subscription": ["name": "Plan B", "expirationDate": "2036-01-01T01:01:01Z", "renewalStatus": "renew"],
-            "device": ["name": "My iMac"],
-        ]
-        let signature = try Self.signature(forPayload: payload)
-        let expectedJSON: [String: Any] = ["payload": payload, "signature": signature]
-        let apiData = try XCTUnwrap(APIData(json: expectedJSON))
-        let expectedResponse = try XCTUnwrap(ActivationResponse(data: apiData))
-        self.mockAPI.activateReturnValue = expectedResponse
-
-        _ = try await self.controller.activate(withEmail: "baz@possum.com", password: "abcdef")
-
-        let json = try XCTUnwrap(try self.readLicence())
-        let actualPayload = try XCTUnwrap(json["payload"] as? [String: Any])
-        XCTAssertEqual(actualPayload["response"] as? String, "active")
-        XCTAssertEqual(actualPayload["token"] as? String, "updated-token")
-        XCTAssertEqual(actualPayload["subscription"] as? [String: String], ["name": "Plan B", "expirationDate": "2036-01-01T01:01:01Z", "renewalStatus": "renew"])
-        XCTAssertEqual(actualPayload["device"] as? [String: String], ["name": "My iMac"])
-
-        XCTAssertEqual(json["signature"] as? String, signature)
-    }
-
-    //    func test_activate_setsTimerToFireInAnHour() throws {
-    //        let payload: [String: Any] = ["response": "active", "token": "updated-token", "subscriptionName": "Plan B", "expirationDate": "2036-01-01T01:01:01Z"]
-    //        let signature = try Self.signature(forPayload: payload)
-    //        let expectedJSON: [String: Any] = ["payload": payload, "signature": signature]
-    //        let apiData = try XCTUnwrap(APIData(json: expectedJSON))
-    //        let expectedResponse = try XCTUnwrap(ActivationResponse(data: apiData))
-    //        self.mockAPI.activateResponse = .success(expectedResponse)
-    //
-    //        let expectation = self.expectation(description: "Activate Completed")
-    //        self.controller.activate(withEmail: "baz@possum.com", password: "abcdef")  { result in
-    //            expectation.fulfill()
-    //        }
-    //        self.waitForExpectations(timeout: 1)
-    //
-    //        let timer = try XCTUnwrap(self.controller.recheckTimer)
-    //        let difference = timer.fireDate.timeIntervalSince(Date())
-    //        XCTAssertGreaterThan(difference, 3600 - 1)
-    //        XCTAssertLessThan(difference, 3600 + 1)
-    //    }
-    //
-    //    func test_activate_setsLastCheckDate() throws {
-    //        let payload: [String: Any] = ["response": "active", "token": "updated-token", "subscriptionName": "Plan B", "expirationDate": "2036-01-01T01:01:01Z"]
-    //        let signature = try Self.signature(forPayload: payload)
-    //        let expectedJSON: [String: Any] = ["payload": payload, "signature": signature]
-    //        let apiData = try XCTUnwrap(APIData(json: expectedJSON))
-    //        let expectedResponse = try XCTUnwrap(ActivationResponse(data: apiData))
-    //        self.mockAPI.activateResponse = .success(expectedResponse)
-    //
-    //        self.controller.activate(withEmail: "baz@possum.com", password: "abcdef")
-    //
-    //        let lastCheck = try XCTUnwrap(self.controller.lastCheck)
-    //        let difference = lastCheck.timeIntervalSince(Date())
-    //        XCTAssertGreaterThan(difference, -1)
-    //        XCTAssertLessThan(difference, 1)
-    //    }
-    //
-    //    func test_activate_callsCheckSubscriptionAgainIfTimerFiresAfterLastCheckDatePlus24Hours() throws {
-    //        let payload: [String: Any] = ["response": "active", "token": "updated-token", "subscriptionName": "Plan B", "expirationDate": "2036-01-01T01:01:01Z"]
-    //        let signature = try Self.signature(forPayload: payload)
-    //        let expectedJSON: [String: Any] = ["payload": payload, "signature": signature]
-    //        let apiData = try XCTUnwrap(APIData(json: expectedJSON))
-    //        let expectedResponse = try XCTUnwrap(ActivationResponse(data: apiData))
-    //        self.mockAPI.activateResponse = .success(expectedResponse)
-    //
-    //        self.controller.activate(withEmail: "baz@possum.com", password: "abcdef")
-    //
-    //        self.mockAPI.reset()
-    //        let timer = try XCTUnwrap(self.controller.recheckTimer)
-    //
-    //        XCTAssertNil(self.mockAPI.calledMethod)
-    //        self.controller.setLastCheck(Date(timeIntervalSinceNow: -86401))
-    //        timer.fire()
-    //
-    //        XCTAssertEqual(self.mockAPI.calledMethod, "check")
-    //    }
-
-
     //MARK: - checkSubscription(updatingDeviceName:)
     func test_checkSubscription_tellsSubscriptionAPIToCheckWithTokenAndDevice() async throws {
         let storedPayload: [String: Any] = [
@@ -368,7 +127,7 @@ class SubscriptionControllerV1Tests: APITestCase {
         let storedSignature = try Self.signature(forPayload: storedPayload)
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
 
-        let expectedSubscription = Subscription(payload: ["name": "Plan B", "expirationDate": "2015-01-01T00:00:00Z", "renewalStatus": "renew"], hasExpired: true)
+        let expectedSubscription = API.V1.Subscription(payload: ["name": "Plan B", "expirationDate": "2015-01-01T00:00:00Z", "renewalStatus": "renew"], hasExpired: true)
 
         let expectedError = NSError(domain: NSURLErrorDomain, code: 31, userInfo: nil)
         self.mockAPI.checkError = .generic(expectedError)
@@ -391,7 +150,7 @@ class SubscriptionControllerV1Tests: APITestCase {
         ]
         let storedSignature = try Self.signature(forPayload: storedPayload)
         try self.writeLicence(["payload": storedPayload, "signature": storedSignature])
-        let expectedSubscription = Subscription(payload: ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"], hasExpired: false)
+        let expectedSubscription = API.V1.Subscription(payload: ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"], hasExpired: false)
         let expectedError = NSError(domain: NSURLErrorDomain, code: 31, userInfo: nil)
         self.mockAPI.checkError = .generic(expectedError)
 
@@ -458,7 +217,7 @@ class SubscriptionControllerV1Tests: APITestCase {
         ]
         let signature = try Self.signature(forPayload: payload)
         let expectedJSON: [String: Any] = ["payload": payload, "signature": signature]
-        let expectedSubscription = Subscription(payload: ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"], hasExpired: true)
+        let expectedSubscription = API.V1.Subscription(payload: ["name": "Plan B", "expirationDate": "2035-01-01T00:00:00Z", "renewalStatus": "renew"], hasExpired: true)
 
         let apiData = try XCTUnwrap(APIData(json: expectedJSON))
         let expectedResponse = try XCTUnwrap(ActivationResponse(data: apiData))
@@ -490,7 +249,7 @@ class SubscriptionControllerV1Tests: APITestCase {
         ]
         let signature = try Self.signature(forPayload: payload)
         let expectedJSON: [String: Any] = ["payload": payload, "signature": signature]
-        let expectedSubscription = Subscription(payload: ["name": "Plan B", "expirationDate": "2036-01-01T01:01:01Z", "renewalStatus": renewalStatus.rawValue], hasExpired: false)
+        let expectedSubscription = API.V1.Subscription(payload: ["name": "Plan B", "expirationDate": "2036-01-01T01:01:01Z", "renewalStatus": renewalStatus.rawValue], hasExpired: false)
 
         let apiData = try XCTUnwrap(APIData(json: expectedJSON))
         let expectedResponse = try XCTUnwrap(ActivationResponse(data: apiData))

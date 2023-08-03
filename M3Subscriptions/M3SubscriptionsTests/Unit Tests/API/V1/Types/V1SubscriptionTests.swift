@@ -10,6 +10,7 @@
 import XCTest
 
 class V1SubscriptionTests: XCTestCase {
+    typealias Subscription = API.V1.Subscription
     func test_init_returnsNilIfNameIsMissing() throws {
         let payload: [String: Any] = [
             "id": "planID",

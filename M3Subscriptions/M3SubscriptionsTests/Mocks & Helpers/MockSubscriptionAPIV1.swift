@@ -10,27 +10,13 @@ import Foundation
 @testable import M3Subscriptions
 
 class MockSubscriptionAPIV1: SubscriptionAPIV1 {
+    typealias ActivationResponse = API.V1.ActivationResponse
+    typealias ActivationRequest = API.V1.ActivationRequest
+
     var calledMethod: String?
     var requestArgument: ActivationRequest?
     var deviceArgument: Device?
     var tokenArgument: String?
-
-    var activateReturnValue: ActivationResponse?
-    var activateError: ActivateAPI.Failure?
-    func activate(_ request: ActivationRequest, device: Device) async throws -> ActivationResponse {
-        self.calledMethod = "activate"
-        self.requestArgument = request
-        self.deviceArgument = device
-        if let activateError {
-            throw activateError
-        }
-
-        guard let activateReturnValue else {
-            throw NSError(domain: "com.mcubedsw.testing", code: -1234, userInfo: nil)
-        }
-
-        return activateReturnValue
-    }
 
     var checkReturnValue: ActivationResponse?
     var checkError: CheckAPI.Failure?
@@ -72,8 +58,6 @@ class MockSubscriptionAPIV1: SubscriptionAPIV1 {
         self.deviceArgument = nil
         self.tokenArgument = nil
 
-        self.activateReturnValue = nil
-        self.activateError = nil
         self.checkReturnValue = nil
         self.checkError = nil
         self.deactivateReturnValue = nil

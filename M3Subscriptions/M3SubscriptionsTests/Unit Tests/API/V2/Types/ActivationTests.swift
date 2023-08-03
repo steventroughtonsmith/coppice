@@ -29,6 +29,7 @@ final class ActivationTests: APITestCase {
                                         "name": "Annual Subscription",
                                         "expirationTimestamp": 654_321_000,
                                         "renewalStatus": "renew",
+                                        "maxDeviceCount": 3,
                                     ])
     }
 
@@ -40,6 +41,7 @@ final class ActivationTests: APITestCase {
                                         "name": "Annual Subscription",
                                         "expirationTimestamp": 654_321_000,
                                         "renewalStatus": "renew",
+                                        "maxDeviceCount": 3,
                                     ])
     }
 
@@ -56,6 +58,7 @@ final class ActivationTests: APITestCase {
                                         "name": "Annual Subscription",
                                         "expirationTimestamp": 654_321_000,
                                         "renewalStatus": "renew",
+                                        "maxDeviceCount": 3,
                                     ])
     }
 
@@ -66,6 +69,7 @@ final class ActivationTests: APITestCase {
                                         "id": "abcde",
                                         "expirationTimestamp": 654_321_000,
                                         "renewalStatus": "renew",
+                                        "maxDeviceCount": 3,
                                     ])
     }
 
@@ -76,6 +80,7 @@ final class ActivationTests: APITestCase {
                                         "id": "abcde",
                                         "name": "Annual Subscription",
                                         "renewalStatus": "renew",
+                                        "maxDeviceCount": 3,
                                     ])
     }
 
@@ -86,6 +91,18 @@ final class ActivationTests: APITestCase {
                                         "id": "abcde",
                                         "name": "Annual Subscription",
                                         "expirationTimestamp": 654_321_000,
+                                        "maxDeviceCount": 3,
+                                    ])
+    }
+
+    func test_init_throwsInvalidResponseIfSubscriptionMaxDeviceCountMissing() throws {
+        self.runInvalidResponseTest(activationID: "12345",
+                                    device: ["name": "My Machine"],
+                                    subscription: [
+                                        "id": "abcde",
+                                        "name": "Annual Subscription",
+                                        "expirationTimestamp": 654_321_000,
+                                        "renewalStatus": "renew",
                                     ])
     }
 
@@ -95,6 +112,7 @@ final class ActivationTests: APITestCase {
             "name": "Annual Subscription",
             "expirationTimestamp": 654_321_000,
             "renewalStatus": "renew",
+            "maxDeviceCount": 3
         ]
         let activation = try createActivation(activationID: "12345",
                                               device: ["name": "My Machine"],
@@ -105,6 +123,7 @@ final class ActivationTests: APITestCase {
         XCTAssertEqual(activation.subscription.name, "Annual Subscription")
         XCTAssertEqual(activation.subscription.expirationTimestamp, 654_321_000)
         XCTAssertEqual(activation.subscription.renewalStatus, .renew)
+        XCTAssertEqual(activation.subscription.maxDeviceCount, 3)
     }
 
 

@@ -41,48 +41,12 @@ extension API.V1 {
         }
 
         static func error(for failure: Error) -> NSError {
-            if let activationFailure = failure as? API.V1.ActivateAPI.Failure {
-                return self.error(for: activationFailure)
-            } else if let checkFailure = failure as? API.V1.CheckAPI.Failure {
+            if let checkFailure = failure as? API.V1.CheckAPI.Failure {
                 return self.error(for: checkFailure)
             } else if let deactivateFailure = failure as? API.V1.DeactivateAPI.Failure {
                 return self.error(for: deactivateFailure)
             }
             return failure as NSError
-        }
-
-        static func error(for failure: API.V1.ActivateAPI.Failure) -> NSError {
-            switch failure {
-            case .generic(let error as NSError) where error.domain == NSURLErrorDomain:
-                return self.createError(code: .couldNotConnectToServer, context: .activate, additionalOptions: [NSUnderlyingErrorKey: error])
-            case .generic(let error):
-                return self.createError(code: .other, context: .activate, additionalOptions: (error != nil) ? [NSUnderlyingErrorKey: error!] : nil)
-            case .invalidRequest:
-                return self.createError(code: .other, context: .activate)
-            case .loginFailed:
-                return self.createError(code: .loginFailed, context: .activate, additionalOptions: [
-                    InfoKeys.moreInfoTitle: NSLocalizedString("Forgot Password…", comment: "Forgot password button"),
-                    InfoKeys.moreInfoURL: URL(string: "https://mcubedsw.com/forgot_password")!,
-                ])
-            case .noSubscriptionFound:
-                return self.createError(code: .noSubscriptionFound, context: .activate, additionalOptions: [
-                    InfoKeys.moreInfoTitle: NSLocalizedString("Find Out More…", comment: "Find out more about Coppice Pro button"),
-                    InfoKeys.moreInfoURL: URL(string: "https://coppiceapp.com/pro")!,
-                ])
-            case .subscriptionExpired(let subscription):
-                var additionalOptions: [String: Any] = [
-                    InfoKeys.moreInfoTitle: NSLocalizedString("Renew", comment: "Renew Coppice Pro button"),
-                    InfoKeys.moreInfoURL: URL(string: "https://coppiceapp.com/pro")!,
-                ]
-                if let subscription = subscription {
-                    additionalOptions[InfoKeys.subscription] = subscription
-                }
-                return self.createError(code: .subscriptionExpired, context: .activate, additionalOptions: additionalOptions)
-            case .tooManyDevices(let devices):
-                return self.createError(code: .tooManyDevices, context: .activate, additionalOptions: [InfoKeys.devices: devices])
-            case .multipleSubscriptions(let plans):
-                return self.createError(code: .multipleSubscriptionsFound, context: .activate, additionalOptions: [InfoKeys.subscriptionPlans: plans])
-            }
         }
 
         static func error(for failure: API.V1.CheckAPI.Failure) -> NSError {

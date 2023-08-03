@@ -23,10 +23,8 @@
 		99848172248E648300BC0A8A /* Activations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984816A248E648300BC0A8A /* Activations.swift */; };
 		99848173248E648300BC0A8A /* DeactivateAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984816B248E648300BC0A8A /* DeactivateAPI.swift */; };
 		99848174248E648300BC0A8A /* CheckAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984816C248E648300BC0A8A /* CheckAPI.swift */; };
-		99848175248E648300BC0A8A /* ActivateAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984816D248E648300BC0A8A /* ActivateAPI.swift */; };
 		99848178248E651A00BC0A8A /* ActivationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99848177248E651A00BC0A8A /* ActivationRequest.swift */; };
 		9984817D248E68A600BC0A8A /* DeactivateAPIV1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984817C248E68A600BC0A8A /* DeactivateAPIV1Tests.swift */; };
-		9984817F248E68B600BC0A8A /* ActivateAPIV1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9984817E248E68B600BC0A8A /* ActivateAPIV1Tests.swift */; };
 		99848181248E68C500BC0A8A /* CheckAPIV1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99848180248E68C500BC0A8A /* CheckAPIV1Tests.swift */; };
 		99848183248E68DF00BC0A8A /* MockNetworkAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99848182248E68DF00BC0A8A /* MockNetworkAdapter.swift */; };
 		99848186248E68FA00BC0A8A /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99848185248E68FA00BC0A8A /* Device.swift */; };
@@ -100,10 +98,8 @@
 		9984816A248E648300BC0A8A /* Activations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Activations.swift; sourceTree = "<group>"; };
 		9984816B248E648300BC0A8A /* DeactivateAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeactivateAPI.swift; sourceTree = "<group>"; };
 		9984816C248E648300BC0A8A /* CheckAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckAPI.swift; sourceTree = "<group>"; };
-		9984816D248E648300BC0A8A /* ActivateAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivateAPI.swift; sourceTree = "<group>"; };
 		99848177248E651A00BC0A8A /* ActivationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivationRequest.swift; sourceTree = "<group>"; };
 		9984817C248E68A600BC0A8A /* DeactivateAPIV1Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeactivateAPIV1Tests.swift; sourceTree = "<group>"; };
-		9984817E248E68B600BC0A8A /* ActivateAPIV1Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivateAPIV1Tests.swift; sourceTree = "<group>"; };
 		99848180248E68C500BC0A8A /* CheckAPIV1Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckAPIV1Tests.swift; sourceTree = "<group>"; };
 		99848182248E68DF00BC0A8A /* MockNetworkAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkAdapter.swift; sourceTree = "<group>"; };
 		99848185248E68FA00BC0A8A /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
@@ -176,7 +172,6 @@
 				990D290C2A6EA44900C3583A /* SubscriptionController.swift */,
 				99848188248E696700BC0A8A /* Types */,
 				9984816A248E648300BC0A8A /* Activations.swift */,
-				9984816D248E648300BC0A8A /* ActivateAPI.swift */,
 				9984816C248E648300BC0A8A /* CheckAPI.swift */,
 				9984816B248E648300BC0A8A /* DeactivateAPI.swift */,
 			);
@@ -361,7 +356,6 @@
 				99D328B82A7692EA00DA16EF /* Types */,
 				9984817C248E68A600BC0A8A /* DeactivateAPIV1Tests.swift */,
 				99848180248E68C500BC0A8A /* CheckAPIV1Tests.swift */,
-				9984817E248E68B600BC0A8A /* ActivateAPIV1Tests.swift */,
 			);
 			path = V1;
 			sourceTree = "<group>";
@@ -582,7 +576,6 @@
 				990D29122A6EA7BD00C3583A /* API.swift in Sources */,
 				9910B2C7296471F000459493 /* Configs.swift in Sources */,
 				9998B4DD251118F300E2D455 /* APIDebugManager.swift in Sources */,
-				99848175248E648300BC0A8A /* ActivateAPI.swift in Sources */,
 				99848178248E651A00BC0A8A /* ActivationRequest.swift in Sources */,
 				99848186248E68FA00BC0A8A /* Device.swift in Sources */,
 			);
@@ -606,7 +599,6 @@
 				99D328BD2A7694CC00DA16EF /* V2AdapterTests.swift in Sources */,
 				998481AE24927EA600BC0A8A /* MockSubscriptionAPIV1.swift in Sources */,
 				99D328BB2A7694B800DA16EF /* V2ControllerTests.swift in Sources */,
-				9984817F248E68B600BC0A8A /* ActivateAPIV1Tests.swift in Sources */,
 				998481A7248FDE5E00BC0A8A /* XCTestExtensions.swift in Sources */,
 				99D328CA2A76B0DC00DA16EF /* FakeKeychain.swift in Sources */,
 				99D328C82A76AAFE00DA16EF /* Mocking.swift in Sources */,

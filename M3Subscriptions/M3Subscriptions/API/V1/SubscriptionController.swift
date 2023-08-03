@@ -25,31 +25,6 @@ extension API.V1 {
 
         @Published public var lastResponse: ActivationResponse?
 
-        //MARK: - Version 1
-        public func activate(withEmail email: String, password: String, subscription: Subscription? = nil, deactivatingDevice: SubscriptionDevice? = nil) async throws -> ActivationResponse {
-#if TEST
-            let bundleID = TEST_OVERRIDES.bundleID ?? Bundle.main.bundleIdentifier ?? "com.mcubedsw.unknown"
-#else
-            let bundleID = Bundle.main.bundleIdentifier ?? "com.mcubedsw.unknown"
-#endif
-            let request = ActivationRequest(email: email,
-                                            password: password,
-                                            bundleID: bundleID,
-                                            subscriptionID: subscription?.id,
-                                            deviceDeactivationToken: deactivatingDevice?.deactivationToken)
-            let device = Device(name: Host.current().localizedName)
-
-
-            do {
-                let response = try await self.subscriptionAPI.activate(request, device: device)
-                response.write(to: self.activationDetailsURL)
-                self.lastResponse = response
-                return response
-            } catch {
-                throw SubscriptionErrorFactory.error(for: error)
-            }
-        }
-
         public func checkSubscription(updatingDeviceName deviceName: String? = nil) async throws -> ActivationResponse {
             guard
                 let localResponse = ActivationResponse(url: self.activationDetailsURL),
