@@ -184,6 +184,24 @@ class SystemProfileInfoItemCreator {
         "13,2": "(2022)",
     ]
 
+    //Apple is no longer including Mac type in model
+    private static let macModels = [
+        "13,1": "Mac Studio (2022)",
+        "13,2": "Mac Studio (2022)",
+        "14,2": "MacBook Air (2022)",
+        "14,3": "Mac Mini (2023)",
+        "14,5": "MacBook Pro (14\", 2023)",
+        "14,6": "MacBook Pro (16\", 2023)",
+        "14,7": "MacBook Pro (13\", 2022)",
+        "14,8": "Mac Pro (2023)",
+        "14,9": "MacBook Pro (14\", 2023)",
+        "14,10": "MacBook Pro (16\", 2023)",
+        "14,12": "Mac Mini (2023)",
+        "14,13": "Mac Studio (2023)",
+        "14,14": "Mac Studio (2023)",
+        "14,15": "MacBook Air (15\", 2023)",
+    ]
+
     private static func displayModel(for value: Any) -> String? {
         guard let modelID = value as? NSString else {
             return nil
@@ -211,16 +229,19 @@ class SystemProfileInfoItemCreator {
             return self.displayModel(for: modelID, prefix: "MacBook", modelName: "MacBook", models: self.macBookModels)
         }
         if (modelID.hasPrefix("Mac")) {
-            return self.displayModel(for: modelID, prefix: "Mac", modelName: "Mac Studio", models: self.macStudioModels)
+            return self.displayModel(for: modelID, prefix: "Mac", modelName: nil, models: self.macModels)
         }
         return nil
     }
 
-    private static func displayModel(for modelID: NSString, prefix: String, modelName: String, models: [String: String]) -> String {
+    private static func displayModel(for modelID: NSString, prefix: String, modelName: String?, models: [String: String]) -> String {
         let keySuffix = modelID.substring(from: prefix.count)
         if let nameSuffix = models[keySuffix] {
-            return "\(modelName) \(nameSuffix)"
+            if let modelName {
+                return "\(modelName) \(nameSuffix)"
+            }
+            return nameSuffix
         }
-        return modelName
+        return modelName ?? "Mac"
     }
 }
