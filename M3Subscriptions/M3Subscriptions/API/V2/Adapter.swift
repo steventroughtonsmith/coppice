@@ -11,6 +11,8 @@ import Foundation
 protocol APIAdapterV2 {
     func login(email: String, password: String, deviceName: String) async throws -> APIData
 
+    func expecting(_ response: APIData.Response) -> APIAdapterV2
+    func allowedFailures(_ responses: [APIData.Response]) -> APIAdapterV2
     func withAuthentication(_ authentication: API.V2.Authentication) -> APIAdapterV2
 
     func logout() async throws -> APIData
@@ -32,9 +34,32 @@ extension API.V2 {
             self.networkAdapter = networkAdapter
         }
 
-        private var currentAuthentication: Authentication?
+        private struct Context {
+            var authentication: Authentication?
+            var expectedResponse: APIData.Response?
+            var allowedFailures: [APIData.Response] = []
+        }
+
+        private var currentContext: Context?
+
         func withAuthentication(_ authentication: API.V2.Authentication) -> APIAdapterV2 {
-            self.currentAuthentication = authentication
+            var context = self.currentContext ?? Context()
+            context.authentication = authentication
+            self.currentContext = context
+            return self
+        }
+
+        func expecting(_ response: APIData.Response) -> APIAdapterV2 {
+            var context = self.currentContext ?? Context()
+            context.expectedResponse = response
+            self.currentContext = context
+            return self
+        }
+
+        func allowedFailures(_ responses: [APIData.Response]) -> APIAdapterV2 {
+            var context = self.currentContext ?? Context()
+            context.allowedFailures = responses
+            self.currentContext = context
             return self
         }
 
@@ -103,7 +128,7 @@ extension API.V2 {
         private func authenticatedAPICall(endpoint: String, method: HTTPMethod, body: [String: String]) async throws -> APIData {
             var modifiedBody = body
             let headers: [String: String]?
-            switch self.currentAuthentication {
+            switch self.currentContext?.authentication {
             case .none:
                 headers = nil
             case .token(let token):
@@ -116,7 +141,26 @@ extension API.V2 {
                 modifiedBody["licence"] = licence
             }
 
-            return try await self.networkAdapter.callAPI(endpoint: endpoint, method: method, body: modifiedBody, headers: headers)
+            let apiData: APIData
+            do {
+                apiData = try await self.networkAdapter.callAPI(endpoint: endpoint, method: method, body: modifiedBody, headers: headers)
+            } catch {
+                throw Error.couldNotConnectToServer(error as NSError)
+            }
+
+            guard let expectedResult = self.currentContext?.expectedResponse else {
+                preconditionFailure("No expected response")
+            }
+
+            guard expectedResult == apiData.response else {
+                let failures = self.currentContext?.allowedFailures ?? []
+                if failures.contains(apiData.response) {
+                    throw Error(apiResponse: apiData.response) ?? .invalidResponse
+                }
+                throw Error.invalidResponse
+            }
+
+            return apiData
         }
     }
 }

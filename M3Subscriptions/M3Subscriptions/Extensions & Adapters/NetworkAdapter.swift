@@ -67,6 +67,17 @@ class URLSessionNetworkAdapter: NetworkAdapter {
     }
 
     func callAPI(endpoint: String, method: HTTPMethod = .post, body: [String: String], headers: [String: String]?) async throws -> APIData {
+        #if DEBUG
+        switch APIDebugManager.shared.debugResponse(forEndpoint: endpoint) {
+        case .none:
+            break
+        case .data(let apiData):
+            return apiData
+        case .error(let error):
+            throw error
+        }
+
+        #endif
         let request = self.request(forEndpoint: endpoint, method: method, body: body, headers: headers)
         return try await self.callAPI(with: request)
     }

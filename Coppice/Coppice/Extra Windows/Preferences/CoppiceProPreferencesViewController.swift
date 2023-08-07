@@ -20,10 +20,10 @@ class CoppiceProPreferencesViewController: PreferencesViewController {
 
 
     //MARK: - View
-    private let contentVC = CoppiceProViewController(viewModel: .init())
+    let coppiceProViewController = CoppiceProViewController(viewModel: .init())
     override func loadView() {
         self.view = NSView()
-        self.view.addSubview(self.contentVC.view, withInsets: .zero)
-        self.addChild(self.contentVC)
+        self.view.addSubview(self.coppiceProViewController.view, withInsets: .zero)
+        self.addChild(self.coppiceProViewController)
     }
 }

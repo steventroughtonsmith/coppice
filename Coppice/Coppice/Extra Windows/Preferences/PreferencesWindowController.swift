@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import M3Subscriptions
 import Sparkle
 
 class PreferencesWindowController: NSWindowController {
@@ -32,6 +33,8 @@ class PreferencesWindowController: NSWindowController {
         return "PreferencesWindow"
     }
 
+    let coppiceProPreferences = CoppiceProPreferencesViewController()
+
     override func windowDidLoad() {
         super.windowDidLoad()
 
@@ -46,7 +49,7 @@ class PreferencesWindowController: NSWindowController {
             self.tabController.addTabViewItem(updatePrefs)
         }
 
-        if let coppicePro = CoppiceProPreferencesViewController().tabViewItem {
+        if let coppicePro = self.coppiceProPreferences.tabViewItem {
             self.tabController.addTabViewItem(coppicePro)
         }
 
@@ -60,6 +63,11 @@ class PreferencesWindowController: NSWindowController {
 
     func showCoppicePro() {
         self.tabController.selectedTabViewItemIndex = (self.tabController.tabViewItems.count - 1)
+    }
+
+    func activate(withLicenceURL url: URL) {
+        self.showCoppicePro()
+        self.coppiceProPreferences.coppiceProViewController.activate(withLicenceURL: url)
     }
 }
 

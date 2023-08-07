@@ -13,17 +13,15 @@ public class APIDebugManager: NSObject {
 
     public func buildResponsesMenu() -> NSMenu {
         let menu = NSMenu()
-        let activateMenuItem = NSMenuItem(title: "Activation Errors", action: nil, keyEquivalent: "")
-        activateMenuItem.submenu = self.buildActivateMenu()
-        menu.addItem(activateMenuItem)
 
-        let deactivateMenuItem = NSMenuItem(title: "Deactivation Errors", action: nil, keyEquivalent: "")
-        deactivateMenuItem.submenu = self.buildDeactivateMenu()
-        menu.addItem(deactivateMenuItem)
+        let v2MenuItem = NSMenuItem(title: "V2", action: nil, keyEquivalent: "")
+        v2MenuItem.submenu = self.buildV2DebugMenu()
+        menu.addItem(v2MenuItem)
 
-        let checkMenuItem = NSMenuItem(title: "Check Errors", action: nil, keyEquivalent: "")
-        checkMenuItem.submenu = self.buildCheckMenu()
-        menu.addItem(checkMenuItem)
+        let v1MenuItem = NSMenuItem(title: "V1", action: nil, keyEquivalent: "")
+        v1MenuItem.submenu = self.buildV1ResponsesMenu()
+        menu.addItem(v1MenuItem)
+
         return menu
     }
 
@@ -74,45 +72,58 @@ public class APIDebugManager: NSObject {
         self.updateState(of: sender.menu, value: config)
     }
 
-    //MARK: - Activate
-    var activateDebugString: String?
 
-    private func buildActivateMenu() -> NSMenu {
+    //MARK: - Network Adapter Debug
+    enum DebugResponse {
+        case none
+        case data(APIData)
+        case error(Error)
+    }
+
+    var debugResponse: DebugResponse = .none
+    private var baseDebugResponse: DebugResponse = .none
+    private var debugResponsesByEndPoint: [String: DebugResponse] = [:]
+
+    func debugResponse(forEndpoint endpoint: String) -> DebugResponse {
+        return self.debugResponsesByEndPoint[endpoint] ?? self.baseDebugResponse
+    }
+
+    func resetDebugResponses() {
+        self.baseDebugResponse = .none
+        self.debugResponsesByEndPoint = [:]
+    }
+
+    func setDebugResponse(_ debugResponse: DebugResponse, forEndpoint endpoint: String? = nil) {
+        guard let endpoint else {
+            self.baseDebugResponse = debugResponse
+            return
+        }
+        self.debugResponsesByEndPoint[endpoint] = debugResponse
+    }
+
+
+
+    //MARK: - V2 Menu
+    private func buildV2DebugMenu() -> NSMenu {
         let menu = NSMenu()
-        let none = menu.addItem(withTitle: "None", action: #selector(self.activateMenuItemSelected(_:)), keyEquivalent: "")
-        none.target = self
-        menu.addItem(NSMenuItem.separator())
-
-        let noSubscription = menu.addItem(withTitle: "No Subscription Found", action: #selector(self.activateMenuItemSelected(_:)), keyEquivalent: "")
-        noSubscription.representedObject = "no_subscription_found"
-        noSubscription.target = self
-
-        let multipleSubscriptions2 = menu.addItem(withTitle: "2 Subscriptions Found", action: #selector(self.activateMenuItemSelected(_:)), keyEquivalent: "")
-        multipleSubscriptions2.representedObject = "multiple_subscriptions::number:2"
-        multipleSubscriptions2.target = self
-        let multipleSubscriptions5 = menu.addItem(withTitle: "5 Subscription Found", action: #selector(self.activateMenuItemSelected(_:)), keyEquivalent: "")
-        multipleSubscriptions5.representedObject = "multiple_subscriptions::number:5"
-        multipleSubscriptions5.target = self
-
-        let subscriptionExpiredCancelled = menu.addItem(withTitle: "Subscription Expired (Cancelled)", action: #selector(self.activateMenuItemSelected(_:)), keyEquivalent: "")
-        subscriptionExpiredCancelled.representedObject = "subscription_expired::renewalStatus:cancelled"
-        subscriptionExpiredCancelled.target = self
-        let subscriptionExpiredFailed = menu.addItem(withTitle: "Subscription Expired (Billing Failed)", action: #selector(self.activateMenuItemSelected(_:)), keyEquivalent: "")
-        subscriptionExpiredFailed.representedObject = "subscription_expired::renewalStatus:failed"
-        subscriptionExpiredFailed.target = self
-
-        let tooManyDevices = menu.addItem(withTitle: "Too Many Devices", action: #selector(self.activateMenuItemSelected(_:)), keyEquivalent: "")
-        tooManyDevices.representedObject = "too_many_devices::number:3"
-        tooManyDevices.target = self
-
-        self.updateState(of: menu, value: self.activateDebugString)
-
+        menu.items = API.V2.Debug.shared.debugMenuItems()
         return menu
     }
 
-    @IBAction func activateMenuItemSelected(_ sender: NSMenuItem?) {
-        self.activateDebugString = sender?.representedObject as? String
-        self.updateState(of: sender?.menu, value: self.activateDebugString)
+
+
+    //MARK: - V1 Menu
+    private func buildV1ResponsesMenu() -> NSMenu {
+        let menu = NSMenu()
+
+        let deactivateMenuItem = NSMenuItem(title: "Deactivation Errors", action: nil, keyEquivalent: "")
+        deactivateMenuItem.submenu = self.buildDeactivateMenu()
+        menu.addItem(deactivateMenuItem)
+
+        let checkMenuItem = NSMenuItem(title: "Check Errors", action: nil, keyEquivalent: "")
+        checkMenuItem.submenu = self.buildCheckMenu()
+        menu.addItem(checkMenuItem)
+        return menu
     }
 
 
@@ -129,7 +140,7 @@ public class APIDebugManager: NSObject {
         noDevice.representedObject = "no_device_found"
         noDevice.target = self
 
-        self.updateState(of: menu, value: self.activateDebugString)
+        self.updateState(of: menu, value: self.deactivateDebugString)
 
         return menu
     }
@@ -165,7 +176,6 @@ public class APIDebugManager: NSObject {
         activeBillingFailed.representedObject = "active::renewalStatus:failed::expirationTimestamp:\(timestamp)"
         activeBillingFailed.target = self
 
-
         let noDevice = menu.addItem(withTitle: "No Device Found", action: #selector(self.checkMenuItemSelected(_:)), keyEquivalent: "")
         noDevice.representedObject = "no_device_found"
         noDevice.target = self
@@ -181,7 +191,7 @@ public class APIDebugManager: NSObject {
         subscriptionExpiredFailed.representedObject = "subscription_expired::renewalStatus:failed"
         subscriptionExpiredFailed.target = self
 
-        self.updateState(of: menu, value: self.activateDebugString)
+        self.updateState(of: menu, value: self.checkDebugString)
 
         return menu
     }

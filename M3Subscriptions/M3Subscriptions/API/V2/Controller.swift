@@ -51,7 +51,7 @@ extension API.V2 {
                     return
                 }
             } catch {
-//                print("No valid local activation")
+                //No local activation
             }
 
             do {
@@ -59,7 +59,7 @@ extension API.V2 {
                 self.activationSource = .licence(licence)
                 return
             } catch {
-//                print("No valid licence")
+                //No local valid licence
             }
             self.activationSource = .none
         }
@@ -71,12 +71,11 @@ extension API.V2 {
         ///   - email: The email to login with
         ///   - password: The password for the account
         public func login(email: String, password: String) async throws {
-            let apiData = try await self.adapter.login(email: email, password: password, deviceName: Device.shared.defaultName)
+            let apiData = try await self.adapter
+                .expecting(.loggedIn)
+                .login(email: email, password: password, deviceName: Device.shared.defaultName)
 
-            guard
-                apiData.response == .loggedIn,
-                let token = apiData.payload["token"] as? String
-            else {
+            guard let token = apiData.payload["token"] as? String else {
                 throw Error.loginFailed
             }
 
@@ -95,10 +94,9 @@ extension API.V2 {
         public func logout() async throws {
             let apiData = try await self.adapter
                 .withAuthentication(try self.authenticationType(from: [.token]))
+                .expecting(.loggedOut)
                 .logout()
-            guard apiData.response == .loggedOut else {
-                throw Error.invalidResponse
-            }
+
             try self.keychain.removeToken()
         }
 
@@ -116,11 +114,9 @@ extension API.V2 {
         public func activate(subscriptionID: String? = nil) async throws {
             let apiData = try await self.adapter
                 .withAuthentication(try self.authenticationType())
+                .expecting(.active)
+                .allowedFailures([.noSubscriptionFound, .expired, .tooManyDevices, .invalidLicence])
                 .activate(device: .shared, subscriptionID: subscriptionID)
-
-            guard apiData.response == .active else {
-                throw Error.notActivated
-            }
 
             let activation = try Activation(apiData: apiData)
             try activation.write(to: self.activationURL)
@@ -136,11 +132,9 @@ extension API.V2 {
 
             let apiData = try await self.adapter
                 .withAuthentication(try self.authenticationType())
+                .expecting(.active)
+                .allowedFailures([.invalidLicence, .noDeviceFound, .noSubscriptionFound, .expired])
                 .check(activationID: activation.activationID, device: .shared)
-
-            guard apiData.response == .active else {
-                throw Error.notActivated
-            }
 
             let newActivation = try Activation(apiData: apiData)
             try newActivation.write(to: self.activationURL)
@@ -156,12 +150,10 @@ extension API.V2 {
 
             let apiData = try await self.adapter
                 .withAuthentication(try self.authenticationType(from: [.token]))
+                .expecting(.success)
                 .listSubscriptions(bundleID: bundleIdentifier, deviceType: Device.shared.type)
 
-            guard
-                apiData.response == .success,
-                let apiSubscriptions = apiData.payload["subscriptions"] as? [[String: Any]]
-            else {
+            guard let apiSubscriptions = apiData.payload["subscriptions"] as? [[String: Any]] else {
                 throw Error.invalidResponse
             }
 
@@ -176,10 +168,11 @@ extension API.V2 {
         public func listDevices(subscriptionID: String) async throws -> (maxDeviceCount: Int, devices: [ActivatedDevice]) {
             let apiData = try await self.adapter
                 .withAuthentication(try self.authenticationType())
+                .expecting(.success)
+                .allowedFailures([.invalidLicence, .noSubscriptionFound])
                 .listDevices(subscriptionID: subscriptionID, device: .shared)
 
             guard
-                apiData.response == .success,
                 let apiDevices = apiData.payload["devices"] as? [[String: Any]],
                 let maxDeviceCount = apiData.payload["maxDeviceCount"] as? Int
             else {
@@ -203,11 +196,9 @@ extension API.V2 {
 
             let apiData = try await self.adapter
                 .withAuthentication(try self.authenticationType(from: [.token]))
+                .expecting(.active)
+                .allowedFailures([.noDeviceFound, .noSubscriptionFound, .expired])
                 .renameDevice(activationID: activation.activationID, deviceName: name)
-
-            guard apiData.response == .active else {
-                throw Error.notActivated
-            }
 
             let newActivation = try Activation(apiData: apiData)
             try newActivation.write(to: self.activationURL)
@@ -229,13 +220,12 @@ extension API.V2 {
                     idToDeactivate = activation.activationID
                 }
             }
+
             let apiData = try await self.adapter
                 .withAuthentication(try self.authenticationType())
+                .expecting(.deactivated)
+                .allowedFailures([.noDeviceFound, .noSubscriptionFound])
                 .deactivate(activationID: idToDeactivate!)
-
-            guard apiData.response == .deactivated else {
-                throw Error.invalidResponse
-            }
 
             try self.cleanUpDeactivation()
         }

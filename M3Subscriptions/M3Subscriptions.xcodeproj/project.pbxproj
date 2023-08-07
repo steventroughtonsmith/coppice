@@ -16,6 +16,7 @@
 		990D291E2A6ECA6500C3583A /* Adapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990D291D2A6ECA6500C3583A /* Adapter.swift */; };
 		990D29222A6ECE7C00C3583A /* V2.Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990D29212A6ECE7C00C3583A /* V2.Errors.swift */; };
 		9910B2C7296471F000459493 /* Configs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9910B2C6296471F000459493 /* Configs.swift */; };
+		992C432F2A7FCBA10061688F /* Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992C432E2A7FCBA10061688F /* Debug.swift */; };
 		99848160248E639C00BC0A8A /* libM3Subscriptions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99848149248E635600BC0A8A /* libM3Subscriptions.a */; };
 		9984816F248E648300BC0A8A /* ResultExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99848166248E648300BC0A8A /* ResultExtension.swift */; };
 		99848170248E648300BC0A8A /* NetworkAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99848167248E648300BC0A8A /* NetworkAdapter.swift */; };
@@ -89,6 +90,7 @@
 		990D291D2A6ECA6500C3583A /* Adapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Adapter.swift; sourceTree = "<group>"; };
 		990D29212A6ECE7C00C3583A /* V2.Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V2.Errors.swift; sourceTree = "<group>"; };
 		9910B2C6296471F000459493 /* Configs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configs.swift; sourceTree = "<group>"; };
+		992C432E2A7FCBA10061688F /* Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debug.swift; sourceTree = "<group>"; };
 		99848149248E635600BC0A8A /* libM3Subscriptions.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libM3Subscriptions.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9984815B248E639C00BC0A8A /* M3SubscriptionsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = M3SubscriptionsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9984815F248E639C00BC0A8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 		990D29172A6EC11600C3583A /* V2 */ = {
 			isa = PBXGroup;
 			children = (
+				992C432E2A7FCBA10061688F /* Debug.swift */,
 				99848168248E648300BC0A8A /* Controller.swift */,
 				990D291D2A6ECA6500C3583A /* Adapter.swift */,
 				990D29212A6ECE7C00C3583A /* V2.Errors.swift */,
@@ -556,6 +559,7 @@
 				99848172248E648300BC0A8A /* Activations.swift in Sources */,
 				990D29222A6ECE7C00C3583A /* V2.Errors.swift in Sources */,
 				990D291A2A6EC25800C3583A /* V2.Subscription.swift in Sources */,
+				992C432F2A7FCBA10061688F /* Debug.swift in Sources */,
 				990D29142A6EB6E000C3583A /* Licence.swift in Sources */,
 				9984818E248E698D00BC0A8A /* SubscriptionDevice.swift in Sources */,
 				998AB6EF2A743A8F0013513E /* Authentication.swift in Sources */,

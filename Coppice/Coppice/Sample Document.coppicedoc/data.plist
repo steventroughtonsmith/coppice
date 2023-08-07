@@ -10,11 +10,23 @@
 			<key>canvas</key>
 			<string>Canvas_5C45392D-B2B5-4372-92A3-084A047A76AD</string>
 			<key>frame</key>
-			<string>{{-181, -111}, {293, 417}}</string>
+			<string>{{-1262, 1}, {293, 417}}</string>
 			<key>id</key>
 			<string>CanvasPage_328D44A1-9D21-4EDB-A1F1-B97DFA63ACE6</string>
 			<key>page</key>
 			<string>Page_D6B1951C-45AA-42B7-B4E4-B3FA3C2A4676</string>
+			<key>zIndex</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>canvas</key>
+			<string>Canvas_5C45392D-B2B5-4372-92A3-084A047A76AD</string>
+			<key>frame</key>
+			<string>{{-768, -112}, {300, 230}}</string>
+			<key>id</key>
+			<string>CanvasPage_D5615854-CFCC-40AE-A053-EE604AFEAB0E</string>
+			<key>page</key>
+			<string>Page_B1CA31B5-52AF-4385-9FAD-C0A4FB9330E8</string>
 			<key>zIndex</key>
 			<integer>0</integer>
 		</dict>
@@ -363,7 +375,7 @@
 			<key>sortIndex</key>
 			<integer>1</integer>
 			<key>theme</key>
-			<string>dark</string>
+			<string>auto</string>
 			<key>thumbnail</key>
 			<dict>
 				<key>filename</key>
@@ -376,9 +388,9 @@
 			<key>title</key>
 			<string>Welcome</string>
 			<key>viewPort</key>
-			<string>{{-948, -562}, {1829, 1302}}</string>
+			<string>{{-1383.0000000000005, -280.33333333333337}, {794, 575}}</string>
 			<key>zoomFactor</key>
-			<real>1</real>
+			<real>0.75</real>
 		</dict>
 	</array>
 	<key>folders</key>
@@ -792,36 +804,6 @@
 			</array>
 			<key>rootPageID</key>
 			<string>CanvasPage_79169389-EC6E-4AD8-9E9D-8EFA0BBF495C</string>
-		</dict>
-		<dict>
-			<key>canvas</key>
-			<string>Canvas_5C45392D-B2B5-4372-92A3-084A047A76AD</string>
-			<key>entryPoints</key>
-			<array>
-				<dict>
-					<key>pageLink</key>
-					<string>coppice://page/B1CA31B5-52AF-4385-9FAD-C0A4FB9330E8?source=328D44A1-9D21-4EDB-A1F1-B97DFA63ACE6</string>
-					<key>relativePosition</key>
-					<string>{551, -110}</string>
-				</dict>
-			</array>
-			<key>id</key>
-			<string>PageHierarchy_596A2B33-6394-4C25-A5E1-99D217CF2704</string>
-			<key>links</key>
-			<array/>
-			<key>pages</key>
-			<array>
-				<dict>
-					<key>canvasPageID</key>
-					<string>CanvasPage_D5615854-CFCC-40AE-A053-EE604AFEAB0E</string>
-					<key>pageID</key>
-					<string>Page_B1CA31B5-52AF-4385-9FAD-C0A4FB9330E8</string>
-					<key>relativeContentFrame</key>
-					<string>{{0, 0}, {300, 230}}</string>
-				</dict>
-			</array>
-			<key>rootPageID</key>
-			<string>CanvasPage_D5615854-CFCC-40AE-A053-EE604AFEAB0E</string>
 		</dict>
 		<dict>
 			<key>canvas</key>

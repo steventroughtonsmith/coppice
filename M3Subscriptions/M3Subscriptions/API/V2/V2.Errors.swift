@@ -24,6 +24,31 @@ extension API.V2 {
     }
 }
 
+extension API.V2.Error {
+    init?(apiResponse: APIData.Response) {
+        switch apiResponse {
+        case .active, .deactivated, .success, .loggedIn, .loggedOut: // Not errors
+            return nil
+        case .multipleSubscriptions: // No longer errors
+            self = .invalidResponse
+        case .loginFailed:
+            self = .loginFailed
+        case .noSubscriptionFound:
+            self = .noSubscriptionFound
+        case .noDeviceFound:
+            self = .noDeviceFound
+        case .tooManyDevices:
+            self = .tooManyDevices
+        case .expired:
+            self = .subscriptionExpired
+        case .invalidLicence:
+            self = .invalidLicence
+        case .other:
+            self = .invalidResponse
+        }
+    }
+}
+
 extension API.V2.Error: CustomNSError {
     public static var errorDomain: String {
         return "com.mcubedsw.API.V2"

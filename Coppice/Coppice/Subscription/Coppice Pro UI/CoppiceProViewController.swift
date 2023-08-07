@@ -107,6 +107,17 @@ class CoppiceProViewController: NSViewController {
         self.rightButton.image = contentView.rightActionIcon
     }
 
+    //MARK: - Licence URL
+    func activate(withLicenceURL url: URL) {
+        Task {
+            do {
+                try await self.viewModel.activate(withLicenceAtURL: url)
+            } catch {
+                print("Error: \(error)")
+            }
+        }
+    }
+
     //MARK: - Upgrading
     @IBOutlet weak var licenceUpgradeAlert: NSBox!
 

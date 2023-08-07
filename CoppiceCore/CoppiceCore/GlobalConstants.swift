@@ -9,6 +9,7 @@ import AppKit
 
 public struct GlobalConstants {
     public static let urlScheme = "coppice"
+    public static let activateHost = "activate"
 
     public static let appErrorDomain = "com.mcubedsw.Coppices"
 

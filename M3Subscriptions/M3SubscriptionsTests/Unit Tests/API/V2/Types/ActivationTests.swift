@@ -112,7 +112,7 @@ final class ActivationTests: APITestCase {
             "name": "Annual Subscription",
             "expirationTimestamp": 654_321_000,
             "renewalStatus": "renew",
-            "maxDeviceCount": 3
+            "maxDeviceCount": 3,
         ]
         let activation = try createActivation(activationID: "12345",
                                               device: ["name": "My Machine"],

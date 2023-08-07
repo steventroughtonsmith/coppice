@@ -101,10 +101,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func application(_ application: NSApplication, open urls: [URL]) {
-        let pageURLs = urls.filter { $0.scheme == GlobalConstants.urlScheme }
+        let coppiceURLs = urls.filter { $0.scheme == GlobalConstants.urlScheme }
+        if urls.count == 1, (try? API.V2.Licence(url: urls[0])) != nil {
+            self.preferencesWindow.showWindow(self)
+            self.preferencesWindow.activate(withLicenceURL: urls[0])
+        }
+
+
         let documents = CoppiceDocumentController.shared.documents.compactMap { $0 as? Document }
 
-        pageURLs.forEach { (url) in
+        coppiceURLs.forEach { (url) in
             for document in documents {
                 if document.handle(url) {
                     break

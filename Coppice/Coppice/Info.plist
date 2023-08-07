@@ -12,7 +12,9 @@
 				<string>coppicedoc</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>CoppiceDocIcon</string>
+			<string></string>
+			<key>CFBundleTypeIconSystemGenerated</key>
+			<integer>1</integer>
 			<key>CFBundleTypeName</key>
 			<string>Coppice Document</string>
 			<key>CFBundleTypeOSTypes</key>
@@ -31,6 +33,24 @@
 			<integer>1</integer>
 			<key>NSDocumentClass</key>
 			<string>$(PRODUCT_MODULE_NAME).Document</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>coppicelicence</string>
+			</array>
+			<key>CFBundleTypeIconSystemGenerated</key>
+			<integer>1</integer>
+			<key>CFBundleTypeName</key>
+			<string>Coppice Licence</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSHandlerRank</key>
+			<string>Default</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.mcubedsw.Coppice.licence</string>
+			</array>
 		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
@@ -90,6 +110,13 @@ All rights reserved.</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>Coppice Document</string>
+			<key>UTTypeIcons</key>
+			<dict>
+				<key>UTTypeIconBadgeName</key>
+				<string>AppIcon</string>
+				<key>UTTypeIconText</key>
+				<string>Coppice</string>
+			</dict>
 			<key>UTTypeIdentifier</key>
 			<string>com.mcubedsw.Coppice.document</string>
 			<key>UTTypeTagSpecification</key>
@@ -97,6 +124,30 @@ All rights reserved.</string>
 				<key>public.filename-extension</key>
 				<array>
 					<string>coppicedoc</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Coppice Licence</string>
+			<key>UTTypeIcons</key>
+			<dict>
+				<key>UTTypeIconBackgroundName</key>
+				<string>LicenceDocIcon</string>
+				<key>UTTypeIconBadgeName</key>
+				<string>AppIcon</string>
+			</dict>
+			<key>UTTypeIdentifier</key>
+			<string>com.mcubedsw.Coppice.licence</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>coppicelicence</string>
 				</array>
 			</dict>
 		</dict>

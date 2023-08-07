@@ -144,7 +144,7 @@ class CoppiceProViewModel {
         //If we're over the limit and our current device is not one of the listed devices then ask to deactivate one
         if (devices.count) >= maxDeviceCount, devices.contains(where: { $0.isCurrent == true }) == false {
             guard let view = self.view else {
-                fatalError()
+                preconditionFailure()
             }
             let deviceToDeactivate = try await view.deactivateDevice(from: devices)
             try await self.subscriptionManager.v2Controller.deactivate(activationID: deviceToDeactivate.id)

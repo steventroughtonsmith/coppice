@@ -70,7 +70,7 @@ class ActivatedCoppiceProContentViewController: NSViewController {
         self.deviceLabel.isEditable = true
         self.deviceLabel.isSelectable = true
         self.view.window?.makeFirstResponder(self.deviceLabel)
-        self.renameButton.action = #selector(finishRenaming(_:))
+        self.renameButton.action = #selector(self.finishRenaming(_:))
     }
 
     @IBAction func finishRenaming(_ sender: Any) {
@@ -82,7 +82,7 @@ class ActivatedCoppiceProContentViewController: NSViewController {
         self.deviceLabel.isEditable = false
         self.deviceLabel.isSelectable = false
         self.deviceLabel.resignFirstResponder()
-        self.renameButton.action = #selector(renameDevice(_:))
+        self.renameButton.action = #selector(self.renameDevice(_:))
 
         Task {
             do {

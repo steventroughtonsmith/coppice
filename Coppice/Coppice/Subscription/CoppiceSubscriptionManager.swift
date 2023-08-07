@@ -160,7 +160,7 @@ class CoppiceSubscriptionManager: NSObject {
     }
 
     private func handleCheckError(_ error: NSError) {
-        //TODO: Figure out what to do
+        print("check error: \(error)")
     }
 
     private func completeCheck() {
