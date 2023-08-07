@@ -273,5 +273,17 @@ extension AppDelegate: CoppiceSubscriptionManagerDelegate {
             stop.pointee = true
         }
     }
+
+    func presentViewController(_ viewController: NSViewController, for subscriptionManager: CoppiceSubscriptionManager) -> Bool {
+        self.preferencesWindow.showWindow(nil)
+        self.preferencesWindow.showCoppicePro()
+
+        guard let vc = self.preferencesWindow.contentViewController else {
+            return false
+        }
+
+        vc.presentAsSheet(viewController)
+        return true
+    }
 }
 

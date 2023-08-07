@@ -13,6 +13,7 @@ import M3Subscriptions
 protocol CoppiceSubscriptionManagerDelegate: AnyObject {
     func showCoppicePro(with error: NSError, for subscriptionManager: CoppiceSubscriptionManager)
     func showInfoAlert(_ infoAlert: InfoAlert, for subscriptionManager: CoppiceSubscriptionManager)
+    func presentViewController(_ viewController: NSViewController, for subscriptionManager: CoppiceSubscriptionManager) -> Bool
 }
 
 class CoppiceSubscriptionManager: NSObject {
@@ -146,9 +147,18 @@ class CoppiceSubscriptionManager: NSObject {
                 if self.activeAPIVersion == .v1, let controller = self.v1Controller {
                     let activationResponse = try await controller.checkSubscription()
                     self.state = activationResponse.isActive ? .enabled : .unknown
+                } else if case .licence(let licence) = self.v2Controller.activationSource {
+                    do {
+                        try await self.activate(licence: licence)
+                    } catch API.V2.Error.invalidLicence {
+                        throw API.V2.Error.invalidLicence
+                    } catch {
+                        print("Failed to activate, fall back to licence state")
+                    }
+                    self.updateStateFromActivationSource()
                 } else {
                     try await self.v2Controller.check()
-                    self.state = self.v2Controller.activationSource.isActivated ? .enabled : .unknown
+                    self.updateStateFromActivationSource()
                 }
                 self.currentCheckError = nil
             } catch let error as API.V2.Error {
@@ -158,6 +168,36 @@ class CoppiceSubscriptionManager: NSObject {
             }
             Task { @MainActor in
                 self.completeCheck()
+            }
+        }
+    }
+
+
+    private func activate(licence: API.V2.Licence) async throws {
+        let (maxDeviceCount, devices) = try await self.v2Controller.listDevices(subscriptionID: licence.subscription.id)
+        //If we're over the limit and our current device is not one of the listed devices then ask to deactivate one
+        if (devices.count) >= maxDeviceCount, devices.contains(where: { $0.isCurrent == true }) == false {
+            let deviceToDeactivate = try await self.deactivateDevice(from: devices)
+            try await self.v2Controller.deactivate(activationID: deviceToDeactivate.id)
+        }
+
+        try await self.v2Controller.activate(subscriptionID: licence.subscription.id)
+    }
+
+    private func deactivateDevice(from devices: [API.V2.ActivatedDevice]) async throws -> API.V2.ActivatedDevice {
+        return try await withCheckedThrowingContinuation { continuation in
+            Task { @MainActor in
+                let devicesVC = TooManyDevicesViewController(devices: devices) { selectedDevice in
+                    guard let selectedDevice else {
+                        continuation.resume(throwing: CoppiceProViewModel.Error.userCancelled)
+                        return
+                    }
+                    continuation.resume(returning: selectedDevice)
+                }
+                guard self.delegate?.presentViewController(devicesVC, for: self) ?? false else {
+                    continuation.resume(throwing: CoppiceProViewModel.Error.userCancelled)
+                    return
+                }
             }
         }
     }

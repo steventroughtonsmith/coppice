@@ -130,12 +130,6 @@ class CoppiceProViewModel {
             try self.subscriptionManager.v2Controller.saveLicence(licence)
             try await self.activate(subscription: licence.subscription)
             self.currentContentView = .activated
-        } catch let error as API.V2.Error {
-            if case .couldNotConnectToServer(let nsError) = error {
-                self.view?.presentError(nsError as! Error)
-                return
-            }
-            self.presentError(error)
         } catch {
             self.presentError(error)
         }
