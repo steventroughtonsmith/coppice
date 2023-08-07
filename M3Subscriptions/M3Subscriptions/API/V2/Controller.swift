@@ -260,7 +260,16 @@ extension API.V2 {
 }
 
 extension API.V2.Controller.ActivationSource {
-    public var activated: Bool {
+    public var isActivated: Bool {
+        switch self {
+        case .none:
+            return false
+        case .licence, .website:
+            return true
+        }
+    }
+
+    public var isValid: Bool {
         switch self {
         case .none:
             return false

@@ -57,11 +57,7 @@ class ActivatedCoppiceProContentViewController: NSViewController {
 
     private func deactivate() {
         Task {
-            do {
-                try await self.viewModel.deactivate()
-            } catch {
-                //TODO: Handle error
-            }
+            try await self.viewModel.deactivate()
         }
     }
 
@@ -85,12 +81,7 @@ class ActivatedCoppiceProContentViewController: NSViewController {
         self.renameButton.action = #selector(self.renameDevice(_:))
 
         Task {
-            do {
-                try await self.viewModel.rename(to: self.deviceLabel.stringValue)
-            } catch {
-                //TODO: handle error
-                print("Error renaming: \(error)")
-            }
+            try await self.viewModel.rename(to: self.deviceLabel.stringValue)
         }
     }
 

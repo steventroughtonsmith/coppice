@@ -13,6 +13,7 @@ import M3Subscriptions
 protocol CoppiceProView: AnyObject {
     func selectSubscription(from subscriptions: [API.V2.Subscription]) async throws -> API.V2.Subscription
     func deactivateDevice(from devices: [API.V2.ActivatedDevice]) async throws -> API.V2.ActivatedDevice
+    func presentError(_ error: Swift.Error)
 }
 
 class CoppiceProViewModel {
@@ -97,7 +98,7 @@ class CoppiceProViewModel {
 
 
     //MARK: - Activation Actions
-    func activateWithLogin(email: String, password: String) async throws {
+    func activateWithLogin(email: String, password: String) async {
         do {
             try await self.subscriptionManager.v2Controller.login(email: email, password: password)
             let subscriptions = try await self.subscriptionManager.v2Controller.listSubscriptions()
@@ -108,34 +109,35 @@ class CoppiceProViewModel {
             } else if subscriptions.count == 1 {
                 selectedSubscription = subscriptions[0]
             } else {
-                fatalError()
+                preconditionFailure()
             }
 
             try await self.activate(subscription: selectedSubscription)
             self.currentContentView = .activated
         } catch {
-            try await self.subscriptionManager.v2Controller.logout()
-            //TODO: Handle error
-            print("Activation failed: \(error)")
+            self.presentError(error)
+            do {
+                try await self.subscriptionManager.v2Controller.logout()
+            } catch {
+                //Failed logging out
+            }
         }
     }
 
-    func activate(withLicenceAtURL url: URL) async throws {
-        let licence = try API.V2.Licence(url: url)
+    func activate(withLicenceAtURL url: URL) async {
         do {
+            let licence = try API.V2.Licence(url: url)
             try self.subscriptionManager.v2Controller.saveLicence(licence)
-        } catch {
-            //TODO: Handle Error
-        }
-
-        do {
             try await self.activate(subscription: licence.subscription)
             self.currentContentView = .activated
         } catch let error as API.V2.Error {
-            guard case .couldNotConnectToServer(let nsError) = error else {
-                throw error
+            if case .couldNotConnectToServer(let nsError) = error {
+                self.view?.presentError(nsError as! Error)
+                return
             }
-            print("error: \(nsError)")
+            self.presentError(error)
+        } catch {
+            self.presentError(error)
         }
     }
 
@@ -153,7 +155,7 @@ class CoppiceProViewModel {
         try await self.subscriptionManager.v2Controller.activate(subscriptionID: subscription.id)
     }
 
-    func deactivate() async throws {
+    func deactivate() async {
         do {
             switch self.subscriptionManager.activeAPIVersion {
             case .v1:
@@ -164,8 +166,7 @@ class CoppiceProViewModel {
             }
             self.currentContentView = .login
         } catch {
-            //TODO: Handle error
-            print("Error deactivating: \(error)")
+            self.presentError(error)
         }
     }
 
@@ -180,14 +181,14 @@ class CoppiceProViewModel {
         return true
     }
 
-    func rename(to newName: String) async throws {
+    func rename(to newName: String) async {
         do {
             guard self.canRename else {
                 return
             }
             try await self.subscriptionManager.v2Controller.renameDevice(to: newName)
         } catch {
-            //TODO: Handle Error
+            self.presentError(error)
         }
     }
 
@@ -250,6 +251,13 @@ class CoppiceProViewModel {
 
         let date = Date(timeIntervalSince1970: expirationTimestamp)
         return String(format: format, dateFormatter.string(from: date))
+    }
+
+    //MARK: - Errors
+    func presentError(_ error: Swift.Error) {
+        Task { @MainActor in
+            self.view?.presentError(error)
+        }
     }
 }
 

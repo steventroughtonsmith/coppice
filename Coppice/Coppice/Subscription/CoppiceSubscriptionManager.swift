@@ -49,7 +49,7 @@ class CoppiceSubscriptionManager: NSObject {
         }
 
         self.subscribers[.v2ActivationSource] = self.v2Controller.$activationSource.receive(on: DispatchQueue.main).sink { [weak self] source in
-            self?.state = (source.activated) ? .enabled : .unknown
+            self?.state = (source.isActivated) ? .enabled : .unknown
         }
 
         self.checkSubscriptionIfNeeded()
@@ -71,6 +71,7 @@ class CoppiceSubscriptionManager: NSObject {
     enum State {
         case unknown
         case enabled
+        case expired
     }
 
     @Published private(set) var state: State = .unknown
@@ -147,11 +148,13 @@ class CoppiceSubscriptionManager: NSObject {
                     self.state = activationResponse.isActive ? .enabled : .unknown
                 } else {
                     try await self.v2Controller.check()
-                    self.state = self.v2Controller.activationSource.activated ? .enabled : .unknown
+                    self.state = self.v2Controller.activationSource.isActivated ? .enabled : .unknown
                 }
                 self.currentCheckError = nil
+            } catch let error as API.V2.Error {
+                self.handleCheckError(error)
             } catch {
-                self.handleCheckError(error as NSError)
+                print("Unknown error!")
             }
             Task { @MainActor in
                 self.completeCheck()
@@ -159,8 +162,29 @@ class CoppiceSubscriptionManager: NSObject {
         }
     }
 
-    private func handleCheckError(_ error: NSError) {
-        print("check error: \(error)")
+    private func handleCheckError(_ error: API.V2.Error) {
+        switch error {
+        case .subscriptionExpired:
+            self.state = .expired
+        case .invalidAuthenticationMethod, .invalidLicence, .noSubscriptionFound, .noDeviceFound, .notActivated:
+            Task { @MainActor in
+                self.delegate?.showCoppicePro(with: error as NSError, for: self)
+                self.state = .unknown
+            }
+        case .generic, .invalidResponse, .couldNotConnectToServer:
+            self.updateStateFromActivationSource()
+        case .tooManyDevices, .loginFailed:
+            break //ignore
+        }
+    }
+
+    private func updateStateFromActivationSource() {
+        guard self.v2Controller.activationSource.isActivated else {
+            self.state = .unknown
+            return
+        }
+
+        self.state = self.v2Controller.activationSource.isValid ? .enabled : .expired
     }
 
     private func completeCheck() {

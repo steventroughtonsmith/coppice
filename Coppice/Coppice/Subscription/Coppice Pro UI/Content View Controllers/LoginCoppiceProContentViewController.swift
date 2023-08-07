@@ -42,12 +42,7 @@ class LoginCoppiceProContentViewController: NSViewController {
     //MARK: - Actions
     @IBAction func activate(_ sender: NSButton) {
         Task {
-            do {
-                try await self.viewModel.activateWithLogin(email: self.email, password: self.password)
-            } catch {
-                //TODO: Handle errors
-                Logger().log(level: .error, "Error: \(error)")
-            }
+            await self.viewModel.activateWithLogin(email: self.email, password: self.password)
         }
     }
 }

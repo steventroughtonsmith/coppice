@@ -48,7 +48,6 @@ class CoppiceProViewController: NSViewController {
         self.setupSubscribers()
     }
 
-
     @IBOutlet weak var contentContainerView: NSView!
 
     private var currentContentViewController: (NSViewController & CoppiceProContentView)? {
@@ -110,11 +109,7 @@ class CoppiceProViewController: NSViewController {
     //MARK: - Licence URL
     func activate(withLicenceURL url: URL) {
         Task {
-            do {
-                try await self.viewModel.activate(withLicenceAtURL: url)
-            } catch {
-                print("Error: \(error)")
-            }
+            await self.viewModel.activate(withLicenceAtURL: url)
         }
     }
 
@@ -185,6 +180,15 @@ extension CoppiceProViewController: CoppiceProView {
                 self.presentAsSheet(devicesVC)
             }
         }
+    }
+
+    func presentError(_ error: Error) {
+        let alert = NSAlert(error: error)
+        guard let window = self.view.window else {
+            alert.runModal()
+            return
+        }
+        alert.beginSheetModal(for: window)
     }
 }
 
