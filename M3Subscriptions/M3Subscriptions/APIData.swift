@@ -23,6 +23,8 @@ struct APIData {
         case success
         case loggedIn
         case loggedOut
+        case noTrialAvailable
+        case trialUsed
         case other(String)
 
         static func response(from string: String) -> Response {
@@ -61,6 +63,12 @@ struct APIData {
             }
             if (string == "logged_out") {
                 return .loggedOut
+            }
+            if (string == "no_trial_available") {
+                return .noTrialAvailable
+            }
+            if (string == "trial_used") {
+                return .trialUsed
             }
             return .other(string)
         }

@@ -26,6 +26,7 @@ class InspectorContainerViewController: NSViewController, SplitViewContainable {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupObservation()
+        self.updateTrialView()
     }
 
     @IBOutlet var topConstraint: NSLayoutConstraint!
@@ -38,10 +39,26 @@ class InspectorContainerViewController: NSViewController, SplitViewContainable {
     }
 
 
-    private var inspectorObservation: AnyCancellable?
+    //MARK: - Subscribers
+    private enum SubscriberKey {
+        case inspectors
+        case trialState
+    }
+
+    private var subscribers: [SubscriberKey: AnyCancellable] = [:]
+
     private func setupObservation() {
-        self.inspectorObservation = self.viewModel.$inspectors.sink { [weak self] inspectors in
+        self.subscribers[.inspectors] = self.viewModel.$inspectors.sink { [weak self] inspectors in
             self?.inspectorViewControllers = inspectors.compactMap { $0 as? BaseInspectorViewController }
+        }
+
+        self.subscribers[.trialState] = CoppiceSubscriptionManager.shared.v2Controller.$trialState.sink { [weak self] newState in
+            switch newState {
+            case .available:
+                self?.startTrialButton.isHidden = false
+            case .redeemed:
+                self?.startTrialButton.isHidden = true
+            }
         }
     }
 
@@ -76,6 +93,28 @@ class InspectorContainerViewController: NSViewController, SplitViewContainable {
         return item
     }
 
+    //MARK: - Trial
+    @IBOutlet weak var trialContainerView: CoppiceGreenView!
+    @IBOutlet weak var startTrialButton: RoundButton!
+    @IBOutlet weak var trialRemainingLabel: NSTextField!
+    @IBOutlet weak var trialRemainingBox: NSBox!
+
+    private var trialRemainingBoxWidthConstraint: NSLayoutConstraint?
+
+    private func updateTrialView() {
+        let daysRemaining = 12 //self.viewModel.trialDaysRemaining
+        if daysRemaining == 1 {
+            self.trialRemainingLabel.stringValue = "1 day left"
+        } else {
+            self.trialRemainingLabel.stringValue = "\(daysRemaining) days left"
+        }
+
+        self.trialRemainingBoxWidthConstraint?.isActive = false
+
+        self.trialRemainingBoxWidthConstraint = self.trialRemainingBox.widthAnchor.constraint(equalTo: self.trialContainerView.widthAnchor, multiplier: Double(30 - daysRemaining) / 30)
+        self.trialRemainingBoxWidthConstraint?.isActive = true
+
+    }
 
     //MARK: - Pro
     @IBOutlet weak var showProInfoButton: RoundButton! {

@@ -29,7 +29,8 @@ class CoppiceSubscriptionManager: NSObject {
     init(appSupportURL: URL) {
         let licenceURL = appSupportURL.appendingPathComponent("Licence.coppicelicence")
         let activationURL = appSupportURL.appendingPathComponent("Activation")
-        self.v2Controller = API.V2.Controller(licenceURL: licenceURL, activationURL: activationURL)
+        let trialLicenceURL = appSupportURL.appendingPathComponent(".Trial.coppicelicence")
+        self.v2Controller = API.V2.Controller(licenceURL: licenceURL, activationURL: activationURL, trialLicenceURL: trialLicenceURL)
 
         //Activation details were never put in the /Coppice directory
         let v1ActivationDetails = appSupportURL.deletingLastPathComponent().appendingPathComponent("licence")
@@ -81,6 +82,9 @@ class CoppiceSubscriptionManager: NSObject {
         self.state = state
     }
     #endif
+
+    //MARK: - Trial
+    
 
 
     //MARK: - API Version
@@ -149,7 +153,10 @@ class CoppiceSubscriptionManager: NSObject {
                     self.state = activationResponse.isActive ? .enabled : .unknown
                 } else if case .licence(let licence) = self.v2Controller.activationSource {
                     do {
-                        try await self.activate(licence: licence)
+                        //Only activate if licence is an active trial or a full licence
+                        if licence.isActive || licence.subscription.renewalStatus != .trial {
+                            try await self.activate(licence: licence)
+                        }
                     } catch API.V2.Error.invalidLicence {
                         throw API.V2.Error.invalidLicence
                     } catch {
@@ -213,7 +220,7 @@ class CoppiceSubscriptionManager: NSObject {
             }
         case .generic, .invalidResponse, .couldNotConnectToServer:
             self.updateStateFromActivationSource()
-        case .tooManyDevices, .loginFailed:
+        case .tooManyDevices, .loginFailed, .trialUsed, .noTrialAvailable:
             break //ignore
         }
     }

@@ -78,7 +78,7 @@ extension LicenceCoppiceProContentViewController: CoppiceProContentView {
     }
 
     var rightActionTitle: String {
-        return "Learn About Pro…"
+        return "Learn More…"
     }
 
     var rightActionIcon: NSImage {
@@ -87,5 +87,9 @@ extension LicenceCoppiceProContentViewController: CoppiceProContentView {
 
     func performRightAction(in viewController: CoppiceProViewController) {
         NSWorkspace.shared.open(.coppicePro)
+    }
+
+    var canShowTrial: Bool {
+        return true
     }
 }

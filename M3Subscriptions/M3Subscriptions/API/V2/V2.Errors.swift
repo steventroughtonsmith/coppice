@@ -21,6 +21,8 @@ extension API.V2 {
         case notActivated //C
         case couldNotConnectToServer(NSError) //All
         case invalidResponse
+        case noTrialAvailable
+        case trialUsed
     }
 }
 
@@ -43,6 +45,10 @@ extension API.V2.Error {
             self = .subscriptionExpired
         case .invalidLicence:
             self = .invalidLicence
+        case .noTrialAvailable:
+            self = .noTrialAvailable
+        case .trialUsed:
+            self = .trialUsed
         case .other:
             self = .invalidResponse
         }
@@ -66,7 +72,9 @@ extension API.V2.Error: CustomNSError {
         case .noDeviceFound:                return 8
         case .notActivated:                 return 9
         case .couldNotConnectToServer:      return 10
-        case .invalidResponse:                 return 11
+        case .invalidResponse:              return 11
+        case .noTrialAvailable:             return 12
+        case .trialUsed:                    return 13
         }
     }
 
@@ -112,6 +120,10 @@ extension API.V2.Error: LocalizedError {
             return NSLocalizedString("Could Not Contact M Cubed's Servers", comment: "Could Not Connect To Server Error Description")
         case .invalidResponse:
             return NSLocalizedString("Oops. Something went wrong", comment: "Action failed Error Description")
+        case .noTrialAvailable:
+            return NSLocalizedString("Trial Not Available", comment: "No Trial Available Error Description")
+        case .trialUsed:
+            return NSLocalizedString("Free Trial Used", comment: "Trial Used Error Description")
         }
     }
 
@@ -139,6 +151,10 @@ extension API.V2.Error: LocalizedError {
             return NSLocalizedString("Please check your internet connection and try again. If the problem persists please contact M Cubed Support", comment: "Could Not Connect To Server Error Recovery")
         case .invalidResponse:
             return NSLocalizedString("Coppice got bad data back from the server. Please try again.", comment: "Action failed Error Description")
+        case .noTrialAvailable:
+            return NSLocalizedString("There is no trial currently available for Coppice. Try again later", comment: "Trial unavailable Recovery Suggestion")
+        case .trialUsed:
+            return NSLocalizedString("You have already used your free trial of Coppice Pro. Please purchase from https://mcubedsw.com/coppice to continue using Coppice Pro", comment: "Trial used Recovery Suggestion")
         }
     }
 }

@@ -25,8 +25,14 @@ extension API.V2 {
                 throw API.V2.Error.invalidLicence
             }
 
+            guard let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+                throw API.V2.Error.invalidLicence
+            }
+            try self.init(json: json)
+        }
+
+        public init(json: [String: Any]) throws {
             guard
-                let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
                 let payload = json["payload"] as? [String: Any],
                 let signature = json["signature"] as? String,
                 APIData.verify(payload: payload, signature: signature) == signature
@@ -43,7 +49,6 @@ extension API.V2 {
             else {
                 throw API.V2.Error.invalidLicence
             }
-
 
             self.licenceID = licenceID
             self.subscription = Subscription(id: subscriptionID,
@@ -94,6 +99,10 @@ extension API.V2 {
             }
 
             return data
+        }
+
+        public var isActive: Bool {
+            return self.subscription.expirationTimestamp > Date().timeIntervalSince1970
         }
     }
 }

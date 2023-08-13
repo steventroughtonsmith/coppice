@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="22138.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="22152" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22138.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22152"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -12,21 +12,108 @@
                 <outlet property="proGreenView" destination="JS2-e6-9rY" id="RIX-1d-YIb"/>
                 <outlet property="showProInfoButton" destination="0Rh-Sq-M7Y" id="PyU-U7-JjP"/>
                 <outlet property="stackView" destination="o7a-ej-oXw" id="fet-UQ-tZ6"/>
+                <outlet property="startTrialButton" destination="Sp3-mH-xTz" id="aQC-jg-HKv"/>
                 <outlet property="topConstraint" destination="oo2-nZ-BSR" id="APM-nP-oeb"/>
+                <outlet property="trialContainerView" destination="F7z-Zx-PIk" id="89r-dC-j57"/>
+                <outlet property="trialRemainingBox" destination="oLt-lh-kNz" id="0Eb-Sz-fxT"/>
+                <outlet property="trialRemainingLabel" destination="lRl-LG-cTv" id="l8W-Zz-cev"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="Hz6-mo-xeY">
-            <rect key="frame" x="0.0" y="0.0" width="280" height="888"/>
+            <rect key="frame" x="0.0" y="0.0" width="280" height="984"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uR6-D1-WKg">
-                    <rect key="frame" x="0.0" y="0.0" width="280" height="888"/>
+                    <rect key="frame" x="0.0" y="0.0" width="280" height="984"/>
                     <subviews>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="IHn-Gg-ehd">
+                            <rect key="frame" x="0.0" y="948" width="280" height="36"/>
+                            <subviews>
+                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="F7z-Zx-PIk" customClass="CoppiceGreenView" customModule="Coppice" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="280" height="36"/>
+                                    <subviews>
+                                        <box placeholderIntrinsicWidth="51" placeholderIntrinsicHeight="36" boxType="custom" borderType="none" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="oLt-lh-kNz">
+                                            <rect key="frame" x="229" y="0.0" width="51" height="36"/>
+                                            <view key="contentView" id="1t5-9v-wsD">
+                                                <rect key="frame" x="0.0" y="0.0" width="51" height="36"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            </view>
+                                            <color key="fillColor" white="0.0" alpha="0.19709289965986396" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </box>
+                                        <imageView wantsLayer="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" alphaValue="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="Utg-nI-UPq">
+                                            <rect key="frame" x="10" y="8" width="20" height="20"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="20" id="OpM-Nb-L2v"/>
+                                                <constraint firstAttribute="height" constant="20" id="Rlt-Qj-UrB"/>
+                                            </constraints>
+                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="Pro-Tree-Small" id="Ekn-34-eKv"/>
+                                        </imageView>
+                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kdY-QA-bAI">
+                                            <rect key="frame" x="36" y="10" width="115" height="16"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Coppice Pro Trial" id="1Dy-pg-ftg">
+                                                <font key="font" metaFont="systemBold"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lRl-LG-cTv">
+                                            <rect key="frame" x="155" y="10" width="76" height="16"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" title="30 days left" id="yyk-rU-KfJ">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <button toolTip="Click to buy Coppice Pro" translatesAutoresizingMaskIntoConstraints="NO" id="RRe-e6-IKd">
+                                            <rect key="frame" x="0.0" y="0.0" width="280" height="36"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" alignment="center" imageScaling="proportionallyDown" inset="2" id="XvY-65-Mwi">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <color key="bezelColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <accessibility description="Buy Coppice Pro"/>
+                                            <connections>
+                                                <action selector="showProInfo:" target="-2" id="uJC-Jf-ssn"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="RRe-e6-IKd" firstAttribute="top" secondItem="F7z-Zx-PIk" secondAttribute="top" id="794-5n-qfZ"/>
+                                        <constraint firstAttribute="trailing" secondItem="oLt-lh-kNz" secondAttribute="trailing" id="8i7-Pz-oD2"/>
+                                        <constraint firstAttribute="bottom" secondItem="Utg-nI-UPq" secondAttribute="bottom" constant="8" id="DFu-f3-vvI"/>
+                                        <constraint firstItem="RRe-e6-IKd" firstAttribute="leading" secondItem="F7z-Zx-PIk" secondAttribute="leading" id="HMN-B8-u7s"/>
+                                        <constraint firstAttribute="bottom" secondItem="RRe-e6-IKd" secondAttribute="bottom" id="M7G-k0-FJC"/>
+                                        <constraint firstAttribute="bottom" secondItem="oLt-lh-kNz" secondAttribute="bottom" id="OdN-N2-yxh"/>
+                                        <constraint firstAttribute="trailing" secondItem="RRe-e6-IKd" secondAttribute="trailing" id="QbC-H6-buK"/>
+                                        <constraint firstItem="Utg-nI-UPq" firstAttribute="top" secondItem="F7z-Zx-PIk" secondAttribute="top" constant="8" id="TvZ-xh-6a4"/>
+                                        <constraint firstItem="kdY-QA-bAI" firstAttribute="leading" secondItem="Utg-nI-UPq" secondAttribute="trailing" constant="8" symbolic="YES" id="WTv-z2-hwx"/>
+                                        <constraint firstItem="kdY-QA-bAI" firstAttribute="centerY" secondItem="Utg-nI-UPq" secondAttribute="centerY" id="aOm-qc-aJ9"/>
+                                        <constraint firstItem="lRl-LG-cTv" firstAttribute="firstBaseline" secondItem="kdY-QA-bAI" secondAttribute="firstBaseline" id="ag8-Ou-Nf8"/>
+                                        <constraint firstItem="lRl-LG-cTv" firstAttribute="leading" secondItem="kdY-QA-bAI" secondAttribute="trailing" constant="8" symbolic="YES" id="cid-fH-oY1"/>
+                                        <constraint firstItem="oLt-lh-kNz" firstAttribute="top" secondItem="F7z-Zx-PIk" secondAttribute="top" id="cwH-bh-s9d"/>
+                                        <constraint firstItem="Utg-nI-UPq" firstAttribute="leading" secondItem="F7z-Zx-PIk" secondAttribute="leading" constant="10" id="pEh-Hl-6Xv"/>
+                                    </constraints>
+                                </customView>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="F7z-Zx-PIk" firstAttribute="leading" secondItem="IHn-Gg-ehd" secondAttribute="leading" id="51i-NM-4yU"/>
+                                <constraint firstItem="F7z-Zx-PIk" firstAttribute="top" secondItem="IHn-Gg-ehd" secondAttribute="top" id="Exq-ov-TBm"/>
+                                <constraint firstAttribute="bottom" secondItem="F7z-Zx-PIk" secondAttribute="bottom" id="Lau-CE-M0b"/>
+                                <constraint firstAttribute="trailing" secondItem="F7z-Zx-PIk" secondAttribute="trailing" id="bed-q7-5OO"/>
+                            </constraints>
+                            <connections>
+                                <binding destination="-2" name="hidden" keyPath="self.viewModel.isTrialActive" id="ZAI-iW-Cwa">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                    </dictionary>
+                                </binding>
+                            </connections>
+                        </customView>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="Nz2-8j-R5g">
-                            <rect key="frame" x="0.0" y="723" width="280" height="165"/>
+                            <rect key="frame" x="0.0" y="783" width="280" height="165"/>
                             <subviews>
                                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="JS2-e6-9rY" customClass="CoppiceGreenView" customModule="Coppice" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="-15" width="280" height="180"/>
@@ -41,7 +128,7 @@ by upgrading to Coppice Pro</string>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SsM-n9-24w">
+                                        <button verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SsM-n9-24w">
                                             <rect key="frame" x="90" y="62" width="180" height="14"/>
                                             <buttonCell key="cell" type="bevel" title="Show Pro Features in Inspector" bezelStyle="regularSquare" image="Plain-Checkbox-Off" imagePosition="leading" alignment="right" alternateImage="Plain-Checkbox-On" controlSize="small" state="on" inset="2" id="Dyc-9q-3ua">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -50,18 +137,6 @@ by upgrading to Coppice Pro</string>
                                             <color key="contentTintColor" red="1" green="1" blue="1" alpha="0.74992028061224492" colorSpace="custom" customColorSpace="sRGB"/>
                                             <connections>
                                                 <binding destination="-2" name="value" keyPath="self.showProFeatures" id="HXS-Pe-405"/>
-                                            </connections>
-                                        </button>
-                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0Rh-Sq-M7Y" customClass="RoundButton" customModule="Coppice" customModuleProvider="target">
-                                            <rect key="frame" x="164" y="19" width="112" height="27"/>
-                                            <buttonCell key="cell" type="push" title="Find Out More…" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="p7O-64-r3d" customClass="RoundButtonCell" customModule="Coppice" customModuleProvider="target">
-                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="smallSystem"/>
-                                            </buttonCell>
-                                            <color key="bezelColor" name="CoppiceGreen"/>
-                                            <color key="contentTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <connections>
-                                                <action selector="showProInfo:" target="-2" id="6gf-Af-oho"/>
                                             </connections>
                                         </button>
                                         <textField focusRingType="none" horizontalHuggingPriority="252" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="PqX-KW-HWJ">
@@ -84,21 +159,56 @@ by upgrading to Coppice Pro</string>
                                             </constraints>
                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="top" image="Arrow-Tree-Upsell" id="8Kt-nd-lHj"/>
                                         </imageView>
+                                        <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" ambiguous="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oo6-ca-eHS">
+                                            <rect key="frame" x="85" y="26" width="185" height="16"/>
+                                            <subviews>
+                                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0Rh-Sq-M7Y" customClass="RoundButton" customModule="Coppice" customModuleProvider="target">
+                                                    <rect key="frame" x="-6" y="-7" width="112" height="27"/>
+                                                    <buttonCell key="cell" type="push" title="Find Out More…" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="p7O-64-r3d" customClass="RoundButtonCell" customModule="Coppice" customModuleProvider="target">
+                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                    </buttonCell>
+                                                    <color key="bezelColor" name="CoppiceGreen"/>
+                                                    <color key="contentTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <connections>
+                                                        <action selector="showProInfo:" target="-2" id="6gf-Af-oho"/>
+                                                    </connections>
+                                                </button>
+                                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Sp3-mH-xTz" customClass="RoundButton" customModule="Coppice" customModuleProvider="target">
+                                                    <rect key="frame" x="102" y="-7" width="89" height="27"/>
+                                                    <buttonCell key="cell" type="push" title="Start Trial…" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Gjh-YI-Tra" customClass="RoundButtonCell" customModule="Coppice" customModuleProvider="target">
+                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                    </buttonCell>
+                                                    <color key="bezelColor" name="CoppiceGreen"/>
+                                                    <color key="contentTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <connections>
+                                                        <action selector="showCoppiceProTrial:" target="-1" id="WHp-E2-B3e"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <visibilityPriorities>
+                                                <integer value="1000"/>
+                                                <integer value="1000"/>
+                                            </visibilityPriorities>
+                                            <customSpacing>
+                                                <real value="3.4028234663852886e+38"/>
+                                                <real value="3.4028234663852886e+38"/>
+                                            </customSpacing>
+                                        </stackView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="jQP-ts-nji" firstAttribute="trailing" secondItem="PqX-KW-HWJ" secondAttribute="trailing" id="65K-o1-l63"/>
                                         <constraint firstItem="XyC-PY-Aa7" firstAttribute="leading" secondItem="JS2-e6-9rY" secondAttribute="leading" id="8sl-7S-hJ3"/>
+                                        <constraint firstAttribute="trailing" secondItem="oo6-ca-eHS" secondAttribute="trailing" constant="10" id="9cY-xU-dLX"/>
                                         <constraint firstItem="XyC-PY-Aa7" firstAttribute="centerY" secondItem="PqX-KW-HWJ" secondAttribute="centerY" constant="3" id="BWm-Gy-ugo"/>
                                         <constraint firstItem="QoV-ct-OSA" firstAttribute="leading" secondItem="JS2-e6-9rY" secondAttribute="leading" constant="-5" id="EFm-bW-9oB"/>
                                         <constraint firstItem="SsM-n9-24w" firstAttribute="trailing" secondItem="jQP-ts-nji" secondAttribute="trailing" id="KEp-2H-5Ea"/>
                                         <constraint firstAttribute="bottom" secondItem="QoV-ct-OSA" secondAttribute="bottom" constant="18" id="LPR-J6-zZz"/>
-                                        <constraint firstAttribute="bottom" secondItem="0Rh-Sq-M7Y" secondAttribute="bottom" constant="26" id="apg-bD-Nit"/>
-                                        <constraint firstItem="0Rh-Sq-M7Y" firstAttribute="top" secondItem="SsM-n9-24w" secondAttribute="bottom" constant="20" id="gCP-CD-Nmo"/>
+                                        <constraint firstItem="oo6-ca-eHS" firstAttribute="trailing" secondItem="SsM-n9-24w" secondAttribute="trailing" id="M6Y-YM-8Gt"/>
                                         <constraint firstItem="PqX-KW-HWJ" firstAttribute="leading" secondItem="XyC-PY-Aa7" secondAttribute="trailing" id="igY-ea-t3h"/>
                                         <constraint firstItem="PqX-KW-HWJ" firstAttribute="top" secondItem="JS2-e6-9rY" secondAttribute="top" constant="10" id="jlj-y1-CgK"/>
                                         <constraint firstItem="jQP-ts-nji" firstAttribute="top" secondItem="PqX-KW-HWJ" secondAttribute="bottom" constant="8" symbolic="YES" id="lRV-5W-lHn"/>
-                                        <constraint firstAttribute="trailing" secondItem="0Rh-Sq-M7Y" secondAttribute="trailing" constant="10" id="mlx-tR-BZG"/>
-                                        <constraint firstItem="0Rh-Sq-M7Y" firstAttribute="trailing" secondItem="jQP-ts-nji" secondAttribute="trailing" id="s2C-n8-MmJ"/>
                                     </constraints>
                                 </customView>
                             </subviews>
@@ -113,17 +223,25 @@ by upgrading to Coppice Pro</string>
                                 <userDefinedRuntimeAttribute type="boolean" keyPath="clipsToBounds" value="NO"/>
                             </userDefinedRuntimeAttributes>
                             <connections>
+                                <binding destination="-2" name="hidden2" keyPath="self.viewModel.isTrialActive" previousBinding="679-F1-0T4" id="F13-Rj-qrq">
+                                    <dictionary key="options">
+                                        <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                        <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                        <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                        <integer key="NSNullPlaceholder" value="-1"/>
+                                    </dictionary>
+                                </binding>
                                 <binding destination="-2" name="hidden" keyPath="self.viewModel.isProEnabled" id="679-F1-0T4"/>
                             </connections>
                         </customView>
                         <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zkb-NC-iT9">
-                            <rect key="frame" x="0.0" y="0.0" width="280" height="723"/>
+                            <rect key="frame" x="0.0" y="0.0" width="280" height="783"/>
                             <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="jmX-5L-ayH" customClass="FlippedClipView" customModule="Coppice" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="280" height="723"/>
+                                <rect key="frame" x="0.0" y="0.0" width="280" height="783"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" placeholderIntrinsicWidth="184" placeholderIntrinsicHeight="300" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="o7a-ej-oXw">
-                                        <rect key="frame" x="0.0" y="423" width="280" height="300"/>
+                                        <rect key="frame" x="0.0" y="483" width="280" height="300"/>
                                     </stackView>
                                 </subviews>
                                 <constraints>
@@ -141,13 +259,14 @@ by upgrading to Coppice Pro</string>
                                 <autoresizingMask key="autoresizingMask"/>
                             </scroller>
                             <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="NeV-Vp-Zxt">
-                                <rect key="frame" x="264" y="0.0" width="16" height="723"/>
+                                <rect key="frame" x="264" y="0.0" width="16" height="783"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </scroller>
                             <accessibility description="Inspectors"/>
                         </scrollView>
                     </subviews>
                     <constraints>
+                        <constraint firstAttribute="trailing" secondItem="IHn-Gg-ehd" secondAttribute="trailing" id="19G-Ue-2gQ"/>
                         <constraint firstItem="Nz2-8j-R5g" firstAttribute="leading" secondItem="uR6-D1-WKg" secondAttribute="leading" id="Ewg-yP-Uuj"/>
                         <constraint firstAttribute="trailing" secondItem="Nz2-8j-R5g" secondAttribute="trailing" id="FM7-lM-Yvc"/>
                         <constraint firstItem="Zkb-NC-iT9" firstAttribute="leading" secondItem="uR6-D1-WKg" secondAttribute="leading" id="mxd-vS-jzU"/>
@@ -156,8 +275,10 @@ by upgrading to Coppice Pro</string>
                     <visibilityPriorities>
                         <integer value="1000"/>
                         <integer value="1000"/>
+                        <integer value="1000"/>
                     </visibilityPriorities>
                     <customSpacing>
+                        <real value="3.4028234663852886e+38"/>
                         <real value="3.4028234663852886e+38"/>
                         <real value="3.4028234663852886e+38"/>
                     </customSpacing>

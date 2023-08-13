@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="22152" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22152"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="CoppiceProTrialViewController" customModule="Coppice" customModuleProvider="target">
+            <connections>
+                <outlet property="privacyPolicyCheckbox" destination="a97-2p-xMR" id="tDD-NT-1lQ"/>
+                <outlet property="startTrialButton" destination="fPN-lV-lnP" id="ca5-31-aUF"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="346" height="495"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <box boxType="custom" borderType="none" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="pHO-cy-yFp">
+                    <rect key="frame" x="0.0" y="0.0" width="346" height="164"/>
+                    <view key="contentView" id="Dbm-cj-2Bn">
+                        <rect key="frame" x="0.0" y="0.0" width="346" height="164"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="9vf-qs-kda">
+                                <rect key="frame" x="25" y="100" width="301" height="34"/>
+                                <subviews>
+                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="bWW-Pt-whP">
+                                        <rect key="frame" x="182" y="0.0" width="119" height="14"/>
+                                        <buttonCell key="cell" type="bevel" title="Terms and Conditions" bezelStyle="rounded" alignment="left" controlSize="small" inset="2" id="GGZ-yf-0ZY">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="smallSystem"/>
+                                        </buttonCell>
+                                        <color key="bezelColor" name="CoppiceGreen"/>
+                                        <color key="contentTintColor" name="CoppiceGreenPale"/>
+                                        <connections>
+                                            <action selector="showTermsAndConditions:" target="-2" id="WPr-Ps-IZq"/>
+                                        </connections>
+                                    </button>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1wg-cn-oz2">
+                                        <rect key="frame" x="-1" y="-1" width="185" height="16"/>
+                                        <buttonCell key="cell" type="check" title="I have read and understood the" bezelStyle="regularSquare" imagePosition="left" controlSize="small" inset="2" id="AkL-xL-6Vx">
+                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                            <font key="font" metaFont="smallSystem"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <binding destination="-2" name="value" keyPath="self.termsSelected" id="SM7-12-PfU"/>
+                                            <outlet property="nextKeyView" destination="fPN-lV-lnP" id="Fqx-FH-fBO"/>
+                                        </connections>
+                                    </button>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="a97-2p-xMR">
+                                        <rect key="frame" x="-1" y="19" width="185" height="16"/>
+                                        <buttonCell key="cell" type="check" title="I have read and understood the" bezelStyle="regularSquare" imagePosition="left" controlSize="small" inset="2" id="E4J-xV-yN6">
+                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                            <font key="font" metaFont="smallSystem"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <binding destination="-2" name="value" keyPath="self.privacyPolicySelected" id="z06-Et-gTr"/>
+                                            <outlet property="nextKeyView" destination="1wg-cn-oz2" id="iQK-0i-7kv"/>
+                                        </connections>
+                                    </button>
+                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="ALW-Rx-Rys">
+                                        <rect key="frame" x="182" y="20" width="77" height="14"/>
+                                        <buttonCell key="cell" type="bevel" title="Privacy Policy" bezelStyle="rounded" alignment="left" controlSize="small" inset="2" id="EqC-7c-IML">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="smallSystem"/>
+                                        </buttonCell>
+                                        <color key="bezelColor" name="CoppiceGreen"/>
+                                        <color key="contentTintColor" name="CoppiceGreenPale"/>
+                                        <connections>
+                                            <action selector="showPrivacyPolicy:" target="-2" id="Hae-m3-7lK"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="ALW-Rx-Rys" firstAttribute="leading" secondItem="a97-2p-xMR" secondAttribute="trailing" constant="-2" id="0b2-mo-OUR"/>
+                                    <constraint firstItem="bWW-Pt-whP" firstAttribute="firstBaseline" secondItem="1wg-cn-oz2" secondAttribute="firstBaseline" id="37t-rw-23a"/>
+                                    <constraint firstItem="1wg-cn-oz2" firstAttribute="top" secondItem="a97-2p-xMR" secondAttribute="bottom" constant="6" symbolic="YES" id="8bW-jQ-tQW"/>
+                                    <constraint firstItem="bWW-Pt-whP" firstAttribute="leading" secondItem="1wg-cn-oz2" secondAttribute="trailing" constant="-2" id="BY4-WW-WtW"/>
+                                    <constraint firstItem="1wg-cn-oz2" firstAttribute="leading" secondItem="9vf-qs-kda" secondAttribute="leading" id="FGQ-6r-zSX"/>
+                                    <constraint firstItem="a97-2p-xMR" firstAttribute="top" secondItem="9vf-qs-kda" secondAttribute="top" id="Upe-QL-lfY"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="bWW-Pt-whP" secondAttribute="trailing" id="YWr-XR-zKy"/>
+                                    <constraint firstItem="a97-2p-xMR" firstAttribute="leading" secondItem="9vf-qs-kda" secondAttribute="leading" id="ZQ5-ZS-JKu"/>
+                                    <constraint firstItem="ALW-Rx-Rys" firstAttribute="firstBaseline" secondItem="a97-2p-xMR" secondAttribute="firstBaseline" id="fdS-YL-rcO"/>
+                                    <constraint firstAttribute="bottom" secondItem="1wg-cn-oz2" secondAttribute="bottom" id="lGK-Dm-yK2"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ALW-Rx-Rys" secondAttribute="trailing" id="zDR-J0-EXz"/>
+                                </constraints>
+                            </customView>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fPN-lV-lnP" customClass="RoundButton" customModule="Coppice" customModuleProvider="target">
+                                <rect key="frame" x="77" y="24" width="192" height="52"/>
+                                <buttonCell key="cell" type="push" title="Start Trial" bezelStyle="rounded" image="Pro-Tree-Small" imagePosition="leading" alignment="center" controlSize="large" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="NeH-vi-dDq" customClass="RoundButtonCell" customModule="Coppice" customModuleProvider="target">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="systemSemibold" size="24"/>
+                                </buttonCell>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="180" id="nhF-ye-fei"/>
+                                    <constraint firstAttribute="height" constant="40" id="oc0-wX-wrr"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="fillColour">
+                                        <color key="value" name="CoppiceGreen"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColour">
+                                        <color key="value" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="startTrial:" target="-2" id="E3j-O0-wuP"/>
+                                    <binding destination="-2" name="enabled" keyPath="self.privacyPolicySelected" id="Sbb-6I-4UC"/>
+                                    <binding destination="-2" name="enabled2" keyPath="self.termsSelected" previousBinding="Sbb-6I-4UC" id="1Y5-97-MsX">
+                                        <dictionary key="options">
+                                            <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                            <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                            <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                            <integer key="NSNullPlaceholder" value="-1"/>
+                                        </dictionary>
+                                    </binding>
+                                    <outlet property="nextKeyView" destination="VTP-gm-p6x" id="ngk-M7-be1"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="fPN-lV-lnP" firstAttribute="top" secondItem="9vf-qs-kda" secondAttribute="bottom" constant="30" id="8s9-5a-CI8"/>
+                            <constraint firstAttribute="bottom" secondItem="fPN-lV-lnP" secondAttribute="bottom" constant="30" id="ARh-bL-WQc"/>
+                            <constraint firstItem="9vf-qs-kda" firstAttribute="top" secondItem="Dbm-cj-2Bn" secondAttribute="top" constant="30" id="HVC-AR-fjy"/>
+                            <constraint firstItem="9vf-qs-kda" firstAttribute="leading" secondItem="Dbm-cj-2Bn" secondAttribute="leading" constant="25" id="VV6-yo-DpT"/>
+                            <constraint firstItem="fPN-lV-lnP" firstAttribute="centerX" secondItem="Dbm-cj-2Bn" secondAttribute="centerX" id="ifF-i7-Gfa"/>
+                            <constraint firstAttribute="trailing" secondItem="9vf-qs-kda" secondAttribute="trailing" constant="20" id="ljw-V3-2FD"/>
+                        </constraints>
+                    </view>
+                    <color key="fillColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="1" colorSpace="calibratedRGB"/>
+                </box>
+                <box boxType="custom" borderType="none" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="a7K-Ta-M6x">
+                    <rect key="frame" x="0.0" y="164" width="346" height="331"/>
+                    <view key="contentView" appearanceType="aqua" id="viD-DW-sWI">
+                        <rect key="frame" x="0.0" y="0.0" width="346" height="331"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KFg-bn-QVf">
+                                <rect key="frame" x="-13" y="-13" width="150" height="146"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="IbS-x2-NKr"/>
+                                    <constraint firstAttribute="height" constant="146" id="diF-XW-HhK"/>
+                                </constraints>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="Arrow-Tree-Upsell" id="t8S-GZ-dow"/>
+                            </imageView>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="VTP-gm-p6x">
+                                <rect key="frame" x="316" y="298" width="20" height="26"/>
+                                <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="xmark.circle.fill" catalog="system" imagePosition="overlaps" alignment="center" controlSize="large" imageScaling="proportionallyUpOrDown" inset="2" id="efk-ZS-Vac">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="bT8-LI-KyH"/>
+                                    <constraint firstAttribute="height" constant="20" id="v9a-E1-AXp"/>
+                                </constraints>
+                                <accessibility description="Close"/>
+                                <connections>
+                                    <action selector="close:" target="-2" id="PUN-RZ-OLb"/>
+                                    <outlet property="nextKeyView" destination="a97-2p-xMR" id="iB7-MR-Jna"/>
+                                </connections>
+                            </button>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0ge-4P-cKE">
+                                <rect key="frame" x="109" y="178" width="128" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="A8W-xO-wwG"/>
+                                    <constraint firstAttribute="width" constant="128" id="yTQ-S8-OlX"/>
+                                </constraints>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="NSApplicationIcon" id="dJ6-it-zO6"/>
+                                <accessibility description="Coppice Icon"/>
+                            </imageView>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yiQ-iJ-o7b">
+                                <rect key="frame" x="60" y="135" width="226" height="35"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Try Coppice Pro" id="GSP-GB-PF2">
+                                    <font key="font" metaFont="systemBold" size="30"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="98R-MR-RrL">
+                                <rect key="frame" x="106" y="106" width="134" height="21"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="30-day free trial" id="zzW-ot-e7h">
+                                    <font key="font" metaFont="system" size="18"/>
+                                    <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XkI-dW-CqT">
+                                <rect key="frame" x="40" y="60" width="267" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Try all the features of Coppice Pro for free." id="J9A-Hk-VaG">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="o7X-iO-l5M">
+                                <rect key="frame" x="247" y="-43" width="150" height="316"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="OvQ-fL-A5h"/>
+                                    <constraint firstAttribute="height" constant="316" id="SPR-qJ-NNc"/>
+                                </constraints>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="Arrow-Tree-Pro-Left" id="gON-K7-dPb"/>
+                            </imageView>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ovk-0c-H94">
+                                <rect key="frame" x="44" y="40" width="258" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="No sign-up. No payment details required." id="Zjy-AY-lIy">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="XkI-dW-CqT" firstAttribute="top" secondItem="98R-MR-RrL" secondAttribute="bottom" constant="30" id="0Iy-Gc-TE0"/>
+                            <constraint firstItem="98R-MR-RrL" firstAttribute="top" secondItem="yiQ-iJ-o7b" secondAttribute="bottom" constant="8" symbolic="YES" id="5Ai-7C-n8M"/>
+                            <constraint firstItem="ovk-0c-H94" firstAttribute="centerX" secondItem="viD-DW-sWI" secondAttribute="centerX" id="9CB-vA-GM0"/>
+                            <constraint firstItem="KFg-bn-QVf" firstAttribute="leading" secondItem="viD-DW-sWI" secondAttribute="leading" constant="-13" id="AJZ-1T-gOq"/>
+                            <constraint firstAttribute="bottom" secondItem="KFg-bn-QVf" secondAttribute="bottom" constant="-13" id="Aka-SE-9Bx"/>
+                            <constraint firstItem="ovk-0c-H94" firstAttribute="top" secondItem="XkI-dW-CqT" secondAttribute="bottom" constant="4" id="BGF-Ue-Jjd"/>
+                            <constraint firstItem="XkI-dW-CqT" firstAttribute="centerX" secondItem="viD-DW-sWI" secondAttribute="centerX" id="Dvj-G9-oVn"/>
+                            <constraint firstAttribute="bottom" secondItem="o7X-iO-l5M" secondAttribute="bottom" constant="-43" id="Hhn-Ic-S1j"/>
+                            <constraint firstAttribute="trailing" secondItem="VTP-gm-p6x" secondAttribute="trailing" constant="10" id="Mwb-yi-K2w"/>
+                            <constraint firstItem="0ge-4P-cKE" firstAttribute="centerX" secondItem="viD-DW-sWI" secondAttribute="centerX" id="Rpw-g0-65M"/>
+                            <constraint firstItem="98R-MR-RrL" firstAttribute="centerX" secondItem="viD-DW-sWI" secondAttribute="centerX" id="V8c-Ti-dPv"/>
+                            <constraint firstAttribute="trailing" secondItem="o7X-iO-l5M" secondAttribute="trailing" constant="-51" id="Wgn-j0-gXN"/>
+                            <constraint firstItem="VTP-gm-p6x" firstAttribute="top" secondItem="viD-DW-sWI" secondAttribute="top" constant="10" id="ahh-N3-dpj"/>
+                            <constraint firstItem="yiQ-iJ-o7b" firstAttribute="centerX" secondItem="viD-DW-sWI" secondAttribute="centerX" id="g26-Ja-i89"/>
+                            <constraint firstItem="yiQ-iJ-o7b" firstAttribute="top" secondItem="0ge-4P-cKE" secondAttribute="bottom" constant="8" symbolic="YES" id="plL-O5-3x3"/>
+                            <constraint firstItem="0ge-4P-cKE" firstAttribute="top" secondItem="viD-DW-sWI" secondAttribute="top" constant="25" id="s7P-If-Dei"/>
+                            <constraint firstAttribute="bottom" secondItem="ovk-0c-H94" secondAttribute="bottom" constant="40" id="xHu-0D-5OY"/>
+                        </constraints>
+                    </view>
+                    <color key="borderColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="fillColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </box>
+            </subviews>
+            <constraints>
+                <constraint firstItem="pHO-cy-yFp" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="Inc-9O-awM"/>
+                <constraint firstAttribute="trailing" secondItem="pHO-cy-yFp" secondAttribute="trailing" id="KdM-hL-sCx"/>
+                <constraint firstItem="a7K-Ta-M6x" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="MEU-uF-W1F"/>
+                <constraint firstAttribute="bottom" secondItem="pHO-cy-yFp" secondAttribute="bottom" id="Pkm-8A-yjE"/>
+                <constraint firstItem="pHO-cy-yFp" firstAttribute="top" secondItem="a7K-Ta-M6x" secondAttribute="bottom" id="gP7-i0-L3z"/>
+                <constraint firstItem="a7K-Ta-M6x" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="jbV-kV-HS1"/>
+                <constraint firstAttribute="trailing" secondItem="a7K-Ta-M6x" secondAttribute="trailing" id="peG-6j-bmy"/>
+            </constraints>
+            <connections>
+                <outlet property="nextKeyView" destination="a97-2p-xMR" id="dME-pb-Iid"/>
+            </connections>
+            <point key="canvasLocation" x="64" y="150"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="Arrow-Tree-Pro-Left" width="92" height="200.5"/>
+        <image name="Arrow-Tree-Upsell" width="79" height="78.5"/>
+        <image name="NSApplicationIcon" width="32" height="32"/>
+        <image name="Pro-Tree-Small" width="36.5" height="33"/>
+        <image name="xmark.circle.fill" catalog="system" width="15" height="15"/>
+        <namedColor name="CoppiceGreen">
+            <color red="0.094117647058823528" green="0.52549019607843139" blue="0.062745098039215685" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="CoppiceGreenPale">
+            <color red="0.56470588235294117" green="0.8901960784313725" blue="0.54117647058823526" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

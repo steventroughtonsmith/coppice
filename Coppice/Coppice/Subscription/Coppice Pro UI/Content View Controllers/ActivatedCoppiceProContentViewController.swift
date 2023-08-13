@@ -57,7 +57,7 @@ class ActivatedCoppiceProContentViewController: NSViewController {
 
     private func deactivate() {
         Task {
-            try await self.viewModel.deactivate()
+            await self.viewModel.deactivate()
         }
     }
 
@@ -81,7 +81,7 @@ class ActivatedCoppiceProContentViewController: NSViewController {
         self.renameButton.action = #selector(self.renameDevice(_:))
 
         Task {
-            try await self.viewModel.rename(to: self.deviceLabel.stringValue)
+            await self.viewModel.rename(to: self.deviceLabel.stringValue)
         }
     }
 
@@ -95,6 +95,9 @@ class ActivatedCoppiceProContentViewController: NSViewController {
 
 extension ActivatedCoppiceProContentViewController: CoppiceProContentView {
     var leftActionTitle: String {
+        if self.viewModel.trialEnabled {
+            return ""
+        }
         return "Deactivate Device"
     }
 
@@ -107,14 +110,32 @@ extension ActivatedCoppiceProContentViewController: CoppiceProContentView {
     }
 
     var rightActionTitle: String {
+        if self.viewModel.trialEnabled {
+            return "Buy Coppice Pro…"
+        }
+
+        guard self.viewModel.canAccessAccount else {
+            return ""
+        }
         return "View Account…"
     }
 
     var rightActionIcon: NSImage {
+        if self.viewModel.trialEnabled {
+            return NSImage(named: "Pro-Tree-Icon")!
+        }
         return NSImage(systemSymbolName: "person.fill", accessibilityDescription: nil)!
     }
 
     func performRightAction(in viewController: CoppiceProViewController) {
+        if self.viewModel.trialEnabled {
+            NSWorkspace.shared.open(.coppicePro)
+            return
+        }
         NSWorkspace.shared.open(.mcubedAccount)
+    }
+
+    var canShowTrial: Bool {
+        return false
     }
 }

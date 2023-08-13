@@ -12,11 +12,18 @@ class RoundButton: NSButton {
     @IBInspectable var borderColour: NSColor = .white.withAlphaComponent(0.5)
     @IBInspectable var fillColour: NSColor = .clear
 
+    var titleInsets: NSEdgeInsets = .zero
+    var imageInsets: NSEdgeInsets = .zero
+
     override class var cellClass: AnyClass? {
         get {
             return RoundButtonCell.self
         }
         set {}
+    }
+
+    override var alignmentRectInsets: NSEdgeInsets {
+        return NSEdgeInsets(top: 2, left: 6, bottom: 4, right: 6)
     }
 }
 
@@ -49,5 +56,21 @@ class RoundButtonCell: NSButtonCell {
         let path = NSBezierPath(roundedRect: pathFrame.insetBy(dx: 0.5, dy: 0.5), xRadius: pathFrame.height / 2, yRadius: pathFrame.height / 2)
         path.lineWidth = 1
         path.stroke()
+    }
+
+    override func drawTitle(_ title: NSAttributedString, withFrame frame: NSRect, in controlView: NSView) -> NSRect {
+        var adjustedFrame = frame
+        if let roundButton = controlView as? RoundButton {
+            adjustedFrame = frame.insetBy(roundButton.titleInsets)
+        }
+        return super.drawTitle(title, withFrame: adjustedFrame, in: controlView)
+    }
+
+    override func drawImage(_ image: NSImage, withFrame frame: NSRect, in controlView: NSView) {
+        var adjustedFrame = frame
+        if let roundButton = controlView as? RoundButton {
+            adjustedFrame = frame.insetBy(roundButton.imageInsets)
+        }
+        super.drawImage(image, withFrame: adjustedFrame, in: controlView)
     }
 }

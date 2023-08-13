@@ -16,6 +16,17 @@ extension API.V2 {
         public var secondaryState: SecondaryState = .none
         var apiData: APIData
 
+        init(url: URL) throws {
+            let data = try Data(contentsOf: url)
+            guard 
+                let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+                let apiData = APIData(json: json)
+            else {
+                throw Error.notActivated
+            }
+            try self.init(apiData: apiData)
+        }
+
         init(apiData: APIData) throws {
             let payload = apiData.payload
             guard
@@ -36,6 +47,10 @@ extension API.V2 {
 
         func write(to url: URL) throws {
             try self.apiData.write(to: url)
+        }
+
+        var isTrial: Bool {
+            return self.subscription.renewalStatus == .trial
         }
     }
 }

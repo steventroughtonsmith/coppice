@@ -10,58 +10,63 @@ import Foundation
 
 extension API.V2 {
     public class Controller {
-        public enum ActivationSource {
-            case none
-            case licence(Licence)
-            case website(Activation)
-        }
-
-        @Published public private(set) var activationSource: ActivationSource = .none
-
-        #if DEBUG
-        func setActivationSource(_ source: ActivationSource) {
-            self.activationSource = source
-        }
-        #endif
-
         let licenceURL: URL
         let activationURL: URL
+        let trialLicenceURL: URL
         private let adapter: APIAdapterV2
         private let keychain: Keychain
-        public convenience init(licenceURL: URL, activationURL: URL) {
+        public convenience init(licenceURL: URL, activationURL: URL, trialLicenceURL: URL) {
             let networkAdapter = URLSessionNetworkAdapter()
             networkAdapter.activeVersion = .v2
             let adapter = Adapter(networkAdapter: networkAdapter)
-            self.init(licenceURL: licenceURL, activationURL: activationURL, adapter: adapter, keychain: DefaultKeychain())
+            self.init(licenceURL: licenceURL, activationURL: activationURL, trialLicenceURL: trialLicenceURL, adapter: adapter, keychain: DefaultKeychain())
         }
 
-        init(licenceURL: URL, activationURL: URL, adapter: APIAdapterV2, keychain: Keychain) {
+        init(licenceURL: URL, activationURL: URL, trialLicenceURL: URL, adapter: APIAdapterV2, keychain: Keychain) {
             self.licenceURL = licenceURL
             self.activationURL = activationURL
+            self.trialLicenceURL = trialLicenceURL
             self.adapter = adapter
             self.keychain = keychain
 
-            do {
-                let data = try Data(contentsOf: self.activationURL)
+            self.checkForLocalActivation()
+        }
 
-                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-                   let apiData = APIData(json: json) {
-                    let activation = try Activation(apiData: apiData)
-                    self.activationSource = .website(activation)
-                    return
-                }
-            } catch {
-                //No local activation
+        //MARK: - State
+        @Published public private(set) var trialState: TrialState = .available
+        @Published public private(set) var activationSource: ActivationSource = .none
+        @Published public private(set) var authenticationType: AuthenticationType?
+
+#if DEBUG
+        func setActivationSource(_ source: ActivationSource) {
+            self.activationSource = source
+        }
+#endif
+
+        private func checkForLocalActivation() {
+            let licence = try? Licence(url: self.licenceURL)
+            let trialLicence = try? Licence(url: self.trialLicenceURL)
+            let activation = try? Activation(url: self.activationURL)
+
+            if let trialLicence {
+                self.trialState = .redeemed(trialLicence)
+            } else {
+                self.trialState = .available
             }
 
-            do {
-                let licence = try Licence(url: self.licenceURL)
-                self.activationSource = .licence(licence)
-                return
-            } catch {
-                //No local valid licence
+            if (try? self.keychain.fetchToken()) != nil {
+                self.authenticationType = .token
+            } else {
+                self.authenticationType = .licence
             }
-            self.activationSource = .none
+
+            if let activation {
+                self.activationSource = .website(activation)
+            } else if let activationLicence = (licence ?? trialLicence) {
+                self.activationSource = .licence(activationLicence)
+            } else {
+                self.activationSource = .none
+            }
         }
 
         //MARK: - Authentication
@@ -92,18 +97,19 @@ extension API.V2 {
 
         /// Logs out the user, deleting from the keychain
         public func logout() async throws {
-            let apiData = try await self.adapter
+            _ = try await self.adapter
                 .withAuthentication(try self.authenticationType(from: [.token]))
                 .expecting(.loggedOut)
                 .logout()
 
             try self.keychain.removeToken()
+            self.authenticationType = .none
         }
 
         /// Save licence to disk
         /// - Parameter licence: The licence to save
-        public func saveLicence(_ licence: Licence) throws {
-            try licence.write(to: self.licenceURL)
+        public func saveLicence(_ licence: Licence, isTrial: Bool = false) throws {
+            try licence.write(to: isTrial ? self.trialLicenceURL : self.licenceURL)
             self.activationSource = .licence(licence)
         }
 
@@ -201,6 +207,14 @@ extension API.V2 {
                 .renameDevice(activationID: activation.activationID, deviceName: name)
 
             let newActivation = try Activation(apiData: apiData)
+            if let trialLicence = try? Licence(url: self.trialLicenceURL), 
+               trialLicence.isActive == false,
+               newActivation.subscription.id == trialLicence.subscription.id
+            {
+                try? self.cleanUpDeactivation()
+                return
+            }
+
             try newActivation.write(to: self.activationURL)
             self.activationSource = .website(newActivation)
         }
@@ -221,7 +235,7 @@ extension API.V2 {
                 }
             }
 
-            let apiData = try await self.adapter
+            _ = try await self.adapter
                 .withAuthentication(try self.authenticationType())
                 .expecting(.deactivated)
                 .allowedFailures([.noDeviceFound, .noSubscriptionFound])
@@ -240,22 +254,58 @@ extension API.V2 {
             self.activationSource = .none
         }
 
-        enum AuthenticationType {
-            case token
-            case licence
-        }
-
         private func authenticationType(from allowedTypes: [AuthenticationType] = [.token, .licence]) throws -> API.V2.Authentication {
             if allowedTypes.contains(.token),
                let token = try? self.keychain.fetchToken() {
                 return .token(token)
             }
             if allowedTypes.contains(.licence) {
-                let licence = try Licence(url: self.licenceURL)
-                return .licence(licence)
+                if FileManager.default.fileExists(atPath: self.licenceURL.path) {
+                    return .licence(try Licence(url: self.licenceURL))
+                } else if FileManager.default.fileExists(atPath: self.trialLicenceURL.path) {
+                    return .licence(try Licence(url: self.trialLicenceURL))
+                }
             }
             throw Error.invalidAuthenticationMethod
         }
+
+        //MARK: - Trial
+        public func startTrial() async throws -> Licence {
+            guard let bundleIdentifier = Bundle.main.bundleIdentifier else {
+                throw Error.invalidResponse
+            }
+
+            let apiData = try await self.adapter
+                .expecting(.success)
+                .allowedFailures([.noTrialAvailable, .trialUsed])
+                .startTrial(bundleID: bundleIdentifier, device: Device.shared)
+
+            guard let rawLicence = apiData.payload["licence"] as? [String: Any] else {
+                throw Error.invalidLicence
+            }
+
+            let licence = try Licence(json: rawLicence)
+            self.trialState = .redeemed(licence)
+            return licence
+        }
+    }
+}
+
+extension API.V2.Controller {
+    public enum ActivationSource {
+        case none
+        case licence(API.V2.Licence)
+        case website(API.V2.Activation)
+    }
+
+    public enum AuthenticationType {
+        case token
+        case licence
+    }
+
+    public enum TrialState {
+        case available
+        case redeemed(API.V2.Licence)
     }
 }
 

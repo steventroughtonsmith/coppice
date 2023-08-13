@@ -65,6 +65,11 @@ class PreferencesWindowController: NSWindowController {
         self.tabController.selectedTabViewItemIndex = (self.tabController.tabViewItems.count - 1)
     }
 
+    func showCoppiceProTrial() {
+        self.showCoppicePro()
+        self.coppiceProPreferences.coppiceProViewController.showTrialInfo(nil)
+    }
+
     func activate(withLicenceURL url: URL) {
         self.showCoppicePro()
         self.coppiceProPreferences.coppiceProViewController.activate(withLicenceURL: url)

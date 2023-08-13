@@ -24,6 +24,8 @@ protocol APIAdapterV2 {
     func renameDevice(activationID: String, deviceName: String) async throws -> APIData
     func listSubscriptions(bundleID: String, deviceType: Device.DeviceType) async throws -> APIData
     func listDevices(subscriptionID: String, device: Device) async throws -> APIData
+
+    func startTrial(bundleID: String, device: Device)  async throws -> APIData
 }
 
 
@@ -122,6 +124,13 @@ extension API.V2 {
                 "deviceType": device.type.rawValue,
                 "deviceID": device.id,
                 "subscriptionID": subscriptionID,
+            ])
+        }
+
+        func startTrial(bundleID: String, device: Device) async throws -> APIData {
+            return try await self.authenticatedAPICall(endpoint: "start_trial", method: .post, body: [
+                "deviceID": device.id,
+                "bundleID": bundleID,
             ])
         }
 

@@ -18,6 +18,8 @@ protocol CoppiceProContentView: AnyObject {
     var rightActionTitle: String { get }
     var rightActionIcon: NSImage { get }
     func performRightAction(in viewController: CoppiceProViewController)
+
+    var canShowTrial: Bool { get }
 }
 
 class CoppiceProViewController: NSViewController {
@@ -82,6 +84,7 @@ class CoppiceProViewController: NSViewController {
     //MARK: - Footer Buttons
     @IBOutlet weak var leftButton: RoundButton!
     @IBOutlet weak var rightButton: RoundButton!
+    @IBOutlet weak var trialButton: RoundButton!
 
     @IBAction func leftButtonClicked(_ sender: Any) {
         self.currentContentViewController?.performLeftAction(in: self)
@@ -92,18 +95,21 @@ class CoppiceProViewController: NSViewController {
     }
 
     private func updateFooterButtons() {
-        self.leftButton.isHidden = (self.currentContentViewController == nil)
-        self.rightButton.isHidden = (self.currentContentViewController == nil)
-
         guard let contentView = self.currentContentViewController else {
+            self.leftButton.isHidden = true
+            self.rightButton.isHidden = true
             return
         }
 
         self.leftButton.title = contentView.leftActionTitle
         self.leftButton.image = contentView.leftActionIcon
+        self.leftButton.isHidden = contentView.leftActionTitle.count == 0
 
         self.rightButton.title = contentView.rightActionTitle
         self.rightButton.image = contentView.rightActionIcon
+        self.rightButton.isHidden = contentView.rightActionTitle.count == 0
+
+        self.trialButton.isHidden = !(contentView.canShowTrial && self.viewModel.trialAvailable)
     }
 
     //MARK: - Licence URL
@@ -111,6 +117,15 @@ class CoppiceProViewController: NSViewController {
         Task {
             await self.viewModel.activate(withLicenceAtURL: url)
         }
+    }
+
+    //MARK: - Trial
+    private lazy var trialVC: CoppiceProTrialViewController = {
+        return CoppiceProTrialViewController(viewModel: self.viewModel)
+    }()
+
+    @IBAction func showTrialInfo(_ sender: Any?) {
+        self.presentAsSheet(self.trialVC)
     }
 
     //MARK: - Upgrading

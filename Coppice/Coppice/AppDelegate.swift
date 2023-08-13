@@ -128,6 +128,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.preferencesWindow.showWindow(sender)
     }
 
+    @IBAction func showCoppiceProTrial(_ sender: Any?) {
+        self.showPreferences(sender)
+        self.preferencesWindow.showCoppicePro()
+        self.preferencesWindow.coppiceProPreferences.coppiceProViewController.showTrialInfo(sender)
+    }
+
+
     //MARK: - About
     lazy var aboutWindow: AboutWindowController = {
         return AboutWindowController()

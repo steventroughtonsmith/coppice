@@ -32,12 +32,36 @@ class InspectorContainerViewModel: ViewModel {
 
     //MARK: - Pro
     @objc dynamic var isProEnabled = false
+    @objc dynamic var isTrialActive = false
+
+    var trialDaysRemaining: Int = 0
 
     var activationObserver: AnyCancellable?
     private func setupProObservation() {
-        self.activationObserver = CoppiceSubscriptionManager.shared.$state
+        self.subscribers[.subscriptionState] = CoppiceSubscriptionManager.shared.$state
             .sink { [weak self] newValue in
                 self?.isProEnabled = (newValue == .enabled)
             }
+
+        self.subscribers[.trialState] = CoppiceSubscriptionManager.shared.v2Controller.$trialState.sink { [weak self] newState in
+            switch newState {
+            case .available:
+                self?.isTrialActive = false
+            case .redeemed(let licence):
+                self?.isTrialActive = licence.isActive
+                let daysRemaining = Int((licence.subscription.expirationTimestamp - Date().timeIntervalSince1970) / 86400)
+                self?.trialDaysRemaining = min(max(daysRemaining, 0), 30)
+            }
+        }
     }
+
+
+
+    //MARK: - Subscribers
+    private enum SubscriberKey {
+        case subscriptionState
+        case trialState
+    }
+
+    private var subscribers: [SubscriberKey: AnyCancellable] = [:]
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="22146" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="22152" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22146"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22152"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -14,7 +14,8 @@
                 <outlet property="headerBackground" destination="Qor-tl-5dM" id="Cy4-S1-5AJ"/>
                 <outlet property="leftButton" destination="qm6-zH-S5L" id="ev2-Lw-Nwv"/>
                 <outlet property="licenceUpgradeAlert" destination="icx-eV-i9k" id="YcS-Ih-17U"/>
-                <outlet property="rightButton" destination="ENJ-t7-iLp" id="OuO-7p-wOO"/>
+                <outlet property="rightButton" destination="4WS-jG-ym4" id="snQ-dl-PDB"/>
+                <outlet property="trialButton" destination="ENJ-t7-iLp" id="x7q-NE-SI5"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
         </customObject>
@@ -144,28 +145,55 @@
                                                 <action selector="leftButtonClicked:" target="-2" id="592-9a-DH6"/>
                                             </connections>
                                         </button>
-                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ENJ-t7-iLp" customClass="RoundButton" customModule="Coppice" customModuleProvider="target">
-                                            <rect key="frame" x="820" y="8" width="112" height="32"/>
-                                            <buttonCell key="cell" type="push" title="Button B" bezelStyle="rounded" imagePosition="left" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Zda-xi-2z4" customClass="RoundButtonCell" customModule="Coppice" customModuleProvider="target">
-                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                                <imageReference key="image" image="folder.fill" catalog="system" symbolScale="large"/>
-                                            </buttonCell>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="color" keyPath="borderColour">
-                                                    <color key="value" name="RoundButton"/>
-                                                </userDefinedRuntimeAttribute>
-                                            </userDefinedRuntimeAttributes>
-                                            <connections>
-                                                <action selector="rightButtonClicked:" target="-2" id="Pu1-dW-2Qe"/>
-                                            </connections>
-                                        </button>
+                                        <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" ambiguous="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KDt-1h-7X9">
+                                            <rect key="frame" x="721" y="15" width="204" height="20"/>
+                                            <subviews>
+                                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4WS-jG-ym4" customClass="RoundButton" customModule="Coppice" customModuleProvider="target">
+                                                    <rect key="frame" x="-7" y="-7" width="87" height="32"/>
+                                                    <buttonCell key="cell" type="push" title="Button B" bezelStyle="rounded" imagePosition="left" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="WSf-GH-vdM" customClass="RoundButtonCell" customModule="Coppice" customModuleProvider="target">
+                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColour">
+                                                            <color key="value" name="RoundButton"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                    <connections>
+                                                        <action selector="rightButtonClicked:" target="-2" id="BCY-Rw-c7g"/>
+                                                    </connections>
+                                                </button>
+                                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ENJ-t7-iLp" customClass="RoundButton" customModule="Coppice" customModuleProvider="target">
+                                                    <rect key="frame" x="74" y="-7" width="137" height="32"/>
+                                                    <buttonCell key="cell" type="push" title="Try for Free…" bezelStyle="rounded" imagePosition="left" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Zda-xi-2z4" customClass="RoundButtonCell" customModule="Coppice" customModuleProvider="target">
+                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                        <imageReference key="image" image="clock.fill" catalog="system" symbolScale="large"/>
+                                                    </buttonCell>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColour">
+                                                            <color key="value" name="RoundButton"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                    <connections>
+                                                        <action selector="showTrialInfo:" target="-2" id="TAV-XK-COx"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <visibilityPriorities>
+                                                <integer value="1000"/>
+                                                <integer value="1000"/>
+                                            </visibilityPriorities>
+                                            <customSpacing>
+                                                <real value="3.4028234663852886e+38"/>
+                                                <real value="3.4028234663852886e+38"/>
+                                            </customSpacing>
+                                        </stackView>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="KDt-1h-7X9" secondAttribute="trailing" constant="15" id="0l3-Wl-gQ5"/>
                                         <constraint firstItem="qm6-zH-S5L" firstAttribute="top" secondItem="kXH-DM-Odj" secondAttribute="top" constant="15" id="AkF-k8-kz1"/>
-                                        <constraint firstAttribute="trailing" secondItem="ENJ-t7-iLp" secondAttribute="trailing" constant="15" id="G3J-rc-Hpv"/>
                                         <constraint firstItem="qm6-zH-S5L" firstAttribute="leading" secondItem="kXH-DM-Odj" secondAttribute="leading" constant="15" id="UdO-Vy-ZEa"/>
-                                        <constraint firstItem="ENJ-t7-iLp" firstAttribute="centerY" secondItem="kXH-DM-Odj" secondAttribute="centerY" id="XLD-ri-aCQ"/>
                                         <constraint firstItem="qm6-zH-S5L" firstAttribute="centerY" secondItem="kXH-DM-Odj" secondAttribute="centerY" id="a2n-7m-wCH"/>
                                         <constraint firstAttribute="bottom" secondItem="qm6-zH-S5L" secondAttribute="bottom" constant="15" id="svI-z9-ljE"/>
                                     </constraints>
@@ -270,6 +298,7 @@
         <image name="Arrow-Tree-Pro-Left" width="92" height="200.5"/>
         <image name="Arrow-Tree-Pro-Right" width="101.5" height="100.5"/>
         <image name="Pro-Tree-Large" width="132.5" height="117.5"/>
+        <image name="clock.fill" catalog="system" width="20" height="20"/>
         <image name="folder.fill" catalog="system" width="23" height="18"/>
         <namedColor name="RoundButton">
             <color red="0.0" green="0.0" blue="0.0" alpha="0.15000000596046448" colorSpace="custom" customColorSpace="sRGB"/>

@@ -28,10 +28,19 @@ class CoppiceProViewModel {
             self?.updateNeedsLicenceUpgrade()
         }
         self.updateNeedsLicenceUpgrade()
+        if case .available = self.subscriptionManager.v2Controller.trialState {
+            self.trialAvailable = false
+        } else {
+            self.trialAvailable = true
+        }
     }
 
 
     @Published private(set) var activation: Activation?
+
+    var canAccessAccount: Bool {
+        return self.subscriptionManager.v2Controller.authenticationType == .token
+    }
 
     private func handleStateChange(newValue: CoppiceSubscriptionManager.State) {
         guard newValue == .enabled else {
@@ -168,7 +177,8 @@ class CoppiceProViewModel {
         guard
             self.subscriptionManager.state == .enabled,
             self.subscriptionManager.activeAPIVersion == .v2,
-            case .website = self.subscriptionManager.v2Controller.activationSource
+            case .website(let activation) = self.subscriptionManager.v2Controller.activationSource,
+            activation.subscription.renewalStatus != .trial
         else {
             return false
         }
@@ -181,6 +191,25 @@ class CoppiceProViewModel {
                 return
             }
             try await self.subscriptionManager.v2Controller.renameDevice(to: newName)
+        } catch {
+            self.presentError(error)
+        }
+    }
+
+    //MARK: - Trial
+    @Published var trialAvailable: Bool = true
+
+    var trialEnabled: Bool {
+        return (self.activation?.renewalStatus == .trial)
+    }
+
+    func startTrial() async {
+        do {
+            let licence = try await self.subscriptionManager.v2Controller.startTrial()
+            try self.subscriptionManager.v2Controller.saveLicence(licence)
+            try await self.subscriptionManager.v2Controller.activate(subscriptionID: licence.subscription.id)
+            self.currentContentView = .activated
+            self.trialAvailable = false
         } catch {
             self.presentError(error)
         }
@@ -234,6 +263,12 @@ class CoppiceProViewModel {
                 format = NSLocalizedString("(will renew on %@)", comment: "'will renew on <date>' active subscription info label")
             case .cancelled, .failed:
                 format = NSLocalizedString("(will expire on %@)", comment: "'will expire on <date>' active subscription that will expire (due to billing failure or the user cancelling) info label")
+            case .trial:
+                let daysRemaining = (expirationTimestamp - Date().timeIntervalSince1970) / 86400
+                if daysRemaining == 1 {
+                    return NSLocalizedString("(1 day remaining)", comment: "trial 1 day remaining")
+                }
+                return String(format: NSLocalizedString("(%d days remaining)", comment: "trial days remaining plural"), Int(daysRemaining))
             default:
                 return ""
             }

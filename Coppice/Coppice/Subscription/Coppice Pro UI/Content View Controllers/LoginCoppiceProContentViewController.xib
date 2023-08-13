@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="22146" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="22152" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22146"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22152"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -21,7 +21,7 @@
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="k2g-Bi-iPz">
                     <rect key="frame" x="0.0" y="66" width="250" height="92"/>
                     <subviews>
-                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nqk-WD-tIJ">
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nqk-WD-tIJ">
                             <rect key="frame" x="-2" y="76" width="39" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="Email" id="Vii-B4-LuF">
                                 <font key="font" metaFont="systemSemibold" size="13"/>
@@ -29,7 +29,7 @@
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pCT-lS-Cyn">
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pCT-lS-Cyn">
                             <rect key="frame" x="-2" y="26" width="66" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="Password" id="PrY-Ai-EsP">
                                 <font key="font" metaFont="systemSemibold" size="13"/>
@@ -37,7 +37,7 @@
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CkH-uj-oWG">
+                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CkH-uj-oWG">
                             <rect key="frame" x="0.0" y="50" width="250" height="22"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" bezelStyle="round" id="5ok-Uh-6S4">
                                 <font key="font" metaFont="system"/>
@@ -53,7 +53,7 @@
                                 <outlet property="nextKeyView" destination="wVk-iW-s06" id="hGb-6c-rnl"/>
                             </connections>
                         </textField>
-                        <secureTextField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wVk-iW-s06">
+                        <secureTextField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wVk-iW-s06">
                             <rect key="frame" x="0.0" y="0.0" width="250" height="22"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="250" id="A50-eB-aKh"/>

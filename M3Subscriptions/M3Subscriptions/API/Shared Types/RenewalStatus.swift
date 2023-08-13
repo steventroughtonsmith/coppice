@@ -11,6 +11,7 @@ import Foundation
 public enum RenewalStatus: String {
     case unknown
     case renew
+    case trial
     case cancelled
     case failed
 }
