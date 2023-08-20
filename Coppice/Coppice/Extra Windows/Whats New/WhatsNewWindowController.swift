@@ -57,6 +57,6 @@ class WhatsNewWindowController: NSWindowController {
     }
 
     @IBAction func seeReleaseNotes(_ sender: Any) {
-        NSWorkspace.shared.open(URL(string: "https://coppiceapp.com/release_notes")!)
+        NSWorkspace.shared.open(.releaseNotes)
     }
 }

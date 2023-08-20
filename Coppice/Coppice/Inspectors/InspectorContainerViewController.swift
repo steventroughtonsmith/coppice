@@ -102,7 +102,7 @@ class InspectorContainerViewController: NSViewController, SplitViewContainable {
     private var trialRemainingBoxWidthConstraint: NSLayoutConstraint?
 
     private func updateTrialView() {
-        let daysRemaining = 12 //self.viewModel.trialDaysRemaining
+        let daysRemaining = self.viewModel.trialDaysRemaining
         if daysRemaining == 1 {
             self.trialRemainingLabel.stringValue = "1 day left"
         } else {
@@ -113,7 +113,6 @@ class InspectorContainerViewController: NSViewController, SplitViewContainable {
 
         self.trialRemainingBoxWidthConstraint = self.trialRemainingBox.widthAnchor.constraint(equalTo: self.trialContainerView.widthAnchor, multiplier: Double(30 - daysRemaining) / 30)
         self.trialRemainingBoxWidthConstraint?.isActive = true
-
     }
 
     //MARK: - Pro

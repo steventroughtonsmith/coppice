@@ -18,7 +18,7 @@ extension API.V2 {
 
         init(url: URL) throws {
             let data = try Data(contentsOf: url)
-            guard 
+            guard
                 let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
                 let apiData = APIData(json: json)
             else {

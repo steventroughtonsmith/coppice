@@ -241,14 +241,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         guard let url = URL(string: "https://coppiceapp.com/blog") else {
             return
         }
-        NSWorkspace.shared.open(url)
+        NSWorkspace.shared.open(.blog)
     }
 
-    @IBAction func openCoppiceTwitter(_ sender: Any?) {
-        guard let url = URL(string: "https://twitter.com/coppiceapp") else {
-            return
-        }
-        NSWorkspace.shared.open(url)
+    @IBAction func openMCubedMastodon(_ sender: Any?) {
+        NSWorkspace.shared.open(.socials)
     }
 
     @IBAction func showHelpViewer(_ sender: Any?) {

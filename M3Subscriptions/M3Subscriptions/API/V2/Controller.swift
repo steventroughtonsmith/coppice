@@ -207,7 +207,7 @@ extension API.V2 {
                 .renameDevice(activationID: activation.activationID, deviceName: name)
 
             let newActivation = try Activation(apiData: apiData)
-            if let trialLicence = try? Licence(url: self.trialLicenceURL), 
+            if let trialLicence = try? Licence(url: self.trialLicenceURL),
                trialLicence.isActive == false,
                newActivation.subscription.id == trialLicence.subscription.id
             {

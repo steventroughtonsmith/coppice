@@ -83,9 +83,6 @@ class CoppiceSubscriptionManager: NSObject {
     }
     #endif
 
-    //MARK: - Trial
-    
-
 
     //MARK: - API Version
     enum APIVersion {

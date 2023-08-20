@@ -33,8 +33,10 @@ extension URL {
     static let privacyPolicy = URL(string: "https://mcubedsw.com/privacy")!
     static let coppicePro = URL(string: "https://mcubedsw.com/coppice#pro")!
     static let mcubedAccount = URL(string: "https://mcubedsw.com/account")!
+    static let releaseNotes = URL(string: "https://mcubedsw.com/coppice/release_notes")!
+    static let socials = URL(string: "https://mastodon.social/@mcubedsw")!
+    static let blog = URL(string: "https://mcubedsw.com/blog")!
 }
-
 
 
 enum SidebarSize: String, CaseIterable {
