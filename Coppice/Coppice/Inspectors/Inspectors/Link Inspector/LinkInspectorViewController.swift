@@ -61,6 +61,7 @@ class LinkInspectorViewController: BaseInspectorViewController {
 
     func startEditingLink() {
         self.view.window?.makeFirstResponder(self.linkControl.textField)
+        self.view.scrollToVisible(self.view.bounds)
     }
 
     func clearLink() {
