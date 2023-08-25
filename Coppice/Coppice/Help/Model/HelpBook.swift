@@ -29,39 +29,36 @@ class HelpBook: Codable {
     class Topic: Codable, Equatable {
         var id: String
         var title: String
-        var dateUpdated: Date
-        var dateCreated: Date?
+        var versionIntroduced: String
+        var versionUpdated: String
         var tags: [String] = []
-        var appVersion: String
         weak var helpBook: HelpBook?
 
         enum CodingKeys: String, CodingKey {
             case id
             case title
-            case dateUpdated
-            case dateCreated
+            case versionIntroduced
+            case versionUpdated
             case tags
-            case appVersion
         }
 
         static func == (lhs: Topic, rhs: Topic) -> Bool {
             return lhs.id == rhs.id
         }
 
-        init(id: String, title: String, dateUpdated: Date, dateCreated: Date?, tags: [String], appVersion: String) {
+        init(id: String, title: String, versionIntroduced: String, versionUpdated: String, tags: [String]) {
             self.id = id
             self.title = title
-            self.dateUpdated = dateUpdated
-            self.dateCreated = dateCreated
+            self.versionIntroduced = versionIntroduced
+            self.versionUpdated = versionUpdated
             self.tags = tags
-            self.appVersion = appVersion
         }
 
         var isNewInCurrentVersion: Bool {
             guard let versionString = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String else {
                 return false
             }
-            return versionString.hasPrefix(self.appVersion)
+            return versionString.hasPrefix(self.versionIntroduced)
         }
     }
 
@@ -98,7 +95,7 @@ class HelpBook: Codable {
     }
 
     lazy var home: Topic = {
-        let topic = HelpBook.Topic(id: "_home", title: "Home", dateUpdated: Date(), dateCreated: nil, tags: [], appVersion: "2020.1")
+        let topic = HelpBook.Topic(id: "_home", title: "Home", versionIntroduced: "2020.1", versionUpdated: "2020.1", tags: [])
         topic.helpBook = self
         return topic
     }()

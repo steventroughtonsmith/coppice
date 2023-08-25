@@ -32,11 +32,15 @@ class APITestCase: XCTestCase {
             return
         }
         let key = try String(contentsOf: publicKeyURL)
+        #if TEST
         TEST_OVERRIDES.publicKey = key
+        #endif
     }
 
     override func tearDownWithError() throws {
+        #if TEST
         TEST_OVERRIDES.publicKey = nil
+        #endif
         let testDirectoryPath = try self.temporaryTestDirectory(createIfNeeded: false)
         if FileManager.default.fileExists(atPath: testDirectoryPath.path) {
             try FileManager.default.removeItem(at: testDirectoryPath)
