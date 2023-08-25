@@ -368,11 +368,11 @@ class ModelReaderTests: XCTestCase {
             "canvases": [
                 ["id": Canvas.modelID(with: UUID()).stringRepresentation],
             ],
-            "pages": [],
-            "canvasPages": [],
-            "folders": [],
-            "canvasLinks": [],
-            "pageHierarchies": [],
+            "pages": [[String: Any]](),
+            "canvasPages": [[String: Any]](),
+            "folders": [[String: Any]](),
+            "canvasLinks": [[String: Any]](),
+            "pageHierarchies": [[String: Any]](),
             "version": Plist.allPlists.last!.version,
         ]
         let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
@@ -389,14 +389,14 @@ class ModelReaderTests: XCTestCase {
 
     func test_errors_throwsModelObjectUpdateErrorIfPageUpdateFailed() {
         let plist: [String: Any] = [
-            "canvases": [],
+            "canvases": [[String: Any]](),
             "pages": [
                 ["id": Page.modelID(with: UUID()).stringRepresentation],
             ],
-            "canvasPages": [],
-            "folders": [],
-            "canvasLinks": [],
-            "pageHierarchies": [],
+            "canvasPages": [[String: Any]](),
+            "folders": [[String: Any]](),
+            "canvasLinks": [[String: Any]](),
+            "pageHierarchies": [[String: Any]](),
             "version": Plist.allPlists.last!.version,
         ]
         let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
@@ -413,14 +413,14 @@ class ModelReaderTests: XCTestCase {
 
     func test_errors_throwsModelObjectUpdateErrorIfCanvasPageUpdateFailed() {
         let plist: [String: Any] = [
-            "canvases": [],
-            "pages": [],
+            "canvases": [[String: Any]](),
+            "pages": [[String: Any]](),
             "canvasPages": [
                 ["id": CanvasPage.modelID(with: UUID()).stringRepresentation],
             ],
-            "folders": [],
-            "canvasLinks": [],
-            "pageHierarchies": [],
+            "folders": [[String: Any]](),
+            "canvasLinks": [[String: Any]](),
+            "pageHierarchies": [[String: Any]](),
             "version": Plist.allPlists.last!.version,
         ]
         let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
@@ -437,14 +437,14 @@ class ModelReaderTests: XCTestCase {
 
     func test_errors_throwsModelObjectUpdateErrorIfFolderUpdateFailed() {
         let plist: [String: Any] = [
-            "canvases": [],
-            "pages": [],
-            "canvasPages": [],
+            "canvases": [[String: Any]](),
+            "pages": [[String: Any]](),
+            "canvasPages": [[String: Any]](),
             "folders": [
                 ["id": Folder.modelID(with: UUID()).stringRepresentation],
             ],
-            "canvasLinks": [],
-            "pageHierarchies": [],
+            "canvasLinks": [[String: Any]](),
+            "pageHierarchies": [[String: Any]](),
             "version": Plist.allPlists.last!.version,
         ]
         let plistData = try! PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)

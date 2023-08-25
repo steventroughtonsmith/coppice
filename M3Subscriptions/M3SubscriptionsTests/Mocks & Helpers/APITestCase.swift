@@ -60,7 +60,7 @@ class APITestCase: XCTestCase {
         //See https://stackoverflow.com/questions/10579985/how-can-i-get-seckeyref-from-der-pem-file
         let options: [String: Any] = [kSecImportExportPassphrase as String: "password"]
         var error: Unmanaged<CFError>?
-        var itemsArray: CFArray? = [] as CFArray
+        var itemsArray: CFArray? = [Any]() as CFArray
         var privateKey: SecKey?
         let importResult = SecPKCS12Import(p12Data as CFData, options as CFDictionary, &itemsArray)
         guard

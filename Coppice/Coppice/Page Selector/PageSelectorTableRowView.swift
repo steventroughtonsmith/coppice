@@ -17,7 +17,7 @@ class PageSelectorTableRowView: NSTableRowView {
     var cornerRadius: CGFloat = 5
 
     override func drawSelection(in dirtyRect: NSRect) {
-        let color: NSColor = self.isEmphasized ? .selectedContentBackgroundColor : .secondarySelectedControlColor
+        let color: NSColor = self.isEmphasized ? .selectedContentBackgroundColor : .unemphasizedSelectedContentBackgroundColor
         color.setFill()
         NSBezierPath(roundedRect: dirtyRect, xRadius: self.cornerRadius, yRadius: self.cornerRadius).fill()
     }

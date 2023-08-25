@@ -76,7 +76,7 @@ extension API.V2 {
             menu.addItem(self.clearApiResponseMenuItem(endpoint: "subscriptions"))
             menu.addItem(self.apiResponseMenuItem(title: "1 Subscription", .success, endpoint: "subscriptions", payload: [
                 "subscriptions": [
-                    ["id": "sub1", "name": "Subscription 1", "expirationTimestamp": Int(Date(timeIntervalSinceNow: 86400 * 180).timeIntervalSince1970), "renewalStatus": "renew", "maxDeviceCount": 3, "currentDeviceCount": 2],
+                    ["id": "sub1", "name": "Subscription 1", "expirationTimestamp": Int(Date(timeIntervalSinceNow: 86400 * 180).timeIntervalSince1970), "renewalStatus": "renew", "maxDeviceCount": 3, "currentDeviceCount": 2] as [String: Any],
                 ],
             ]))
 
@@ -85,7 +85,7 @@ extension API.V2 {
                     ["id": "sub1", "name": "Subscription 1", "expirationTimestamp": Int(Date(timeIntervalSinceNow: 86400 * 180).timeIntervalSince1970), "renewalStatus": "renew", "maxDeviceCount": 3, "currentDeviceCount": 2],
                     ["id": "sub2", "name": "Subscription 2", "expirationTimestamp": Int(Date(timeIntervalSinceNow: 86400 * 30).timeIntervalSince1970), "renewalStatus": "cancelled", "maxDeviceCount": 1, "currentDeviceCount": 1],
                     ["id": "sub3", "name": "Subscription 3", "expirationTimestamp": Int(Date(timeIntervalSinceNow: 86400 * 360).timeIntervalSince1970), "renewalStatus": "failed", "maxDeviceCount": 4, "currentDeviceCount": 3],
-                ],
+                ] as [[String: Any]],
             ]))
 
             return menu
@@ -102,7 +102,7 @@ extension API.V2 {
 
             menu.addItem(self.apiResponseMenuItem(title: "2 devices", .success, endpoint: "devices", payload: [
                 "devices": [
-                    ["activationID": "device1", "activationTimestamp": Int(Date(timeIntervalSinceNow: -10).timeIntervalSince1970), "name": "Device 1"],
+                    ["activationID": "device1", "activationTimestamp": Int(Date(timeIntervalSinceNow: -10).timeIntervalSince1970), "name": "Device 1"] as [String: Any],
                     ["activationID": "device2", "activationTimestamp": Int(Date(timeIntervalSinceNow: -100 * 86400).timeIntervalSince1970), "name": "Device 2"],
                 ],
                 "maxDeviceCount": 3,
@@ -110,7 +110,7 @@ extension API.V2 {
 
             menu.addItem(self.apiResponseMenuItem(title: "2 devices (no names0", .success, endpoint: "devices", payload: [
                 "devices": [
-                    ["activationID": "device1", "activationTimestamp": Int(Date(timeIntervalSinceNow: -10).timeIntervalSince1970)],
+                    ["activationID": "device1", "activationTimestamp": Int(Date(timeIntervalSinceNow: -10).timeIntervalSince1970)] as [String: Any],
                     ["activationID": "device2", "activationTimestamp": Int(Date(timeIntervalSinceNow: -100 * 86400).timeIntervalSince1970)],
                 ],
                 "maxDeviceCount": 3,
@@ -118,7 +118,7 @@ extension API.V2 {
 
             menu.addItem(self.apiResponseMenuItem(title: "3 devices", .success, endpoint: "devices", payload: [
                 "devices": [
-                    ["activationID": "device1", "activationTimestamp": Int(Date(timeIntervalSinceNow: -10).timeIntervalSince1970), "name": "Device 1"],
+                    ["activationID": "device1", "activationTimestamp": Int(Date(timeIntervalSinceNow: -10).timeIntervalSince1970), "name": "Device 1"] as [String: Any],
                     ["activationID": "device2", "activationTimestamp": Int(Date(timeIntervalSinceNow: -100 * 86400).timeIntervalSince1970), "name": "Device 2"],
                     ["activationID": "device3", "activationTimestamp": Int(Date(timeIntervalSinceNow: -200 * 86400).timeIntervalSince1970), "name": "Device 3"],
                 ],
@@ -127,7 +127,7 @@ extension API.V2 {
 
             menu.addItem(self.apiResponseMenuItem(title: "3 devices (including current)", .success, endpoint: "devices", payload: [
                 "devices": [
-                    ["activationID": "device1", "activationTimestamp": Int(Date(timeIntervalSinceNow: -10).timeIntervalSince1970), "name": "Device 1"],
+                    ["activationID": "device1", "activationTimestamp": Int(Date(timeIntervalSinceNow: -10).timeIntervalSince1970), "name": "Device 1"] as [String: Any],
                     ["activationID": "device2", "activationTimestamp": Int(Date(timeIntervalSinceNow: -100 * 86400).timeIntervalSince1970), "name": "Device 2", "isCurrent": true],
                     ["activationID": "device3", "activationTimestamp": Int(Date(timeIntervalSinceNow: -200 * 86400).timeIntervalSince1970), "name": "Device 3"],
                 ],
@@ -144,35 +144,35 @@ extension API.V2 {
                 "device": ["name": "My Cool Mac"],
                 "subscription": [
                     "id": "sub1", "name": "Subscription 1", "expirationTimestamp": Int(Date(timeIntervalSinceNow: 86400 * 180).timeIntervalSince1970), "renewalStatus": "renew", "maxDeviceCount": 3,
-                ],
+                ] as [String: Any],
             ]))
             menu.addItem(self.apiResponseMenuItem(title: "Expired", .active, endpoint: "activate", payload: [
                 "activationID": "activation1",
                 "device": ["name": "My Cool Mac"],
                 "subscription": [
                     "id": "sub1", "name": "Subscription 1", "expirationTimestamp": Int(Date().timeIntervalSince1970), "renewalStatus": "renew", "maxDeviceCount": 3,
-                ],
+                ] as [String: Any],
             ]))
             menu.addItem(self.apiResponseMenuItem(title: "Renewing Soon", .active, endpoint: "activate", payload: [
                 "activationID": "activation1",
                 "device": ["name": "My Cool Mac"],
                 "subscription": [
                     "id": "sub1", "name": "Subscription 1", "expirationTimestamp": Int(Date(timeIntervalSinceNow: 86400 * 15).timeIntervalSince1970), "renewalStatus": "renew", "maxDeviceCount": 3,
-                ],
+                ] as [String: Any],
             ]))
             menu.addItem(self.apiResponseMenuItem(title: "Cancelled", .active, endpoint: "activate", payload: [
                 "activationID": "activation1",
                 "device": ["name": "My Cool Mac"],
                 "subscription": [
                     "id": "sub1", "name": "Subscription 1", "expirationTimestamp": Int(Date(timeIntervalSinceNow: 86400 * 180).timeIntervalSince1970), "renewalStatus": "cancelled", "maxDeviceCount": 3,
-                ],
+                ] as [String: Any],
             ]))
             menu.addItem(self.apiResponseMenuItem(title: "Billing Failed", .active, endpoint: "activate", payload: [
                 "activationID": "activation1",
                 "device": ["name": "My Cool Mac"],
                 "subscription": [
                     "id": "sub1", "name": "Subscription 1", "expirationTimestamp": Int(Date(timeIntervalSinceNow: 86400 * 15).timeIntervalSince1970), "renewalStatus": "failed", "maxDeviceCount": 3,
-                ],
+                ] as [String: Any],
             ]))
 
             return menu
@@ -186,35 +186,35 @@ extension API.V2 {
                 "device": ["name": "My Cool Mac"],
                 "subscription": [
                     "id": "sub1", "name": "Subscription 1", "expirationTimestamp": Int(Date(timeIntervalSinceNow: 86400 * 180).timeIntervalSince1970), "renewalStatus": "renew", "maxDeviceCount": 3,
-                ],
+                ] as [String: Any],
             ]))
             menu.addItem(self.apiResponseMenuItem(title: "Expired", .active, endpoint: "check", payload: [
                 "activationID": "activation1",
                 "device": ["name": "My Cool Mac"],
                 "subscription": [
                     "id": "sub1", "name": "Subscription 1", "expirationTimestamp": Int(Date().timeIntervalSince1970), "renewalStatus": "renew", "maxDeviceCount": 3,
-                ],
+                ] as [String: Any],
             ]))
             menu.addItem(self.apiResponseMenuItem(title: "Renewing Soon", .active, endpoint: "check", payload: [
                 "activationID": "activation1",
                 "device": ["name": "My Cool Mac"],
                 "subscription": [
                     "id": "sub1", "name": "Subscription 1", "expirationTimestamp": Int(Date(timeIntervalSinceNow: 86400 * 15).timeIntervalSince1970), "renewalStatus": "renew", "maxDeviceCount": 3,
-                ],
+                ] as [String: Any],
             ]))
             menu.addItem(self.apiResponseMenuItem(title: "Cancelled", .active, endpoint: "check", payload: [
                 "activationID": "activation1",
                 "device": ["name": "My Cool Mac"],
                 "subscription": [
                     "id": "sub1", "name": "Subscription 1", "expirationTimestamp": Int(Date(timeIntervalSinceNow: 86400 * 180).timeIntervalSince1970), "renewalStatus": "cancelled", "maxDeviceCount": 3,
-                ],
+                ] as [String: Any],
             ]))
             menu.addItem(self.apiResponseMenuItem(title: "Billing Failed", .active, endpoint: "check", payload: [
                 "activationID": "activation1",
                 "device": ["name": "My Cool Mac"],
                 "subscription": [
                     "id": "sub1", "name": "Subscription 1", "expirationTimestamp": Int(Date(timeIntervalSinceNow: 86400 * 15).timeIntervalSince1970), "renewalStatus": "failed", "maxDeviceCount": 3,
-                ],
+                ] as [String: Any],
             ]))
 
             return menu

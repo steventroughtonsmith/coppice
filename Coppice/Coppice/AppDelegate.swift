@@ -238,9 +238,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @IBAction func openCoppiceBlog(_ sender: Any?) {
-        guard let url = URL(string: "https://coppiceapp.com/blog") else {
-            return
-        }
         NSWorkspace.shared.open(.blog)
     }
 

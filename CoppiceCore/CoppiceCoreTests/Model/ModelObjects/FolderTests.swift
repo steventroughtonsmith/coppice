@@ -517,7 +517,7 @@ class FolderTests: XCTestCase {
             .id: folder.id,
             .Folder.title: "Cool Pages",
             .Folder.dateCreated: Date(timeIntervalSinceReferenceDate: 3101),
-            .Folder.contents: [1, 4, "5"],
+            .Folder.contents: [1, 4, "5"] as [Any],
         ]
 
         XCTAssertThrowsError(try folder.update(fromPlistRepresentation: plist)) {
@@ -533,7 +533,7 @@ class FolderTests: XCTestCase {
             .id: folder.id,
             .Folder.title: "Cool Pages",
             .Folder.dateCreated: Date(timeIntervalSinceReferenceDate: 3102),
-            .Folder.contents: [object1.id, "baz", object2.id],
+            .Folder.contents: [object1.id, "baz", object2.id] as [Any],
         ]
 
         XCTAssertThrowsError(try folder.update(fromPlistRepresentation: plist)) {

@@ -34,7 +34,7 @@ class LicenceCoppiceProContentViewController: NSViewController {
 
     private func activate(with url: URL) {
         Task {
-            try await self.viewModel.activate(withLicenceAtURL: url)
+            await self.viewModel.activate(withLicenceAtURL: url)
         }
     }
 }

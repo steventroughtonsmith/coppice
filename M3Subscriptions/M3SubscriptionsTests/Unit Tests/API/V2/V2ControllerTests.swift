@@ -15,12 +15,14 @@ final class V2ControllerTests: APITestCase {
     var mockAdapter: MockAPIAdapterV2!
     var licenceURL: URL!
     var activationURL: URL!
+    var trialLicenceURL: URL!
     var fakeKeychain: FakeKeychain!
 
     override func setUpWithError() throws {
         try super.setUpWithError()
         self.licenceURL = try self.temporaryTestDirectory().appendingPathComponent("Licence.coppicelicence")
         self.activationURL = try self.temporaryTestDirectory().appendingPathComponent("Activation")
+        self.trialLicenceURL = try self.temporaryTestDirectory().appendingPathExtension("Trial.coppicelicence")
         self.mockAdapter = MockAPIAdapterV2()
         self.fakeKeychain = FakeKeychain()
 
@@ -28,13 +30,14 @@ final class V2ControllerTests: APITestCase {
 
         self.controller = API.V2.Controller(licenceURL: self.licenceURL,
                                             activationURL: self.activationURL,
+                                            trialLicenceURL: self.trialLicenceURL,
                                             adapter: self.mockAdapter,
                                             keychain: self.fakeKeychain)
     }
 
     //MARK: - init()
     func test_init_setsActivationSourceToNoneIfNoLicenceOrActivationFile() async throws {
-        let controller = API.V2.Controller(licenceURL: self.licenceURL, activationURL: self.activationURL)
+        let controller = API.V2.Controller(licenceURL: self.licenceURL, activationURL: self.activationURL, trialLicenceURL: self.trialLicenceURL)
 
         guard case .none = controller.activationSource else {
             XCTFail("Activation source not .none")
@@ -54,11 +57,11 @@ final class V2ControllerTests: APITestCase {
         let data = try JSONSerialization.data(withJSONObject: [
             "payload": licencePayload,
             "signature": "invalidSignature",
-        ])
+        ] as [String: Any])
 
         try data.write(to: self.licenceURL)
 
-        let controller = API.V2.Controller(licenceURL: self.licenceURL, activationURL: self.activationURL)
+        let controller = API.V2.Controller(licenceURL: self.licenceURL, activationURL: self.activationURL, trialLicenceURL: self.trialLicenceURL)
         guard case .none = controller.activationSource else {
             XCTFail("Activation source not .none")
             return
@@ -77,11 +80,11 @@ final class V2ControllerTests: APITestCase {
         let data = try JSONSerialization.data(withJSONObject: [
             "payload": licencePayload,
             "signature": try Self.signature(forPayload: licencePayload),
-        ])
+        ] as [String: Any])
 
         try data.write(to: self.licenceURL)
 
-        let controller = API.V2.Controller(licenceURL: self.licenceURL, activationURL: self.activationURL)
+        let controller = API.V2.Controller(licenceURL: self.licenceURL, activationURL: self.activationURL, trialLicenceURL: self.trialLicenceURL)
         guard case .licence(let actualLicence) = controller.activationSource else {
             XCTFail("Activation source not .licence: \(controller.activationSource)")
             return
@@ -99,7 +102,7 @@ final class V2ControllerTests: APITestCase {
         activationData.signature = "invalidsignature"
         try activationData.write(to: self.activationURL)
 
-        let controller = API.V2.Controller(licenceURL: self.licenceURL, activationURL: self.activationURL)
+        let controller = API.V2.Controller(licenceURL: self.licenceURL, activationURL: self.activationURL, trialLicenceURL: self.trialLicenceURL)
         guard case .none = controller.activationSource else {
             XCTFail("Activation source not .none")
             return
@@ -110,7 +113,7 @@ final class V2ControllerTests: APITestCase {
         let activationData = self.standardActivationData()
         try activationData.write(to: self.activationURL)
 
-        let controller = API.V2.Controller(licenceURL: self.licenceURL, activationURL: self.activationURL)
+        let controller = API.V2.Controller(licenceURL: self.licenceURL, activationURL: self.activationURL, trialLicenceURL: self.trialLicenceURL)
         guard case .website(let activation) = controller.activationSource else {
             XCTFail("Activation source not .website")
             return
@@ -131,7 +134,7 @@ final class V2ControllerTests: APITestCase {
         let data = try JSONSerialization.data(withJSONObject: [
             "payload": licencePayload,
             "signature": try Self.signature(forPayload: licencePayload),
-        ])
+        ] as [String: Any])
 
         try data.write(to: self.licenceURL)
 
@@ -139,7 +142,7 @@ final class V2ControllerTests: APITestCase {
         activationData.signature = "invalidsignature"
         try activationData.write(to: self.activationURL)
 
-        let controller = API.V2.Controller(licenceURL: self.licenceURL, activationURL: self.activationURL)
+        let controller = API.V2.Controller(licenceURL: self.licenceURL, activationURL: self.activationURL, trialLicenceURL: self.trialLicenceURL)
         guard case .licence(let actualLicence) = controller.activationSource else {
             XCTFail("Activation source not .licence: \(controller.activationSource)")
             return
@@ -164,14 +167,14 @@ final class V2ControllerTests: APITestCase {
         let data = try JSONSerialization.data(withJSONObject: [
             "payload": licencePayload,
             "signature": try Self.signature(forPayload: licencePayload),
-        ])
+        ] as [String: Any])
 
         try data.write(to: self.licenceURL)
 
         let activationData = self.standardActivationData()
         try activationData.write(to: self.activationURL)
 
-        let controller = API.V2.Controller(licenceURL: self.licenceURL, activationURL: self.activationURL)
+        let controller = API.V2.Controller(licenceURL: self.licenceURL, activationURL: self.activationURL, trialLicenceURL: self.trialLicenceURL)
         guard case .website(let activation) = controller.activationSource else {
             XCTFail("Activation source not .website")
             return
@@ -303,10 +306,10 @@ final class V2ControllerTests: APITestCase {
         XCTAssertEqual(arguments.1, "foobarbaz")
     }
 
-    func test_activate_throwsNotActivatedIfResponseIsNotActive() async throws {
+    func test_activate_throwsInvalidResponseIfResponseIsNotActive() async throws {
         self.mockAdapter.activateMock.returnValue = APIData.deactivated()
         await XCTAssertThrowsErrorAsync(try await self.controller.activate()) { error in
-            XCTAssertEqualsV2Error(error, .notActivated)
+            XCTAssertEqualsV2Error(error, .invalidResponse)
         }
     }
 
@@ -376,13 +379,13 @@ final class V2ControllerTests: APITestCase {
         XCTAssertEqual(arguments.1.type, .mac)
     }
 
-    func test_check_throwsNotActivatedIfResponseIsNotActive() async throws {
+    func test_check_throwsInvalidResponseIfResponseIsNotValid() async throws {
         let activation = try self.standardActivation()
         self.controller.setActivationSource(.website(activation))
 
-        self.mockAdapter.checkMock.returnValue = APIData.noDeviceFound()
+        self.mockAdapter.checkMock.returnValue = APIData.deactivated()
         await XCTAssertThrowsErrorAsync(try await self.controller.check()) { error in
-            XCTAssertEqualsV2Error(error, .notActivated)
+            XCTAssertEqualsV2Error(error, .invalidResponse)
         }
     }
 
@@ -624,13 +627,13 @@ final class V2ControllerTests: APITestCase {
         XCTAssertEqual(arguments.1, "My Awesome Device")
     }
 
-    func test_renameDevice_throwsNoActivatedIfResponseIsNotActive() async throws {
+    func test_renameDevice_throwsInvalidResponseIfResponseIsNotValid() async throws {
         let activation = try self.standardActivation()
         self.controller.setActivationSource(.website(activation))
 
-        self.mockAdapter.renameDeviceMock.returnValue = APIData.noDeviceFound()
+        self.mockAdapter.renameDeviceMock.returnValue = APIData.deactivated()
         await XCTAssertThrowsErrorAsync(try await self.controller.renameDevice(to: "My Awesome Device")) { error in
-            XCTAssertEqualsV2Error(error, .notActivated)
+            XCTAssertEqualsV2Error(error, .invalidResponse)
         }
     }
 
@@ -729,7 +732,7 @@ final class V2ControllerTests: APITestCase {
 
     func test_deactivate_throwsInvalidResponseIfResponseIsNotDeactivated() async throws {
         self.controller.setActivationSource(.website(try self.standardActivation()))
-        self.mockAdapter.deactivateMock.returnValue = APIData.noDeviceFound()
+        self.mockAdapter.deactivateMock.returnValue = APIData.subscriptionExpired()
         await XCTAssertThrowsErrorAsync(try await self.controller.deactivate()) { error in
             XCTAssertEqualsV2Error(error, .invalidResponse)
         }
@@ -779,7 +782,7 @@ final class V2ControllerTests: APITestCase {
         let data = try JSONSerialization.data(withJSONObject: [
             "payload": licencePayload,
             "signature": try Self.signature(forPayload: licencePayload),
-        ])
+        ] as [String: Any])
 
         let licenceString = data.base64EncodedString()
         let licence = try Licence(url: URL(string: "coppice://activate?licence=\(licenceString)")!)

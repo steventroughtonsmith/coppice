@@ -63,13 +63,7 @@ class ImagePageLinkManager: PageLinkManager {
         })
 
         do {
-            if #available(macOS 12, *) {
-                detectionRequest.recognitionLanguages = try detectionRequest.supportedRecognitionLanguages()
-            } else if #available(macOS 11, *) {
-                detectionRequest.recognitionLanguages = try VNRecognizeTextRequest.supportedRecognitionLanguages(for: .accurate, revision: VNRecognizeTextRequestRevision2)
-            } else {
-                detectionRequest.recognitionLanguages = try VNRecognizeTextRequest.supportedRecognitionLanguages(for: .accurate, revision: VNRecognizeTextRequestRevision1)
-            }
+            detectionRequest.recognitionLanguages = try detectionRequest.supportedRecognitionLanguages()
         } catch {
             //Guess we're not recognising other languages today
         }

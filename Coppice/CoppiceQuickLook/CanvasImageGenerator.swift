@@ -41,7 +41,7 @@ class CanvasImageGenerator {
         case .dark:
             color = NSColor(named: "CanvasBackgroundDark") ?? .darkGray
         case .auto:
-            if (NSAppearance.current.name == .darkAqua) {
+            if (NSAppearance.currentDrawing().name == .darkAqua) {
                 color = NSColor(named: "CanvasBackgroundDark") ?? .darkGray
             } else {
                 color = NSColor(named: "CanvasBackgroundLight") ?? .lightGray
@@ -62,7 +62,7 @@ class CanvasImageGenerator {
         case .dark:
             color = NSColor(named: "ArrowColourDark") ?? .white
         case .auto:
-            if (NSAppearance.current.name == .darkAqua) {
+            if (NSAppearance.currentDrawing().name == .darkAqua) {
                 color = NSColor(named: "ArrowColourDark") ?? .white
             } else {
                 color = NSColor(named: "ArrowColourLight") ?? .darkGray

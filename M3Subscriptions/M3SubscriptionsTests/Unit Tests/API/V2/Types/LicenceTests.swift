@@ -25,7 +25,7 @@ final class LicenceTests: APITestCase {
         let data = try JSONSerialization.data(withJSONObject: [
             "payload": licencePayload,
             "signature": try Self.signature(forPayload: licencePayload),
-        ])
+        ] as [String: Any])
 
         let licenceURL = try self.temporaryTestDirectory().appendingPathComponent("test.coppicelicence")
         try data.write(to: licenceURL)
@@ -61,7 +61,7 @@ final class LicenceTests: APITestCase {
         let data = try JSONSerialization.data(withJSONObject: [
             "payload": licencePayload,
             "signature": try Self.signature(forPayload: licencePayload),
-        ])
+        ] as [String: Any])
 
         let licenceString = data.base64EncodedString()
 
@@ -172,7 +172,7 @@ final class LicenceTests: APITestCase {
         let data = try JSONSerialization.data(withJSONObject: [
             "payload": licencePayload,
             "signature": try Self.signature(forPayload: licencePayload),
-        ])
+        ] as [String: Any])
 
         let licenceString = data.base64EncodedString()
         let licence = try Licence(url: URL(string: "coppice://activate?licence=\(licenceString)")!)
@@ -195,7 +195,7 @@ final class LicenceTests: APITestCase {
         let data = try JSONSerialization.data(withJSONObject: [
             "payload": licencePayload,
             "signature": try Self.signature(forPayload: licencePayload),
-        ])
+        ] as [String: Any])
 
         let licenceString = data.base64EncodedString()
         let licence = try Licence(url: URL(string: "coppice://activate?licence=\(licenceString)")!)
@@ -217,7 +217,7 @@ final class LicenceTests: APITestCase {
         let data = try JSONSerialization.data(withJSONObject: [
             "payload": payload,
             "signature": try Self.signature(forPayload: payload),
-        ])
+        ] as [String: Any])
 
         let licenceString = data.base64EncodedString()
         let url = URL(string: "coppice://activate?licence=\(licenceString)")!

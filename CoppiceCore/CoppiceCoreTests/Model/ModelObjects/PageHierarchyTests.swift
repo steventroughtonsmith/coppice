@@ -16,7 +16,7 @@ class PageHierarchyTests: XCTestCase {
         XCTAssertNil(LegacyPageHierarchy(plistRepresentation: [
             "pageID": Page.modelID(with: UUID()).stringRepresentation,
             "frame": NSStringFromRect(.zero),
-            "children": [],
+            "children": [[String: Any]](),
         ]))
     }
 
@@ -24,7 +24,7 @@ class PageHierarchyTests: XCTestCase {
         XCTAssertNil(LegacyPageHierarchy(plistRepresentation: [
             "id": CanvasPage.modelID(with: UUID()).stringRepresentation,
             "frame": NSStringFromRect(.zero),
-            "children": [],
+            "children": [[String: Any]](),
         ]))
     }
 
@@ -32,7 +32,7 @@ class PageHierarchyTests: XCTestCase {
         XCTAssertNil(LegacyPageHierarchy(plistRepresentation: [
             "id": CanvasPage.modelID(with: UUID()).stringRepresentation,
             "pageID": Page.modelID(with: UUID()).stringRepresentation,
-            "children": [],
+            "children": [[String: Any]](),
         ]))
     }
 
@@ -52,7 +52,7 @@ class PageHierarchyTests: XCTestCase {
             "id": expectedID.stringRepresentation,
             "pageID": expectedPageID.stringRepresentation,
             "frame": NSStringFromRect(expectedFrame),
-            "children": [],
+            "children": [[String: Any]](),
         ]))
 
         XCTAssertEqual(hierarchy.id, expectedID)
@@ -73,8 +73,8 @@ class PageHierarchyTests: XCTestCase {
                     "id": expectedID.stringRepresentation,
                     "pageID": expectedPageID.stringRepresentation,
                     "frame": NSStringFromRect(expectedFrame),
-                    "children": [],
-                ],
+                    "children": [[String: Any]](),
+                ] as [String: Any],
             ],
         ]))
 

@@ -33,7 +33,7 @@ extension TestData.Plist {
                                     "pageID": Page.modelID(with: self.pageIDs[2]).stringRepresentation,
                                     "frame": NSStringFromRect(CGRect(x: 70, y: 100, width: 10, height: 40)),
                                     "children": [[String: Any]](),
-                                ],
+                                ] as [String: Any],
                                 [
                                     "id": CanvasPage.modelID(with: self.closedCanvasPageIDs[2]).stringRepresentation,
                                     "pageID": Page.modelID(with: self.pageIDs[0]).stringRepresentation,
@@ -41,7 +41,7 @@ extension TestData.Plist {
                                     "children": [[String: Any]](),
                                 ],
                             ],
-                        ],
+                        ] as [String: Any],
                         Page.modelID(with: self.pageIDs[2]).stringRepresentation: [
                             "id": CanvasPage.modelID(with: self.closedCanvasPageIDs[3]).stringRepresentation,
                             "pageID": Page.modelID(with: self.pageIDs[2]).stringRepresentation,
@@ -75,7 +75,7 @@ extension TestData.Plist {
                             "pageID": Page.modelID(with: self.pageIDs[0]).stringRepresentation,
                             "frame": NSStringFromRect(CGRect(x: 50, y: 70, width: 10, height: 10)),
                             "children": [[String: Any]](),
-                        ],
+                        ] as [String: Any],
                     ],
                 ],
                 "zoomFactor": 1,
@@ -103,7 +103,7 @@ extension TestData.Plist {
                 "title": "Page 3",
                 "dateCreated": Date(timeIntervalSinceReferenceDate: 999),
                 "dateModified": Date(timeIntervalSinceReferenceDate: 9999),
-                "content": ["type": "image", "filename": "\(self.pageIDs[2].uuidString).png", "metadata": ["description": "This is an image"]],
+                "content": ["type": "image", "filename": "\(self.pageIDs[2].uuidString).png", "metadata": ["description": "This is an image"]] as [String: Any],
             ],
         ]
 

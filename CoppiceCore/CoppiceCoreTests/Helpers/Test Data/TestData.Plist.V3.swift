@@ -63,7 +63,7 @@ extension TestData.Plist {
                     "cropRect": NSStringFromRect(CGRect(x: 0, y: 0, width: 128, height: 128)),
                     "hotspots": [Any](),
                     "orientation": 1,
-                ]],
+                ] as [String: Any]] as [String: Any],
                 "allowsAutoLinking": 1,
             ],
         ]
@@ -193,7 +193,7 @@ extension TestData.Plist {
                         "relativeContentFrame": NSStringFromRect(CGRect(x: 0, y: 0, width: 10, height: 10)),
                     ],
                 ],
-                "links": [],
+                "links": [[String: Any]](),
             ],
             [
                 "id": PageHierarchy.modelID(with: self.pageHierarchyIDs[2]).stringRepresentation,
@@ -212,7 +212,7 @@ extension TestData.Plist {
                         "relativeContentFrame": NSStringFromRect(CGRect(x: 0, y: 0, width: 10, height: 10)),
                     ],
                 ],
-                "links": [],
+                "links": [[String: Any]](),
             ],
             [
                 "id": PageHierarchy.modelID(with: self.pageHierarchyIDs[3]).stringRepresentation,
@@ -231,7 +231,7 @@ extension TestData.Plist {
                         "relativeContentFrame": NSStringFromRect(CGRect(x: 0, y: 0, width: 10, height: 10)),
                     ],
                 ],
-                "links": [],
+                "links": [[String: Any]](),
             ],
         ]
 

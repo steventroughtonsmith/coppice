@@ -100,7 +100,7 @@ class ImagePageContentsTests: XCTestCase {
             "hotspots": [
                 ["kind": "rectangle", "points": [["X": 24, "Y": 32.1], ["X": 42, "Y": 1.23]]],
                 ["kind": "oval", "points": [["X": 1, "Y": 2.0], ["X": 3, "Y": 4.0]], "link": "https://coppiceapp.com"],
-                ["kind": "polygon", "points": [["X": -1, "Y": -2.0], ["X": -3, "Y": -4.0]]],
+                ["kind": "polygon", "points": [["X": -1, "Y": -2.0], ["X": -3, "Y": -4.0]]] as [String: Any],
             ],
         ])
 
@@ -133,7 +133,7 @@ class ImagePageContentsTests: XCTestCase {
             "hotspots": [
                 ["kind": "rectangle", "points": [["X": 24, "Y": 32.1], ["X": 42, "Y": 1.23]]],
                 ["points": [["X": 1, "Y": 2.0], ["X": 3, "Y": 4.0]], "link": URL(string: "https://coppiceapp.com")!],
-                ["kind": "polygon", "points": [["X": -1, "Y": -2.0], ["X": -3, "Y": -4.0]]],
+                ["kind": "polygon", "points": [["X": -1, "Y": -2.0], ["X": -3, "Y": -4.0]]] as [String: Any],
             ],
         ])
 

@@ -58,7 +58,7 @@ class APIDataTests: APITestCase {
 
     func test_init_returnsNilIfJSONPayloadIsNotValidJSON() throws {
         let json: [String: Any] = [
-            "payload": ["response": "bar", "foo": NSObject()],
+            "payload": ["response": "bar", "foo": NSObject()] as [String: Any],
             "signature": 42,
         ]
         XCTAssertNil(APIData(json: json))
@@ -66,7 +66,7 @@ class APIDataTests: APITestCase {
 
     func test_init_returnsNilIfSignatureIsNotBase64EncodedString() throws {
         let json: [String: Any] = [
-            "payload": ["response": "baz", "foo": "bar", "baz": 42, "test": ["c": 3, "p": 0, "bb": 8, "r": 2, "d": 2]],
+            "payload": ["response": "baz", "foo": "bar", "baz": 42, "test": ["c": 3, "p": 0, "bb": 8, "r": 2, "d": 2]] as [String: Any],
             "signature": "•",
         ]
         XCTAssertNil(APIData(json: json))
