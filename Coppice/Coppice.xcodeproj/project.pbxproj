@@ -176,6 +176,7 @@
 		9977119A239E89B200FCC8C7 /* DocumentWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FE01E222D4CC8A004D380D /* DocumentWindowController.swift */; };
 		9977119C239E91FD00FCC8C7 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9977119B239E91FD00FCC8C7 /* ViewModel.swift */; };
 		997711CA239E9AF400FCC8C7 /* MockDocumentWindowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997711C9239E9AF400FCC8C7 /* MockDocumentWindowViewModel.swift */; };
+		99796C862A98DA7100B951D0 /* CoppiceCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99D0C87D24C5EDB4002EEBFA /* CoppiceCore.framework */; };
 		9981E6CB24C055CE005AF0EE /* PreferencesTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9981E6CA24C055CE005AF0EE /* PreferencesTabView.swift */; };
 		9981E6CF24C05811005AF0EE /* AboutWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9981E6CD24C05811005AF0EE /* AboutWindowController.swift */; };
 		9981E6D024C05811005AF0EE /* AboutWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9981E6CE24C05811005AF0EE /* AboutWindow.xib */; };
@@ -190,7 +191,6 @@
 		9982FED22A67DFBD00970283 /* QuickLookPreviewGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9982FED12A67DFBD00970283 /* QuickLookPreviewGenerator.swift */; };
 		9982FED32A67E04700970283 /* QuickLookPreviewGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9982FED12A67DFBD00970283 /* QuickLookPreviewGenerator.swift */; };
 		9982FED42A67E04E00970283 /* CanvasImageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C8E924C7022D002EEBFA /* CanvasImageGenerator.swift */; };
-		9982FED62A681F2100970283 /* Info.plist.prefix in Resources */ = {isa = PBXBuildFile; fileRef = 9982FED52A681F2100970283 /* Info.plist.prefix */; };
 		9982FEDC2A68390100970283 /* RecentDocumentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9982FEDB2A68390100970283 /* RecentDocumentController.swift */; };
 		998329512A659EAC006FC478 /* WelcomeDocumentCollectionViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9983294F2A659EAC006FC478 /* WelcomeDocumentCollectionViewItem.swift */; };
 		998329522A659EAC006FC478 /* WelcomeDocumentCollectionViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 998329502A659EAC006FC478 /* WelcomeDocumentCollectionViewItem.xib */; };
@@ -417,6 +417,27 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		99796C802A98D77600B951D0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 99FE018522CD1037004D380D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 999EA6912433973A00BF254E;
+			remoteInfo = "Prepare Info.Plist Prefix";
+		};
+		99796C822A98D77B00B951D0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 99FE018522CD1037004D380D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 999EA6912433973A00BF254E;
+			remoteInfo = "Prepare Info.Plist Prefix";
+		};
+		99796C842A98D77E00B951D0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 99FE018522CD1037004D380D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 999EA6912433973A00BF254E;
+			remoteInfo = "Prepare Info.Plist Prefix";
+		};
 		9982FEC92A67DF3B00970283 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 99FE018522CD1037004D380D /* Project object */;
@@ -927,6 +948,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99796C862A98DA7100B951D0 /* CoppiceCore.framework in Frameworks */,
 				9982FEC22A67DF3B00970283 /* QuickLookThumbnailing.framework in Frameworks */,
 				9982FEC32A67DF3B00970283 /* Quartz.framework in Frameworks */,
 			);
@@ -2204,6 +2226,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				99796C852A98D77E00B951D0 /* PBXTargetDependency */,
 			);
 			name = QuickLookThumbnail;
 			productName = QuickLookThumbnail;
@@ -2221,6 +2244,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				99796C812A98D77600B951D0 /* PBXTargetDependency */,
 			);
 			name = CoppiceSpotlight;
 			productName = CoppiceSpotlight;
@@ -2238,6 +2262,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				99796C832A98D77B00B951D0 /* PBXTargetDependency */,
 			);
 			name = CoppiceQuickLook;
 			productName = CoppiceQuickLook;
@@ -2380,7 +2405,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9982FED62A681F2100970283 /* Info.plist.prefix in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2881,6 +2905,21 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		99796C812A98D77600B951D0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 999EA6912433973A00BF254E /* Prepare Info.Plist Prefix */;
+			targetProxy = 99796C802A98D77600B951D0 /* PBXContainerItemProxy */;
+		};
+		99796C832A98D77B00B951D0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 999EA6912433973A00BF254E /* Prepare Info.Plist Prefix */;
+			targetProxy = 99796C822A98D77B00B951D0 /* PBXContainerItemProxy */;
+		};
+		99796C852A98D77E00B951D0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 999EA6912433973A00BF254E /* Prepare Info.Plist Prefix */;
+			targetProxy = 99796C842A98D77E00B951D0 /* PBXContainerItemProxy */;
+		};
 		9982FECA2A67DF3B00970283 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 9982FEBF2A67DF3B00970283 /* QuickLookThumbnail */;
