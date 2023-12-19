@@ -78,15 +78,21 @@ class CanvasEditorViewModel: ViewModel {
         self.layoutEngine.alwaysShowPageTitles = self.isProEnabled && self.canvas.alwaysShowPageTitles
     }
 
+    //MARK: - Subscribers
+    private enum SubscriberKey {
+        case canvasChange
+        case canvasPageChange
+        case canvasLinkChange
+    }
+
+    private var subscribers: [SubscriberKey: AnyCancellable] = [:]
+
 
     //MARK: - Observation
-    var canvasObserver: ModelCollection<Canvas>.Observation?
-    var canvasPageObserver: ModelCollection<CanvasPage>.Observation?
-    var canvasLinkObserver: ModelCollection<CanvasLink>.Observation?
-
     private func setupObservation() {
-        self.canvasObserver = self.modelController.canvasCollection.addObserver(filterBy: [self.canvas.id]) { [weak self] change in
-            if change.changeType == .update, !change.didUpdate(\.thumbnail) {
+        self.subscribers[.canvasChange] = self.canvas.changePublisher?
+            .filter { $0.changeType == .update && !$0.didUpdate(\.thumbnail) }
+            .sink { [weak self] change in
                 self?.wantsUpdate = true
                 self?.updateIfNeeded()
                 if change.didUpdate(\.alwaysShowPageTitles) {
@@ -96,22 +102,13 @@ class CanvasEditorViewModel: ViewModel {
                     self?.view?.themeDidChange()
                 }
             }
-        }
-        self.canvasPageObserver = self.modelController.canvasPageCollection.addObserver() { [weak self] _ in
+
+        self.subscribers[.canvasPageChange] = self.modelController.canvasPageCollection.changePublisher.sink { [weak self] _ in
             self?.wantsUpdate = true
         }
 
-        self.canvasLinkObserver = self.modelController.canvasLinkCollection.addObserver() { [weak self] _ in
+        self.subscribers[.canvasLinkChange] = self.modelController.canvasLinkCollection.changePublisher.sink { [weak self] _ in
             self?.wantsUpdate = true
-        }
-    }
-
-    deinit {
-        if let observer = self.canvasObserver {
-            self.modelController.collection(for: Canvas.self).removeObserver(observer)
-        }
-        if let observer = self.canvasPageObserver {
-            self.modelController.collection(for: CanvasPage.self).removeObserver(observer)
         }
     }
 

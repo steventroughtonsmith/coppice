@@ -19,27 +19,27 @@ protocol CanvasListView: AnyObject {
 class CanvasListViewModel: ViewModel {
     weak var view: CanvasListView?
 
+    //MARK: - Subscribers
+    private enum SubscriberKey {
+        case canvas
+        case selectedCanvas
+    }
+
+    private var subscribers: [SubscriberKey: AnyCancellable] = [:]
+
     //MARK: - Observation
-    private var canvasObserver: ModelCollection<Canvas>.Observation?
-    private var selectedCanvasObserver: AnyCancellable?
     func startObserving() {
-        self.canvasObserver = self.canvasCollection.addObserver { [weak self] _ in
+        self.subscribers[.canvas] = self.canvasCollection.changePublisher.sink { [weak self] _ in
             self?.reloadCanvases()
         }
-        self.selectedCanvasObserver = self.documentWindowViewModel.$selectedCanvasID.sink { [weak self] canvasID in
+        self.subscribers[.selectedCanvas] = self.documentWindowViewModel.$selectedCanvasID.sink { [weak self] canvasID in
             self?.cachedCanvases = nil //BUB-195: Just in case we receive this before a reload canvases, lets clear the cache
             self?.selectedCanvasIndex = self?.canvases.firstIndex { $0.id == canvasID }
         }
     }
 
     func stopObserving() {
-        if let observer = self.canvasObserver {
-        	self.canvasCollection.removeObserver(observer)
-        }
-        self.canvasObserver = nil
-
-        self.selectedCanvasObserver?.cancel()
-        self.selectedCanvasObserver = nil
+        self.subscribers = [:]
     }
 
 

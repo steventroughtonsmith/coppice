@@ -50,10 +50,6 @@ class DocumentWindowViewModel: NSObject {
         self.setupObservation()
     }
 
-    deinit {
-        self.cleanUpObserveration()
-    }
-
     func performNewDocumentSetup() {
         self.modelController.disableUndo {
             let page = self.modelController.createPage(in: self.modelController.rootFolder) {
@@ -171,36 +167,28 @@ class DocumentWindowViewModel: NSObject {
         self.currentNavStack = nil
     }
 
+    //MARK: - Subscribers
+    private enum SubscriberKey {
+        case canvases
+        case folders
+        case pages
+    }
+
+    private var subscribers: [SubscriberKey: AnyCancellable] = [:]
+
 
     //MARK: - Observation
-    var canvasObserver: ModelCollection<Canvas>.Observation?
-    var folderObserver: ModelCollection<Folder>.Observation?
-    var pageObserver: ModelCollection<Page>.Observation?
     private func setupObservation() {
-        self.canvasObserver = self.modelController.canvasCollection.addObserver { [weak self] (change) in
+        self.subscribers[.canvases] = self.modelController.canvasCollection.changePublisher.sink { [weak self] (change) in
             self?.handleCanvasChange(change)
         }
 
-        self.folderObserver = self.modelController.folderCollection.addObserver { [weak self] (change) in
+        self.subscribers[.folders] = self.modelController.folderCollection.changePublisher.sink { [weak self] (change) in
             self?.handleFolderChange(change)
         }
 
-        self.pageObserver = self.modelController.pageCollection.addObserver { [weak self] (change) in
+        self.subscribers[.pages] = self.modelController.pageCollection.changePublisher.sink { [weak self] (change) in
             self?.handlePageChange(change)
-        }
-    }
-
-    private func cleanUpObserveration() {
-        if let observer = self.canvasObserver {
-            self.modelController.canvasCollection.removeObserver(observer)
-        }
-
-        if let observer = self.folderObserver {
-            self.modelController.folderCollection.removeObserver(observer)
-        }
-
-        if let observer = self.pageObserver {
-            self.modelController.pageCollection.removeObserver(observer)
         }
     }
 

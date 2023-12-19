@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import Combine
 import CoppiceCore
 import M3Data
 
@@ -18,8 +19,8 @@ class DebugCanvasEditorViewModel: NSObject {
     weak var view: DebugCanvasEditorView?
 
     @objc dynamic let canvas: Canvas
-    let modelController: ModelController
-    init(canvas: Canvas, modelController: ModelController) {
+    let modelController: CoppiceModelController
+    init(canvas: Canvas, modelController: CoppiceModelController) {
         self.canvas = canvas
         self.modelController = modelController
         super.init()
@@ -63,16 +64,21 @@ class DebugCanvasEditorViewModel: NSObject {
 
 
     //MARK: - Observation
-    private var observation: ModelCollection<CanvasPage>.Observation?
     func startObservingChanges() {
-        self.observation = self.modelController.collection(for: CanvasPage.self).addObserver { [weak self] change in
+        self.subscribers[.canvasPage] = self.modelController.canvasPageCollection.changePublisher.sink { [weak self] change in
             self?.view?.reloadPage(change.object)
         }
     }
 
     func stopObservingChanges() {
-        if let observation = self.observation {
-            self.modelController.collection(for: CanvasPage.self).removeObserver(observation)
-        }
+        self.subscribers = [:]
     }
+
+
+    //MARK: - Subscribers
+    private enum SubscriberKey {
+        case canvasPage
+    }
+
+    private var subscribers: [SubscriberKey: AnyCancellable] = [:]
 }

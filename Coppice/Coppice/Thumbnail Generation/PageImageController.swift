@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import Combine
 import CoppiceCore
 import M3Data
 
@@ -26,18 +27,11 @@ class PageImageController: NSObject {
 
 
     //MARK: - Observation
-    private var observation: ModelCollection<Page>.Observation?
     private func startObservation() {
-        self.observation = self.modelController.collection(for: Page.self).addObserver { [weak self] change in
+        self.subscribers[.pages] = self.modelController.collection(for: Page.self).changePublisher.sink { [weak self] change in
             if change.changeType == .update || change.changeType == .delete {
                 self?.cache.removeObject(forKey: (change.object.id.uuid as NSUUID))
             }
-        }
-    }
-
-    private func endObservation() {
-        if let observer = self.observation {
-            self.modelController.collection(for: Page.self).removeObserver(observer)
         }
     }
 
@@ -82,4 +76,11 @@ class PageImageController: NSObject {
         image.addRepresentation(bitmapRep)
         return image
     }
+
+    //MARK: - Subscribers
+    private enum SubscriberKey {
+        case pages
+    }
+
+    private var subscribers: [SubscriberKey: AnyCancellable] = [:]
 }

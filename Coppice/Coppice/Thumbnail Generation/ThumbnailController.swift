@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import Combine
 import CoppiceCore
 import M3Data
 
@@ -26,34 +27,28 @@ class ThumbnailController: NSObject {
         }
     }
 
-
-    //MARK: - Observation
-    var canvasObserver: ModelCollection<Canvas>.Observation?
-    var canvasPageObserver: ModelCollection<CanvasPage>.Observation?
-    var pageObserver: ModelCollection<Page>.Observation?
-    private func setupObservation() {
-        self.canvasObserver = self.modelController.canvasCollection.addObserver { [weak self] (change) in
-            self?.changed(change.object)
-        }
-
-        self.canvasPageObserver = self.modelController.canvasPageCollection.addObserver { [weak self] (change) in
-            self?.changed(change.object)
-        }
-
-        self.pageObserver = self.modelController.pageCollection.addObserver { [weak self] (change) in
-            self?.changed(change.object)
-        }
+    //MARK: - Subscribers
+    private enum SubscriberKey {
+        case canvases
+        case canvasPages
+        case pages
     }
 
-    deinit {
-        if let observer = self.canvasObserver {
-            self.modelController.canvasCollection.removeObserver(observer)
+    private var subscribers: [SubscriberKey: AnyCancellable] = [:]
+
+
+    //MARK: - Observation
+    private func setupObservation() {
+        self.subscribers[.canvases] = self.modelController.canvasCollection.changePublisher.sink { [weak self] (change) in
+            self?.changed(change.object)
         }
-        if let observer = self.canvasPageObserver {
-            self.modelController.canvasPageCollection.removeObserver(observer)
+
+        self.subscribers[.canvasPages] = self.modelController.canvasPageCollection.changePublisher.sink { [weak self] (change) in
+            self?.changed(change.object)
         }
-        if let observer = self.pageObserver {
-            self.modelController.pageCollection.removeObserver(observer)
+
+        self.subscribers[.pages] = self.modelController.pageCollection.changePublisher.sink { [weak self] (change) in
+            self?.changed(change.object)
         }
     }
 

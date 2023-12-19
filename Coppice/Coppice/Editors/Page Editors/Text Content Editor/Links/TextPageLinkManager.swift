@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import Combine
 import CoppiceCore
 import M3Data
 
@@ -24,14 +25,13 @@ extension TextPageLinkManagerDelegate {
 
 
 class TextPageLinkManager: PageLinkManager {
-    private var observer: ModelCollection<Page>.Observation!
     private let parsingDelay: TimeInterval
     init(pageID: ModelID, modelController: ModelController, parsingDelay: TimeInterval = 0.5) {
         self.parsingDelay = parsingDelay
 
         super.init(pageID: pageID, modelController: modelController)
 
-        self.observer = self.modelController.collection(for: Page.self).addObserver { [weak self] (change) in
+        self.subscribers[.pages] = self.modelController.collection(for: Page.self).changePublisher.sink { [weak self] (change) in
             //Update if the current page's content was updated
             if change.object.id == self?.pageID && change.didUpdate(\.content) {
                 self?.setNeedsReparse()
@@ -44,12 +44,6 @@ class TextPageLinkManager: PageLinkManager {
             }
             self?.lastParsedText = nil
             self?.setNeedsReparse()
-        }
-    }
-
-    deinit {
-        if let observer = self.observer {
-            self.modelController.collection(for: Page.self).removeObserver(observer)
         }
     }
 
@@ -163,6 +157,13 @@ class TextPageLinkManager: PageLinkManager {
         textContent.text = mutableString
         self.lastParsedText = mutableString.copy() as? NSAttributedString
     }
+
+    //MARK: - Subscribers
+    private enum SubscriberKey {
+        case pages
+    }
+
+    private var subscribers: [SubscriberKey: AnyCancellable] = [:]
 }
 
 extension TextPageLinkManager: NSTextStorageDelegate {

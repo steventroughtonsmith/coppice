@@ -7,18 +7,17 @@
 //
 
 import Cocoa
+import Combine
 import Vision
 
 import CoppiceCore
 import M3Data
 
 class ImagePageLinkManager: PageLinkManager {
-    private var observer: ModelCollection<Page>.Observation!
-
     override init(pageID: ModelID, modelController: ModelController) {
         super.init(pageID: pageID, modelController: modelController)
 
-        self.observer = self.modelController.collection(for: Page.self).addObserver { [weak self] change in
+        self.subscribers[.page] = self.modelController.collection(for: Page.self).changePublisher.sink { [weak self] change in
             //Rescan the image for text if its content was updated
             if change.object.id == self?.pageID && change.didUpdate(\.content) {
                 self?.setNeedsRescan()
@@ -31,12 +30,6 @@ class ImagePageLinkManager: PageLinkManager {
             }
 
             self?.setNeedsHotspotGeneration()
-        }
-    }
-
-    deinit {
-        if let observer = self.observer {
-            self.modelController.collection(for: Page.self).removeObserver(observer)
         }
     }
 
@@ -143,6 +136,13 @@ class ImagePageLinkManager: PageLinkManager {
                                                                imageSize: image.size,
                                                                orientation: imageContent.orientation)
     }
+
+    //MARK: - Subscribers
+    private enum SubscriberKey {
+        case page
+    }
+
+    private var subscribers: [SubscriberKey: AnyCancellable] = [:]
 }
 
 

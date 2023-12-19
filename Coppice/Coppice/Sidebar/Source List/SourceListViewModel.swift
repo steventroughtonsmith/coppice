@@ -28,31 +28,30 @@ class SourceListViewModel: ViewModel {
         self.reloadSourceListNodes()
     }
 
-    var pagesObserver: ModelCollection<Page>.Observation?
-    var foldersObserver: ModelCollection<Folder>.Observation?
-    var selectionObserver: AnyCancellable?
-    func startObserving() {
-        self.pagesObserver = self.modelController.collection(for: Page.self).addObserver(changeHandler: { [weak self] _ in
-            self?.setNeedsReload()
-        })
-        self.foldersObserver = self.modelController.collection(for: Folder.self).addObserver(changeHandler: { [weak self] _ in
-            self?.setNeedsReload()
-        })
+    //MARK: - Subscribers
+    private enum SubscriberKey {
+        case pages
+        case folders
+        case selection
+    }
 
-        self.selectionObserver = self.documentWindowViewModel.$sidebarSelection.sink { [weak self] newItem in
+    private var subscribers: [SubscriberKey: AnyCancellable] = [:]
+
+    func startObserving() {
+        self.subscribers[.pages] = self.modelController.collection(for: Page.self).changePublisher.sink { [weak self] _ in
+            self?.setNeedsReload()
+        }
+        self.subscribers[.folders] = self.modelController.collection(for: Folder.self).changePublisher.sink { [weak self] _ in
+            self?.setNeedsReload()
+        }
+
+        self.subscribers[.selection] = self.documentWindowViewModel.$sidebarSelection.sink { [weak self] newItem in
             self?.updateSelectedNodes(with: newItem)
         }
     }
 
     func stopObserving() {
-        if let observer = self.pagesObserver {
-            self.modelController.collection(for: Page.self).removeObserver(observer)
-        }
-        if let observer = self.foldersObserver {
-            self.modelController.collection(for: Folder.self).removeObserver(observer)
-        }
-        self.selectionObserver?.cancel()
-        self.selectionObserver = nil
+        self.subscribers = [:]
     }
 
 
