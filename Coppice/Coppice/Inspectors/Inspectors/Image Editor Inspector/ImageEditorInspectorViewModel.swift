@@ -11,13 +11,18 @@ import Combine
 import CoppiceCore
 
 class ImageEditorInspectorViewModel: BaseInspectorViewModel {
-    @objc dynamic let editorViewModel: ImageEditorViewModel
+    let editorViewModel: ImageEditorViewModel
     init(editorViewModel: ImageEditorViewModel) {
         self.editorViewModel = editorViewModel
         super.init()
         self.subscribers[.editorMode] = editorViewModel.$mode.receive(on: DispatchQueue.main).sink { [weak self] _ in
             self?.willChangeValue(forKey: #keyPath(selectedModeIndex))
             self?.didChangeValue(forKey: #keyPath(selectedModeIndex))
+        }
+
+        self.subscribers[.imageDescription] = editorViewModel.imageContent.$imageDescription.receive(on: DispatchQueue.main).sink { [weak self] _ in
+            self?.willChangeValue(for: \.imageDescription)
+            self?.didChangeValue(for: \.imageDescription)
         }
     }
 
@@ -32,18 +37,10 @@ class ImageEditorInspectorViewModel: BaseInspectorViewModel {
     //MARK: - Subscribers
     private enum SubscriberKey {
         case editorMode
+        case imageDescription
     }
 
     private var subscribers: [SubscriberKey: AnyCancellable] = [:]
-
-    //MARK: - KVO
-    override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
-        var keyPaths = super.keyPathsForValuesAffectingValue(forKey: key)
-        if key == #keyPath(imageDescription) {
-            keyPaths.insert("self.editorViewModel.imageContent.imageDescription")
-        }
-        return keyPaths
-    }
 
     //MARK: - Properties
     @objc dynamic var imageDescription: String {

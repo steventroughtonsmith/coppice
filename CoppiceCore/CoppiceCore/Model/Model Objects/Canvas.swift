@@ -36,13 +36,13 @@ final public class Canvas: NSObject, CollectableModelObject {
 
 
     //MARK: - Attributes
-    @objc dynamic public var title: String = "New Canvas" {
+    public var title: String = "New Canvas" {
         didSet { self.didChange(\.title, oldValue: oldValue) }
     }
 
     public var dateCreated = Date()
     public var dateModified = Date()
-    @objc dynamic public var sortIndex = 0 {
+    public var sortIndex = 0 {
         didSet { self.didChange(\.sortIndex, oldValue: oldValue) }
     }
 
@@ -62,7 +62,7 @@ final public class Canvas: NSObject, CollectableModelObject {
         }
     }
 
-    @objc dynamic public var thumbnail: NSImage? {
+    public var thumbnail: NSImage? {
         didSet { self.didChange(\.thumbnail, oldValue: oldValue) }
     }
 

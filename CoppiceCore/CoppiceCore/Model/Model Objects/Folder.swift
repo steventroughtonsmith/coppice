@@ -20,7 +20,7 @@ final public class Folder: NSObject, CollectableModelObject, FolderContainable {
 
 
     //MARK: - Persisted Attributes
-    @objc dynamic public var title: String = "New Folder" {
+    public var title: String = "New Folder" {
         didSet { self.didChange(\.title, oldValue: oldValue) }
     }
 

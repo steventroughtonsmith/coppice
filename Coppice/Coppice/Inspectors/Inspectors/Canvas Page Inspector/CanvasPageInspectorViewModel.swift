@@ -6,6 +6,7 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
+import Combine
 import CoppiceCore
 import Foundation
 import M3Data
@@ -19,6 +20,11 @@ class CanvasPageInspectorViewModel: BaseInspectorViewModel {
         self.modelController = modelController
 
         super.init()
+
+        self.subscribers[.frame] = canvasPage.changePublisher(for: \.frame)?.sink { [weak self] _ in
+            self?.notifyOfChange(to: \.width)
+            self?.notifyOfChange(to: \.height)
+        }
     }
 
     override var title: String? {
@@ -27,14 +33,6 @@ class CanvasPageInspectorViewModel: BaseInspectorViewModel {
 
     override var collapseIdentifier: String {
         return "inspector.canvaspage"
-    }
-
-    override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
-        var keyPaths = super.keyPathsForValuesAffectingValue(forKey: key)
-        if ((key == #keyPath(width)) || key == #keyPath(height)) {
-            keyPaths.insert("canvasPage.frame")
-        }
-        return keyPaths
     }
 
     var widthToHeightAspectRatio: CGFloat? {
@@ -105,4 +103,11 @@ class CanvasPageInspectorViewModel: BaseInspectorViewModel {
         }
         self.canvasPage.frame.size = page.content.sizeToFitContent(currentSize: self.canvasPage.frame.size)
     }
+
+    //MARK: - Subscribers
+    private enum SubscriberKey {
+        case frame
+    }
+
+    private var subscribers: [SubscriberKey: AnyCancellable] = [:]
 }

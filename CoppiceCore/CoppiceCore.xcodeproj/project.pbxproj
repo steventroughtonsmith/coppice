@@ -121,6 +121,7 @@
 		99D0C8EF24C72494002EEBFA /* LayoutEnginePage+CanvasPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C8EE24C72494002EEBFA /* LayoutEnginePage+CanvasPage.swift */; };
 		99D0C8F124C728C7002EEBFA /* ArrowDrawHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C8F024C728C7002EEBFA /* ArrowDrawHelper.swift */; };
 		99E47E2C274BF8DC007D180F /* NSRange+M3ExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E47E2B274BF8DC007D180F /* NSRange+M3ExtensionsTests.swift */; };
+		99E6DEDA2B3479E0001A0B1C /* NSObject+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E6DED92B3479E0001A0B1C /* NSObject+M3Extensions.swift */; };
 		99F0D5FC267D30D70020D37C /* NSRange+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F0D5FB267D30D70020D37C /* NSRange+M3Extensions.swift */; };
 		99F6BD1F27C3D21F00E5AD20 /* ImageHotspot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F6BD1E27C3D21F00E5AD20 /* ImageHotspot.swift */; };
 		99F6BD2127C3D23F00E5AD20 /* ImageHotspotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F6BD2027C3D23F00E5AD20 /* ImageHotspotTests.swift */; };
@@ -258,6 +259,7 @@
 		99D0C8EE24C72494002EEBFA /* LayoutEnginePage+CanvasPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LayoutEnginePage+CanvasPage.swift"; sourceTree = "<group>"; };
 		99D0C8F024C728C7002EEBFA /* ArrowDrawHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrowDrawHelper.swift; sourceTree = "<group>"; };
 		99E47E2B274BF8DC007D180F /* NSRange+M3ExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRange+M3ExtensionsTests.swift"; sourceTree = "<group>"; };
+		99E6DED92B3479E0001A0B1C /* NSObject+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+M3Extensions.swift"; sourceTree = "<group>"; };
 		99F0D5FB267D30D70020D37C /* NSRange+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRange+M3Extensions.swift"; sourceTree = "<group>"; };
 		99F6BD1E27C3D21F00E5AD20 /* ImageHotspot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageHotspot.swift; sourceTree = "<group>"; };
 		99F6BD2027C3D23F00E5AD20 /* ImageHotspotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageHotspotTests.swift; sourceTree = "<group>"; };
@@ -514,6 +516,7 @@
 				99D0C86E24C5E080002EEBFA /* CoreGraphics+M3Extensions.swift */,
 				99F0D5FB267D30D70020D37C /* NSRange+M3Extensions.swift */,
 				99C88C7A28A13B68006791CB /* Set+M3Extensions.swift */,
+				99E6DED92B3479E0001A0B1C /* NSObject+M3Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -726,6 +729,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				997ABC482882E96E00A75722 /* CanvasLink.swift in Sources */,
+				99E6DEDA2B3479E0001A0B1C /* NSObject+M3Extensions.swift in Sources */,
 				994664A02816EE0300A08522 /* CroppedImageCache.swift in Sources */,
 				99D0C80D24C5DE79002EEBFA /* PageLink.swift in Sources */,
 				99D0C8E524C5FBEA002EEBFA /* ResizePageEventContext.swift in Sources */,

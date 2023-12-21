@@ -16,7 +16,8 @@ class ImageHotspotCollection {
     init(imageContent: ImagePageContent) {
         self.imageContent = imageContent
 
-        self.subscribers[.imageHotspots] = self.imageContent.publisher(for: \.hotspots).sink { hotspots in
+        //REMOVE KVO
+        self.subscribers[.imageHotspots] = self.imageContent.$hotspots.sink { hotspots in
             self.reloadImageEditorHotspots(using: hotspots)
         }
         self.reloadImageEditorHotspots(using: self.imageContent.hotspots)

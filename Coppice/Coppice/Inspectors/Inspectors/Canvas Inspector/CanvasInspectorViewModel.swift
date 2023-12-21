@@ -18,12 +18,15 @@ protocol CanvasInspectorView: AnyObject {}
 class CanvasInspectorViewModel: BaseInspectorViewModel {
     weak var view: CanvasInspectorView?
 
-    @objc dynamic let canvas: Canvas
+    let canvas: Canvas
     let modelController: ModelController
     init(canvas: Canvas, modelController: ModelController) {
         self.canvas = canvas
         self.modelController = modelController
         super.init()
+
+        self.subscribers[.canvasTitle] = canvas.changePublisher(for: \.title)?.notify(self, ofChangeTo: \.canvasTitle)
+        self.subscribers[.alwaysShowPageTitles] = canvas.changePublisher(for: \.alwaysShowPageTitles)?.notify(self, ofChangeTo: \.alwaysShowPageTitles)
     }
 
     override var title: String? {
@@ -32,14 +35,6 @@ class CanvasInspectorViewModel: BaseInspectorViewModel {
 
     override var collapseIdentifier: String {
         return "inspector.page"
-    }
-
-    override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
-        var keyPaths = super.keyPathsForValuesAffectingValue(forKey: key)
-        if (key == #keyPath(canvasTitle)) {
-            keyPaths.insert("canvas.title")
-        }
-        return keyPaths
     }
 
     @objc dynamic var canvasTitle: String {
@@ -70,4 +65,12 @@ class CanvasInspectorViewModel: BaseInspectorViewModel {
         get { self.canvas.alwaysShowPageTitles }
         set { self.canvas.alwaysShowPageTitles = newValue }
     }
+
+    //MARK: - Subscribers
+    private enum SubscriberKey {
+        case canvasTitle
+        case alwaysShowPageTitles
+    }
+
+    private var subscribers: [SubscriberKey: AnyCancellable] = [:]
 }

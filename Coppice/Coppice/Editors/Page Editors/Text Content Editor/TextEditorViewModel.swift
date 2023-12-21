@@ -34,17 +34,10 @@ class TextEditorViewModel: ViewModel {
         self.searchStringObserver = self.documentWindowViewModel.publisher(for: \.searchString).sink { [weak self] searchString in
             self?.updateHighlightedRange(with: searchString)
         }
-        self.textObserver = self.textContent.publisher(for: \.text).sink(receiveValue: { [weak self] (text) in
+        self.textObserver = self.textContent.$text.sink { [weak self] (text) in
             self?.view?.updateTextView(with: text)
-        })
-    }
-
-    override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
-        var keyPaths = super.keyPathsForValuesAffectingValue(forKey: key)
-        if (key == "attributedText") {
-            keyPaths.insert("textContent.text")
+            self?.notifyOfChange(to: \.attributedText)
         }
-        return keyPaths
     }
 
     @objc dynamic var attributedText: NSAttributedString {

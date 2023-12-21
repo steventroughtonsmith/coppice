@@ -26,6 +26,7 @@ class PageEditorViewModel: ViewModel {
     }
 
     override func setup() {
+        //TODO: Do we need to remove this?
         self.contentObserver = NotificationCenter.default.addObserver(forName: Page.contentChangedNotification, object: self.page, queue: .main) { [weak self] (_) in
             self?.view?.contentChanged()
         }

@@ -18,7 +18,7 @@ protocol ImageEditorViewProtocol: AnyObject {
 class ImageEditorViewModel: ViewModel {
     weak var view: ImageEditorViewProtocol?
 
-    @objc dynamic let imageContent: ImagePageContent
+    let imageContent: ImagePageContent
     let viewMode: PageContentEditorViewMode
     let pageLinkManager: ImagePageLinkManager?
     init(imageContent: ImagePageContent, viewMode: PageContentEditorViewMode, documentWindowViewModel: DocumentWindowViewModel, pageLinkManager: ImagePageLinkManager?) {
@@ -29,11 +29,21 @@ class ImageEditorViewModel: ViewModel {
         super.init(documentWindowViewModel: documentWindowViewModel)
         self.regenerateCroppedImage()
 
-        self.subscribers[.image] = imageContent.publisher(for: \.image).receive(on: DispatchQueue.main).sink { [weak self] _ in
+        self.subscribers[.image] = imageContent.$image.receive(on: DispatchQueue.main).sink { [weak self] _ in
+            self?.willChangeValue(for: \.image)
+            self?.willChangeValue(for: \.isLoading)
+            self?.didChangeValue(for: \.image)
+            self?.didChangeValue(for: \.isLoading)
             self?.needsRegenerateCroppedImage = true
         }
-        self.subscribers[.cropRect] = imageContent.publisher(for: \.cropRect).receive(on: DispatchQueue.main).sink { [weak self] _ in
+        self.subscribers[.cropRect] = imageContent.$cropRect.receive(on: DispatchQueue.main).sink { [weak self] _ in
+            self?.willChangeValue(for: \.cropRect)
+            self?.didChangeValue(for: \.cropRect)
             self?.needsRegenerateCroppedImage = true
+        }
+        self.subscribers[.imageDescription] = imageContent.$imageDescription.receive(on: DispatchQueue.main).sink { [weak self] _ in
+            self?.willChangeValue(for: \.accessibilityDescription)
+            self?.didChangeValue(for: \.accessibilityDescription)
         }
         self.subscribers[.searchString] = documentWindowViewModel.publisher(for: \.searchString).sink { [weak self] searchString in
             self?.updateHightlightedRect(withSearchString: searchString)
@@ -55,6 +65,7 @@ class ImageEditorViewModel: ViewModel {
     private enum SubscriberKey {
         case image
         case cropRect
+        case imageDescription
         case searchString
         case isProEnabled
     }
@@ -66,16 +77,7 @@ class ImageEditorViewModel: ViewModel {
 
     override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
         var keyPaths = super.keyPathsForValuesAffectingValue(forKey: key)
-        if key == #keyPath(image) {
-            keyPaths.insert("imageContent.image")
-        } else if key == #keyPath(accessibilityDescription) {
-            keyPaths.insert("imageContent.imageDescription")
-        } else if key == #keyPath(cropRect) {
-            keyPaths.insert("imageContent.cropRect")
-        } else if key == #keyPath(croppedImage) {
-            keyPaths.insert("cachedCroppedImage")
-        } else if key == #keyPath(isLoading) {
-            keyPaths.insert("imageContent.image")
+         if key == #keyPath(croppedImage) {
             keyPaths.insert("cachedCroppedImage")
         }
         return keyPaths

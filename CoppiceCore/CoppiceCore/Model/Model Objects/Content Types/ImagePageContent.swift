@@ -13,7 +13,7 @@ import Vision
 
 public class ImagePageContent: NSObject, PageContent {
     public let contentType = PageContentType.image
-    @objc dynamic public private(set) var image: NSImage? {
+    @Published public private(set) var image: NSImage? {
         didSet {
             self.didChange(\.image, oldValue: oldValue)
         }
@@ -82,7 +82,7 @@ public class ImagePageContent: NSObject, PageContent {
         return true
     }
 
-    @objc dynamic public var imageDescription: String? {
+    @Published public var imageDescription: String? {
         didSet {
             guard self.imageDescription != oldValue else {
                 return
@@ -91,7 +91,7 @@ public class ImagePageContent: NSObject, PageContent {
         }
     }
 
-    @objc dynamic public var cropRect: CGRect {
+    @Published public var cropRect: CGRect {
         didSet {
             guard self.cropRect != oldValue else {
                 return
@@ -105,7 +105,7 @@ public class ImagePageContent: NSObject, PageContent {
         }
     }
 
-    @objc dynamic public var hotspots: [ImageHotspot] = [] {
+    @Published public var hotspots: [ImageHotspot] = [] {
         didSet {
             guard self.hotspots != oldValue else {
                 return
@@ -115,7 +115,7 @@ public class ImagePageContent: NSObject, PageContent {
         }
     }
 
-    @objc dynamic public var recognizedTexts: [VNRecognizedText] = [] {
+    @Published public var recognizedTexts: [VNRecognizedText] = [] {
         didSet {
             guard self.recognizedTexts != oldValue else {
                 return
@@ -183,11 +183,12 @@ public class ImagePageContent: NSObject, PageContent {
             self.cropRect = .zero
         }
 
+        super.init()
+
         if self.cropRect == .zero, let image = self.image {
             self.cropRect = CGRect(origin: .zero, size: image.size)
         }
 
-        super.init()
         self.findAllLinks()
     }
 

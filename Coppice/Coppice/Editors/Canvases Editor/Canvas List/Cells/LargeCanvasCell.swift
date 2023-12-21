@@ -28,6 +28,9 @@ class LargeCanvasCell: EditableLabelCell, CanvasCell {
             }
             self.thumbnailBackground.fillColor = theme.canvasBackgroundColor
             self.thumbnailImageView.image = canvas.thumbnail
+            self.nameLabel.stringValue = canvas.title
+
+            self.subscribers[.canvasTitle] = canvas.changePublisher(for: \.title)?.notify(self, ofChangeTo: \.canvasTitle)
         }
     }
 
@@ -37,5 +40,17 @@ class LargeCanvasCell: EditableLabelCell, CanvasCell {
         self.thumbnailImageView.unregisterDraggedTypes()
     }
 
+    @objc dynamic var canvasTitle: String {
+        get { return (self.objectValue as? Canvas)?.title ?? "" }
+        set { (self.objectValue as? Canvas)?.title = newValue }
+    }
+
     var springLoadEnabled = false
+
+    //MARK: - Subscribers
+    private enum SubscriberKey {
+        case canvasTitle
+    }
+
+    private var subscribers: [SubscriberKey: AnyCancellable] = [:]
 }

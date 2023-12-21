@@ -7,6 +7,7 @@
 //
 
 import AppKit
+import Combine
 import CoppiceCore
 
 class SourceListNodeCollection: NSObject {
@@ -193,14 +194,8 @@ class FolderSourceListNode: SourceListNode {
     init(folder: Folder) {
         self.folder = folder
         super.init(item: .folder(folder.id))
-    }
 
-    override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
-        var keyPaths = super.keyPathsForValuesAffectingValue(forKey: key)
-        if key == #keyPath(title) {
-            keyPaths.insert("self.folder.title")
-        }
-        return keyPaths
+        self.subscribers[.folderTitle] = folder.changePublisher(for: \.title)?.notify(self, ofChangeTo: \.title)
     }
 
     @objc dynamic override var title: String {
@@ -232,6 +227,13 @@ class FolderSourceListNode: SourceListNode {
         let type = NSLocalizedString("Folder", comment: "Folder table row accessibility description")
         return "\(self.title), \(type)"
     }
+
+    //MARK: - Subscribers
+    private enum SubscriberKey {
+        case folderTitle
+    }
+
+    private var subscribers: [SubscriberKey: AnyCancellable] = [:]
 }
 
 
@@ -241,14 +243,8 @@ class PageSourceListNode: SourceListNode {
     init(page: Page) {
         self.page = page
         super.init(item: .page(page.id))
-    }
 
-    override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
-        var keyPaths = super.keyPathsForValuesAffectingValue(forKey: key)
-        if (key == #keyPath(title)) || (key == #keyPath(textColor)) {
-            keyPaths.insert("self.page.title")
-        }
-        return keyPaths
+        self.subscribers[.pageTitle] = page.changePublisher(for: \.title)?.notify(self, ofChangeTo: \.title)
     }
 
     @objc dynamic override var title: String {
@@ -282,6 +278,13 @@ class PageSourceListNode: SourceListNode {
         }
         return "\(self.title), \(self.page.content.contentType.localizedName)"
     }
+
+    //MARK: - Subscribers
+    private enum SubscriberKey {
+        case pageTitle
+    }
+
+    private var subscribers: [SubscriberKey: AnyCancellable] = [:]
 }
 
 

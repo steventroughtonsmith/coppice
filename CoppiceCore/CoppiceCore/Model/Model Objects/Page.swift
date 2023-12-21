@@ -35,12 +35,12 @@ final public class Page: NSObject, CollectableModelObject, FolderContainable {
 
 
     // MARK: - Attributes
-    @objc dynamic public var title: String {
+    public var title: String {
         didSet { self.didChange(\.title, oldValue: oldValue) }
     }
 
-    @objc dynamic public var dateCreated = Date()
-    @objc dynamic public var dateModified = Date()
+    public var dateCreated = Date()
+    public var dateModified = Date()
     private var userPreferredSize: CGSize?
     public var contentSize: CGSize {
         get {
@@ -52,7 +52,7 @@ final public class Page: NSObject, CollectableModelObject, FolderContainable {
     }
 
     /// Added in 2021.2
-    @objc dynamic public var allowsAutoLinking: Bool = true {
+    public var allowsAutoLinking: Bool = true {
         didSet { self.didChange(\.allowsAutoLinking, oldValue: oldValue) }
     }
 

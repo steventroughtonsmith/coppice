@@ -16,11 +16,11 @@ final public class CanvasPage: NSObject, CollectableModelObject {
     public weak var collection: ModelCollection<CanvasPage>?
 
     //MARK: - Attributes
-    @objc dynamic public var frame: CGRect = .zero {
+    @Published public var frame: CGRect = .zero {
         didSet { self.didChange(\.frame, oldValue: oldValue) }
     }
 
-    @objc dynamic public var title: String {
+    public var title: String {
         return self.page?.title ?? ""
     }
 
@@ -45,14 +45,13 @@ final public class CanvasPage: NSObject, CollectableModelObject {
 
 
     //MARK: - Relationships
-    @ModelObjectReference @objc dynamic public var page: Page? {
+    @ModelObjectReference public var page: Page? {
         didSet {
             if let page = self.page, self.frame.size == .zero {
                 self.frame.size = page.contentSize
             }
-            self.willChangeValue(for: \.title)
             self.didChangeRelationship(\.page, inverseKeyPath: \.canvasPages, oldValue: oldValue)
-            self.didChangeValue(for: \.title)
+            //TODO: Update title
         }
     }
 
@@ -84,18 +83,8 @@ final public class CanvasPage: NSObject, CollectableModelObject {
         return false
     }
 
-
-    //MARK: - KVO
-    override public class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
-        var keyPaths = super.keyPathsForValuesAffectingValue(forKey: key)
-        if key == "title" {
-            keyPaths.insert("self.page.title")
-        }
-        return keyPaths
-    }
-
     //MARK: - Old Relationships
-    @ModelObjectReference @objc dynamic public var parent: CanvasPage? {
+    @ModelObjectReference public var parent: CanvasPage? {
         didSet {
             self.willChangeValue(for: \.title)
             self.didChangeRelationship(\.parent, inverseKeyPath: \.children, oldValue: oldValue)

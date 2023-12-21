@@ -11,7 +11,7 @@ import M3Data
 
 public class TextPageContent: NSObject, PageContent {
     public let contentType = PageContentType.text
-    @objc dynamic public var text: NSAttributedString = NSAttributedString(string: "", attributes: [.font: Page.defaultFont]) {
+    @Published public var text: NSAttributedString = NSAttributedString(string: "", attributes: [.font: Page.defaultFont]) {
         didSet {
             guard self.text != oldValue else {
                 return

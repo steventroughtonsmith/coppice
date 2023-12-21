@@ -6,6 +6,7 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
+import Combine
 import CoppiceCore
 import Foundation
 
@@ -24,17 +25,10 @@ class CanvasPageViewModel: ViewModel {
         self.canvasPage = canvasPage
         self.page = canvasPage.page
         super.init(documentWindowViewModel: documentWindowViewModel)
-    }
-
-    override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
-        var keyPaths = super.keyPathsForValuesAffectingValue(forKey: key)
-        if (key == #keyPath(title)) {
-            keyPaths.insert("self.page.title")
+        self.subscribers[.pageTitle] = canvasPage.page?.changePublisher(for: \.title)?.sink { [weak self] _ in
+            self?.notifyOfChange(to: \.title)
+            self?.notifyOfChange(to: \.accessibilityDescription)
         }
-        if (key == #keyPath(accessibilityDescription)) {
-            keyPaths.insert("self.canvasPage.parent.title")
-        }
-        return keyPaths
     }
 
     @objc dynamic var title: String {
@@ -70,5 +64,12 @@ class CanvasPageViewModel: ViewModel {
 
         return (description.count > 0) ? description : nil
     }
+
+    //MARK: - Subscribers
+    private enum SubscriberKey {
+        case pageTitle
+    }
+
+    private var subscribers: [SubscriberKey: AnyCancellable] = [:]
 }
 
