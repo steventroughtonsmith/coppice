@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		99248D212B3497DE0059546E /* M3Data in Frameworks */ = {isa = PBXBuildFile; productRef = 99248D202B3497DE0059546E /* M3Data */; };
 		99399D0B28F45AA800B0E080 /* MockPageHierarchyRestorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99399D0A28F45AA800B0E080 /* MockPageHierarchyRestorer.swift */; };
 		994664A02816EE0300A08522 /* CroppedImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9946649F2816EE0300A08522 /* CroppedImageCache.swift */; };
 		9948C0CF2896B78C00DB754E /* TestData.Plist.V2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9948C0CE2896B78C00DB754E /* TestData.Plist.V2.swift */; };
@@ -41,7 +42,6 @@
 		99C0BA9B28B265F500F42AD9 /* PageHierarchyRestorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C0BA9A28B265F500F42AD9 /* PageHierarchyRestorer.swift */; };
 		99C88C7B28A13B68006791CB /* Set+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C88C7A28A13B68006791CB /* Set+M3Extensions.swift */; };
 		99C88C7D28A1419C006791CB /* LayoutEngineLink+CanvasLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C88C7C28A1419C006791CB /* LayoutEngineLink+CanvasLink.swift */; };
-		99CC5B8527F1F28E0084ADFF /* M3Data.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99CC5B8427F1F28E0084ADFF /* M3Data.framework */; };
 		99D0C76024C5DD1E002EEBFA /* CoppiceCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99D0C75624C5DD1E002EEBFA /* CoppiceCore.framework */; };
 		99D0C76724C5DD1E002EEBFA /* CoppiceCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 99D0C75924C5DD1E002EEBFA /* CoppiceCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		99D0C7FC24C5DE79002EEBFA /* CoppiceModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0C7DF24C5DE79002EEBFA /* CoppiceModelController.swift */; };
@@ -172,7 +172,6 @@
 		99C0BA9A28B265F500F42AD9 /* PageHierarchyRestorer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageHierarchyRestorer.swift; sourceTree = "<group>"; };
 		99C88C7A28A13B68006791CB /* Set+M3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Set+M3Extensions.swift"; sourceTree = "<group>"; };
 		99C88C7C28A1419C006791CB /* LayoutEngineLink+CanvasLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LayoutEngineLink+CanvasLink.swift"; sourceTree = "<group>"; };
-		99CC5B8427F1F28E0084ADFF /* M3Data.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = M3Data.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		99D0C75624C5DD1E002EEBFA /* CoppiceCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CoppiceCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		99D0C75924C5DD1E002EEBFA /* CoppiceCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoppiceCore.h; sourceTree = "<group>"; };
 		99D0C75A24C5DD1E002EEBFA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -270,7 +269,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				99CC5B8527F1F28E0084ADFF /* M3Data.framework in Frameworks */,
+				99248D212B3497DE0059546E /* M3Data in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,7 +327,6 @@
 		99CC5B8327F1F28E0084ADFF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				99CC5B8427F1F28E0084ADFF /* M3Data.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -622,6 +620,9 @@
 			dependencies = (
 			);
 			name = CoppiceCore;
+			packageProductDependencies = (
+				99248D202B3497DE0059546E /* M3Data */,
+			);
 			productName = CoppiceCore;
 			productReference = 99D0C75624C5DD1E002EEBFA /* CoppiceCore.framework */;
 			productType = "com.apple.product-type.framework";
@@ -672,6 +673,8 @@
 				Base,
 			);
 			mainGroup = 99D0C74C24C5DD1E002EEBFA;
+			packageReferences = (
+			);
 			productRefGroup = 99D0C75724C5DD1E002EEBFA /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1355,6 +1358,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		99248D202B3497DE0059546E /* M3Data */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = M3Data;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 99D0C74D24C5DD1E002EEBFA /* Project object */;
 }

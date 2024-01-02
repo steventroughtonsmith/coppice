@@ -87,7 +87,7 @@ public enum PageContentType: String, Equatable, CaseIterable {
     }
 }
 
-public protocol PageContent: AnyObject {
+public protocol PageContent: AnyObject, PlistConvertable {
     var contentType: PageContentType { get }
     var page: Page? { get set }
     var undoManager: UndoManager? { get }
@@ -126,6 +126,23 @@ extension PageContent {
 
     public func firstMatch(forSearchString searchString: String) -> NSRange {
         return NSRange(location: NSNotFound, length: 0)
+    }
+}
+
+extension PageContent {
+    public func toPlistValue() throws -> PlistValue {
+        return self.modelFile
+    }
+
+    public static func fromPlistValue(_ plistValue: PlistValue) throws -> PageContent {
+        guard 
+            let modelFile = plistValue as? ModelFile,
+            let contentType = PageContentType(rawValue: modelFile.type)
+        else {
+            throw PlistConvertableError.invalidConversionFromPlistValue
+        }
+
+        return try contentType.createContent(modelFile: modelFile)
     }
 }
 

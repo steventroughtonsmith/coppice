@@ -67,6 +67,9 @@
 		991B60C6254334F2002C483C /* HelpSearchResultTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991B60C5254334F2002C483C /* HelpSearchResultTableCellView.swift */; };
 		991F935C24ADF64A006A0A09 /* HoverSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991F935B24ADF64A006A0A09 /* HoverSegmentedControl.swift */; };
 		9923B06B22F45F7E0035D8C6 /* TestObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9923B06A22F45F7E0035D8C6 /* TestObjects.swift */; };
+		99248D1F2B3497CF0059546E /* M3Data in Frameworks */ = {isa = PBXBuildFile; productRef = 99248D1E2B3497CF0059546E /* M3Data */; };
+		99248D232B3499600059546E /* M3Data in Frameworks */ = {isa = PBXBuildFile; productRef = 99248D222B3499600059546E /* M3Data */; };
+		99248D252B3499A10059546E /* M3Data in Frameworks */ = {isa = PBXBuildFile; productRef = 99248D242B3499A10059546E /* M3Data */; };
 		9925B2622386A0DF001A8ADC /* TextEditorInspectorTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9925B2612386A0DF001A8ADC /* TextEditorInspectorTypes.swift */; };
 		9926951A24AA34940050DFED /* ImmediateMenuSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9926951924AA34940050DFED /* ImmediateMenuSegmentedControl.swift */; };
 		992710C424D1A29200C7C61A /* TourInterfaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992710C324D1A29200C7C61A /* TourInterfaceView.swift */; };
@@ -108,7 +111,6 @@
 		993D2BFE2412FB1C002E5BAC /* SplitViewContainable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993D2BFD2412FB1C002E5BAC /* SplitViewContainable.swift */; };
 		993D2C0024157196002E5BAC /* SourceListOutlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993D2BFF24157196002E5BAC /* SourceListOutlineView.swift */; };
 		994253EF244F49A7008272E6 /* CanvasListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994253EE244F49A7008272E6 /* CanvasListViewModelTests.swift */; };
-		9944F79628201B080012BFAA /* M3Data.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 99CC5B8227F1F1E00084ADFF /* M3Data.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9944F798282021D30012BFAA /* SidebarUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9944F797282021D30012BFAA /* SidebarUITests.swift */; };
 		9944F79A2820240E0012BFAA /* SidebarUITestsDocument.coppicedoc in Resources */ = {isa = PBXBuildFile; fileRef = 9944F7992820240E0012BFAA /* SidebarUITestsDocument.coppicedoc */; };
 		9944F79D282024230012BFAA /* XCTestExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9944F79C282024230012BFAA /* XCTestExtensions.swift */; };
@@ -489,7 +491,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				9944F79628201B080012BFAA /* M3Data.framework in Copy Frameworks */,
 				999617FF249D0CC300A1AE24 /* Sparkle.framework in Copy Frameworks */,
 				99D0C87F24C5EDB4002EEBFA /* CoppiceCore.framework in Copy Frameworks */,
 			);
@@ -849,7 +850,6 @@
 		99C9006325794AE700969E92 /* TextEditorParagraphInspectorView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextEditorParagraphInspectorView.xib; sourceTree = "<group>"; };
 		99C9AF1323631348009F909A /* CanvasTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasTextView.swift; sourceTree = "<group>"; };
 		99C9AF1523632349009F909A /* NSView+CanvasLookup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+CanvasLookup.swift"; sourceTree = "<group>"; };
-		99CC5B8227F1F1E00084ADFF /* M3Data.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = M3Data.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		99D03F1A267BA6F600B9CE1B /* LinkEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkEditor.swift; sourceTree = "<group>"; };
 		99D0C6E924C5A606002EEBFA /* CoppiceSpotlight.mdimporter */ = {isa = PBXFileReference; explicitFileType = "wrapper.spotlight-importer"; includeInIndex = 0; path = CoppiceSpotlight.mdimporter; sourceTree = BUILT_PRODUCTS_DIR; };
 		99D0C6EC24C5A606002EEBFA /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = main.c; path = CoppiceSpotlight/main.c; sourceTree = SOURCE_ROOT; };
@@ -948,6 +948,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99248D252B3499A10059546E /* M3Data in Frameworks */,
 				99796C862A98DA7100B951D0 /* CoppiceCore.framework in Frameworks */,
 				9982FEC22A67DF3B00970283 /* QuickLookThumbnailing.framework in Frameworks */,
 				9982FEC32A67DF3B00970283 /* Quartz.framework in Frameworks */,
@@ -966,6 +967,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				99D0C8E624C6F4C5002EEBFA /* CoppiceCore.framework in Frameworks */,
+				99248D1F2B3497CF0059546E /* M3Data in Frameworks */,
 				99D0C71024C5CED0002EEBFA /* Quartz.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -978,6 +980,7 @@
 				9999A23424F80CAB001F8161 /* libM3Subscriptions.a in Frameworks */,
 				999617FE249D0CBA00A1AE24 /* Sparkle.framework in Frameworks */,
 				99062DE02519117C009D3317 /* AVKit.framework in Frameworks */,
+				99248D232B3499600059546E /* M3Data in Frameworks */,
 				99ED9FD62A64364500BF7A84 /* CoppiceCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1909,7 +1912,6 @@
 				9999A23324F80CAB001F8161 /* libM3Subscriptions.a */,
 				9999A23124F80C8D001F8161 /* libM3Subscriptions.a */,
 				99D0C87D24C5EDB4002EEBFA /* CoppiceCore.framework */,
-				99CC5B8227F1F1E00084ADFF /* M3Data.framework */,
 				99D0C70F24C5CED0002EEBFA /* Quartz.framework */,
 				9982FEC12A67DF3B00970283 /* QuickLookThumbnailing.framework */,
 			);
@@ -2229,6 +2231,9 @@
 				99796C852A98D77E00B951D0 /* PBXTargetDependency */,
 			);
 			name = QuickLookThumbnail;
+			packageProductDependencies = (
+				99248D242B3499A10059546E /* M3Data */,
+			);
 			productName = QuickLookThumbnail;
 			productReference = 9982FEC02A67DF3B00970283 /* QuickLookThumbnail.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -2265,6 +2270,9 @@
 				99796C832A98D77B00B951D0 /* PBXTargetDependency */,
 			);
 			name = CoppiceQuickLook;
+			packageProductDependencies = (
+				99248D1E2B3497CF0059546E /* M3Data */,
+			);
 			productName = CoppiceQuickLook;
 			productReference = 99D0C70D24C5CED0002EEBFA /* CoppiceQuickLook.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -2291,6 +2299,9 @@
 				9982FECA2A67DF3B00970283 /* PBXTargetDependency */,
 			);
 			name = Coppice;
+			packageProductDependencies = (
+				99248D222B3499600059546E /* M3Data */,
+			);
 			productName = Bubbles;
 			productReference = 99FE018D22CD1037004D380D /* Coppice.app */;
 			productType = "com.apple.product-type.application";
@@ -4023,6 +4034,21 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		99248D1E2B3497CF0059546E /* M3Data */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = M3Data;
+		};
+		99248D222B3499600059546E /* M3Data */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = M3Data;
+		};
+		99248D242B3499A10059546E /* M3Data */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = M3Data;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 99FE018522CD1037004D380D /* Project object */;
 }

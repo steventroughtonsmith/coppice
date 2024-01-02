@@ -6,7 +6,7 @@
 //  Copyright © 2019 M Cubed Software. All rights reserved.
 //
 
-import Cocoa
+import AppKit
 import M3Data
 
 final public class Canvas: NSObject, CollectableModelObject {
@@ -26,7 +26,7 @@ final public class Canvas: NSObject, CollectableModelObject {
 
 
     //MARK: - ModelObject Definitions
-    public static let modelType: ModelType = ModelType(rawValue: "Canvas")!
+    public static let modelType: ModelType = ModelType(rawValue: "Canvas")
     public var id = ModelID(modelType: Canvas.modelType)
     public weak var collection: ModelCollection<Canvas>?
 
