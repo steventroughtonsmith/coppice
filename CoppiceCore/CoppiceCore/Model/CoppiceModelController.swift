@@ -158,7 +158,7 @@ public class CoppiceModelController: NSObject, ModelController {
     }
 
     public func delete(_ folder: Folder) {
-        folder.contents.forEach { item in
+        folder.folderContents.forEach { item in
             if let folder = item as? Folder {
                 self.delete(folder)
             } else if let page = item as? Page {

@@ -27,11 +27,11 @@ final public class Folder: NSObject, CollectableModelObject, FolderContainable {
     public var dateCreated: Date = Date()
 
     public var dateModified: Date {
-        guard self.contents.count > 0 else {
+        guard self.folderContents.count > 0 else {
             return self.dateCreated
         }
 
-        let sorted = self.contents.sorted(by: { $0.dateModified > $1.dateModified })
+        let sorted = self.folderContents.sorted(by: { $0.dateModified > $1.dateModified })
         return sorted[0].dateModified
     }
 
@@ -39,7 +39,16 @@ final public class Folder: NSObject, CollectableModelObject, FolderContainable {
         didSet { self.didChange(\.containingFolder, oldValue: oldValue) }
     }
 
-    public var contents: [FolderContainable] = [] {
+    public var folderContents: [FolderContainable] {
+        get {
+            return self.contents.compactMap { self.modelController?.object(with: $0) as? FolderContainable }
+        }
+        set {
+            self.contents = newValue.map(\.id)
+        }
+    }
+
+    private var contents: [ModelID] = [] {
         didSet { self.didChange(\.contents, oldValue: oldValue) }
     }
 
@@ -53,7 +62,7 @@ final public class Folder: NSObject, CollectableModelObject, FolderContainable {
     //MARK: - Folder Management
     public func insert(_ objects: [FolderContainable], below item: FolderContainable? = nil) {
         self.modelController?.pushChangeGroup()
-        var contents: [FolderContainable?] = self.contents
+        var contents: [FolderContainable?] = self.folderContents
 
         //We need to get the index before processing as the item we're inserting above might be an existing item
         var index: Int? = nil
@@ -78,14 +87,14 @@ final public class Folder: NSObject, CollectableModelObject, FolderContainable {
             contents.insert(contentsOf: objects, at: 0)
         }
 
-        self.contents = contents.compactMap { $0 }
+        self.folderContents = contents.compactMap { $0 }
         self.modelController?.popChangeGroup()
     }
 
     public func remove(_ objects: [FolderContainable]) {
         for object in objects {
-            if let index = self.contents.firstIndex(where: { $0.id == object.id }) {
-                self.contents.remove(at: index)
+            if let index = self.folderContents.firstIndex(where: { $0.id == object.id }) {
+                self.folderContents.remove(at: index)
             }
         }
     }
@@ -118,7 +127,7 @@ final public class Folder: NSObject, CollectableModelObject, FolderContainable {
     }
 
     public func sort(using method: SortingMethod) {
-        self.contents = self.contents.sorted(by: method.compare)
+        self.folderContents = self.folderContents.sorted(by: method.compare)
     }
 
 
@@ -149,7 +158,7 @@ final public class Folder: NSObject, CollectableModelObject, FolderContainable {
 
         plist[.id] = self.id
         plist[.Folder.title] = self.title
-        plist[.Folder.contents] = self.contents.map(\.id)
+        plist[.Folder.contents] = self.contents
         plist[.Folder.dateCreated] = self.dateCreated
 
         return plist
@@ -164,15 +173,17 @@ final public class Folder: NSObject, CollectableModelObject, FolderContainable {
         let dateCreated: Date = try plist.requiredAttribute(withKey: .Folder.dateCreated)
 
         let contentsIDs: [ModelID] = try plist.requiredAttribute(withKey: .Folder.contents)
-        let contents = contentsIDs.compactMap { self.modelController?.object(with: $0) as? FolderContainable }
-        guard contentsIDs.count == contents.count else {
-            throw ModelObjectUpdateErrors.attributeNotFound(ModelPlistKey.Folder.contents.rawValue)
-        }
-        contents.forEach { $0.containingFolder = self }
+//        let contents = contentsIDs.compactMap { self.modelController?.object(with: $0) as? FolderContainable }
+//        guard contentsIDs.count == contents.count else {
+//            throw ModelObjectUpdateErrors.attributeNotFound(ModelPlistKey.Folder.contents.rawValue)
+//        }
+
 
         self.title = title
         self.dateCreated = dateCreated
-        self.contents = contents
+        self.contents = contentsIDs
+
+        self.folderContents.forEach { $0.containingFolder = self }
 
         let plistKeys = ModelPlistKey.Folder.all
         self.otherProperties = plist.filter { (key, _) -> Bool in

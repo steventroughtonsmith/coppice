@@ -133,7 +133,7 @@ class SourceListViewModel: ViewModel {
                 continue
             }
 
-            let folderContentsIDs: [DocumentWindowViewModel.SidebarItem] = folder.contents.compactMap {
+            let folderContentsIDs: [DocumentWindowViewModel.SidebarItem] = folder.folderContents.compactMap {
                 if $0.id.modelType == Page.modelType {
                     return .page($0.id)
                 }
@@ -258,14 +258,14 @@ class SourceListViewModel: ViewModel {
         }
 
         if index == -1 {
-            folder.insert(items, below: folder.contents.last)
+            folder.insert(items, below: folder.folderContents.last)
             return true
         } else {
             let trueIndex = index - 1
             if (trueIndex == -1) {
                 folder.insert(items, below: nil)
                 return true
-            } else if let item = folder.contents[safe: trueIndex] {
+            } else if let item = folder.folderContents[safe: trueIndex] {
                 folder.insert(items, below: item)
                 return true
             }
@@ -330,7 +330,7 @@ class SourceListViewModel: ViewModel {
         }
 
         if index == -1 {
-            self.modelController.createPages(fromFilesAt: urls, in: folder, below: folder.contents.last)
+            self.modelController.createPages(fromFilesAt: urls, in: folder, below: folder.folderContents.last)
             return true
         }
 
@@ -338,7 +338,7 @@ class SourceListViewModel: ViewModel {
         if (trueIndex == -1) {
             self.modelController.createPages(fromFilesAt: urls, in: folder)
         } else {
-            self.modelController.createPages(fromFilesAt: urls, in: folder, below: folder.contents[safe: trueIndex])
+            self.modelController.createPages(fromFilesAt: urls, in: folder, below: folder.folderContents[safe: trueIndex])
         }
         return true
     }
@@ -388,7 +388,7 @@ class SourceListViewModel: ViewModel {
             return nil
         }
         let containingFolder = collection.commonAncestor?.folderForCreation ?? self.modelController.rootFolder
-        let newFolder = self.modelController.createFolder(in: containingFolder, below: containingFolder.contents.last) { folder in
+        let newFolder = self.modelController.createFolder(in: containingFolder, below: containingFolder.folderContents.last) { folder in
             folder.insert(collection.nodes.compactMap(\.folderContainable))
         }
         return .folder(newFolder.id)

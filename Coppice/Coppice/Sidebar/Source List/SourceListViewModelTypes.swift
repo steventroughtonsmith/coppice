@@ -212,7 +212,7 @@ class FolderSourceListNode: SourceListNode {
     }
 
     override var folderItemForCreation: FolderContainable? {
-        return self.folder.contents.last
+        return self.folder.folderContents.last
     }
 
     override var folderContainable: FolderContainable? {

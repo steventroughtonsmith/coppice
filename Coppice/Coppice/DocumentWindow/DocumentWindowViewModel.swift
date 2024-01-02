@@ -429,7 +429,7 @@ extension DocumentWindowViewModel {
     }
 
     private func alertForDeletingSingleFolder(_ folder: Folder) -> Alert? {
-        guard folder.contents.count > 0 else {
+        guard folder.folderContents.count > 0 else {
             return nil
         }
         return Alert(title: NSLocalizedString("Delete Folder", comment: "Delete folder alert title"),
