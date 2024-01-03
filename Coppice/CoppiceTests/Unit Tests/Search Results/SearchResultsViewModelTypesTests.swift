@@ -26,7 +26,7 @@ class PageSearchResultTests: XCTestCase {
         let modelController = CoppiceModelController(undoManager: UndoManager())
         let page = modelController.collection(for: Page.self).newObject() {
             $0.title = "Foo Bar Baz"
-            $0.content = ImagePageContent()
+            $0.content = Page.Content.Image()
         }
         let result = PageSearchResult(match: .init(page: page, matchType: .title(NSRange(location: 4, length: 3))), searchString: "Bar")
 
@@ -37,7 +37,7 @@ class PageSearchResultTests: XCTestCase {
         let modelController = CoppiceModelController(undoManager: UndoManager())
         let page = modelController.collection(for: Page.self).newObject() {
             $0.title = "Foo Bar Baz"
-            let content = TextPageContent()
+            let content = Page.Content.Text()
             content.text = NSAttributedString(string: "The quick brown fox jumped over the lazy dog")
             $0.content = content
         }
@@ -50,7 +50,7 @@ class PageSearchResultTests: XCTestCase {
         let modelController = CoppiceModelController(undoManager: UndoManager())
         let page = modelController.collection(for: Page.self).newObject() {
             $0.title = "Foo Bar Baz"
-            let content = TextPageContent()
+            let content = Page.Content.Text()
             content.text = NSAttributedString(string: "The quick brown fox jumped over the lazy dog")
             $0.content = content
         }
@@ -64,7 +64,7 @@ class PageSearchResultTests: XCTestCase {
         let modelController = CoppiceModelController(undoManager: UndoManager())
         let page = modelController.collection(for: Page.self).newObject() {
             $0.title = "Foo Bar Baz"
-            let content = TextPageContent()
+            let content = Page.Content.Text()
             content.text = NSAttributedString(string: "The quick brown fox jumped over the lazy dog")
             $0.content = content
         }

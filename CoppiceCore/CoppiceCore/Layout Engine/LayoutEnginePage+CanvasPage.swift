@@ -21,12 +21,13 @@ extension LayoutEnginePage {
             guard let layoutPage = layoutEnginePages[canvasPage.id.uuid] else {
                 continue
             }
-            for child in canvasPage.children {
-                guard let childLayoutPage = layoutEnginePages[child.id.uuid] else {
-                    continue
-                }
-                layoutPage.addChild(childLayoutPage)
-            }
+            //TODO: Replace children
+//            for child in canvasPage.children {
+//                guard let childLayoutPage = layoutEnginePages[child.id.uuid] else {
+//                    continue
+//                }
+//                layoutPage.addChild(childLayoutPage)
+//            }
         }
         return Array(layoutEnginePages.values)
     }

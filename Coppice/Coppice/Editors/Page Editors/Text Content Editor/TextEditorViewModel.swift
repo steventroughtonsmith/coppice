@@ -18,10 +18,10 @@ protocol TextEditorView: Editor {
 class TextEditorViewModel: ViewModel {
     weak var view: TextEditorView?
 
-    @objc dynamic let textContent: TextPageContent
+    @objc dynamic let textContent: Page.Content.Text
     let viewMode: PageContentEditorViewMode
     let pageLinkManager: TextPageLinkManager?
-    init(textContent: TextPageContent, viewMode: PageContentEditorViewMode, documentWindowViewModel: DocumentWindowViewModel, pageLinkManager: TextPageLinkManager?) {
+    init(textContent: Page.Content.Text, viewMode: PageContentEditorViewMode, documentWindowViewModel: DocumentWindowViewModel, pageLinkManager: TextPageLinkManager?) {
         self.textContent = textContent
         self.viewMode = viewMode
         self.pageLinkManager = pageLinkManager
@@ -45,7 +45,7 @@ class TextEditorViewModel: ViewModel {
         set { self.textContent.text = newValue }
     }
 
-    @discardableResult func createNewLinkedPage(ofType type: PageContentType, from range: NSRange, updatingSelection: Bool = true) -> Page {
+    @discardableResult func createNewLinkedPage(ofType type: Page.ContentType, from range: NSRange, updatingSelection: Bool = true) -> Page {
         if updatingSelection {
             return self.actuallyCreateNewLinkedPage(ofType: type, from: range)
         }
@@ -54,7 +54,7 @@ class TextEditorViewModel: ViewModel {
         }
     }
 
-    private func actuallyCreateNewLinkedPage(ofType type: PageContentType, from range: NSRange) -> Page {
+    private func actuallyCreateNewLinkedPage(ofType type: Page.ContentType, from range: NSRange) -> Page {
         let selectedText = self.attributedText.attributedSubstring(from: range)
         self.modelController.undoManager.beginUndoGrouping()
 

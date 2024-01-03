@@ -1,5 +1,5 @@
 //
-//  TextPageContentsTests.swift
+//  Page.Content.TextsTests.swift
 //  CoppiceTests
 //
 //  Created by Martin Pilkington on 13/04/2020.
@@ -10,16 +10,16 @@
 import M3Data
 import XCTest
 
-class TextPageContentsTests: XCTestCase {
+class PageContentTextTests: XCTestCase {
     var modelController: CoppiceModelController!
     var page: Page!
-    var content: TextPageContent!
+    var content: Page.Content.Text!
 
     override func setUp() {
         super.setUp()
 
         self.modelController = CoppiceModelController(undoManager: UndoManager())
-        self.content = TextPageContent()
+        self.content = Page.Content.Text()
         self.page = Page.create(in: self.modelController) { $0.content = self.content }
     }
 
@@ -34,7 +34,7 @@ class TextPageContentsTests: XCTestCase {
     //MARK: - .text
     func test_text_notifiesOfChangeIfNewValueIsDifferent() {
         let expectation = self.expectation(description: "Called observer")
-        let observer = self.modelController.pageCollection.addObserver { (change) in
+        let observer = self.modelController.pageCollection.changePublisher.sink { (change) in
             expectation.fulfill()
             XCTAssertEqual(change.changeType, .update)
             XCTAssertTrue(change.didUpdate(\.content))
@@ -44,14 +44,14 @@ class TextPageContentsTests: XCTestCase {
 
         self.wait(for: [expectation], timeout: 1)
 
-        self.modelController.collection(for: Page.self).removeObserver(observer)
+        observer.cancel()
     }
 
     func test_text_doesntNotifyOfChangeIfNewValueIsTheSameAsOldValue() {
         self.content.text = NSAttributedString(string: "Hello World")
         let expectation = self.expectation(description: "Called observer")
         expectation.isInverted = true
-        let observer = self.modelController.pageCollection.addObserver { (change) in
+        let observer = self.modelController.pageCollection.changePublisher.sink { (change) in
             expectation.fulfill()
         }
 
@@ -59,7 +59,7 @@ class TextPageContentsTests: XCTestCase {
 
         self.wait(for: [expectation], timeout: 0.5)
 
-        self.modelController.collection(for: Page.self).removeObserver(observer)
+        observer.cancel()
     }
 
 
@@ -111,13 +111,13 @@ class TextPageContentsTests: XCTestCase {
     func test_init_createsTextBasedOnSuppliedData() throws {
         let data = try NSAttributedString(string: "Hello World").data(from: NSRange(location: 0, length: 11), documentAttributes: [.documentType: NSAttributedString.DocumentType.rtf])
 
-        let content = TextPageContent(data: data)
+        let content = Page.Content.Text(data: data)
         XCTAssertEqual(content.text.string, "Hello World")
     }
 
     func test_init_addsAnyMetadataToOtherMetadata() throws {
         let modelFile = ModelFile(type: "text", filename: nil, data: nil, metadata: ["foo": "bar", "hello": "world"])
-        let content = try TextPageContent(modelFile: modelFile)
+        let content = try Page.Content.Text(modelFile: modelFile)
         XCTAssertEqual(content.otherMetadata?["foo"] as? String, "bar")
         XCTAssertEqual(content.otherMetadata?["hello"] as? String, "world")
     }
@@ -127,7 +127,7 @@ class TextPageContentsTests: XCTestCase {
     func test_modelFile_typeIsTextContentType() {
         self.content.text = NSAttributedString(string: "Hello World")
         let modelFile = self.content.modelFile
-        XCTAssertEqual(modelFile.type, PageContentType.text.rawValue)
+        XCTAssertEqual(modelFile.type, Page.ContentType.text.rawValue)
     }
 
     func test_modelFile_fileNameContainsPageIDAndRTFExtension() {
@@ -152,7 +152,7 @@ class TextPageContentsTests: XCTestCase {
 
     func test_modelFile_metadataIsSetToOtherMetadata() throws {
         let initialModelFile = ModelFile(type: "text", filename: nil, data: nil, metadata: ["foo": "bar", "hello": "world"])
-        let content = try TextPageContent(modelFile: initialModelFile)
+        let content = try Page.Content.Text(modelFile: initialModelFile)
 
         let modelFile = content.modelFile
         XCTAssertEqual(modelFile.metadata?["foo"] as? String, "bar")

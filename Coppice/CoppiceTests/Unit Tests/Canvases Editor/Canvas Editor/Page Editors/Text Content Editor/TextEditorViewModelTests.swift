@@ -13,7 +13,7 @@ import XCTest
 class TextEditorViewModelTests: XCTestCase {
     var modelController: CoppiceModelController!
     var page: Page!
-    var textContent: TextPageContent!
+    var textContent: Page.Content.Text!
     var documentWindowViewModel: MockDocumentWindowViewModel!
 
     var viewModel: TextEditorViewModel!
@@ -21,7 +21,7 @@ class TextEditorViewModelTests: XCTestCase {
     override func setUp() {
         super.setUp()
         self.modelController = CoppiceModelController(undoManager: UndoManager())
-        self.textContent = TextPageContent()
+        self.textContent = Page.Content.Text()
 
         self.page = Page.create(in: self.modelController) {
             $0.content = self.textContent

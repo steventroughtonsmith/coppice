@@ -124,7 +124,7 @@ class PageLinkManagerTests: XCTestCase {
 
     //MARK: - Page
     func test_updatesLinksInPageWhenANewPageIsAdded() {
-        let content = TextPageContent()
+        let content = Page.Content.Text()
         content.text = NSTextStorage(attributedString: NSAttributedString(string: "Test hello earth test"))
         self.editingPage.content = content
 
@@ -144,7 +144,7 @@ class PageLinkManagerTests: XCTestCase {
     }
 
     func test_updatesLinksInPageWhenAPageIsRemoved() {
-        let content = TextPageContent()
+        let content = Page.Content.Text()
         content.text = NSAttributedString(string: "Test hello world test")
         self.editingPage.content = content
 
@@ -166,7 +166,7 @@ class PageLinkManagerTests: XCTestCase {
     }
 
     func test_updatesLinksInPageWhenAPageTitleChanges() {
-        let content = TextPageContent()
+        let content = Page.Content.Text()
         content.text = NSAttributedString(string: "Test hello world test")
         self.editingPage.content = content
 

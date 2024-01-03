@@ -18,7 +18,7 @@ class PageSelectorViewModelTests: XCTestCase {
     var strawberryPage: Page!
     var bananaPage: Page!
 
-    let expectedAdditionalRows = (PageContentType.allCases.count + 2)
+    let expectedAdditionalRows = (Page.ContentType.allCases.count + 2)
 
     override func setUp() {
         super.setUp()
@@ -159,8 +159,8 @@ class PageSelectorViewModelTests: XCTestCase {
             return false
         }
         XCTAssertEqual(contentTypeRows.first, try XCTUnwrap(viewModel.rows[safe: 6]))
-        XCTAssertEqual(contentTypeRows.count, PageContentType.allCases.count)
-        for contentType in PageContentType.allCases {
+        XCTAssertEqual(contentTypeRows.count, Page.ContentType.allCases.count)
+        for contentType in Page.ContentType.allCases {
             XCTAssertTrue(contentTypeRows.contains(where: { $0.rowType == .contentType(contentType) }))
         }
     }
@@ -175,8 +175,8 @@ class PageSelectorViewModelTests: XCTestCase {
             }
             return false
         }
-        XCTAssertEqual(contentTypeRows.count, PageContentType.allCases.count)
-        for contentType in PageContentType.allCases {
+        XCTAssertEqual(contentTypeRows.count, Page.ContentType.allCases.count)
+        for contentType in Page.ContentType.allCases {
             XCTAssertTrue(contentTypeRows.contains(where: { $0.rowType == .contentType(contentType) }))
         }
     }
@@ -191,8 +191,8 @@ class PageSelectorViewModelTests: XCTestCase {
             }
             return false
         }
-        XCTAssertEqual(contentTypeRows.count, PageContentType.allCases.count)
-        for contentType in PageContentType.allCases {
+        XCTAssertEqual(contentTypeRows.count, Page.ContentType.allCases.count)
+        for contentType in Page.ContentType.allCases {
             XCTAssertTrue(contentTypeRows.contains(where: { $0.rowType == .contentType(contentType) }))
         }
     }
@@ -250,6 +250,6 @@ class PageSelectorViewModelTests: XCTestCase {
 
         let page = try XCTUnwrap(modelController.pageCollection.all.first(where: { $0.title == "Berry" }))
         XCTAssertEqual(selectedPage, page)
-        XCTAssertTrue(page.content is ImagePageContent)
+        XCTAssertTrue(page.content is Page.Content.Image)
     }
 }

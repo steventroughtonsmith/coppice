@@ -242,7 +242,7 @@ class CanvasEditorViewModel: ViewModel {
         self.updatePages()
     }
 
-    func newPage(of type: PageContentType, centredOn point: CGPoint? = nil) {
+    func newPage(of type: Page.ContentType, centredOn point: CGPoint? = nil) {
         self.modelController.createPage(ofType: type, in: self.documentWindowViewModel.folderForNewPages) { (page) in
             self.canvas.addPages([page], centredOn: point)
         }

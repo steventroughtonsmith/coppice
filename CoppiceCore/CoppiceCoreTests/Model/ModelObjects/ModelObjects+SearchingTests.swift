@@ -113,29 +113,29 @@ class ModelObjects_SearchingTests: XCTestCase {
         let modelController = CoppiceModelController(undoManager: UndoManager())
         let page1 = Page.create(in: modelController) {
             $0.title = "Foo Bar Baz"
-            $0.content = TextPageContent()
+            $0.content = Page.Content.Text()
         }
 
         _ = Page.create(in: modelController) {
             $0.title = "No Matches"
-            $0.content = TextPageContent()
+            $0.content = Page.Content.Text()
         }
 
         let page3 = Page.create(in: modelController) {
             $0.title = "No Match in title"
-            let page3Content = TextPageContent()
+            let page3Content = Page.Content.Text()
             page3Content.text = NSAttributedString(string: "A brief history of bars")
             $0.content = page3Content
         }
 
         let page4 = Page.create(in: modelController) {
             $0.title = "A cool bar"
-            $0.content = TextPageContent()
+            $0.content = Page.Content.Text()
         }
 
         let page5 = Page.create(in: modelController) {
             $0.title = "No Match in title"
-            let page5Content = TextPageContent()
+            let page5Content = Page.Content.Text()
             page5Content.text = NSAttributedString(string: "This, bar none!")
             $0.content = page5Content
         }

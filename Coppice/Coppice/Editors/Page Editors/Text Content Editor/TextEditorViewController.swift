@@ -103,7 +103,7 @@ class TextEditorViewController: NSViewController, NSMenuItemValidation, NSToolba
         }
 
         guard let rawType = item.representedObject as? String,
-            let type = PageContentType(rawValue: rawType)
+            let type = Page.ContentType(rawValue: rawType)
         else {
             return
         }

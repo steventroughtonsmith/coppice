@@ -27,7 +27,7 @@ class MockPageContent: NSObject, PageContent, NSFilePromiseProviderDelegate {
 
     var maintainAspectRatio: Bool = false
 
-    var contentType: PageContentType {
+    var contentType: Page.ContentType {
         return .text
     }
 

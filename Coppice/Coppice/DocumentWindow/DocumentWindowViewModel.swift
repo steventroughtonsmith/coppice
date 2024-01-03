@@ -41,7 +41,7 @@ class DocumentWindowViewModel: NSObject {
             if page.containingFolder == nil {
                 self.modelController.rootFolder.insert([page])
             }
-            if let imageContent = page.content as? ImagePageContent {
+            if let imageContent = page.content as? Page.Content.Image {
                 //Pre-generate the cropped images if needed
                 modelController.croppedImageCache.croppedImage(for: imageContent)
             }
@@ -270,7 +270,7 @@ class DocumentWindowViewModel: NSObject {
 
 
     //MARK: - New Page Helpers
-    @Published var lastCreatePageType: PageContentType = .text
+    @Published var lastCreatePageType: Page.ContentType = .text
 
     var canvasForNewPages: Canvas? {
         guard self.sidebarSelection.firstIndex(of: .canvases) != nil else {

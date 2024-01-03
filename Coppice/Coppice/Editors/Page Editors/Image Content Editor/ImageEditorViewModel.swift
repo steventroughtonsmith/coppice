@@ -18,10 +18,10 @@ protocol ImageEditorViewProtocol: AnyObject {
 class ImageEditorViewModel: ViewModel {
     weak var view: ImageEditorViewProtocol?
 
-    let imageContent: ImagePageContent
+    let imageContent: Page.Content.Image
     let viewMode: PageContentEditorViewMode
     let pageLinkManager: ImagePageLinkManager?
-    init(imageContent: ImagePageContent, viewMode: PageContentEditorViewMode, documentWindowViewModel: DocumentWindowViewModel, pageLinkManager: ImagePageLinkManager?) {
+    init(imageContent: Page.Content.Image, viewMode: PageContentEditorViewMode, documentWindowViewModel: DocumentWindowViewModel, pageLinkManager: ImagePageLinkManager?) {
         self.imageContent = imageContent
         self.viewMode = viewMode
         self.hotspotCollection = ImageHotspotCollection(imageContent: imageContent)
@@ -183,7 +183,7 @@ class ImageEditorViewModel: ViewModel {
     private func updateHightlightedRect(withSearchString searchString: String?) {
         guard
             let searchString = searchString,
-            let match = self.imageContent.firstMatch(forSearchString: searchString) as? ImagePageContent.Match,
+            let match = self.imageContent.firstMatch(forSearchString: searchString) as? Page.Content.Image.Match,
             let range = Range(match.range, in: match.string)
         else {
             self.highlightRect = nil

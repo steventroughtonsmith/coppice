@@ -112,7 +112,7 @@ class PageSelectorViewModel: NSObject {
         if self.showExternalLinkRow(forSearchString: self.searchString) {
             newRows.append(PageSelectorRow.externalLink)
         }
-        newRows.append(contentsOf: PageContentType.allCases.map { PageSelectorRow(contentType: $0) })
+        newRows.append(contentsOf: Page.ContentType.allCases.map { PageSelectorRow(contentType: $0) })
         self.rows = newRows
     }
 
@@ -171,7 +171,7 @@ class PageSelectorRow: NSObject {
 
     enum RowType: Equatable {
         case page(Page)
-        case contentType(PageContentType)
+        case contentType(Page.ContentType)
         case externalLink
         case divider
         case header
@@ -193,14 +193,14 @@ class PageSelectorRow: NSObject {
     convenience init(page: Page) {
         let title = page.title
         var body: String?
-        if let string = (page.content as? TextPageContent)?.text.string, string.count > 0 {
+        if let string = (page.content as? Page.Content.Text)?.text.string, string.count > 0 {
             body = string
         }
         let image = page.content.contentType.icon(.small)
         self.init(title: title, body: body, folderPath: page.containingFolder?.pathString, image: image, rowType: .page(page))
     }
 
-    convenience init(contentType: PageContentType) {
+    convenience init(contentType: Page.ContentType) {
         self.init(title: contentType.localizedName, body: nil, image: contentType.icon(.small), rowType: .contentType(contentType))
     }
 

@@ -130,7 +130,7 @@ class TextPageLinkManager: PageLinkManager {
     }
 
     private func update(_ page: Page) {
-        guard let textContent = page.content as? TextPageContent,
+        guard let textContent = page.content as? Page.Content.Text,
             textContent.text != self.lastParsedText
         else {
             return

@@ -32,7 +32,7 @@ extension TestData {
                     $0.title = "Page 1"
                     $0.dateCreated = Date(timeIntervalSinceReferenceDate: 123)
                     $0.dateModified = Date(timeIntervalSinceReferenceDate: 456)
-                    let content = TextPageContent()
+                    let content = Page.Content.Text()
                     content.text = NSAttributedString(string: "Foo Bar")
                     $0.content = content
                 },
@@ -42,14 +42,14 @@ extension TestData {
                     $0.dateCreated = Date(timeIntervalSinceReferenceDate: 0)
                     $0.dateModified = Date(timeIntervalSinceReferenceDate: 0)
                     $0.contentSize = CGSize(width: 1024, height: 768)
-                    $0.content = TextPageContent()
+                    $0.content = Page.Content.Text()
                 },
                 self.modelController.pageCollection.newObject() {
                     $0.id = Page.modelID(with: self.pageIDs[2])
                     $0.title = "Page 3"
                     $0.dateCreated = Date(timeIntervalSinceReferenceDate: 999)
                     $0.dateModified = Date(timeIntervalSinceReferenceDate: 9999)
-                    let content = ImagePageContent()
+                    let content = Page.Content.Image()
                     content.setImage(NSImage(named: NSImage.applicationIconName)!, operation: .replace)
                     content.imageDescription = "This is an image"
                     $0.content = content
@@ -135,7 +135,7 @@ extension TestData {
                 $0.id = Folder.modelID(with: self.folderIDs[1])
                 $0.title = "My New Folder"
                 $0.dateCreated = Date(timeIntervalSinceReferenceDate: 9241)
-                $0.contents = [
+                $0.folderContents = [
                     self.pages[1],
                 ]
             }
@@ -143,7 +143,7 @@ extension TestData {
                 $0.id = Folder.modelID(with: self.folderIDs[0])
                 $0.title = Folder.rootFolderTitle
                 $0.dateCreated = Date(timeIntervalSinceReferenceDate: 1429)
-                $0.contents = [
+                $0.folderContents = [
                     self.pages[0],
                     otherFolder,
                     self.pages[2],

@@ -26,7 +26,7 @@ class ModelObjects_PasteboardTests: XCTestCase {
 
     func test_pasteboardWriter_pageWriterContainsModelID() {
         let page = Page()
-        page.content = TextPageContent()
+        page.content = Page.Content.Text()
         let pasteboardWriter = page.pasteboardWriter
         XCTAssertTrue(pasteboardWriter.writableTypes(for: NSPasteboard.general).contains(ModelID.PasteboardType))
     }
@@ -34,13 +34,13 @@ class ModelObjects_PasteboardTests: XCTestCase {
 
     //MARK: - .filePromiseProvider
     func test_filePromiseProvider_textContentReturnsFilePromiseProviderWithRTFFileType() {
-        let content = TextPageContent()
+        let content = Page.Content.Text()
         let fileProvider = content.filePromiseProvider
         XCTAssertEqual(fileProvider.fileType, kUTTypeRTF as String)
     }
 
     func test_filePromiseProvider_imageContentReturnsFilePromiseProviderWithPNGFileType() {
-        let content = ImagePageContent()
+        let content = Page.Content.Image()
         let fileProvider = content.filePromiseProvider
         XCTAssertEqual(fileProvider.fileType, kUTTypePNG as String)
     }
@@ -50,7 +50,7 @@ class ModelObjects_PasteboardTests: XCTestCase {
     func test_filePromiseProviderFileNameForType_textContentReturnsEmptyStringIfTypeIsNotRTF() {
         let page = Page()
         page.title = "Hello World"
-        let content = TextPageContent()
+        let content = Page.Content.Text()
         page.content = content
 
         let provider = content.filePromiseProvider
@@ -60,7 +60,7 @@ class ModelObjects_PasteboardTests: XCTestCase {
     func test_filePromiseProviderFileNameForType_textContentReturnsFileNameUsingPageTitle() {
         let page = Page()
         page.title = "Hello World"
-        let content = TextPageContent()
+        let content = Page.Content.Text()
         page.content = content
 
         let provider = content.filePromiseProvider
@@ -71,7 +71,7 @@ class ModelObjects_PasteboardTests: XCTestCase {
     func test_filePromiseProviderFileNameForType_textContentReturnsFileNameWithRTFExtension() {
         let page = Page()
         page.title = "Hello World"
-        let content = TextPageContent()
+        let content = Page.Content.Text()
         page.content = content
 
         let provider = content.filePromiseProvider
@@ -82,7 +82,7 @@ class ModelObjects_PasteboardTests: XCTestCase {
     func test_filePromiseProviderFileNameForType_imageContentReturnsEmptyStringIfTypeIsNotPNG() {
         let page = Page()
         page.title = "Hello World"
-        let content = ImagePageContent()
+        let content = Page.Content.Image()
         page.content = content
 
         let provider = content.filePromiseProvider
@@ -92,7 +92,7 @@ class ModelObjects_PasteboardTests: XCTestCase {
     func test_filePromiseProviderFileNameForType_imageContentReturnsFileNameUsingPageTitle() {
         let page = Page()
         page.title = "Hello World"
-        let content = ImagePageContent()
+        let content = Page.Content.Image()
         page.content = content
 
         let provider = content.filePromiseProvider
@@ -103,7 +103,7 @@ class ModelObjects_PasteboardTests: XCTestCase {
     func test_filePromiseProviderFileNameForType_imageContentReturnsFileNameWithPNGExtension() {
         let page = Page()
         page.title = "Hello World"
-        let content = ImagePageContent()
+        let content = Page.Content.Image()
         page.content = content
 
         let provider = content.filePromiseProvider
@@ -116,7 +116,7 @@ class ModelObjects_PasteboardTests: XCTestCase {
     func test_filePromiseProviderWritePromise_textContentWritesDataToSuppliedURL() {
         let page = Page()
         page.title = "Hello World"
-        let content = TextPageContent()
+        let content = Page.Content.Text()
         page.content = content
         content.text = NSAttributedString(string: "Foo Bar")
 
@@ -140,7 +140,7 @@ class ModelObjects_PasteboardTests: XCTestCase {
     func test_filePromiseProviderWritePromise_textContentCallsCallbackWithNilIfWriteSucceeds() {
         let page = Page()
         page.title = "Hello World"
-        let content = TextPageContent()
+        let content = Page.Content.Text()
         page.content = content
         content.text = NSAttributedString(string: "Foo Bar")
 
@@ -163,7 +163,7 @@ class ModelObjects_PasteboardTests: XCTestCase {
     func test_filePromiseProviderWritePromise_textContentCallsCallbackWithErrorIfWriteFails() {
         let page = Page()
         page.title = "Hello World"
-        let content = TextPageContent()
+        let content = Page.Content.Text()
         page.content = content
         content.text = NSAttributedString(string: "Foo Bar")
 
@@ -186,7 +186,7 @@ class ModelObjects_PasteboardTests: XCTestCase {
     func test_filePromiseProviderWritePromise_imageContentWritesDataToSuppliedURL() throws {
         let page = Page()
         page.title = "Hello World"
-        let content = ImagePageContent()
+        let content = Page.Content.Image()
         page.content = content
         content.setImage(NSImage(named: "NSAddTemplate")!, operation: .replace)
 
@@ -210,7 +210,7 @@ class ModelObjects_PasteboardTests: XCTestCase {
     func test_filePromiseProviderWritePromise_imageContentCallsCallbackWithNilIfWriteSucceeds() {
         let page = Page()
         page.title = "Hello World"
-        let content = ImagePageContent()
+        let content = Page.Content.Image()
         page.content = content
         content.setImage(NSImage(named: "NSAddTemplate")!, operation: .replace)
 
@@ -233,7 +233,7 @@ class ModelObjects_PasteboardTests: XCTestCase {
     func test_filePromiseProviderWritePromise_imageContentCallsCallbackWithErrorIfWriteFails() {
         let page = Page()
         page.title = "Hello World"
-        let content = ImagePageContent()
+        let content = Page.Content.Image()
         page.content = content
         content.setImage(NSImage(named: "NSAddTemplate")!, operation: .replace)
 
@@ -256,7 +256,7 @@ class ModelObjects_PasteboardTests: XCTestCase {
 
     //MARK: - ExtendableFilePromiseProvider
     func test_writableTypesForPasteboard_addsAdditionalItemTypesToArray() {
-        let content = TextPageContent()
+        let content = Page.Content.Text()
         let provider = content.filePromiseProvider
 
         provider.additionalItems[ModelID.PasteboardType] = CanvasPage.modelID(with: UUID())
@@ -268,7 +268,7 @@ class ModelObjects_PasteboardTests: XCTestCase {
     }
 
     func test_pasteboardPropertyListForType_returnsAdditionalItemIfTypeMatches() {
-        let content = TextPageContent()
+        let content = Page.Content.Text()
         let provider = content.filePromiseProvider
 
         let modelID = CanvasPage.modelID(with: UUID())
@@ -280,7 +280,7 @@ class ModelObjects_PasteboardTests: XCTestCase {
     }
 
     func test_pasteboardPropertyListForType_doesntReturnAnythingForTypeNotInAdditionalItems() {
-        let content = TextPageContent()
+        let content = Page.Content.Text()
         let provider = content.filePromiseProvider
 
         let modelID = CanvasPage.modelID(with: UUID())

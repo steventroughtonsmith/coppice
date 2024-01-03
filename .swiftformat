@@ -1,7 +1,7 @@
 --indent 4
 --self insert
 --extensionacl on-declarations
---modifierorder required,dynamic,override,public,private,private(set),lazy
+--modifierorder required,dynamic,public,private,private(set),override,lazy
 --ranges no-space
 --patternlet inline
 

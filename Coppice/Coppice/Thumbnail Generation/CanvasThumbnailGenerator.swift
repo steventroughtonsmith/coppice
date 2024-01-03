@@ -122,7 +122,7 @@ class CanvasThumbnailGenerator: NSObject {
     private func drawTextPage(_ page: Page, with rect: CGRect, context: Context) -> CGRect {
         let plainPageRect = self.drawPlainPage(withBackgroundColour: .white, with: rect, context: context)
         guard
-            let textContent = page.content as? TextPageContent,
+            let textContent = page.content as? Page.Content.Text,
             context.dryRun == false
         else {
             return plainPageRect
@@ -215,7 +215,7 @@ class CanvasThumbnailGenerator: NSObject {
     //MARK: - Image Page
     private func drawImagePage(_ page: Page, with rect: CGRect, context: Context) -> CGRect {
         guard
-            let imageContent = page.content as? ImagePageContent,
+            let imageContent = page.content as? Page.Content.Image,
             let image = imageContent.image
         else {
                 return self.drawPlainPage(withBackgroundColour: NSColor(white: 0.4, alpha: 1), with: rect, context: context)

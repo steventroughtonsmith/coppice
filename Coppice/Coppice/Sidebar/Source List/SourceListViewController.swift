@@ -139,12 +139,12 @@ class SourceListViewController: NSViewController, NSMenuItemValidation {
 
     //MARK: - Create Menu Actions
     @IBAction func newPage(_ sender: Any?) {
-        var type: PageContentType? = nil
+        var type: Page.ContentType? = nil
         //If the sender is a menu item then get the represented object. Otherwise we'll use nil and use the last created type
         if let rawType = (sender as? NSMenuItem)?.representedObject as? String {
-            type = PageContentType(rawValue: rawType)
+            type = Page.ContentType(rawValue: rawType)
         } else if let rawIdentifier = (sender as? NSTouchBarItem)?.identifier.rawValue {
-            type = PageContentType(rawValue: rawIdentifier)
+            type = Page.ContentType(rawValue: rawIdentifier)
         }
         self.createdItem = self.viewModel.createPage(ofType: type, underNodes: self.nodesForAction)
     }

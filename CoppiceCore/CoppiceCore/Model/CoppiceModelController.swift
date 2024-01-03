@@ -44,7 +44,7 @@ public class CoppiceModelController: NSObject, ModelController {
         return self.collection(for: Page.self)
     }
 
-    @discardableResult public func createPage(ofType contentType: PageContentType = .text, in parentFolder: Folder, below item: FolderContainable? = nil, setup: ((Page) -> Void)? = nil) -> Page {
+    @discardableResult public func createPage(ofType contentType: Page.ContentType = .text, in parentFolder: Folder, below item: FolderContainable? = nil, setup: ((Page) -> Void)? = nil) -> Page {
         self.undoManager.beginUndoGrouping()
 
         let page = Page.create(in: self) {
@@ -86,14 +86,20 @@ public class CoppiceModelController: NSObject, ModelController {
 
         let duplicatedPages = pages.map { page -> Page in
             let duplicatedPage = Page.create(in: self) {
-                var plist = page.plistRepresentation
-                plist[.id] = $0.id
+                guard
+                    var plist = try? page.plistRepresentation.plist,
+                    let id = try? $0.id.toPlistValue()
+                else {
+                    return
+                }
+
+                plist[.id] = id
 
                 let newDateCreated = Date()
-                plist[.Page.dateCreated] = newDateCreated
-                plist[.Page.dateModified] = newDateCreated
+                plist[Page.PlistKeys.dateCreated] = newDateCreated
+                plist[Page.PlistKeys.dateModified] = newDateCreated
 
-                try? $0.update(fromPlistRepresentation: plist)
+                try? $0.update(fromPlistRepresentation: ModelObjectPlistRepresentation(id: $0.id, plist: plist))
             }
 
             page.containingFolder?.insert([duplicatedPage], below: page)

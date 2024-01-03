@@ -13,7 +13,7 @@ class DebugDocumentBuilder: NSObject {
     static let shared = DebugDocumentBuilder()
 
     private func addLinks(from sourcePage: CanvasPage, to destinationPages: [CanvasPage], on canvas: Canvas) {
-        let textContent = TextPageContent()
+        let textContent = Page.Content.Text()
         let attributedString = NSMutableAttributedString()
         for destinationPage in destinationPages {
             let pageLink = PageLink(destination: destinationPage.page!.id, source: sourcePage.id)
@@ -140,7 +140,7 @@ class DebugDocumentBuilder: NSObject {
 
         let ovalImagePage = mc.createPage(ofType: .image, in: folder) {
             $0.title = "Oval Image Link"
-            if let imageContent = $0.content as? ImagePageContent {
+            if let imageContent = $0.content as? Page.Content.Image {
                 imageContent.setImage(appIcon, operation: .replace)
 
                 imageContent.hotspots = [
@@ -156,7 +156,7 @@ class DebugDocumentBuilder: NSObject {
 
         let polygonImagePage = mc.createPage(ofType: .image, in: folder) {
             $0.title = "Polygon Image Link"
-            if let imageContent = $0.content as? ImagePageContent {
+            if let imageContent = $0.content as? Page.Content.Image {
                 imageContent.setImage(appIcon, operation: .replace)
 
                 imageContent.hotspots = [
@@ -175,7 +175,7 @@ class DebugDocumentBuilder: NSObject {
         let rectangleImagePage = mc.createPage(ofType: .image, in: folder) {
             $0.title = "Rectangle Image Link"
 
-            if let imageContent = $0.content as? ImagePageContent {
+            if let imageContent = $0.content as? Page.Content.Image {
                 imageContent.setImage(appIcon, operation: .replace)
 
                 imageContent.hotspots = [

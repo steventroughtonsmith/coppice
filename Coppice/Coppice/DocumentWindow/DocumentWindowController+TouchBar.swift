@@ -31,7 +31,7 @@ extension DocumentWindowController: NSTouchBarDelegate {
 
             let pageTouchBar = NSTouchBar()
             pageTouchBar.delegate = self.newPageMenuDelegate
-            pageTouchBar.defaultItemIdentifiers = PageContentType.allCases.map(\.rawValue).map { NSTouchBarItem.Identifier($0) }
+            pageTouchBar.defaultItemIdentifiers = Page.ContentType.allCases.map(\.rawValue).map { NSTouchBarItem.Identifier($0) }
 
             pageItem.pressAndHoldTouchBar = pageTouchBar
             pageItem.popoverTouchBar = pageTouchBar

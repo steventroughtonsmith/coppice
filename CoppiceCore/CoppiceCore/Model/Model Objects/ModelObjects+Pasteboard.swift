@@ -29,8 +29,8 @@ extension Folder {
     }
 }
 
-extension TextPageContent: NSFilePromiseProviderDelegate {
-    public var filePromiseProvider: ExtendableFilePromiseProvider {
+extension Page.Content.Text: NSFilePromiseProviderDelegate {
+    public override var filePromiseProvider: ExtendableFilePromiseProvider {
         return ExtendableFilePromiseProvider(fileType: (kUTTypeRTF as String), delegate: self)
     }
 
@@ -55,8 +55,8 @@ extension TextPageContent: NSFilePromiseProviderDelegate {
     }
 }
 
-extension ImagePageContent: NSFilePromiseProviderDelegate {
-    public var filePromiseProvider: ExtendableFilePromiseProvider {
+extension Page.Content.Image: NSFilePromiseProviderDelegate {
+    public override var filePromiseProvider: ExtendableFilePromiseProvider {
         return ExtendableFilePromiseProvider(fileType: (kUTTypePNG as String), delegate: self)
     }
 
@@ -85,7 +85,7 @@ extension ImagePageContent: NSFilePromiseProviderDelegate {
 public class ExtendableFilePromiseProvider: NSFilePromiseProvider {
     public var additionalItems: [NSPasteboard.PasteboardType: Any] = [:]
 
-    override public func writableTypes(for pasteboard: NSPasteboard) -> [NSPasteboard.PasteboardType] {
+    public override func writableTypes(for pasteboard: NSPasteboard) -> [NSPasteboard.PasteboardType] {
         var types = super.writableTypes(for: pasteboard)
         if self.additionalItems.count > 0 {
             types.append(contentsOf: self.additionalItems.keys)

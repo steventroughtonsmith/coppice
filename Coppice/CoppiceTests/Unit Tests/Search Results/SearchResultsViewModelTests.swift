@@ -95,14 +95,14 @@ class SearchResultsViewModelTests: XCTestCase {
     @discardableResult func addTestData() -> (Page, Page, Canvas, Canvas) {
         let page1 = self.modelController.collection(for: Page.self).newObject() {
             $0.title = "Hello Goodbye"
-            let content = TextPageContent()
+            let content = Page.Content.Text()
             content.text = NSAttributedString(string: "Foo Bar the Baz")
             $0.content = content
         }
 
         let page2 = self.modelController.collection(for: Page.self).newObject() {
             $0.title = "News of the world"
-            let content = TextPageContent()
+            let content = Page.Content.Text()
             content.text = NSAttributedString(string: "What on earth?")
             $0.content = content
         }

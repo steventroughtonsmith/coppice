@@ -12,8 +12,8 @@ import XCTest
 
 class MockCoppiceModelController: CoppiceModelController {
     //MARK: - Page
-    let createPageOfTypeMock = MockDetails<(PageContentType, Folder, FolderContainable?, ((Page) -> Void)?), Page>()
-    @discardableResult override func createPage(ofType contentType: PageContentType = .text, in parentFolder: Folder, below item: FolderContainable? = nil, setup: ((Page) -> Void)? = nil) -> Page {
+    let createPageOfTypeMock = MockDetails<(Page.ContentType, Folder, FolderContainable?, ((Page) -> Void)?), Page>()
+    @discardableResult override func createPage(ofType contentType: Page.ContentType = .text, in parentFolder: Folder, below item: FolderContainable? = nil, setup: ((Page) -> Void)? = nil) -> Page {
         if let returnValue = self.createPageOfTypeMock.called(withArguments: (contentType, parentFolder, item, setup)) {
             return returnValue
         }

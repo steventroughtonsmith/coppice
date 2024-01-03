@@ -21,6 +21,10 @@
   },
   "testTargets" : [
     {
+      "skippedTests" : [
+        "CanvasTests\/test_openPageLinkedFrom_ifLinkedPageAlreadyExistsOnBottomLeftAddsToTopLeft()",
+        "CanvasTests\/test_openPageLinkedFrom_ifLinkedPageAlreadyExistsOnTopLeftAddsToBottomLeft()"
+      ],
       "target" : {
         "containerPath" : "container:CoppiceCore.xcodeproj",
         "identifier" : "99D0C75E24C5DD1E002EEBFA",

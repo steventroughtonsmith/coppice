@@ -25,7 +25,7 @@ extension Plist {
             ]
         }
 
-        override func migrateToNextVersion() throws -> [String: Any] {
+        override func migrateToNextVersion() throws -> [String: PlistValue] {
             throw ModelPlist.Errors.migrationNotAvailable
         }
     }

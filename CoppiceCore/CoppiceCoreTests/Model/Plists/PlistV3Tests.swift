@@ -18,7 +18,8 @@ final class PlistV3Tests: XCTestCase {
 
     //MARK: - Errors (Missing Collection)
     func test_errors_throwsMissingCollectionErrorIfCanvasesMissing() {
-        let plist: [String: Any] = ["version": 3, "pages": [[String: Any]](), "canvasPages": [[String: Any]](), "folders": [[String: Any]](), "canvasLinks": [[String: Any]]()]
+        let emptyArray = [[String: Any]]() as PlistValue
+        let plist: [String: PlistValue] = ["version": 3, "pages": emptyArray, "canvasPages": emptyArray, "folders": emptyArray, "canvasLinks": emptyArray]
         do {
             _ = try Plist.V3(plist: plist)
             XCTFail("Error not thrown")
@@ -30,7 +31,8 @@ final class PlistV3Tests: XCTestCase {
     }
 
     func test_errors_throwsMissingCollectionErrorIfPagesMissing() {
-        let plist: [String: Any] = ["version": 3, "canvases": [[String: Any]](), "canvasPages": [[String: Any]](), "folders": [[String: Any]](), "canvasLinks": [[String: Any]]()]
+        let emptyArray = [[String: Any]]() as PlistValue
+        let plist: [String: PlistValue] = ["version": 3, "canvases": emptyArray, "canvasPages": emptyArray, "folders": emptyArray, "canvasLinks": emptyArray]
         do {
             _ = try Plist.V3(plist: plist)
             XCTFail("Error not thrown")
@@ -42,7 +44,8 @@ final class PlistV3Tests: XCTestCase {
     }
 
     func test_errors_throwsMissingCollectionErrorIfCanvasPagesMissing() {
-        let plist: [String: Any] = ["version": 3, "pages": [[String: Any]](), "canvases": [[String: Any]](), "folders": [[String: Any]](), "canvasLinks": [[String: Any]]()]
+        let emptyArray = [[String: Any]]() as PlistValue
+        let plist: [String: PlistValue] = ["version": 3, "pages": emptyArray, "canvases": emptyArray, "folders": emptyArray, "canvasLinks": emptyArray]
         do {
             _ = try Plist.V3(plist: plist)
             XCTFail("Error not thrown")
@@ -54,7 +57,8 @@ final class PlistV3Tests: XCTestCase {
     }
 
     func test_errors_throwsMissingCollectionErrorIfFoldersMissing() {
-        let plist: [String: Any] = ["version": 3, "pages": [[String: Any]](), "canvases": [[String: Any]](), "canvasPages": [[String: Any]](), "canvasLinks": [[String: Any]]()]
+        let emptyArray = [[String: Any]]() as PlistValue
+        let plist: [String: PlistValue] = ["version": 3, "pages": emptyArray, "canvases": emptyArray, "canvasPages": emptyArray, "canvasLinks": emptyArray]
         do {
             _ = try Plist.V3(plist: plist)
             XCTFail("Error not thrown")
@@ -66,7 +70,8 @@ final class PlistV3Tests: XCTestCase {
     }
 
     func test_errors_throwsMissingCollectionErrorIfCanvasLinksMissing() {
-        let plist: [String: Any] = ["version": 3, "pages": [[String: Any]](), "canvases": [[String: Any]](), "canvasPages": [[String: Any]](), "folders": [[String: Any]]()]
+        let emptyArray = [[String: Any]]() as PlistValue
+        let plist: [String: PlistValue] = ["version": 3, "pages": emptyArray, "canvases": emptyArray, "canvasPages": emptyArray, "folders": emptyArray]
         do {
             _ = try Plist.V3(plist: plist)
             XCTFail("Error not thrown")
@@ -79,13 +84,14 @@ final class PlistV3Tests: XCTestCase {
 
     //MARK: - Errors (missingID)
     func test_errors_throwsMissingIDErrorIfACanvasIsMissingAnID() {
-        let plist: [String: Any] = [
+        let emptyArray = [[String: Any]]() as PlistValue
+        let plist: [String: PlistValue] = [
             "version": 3,
             "canvases": [["title": "Canvas Without ID"]],
-            "pages": [[String: Any]](),
-            "canvasPages": [[String: Any]](),
-            "folders": [[String: Any]](),
-            "canvasLinks": [[String: Any]](),
+            "pages": emptyArray,
+            "canvasPages": emptyArray,
+            "folders": emptyArray,
+            "canvasLinks": emptyArray,
         ]
 
         do {
@@ -99,16 +105,17 @@ final class PlistV3Tests: XCTestCase {
     }
 
     func test_errors_throwsMissingIDErrorIfAPageIsMissingAnID() {
-        let plist: [String: Any] = [
+        let emptyArray = [[String: Any]]() as PlistValue
+        let plist: [String: PlistValue] = [
             "version": 3,
-            "canvases": [[String: Any]](),
+            "canvases": emptyArray,
             "pages": [
                 ["id": Page.modelID(with: UUID()).stringRepresentation, "title": "Page With ID"],
                 ["title": "Page Without ID"],
-            ],
-            "canvasPages": [[String: Any]](),
-            "folders": [[String: Any]](),
-            "canvasLinks": [[String: Any]](),
+            ] as PlistValue,
+            "canvasPages": emptyArray,
+            "folders": emptyArray,
+            "canvasLinks": emptyArray,
         ]
 
         do {
@@ -122,16 +129,17 @@ final class PlistV3Tests: XCTestCase {
     }
 
     func test_errors_throwsMissingIDErrorIfACanvasPageIsMissingAnID() {
-        let plist: [String: Any] = [
+        let emptyArray = [[String: Any]]() as PlistValue
+        let plist: [String: PlistValue] = [
             "version": 3,
-            "canvases": [[String: Any]](),
-            "pages": [[String: Any]](),
+            "canvases": emptyArray,
+            "pages": emptyArray,
             "canvasPages": [
                 ["id": Page.modelID(with: UUID()).stringRepresentation, "frame": NSStringFromRect(CGRect(x: 0, y: 2, width: 8, height: 9))],
                 ["frame": NSStringFromRect(CGRect(x: 0, y: 12, width: 5, height: 4))],
-            ],
-            "folders": [[String: Any]](),
-            "canvasLinks": [[String: Any]](),
+            ] as PlistValue,
+            "folders": emptyArray,
+            "canvasLinks": emptyArray,
         ]
 
         do {
@@ -145,16 +153,17 @@ final class PlistV3Tests: XCTestCase {
     }
 
     func test_errors_throwsMissingIDErrorIfAFolderIsMissingAnID() {
-        let plist: [String: Any] = [
+        let emptyArray = [[String: Any]]() as PlistValue
+        let plist: [String: PlistValue] = [
             "version": 3,
-            "canvases": [[String: Any]](),
-            "pages": [[String: Any]](),
-            "canvasPages": [[String: Any]](),
+            "canvases": emptyArray,
+            "pages": emptyArray,
+            "canvasPages": emptyArray,
             "folders": [
                 ["id": Page.modelID(with: UUID()).stringRepresentation, "title": "My Folder", "contents": [String]()] as [String: Any],
                 ["title": "Second Folder", "contents": [String]()],
-            ],
-            "canvasLinks": [[String: Any]](),
+            ] as PlistValue,
+            "canvasLinks": emptyArray,
         ]
 
         do {
@@ -169,16 +178,17 @@ final class PlistV3Tests: XCTestCase {
     }
 
     func test_errors_throwsMissingIDErrorIfACanvasLinkIsMissingAnID() {
-        let plist: [String: Any] = [
+        let emptyArray = [[String: Any]]() as PlistValue
+        let plist: [String: PlistValue] = [
             "version": 3,
-            "canvases": [[String: Any]](),
-            "pages": [[String: Any]](),
-            "canvasPages": [[String: Any]](),
+            "canvases": emptyArray,
+            "pages": emptyArray,
+            "canvasPages": emptyArray,
             "folders": [
                 ["id": CanvasLink.modelID(with: UUID()).stringRepresentation, "link": "coppice://12345"],
                 ["link": "coppice://67890"],
-            ],
-            "canvasLinks": [[String: Any]](),
+            ] as PlistValue,
+            "canvasLinks": emptyArray,
         ]
 
         do {

@@ -11,13 +11,13 @@ import Foundation
 import M3Data
 
 class TestModelObject: ModelObject {
-    var plistRepresentation = [ModelPlistKey: Any]()
+    lazy var plistRepresentation = ModelObjectPlistRepresentation(id: self.id, plist: [:])
 
-    var otherProperties = [ModelPlistKey: Any]()
+    var otherProperties = [ModelPlistKey: PlistValue]()
 
-    func update(fromPlistRepresentation plist: [ModelPlistKey: Any]) {}
+    func update(fromPlistRepresentation plist: ModelObjectPlistRepresentation) {}
 
-    static var modelType: ModelType = ModelType("Test")!
+    static var modelType: ModelType = ModelType("Test")
 
     var id = ModelID(modelType: TestModelObject.modelType)
 
@@ -27,17 +27,17 @@ class TestModelObject: ModelObject {
 }
 
 final class TestCollectableModelObject: NSObject, CollectableModelObject {
-    var plistRepresentation = [ModelPlistKey: Any]()
+    lazy var plistRepresentation = ModelObjectPlistRepresentation(id: self.id, plist: [:])
 
-    var otherProperties = [ModelPlistKey: Any]()
+    var otherProperties = [ModelPlistKey: PlistValue]()
 
-    func update(fromPlistRepresentation plist: [ModelPlistKey: Any]) {}
+    func update(fromPlistRepresentation plist: ModelObjectPlistRepresentation) {}
 
     var collection: ModelCollection<TestCollectableModelObject>?
 
     var id = ModelID(modelType: TestCollectableModelObject.modelType)
 
-    static var modelType: ModelType = ModelType("CollectableTest")!
+    static var modelType: ModelType = ModelType("CollectableTest")
 
     required override init() {
         super.init()
@@ -72,16 +72,16 @@ final class TestCollectableModelObject: NSObject, CollectableModelObject {
 }
 
 final class RelationshipModelObject: NSObject, CollectableModelObject {
-    var plistRepresentation = [ModelPlistKey: Any]()
-    var otherProperties = [ModelPlistKey: Any]()
+    lazy var plistRepresentation = ModelObjectPlistRepresentation(id: self.id, plist: [:])
+    var otherProperties = [ModelPlistKey: PlistValue]()
 
-    func update(fromPlistRepresentation plist: [ModelPlistKey: Any]) {}
+    func update(fromPlistRepresentation plist: ModelObjectPlistRepresentation) {}
 
     var collection: ModelCollection<RelationshipModelObject>?
 
     var id = ModelID(modelType: RelationshipModelObject.modelType)
 
-    static var modelType: ModelType = ModelType("Relationship")!
+    static var modelType: ModelType = ModelType("Relationship")
 
     var relationship: Set<TestCollectableModelObject> {
         self.relationship(for: \.inverseRelationship)

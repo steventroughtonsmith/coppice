@@ -21,7 +21,7 @@ public class CroppedImageCache {
         return queue
     }()
 
-    public func croppedImage(for imageContent: ImagePageContent, completion: ((NSImage?) -> Void)? = nil) {
+    public func croppedImage(for imageContent: Page.Content.Image, completion: ((NSImage?) -> Void)? = nil) {
         guard let page = imageContent.page, let image = imageContent.image else {
             completion?(imageContent.image)
             return

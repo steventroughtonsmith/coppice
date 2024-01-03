@@ -8,10 +8,11 @@
 import Cocoa
 
 import CoppiceCore
+import M3Data
 
 extension TestData.Plist {
     class V2: TestData {
-        lazy var plistCanvases: [[String: Any]] = [
+        lazy var plistCanvases: [[String: PlistValue]] = [
             [
                 "id": Canvas.modelID(with: self.canvasIDs[0]).stringRepresentation,
                 "title": "Canvas 1",
@@ -48,7 +49,7 @@ extension TestData.Plist {
                             "frame": NSStringFromRect(CGRect(x: -70, y: -60, width: 10, height: 10)),
                             "children": [[String: Any]](),
                         ],
-                    ],
+                    ] as PlistValue,
                     CanvasPage.modelID(with: self.canvasPageIDs[1]).stringRepresentation: [
                         Page.modelID(with: self.pageIDs[0]).stringRepresentation: [
                             "id": CanvasPage.modelID(with: self.closedCanvasPageIDs[4]).stringRepresentation,
@@ -57,7 +58,7 @@ extension TestData.Plist {
                             "children": [[String: Any]](),
                         ],
                     ],
-                ],
+                ] as PlistValue,
                 "zoomFactor": 1,
             ],
             [
@@ -77,12 +78,12 @@ extension TestData.Plist {
                             "children": [[String: Any]](),
                         ] as [String: Any],
                     ],
-                ],
+                ] as PlistValue,
                 "zoomFactor": 1,
             ],
         ]
 
-        lazy var plistPages: [[String: Any]] = [
+        lazy var plistPages: [[String: PlistValue]] = [
             [
                 "id": Page.modelID(with: self.pageIDs[0]).stringRepresentation,
                 "title": "Page 1",
@@ -103,11 +104,11 @@ extension TestData.Plist {
                 "title": "Page 3",
                 "dateCreated": Date(timeIntervalSinceReferenceDate: 999),
                 "dateModified": Date(timeIntervalSinceReferenceDate: 9999),
-                "content": ["type": "image", "filename": "\(self.pageIDs[2].uuidString).png", "metadata": ["description": "This is an image"]] as [String: Any],
+                "content": ["type": "image", "filename": "\(self.pageIDs[2].uuidString).png", "metadata": ["description": "This is an image"]] as PlistValue,
             ],
         ]
 
-        lazy var plistCanvasPages: [[String: Any]] = [
+        lazy var plistCanvasPages: [[String: PlistValue]] = [
             [
                 "id": CanvasPage.modelID(with: self.canvasPageIDs[0]).stringRepresentation,
                 "frame": NSStringFromRect(CGRect(x: 0, y: 1, width: 2, height: 3)),
@@ -145,7 +146,7 @@ extension TestData.Plist {
             "\(self.pageIDs[2].uuidString).png": NSImage(named: "NSAddTemplate")!.pngData()!,
         ]
 
-        lazy var plistFolders: [[String: Any]] = [
+        lazy var plistFolders: [[String: PlistValue]] = [
             [
                 "id": Folder.modelID(with: self.folderIDs[0]).stringRepresentation,
                 "title": Folder.rootFolderTitle,
@@ -168,18 +169,18 @@ extension TestData.Plist {
 
 
         let documentID = UUID(uuidString: "66FBC053-53A2-412D-918F-52C088E2F492")!
-        var plistSettings: [String: Any] {
+        var plistSettings: [String: PlistValue] {
             return ["documentID": self.documentID.uuidString, "pageGroupExpanded": true]
         }
 
 
-        var plist: [String: Any] {
+        var plist: [String: PlistValue] {
             return [
-                "canvases": self.plistCanvases,
-                "pages": self.plistPages,
-                "canvasPages": self.plistCanvasPages,
-                "folders": self.plistFolders,
-                "settings": self.plistSettings,
+                "canvases": self.plistCanvases as PlistValue,
+                "pages": self.plistPages as PlistValue,
+                "canvasPages": self.plistCanvasPages as PlistValue,
+                "folders": self.plistFolders as PlistValue,
+                "settings": self.plistSettings as PlistValue,
                 "version": 2,
             ]
         }

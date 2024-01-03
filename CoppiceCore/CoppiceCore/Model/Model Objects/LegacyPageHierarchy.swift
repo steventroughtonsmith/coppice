@@ -44,42 +44,42 @@ public class LegacyPageHierarchy {
         self.init(id: id, pageID: pageID, frame: frame, children: children)
     }
 
-    public func pageHierarchyPersistenceRepresentation(withSourceCanvasPageID sourceID: ModelID, sourcePageID: ModelID, andFrame sourceFrame: CGRect) -> [ModelPlistKey: Any] {
+    public func pageHierarchyPersistenceRepresentation(withSourceCanvasPageID sourceID: ModelID, sourcePageID: ModelID, andFrame sourceFrame: CGRect) -> [ModelPlistKey: PlistValue] {
         let (legacyPages, links) = self.flattenedHierarchyAndLinks()
 
-        let pages = legacyPages.map { legacyPage -> [ModelPlistKey: Any] in
+        let pages = legacyPages.map { legacyPage -> [String: Any] in
             return [
-                .PageHierarchy.PageRef.canvasPageID: legacyPage.id.stringRepresentation,
-                .PageHierarchy.PageRef.pageID: legacyPage.pageID.stringRepresentation,
-                .PageHierarchy.PageRef.relativeContentFrame: NSStringFromRect(legacyPage.frame.moved(byX: -self.frame.origin.x, y: -self.frame.origin.y)),
+                "canvasPageID": legacyPage.id.stringRepresentation,
+                "pageID": legacyPage.pageID.stringRepresentation,
+                "relativeContentFrame": NSStringFromRect(legacyPage.frame.moved(byX: -self.frame.origin.x, y: -self.frame.origin.y)),
             ]
         }
 
-        let entryPoints: [ModelPlistKey: Any] = [
-            .PageHierarchy.EntryPoint.pageLink: PageLink(destination: self.pageID, source: sourceID).url.absoluteString,
-            .PageHierarchy.EntryPoint.relativePosition: NSStringFromPoint(self.frame.origin.minus(sourceFrame.origin)),
+        let entryPoints: [String: Any] = [
+            "pageLink": PageLink(destination: self.pageID, source: sourceID).url.absoluteString,
+            "relativePosition": NSStringFromPoint(self.frame.origin.minus(sourceFrame.origin)),
         ]
 
         return [
-            .PageHierarchy.rootPageID: self.id.stringRepresentation,
-            .PageHierarchy.entryPoints: [entryPoints.toPersistanceRepresentation],
-            .PageHierarchy.pages: pages.map(\.toPersistanceRepresentation),
-            .PageHierarchy.links: links.map(\.toPersistanceRepresentation),
+            PageHierarchy.PlistKeys.rootPageID: self.id.stringRepresentation,
+            PageHierarchy.PlistKeys.entryPoints: [entryPoints] as PlistValue,
+            PageHierarchy.PlistKeys.pages: pages as PlistValue,
+            PageHierarchy.PlistKeys.links: links as PlistValue,
         ]
     }
 
-    func flattenedHierarchyAndLinks() -> (pages: [LegacyPageHierarchy], links: [[ModelPlistKey: Any]]) {
+    func flattenedHierarchyAndLinks() -> (pages: [LegacyPageHierarchy], links: [[String: Any]]) {
         var pages = [self]
-        var links = [[ModelPlistKey: Any]]()
+        var links = [[String: Any]]()
         for child in self.children {
             let (childPages, childLinks) = child.flattenedHierarchyAndLinks()
             pages.append(contentsOf: childPages)
             links.append(contentsOf: childLinks)
 
             links.append([
-                .PageHierarchy.LinkRef.sourceID: self.id.stringRepresentation,
-                .PageHierarchy.LinkRef.destinationID: child.id.stringRepresentation,
-                .PageHierarchy.LinkRef.link: PageLink(destination: child.pageID, source: self.id).url.absoluteString,
+                "sourceID": self.id.stringRepresentation,
+                "destinationID": child.id.stringRepresentation,
+                "link": PageLink(destination: child.pageID, source: self.id).url.absoluteString,
             ])
         }
 

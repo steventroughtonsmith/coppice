@@ -48,7 +48,7 @@ class CoppiceModelControllerPageTests: XCTestCase {
 
         let newPage = self.modelController.createPage(in: self.folder, below: nil)
         XCTAssertEqual(newPage.containingFolder, self.folder)
-        XCTAssertEqual(self.folder.contents[safe: 0] as? Page, newPage)
+        XCTAssertEqual(self.folder.folderContents[safe: 0] as? Page, newPage)
     }
 
     func test_createPageOfType_addsItemInSuppliedFolderBelowSuppliedItem() throws {
@@ -58,7 +58,7 @@ class CoppiceModelControllerPageTests: XCTestCase {
 
         let newPage = self.modelController.createPage(in: self.folder, below: initialPage1)
         XCTAssertEqual(newPage.containingFolder, self.folder)
-        XCTAssertEqual(self.folder.contents[safe: 1] as? Page, newPage)
+        XCTAssertEqual(self.folder.folderContents[safe: 1] as? Page, newPage)
     }
 
     func test_createPageOfType_callsSetupBlockWithCreatedPage() throws {
@@ -80,7 +80,7 @@ class CoppiceModelControllerPageTests: XCTestCase {
         let page = self.modelController.createPage(in: self.folder)
 
         self.undoManager.undo()
-        XCTAssertFalse(self.folder.contents.contains(where: { $0.id == page.id }))
+        XCTAssertFalse(self.folder.folderContents.contains(where: { $0.id == page.id }))
     }
 
     func test_createPageOfType_redoRecreatesPageWithSameIDAndProperties() throws {
@@ -111,7 +111,7 @@ class CoppiceModelControllerPageTests: XCTestCase {
         self.undoManager.redo()
 
         let redonePage = try XCTUnwrap(self.modelController.pageCollection.objectWithID(page.id))
-        XCTAssertEqual(self.folder.contents[safe: 1] as? Page, redonePage)
+        XCTAssertEqual(self.folder.folderContents[safe: 1] as? Page, redonePage)
         XCTAssertEqual(redonePage.containingFolder, self.folder)
     }
 
@@ -133,8 +133,8 @@ class CoppiceModelControllerPageTests: XCTestCase {
         XCTAssertEqual(imagePage.containingFolder, self.folder)
         XCTAssertEqual(textPage.containingFolder, self.folder)
 
-        XCTAssertEqual(self.folder.contents[safe: 0] as? Page, imagePage)
-        XCTAssertEqual(self.folder.contents[safe: 1] as? Page, textPage)
+        XCTAssertEqual(self.folder.folderContents[safe: 0] as? Page, imagePage)
+        XCTAssertEqual(self.folder.folderContents[safe: 1] as? Page, textPage)
     }
 
     func test_createPagesFromFilesAtURLs_addsPagesToFolderBelowSuppliedItem() throws {
@@ -147,8 +147,8 @@ class CoppiceModelControllerPageTests: XCTestCase {
         XCTAssertEqual(imagePage.containingFolder, self.folder)
         XCTAssertEqual(textPage.containingFolder, self.folder)
 
-        XCTAssertEqual(self.folder.contents[safe: 1] as? Page, imagePage)
-        XCTAssertEqual(self.folder.contents[safe: 2] as? Page, textPage)
+        XCTAssertEqual(self.folder.folderContents[safe: 1] as? Page, imagePage)
+        XCTAssertEqual(self.folder.folderContents[safe: 2] as? Page, textPage)
     }
 
     func test_createPagesFromFilesAtURLs_callsSetupBlock() {
@@ -183,8 +183,8 @@ class CoppiceModelControllerPageTests: XCTestCase {
 
         self.undoManager.undo()
 
-        XCTAssertFalse(self.folder.contents.contains(where: { $0.id == imagePage.id }))
-        XCTAssertFalse(self.folder.contents.contains(where: { $0.id == textPage.id }))
+        XCTAssertFalse(self.folder.folderContents.contains(where: { $0.id == imagePage.id }))
+        XCTAssertFalse(self.folder.folderContents.contains(where: { $0.id == textPage.id }))
     }
 
     func test_createPagesFromFilesAtURLs_redoingRecreatesPagesWithSameIDsAndContent() throws {
@@ -200,14 +200,14 @@ class CoppiceModelControllerPageTests: XCTestCase {
         XCTAssertEqual(redoneImagePage.dateCreated, imagePage.dateCreated)
         XCTAssertEqual(redoneImagePage.dateModified, imagePage.dateModified)
         XCTAssertEqual(redoneImagePage.content.contentType, imagePage.content.contentType)
-        XCTAssertEqual((redoneImagePage.content as? ImagePageContent)?.image, (imagePage.content as? ImagePageContent)?.image)
+        XCTAssertEqual((redoneImagePage.content as? Page.Content.Image)?.image, (imagePage.content as? Page.Content.Image)?.image)
 
         let redoneTextPage = try XCTUnwrap(self.modelController.pageCollection.objectWithID(textPage.id))
         XCTAssertEqual(redoneTextPage.title, textPage.title)
         XCTAssertEqual(redoneTextPage.dateCreated, textPage.dateCreated)
         XCTAssertEqual(redoneTextPage.dateModified, textPage.dateModified)
         XCTAssertEqual(redoneTextPage.content.contentType, textPage.content.contentType)
-        XCTAssertEqual((redoneTextPage.content as? TextPageContent)?.text, (textPage.content as? TextPageContent)?.text)
+        XCTAssertEqual((redoneTextPage.content as? Page.Content.Text)?.text, (textPage.content as? Page.Content.Text)?.text)
     }
 
     func test_createPagesFromFilesAtURLs_redoingAddsPagesBackToFolder() throws {
@@ -219,16 +219,16 @@ class CoppiceModelControllerPageTests: XCTestCase {
 
         self.undoManager.undo()
 
-        XCTAssertFalse(self.folder.contents.contains(where: { $0.id == imagePage.id }))
-        XCTAssertFalse(self.folder.contents.contains(where: { $0.id == textPage.id }))
+        XCTAssertFalse(self.folder.folderContents.contains(where: { $0.id == imagePage.id }))
+        XCTAssertFalse(self.folder.folderContents.contains(where: { $0.id == textPage.id }))
 
         self.undoManager.redo()
 
         let redoneImagePage = try XCTUnwrap(self.modelController.pageCollection.objectWithID(imagePage.id))
         let redoneTextPage = try XCTUnwrap(self.modelController.pageCollection.objectWithID(textPage.id))
 
-        XCTAssertEqual(self.folder.contents[safe: 1] as? Page, redoneImagePage)
-        XCTAssertEqual(self.folder.contents[safe: 2] as? Page, redoneTextPage)
+        XCTAssertEqual(self.folder.folderContents[safe: 1] as? Page, redoneImagePage)
+        XCTAssertEqual(self.folder.folderContents[safe: 2] as? Page, redoneTextPage)
     }
 
 
@@ -257,12 +257,12 @@ class CoppiceModelControllerPageTests: XCTestCase {
 
     func test_duplicatePages_returnedPagesHaveSameContentAsSuppliedPages() throws {
         let (imagePage, textPage) = try self.createTestPagesFromFiles()
-        let imagePageContent = try XCTUnwrap(imagePage.content as? ImagePageContent)
-        let textPageContent = try XCTUnwrap(textPage.content as? TextPageContent)
+        let imagePageContent = try XCTUnwrap(imagePage.content as? Page.Content.Image)
+        let textPageContent = try XCTUnwrap(textPage.content as? Page.Content.Text)
 
         let duplicatedPages = self.modelController.duplicatePages([imagePage, textPage])
-        let duplicatedImagePageContent = try XCTUnwrap(duplicatedPages[safe: 0]?.content as? ImagePageContent)
-        let duplicatedTextPageContent = try XCTUnwrap(duplicatedPages[safe: 1]?.content as? TextPageContent)
+        let duplicatedImagePageContent = try XCTUnwrap(duplicatedPages[safe: 0]?.content as? Page.Content.Image)
+        let duplicatedTextPageContent = try XCTUnwrap(duplicatedPages[safe: 1]?.content as? Page.Content.Text)
 
         XCTAssertEqual(duplicatedImagePageContent.image?.pngData(), imagePageContent.image?.pngData())
         XCTAssertEqual(duplicatedImagePageContent.imageDescription, imagePageContent.imageDescription)
@@ -290,8 +290,8 @@ class CoppiceModelControllerPageTests: XCTestCase {
         let duplicatedImagePage = try XCTUnwrap(duplicatedPages[safe: 0])
         let duplicatedTextPage = try XCTUnwrap(duplicatedPages[safe: 1])
 
-        XCTAssertEqual(self.folder.contents[safe: 1] as? Page, duplicatedImagePage)
-        XCTAssertEqual(self.folder.contents[safe: 3] as? Page, duplicatedTextPage)
+        XCTAssertEqual(self.folder.folderContents[safe: 1] as? Page, duplicatedImagePage)
+        XCTAssertEqual(self.folder.folderContents[safe: 3] as? Page, duplicatedTextPage)
     }
 
     func test_duplicatePages_returnedPagesAreAddedToSameFolderAsOriginalAndBelowOriginalIfFoldersAreDifferent() throws {
@@ -303,8 +303,8 @@ class CoppiceModelControllerPageTests: XCTestCase {
         let duplicatedImagePage = try XCTUnwrap(duplicatedPages[safe: 0])
         let duplicatedTextPage = try XCTUnwrap(duplicatedPages[safe: 1])
 
-        XCTAssertEqual(self.modelController.rootFolder.contents[safe: 1] as? Page, duplicatedImagePage)
-        XCTAssertEqual(self.folder.contents[safe: 1] as? Page, duplicatedTextPage)
+        XCTAssertEqual(self.modelController.rootFolder.folderContents[safe: 1] as? Page, duplicatedImagePage)
+        XCTAssertEqual(self.folder.folderContents[safe: 1] as? Page, duplicatedTextPage)
     }
 
     func test_duplicatePages_undoRemovesDuplicatedPagesFromCollection() throws {
@@ -335,14 +335,14 @@ class CoppiceModelControllerPageTests: XCTestCase {
         XCTAssertEqual(redoneImagePage.dateCreated, duplicatedImagePage.dateCreated)
         XCTAssertEqual(redoneImagePage.dateModified, duplicatedImagePage.dateModified)
         XCTAssertEqual(redoneImagePage.content.contentType, duplicatedImagePage.content.contentType)
-        XCTAssertEqual((redoneImagePage.content as? ImagePageContent)?.image, (duplicatedImagePage.content as? ImagePageContent)?.image)
+        XCTAssertEqual((redoneImagePage.content as? Page.Content.Image)?.image, (duplicatedImagePage.content as? Page.Content.Image)?.image)
 
         let redoneTextPage = try XCTUnwrap(self.modelController.pageCollection.objectWithID(duplicatedTextPage.id))
         XCTAssertEqual(redoneTextPage.title, duplicatedTextPage.title)
         XCTAssertEqual(redoneTextPage.dateCreated, duplicatedTextPage.dateCreated)
         XCTAssertEqual(redoneTextPage.dateModified, duplicatedTextPage.dateModified)
         XCTAssertEqual(redoneTextPage.content.contentType, duplicatedTextPage.content.contentType)
-        XCTAssertEqual((redoneTextPage.content as? TextPageContent)?.text, (duplicatedTextPage.content as? TextPageContent)?.text)
+        XCTAssertEqual((redoneTextPage.content as? Page.Content.Text)?.text, (duplicatedTextPage.content as? Page.Content.Text)?.text)
     }
 
     func test_duplicatePages_redoAddsDuplicatedPagesBackToFolder() throws {
@@ -357,8 +357,8 @@ class CoppiceModelControllerPageTests: XCTestCase {
         self.undoManager.undo()
         self.undoManager.redo()
 
-        XCTAssertEqual(self.modelController.rootFolder.contents[safe: 1] as? Page, duplicatedImagePage)
-        XCTAssertEqual(self.folder.contents[safe: 1] as? Page, duplicatedTextPage)
+        XCTAssertEqual(self.modelController.rootFolder.folderContents[safe: 1] as? Page, duplicatedImagePage)
+        XCTAssertEqual(self.folder.folderContents[safe: 1] as? Page, duplicatedTextPage)
     }
 
 
@@ -372,6 +372,7 @@ class CoppiceModelControllerPageTests: XCTestCase {
     }
 
     func test_deletePage_removesPageFromAllCanvases() throws {
+        XCTFail()
         let page = self.modelController.createPage(in: self.folder)
         let canvas1 = self.modelController.createCanvas()
         let canvasPage1 = try XCTUnwrap(canvas1.addPages([page]).first)
@@ -379,7 +380,7 @@ class CoppiceModelControllerPageTests: XCTestCase {
         let canvasPage2 = try XCTUnwrap(canvas2.addPages([page]).first)
         canvasPage2.frame = CGRect(x: 10, y: 20, width: 300, height: 400)
         let canvasPage3 = try XCTUnwrap(canvas2.addPages([page]).first)
-        canvasPage3.parent = canvasPage2
+//        canvasPage3.parent = canvasPage2
 
         self.modelController.delete(page)
 
@@ -397,7 +398,7 @@ class CoppiceModelControllerPageTests: XCTestCase {
 
         self.modelController.delete(page)
 
-        XCTAssertFalse(self.folder.contents.contains(where: { $0.id == page.id }))
+        XCTAssertFalse(self.folder.folderContents.contains(where: { $0.id == page.id }))
     }
 
     func test_deletePage_undoAddsPageBackToCollectionWithSameIDAndContents() throws {
@@ -418,6 +419,7 @@ class CoppiceModelControllerPageTests: XCTestCase {
     }
 
     func test_deletePage_undoAddsPageBackToAnyCanvasesWithSameIDsAndProperties() throws {
+        XCTFail()
         let page = self.modelController.createPage(in: self.folder)
         let canvas1 = self.modelController.createCanvas()
         let canvasPage1 = try XCTUnwrap(canvas1.addPages([page]).first)
@@ -427,7 +429,7 @@ class CoppiceModelControllerPageTests: XCTestCase {
         canvasPage2.frame = CGRect(x: 10, y: 20, width: 300, height: 400)
         let canvasPage3 = try XCTUnwrap(canvas2.addPages([page]).first)
         canvasPage3.frame = CGRect(x: -10, y: -20, width: 400, height: 500)
-        canvasPage3.parent = canvasPage2
+//        canvasPage3.parent = canvasPage2
         self.undoManager.removeAllActions()
 
         self.modelController.delete(page)
@@ -436,13 +438,13 @@ class CoppiceModelControllerPageTests: XCTestCase {
 
         let redoneCanvasPage1 = try XCTUnwrap(self.modelController.canvasPageCollection.objectWithID(canvasPage1.id))
         XCTAssertEqual(redoneCanvasPage1.frame, canvasPage1.frame)
-        XCTAssertNil(redoneCanvasPage1.parent)
+//        XCTAssertNil(redoneCanvasPage1.parent)
         let redoneCanvasPage2 = try XCTUnwrap(self.modelController.canvasPageCollection.objectWithID(canvasPage2.id))
         XCTAssertEqual(redoneCanvasPage2.frame, canvasPage2.frame)
-        XCTAssertNil(redoneCanvasPage2.parent)
+//        XCTAssertNil(redoneCanvasPage2.parent)
         let redoneCanvasPage3 = try XCTUnwrap(self.modelController.canvasPageCollection.objectWithID(canvasPage3.id))
         XCTAssertEqual(redoneCanvasPage3.frame, canvasPage3.frame)
-        XCTAssertEqual(redoneCanvasPage3.parent, redoneCanvasPage2)
+//        XCTAssertEqual(redoneCanvasPage3.parent, redoneCanvasPage2)
     }
 
     func test_deletePage_undoAddsPagesBackToFolder() throws {
@@ -459,7 +461,7 @@ class CoppiceModelControllerPageTests: XCTestCase {
 
         let redonePage = try XCTUnwrap(self.modelController.pageCollection.objectWithID(page.id))
         XCTAssertEqual(redonePage.containingFolder, self.folder)
-        XCTAssertEqual(self.folder.contents[safe: 1] as? Page, redonePage)
+        XCTAssertEqual(self.folder.folderContents[safe: 1] as? Page, redonePage)
     }
 
     func test_deletePage_redoDeletesPageAgain() throws {
@@ -476,6 +478,7 @@ class CoppiceModelControllerPageTests: XCTestCase {
     }
 
     func test_deletePage_redoRemovesPageFromCanvasesAgain() throws {
+        XCTFail()
         let page = self.modelController.createPage(in: self.folder)
         let canvas1 = self.modelController.createCanvas()
         let canvasPage1 = try XCTUnwrap(canvas1.addPages([page]).first)
@@ -483,7 +486,7 @@ class CoppiceModelControllerPageTests: XCTestCase {
         let canvasPage2 = try XCTUnwrap(canvas2.addPages([page]).first)
         canvasPage2.frame = CGRect(x: 10, y: 20, width: 300, height: 400)
         let canvasPage3 = try XCTUnwrap(canvas2.addPages([page]).first)
-        canvasPage3.parent = canvasPage2
+//        canvasPage3.parent = canvasPage2
         self.undoManager.removeAllActions()
 
         self.modelController.delete(page)
@@ -506,10 +509,10 @@ class CoppiceModelControllerPageTests: XCTestCase {
         self.modelController.delete(page)
 
         self.undoManager.undo()
-        XCTAssertTrue(self.folder.contents.contains(where: { $0.id == page.id }))
+        XCTAssertTrue(self.folder.folderContents.contains(where: { $0.id == page.id }))
         self.undoManager.redo()
 
-        XCTAssertFalse(self.folder.contents.contains(where: { $0.id == page.id }))
+        XCTAssertFalse(self.folder.folderContents.contains(where: { $0.id == page.id }))
     }
 
 

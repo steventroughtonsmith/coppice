@@ -23,22 +23,22 @@ class CanvasPageTests: XCTestCase {
     //MARK: - .plistRepresentation
     func test_plistRepresentation_containsID() throws {
         let canvasPage = CanvasPage.create(in: self.modelController)
-        let id = try XCTUnwrap(canvasPage.plistRepresentation[.id] as? ModelID)
+        let id: ModelID = try canvasPage.plistRepresentation[required: .id]
         XCTAssertEqual(id, canvasPage.id)
     }
 
     func test_plistRepresentation_containsFrame() throws {
         let canvasPage = CanvasPage.create(in: self.modelController)
         canvasPage.frame = CGRect(x: 20, y: 30, width: 40, height: 50)
-        let frame = try XCTUnwrap(canvasPage.plistRepresentation[.CanvasPage.frame] as? String)
-        XCTAssertEqual(frame, NSStringFromRect(CGRect(x: 20, y: 30, width: 40, height: 50)))
+        let frame: CGRect = try canvasPage.plistRepresentation[required: CanvasPage.PlistKeys.frame]
+        XCTAssertEqual(frame, CGRect(x: 20, y: 30, width: 40, height: 50))
     }
 
     func test_plistRepresentation_containsPageID() throws {
         let page = Page.create(in: self.modelController)
         let canvasPage = CanvasPage.create(in: self.modelController)
         canvasPage.page = page
-        let pageID = try XCTUnwrap(canvasPage.plistRepresentation[.CanvasPage.page] as? ModelID)
+        let pageID: ModelID? = try canvasPage.plistRepresentation[CanvasPage.PlistKeys.page]
         XCTAssertEqual(pageID, page.id)
     }
 
@@ -46,14 +46,14 @@ class CanvasPageTests: XCTestCase {
         let canvas = Canvas.create(in: self.modelController)
         let canvasPage = CanvasPage.create(in: self.modelController)
         canvasPage.canvas = canvas
-        let canvasID = try XCTUnwrap(canvasPage.plistRepresentation[.CanvasPage.canvas] as? ModelID)
+        let canvasID: ModelID? = try canvasPage.plistRepresentation[CanvasPage.PlistKeys.canvas]
         XCTAssertEqual(canvasID, canvas.id)
     }
 
     func test_plistRepresentation_containsZIndex() throws {
         let canvasPage = CanvasPage.create(in: self.modelController)
         canvasPage.zIndex = 42
-        let zIndex = try XCTUnwrap(canvasPage.plistRepresentation[.CanvasPage.zIndex] as? Int)
+        let zIndex: Int = try canvasPage.plistRepresentation[required: CanvasPage.PlistKeys.zIndex]
         XCTAssertEqual(zIndex, canvasPage.zIndex)
     }
 
@@ -61,26 +61,26 @@ class CanvasPageTests: XCTestCase {
         let modelController = CoppiceModelController(undoManager: UndoManager())
         let canvasPage = modelController.collection(for: CanvasPage.self).newObject()
 
-        let plist: [ModelPlistKey: Any] = [
-            .id: canvasPage.id,
+        let plist: [ModelPlistKey: PlistValue] = [
+            .id: canvasPage.id.stringRepresentation,
             ModelPlistKey(rawValue: "bar"): "foo",
-            .CanvasPage.frame: NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
-            .CanvasPage.zIndex: 31,
+            CanvasPage.PlistKeys.frame: NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
+            CanvasPage.PlistKeys.zIndex: 31,
             ModelPlistKey(rawValue: "point"): NSStringFromPoint(CGPoint(x: 15, y: 51)),
         ]
 
-        XCTAssertNoThrow(try canvasPage.update(fromPlistRepresentation: plist))
+        XCTAssertNoThrow(try canvasPage.update(fromPlistRepresentation: .init(id: canvasPage.id, plist: plist)))
 
-        let plistRepresentation = canvasPage.plistRepresentation
-        XCTAssertEqual(plistRepresentation[ModelPlistKey(rawValue: "bar")] as? String, "foo")
-        XCTAssertEqual(plistRepresentation[ModelPlistKey(rawValue: "point")] as? String, NSStringFromPoint(CGPoint(x: 15, y: 51)))
+        let plistRepresentation = try canvasPage.plistRepresentation
+        XCTAssertEqual(try plistRepresentation[ModelPlistKey(rawValue: "bar")], "foo")
+        XCTAssertEqual(try plistRepresentation[ModelPlistKey(rawValue: "point")], CGPoint(x: 15, y: 51))
     }
 
 
     //MARK: - update(fromPlistRepresentation:)
     func test_updateFromPlistRepresentation_throwsErrorIfModelControllerNotSet() {
         let canvasPage = CanvasPage()
-        XCTAssertThrowsError(try canvasPage.update(fromPlistRepresentation: [:]), "") {
+        XCTAssertThrowsError(try canvasPage.update(fromPlistRepresentation: .init(id: canvasPage.id, plist: [:])), "") {
             XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .modelControllerNotSet)
         }
     }
@@ -93,15 +93,15 @@ class CanvasPageTests: XCTestCase {
         let parent = modelController.collection(for: CanvasPage.self).newObject()
         let canvasPage = modelController.collection(for: CanvasPage.self).newObject()
 
-        let plist: [ModelPlistKey: Any] = [
+        let plist: [ModelPlistKey: PlistValue] = [
             .id: "foobar",
-            .CanvasPage.frame: NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
-            .CanvasPage.page: newPage.id.stringRepresentation,
-            .CanvasPage.canvas: newCanvas.id.stringRepresentation,
-            .CanvasPage.parent: parent.id.stringRepresentation,
+            CanvasPage.PlistKeys.frame: NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
+            CanvasPage.PlistKeys.page: newPage.id.stringRepresentation,
+            CanvasPage.PlistKeys.canvas: newCanvas.id.stringRepresentation,
+            ModelPlistKey(rawValue: "parent"): parent.id.stringRepresentation,
         ]
 
-        XCTAssertThrowsError(try canvasPage.update(fromPlistRepresentation: plist), "") {
+        XCTAssertThrowsError(try canvasPage.update(fromPlistRepresentation: .init(id: canvasPage.id, plist: plist)), "") {
             XCTAssertEqual(($0 as? ModelObjectUpdateErrors), ModelObjectUpdateErrors.idsDontMatch)
         }
     }
@@ -110,12 +110,12 @@ class CanvasPageTests: XCTestCase {
         let modelController = CoppiceModelController(undoManager: UndoManager())
         let canvasPage = modelController.collection(for: CanvasPage.self).newObject()
 
-        let plist: [ModelPlistKey: Any] = [
-            .id: canvasPage.id,
-            .CanvasPage.frame: NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
+        let plist: [ModelPlistKey: PlistValue] = [
+            .id: canvasPage.id.stringRepresentation,
+            CanvasPage.PlistKeys.frame: NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
         ]
 
-        XCTAssertNoThrow(try canvasPage.update(fromPlistRepresentation: plist))
+        XCTAssertNoThrow(try canvasPage.update(fromPlistRepresentation: .init(id: canvasPage.id, plist: plist)))
 
         XCTAssertEqual(canvasPage.frame, CGRect(x: 1, y: 2, width: 3, height: 4))
     }
@@ -124,13 +124,13 @@ class CanvasPageTests: XCTestCase {
         let modelController = CoppiceModelController(undoManager: UndoManager())
         let canvasPage = modelController.collection(for: CanvasPage.self).newObject()
 
-        let plist: [ModelPlistKey: Any] = [
-            .id: canvasPage.id,
-            .CanvasPage.frame: NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
-            .CanvasPage.zIndex: 31,
+        let plist: [ModelPlistKey: PlistValue] = [
+            .id: canvasPage.id.stringRepresentation,
+            CanvasPage.PlistKeys.frame: NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
+            CanvasPage.PlistKeys.zIndex: 31,
         ]
 
-        XCTAssertNoThrow(try canvasPage.update(fromPlistRepresentation: plist))
+        XCTAssertNoThrow(try canvasPage.update(fromPlistRepresentation: .init(id: canvasPage.id, plist: plist)))
 
         XCTAssertEqual(canvasPage.zIndex, 31)
     }
@@ -142,13 +142,13 @@ class CanvasPageTests: XCTestCase {
         let newPage = modelController.collection(for: Page.self).newObject()
         let canvasPage = modelController.collection(for: CanvasPage.self).newObject()
 
-        let plist: [ModelPlistKey: Any] = [
-            .id: canvasPage.id,
-            .CanvasPage.frame: NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
-            .CanvasPage.page: newPage.id,
+        let plist: [ModelPlistKey: PlistValue] = [
+            .id: canvasPage.id.stringRepresentation,
+            CanvasPage.PlistKeys.frame: NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
+            CanvasPage.PlistKeys.page: newPage.id.stringRepresentation,
         ]
 
-        XCTAssertNoThrow(try canvasPage.update(fromPlistRepresentation: plist))
+        XCTAssertNoThrow(try canvasPage.update(fromPlistRepresentation: .init(id: canvasPage.id, plist: plist)))
 
         XCTAssertEqual(canvasPage.page, newPage)
     }
@@ -160,13 +160,13 @@ class CanvasPageTests: XCTestCase {
         let newCanvas = modelController.collection(for: Canvas.self).newObject()
         let canvasPage = modelController.collection(for: CanvasPage.self).newObject()
 
-        let plist: [ModelPlistKey: Any] = [
-            .id: canvasPage.id,
-            .CanvasPage.frame: NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
-            .CanvasPage.canvas: newCanvas.id,
+        let plist: [ModelPlistKey: PlistValue] = [
+            .id: canvasPage.id.stringRepresentation,
+            CanvasPage.PlistKeys.frame: NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
+            CanvasPage.PlistKeys.canvas: newCanvas.id.stringRepresentation,
         ]
 
-        XCTAssertNoThrow(try canvasPage.update(fromPlistRepresentation: plist))
+        XCTAssertNoThrow(try canvasPage.update(fromPlistRepresentation: .init(id: canvasPage.id, plist: plist)))
 
         XCTAssertEqual(canvasPage.canvas, newCanvas)
     }
@@ -175,15 +175,15 @@ class CanvasPageTests: XCTestCase {
         let modelController = CoppiceModelController(undoManager: UndoManager())
         let canvasPage = modelController.collection(for: CanvasPage.self).newObject()
 
-        let plist: [ModelPlistKey: Any] = [
-            .id: canvasPage.id,
+        let plist: [ModelPlistKey: PlistValue] = [
+            .id: canvasPage.id.stringRepresentation,
             ModelPlistKey(rawValue: "bar"): "foo",
-            .CanvasPage.frame: NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
-            .CanvasPage.zIndex: 31,
+            CanvasPage.PlistKeys.frame: NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
+            CanvasPage.PlistKeys.zIndex: 31,
             ModelPlistKey(rawValue: "point"): NSStringFromPoint(CGPoint(x: 15, y: 51)),
         ]
 
-        XCTAssertNoThrow(try canvasPage.update(fromPlistRepresentation: plist))
+        XCTAssertNoThrow(try canvasPage.update(fromPlistRepresentation: .init(id: canvasPage.id, plist: plist)))
 
         XCTAssertEqual(canvasPage.otherProperties[ModelPlistKey(rawValue: "bar")] as? String, "foo")
         XCTAssertEqual(canvasPage.otherProperties[ModelPlistKey(rawValue: "point")] as? String, NSStringFromPoint(CGPoint(x: 15, y: 51)))
@@ -193,18 +193,18 @@ class CanvasPageTests: XCTestCase {
         let modelController = CoppiceModelController(undoManager: UndoManager())
         let canvasPage = modelController.collection(for: CanvasPage.self).newObject()
 
-        let plist: [ModelPlistKey: Any] = [
-            .id: canvasPage.id,
+        let plist: [ModelPlistKey: PlistValue] = [
+            .id: canvasPage.id.stringRepresentation,
             ModelPlistKey(rawValue: "bar"): "foo",
-            .CanvasPage.frame: NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
-            .CanvasPage.zIndex: 31,
+            CanvasPage.PlistKeys.frame: NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
+            CanvasPage.PlistKeys.zIndex: 31,
             ModelPlistKey(rawValue: "point"): NSStringFromPoint(CGPoint(x: 15, y: 51)),
         ]
 
-        XCTAssertNoThrow(try canvasPage.update(fromPlistRepresentation: plist))
+        XCTAssertNoThrow(try canvasPage.update(fromPlistRepresentation: .init(id: canvasPage.id, plist: plist)))
 
         XCTAssertEqual(canvasPage.otherProperties.count, 2)
-        for key in ModelPlistKey.CanvasPage.all {
+        for key in CanvasPage.PlistKeys.all {
             XCTAssertNil(canvasPage.otherProperties[key])
         }
     }
@@ -245,6 +245,7 @@ class CanvasPageTests: XCTestCase {
     }
 
     func test_existingLinkedCanvasPageForPage_returnsNilIfNoDirectChildMatchesPage() {
+        XCTFail()
         let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let page = modelController.collection(for: Page.self).newObject()
@@ -255,7 +256,7 @@ class CanvasPageTests: XCTestCase {
         let childPage = modelController.collection(for: Page.self).newObject()
         modelController.collection(for: CanvasPage.self).newObject() {
             $0.page = childPage
-            $0.parent = canvasPage
+//            $0.parent = canvasPage
         }
 
         XCTAssertNil(canvasPage.existingLinkedCanvasPage(for: Page()))

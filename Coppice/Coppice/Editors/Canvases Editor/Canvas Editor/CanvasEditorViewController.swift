@@ -81,7 +81,7 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
         })
 
         self.subscribers[.pageContentDidChange] = NotificationCenter.default.publisher(for: .pageContentLinkDidChange).sink { [weak self] notification in
-            guard let self, let content = notification.object as? PageContent else {
+            guard let self, let content = notification.object as? Page.Content else {
                 return
             }
             if content.page?.canvasPages.map(\.canvas).contains(self.viewModel.canvas) == true {
@@ -603,7 +603,7 @@ class CanvasEditorViewController: NSViewController, NSMenuItemValidation, SplitV
     @IBAction func newPageFromContextMenu(_ sender: NSMenuItem?) {
         guard
             let rawType = sender?.representedObject as? String,
-            let type = PageContentType(rawValue: rawType)
+            let type = Page.ContentType(rawValue: rawType)
         else {
             return
         }

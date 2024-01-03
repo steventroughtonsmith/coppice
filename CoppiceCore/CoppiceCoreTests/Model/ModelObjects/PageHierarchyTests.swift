@@ -91,7 +91,7 @@ class PageHierarchyTests: XCTestCase {
         let sourceID = ModelID(modelType: CanvasPage.modelType)
         let sourcePageID = ModelID(modelType: Page.modelType)
         let plist = hierarchy.pageHierarchyPersistenceRepresentation(withSourceCanvasPageID: sourceID, sourcePageID: sourcePageID, andFrame: CGRect(x: -30, y: -150, width: 60, height: 100))
-        XCTAssertEqual(plist[.PageHierarchy.rootPageID] as? String, hierarchy.id.stringRepresentation)
+        XCTAssertEqual(plist[PageHierarchy.PlistKeys.rootPageID] as? String, hierarchy.id.stringRepresentation)
     }
 
     func test_pageHierarchyPlistRepresentation_hasSingleEntryPointFromSuppliedSourceToTopOfLegacyHierarchy() throws {
@@ -100,7 +100,7 @@ class PageHierarchyTests: XCTestCase {
         let sourceID = ModelID(modelType: CanvasPage.modelType)
         let sourcePageID = ModelID(modelType: Page.modelType)
         let plist = hierarchy.pageHierarchyPersistenceRepresentation(withSourceCanvasPageID: sourceID, sourcePageID: sourcePageID, andFrame: CGRect(x: -30, y: -150, width: 60, height: 100))
-        let entryPoints = try XCTUnwrap(plist[.PageHierarchy.entryPoints] as? [[String: Any]])
+        let entryPoints = try XCTUnwrap(plist[PageHierarchy.PlistKeys.entryPoints] as? [[String: Any]])
         XCTAssertEqual(entryPoints.count, 1)
         XCTAssertEqual(entryPoints.first?["pageLink"] as? String, PageLink(destination: hierarchy.pageID, source: sourceID).url.absoluteString)
     }
@@ -111,7 +111,7 @@ class PageHierarchyTests: XCTestCase {
         let sourceID = ModelID(modelType: CanvasPage.modelType)
         let sourcePageID = ModelID(modelType: Page.modelType)
         let plist = hierarchy.pageHierarchyPersistenceRepresentation(withSourceCanvasPageID: sourceID, sourcePageID: sourcePageID, andFrame: CGRect(x: -30, y: -150, width: 60, height: 100))
-        let entryPoints = try XCTUnwrap(plist[.PageHierarchy.entryPoints] as? [[String: Any]])
+        let entryPoints = try XCTUnwrap(plist[PageHierarchy.PlistKeys.entryPoints] as? [[String: Any]])
         XCTAssertEqual(entryPoints.count, 1)
         XCTAssertEqual(entryPoints.first?["relativePosition"] as? String, NSStringFromPoint(CGPoint(x: 0, y: 160)))
     }
@@ -122,7 +122,7 @@ class PageHierarchyTests: XCTestCase {
         let sourceID = ModelID(modelType: CanvasPage.modelType)
         let sourcePageID = ModelID(modelType: Page.modelType)
         let plist = hierarchy.pageHierarchyPersistenceRepresentation(withSourceCanvasPageID: sourceID, sourcePageID: sourcePageID, andFrame: CGRect(x: -30, y: -150, width: 60, height: 100))
-        let pageRefs = try XCTUnwrap(plist[.PageHierarchy.pages] as? [[String: Any]])
+        let pageRefs = try XCTUnwrap(plist[PageHierarchy.PlistKeys.pages] as? [[String: Any]])
         let rootPage = try XCTUnwrap(pageRefs.first(where: { ($0["canvasPageID"] as? String) == hierarchy.id.stringRepresentation }))
         XCTAssertEqual(rootPage["pageID"] as? String, hierarchy.pageID.stringRepresentation)
         XCTAssertEqual(rootPage["relativeContentFrame"] as? String, NSStringFromRect(CGRect(x: 0, y: 0, width: 40, height: 30)))
@@ -134,7 +134,7 @@ class PageHierarchyTests: XCTestCase {
         let sourceID = ModelID(modelType: CanvasPage.modelType)
         let sourcePageID = ModelID(modelType: Page.modelType)
         let plist = hierarchy.pageHierarchyPersistenceRepresentation(withSourceCanvasPageID: sourceID, sourcePageID: sourcePageID, andFrame: CGRect(x: -30, y: -150, width: 60, height: 100))
-        let pageRefs = try XCTUnwrap(plist[.PageHierarchy.pages] as? [[String: Any]])
+        let pageRefs = try XCTUnwrap(plist[PageHierarchy.PlistKeys.pages] as? [[String: Any]])
 
         let child1 = try XCTUnwrap(pageRefs.first(where: { ($0["canvasPageID"] as? String) == hierarchy.children[0].id.stringRepresentation }))
         XCTAssertEqual(child1["pageID"] as? String, hierarchy.children[0].pageID.stringRepresentation)
@@ -159,7 +159,7 @@ class PageHierarchyTests: XCTestCase {
         let sourceID = ModelID(modelType: CanvasPage.modelType)
         let sourcePageID = ModelID(modelType: Page.modelType)
         let plist = hierarchy.pageHierarchyPersistenceRepresentation(withSourceCanvasPageID: sourceID, sourcePageID: sourcePageID, andFrame: CGRect(x: -30, y: -150, width: 60, height: 100))
-        let linkRefs = try XCTUnwrap(plist[.PageHierarchy.links] as? [[String: Any]])
+        let linkRefs = try XCTUnwrap(plist[PageHierarchy.PlistKeys.links] as? [[String: Any]])
 
         let rootID = hierarchy.id
         let child1ID = hierarchy.children[0].id

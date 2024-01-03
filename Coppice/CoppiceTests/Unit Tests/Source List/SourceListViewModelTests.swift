@@ -83,7 +83,7 @@ class SourceListViewModelTests: BaseTestCase {
         }
         let page2 = self.modelController.collection(for: Page.self).newObject() {
             $0.title = "Second Page"
-            $0.content = ImagePageContent()
+            $0.content = Page.Content.Image()
         }
         let page3 = self.modelController.collection(for: Page.self).newObject() {
             $0.title = "Possums!"
@@ -112,12 +112,12 @@ class SourceListViewModelTests: BaseTestCase {
         let page1Node = try XCTUnwrap(pagesItem.children[safe: 0])
         XCTAssertEqual(page1Node.item, .page(page1.id))
         XCTAssertEqual(page1Node.title, page1.title)
-        XCTAssertEqual(page1Node.image, PageContentType.text.icon(.regular))
+        XCTAssertEqual(page1Node.image, Page.ContentType.text.icon(.regular))
 
         let page2Node = try XCTUnwrap(pagesItem.children[safe: 1])
         XCTAssertEqual(page2Node.item, .page(page2.id))
         XCTAssertEqual(page2Node.title, page2.title)
-        XCTAssertEqual(page2Node.image, PageContentType.image.icon(.regular))
+        XCTAssertEqual(page2Node.image, Page.ContentType.image.icon(.regular))
 
         let folder1Node = try XCTUnwrap(pagesItem.children[safe: 2])
         XCTAssertEqual(folder1Node.item, .folder(folder1.id))
@@ -127,7 +127,7 @@ class SourceListViewModelTests: BaseTestCase {
         let page3Node = try XCTUnwrap(pagesItem.children[safe: 3])
         XCTAssertEqual(page3Node.item, .page(page3.id))
         XCTAssertEqual(page3Node.title, page3.title)
-        XCTAssertEqual(page3Node.image, PageContentType.text.icon(.regular))
+        XCTAssertEqual(page3Node.image, Page.ContentType.text.icon(.regular))
 
         let folder2Node = try XCTUnwrap(pagesItem.children[safe: 4])
         XCTAssertEqual(folder2Node.item, .folder(folder2.id))
@@ -198,7 +198,7 @@ class SourceListViewModelTests: BaseTestCase {
         let folder1Page1Item = try XCTUnwrap(folder1Item.children[safe: 0])
         XCTAssertEqual(folder1Page1Item.item, .page(folder1Page1.id))
         XCTAssertEqual(folder1Page1Item.title, folder1Page1.title)
-        XCTAssertEqual(folder1Page1Item.image, PageContentType.text.icon(.regular))
+        XCTAssertEqual(folder1Page1Item.image, Page.ContentType.text.icon(.regular))
 
         //START FOLDER 1.1
         let folder1Folder1Item = try XCTUnwrap(folder1Item.children[safe: 1])
@@ -210,18 +210,18 @@ class SourceListViewModelTests: BaseTestCase {
         let folder1Folder1Page1Item = try XCTUnwrap(folder1Folder1Item.children[safe: 0])
         XCTAssertEqual(folder1Folder1Page1Item.item, .page(folder1Folder1Page1.id))
         XCTAssertEqual(folder1Folder1Page1Item.title, folder1Folder1Page1.title)
-        XCTAssertEqual(folder1Folder1Page1Item.image, PageContentType.text.icon(.regular))
+        XCTAssertEqual(folder1Folder1Page1Item.image, Page.ContentType.text.icon(.regular))
 
         let folder1Folder1Page2Item = try XCTUnwrap(folder1Folder1Item.children[safe: 1])
         XCTAssertEqual(folder1Folder1Page2Item.item, .page(folder1Folder1Page2.id))
         XCTAssertEqual(folder1Folder1Page2Item.title, folder1Folder1Page2.title)
-        XCTAssertEqual(folder1Folder1Page2Item.image, PageContentType.text.icon(.regular))
+        XCTAssertEqual(folder1Folder1Page2Item.image, Page.ContentType.text.icon(.regular))
         //END FOLDER 1.1
 
         let folder1Page2Item = try XCTUnwrap(folder1Item.children[safe: 2])
         XCTAssertEqual(folder1Page2Item.item, .page(folder1Page2.id))
         XCTAssertEqual(folder1Page2Item.title, folder1Page2.title)
-        XCTAssertEqual(folder1Page2Item.image, PageContentType.text.icon(.regular))
+        XCTAssertEqual(folder1Page2Item.image, Page.ContentType.text.icon(.regular))
         //END FOLDER 1
 
         let folder2Item = try XCTUnwrap(pagesNode.children[safe: 2])
@@ -231,7 +231,7 @@ class SourceListViewModelTests: BaseTestCase {
         let folder2Page1Item = try XCTUnwrap(folder2Item.children[safe: 0])
         XCTAssertEqual(folder2Page1Item.item, .page(folder2Page1.id))
         XCTAssertEqual(folder2Page1Item.title, folder2Page1.title)
-        XCTAssertEqual(folder2Page1Item.image, PageContentType.text.icon(.regular))
+        XCTAssertEqual(folder2Page1Item.image, Page.ContentType.text.icon(.regular))
     }
 
     func test_rootSourceListNodes_reloadsNodesWhenPageAdded() throws {
@@ -918,8 +918,8 @@ class SourceListViewModelTests: BaseTestCase {
         let rootFolder = self.modelController.rootFolder
         _ = vm.dropFiles(at: [textURL, imageURL], onto: vm.pagesGroupNode, atChildIndex: -1)
 
-        XCTAssertTrue((rootFolder.contents[safe: 3] as? Page)?.content is TextPageContent)
-        XCTAssertTrue((rootFolder.contents[safe: 4] as? Page)?.content is ImagePageContent)
+        XCTAssertTrue((rootFolder.contents[safe: 3] as? Page)?.content is Page.Content.Text)
+        XCTAssertTrue((rootFolder.contents[safe: 4] as? Page)?.content is Page.Content.Image)
     }
 
     func test_dropFilesAtURLsOntoNode_createsPagesAtStartOfNodeFolderIfURLsAreValidAndIndexIs0() throws {
@@ -934,8 +934,8 @@ class SourceListViewModelTests: BaseTestCase {
         let rootFolder = self.modelController.rootFolder
         _ = vm.dropFiles(at: [textURL, imageURL], onto: vm.pagesGroupNode, atChildIndex: 0)
 
-        XCTAssertTrue((rootFolder.contents[safe: 0] as? Page)?.content is TextPageContent)
-        XCTAssertTrue((rootFolder.contents[safe: 1] as? Page)?.content is ImagePageContent)
+        XCTAssertTrue((rootFolder.contents[safe: 0] as? Page)?.content is Page.Content.Text)
+        XCTAssertTrue((rootFolder.contents[safe: 1] as? Page)?.content is Page.Content.Image)
     }
 
     func test_dropFilesAtURLsOntoNode_createsPagesAboveItemAtIndexOfNodeFolderIfURLsAreValid() throws {
@@ -950,8 +950,8 @@ class SourceListViewModelTests: BaseTestCase {
         let rootFolder = self.modelController.rootFolder
         _ = vm.dropFiles(at: [textURL, imageURL], onto: vm.pagesGroupNode, atChildIndex: 2)
 
-        XCTAssertTrue((rootFolder.contents[safe: 2] as? Page)?.content is TextPageContent)
-        XCTAssertTrue((rootFolder.contents[safe: 3] as? Page)?.content is ImagePageContent)
+        XCTAssertTrue((rootFolder.contents[safe: 2] as? Page)?.content is Page.Content.Text)
+        XCTAssertTrue((rootFolder.contents[safe: 3] as? Page)?.content is Page.Content.Image)
     }
 
 

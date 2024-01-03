@@ -89,3 +89,17 @@ public struct PageLink: Equatable, Hashable {
         hasher.combine(self.source)
     }
 }
+
+extension PageLink: PlistConvertable {
+    public func toPlistValue() throws -> PlistValue {
+        return self.url.absoluteString
+    }
+
+    public static func fromPlistValue(_ plistValue: PlistValue) throws -> PageLink {
+        let url: URL = try .fromPlistValue(plistValue)
+        guard let pageLink = PageLink(url: url) else {
+            throw PlistConvertableError.invalidConversionFromPlistValue
+        }
+        return pageLink
+    }
+}

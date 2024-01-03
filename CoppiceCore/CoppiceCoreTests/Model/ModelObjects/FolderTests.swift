@@ -55,9 +55,9 @@ class FolderTests: XCTestCase {
 
         folder.insert([object1, object2, object3])
 
-        XCTAssertEqual(folder.contents[0].id, object1.id)
-        XCTAssertEqual(folder.contents[1].id, object2.id)
-        XCTAssertEqual(folder.contents[2].id, object3.id)
+        XCTAssertEqual(folder.folderContents[0].id, object1.id)
+        XCTAssertEqual(folder.folderContents[1].id, object2.id)
+        XCTAssertEqual(folder.folderContents[2].id, object3.id)
     }
 
     func test_insertObjectsBelow_addsObjectsToTopOfFolderIfItemIsNil() {
@@ -73,9 +73,9 @@ class FolderTests: XCTestCase {
 
         folder.insert([object1, object2, object3], below: nil)
 
-        XCTAssertEqual(folder.contents[0].id, object1.id)
-        XCTAssertEqual(folder.contents[1].id, object2.id)
-        XCTAssertEqual(folder.contents[2].id, object3.id)
+        XCTAssertEqual(folder.folderContents[0].id, object1.id)
+        XCTAssertEqual(folder.folderContents[1].id, object2.id)
+        XCTAssertEqual(folder.folderContents[2].id, object3.id)
     }
 
     func test_insertObjectsBelow_addsObjectsToEndOfFolderIfItemIsLastItem() {
@@ -91,9 +91,9 @@ class FolderTests: XCTestCase {
 
         folder.insert([object1, object2, object3], below: existingItem2)
 
-        XCTAssertEqual(folder.contents[2].id, object1.id)
-        XCTAssertEqual(folder.contents[3].id, object2.id)
-        XCTAssertEqual(folder.contents[4].id, object3.id)
+        XCTAssertEqual(folder.folderContents[2].id, object1.id)
+        XCTAssertEqual(folder.folderContents[3].id, object2.id)
+        XCTAssertEqual(folder.folderContents[4].id, object3.id)
     }
 
     func test_insertObjectsBelow_insertsObjectsBelowSuppliedItem() {
@@ -109,9 +109,9 @@ class FolderTests: XCTestCase {
 
         folder.insert([object1, object2, object3], below: existingItem1)
 
-        XCTAssertEqual(folder.contents[1].id, object1.id)
-        XCTAssertEqual(folder.contents[2].id, object2.id)
-        XCTAssertEqual(folder.contents[3].id, object3.id)
+        XCTAssertEqual(folder.folderContents[1].id, object1.id)
+        XCTAssertEqual(folder.folderContents[2].id, object2.id)
+        XCTAssertEqual(folder.folderContents[3].id, object3.id)
     }
 
     func test_insertObjectsBelow_setsContainingFolderOfInsertedItemsToReceiver() {
@@ -127,11 +127,11 @@ class FolderTests: XCTestCase {
 
         folder.insert([object1, object2, object3], below: nil)
 
-        XCTAssertEqual(folder.contents[0].containingFolder, folder)
-        XCTAssertEqual(folder.contents[1].containingFolder, folder)
-        XCTAssertEqual(folder.contents[2].containingFolder, folder)
-        XCTAssertEqual(folder.contents[3].containingFolder, folder)
-        XCTAssertEqual(folder.contents[4].containingFolder, folder)
+        XCTAssertEqual(folder.folderContents[0].containingFolder, folder)
+        XCTAssertEqual(folder.folderContents[1].containingFolder, folder)
+        XCTAssertEqual(folder.folderContents[2].containingFolder, folder)
+        XCTAssertEqual(folder.folderContents[3].containingFolder, folder)
+        XCTAssertEqual(folder.folderContents[4].containingFolder, folder)
     }
 
     func test_insertObjectsBelow_ifObjectsAlreadyInADifferentFolderRemovesFromThatFolder() {
@@ -148,14 +148,14 @@ class FolderTests: XCTestCase {
 
         newFolder.insert([object1, object3], below: existingObject1)
 
-        XCTAssertEqual(oldFolder.contents.count, 1)
-        XCTAssertFalse(oldFolder.contents.contains(where: { $0.id == object1.id }))
-        XCTAssertTrue(oldFolder.contents.contains(where: { $0.id == object2.id }))
-        XCTAssertFalse(oldFolder.contents.contains(where: { $0.id == object3.id }))
+        XCTAssertEqual(oldFolder.folderContents.count, 1)
+        XCTAssertFalse(oldFolder.folderContents.contains(where: { $0.id == object1.id }))
+        XCTAssertTrue(oldFolder.folderContents.contains(where: { $0.id == object2.id }))
+        XCTAssertFalse(oldFolder.folderContents.contains(where: { $0.id == object3.id }))
 
 
-        XCTAssertEqual(newFolder.contents[1].id, object1.id)
-        XCTAssertEqual(newFolder.contents[2].id, object3.id)
+        XCTAssertEqual(newFolder.folderContents[1].id, object1.id)
+        XCTAssertEqual(newFolder.folderContents[2].id, object3.id)
 
         XCTAssertEqual(object1.containingFolder, newFolder)
         XCTAssertEqual(object3.containingFolder, newFolder)
@@ -179,17 +179,17 @@ class FolderTests: XCTestCase {
 
         newFolder.insert([object1, object3], below: existingObject1)
 
-        XCTAssertEqual(oldFolder1.contents.count, 1)
-        XCTAssertFalse(oldFolder1.contents.contains(where: { $0.id == object1.id }))
-        XCTAssertTrue(oldFolder1.contents.contains(where: { $0.id == object2.id }))
+        XCTAssertEqual(oldFolder1.folderContents.count, 1)
+        XCTAssertFalse(oldFolder1.folderContents.contains(where: { $0.id == object1.id }))
+        XCTAssertTrue(oldFolder1.folderContents.contains(where: { $0.id == object2.id }))
 
-        XCTAssertEqual(oldFolder2.contents.count, 1)
-        XCTAssertFalse(oldFolder2.contents.contains(where: { $0.id == object3.id }))
-        XCTAssertTrue(oldFolder2.contents.contains(where: { $0.id == object4.id }))
+        XCTAssertEqual(oldFolder2.folderContents.count, 1)
+        XCTAssertFalse(oldFolder2.folderContents.contains(where: { $0.id == object3.id }))
+        XCTAssertTrue(oldFolder2.folderContents.contains(where: { $0.id == object4.id }))
 
 
-        XCTAssertEqual(newFolder.contents[1].id, object1.id)
-        XCTAssertEqual(newFolder.contents[2].id, object3.id)
+        XCTAssertEqual(newFolder.folderContents[1].id, object1.id)
+        XCTAssertEqual(newFolder.folderContents[2].id, object3.id)
 
         XCTAssertEqual(object1.containingFolder, newFolder)
         XCTAssertEqual(object3.containingFolder, newFolder)
@@ -208,12 +208,12 @@ class FolderTests: XCTestCase {
 
         folder.insert([existingItem3, existingItem1], below: existingItem5)
 
-        XCTAssertEqual(folder.contents[0].id, existingItem2.id)
-        XCTAssertEqual(folder.contents[1].id, existingItem4.id)
-        XCTAssertEqual(folder.contents[2].id, existingItem5.id)
-        XCTAssertEqual(folder.contents[3].id, existingItem3.id)
-        XCTAssertEqual(folder.contents[4].id, existingItem1.id)
-        XCTAssertEqual(folder.contents[5].id, existingItem6.id)
+        XCTAssertEqual(folder.folderContents[0].id, existingItem2.id)
+        XCTAssertEqual(folder.folderContents[1].id, existingItem4.id)
+        XCTAssertEqual(folder.folderContents[2].id, existingItem5.id)
+        XCTAssertEqual(folder.folderContents[3].id, existingItem3.id)
+        XCTAssertEqual(folder.folderContents[4].id, existingItem1.id)
+        XCTAssertEqual(folder.folderContents[5].id, existingItem6.id)
     }
 
     func test_insertObjectsBelow_ifObjectsInReceiverAndSuppliedItemIsOneOfObjectsInsertsBelowSuppliedItemsPreviousIndex() {
@@ -229,9 +229,9 @@ class FolderTests: XCTestCase {
 
         folder.insert([object1, existingItem2, object2], below: existingItem2)
 
-        XCTAssertEqual(folder.contents[1].id, object1.id)
-        XCTAssertEqual(folder.contents[2].id, existingItem2.id)
-        XCTAssertEqual(folder.contents[3].id, object2.id)
+        XCTAssertEqual(folder.folderContents[1].id, object1.id)
+        XCTAssertEqual(folder.folderContents[2].id, existingItem2.id)
+        XCTAssertEqual(folder.folderContents[3].id, object2.id)
     }
 
     func test_insertObjectsBelow_ifObjectsFromAMixOfPlacesRemovesFromOtherFoldersAndInsertsBelowSuppliedItem() {
@@ -253,18 +253,18 @@ class FolderTests: XCTestCase {
 
         newFolder.insert([object1, existingObject2, object3], below: existingObject1)
 
-        XCTAssertEqual(oldFolder1.contents.count, 1)
-        XCTAssertFalse(oldFolder1.contents.contains(where: { $0.id == object1.id }))
-        XCTAssertTrue(oldFolder1.contents.contains(where: { $0.id == object2.id }))
+        XCTAssertEqual(oldFolder1.folderContents.count, 1)
+        XCTAssertFalse(oldFolder1.folderContents.contains(where: { $0.id == object1.id }))
+        XCTAssertTrue(oldFolder1.folderContents.contains(where: { $0.id == object2.id }))
 
-        XCTAssertEqual(oldFolder2.contents.count, 1)
-        XCTAssertFalse(oldFolder2.contents.contains(where: { $0.id == object3.id }))
-        XCTAssertTrue(oldFolder2.contents.contains(where: { $0.id == object4.id }))
+        XCTAssertEqual(oldFolder2.folderContents.count, 1)
+        XCTAssertFalse(oldFolder2.folderContents.contains(where: { $0.id == object3.id }))
+        XCTAssertTrue(oldFolder2.folderContents.contains(where: { $0.id == object4.id }))
 
 
-        XCTAssertEqual(newFolder.contents[1].id, object1.id)
-        XCTAssertEqual(newFolder.contents[2].id, existingObject2.id)
-        XCTAssertEqual(newFolder.contents[3].id, object3.id)
+        XCTAssertEqual(newFolder.folderContents[1].id, object1.id)
+        XCTAssertEqual(newFolder.folderContents[2].id, existingObject2.id)
+        XCTAssertEqual(newFolder.folderContents[3].id, object3.id)
 
         XCTAssertEqual(object1.containingFolder, newFolder)
         XCTAssertEqual(existingObject2.containingFolder, newFolder)
@@ -286,9 +286,9 @@ class FolderTests: XCTestCase {
 
         folder.remove([object2, object4])
 
-        XCTAssertEqual(folder.contents[0].id, object1.id)
-        XCTAssertEqual(folder.contents[1].id, object3.id)
-        XCTAssertEqual(folder.contents[2].id, object5.id)
+        XCTAssertEqual(folder.folderContents[0].id, object1.id)
+        XCTAssertEqual(folder.folderContents[1].id, object3.id)
+        XCTAssertEqual(folder.folderContents[2].id, object5.id)
     }
 
 
@@ -304,25 +304,25 @@ class FolderTests: XCTestCase {
 
         folder.sort(using: .title)
 
-        XCTAssertEqual(folder.contents[0].id, object2.id)
-        XCTAssertEqual(folder.contents[1].id, object1.id)
-        XCTAssertEqual(folder.contents[2].id, object3.id)
+        XCTAssertEqual(folder.folderContents[0].id, object2.id)
+        XCTAssertEqual(folder.folderContents[1].id, object1.id)
+        XCTAssertEqual(folder.folderContents[2].id, object3.id)
     }
 
     func test_sortUsingMethod_sortsContentsAscendingByType() {
         let folder = self.foldersCollection.newObject()
 
-        let object1 = self.pagesCollection.newObject() { $0.content = ImagePageContent() }
+        let object1 = self.pagesCollection.newObject() { $0.content = Page.Content.Image() }
         let object2 = self.foldersCollection.newObject()
-        let object3 = self.pagesCollection.newObject() { $0.content = TextPageContent() }
+        let object3 = self.pagesCollection.newObject() { $0.content = Page.Content.Text() }
 
         folder.insert([object1, object2, object3])
 
         folder.sort(using: .type)
 
-        XCTAssertEqual(folder.contents[0].id, object2.id)
-        XCTAssertEqual(folder.contents[1].id, object3.id)
-        XCTAssertEqual(folder.contents[2].id, object1.id)
+        XCTAssertEqual(folder.folderContents[0].id, object2.id)
+        XCTAssertEqual(folder.folderContents[1].id, object3.id)
+        XCTAssertEqual(folder.folderContents[2].id, object1.id)
     }
 
     func test_sortUsingMethod_sortsFolderDescendingByDateCreated() {
@@ -336,9 +336,9 @@ class FolderTests: XCTestCase {
 
         folder.sort(using: .dateCreated)
 
-        XCTAssertEqual(folder.contents[0].id, object3.id)
-        XCTAssertEqual(folder.contents[1].id, object2.id)
-        XCTAssertEqual(folder.contents[2].id, object1.id)
+        XCTAssertEqual(folder.folderContents[0].id, object3.id)
+        XCTAssertEqual(folder.folderContents[1].id, object2.id)
+        XCTAssertEqual(folder.folderContents[2].id, object1.id)
     }
 
     func test_sortUsingMethod_sortsFolderDescendingUsingLastModified() {
@@ -355,9 +355,9 @@ class FolderTests: XCTestCase {
 
         folder.sort(using: .lastModified)
 
-        XCTAssertEqual(folder.contents[0].id, object2.id)
-        XCTAssertEqual(folder.contents[1].id, object3.id)
-        XCTAssertEqual(folder.contents[2].id, object1.id)
+        XCTAssertEqual(folder.folderContents[0].id, object2.id)
+        XCTAssertEqual(folder.folderContents[1].id, object3.id)
+        XCTAssertEqual(folder.folderContents[2].id, object1.id)
     }
 
 
@@ -389,15 +389,13 @@ class FolderTests: XCTestCase {
     //MARK: - .plistRepresentation
     func test_plistRepresentation_containsID() throws {
         let folder = Folder()
-        let id = try XCTUnwrap(folder.plistRepresentation[.id] as? ModelID)
-        XCTAssertEqual(id, folder.id)
+        XCTAssertEqual(try folder.plistRepresentation[.id], folder.id)
     }
 
     func test_plistRepresentation_containsTitle() throws {
         let folder = Folder()
         folder.title = "Possum!"
-        let title = try XCTUnwrap(folder.plistRepresentation[.Folder.title] as? String)
-        XCTAssertEqual(title, "Possum!")
+        XCTAssertEqual(try folder.plistRepresentation[Folder.PlistKeys.title], "Possum!")
     }
 
     func test_plistRepresentation_contentsContents() throws {
@@ -405,9 +403,9 @@ class FolderTests: XCTestCase {
         let object1 = Page()
         let object2 = Page()
         let object3 = Folder()
-        folder.contents = [object1, object2, object3] as [FolderContainable]
+        folder.folderContents = [object1, object2, object3] as [FolderContainable]
 
-        let contents = try XCTUnwrap(folder.plistRepresentation[.Folder.contents] as? [ModelID])
+        let contents: [ModelID] = try folder.plistRepresentation[required: Folder.PlistKeys.contents]
         XCTAssertEqual(contents[0], object1.id)
         XCTAssertEqual(contents[1], object2.id)
         XCTAssertEqual(contents[2], object3.id)
@@ -417,20 +415,20 @@ class FolderTests: XCTestCase {
         let folder = self.foldersCollection.newObject()
         let object1 = self.pagesCollection.newObject()
         let object2 = self.foldersCollection.newObject()
-        let plist: [ModelPlistKey: Any] = [
-            .id: folder.id,
-            .Folder.title: "Cool Pages",
-            .Folder.dateCreated: Date(timeIntervalSinceReferenceDate: 3106),
+        let plist: [ModelPlistKey: PlistValue] = [
+            .id: folder.id.stringRepresentation,
+            Folder.PlistKeys.title: "Cool Pages",
+            Folder.PlistKeys.dateCreated: Date(timeIntervalSinceReferenceDate: 3106),
             ModelPlistKey(rawValue: "foo"): "bar",
-            .Folder.contents: [object1.id, object2.id],
+            Folder.PlistKeys.contents: [object1.id.stringRepresentation, object2.id.stringRepresentation],
             ModelPlistKey(rawValue: "baz"): ["hello": "world"],
         ]
 
-        XCTAssertNoThrow(try folder.update(fromPlistRepresentation: plist))
+        XCTAssertNoThrow(try folder.update(fromPlistRepresentation: .init(id: folder.id, plist: plist)))
 
-        let plistRepresentation = folder.plistRepresentation
-        XCTAssertEqual(plistRepresentation[ModelPlistKey(rawValue: "foo")] as? String, "bar")
-        XCTAssertEqual(plistRepresentation[ModelPlistKey(rawValue: "baz")] as? [String: String], ["hello": "world"])
+        let plistRepresentation = try folder.plistRepresentation
+        XCTAssertEqual(try plistRepresentation[ModelPlistKey(rawValue: "foo")], "bar")
+        XCTAssertEqual(try plistRepresentation[ModelPlistKey(rawValue: "baz")], ["hello": "world"])
     }
 
 
@@ -439,13 +437,13 @@ class FolderTests: XCTestCase {
         let folder = self.foldersCollection.newObject()
         let object1 = self.pagesCollection.newObject()
         let object2 = self.foldersCollection.newObject()
-        let plist: [ModelPlistKey: Any] = [
+        let plist: [ModelPlistKey: PlistValue] = [
             .id: "unknown-folder",
-            .Folder.title: "Cool Pages",
-            .Folder.contents: [object1.id.stringRepresentation, object2.id.stringRepresentation],
+            Folder.PlistKeys.title: "Cool Pages",
+            Folder.PlistKeys.contents: [object1.id.stringRepresentation, object2.id.stringRepresentation],
         ]
 
-        XCTAssertThrowsError(try folder.update(fromPlistRepresentation: plist)) {
+        XCTAssertThrowsError(try folder.update(fromPlistRepresentation: .init(id: folder.id, plist: plist))) {
             XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .idsDontMatch)
         }
     }
@@ -454,14 +452,14 @@ class FolderTests: XCTestCase {
         let folder = self.foldersCollection.newObject()
         let object1 = self.pagesCollection.newObject()
         let object2 = self.foldersCollection.newObject()
-        let plist: [ModelPlistKey: Any] = [
-            .id: folder.id,
-            .Folder.title: "Cool Pages",
-            .Folder.dateCreated: Date(timeIntervalSinceReferenceDate: 3106),
-            .Folder.contents: [object1.id, object2.id],
+        let plist: [ModelPlistKey: PlistValue] = [
+            .id: folder.id.stringRepresentation,
+            Folder.PlistKeys.title: "Cool Pages",
+            Folder.PlistKeys.dateCreated: Date(timeIntervalSinceReferenceDate: 3106),
+            Folder.PlistKeys.contents: [object1.id.stringRepresentation, object2.id.stringRepresentation],
         ]
 
-        XCTAssertNoThrow(try folder.update(fromPlistRepresentation: plist))
+        XCTAssertNoThrow(try folder.update(fromPlistRepresentation: .init(id: folder.id, plist: plist)))
 
         XCTAssertEqual(folder.title, "Cool Pages")
     }
@@ -470,12 +468,12 @@ class FolderTests: XCTestCase {
         let folder = self.foldersCollection.newObject()
         let object1 = self.pagesCollection.newObject()
         let object2 = self.foldersCollection.newObject()
-        let plist: [ModelPlistKey: Any] = [
-            .id: folder.id,
-            .Folder.contents: [object1.id, object2.id],
+        let plist: [ModelPlistKey: PlistValue] = [
+            .id: folder.id.stringRepresentation,
+            Folder.PlistKeys.contents: [object1.id.stringRepresentation, object2.id.stringRepresentation],
         ]
 
-        XCTAssertThrowsError(try folder.update(fromPlistRepresentation: plist)) {
+        XCTAssertThrowsError(try folder.update(fromPlistRepresentation: .init(id: folder.id, plist: plist))) {
             XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .attributeNotFound("title"))
         }
     }
@@ -484,59 +482,60 @@ class FolderTests: XCTestCase {
         let folder = self.foldersCollection.newObject()
         let object1 = self.pagesCollection.newObject()
         let object2 = self.foldersCollection.newObject()
-        let plist: [ModelPlistKey: Any] = [
-            .id: folder.id,
-            .Folder.title: "Cool Pages",
-            .Folder.dateCreated: Date(timeIntervalSinceReferenceDate: 3100),
-            .Folder.contents: [object1.id, object2.id],
+        let plist: [ModelPlistKey: PlistValue] = [
+            .id: folder.id.stringRepresentation,
+            Folder.PlistKeys.title: "Cool Pages",
+            Folder.PlistKeys.dateCreated: Date(timeIntervalSinceReferenceDate: 3100),
+            Folder.PlistKeys.contents: [object1.id.stringRepresentation, object2.id.stringRepresentation],
         ]
 
-        XCTAssertNoThrow(try folder.update(fromPlistRepresentation: plist))
+        XCTAssertNoThrow(try folder.update(fromPlistRepresentation: .init(id: folder.id, plist: plist)))
 
-        XCTAssertEqual(folder.contents[safe: 0]?.id, object1.id)
-        XCTAssertEqual(folder.contents[safe: 1]?.id, object2.id)
+        XCTAssertEqual(folder.folderContents[safe: 0]?.id, object1.id)
+        XCTAssertEqual(folder.folderContents[safe: 1]?.id, object2.id)
     }
 
     func test_updatesFromPlistRepresentation_throwsIfContentsMissing() {
         let folder = Folder()
 
-        let plist: [ModelPlistKey: Any] = [
-            .id: folder.id,
-            .Folder.dateCreated: Date(timeIntervalSinceReferenceDate: 3101),
-            .Folder.title: "Cool Pages",
+        let plist: [ModelPlistKey: PlistValue] = [
+            .id: folder.id.stringRepresentation,
+            Folder.PlistKeys.dateCreated: Date(timeIntervalSinceReferenceDate: 3101),
+            Folder.PlistKeys.title: "Cool Pages",
         ]
 
-        XCTAssertThrowsError(try folder.update(fromPlistRepresentation: plist)) {
+        XCTAssertThrowsError(try folder.update(fromPlistRepresentation: .init(id: folder.id, plist: plist))) {
             XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .attributeNotFound("contents"))
         }
     }
 
     func test_updatesFromPlistRepresentation_throwsIfContentsNotArrayOfStrings() {
-        let folder = Folder()
-        let plist: [ModelPlistKey: Any] = [
-            .id: folder.id,
-            .Folder.title: "Cool Pages",
-            .Folder.dateCreated: Date(timeIntervalSinceReferenceDate: 3101),
-            .Folder.contents: [1, 4, "5"] as [Any],
-        ]
-
-        XCTAssertThrowsError(try folder.update(fromPlistRepresentation: plist)) {
-            XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .attributeNotFound("contents"))
-        }
+        XCTFail()
+//        let folder = Folder()
+//        let plist: [ModelPlistKey: PlistValue] = [
+//            .id: folder.id.stringRepresentation,
+//            Folder.PlistKeys.title: "Cool Pages",
+//            Folder.PlistKeys.dateCreated: Date(timeIntervalSinceReferenceDate: 3101),
+//            Folder.PlistKeys.contents: [1, 4, "5"] as [PlistValue],
+//        ]
+//
+//        XCTAssertThrowsError(try folder.update(fromPlistRepresentation: .init(id: folder.id, plist: plist))) {
+//            XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .attributeNotFound("contents"))
+//        }
     }
 
     func test_updatesFromPlistRepresentation_throwsIfContentsNotAllModelIDStrings() {
         let folder = self.foldersCollection.newObject()
         let object1 = self.pagesCollection.newObject()
         let object2 = self.foldersCollection.newObject()
-        let plist: [ModelPlistKey: Any] = [
-            .id: folder.id,
-            .Folder.title: "Cool Pages",
-            .Folder.dateCreated: Date(timeIntervalSinceReferenceDate: 3102),
-            .Folder.contents: [object1.id, "baz", object2.id] as [Any],
+        let plist: [ModelPlistKey: PlistValue] = [
+            .id: folder.id.stringRepresentation,
+            Folder.PlistKeys.title: "Cool Pages",
+            Folder.PlistKeys.dateCreated: Date(timeIntervalSinceReferenceDate: 3102),
+            Folder.PlistKeys.contents: [object1.id.stringRepresentation, "baz", object2.id.stringRepresentation] as [String],
         ]
 
-        XCTAssertThrowsError(try folder.update(fromPlistRepresentation: plist)) {
+        XCTAssertThrowsError(try folder.update(fromPlistRepresentation: .init(id: folder.id, plist: plist))) {
             XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .attributeNotFound("contents"))
         }
     }
@@ -545,14 +544,14 @@ class FolderTests: XCTestCase {
         let folder = self.foldersCollection.newObject()
         let object1 = self.pagesCollection.newObject()
         let object2 = self.foldersCollection.newObject()
-        let plist: [ModelPlistKey: Any] = [
-            .id: folder.id,
-            .Folder.title: "Cool Pages",
-            .Folder.dateCreated: Date(timeIntervalSinceReferenceDate: 3106),
-            .Folder.contents: [object1.id, object2.id],
+        let plist: [ModelPlistKey: PlistValue] = [
+            .id: folder.id.stringRepresentation,
+            Folder.PlistKeys.title: "Cool Pages",
+            Folder.PlistKeys.dateCreated: Date(timeIntervalSinceReferenceDate: 3106),
+            Folder.PlistKeys.contents: [object1.id.stringRepresentation, object2.id.stringRepresentation],
         ]
 
-        XCTAssertNoThrow(try folder.update(fromPlistRepresentation: plist))
+        XCTAssertNoThrow(try folder.update(fromPlistRepresentation: .init(id: folder.id, plist: plist)))
 
         XCTAssertEqual(folder.dateCreated.timeIntervalSinceReferenceDate, 3106)
     }
@@ -561,13 +560,13 @@ class FolderTests: XCTestCase {
         let folder = self.foldersCollection.newObject()
         let object1 = self.pagesCollection.newObject()
         let object2 = self.foldersCollection.newObject()
-        let plist: [ModelPlistKey: Any] = [
-            .id: folder.id,
-            .Folder.title: "Cool Pages",
-            .Folder.contents: [object1.id, object2.id],
+        let plist: [ModelPlistKey: PlistValue] = [
+            .id: folder.id.stringRepresentation,
+            Folder.PlistKeys.title: "Cool Pages",
+            Folder.PlistKeys.contents: [object1.id.stringRepresentation, object2.id.stringRepresentation],
         ]
 
-        XCTAssertThrowsError(try folder.update(fromPlistRepresentation: plist)) {
+        XCTAssertThrowsError(try folder.update(fromPlistRepresentation: .init(id: folder.id, plist: plist))) {
             XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .attributeNotFound("dateCreated"))
         }
     }
@@ -576,16 +575,16 @@ class FolderTests: XCTestCase {
         let folder = self.foldersCollection.newObject()
         let object1 = self.pagesCollection.newObject()
         let object2 = self.foldersCollection.newObject()
-        let plist: [ModelPlistKey: Any] = [
-            .id: folder.id,
-            .Folder.title: "Cool Pages",
-            .Folder.dateCreated: Date(timeIntervalSinceReferenceDate: 3106),
+        let plist: [ModelPlistKey: PlistValue] = [
+            .id: folder.id.stringRepresentation,
+            Folder.PlistKeys.title: "Cool Pages",
+            Folder.PlistKeys.dateCreated: Date(timeIntervalSinceReferenceDate: 3106),
             ModelPlistKey(rawValue: "foo"): "bar",
-            .Folder.contents: [object1.id, object2.id],
+            Folder.PlistKeys.contents: [object1.id.stringRepresentation, object2.id.stringRepresentation],
             ModelPlistKey(rawValue: "baz"): ["hello": "world"],
         ]
 
-        XCTAssertNoThrow(try folder.update(fromPlistRepresentation: plist))
+        XCTAssertNoThrow(try folder.update(fromPlistRepresentation: .init(id: folder.id, plist: plist)))
 
         XCTAssertEqual(folder.otherProperties[ModelPlistKey(rawValue: "foo")] as? String, "bar")
         XCTAssertEqual(folder.otherProperties[ModelPlistKey(rawValue: "baz")] as? [String: String], ["hello": "world"])
@@ -595,18 +594,18 @@ class FolderTests: XCTestCase {
         let folder = self.foldersCollection.newObject()
         let object1 = self.pagesCollection.newObject()
         let object2 = self.foldersCollection.newObject()
-        let plist: [ModelPlistKey: Any] = [
-            .id: folder.id,
-            .Folder.title: "Cool Pages",
-            .Folder.dateCreated: Date(timeIntervalSinceReferenceDate: 3106),
+        let plist: [ModelPlistKey: PlistValue] = [
+            .id: folder.id.stringRepresentation,
+            Folder.PlistKeys.title: "Cool Pages",
+            Folder.PlistKeys.dateCreated: Date(timeIntervalSinceReferenceDate: 3106),
             ModelPlistKey(rawValue: "foo"): "bar",
-            .Folder.contents: [object1.id, object2.id],
+            Folder.PlistKeys.contents: [object1.id.stringRepresentation, object2.id.stringRepresentation],
             ModelPlistKey(rawValue: "baz"): ["hello": "world"],
         ]
 
-        XCTAssertNoThrow(try folder.update(fromPlistRepresentation: plist))
+        XCTAssertNoThrow(try folder.update(fromPlistRepresentation: .init(id: folder.id, plist: plist)))
         XCTAssertEqual(folder.otherProperties.count, 2)
-        for key in ModelPlistKey.Folder.all {
+        for key in Folder.PlistKeys.all {
             XCTAssertNil(folder.otherProperties[key])
         }
     }

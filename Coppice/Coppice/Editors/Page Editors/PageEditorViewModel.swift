@@ -41,13 +41,13 @@ class PageEditorViewModel: ViewModel {
     var contentEditor: (PageContentEditor & NSViewController) {
         switch self.page.content.contentType {
         case .text:
-            let viewModel = TextEditorViewModel(textContent: (self.page.content as! TextPageContent),
+            let viewModel = TextEditorViewModel(textContent: (self.page.content as! Page.Content.Text),
                                                 viewMode: self.viewMode,
                                                 documentWindowViewModel: self.documentWindowViewModel,
                                                 pageLinkManager: self.documentWindowViewModel.pageLinkController.pageLinkManager(for: self.page) as? TextPageLinkManager)
             return TextEditorViewController(viewModel: viewModel)
         case .image:
-            let viewModel = ImageEditorViewModel(imageContent: (self.page.content as! ImagePageContent),
+            let viewModel = ImageEditorViewModel(imageContent: (self.page.content as! Page.Content.Image),
                                                  viewMode: self.viewMode,
                                                  documentWindowViewModel: self.documentWindowViewModel,
                                                  pageLinkManager: self.documentWindowViewModel.pageLinkController.pageLinkManager(for: self.page) as? ImagePageLinkManager)

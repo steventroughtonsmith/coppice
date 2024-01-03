@@ -32,6 +32,16 @@ class ModelReaderTests: XCTestCase {
         self.modelReader = ModelReader(modelController: self.modelController, plists: [Plist.V2.self, Plist.V3.self])
     }
 
+    override func tearDown() {
+        super.tearDown()
+
+        self.testPlist = nil
+        self.plistFileWrapper = nil
+        self.contentFileWrapper = nil
+        self.modelController = nil
+        self.modelReader = nil
+    }
+
     func test_read_createsAllCanvasesFromPlist() {
         XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper, shouldMigrate: { true }))
 
@@ -297,14 +307,14 @@ class ModelReaderTests: XCTestCase {
         XCTAssertEqual(canvasLink1.destinationPage, canvasPage2)
         XCTAssertEqual(canvasLink2.destinationPage, canvasPage4)
 
-        XCTAssertEqual(folder1.contents[safe: 0]?.id, page1.id)
+        XCTAssertEqual(folder1.folderContents[safe: 0]?.id, page1.id)
         XCTAssertEqual(page1.containingFolder, folder1)
-        XCTAssertEqual(folder1.contents[safe: 1]?.id, folder2.id)
+        XCTAssertEqual(folder1.folderContents[safe: 1]?.id, folder2.id)
         XCTAssertEqual(folder2.containingFolder, folder1)
-        XCTAssertEqual(folder1.contents[safe: 2]?.id, page3.id)
+        XCTAssertEqual(folder1.folderContents[safe: 2]?.id, page3.id)
         XCTAssertEqual(page3.containingFolder, folder1)
 
-        XCTAssertEqual(folder2.contents[safe: 0]?.id, page2.id)
+        XCTAssertEqual(folder2.folderContents[safe: 0]?.id, page2.id)
         XCTAssertEqual(page2.containingFolder, folder2)
     }
 
@@ -313,15 +323,15 @@ class ModelReaderTests: XCTestCase {
 
         let textPage = self.modelController.collection(for: Page.self).objectWithID(Page.modelID(with: self.testPlist.pageIDs[0]))
         XCTAssertEqual(textPage?.content.contentType, .text)
-        XCTAssertEqual((textPage?.content as? TextPageContent)?.text.string, "Foo Bar")
+        XCTAssertEqual((textPage?.content as? Page.Content.Text)?.text.string, "Foo Bar")
 
         let imagePage = self.modelController.collection(for: Page.self).objectWithID(Page.modelID(with: self.testPlist.pageIDs[2]))
         XCTAssertEqual(imagePage?.content.contentType, .image)
         //We need to convert to data and back to ensure the resulting pngData is always equal
         let imageData = NSImage(named: NSImage.applicationIconName)!.pngData()!
         let image = NSImage(data: imageData)!
-        XCTAssertEqual((imagePage?.content as? ImagePageContent)?.image?.pngData(), image.pngData())
-        XCTAssertEqual((imagePage?.content as? ImagePageContent)?.imageDescription, "This is an image")
+        XCTAssertEqual((imagePage?.content as? Page.Content.Image)?.image?.pngData(), image.pngData())
+        XCTAssertEqual((imagePage?.content as? Page.Content.Image)?.imageDescription, "This is an image")
     }
 
 

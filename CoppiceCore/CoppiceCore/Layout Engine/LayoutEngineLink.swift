@@ -73,7 +73,7 @@ public class LayoutEngineLink: LayoutEngineItem {
 
 
     //MARK: - Frames
-    override public var layoutFrame: CGRect {
+    public override var layoutFrame: CGRect {
         get {
             guard let basicFrame = CGRect(points: [self.sourcePoint.point, self.destinationPoint.point]) else {
                 return .zero

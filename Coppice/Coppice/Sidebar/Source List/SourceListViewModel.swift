@@ -351,7 +351,7 @@ class SourceListViewModel: ViewModel {
                     return false
             }
 
-            if PageContentType.contentType(forUTI: typeIdentifier) == nil {
+            if Page.ContentType.contentType(forUTI: typeIdentifier) == nil {
                 return false
             }
         }
@@ -360,7 +360,7 @@ class SourceListViewModel: ViewModel {
 
 
     //MARK: - Creation
-    func createPage(ofType type: PageContentType?, underNodes collection: SourceListNodeCollection) -> DocumentWindowViewModel.SidebarItem {
+    func createPage(ofType type: Page.ContentType?, underNodes collection: SourceListNodeCollection) -> DocumentWindowViewModel.SidebarItem {
         let actualType = type ?? self.documentWindowViewModel.lastCreatePageType
         let lastNode = collection.nodes.last
         let folder: Folder

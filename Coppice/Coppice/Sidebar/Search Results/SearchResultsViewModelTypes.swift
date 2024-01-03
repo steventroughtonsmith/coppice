@@ -99,7 +99,7 @@ class PageSearchResult: SearchResult {
 
     override var body: NSAttributedString? {
         guard case .content(let contentMatch) = self.match.matchType else {
-            guard let textContent = self.match.page.content as? TextPageContent else {
+            guard let textContent = self.match.page.content as? Page.Content.Text else {
                 return nil
             }
             var baseString = textContent.text.string
@@ -128,7 +128,7 @@ class PageSearchResult: SearchResult {
     }
 
     override var image: NSImage? {
-        guard let imageContent = self.match.page.content as? ImagePageContent else {
+        guard let imageContent = self.match.page.content as? Page.Content.Image else {
             return nil
         }
 

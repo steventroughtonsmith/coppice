@@ -70,7 +70,7 @@ class CoppiceModelControllerFolderTests: XCTestCase {
         self.parentFolder.insert([initialPage1, initialPage2])
 
         let folder = self.modelController.createFolder(in: self.parentFolder, below: nil)
-        XCTAssertEqual(self.parentFolder.contents[safe: 0] as? Folder, folder)
+        XCTAssertEqual(self.parentFolder.folderContents[safe: 0] as? Folder, folder)
     }
 
     func test_createFolder_addsFolderInSuppliedFolderBelowSuppliedItem() throws {
@@ -79,7 +79,7 @@ class CoppiceModelControllerFolderTests: XCTestCase {
         self.parentFolder.insert([initialPage1, initialPage2])
 
         let folder = self.modelController.createFolder(in: self.parentFolder, below: initialPage1)
-        XCTAssertEqual(self.parentFolder.contents[safe: 1] as? Folder, folder)
+        XCTAssertEqual(self.parentFolder.folderContents[safe: 1] as? Folder, folder)
     }
 
     func test_createFolder_callsSetupBlockWithCreatedFolder() throws {
@@ -103,7 +103,7 @@ class CoppiceModelControllerFolderTests: XCTestCase {
 
         self.undoManager.undo()
 
-        XCTAssertFalse(self.parentFolder.contents.contains(where: { $0.id == folder.id }))
+        XCTAssertFalse(self.parentFolder.folderContents.contains(where: { $0.id == folder.id }))
     }
 
     func test_createFolder_redoingRecreatesFolderWithSameIDAndProperties() throws {
@@ -126,12 +126,12 @@ class CoppiceModelControllerFolderTests: XCTestCase {
         let folder = self.modelController.createFolder(in: self.parentFolder, below: initialPage1)
 
         self.undoManager.undo()
-        XCTAssertFalse(self.parentFolder.contents.contains(where: { $0.id == folder.id }))
+        XCTAssertFalse(self.parentFolder.folderContents.contains(where: { $0.id == folder.id }))
         self.undoManager.redo()
 
         let redoneFolder = try XCTUnwrap(self.modelController.folderCollection.objectWithID(folder.id))
         XCTAssertEqual(redoneFolder.containingFolder, self.parentFolder)
-        XCTAssertEqual(self.parentFolder.contents[safe: 1] as? Folder, redoneFolder)
+        XCTAssertEqual(self.parentFolder.folderContents[safe: 1] as? Folder, redoneFolder)
     }
 
 
@@ -149,7 +149,7 @@ class CoppiceModelControllerFolderTests: XCTestCase {
 
         self.modelController.delete(folder)
 
-        XCTAssertFalse(self.parentFolder.contents.contains(where: { $0.id == folder.id }))
+        XCTAssertFalse(self.parentFolder.folderContents.contains(where: { $0.id == folder.id }))
     }
 
     func test_deleteFolder_removesContentsOfFolder() throws {
@@ -230,7 +230,7 @@ class CoppiceModelControllerFolderTests: XCTestCase {
         self.undoManager.undo()
 
         let undoneFolder = try XCTUnwrap(self.modelController.folderCollection.objectWithID(folder.id))
-        XCTAssertEqual(self.parentFolder.contents[safe: 1] as? Folder, undoneFolder)
+        XCTAssertEqual(self.parentFolder.folderContents[safe: 1] as? Folder, undoneFolder)
         XCTAssertEqual(undoneFolder.containingFolder, self.parentFolder)
     }
 
@@ -261,11 +261,11 @@ class CoppiceModelControllerFolderTests: XCTestCase {
         XCTAssertEqual(undonePage2.dateCreated, page2.dateCreated)
 
         let undoneFolder = try XCTUnwrap(self.modelController.folderCollection.objectWithID(folder.id))
-        XCTAssertEqual(undoneFolder.contents[safe: 0] as? Page, undonePage1)
+        XCTAssertEqual(undoneFolder.folderContents[safe: 0] as? Page, undonePage1)
         XCTAssertEqual(undonePage1.containingFolder, undoneFolder)
-        XCTAssertEqual(undoneFolder.contents[safe: 1] as? Folder, undoneSubFolder1)
+        XCTAssertEqual(undoneFolder.folderContents[safe: 1] as? Folder, undoneSubFolder1)
         XCTAssertEqual(undonePage1.containingFolder, undoneFolder)
-        XCTAssertEqual(undoneFolder.contents[safe: 2] as? Page, undonePage2)
+        XCTAssertEqual(undoneFolder.folderContents[safe: 2] as? Page, undonePage2)
         XCTAssertEqual(undonePage2.containingFolder, undoneFolder)
     }
 
@@ -286,9 +286,9 @@ class CoppiceModelControllerFolderTests: XCTestCase {
         let undoneSubPage1 = try XCTUnwrap(self.modelController.pageCollection.objectWithID(subPage1.id))
         let undoneSubPage2 = try XCTUnwrap(self.modelController.pageCollection.objectWithID(subPage2.id))
 
-        XCTAssertEqual(undoneSubFolder.contents[safe: 0] as? Page, undoneSubPage1)
+        XCTAssertEqual(undoneSubFolder.folderContents[safe: 0] as? Page, undoneSubPage1)
         XCTAssertEqual(undoneSubPage1.containingFolder, undoneSubFolder)
-        XCTAssertEqual(undoneSubFolder.contents[safe: 1] as? Page, undoneSubPage2)
+        XCTAssertEqual(undoneSubFolder.folderContents[safe: 1] as? Page, undoneSubPage2)
         XCTAssertEqual(undoneSubPage2.containingFolder, undoneSubFolder)
     }
 
@@ -347,10 +347,10 @@ class CoppiceModelControllerFolderTests: XCTestCase {
         self.modelController.delete(folder)
 
         self.undoManager.undo()
-        XCTAssertTrue(self.parentFolder.contents.contains(where: { $0.id == folder.id }))
+        XCTAssertTrue(self.parentFolder.folderContents.contains(where: { $0.id == folder.id }))
         self.undoManager.redo()
 
-        XCTAssertFalse(self.parentFolder.contents.contains(where: { $0.id == folder.id }))
+        XCTAssertFalse(self.parentFolder.folderContents.contains(where: { $0.id == folder.id }))
     }
 
     func test_deleteFolder_redoingRemovesContentsOfFolderAgain() throws {
@@ -437,7 +437,7 @@ class CoppiceModelControllerFolderTests: XCTestCase {
         self.modelController.delete([page])
 
         XCTAssertNil(self.modelController.pageCollection.objectWithID(page.id))
-        XCTAssertEqual(self.modelController.rootFolder.contents.count, 0)
+        XCTAssertEqual(self.modelController.rootFolder.folderContents.count, 0)
     }
 
     func test_deleteFolderItems_deletesSingleFolder() throws {
@@ -445,7 +445,7 @@ class CoppiceModelControllerFolderTests: XCTestCase {
         self.modelController.delete([folder])
 
         XCTAssertNil(self.modelController.folderCollection.objectWithID(folder.id))
-        XCTAssertEqual(self.modelController.rootFolder.contents.count, 0)
+        XCTAssertEqual(self.modelController.rootFolder.folderContents.count, 0)
     }
 
     func test_deleteFolderItems_deletesMultipleItems() throws {
@@ -477,7 +477,7 @@ class CoppiceModelControllerFolderTests: XCTestCase {
         XCTAssertEqual(undonePage.dateModified, page.dateModified)
         XCTAssertEqual(undonePage.containingFolder, self.modelController.rootFolder)
 
-        XCTAssertEqual(self.modelController.rootFolder.contents[safe: 0] as? Page, undonePage)
+        XCTAssertEqual(self.modelController.rootFolder.folderContents[safe: 0] as? Page, undonePage)
     }
 
     func test_deleteFolderItems_undoingSingleFolderDeleteRestoresFolder() throws {
@@ -493,7 +493,7 @@ class CoppiceModelControllerFolderTests: XCTestCase {
         XCTAssertEqual(undoneFolder.dateCreated, folder.dateCreated)
         XCTAssertEqual(undoneFolder.containingFolder, self.modelController.rootFolder)
 
-        XCTAssertEqual(self.modelController.rootFolder.contents[safe: 0] as? Folder, undoneFolder)
+        XCTAssertEqual(self.modelController.rootFolder.folderContents[safe: 0] as? Folder, undoneFolder)
     }
 
     func test_deleteFolderItems_undoingMultipleItemDeletionRestoresAllItems() throws {
@@ -522,7 +522,7 @@ class CoppiceModelControllerFolderTests: XCTestCase {
         XCTAssertNotNil(self.modelController.pageCollection.objectWithID(page.id))
         self.undoManager.redo()
         XCTAssertNil(self.modelController.pageCollection.objectWithID(page.id))
-        XCTAssertEqual(self.modelController.rootFolder.contents.count, 0)
+        XCTAssertEqual(self.modelController.rootFolder.folderContents.count, 0)
     }
 
     func test_deleteFolderItems_redoingSingleFolderDeleteDeletesFolderAgain() throws {
@@ -534,7 +534,7 @@ class CoppiceModelControllerFolderTests: XCTestCase {
         XCTAssertNotNil(self.modelController.folderCollection.objectWithID(folder.id))
         self.undoManager.redo()
         XCTAssertNil(self.modelController.folderCollection.objectWithID(folder.id))
-        XCTAssertEqual(self.modelController.rootFolder.contents.count, 0)
+        XCTAssertEqual(self.modelController.rootFolder.folderContents.count, 0)
     }
 
     func test_deleteFolderItems_redoingMultipleItemDeletionDeletsAllItemsAgain() throws {

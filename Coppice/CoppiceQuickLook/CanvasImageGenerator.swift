@@ -118,19 +118,19 @@ class CanvasImageGenerator {
 
         switch page.content.contentType {
         case .text:
-            guard let content = page.content as? TextPageContent else {
+            guard let content = page.content as? Page.Content.Text else {
                 return
             }
             self.draw(content, in: rect)
         case .image:
-            guard let content = page.content as? ImagePageContent else {
+            guard let content = page.content as? Page.Content.Image else {
                 return
             }
             self.draw(content, in: rect)
         }
     }
 
-    private func draw(_ textContent: TextPageContent, in rect: CGRect) {
+    private func draw(_ textContent: Page.Content.Text, in rect: CGRect) {
         var insets = GlobalConstants.textEditorInsets()
         //NSTextView adds some additional insets so we need to add them ourselves
         insets.left += 5
@@ -138,7 +138,7 @@ class CanvasImageGenerator {
         textContent.text.draw(in: rect.insetBy(insets))
     }
 
-    private func draw(_ imageContent: ImagePageContent, in rect: CGRect) {
+    private func draw(_ imageContent: Page.Content.Image, in rect: CGRect) {
         imageContent.image?.draw(in: rect)
     }
 }

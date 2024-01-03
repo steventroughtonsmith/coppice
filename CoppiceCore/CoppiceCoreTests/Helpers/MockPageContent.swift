@@ -10,40 +10,40 @@ import AppKit
 @testable import CoppiceCore
 import M3Data
 
-class MockPageContent: NSObject, PageContent, NSFilePromiseProviderDelegate {
-    var pageLinks: Set<CoppiceCore.PageLink> = []
-
-    var minimumContentSize: CGSize {
+class MockPageContent: Page.Content, NSFilePromiseProviderDelegate {
+    override var minimumContentSize: CGSize {
         return Page.defaultMinimumContentSize
     }
 
-    var otherMetadata: [String: Any]?
-
-    var filePromiseProvider: ExtendableFilePromiseProvider {
+    override var filePromiseProvider: ExtendableFilePromiseProvider {
         return ExtendableFilePromiseProvider(fileType: (kUTTypeText as String), delegate: self)
     }
 
-    var maintainAspectRatio: Bool = false
+    var maintainAspectRatioOverride: Bool = false
+    override var maintainAspectRatio: Bool {
+        return self.maintainAspectRatioOverride
+    }
 
-    var contentType: PageContentType {
+    override var contentType: Page.ContentType {
         return .text
     }
 
-    var initialContentSize: CGSize?
+    var initialContentSizeOverride: CGSize?
+    override var initialContentSize: CGSize? {
+        return self.initialContentSizeOverride
+    }
 
-    var page: Page?
-
-    var modelFile: ModelFile {
+    override var modelFile: ModelFile {
         return ModelFile(type: self.contentType.rawValue, filename: nil, data: nil, metadata: nil)
     }
 
-    func sizeToFitContent(currentSize: CGSize) -> CGSize {
+    override func sizeToFitContent(currentSize: CGSize) -> CGSize {
         return currentSize
     }
 
 
     var match: Match?
-    func firstMatch(forSearchString searchString: String) -> PageContentMatch? {
+    override func firstMatch(forSearchString searchString: String) -> PageContentMatch? {
         return self.match
     }
 

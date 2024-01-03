@@ -8,6 +8,7 @@
 import Cocoa
 
 import CoppiceCore
+import M3Data
 
 extension TestData.Plist {
     class V3: TestData {
@@ -248,15 +249,15 @@ extension TestData.Plist {
         }
 
 
-        var plist: [String: Any] {
+        var plist: [String: PlistValue] {
             return [
-                "canvases": self.plistCanvases,
-                "pages": self.plistPages,
-                "canvasPages": self.plistCanvasPages,
-                "folders": self.plistFolders,
-                "canvasLinks": self.plistCanvasLinks,
-                "pageHierarchies": self.pageHierarchies,
-                "settings": self.plistSettings,
+                "canvases": self.plistCanvases as PlistValue,
+                "pages": self.plistPages as PlistValue,
+                "canvasPages": self.plistCanvasPages as PlistValue,
+                "folders": self.plistFolders as PlistValue,
+                "canvasLinks": self.plistCanvasLinks as PlistValue,
+                "pageHierarchies": self.pageHierarchies as PlistValue,
+                "settings": self.plistSettings as PlistValue,
                 "version": 3,
             ]
         }

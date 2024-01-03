@@ -12,8 +12,8 @@ import Foundation
 import CoppiceCore
 
 class ImageHotspotCollection {
-    let imageContent: ImagePageContent
-    init(imageContent: ImagePageContent) {
+    let imageContent: Page.Content.Image
+    init(imageContent: Page.Content.Image) {
         self.imageContent = imageContent
 
         //REMOVE KVO

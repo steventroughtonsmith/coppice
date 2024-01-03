@@ -41,13 +41,13 @@ class ImagePageLinkManager: PageLinkManager {
     @objc dynamic private func rescanImage() {
         guard
             let page = self.modelController.collection(for: Page.self).objectWithID(self.pageID),
-            let imageContent = page.content as? ImagePageContent,
+            let imageContent = page.content as? Page.Content.Image,
             let cgImage = imageContent.image?.cgImage(forProposedRect: nil, context: nil, hints: nil)
         else {
             return
         }
 
-        //Orientation is weird, look at ImagePageContent.orientation for more
+        //Orientation is weird, look at Page.Content.Image.orientation for more
         let imageRequestHandle = VNImageRequestHandler(cgImage: cgImage, orientation: imageContent.orientation)
         let detectionRequest = VNRecognizeTextRequest(completionHandler: { (request, error) in
             DispatchQueue.main.async {
@@ -73,7 +73,7 @@ class ImagePageLinkManager: PageLinkManager {
     private func processResults(from request: VNRequest) {
         guard
             let page = self.modelController.collection(for: Page.self).objectWithID(self.pageID),
-            let imageContent = page.content as? ImagePageContent,
+            let imageContent = page.content as? Page.Content.Image,
             let results = request.results as? [VNRecognizedTextObservation]
         else {
             return
@@ -119,7 +119,7 @@ class ImagePageLinkManager: PageLinkManager {
     @objc dynamic private func regenerateHotspots() {
         guard
             let page = self.modelController.collection(for: Page.self).objectWithID(self.pageID),
-            let imageContent = page.content as? ImagePageContent,
+            let imageContent = page.content as? Page.Content.Image,
             let image = imageContent.image
         else {
             return
