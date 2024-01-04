@@ -12,7 +12,8 @@ import M3Data
 @Model
 final public class Page: FolderContainable {
     //MARK: - Init
-    public init() {
+    public init(id: ModelID) {
+        self.id = id
         self.content.page = self
     }
 

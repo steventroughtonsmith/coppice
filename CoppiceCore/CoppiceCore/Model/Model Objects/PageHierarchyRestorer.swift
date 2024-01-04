@@ -23,8 +23,7 @@ class PageHierarchyRestorer {
 
         let hierarchyOffset = source.frame.origin.plus(entryPoint.relativePosition)
         let canvasPages = pageHierarchy.pages.map { pageRef in
-            return modelController.canvasPageCollection.newObject() {
-                $0.id = pageRef.canvasPageID
+            return modelController.canvasPageCollection.newObject(modelID: pageRef.canvasPageID) {
                 $0.updatePageID(pageRef.pageID)
                 $0.canvas = self.canvas
                 var absoluteFrame = pageRef.relativeContentFrame

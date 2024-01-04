@@ -72,11 +72,12 @@ extension Page.Content: PlistConvertable {
     }
 
     public static func fromPlistValue(_ plistValue: PlistValue) throws -> Self {
-        guard
-            let modelFile = plistValue as? ModelFile,
-            let contentType = Page.ContentType(rawValue: modelFile.type)
-        else {
+        guard let modelFile = plistValue as? ModelFile else {
             throw PlistConvertableError.invalidConversionFromPlistValue
+        }
+
+        guard let contentType = Page.ContentType(rawValue: modelFile.type) else {
+            throw ModelObjectUpdateErrors.attributeNotFound("content")
         }
 
         return try contentType.createContent(modelFile: modelFile) as! Self

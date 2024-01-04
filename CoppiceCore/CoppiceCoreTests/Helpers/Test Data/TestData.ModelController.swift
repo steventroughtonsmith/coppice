@@ -27,8 +27,7 @@ extension TestData {
 
         lazy var pages: [Page] = {
             return [
-                self.modelController.pageCollection.newObject() {
-                    $0.id = Page.modelID(with: self.pageIDs[0])
+                self.modelController.pageCollection.newObject(modelID: Page.modelID(with: self.pageIDs[0])) {
                     $0.title = "Page 1"
                     $0.dateCreated = Date(timeIntervalSinceReferenceDate: 123)
                     $0.dateModified = Date(timeIntervalSinceReferenceDate: 456)
@@ -36,16 +35,14 @@ extension TestData {
                     content.text = NSAttributedString(string: "Foo Bar")
                     $0.content = content
                 },
-                self.modelController.pageCollection.newObject() {
-                    $0.id = Page.modelID(with: self.pageIDs[1])
+                self.modelController.pageCollection.newObject(modelID: Page.modelID(with: self.pageIDs[1])) {
                     $0.title = "Page 2"
                     $0.dateCreated = Date(timeIntervalSinceReferenceDate: 0)
                     $0.dateModified = Date(timeIntervalSinceReferenceDate: 0)
                     $0.contentSize = CGSize(width: 1024, height: 768)
                     $0.content = Page.Content.Text()
                 },
-                self.modelController.pageCollection.newObject() {
-                    $0.id = Page.modelID(with: self.pageIDs[2])
+                self.modelController.pageCollection.newObject(modelID: Page.modelID(with: self.pageIDs[2])) {
                     $0.title = "Page 3"
                     $0.dateCreated = Date(timeIntervalSinceReferenceDate: 999)
                     $0.dateModified = Date(timeIntervalSinceReferenceDate: 9999)
@@ -59,8 +56,7 @@ extension TestData {
 
         lazy var canvases: [Canvas] = {
             return [
-                self.modelController.canvasCollection.newObject() {
-                    $0.id = Canvas.modelID(with: self.canvasIDs[0])
+                self.modelController.canvasCollection.newObject(modelID: Canvas.modelID(with: self.canvasIDs[0])) {
                     $0.title = "Canvas 1"
                     $0.sortIndex = 2
                     $0.theme = .auto
@@ -68,8 +64,7 @@ extension TestData {
                     $0.dateCreated = Date(timeIntervalSinceReferenceDate: 30)
                     $0.dateModified = Date(timeIntervalSinceReferenceDate: 300)
                 },
-                self.modelController.canvasCollection.newObject() {
-                    $0.id = Canvas.modelID(with: self.canvasIDs[1])
+                self.modelController.canvasCollection.newObject(modelID: Canvas.modelID(with: self.canvasIDs[1])) {
                     $0.title = "Canvas 2"
                     $0.dateCreated = Date(timeIntervalSinceReferenceDate: 42)
                     $0.dateModified = Date(timeIntervalSinceReferenceDate: 42)
@@ -82,29 +77,25 @@ extension TestData {
 
         lazy var canvasPages: [CanvasPage] = {
             return [
-                self.modelController.canvasPageCollection.newObject() {
-                    $0.id = CanvasPage.modelID(with: self.canvasPageIDs[0])
+                self.modelController.canvasPageCollection.newObject(modelID: CanvasPage.modelID(with: self.canvasPageIDs[0])) {
                     $0.frame = CGRect(x: 0, y: 1, width: 2, height: 3)
                     $0.page = self.pages[0]
                     $0.canvas = self.canvases[0]
                     $0.zIndex = 0
                 },
-                self.modelController.canvasPageCollection.newObject() {
-                    $0.id = CanvasPage.modelID(with: self.canvasPageIDs[1])
+                self.modelController.canvasPageCollection.newObject(modelID: CanvasPage.modelID(with: self.canvasPageIDs[1])) {
                     $0.frame = CGRect(x: 30, y: 50, width: 200, height: 400)
                     $0.page = self.pages[1]
                     $0.canvas = self.canvases[0]
                     $0.zIndex = 2
                 },
-                self.modelController.canvasPageCollection.newObject() {
-                    $0.id = CanvasPage.modelID(with: self.canvasPageIDs[2])
+                self.modelController.canvasPageCollection.newObject(modelID: CanvasPage.modelID(with: self.canvasPageIDs[2])) {
                     $0.frame = CGRect(x: -30, y: -2, width: 600, height: 40)
                     $0.page = self.pages[1]
                     $0.canvas = self.canvases[1]
                     $0.zIndex = 0
                 },
-                self.modelController.canvasPageCollection.newObject() {
-                    $0.id = CanvasPage.modelID(with: self.canvasPageIDs[3])
+                self.modelController.canvasPageCollection.newObject(modelID: CanvasPage.modelID(with: self.canvasPageIDs[3])) {
                     $0.frame = CGRect(x: 280, y: 50, width: 200, height: 400)
                     $0.page = self.pages[2]
                     $0.canvas = self.canvases[0]
@@ -115,14 +106,12 @@ extension TestData {
 
         lazy var canvasLinks: [CanvasLink] = {
             return [
-                self.modelController.canvasLinkCollection.newObject() {
-                    $0.id = CanvasLink.modelID(with: self.canvasLinkIDs[0])
+                self.modelController.canvasLinkCollection.newObject(modelID: CanvasLink.modelID(with: self.canvasLinkIDs[0])) {
                     $0.link = PageLink(destination: Page.modelID(with: self.pageIDs[1]), source: CanvasPage.modelID(with: self.canvasPageIDs[0]), autoGenerated: false)
                     $0.destinationPage = self.canvasPages[1]
                     $0.sourcePage = self.canvasPages[0]
                 },
-                self.modelController.canvasLinkCollection.newObject() {
-                    $0.id = CanvasLink.modelID(with: self.canvasLinkIDs[1])
+                self.modelController.canvasLinkCollection.newObject(modelID: CanvasLink.modelID(with: self.canvasLinkIDs[1])) {
                     $0.link = PageLink(destination: Page.modelID(with: self.pageIDs[2]), source: CanvasPage.modelID(with: self.canvasPageIDs[1]), autoGenerated: false)
                     $0.destinationPage = self.canvasPages[3]
                     $0.sourcePage = self.canvasPages[1]
@@ -131,16 +120,14 @@ extension TestData {
         }()
 
         lazy var folders: [Folder] = {
-            let otherFolder = self.modelController.folderCollection.newObject() {
-                $0.id = Folder.modelID(with: self.folderIDs[1])
+            let otherFolder = self.modelController.folderCollection.newObject(modelID: Folder.modelID(with: self.folderIDs[1])) {
                 $0.title = "My New Folder"
                 $0.dateCreated = Date(timeIntervalSinceReferenceDate: 9241)
                 $0.folderContents = [
                     self.pages[1],
                 ]
             }
-            let rootFolder = self.modelController.folderCollection.newObject() {
-                $0.id = Folder.modelID(with: self.folderIDs[0])
+            let rootFolder = self.modelController.folderCollection.newObject(modelID: Folder.modelID(with: self.folderIDs[0])) {
                 $0.title = Folder.rootFolderTitle
                 $0.dateCreated = Date(timeIntervalSinceReferenceDate: 1429)
                 $0.folderContents = [

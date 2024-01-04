@@ -165,7 +165,8 @@ class CanvasTests: XCTestCase {
             Canvas.PlistKeys.dateModified: Date(timeIntervalSinceReferenceDate: 1455),
             Canvas.PlistKeys.sortIndex: 1,
             Canvas.PlistKeys.theme: "auto",
-            Canvas.PlistKeys.thumbnail: ModelFile(type: "thumbnail", filename: nil, data: expectedImageData, metadata: [:]),
+            Canvas.PlistKeys.thumbnail: ModelFile(type: "thumbnail", filename: "\(canvas.id.stringRepresentation)-thumbnail.png", data: expectedImageData, metadata: [:]),
+            Canvas.PlistKeys.zoomFactor: 1.0,
             ModelPlistKey(rawValue: "testingAttribute"): 12345,
         ]
 
@@ -187,9 +188,10 @@ class CanvasTests: XCTestCase {
             Canvas.PlistKeys.dateCreated: Date(timeIntervalSinceReferenceDate: 30),
             Canvas.PlistKeys.dateModified: Date(timeIntervalSinceReferenceDate: 1453),
             Canvas.PlistKeys.sortIndex: 5,
+            Canvas.PlistKeys.zoomFactor: 1.0,
         ]
 
-        XCTAssertThrowsError(try canvas.update(fromPlistRepresentation: .init(id: canvas.id, plist: plist)), "") {
+        XCTAssertThrowsError(try canvas.update(fromPlistRepresentation: .init(id: Canvas.modelID(with: UUID()), plist: plist)), "") {
             XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .idsDontMatch)
         }
     }
@@ -203,6 +205,7 @@ class CanvasTests: XCTestCase {
             Canvas.PlistKeys.dateModified: Date(timeIntervalSinceReferenceDate: 1454),
             Canvas.PlistKeys.sortIndex: 4,
             Canvas.PlistKeys.theme: "auto",
+            Canvas.PlistKeys.zoomFactor: 1.0,
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: .init(id: canvas.id, plist: plist)))
@@ -218,6 +221,7 @@ class CanvasTests: XCTestCase {
             Canvas.PlistKeys.dateModified: Date(timeIntervalSinceReferenceDate: 1453),
             Canvas.PlistKeys.sortIndex: 5,
             Canvas.PlistKeys.theme: "auto",
+            Canvas.PlistKeys.zoomFactor: 1.0,
         ]
 
         XCTAssertThrowsError(try canvas.update(fromPlistRepresentation: .init(id: canvas.id, plist: plist)), "") {
@@ -234,6 +238,7 @@ class CanvasTests: XCTestCase {
             Canvas.PlistKeys.dateModified: Date(timeIntervalSinceReferenceDate: 1455),
             Canvas.PlistKeys.sortIndex: 3,
             Canvas.PlistKeys.theme: "auto",
+            Canvas.PlistKeys.zoomFactor: 1.0,
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: .init(id: canvas.id, plist: plist)))
@@ -249,6 +254,7 @@ class CanvasTests: XCTestCase {
             Canvas.PlistKeys.dateModified: Date(timeIntervalSinceReferenceDate: 1453),
             Canvas.PlistKeys.sortIndex: 5,
             Canvas.PlistKeys.theme: "auto",
+            Canvas.PlistKeys.zoomFactor: 1.0,
         ]
 
         XCTAssertThrowsError(try canvas.update(fromPlistRepresentation: .init(id: canvas.id, plist: plist)), "") {
@@ -265,6 +271,7 @@ class CanvasTests: XCTestCase {
             Canvas.PlistKeys.dateModified: Date(timeIntervalSinceReferenceDate: 1456),
             Canvas.PlistKeys.sortIndex: 2,
             Canvas.PlistKeys.theme: "auto",
+            Canvas.PlistKeys.zoomFactor: 1.0,
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: .init(id: canvas.id, plist: plist)))
@@ -280,6 +287,7 @@ class CanvasTests: XCTestCase {
             Canvas.PlistKeys.dateCreated: Date(timeIntervalSinceReferenceDate: 30),
             Canvas.PlistKeys.sortIndex: 5,
             Canvas.PlistKeys.theme: "auto",
+            Canvas.PlistKeys.zoomFactor: 1.0,
         ]
 
         XCTAssertThrowsError(try canvas.update(fromPlistRepresentation: .init(id: canvas.id, plist: plist)), "") {
@@ -296,6 +304,7 @@ class CanvasTests: XCTestCase {
             Canvas.PlistKeys.dateModified: Date(timeIntervalSinceReferenceDate: 1455),
             Canvas.PlistKeys.sortIndex: 1,
             Canvas.PlistKeys.theme: "auto",
+            Canvas.PlistKeys.zoomFactor: 1.0,
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: .init(id: canvas.id, plist: plist)))
@@ -311,6 +320,7 @@ class CanvasTests: XCTestCase {
             Canvas.PlistKeys.dateCreated: Date(timeIntervalSinceReferenceDate: 30),
             Canvas.PlistKeys.dateModified: Date(timeIntervalSinceReferenceDate: 1453),
             Canvas.PlistKeys.theme: "auto",
+            Canvas.PlistKeys.zoomFactor: 1.0,
         ]
 
         XCTAssertThrowsError(try canvas.update(fromPlistRepresentation: .init(id: canvas.id, plist: plist)), "") {
@@ -327,6 +337,7 @@ class CanvasTests: XCTestCase {
             Canvas.PlistKeys.dateModified: Date(timeIntervalSinceReferenceDate: 1452),
             Canvas.PlistKeys.sortIndex: 1,
             Canvas.PlistKeys.theme: "dark",
+            Canvas.PlistKeys.zoomFactor: 1.0,
         ]
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: .init(id: canvas.id, plist: plist)))
         XCTAssertEqual(canvas.theme, .dark)
@@ -340,6 +351,7 @@ class CanvasTests: XCTestCase {
             Canvas.PlistKeys.dateCreated: Date(timeIntervalSinceReferenceDate: 29),
             Canvas.PlistKeys.dateModified: Date(timeIntervalSinceReferenceDate: 1452),
             Canvas.PlistKeys.sortIndex: 1,
+            Canvas.PlistKeys.zoomFactor: 1.0,
         ]
         XCTAssertThrowsError(try canvas.update(fromPlistRepresentation: .init(id: canvas.id, plist: plist)), "") {
             XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .attributeNotFound("theme"))
@@ -355,6 +367,7 @@ class CanvasTests: XCTestCase {
             Canvas.PlistKeys.dateModified: Date(timeIntervalSinceReferenceDate: 1452),
             Canvas.PlistKeys.sortIndex: 1,
             Canvas.PlistKeys.theme: "possum",
+            Canvas.PlistKeys.zoomFactor: 1.0,
         ]
         XCTAssertThrowsError(try canvas.update(fromPlistRepresentation: .init(id: canvas.id, plist: plist)), "") {
             XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .attributeNotFound("theme"))
@@ -371,6 +384,7 @@ class CanvasTests: XCTestCase {
             Canvas.PlistKeys.sortIndex: 1,
             Canvas.PlistKeys.theme: "auto",
             Canvas.PlistKeys.viewPort: NSStringFromRect(CGRect(x: 9, y: 8, width: 7, height: 6)),
+            Canvas.PlistKeys.zoomFactor: 1.0,
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: .init(id: canvas.id, plist: plist)))
@@ -388,6 +402,7 @@ class CanvasTests: XCTestCase {
             Canvas.PlistKeys.dateModified: Date(timeIntervalSinceReferenceDate: 1455),
             Canvas.PlistKeys.sortIndex: 1,
             Canvas.PlistKeys.theme: "auto",
+            Canvas.PlistKeys.zoomFactor: 1.0,
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: .init(id: canvas.id, plist: plist)))
@@ -408,6 +423,7 @@ class CanvasTests: XCTestCase {
             Canvas.PlistKeys.sortIndex: 1,
             Canvas.PlistKeys.theme: "auto",
             Canvas.PlistKeys.thumbnail: ModelFile(type: "thumbnail", filename: nil, data: expectedImageData, metadata: [:]),
+            Canvas.PlistKeys.zoomFactor: 1.0,
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: .init(id: canvas.id, plist: plist)))
@@ -425,6 +441,7 @@ class CanvasTests: XCTestCase {
             Canvas.PlistKeys.dateModified: Date(timeIntervalSinceReferenceDate: 1455),
             Canvas.PlistKeys.sortIndex: 1,
             Canvas.PlistKeys.theme: "auto",
+            Canvas.PlistKeys.zoomFactor: 1.0,
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: .init(id: canvas.id, plist: plist)))
@@ -505,7 +522,7 @@ class CanvasTests: XCTestCase {
         XCTAssertEqual(canvas.zoomFactor, 0.75)
     }
 
-    func test_updateFromPlistRepresentation_setsZoomFactorTo1IfNoneExistsInPlist() throws {
+    func test_updateFromPlistRepresentation_throwsIfZoomFactorMissing() throws {
         let canvas = Canvas()
 
         let expectedImageData = NSImage(named: "NSAddTemplate")!.pngData()!
@@ -521,7 +538,9 @@ class CanvasTests: XCTestCase {
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: .init(id: canvas.id, plist: plist)))
 
-        XCTAssertEqual(canvas.zoomFactor, 1)
+        XCTAssertThrowsError(try canvas.update(fromPlistRepresentation: .init(id: canvas.id, plist: plist)), "") {
+            XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .attributeNotFound("zoomFactor"))
+        }
     }
 
     func test_updateFromPlistRepresentation_setsAlwaysShowPageTitlesIfSet() throws {
@@ -537,6 +556,7 @@ class CanvasTests: XCTestCase {
             Canvas.PlistKeys.theme: "auto",
             Canvas.PlistKeys.thumbnail: ModelFile(type: "thumbnail", filename: nil, data: expectedImageData, metadata: [:]),
             Canvas.PlistKeys.alwaysShowPageTitles: true,
+            Canvas.PlistKeys.zoomFactor: 1.0,
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: .init(id: canvas.id, plist: plist)))
@@ -558,6 +578,8 @@ class CanvasTests: XCTestCase {
             Canvas.PlistKeys.theme: "auto",
             Canvas.PlistKeys.thumbnail: ModelFile(type: "thumbnail", filename: nil, data: expectedImageData, metadata: [:]),
             ModelPlistKey(rawValue: "testingAttribute"): 12345,
+            Canvas.PlistKeys.zoomFactor: 1.0,
+
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: .init(id: canvas.id, plist: plist)))
@@ -579,6 +601,7 @@ class CanvasTests: XCTestCase {
             Canvas.PlistKeys.theme: "auto",
             Canvas.PlistKeys.thumbnail: ModelFile(type: "thumbnail", filename: nil, data: expectedImageData, metadata: [:]),
             ModelPlistKey(rawValue: "testingAttribute"): 12345,
+            Canvas.PlistKeys.zoomFactor: 1.0,
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: .init(id: canvas.id, plist: plist)))
@@ -803,7 +826,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_addsNewPageToLeftIfParentOfSourceSetAndOnRightAndNoOtherPageExistsThere() throws {
-        XCTFail()
+        XCTFail("Re-implement")
         let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -823,7 +846,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_addsNewPageToTopIfParentOfSourceSetAndOnBottomAndNoOtherPageExistsThere() throws {
-        XCTFail()
+        XCTFail("Re-implement")
         let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -843,7 +866,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_addsNewPageToBottomIfParentOfSourceSetAndOnTopAndNoOtherPageExistsThere() throws {
-        XCTFail()
+        XCTFail("Re-implement")
         let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -863,7 +886,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_ifLinkedPageAlreadyExistsOnRightAddsAbove() throws {
-        XCTFail()
+        XCTFail("Re-implement")
         let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -884,7 +907,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_ifLinkedPageAlreadyExistsOnTopRightAddsToBottomRight() throws {
-        XCTFail()
+        XCTFail("Re-implement")
         let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -911,7 +934,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_ifLinkedPageAlreadyExistsOnBottomRightAddsToTopRight() throws {
-        XCTFail()
+        XCTFail("Re-implement")
         let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -938,7 +961,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_ifLinkedPageAlreadyExistsOnLeftAddsAbove() throws {
-        XCTFail()
+        XCTFail("Re-implement")
         let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -959,7 +982,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_ifLinkedPageAlreadyExistsOnTopLeftAddsToBottomLeft() throws {
-        XCTFail()
+        XCTFail("Re-implement")
         let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -986,7 +1009,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_ifLinkedPageAlreadyExistsOnBottomLeftAddsToTopLeft() throws {
-        XCTFail()
+        XCTFail("Re-implement")
         let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -1013,7 +1036,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_ifLinkedPageAlreadyExistsOnTopAddsToRight() throws {
-        XCTFail()
+        XCTFail("Re-implement")
         let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -1034,7 +1057,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_ifLinkedPageAlreadyExistsOnTopLeftAddsToTopRight() throws {
-        XCTFail()
+        XCTFail("Re-implement")
         let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -1061,7 +1084,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_ifLinkedPageAlreadyExistsOnTopRightAddsToTopLeft() throws {
-        XCTFail()
+        XCTFail("Re-implement")
         let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -1088,7 +1111,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_ifLinkedPageAlreadyExistsOnBottomAddsToRight() throws {
-        XCTFail()
+        XCTFail("Re-implement")
         let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -1109,7 +1132,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_ifLinkedPageAlreadyExistsOnBottomLeftAddsToBottomRight() throws {
-        XCTFail()
+        XCTFail("Re-implement")
         let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -1136,7 +1159,7 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_ifLinkedPageAlreadyExistsOnBottomRightAddsToBottomLeft() throws {
-        XCTFail()
+        XCTFail("Re-implement")
         let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)

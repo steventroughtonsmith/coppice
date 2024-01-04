@@ -38,7 +38,7 @@ class CoppiceModelControllerCanvasPageTests: XCTestCase {
     }
 
     func test_openPageAtLink_addsPageToCanvasIfThereIsNoSourceInLink() throws {
-        XCTFail()
+        XCTFail("Re-implement")
         let linkedPage = Page.create(in: self.modelController)
         let link = linkedPage.linkToPage()
 
@@ -53,7 +53,7 @@ class CoppiceModelControllerCanvasPageTests: XCTestCase {
     }
 
     func test_openPageAtLink_addsPageToCanvasIfSourcePageDoesntExist() throws {
-        XCTFail()
+        XCTFail("Re-implement")
         let linkedPage = Page.create(in: self.modelController)
         let link = linkedPage.linkToPage().withSource(CanvasPage.modelID(with: UUID()))
 

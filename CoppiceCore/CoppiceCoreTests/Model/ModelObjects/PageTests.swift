@@ -116,7 +116,7 @@ class PageTests: XCTestCase {
             Page.PlistKeys.content: ModelFile(type: "text", filename: nil, data: nil, metadata: nil),
         ]
 
-        XCTAssertThrowsError(try page.update(fromPlistRepresentation: .init(id: page.id, plist: plist)), "") {
+        XCTAssertThrowsError(try page.update(fromPlistRepresentation: .init(id: Page.modelID(with: UUID()), plist: plist)), "") {
             XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .idsDontMatch)
         }
     }

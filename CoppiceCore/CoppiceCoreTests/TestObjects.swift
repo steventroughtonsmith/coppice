@@ -23,10 +23,16 @@ class TestModelObject: ModelObject {
 
     var modelController: ModelController?
 
-    required init() {}
+    required init(id: ModelID) {
+        self.id = id
+    }
 }
 
 final class TestCollectableModelObject: NSObject, CollectableModelObject {
+    init(id: ModelID) {
+        self.id = id
+    }
+    
     lazy var plistRepresentation = ModelObjectPlistRepresentation(id: self.id, plist: [:])
 
     var otherProperties = [ModelPlistKey: PlistValue]()
@@ -38,10 +44,6 @@ final class TestCollectableModelObject: NSObject, CollectableModelObject {
     var id = ModelID(modelType: TestCollectableModelObject.modelType)
 
     static var modelType: ModelType = ModelType("CollectableTest")
-
-    required override init() {
-        super.init()
-    }
 
     var objectWasInsertedCalled = false
     func objectWasInserted() {
@@ -85,6 +87,10 @@ final class RelationshipModelObject: NSObject, CollectableModelObject {
 
     var relationship: Set<TestCollectableModelObject> {
         self.relationship(for: \.inverseRelationship)
+    }
+
+    init(id: ModelID) {
+        self.id = id
     }
 }
 

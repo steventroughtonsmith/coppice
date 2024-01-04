@@ -443,7 +443,7 @@ class FolderTests: XCTestCase {
             Folder.PlistKeys.contents: [object1.id.stringRepresentation, object2.id.stringRepresentation],
         ]
 
-        XCTAssertThrowsError(try folder.update(fromPlistRepresentation: .init(id: folder.id, plist: plist))) {
+        XCTAssertThrowsError(try folder.update(fromPlistRepresentation: .init(id: Folder.modelID(with: UUID()), plist: plist))) {
             XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .idsDontMatch)
         }
     }
@@ -510,18 +510,17 @@ class FolderTests: XCTestCase {
     }
 
     func test_updatesFromPlistRepresentation_throwsIfContentsNotArrayOfStrings() {
-        XCTFail()
-//        let folder = Folder()
-//        let plist: [ModelPlistKey: PlistValue] = [
-//            .id: folder.id.stringRepresentation,
-//            Folder.PlistKeys.title: "Cool Pages",
-//            Folder.PlistKeys.dateCreated: Date(timeIntervalSinceReferenceDate: 3101),
-//            Folder.PlistKeys.contents: [1, 4, "5"] as [PlistValue],
-//        ]
-//
-//        XCTAssertThrowsError(try folder.update(fromPlistRepresentation: .init(id: folder.id, plist: plist))) {
-//            XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .attributeNotFound("contents"))
-//        }
+        let folder = Folder()
+        let plist: [ModelPlistKey: PlistValue] = [
+            .id: folder.id.stringRepresentation,
+            Folder.PlistKeys.title: "Cool Pages",
+            Folder.PlistKeys.dateCreated: Date(timeIntervalSinceReferenceDate: 3101),
+            Folder.PlistKeys.contents: [1, 4, "5"] as PlistValue,
+        ]
+
+        XCTAssertThrowsError(try folder.update(fromPlistRepresentation: .init(id: folder.id, plist: plist))) {
+            XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .invalidAttributeType("contents"))
+        }
     }
 
     func test_updatesFromPlistRepresentation_throwsIfContentsNotAllModelIDStrings() {
@@ -536,7 +535,7 @@ class FolderTests: XCTestCase {
         ]
 
         XCTAssertThrowsError(try folder.update(fromPlistRepresentation: .init(id: folder.id, plist: plist))) {
-            XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .attributeNotFound("contents"))
+            XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .invalidAttributeType("contents"))
         }
     }
 

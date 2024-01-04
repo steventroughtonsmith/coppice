@@ -109,8 +109,7 @@ class ModelReaderTests: XCTestCase {
     }
 
     func test_read_doesntCreateNewCanvasIfOneAlreadyExistsWithID() {
-        self.modelController.collection(for: Canvas.self).newObject() {
-            $0.id = Canvas.modelID(with: self.testPlist.canvasIDs[1])
+        self.modelController.collection(for: Canvas.self).newObject(modelID: Canvas.modelID(with: self.testPlist.canvasIDs[1])) {
             $0.title = "Foo Bar Baz"
         }
 
@@ -129,13 +128,11 @@ class ModelReaderTests: XCTestCase {
     }
 
     func test_read_doesntCreateNewPageIfOneAlreadyExistsWithID() {
-        self.modelController.collection(for: Page.self).newObject() {
-            $0.id = Page.modelID(with: self.testPlist.pageIDs[0])
+        self.modelController.collection(for: Page.self).newObject(modelID: Page.modelID(with: self.testPlist.pageIDs[0])) {
             $0.title = "Hello"
         }
 
-        self.modelController.collection(for: Page.self).newObject() {
-            $0.id = Page.modelID(with: self.testPlist.pageIDs[2])
+        self.modelController.collection(for: Page.self).newObject(modelID: Page.modelID(with: self.testPlist.pageIDs[2])) {
             $0.title = "World"
         }
 
@@ -156,9 +153,7 @@ class ModelReaderTests: XCTestCase {
     }
 
     func test_read_doesntCreateNewCanvasPageIfOneAlreadyExistsWithID() {
-        self.modelController.collection(for: CanvasPage.self).newObject() {
-            $0.id = CanvasPage.modelID(with: self.testPlist.canvasPageIDs[1])
-        }
+        self.modelController.collection(for: CanvasPage.self).newObject(modelID: CanvasPage.modelID(with: self.testPlist.canvasPageIDs[1]))
 
         XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper, shouldMigrate: { true }))
 
@@ -172,9 +167,7 @@ class ModelReaderTests: XCTestCase {
     }
 
     func test_read_doesntCreateNewFolderIfOneAlreadyExistsWithID() {
-        self.modelController.collection(for: Folder.self).newObject() {
-            $0.id = Folder.modelID(with: self.testPlist.folderIDs[0])
-        }
+        self.modelController.collection(for: Folder.self).newObject(modelID: Folder.modelID(with: self.testPlist.folderIDs[0]))
 
         XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper, shouldMigrate: { true }))
 
@@ -187,9 +180,7 @@ class ModelReaderTests: XCTestCase {
     }
 
     func test_read_doesntCreateNewCanvasLinkIfOneAlreadyExistsWithID() {
-        self.modelController.collection(for: CanvasLink.self).newObject() {
-            $0.id = CanvasLink.modelID(with: self.testPlist.canvasLinkIDs[0])
-        }
+        self.modelController.collection(for: CanvasLink.self).newObject(modelID: CanvasLink.modelID(with: self.testPlist.canvasLinkIDs[0]))
 
         XCTAssertNoThrow(try self.modelReader.read(plistWrapper: self.plistFileWrapper, contentWrapper: self.contentFileWrapper, shouldMigrate: { true }))
 

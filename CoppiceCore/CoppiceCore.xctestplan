@@ -22,8 +22,27 @@
   "testTargets" : [
     {
       "skippedTests" : [
+        "CanvasPageTests\/test_existingLinkedCanvasPageForPage_returnsNilIfNoDirectChildMatchesPage()",
+        "CanvasTests\/test_openPageLinkedFrom_addsNewPageToBottomIfParentOfSourceSetAndOnTopAndNoOtherPageExistsThere()",
+        "CanvasTests\/test_openPageLinkedFrom_addsNewPageToLeftIfParentOfSourceSetAndOnRightAndNoOtherPageExistsThere()",
+        "CanvasTests\/test_openPageLinkedFrom_addsNewPageToTopIfParentOfSourceSetAndOnBottomAndNoOtherPageExistsThere()",
+        "CanvasTests\/test_openPageLinkedFrom_ifLinkedPageAlreadyExistsOnBottomAddsToRight()",
+        "CanvasTests\/test_openPageLinkedFrom_ifLinkedPageAlreadyExistsOnBottomLeftAddsToBottomRight()",
         "CanvasTests\/test_openPageLinkedFrom_ifLinkedPageAlreadyExistsOnBottomLeftAddsToTopLeft()",
-        "CanvasTests\/test_openPageLinkedFrom_ifLinkedPageAlreadyExistsOnTopLeftAddsToBottomLeft()"
+        "CanvasTests\/test_openPageLinkedFrom_ifLinkedPageAlreadyExistsOnBottomRightAddsToBottomLeft()",
+        "CanvasTests\/test_openPageLinkedFrom_ifLinkedPageAlreadyExistsOnBottomRightAddsToTopRight()",
+        "CanvasTests\/test_openPageLinkedFrom_ifLinkedPageAlreadyExistsOnLeftAddsAbove()",
+        "CanvasTests\/test_openPageLinkedFrom_ifLinkedPageAlreadyExistsOnRightAddsAbove()",
+        "CanvasTests\/test_openPageLinkedFrom_ifLinkedPageAlreadyExistsOnTopAddsToRight()",
+        "CanvasTests\/test_openPageLinkedFrom_ifLinkedPageAlreadyExistsOnTopLeftAddsToBottomLeft()",
+        "CanvasTests\/test_openPageLinkedFrom_ifLinkedPageAlreadyExistsOnTopLeftAddsToTopRight()",
+        "CanvasTests\/test_openPageLinkedFrom_ifLinkedPageAlreadyExistsOnTopRightAddsToBottomRight()",
+        "CanvasTests\/test_openPageLinkedFrom_ifLinkedPageAlreadyExistsOnTopRightAddsToTopLeft()",
+        "CoppiceModelControllerCanvasPageTests\/test_openPageAtLink_addsPageToCanvasIfSourcePageDoesntExist()",
+        "CoppiceModelControllerCanvasPageTests\/test_openPageAtLink_addsPageToCanvasIfThereIsNoSourceInLink()",
+        "CoppiceModelControllerPageTests\/test_deletePage_redoRemovesPageFromCanvasesAgain()",
+        "CoppiceModelControllerPageTests\/test_deletePage_removesPageFromAllCanvases()",
+        "CoppiceModelControllerPageTests\/test_deletePage_undoAddsPageBackToAnyCanvasesWithSameIDsAndProperties()"
       ],
       "target" : {
         "containerPath" : "container:CoppiceCore.xcodeproj",

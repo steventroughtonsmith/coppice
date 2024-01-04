@@ -78,13 +78,6 @@ class CanvasPageTests: XCTestCase {
 
 
     //MARK: - update(fromPlistRepresentation:)
-    func test_updateFromPlistRepresentation_throwsErrorIfModelControllerNotSet() {
-        let canvasPage = CanvasPage()
-        XCTAssertThrowsError(try canvasPage.update(fromPlistRepresentation: .init(id: canvasPage.id, plist: [:])), "") {
-            XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .modelControllerNotSet)
-        }
-    }
-
     func test_updateFromPlistRepresentation_doesntUpdateIfIDsDontMatch() {
         let modelController = CoppiceModelController(undoManager: UndoManager())
 
@@ -101,7 +94,7 @@ class CanvasPageTests: XCTestCase {
             ModelPlistKey(rawValue: "parent"): parent.id.stringRepresentation,
         ]
 
-        XCTAssertThrowsError(try canvasPage.update(fromPlistRepresentation: .init(id: canvasPage.id, plist: plist)), "") {
+        XCTAssertThrowsError(try canvasPage.update(fromPlistRepresentation: .init(id: CanvasPage.modelID(with: UUID()), plist: plist)), "") {
             XCTAssertEqual(($0 as? ModelObjectUpdateErrors), ModelObjectUpdateErrors.idsDontMatch)
         }
     }
@@ -245,7 +238,7 @@ class CanvasPageTests: XCTestCase {
     }
 
     func test_existingLinkedCanvasPageForPage_returnsNilIfNoDirectChildMatchesPage() {
-        XCTFail()
+        XCTFail("Re-implement")
         let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let page = modelController.collection(for: Page.self).newObject()

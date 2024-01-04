@@ -372,7 +372,7 @@ class CoppiceModelControllerPageTests: XCTestCase {
     }
 
     func test_deletePage_removesPageFromAllCanvases() throws {
-        XCTFail()
+        XCTFail("Re-implement")
         let page = self.modelController.createPage(in: self.folder)
         let canvas1 = self.modelController.createCanvas()
         let canvasPage1 = try XCTUnwrap(canvas1.addPages([page]).first)
@@ -419,7 +419,7 @@ class CoppiceModelControllerPageTests: XCTestCase {
     }
 
     func test_deletePage_undoAddsPageBackToAnyCanvasesWithSameIDsAndProperties() throws {
-        XCTFail()
+        XCTFail("Re-implement")
         let page = self.modelController.createPage(in: self.folder)
         let canvas1 = self.modelController.createCanvas()
         let canvasPage1 = try XCTUnwrap(canvas1.addPages([page]).first)
@@ -478,7 +478,7 @@ class CoppiceModelControllerPageTests: XCTestCase {
     }
 
     func test_deletePage_redoRemovesPageFromCanvasesAgain() throws {
-        XCTFail()
+        XCTFail("Re-implement")
         let page = self.modelController.createPage(in: self.folder)
         let canvas1 = self.modelController.createCanvas()
         let canvasPage1 = try XCTUnwrap(canvas1.addPages([page]).first)
