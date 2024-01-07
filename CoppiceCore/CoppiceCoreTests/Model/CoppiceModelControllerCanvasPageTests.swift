@@ -158,7 +158,6 @@ class CoppiceModelControllerCanvasPageTests: XCTestCase {
     //MARK: - close(_:)
     func test_closeCanvasPage_removesCanvasPageFromCanvas() {
         self.modelController.close(self.canvasPage)
-        XCTAssertNil(self.canvasPage.canvas)
         XCTAssertFalse(self.canvas.pages.contains(self.canvasPage))
     }
 

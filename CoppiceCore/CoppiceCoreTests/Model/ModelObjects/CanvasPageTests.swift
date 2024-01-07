@@ -106,6 +106,7 @@ class CanvasPageTests: XCTestCase {
         let plist: [ModelPlistKey: PlistValue] = [
             .id: canvasPage.id.stringRepresentation,
             CanvasPage.PlistKeys.frame: NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
+            CanvasPage.PlistKeys.zIndex: 31,
         ]
 
         XCTAssertNoThrow(try canvasPage.update(fromPlistRepresentation: .init(id: canvasPage.id, plist: plist)))
@@ -138,6 +139,7 @@ class CanvasPageTests: XCTestCase {
         let plist: [ModelPlistKey: PlistValue] = [
             .id: canvasPage.id.stringRepresentation,
             CanvasPage.PlistKeys.frame: NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
+            CanvasPage.PlistKeys.zIndex: 31,
             CanvasPage.PlistKeys.page: newPage.id.stringRepresentation,
         ]
 
@@ -156,6 +158,7 @@ class CanvasPageTests: XCTestCase {
         let plist: [ModelPlistKey: PlistValue] = [
             .id: canvasPage.id.stringRepresentation,
             CanvasPage.PlistKeys.frame: NSStringFromRect(CGRect(x: 1, y: 2, width: 3, height: 4)),
+            CanvasPage.PlistKeys.zIndex: 31,
             CanvasPage.PlistKeys.canvas: newCanvas.id.stringRepresentation,
         ]
 

@@ -39,7 +39,7 @@ extension Page {
             return .zero
         }
 
-        func sizeToFitContent(currentSize: CGSize) -> CGSize {
+        public func sizeToFitContent(currentSize: CGSize) -> CGSize {
             return currentSize
         }
 
@@ -73,7 +73,7 @@ extension Page.Content: PlistConvertable {
 
     public static func fromPlistValue(_ plistValue: PlistValue) throws -> Self {
         guard let modelFile = plistValue as? ModelFile else {
-            throw PlistConvertableError.invalidConversionFromPlistValue
+            throw PlistConvertableError.invalidConversion(fromPlistValue: plistValue, to: self)
         }
 
         guard let contentType = Page.ContentType(rawValue: modelFile.type) else {

@@ -27,7 +27,7 @@ class LargeCanvasCell: EditableLabelCell, CanvasCell {
                 theme = .auto
             }
             self.thumbnailBackground.fillColor = theme.canvasBackgroundColor
-            self.thumbnailImageView.image = canvas.thumbnail
+            self.thumbnailImageView.image = canvas.thumbnail?.image
             self.nameLabel.stringValue = canvas.title
 
             self.subscribers[.canvasTitle] = canvas.changePublisher(for: \.title)?.notify(self, ofChangeTo: \.canvasTitle)

@@ -98,7 +98,7 @@ extension PageLink: PlistConvertable {
     public static func fromPlistValue(_ plistValue: PlistValue) throws -> PageLink {
         let url: URL = try .fromPlistValue(plistValue)
         guard let pageLink = PageLink(url: url) else {
-            throw PlistConvertableError.invalidConversionFromPlistValue
+            throw PlistConvertableError.invalidConversion(fromPlistValue: plistValue, to: self)
         }
         return pageLink
     }

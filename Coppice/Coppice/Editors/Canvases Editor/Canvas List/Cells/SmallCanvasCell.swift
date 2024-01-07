@@ -25,7 +25,7 @@ class SmallCanvasCell: EditableLabelCell, CanvasCell {
                 theme = .auto
             }
             self.thumbnailBackground.fillColor = theme.canvasBackgroundColor
-            self.thumbnailImageView.image = canvas.thumbnail
+            self.thumbnailImageView.image = canvas.thumbnail?.image
             self.thumbnailImageView.toolTip = canvas.title
         }
     }

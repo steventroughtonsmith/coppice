@@ -103,6 +103,7 @@
 		9933119B27FEF7F800099444 /* LinkFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9933119A27FEF7F800099444 /* LinkFinder.swift */; };
 		993600E224AE2A81002C86E4 /* ModelObjects+AppKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993600E124AE2A81002C86E4 /* ModelObjects+AppKit.swift */; };
 		993600E924AE5F1F002C86E4 /* TestLayoutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993600E824AE5F1F002C86E4 /* TestLayoutDelegate.swift */; };
+		9938ABB02B4AD2A20004B6A0 /* Canvas.Thumbnail+AppKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9938ABAF2B4AD2A20004B6A0 /* Canvas.Thumbnail+AppKit.swift */; };
 		993C0EE924B3A5C5009993D4 /* SourceListTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993C0EE824B3A5C5009993D4 /* SourceListTableCellView.swift */; };
 		993D2BD824127E29002E5BAC /* CanvasListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993D2BD624127E29002E5BAC /* CanvasListViewController.swift */; };
 		993D2BD924127E29002E5BAC /* CanvasListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 993D2BD724127E29002E5BAC /* CanvasListView.xib */; };
@@ -615,6 +616,7 @@
 		9933119A27FEF7F800099444 /* LinkFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkFinder.swift; sourceTree = "<group>"; };
 		993600E124AE2A81002C86E4 /* ModelObjects+AppKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelObjects+AppKit.swift"; sourceTree = "<group>"; };
 		993600E824AE5F1F002C86E4 /* TestLayoutDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestLayoutDelegate.swift; sourceTree = "<group>"; };
+		9938ABAF2B4AD2A20004B6A0 /* Canvas.Thumbnail+AppKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Canvas.Thumbnail+AppKit.swift"; sourceTree = "<group>"; };
 		993C0EE824B3A5C5009993D4 /* SourceListTableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceListTableCellView.swift; sourceTree = "<group>"; };
 		993D2BD624127E29002E5BAC /* CanvasListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasListViewController.swift; sourceTree = "<group>"; };
 		993D2BD724127E29002E5BAC /* CanvasListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CanvasListView.xib; sourceTree = "<group>"; };
@@ -1045,6 +1047,7 @@
 				998D077E24115D04004ADFF8 /* Generic Views */,
 				992A5C9D22DCCDA20012CCB6 /* Extensions */,
 				999A317025C83CF700FF60E5 /* VersionNumber.swift */,
+				9938ABAF2B4AD2A20004B6A0 /* Canvas.Thumbnail+AppKit.swift */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -2746,6 +2749,7 @@
 				998CF0FC24ACF6A800EA26A6 /* NSBezierPath+M3Extensions.swift in Sources */,
 				995F9376252CB74200A753E4 /* PageContentEditor.swift in Sources */,
 				997344D62432236300DF4EDB /* PageLinkController.swift in Sources */,
+				9938ABB02B4AD2A20004B6A0 /* Canvas.Thumbnail+AppKit.swift in Sources */,
 				99FDF129241FD52800AF1E51 /* CanvasesViewModel.swift in Sources */,
 				991B5F552541E37E002C483C /* HelpTopicViewController.swift in Sources */,
 				9973737A2423AD6C000D5F21 /* NoEditorViewController.swift in Sources */,

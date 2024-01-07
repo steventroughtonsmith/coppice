@@ -178,6 +178,6 @@ class CanvasSearchResult: SearchResult {
     }
 
     override var image: NSImage? {
-        return self.match.canvas.thumbnail
+        return self.match.canvas.thumbnail?.image
     }
 }

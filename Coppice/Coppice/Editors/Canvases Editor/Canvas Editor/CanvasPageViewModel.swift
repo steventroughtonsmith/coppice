@@ -15,12 +15,12 @@ protocol CanvasPageView: AnyObject {}
 class CanvasPageViewModel: ViewModel {
     weak var view: CanvasPageView?
 
-    @objc dynamic let canvasPage: CanvasPage
+    let canvasPage: CanvasPage
     /*
             We need to store the page as well, as when a canvas page is closed its page is set to nil.
             This prevents any observation from being able to be correctly removed
          */
-    @objc dynamic let page: Page?
+    let page: Page?
     init(canvasPage: CanvasPage, documentWindowViewModel: DocumentWindowViewModel) {
         self.canvasPage = canvasPage
         self.page = canvasPage.page
@@ -56,11 +56,12 @@ class CanvasPageViewModel: ViewModel {
             description.append("\(contentType.localizedName). ")
         }
 
-        if let parentTitle = self.canvasPage.parent?.title {
-            let localizedLinkedTitle = NSLocalizedString("Linked from %@", comment: "Canvas Page 'Linked From {Parent}' Accessibility Description")
-            let title = String(format: localizedLinkedTitle, (parentTitle.count > 0) ? parentTitle : Page.localizedDefaultTitle)
-            description.append("\(title). ")
-        }
+        //TODO: Replace
+//        if let parentTitle = self.canvasPage.parent?.title {
+//            let localizedLinkedTitle = NSLocalizedString("Linked from %@", comment: "Canvas Page 'Linked From {Parent}' Accessibility Description")
+//            let title = String(format: localizedLinkedTitle, (parentTitle.count > 0) ? parentTitle : Page.localizedDefaultTitle)
+//            description.append("\(title). ")
+//        }
 
         return (description.count > 0) ? description : nil
     }

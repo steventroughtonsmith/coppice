@@ -31,7 +31,7 @@ extension PageHierarchy {
                 let pageLink = value["pageLink"],
                 let relativePosition = value["relativePosition"]
             else {
-                throw PlistConvertableError.invalidConversionFromPlistValue
+                throw PlistConvertableError.invalidConversion(fromPlistValue: plistValue, to: self)
             }
             return EntryPoint(pageLink: try .fromPlistValue(pageLink),
                               relativePosition: try .fromPlistValue(relativePosition))

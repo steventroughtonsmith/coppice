@@ -12,7 +12,7 @@ import Foundation
 import M3Data
 
 class CanvasPageInspectorViewModel: BaseInspectorViewModel {
-    @objc dynamic let canvasPage: CanvasPage
+    let canvasPage: CanvasPage
     let modelController: ModelController
 
     init(canvasPage: CanvasPage, modelController: ModelController) {

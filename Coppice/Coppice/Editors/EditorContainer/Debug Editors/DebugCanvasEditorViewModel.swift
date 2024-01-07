@@ -18,7 +18,7 @@ protocol DebugCanvasEditorView: AnyObject {
 class DebugCanvasEditorViewModel: NSObject {
     weak var view: DebugCanvasEditorView?
 
-    @objc dynamic let canvas: Canvas
+    let canvas: Canvas
     let modelController: CoppiceModelController
     init(canvas: Canvas, modelController: CoppiceModelController) {
         self.canvas = canvas
@@ -28,14 +28,6 @@ class DebugCanvasEditorViewModel: NSObject {
 
     @objc dynamic var title: String {
         return self.canvas.title
-    }
-
-    override class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
-        var keyPaths = super.keyPathsForValuesAffectingValue(forKey: key)
-        if key == "sortIndex" {
-            keyPaths.insert("self.canvas.sortIndex")
-        }
-        return keyPaths
     }
 
     @objc dynamic var sortIndex: String {

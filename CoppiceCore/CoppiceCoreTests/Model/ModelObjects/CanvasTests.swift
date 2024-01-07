@@ -165,7 +165,7 @@ class CanvasTests: XCTestCase {
             Canvas.PlistKeys.dateModified: Date(timeIntervalSinceReferenceDate: 1455),
             Canvas.PlistKeys.sortIndex: 1,
             Canvas.PlistKeys.theme: "auto",
-            Canvas.PlistKeys.thumbnail: ModelFile(type: "thumbnail", filename: "\(canvas.id.stringRepresentation)-thumbnail.png", data: expectedImageData, metadata: [:]),
+            Canvas.PlistKeys.thumbnail: ModelFile(type: "thumbnail", filename: "\(canvas.id.uuid.uuidString)-thumbnail.png", data: expectedImageData, metadata: [:]),
             Canvas.PlistKeys.zoomFactor: 1.0,
             ModelPlistKey(rawValue: "testingAttribute"): 12345,
         ]
@@ -370,7 +370,7 @@ class CanvasTests: XCTestCase {
             Canvas.PlistKeys.zoomFactor: 1.0,
         ]
         XCTAssertThrowsError(try canvas.update(fromPlistRepresentation: .init(id: canvas.id, plist: plist)), "") {
-            XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .attributeNotFound("theme"))
+            XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .invalidAttributeType("theme"))
         }
     }
 
@@ -422,7 +422,7 @@ class CanvasTests: XCTestCase {
             Canvas.PlistKeys.dateModified: Date(timeIntervalSinceReferenceDate: 1455),
             Canvas.PlistKeys.sortIndex: 1,
             Canvas.PlistKeys.theme: "auto",
-            Canvas.PlistKeys.thumbnail: ModelFile(type: "thumbnail", filename: nil, data: expectedImageData, metadata: [:]),
+            Canvas.PlistKeys.thumbnail: ModelFile(type: "thumbnail", filename: "\(canvas.id.uuid.uuidString)-thumbnail.png", data: expectedImageData, metadata: [:]),
             Canvas.PlistKeys.zoomFactor: 1.0,
         ]
 
@@ -513,7 +513,7 @@ class CanvasTests: XCTestCase {
             Canvas.PlistKeys.dateModified: Date(timeIntervalSinceReferenceDate: 1455),
             Canvas.PlistKeys.sortIndex: 1,
             Canvas.PlistKeys.theme: "auto",
-            Canvas.PlistKeys.thumbnail: ModelFile(type: "thumbnail", filename: nil, data: expectedImageData, metadata: [:]),
+            Canvas.PlistKeys.thumbnail: ModelFile(type: "thumbnail", filename: "\(canvas.id.uuid.uuidString)-thumbnail.png", data: expectedImageData, metadata: [:]),
             Canvas.PlistKeys.zoomFactor: 0.75,
         ]
 
@@ -533,10 +533,8 @@ class CanvasTests: XCTestCase {
             Canvas.PlistKeys.dateModified: Date(timeIntervalSinceReferenceDate: 1455),
             Canvas.PlistKeys.sortIndex: 1,
             Canvas.PlistKeys.theme: "auto",
-            Canvas.PlistKeys.thumbnail: ModelFile(type: "thumbnail", filename: nil, data: expectedImageData, metadata: [:]),
+            Canvas.PlistKeys.thumbnail: ModelFile(type: "thumbnail", filename: "\(canvas.id.uuid.uuidString)-thumbnail.png", data: expectedImageData, metadata: [:]),
         ]
-
-        XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: .init(id: canvas.id, plist: plist)))
 
         XCTAssertThrowsError(try canvas.update(fromPlistRepresentation: .init(id: canvas.id, plist: plist)), "") {
             XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .attributeNotFound("zoomFactor"))
@@ -554,7 +552,7 @@ class CanvasTests: XCTestCase {
             Canvas.PlistKeys.dateModified: Date(timeIntervalSinceReferenceDate: 1455),
             Canvas.PlistKeys.sortIndex: 1,
             Canvas.PlistKeys.theme: "auto",
-            Canvas.PlistKeys.thumbnail: ModelFile(type: "thumbnail", filename: nil, data: expectedImageData, metadata: [:]),
+            Canvas.PlistKeys.thumbnail: ModelFile(type: "thumbnail", filename: "\(canvas.id.uuid.uuidString)-thumbnail.png", data: expectedImageData, metadata: [:]),
             Canvas.PlistKeys.alwaysShowPageTitles: true,
             Canvas.PlistKeys.zoomFactor: 1.0,
         ]
@@ -576,10 +574,9 @@ class CanvasTests: XCTestCase {
             Canvas.PlistKeys.dateModified: Date(timeIntervalSinceReferenceDate: 1455),
             Canvas.PlistKeys.sortIndex: 1,
             Canvas.PlistKeys.theme: "auto",
-            Canvas.PlistKeys.thumbnail: ModelFile(type: "thumbnail", filename: nil, data: expectedImageData, metadata: [:]),
+            Canvas.PlistKeys.thumbnail: ModelFile(type: "thumbnail", filename: "\(canvas.id.uuid.uuidString)-thumbnail.png", data: expectedImageData, metadata: [:]),
             ModelPlistKey(rawValue: "testingAttribute"): 12345,
             Canvas.PlistKeys.zoomFactor: 1.0,
-
         ]
 
         XCTAssertNoThrow(try canvas.update(fromPlistRepresentation: .init(id: canvas.id, plist: plist)))
@@ -599,7 +596,7 @@ class CanvasTests: XCTestCase {
             Canvas.PlistKeys.dateModified: Date(timeIntervalSinceReferenceDate: 1455),
             Canvas.PlistKeys.sortIndex: 1,
             Canvas.PlistKeys.theme: "auto",
-            Canvas.PlistKeys.thumbnail: ModelFile(type: "thumbnail", filename: nil, data: expectedImageData, metadata: [:]),
+            Canvas.PlistKeys.thumbnail: ModelFile(type: "thumbnail", filename: "\(canvas.id.uuid.uuidString)-thumbnail.png", data: expectedImageData, metadata: [:]),
             ModelPlistKey(rawValue: "testingAttribute"): 12345,
             Canvas.PlistKeys.zoomFactor: 1.0,
         ]

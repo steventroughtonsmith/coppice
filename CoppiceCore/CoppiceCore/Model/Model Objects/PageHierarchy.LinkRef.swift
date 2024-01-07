@@ -35,7 +35,7 @@ extension PageHierarchy {
                 let destinationID = value["destinationID"],
                 let link = value["link"]
             else {
-                throw PlistConvertableError.invalidConversionFromPlistValue
+                throw PlistConvertableError.invalidConversion(fromPlistValue: plistValue, to: self)
             }
             return LinkRef(sourceID: try .fromPlistValue(sourceID),
                            destinationID: try .fromPlistValue(destinationID),

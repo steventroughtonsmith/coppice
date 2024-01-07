@@ -36,7 +36,7 @@ extension PageHierarchy {
                 let pageID = value["pageID"],
                 let relativeContentFrame = value["relativeContentFrame"]
             else {
-                throw PlistConvertableError.invalidConversionFromPlistValue
+                throw PlistConvertableError.invalidConversion(fromPlistValue: plistValue, to: self)
             }
             return PageRef(canvasPageID: try .fromPlistValue(canvasPageID),
                            pageID: try .fromPlistValue(pageID),

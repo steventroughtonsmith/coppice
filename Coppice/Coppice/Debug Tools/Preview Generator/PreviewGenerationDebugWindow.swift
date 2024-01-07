@@ -84,7 +84,7 @@ class PreviewGenerationDebugWindow: NSWindowController {
         }
 
         let thumbnailGenerator = CanvasThumbnailGenerator(canvas: canvas)
-        if let thumbnail = canvas.thumbnail {
+        if let thumbnail = canvas.thumbnail?.image {
             self.thumbnailImageView.image = thumbnail
             self.scrollView.documentView?.frame = CGRect(origin: .zero, size: thumbnail.size)
             self.fullImageView.image = thumbnailGenerator.generateThumbnail(of: thumbnail.size, theme: theme)

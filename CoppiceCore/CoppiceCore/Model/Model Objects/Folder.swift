@@ -17,7 +17,9 @@ final public class Folder: FolderContainable {
     @Attribute public var title: String = "New Folder"
     @Attribute public var dateCreated: Date = Date()
     @Attribute private var contents: [ModelID] = [] {
-        didSet { self.didChange(\.contents, oldValue: oldValue) }
+        didSet {
+            self.folderContents.forEach { $0.containingFolder = self }
+        }
     }
 
     //MARK: - Calculated properties

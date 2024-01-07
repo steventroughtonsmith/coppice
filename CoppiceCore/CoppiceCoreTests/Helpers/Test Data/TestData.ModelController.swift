@@ -71,6 +71,7 @@ extension TestData {
                     $0.sortIndex = 1
                     $0.theme = .light
                     $0.alwaysShowPageTitles = true
+                    $0.zoomFactor = 0.5
                 },
             ]
         }()

@@ -190,7 +190,7 @@ class PagesGroupSourceListNode: SourceListNode {
 
 //MARK: -
 class FolderSourceListNode: SourceListNode {
-    @objc dynamic let folder: Folder
+    let folder: Folder
     init(folder: Folder) {
         self.folder = folder
         super.init(item: .folder(folder.id))
@@ -239,7 +239,7 @@ class FolderSourceListNode: SourceListNode {
 
 //MARK: -
 class PageSourceListNode: SourceListNode {
-    @objc dynamic let page: Page
+    let page: Page
     init(page: Page) {
         self.page = page
         super.init(item: .page(page.id))

@@ -45,16 +45,16 @@ class DebugCanvasPageItem {
     }
 
     var parentID: String {
-        get { self.canvasPage.parent?.id.uuid.uuidString ?? "" }
+        get { "" }
         set {
-            guard let id = CanvasPage.modelID(withUUIDString: newValue),
-                  id != self.canvasPage.id
-            else {
-                self.canvasPage.parent = nil
-                return
-            }
-
-            self.canvasPage.parent = self.canvasPage.collection?.objectWithID(id)
+//            guard let id = CanvasPage.modelID(withUUIDString: newValue),
+//                  id != self.canvasPage.id
+//            else {
+//                self.canvasPage.parent = nil
+//                return
+//            }
+//
+//            self.canvasPage.parent = self.canvasPage.collection?.objectWithID(id)
         }
     }
 }

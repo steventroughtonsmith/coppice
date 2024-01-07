@@ -88,9 +88,13 @@ class ThumbnailController: NSObject {
         }
         self.modelController.disableUndo {
             for object in self.canvasChangeQueue {
-                if let canvas = object as? Canvas {
-                    canvas.thumbnail = self.generateThumbnail(for: canvas)
+                guard
+                    let canvas = object as? Canvas,
+                    let thumbnailImageData = self.generateThumbnail(for: canvas)?.pngData()
+                else {
+                    continue
                 }
+                canvas.thumbnail = .init(data: thumbnailImageData, canvasID: canvas.id)
             }
             self.canvasChangeQueue.removeAllObjects()
         }

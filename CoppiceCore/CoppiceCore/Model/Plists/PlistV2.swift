@@ -71,9 +71,9 @@ extension Plist {
                 }
 
 
-                var updatedCanvasPage = canvasPage
-//                updatedCanvasPage[ModelPlistKey(rawValue: "parent")] = nil
-                migratedCanvasPages.append(updatedCanvasPage)
+                var updatedCanvasPagePlist = canvasPage.plist
+                updatedCanvasPagePlist[ModelPlistKey(rawValue: "parent")] = nil
+                migratedCanvasPages.append(.init(id: canvasPage.id, plist: updatedCanvasPagePlist))
 
                 let canvasLinkID = CanvasLink.modelID(with: UUID())
                 let canvasLink: [ModelPlistKey: PlistValue] = [

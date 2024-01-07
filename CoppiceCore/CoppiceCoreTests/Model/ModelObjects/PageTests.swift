@@ -307,7 +307,7 @@ class PageTests: XCTestCase {
         ]
 
         XCTAssertThrowsError(try page.update(fromPlistRepresentation: .init(id: page.id, plist: plist)), "") {
-            XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .attributeNotFound("content"))
+            XCTAssertEqual(($0 as? ModelObjectUpdateErrors), .invalidAttributeType("content"))
         }
     }
 

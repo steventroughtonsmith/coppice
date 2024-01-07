@@ -31,7 +31,7 @@ extension Canvas {
                 let value = plistValue as? String,
                 let theme = Theme(rawValue: value)
             else {
-                throw PlistConvertableError.invalidConversionFromPlistValue
+                throw PlistConvertableError.invalidConversion(fromPlistValue: plistValue, to: self)
             }
             return theme
         }

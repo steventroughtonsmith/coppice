@@ -12,6 +12,12 @@ public struct Thumbnail: PlistConvertable {
     public let data: Data
     public let canvasID: ModelID
 
+    public init(data: Data, canvasID: ModelID) {
+        self.data = data
+        self.canvasID = canvasID
+    }
+
+
     public func toPlistValue() throws -> PlistValue {
         return ModelFile(type: "thumbnail", filename: "\(self.canvasID.uuid.uuidString)-thumbnail.png", data: self.data, metadata: [:])
     }
@@ -24,7 +30,7 @@ public struct Thumbnail: PlistConvertable {
             let uuid = UUID(uuidString: thumbnailComponents[0]),
             let data = modelFile.data
         else {
-            throw PlistConvertableError.invalidConversionFromPlistValue
+            throw PlistConvertableError.invalidConversion(fromPlistValue: plistValue, to: self)
         }
         return self.init(data: data, canvasID: Canvas.modelID(with: uuid))
     }

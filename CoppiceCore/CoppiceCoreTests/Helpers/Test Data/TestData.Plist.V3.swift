@@ -22,7 +22,7 @@ extension TestData.Plist {
                 "theme": "auto",
                 "viewPort": NSStringFromRect(CGRect(x: 10, y: 20, width: 30, height: 40)),
                 "alwaysShowPageTitles": 0,
-                "zoomFactor": 1,
+                "zoomFactor": 1.0,
             ],
             [
                 "id": Canvas.modelID(with: self.canvasIDs[1]).stringRepresentation,
@@ -32,7 +32,7 @@ extension TestData.Plist {
                 "sortIndex": 1,
                 "theme": "light",
                 "alwaysShowPageTitles": 1,
-                "zoomFactor": 1,
+                "zoomFactor": 0.5,
             ],
         ]
 
