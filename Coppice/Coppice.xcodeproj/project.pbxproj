@@ -2353,7 +2353,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1500;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1510;
 				ORGANIZATIONNAME = "M Cubed Software";
 				TargetAttributes = {
 					9982FEBF2A67DF3B00970283 = {

@@ -56,12 +56,16 @@ class CanvasPageViewModel: ViewModel {
             description.append("\(contentType.localizedName). ")
         }
 
-        //TODO: Replace
-//        if let parentTitle = self.canvasPage.parent?.title {
-//            let localizedLinkedTitle = NSLocalizedString("Linked from %@", comment: "Canvas Page 'Linked From {Parent}' Accessibility Description")
-//            let title = String(format: localizedLinkedTitle, (parentTitle.count > 0) ? parentTitle : Page.localizedDefaultTitle)
-//            description.append("\(title). ")
-//        }
+        let linksIn = self.canvasPage.linksIn
+        if linksIn.count == 1, let parentTitle = linksIn.first?.sourcePage?.title {
+            let localizedLinkedTitle = NSLocalizedString("Linked from %@", comment: "Canvas Page 'Linked From {Parent}' Accessibility Description")
+            let title = String(format: localizedLinkedTitle, (parentTitle.count > 0) ? parentTitle : Page.localizedDefaultTitle)
+            description.append("\(title). ")
+        } else if linksIn.count > 1 {
+            let localizedLinkedTitle = NSLocalizedString("Linked from %ld pages", comment: "Canvas Page 'Linked From {Number} pages' Accessibility Description")
+            let title = String(format: localizedLinkedTitle, linksIn.count)
+            description.append("\(title). ")
+        }
 
         return (description.count > 0) ? description : nil
     }

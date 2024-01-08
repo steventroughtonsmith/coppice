@@ -8,6 +8,7 @@
 
 import AppKit
 import M3Data
+import UniformTypeIdentifiers
 
 extension Canvas {
     public var pasteboardWriter: NSPasteboardWriting {
@@ -31,11 +32,15 @@ extension Folder {
 
 extension Page.Content.Text: NSFilePromiseProviderDelegate {
     public override var filePromiseProvider: ExtendableFilePromiseProvider {
-        return ExtendableFilePromiseProvider(fileType: (kUTTypeRTF as String), delegate: self)
+        return ExtendableFilePromiseProvider(type: .rtf, delegate: self)
     }
 
     public func filePromiseProvider(_ filePromiseProvider: NSFilePromiseProvider, fileNameForType fileType: String) -> String {
-        guard let page = self.page, fileType == (kUTTypeRTF as String) else {
+        guard
+            let page = self.page,
+            let type = UTType(fileType),
+            type == .rtf
+        else {
             return ""
         }
         return page.title + ".rtf"
@@ -57,11 +62,15 @@ extension Page.Content.Text: NSFilePromiseProviderDelegate {
 
 extension Page.Content.Image: NSFilePromiseProviderDelegate {
     public override var filePromiseProvider: ExtendableFilePromiseProvider {
-        return ExtendableFilePromiseProvider(fileType: (kUTTypePNG as String), delegate: self)
+        return ExtendableFilePromiseProvider(type: .png, delegate: self)
     }
 
     public func filePromiseProvider(_ filePromiseProvider: NSFilePromiseProvider, fileNameForType fileType: String) -> String {
-        guard let page = self.page, fileType == (kUTTypePNG as String) else {
+        guard
+            let page = self.page,
+            let type = UTType(fileType),
+            type == .png
+        else {
             return ""
         }
         return page.title + ".png"
@@ -85,6 +94,10 @@ extension Page.Content.Image: NSFilePromiseProviderDelegate {
 public class ExtendableFilePromiseProvider: NSFilePromiseProvider {
     public var additionalItems: [NSPasteboard.PasteboardType: Any] = [:]
 
+    convenience init(type: UTType, delegate: NSFilePromiseProviderDelegate) {
+        self.init(fileType: type.identifier, delegate: delegate)
+    }
+
     public override func writableTypes(for pasteboard: NSPasteboard) -> [NSPasteboard.PasteboardType] {
         var types = super.writableTypes(for: pasteboard)
         if self.additionalItems.count > 0 {
@@ -93,7 +106,7 @@ public class ExtendableFilePromiseProvider: NSFilePromiseProvider {
         return types
     }
 
-    override public func pasteboardPropertyList(forType type: NSPasteboard.PasteboardType) -> Any? {
+    public override func pasteboardPropertyList(forType type: NSPasteboard.PasteboardType) -> Any? {
         if let item = self.additionalItems[type] {
             return item
         }

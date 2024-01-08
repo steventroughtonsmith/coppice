@@ -38,7 +38,7 @@ struct Device {
         }
         #endif
 
-        let expert = IOServiceGetMatchingService(kIOMasterPortDefault, IOServiceMatching("IOPlatformExpertDevice"))
+        let expert = IOServiceGetMatchingService(kIOMainPortDefault, IOServiceMatching("IOPlatformExpertDevice"))
         let number = IORegistryEntryCreateCFProperty(expert, kIOPlatformUUIDKey as CFString, kCFAllocatorDefault, 0)
         IOObjectRelease(expert)
         return (number?.takeUnretainedValue() as? String) ?? ""

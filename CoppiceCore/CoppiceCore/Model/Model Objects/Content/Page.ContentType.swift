@@ -7,6 +7,7 @@
 
 import AppKit
 import M3Data
+import UniformTypeIdentifiers
 
 extension Page {
     public enum ContentType: String, Equatable, CaseIterable {
@@ -32,10 +33,14 @@ extension Page {
         }
 
         public static func contentType(forUTI uti: String) -> ContentType? {
-            if UTTypeConformsTo(uti as CFString, kUTTypeText) {
+            guard let type = UTType(uti) else {
+                return nil
+            }
+
+            if type.conforms(to: .text) {
                 return .text
             }
-            if UTTypeConformsTo(uti as CFString, kUTTypeImage) {
+            if type.conforms(to: .image) {
                 return .image
             }
             return nil

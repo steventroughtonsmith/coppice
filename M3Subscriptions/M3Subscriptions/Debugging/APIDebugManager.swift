@@ -6,7 +6,7 @@
 //  Copyright © 2020 M Cubed Software. All rights reserved.
 //
 
-import Cocoa
+import AppKit
 #if DEBUG
 public class APIDebugManager: NSObject {
     public static var shared = APIDebugManager()

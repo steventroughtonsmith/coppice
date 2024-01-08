@@ -10,6 +10,7 @@ import Cocoa
 import Combine
 import CoppiceCore
 import M3Data
+import UniformTypeIdentifiers
 
 class SourceListViewController: NSViewController, NSMenuItemValidation {
     @objc dynamic let viewModel: SourceListViewModel
@@ -201,7 +202,7 @@ class SourceListViewController: NSViewController, NSMenuItemValidation {
         }
         let nodes = self.nodesForAction
         let panel = NSOpenPanel()
-        panel.allowedFileTypes = [kUTTypeText as String, kUTTypeImage as String]
+        panel.allowedContentTypes = [.text, .image]
         panel.allowsMultipleSelection = true
         panel.prompt = NSLocalizedString("Import", comment: "Import button title")
         panel.beginSheetModal(for: window) { [weak self] (response) in

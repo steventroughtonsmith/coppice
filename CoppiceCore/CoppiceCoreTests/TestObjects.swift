@@ -32,7 +32,7 @@ final class TestCollectableModelObject: NSObject, CollectableModelObject {
     init(id: ModelID) {
         self.id = id
     }
-    
+
     lazy var plistRepresentation = ModelObjectPlistRepresentation(id: self.id, plist: [:])
 
     var otherProperties = [ModelPlistKey: PlistValue]()

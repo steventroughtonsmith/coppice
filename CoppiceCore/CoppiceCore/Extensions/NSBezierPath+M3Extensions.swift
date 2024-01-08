@@ -142,10 +142,12 @@ extension NSBezierPath {
                 mutablePath.move(to: pointArray[0])
             case .lineTo:
                 mutablePath.addLine(to: pointArray[0])
-            case .curveTo:
+            case .curveTo, .cubicCurveTo:
                 mutablePath.addCurve(to: pointArray[2], control1: pointArray[0], control2: pointArray[1])
             case .closePath:
                 mutablePath.closeSubpath()
+            case .quadraticCurveTo:
+                mutablePath.addQuadCurve(to: pointArray[1], control: pointArray[0])
             @unknown default:
                 preconditionFailure()
             }
