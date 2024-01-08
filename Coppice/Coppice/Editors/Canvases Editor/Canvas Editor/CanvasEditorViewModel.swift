@@ -128,6 +128,9 @@ class CanvasEditorViewModel: ViewModel {
                 return
             }
             newViewPort.origin = newViewPort.origin.multiplied(by: -1)
+            guard self.canvas.viewPort != newViewPort else {
+                return
+            }
             self.canvas.viewPort = newViewPort
         }
     }
