@@ -247,7 +247,7 @@ class CanvasThumbnailGenerator: NSObject {
                                 y: rect.origin.y * context.yScale + context.scaledOffset.y,
                                 width: max(rect.size.width * context.xScale, 2),
                                 height: max(rect.size.height * context.yScale, 2)).rounded()
-        guard context.dryRun == false else {
+        guard context.dryRun == false, rect != .zero else {
             return scaledRect
         }
 
