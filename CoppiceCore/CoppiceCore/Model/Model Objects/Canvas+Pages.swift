@@ -166,21 +166,20 @@ extension Canvas {
 
     private func frame(for page: Page, linkedFrom sourcePage: CanvasPage) -> CGRect {
         //TODO: Update or delete
-        return .zero
-//        guard let firstChild = sourcePage.children.first else {
-//            return self.frameWithNoChildren(for: page, linkedFrom: sourcePage)
-//        }
-//        return self.frame(for: page, linkedFrom: sourcePage, withFirstChild: firstChild)
+        guard let firstChild = sourcePage.children.first else {
+            return self.frameWithNoChildren(for: page, linkedFrom: sourcePage)
+        }
+        return self.frame(for: page, linkedFrom: sourcePage, withFirstChild: firstChild)
     }
 
     private func frameWithNoChildren(for page: Page, linkedFrom sourcePage: CanvasPage) -> CGRect {
         let contentSize = page.contentSize
         var directions = [PageDirection.right, .left, .below, .above]
         //TODO: Update or delete
-//        if let parent = sourcePage.parent {
-//            let parentEdge = self.direction(of: sourcePage, from: parent)
-//            directions.insert(parentEdge.opposite, at: 0)
-//        }
+        if let parent = sourcePage.parent {
+            let parentEdge = self.direction(of: sourcePage, from: parent)
+            directions.insert(parentEdge.opposite, at: 0)
+        }
 
         var frames = directions.map {
             return self.frame(forContentSize: contentSize, placed: $0, from: sourcePage)
@@ -250,33 +249,32 @@ extension Canvas {
 
     private func combinedFrameOfSiblings(of canvasPage: CanvasPage, in direction: PageDirection) -> CGRect {
         var frame = canvasPage.frame
+
+        guard let parent = canvasPage.parent else {
+            return frame
+        }
+
+        for child in parent.children {
+            switch direction {
+            case .right:
+                if (child.frame.minX > parent.frame.maxX) {
+                    frame = frame.union(child.frame)
+                }
+            case .left:
+                if (child.frame.maxX < parent.frame.minX) {
+                    frame = frame.union(child.frame)
+                }
+            case .below:
+                if (child.frame.minY > parent.frame.maxY) {
+                    frame = frame.union(child.frame)
+                }
+            case .above:
+                if (child.frame.maxY < parent.frame.minY) {
+                    frame = frame.union(child.frame)
+                }
+            }
+        }
         return frame
-        //TODO: Update
-//        guard let parent = canvasPage.parent else {
-//            return frame
-//        }
-//
-//        for child in parent.children {
-//            switch direction {
-//            case .right:
-//                if (child.frame.minX > parent.frame.maxX) {
-//                    frame = frame.union(child.frame)
-//                }
-//            case .left:
-//                if (child.frame.maxX < parent.frame.minX) {
-//                    frame = frame.union(child.frame)
-//                }
-//            case .below:
-//                if (child.frame.minY > parent.frame.maxY) {
-//                    frame = frame.union(child.frame)
-//                }
-//            case .above:
-//                if (child.frame.maxY < parent.frame.minY) {
-//                    frame = frame.union(child.frame)
-//                }
-//            }
-//        }
-//        return frame
     }
 
     private func direction(of canvasPage: CanvasPage, from otherPage: CanvasPage) -> PageDirection {

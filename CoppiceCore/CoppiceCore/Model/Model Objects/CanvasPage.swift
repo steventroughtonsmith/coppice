@@ -55,6 +55,14 @@ final public class CanvasPage {
         self.relationship(for: \.destinationPage)
     }
 
+    public var children: Set<CanvasPage> {
+        return Set(self.linksOut.compactMap(\.destinationPage))
+    }
+
+    public var parent: CanvasPage? {
+        return self.linksIn.first?.sourcePage
+    }
+
 
     //MARK: - Links
     public func doesLink(to canvasPage: CanvasPage) -> Bool {

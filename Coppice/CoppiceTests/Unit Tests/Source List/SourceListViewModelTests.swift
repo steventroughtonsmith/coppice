@@ -691,8 +691,8 @@ class SourceListViewModelTests: BaseTestCase {
         XCTAssertTrue(vm.dropItems(with: [page1.id, folder.id], onto: vm.pagesGroupNode, atChildIndex: -1, mode: .move))
 
         let rootFolder = self.modelController.rootFolder
-        XCTAssertEqual(rootFolder.contents[safe: 1] as? Page, page1)
-        XCTAssertEqual(rootFolder.contents[safe: 2] as? Folder, folder)
+        XCTAssertEqual(rootFolder.folderContents[safe: 1] as? Page, page1)
+        XCTAssertEqual(rootFolder.folderContents[safe: 2] as? Folder, folder)
     }
 
     func test_dropItemsWithIDsOntoNode_insertsItemsBelowFirstItemOfFolderIfIndexIs0() throws {
@@ -704,8 +704,8 @@ class SourceListViewModelTests: BaseTestCase {
         XCTAssertTrue(vm.dropItems(with: [folder.id, page2.id], onto: vm.pagesGroupNode, atChildIndex: 0, mode: .move))
 
         let rootFolder = self.modelController.rootFolder
-        XCTAssertEqual(rootFolder.contents[safe: 0] as? Folder, folder)
-        XCTAssertEqual(rootFolder.contents[safe: 1] as? Page, page2)
+        XCTAssertEqual(rootFolder.folderContents[safe: 0] as? Folder, folder)
+        XCTAssertEqual(rootFolder.folderContents[safe: 1] as? Page, page2)
     }
 
     func test_dropItemsWithIDsOntoNode_insertsItemsBelowItemAtIndex() throws {
@@ -717,7 +717,7 @@ class SourceListViewModelTests: BaseTestCase {
         XCTAssertTrue(vm.dropItems(with: [page1.id], onto: vm.pagesGroupNode, atChildIndex: 2, mode: .move))
 
         let rootFolder = self.modelController.rootFolder
-        XCTAssertEqual(rootFolder.contents[safe: 1] as? Page, page1)
+        XCTAssertEqual(rootFolder.folderContents[safe: 1] as? Page, page1)
     }
 
     func test_dropItemsWithIDsOntoNode_duplicatesPagesBeforeInsertingBelowItemAtIndexIfModeIsCopy() throws {
@@ -736,10 +736,10 @@ class SourceListViewModelTests: BaseTestCase {
         XCTAssertEqual(page1.containingFolder, expectedPage1Folder)
         XCTAssertEqual(page2.containingFolder, expectedPage2Folder)
 
-        let duplicatedPage1 = try XCTUnwrap(folder.contents[safe: 1] as? Page)
+        let duplicatedPage1 = try XCTUnwrap(folder.folderContents[safe: 1] as? Page)
         XCTAssertEqual(duplicatedPage1.title, page1.title)
 
-        let duplicatedPage2 = try XCTUnwrap(folder.contents[safe: 2] as? Page)
+        let duplicatedPage2 = try XCTUnwrap(folder.folderContents[safe: 2] as? Page)
         XCTAssertEqual(duplicatedPage2.title, page2.title)
     }
 
@@ -918,8 +918,8 @@ class SourceListViewModelTests: BaseTestCase {
         let rootFolder = self.modelController.rootFolder
         _ = vm.dropFiles(at: [textURL, imageURL], onto: vm.pagesGroupNode, atChildIndex: -1)
 
-        XCTAssertTrue((rootFolder.contents[safe: 3] as? Page)?.content is Page.Content.Text)
-        XCTAssertTrue((rootFolder.contents[safe: 4] as? Page)?.content is Page.Content.Image)
+        XCTAssertTrue((rootFolder.folderContents[safe: 3] as? Page)?.content is Page.Content.Text)
+        XCTAssertTrue((rootFolder.folderContents[safe: 4] as? Page)?.content is Page.Content.Image)
     }
 
     func test_dropFilesAtURLsOntoNode_createsPagesAtStartOfNodeFolderIfURLsAreValidAndIndexIs0() throws {
@@ -934,8 +934,8 @@ class SourceListViewModelTests: BaseTestCase {
         let rootFolder = self.modelController.rootFolder
         _ = vm.dropFiles(at: [textURL, imageURL], onto: vm.pagesGroupNode, atChildIndex: 0)
 
-        XCTAssertTrue((rootFolder.contents[safe: 0] as? Page)?.content is Page.Content.Text)
-        XCTAssertTrue((rootFolder.contents[safe: 1] as? Page)?.content is Page.Content.Image)
+        XCTAssertTrue((rootFolder.folderContents[safe: 0] as? Page)?.content is Page.Content.Text)
+        XCTAssertTrue((rootFolder.folderContents[safe: 1] as? Page)?.content is Page.Content.Image)
     }
 
     func test_dropFilesAtURLsOntoNode_createsPagesAboveItemAtIndexOfNodeFolderIfURLsAreValid() throws {
@@ -950,8 +950,8 @@ class SourceListViewModelTests: BaseTestCase {
         let rootFolder = self.modelController.rootFolder
         _ = vm.dropFiles(at: [textURL, imageURL], onto: vm.pagesGroupNode, atChildIndex: 2)
 
-        XCTAssertTrue((rootFolder.contents[safe: 2] as? Page)?.content is Page.Content.Text)
-        XCTAssertTrue((rootFolder.contents[safe: 3] as? Page)?.content is Page.Content.Image)
+        XCTAssertTrue((rootFolder.folderContents[safe: 2] as? Page)?.content is Page.Content.Text)
+        XCTAssertTrue((rootFolder.folderContents[safe: 3] as? Page)?.content is Page.Content.Image)
     }
 
 
@@ -972,7 +972,7 @@ class SourceListViewModelTests: BaseTestCase {
 
         let newPage = try XCTUnwrap(self.modelController.collection(for: Page.self).objectWithID(pageID))
         XCTAssertEqual(newPage.containingFolder, self.modelController.rootFolder)
-        XCTAssertEqual(self.modelController.rootFolder.contents[safe: 1] as? Page, newPage)
+        XCTAssertEqual(self.modelController.rootFolder.folderContents[safe: 1] as? Page, newPage)
     }
 
 
@@ -994,7 +994,7 @@ class SourceListViewModelTests: BaseTestCase {
 
         let newFolder = try XCTUnwrap(self.modelController.collection(for: Folder.self).objectWithID(folderID))
         XCTAssertEqual(newFolder.containingFolder, expectedFolder)
-        XCTAssertEqual(self.modelController.rootFolder.contents[safe: 3] as? Folder, newFolder)
+        XCTAssertEqual(self.modelController.rootFolder.folderContents[safe: 3] as? Folder, newFolder)
     }
 
 
@@ -1026,7 +1026,7 @@ class SourceListViewModelTests: BaseTestCase {
 
         let folder = try XCTUnwrap(self.modelController.collection(for: Folder.self).objectWithID(folderID))
         XCTAssertEqual(folder.containingFolder, self.modelController.rootFolder)
-        XCTAssertEqual(self.modelController.rootFolder.contents.last as? Folder, folder)
+        XCTAssertEqual(self.modelController.rootFolder.folderContents.last as? Folder, folder)
     }
 
     func test_createFolderUsingSelection_addsAllItemsInSelectionToCreatedFolder() throws {
@@ -1047,8 +1047,8 @@ class SourceListViewModelTests: BaseTestCase {
         }
 
         let folder = try XCTUnwrap(self.modelController.collection(for: Folder.self).objectWithID(folderID))
-        XCTAssertEqual(folder.contents[safe: 0] as? Page, page1)
-        XCTAssertEqual(folder.contents[safe: 1] as? Page, page2)
+        XCTAssertEqual(folder.folderContents[safe: 0] as? Page, page1)
+        XCTAssertEqual(folder.folderContents[safe: 1] as? Page, page2)
     }
 
 
@@ -1079,8 +1079,8 @@ class SourceListViewModelTests: BaseTestCase {
         let rootFolder = self.modelController.rootFolder
         XCTAssertEqual(textPage.containingFolder, rootFolder)
         XCTAssertEqual(imagePage.containingFolder, rootFolder)
-        XCTAssertEqual(rootFolder.contents[safe: 1] as? Page, textPage)
-        XCTAssertEqual(rootFolder.contents[safe: 2] as? Page, imagePage)
+        XCTAssertEqual(rootFolder.folderContents[safe: 1] as? Page, textPage)
+        XCTAssertEqual(rootFolder.folderContents[safe: 2] as? Page, imagePage)
     }
 
 

@@ -11,9 +11,7 @@ import AppKit
 @testable import CoppiceCore
 import M3Data
 
-class MockPageContent: NSObject, PageContent, NSFilePromiseProviderDelegate {
-    var pageLinks: Set<CoppiceCore.PageLink> = []
-
+class MockPageContent: Page.Content, NSFilePromiseProviderDelegate {
     var minimumContentSize: CGSize {
         return Page.defaultMinimumContentSize
     }
