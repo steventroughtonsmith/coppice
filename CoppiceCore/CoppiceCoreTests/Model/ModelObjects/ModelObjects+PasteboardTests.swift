@@ -9,6 +9,7 @@
 @testable import CoppiceCore
 import M3Data
 import XCTest
+import UniformTypeIdentifiers
 
 class ModelObjects_PasteboardTests: XCTestCase {
     //MARK: - .pasteboardWriter
@@ -36,13 +37,13 @@ class ModelObjects_PasteboardTests: XCTestCase {
     func test_filePromiseProvider_textContentReturnsFilePromiseProviderWithRTFFileType() {
         let content = Page.Content.Text()
         let fileProvider = content.filePromiseProvider
-        XCTAssertEqual(fileProvider.fileType, kUTTypeRTF as String)
+        XCTAssertEqual(fileProvider.fileType, UTType.rtf.identifier)
     }
 
     func test_filePromiseProvider_imageContentReturnsFilePromiseProviderWithPNGFileType() {
         let content = Page.Content.Image()
         let fileProvider = content.filePromiseProvider
-        XCTAssertEqual(fileProvider.fileType, kUTTypePNG as String)
+        XCTAssertEqual(fileProvider.fileType, UTType.png.identifier)
     }
 
 
@@ -54,7 +55,7 @@ class ModelObjects_PasteboardTests: XCTestCase {
         page.content = content
 
         let provider = content.filePromiseProvider
-        XCTAssertEqual(content.filePromiseProvider(provider, fileNameForType: (kUTTypeText as String)), "")
+        XCTAssertEqual(content.filePromiseProvider(provider, fileNameForType: UTType.text.identifier), "")
     }
 
     func test_filePromiseProviderFileNameForType_textContentReturnsFileNameUsingPageTitle() {
@@ -64,7 +65,7 @@ class ModelObjects_PasteboardTests: XCTestCase {
         page.content = content
 
         let provider = content.filePromiseProvider
-        let filename = (content.filePromiseProvider(provider, fileNameForType: (kUTTypeRTF as String)) as NSString)
+        let filename = (content.filePromiseProvider(provider, fileNameForType: UTType.rtf.identifier) as NSString)
         XCTAssertEqual(filename.deletingPathExtension, "Hello World")
     }
 
@@ -75,7 +76,7 @@ class ModelObjects_PasteboardTests: XCTestCase {
         page.content = content
 
         let provider = content.filePromiseProvider
-        let filename = (content.filePromiseProvider(provider, fileNameForType: (kUTTypeRTF as String)) as NSString)
+        let filename = (content.filePromiseProvider(provider, fileNameForType: UTType.rtf.identifier) as NSString)
         XCTAssertEqual(filename.pathExtension, "rtf")
     }
 
@@ -86,7 +87,7 @@ class ModelObjects_PasteboardTests: XCTestCase {
         page.content = content
 
         let provider = content.filePromiseProvider
-        XCTAssertEqual(content.filePromiseProvider(provider, fileNameForType: (kUTTypeText as String)), "")
+        XCTAssertEqual(content.filePromiseProvider(provider, fileNameForType: UTType.text.identifier), "")
     }
 
     func test_filePromiseProviderFileNameForType_imageContentReturnsFileNameUsingPageTitle() {
@@ -96,7 +97,7 @@ class ModelObjects_PasteboardTests: XCTestCase {
         page.content = content
 
         let provider = content.filePromiseProvider
-        let filename = (content.filePromiseProvider(provider, fileNameForType: (kUTTypePNG as String)) as NSString)
+        let filename = (content.filePromiseProvider(provider, fileNameForType: UTType.png.identifier) as NSString)
         XCTAssertEqual(filename.deletingPathExtension, "Hello World")
     }
 
@@ -107,7 +108,7 @@ class ModelObjects_PasteboardTests: XCTestCase {
         page.content = content
 
         let provider = content.filePromiseProvider
-        let filename = (content.filePromiseProvider(provider, fileNameForType: (kUTTypePNG as String)) as NSString)
+        let filename = (content.filePromiseProvider(provider, fileNameForType: UTType.png.identifier) as NSString)
         XCTAssertEqual(filename.pathExtension, "png")
     }
 

@@ -8,33 +8,34 @@
 
 @testable import CoppiceCore
 import XCTest
+import UniformTypeIdentifiers
 
 class PageContentTests: XCTestCase {
     func test_pageContentType_contentTypeForUTIReturnsTextForPlainTextUTI() {
-        XCTAssertEqual(Page.ContentType.contentType(forUTI: kUTTypePlainText as String), .text)
+        XCTAssertEqual(Page.ContentType.contentType(forUTI: UTType.text.identifier), .text)
     }
 
     func test_pageContentType_contentTypeForUTIReturnsTextForRTFUTI() {
-        XCTAssertEqual(Page.ContentType.contentType(forUTI: kUTTypeRTF as String), .text)
+        XCTAssertEqual(Page.ContentType.contentType(forUTI: UTType.rtf.identifier), .text)
     }
 
     func test_pageContentType_contentTypeForUTIReturnsImageForGIFUTI() {
-        XCTAssertEqual(Page.ContentType.contentType(forUTI: kUTTypeGIF as String), .image)
+        XCTAssertEqual(Page.ContentType.contentType(forUTI: UTType.gif.identifier), .image)
     }
 
     func test_pageContentType_contentTypeForUTIReturnsImageForPNGUTI() {
-        XCTAssertEqual(Page.ContentType.contentType(forUTI: kUTTypePNG as String), .image)
+        XCTAssertEqual(Page.ContentType.contentType(forUTI: UTType.png.identifier), .image)
     }
 
     func test_pageContentType_contentTypeForUTIReturnsImageForJPEGUTI() {
-        XCTAssertEqual(Page.ContentType.contentType(forUTI: kUTTypeJPEG as String), .image)
+        XCTAssertEqual(Page.ContentType.contentType(forUTI: UTType.jpeg.identifier), .image)
     }
 
     func test_pageContentType_contentTypeForUTIReturnsImageForTIFFUTI() {
-        XCTAssertEqual(Page.ContentType.contentType(forUTI: kUTTypeTIFF as String), .image)
+        XCTAssertEqual(Page.ContentType.contentType(forUTI: UTType.tiff.identifier), .image)
     }
 
     func test_pageContentType_contentTypeForUTIReturnsImageForBMPUTI() {
-        XCTAssertEqual(Page.ContentType.contentType(forUTI: kUTTypeBMP as String), .image)
+        XCTAssertEqual(Page.ContentType.contentType(forUTI: UTType.bmp.identifier), .image)
     }
 }

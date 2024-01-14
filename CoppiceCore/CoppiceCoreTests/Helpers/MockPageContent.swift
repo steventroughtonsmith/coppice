@@ -9,6 +9,7 @@
 import AppKit
 @testable import CoppiceCore
 import M3Data
+import UniformTypeIdentifiers
 
 class MockPageContent: Page.Content, NSFilePromiseProviderDelegate {
     override var minimumContentSize: CGSize {
@@ -16,7 +17,7 @@ class MockPageContent: Page.Content, NSFilePromiseProviderDelegate {
     }
 
     override var filePromiseProvider: ExtendableFilePromiseProvider {
-        return ExtendableFilePromiseProvider(fileType: (kUTTypeText as String), delegate: self)
+        return ExtendableFilePromiseProvider(fileType: UTType.text.identifier, delegate: self)
     }
 
     var maintainAspectRatioOverride: Bool = false
