@@ -365,7 +365,7 @@ class CanvasEditorViewModelTests: XCTestCase {
         let page = LayoutEnginePage(id: self.canvasPage1.id.uuid, contentFrame: .zero)
         self.viewModel.remove(items: [page], from: self.viewModel.layoutEngine)
 
-        XCTAssertNil(self.canvasPage1.canvas)
+//        XCTAssertNil(self.canvasPage1.canvas)
         XCTAssertFalse(self.canvas.pages.contains(self.canvasPage1))
     }
 

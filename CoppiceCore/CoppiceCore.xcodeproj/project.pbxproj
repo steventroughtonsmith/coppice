@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		990565DD2B5581DA00BB7B00 /* M3Data in Frameworks */ = {isa = PBXBuildFile; productRef = 990565DC2B5581DA00BB7B00 /* M3Data */; };
 		99248D212B3497DE0059546E /* M3Data in Frameworks */ = {isa = PBXBuildFile; productRef = 99248D202B3497DE0059546E /* M3Data */; };
 		99399D0B28F45AA800B0E080 /* MockPageHierarchyRestorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99399D0A28F45AA800B0E080 /* MockPageHierarchyRestorer.swift */; };
 		994664A02816EE0300A08522 /* CroppedImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9946649F2816EE0300A08522 /* CroppedImageCache.swift */; };
@@ -144,6 +145,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		990565D82B5562C300BB7B00 /* CoreAudioTypes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioTypes.framework; path = System/Library/Frameworks/CoreAudioTypes.framework; sourceTree = SDKROOT; };
 		99399D0A28F45AA800B0E080 /* MockPageHierarchyRestorer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPageHierarchyRestorer.swift; sourceTree = "<group>"; };
 		9946649F2816EE0300A08522 /* CroppedImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CroppedImageCache.swift; sourceTree = "<group>"; };
 		9948C0CE2896B78C00DB754E /* TestData.Plist.V2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.Plist.V2.swift; sourceTree = "<group>"; };
@@ -289,6 +291,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				990565DD2B5581DA00BB7B00 /* M3Data in Frameworks */,
 				99D0C76024C5DD1E002EEBFA /* CoppiceCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -349,6 +352,7 @@
 		99CC5B8327F1F28E0084ADFF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				990565D82B5562C300BB7B00 /* CoreAudioTypes.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -667,6 +671,9 @@
 				99D0C76224C5DD1E002EEBFA /* PBXTargetDependency */,
 			);
 			name = CoppiceCoreTests;
+			packageProductDependencies = (
+				990565DC2B5581DA00BB7B00 /* M3Data */,
+			);
 			productName = CoppiceCoreTests;
 			productReference = 99D0C75F24C5DD1E002EEBFA /* CoppiceCoreTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -1392,6 +1399,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		990565DC2B5581DA00BB7B00 /* M3Data */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = M3Data;
+		};
 		99248D202B3497DE0059546E /* M3Data */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = M3Data;

@@ -35,8 +35,8 @@
     },
     {
       "target" : {
-        "containerPath" : "container:..\/Submodules\/M3Data\/M3Data.xcodeproj",
-        "identifier" : "99CC5B6127F1EFE80084ADFF",
+        "containerPath" : "container:..\/Submodules\/M3Data",
+        "identifier" : "M3DataTests",
         "name" : "M3DataTests"
       }
     },

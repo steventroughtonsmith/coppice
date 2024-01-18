@@ -10,7 +10,18 @@
 @testable import CoppiceCore
 import XCTest
 
-class SourceListNodeCollectionTests: XCTestCase {
+class SourceListNodeTestsBase: XCTestCase {
+    var modelController: CoppiceModelController!
+
+    override func setUp() {
+        super.setUp()
+
+        self.modelController = CoppiceModelController(undoManager: UndoManager())
+    }
+}
+
+
+class SourceListNodeCollectionTests: SourceListNodeTestsBase {
     //MARK: - .count
     func test_count_returnsNumberOfNodesInCollection() {
         let collection = SourceListNodeCollection()
@@ -211,7 +222,7 @@ class SourceListNodeCollectionTests: XCTestCase {
 }
 
 
-class SourceListNodeTests: XCTestCase {
+class SourceListNodeTests: SourceListNodeTestsBase {
     //MARK: - init(item:cellType:)
     func test_init_setsItemAndCellType() {
         let modelID = Page.modelID(with: UUID())
@@ -237,7 +248,7 @@ class SourceListNodeTests: XCTestCase {
 }
 
 
-class CanvasSourceListNodeTests: XCTestCase {
+class CanvasSourceListNodeTests: SourceListNodeTestsBase {
     func test_setsItemToCanvases() {
         XCTAssertEqual(CanvasesSourceListNode().item, .canvases)
     }
@@ -248,16 +259,16 @@ class CanvasSourceListNodeTests: XCTestCase {
 }
 
 
-class PagesGroupSourceListNodeTests: XCTestCase {
+class PagesGroupSourceListNodeTests: SourceListNodeTestsBase {
     func test_setsItemToFolderWithSuppliedFolder() {
-        let folder = Folder()
+        let folder = self.modelController.folderCollection.newObject()
         let node = PagesGroupSourceListNode(rootFolder: folder)
 
         XCTAssertEqual(node.item, .folder(folder.id))
     }
 
     func test_setsTypeToGroupCell() {
-        let folder = Folder()
+        let folder = self.modelController.folderCollection.newObject()
         let node = PagesGroupSourceListNode(rootFolder: folder)
 
         XCTAssertEqual(node.cellType, .groupCell)
@@ -265,9 +276,9 @@ class PagesGroupSourceListNodeTests: XCTestCase {
 }
 
 
-class FolderSourceListNodeTests: XCTestCase {
+class FolderSourceListNodeTests: SourceListNodeTestsBase {
     func test_init_setsItemToSuppliedFolder() {
-        let folder = Folder()
+        let folder = self.modelController.folderCollection.newObject()
         let node = FolderSourceListNode(folder: folder)
         XCTAssertEqual(node.item, .folder(folder.id))
     }
@@ -275,14 +286,14 @@ class FolderSourceListNodeTests: XCTestCase {
 
     //MARK: - .title
     func test_title_get_returnsFolderTitle() {
-        let folder = Folder()
+        let folder = self.modelController.folderCollection.newObject()
         folder.title = "Hello World"
         let node = FolderSourceListNode(folder: folder)
         XCTAssertEqual(node.title, "Hello World")
     }
 
     func test_title_set_setsFolderTitle() {
-        let folder = Folder()
+        let folder = self.modelController.folderCollection.newObject()
         folder.title = "Hello World"
         let node = FolderSourceListNode(folder: folder)
         node.title = "Foo Bar"
@@ -292,17 +303,17 @@ class FolderSourceListNodeTests: XCTestCase {
 
     //MARK: - .folderForCreation
     func test_folderForCreation_returnsFolder() {
-        let folder = Folder()
+        let folder = self.modelController.folderCollection.newObject()
         let node = FolderSourceListNode(folder: folder)
         XCTAssertEqual(node.folderForCreation, folder)
     }
 
     //MARK: - .folderItemForCreation
     func test_folderItemForCreation_returnsLastItemFromFolder() {
-        let containedFolder = Folder()
-        let containedPage1 = Page()
-        let containedPage2 = Page()
-        let folder = Folder()
+        let containedFolder = self.modelController.folderCollection.newObject()
+        let containedPage1 = self.modelController.pageCollection.newObject()
+        let containedPage2 = self.modelController.pageCollection.newObject()
+        let folder = self.modelController.folderCollection.newObject()
         folder.insert([containedPage1, containedFolder, containedPage2])
         let node = FolderSourceListNode(folder: folder)
         XCTAssertEqual(node.folderItemForCreation as? Page, containedPage2)
@@ -310,16 +321,16 @@ class FolderSourceListNodeTests: XCTestCase {
 
     //MARK: - .folderContainable
     func test_folderContainable_returnsFolder() {
-        let folder = Folder()
+        let folder = self.modelController.folderCollection.newObject()
         let node = FolderSourceListNode(folder: folder)
         XCTAssertEqual(node.folderContainable as? Folder, folder)
     }
 }
 
 
-class PagesSourceListNodeTests: XCTestCase {
+class PagesSourceListNodeTests: SourceListNodeTestsBase {
     func test_init_setsItemToSuppliedPage() {
-        let page = Page()
+        let page = self.modelController.pageCollection.newObject()
         let node = PageSourceListNode(page: page)
         XCTAssertEqual(node.item, .page(page.id))
     }
@@ -327,14 +338,14 @@ class PagesSourceListNodeTests: XCTestCase {
 
     //MARK: - .title
     func test_title_get_returnsPageTitle() {
-        let page = Page()
+        let page = self.modelController.pageCollection.newObject()
         page.title = "OMG Possum!"
         let node = PageSourceListNode(page: page)
         XCTAssertEqual(node.title, "OMG Possum!")
     }
 
     func test_title_set_setsPageTitle() {
-        let page = Page()
+        let page = self.modelController.pageCollection.newObject()
         page.title = "No possums :'("
         let node = PageSourceListNode(page: page)
         node.title = "MOAR POSSUMS!"
@@ -344,9 +355,9 @@ class PagesSourceListNodeTests: XCTestCase {
 
     //MARK: - .folderForCreation
     func test_folderForCreation_returnsPagesContainingFolder() {
-        let page = Page()
+        let page = self.modelController.pageCollection.newObject()
 
-        let folder = Folder()
+        let folder = self.modelController.folderCollection.newObject()
         folder.insert([page])
 
         let node = PageSourceListNode(page: page)
@@ -356,9 +367,9 @@ class PagesSourceListNodeTests: XCTestCase {
 
     //MARK: - .folderItemForCreation
     func test_folderItemForCreation_returnsPage() {
-        let page = Page()
+        let page = self.modelController.pageCollection.newObject()
 
-        let folder = Folder()
+        let folder = self.modelController.folderCollection.newObject()
         folder.insert([page])
 
         let node = PageSourceListNode(page: page)
@@ -368,9 +379,9 @@ class PagesSourceListNodeTests: XCTestCase {
 
     //MARK: - .folderContainable
     func test_folderContainable_returnsPage() {
-        let page = Page()
+        let page = self.modelController.pageCollection.newObject()
 
-        let folder = Folder()
+        let folder = self.modelController.folderCollection.newObject()
         folder.insert([page])
 
         let node = PageSourceListNode(page: page)

@@ -127,7 +127,6 @@ extension Canvas {
         if let modelController = self.modelController as? CoppiceModelController {
             let hierarchy = builder.buildHierarchy(in: modelController)
             hierarchy.canvas = self
-            print("pages: \(hierarchy.pages.count) links: \(hierarchy.links.count) entry points: \(hierarchy.entryPoints.count)")
         }
     }
 

@@ -823,7 +823,6 @@ class CanvasTests: XCTestCase {
     }
 
     func test_openPageLinkedFrom_addsNewPageToLeftIfParentOfSourceSetAndOnRightAndNoOtherPageExistsThere() throws {
-        XCTFail("Re-implement")
         let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -832,18 +831,22 @@ class CanvasTests: XCTestCase {
             $0.frame = CGRect(x: 40, y: 40, width: 20, height: 20)
             $0.canvas = canvas
         }
-        let parentPage = CanvasPage.create(in: modelController) {
+        let childPage = CanvasPage.create(in: modelController) {
             $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
             $0.canvas = canvas
-//            $0.parent = rootPage
         }
 
-        let newCanvasPage = try XCTUnwrap(canvas.open(page, linkedFrom: parentPage, with: PageLink(destination: page.id), mode: .new).first)
+        _ = modelController.collection(for: CanvasLink.self).newObject() {
+            $0.sourcePage = rootPage
+            $0.destinationPage = childPage
+            $0.link = PageLink(destination: page.id, source: page.id)
+        }
+
+        let newCanvasPage = try XCTUnwrap(canvas.open(page, linkedFrom: childPage, with: PageLink(destination: page.id), mode: .new).first)
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 10 + GlobalConstants.linkedPageOffset + 20, y: 30, width: 20, height: 20))
     }
 
     func test_openPageLinkedFrom_addsNewPageToTopIfParentOfSourceSetAndOnBottomAndNoOtherPageExistsThere() throws {
-        XCTFail("Re-implement")
         let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -852,18 +855,22 @@ class CanvasTests: XCTestCase {
             $0.frame = CGRect(x: 10, y: 90, width: 20, height: 20)
             $0.canvas = canvas
         }
-        let parentPage = CanvasPage.create(in: modelController) {
+        let childPage = CanvasPage.create(in: modelController) {
             $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
             $0.canvas = canvas
-//            $0.parent = rootPage
         }
 
-        let newCanvasPage = try XCTUnwrap(canvas.open(page, linkedFrom: parentPage, with: PageLink(destination: page.id), mode: .new).first)
+        _ = modelController.collection(for: CanvasLink.self).newObject() {
+            $0.sourcePage = rootPage
+            $0.destinationPage = childPage
+            $0.link = PageLink(destination: page.id, source: page.id)
+        }
+
+        let newCanvasPage = try XCTUnwrap(canvas.open(page, linkedFrom: childPage, with: PageLink(destination: page.id), mode: .new).first)
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 10, y: 30 - GlobalConstants.linkedPageOffset - 20, width: 20, height: 20))
     }
 
     func test_openPageLinkedFrom_addsNewPageToBottomIfParentOfSourceSetAndOnTopAndNoOtherPageExistsThere() throws {
-        XCTFail("Re-implement")
         let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -872,18 +879,22 @@ class CanvasTests: XCTestCase {
             $0.frame = CGRect(x: 10, y: -90, width: 20, height: 20)
             $0.canvas = canvas
         }
-        let parentPage = CanvasPage.create(in: modelController) {
+        let childPage = CanvasPage.create(in: modelController) {
             $0.frame = CGRect(x: 10, y: 30, width: 20, height: 20)
             $0.canvas = canvas
-//            $0.parent = rootPage
         }
 
-        let newCanvasPage = try XCTUnwrap(canvas.open(page, linkedFrom: parentPage, with: PageLink(destination: page.id), mode: .new).first)
+        _ = modelController.collection(for: CanvasLink.self).newObject() {
+            $0.sourcePage = rootPage
+            $0.destinationPage = childPage
+            $0.link = PageLink(destination: page.id, source: page.id)
+        }
+
+        let newCanvasPage = try XCTUnwrap(canvas.open(page, linkedFrom: childPage, with: PageLink(destination: page.id), mode: .new).first)
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 10, y: 50 + GlobalConstants.linkedPageOffset, width: 20, height: 20))
     }
 
     func test_openPageLinkedFrom_ifLinkedPageAlreadyExistsOnRightAddsAbove() throws {
-        XCTFail("Re-implement")
         let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -893,18 +904,22 @@ class CanvasTests: XCTestCase {
             $0.canvas = canvas
         }
 
-        CanvasPage.create(in: modelController) {
+        let childPage = CanvasPage.create(in: modelController) {
             $0.frame = CGRect(x: 90, y: 30, width: 20, height: 20)
-//            $0.parent = parentPage
             $0.canvas = canvas
         } //existing child
+
+        _ = modelController.collection(for: CanvasLink.self).newObject() {
+            $0.sourcePage = parentPage
+            $0.destinationPage = childPage
+            $0.link = PageLink(destination: page.id, source: page.id)
+        }
 
         let newCanvasPage = try XCTUnwrap(canvas.open(page, linkedFrom: parentPage, with: PageLink(destination: page.id), mode: .new).first)
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 90, y: 30 - GlobalConstants.linkedPageOffset - 20, width: 20, height: 20))
     }
 
     func test_openPageLinkedFrom_ifLinkedPageAlreadyExistsOnTopRightAddsToBottomRight() throws {
-        XCTFail("Re-implement")
         let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -914,24 +929,33 @@ class CanvasTests: XCTestCase {
             $0.canvas = canvas
         }
 
-        CanvasPage.create(in: modelController) {
+        let child1Page = CanvasPage.create(in: modelController) {
             $0.frame = CGRect(x: 90, y: 30, width: 20, height: 20)
-//            $0.parent = parentPage
             $0.canvas = canvas
         } //existing right child
 
-        CanvasPage.create(in: modelController) {
+        let child2Page = CanvasPage.create(in: modelController) {
             $0.frame = CGRect(x: 90, y: -30, width: 20, height: 20)
-//            $0.parent = parentPage
             $0.canvas = canvas
         } //existing top right child
+
+        _ = modelController.collection(for: CanvasLink.self).newObject() {
+            $0.sourcePage = parentPage
+            $0.destinationPage = child1Page
+            $0.link = PageLink(destination: page.id, source: page.id)
+        }
+
+        _ = modelController.collection(for: CanvasLink.self).newObject() {
+            $0.sourcePage = parentPage
+            $0.destinationPage = child2Page
+            $0.link = PageLink(destination: page.id, source: page.id)
+        }
 
         let newCanvasPage = try XCTUnwrap(canvas.open(page, linkedFrom: parentPage, with: PageLink(destination: page.id), mode: .new).first)
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 90, y: 50 + GlobalConstants.linkedPageOffset, width: 20, height: 20))
     }
 
     func test_openPageLinkedFrom_ifLinkedPageAlreadyExistsOnBottomRightAddsToTopRight() throws {
-        XCTFail("Re-implement")
         let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -941,24 +965,33 @@ class CanvasTests: XCTestCase {
             $0.canvas = canvas
         }
 
-        CanvasPage.create(in: modelController) {
+        let child1Page = CanvasPage.create(in: modelController) {
             $0.frame = CGRect(x: 90, y: 20, width: 20, height: 20)
-//            $0.parent = parentPage
             $0.canvas = canvas
         } //existing right child
 
-        CanvasPage.create(in: modelController) {
+        let child2Page = CanvasPage.create(in: modelController) {
             $0.frame = CGRect(x: 90, y: 80, width: 20, height: 20)
-//            $0.parent = parentPage
             $0.canvas = canvas
         } //existing bottom right child
+
+        _ = modelController.collection(for: CanvasLink.self).newObject() {
+            $0.sourcePage = parentPage
+            $0.destinationPage = child1Page
+            $0.link = PageLink(destination: page.id, source: page.id)
+        }
+
+        _ = modelController.collection(for: CanvasLink.self).newObject() {
+            $0.sourcePage = parentPage
+            $0.destinationPage = child2Page
+            $0.link = PageLink(destination: page.id, source: page.id)
+        }
 
         let newCanvasPage = try XCTUnwrap(canvas.open(page, linkedFrom: parentPage, with: PageLink(destination: page.id), mode: .new).first)
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 90, y: 20 - GlobalConstants.linkedPageOffset - 20, width: 20, height: 20))
     }
 
     func test_openPageLinkedFrom_ifLinkedPageAlreadyExistsOnLeftAddsAbove() throws {
-        XCTFail("Re-implement")
         let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -968,18 +1001,22 @@ class CanvasTests: XCTestCase {
             $0.canvas = canvas
         }
 
-        CanvasPage.create(in: modelController) {
+        let childPage = CanvasPage.create(in: modelController) {
             $0.frame = CGRect(x: -110, y: 30, width: 20, height: 20)
-//            $0.parent = parentPage
             $0.canvas = canvas
         } //existing child
+
+        _ = modelController.collection(for: CanvasLink.self).newObject() {
+            $0.sourcePage = parentPage
+            $0.destinationPage = childPage
+            $0.link = PageLink(destination: page.id, source: page.id)
+        }
 
         let newCanvasPage = try XCTUnwrap(canvas.open(page, linkedFrom: parentPage, with: PageLink(destination: page.id), mode: .new).first)
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: -110, y: 30 - GlobalConstants.linkedPageOffset - 20, width: 20, height: 20))
     }
 
     func test_openPageLinkedFrom_ifLinkedPageAlreadyExistsOnTopLeftAddsToBottomLeft() throws {
-        XCTFail("Re-implement")
         let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -989,24 +1026,33 @@ class CanvasTests: XCTestCase {
             $0.canvas = canvas
         }
 
-        CanvasPage.create(in: modelController) {
+        let child1Page = CanvasPage.create(in: modelController) {
             $0.frame = CGRect(x: -110, y: 30, width: 20, height: 20)
-//            $0.parent = parentPage
             $0.canvas = canvas
         } //existing right child
 
-        CanvasPage.create(in: modelController) {
+        let child2Page = CanvasPage.create(in: modelController) {
             $0.frame = CGRect(x: -110, y: -30, width: 20, height: 20)
-//            $0.parent = parentPage
             $0.canvas = canvas
         } //existing top left child
+
+        _ = modelController.collection(for: CanvasLink.self).newObject() {
+            $0.sourcePage = parentPage
+            $0.destinationPage = child1Page
+            $0.link = PageLink(destination: page.id, source: page.id)
+        }
+
+        _ = modelController.collection(for: CanvasLink.self).newObject() {
+            $0.sourcePage = parentPage
+            $0.destinationPage = child2Page
+            $0.link = PageLink(destination: page.id, source: page.id)
+        }
 
         let newCanvasPage = try XCTUnwrap(canvas.open(page, linkedFrom: parentPage, with: PageLink(destination: page.id), mode: .new).first)
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: -110, y: 50 + GlobalConstants.linkedPageOffset, width: 20, height: 20))
     }
 
     func test_openPageLinkedFrom_ifLinkedPageAlreadyExistsOnBottomLeftAddsToTopLeft() throws {
-        XCTFail("Re-implement")
         let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -1016,24 +1062,33 @@ class CanvasTests: XCTestCase {
             $0.canvas = canvas
         }
 
-        CanvasPage.create(in: modelController) {
+        let child1Page = CanvasPage.create(in: modelController) {
             $0.frame = CGRect(x: -110, y: 20, width: 20, height: 20)
-//            $0.parent = parentPage
             $0.canvas = canvas
         } //existing right child
 
-        CanvasPage.create(in: modelController) {
+        let child2Page = CanvasPage.create(in: modelController) {
             $0.frame = CGRect(x: -110, y: 80, width: 20, height: 20)
-//            $0.parent = parentPage
             $0.canvas = canvas
         } //existing bottom left child
+
+        _ = modelController.collection(for: CanvasLink.self).newObject() {
+            $0.sourcePage = parentPage
+            $0.destinationPage = child1Page
+            $0.link = PageLink(destination: page.id, source: page.id)
+        }
+
+        _ = modelController.collection(for: CanvasLink.self).newObject() {
+            $0.sourcePage = parentPage
+            $0.destinationPage = child2Page
+            $0.link = PageLink(destination: page.id, source: page.id)
+        }
 
         let newCanvasPage = try XCTUnwrap(canvas.open(page, linkedFrom: parentPage, with: PageLink(destination: page.id), mode: .new).first)
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: -110, y: 20 - GlobalConstants.linkedPageOffset - 20, width: 20, height: 20))
     }
 
     func test_openPageLinkedFrom_ifLinkedPageAlreadyExistsOnTopAddsToRight() throws {
-        XCTFail("Re-implement")
         let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -1043,18 +1098,22 @@ class CanvasTests: XCTestCase {
             $0.canvas = canvas
         }
 
-        CanvasPage.create(in: modelController) {
+        let childPage = CanvasPage.create(in: modelController) {
             $0.frame = CGRect(x: 10, y: -90, width: 20, height: 20)
-//            $0.parent = parentPage
             $0.canvas = canvas
         } //existing child
+
+        _ = modelController.collection(for: CanvasLink.self).newObject() {
+            $0.sourcePage = parentPage
+            $0.destinationPage = childPage
+            $0.link = PageLink(destination: page.id, source: page.id)
+        }
 
         let newCanvasPage = try XCTUnwrap(canvas.open(page, linkedFrom: parentPage, with: PageLink(destination: page.id), mode: .new).first)
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 10 + GlobalConstants.linkedPageOffset + 20, y: -90, width: 20, height: 20))
     }
 
     func test_openPageLinkedFrom_ifLinkedPageAlreadyExistsOnTopLeftAddsToTopRight() throws {
-        XCTFail("Re-implement")
         let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -1064,24 +1123,33 @@ class CanvasTests: XCTestCase {
             $0.canvas = canvas
         }
 
-        CanvasPage.create(in: modelController) {
+        let child1Page = CanvasPage.create(in: modelController) {
             $0.frame = CGRect(x: 10, y: -90, width: 20, height: 20)
-//            $0.parent = parentPage
             $0.canvas = canvas
         } //existing top child
 
-        CanvasPage.create(in: modelController) {
+        let child2Page = CanvasPage.create(in: modelController) {
             $0.frame = CGRect(x: -20, y: -90, width: 20, height: 20)
-//            $0.parent = parentPage
             $0.canvas = canvas
         } //existing top left child
+
+        _ = modelController.collection(for: CanvasLink.self).newObject() {
+            $0.sourcePage = parentPage
+            $0.destinationPage = child1Page
+            $0.link = PageLink(destination: page.id, source: page.id)
+        }
+
+        _ = modelController.collection(for: CanvasLink.self).newObject() {
+            $0.sourcePage = parentPage
+            $0.destinationPage = child2Page
+            $0.link = PageLink(destination: page.id, source: page.id)
+        }
 
         let newCanvasPage = try XCTUnwrap(canvas.open(page, linkedFrom: parentPage, with: PageLink(destination: page.id), mode: .new).first)
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 10 + GlobalConstants.linkedPageOffset + 20, y: -90, width: 20, height: 20))
     }
 
     func test_openPageLinkedFrom_ifLinkedPageAlreadyExistsOnTopRightAddsToTopLeft() throws {
-        XCTFail("Re-implement")
         let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -1091,24 +1159,33 @@ class CanvasTests: XCTestCase {
             $0.canvas = canvas
         }
 
-        CanvasPage.create(in: modelController) {
+        let child1Page = CanvasPage.create(in: modelController) {
             $0.frame = CGRect(x: 20, y: -90, width: 20, height: 20)
-//            $0.parent = parentPage
             $0.canvas = canvas
         } //existing top child
 
-        CanvasPage.create(in: modelController) {
+        let child2Page = CanvasPage.create(in: modelController) {
             $0.frame = CGRect(x: 60, y: -90, width: 20, height: 20)
-//            $0.parent = parentPage
             $0.canvas = canvas
         } //existing top right child
+
+        _ = modelController.collection(for: CanvasLink.self).newObject() {
+            $0.sourcePage = parentPage
+            $0.destinationPage = child1Page
+            $0.link = PageLink(destination: page.id, source: page.id)
+        }
+
+        _ = modelController.collection(for: CanvasLink.self).newObject() {
+            $0.sourcePage = parentPage
+            $0.destinationPage = child2Page
+            $0.link = PageLink(destination: page.id, source: page.id)
+        }
 
         let newCanvasPage = try XCTUnwrap(canvas.open(page, linkedFrom: parentPage, with: PageLink(destination: page.id), mode: .new).first)
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 20 - GlobalConstants.linkedPageOffset - 20, y: -90, width: 20, height: 20))
     }
 
     func test_openPageLinkedFrom_ifLinkedPageAlreadyExistsOnBottomAddsToRight() throws {
-        XCTFail("Re-implement")
         let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -1118,18 +1195,22 @@ class CanvasTests: XCTestCase {
             $0.canvas = canvas
         }
 
-        CanvasPage.create(in: modelController) {
+        let childPage = CanvasPage.create(in: modelController) {
             $0.frame = CGRect(x: 10, y: 110, width: 20, height: 20)
-//            $0.parent = parentPage
             $0.canvas = canvas
         } //existing child
+
+        _ = modelController.collection(for: CanvasLink.self).newObject() {
+            $0.sourcePage = parentPage
+            $0.destinationPage = childPage
+            $0.link = PageLink(destination: page.id, source: page.id)
+        }
 
         let newCanvasPage = try XCTUnwrap(canvas.open(page, linkedFrom: parentPage, with: PageLink(destination: page.id), mode: .new).first)
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 10 + GlobalConstants.linkedPageOffset + 20, y: 110, width: 20, height: 20))
     }
 
     func test_openPageLinkedFrom_ifLinkedPageAlreadyExistsOnBottomLeftAddsToBottomRight() throws {
-        XCTFail("Re-implement")
         let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -1139,24 +1220,33 @@ class CanvasTests: XCTestCase {
             $0.canvas = canvas
         }
 
-        CanvasPage.create(in: modelController) {
+        let child1Page = CanvasPage.create(in: modelController) {
             $0.frame = CGRect(x: 10, y: 110, width: 20, height: 20)
-//            $0.parent = parentPage
             $0.canvas = canvas
         } //existing bottom child
 
-        CanvasPage.create(in: modelController) {
+        let child2Page = CanvasPage.create(in: modelController) {
             $0.frame = CGRect(x: -20, y: 110, width: 20, height: 20)
-//            $0.parent = parentPage
             $0.canvas = canvas
         } //existing bottom left child
+
+        _ = modelController.collection(for: CanvasLink.self).newObject() {
+            $0.sourcePage = parentPage
+            $0.destinationPage = child1Page
+            $0.link = PageLink(destination: page.id, source: page.id)
+        }
+
+        _ = modelController.collection(for: CanvasLink.self).newObject() {
+            $0.sourcePage = parentPage
+            $0.destinationPage = child2Page
+            $0.link = PageLink(destination: page.id, source: page.id)
+        }
 
         let newCanvasPage = try XCTUnwrap(canvas.open(page, linkedFrom: parentPage, with: PageLink(destination: page.id), mode: .new).first)
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 10 + GlobalConstants.linkedPageOffset + 20, y: 110, width: 20, height: 20))
     }
 
     func test_openPageLinkedFrom_ifLinkedPageAlreadyExistsOnBottomRightAddsToBottomLeft() throws {
-        XCTFail("Re-implement")
         let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let canvas = Canvas.create(in: modelController)
@@ -1166,17 +1256,27 @@ class CanvasTests: XCTestCase {
             $0.canvas = canvas
         }
 
-        CanvasPage.create(in: modelController) {
+        let child1Page = CanvasPage.create(in: modelController) {
             $0.frame = CGRect(x: 20, y: 110, width: 20, height: 20)
-//            $0.parent = parentPage
             $0.canvas = canvas
         } //existing bottom child
 
-        CanvasPage.create(in: modelController) {
+        let child2Page = CanvasPage.create(in: modelController) {
             $0.frame = CGRect(x: 60, y: 110, width: 20, height: 20)
-//            $0.parent = parentPage
             $0.canvas = canvas
         } //existing bottom right child
+
+        _ = modelController.collection(for: CanvasLink.self).newObject() {
+            $0.sourcePage = parentPage
+            $0.destinationPage = child1Page
+            $0.link = PageLink(destination: page.id, source: page.id)
+        }
+
+        _ = modelController.collection(for: CanvasLink.self).newObject() {
+            $0.sourcePage = parentPage
+            $0.destinationPage = child2Page
+            $0.link = PageLink(destination: page.id, source: page.id)
+        }
 
         let newCanvasPage = try XCTUnwrap(canvas.open(page, linkedFrom: parentPage, with: PageLink(destination: page.id), mode: .new).first)
         XCTAssertEqual(newCanvasPage.frame, CGRect(x: 20 - GlobalConstants.linkedPageOffset - 20, y: 110, width: 20, height: 20))

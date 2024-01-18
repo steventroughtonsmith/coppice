@@ -372,7 +372,6 @@ class CoppiceModelControllerPageTests: XCTestCase {
     }
 
     func test_deletePage_removesPageFromAllCanvases() throws {
-        XCTFail("Re-implement")
         let page = self.modelController.createPage(in: self.folder)
         let canvas1 = self.modelController.createCanvas()
         let canvasPage1 = try XCTUnwrap(canvas1.addPages([page]).first)
@@ -380,7 +379,12 @@ class CoppiceModelControllerPageTests: XCTestCase {
         let canvasPage2 = try XCTUnwrap(canvas2.addPages([page]).first)
         canvasPage2.frame = CGRect(x: 10, y: 20, width: 300, height: 400)
         let canvasPage3 = try XCTUnwrap(canvas2.addPages([page]).first)
-//        canvasPage3.parent = canvasPage2
+
+        _ = self.modelController.collection(for: CanvasLink.self).newObject() {
+            $0.sourcePage = canvasPage2
+            $0.destinationPage = canvasPage3
+            $0.link = PageLink(destination: page.id, source: page.id)
+        }
 
         self.modelController.delete(page)
 
@@ -419,7 +423,6 @@ class CoppiceModelControllerPageTests: XCTestCase {
     }
 
     func test_deletePage_undoAddsPageBackToAnyCanvasesWithSameIDsAndProperties() throws {
-        XCTFail("Re-implement")
         let page = self.modelController.createPage(in: self.folder)
         let canvas1 = self.modelController.createCanvas()
         let canvasPage1 = try XCTUnwrap(canvas1.addPages([page]).first)
@@ -429,7 +432,13 @@ class CoppiceModelControllerPageTests: XCTestCase {
         canvasPage2.frame = CGRect(x: 10, y: 20, width: 300, height: 400)
         let canvasPage3 = try XCTUnwrap(canvas2.addPages([page]).first)
         canvasPage3.frame = CGRect(x: -10, y: -20, width: 400, height: 500)
-//        canvasPage3.parent = canvasPage2
+
+        _ = self.modelController.collection(for: CanvasLink.self).newObject() {
+            $0.sourcePage = canvasPage2
+            $0.destinationPage = canvasPage3
+            $0.link = PageLink(destination: page.id, source: page.id)
+        }
+
         self.undoManager.removeAllActions()
 
         self.modelController.delete(page)
@@ -438,13 +447,13 @@ class CoppiceModelControllerPageTests: XCTestCase {
 
         let redoneCanvasPage1 = try XCTUnwrap(self.modelController.canvasPageCollection.objectWithID(canvasPage1.id))
         XCTAssertEqual(redoneCanvasPage1.frame, canvasPage1.frame)
-//        XCTAssertNil(redoneCanvasPage1.parent)
+        XCTAssertNil(redoneCanvasPage1.parent)
         let redoneCanvasPage2 = try XCTUnwrap(self.modelController.canvasPageCollection.objectWithID(canvasPage2.id))
         XCTAssertEqual(redoneCanvasPage2.frame, canvasPage2.frame)
-//        XCTAssertNil(redoneCanvasPage2.parent)
+        XCTAssertNil(redoneCanvasPage2.parent)
         let redoneCanvasPage3 = try XCTUnwrap(self.modelController.canvasPageCollection.objectWithID(canvasPage3.id))
         XCTAssertEqual(redoneCanvasPage3.frame, canvasPage3.frame)
-//        XCTAssertEqual(redoneCanvasPage3.parent, redoneCanvasPage2)
+        XCTAssertEqual(redoneCanvasPage3.parent, redoneCanvasPage2)
     }
 
     func test_deletePage_undoAddsPagesBackToFolder() throws {
@@ -478,7 +487,6 @@ class CoppiceModelControllerPageTests: XCTestCase {
     }
 
     func test_deletePage_redoRemovesPageFromCanvasesAgain() throws {
-        XCTFail("Re-implement")
         let page = self.modelController.createPage(in: self.folder)
         let canvas1 = self.modelController.createCanvas()
         let canvasPage1 = try XCTUnwrap(canvas1.addPages([page]).first)
@@ -486,7 +494,11 @@ class CoppiceModelControllerPageTests: XCTestCase {
         let canvasPage2 = try XCTUnwrap(canvas2.addPages([page]).first)
         canvasPage2.frame = CGRect(x: 10, y: 20, width: 300, height: 400)
         let canvasPage3 = try XCTUnwrap(canvas2.addPages([page]).first)
-//        canvasPage3.parent = canvasPage2
+        _ = self.modelController.collection(for: CanvasLink.self).newObject() {
+            $0.sourcePage = canvasPage2
+            $0.destinationPage = canvasPage3
+            $0.link = PageLink(destination: page.id, source: page.id)
+        }
         self.undoManager.removeAllActions()
 
         self.modelController.delete(page)

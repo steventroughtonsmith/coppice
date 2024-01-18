@@ -15,7 +15,7 @@ class TestModelObject: ModelObject {
     required init(id: M3Data.ModelID) {
         self.id = id
     }
-    
+
     lazy var plistRepresentation = ModelObjectPlistRepresentation(id: self.id, plist: [:])
     var otherProperties = [ModelPlistKey: PlistValue]()
 
@@ -34,7 +34,7 @@ final class TestCollectableModelObject: NSObject, CollectableModelObject {
     init(id: M3Data.ModelID) {
         self.id = id
     }
-    
+
     lazy var plistRepresentation = ModelObjectPlistRepresentation(id: self.id, plist: [:])
     var otherProperties = [ModelPlistKey: PlistValue]()
 

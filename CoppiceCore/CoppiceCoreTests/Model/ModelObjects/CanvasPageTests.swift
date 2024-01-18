@@ -241,7 +241,6 @@ class CanvasPageTests: XCTestCase {
     }
 
     func test_existingLinkedCanvasPageForPage_returnsNilIfNoDirectChildMatchesPage() {
-        XCTFail("Re-implement")
         let modelController = CoppiceModelController(undoManager: UndoManager())
 
         let page = modelController.collection(for: Page.self).newObject()
@@ -250,9 +249,14 @@ class CanvasPageTests: XCTestCase {
         }
 
         let childPage = modelController.collection(for: Page.self).newObject()
-        modelController.collection(for: CanvasPage.self).newObject() {
+        let childCanvasPage = modelController.collection(for: CanvasPage.self).newObject() {
             $0.page = childPage
-//            $0.parent = canvasPage
+        }
+
+        _ = modelController.collection(for: CanvasLink.self).newObject() {
+            $0.sourcePage = canvasPage
+            $0.destinationPage = childCanvasPage
+            $0.link = PageLink(destination: childPage.id, source: canvasPage.id)
         }
 
         XCTAssertNil(canvasPage.existingLinkedCanvasPage(for: Page()))

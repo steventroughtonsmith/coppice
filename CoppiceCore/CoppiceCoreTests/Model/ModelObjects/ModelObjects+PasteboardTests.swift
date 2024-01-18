@@ -8,8 +8,8 @@
 
 @testable import CoppiceCore
 import M3Data
-import XCTest
 import UniformTypeIdentifiers
+import XCTest
 
 class ModelObjects_PasteboardTests: XCTestCase {
     //MARK: - .pasteboardWriter

@@ -7,8 +7,8 @@
 //
 
 @testable import CoppiceCore
-import XCTest
 import UniformTypeIdentifiers
+import XCTest
 
 class PageContentTests: XCTestCase {
     func test_pageContentType_contentTypeForUTIReturnsTextForPlainTextUTI() {

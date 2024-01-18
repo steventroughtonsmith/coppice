@@ -22,6 +22,7 @@
 
 /* Begin PBXBuildFile section */
 		9902F4A923882ADA00AF646F /* NSSegmentedControl+M3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9902F4A823882ADA00AF646F /* NSSegmentedControl+M3Extensions.swift */; };
+		990565DB2B557ACE00BB7B00 /* M3Data in Frameworks */ = {isa = PBXBuildFile; productRef = 990565DA2B557ACE00BB7B00 /* M3Data */; };
 		99062DE02519117C009D3317 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99062DDF2519117C009D3317 /* AVKit.framework */; };
 		990B543927D8FE8F004FDA93 /* ImageEditorHotspotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990B543827D8FE8F004FDA93 /* ImageEditorHotspotView.swift */; };
 		990B543B27DF87F9004FDA93 /* ImageHotspotCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990B543A27DF87F9004FDA93 /* ImageHotspotCollection.swift */; };
@@ -991,6 +992,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				990565DB2B557ACE00BB7B00 /* M3Data in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2323,6 +2325,9 @@
 				99FE01A422CD1038004D380D /* PBXTargetDependency */,
 			);
 			name = CoppiceTests;
+			packageProductDependencies = (
+				990565DA2B557ACE00BB7B00 /* M3Data */,
+			);
 			productName = BubblesTests;
 			productReference = 99FE01A222CD1038004D380D /* CoppiceTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -3091,7 +3096,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG TEST";
-				SWIFT_VERSION = 5.0;
 			};
 			name = Test;
 		};
@@ -3113,7 +3117,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.CoppiceTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Coppice.app/Contents/MacOS/Coppice";
 			};
 			name = Test;
@@ -3393,7 +3396,6 @@
 				MARKETING_VERSION = 2023.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
 			};
 			name = Archive;
 		};
@@ -3415,7 +3417,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.CoppiceTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Coppice.app/Contents/MacOS/Coppice";
 			};
 			name = Archive;
@@ -3822,7 +3823,6 @@
 				MARKETING_VERSION = 2023.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -3854,7 +3854,6 @@
 				MARKETING_VERSION = 2023.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.Coppice;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -3876,7 +3875,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.CoppiceTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Coppice.app/Contents/MacOS/Coppice";
 			};
 			name = Debug;
@@ -3899,7 +3897,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mcubedsw.CoppiceTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Coppice.app/Contents/MacOS/Coppice";
 			};
 			name = Release;
@@ -4040,6 +4037,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		990565DA2B557ACE00BB7B00 /* M3Data */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = M3Data;
+		};
 		99248D1E2B3497CF0059546E /* M3Data */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = M3Data;
