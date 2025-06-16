@@ -22,10 +22,4 @@
    <FileRef
       location = "group:Coppice/Coppice/../../M3Subscriptions/M3Subscriptions.xcodeproj">
    </FileRef>
-   <FileRef
-      location = "group:Submodules/M3Data">
-   </FileRef>
-   <FileRef
-      location = "group:Submodules/M3Data/M3Data.xctestplan">
-   </FileRef>
 </Workspace>

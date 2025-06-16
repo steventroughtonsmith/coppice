@@ -1,14 +1,24 @@
 {
+  "originHash" : "ba9ba8889f0089accb88a16c648be59f4342c4773796451e31ad6fffce5ff01e",
   "pins" : [
+    {
+      "identity" : "m3data",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/steventroughtonsmith/m3data.git",
+      "state" : {
+        "branch" : "preservation",
+        "revision" : "46759def05811bb02a19564088f8f46227f74469"
+      }
+    },
     {
       "identity" : "swift-syntax",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-syntax.git",
       "state" : {
-        "revision" : "6ad4ea24b01559dde0773e3d091f1b9e36175036",
-        "version" : "509.0.2"
+        "revision" : "64889f0c732f210a935a0ad7cda38f77f876262d",
+        "version" : "509.1.1"
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

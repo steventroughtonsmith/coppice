@@ -418,6 +418,7 @@
 		99FFF9CE2350BAE400EF02A0 /* PageEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FFF9CD2350BAE400EF02A0 /* PageEditorViewController.swift */; };
 		99FFF9D02350BAF500EF02A0 /* PageEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FFF9CF2350BAF500EF02A0 /* PageEditorViewModel.swift */; };
 		99FFF9D22354C4F600EF02A0 /* GlobalConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FFF9D12354C4F600EF02A0 /* GlobalConstants.swift */; };
+		B060DA3A2E00419A0088E79A /* M3Data in Frameworks */ = {isa = PBXBuildFile; productRef = B060DA392E00419A0088E79A /* M3Data */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -981,6 +982,7 @@
 			files = (
 				998329542A65A4F9006FC478 /* QuickLookUI.framework in Frameworks */,
 				9999A23424F80CAB001F8161 /* libM3Subscriptions.a in Frameworks */,
+				B060DA3A2E00419A0088E79A /* M3Data in Frameworks */,
 				999617FE249D0CBA00A1AE24 /* Sparkle.framework in Frameworks */,
 				99062DE02519117C009D3317 /* AVKit.framework in Frameworks */,
 				99248D232B3499600059546E /* M3Data in Frameworks */,
@@ -2306,6 +2308,7 @@
 			name = Coppice;
 			packageProductDependencies = (
 				99248D222B3499600059546E /* M3Data */,
+				B060DA392E00419A0088E79A /* M3Data */,
 			);
 			productName = Bubbles;
 			productReference = 99FE018D22CD1037004D380D /* Coppice.app */;
@@ -2404,6 +2407,9 @@
 				Base,
 			);
 			mainGroup = 99FE018422CD1037004D380D;
+			packageReferences = (
+				B060DA382E00419A0088E79A /* XCRemoteSwiftPackageReference "m3data" */,
+			);
 			productRefGroup = 99FE018E22CD1037004D380D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -3072,7 +3078,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = K3K39KWKBV;
+				DEVELOPMENT_TEAM = 2ZDN69KUUV;
 				ENABLE_HARDENED_RUNTIME = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3108,7 +3114,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = K3K39KWKBV;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = CoppiceTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3151,7 +3157,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = K3K39KWKBV;
+				DEVELOPMENT_TEAM = 2ZDN69KUUV;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -3189,7 +3195,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = K3K39KWKBV;
+				DEVELOPMENT_TEAM = 2ZDN69KUUV;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -3222,7 +3228,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = K3K39KWKBV;
+				DEVELOPMENT_TEAM = 2ZDN69KUUV;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -3255,7 +3261,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = K3K39KWKBV;
+				DEVELOPMENT_TEAM = 2ZDN69KUUV;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -3378,7 +3384,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = K3K39KWKBV;
+				DEVELOPMENT_TEAM = 2ZDN69KUUV;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3408,7 +3414,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = K3K39KWKBV;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = CoppiceTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3461,7 +3467,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = K3K39KWKBV;
+				DEVELOPMENT_TEAM = 2ZDN69KUUV;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -3493,7 +3499,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = K3K39KWKBV;
+				DEVELOPMENT_TEAM = 2ZDN69KUUV;
 				INFOPLIST_FILE = CoppiceSpotlight/Info.plist;
 				INSTALL_PATH = "@executable_path/../Contents/Library/Spotlight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3521,7 +3527,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = K3K39KWKBV;
+				DEVELOPMENT_TEAM = 2ZDN69KUUV;
 				INFOPLIST_FILE = CoppiceSpotlight/Info.plist;
 				INSTALL_PATH = "@executable_path/../Contents/Library/Spotlight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3548,7 +3554,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = K3K39KWKBV;
+				DEVELOPMENT_TEAM = 2ZDN69KUUV;
 				INFOPLIST_FILE = CoppiceSpotlight/Info.plist;
 				INSTALL_PATH = "@executable_path/../Contents/Library/Spotlight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3573,7 +3579,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = K3K39KWKBV;
+				DEVELOPMENT_TEAM = 2ZDN69KUUV;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -3602,7 +3608,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = K3K39KWKBV;
+				DEVELOPMENT_TEAM = 2ZDN69KUUV;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = CoppiceQuickLook/Info.plist;
 				INFOPLIST_PREFIX_HEADER = "$(CONFIGURATION_TEMP_DIR)/Info.plist.prefix";
@@ -3627,7 +3633,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = K3K39KWKBV;
+				DEVELOPMENT_TEAM = 2ZDN69KUUV;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = CoppiceQuickLook/Info.plist;
 				INFOPLIST_PREFIX_HEADER = "$(CONFIGURATION_TEMP_DIR)/Info.plist.prefix";
@@ -3652,7 +3658,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = K3K39KWKBV;
+				DEVELOPMENT_TEAM = 2ZDN69KUUV;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = CoppiceQuickLook/Info.plist;
 				INFOPLIST_PREFIX_HEADER = "$(CONFIGURATION_TEMP_DIR)/Info.plist.prefix";
@@ -3801,7 +3807,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = K3K39KWKBV;
+				DEVELOPMENT_TEAM = 2ZDN69KUUV;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3836,7 +3842,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = K3K39KWKBV;
+				DEVELOPMENT_TEAM = 2ZDN69KUUV;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3866,7 +3872,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = K3K39KWKBV;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = CoppiceTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3888,7 +3894,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = K3K39KWKBV;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = CoppiceTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4036,6 +4042,17 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		B060DA382E00419A0088E79A /* XCRemoteSwiftPackageReference "m3data" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/steventroughtonsmith/m3data.git";
+			requirement = {
+				branch = preservation;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		990565DA2B557ACE00BB7B00 /* M3Data */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -4051,6 +4068,11 @@
 		};
 		99248D242B3499A10059546E /* M3Data */ = {
 			isa = XCSwiftPackageProductDependency;
+			productName = M3Data;
+		};
+		B060DA392E00419A0088E79A /* M3Data */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B060DA382E00419A0088E79A /* XCRemoteSwiftPackageReference "m3data" */;
 			productName = M3Data;
 		};
 /* End XCSwiftPackageProductDependency section */
